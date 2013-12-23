@@ -108,6 +108,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+#==========================================================================
 # BSAC custom changes from /etc/skel
 export PATH=$HOME/bin:$PATH
 export EDITOR=/usr/bin/vim
@@ -125,7 +126,7 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM="auto verbose"
 
-#BSAC copied from above and added GIT branch info to prompt
+#BSAC duplicated from up above and added GIT branch info to prompt
 if [ "$color_prompt" = yes ]; then
     # BSAC show git branch on command prompt
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m$(__git_ps1 " (%s)")\]\$ '
@@ -141,3 +142,4 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
