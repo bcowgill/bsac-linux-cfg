@@ -54,9 +54,13 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # BSAC show git branch on command prompt
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m$(__git_ps1 " (%s)")\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    #PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    # BSAC show git branch on command prompt
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\[$(__git_ps1 " (%s)")\]\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -109,4 +113,17 @@ fi
 # BSAC custom changes from /etc/skel
 export PATH=$HOME/bin:$PATH
 export EDITOR=/usr/bin/vim
+
+# BSAC show git branch on command prompt
+# see /etc/bash_completion.d/git for options
+# Prompt branch looks like: (master *+$%<>)
+# DIRTY STATE *=unstaged files +=staged changes
+# STASH $=stashed files
+# UNTRACKED %=untracked files
+# UPSTREAM <=behind >=ahead <>=diverged from upstream
+#PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM="auto verbose"
 
