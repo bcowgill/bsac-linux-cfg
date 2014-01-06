@@ -19,6 +19,9 @@ alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 
+# use fdupes to do something like my delsame.pl
+alias delsame='fdupes --recurse --noempty --size --delete'
+
 # default options for some commands
 # wcd default color graphic selector. 
 # wcdls just list what dirs match. 
@@ -37,7 +40,7 @@ alias wcdscan='\wcd -z50 -s &'
 alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
 
 if [ `hostname` == bcowgill-dt  ]; then
-   echo modifying aliases for host bcowgill-dt
+   #echo modifying aliases for host bcowgill-dt
    # = --compact-tree not present. use -ga mode instead
    # -T = --ascii-tree
    # -gc = --center-tree
@@ -84,5 +87,4 @@ fi
 # alias ll='ls -l'                              # long list
 # alias la='ls -A'                              # all but . and ..
 # alias l='ls -CF'                              #
-# Personal bash aliases
 
