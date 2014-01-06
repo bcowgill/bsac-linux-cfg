@@ -1,6 +1,43 @@
 # bash functions
 # Brent S.A. Cowgill
 
+# iselect command example of an enhanced cd command
+#   database scan for enhanced cd command
+which iselect > /dev/null 2>&1
+if [ "$?" == "0" ]; then
+   #echo we have iselect installed
+cds () {
+  (cd $HOME;
+   find . -type d -print |\
+   sed -e "s;^\.;$HOME;" |\
+   sort -u >$HOME/.cdpaths ) &
+}
+
+#   definition of the enhanced cd command
+cd () {
+    if [ -d $1 ]; then
+       builtin cd $1
+    else
+       builtin cd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
+           iselect -a -Q $1 -n "chdir" \
+                   -t "Change Directory to..."`
+    fi
+    #PS1="\u@\h:$PWD\n:> "
+}
+
+fi
+
+# wcd.exec command present then we define wcd function
+# on cygwin the command is wcd.exe and no need for a function
+which wcd.exec > /dev/null 2>&1
+if [ "$?" == "0" ]; then
+   #echo we have wcd.exec installed
+   unalias wcd 2> /dev/null
+   if [ -f /usr/share/wcd/wcd-include.sh ]; then
+      . /usr/share/wcd/wcd-include.sh
+   fi
+fi
+
 ############################################################################
 # Some example functions:(from cygwin default .bashrc file)
 #

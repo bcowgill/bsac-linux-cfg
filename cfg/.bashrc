@@ -112,6 +112,7 @@ fi
 # BSAC custom changes from /etc/skel
 export PATH=$HOME/bin:$PATH
 export EDITOR=/usr/bin/vim
+export WCDSCAN=/home/brent.cowgill
 
 # BSAC show git branch on command prompt
 # see /etc/bash_completion.d/git for options

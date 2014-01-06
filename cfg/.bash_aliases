@@ -8,6 +8,7 @@ alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
+alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
 
 # go up the dir tree quickly
 alias ..='cd ..'
@@ -17,6 +18,41 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
+
+# default options for some commands
+# wcd default color graphic selector. 
+# wcdls just list what dirs match. 
+# wcds show the wcd dir stack
+# wcdscan rescan configured directories in background
+# wcdv view configuration
+# wcdl for normal select list. 
+# wcdo for stdio version select list
+alias wcd='\wcd -z50 -g --compact-tree --center-tree --color'
+alias wcda='\wcd -z50 -g --compact-tree --center-tree --color --ascii-tree'
+alias wcds='\wcd -z50 ='
+alias wcdl='\wcd -z50'
+alias wcdo='\wcd -z50 -o'
+alias wcdls='\wcd -z50 --to-stdout'
+alias wcdscan='\wcd -z50 -s &'
+alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+
+if [ `hostname` == bcowgill-dt  ]; then
+   echo modifying aliases for host bcowgill-dt
+   # = --compact-tree not present. use -ga mode instead
+   # -T = --ascii-tree
+   # -gc = --center-tree
+   # -K  = --color
+   # -od = --to-stdout
+   # wcd will be defined as a function in .bash_functions
+   alias wd='wcd -z50 -ga -gc -K'
+   alias wcda='wcd -z50 -ga -gc -K -T'
+   alias wcds='wcd -z50 ='
+   alias wcdl='wcd -z50'
+   alias wcdo='wcd -z50 -o'
+   alias wcdls='wcd -z50 -od'
+   alias wcdscan='wcd -z50 -s &'
+   alias wcdv='wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+fi
 
 ############################################################################
 # Some example alias instructions (from cygwin default .bashrc)
