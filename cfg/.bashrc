@@ -143,3 +143,7 @@ xterm*|rxvt*)
     ;;
 esac
 
+#BSAC match cygwin put functions in separate sourced file
+if [ -f ~/.bash_functions ]; then
+    . ~/.bash_functions
+fi
