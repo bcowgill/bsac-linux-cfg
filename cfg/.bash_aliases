@@ -19,10 +19,12 @@ alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 
+# default options for some commands
+alias cdiff='colordiff'
+
 # use fdupes to do something like my delsame.pl
 alias delsame='fdupes --recurse --noempty --size --delete'
 
-# default options for some commands
 # wcd default color graphic selector. 
 # wcdls just list what dirs match. 
 # wcds show the wcd dir stack
@@ -31,6 +33,7 @@ alias delsame='fdupes --recurse --noempty --size --delete'
 # wcdl for normal select list. 
 # wcdo for stdio version select list
 alias wcd='\wcd -z50 -g --compact-tree --center-tree --color'
+alias wd='wcd'
 alias wcda='\wcd -z50 -g --compact-tree --center-tree --color --ascii-tree'
 alias wcds='\wcd -z50 ='
 alias wcdl='\wcd -z50'
