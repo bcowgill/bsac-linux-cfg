@@ -4,6 +4,7 @@ DROP=~/Dropbox/WorkSafe/_tx/ontology
 echo ======================================================================
 date
 mkdir -p $DROP
+crontab -l > ~/bin/cfg/crontab-$HOSTNAME
 pushd ~/workspace
 mkdir backup
 tar cvzf backup/ontology-notes.tgz *.txt
