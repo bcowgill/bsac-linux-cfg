@@ -3,6 +3,6 @@
 pushd ~/modeller
 truncate --size modeller.log
 ./modeller > /dev/null 2>&1 &
-tail -f modeller.log
+tailmodeller.sh
 popd
 
