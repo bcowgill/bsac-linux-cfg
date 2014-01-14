@@ -63,4 +63,3 @@ set +x
 
 echo === final size of the cache
 du -sh /var/cache/apt/archives
-
