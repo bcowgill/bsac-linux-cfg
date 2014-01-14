@@ -8,7 +8,7 @@ crontab -l > ~/bin/cfg/crontab-$HOSTNAME
 
 pushd ~
 mkdir -p workspace/backup
-tar cvzf workspace/backup/ontology-home-cfg.tgz .gitconfig .viminfo .lesshist .bash_history .charles.config .charles .kde/Autostart .kde/env .kde/share .local/share .Ontology_Modeller_Workspace workspace/.metadata
+tar cvzf workspace/backup/ontology-home-cfg.tgz .gitconfig .viminfo .lesshist .bash_history .charles.config .charles .kde/Autostart .kde/env .kde/share .local/share .Ontology_Modeller_Workspace workspace/.metadata /etc/X11/xorg.conf
 popd
 
 pushd ~/workspace
