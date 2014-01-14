@@ -30,7 +30,7 @@ PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix
 function check_linux {
    local version
    version="$1"
-   if lsb_release -a 2>/dev/null | grep Codename | grep $version; then
+   if [ $(lsb_release -sc) == $version ]; then
       echo OK ubuntu version $version
       return 0
    else
@@ -226,6 +226,13 @@ function file_has_text {
    fi
 }
 
+function apt_has_source {
+   local source message
+   source="$1"
+   message="$2"
+   file_has_text /etc/apt/sources.list "$source" "$message" || (sudo add-apt-repository "$source" && touch go.sudo)
+}
+
 pushd $HOME
 
 check_linux $UBUNTU
@@ -250,21 +257,15 @@ cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
 # update apt sources list with needed values to install some more complicated programs
 touch go.sudo; rm go.sudo
-file_has_text /etc/apt/sources.list charles-proxy "config for charles-proxy missing" || echo "echo deb http://www.charlesproxy.com/packages/apt/ charles-proxy main >> /etc/apt/sources.list" > go.sudo
-file_has_text /etc/apt/sources.list "deb http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU" "config for svn update missing" || echo "echo deb http://ppa.launchpad.net/svn/ppa/ubuntu precise main >> /etc/apt/sources.list" >> go.sudo
-file_has_text /etc/apt/sources.list "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU" "config for svn update missing" || echo "echo deb-src http://ppa.launchpad.net/svn/ppa/ubuntu precise main >> /etc/apt/sources.list" >> go.sudo
-[ -f go.sudo ] && (echo "apt-get update; apt-get install $CHARLESPKG $SUBVERSIONPKG" >> go.sudo)
-[ -f go.sudo ] && (chmod +x go.sudo; echo "ASK Need permission to update apt sources.list" ; cat go.sudo; sudo ./go.sudo)
-file_has_text /etc/apt/sources.list charles-proxy "config for charles-proxy missing"  
-file_has_text /etc/apt/sources.list "deb http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU"
-file_has_text /etc/apt/sources.list "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU"
+apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "config for charles-proxy missing"
+apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
+apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
+apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "config for skype missing"
 
-   sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
-   sudo apt-get update
-   sudo apt-get install skype-bin skype && sudo apt-get -f install   
-
+[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG && sudo apt-get -f install)
 
 cmd_exists $CHARLES
+cmd_exists $SKYPE
 cmd_exists svn
 if svn --version | grep " version " | grep $SVNVER; then
    echo OK svn command version correct
