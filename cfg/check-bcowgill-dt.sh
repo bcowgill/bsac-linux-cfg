@@ -11,8 +11,10 @@ ULIMITFILES=8196
 EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
-INSTALL="vim curl colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser"
+INSTALL="vim curl colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
 INSTALLFROM="wcd.exec:wcd" # not used, (YET) just quick reference
+SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
+# gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="node npm"
 NODEPKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
@@ -338,6 +340,7 @@ file_exists_from_package /etc/bash_completion.d/git bash-completion
 install_commands "$INSTALL"
 install_commands_from "$INSTALLFROM"
 install_command_from_packages node "$NODEPKG"
+install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -390,5 +393,9 @@ make_dir_exist /tmp/ontology/system "Ontology system dir"
 dir_exists .config/autostart
 file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+
+# Screen saver
+file_has_text .kde/share/config/kscreensaverrc "Saver=KSlideshow.desktop" "screensaver configured"
+file_has_text .kde/share/config/kslideshow.kssrc "Dropbox/WorkSafe" "screensaver dir configured"
 
 popd
