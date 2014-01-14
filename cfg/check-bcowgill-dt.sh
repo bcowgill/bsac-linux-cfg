@@ -344,4 +344,11 @@ file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
 
 FILE=.kde/share/config/kioslaverc
 file_has_text $FILE "httpProxy=localhost 58008" "system proxy config"
+
+# Eclipse configuration
+file_exists eclipse/eclipse "Eclipse program"
+file_exists eclipse/Eclipse.desktop "Eclipse launcher"
+dir_exists .local/share/applications "KDE applications folder"
+file_exists .local/share/applications/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop .local/share/applications/Eclipse.desktop
+
 popd
