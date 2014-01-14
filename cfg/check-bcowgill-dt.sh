@@ -233,6 +233,20 @@ function apt_has_source {
    file_has_text /etc/apt/sources.list "$source" "$message" || (sudo add-apt-repository "$source" && touch go.sudo)
 }
 
+function crontab_has_command {
+   local command config message
+   command="$1"
+   config="$2"
+   message="$3"
+   if crontab -l | grep "$command"; then
+      echo OK crontab has command $command
+      return 0
+   else
+      echo NOT OK crontab missing command $oommand trying to install [$message]
+      (crontab -l; echo "$config" ) | crontab -
+   fi
+}
+
 pushd $HOME
 
 check_linux $UBUNTU
@@ -285,6 +299,7 @@ commands_exist "$COMMANDS"
 
 cmd_exists backup-work.sh "backup script missing"
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
-file_has_text bin/cfg/crontab-$HOSTNAME backup-work.sh
+crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/workspace/bin/backup-work.sh > /tmp/backup-work.log 2>&1" "crontab daily backup configuration"
+crontab_has_command "backup-work.sh"
 
 popd
