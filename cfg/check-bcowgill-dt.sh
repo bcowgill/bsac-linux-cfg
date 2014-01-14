@@ -351,7 +351,14 @@ file_exists eclipse/Eclipse.desktop "Eclipse launcher"
 dir_exists .local/share/applications "KDE applications folder"
 file_exists .local/share/applications/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop .local/share/applications/Eclipse.desktop
 
+TEXT="ProFontWindows"
+file_has_text workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs "$TEXT"
+file_has_text workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs "$TEXT"
+file_has_text workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
+
 # Ontology Modeller
 file_exists modeller/modeller "Ontology modeller"
+make_dir_exist /tmp/ontology/output "Ontology output dir"
+make_dir_exist /tmp/ontology/system "Ontology system dir"
 
 popd
