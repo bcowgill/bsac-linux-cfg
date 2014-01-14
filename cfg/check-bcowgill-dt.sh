@@ -1,0 +1,289 @@
+#!/bin/bash
+# Check configuration to make sure things are ok and make them ok where possible
+
+# terminate on first error
+set -e
+# turn on trace of currently running command if you need it
+#set -x
+
+UBUNTU=precise
+INSTALL="vim curl colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser"
+INSTALLFROM="wcd.exec:wcd" # not used, (YET) just quick reference
+
+NODE="node npm"
+NODEPKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
+
+CHARLES="charles"
+CHARLESPKG=charles-proxy
+
+SVNVER="1.7.9"
+SUBVERSIONPKG="subversion libsvn-java"
+
+SKYPE=skype
+SKYPEPKG="skype skype-bin"
+
+COMMANDS="apt-file $NODE svn $CHARLES $SKYPE"
+PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG"
+# flashplutin installer
+# subversion
+
+function check_linux {
+   local version
+   version="$1"
+   if lsb_release -a 2>/dev/null | grep Codename | grep $version; then
+      echo OK ubuntu version $version
+      return 0
+   else
+      echo NOT OK ubuntu version not $version
+      return 1
+   fi
+}
+
+function dir_exists {
+   local dir message
+   dir="$1"
+   message="$2"
+   if [ -d "$dir" ]; then
+      echo OK directory exists: $dir
+      return 0
+   else
+      echo NOT OK directory missing: $dir [$message]
+      return 1
+   fi
+}
+
+function file_exists {
+   local file message
+   file="$1"
+   message="$2"
+   if [ -f "$file" ]; then
+      echo OK file exists: $file
+      return 0
+   else
+      echo NOT OK file missing: $file [$message]
+      return 1
+   fi
+}
+
+function file_link_exists {
+   local file message
+   file="$1"
+   message="$2"
+   if [ -L "$file" ]; then
+      echo OK symlink exists: $file
+      return 0
+   else
+      echo NOT OK symlink missing: $file [$message]
+      return 1
+   fi
+}
+
+function dir_link_exists {
+   local dir message
+   dir="$1"
+   message="$2"
+   if [ -L "$dir" ]; then
+      echo OK symlink dir exists: $dir
+      return 0
+   else
+      echo NOT OK symlink dir missing: $dir [$message]
+      return 1
+   fi
+}
+
+function file_linked_to {
+   local name target message
+   name="$1"
+   target="$2"
+   message="$3"
+   file_exists "$target" "$message"
+   if [ `readlink "$name"` == "$target" ]; then
+      echo OK symlink $name links to $target
+      return 0
+   else
+      file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && mv "$name" "$name.orig"
+      file_link_exists "$name" "try creating for $message" || ln -s "$target" "$name"
+      file_link_exists "$name" "$message"
+   fi
+}
+
+function dir_linked_to {
+   local name target message
+   name="$1"
+   target="$2"
+   message="$3"
+   dir_exists "$target" "$message"
+   if [ -e "$name" ]; then
+      if [ `readlink "$name"` == "$target" ]; then
+         echo OK symlink $name links to dir $target
+         return 0
+      else
+         if [ `readlink "$name"` == "$target/" ]; then
+            echo OK symlink $name links to dir $target/
+            return 0
+         else
+            echo NOT OK already exists: "$name" cannot create as a link to dir "$target" [$message] `readlink "$name"`
+            return 1
+         fi
+      fi
+   else
+      ln -s "$target" "$name"
+      dir_link_exists "$name" "$message"
+   fi
+}
+
+function file_exists_from_package {
+   local file package
+   file="$1"
+   package="$2"
+   file_exists "$file" "sudo apt-get install $package"
+}
+
+function cmd_exists {
+   local cmd messagenode npm
+   cmd="$1"
+   message="$2"
+   if which "$cmd"; then
+      echo OK command $cmd exists
+      return 0
+   else
+      if [ -z "$message" ]; then
+         message="sudo apt-get install $cmd"
+      fi
+      echo NOT OK command $cmd missing [$message]
+      return 1
+   fi
+}
+
+function commands_exist {
+   local commands
+   commands="$1"
+   for cmd in $commands
+   do
+      cmd_exists "$cmd"
+   done
+}
+
+function install_command_from {
+   local command package
+   command="$1"
+   package="$2"
+   cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get install "$package")
+   cmd_exists "$command"
+}
+
+function install_command_from_packages {
+   local command packages
+   command="$1"
+   packages="$2"
+   cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get install $packages)
+   cmd_exists "$command"
+}
+
+function install_file_from {
+   local file package
+   file="$1"
+   package="$2"
+   file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
+   file_exists "$file"
+}
+
+function install_commands {
+   local commands
+   commands="$1"
+   for cmd in $commands
+   do
+      cmd_exists $cmd > /dev/null || (echo want to install $cmd ; sudo apt-get install "$cmd")
+      cmd_exists $cmd
+   done
+}
+
+# Install commands from specific package specified as input list wi1.7.9th : separation
+# cmd1:pkg2 cmd2:pkg2 ...
+function install_commands_from {
+   local list
+   list="$1"
+   for cmd_pkg in $list
+   do
+      # split the cmd:pkg string into vars
+      IFS=: read cmd package <<< $cmd_pkg
+      install_command_from $cmd $package
+   done
+}
+
+function file_has_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file"
+   if grep "$text" "$file" > /dev/null; then
+      echo OK file has text: "$file" "$text"
+      return 0
+   else
+      echo NOT OK file missing text: "$file" "$text" [$message]
+      return 1
+   fi
+}
+
+pushd $HOME
+
+check_linux $UBUNTU
+
+file_exists .fonts/p/ProFontWindows.ttf "ProFontWindows font needs to be installed"
+file_has_text .kde/share/apps/konsole/Shell.profile ProFontWindows "need to set font for konsole"
+
+dir_linked_to sandbox workspace "sandbox alias for workspace"
+dir_linked_to bin workspace/bin "transfer area in workspace"
+dir_linked_to tx workspace/tx "transfer area in workspace"
+dir_linked_to jdk workspace/jdk1.7.0_21
+dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
+
+dir_exists  bin/cfg "bin configuration missing"
+
+file_linked_to go.sh bin/onboot-bcowgill-dt.sh "on reboot script configured"
+file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
+file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
+file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
+
+cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
+
+# update apt sources list with needed values to install some more complicated programs
+touch go.sudo; rm go.sudo
+file_has_text /etc/apt/sources.list charles-proxy "config for charles-proxy missing" || echo "echo deb http://www.charlesproxy.com/packages/apt/ charles-proxy main >> /etc/apt/sources.list" > go.sudo
+file_has_text /etc/apt/sources.list "deb http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU" "config for svn update missing" || echo "echo deb http://ppa.launchpad.net/svn/ppa/ubuntu precise main >> /etc/apt/sources.list" >> go.sudo
+file_has_text /etc/apt/sources.list "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU" "config for svn update missing" || echo "echo deb-src http://ppa.launchpad.net/svn/ppa/ubuntu precise main >> /etc/apt/sources.list" >> go.sudo
+[ -f go.sudo ] && (echo "apt-get update; apt-get install $CHARLESPKG $SUBVERSIONPKG" >> go.sudo)
+[ -f go.sudo ] && (chmod +x go.sudo; echo "ASK Need permission to update apt sources.list" ; cat go.sudo; sudo ./go.sudo)
+file_has_text /etc/apt/sources.list charles-proxy "config for charles-proxy missing"  
+file_has_text /etc/apt/sources.list "deb http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU"
+file_has_text /etc/apt/sources.list "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $UBUNTU"
+
+   sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+   sudo apt-get update
+   sudo apt-get install skype-bin skype && sudo apt-get -f install   
+
+
+cmd_exists $CHARLES
+cmd_exists svn
+if svn --version | grep " version " | grep $SVNVER; then
+   echo OK svn command version correct
+else
+   echo NOT OK svn command version incorrect
+   exit 1
+fi
+
+install_file_from /etc/bash_completion bash-completion
+file_exists_from_package /etc/bash_completion.d/git bash-completion
+
+install_commands "$INSTALL"
+install_commands_from "$INSTALLFROM"
+install_command_from_packages node "$NODEPKG"
+
+commands_exist "$COMMANDS"
+
+cmd_exists backup-work.sh "backup script missing"
+file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
+file_has_text bin/cfg/crontab-$HOSTNAME backup-work.sh
+
+popd
