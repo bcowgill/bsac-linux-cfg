@@ -25,6 +25,14 @@ alias cdiff='colordiff'
 # use fdupes to do something like my delsame.pl
 alias delsame='fdupes --recurse --noempty --size --delete'
 
+# some package aliases
+# pkgfind search for a package
+# pkgls show all files installed by package
+alias pkgfind='pkgfind.sh'
+alias pkgless='pkgless.sh'
+alias pkgfiles='pkgfiles.sh'
+alias pkgls='dpkg -L'
+
 # wcd default color graphic selector. 
 # wcdls just list what dirs match. 
 # wcds show the wcd dir stack
