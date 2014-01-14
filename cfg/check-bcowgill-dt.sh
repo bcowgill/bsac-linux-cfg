@@ -345,6 +345,9 @@ file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
 FILE=.kde/share/config/kioslaverc
 file_has_text $FILE "httpProxy=localhost 58008" "system proxy config"
 
+# java configuration
+dir_exists workspace/jdk1.7.0_21 "java runtime"
+
 # Eclipse configuration
 file_exists eclipse/eclipse "Eclipse program"
 file_exists eclipse/Eclipse.desktop "Eclipse launcher"
