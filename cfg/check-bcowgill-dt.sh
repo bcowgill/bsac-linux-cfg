@@ -18,6 +18,7 @@ NODEPKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node
 
 CHARLES="charles"
 CHARLESPKG=charles-proxy
+CHARLESLICENSE="Ontology-Partners Ltd:c7f341142e860a8354"
 
 SVNVER="1.7.9"
 SUBVERSIONPKG="subversion libsvn-java"
@@ -287,7 +288,7 @@ apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) m
 apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
 apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "config for skype missing"
 
-[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG && sudo apt-get -f install)
+[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLESLICENSE)
 
 cmd_exists $CHARLES
 cmd_exists $SKYPE
