@@ -351,4 +351,7 @@ file_exists eclipse/Eclipse.desktop "Eclipse launcher"
 dir_exists .local/share/applications "KDE applications folder"
 file_exists .local/share/applications/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop .local/share/applications/Eclipse.desktop
 
+# Ontology Modeller
+file_exists modeller/modeller "Ontology modeller"
+
 popd
