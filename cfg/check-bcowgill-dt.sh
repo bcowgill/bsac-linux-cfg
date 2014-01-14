@@ -288,7 +288,10 @@ else
 fi
 
 file_exists .fonts/p/ProFontWindows.ttf "ProFontWindows font needs to be installed"
-file_has_text .kde/share/apps/konsole/Shell.profile ProFontWindows "need to set font for konsole"
+file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole"
+file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,14" "ProFontWindows in kate editor"
+#file_has_text .kde/share/config/katesyntaxhighlightingrc ""
+file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font"
 
 dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/bin "transfer area in workspace"
