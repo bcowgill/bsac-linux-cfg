@@ -119,10 +119,11 @@ function file_linked_to {
 }
 
 function dir_linked_to {
-   local name target message
+   local name target message root
    name="$1"
    target="$2"
    message="$3"
+   root="$4"
    dir_exists "$target" "$message"
    if [ -e "$name" ]; then
       if [ `readlink "$name"` == "$target" ]; then
@@ -138,7 +139,13 @@ function dir_linked_to {
          fi
       fi
    else
-      ln -s "$target" "$name"
+      echo NOT OK symlink $name missing will try to create
+      echo ln -s "$target" "$name"
+      if [ -z "$root" ]; then
+         ln -s "$target" "$name"
+      else
+         sudo ln -s "$target" "$name"
+      fi
       dir_link_exists "$name" "$message"
    fi
 }
@@ -291,6 +298,8 @@ apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -s
 apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "config for skype missing"
 
 [ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLESLICENSE)
+file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
+dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
 
 cmd_exists $CHARLES
 cmd_exists $SKYPE
