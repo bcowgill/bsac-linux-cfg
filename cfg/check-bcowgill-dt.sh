@@ -7,6 +7,9 @@ set -e
 #set -x
 
 UBUNTU=precise
+EMAIL=brent.cowgill@ontology.command
+MYNAME="Brent S.A. Cowgill"
+
 INSTALL="vim curl colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser"
 INSTALLFROM="wcd.exec:wcd" # not used, (YET) just quick reference
 
@@ -25,7 +28,6 @@ SKYPEPKG="skype skype-bin"
 COMMANDS="apt-file $NODE svn $CHARLES $SKYPE"
 PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG"
 # flashplutin installer
-# subversion
 
 function check_linux {
    local version
@@ -310,5 +312,15 @@ cmd_exists backup-work.sh "backup script missing"
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/workspace/bin/backup-work.sh > /tmp/backup-work.log 2>&1" "crontab daily backup configuration"
 crontab_has_command "backup-work.sh"
+
+if [ x`git config --global --get user.email` == x$EMAIL ]; then
+   echo OK git config has been set up
+else
+   echo NOT OK git config not set. trying to do so
+   git config --global user.name "$MYNAME"
+   git config --global user.email $EMAIL
+fi
+
+
 
 popd
