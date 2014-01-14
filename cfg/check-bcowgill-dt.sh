@@ -318,6 +318,10 @@ install_commands "$INSTALL"
 install_commands_from "$INSTALLFROM"
 install_command_from_packages node "$NODEPKG"
 
+make_dir_exist workspace/dropbox-dist "dropbox distribution files"
+file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
+file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
+
 commands_exist "$COMMANDS"
 
 cmd_exists backup-work.sh "backup script missing"
@@ -345,9 +349,6 @@ file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
 FILE=.kde/share/config/kioslaverc
 file_has_text $FILE "httpProxy=localhost 58008" "system proxy config"
 
-# java configuration
-dir_exists workspace/jdk1.7.0_21 "java runtime"
-
 # Eclipse configuration
 file_exists eclipse/eclipse "Eclipse program"
 file_exists eclipse/Eclipse.desktop "Eclipse launcher"
@@ -363,5 +364,10 @@ file_has_text workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings/or
 file_exists modeller/modeller "Ontology modeller"
 make_dir_exist /tmp/ontology/output "Ontology output dir"
 make_dir_exist /tmp/ontology/system "Ontology system dir"
+
+# Dropbox configuration
+dir_exists .config/autostart
+file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
+file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
 
 popd
