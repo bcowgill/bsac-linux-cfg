@@ -52,6 +52,14 @@ function dir_exists {
    fi
 }
 
+function make_dir_exist {
+   local dir message
+   dir="$1"
+   message="$2"
+   dir_exists "$dir" "$message" || mkdir -p "$dir"
+   dir_exists "$dir" "$message"
+}
+
 function file_exists {
    local file message
    file="$1"
@@ -261,6 +269,7 @@ dir_linked_to jdk workspace/jdk1.7.0_21
 dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
+make_dir_exist  workspace/backup/cfg "workspace home configuration files missing"
 
 file_linked_to go.sh bin/onboot-bcowgill-dt.sh "on reboot script configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
