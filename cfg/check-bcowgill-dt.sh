@@ -272,7 +272,8 @@ dir_linked_to jdk workspace/jdk1.7.0_21
 dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
-make_dir_exist  workspace/backup/cfg "workspace home configuration files missing"
+make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
+make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 
 file_linked_to go.sh bin/onboot-bcowgill-dt.sh "on reboot script configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
@@ -284,6 +285,7 @@ cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 # update apt sources list with needed values to install some more complicated programs
 touch go.sudo; rm go.sudo
 apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "config for charles-proxy missing"
+[ -f go.sudo ] && (wget -q -O - http://www.charlesproxy.com/packages/apt/PublicKey | sudo apt-key add - )
 apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
 apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
 apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "config for skype missing"
