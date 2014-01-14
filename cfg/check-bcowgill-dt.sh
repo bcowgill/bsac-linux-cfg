@@ -7,6 +7,7 @@ set -e
 #set -x
 
 UBUNTU=precise
+ULIMITFILES=8196
 EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
@@ -268,6 +269,23 @@ function crontab_has_command {
 pushd $HOME
 
 check_linux $UBUNTU
+
+touch go.sudo; rm go.sudo
+if [ `ulimit -n` == $ULIMITFILES ]; then
+   echo OK ulimit for open files is good
+else
+   echo NOT OK ulimit for open files is bad need $ULIMITFILES
+   file_has_text /etc/security/limits.conf brent.cowgill "check limits file" || ( \
+      echo echo \"brent.cowgill            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
+      echo echo \"brent.cowgill            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
+      chmod +x go.sudo;
+      sudo ./go.sudo\
+   )
+   file_has_text /etc/security/limits.conf brent.cowgill "check username in limits file"
+   file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
+   echo YOUDO You have to logout/login again for ulimit to take effect.
+   exit 1
+fi
 
 file_exists .fonts/p/ProFontWindows.ttf "ProFontWindows font needs to be installed"
 file_has_text .kde/share/apps/konsole/Shell.profile ProFontWindows "need to set font for konsole"
