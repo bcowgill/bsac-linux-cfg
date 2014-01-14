@@ -333,4 +333,6 @@ file_has_text $FILE "displayFontSize>16" "charles font config"
 file_has_text $FILE "tx/mirror</savePath" "charles mirror config"
 file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
 
+FILE=.kde/share/config/kioslaverc
+file_has_text $FILE "httpProxy=localhost 58008" "system proxy config"
 popd
