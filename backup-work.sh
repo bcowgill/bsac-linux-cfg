@@ -1,11 +1,15 @@
 #!/bin/bash
 # save some stuff to dropbox for work at home
 DROP=~/Dropbox/WorkSafe/_tx/ontology
+THUNDER=ryu9c8b3.default
+MOZZ=19o4iihs.default
 HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
    .charles.config .charles \
    .kde/Autostart .kde/env .kde/share .local/share \
    .config/autostart .config/TrollTech.conf \
    .Ontology_Modeller_Workspace \
+   .thunderbird/$THUNDER/prefs.js .thunderbird/$THUNDER/session.json \
+   .mozilla/firefox/$MOZZ/prefs.js .mozilla/firefox/$MOZZ/sessionstore.js .mozilla/firefox/$MOZZ/search.json .mozilla/firefox/$MOZZ/bookmarkbackups \
    .SourceGear* \
    .dropbox"
 ROOTCFG="/etc/X11/xorg.conf"

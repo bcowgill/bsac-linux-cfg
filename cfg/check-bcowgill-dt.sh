@@ -415,4 +415,8 @@ file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp worksp
 file_has_text .kde/share/config/kscreensaverrc "Saver=KSlideshow.desktop" "screensaver configured"
 file_has_text .kde/share/config/kslideshow.kssrc "Dropbox/WorkSafe" "screensaver dir configured"
 
+# Thunderbird
+file_has_text .thunderbird/ryu9c8b3.default/prefs.js "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
+file_has_text .thunderbird/ryu9c8b3.default/prefs.js "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
+
 popd

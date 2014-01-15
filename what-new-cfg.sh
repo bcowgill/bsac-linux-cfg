@@ -1,7 +1,7 @@
 #!/bin/bash
 # show what files are newer than specified file.
 # assumes newest reconfigure.timestamp* if none given
-REGEX='/(workspace|Dropbox|Pictures|\.fontconfig|.Skype|\.mozilla|\.dropbox|(\.config|\.cache)/chromium)/'
+REGEX='/(workspace|Dropbox|Pictures|\.fontconfig|.Skype|\.mozilla|\.thunderbird|\.cache/thunderbird|\.dropbox|(\.config|\.cache)/chromium)/'
 
 if [ -z $1 ]; then
    newer=`ls -1 ~/reconfigure.timestamp* -t | head -1`
