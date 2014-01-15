@@ -1,9 +1,13 @@
 #!/bin/bash
 # save some stuff to dropbox for work at home
 DROP=~/Dropbox/WorkSafe/_tx/ontology
-HOMECFG=".gitconfig .viminfo .lesshist .bash_history .charles.config \
-   .charles .kde/Autostart .kde/env .kde/share .local/share \
-   .config/autostart .config/TrollTech.conf .Ontology_Modeller_Workspace .dropbox"
+HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
+   .charles.config .charles \
+   .kde/Autostart .kde/env .kde/share .local/share \
+   .config/autostart .config/TrollTech.conf \
+   .Ontology_Modeller_Workspace \
+   .SourceGear* \
+   .dropbox"
 ROOTCFG="/etc/X11/xorg.conf"
 WORKCFG="workspace/.metadata"
 
@@ -15,6 +19,7 @@ crontab -l > ~/bin/cfg/crontab-$HOSTNAME
 
 pushd ~
 mkdir -p workspace/backup
+
 tar cvzf workspace/backup/ontology-home-cfg.tgz $HOMECFG $WORKCFG $ROOTCFG
 popd
 

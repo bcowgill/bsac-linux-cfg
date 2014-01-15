@@ -125,6 +125,16 @@ function file_linked_to {
    fi
 }
 
+function file_hard_linked_to {
+   local name target message
+   name="$1"
+   target="$2"
+   message="$3"
+   file_exists "$target" "$message check target"
+   file_exists "$name" "$message will try to hard link" || ln "$target" "$name"
+   file_exists "$name" "$message"
+}
+
 function dir_linked_to {
    local name target message root
    name="$1"
