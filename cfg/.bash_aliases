@@ -23,8 +23,15 @@ alias ........='cd ../../../../../../..'
 alias cdiff='colordiff'
 
 # use source gear diffmerge or vimdiff as a visual diff program
-alias vdiff='sgdm.exe'
-which sgdm.exe >> /dev/null || alias vdiff='vimdiff'
+if which sgdm.exe >> /dev/null; then
+   alias vdiff='sgdm.exe'
+else
+   if which diffmerge >> /dev/null; then
+      alias vdiff='diffmerge'
+   else
+      alias vdiff='vimdiff'
+   fi
+fi
 
 # use fdupes to do something like my delsame.pl
 alias delsame='fdupes --recurse --noempty --size --delete'

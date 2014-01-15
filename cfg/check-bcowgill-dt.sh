@@ -23,6 +23,10 @@ CHARLES="charles"
 CHARLESPKG=charles-proxy
 CHARLESLICENSE="Ontology-Partners Ltd:c7f341142e860a8354"
 
+DIFFMERGE=diffmerge
+DIFFMERGEPKG=diffmerge_4.2.0.697.stable_amd64.deb
+DIFFMERGEURL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGEPKG
+
 SVNVER="1.7.9"
 SUBVERSIONPKG="subversion libsvn-java"
 
@@ -336,6 +340,9 @@ fi
 
 install_file_from /etc/bash_completion bash-completion
 file_exists_from_package /etc/bash_completion.d/git bash-completion
+
+cmd_exists $DIFFMERGE "sourcegear diffmerge will try to get" || (wget --output-document $HOME/Downloads/$DIFFMERGEPKG $DIFFMERGEURL && sudo dpkg --install $HOME/Downloads/$DIFFMERGEPKG)
+cmd_exists $DIFFMERGE "sourcegear diffmerge"
 
 install_commands "$INSTALL"
 install_commands_from "$INSTALLFROM"
