@@ -367,7 +367,7 @@ file_has_text $FILE "port>58008" "charles port config"
 file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
 file_has_text $FILE "displayFont>ProFontWindows" "charles font config"
 file_has_text $FILE "displayFontSize>16" "charles font config"
-file_has_text $FILE "tx/mirror</savePath" "charles mirror config"
+file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config"
 file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
 
 FILE=.kde/share/config/kioslaverc
