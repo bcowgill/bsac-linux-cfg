@@ -423,4 +423,27 @@ file_has_text .thunderbird/ryu9c8b3.default/prefs.js "ProFontWindows"
 # System Settings
 file_has_text ./.kde/share/config/kcminputrc "MouseButtonMapping=LeftHanded"
 
+FILE=.kderc
+file_has_text $FILE "activeFont=Ubuntu,11"
+file_has_text $FILE "desktopFont=Ubuntu,11"
+file_has_text $FILE "font=Ubuntu,11"
+file_has_text $FILE "menuFont=Ubuntu,11"
+file_has_text $FILE "taskbarFont=Ubuntu,11"
+file_has_text $FILE "smallestReadableFont=Ubuntu,10"
+file_has_text $FILE "toolBarFont=Ubuntu,10"
+file_has_text $FILE "fixed=ProFontWindows,14"
+
+FILE=.kde/share/config/kdeglobals
+file_has_text $FILE "ColorScheme=Zion .Reversed."
+file_has_text $FILE "activeFont=Ubuntu,11"
+file_has_text $FILE "desktopFont=Ubuntu,11"
+file_has_text $FILE "font=Ubuntu,11"
+file_has_text $FILE "menuFont=Ubuntu,11"
+file_has_text $FILE "taskbarFont=Ubuntu,11"
+file_has_text $FILE "smallestReadableFont=Ubuntu,10"
+file_has_text $FILE "toolBarFont=Ubuntu,10"
+file_has_text $FILE "fixed=ProFontWindows,14"
+file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
+file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
+
 popd
