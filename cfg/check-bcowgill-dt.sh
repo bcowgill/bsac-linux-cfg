@@ -421,7 +421,10 @@ file_has_text .thunderbird/ryu9c8b3.default/prefs.js "default/News/newsrc-news" 
 file_has_text .thunderbird/ryu9c8b3.default/prefs.js "ProFontWindows"
 
 # System Settings
-file_has_text ./.kde/share/config/kcminputrc "MouseButtonMapping=LeftHanded"
+FILE=.kde/share/config/kcminputrc
+file_has_text $FILE "MouseButtonMapping=LeftHanded"
+file_has_text $FILE "cursorTheme=redglass"
+file_has_text $FILE "cursorSize=32"
 
 FILE=.kderc
 file_has_text $FILE "activeFont=Ubuntu,11"
@@ -445,5 +448,7 @@ file_has_text $FILE "toolBarFont=Ubuntu,10"
 file_has_text $FILE "fixed=ProFontWindows,14"
 file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
 file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
+
+file_has_text .kde/share/config/plasmarc "name=oxygen"
 
 popd
