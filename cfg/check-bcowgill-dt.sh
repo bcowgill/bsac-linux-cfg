@@ -367,8 +367,10 @@ commands_exist "$COMMANDS"
 
 cmd_exists backup-work.sh "backup script missing"
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
-crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/workspace/bin/backup-work.sh > /tmp/backup-work.log 2>&1" "crontab daily backup configuration"
+crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
 crontab_has_command "backup-work.sh"
+crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
+crontab_has_command "wcdscan.sh"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
    echo OK git config has been set up
