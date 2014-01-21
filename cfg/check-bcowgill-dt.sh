@@ -355,7 +355,7 @@ cmd_exists $DIFFMERGE "sourcegear diffmerge will try to get" || (wget --output-d
 cmd_exists $DIFFMERGE "sourcegear diffmerge"
 
 install_commands "$INSTALL"
-install_commands_from "$INSTALLFROM"
+install_commands_from "$INSTALLFROM"ver@default:default,com.ontologypartners.http@default:default,com.ontologypartners.jdbc.provider@default:default,com.ontologypartners.jena@default:default,com.ontologypartners.licencecollector@default:default,co
 install_command_from_packages node "$NODEPKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
@@ -448,7 +448,17 @@ file_has_text $FILE "toolBarFont=Ubuntu,10"
 file_has_text $FILE "fixed=ProFontWindows,14"
 file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
 file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
+file_has_text $FILE "DateFormatShort=%Y-%m-%d"
+file_has_text $FILE "BinaryUnitDialect=2"   # byte units kB, MB etc
 
 file_has_text .kde/share/config/plasmarc "name=oxygen"
+
+# Spell checking settings
+FILE=.kde/share/config/sonnetrc
+file_has_text $FILE "backgroundCheckerEnabled=true"
+file_has_text $FILE "checkerEnabledByDefault=true"
+file_has_text $FILE "defaultLanguage=en_GB"
+
+#file_has_text $FILE ""
 
 popd
