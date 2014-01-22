@@ -22,4 +22,5 @@
 # m h  dom mon dow   command
 # Lines are added to this from bin/cfg/check-bcowgill-dt.sh so
 # make your changes there
-30 17,18 * * * $HOME/workspace/bin/backup-work.sh > /tmp/backup-work.log 2>&1
+30 17,18 * * * $HOME/bin/backup-work.sh > /tmp/crontab-backup-work.log 2>&1
+*/10 9,10,11,12,13,14,15,16,17,18 * * * $HOME/bin/wcdscan.sh > /tmp/crontab-wcdscan.log 2>&1
