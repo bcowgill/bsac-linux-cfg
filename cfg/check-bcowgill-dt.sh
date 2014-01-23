@@ -30,6 +30,8 @@ DIFFMERGEURL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGEPKG
 SVNVER="1.7.9"
 SUBVERSIONPKG="subversion libsvn-java"
 
+THUNDER=ryu9c8b3.default
+
 SKYPE=skype
 SKYPEPKG="skype skype-bin"
 
@@ -261,6 +263,21 @@ function file_has_text {
    fi
 }
 
+function file_contains_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file"
+   if egrep "$text" "$file" > /dev/null; then
+      echo OK file contains regex: "$file" "$text"
+      return 0
+   else
+      echo NOT OK file missing regex: "$file" "$text" [$message]
+      return 1
+   fi
+}
+
 function apt_has_source {
    local source message
    source="$1"
@@ -418,9 +435,23 @@ file_has_text .kde/share/config/kscreensaverrc "Saver=KSlideshow.desktop" "scree
 file_has_text .kde/share/config/kslideshow.kssrc "Dropbox/WorkSafe" "screensaver dir configured"
 
 # Thunderbird
-file_has_text .thunderbird/ryu9c8b3.default/prefs.js "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
-file_has_text .thunderbird/ryu9c8b3.default/prefs.js "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"q
-file_has_text .thunderbird/ryu9c8b3.default/prefs.js "ProFontWindows"
+FILE=".thunderbird/$THUNDER/prefs.js"
+file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
+file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
+file_has_text $FILE "ProFontWindows"
+file_contains_text $FILE "browser.anchor_color., .#99FFFF"
+file_contains_text $FILE "browser.display.background_color., .#666666"
+file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
+file_contains_text $FILE "browser.display.use_document_colors., false"
+file_contains_text $FILE "browser.visited_color., .#FFCCCC"
+file_contains_text $FILE "mail.citation_color., .#FFCC66"
+file_contains_text $FILE "mailnews.tags..label1.color., .#FF0000"
+file_contains_text $FILE "mailnews.tags..label2.color., .#FF9900"
+file_contains_text $FILE "mailnews.tags..label3.color., .#009900"
+file_contains_text $FILE "mailnews.tags..label4.color., .#3333FF"
+file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
+file_contains_text $FILE "msgcompose.background.color., .#333333"
+file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
 
 # System Settings
 FILE=.kde/share/config/kcminputrc
