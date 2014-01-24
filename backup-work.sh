@@ -13,7 +13,7 @@ HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
    .mozilla/firefox/$MOZZ/prefs.js .mozilla/firefox/$MOZZ/sessionstore.js .mozilla/firefox/$MOZZ/search.json .mozilla/firefox/$MOZZ/bookmarkbackups \
    .SourceGear* \
    .dropbox"
-ROOTCFG="/etc/X11/xorg.conf"
+ROOTCFG="/etc/X11/xorg.conf /etc/mtab /etc/fstab"
 WORKCFG="workspace/.metadata"
 
 
