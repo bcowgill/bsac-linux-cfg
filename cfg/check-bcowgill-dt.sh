@@ -390,6 +390,26 @@ file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
 
+if [ -d /data/UNMOUNTED ]; then
+   echo OK /data/UNMOUNTED exists will try mounting it to check dirs
+   sudo mount /data
+   if [ -d /data/UNMOUNTED ]; then
+      echo NOT OK unable to mount /data
+#   mkdir -p /data/UNMOUNTED
+#   blkid /dev/sdb1
+#   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" /data
+#   /etc/fstab entry added
+#   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
+#   mkdir -p /data/brent.cowgill
+#   chown -R brent.cowgill:domusers /data/brent.cowgill
+      exit 1
+   fi
+else
+   dir_exists /data/brent.cowgill "personal area on data dir missing"
+fi
+make_dir_exist /data/brent.cowgill/backup "backup dir on /data"
+make_dir_exist /data/brent.cowgill/VirtualBox "VirtualBox dir on /data"
+
 cmd_exists wget
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
