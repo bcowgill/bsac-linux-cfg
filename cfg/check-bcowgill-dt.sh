@@ -30,13 +30,16 @@ DIFFMERGEURL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGEPKG
 SVNVER="1.7.9"
 SUBVERSIONPKG="subversion libsvn-java"
 
+GITSVN=/usr/lib/git-core/git-svn
+GITSVNPKG="git-svn"
+
 THUNDER=ryu9c8b3.default
 
 SKYPE=skype
 SKYPEPKG="skype skype-bin"
 
 COMMANDS="apt-file $NODE svn $CHARLES $SKYPE"
-PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG"
+PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG"
 # flashplutin installer
 
 function check_linux {
@@ -365,6 +368,15 @@ else
    exit 1
 fi
 
+cmd_exists git
+if [ -x $GITSVN ]; then
+   echo OK git svn command installed
+else
+   echo NOT OK git svn command missing -- will try to install
+   sudo apt-get install $GITSVNPKG
+fi
+cmd_exists $GITSVN
+
 install_file_from /etc/bash_completion bash-completion
 file_exists_from_package /etc/bash_completion.d/git bash-completion
 
@@ -483,6 +495,7 @@ file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
 file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
 file_has_text $FILE "DateFormatShort=%Y-%m-%d"
 file_has_text $FILE "BinaryUnitDialect=2"   # byte units kB, MB etc
+file_has_text $FILE "UseSystemBell=true"
 
 file_has_text .kde/share/config/plasmarc "name=oxygen"
 
@@ -496,7 +509,7 @@ file_has_text $FILE "defaultLanguage=en_GB"
 FILE=.kde/share/config/kwinrc
 file_has_text $FILE "kwin4_effect_cubeEnabled=false"
 file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
-file_has_text $FILE "kwin4_effect_magnifierEnabled=true"
+file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
 file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
 file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
 file_has_text $FILE "kwin4_effect_snaphelperEnabled=true"
@@ -506,5 +519,22 @@ file_has_text $FILE "kwin4_effect_zoomEnabled=true"
 
 #FILE=.kde/share/config/kwinrc
 #file_has_text $FILE ""
+
+# Accessibility
+FILE=.kde/share/config/kaccessrc
+file_has_text $FILE "SystemBell=true"
+file_has_text $FILE "VisibleBell=true"
+file_has_text $FILE "VisibleBellInvert=false"
+file_has_text $FILE "AccessXBeep=true"
+file_has_text $FILE "BounceKeysRejectBeep=true"
+file_has_text $FILE "GestureConfirmation=true"
+file_has_text $FILE "SlowKeysAcceptBeep=true"
+file_has_text $FILE "SlowKeysPressBeep=true"
+file_has_text $FILE "SlowKeysRejectBeep=true"
+file_has_text $FILE "StickyKeysBeep=true"
+file_has_text $FILE "StickyKeysLatch=true"
+file_has_text $FILE "ToggleKeysBeep=true"
+file_has_text $FILE "kNotifyAccessX=true"
+file_has_text $FILE "kNotifyModifiers=true"
 
 popd
