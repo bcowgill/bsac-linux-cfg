@@ -11,7 +11,7 @@ ULIMITFILES=8196
 EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
-INSTALL="vim curl colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
+INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
 INSTALLFROM="wcd.exec:wcd" # not used, (YET) just quick reference
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
@@ -22,6 +22,10 @@ NODEPKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node
 CHARLES="charles"
 CHARLESPKG=charles-proxy
 CHARLESLICENSE="Ontology-Partners Ltd:c7f341142e860a8354"
+
+VIRTUALBOX="VirtualBox"
+VIRTUALBOXCMDS="dkms VirtualBox"
+VIRTUALBOXPKG="dkms virtualbox-4.3"
 
 DIFFMERGE=diffmerge
 DIFFMERGEPKG=diffmerge_4.2.0.697.stable_amd64.deb
@@ -38,9 +42,8 @@ THUNDER=ryu9c8b3.default
 SKYPE=skype
 SKYPEPKG="skype skype-bin"
 
-COMMANDS="apt-file $NODE svn $CHARLES $SKYPE"
-PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG"
-# flashplutin installer
+COMMANDS="apt-file $NODE svn $CHARLES $SKYPE $VIRTUALBOXCMDS"
+PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG $VIRTUALBOXPKG"
 
 function check_linux {
    local version
@@ -266,6 +269,21 @@ function file_has_text {
    fi
 }
 
+function file_must_not_have_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file"
+   if grep "$text" "$file" > /dev/null; then
+      echo NOT OK file should not have text: "$file" "$text" [$message]
+      return 1
+   else
+      echo OK file does not have text: "$file" "$text"
+      return 0
+   fi
+}
+
 function file_contains_text {
    local file text message
    file="$1"
@@ -276,7 +294,7 @@ function file_contains_text {
       echo OK file contains regex: "$file" "$text"
       return 0
    else
-      echo NOT OK file missing regex: "$file" "$text" [$message]
+      echo NOT OK file missing regex: egrep \"$text\" \"$file\" [$message]
       return 1
    fi
 }
@@ -286,6 +304,34 @@ function apt_has_source {
    source="$1"
    message="$2"
    file_has_text /etc/apt/sources.list "$source" "$message" || (sudo add-apt-repository "$source" && touch go.sudo)
+}
+
+function apt_must_not_have_source {
+   local source message
+   source="$1"
+   message="$2"
+   file_must_not_have_text /etc/apt/sources.list "$source" "$message"
+}
+
+function apt_has_key {
+   local key url message
+   key="$1"
+   url="$2"
+   message="$3"
+   if sudo apt-key list | grep "$key"; then
+      echo OK apt-key has $key
+      return 0
+   else
+      echo NOT OK apt-key missing $key trying to install [$message]
+      wget -q "$url" -O- | sudo apt-key add -
+      if sudo apt-key list | grep "$key"; then
+         echo OK apt-key installed $key
+         return 0
+      else
+         echo NOT OK apt-key could not install $key
+         return 1
+      fi
+   fi
 }
 
 function crontab_has_command {
@@ -344,15 +390,23 @@ file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
 
+cmd_exists wget
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
 # update apt sources list with needed values to install some more complicated programs
 touch go.sudo; rm go.sudo
-apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "config for charles-proxy missing"
+apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy missing"
+apt_must_not_have_source "deb-src http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy wrong"
 [ -f go.sudo ] && (wget -q -O - http://www.charlesproxy.com/packages/apt/PublicKey | sudo apt-key add - )
-apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
-apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "config for svn update missing"
-apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "config for skype missing"
+apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
+apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
+apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
+
+apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox missing"
+apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox wrong"
+apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
+cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOXPKG)
+cmd_exists $VIRTUALBOX 
 
 [ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLESLICENSE)
 file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
@@ -384,7 +438,7 @@ cmd_exists $DIFFMERGE "sourcegear diffmerge will try to get" || (wget --output-d
 cmd_exists $DIFFMERGE "sourcegear diffmerge"
 
 install_commands "$INSTALL"
-install_commands_from "$INSTALLFROM"ver@default:default,com.ontologypartners.http@default:default,com.ontologypartners.jdbc.provider@default:default,com.ontologypartners.jena@default:default,com.ontologypartners.licencecollector@default:default,co
+install_commands_from "$INSTALLFROM"
 install_command_from_packages node "$NODEPKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
@@ -451,19 +505,24 @@ FILE=".thunderbird/$THUNDER/prefs.js"
 file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
 file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
 file_has_text $FILE "ProFontWindows"
-file_contains_text $FILE "browser.anchor_color., .#99FFFF"
-file_contains_text $FILE "browser.display.background_color., .#666666"
-file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
-file_contains_text $FILE "browser.display.use_document_colors., false"
-file_contains_text $FILE "browser.visited_color., .#FFCCCC"
-file_contains_text $FILE "mail.citation_color., .#FFCC66"
+file_contains_text $FILE "browser.anchor_color., .#66FFFF"
+#file_contains_text $FILE "browser.anchor_color., .#99FFFF"
+file_contains_text $FILE "browser.display.background_color., .#000000"
+#file_contains_text $FILE "browser.display.background_color., .#666666"
+file_contains_text $FILE "browser.display.foreground_color., .#FFFF33"
+#file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
+#file_contains_text $FILE "browser.display.use_document_colors., false"
+file_contains_text $FILE "browser.visited_color., .#FF99FF"
+#file_contains_text $FILE "browser.visited_color., .#FFCCCC"
+file_contains_text $FILE "mail.citation_color., .#CCCCCC"
+#file_contains_text $FILE "mail.citation_color., .#FFCC66"
 file_contains_text $FILE "mailnews.tags..label1.color., .#FF0000"
 file_contains_text $FILE "mailnews.tags..label2.color., .#FF9900"
 file_contains_text $FILE "mailnews.tags..label3.color., .#009900"
 file_contains_text $FILE "mailnews.tags..label4.color., .#3333FF"
 file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
-file_contains_text $FILE "msgcompose.background.color., .#333333"
-file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
+#file_contains_text $FILE "msgcompose.background.color., .#333333"
+#file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
 
 # System Settings
 FILE=.kde/share/config/kcminputrc
@@ -538,3 +597,5 @@ file_has_text $FILE "kNotifyAccessX=true"
 file_has_text $FILE "kNotifyModifiers=true"
 
 popd
+
+echo OK all checks complete
