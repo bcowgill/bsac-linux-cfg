@@ -29,7 +29,7 @@ if which sgdm.exe >> /dev/null; then
    alias vdiff='sgdm.exe'
 else
    if which diffmerge >> /dev/null; then
-      alias vdiff='diffmerge'
+      alias vdiff='diffmerge --nosplash'
    else
       alias vdiff='vimdiff'
    fi
