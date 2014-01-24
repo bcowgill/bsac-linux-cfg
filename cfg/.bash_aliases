@@ -23,6 +23,7 @@ alias ........='cd ../../../../../../..'
 alias cdiff='colordiff'
 
 # use source gear diffmerge or vimdiff as a visual diff program
+alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
 if which sgdm.exe >> /dev/null; then
    alias vdiff='sgdm.exe'
 else
