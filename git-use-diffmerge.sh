@@ -3,6 +3,7 @@
 # git difftool --no-prompt filenane
 # or
 # git mergetool --no-prompt filename
+# https://sourcegear.com/diffmerge/webhelp/sec__git__linux.html
 
 if [ "x$1" == "xfalse" ]; then
    git config --global --unset diff.tool
