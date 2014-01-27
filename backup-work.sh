@@ -7,7 +7,7 @@ HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
    .charles.config .charles \
    .kde/Autostart .kde/env .kde/share .local/share \
    .config/autostart .config/TrollTech.conf \
-   .config/VirtualBox \
+   .config/VirtualBox VirtualBox* \
    .Ontology_Modeller_Workspace \
    .thunderbird/$THUNDER/prefs.js .thunderbird/$THUNDER/session.json \
    .mozilla/firefox/$MOZZ/prefs.js .mozilla/firefox/$MOZZ/sessionstore.js .mozilla/firefox/$MOZZ/search.json .mozilla/firefox/$MOZZ/bookmarkbackups \
@@ -31,7 +31,7 @@ popd
 pushd ~/workspace
 tar cvzf backup/ontology-notes.tgz *.txt
 tar cvzf backup/ontology-bin.tgz bin/
-tar cvzf backup/work-visualise.tgz play/ charles-config/
+tar cvzf backup/work-visualise.tgz play/ charles-config/ projects/lib-cca
 
 cp ~/Documents/PhoenixYard*.pdf $DROP
 cp backup/ontology-notes.tgz $DROP
