@@ -12,12 +12,13 @@ EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
-INSTALLFROM="wcd.exec:wcd" # not used, (YET) just quick reference
+INSTALLFROM="wcd.exec:wcd"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="node npm"
 NODEPKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
+INSTALLNPMFROM="uglifyjs:uglify-js@1"
 
 CHARLES="charles"
 CHARLESPKG=charles-proxy
@@ -215,6 +216,14 @@ function install_command_from {
    cmd_exists "$command"
 }
 
+function install_npm_command_from {
+   local command package
+   command="$1"
+   package="$2"
+   cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
+   cmd_exists "$command"
+}
+
 function install_command_from_packages {
    local command packages
    command="$1"
@@ -251,6 +260,17 @@ function install_commands_from {
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
       install_command_from $cmd $package
+   done
+}
+
+function install_npm_commands_from {
+   local list
+   list="$1"
+   for cmd_pkg in $list
+   do
+      # split the cmd:pkg string into vars
+      IFS=: read cmd package <<< $cmd_pkg
+      install_npm_command_from $cmd $package
    done
 }
 
@@ -424,6 +444,7 @@ apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "a
 
 apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox missing"
 apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox wrong"
+echo Checking for apt-keys...
 apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
 cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOXPKG)
 cmd_exists $VIRTUALBOX 
@@ -461,6 +482,9 @@ install_commands "$INSTALL"
 install_commands_from "$INSTALLFROM"
 install_command_from_packages node "$NODEPKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
+
+# uglify does not install, despite what it says on github
+#install_npm_commands_from "$INSTALLNPMFROM" 
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
