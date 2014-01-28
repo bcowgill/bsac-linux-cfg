@@ -616,6 +616,11 @@ file_has_text $FILE "ToggleKeysBeep=true"
 file_has_text $FILE "kNotifyAccessX=true"
 file_has_text $FILE "kNotifyModifiers=true"
 
+# Startup
+FILE=.kde/share/config/systemsettingsrc
+file_has_text $FILE "ksysguard"
+file_has_text $FILE "dropboxd"
+
 popd
 
 echo OK all checks complete
