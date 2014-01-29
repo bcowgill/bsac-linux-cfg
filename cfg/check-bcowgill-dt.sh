@@ -645,6 +645,12 @@ FILE=.kde/share/config/systemsettingsrc
 file_has_text $FILE "ksysguard"
 file_has_text $FILE "dropboxd"
 
+# Default Applications
+FILE=.kde/share/config/emaildefaults
+file_contains_text $FILE "EmailClient..e.=thunderbird"
+FILE=.kde/share/config/kdeglobals
+file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
+
 popd
 
 echo OK all checks complete
