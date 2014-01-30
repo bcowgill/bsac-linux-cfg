@@ -21,6 +21,7 @@ alias ........='cd ../../../../../../..'
 
 # default options for some commands
 alias cdiff='colordiff'
+alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 
 # use source gear diffmerge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
