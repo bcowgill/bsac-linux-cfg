@@ -9,6 +9,7 @@ alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
 alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
+alias prompter='source `which toggle-prompt.sh`'
 
 # go up the dir tree quickly
 alias ..='cd ..'
