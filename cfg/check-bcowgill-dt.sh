@@ -517,7 +517,8 @@ file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config"
 file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
 
 FILE=.kde/share/config/kioslaverc
-file_has_text $FILE "httpProxy=localhost 58008" "system proxy config"
+file_has_text $FILE "ProxyType=1" "system proxy config"
+file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
 
 # Eclipse configuration
 file_exists eclipse/eclipse "Eclipse program"
