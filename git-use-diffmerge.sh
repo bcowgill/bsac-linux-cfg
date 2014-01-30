@@ -18,6 +18,11 @@ else
    git config --global merge.tool diffmerge
    git config --global mergetool.diffmerge.trustExitCode true
    git config --global mergetool.diffmerge.cmd "/usr/bin/diffmerge --nosplash --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
+   if which sgdm.exe; then
+      echo sgdm.exe
+      git config --global difftool.diffmerge.cmd "git-diffmerge.sh \"\$LOCAL\" \"\$REMOTE\""
+      git config --global mergetool.diffmerge.cmd "git-diffmerge-merge.sh --nosplash --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
+   fi
 fi
 git config --global --list
 
