@@ -7,8 +7,11 @@ rm -rf /tmp/ontology/output/ /tmp/ontology/system/
 mkdir /tmp/ontology/output/ /tmp/ontology/system
 find /tmp/ontology/
 ps -ef | grep 8085
+touch /tmp/ontology/godel-clean.timestamp
 echo Go ahead and build Godel clean now in Eclipse then come back here to apply config fragments
 read WAIT
 apply-config-localhost.sh
 echo Go ahead and deploy your resources to the runtime now.
+echo To see what files changed in the build:
+echo find ~/workspace/trunk -newer /tmp/ontology/godel-clean.timestamp
 
