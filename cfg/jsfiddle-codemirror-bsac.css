@@ -1,4 +1,6 @@
 /* BASICS */
+// Text editor stylesheet for jsfiddle.
+// Map to url http://jsfiddle.net/js/codemirror/lib/codemirror.css?jobofferinsidebar
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
@@ -62,6 +64,7 @@
 
 /* DEFAULT THEME */
 
+/* BSAC
 .cm-s-default .cm-keyword {color: #708;}
 .cm-s-default .cm-atom {color: #219;}
 .cm-s-default .cm-number {color: #164;}
@@ -85,6 +88,7 @@
 .cm-s-default .cm-quote {color: #090;}
 .cm-s-default .cm-hr {color: #999;}
 .cm-s-default .cm-link {color: #00c;}
+*/
 
 .cm-negative {color: #d44;}
 .cm-positive {color: #292;}
@@ -167,12 +171,16 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .CodeMirror-lines {
   cursor: text;
 }
+
+// BSAC grabbing the font from the pastel-on-dark theme but leaving the rest as the matrix
+
 .CodeMirror pre {
   /* Reset some styles that the rest of the page might have set */
   -moz-border-radius: 0; -webkit-border-radius: 0; -o-border-radius: 0; border-radius: 0;
   border-width: 0;
   background: transparent;
-  font-family: inherit;
+  font-family: "consolas", "Monaco", "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+//  font-family: inherit;
   font-size: inherit;
   margin: 0;
   white-space: pre;
@@ -183,6 +191,26 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   position: relative;
   overflow: visible;
 }
+
+// BSAC
+.CodeMirror span {
+  font-family: "consolas", "Monaco", "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+}
+
+// BSAC
+.CodeMirror {
+   border: 1px solid red;
+        color: #00FF00;
+        background: #000000;
+//        background: #2c2827;
+//        color: #8F938F;
+        line-height: 1.2;
+        font-family: "consolas", "Monaco", "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+        font-size: 14px;
+}
+
+
+
 .CodeMirror-wrap pre {
   word-wrap: break-word;
   white-space: pre-wrap;
@@ -247,18 +275,20 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 
 /* CUSTOM SETTINGS FOR JSFIDDLE */
 
+// BSAC
 .CodeMirror {
-  line-height: 1.5em;
-  font-size: .85em;
-  font-family: "Monaco", "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+//  line-height: 1.5em;
+//  font-size: .85em;
+//  font-family: "Monaco", "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
   /* Necessary so the scrollbar can be absolutely positioned within the wrapper on Lion. */
   position: relative;
   /* This prevents unwanted scrollbars from showing up on the body and wrapper in IE. */
   overflow: hidden;
   height: 100%;
   box-shadow: inset 0 1px 3px #E4E4E4;
-  background: #fff;
+//  background: #fff;
 }
+
 
 .CodeMirror-gutter-elt {
   z-index: 20;
@@ -335,10 +365,56 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   background: #e8f2ff !important;
 }
 
+// BSAC
 div.CodeMirror span.CodeMirror-matchingbracket {
-  color: #67d73e;
+   color: #ff0;
+   font-size: 1.2em;
+//color: #67d73e;
 }
 
 div.CodeMirror span.CodeMirror-nonmatchingbracket {
   color: #f22;
 }
+
+// BSAC
+// grabbing the font from the pastel-on-dark theme but leaving the rest as the matrix
+.CodeMirror {
+        background: #000000;
+        color: #00FF00;
+//        background: #2c2827;
+//        color: #8F938F;
+        line-height: 1.5;
+        font-family: "consolas" "Monaco", "Andale Mono", "Lucida Console", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace;
+        font-size: 14px;
+}
+
+.cm-s-default div.CodeMirror-selected {
+//   background: #2D2D2D !important;
+   background: #FF0 !important;
+   opacity: 0.2;
+}
+.cm-s-default .CodeMirror-gutters { background: #060; border-right: 2px solid #00FF00; }
+.cm-s-default .CodeMirror-linenumber { color: #FFFFFF; }
+.cm-s-default .CodeMirror-cursor { border-left: 1px solid #00FF00 !important; }
+
+.cm-s-default span.cm-keyword {color: #008803; font-weight: bold;}
+.cm-s-default span.cm-atom {color: #3FF;}
+.cm-s-default span.cm-number {color: #FFB94F;}
+.cm-s-default span.cm-def {color: #99C;}
+.cm-s-default span.cm-variable {color: #F6C;}
+.cm-s-default span.cm-variable-2 {color: #C6F;}
+.cm-s-default span.cm-variable-3 {color: #96F;}
+.cm-s-default span.cm-property {color: #62FFA0;}
+.cm-s-default span.cm-operator {color: #999}
+.cm-s-default span.cm-comment {color: #CCCCCC;}
+.cm-s-default span.cm-string {color: #39C;}
+.cm-s-default span.cm-meta {color: #C9F;}
+.cm-s-default span.cm-qualifier {color: #FFF700;}
+.cm-s-default span.cm-builtin {color: #30a;}
+.cm-s-default span.cm-bracket {color: #cc7;}
+.cm-s-default span.cm-tag {color: #FFBD40;}
+.cm-s-default span.cm-attribute {color: #FFF700;}
+.cm-s-default span.cm-error {color: #FF0000;}
+
+.cm-s-default .CodeMirror-activeline-background {background: #040;}
+
