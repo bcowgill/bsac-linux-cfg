@@ -32,6 +32,10 @@ DIFFMERGE=diffmerge
 DIFFMERGEPKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGEURL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGEPKG
 
+SUBLIME=subl
+SUBLIMEPKG=sublime-text_build-3047_amd64.deb
+SUBLIMEURL=http://c758482.r82.cf2.rackcdn.com/$SUBLIMEPKG
+
 SVNVER="1.7.9"
 SUBVERSIONPKG="subversion libsvn-java"
 
@@ -482,6 +486,9 @@ install_commands "$INSTALL"
 install_commands_from "$INSTALLFROM"
 install_command_from_packages node "$NODEPKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
+
+cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/Downloads/$SUBLIMEPKG $SUBLIMEURL && sudo dpkg --install $HOME/Downloads/$SUBLIMEPKG)
+cmd_exists $SUBLIME "sublime editor"
 
 # uglify does not install, despite what it says on github
 #install_npm_commands_from "$INSTALLNPMFROM" 
