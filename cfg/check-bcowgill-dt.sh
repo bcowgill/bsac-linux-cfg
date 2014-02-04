@@ -616,20 +616,9 @@ file_has_text $FILE "backgroundCheckerEnabled=true"
 file_has_text $FILE "checkerEnabledByDefault=true"
 file_has_text $FILE "defaultLanguage=en_GB"
 
-# KDE Desktop Effects
-FILE=.kde/share/config/kwinrc
-file_has_text $FILE "kwin4_effect_cubeEnabled=false"
-file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
-file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
-file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
-file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
-file_has_text $FILE "kwin4_effect_snaphelperEnabled=true"
-file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
-file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
-file_has_text $FILE "kwin4_effect_zoomEnabled=true"
-
-#FILE=.kde/share/config/kwinrc
-#file_has_text $FILE ""
+# Sourcegear Diffmerge colors
+FILE=".SourceGear DiffMerge"
+file_has_text "$FILE" "bg=0"
 
 # Accessibility
 FILE=.kde/share/config/kaccessrc
@@ -658,6 +647,21 @@ FILE=.kde/share/config/emaildefaults
 file_contains_text $FILE "EmailClient..e.=thunderbird"
 FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
+
+# KDE Desktop Effects
+FILE=.kde/share/config/kwinrc
+file_has_text $FILE "kwin4_effect_cubeEnabled=false"
+file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
+file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
+file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
+file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
+file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
+file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
+file_has_text $FILE "kwin4_effect_zoomEnabled=true"
+file_has_text $FILE "kwin4_effect_snaphelperEnabled=true"
+
+#FILE=.kde/share/config/kwinrc
+#file_has_text $FILE ""
 
 popd
 
