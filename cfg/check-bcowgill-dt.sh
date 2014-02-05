@@ -47,6 +47,8 @@ THUNDER=ryu9c8b3.default
 SKYPE=skype
 SKYPEPKG="skype skype-bin"
 
+INIDIR=check-iniline
+
 COMMANDS="apt-file $NODE svn $CHARLES $SKYPE $VIRTUALBOXCMDS"
 PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG $VIRTUALBOXPKG"
 
@@ -293,6 +295,17 @@ function file_has_text {
    fi
 }
 
+function ini_file_has_text {
+   local dir file text message
+   dir=`dirname "$1"`
+   file=`basename "$1"`
+   text="$2"
+   message="$3"
+   file_exists "$dir/$file"
+   file_exists "$INIDIR/$file" || (ini-inline.pl "$dir/$file" > "$INIDIR/$file")
+   file_has_text "$INIDIR/$file" "$text" "$message"
+}
+
 function file_must_not_have_text {
    local file text message
    file="$1"
@@ -406,6 +419,8 @@ dir_linked_to jdk workspace/jdk1.7.0_21
 dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
+rm -rf $INIDIR
+make_dir_exist $INIDIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 
@@ -618,7 +633,39 @@ file_has_text $FILE "defaultLanguage=en_GB"
 
 # Sourcegear Diffmerge colors
 FILE=".SourceGear DiffMerge"
-file_has_text "$FILE" "bg=0"
+cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
+ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
+ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
+ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
+ini_file_has_text "$FILE" "/File/Color/Caret/fg=16777215"
+ini_file_has_text "$FILE" "/File/Color/Conflict/bg=4194304"
+ini_file_has_text "$FILE" "/File/Color/Conflict/fg=16744576"
+ini_file_has_text "$FILE" "/File/Color/Conflict/IL/bg=4721920"
+ini_file_has_text "$FILE" "/File/Color/EolUnknown/fg=1973790"
+ini_file_has_text "$FILE" "/File/Color/LineNr/bg=0"
+ini_file_has_text "$FILE" "/File/Color/NoneEqual/bg=4194304"
+ini_file_has_text "$FILE" "/File/Color/NoneEqual/fg=16711680"
+ini_file_has_text "$FILE" "/File/Color/NoneEqual/IL/bg=4194304"
+ini_file_has_text "$FILE" "/File/Color/Omit/bg=0"
+ini_file_has_text "$FILE" "/File/Color/Omit/fg=3552822"
+ini_file_has_text "$FILE" "/File/Color/Selection/fg=16776960"
+ini_file_has_text "$FILE" "/File/Color/SubEqual/bg=16384"
+ini_file_has_text "$FILE" "/File/Color/SubEqual/fg=65280"
+ini_file_has_text "$FILE" "/File/Color/SubEqual/IL/bg=32768"
+ini_file_has_text "$FILE" "/File/Color/SubNotEqual/bg=64"
+ini_file_has_text "$FILE" "/File/Color/SubNotEqual/fg=65535"
+ini_file_has_text "$FILE" "/File/Color/SubNotEqual/IL/bg=64"
+ini_file_has_text "$FILE" "/File/Color/Void/bg=0"
+ini_file_has_text "$FILE" "/File/Color/Void/fg=2631720"
+ini_file_has_text "$FILE" "/File/Color/Window/bg=0"
+ini_file_has_text "$FILE" "/Folder/Color/Different/bg=0"
+ini_file_has_text "$FILE" "/Folder/Color/Equal/bg=0"
+ini_file_has_text "$FILE" "/Folder/Color/Equal/fg=16777215"
+ini_file_has_text "$FILE" "/Folder/Color/Equivalent/bg=0"
+ini_file_has_text "$FILE" "/Folder/Color/Error/bg=1"
+ini_file_has_text "$FILE" "/Folder/Color/Folders/bg=0"
+ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
+ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
 
 # Accessibility
 FILE=.kde/share/config/kaccessrc
