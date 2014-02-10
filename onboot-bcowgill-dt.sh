@@ -7,3 +7,5 @@ popd
 pushd ~/workspace/play/d3/WebContent/dataflow
 webserver.sh 9898 > /tmp/bcowgill-webserver-9898.log 2>&1 &
 popd
+echo You need to start Charles before the browsers!
+
