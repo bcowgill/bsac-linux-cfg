@@ -695,6 +695,12 @@ file_contains_text $FILE "EmailClient..e.=thunderbird"
 FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
+# sublime configuration
+FILE=.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
+file_has_text $FILE "ProFontWindows"
+file_contains_text $FILE "font_size.: 16"
+
 # KDE Desktop Effects
 FILE=.kde/share/config/kwinrc
 file_has_text $FILE "kwin4_effect_cubeEnabled=false"
