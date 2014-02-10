@@ -3,6 +3,7 @@
 pushd ~/modeller
 truncate --size modeller.log
 ./modeller > /dev/null 2>&1 &
-tailmodeller.sh
+#tailmodeller.sh
+tail -f modeller.log | show-java-log-errors.pl 
 popd
 
