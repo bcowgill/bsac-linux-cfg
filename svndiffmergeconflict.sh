@@ -1,6 +1,9 @@
 #!/bin/bash
 # svn merge conflicts with diffmerge
 # http://support.sourcegear.com/viewtopic.php?f=33&t=11661
+# export SVN_MERGE=$HOME/bin/svndiffmergeconflict.sh
+# or add a line to ~/.subversion/config
+# merge-tool-cmd = $HOME/bin/svndiffmergeconflict.sh
 
 # svn diff --diff-cmd=svndiffmerge.sh filename
 # Select L when you see the message below:

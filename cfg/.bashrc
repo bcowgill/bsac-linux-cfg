@@ -144,6 +144,9 @@ xterm*|rxvt*)
     ;;
 esac
 
+# BSAC svn configuration for merging with diffmerge
+export SVN_MERGE=$HOME/bin/svndiffmergeconflict.sh
+
 #BSAC match cygwin put functions in separate sourced file
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
