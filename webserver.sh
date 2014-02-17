@@ -12,9 +12,11 @@ if [ "x$DOCROOT" == "x" ]; then
    DOCROOT=.
 fi
 
+LOG=/tmp/bcowgill-webserver-$PORT.log
 pushd $DOCROOT
-echo Serving content from `pwd` on http://localhost:$PORT
-python -m SimpleHTTPServer $PORT &
+echo Serving content from `pwd` on http://localhost:$PORT logging to $LOG
+rm $LOG
+python -m SimpleHTTPServer $PORT > $LOG 2>&1 &
 # For python 3.0+
 #python -m http.server $PORT &
 ps -ef | grep python | grep SimpleHTTPServer
