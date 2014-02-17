@@ -147,6 +147,10 @@ esac
 # BSAC svn configuration for merging with diffmerge
 export SVN_MERGE=$HOME/bin/svndiffmergeconflict.sh
 
+# BSAC java setup for maven 3 builds
+export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_21
+export M2_HOME=
+
 #BSAC match cygwin put functions in separate sourced file
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
