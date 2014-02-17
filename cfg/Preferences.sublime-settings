@@ -1,0 +1,28 @@
+{
+	"auto_complete_commit_on_tab": true,
+	"bold_folder_labels": true,
+	"caret_style": "phase",
+	"color_scheme": "Packages/Color Scheme - Default/Cobalt.tmTheme",
+	"dictionary": "Packages/Language - English/en_US.dic",
+	"draw_white_space": "all",
+	"font_face": "ProFontWindows",
+	"font_size": 16,
+	"highlight_line": true,
+	"highlight_modified_tabs": false,
+	"indent_guide_options":
+	[
+		"draw_active"
+	],
+	"match_brackets_angle": true,
+	"rulers":
+	[
+		78
+	],
+	"scroll_past_end": false,
+	"scroll_speed": 10,
+	"spell_check": true,
+	"tab_size": 4,
+	"translate_tabs_to_spaces": false,
+	"trim_trailing_white_space_on_save": true,
+	"word_separators": "./\\()\"':,.;<>~!@#$%^&*|+=[]{}`~?"
+}

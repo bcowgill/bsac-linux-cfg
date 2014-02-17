@@ -12,7 +12,7 @@ EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
-INSTALLFROM="wcd.exec:wcd"
+INSTALLFROM="wcd.exec:wcd mvn:maven"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
@@ -38,6 +38,8 @@ SUBLIMEURL=http://c758482.r82.cf2.rackcdn.com/$SUBLIMEPKG
 
 SVNVER="1.7.9"
 SUBVERSIONPKG="subversion libsvn-java"
+
+MVNVER="3.0.4"
 
 GITSVN=/usr/lib/git-core/git-svn
 GITSVNPKG="git-svn"
@@ -482,6 +484,26 @@ else
    exit 1
 fi
 
+cmd_exists mvn
+if mvn --version | grep "Apache Maven " | grep $MVNVER; then
+   echo OK mvn command version correct
+else
+   echo NOT OK mvn command version incorrect
+   exit 1
+fi
+if [ "x$JAVA_HOME" == "x/usr/lib/jvm/jdk1.7.0_21" ]; then
+   echo OK JAVA_HOME set correctly
+else
+   echo NOT OK JAVA_HOME is incorrect $JAVA_HOME
+   exit 1
+fi
+if [ "x$M2_HOME" == "x" ]; then
+   echo OK M2_HOME set correctly
+else
+   echo NOT OK M2_HOME is incorrect $M2_HOME
+   exit 1
+fi
+
 cmd_exists git
 if [ -x $GITSVN ]; then
    echo OK git svn command installed
@@ -697,9 +719,13 @@ file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
 # sublime configuration
 FILE=.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
 file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
 file_has_text $FILE "ProFontWindows"
 file_contains_text $FILE "font_size.: 16"
+
+FILE=.config/sublime-text-3/Packages/User/Default.sublime-theme
+file_linked_to $FILE $HOME/bin/cfg/Default.sublime-theme
 
 # KDE Desktop Effects
 FILE=.kde/share/config/kwinrc
