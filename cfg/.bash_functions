@@ -15,11 +15,11 @@ cds () {
 
 #   definition of the enhanced cd command
 cd () {
-    if [ -d $1 ]; then
-       builtin cd $1
+    if [ -d "$1" ]; then
+       builtin cd "$1"
     else
        builtin cd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
-           iselect -a -Q $1 -n "chdir" \
+           iselect -a -Q "$1" -n "chdir" \
                    -t "Change Directory to..."`
     fi
     #PS1="\u@\h:$PWD\n:> "
