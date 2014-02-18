@@ -17,8 +17,10 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="node npm"
-NODEPKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
-INSTALLNPMFROM="uglifyjs:uglify-js@1"
+NODE_VER="v0.10.25"
+NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
+INSTALL_NPM_FROM=""
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli"
 
 CHARLES="charles"
 CHARLESPKG=charles-proxy
@@ -33,6 +35,7 @@ DIFFMERGEPKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGEURL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGEPKG
 
 SUBLIME=subl
+SUBLCFG=.config/sublime-text-3/Packages
 SUBLIMEPKG=sublime-text_build-3047_amd64.deb
 SUBLIMEURL=http://c758482.r82.cf2.rackcdn.com/$SUBLIMEPKG
 
@@ -52,7 +55,7 @@ SKYPEPKG="skype skype-bin"
 INIDIR=check-iniline
 
 COMMANDS="apt-file $NODE svn $CHARLES $SKYPE $VIRTUALBOXCMDS"
-PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODEPKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG $VIRTUALBOXPKG"
+PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODE_PKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG $VIRTUALBOXPKG"
 
 function check_linux {
    local version
@@ -232,6 +235,14 @@ function install_npm_command_from {
    cmd_exists "$command"
 }
 
+function install_npm_global_command_from {
+   local command package
+   command="$1"
+   package="$2"
+   cmd_exists "$command" > /dev/null || (echo want to install global $command from npm $package; sudo npm install -g "$package")
+   cmd_exists "$command"
+}
+
 function install_command_from_packages {
    local command packages
    command="$1"
@@ -279,6 +290,17 @@ function install_npm_commands_from {
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
       install_npm_command_from $cmd $package
+   done
+}
+
+function install_npm_global_commands_from {
+   local list
+   list="$1"
+   for cmd_pkg in $list
+   do
+      # split the cmd:pkg string into vars
+      IFS=: read cmd package <<< $cmd_pkg
+      install_npm_global_command_from $cmd $package
    done
 }
 
@@ -521,14 +543,28 @@ cmd_exists $DIFFMERGE "sourcegear diffmerge"
 
 install_commands "$INSTALL"
 install_commands_from "$INSTALLFROM"
-install_command_from_packages node "$NODEPKG"
+install_command_from_packages node "$NODE_PKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
 cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/Downloads/$SUBLIMEPKG $SUBLIMEURL && sudo dpkg --install $HOME/Downloads/$SUBLIMEPKG)
 cmd_exists $SUBLIME "sublime editor"
 
-# uglify does not install, despite what it says on github
-#install_npm_commands_from "$INSTALLNPMFROM" 
+if node --version | grep $NODE_VER; then
+   echo OK node command version correct
+else
+   echo NOT OK node command version incorrect. trying to update
+   #https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
+   sudo apt-get update
+   sudo apt-get install -y python-software-properties python g++ make
+   sudo add-apt-repository ppa:chris-lea/node.js
+   sudo apt-get update
+   sudo apt-get install nodejs
+   exit 1
+fi
+
+npm config set registry https://registry.npmjs.org/
+#install_npm_commands_from "$INSTALL_NPM_FROM" 
+install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -718,14 +754,17 @@ FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
 # sublime configuration
-FILE=.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+FILE=$SUBLCFG/User/Preferences.sublime-settings
 file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
 file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
 file_has_text $FILE "ProFontWindows"
 file_contains_text $FILE "font_size.: 16"
 
-FILE=.config/sublime-text-3/Packages/User/Default.sublime-theme
-file_linked_to $FILE $HOME/bin/cfg/Default.sublime-theme
+DIR="$SUBLCFG/Theme - Default"
+FILE="$DIR/Default.sublime-theme"
+dir_exists "$DIR" "sublime theme override dir"
+file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
+file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
 
 # KDE Desktop Effects
 FILE=.kde/share/config/kwinrc
