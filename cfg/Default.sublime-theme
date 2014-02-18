@@ -235,7 +235,7 @@
     },
     {
         "class": "tool_tip_control",
-        "layer0.texture": "Theme - Default/tool_tip_background.png",
+        "layer0.texture": "Theme - Default/bsac_dark_tool_tip_background.png",
         "layer0.inner_margin": [2, 2],
         "layer0.opacity": 1.0,
         "content_margin": [3, 3]
