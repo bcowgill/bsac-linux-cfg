@@ -58,6 +58,9 @@ INIDIR=check-iniline
 COMMANDS="apt-file $NODE svn $CHARLES $SKYPE $VIRTUALBOXCMDS"
 PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODE_PKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG $VIRTUALBOXPKG"
 
+#============================================================================
+# files and directories
+
 function check_linux {
    local version
    version="$1"
@@ -87,8 +90,15 @@ function make_dir_exist {
    local dir message
    dir="$1"
    message="$2"
-   dir_exists "$dir" "$message" || mkdir -p "$dir"
+   dir_exists "$dir" > /dev/null || mkdir -p "$dir"
    dir_exists "$dir" "$message"
+}
+
+function remove_file {
+   local file
+   if [ -f "$file" ]; then
+      rm "$file"
+   fi
 }
 
 function file_exists {
@@ -195,6 +205,17 @@ function file_exists_from_package {
    file_exists "$file" "sudo apt-get install $package"
 }
 
+function install_file_from {
+   local file package
+   file="$1"
+   package="$2"
+   file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
+   file_exists "$file"
+}
+
+#============================================================================
+# commands and packages
+
 function cmd_exists {
    local cmd messagenode npm
    cmd="$1"
@@ -231,62 +252,12 @@ function install_command_from {
    cmd_exists "$command"
 }
 
-function install_npm_command_from {
-   local command package
-   command="$1"
-   package="$2"
-   if [ -z "$package" ]; then
-      package="$command"
-   fi
-   cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
-   cmd_exists "$command"
-}
-
-function install_npm_global_command_from {
-   local command package
-   command="$1"
-   package="$2"
-   if [ -z "$package" ]; then
-      package="$command"
-   fi
-   cmd_exists "$command" > /dev/null || (echo want to install global $command from npm $package; sudo npm install -g "$package")
-   cmd_exists "$command"
-}
-
-function install_grunt_template_from {
-   local template package dir
-   template="$1"
-   package="$2"
-   dir="$HOME/.grunt-init/$template"
-   dir_exists "$dir" > /dev/null || (echo want to install grunt template $template from $package; git clone https://github.com/gruntjs/$package "$dir")
-   dir_exists "$dir"
-}
-
-function install_grunt_templates_from {
-   local list tmp_pkg template package
-   list="$1"
-   for tmp_pkg in $list
-   do
-      # split the template:pkg string into vars
-      IFS=: read template package <<< $template_pkg
-      install_grunt_template_from template package
-   done
-}
-
 function install_command_from_packages {
    local command packages
    command="$1"
    packages="$2"
    cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get install $packages)
    cmd_exists "$command"
-}
-
-function install_file_from {
-   local file package
-   file="$1"
-   package="$2"
-   file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
-   file_exists "$file"
 }
 
 function install_commands {
@@ -312,6 +283,31 @@ function install_commands_from {
    done
 }
 
+function install_commands_from {
+   local list cmd_pkg cmd package
+   list="$1"
+   for cmd_pkg in $list
+   do
+      # split the cmd:pkg string into vars
+      IFS=: read cmd package <<< $cmd_pkg
+      install_command_from $cmd $package
+   done
+}
+
+#============================================================================
+# node related commands and packages
+
+function install_npm_command_from {
+   local command package
+   command="$1"
+   package="$2"
+   if [ -z "$package" ]; then
+      package="$command"
+   fi
+   cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
+   cmd_exists "$command"
+}
+
 function install_npm_commands_from {
    local list cmd_pkg cmd package
    list="$1"
@@ -323,6 +319,17 @@ function install_npm_commands_from {
    done
 }
 
+function install_npm_global_command_from {
+   local command package
+   command="$1"
+   package="$2"
+   if [ -z "$package" ]; then
+      package="$command"
+   fi
+   cmd_exists "$command" > /dev/null || (echo want to install global $command from npm $package; sudo npm install -g "$package")
+   cmd_exists "$command"
+}
+
 function install_npm_global_commands_from {
    local list cmd_pkg cmd package
    list="$1"
@@ -331,6 +338,39 @@ function install_npm_global_commands_from {
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
       install_npm_global_command_from $cmd $package
+   done
+}
+
+function install_grunt_template_from {
+   local template package dir
+   template="$1"
+   package="$2"
+   dir="$HOME/.grunt-init/$template"
+   dir_exists "$dir" > /dev/null || (echo want to install grunt template $template from $package; git clone https://github.com/gruntjs/$package "$dir")
+   dir_exists "$dir"
+}
+
+function install_grunt_templates_from {
+   local list tmp_pkg template package
+   list="$1"
+   for tmp_pkg in $list
+   do
+      # split the template:pkg string into vars
+      IFS=: read template package <<< $tmp_pkg
+      install_grunt_template_from $template $package
+   done
+}
+
+# Install commands from specific package specified as input list wi1.7.9th : separation
+# cmd1:pkg2 cmd2:pkg2 ...
+function install_commands_from {
+   local list cmd_pkg cmd package
+   list="$1"
+   for cmd_pkg in $list
+   do
+      # split the cmd:pkg string into vars
+      IFS=: read cmd package <<< $cmd_pkg
+      install_command_from $cmd $package
    done
 }
 
@@ -356,7 +396,7 @@ function ini_file_has_text {
    text="$2"
    message="$3"
    file_exists "$dir/$file"
-   file_exists "$INIDIR/$file" || (ini-inline.pl "$dir/$file" > "$INIDIR/$file")
+   file_exists "$INIDIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INIDIR/$file")
    file_has_text "$INIDIR/$file" "$text" "$message"
 }
 
@@ -438,6 +478,8 @@ function crontab_has_command {
       (crontab -l; echo "$config" ) | crontab -
    fi
 }
+
+#============================================================================
 
 pushd $HOME
 
