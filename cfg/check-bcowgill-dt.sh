@@ -20,7 +20,8 @@ NODE="node npm"
 NODE_VER="v0.10.25"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
 INSTALL_NPM_FROM=""
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli"
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init"
+INSTALL_GRUNT_TEMPLATES="jquery:grunt-init-jquery.git"
 
 CHARLES="charles"
 CHARLESPKG=charles-proxy
@@ -223,6 +224,9 @@ function install_command_from {
    local command package
    command="$1"
    package="$2"
+   if [ -z "$package" ]; then
+      package="$command"
+   fi
    cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get install "$package")
    cmd_exists "$command"
 }
@@ -231,6 +235,9 @@ function install_npm_command_from {
    local command package
    command="$1"
    package="$2"
+   if [ -z "$package" ]; then
+      package="$command"
+   fi
    cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
    cmd_exists "$command"
 }
@@ -239,8 +246,31 @@ function install_npm_global_command_from {
    local command package
    command="$1"
    package="$2"
+   if [ -z "$package" ]; then
+      package="$command"
+   fi
    cmd_exists "$command" > /dev/null || (echo want to install global $command from npm $package; sudo npm install -g "$package")
    cmd_exists "$command"
+}
+
+function install_grunt_template_from {
+   local template package dir
+   template="$1"
+   package="$2"
+   dir="$HOME/.grunt-init/$template"
+   dir_exists "$dir" > /dev/null || (echo want to install grunt template $template from $package; git clone https://github.com/gruntjs/$package "$dir")
+   dir_exists "$dir"
+}
+
+function install_grunt_templates_from {
+   local list tmp_pkg template package
+   list="$1"
+   for tmp_pkg in $list
+   do
+      # split the template:pkg string into vars
+      IFS=: read template package <<< $template_pkg
+      install_grunt_template_from template package
+   done
 }
 
 function install_command_from_packages {
@@ -272,7 +302,7 @@ function install_commands {
 # Install commands from specific package specified as input list wi1.7.9th : separation
 # cmd1:pkg2 cmd2:pkg2 ...
 function install_commands_from {
-   local list
+   local list cmd_pkg cmd package
    list="$1"
    for cmd_pkg in $list
    do
@@ -283,7 +313,7 @@ function install_commands_from {
 }
 
 function install_npm_commands_from {
-   local list
+   local list cmd_pkg cmd package
    list="$1"
    for cmd_pkg in $list
    do
@@ -294,7 +324,7 @@ function install_npm_commands_from {
 }
 
 function install_npm_global_commands_from {
-   local list
+   local list cmd_pkg cmd package
    list="$1"
    for cmd_pkg in $list
    do
@@ -549,23 +579,6 @@ install_command_from_packages kslideshow.kss "$SCREENSAVER"
 cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/Downloads/$SUBLIMEPKG $SUBLIMEURL && sudo dpkg --install $HOME/Downloads/$SUBLIMEPKG)
 cmd_exists $SUBLIME "sublime editor"
 
-if node --version | grep $NODE_VER; then
-   echo OK node command version correct
-else
-   echo NOT OK node command version incorrect. trying to update
-   #https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
-   sudo apt-get update
-   sudo apt-get install -y python-software-properties python g++ make
-   sudo add-apt-repository ppa:chris-lea/node.js
-   sudo apt-get update
-   sudo apt-get install nodejs
-   exit 1
-fi
-
-npm config set registry https://registry.npmjs.org/
-#install_npm_commands_from "$INSTALL_NPM_FROM" 
-install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
-
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
@@ -586,6 +599,25 @@ else
    git config --global user.name "$MYNAME"
    git config --global user.email $EMAIL
 fi
+
+if node --version | grep $NODE_VER; then
+   echo OK node command version correct
+else
+   echo NOT OK node command version incorrect. trying to update
+   #https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
+   sudo apt-get update
+   sudo apt-get install -y python-software-properties python g++ make
+   sudo add-apt-repository ppa:chris-lea/node.js
+   sudo apt-get update
+   sudo apt-get install nodejs
+   exit 1
+fi
+
+npm config set registry https://registry.npmjs.org/
+#install_npm_commands_from "$INSTALL_NPM_FROM" 
+install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
+make_dir_exist $HOME/.grunt-init "grunt template dir"
+#install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
 # Check charles configuration options
 FILE=.charles.config
