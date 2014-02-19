@@ -283,19 +283,8 @@ function install_commands_from {
    done
 }
 
-function install_commands_from {
-   local list cmd_pkg cmd package
-   list="$1"
-   for cmd_pkg in $list
-   do
-      # split the cmd:pkg string into vars
-      IFS=: read cmd package <<< $cmd_pkg
-      install_command_from $cmd $package
-   done
-}
-
 #============================================================================
-# node related commands and packages
+# node/npm/grunt related commands and packages
 
 function install_npm_command_from {
    local command package
@@ -361,19 +350,10 @@ function install_grunt_templates_from {
    done
 }
 
-# Install commands from specific package specified as input list wi1.7.9th : separation
-# cmd1:pkg2 cmd2:pkg2 ...
-function install_commands_from {
-   local list cmd_pkg cmd package
-   list="$1"
-   for cmd_pkg in $list
-   do
-      # split the cmd:pkg string into vars
-      IFS=: read cmd package <<< $cmd_pkg
-      install_command_from $cmd $package
-   done
-}
+#============================================================================
+# check configuration within files
 
+# exact check for text in file
 function file_has_text {
    local file text message
    file="$1"
@@ -389,15 +369,20 @@ function file_has_text {
    fi
 }
 
-function ini_file_has_text {
-   local dir file text message
-   dir=`dirname "$1"`
-   file=`basename "$1"`
+# regex check for text in file
+function file_contains_text {
+   local file text message
+   file="$1"
    text="$2"
    message="$3"
-   file_exists "$dir/$file"
-   file_exists "$INIDIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INIDIR/$file")
-   file_has_text "$INIDIR/$file" "$text" "$message"
+   file_exists "$file"
+   if egrep "$text" "$file" > /dev/null; then
+      echo OK file contains regex: "$file" "$text"
+      return 0
+   else
+      echo NOT OK file missing regex: egrep \"$text\" \"$file\" [$message]
+      return 1
+   fi
 }
 
 function file_must_not_have_text {
@@ -415,20 +400,33 @@ function file_must_not_have_text {
    fi
 }
 
-function file_contains_text {
-   local file text message
-   file="$1"
+function ini_file_has_text {
+   local dir file text message
+   dir=`dirname "$1"`
+   file=`basename "$1"`
    text="$2"
    message="$3"
-   file_exists "$file"
-   if egrep "$text" "$file" > /dev/null; then
-      echo OK file contains regex: "$file" "$text"
+   file_exists "$dir/$file"
+   file_exists "$INIDIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INIDIR/$file")
+   file_has_text "$INIDIR/$file" "$text" "$message"
+}
+
+function crontab_has_command {
+   local command config message
+   command="$1"
+   config="$2"
+   message="$3"
+   if crontab -l | grep "$command"; then
+      echo OK crontab has command $command
       return 0
    else
-      echo NOT OK file missing regex: egrep \"$text\" \"$file\" [$message]
-      return 1
+      echo NOT OK crontab missing command $oommand trying to install [$message]
+      (crontab -l; echo "$config" ) | crontab -
    fi
 }
+
+#============================================================================
+# apt-get configuration
 
 function apt_has_source {
    local source message
@@ -465,21 +463,8 @@ function apt_has_key {
    fi
 }
 
-function crontab_has_command {
-   local command config message
-   command="$1"
-   config="$2"
-   message="$3"
-   if crontab -l | grep "$command"; then
-      echo OK crontab has command $command
-      return 0
-   else
-      echo NOT OK crontab missing command $oommand trying to install [$message]
-      (crontab -l; echo "$config" ) | crontab -
-   fi
-}
-
 #============================================================================
+# begin actual system checking
 
 pushd $HOME
 
