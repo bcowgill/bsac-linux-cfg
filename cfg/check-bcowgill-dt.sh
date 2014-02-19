@@ -11,7 +11,9 @@ ULIMITFILES=8196
 EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
-INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
+DOWNLOAD=$HOME/Downloads
+
+INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix gettext"
 INSTALL_FROM="wcd.exec:wcd mvn:maven"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
@@ -40,10 +42,18 @@ SUBLIME_CFG=.config/sublime-text-3/Packages
 SUBLIME_PKG=sublime-text_build-3047_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
-SVN_VER="1.8"
+SVN_VER="1.8.5"
 SVN_PKG="subversion libsvn-java"
 
 MVN_VER="3.0.4"
+
+GIT_VER="1.9.0"
+GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
+GIT_PKG=git
+GIT_PKG_AFTER="git-doc git-gui gitk libsvn-perl git-svn tig"
+
+GIT_TAR=git-$GIT_VER
+GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 GITSVN=/usr/lib/git-core/git-svn
 GITSVN_PKG="git-svn"
@@ -55,8 +65,8 @@ SKYPE_PKG="skype skype-bin"
 
 INI_DIR=check-iniline
 
-COMMANDS="apt-file $NODE svn wcd.exec mvn $CHARLES $SKYPE $VIRTUALBOX_CMDS $SUBLIME $DIFFMERGE"
-PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODE_PKG $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG"
+COMMANDS="apt-file $NODE svn git wcd.exec mvn gettext $CHARLES $SKYPE $VIRTUALBOX_CMDS $SUBLIME $DIFFMERGE"
+PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $SVN_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODE_PKG $CHARLES_PKG $SKYPE_PKG $VIRTUALBOX_PKG"
 
 #============================================================================
 # files and directories
@@ -566,17 +576,48 @@ dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlin
 cmd_exists $CHARLES
 cmd_exists $SKYPE
 cmd_exists svn
+apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
+FILE="/etc/apt/sources.list.d/WANdisco.list"
+make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
+file_has_text "$FILE" wandisco.com
 if svn --version | grep " version " | grep $SVN_VER; then
    echo OK svn command version correct
 else
    echo NOT OK svn command version incorrect - will try update
-   apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
-   FILE="/etc/apt/sources.list.d/WANdisco.list"
-   make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
-   file_has_text "$FILE" wandisco.com
+   # http://askubuntu.com/questions/312568/where-can-i-find-a-subversion-1-8-binary
    sudo apt-get update
    apt-cache show subversion | grep '^Version:'   
    sudo apt-get install $SVN_PKG
+   echo NOT OK exiting after svn update, try again.
+   exit 1
+fi
+
+which git
+if git --version | grep " version " | grep $GIT_VER; then
+   echo OK git command version correct
+else
+   echo NOT OK git command version incorrect - will try update
+   # http://blog.avirtualhome.com/git-ppa-for-ubuntu/
+   apt_has_source ppa:pdoes/ppa "repository for git"
+   sudo apt-get update
+   apt-cache show git | grep '^Version:'
+   sudo apt-get install $GIT_PKG $GIT_PKG_AFTER
+   echo NOT OK exiting after git update, try again.
+   exit 1
+   
+   sudo apt-get install $GIT_PKG_MAKE
+   # upgrading git on ubuntu
+   # https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
+   make_dir_exist $DOWNLOAD
+   pushd $DOWNLOAD
+   wget $GIT_URL
+   tar xvzf $GIT_TAR.tar.gz
+   cd $GIT_TAR
+   make prefix=/usr/local all
+   sudo make prefix=/usr/local install
+   sudo apt-get install $GIT_PKG_AFTER
+   popd
+   echo NOT OK exiting after git update, try again.
    exit 1
 fi
 
@@ -859,4 +900,6 @@ file_has_text $FILE "kwin4_effect_snaphelperEnabled=true"
 
 popd
 
+echo COMMANDS="$COMMANDS"
+echo PACKAGES="$PACKAGES"
 echo OK all checks complete
