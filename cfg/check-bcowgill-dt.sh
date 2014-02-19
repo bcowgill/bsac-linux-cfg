@@ -12,11 +12,11 @@ EMAIL=brent.cowgill@ontology.command
 MYNAME="Brent S.A. Cowgill"
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix"
-INSTALLFROM="wcd.exec:wcd mvn:maven"
+INSTALL_FROM="wcd.exec:wcd mvn:maven"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
-NODE="node npm"
+NODE="node npm grunt grunt-init uglifyjs"
 NODE_VER="v0.10.25"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
 INSTALL_NPM_FROM=""
@@ -24,39 +24,39 @@ INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init"
 INSTALL_GRUNT_TEMPLATES="jquery:grunt-init-jquery.git"
 
 CHARLES="charles"
-CHARLESPKG=charles-proxy
-CHARLESLICENSE="Ontology-Partners Ltd:c7f341142e860a8354"
+CHARLES_PKG=charles-proxy
+CHARLES_LICENSE="Ontology-Partners Ltd:c7f341142e860a8354"
 
 VIRTUALBOX="VirtualBox"
-VIRTUALBOXCMDS="dkms VirtualBox"
-VIRTUALBOXPKG="dkms virtualbox-4.3"
+VIRTUALBOX_CMDS="dkms VirtualBox"
+VIRTUALBOX_PKG="dkms virtualbox-4.3"
 
 DIFFMERGE=diffmerge
-DIFFMERGEPKG=diffmerge_4.2.0.697.stable_amd64.deb
-DIFFMERGEURL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGEPKG
+DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
+DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
 SUBLIME=subl
-SUBLCFG=.config/sublime-text-3/Packages
-SUBLIMEPKG=sublime-text_build-3047_amd64.deb
-SUBLIMEURL=http://c758482.r82.cf2.rackcdn.com/$SUBLIMEPKG
+SUBLIME_CFG=.config/sublime-text-3/Packages
+SUBLIME_PKG=sublime-text_build-3047_amd64.deb
+SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
-SVNVER="1.7.9"
-SUBVERSIONPKG="subversion libsvn-java"
+SVN_VER="1.8"
+SVN_PKG="subversion libsvn-java"
 
-MVNVER="3.0.4"
+MVN_VER="3.0.4"
 
 GITSVN=/usr/lib/git-core/git-svn
-GITSVNPKG="git-svn"
+GITSVN_PKG="git-svn"
 
 THUNDER=ryu9c8b3.default
 
 SKYPE=skype
-SKYPEPKG="skype skype-bin"
+SKYPE_PKG="skype skype-bin"
 
-INIDIR=check-iniline
+INI_DIR=check-iniline
 
-COMMANDS="apt-file $NODE svn $CHARLES $SKYPE $VIRTUALBOXCMDS"
-PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODE_PKG $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG $VIRTUALBOXPKG"
+COMMANDS="apt-file $NODE svn wcd.exec mvn $CHARLES $SKYPE $VIRTUALBOX_CMDS $SUBLIME $DIFFMERGE"
+PACKAGES="vim curl colordiff bash-completion dlocate apt-file deborphan dos2unix flip fdupes wcd $GITSVNPKG tig mmv iselect multitail charles-proxy skype skype-bin $NODE_PKG $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG"
 
 #============================================================================
 # files and directories
@@ -92,6 +92,16 @@ function make_dir_exist {
    message="$2"
    dir_exists "$dir" > /dev/null || mkdir -p "$dir"
    dir_exists "$dir" "$message"
+}
+
+function make_root_file_exist {
+   local file contents message temp_file
+   file="$1"
+   contents="$2"
+   temp_file=`mktemp`
+   file_exists "$file" > /dev/null || (echo "$contents" >> $temp_file; chmod go+r $temp_file; sudo cp $temp_file "$file")
+   rm $temp_file
+   file_exists "$file" "$message"
 }
 
 function remove_file {
@@ -407,8 +417,8 @@ function ini_file_has_text {
    text="$2"
    message="$3"
    file_exists "$dir/$file"
-   file_exists "$INIDIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INIDIR/$file")
-   file_has_text "$INIDIR/$file" "$text" "$message"
+   file_exists "$INI_DIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
+   file_has_text "$INI_DIR/$file" "$text" "$message"
 }
 
 function crontab_has_command {
@@ -500,8 +510,8 @@ dir_linked_to jdk workspace/jdk1.7.0_21
 dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
-rm -rf $INIDIR
-make_dir_exist $INIDIR "output area for checking INI file settings"
+rm -rf $INI_DIR
+make_dir_exist $INI_DIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 
@@ -546,25 +556,32 @@ apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_relea
 apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox wrong"
 echo Checking for apt-keys...
 apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
-cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOXPKG)
+cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
 cmd_exists $VIRTUALBOX 
 
-[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLESPKG $SUBVERSIONPKG $SKYPEPKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLESLICENSE)
+[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
 file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
 dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
 
 cmd_exists $CHARLES
 cmd_exists $SKYPE
 cmd_exists svn
-if svn --version | grep " version " | grep $SVNVER; then
+if svn --version | grep " version " | grep $SVN_VER; then
    echo OK svn command version correct
 else
-   echo NOT OK svn command version incorrect
+   echo NOT OK svn command version incorrect - will try update
+   apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
+   FILE="/etc/apt/sources.list.d/WANdisco.list"
+   make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
+   file_has_text "$FILE" wandisco.com
+   sudo apt-get update
+   apt-cache show subversion | grep '^Version:'   
+   sudo apt-get install $SVN_PKG
    exit 1
 fi
 
 cmd_exists mvn
-if mvn --version | grep "Apache Maven " | grep $MVNVER; then
+if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
    echo OK mvn command version correct
 else
    echo NOT OK mvn command version incorrect
@@ -588,22 +605,22 @@ if [ -x $GITSVN ]; then
    echo OK git svn command installed
 else
    echo NOT OK git svn command missing -- will try to install
-   sudo apt-get install $GITSVNPKG
+   sudo apt-get install $GITSVN_PKG
 fi
 cmd_exists $GITSVN
 
 install_file_from /etc/bash_completion bash-completion
 file_exists_from_package /etc/bash_completion.d/git bash-completion
 
-cmd_exists $DIFFMERGE "sourcegear diffmerge will try to get" || (wget --output-document $HOME/Downloads/$DIFFMERGEPKG $DIFFMERGEURL && sudo dpkg --install $HOME/Downloads/$DIFFMERGEPKG)
+cmd_exists $DIFFMERGE "sourcegear diffmerge will try to get" || (wget --output-document $HOME/Downloads/$DIFFMERGE_PKG $DIFFMERGE_URL && sudo dpkg --install $HOME/Downloads/$DIFFMERGE_PKG)
 cmd_exists $DIFFMERGE "sourcegear diffmerge"
 
 install_commands "$INSTALL"
-install_commands_from "$INSTALLFROM"
+install_commands_from "$INSTALL_FROM"
 install_command_from_packages node "$NODE_PKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
-cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/Downloads/$SUBLIMEPKG $SUBLIMEURL && sudo dpkg --install $HOME/Downloads/$SUBLIMEPKG)
+cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/Downloads/$SUBLIME_PKG $SUBLIME_URL && sudo dpkg --install $HOME/Downloads/$SUBLIME_PKG)
 cmd_exists $SUBLIME "sublime editor"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
@@ -813,13 +830,13 @@ FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
 # sublime configuration
-FILE=$SUBLCFG/User/Preferences.sublime-settings
+FILE=$SUBLIME_CFG/User/Preferences.sublime-settings
 file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
 file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
 file_has_text $FILE "ProFontWindows"
 file_contains_text $FILE "font_size.: 16"
 
-DIR="$SUBLCFG/Theme - Default"
+DIR="$SUBLIME_CFG/Theme - Default"
 FILE="$DIR/Default.sublime-theme"
 dir_exists "$DIR" "sublime theme override dir"
 file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
