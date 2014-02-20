@@ -176,6 +176,22 @@ function file_linked_to {
    fi
 }
 
+function file_linked_to_root {
+   local name target message
+   name="$1"
+   target="$2"
+   message="$3"
+   file_exists "$target" "$message"
+   if [ `readlink "$name"` == "$target" ]; then
+      echo OK symlink $name links to $target
+      return 0
+   else
+      file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && sudo mv "$name" "$name.orig"
+      file_link_exists "$name" "try creating for $message" || sudo ln -s "$target" "$name"
+      file_link_exists "$name" "$message"
+   fi
+}
+
 function file_hard_linked_to {
    local name target message
    name="$1"
@@ -484,6 +500,16 @@ function apt_has_key {
 }
 
 #============================================================================
+# miscellaneous configuration
+
+function has_ssh_keys {
+   file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
+   file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
+#   file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
+#   file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
+}
+
+#============================================================================
 # begin actual system checking
 
 pushd $HOME
@@ -592,6 +618,8 @@ else
    exit 1
 fi
 
+has_ssh_keys
+
 which git
 if git --version | grep " version " | grep $GIT_VER; then
    echo OK git command version correct
@@ -650,8 +678,8 @@ else
 fi
 cmd_exists $GITSVN
 
-install_file_from /etc/bash_completion bash-completion
-file_exists_from_package /etc/bash_completion.d/git bash-completion
+# git installs completion file but not in right place any more
+file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
 
 cmd_exists $DIFFMERGE "sourcegear diffmerge will try to get" || (wget --output-document $HOME/Downloads/$DIFFMERGE_PKG $DIFFMERGE_URL && sudo dpkg --install $HOME/Downloads/$DIFFMERGE_PKG)
 cmd_exists $DIFFMERGE "sourcegear diffmerge"
@@ -893,7 +921,7 @@ file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
 file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
 file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
 file_has_text $FILE "kwin4_effect_zoomEnabled=true"
-file_has_text $FILE "kwin4_effect_snaphelperEnabled=true"
+file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
 
 #FILE=.kde/share/config/kwinrc
 #file_has_text $FILE ""
