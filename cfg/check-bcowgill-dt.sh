@@ -23,7 +23,7 @@ NODE_VER="v0.10.25"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
 INSTALL_NPM_FROM=""
 INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init"
-INSTALL_GRUNT_TEMPLATES="jquery:grunt-init-jquery.git"
+INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 CHARLES="charles"
 CHARLES_PKG=charles-proxy
@@ -503,6 +503,7 @@ function apt_has_key {
 # miscellaneous configuration
 
 function has_ssh_keys {
+# need to upload ssh public key to github before getting grunt templates
    file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
    file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
 #   file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
@@ -730,7 +731,8 @@ npm config set registry https://registry.npmjs.org/
 #install_npm_commands_from "$INSTALL_NPM_FROM" 
 install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
 make_dir_exist $HOME/.grunt-init "grunt template dir"
-#install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
+# need to upload ssh public key to github before getting grunt templates
+install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
 # Check charles configuration options
 FILE=.charles.config
