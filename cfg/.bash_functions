@@ -14,7 +14,7 @@ cds () {
 }
 
 #   definition of the enhanced cd command
-cd () {
+ecd () {
     if [ -d "$1" ]; then
        builtin cd "$1"
     else
