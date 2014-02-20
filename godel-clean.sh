@@ -13,5 +13,5 @@ read WAIT
 apply-config-localhost.sh
 echo Go ahead and deploy your resources to the runtime now.
 echo To see what files changed in the build:
-echo find ~/workspace/trunk -newer /tmp/ontology/godel-clean.timestamp
+echo find ~/workspace/ontoscope -newer /tmp/ontology/godel-clean.timestamp
 
