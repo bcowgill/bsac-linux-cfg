@@ -879,6 +879,7 @@ file_has_text $FILE "defaultLanguage=en_GB"
 # Sourcegear Diffmerge colors
 FILE=".SourceGear DiffMerge"
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
+ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
 ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
 ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
 ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
