@@ -40,6 +40,9 @@ fi
 # use fdupes to do something like my delsame.pl
 alias delsame='fdupes --recurse --noempty --size --delete'
 
+# make sense of ps -ef
+alias pswhat='ps -ef | egrep "^($USER|`id -u`)" | what-is-running.pl'
+
 # some package aliases
 # pkgfind search for a package
 # pkgls show all files installed by package
