@@ -9,6 +9,10 @@
 	"font_size": 16,
 	"highlight_line": true,
 	"highlight_modified_tabs": false,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
 	"indent_guide_options":
 	[
 		"draw_active"

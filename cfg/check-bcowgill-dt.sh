@@ -38,7 +38,7 @@ DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
 SUBLIME=subl
-SUBLIME_CFG=.config/sublime-text-3/Packages
+SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3047_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
@@ -247,6 +247,14 @@ function install_file_from {
    package="$2"
    file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
    file_exists "$file"
+}
+
+function install_file_manually {
+   local file message source
+   file="$1"
+   message="$2"
+   source="$3"
+   file_exists "$file" "manually install $message from $source"
 }
 
 #============================================================================
@@ -540,6 +548,11 @@ file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,14" "ProFontWi
 #file_has_text .kde/share/config/katesyntaxhighlightingrc ""
 file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font"
 
+#TODO KATE color check
+#./.kde/share/config/colors/Recent_Colors
+#./.kde/share/config/kateschemarc
+#./.kde/share/config/katerc
+
 dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/bin "transfer area in workspace"
 dir_linked_to tx workspace/tx "transfer area in workspace"
@@ -692,6 +705,8 @@ install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
 cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/Downloads/$SUBLIME_PKG $SUBLIME_URL && sudo dpkg --install $HOME/Downloads/$SUBLIME_PKG)
 cmd_exists $SUBLIME "sublime editor"
+install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
+install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -901,13 +916,13 @@ FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
 # sublime configuration
-FILE=$SUBLIME_CFG/User/Preferences.sublime-settings
+FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
 file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
 file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
 file_has_text $FILE "ProFontWindows"
 file_contains_text $FILE "font_size.: 16"
 
-DIR="$SUBLIME_CFG/Theme - Default"
+DIR="$SUBLIME_CFG/Packages/Theme - Default"
 FILE="$DIR/Default.sublime-theme"
 dir_exists "$DIR" "sublime theme override dir"
 file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
