@@ -534,6 +534,15 @@ function has_ssh_keys {
 
 pushd $HOME
 
+id
+
+if grep $USER /etc/group | grep sudo; then
+   echo OK user $USER has sudo privileges
+else
+   echo NOT OK user $USER does not have sudo privileges
+fi
+
+
 check_linux $UBUNTU
 
 touch go.sudo; rm go.sudo
