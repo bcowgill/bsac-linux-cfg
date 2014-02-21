@@ -12,7 +12,8 @@ if [ "x$DOCROOT" == "x" ]; then
    DOCROOT=.
 fi
 
-LOG=/tmp/bcowgill-webserver-$PORT.log
+[ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
+LOG=/tmp/$USER/bcowgill-webserver-$PORT.log
 pushd $DOCROOT
 echo Serving content from `pwd` on http://localhost:$PORT logging to $LOG
 rm $LOG

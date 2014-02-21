@@ -18,7 +18,7 @@ INSTALL_FROM="wcd.exec:wcd mvn:maven"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
-NODE="node npm grunt grunt-init uglifyjs"
+NODE="node npm grunt grunt-init uglifyjs phantomjs"
 NODE_VER="v0.10.25"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
 INSTALL_NPM_FROM=""
@@ -255,6 +255,17 @@ function install_file_manually {
    message="$2"
    source="$3"
    file_exists "$file" "manually install $message from $source"
+}
+
+function install_git_repo {
+   local dir subdir url message
+   dir="$1"
+   subdir="$2"
+   url="$3"
+   message="$4"
+   dir_exists "$dir" "$message"
+   dir_exists "$dir/$subdir" > /dev/null || (echo "NOT OK get git repo $mesasge from $url"; pushd "$dir" && git clone "$url" "$subdir"; popd)
+   dir_exists "$dir/$subdir" "$message"
 }
 
 #============================================================================
@@ -561,6 +572,7 @@ dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
 rm -rf $INI_DIR
+make_dir_exist /tmp/$USER "user's own temporary directory"
 make_dir_exist $INI_DIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
@@ -707,6 +719,7 @@ cmd_exists $SUBLIME "sublime will try to get" || (wget --output-document $HOME/D
 cmd_exists $SUBLIME "sublime editor"
 install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -716,9 +729,11 @@ commands_exist "$COMMANDS"
 
 cmd_exists backup-work.sh "backup script missing"
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
-crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
+crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/$USER" "crontab user temp dir creation"
+crontab_has_command "mkdir"
+crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/$USER/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
 crontab_has_command "backup-work.sh"
-crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
+crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/$USER/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then

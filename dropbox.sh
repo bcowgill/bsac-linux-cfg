@@ -1,3 +1,4 @@
 #!/bin/bash
 # start up dropbox daemon - shouldn't need to as kde autostart is configured to do it.
-~/workspace/dropbox-dist/.dropbox-dist/dropboxd > /tmp/dropbox.log 2>&1 &
+[ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
+~/workspace/dropbox-dist/.dropbox-dist/dropboxd > /tmp/$USER/dropbox.log 2>&1 &
