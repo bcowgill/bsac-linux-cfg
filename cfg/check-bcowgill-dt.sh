@@ -573,6 +573,7 @@ dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
 dir_exists  bin/cfg "bin configuration missing"
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
+dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
 make_dir_exist $INI_DIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
@@ -729,11 +730,11 @@ commands_exist "$COMMANDS"
 
 cmd_exists backup-work.sh "backup script missing"
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
-crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/$USER" "crontab user temp dir creation"
+crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
-crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/$USER/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
+crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
 crontab_has_command "backup-work.sh"
-crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/$USER/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
+crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
