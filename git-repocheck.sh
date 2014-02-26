@@ -5,11 +5,14 @@ REPOS=`find . -type d -name .git | grep -v Soda | perl -pne 's{\.git \s* \z}{\n}
 echo $REPOS
 for dir in $REPOS
 do
-   echo "$dir"
    pushd "$dir" > /dev/null
    perl -e 'print(("=" x 78) . "\n")'
-   pwd
-   git status
+   if git status | grep 'nothing to commit, working directory clean' > /dev/null; then
+      echo `pwd` no changes
+   else
+      pwd
+      git status
+   fi
    popd > /dev/null
 done
 popd > /dev/null

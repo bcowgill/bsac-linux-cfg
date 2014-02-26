@@ -108,7 +108,7 @@ function make_root_file_exist {
    local file contents message temp_file
    file="$1"
    contents="$2"
-   temp_file=`mktemp`
+   temp_file=`mktemp --tmpdir=/tmp/$USER`
    file_exists "$file" > /dev/null || (echo "$contents" >> $temp_file; chmod go+r $temp_file; sudo cp $temp_file "$file")
    rm $temp_file
    file_exists "$file" "$message"
@@ -550,13 +550,13 @@ if [ `ulimit -n` == $ULIMITFILES ]; then
    echo OK ulimit for open files is good
 else
    echo NOT OK ulimit for open files is bad need $ULIMITFILES
-   file_has_text /etc/security/limits.conf brent.cowgill "check limits file" || ( \
-      echo echo \"brent.cowgill            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
-      echo echo \"brent.cowgill            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
+   file_has_text /etc/security/limits.conf $USER "check limits file" || ( \
+      echo echo \"$USER            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
+      echo echo \"$USER            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
       chmod +x go.sudo;
       sudo ./go.sudo\
    )
-   file_has_text /etc/security/limits.conf brent.cowgill "check username in limits file"
+   file_has_text /etc/security/limits.conf $USER "check username in limits file"
    file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
    echo YOUDO You have to logout/login again for ulimit to take effect.
    exit 1
@@ -602,15 +602,15 @@ if [ -d /data/UNMOUNTED ]; then
 #   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" /data
 #   /etc/fstab entry added
 #   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
-#   mkdir -p /data/brent.cowgill
-#   chown -R brent.cowgill:domusers /data/brent.cowgill
+#   mkdir -p /data/$USER
+#   chown -R $USER:domusers /data/$USER
       exit 1
    fi
 else
-   dir_exists /data/brent.cowgill "personal area on data dir missing"
+   dir_exists /data/$USER "personal area on data dir missing"
 fi
-make_dir_exist /data/brent.cowgill/backup "backup dir on /data"
-make_dir_exist /data/brent.cowgill/VirtualBox "VirtualBox dir on /data"
+make_dir_exist /data/$USER/backup "backup dir on /data"
+make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 
 cmd_exists wget
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
