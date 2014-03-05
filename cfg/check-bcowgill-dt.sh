@@ -698,7 +698,7 @@ else
    echo NOT OK JAVA_HOME is incorrect $JAVA_HOME
    exit 1
 fi
-if [ "x$M2_HOME" == "x" ]; then
+if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
    echo OK M2_HOME set correctly
 else
    echo NOT OK M2_HOME is incorrect $M2_HOME
@@ -854,15 +854,25 @@ file_has_text $FILE "fixed=ProFontWindows,14"
 
 FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "ColorScheme=Zion .Reversed."
-file_has_text $FILE "activeFont=Ubuntu,11"
-file_has_text $FILE "desktopFont=Ubuntu,11"
-file_has_text $FILE "font=Ubuntu,11"
-file_has_text $FILE "menuFont=Ubuntu,11"
-file_has_text $FILE "taskbarFont=Ubuntu,11"
-file_has_text $FILE "smallestReadableFont=Ubuntu,10"
-file_has_text $FILE "toolBarFont=Ubuntu,10"
-file_has_text $FILE "fixed=ProFontWindows,14"
-file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
+# Unity settings
+file_has_text $FILE "activeFont=Ubuntu,9"
+file_has_text $FILE "desktopFont=Ubuntu,9"
+file_has_text $FILE "font=Ubuntu,9"
+file_has_text $FILE "menuFont=Ubuntu,9"
+file_has_text $FILE "taskbarFont=Ubuntu,9"
+file_has_text $FILE "smallestReadableFont=Ubuntu,8"
+file_has_text $FILE "toolBarFont=Ubuntu,8"
+file_has_text $FILE "ToolButtonStyle=TextBesideIcon"
+
+# KDE settings
+#file_has_text $FILE "activeFont=Ubuntu,11"
+#file_has_text $FILE "desktopFont=Ubuntu,11"
+#file_has_text $FILE "font=Ubuntu,11"
+#file_has_text $FILE "menuFont=Ubuntu,11"
+#file_has_text $FILE "taskbarFont=Ubuntu,11"
+#file_has_text $FILE "smallestReadableFont=Ubuntu,10"
+#file_has_text $FILE "fixed=ProFontWindows,14"
+#file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
 file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
 file_has_text $FILE "DateFormatShort=%Y-%m-%d"
 file_has_text $FILE "BinaryUnitDialect=2"   # byte units kB, MB etc
@@ -939,7 +949,8 @@ file_has_text $FILE "dropboxd"
 FILE=.kde/share/config/emaildefaults
 file_contains_text $FILE "EmailClient..e.=thunderbird"
 FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
+file_has_text $FILE "BrowserApplication=chromium-browser.desktop"
+#KDE file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
 # sublime configuration
 FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
