@@ -15,7 +15,8 @@ DOWNLOAD=$HOME/Downloads
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes tig mmv iselect multitail chromium-browser cmatrix gettext"
 INSTALL_FROM="wcd.exec:wcd mvn:maven"
-SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix"
+SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
+
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="node npm grunt grunt-init uglifyjs phantomjs"
