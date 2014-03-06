@@ -10,5 +10,8 @@ popd
 pushd ~/workspace/play/d3/WebContent/grunt-test/grunt-test-jshint-uglify
 webserver.sh 8555 &
 popd
+pushd ~/workspace/ontoscope/bundles
+webserver.sh 8901 &
+popd
 echo You need to start Charles before the browsers!
 
