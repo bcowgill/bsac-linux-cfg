@@ -32,6 +32,10 @@ pushd ~/workspace
 tar cvzf backup/ontology-notes.tgz *.txt
 tar cvzf backup/ontology-bin.tgz bin/
 tar cvzf backup/work-visualise.tgz play/ charles-config/ projects/lib-cca
+tar cvzf backup/ontology-dataflow.tgz ontoscope/bundles/web.ontoscope.test/package.json \
+   ontoscope/bundles/web.ontoscope.test/Gruntfile.js \
+   ontoscope/bundles/web.ontoscope.test/qunit-testing \
+   ontoscope/bundles/web.ontoscope/html/com/ontologypartners/web/ontoscope/components/dataflow
 
 cp ~/Documents/PhoenixYard*.pdf $DROP
 cp backup/ontology-notes.tgz $DROP
