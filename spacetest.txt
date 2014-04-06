@@ -1,0 +1,15 @@
+a test file for spaces.pl------
+    leading spaces-------------
+   leading+trailing spaces   --
+		leading tabs-
+	leading and trailing tabs	----
+  	 	mixed 	spaces 	and	 tabs  		    	---------
+-------------
+
+
+line with line feed----------->
+<
+line with carriage return-><
+line with carriage return line feed-------->
+<
+

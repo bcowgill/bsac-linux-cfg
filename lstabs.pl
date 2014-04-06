@@ -1,11 +1,12 @@
 #!/usr/bin/env perl
 # list tab/space inconsistencies in files
+# export TAB_STOP=N to change tab stop size
 
 use strict;
 use warnings;
 use English qw(-no_match_vars);
 
-my $TAB_STOP = 4;
+my $TAB_STOP = $ENV{TAB_STOP} || 4;
 my $prefix_tabs = 0;
 my $prefix_spaces = 0;
 my $uneven_spacing = 0;
@@ -61,12 +62,12 @@ sub mark_spacing
 	return $prefix;
 }
 
-print "$INPUT_LINE_NUMBER lines read\n";
+print "=====\n$INPUT_LINE_NUMBER lines read\n";
 print "$prefix_spaces lines with prefix spacing\n";
 print "$prefix_tabs lines with prefix tabs\n";
 if ($uneven_spacing)
 {
-	print "spacing which mismatches tab depth ($TAB_STOP) found.\n";
+	print "spacing which mismatches tab depth (TAB_STOP=$TAB_STOP) found.\n";
 	$code = 2;
 }
 if ($prefix_tabs && $prefix_spaces)
