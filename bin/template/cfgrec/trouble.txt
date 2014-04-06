@@ -1,0 +1,5 @@
+Record of troubles with work station
+# a new line with   now | line.sh >> trouble.txt
+
+=== 2014-02-28 09:18:42+00:00 Fri  ===========================================
++++TROUBLE nothing 

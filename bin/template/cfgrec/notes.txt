@@ -1,0 +1,5 @@
+Notes about code checkins (log messages, tags, etc)
+# a new line with   now | line.sh >> notes.txt
+
+
+=== 2014-02-11 17:37:32+00:00 Tue  ===========================================

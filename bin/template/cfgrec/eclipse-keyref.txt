@@ -1,0 +1,125 @@
+Eclipse Keyboard Shortcuts
+
+Navigational Shortcuts:
+
+F10             Main menu:
+Shift+F10	Context menu
+Ctrl+F10	View menu (ubuntu overrides this)
+
+Workspace navigation:
+
+F12 Activate editor
+Ctrl+Shift+W	Switch editor
+Ctrl+F6	 Next editor
+Ctrl+Shift+F6	 Prev editor
+Ctrl+F7	Next workspace
+Ctrl+Shift+F7	Prev workspace
+Ctrl+F8	Next perspective
+Ctrl+Shift+F8	 Prev perspective
+Alt+Left	 Back
+Alt+Right	 Forward
+
+Files:
+
+Alt+Shift+S	Show in…
+Ctrl+Shift+R	Jump to file
+Ctrl+N	New file
+Ctrl+S	Save file
+Ctrl+Shift+S	Save all files
+Ctrl+F4	Close file
+Ctrl+Shift+F4	Close all files
+
+Find:
+
+Ctrl+L	Goto line
+Ctrl+F	Find
+Ctrl+J	 Incremental find
+Ctrl+Shift+J	 Incremental find prev
+Ctrl+K	Find next
+Ctrl+Shift+K	Find prev
+Ctrl+H	Search workspace
+Ctrl+(dot)	Navigate next
+Ctrl+(comma)	Navigate prev
+
+Java navigation:
+
+F3	Goto declaration
+Ctrl+ Shift+ U	Find references in file
+Ctrl +Shift+ G	Find references in workspace
+Ctrl+ G	 Find declarations in workspace
+Ctrl +Shift+ P	 Navigate to matching bracket/brace
+Ctrl +T	Popup type hierarchy
+Ctrl +Shift+ T	Open Type
+Ctrl +O	Outline of current source
+Ctrl +F3	Outline of current cursor position
+Ctrl
+ +Shift+ Arrow	 Jump beetween methods up or down
+F2 Show Javadoc
+F4	 Show hierarchy
+Ctrl +Alt+ H	Open call hierarchy
+
+General editing:
+
+Alt+ Arrow+	Move line(s) up or down
+Alt +Shift+ Up	Expand selection to enclosing element
+Alt +Shift+ Right	Expand selection to next element
+Alt+ Shift+ Left	 Expand selection to previous element
+Alt +Shift+ Down	Restore previous selection
+Ctrl +Alt +Arrow	Duplicate line(s) up or down
+Shift +Enter	Insert line below
+Ctrl +Shift+ Enter	Insert line above
+Ctrl +D	Delete line
+Ctrl +Shift+ Q	 Toggle Quick Diff
+Ctrl +Shift+ Y	Convert to lowercase
+Ctrl +Shift +X	Convert to uppercase
+
+Java editing:
+
+Al+t Shift+ U	Remove occurrence annotations
+Ctrl +1	Quick fix (works even when there are no errors
+Ctrl +Shift+ M	Add import
+Ctrl +Shift+ F	Reformat
+Ctrl +Shift+ O	Organize Imports
+Ctrl +/	Comment
+Ctrl +\	UnComment
+Ctrl +Shift+ Space	Parameter hints
+Ctrl	Hyperlink identifier
+Ctrl+ I	Correct indentation
+Shift+ Space	Incremental content assist
+
+Debugger:
+
+F5	Step into
+F6	Step over
+F7	Run to return
+F8	Resume
+F9	 Relaunch last
+F11	Run/debug last
+Ctrl+ F11	Run
+Ctrl +Shift+ B	Toggle breakpoint
+Ctrl+ D	Display
+Ctrl +Q	Inspect
+Ctrl +R	Run to line
+Ctrl +U	Run snippet
+
+Refactoring:
+
+Alt+ T	Refactoring menu
+Ctrl+ Shift+ Z	Undo refactor
+Ctrl +Shift+ Y	Redo refactor
+Alt +Shift +R	Rename
+Alt +Shift+ V	Move
+Alt +Shift+ I	Inline
+Alt +Shift+ M	Extract method
+Alt +Shift+ L	Extract local
+Alt +Shift+ C	Change method signature
+
+Misc:
+
+F5	Refresh
+F1	Infopop
+F2	Show resizeable hover
+
+
+Sathya
+February 22, 2012 at 8:43 am

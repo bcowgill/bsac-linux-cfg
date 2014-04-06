@@ -1,0 +1,76 @@
+000_scratch.txt
+
+files open in kate
+bin/cfg/check-bcowgill-dt.sh
+bin/backup-work.sh
+workspace/bin/000_scratch.txt
+workspace/bin/cfgrec.txt
+workspace/bin/notes.txt
+
+AMD vs CommonJS vs RequireJS
+http://stackoverflow.com/questions/16521471/relation-between-commonjs-amd-and-requirejs
+
+Node's module packaging   
+http://nodejs.org/docs/v0.5.0/api/modules.html
+
+d3 example of amd and node/commonJS packaging compatability
+!function() {
+  var d3 = {
+    version: "3.4.2"
+  };
+  ...
+  if (typeof define === "function" && define.amd) {
+    define(d3);
+  } else if (typeof module === "object" && module.exports) {
+    module.exports = d3;
+  } else {
+    this.d3 = d3;
+  }
+}
+
+
+
+/* XYZZY this is to reproduce table-like structure for the sake of table-less layout. */
+.table {
+   display:table;
+   table-layout:fixed;
+/*   width:100px; */
+}
+.table_caption {
+   display: table-caption;
+}
+.table_colgroup, .table_column_group {
+   display: table-column-group;
+}
+
+.table_header_group, .thead {
+   display: table-header-group;
+}
+
+.table_footer_group, .tfoot {
+   display: table-footer-group;
+}
+
+.table_row_group, .tbody {
+   display: table-row-group;
+}
+
+.table_row, .tr {
+   display: table-row;
+/*   height:10px; */
+}
+.table_cell, .td {
+   display: table-cell;
+}
+
+.table_column, .col {
+   display: table-column;
+}
+
+.colspanAll {
+   column-span: all; /* W3C */
+   -webkit-column-span: all; /* Safari & Chrome */
+   -moz-column-span: all; /* Firefox */
+   -ms-column-span: all; /* Internet Explorer */
+   -o-column-span: all; /* Opera */
+}

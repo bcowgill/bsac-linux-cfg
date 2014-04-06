@@ -1,0 +1,300 @@
+Ubuntu workstation setup:
+some legacy config from ontology which may be useful
+
+=== 2014-03-06 09:23:03+00:00 Thu  ===========================================
++++INSTALL Screensaver for ubuntu unity desktop
+   http://www.howtogeek.com/114027/how-to-add-screensavers-to-ubuntu-12.04/
+   sudo apt-get remove gnome-screensaver
+   sudo apt-get install xscreensaver xscreensaver-data-extra xscreensaver-gl-extra fortune xfishtank xdaliclock
+   Screensaver / Advanced
+      Configure pictures directory /home/brent.cowgill/Pictures/WorkSafe
+      Configure text generation program /home/brent.cowgill/bin/fortune.sh
+      Confgure GLText command line: gltext -root -text "`/home/brent.cowgill/bin/fortune.sh`"
+      Configure Carousel command line carousel -count 3
+   Lock screen shortcut assignment Ctrl-Alt-L does not seem to work
+      use Ctrl-Super-L === Ctrl-Win-L
+   
+   +++INSTALL:KDE kolourpaint4 package for a simple image editor
+   +++INSTALL gimp for more comprehensive image editing
+      apt-get install kolourpaint4 gimp
+
++++INSTALL:VM Setup Win7x64 DVD into a virtualbox VM
+   https://forums.virtualbox.org/viewtopic.php?f=2&t=37628
+   Create new VM named IE11-Win7x64-Licensed  (/data/brent.cowgill/VirtualBox-VMs)
+      Windows 7 64 bit
+      Memory 2048MB
+      Create a virtual hard drive now / format VMDK / Dynamically Allocated / 170 GB
+      Settings / General / Advanced
+         Shared Clipboard: Bidirectional
+         Description 
+         Windows 7 license installed from DVD
+         Windows 7 Pro  P7CMH WW48B MJRQM RW86C C74Y4
+      Settings / System / Motherboard
+         Chipset ICH9
+         Enable I/O APIC: yes
+      Settings / Display / Video
+         Video Memory 27Mb
+      Settings / Network - Bridged Adapter and refresh MAC address
+      Settings / Shared Folders - /home/brent.cowgill share name ubuntu-host
+        accessed as \\vboxsvr\ubuntu-host --> vboxsvr may be bcowgill-dt (need guest additions installed)
+  Start up the VM with CD in the drive
+     Normal setup stuff choose language, etc
+  Setup on first boot
+     brent.cowgill user name
+     bcowgill-win7 computer name
+     windows update installs an update and restart
+  Guest Additions installed manually by going to Computer (to fix auto resize)
+  Take snapshot
+  Install IE9 - Take snapshot
+  Install IE10 - Take snapshot
+  Install IE11 - Take snapshot
+
++++INFO:COLOR:KATE
+   These config files relate to configuring Kate color scheme. but may be able to download some.
+   ./.kde/share/config/colors/Recent_Colors ./.kde/share/config/kateschemarc ./.kde/share/config/katerc
+
++++CONFIG:SUBLIME Package Control https://sublime.wbond.net/ sublime-grunt-build
+   To set up support for running grunt build system from sublime
+   touch ~/.config/sublime-text-3/last-update.timestamp
+
+   sublime 3 View / Show Console
+   paste this: import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+   
+   find /home/brent.cowgill/.config/sublime-text-3/ -newer ~/.config/sublime-text-3/last-update.timestamp
+  /home/brent.cowgill/.config/sublime-text-3/Packages/User
+  /home/brent.cowgill/.config/sublime-text-3/Packages/User/Package Control.last-run
+  /home/brent.cowgill/.config/sublime-text-3/Packages/User/Package Control.cache
+  /home/brent.cowgill/.config/sublime-text-3/Packages/User/Package Control.cache/ad7758d143e99a76034aad71ae2a1f3b.info
+  /home/brent.cowgill/.config/sublime-text-3/Packages/User/Package Control.cache/ad7758d143e99a76034aad71ae2a1f3b
+  /home/brent.cowgill/.config/sublime-text-3/Packages/Theme - Soda/.git
+  /home/brent.cowgill/.config/sublime-text-3/Packages/Theme - Soda/.git/FETCH_HEAD
+  /home/brent.cowgill/.config/sublime-text-3/Local
+  /home/brent.cowgill/.config/sublime-text-3/Local/Session.sublime_session
+  /home/brent.cowgill/.config/sublime-text-3/Local/Session.sublime_metrics
+  /home/brent.cowgill/.config/sublime-text-3/Installed Packages
+  /home/brent.cowgill/.config/sublime-text-3/Installed Packages/Package Control.sublime-package
+  /home/brent.cowgill/.config/sublime-text-3/Index
+  /home/brent.cowgill/.config/sublime-text-3/Index/LOG
+  /home/brent.cowgill/.config/sublime-text-3/Index/000065.log
+  /home/brent.cowgill/.config/sublime-text-3/Index/000064.sst
+  /home/brent.cowgill/.config/sublime-text-3/Index/MANIFEST-000063
+  /home/brent.cowgill/.config/sublime-text-3/Index/CURRENT
+
+  sublime-grunt-build
+  https://www.npmjs.org/package/sublime-grunt-build
+  Ctrl-Shift-P
+  Package Control: Install Package
+  Not sure if worked so had to open all package files manually within sublime 3 to see Grun appear in preferences menu.
+  Then had to manually install the sublime-grunt-build package by git clone to finally see grunt appear on Tools / Build System
+  because there was a syntax error in the sublime plugin .py file. after fixing that edit sublime project settings file
+  to add build on save as documented on the URL above. and it works.
+
++++DEV Code re-checkout with new svn and use git-svn bridge so branching is nicer
+   cd workspace
+   ##svn co http://svn/svn/repos/dev/trunk/ .
+   git svn clone http://svn/svn/repos/dev/trunk/ ontoscope -r HEAD   
+   need to run git gc periodically to garbage collect and keep disk space optimum
+   
+   See BASIC EXAMPLES from man git-svn page for workflow
+   BASIC EXAMPLES
+       Tracking and contributing to the trunk of a Subversion-managed project (ignoring tags and branches):
+           # Clone a repo (like git clone):
+                   git svn clone http://svn.example.com/project/trunk
+           # Enter the newly cloned directory:
+                   cd trunk
+           # You should be on master branch, double-check with 'git branch'
+                   git branch
+           # Do some work and commit locally to Git:
+                   git commit ...
+           # Something is committed to SVN, rebase your local changes against the
+           # latest changes in SVN:
+                   git svn rebase
+           # Now commit your changes (that were committed previously using Git) to SVN,
+           # as well as automatically updating your working HEAD:
+                   git svn dcommit
+           # Append svn:ignore settings to the default Git exclude file:
+                   git svn show-ignore >> .git/info/exclude
+                   
+          For the sake of simplicity and interoperating with Subversion, it is recommended that all git svn users clone, fetch and dcommit directly
+       from the SVN server, and avoid all git clone/pull/merge/push operations between Git repositories and branches. The recommended method of
+       exchanging code between Git branches and users is git format-patch and git am, or just 'dcommit’ing to the SVN repository.     
+       
+              Do not use the --amend option of git-commit(1) on a change you’ve already dcommitted. It is considered bad practice to --amend commits
+       you’ve already pushed to a remote repository for other users, and dcommit with SVN is analogous to that.
+
+        We ignore all SVN properties except svn:executable. Any unhandled properties are logged to $GIT_DIR/svn/<refname>/unhandled.log
+
+    
++++CONFIG:COLOR:SUBLIME Preferences / Color Scheme: Cobalt. Monokai is also good.
+   Edit config file ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+      and grab settings from the default config
+      Default config file ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+      Set font to ProFontWindows and 16 pt
+
++++INSTALL:VM Virtual box install
+   https://www.virtualbox.org/wiki/Linux_Downloads
+   Added to check config script to install dkms and virtualbox-4.3 packages
+   run VirtualBox
+   New VM
+      name dagny
+      Windows 7 64 bit
+      Memory size: 1024 MB
+      Hard Disk VDI VirtualBox Disk Image, dynamically allocated
+         /data/brent.cowgill/VirtualBox/dagny.vdi 25GB max
+      
+      Get Windows images 
+      http://www.modern.ie/en-us/virtualization-tools#downloads
+      Win7 IE9 saved to /data/brent.cowgill/VirtualBox/imags/Win7-IE9
+      grabbed url list from website
+      wget `cat list.txt` to pull images down
+      
++++INSTALL:VM Virtual box install - continue
+   After download, extract by running the .sfx file
+   Downloaded a .pdf file with instructions 
+   Follow instructions at https://modernievirt.blob.core.windows.net/vhd/virtualmachine_instructions_2014-01-21.pdf
+   http://www.maketecheasier.com/import-export-ova-files-in-virtualbox/
+   Especially the Initial snapshot to roll back when trial period expires.
+   Win7 machines IEUser/Passw0rd!
+   
+   VirtualBox File / Import Appliance.
+      You can edit the settings before import by clicking on settings.
+      Change machine name/disk file to remove spaces
+      Increase memory to 2Gb
+      Generate random MAC address
+      Increase video memory to 27Mb (have to set this after import)
+      Network Settings - Bridged Adapter (have to set this after import)
+      When VM starts you need to update the VirtualBox Guest OS additions Devices / Insert ...
+      Take Snapshot -- IMPORTANT, before running IE and turning on Intranet settings.
+
+   Moved "~/VirtualBox VMs" directory to /data/brent.cowgill/VirtualBox-VMs
+   Created symlink from "~/VirtualBox VMs" to /data/brent.cowgill/VirtialBox-VMs
+   cp -R VirtualBox\ VMs/ /data/brent.cowgill/VirtualBox-VMs
+   mv VirtualBox\ VMs/ VirtualBox\ VMs-DELETE/
+   ln -s /data/brent.cowgill/VirtualBox-VMs/ "VirtualBox VMs"
+         
+   KEY:VM:HOST RightCtrl-Home VirtualBox Host Menu
+   KEY:VM:WIN RightCtrl-F Toggle VM Full screen
+   KEY:VM:WIN RightCtrl-E Take VM screen shot
+   KEY:VM:MOUSE RightCtrl-I Disable mouse integration 
+   KEY:VM:VM RightCtrl-Del Insert Ctrl-Alt-Del to VM
+   KEY:VM:VM RightCtrl-P Pause the VM 
+   KEY:VM:VM RightCtrl-Q Close the VM 
+   KEY:VM:VM RightCtrl-R Reset (power cycle) the VM 
+   KEY:VM:VM RightCtrl-H Shutdown the VM    
+
++++CONFIG:KDE System Settings / Locale / Country Region and Language 
+   Date and Time / Short Date Format: YYYY-MM-DD
+   Other / Byte size units: Metric Units (kB, MB, etc)
+
++++CONFIG:KDE System Settings / Workspace Appearance
+      Cursor Theme: redglass 32
+      Desktop Theme: Oxygen
+
++++CONFIG:KDE System Settings / Desktop Effects / All Effects
+      Magnifier (magnify section near cursor but doesn't do that, needs to be on for Zoom to work though!)
+      Snap Helper (locate center of screen when moving a window)
+      Track Mouse (show stars around mouse cursor)
+      Zoom (magnify entire desktop)
+      Mouse Mark (draw lines on desktop)
+      Window Geometry (show window sizes when moving)
+      Desktop Cube - disable
+      Desktop Grid (show/switch desktops on a grid)
+      Present Windows (show/switch windows)
+      
++++CONFIG:KDE System Settings / Accessibility
+   Bell
+      Use System Bell
+      Use Visible Bell / Flash Screen
+   Modifier Keys / Locking Keys
+      Use system bell
+      Use KDE system notification
+   Activation Gestures / Notification
+      Use system bell
+      Show confirmation dialog
+      Use KDE system notification
+
+   Keyboard shortcuts configuration ./.kde/share/config/kglobalshortcutsrc
+   KEY:KDE Meta-Shf-F12 Toggle Desktop Effects
+   KEY:KDE:MOUSE Meta-Ctl Track Mouse (show stars around mouse cursor)
+   KEY:KDE:ZOOM Meta-Plus Zoom in
+   KEY:KDE:ZOOM Meta-Minus Zoom out
+   KEY:KDE:ZOOM Meta-Zero Zoom normal
+   KEY:KDE:ZOOM Meta-Up/Down/Left/Right Zoom pan in direction
+   KEY:KDE:ZOOM Meta-F6 Zoom move mouse to center
+   KEY:KDE:ZOOM Meta-F5 Zoom move mouse to focus
+   KEY:KDE:MOUSE Meta-Shf Mouse Mark draw on desktop
+   KEY:KDE:MOUSE Meta-Shf-F11 Mouse Mark clear marks
+   KEY:KDE:MOUSE Meta-Shf-F12 Mouse Mark clear last mark
+   KEY:KDE:WIN Ctrl-Shf-F11 Window Geometry toggle display of sizes when moving
+   KEY:KDE:WIN Ctrl-F8 Desktop Grid show all desktops in a grid for selection
+   KEY:KDE:WIN Ctrl-F7 Present Windows toggle present windows
+   KEY:KDE:WIN Ctrl-F9 Present Windows on current desktop
+   KEY:KDE:WIN Ctrl-F10 Present Windows on all desktops
+
+   KEY:ECLIPSE:FOLDING Ctrl-Numpad_Divide Folding - Toggle on/off
+   KEY:ECLIPSE:FOLDING Ctrl-Numpad_Multiply Folding - Expand all
+   KEY:ECLIPSE:FOLDING Ctrl-Shf-Numpad_Divide Folding - Collapse all
+   KEY:ECLIPSE:FOLDING Ctrl-Shf-Numpad_Multiply Folding - Reset structure
+   
++++INSTALL Bash Completion and dlocate
+   apt-get install bash-completion
+   apt-get install dlocate apt-file deborphan
+   apt-file update
+      dlocate show which packages an installed file may come from
+      https://help.ubuntu.com/community/AptGet/Howto#Search_commands
+      apt-file shows which package supplies a file. 
+      using apt-file search git-completion says stgit is the package needed
+   apt-get install aptitude -- a text-based screen package viewer
+   apt-get -s install package -- show what would happen but don't install
+   apt-get update -- run periodically, and after changing sources list
+   apt-get check -- check for broken dependencies
+   apt-get -f install -- fix unmet/broken dependencies
+   apt-cache search term -- find packages with search terms
+   dpkg -l *search-term* -- find packages and mark ii installed un not installed
+   deborphan -- shows packages not needed
+      deborphan -A package  -- tell deborphan not to report a package as unneeded (whitelist)
+      deborphan -R package  -- remove package from the whitelist so it can be reported again
+      deborphan | xargs apt-get --purge remove -y    -- remove packages
+
++++INSTALL Adobe Flash Player http://get.adobe.com/flashplayer/?no_redirect
+   http://thegeekin.com/install-flash-player-chromium-ubuntu/
+   apt-get install flashplugin-installer
+   mkdir -p /opt/google/chromium/plugins
+   cp /usr/lib/flashplugin-installer/libflashplayer.so /opt/google/chromium/plugins/
+
++++INSTALL Adobe Flash Player http://get.adobe.com/flashplayer/?no_redirect
+   downloaded the .tar.gz version
+
++++INSTALL:FONT ProFontWindows.ttf
+   http://www.tobias-jung.de/seekingprofont/ Used KDE font manager to install for personal not system wide
+   Also Alegreya Google Font downloaded - but is not monospaced
+   Set Font to ProFontWindows 14pt in Eclipse, Kedit, Konsole, System Settings > Application Appearance > Fonts > Fixed Width
+      ProFontWindows 16pt in Charles
+
++++CONFIG:COLOR:CHROME ColorZilla extension installed http://pages.colorzilla.com/chrome/welcome/new/?chrome/27.0.1453.56/-/0.5.4
+  Features
+  Eyedropper - get the color of any pixel on the page
+  An advanced Color Picker similar to ones that can be found in Photoshop and Paint Shop Pro
+  Webpage Color Analyzer - analyze DOM element colors on any Web page, locate corresponding elements
+  Ultimate CSS Gradient Generator
+  Palette Viewer with 7 pre-installed palettes
+  Color History of recently picked colors
+  Also
+
+  Displays element information like tag name, class, id, size etc.
+  Outline elements under the cursor
+  Auto copy the generated or sampled colors to the clipboard in CSS RGB, Hex and other formats.
+  Keyboard shortcuts for quickly sampling page colors using the keyboard.
+  Get the color of dynamic elements (hovered links etc.) by resampling the last sampled pixel
+  Bonus features
+
+  Single-click color picking - click on the main ColorZilla toolbar icon and you're ready to pick (currently only available on Windows).
+  Pick colors from Flash objects
+  Pick colors at any zoom level
+
++++URL CSS column span http://www.quackit.com/css/css3/properties/css_column-span.cfm
+   use CSS before/after to change the content of the cell to No Value
+   CSS3 Draft column span http://www.w3.org/TR/css3-multicol/#column-span
+   Column span simulation CSS tables http://stackoverflow.com/questions/2403990/html-colspan-in-css
+
++++URL:COLOR Web color names http://en.wikipedia.org/wiki/Web_colors

@@ -1,0 +1,29 @@
+   KEY:VM:HOST RightCtrl-Home VirtualBox Host Menu
+   KEY:VM:WIN RightCtrl-F Toggle VM Full screen
+   KEY:VM:WIN RightCtrl-E Take VM screen shot
+   KEY:VM:MOUSE RightCtrl-I Disable mouse integration 
+   KEY:VM:VM RightCtrl-Del Insert Ctrl-Alt-Del to VM
+   KEY:VM:VM RightCtrl-P Pause the VM 
+   KEY:VM:VM RightCtrl-Q Close the VM 
+   KEY:VM:VM RightCtrl-R Reset (power cycle) the VM 
+   KEY:VM:VM RightCtrl-H Shutdown the VM    
+   KEY:KDE Meta-Shf-F12 Toggle Desktop Effects
+   KEY:KDE:MOUSE Meta-Ctl Track Mouse (show stars around mouse cursor)
+   KEY:KDE:ZOOM Meta-Plus Zoom in
+   KEY:KDE:ZOOM Meta-Minus Zoom out
+   KEY:KDE:ZOOM Meta-Zero Zoom normal
+   KEY:KDE:ZOOM Meta-Up/Down/Left/Right Zoom pan in direction
+   KEY:KDE:ZOOM Meta-F6 Zoom move mouse to center
+   KEY:KDE:ZOOM Meta-F5 Zoom move mouse to focus
+   KEY:KDE:MOUSE Meta-Shf Mouse Mark draw on desktop
+   KEY:KDE:MOUSE Meta-Shf-F11 Mouse Mark clear marks
+   KEY:KDE:MOUSE Meta-Shf-F12 Mouse Mark clear last mark
+   KEY:KDE:WIN Ctrl-Shf-F11 Window Geometry toggle display of sizes when moving
+   KEY:KDE:WIN Ctrl-F8 Desktop Grid show all desktops in a grid for selection
+   KEY:KDE:WIN Ctrl-F7 Present Windows toggle present windows
+   KEY:KDE:WIN Ctrl-F9 Present Windows on current desktop
+   KEY:KDE:WIN Ctrl-F10 Present Windows on all desktops
+   KEY:ECLIPSE:FOLDING Ctrl-Numpad_Divide Folding - Toggle on/off
+   KEY:ECLIPSE:FOLDING Ctrl-Numpad_Multiply Folding - Expand all
+   KEY:ECLIPSE:FOLDING Ctrl-Shf-Numpad_Divide Folding - Collapse all
+   KEY:ECLIPSE:FOLDING Ctrl-Shf-Numpad_Multiply Folding - Reset structure

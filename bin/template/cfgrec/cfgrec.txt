@@ -1,0 +1,31 @@
+Ubuntu workstation setup:
+TODO-HOSTNAME
+
+Markers in use:
+BACKUP
+BASH
+CHARLES
+CHROME
+COLOR
+CONFIG
+DEV
+ECLIPSE
+FONT
+INSTALL
+KDE
+SYS
+TODO
+TROUBLE
+UBUNTU
+URL
+VM
+WIKI
+XWIN
+
+# get listing of markers
+( grep '+++' ../cfgrec.txt | perl -ne 'if (s{\A\+\++\s*([^\s]+).*\z}{$1\n}xms) { s{:}{\n}xmg; print}' |  grep '+++' ../cfgrec.txt | perl -neA\+\++\s*([^\s]+).*\z}{$1\n}xms) { s{:}{\n}xmg; print}' | sort | uniq )
+# generate timestamp banner line
+now | line.sh
+
+=== 2014-03-06 09:23:03+00:00 Thu  ===========================================
++++URL:COLOR Web color names http://en.wikipedia.org/wiki/Web_colors
