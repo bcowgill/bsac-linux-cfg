@@ -8,8 +8,10 @@ set -e
 
 UBUNTU=precise
 ULIMITFILES=8196
-EMAIL=brent.cowgill@ontology.command
+EMAIL=brent.cowgill@ontology.com
 MYNAME="Brent S.A. Cowgill"
+THUNDER=ryu9c8b3.default
+DROPBACKUP=Dropbox/WorkSafe/_tx/ontology
 
 DOWNLOAD=$HOME/Downloads
 
@@ -58,8 +60,6 @@ GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 GITSVN=/usr/lib/git-core/git-svn
 GITSVN_PKG="git-svn"
-
-THUNDER=ryu9c8b3.default
 
 SKYPE=skype
 SKYPE_PKG="skype skype-bin"
@@ -578,7 +578,7 @@ dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/bin "transfer area in workspace"
 dir_linked_to tx workspace/tx "transfer area in workspace"
 dir_linked_to jdk workspace/jdk1.7.0_21
-dir_linked_to bk Dropbox/WorkSafe/_tx/ontology "backup area in Dropbox"
+dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
 rm -rf $INI_DIR
