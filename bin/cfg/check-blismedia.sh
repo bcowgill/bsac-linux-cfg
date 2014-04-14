@@ -7,17 +7,21 @@ set -e
 # turn on trace of currently running command if you need it
 #set -x
 
-UBUNTU=precise
+UBUNTU=trusty
 ULIMITFILES=8196
-EMAIL=brent.cowgill@COMPANY.com
+EMAIL=brent@blismedia.com
 MYNAME="Brent S.A. Cowgill"
-DROPBACKUP=Dropbox/WorkSafe/_tx/COMPANY
+COMPANY=blismedia
+ONBOOT=onboot-$COMPANY.sh
+MOUNT_DATA=""
+DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 THUNDER=""
 #THUNDER=ryu9c8b3.default
 
 DOWNLOAD=$HOME/Downloads
 
+USE_JAVA=""
 
 MVN_PKG=""
 MVN_CMD=""
@@ -29,8 +33,9 @@ INSTALL_FROM="wcd.exec:wcd $MVN_PKG"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
-NODE="node npm grunt grunt-init uglifyjs phantomjs"
+NODE="nodejs npm grunt grunt-init uglifyjs phantomjs"
 NODE_VER="v0.10.25"
+NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
 INSTALL_NPM_FROM=""
 INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower"
@@ -40,7 +45,8 @@ CHARLES="charles"
 CHARLES_PKG=charles-proxy
 
 VIRTUALBOX="VirtualBox"
-VIRTUALBOX_CMDS="dkms VirtualBox"
+VIRTUALBOX_CMDS="dkms"
+## TODO VIRTUALBOX_CMDS="dkms VirtualBox"
 VIRTUALBOX_PKG="dkms virtualbox-4.3"
 
 DIFFMERGE=diffmerge
@@ -64,7 +70,7 @@ GITSVN_PKG=""
 #GITSVN=/usr/lib/git-core/git-svn
 #GITSVN_PKG="libsvn-perl git-svn"
 
-GIT_VER="1.9.0"
+GIT_VER="1.9.1"
 GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
 GIT_PKG=git
 GIT_PKG_AFTER="git-doc git-gui gitk tig $GITSVN_PKG"
@@ -78,7 +84,7 @@ SKYPE_PKG="skype skype-bin"
 INI_DIR=check-iniline
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext"
-COMMANDS="apt-file wcd.exec gettext git $NODE $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
+COMMANDS="apt-file wcd.exec gettext git $NODE_CMD $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
 PACKAGES="$INSTALL apt-file wcd bash-completion $NODE_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $VIRTUALBOX_PKG $SCREENSAVER"
 
 #============================================================================
@@ -263,12 +269,23 @@ function install_file_from {
 }
 
 function install_file_from_url {
+   local file package url message
+   file="$1"
+   package="$2"
+   url="$3"
+   message="$4"
+   file_exists "$file" > /dev/null || (echo Try to install $file from $package at $url; wget --output-document $HOME/Downloads/$package $url)
+   file_exists "$file" "$message"
+}
+
+function install_file_from_url_zip {
    local file package url
    file="$1"
    package="$2"
    url="$3"
-   file_exists "$file" > /dev/null || (echo Try to install $file from $package at $url; wget --output-document $HOME/Downloads/$package $url)
-   file_exists "$file"
+   message="$4"
+   install_file_from_url "$file" "$package" "$url" > /dev/null || (pushd $HOME/Downloads/ && unzip $HOME/Downloads/$package && popd)
+   file_exists "$file" "$message"
 }
 
 function install_file_manually {
@@ -294,7 +311,7 @@ function install_git_repo {
 # commands and packages
 
 function cmd_exists {
-   local cmd messagenode npm
+   local cmd message npm
    cmd="$1"
    message="$2"
    if which "$cmd"; then
@@ -342,8 +359,10 @@ function install_commands {
    commands="$1"
    for cmd in $commands
    do
-      cmd_exists $cmd > /dev/null || (echo want to install $cmd ; sudo apt-get install "$cmd")
-      cmd_exists $cmd
+      if [ ! -z "$cmd" ]; then
+         cmd_exists $cmd > /dev/null || (echo want to install $cmd ; sudo apt-get install "$cmd")
+         cmd_exists $cmd
+      fi
    done
 }
 
@@ -367,8 +386,8 @@ function install_command_package_from_url {
    package="$2"
    url="$3"
    message="$4"
-   cmd_exists "$cmd" > /dev/null || (echo Try to install $cmd from $package at $url $message; wget --output-document $HOME/Downloads/$package $url && sudo dpkg --install $HOME/Downloads/$cmd)
-   cmd_exists "$file" $message
+   cmd_exists "$cmd" > /dev/null || (echo Try to install $cmd from $package at $url $message; wget --output-document $HOME/Downloads/$package $url && sudo dpkg --install $HOME/Downloads/$package)
+   cmd_exists "$cmd" $message
 }
 
 #============================================================================
@@ -447,7 +466,7 @@ function file_has_text {
    file="$1"
    text="$2"
    message="$3"
-   file_exists "$file"
+   file_exists "$file" "$message"
    if grep "$text" "$file" > /dev/null; then
       echo OK file has text: "$file" "$text"
       return 0
@@ -556,10 +575,11 @@ function apt_has_key {
 
 function has_ssh_keys {
 # need to upload ssh public key to github before getting grunt templates
+   #file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
+   #file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
+   #mv .ssh/id_rsa* $HOME/bin/cfg/
    file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
    file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
-#   file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
-#   file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
 }
 
 #============================================================================
@@ -595,11 +615,25 @@ else
    exit 1
 fi
 
-file_exists .fonts/p/ProFontWindows.ttf "ProFontWindows font needs to be installed"
-file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole"
-file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,14" "ProFontWindows in kate editor"
+install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
+install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
+install_file_from_url_zip Downloads/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
+
+cmd_exists kfontinst
+FILE=.fonts/p/ProFontWindows.ttf
+file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
+file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf 
+file_exists $FILE "ProFontWindows still not installed"
+
+FILE=.fonts/p/ProFontWindows_Bold.ttf
+file_exists $FILE > /dev/null || kfontinst Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
+file_exists $FILE "ProFontWindows Bold still not installed"
+
+file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
+file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,14" "ProFontWindows in kate editor Settings / Configure Kate / Fonts & Colors"
+file_has_text .kde/share/config/kateschemarc "Solarized (dark)" "Solarized Dark schema in kate editor"
 #file_has_text .kde/share/config/katesyntaxhighlightingrc ""
-file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font"
+file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font System Settings / Application Appearance / Fonts"
 
 #TODO KATE color check
 #./.kde/share/config/colors/Recent_Colors
@@ -609,8 +643,10 @@ file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWin
 dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/bin "transfer area in workspace"
 dir_linked_to tx workspace/tx "transfer area in workspace"
-dir_linked_to jdk workspace/jdk1.7.0_21
 dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
+if [ ! -z $USE_JAVA ]; then
+   dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
+fi
 
 dir_exists  bin/cfg "bin configuration missing"
 rm -rf $INI_DIR
@@ -618,18 +654,21 @@ make_dir_exist /tmp/$USER "user's own temporary directory"
 dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
 make_dir_exist $INI_DIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
+make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 
-file_linked_to go.sh bin/onboot-bcowgill-dt.sh "on reboot script configured"
+file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
+file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
 
-if [ -d /data/UNMOUNTED ]; then
-   echo OK /data/UNMOUNTED exists will try mounting it to check dirs
-   sudo mount /data
+if [ ! -z $MOUNT_DATA ]; then
    if [ -d /data/UNMOUNTED ]; then
-      echo NOT OK unable to mount /data
+      echo OK /data/UNMOUNTED exists will try mounting it to check dirs
+      sudo mount /data
+      if [ -d /data/UNMOUNTED ]; then
+         echo NOT OK unable to mount /data
 #   mkdir -p /data/UNMOUNTED
 #   blkid /dev/sdb1
 #   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" /data
@@ -637,11 +676,14 @@ if [ -d /data/UNMOUNTED ]; then
 #   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
 #   mkdir -p /data/$USER
 #   chown -R $USER:domusers /data/$USER
-      exit 1
+         exit 1
+      fi
    fi
-else
-   dir_exists /data/$USER "personal area on data dir missing"
 fi
+dir_exists /data/$USER "personal area on data dir missing"
+#sudo mkdir -p /data/$USER
+#sudo chown $USER:$USER /data/$USER
+
 make_dir_exist /data/$USER/backup "backup dir on /data"
 make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 
@@ -660,10 +702,14 @@ apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "a
 apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox missing"
 apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox wrong"
 echo Checking for apt-keys...
+apt_has_key charlesproxy http://www.charlesproxy.com/packages/apt/PublicKey "key fingerprint for Charles Proxy missing"
 apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
-cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
-cmd_exists $VIRTUALBOX 
 
+cmd_exists dkms "need dkms command for VirtualBox"
+## TODO cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
+## TODO cmd_exists $VIRTUALBOX 
+
+echo MAYBE DO MANUALLY apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG
 [ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
 
 cmd_exists $CHARLES
@@ -723,13 +769,16 @@ else
    exit 1
 fi
 
-cmd_exists mvn
-if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
-   echo OK mvn command version correct
-else
-   echo NOT OK mvn command version incorrect
-   exit 1
+if [ ! -z $MVN_PKG ]; then
+   cmd_exists mvn
+   if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
+      echo OK mvn command version correct
+   else
+      echo NOT OK mvn command version incorrect
+      exit 1
+   fi
 fi
+
 if [ "x$JAVA_HOME" == "x/usr/lib/jvm/jdk1.7.0_21" ]; then
    echo OK JAVA_HOME set correctly
 else
@@ -760,15 +809,11 @@ fi
 file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
 install_command_package_from_url $DIFFMERGE $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
 
+echo BIG INSTALL $INSTALL
 install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
-install_command_from_packages node "$NODE_PKG"
+install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
-
-install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
-install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
-install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
-install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -776,7 +821,13 @@ file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
 
 commands_exist "$COMMANDS"
 
+file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
+file_exists workspace/cfgrec.txt "configuration record files"
+
+#cp bin/ontology/backup-work* bin/cfg/
+#pushd bin; ln -s cfg/backup-work.sh; ln -s cfg/backup-work-manual.sh; popd
 cmd_exists backup-work.sh "backup script missing"
+
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
@@ -793,7 +844,7 @@ else
    git config --global user.email $EMAIL
 fi
 
-if node --version | grep $NODE_VER; then
+if $NODE_CMD --version | grep $NODE_VER; then
    echo OK node command version correct
 else
    echo NOT OK node command version incorrect. trying to update
@@ -813,24 +864,43 @@ make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
 install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
+cmd_exists git "need git installed before configure sublime"
+cmd_exists grunt "need grunt installed before configure sublime for it"
+
+file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
+cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
+install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
+install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
+#cp Downloads/Package-Control.sublime-package.zip ".config/sublime-text-3/Installed Packages/Package Control.sublime-package"
+install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
+install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
+## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+
+cmd_exists git "need git to clone repos"
+make_dir_exist workspace/play "github repo play area"
+install_git_repo "workspace/play" jshint-test https://github.com/bcowgill/jshint-test.git "my jshint build system"
+install_git_repo "workspace/play" grunt-test https://github.com/bcowgill/grunt-test.git "my grunt build system"
+install_git_repo "workspace/play" bsac-linux-cfg https://github.com/bcowgill/bsac-linux-cfg.git "my linux config scripts"
+
 # Check charles configuration options
 FILE=.charles.config
-file_has_text $FILE "port>58008" "charles port config"
+make_dir_exist tx/mirror/web "charles mirroring area"
+file_has_text $FILE "port>58008" "charles port config Proxy / Proxy Settings"
 file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
-file_has_text $FILE "displayFont>ProFontWindows" "charles font config"
+file_has_text $FILE "displayFont>ProFontWindows" "charles font config Edit / Preferences / User Interface"
+file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
 file_has_text $FILE "displayFontSize>16" "charles font config"
-file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config"
-file_has_text $FILE "showMemoryUsage>true" "charles memory usage config"
+file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
 FILE=.kde/share/config/kioslaverc
-file_has_text $FILE "ProxyType=1" "system proxy config"
+file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
 file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
 
 DIR=.local/share/applications
 dir_exists $DIR "KDE applications folder"
 
 # Eclipse configuration (shortcut and font)
-if [ ! -z "ECLIPSE" ]; then
+if [ ! -z "$ECLIPSE" ]; then
 DIR=.local/share/applications
 file_exists eclipse/eclipse "Eclipse program"
 file_exists eclipse/Eclipse.desktop "Eclipse launcher"
@@ -844,13 +914,9 @@ file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
 fi
 
 # Dropbox configuration
-dir_exists .config/autostart
+dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
 file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
-
-# Screen saver
-file_has_text .kde/share/config/kscreensaverrc "Saver=KSlideshow.desktop" "screensaver configured"
-file_has_text .kde/share/config/kslideshow.kssrc "Dropbox/WorkSafe" "screensaver dir configured"
 
 # Thunderbird
 if [ ! -z $THUNDER ]; then
@@ -882,12 +948,12 @@ fi
 
 # System Settings
 FILE=.kde/share/config/kcminputrc
-file_has_text $FILE "MouseButtonMapping=LeftHanded"
-file_has_text $FILE "cursorTheme=redglass"
-file_has_text $FILE "cursorSize=32"
+file_has_text $FILE "MouseButtonMapping=LeftHanded" "Mouse settings System Settings / Input Devices / Mouse Settings"
+file_has_text $FILE "cursorTheme=redglass" "System Settings / Workspace Appearance / Cursor Theme"
+file_has_text $FILE "cursorSize=32" "System Settings / Workspace Appearance / Cursor Theme"
 
-FILE=.kderc
-file_has_text $FILE "activeFont=Ubuntu,11"
+FILE=.kde/share/config/kdeglobals
+file_has_text $FILE "activeFont=Ubuntu,11" "System Settings / Application Appearance"
 file_has_text $FILE "desktopFont=Ubuntu,11"
 file_has_text $FILE "font=Ubuntu,11"
 file_has_text $FILE "menuFont=Ubuntu,11"
@@ -897,36 +963,21 @@ file_has_text $FILE "toolBarFont=Ubuntu,10"
 file_has_text $FILE "fixed=ProFontWindows,14"
 
 FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "ColorScheme=Zion .Reversed."
+file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
 # Unity settings
-file_has_text $FILE "activeFont=Ubuntu,9"
-file_has_text $FILE "desktopFont=Ubuntu,9"
-file_has_text $FILE "font=Ubuntu,9"
-file_has_text $FILE "menuFont=Ubuntu,9"
-file_has_text $FILE "taskbarFont=Ubuntu,9"
-file_has_text $FILE "smallestReadableFont=Ubuntu,8"
-file_has_text $FILE "toolBarFont=Ubuntu,8"
-file_has_text $FILE "ToolButtonStyle=TextBesideIcon"
 
 # KDE settings
-#file_has_text $FILE "activeFont=Ubuntu,11"
-#file_has_text $FILE "desktopFont=Ubuntu,11"
-#file_has_text $FILE "font=Ubuntu,11"
-#file_has_text $FILE "menuFont=Ubuntu,11"
-#file_has_text $FILE "taskbarFont=Ubuntu,11"
-#file_has_text $FILE "smallestReadableFont=Ubuntu,10"
-#file_has_text $FILE "fixed=ProFontWindows,14"
-#file_has_text $FILE "ToolButtonStyle=TextUnderIcon"
+file_has_text $FILE "ToolButtonStyle=TextUnderIcon" "System Settings / Application Appearance / Style / Fine Tuning"
 file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
-file_has_text $FILE "DateFormatShort=%Y-%m-%d"
+file_has_text $FILE "DateFormatShort=%Y-%m-%d" "System Settings / Locale / Date & Time"
 file_has_text $FILE "BinaryUnitDialect=2"   # byte units kB, MB etc
-file_has_text $FILE "UseSystemBell=true"
+file_has_text $FILE "UseSystemBell=true" "System Settings / Notifications / System Bell"
 
-file_has_text .kde/share/config/plasmarc "name=oxygen"
+file_has_text .kde/share/config/plasmarc "name=oxygen" "System Settings / Workspace Appearaance / Desktop Theme"
 
 # Spell checking settings
 FILE=.kde/share/config/sonnetrc
-file_has_text $FILE "backgroundCheckerEnabled=true"
+file_has_text $FILE "backgroundCheckerEnabled=true" "System Settings / Locale / Spell Checker"
 file_has_text $FILE "checkerEnabledByDefault=true"
 file_has_text $FILE "defaultLanguage=en_GB"
 
@@ -958,6 +1009,7 @@ ini_file_has_text "$FILE" "/File/Color/SubNotEqual/IL/bg=64"
 ini_file_has_text "$FILE" "/File/Color/Void/bg=0"
 ini_file_has_text "$FILE" "/File/Color/Void/fg=2631720"
 ini_file_has_text "$FILE" "/File/Color/Window/bg=0"
+ini_file_has_text "$FILE" "/Folder/Font=16:76:ProFontWindows"
 ini_file_has_text "$FILE" "/Folder/Color/Different/bg=0"
 ini_file_has_text "$FILE" "/Folder/Color/Equal/bg=0"
 ini_file_has_text "$FILE" "/Folder/Color/Equal/fg=16777215"
@@ -969,12 +1021,12 @@ ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
 
 # Accessibility
 FILE=.kde/share/config/kaccessrc
-file_has_text $FILE "SystemBell=true"
+file_has_text $FILE "SystemBell=true" "System Settings / Accessibility / Bell"
 file_has_text $FILE "VisibleBell=true"
 file_has_text $FILE "VisibleBellInvert=false"
 file_has_text $FILE "AccessXBeep=true"
 file_has_text $FILE "BounceKeysRejectBeep=true"
-file_has_text $FILE "GestureConfirmation=true"
+file_has_text $FILE "GestureConfirmation=true" "System Settings / Accessibility / Activation Gestures"
 file_has_text $FILE "SlowKeysAcceptBeep=true"
 file_has_text $FILE "SlowKeysPressBeep=true"
 file_has_text $FILE "SlowKeysRejectBeep=true"
@@ -987,11 +1039,14 @@ file_has_text $FILE "kNotifyModifiers=true"
 # Startup
 FILE=.kde/share/config/systemsettingsrc
 file_has_text $FILE "ksysguard"
-file_has_text $FILE "dropboxd"
+# TODO file_has_text $FILE "dropboxd"
 
 # Default Applications
+if [ ! -z $THUNDER ]; then
 FILE=.kde/share/config/emaildefaults
 file_contains_text $FILE "EmailClient..e.=thunderbird"
+fi
+
 FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "BrowserApplication=chromium-browser.desktop"
 #KDE file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
@@ -1005,27 +1060,44 @@ file_contains_text $FILE "font_size.: 16"
 
 DIR="$SUBLIME_CFG/Packages/Theme - Default"
 FILE="$DIR/Default.sublime-theme"
-dir_exists "$DIR" "sublime theme override dir"
-file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
-file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
+## TODO dir_exists "$DIR" "sublime theme override dir"
+## TODO file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
+## TODO file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
 
 # KDE Desktop Effects
 FILE=.kde/share/config/kwinrc
-file_has_text $FILE "kwin4_effect_cubeEnabled=false"
-file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
-file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
-file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
-file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
-file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
-file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
-file_has_text $FILE "kwin4_effect_zoomEnabled=true"
-file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
+## TODO special window effects
+## TODO file_has_text $FILE "kwin4_effect_cubeEnabled=false"
+## TODO file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
+## TODO file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_zoomEnabled=true"
+## TODO file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
 
 #FILE=.kde/share/config/kwinrc
 #file_has_text $FILE ""
+
+# Screen saver
+FILE=.kde/share/config/kscreensaverrc
+file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+file_has_text "$FILE" "Timeout=1200" "screensaver activation time configured"
+file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
+
+FILE=.kde/share/config/kslideshow.kssrc
+file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
+file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
 
 popd
 
 echo COMMANDS="$COMMANDS"
 echo PACKAGES="$PACKAGES"
+
+echo TODO VIRTUALBOX SETUP
+echo TODO SUBLIME THEME OVERRIDES
+echo TODO WINDOW MANAGER SPECIAL EFFECTS
+
 echo OK all checks complete
+
