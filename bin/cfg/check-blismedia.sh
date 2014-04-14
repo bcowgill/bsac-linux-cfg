@@ -310,6 +310,22 @@ function install_git_repo {
 #============================================================================
 # commands and packages
 
+function check_version {
+   local cmd opt version message
+   cmd="$1"
+   opt="$2"
+   find="$3"
+   version="$4"
+   message="$5"
+   if $cmd $opt | grep "$find" | grep "$version"; then
+      echo OK $cmd is correct version [$version]
+   else
+      echo NOT OK $cmd is not version [$version] `$cmd $opt`
+      return 1
+   fi
+   return 0
+}
+
 function cmd_exists {
    local cmd message npm
    cmd="$1"
@@ -644,6 +660,7 @@ dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"
 #dir_linked_to bin workspace/bin "transfer area in workspace"
 dir_linked_to tx workspace/tx "transfer area in workspace"
+dir_linked_to projects workspace/projects "projects area in workspace"
 dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 if [ ! -z $USE_JAVA ]; then
    dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
