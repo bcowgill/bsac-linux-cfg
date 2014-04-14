@@ -641,7 +641,8 @@ file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWin
 #./.kde/share/config/katerc
 
 dir_linked_to sandbox workspace "sandbox alias for workspace"
-dir_linked_to bin workspace/bin "transfer area in workspace"
+dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"
+#dir_linked_to bin workspace/bin "transfer area in workspace"
 dir_linked_to tx workspace/tx "transfer area in workspace"
 dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 if [ ! -z $USE_JAVA ]; then
@@ -825,7 +826,8 @@ file_exists workspace/cfgrec.txt "configuration record files will copy from temp
 file_exists workspace/cfgrec.txt "configuration record files"
 
 #cp bin/ontology/backup-work* bin/cfg/
-#pushd bin; ln -s cfg/backup-work.sh; ln -s cfg/backup-work-manual.sh; popd
+file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work.sh "daily backup script"
+file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual.sh "manual backup script"
 cmd_exists backup-work.sh "backup script missing"
 
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
