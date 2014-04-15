@@ -1,6 +1,6 @@
 #!/bin/bash
 # save some stuff to dropbox for work at home
-DROP=~/Dropbox/WorkSafe/_tx/ontology
+DROP=~/Dropbox/WorkSafe/_tx/blismedia
 #THUNDER=ryu9c8b3.default
 MOZZ=eog6kquf.default
 COMPANY=blismedia

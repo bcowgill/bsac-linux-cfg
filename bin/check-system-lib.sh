@@ -256,14 +256,19 @@ function cmd_exists {
 }
 
 function commands_exist {
-   local commands
+   local commands error
    commands="$1"
+   error=0
    for cmd in $commands
    do
-      cmd_exists "$cmd"
+      cmd_exists "$cmd" || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
+# Install a single command from a differently named package
 function install_command_from {
    local command package
    command="$1"
@@ -272,40 +277,50 @@ function install_command_from {
       package="$command"
    fi
    cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get install "$package")
-   cmd_exists "$command"
+   cmd_exists "$command" || return 1
 }
 
+# Install a single command but using a list of packages
 function install_command_from_packages {
    local command packages
    command="$1"
    packages="$2"
    cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get install $packages)
-   cmd_exists "$command"
+   cmd_exists "$command" || return 1
 }
 
+# Install a bunch of commands if possible
 function install_commands {
-   local commands
+   local commands error
    commands="$1"
+   error=0
    for cmd in $commands
    do
       if [ ! -z "$cmd" ]; then
          cmd_exists $cmd > /dev/null || (echo want to install $cmd ; sudo apt-get install "$cmd")
-         cmd_exists $cmd
+         cmd_exists $cmd || error=1
       fi
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
-# Install commands from specific package specified as input list wi1.7.9th : separation
+# Install commands from specific package specified as input list with : separation
 # cmd1:pkg2 cmd2:pkg2 ...
 function install_commands_from {
-   local list cmd_pkg cmd package
+   local list cmd_pkg cmd package error
    list="$1"
+   error=0
    for cmd_pkg in $list
    do
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
-      install_command_from $cmd $package
+      install_command_from $cmd $package || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
 # Force a command to be installed
@@ -318,20 +333,24 @@ function force_install_command_from {
    fi
    echo forced to install $command from $package
    sudo apt-get install "$package"
-   cmd_exists "$command"
+   cmd_exists "$command" || return 1
 }
 
 # Force install commands from specific package specified as input list with : separation
 # cmd1:pkg2 cmd2:pkg2 ...
 function force_install_commands_from {
-   local list cmd_pkg cmd package
+   local list cmd_pkg cmd package error
    list="$1"
+   error=0
    for cmd_pkg in $list
    do
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
-      force_install_command_from $cmd $package
+      force_install_command_from $cmd $package || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
 # Install a package downloaded from a url
@@ -342,7 +361,7 @@ function install_command_package_from_url {
    url="$3"
    message="$4"
    cmd_exists "$cmd" > /dev/null || (echo Try to install $cmd from $package at $url $message; wget --output-document $HOME/Downloads/$package $url && sudo dpkg --install $HOME/Downloads/$package)
-   cmd_exists "$cmd" $message
+   cmd_exists "$cmd" $message || return 1
 }
 
 # Check if a server (just a command) is running
@@ -350,7 +369,7 @@ function is_server_running {
    local cmd message
    cmd="$1"
    message="$2"
-   if ps -ef | grep mysql | grep -v grep ; then
+   if ps -ef | grep $cmd | grep -v grep ; then
       echo OK $cmd is running
    else
       echo NOT OK $cmd is not running [$message]
@@ -362,6 +381,7 @@ function is_server_running {
 #============================================================================
 # node/npm/grunt related commands and packages
 
+# Install a command with the node package manager
 function install_npm_command_from {
    local command package
    command="$1"
@@ -370,20 +390,26 @@ function install_npm_command_from {
       package="$command"
    fi
    cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
-   cmd_exists "$command"
+   cmd_exists "$command" || return 1
 }
 
+# Install a bunch of commands with the node package manager
 function install_npm_commands_from {
-   local list cmd_pkg cmd package
+   local list cmd_pkg cmd package error
    list="$1"
+   error=0
    for cmd_pkg in $list
    do
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
-      install_npm_command_from $cmd $package
+      install_npm_command_from $cmd $package || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
+# Install a global command with the node package manager
 function install_npm_global_command_from {
    local command package
    command="$1"
@@ -395,17 +421,23 @@ function install_npm_global_command_from {
    cmd_exists "$command"
 }
 
+# Install a bunch of  global commands with the node package manager
 function install_npm_global_commands_from {
-   local list cmd_pkg cmd package
+   local list cmd_pkg cmd package error
    list="$1"
+   error=0
    for cmd_pkg in $list
    do
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
-      install_npm_global_command_from $cmd $package
+      install_npm_global_command_from $cmd $package || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
+# Install a new project template for grunt system
 function install_grunt_template_from {
    local template package dir
    template="$1"
@@ -415,20 +447,26 @@ function install_grunt_template_from {
    dir_exists "$dir"
 }
 
+# Install a bunch of new project template for grunt system
 function install_grunt_templates_from {
-   local list tmp_pkg template package
+   local list tmp_pkg template package error
    list="$1"
+   error=0
    for tmp_pkg in $list
    do
       # split the template:pkg string into vars
       IFS=: read template package <<< $tmp_pkg
-      install_grunt_template_from $template $package
+      install_grunt_template_from $template $package || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
 #============================================================================
 # perl related setup
 
+# Check that a perl module is available
 function perl_module_exists {
    local module message
    module="$1"
@@ -442,38 +480,65 @@ function perl_module_exists {
    return 0
 }
 
+# Check that a bunch of perl modules are available
 function perl_modules_exist {
-   local modules
+   local modules error
    modules="$1"
+   error=0
    for mod in $modules
    do
-      perl_module_exists "$mod" "sudo cpanp install $mod"
+      perl_module_exists "$mod" "sudo cpanp install $mod" || error=1
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
+# Install as many perl modules as possible
 function install_perl_modules {
-   local modules
+   local modules error
    modules="$1"
+   error=0
    for mod in $modules
    do
       if [ ! -z "$mod" ]; then
          perl_module_exists $mod > /dev/null || (echo want to install perl module $mod ; sudo cpanp install "$mod")
-         perl_module_exists $mod
+         perl_module_exists $mod || error=1
       fi
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
 }
 
+# Force to install a bunch of perl modules
 function force_install_perl_modules {
-   local modules
+   local modules error
    modules="$1"
+   error=0
    for mod in $modules
    do
       if [ ! -z "$mod" ]; then
          echo forced to install perl module $mod
          sudo cpanp install "$mod"
-         perl_module_exists $mod
+         perl_module_exists $mod || error=1
       fi
    done
+   if [ $error == 1 ]; then
+      return 1
+   fi
+}
+
+# Do a standard perl project build sequence
+function build_perl_project {
+   local dir
+   dir="$1"
+   pushd "$dir" > /dev/null
+   echo build perl project in dir `pwd`
+   touch before_build.timestamp
+   perl Build.PL && ./Build && ./Build test && ./Build install
+   find . -newer before_build.timestamp
+   popd > /dev/null
 }
 
 #============================================================================
@@ -600,3 +665,22 @@ function has_ssh_keys {
    file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
    file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
 }
+
+#============================================================================
+# mysql related setup
+
+function mysql_connection_check {
+   local user
+   user=$1
+   echo Checking mysql connection to localhost for user $user
+   if mysql -u $user -p -e 'show databases;'; then
+      echo OK $user can connect to mysql on localhost
+   else
+      echo NOT OK $user cannot connect to mysql on localhost
+      return 1
+   fi
+   return 0
+}
+
+# check for user account on localhost mysql
+#mysql -u root -D mysql -p -e 'select user,host from user where user="test_user"' | grep localhost
