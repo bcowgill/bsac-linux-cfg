@@ -549,7 +549,12 @@ function install_perl_project_dependencies {
    dir="$1"
    error=1
    push_dir "$dir" "install perl dependencies for project"
-   perl Build.PL && ./Build installdeps && error=0
+   if [ -f Build.PL ]; then
+      perl Build.PL && sudo ./Build installdeps && error=0
+   else
+      echo no Build.PL so no dependencies to install
+      error=0
+   fi
    popd > /dev/null
    return $error
 }
