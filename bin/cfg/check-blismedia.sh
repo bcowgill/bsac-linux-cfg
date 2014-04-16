@@ -46,7 +46,7 @@ CHARLES_PKG=charles-proxy
 
 VIRTUALBOX="VirtualBox"
 VIRTUALBOX_CMDS="dkms"
-## TODO VIRTUALBOX_CMDS="dkms VirtualBox"
+VIRTUALBOX_CMDS="dkms VirtualBox"
 VIRTUALBOX_PKG="dkms virtualbox-4.3"
 
 DIFFMERGE=diffmerge
@@ -87,7 +87,7 @@ INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv isel
 COMMANDS="apt-file wcd.exec gettext git $NODE_CMD $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
 PACKAGES="$INSTALL apt-file wcd bash-completion $NODE_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $VIRTUALBOX_PKG $SCREENSAVER"
 
-source `which check-system-lib.sh`
+source `which lib-check-system.sh`
 
 #============================================================================
 # begin actual system checking
@@ -219,8 +219,8 @@ apt_has_key charlesproxy http://www.charlesproxy.com/packages/apt/PublicKey "key
 apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
 
 cmd_exists dkms "need dkms command for VirtualBox"
-## TODO cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
-## TODO cmd_exists $VIRTUALBOX 
+cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
+cmd_exists $VIRTUALBOX 
 
 echo MAYBE DO MANUALLY apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG
 [ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
