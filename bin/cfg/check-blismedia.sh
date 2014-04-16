@@ -140,7 +140,9 @@ file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "ne
 file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,14" "ProFontWindows in kate editor Settings / Configure Kate / Fonts & Colors"
 file_has_text .kde/share/config/kateschemarc "Solarized (dark)" "Solarized Dark schema in kate editor"
 # adjusted Solarized (dark) color for some barely visible items
-file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff7b007b,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
+file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff930093,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
+#file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff7b007b,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
+
 file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:Redirection=1,ff293ea6,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
 file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font System Settings / Application Appearance / Fonts"
 
@@ -602,6 +604,10 @@ file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
 FILE=.kde/share/config/kslideshow.kssrc
 file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
 file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
+
+# uk/us keyboard layout
+FILE=.kde/share/config/kxkbrc
+file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
 
 popd
 

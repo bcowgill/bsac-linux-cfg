@@ -761,5 +761,28 @@ function mysql_make_database_exist {
    return 0
 }
 
+function mysql_make_test_user_exist_on_database {
+   local user password database superuser
+   user=$1
+   password=$2
+   database=$3
+   superuser=$4
+   if mysql -u $user -p$password -e 'show grants;' | grep $user; then
+      echo OK $user exists with grants
+   else
+      echo NOT OK $user not configured. Will set it up with $superuser mysql account
+      # drop and recreate user with no errors
+      mysql -u $superuser -D mysql -p <<SQL
+      GRANT USAGE ON *.* TO '$user'@'localhost';
+      DROP USER '$user'@'localhost';
+      CREATE USER '$user'@'localhost' IDENTIFIED BY '$password';
+      GRANT ALL ON $database.* TO '$user'@'localhost';
+      GRANT SUPER ON *.* TO '$user'@'localhost';
+      FLUSH PRIVILEGES;
+SQL
+     mysql_connection_check $user $password
+  fi
+}
+
 # check for user account on localhost mysql
 #mysql -u root -D mysql -p -e 'select user,host from user where user="test_user"' | grep localhost
