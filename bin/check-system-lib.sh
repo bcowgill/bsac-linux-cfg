@@ -28,6 +28,20 @@ function dir_exists {
    return 0
 }
 
+# Enter a directory for some task, checking for existence
+function push_dir {
+   local dir message
+   dir="$1"
+   message="$2"
+   if dir_exists "$dir"; then
+      pushd "$dir" > /dev/null
+      echo $message in dir `pwd`
+   else
+      echo NOT OK directory missing: $dir [$message]
+      return 1
+   fi
+}
+
 function make_dir_exist {
    local dir message
    dir="$1"
@@ -529,6 +543,33 @@ function force_install_perl_modules {
    fi
 }
 
+# Install perl project dependencies
+function install_perl_project_dependencies {
+   local dir error
+   dir="$1"
+   error=1
+   push_dir "$dir" "install perl dependencies for project"
+   perl Build.PL && ./Build installdeps && error=0
+   popd > /dev/null
+   return $error
+}
+
+# Install multiple perl project dependencies
+function install_all_perl_project_dependencies {
+   local dirs error
+   dirs="$1"
+   error=0
+   for dir in $dirs
+   do
+      if [ ! -z "$dir" ]; then
+         install_perl_project_dependencies "$dir" || error=1
+      fi
+   done
+   if [ $error == 1 ]; then
+      return 1
+   fi
+}
+
 # Do a standard perl project build sequence
 function build_perl_project {
    local dir
@@ -670,14 +711,47 @@ function has_ssh_keys {
 # mysql related setup
 
 function mysql_connection_check {
-   local user
+   local user password
    user=$1
+   password=$2
    echo Checking mysql connection to localhost for user $user
-   if mysql -u $user -p -e 'show databases;'; then
+   if mysql -u $user -p$password -e 'show databases; show grants;'; then
       echo OK $user can connect to mysql on localhost
    else
       echo NOT OK $user cannot connect to mysql on localhost
       return 1
+   fi
+   return 0
+}
+
+# Check that a database is reachable on localhost for a user
+function mysql_check_for_database {
+   local user database password
+   database=$1
+   user=$2
+   # optional password
+   password=$2
+   echo Check for mysql database $database with user $user
+   if mysql -u $user -p$password -e 'show databases;' | grep $database; then
+      echo OK $database exists on mysql localhost
+   else
+      echo NOT OK $database does not exist on mysql localhost for user $user
+      return 1
+   fi
+   return 0
+}
+
+# Check for a database and make it if not present
+function mysql_make_database_exist {
+   local database user
+   database=$1
+   user=$2
+   if mysql_check_for_database $database $user > /dev/null; then
+      echo OK $database exists on mysql localhost
+   else
+      echo NOT OK $database does not exist on mysql localhost will try to create with user $user
+      mysql -u $user -p -e "create database $database"
+      mysql_check_for_database $database $user || return 1
    fi
    return 0
 }
