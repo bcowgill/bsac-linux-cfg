@@ -48,6 +48,7 @@ VIRTUALBOX="VirtualBox"
 VIRTUALBOX_CMDS="dkms"
 VIRTUALBOX_CMDS="dkms VirtualBox"
 VIRTUALBOX_PKG="dkms virtualbox-4.3"
+VIRTUALBOX_REL="raring"
 
 DIFFMERGE=diffmerge
 DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
@@ -212,8 +213,11 @@ apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) m
 apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
 apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
 
-apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox missing"
-apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config for virtualbox wrong"
+apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox missing trusty must use raring for now"
+apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox wrong"
+apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+
 echo Checking for apt-keys...
 apt_has_key charlesproxy http://www.charlesproxy.com/packages/apt/PublicKey "key fingerprint for Charles Proxy missing"
 apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
@@ -465,6 +469,8 @@ FILE=.kde/share/config/kcminputrc
 file_has_text $FILE "MouseButtonMapping=LeftHanded" "Mouse settings System Settings / Input Devices / Mouse Settings"
 file_has_text $FILE "cursorTheme=redglass" "System Settings / Workspace Appearance / Cursor Theme"
 file_has_text $FILE "cursorSize=32" "System Settings / Workspace Appearance / Cursor Theme"
+file_has_text $FILE "RepeatDelay=150" "System Settings / Input Devices / Keyboard / Hardware"
+file_has_text $FILE "RepeatRate=50" "System Settings / Input Devices / Keyboard / Hardware"
 
 FILE=.kde/share/config/kdeglobals
 file_has_text $FILE "activeFont=Ubuntu,11" "System Settings / Application Appearance"
