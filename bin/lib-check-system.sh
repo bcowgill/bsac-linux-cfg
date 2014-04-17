@@ -424,6 +424,20 @@ function is_server_running {
    return 0
 }
 
+# Check that a server (just a command) is not running
+function server_should_not_be_running {
+   local cmd message
+   cmd="$1"
+   message="$2"
+   if ps -ef | grep $cmd | grep -v grep ; then
+      echo NOT OK $cmd should not be running [$message]
+      return 1
+   else
+      echo OK $cmd is not running
+   fi
+   return 0
+}
+
 # Check if port is listening like your web server
 function is_port_listening {
    local host port message
@@ -452,6 +466,23 @@ function port_should_not_be_listening {
       echo  OK $host:$port is not listening
    fi
    return 0
+}
+
+# Make http request with wget and optionally show log file on error
+function http_request_show {
+   local url message log
+   url="$1"
+   message="$2"
+   log="$3"
+   echo Send a request to $url [$message]
+   if wget --output-document=- "$url" ; then
+      echo OK got response to $url
+   else
+      echo NOT OK no response from $url [$message]
+      if [ ! -z "$log" ]; then
+         cat "$log"
+      fi
+   fi
 }
 
 #============================================================================
