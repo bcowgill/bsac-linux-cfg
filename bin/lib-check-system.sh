@@ -1,10 +1,18 @@
-# library of functions for checking linux system and setting things up
+# lib-check-system.sh - library of functions for checking linux system and setting things up
+# Brent S.A. Cowgill.
+# License: Unlicense http://unlicense.org/
+
 # Provides perl test case like output
 # OK something worked
 # NOT OK something failed
+# Make sure you set -e on your setup script to it will terminate on first failure
+#
+# Example:
+# set -e
+# file_exists something-i-need.txt "need this config file"
 
 #============================================================================
-# control
+# Flow control
 
 function pause {
    local message input
@@ -813,18 +821,6 @@ function apt_has_key {
 }
 
 #============================================================================
-# miscellaneous configuration
-
-function has_ssh_keys {
-# need to upload ssh public key to github before getting grunt templates
-   #file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
-   #file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
-   #mv .ssh/id_rsa* $HOME/bin/cfg/
-   file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
-   file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
-}
-
-#============================================================================
 # mysql related setup
 
 function mysql_connection_check {
@@ -898,3 +894,16 @@ SQL
 
 # check for user account on localhost mysql
 #mysql -u root -D mysql -p -e 'SELECT user, host FROM user WHERE user="test_user"' | grep localhost
+
+#============================================================================
+# miscellaneous configuration
+
+function has_ssh_keys {
+# need to upload ssh public key to github before getting grunt templates
+   #file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
+   #file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
+   #mv .ssh/id_rsa* $HOME/bin/cfg/
+   file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
+   file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
+}
+
