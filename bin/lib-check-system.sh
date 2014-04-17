@@ -3,6 +3,20 @@
 #============================================================================
 # files and directories
 
+function pause {
+   local message input
+   message="$1"
+   echo PAUSE $message press ENTER to continue.
+   read input
+}
+
+function stop {
+   local message
+   message="$1"
+   echo STOPPED: $message
+   exit 1
+}
+
 function check_linux {
    local version
    version="$1"
@@ -720,7 +734,7 @@ function mysql_connection_check {
    user=$1
    password=$2
    echo Checking mysql connection to localhost for user $user
-   if mysql -u $user -p$password -e 'show databases; show grants;'; then
+   if mysql -u $user -p$password -e 'SHOW DATABASES; SHOW GRANTS;'; then
       echo OK $user can connect to mysql on localhost
    else
       echo NOT OK $user cannot connect to mysql on localhost
@@ -737,7 +751,7 @@ function mysql_check_for_database {
    # optional password
    password=$2
    echo Check for mysql database $database with user $user
-   if mysql -u $user -p$password -e 'show databases;' | grep $database; then
+   if mysql -u $user -p$password -e "SELECT schema_name, 'exists' FROM information_schema.schemata WHERE schema_name = '$database';" | grep $database; then
       echo OK $database exists on mysql localhost
    else
       echo NOT OK $database does not exist on mysql localhost for user $user
@@ -755,7 +769,7 @@ function mysql_make_database_exist {
       echo OK $database exists on mysql localhost
    else
       echo NOT OK $database does not exist on mysql localhost will try to create with user $user
-      mysql -u $user -p -e "create database $database"
+      mysql -u $user -p -e "CREATE DATABASE $database"
       mysql_check_for_database $database $user || return 1
    fi
    return 0
@@ -767,7 +781,7 @@ function mysql_make_test_user_exist_on_database {
    password=$2
    database=$3
    superuser=$4
-   if mysql -u $user -p$password -e 'show grants;' | grep $user; then
+   if mysql -u $user -p$password -e 'SHOW GRANTS;' | grep $user; then
       echo OK $user exists with grants
    else
       echo NOT OK $user not configured. Will set it up with $superuser mysql account
@@ -785,4 +799,4 @@ SQL
 }
 
 # check for user account on localhost mysql
-#mysql -u root -D mysql -p -e 'select user,host from user where user="test_user"' | grep localhost
+#mysql -u root -D mysql -p -e 'SELECT user, host FROM user WHERE user="test_user"' | grep localhost
