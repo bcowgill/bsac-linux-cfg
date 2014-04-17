@@ -424,6 +424,36 @@ function is_server_running {
    return 0
 }
 
+# Check if port is listening like your web server
+function is_port_listening {
+   local host port message
+   host="$1"
+   port="$2"
+   message="$3"
+   if nc localhost 3000 < /dev/null > /dev/null; then
+      echo  OK $host:$port is listening
+   else
+      echo NOT OK $host:$port is not listening [$message]
+      return 1
+   fi
+   return 0
+}
+
+# Check that a port is not listening
+function port_should_not_be_listening {
+   local host port message
+   host="$1"
+   port="$2"
+   message="$3"
+   if nc localhost 3000 < /dev/null > /dev/null; then
+      echo NOT OK $host:$port should not be listening [$message]
+      return 1
+   else
+      echo  OK $host:$port is not listening
+   fi
+   return 0
+}
+
 #============================================================================
 # node/npm/grunt related commands and packages
 
