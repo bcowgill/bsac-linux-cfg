@@ -262,6 +262,19 @@ function install_git_repo {
    dir_exists "$dir/$subdir" "$message"
 }
 
+# Get a git repository and set to track a specific branch (ex origin/master)
+function install_git_repo_branch {
+   local dir subdir branch url message
+   dir="$1"
+   subdir="$2"
+   branch="$3"
+   url="$4"
+   message="$5"
+   dir_exists "$dir" "$message"
+   dir_exists "$dir/$subdir" > /dev/null || (echo "NOT OK get git repo $mesasge from $url"; pushd "$dir" && git clone "$url" "$subdir" && cd "$subdir" && git checkout --track $branch ; popd)
+   dir_exists "$dir/$subdir" "$message"
+}
+
 #============================================================================
 # commands and packages
 
