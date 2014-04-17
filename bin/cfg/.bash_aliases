@@ -1,5 +1,6 @@
 # bash alias file
 # Brent S.A. Cowgill
+# MOTE: there are custom aliases set by hostname
 
 # Show the path split into one dir per line
 alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
@@ -68,7 +69,10 @@ alias wcdls='\wcd -z50 --to-stdout'
 alias wcdscan='\wcd -z50 -s &'
 alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
 
-if [ `hostname` == bcowgill-dt  ]; then
+alias charles-up='source `which proxy-to-charles.sh`'
+alias charles-down='source `which proxy-off.sh`'
+
+if [ `hostname` == blismedia  ]; then
    #echo modifying aliases for host bcowgill-dt
    # = --compact-tree not present. use -ga mode instead
    # -T = --ascii-tree
