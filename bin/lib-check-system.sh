@@ -1,7 +1,10 @@
 # library of functions for checking linux system and setting things up
+# Provides perl test case like output
+# OK something worked
+# NOT OK something failed
 
 #============================================================================
-# files and directories
+# control
 
 function pause {
    local message input
@@ -28,6 +31,9 @@ function check_linux {
    fi
    return 0
 }
+
+#============================================================================
+# files and directories
 
 function dir_exists {
    local dir message
@@ -292,8 +298,9 @@ function commands_exist {
       cmd_exists "$cmd" || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for commands_exist $commands
    fi
+   return $error
 }
 
 # Install a single command from a differently named package
@@ -330,8 +337,9 @@ function install_commands {
       fi
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_commands $commands
    fi
+   return $error
 }
 
 # Install commands from specific package specified as input list with : separation
@@ -347,8 +355,9 @@ function install_commands_from {
       install_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_commands_from $list
    fi
+   return $error
 }
 
 # Force a command to be installed
@@ -377,8 +386,9 @@ function force_install_commands_from {
       force_install_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for force_install_commands_from $list
    fi
+   return $error
 }
 
 # Install a package downloaded from a url
@@ -433,8 +443,9 @@ function install_npm_commands_from {
       install_npm_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_npm_commands_from $list
    fi
+   return $error
 }
 
 # Install a global command with the node package manager
@@ -461,8 +472,9 @@ function install_npm_global_commands_from {
       install_npm_global_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_npm_global_commands_from $list
    fi
+   return $error
 }
 
 # Install a new project template for grunt system
@@ -487,8 +499,9 @@ function install_grunt_templates_from {
       install_grunt_template_from $template $package || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_grunt_templates_from $list
    fi
+   return $error
 }
 
 #============================================================================
@@ -518,8 +531,9 @@ function perl_modules_exist {
       perl_module_exists "$mod" "sudo cpanp install $mod" || error=1
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for perl_modules_exist $modules 
    fi
+   return $error
 }
 
 # Install as many perl modules as possible
@@ -535,8 +549,9 @@ function install_perl_modules {
       fi
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_perl_modules $modules 
    fi
+   return $error
 }
 
 # Force to install a bunch of perl modules
@@ -553,8 +568,9 @@ function force_install_perl_modules {
       fi
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for force_install_perl_modules $modules
    fi
+   return $error
 }
 
 # Install perl project dependencies
@@ -566,10 +582,18 @@ function install_perl_project_dependencies {
    if [ -f Build.PL ]; then
       perl Build.PL && sudo ./Build installdeps && error=0
    else
-      echo no Build.PL so no dependencies to install
-      error=0
+      if [ -f Makefile.PL ]; then
+         # This will only tell you about missing pre-requisites, not install them
+         perl Makefile.PL && error=0
+      else
+         echo MAYBE NOT OK "$dir" no Build.PL or Makefile.PL found so no dependencies to install
+         error=0
+      fi
    fi
    popd > /dev/null
+   if [ $error == 1 ]; then
+      echo NOT OK errors for install_perl_project_dependencies $dir 
+   fi
    return $error
 }
 
@@ -585,20 +609,94 @@ function install_all_perl_project_dependencies {
       fi
    done
    if [ $error == 1 ]; then
-      return 1
+      echo NOT OK errors for install_all_perl_project_dependencies $dirs 
    fi
+   return $error
 }
 
 # Do a standard perl project build sequence
 function build_perl_project {
-   local dir
+   local dir error
    dir="$1"
+   error=1
    pushd "$dir" > /dev/null
    echo build perl project in dir `pwd`
    touch before_build.timestamp
-   perl Build.PL && ./Build && ./Build test && ./Build install
+   if [ -f Build.PL ]; then
+      perl Build.PL && ./Build && ./Build test && ./Build install && error=0
+   else
+      if [ -f Makefile.PL ]; then
+         perl Makefile.PL && make && make test && sudo make install && error=0
+      else
+         echo MAYBE NOT OK "$dir" no Build.PL or Makefile.PL found so nothing to build
+      fi
+   fi
    find . -newer before_build.timestamp
    popd > /dev/null
+   if [ $error == 1 ]; then
+      echo NOT OK errors for build_perl_project $dir 
+   fi
+   return $error
+}
+
+# Build a perl project and install omitting tests, in case failures are temporarily allowed
+function build_perl_project_no_tests {
+   local dir error
+   dir="$1"
+   error=1
+   pushd "$dir" > /dev/null
+   echo Build perl project in dir `pwd`
+   touch before_build.timestamp
+   echo WARNING: build will skip test phase, may install with failing tests.
+   if [ -f Build.PL ]; then
+      perl Build.PL && ./Build && sudo ./Build install && error=0
+   else
+      if [ -f Makefile.PL ]; then
+         perl Makefile.PL && make && sudo make install && error=0
+      else
+         echo MAYBE NOT OK "$dir" no Build.PL or Makefile.PL found so nothing to build
+      fi
+   fi
+   find . -newer before_build.timestamp
+   popd > /dev/null
+   if [ $error == 1 ]; then
+      echo NOT OK errors for build_perl_project_no_tests $dir 
+   fi
+   return $error
+}
+
+# Build as many perl projects as possible
+function build_perl_projects {
+   local dirs error
+   dirs="$1"
+   error=0
+   for dir in $dirs
+   do
+      if [ ! -z "$dir" ]; then
+         build_perl_project "$dir" || error=1
+      fi
+   done
+   if [ $error == 1 ]; then
+      echo NOT OK errors for build_perl_projects $dirs 
+   fi
+   return $error
+}
+
+# Build as many perl projects as possible without running tests
+function build_perl_projects_no_tests {
+   local dirs error
+   dirs="$1"
+   error=0
+   for dir in $dirs
+   do
+      if [ ! -z "$dir" ]; then
+         build_perl_project_no_tests "$dir" || error=1
+      fi
+   done
+   if [ $error == 1 ]; then
+      echo NOT OK errors for build_perl_projects_no_tests $dirs 
+   fi
+   return $error
 }
 
 #============================================================================
