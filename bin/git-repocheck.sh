@@ -1,7 +1,14 @@
 #!/bin/bash
 # check all my git repos for uncommitted changes
-pushd $HOME > /dev/null
+TOP=$HOME
+if [ `hostname` == WYATT ]; then
+   TOP=/cygdrive/d/d/s
+fi
+pushd $TOP > /dev/null
 REPOS=`find . -type d -name .git | grep -v Soda | perl -pne 's{\.git \s* \z}{\n}xms;'`
+if [ `hostname` == WYATT ]; then
+   REPOS="$HOME $REPOS"
+fi
 echo $REPOS
 for dir in $REPOS
 do
