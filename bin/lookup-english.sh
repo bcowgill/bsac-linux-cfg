@@ -8,6 +8,7 @@ WORDS=`dirname $WORDS`
 WORDS="$WORDS/english"
 WORDLISTS="$WORDS/english-words.txt $WORDS/english-open-word-list.txt $WORDS/american-english.txt $WORDS/british-english.txt"
 [ -d $WORDS ] || mkdir -p $WORDS
+
 if [ ! -f $WORDS/english-words.txt ]; then
    # http://www-personal.umich.edu/~jlawler/wordlist.html
    echo Fetching english words from web to $WORDS/
@@ -23,6 +24,12 @@ if [ ! -f $WORDS/english-open-word-list.txt ]; then
    cat EOWL-v1.1.2/LF\ Delimited\ Format/*Words.txt | sort > $WORDS/english-open-word-list.txt
    rm -rf EOWL-v1.1.2 eowl.zip
    popd
+fi
+
+if [ -z $1 ]; then
+   echo Usage example: match .el..es omitting letters already guessed
+   echo "R='[^delnrst]'; lookup-english.sh \${R}el\${R}\${R}es"
+   exit 1
 fi
 echo regex: "\A $1 \b"
 LOOKUP=$1 perl -ne 'print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
