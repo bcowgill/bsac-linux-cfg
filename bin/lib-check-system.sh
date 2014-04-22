@@ -135,12 +135,15 @@ function dir_link_exists {
 }
 
 function file_linked_to {
-   local name target message
+   local name target message link
    name="$1"
    target="$2"
    message="$3"
    file_exists "$target" "$message"
-   if [ `readlink "$name"` == "$target" ]; then
+   set +e
+   link=`readlink "$name"`
+   set -e
+   if [ "${link:-}" == "$target" ]; then
       echo OK symlink $name links to $target
       return 0
    else
@@ -151,12 +154,15 @@ function file_linked_to {
 }
 
 function file_linked_to_root {
-   local name target message
+   local name target message link
    name="$1"
    target="$2"
    message="$3"
    file_exists "$target" "$message"
-   if [ `readlink "$name"` == "$target" ]; then
+   set +e
+   link=`readlink "$name"`
+   set -e
+   if [ "${link:-}" == "$target" ]; then
       echo OK symlink $name links to $target
       return 0
    else
@@ -177,18 +183,21 @@ function file_hard_linked_to {
 }
 
 function dir_linked_to {
-   local name target message root
+   local name target message root link
    name="$1"
    target="$2"
    message="$3"
    root="$4"
    dir_exists "$target" "$message"
    if [ -e "$name" ]; then
-      if [ `readlink "$name"` == "$target" ]; then
+      set +e
+      link=`readlink "$name"`
+      set -e
+      if [ "${link:-}" == "$target" ]; then
          echo OK symlink $name links to dir $target
          return 0
       else
-         if [ `readlink "$name"` == "$target/" ]; then
+         if [ "${link:-}" == "$target/" ]; then
             echo OK symlink $name links to dir $target/
             return 0
          else

@@ -173,6 +173,7 @@ make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 
 file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
 file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
+file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home.sh "home work unpacker configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
@@ -345,6 +346,7 @@ file_exists workspace/cfgrec.txt "configuration record files"
 file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work.sh "daily backup script"
 file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual.sh "manual backup script"
 cmd_exists backup-work.sh "backup script missing"
+cmd_exists get-from-home.sh "unpacker script for work at home"
 
 file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
