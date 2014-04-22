@@ -5,4 +5,5 @@ wcd.go
 backup-work-manual.sh
 backup-work.sh
 check-system.sh
+get-from-home.sh
 
