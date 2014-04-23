@@ -607,10 +607,25 @@ function perl_module_exists {
    local module message
    module="$1"
    message="$2"
-   if perl -M$module -e 'print "OK perl module $ARGV[0] is installed\n"' $module > /dev/null; then
+   if perl -M$module -e 'my $ver = eval "\$$ARGV[0]::VERSION"; print "OK perl module $ARGV[0] v$ver is installed\n"' $module > /dev/null; then
       echo OK perl module $module is installed
    else
       echo NOT OK perl module $module is not installed [$message]
+      return 1
+   fi
+   return 0
+}
+
+# Check that a specific version perl module is available
+function perl_module_version_exists {
+   local module version message
+   module="$1"
+   version="$2"
+   message="$3"
+   if perl -M$module -e 'my $ver = eval "\$$ARGV[0]::VERSION"; my $msg = "OK perl module $ARGV[0] v$ver is installed, expected v$ARGV[1]\n"; if ($ver eq $ARGV[1]) { print $msg; } else { print "NOT $msg"; exit 1; }' $module $version; then
+      echo OK perl module $module version $version is installed
+   else
+      echo NOT OK perl module $module version $version is not installed [$message]
       return 1
    fi
    return 0

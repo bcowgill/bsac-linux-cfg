@@ -30,9 +30,10 @@ my $content = <>;
 # [%# COMMENTED ... %]
 # can also just be $obj.prop.subprop ...
 # perhaps even $obj.$key ??
+# and ${obj.id}
 # but these can match some javascript so output not exact
 
-$content =~ s{( \[ \% .+? \% \] | \$(\w|\.|\$)+ )}{
+$content =~ s{( \[ \% .+? \% \] | \$(\w|\.|\$|\{|\})+ )}{
    my $match = $1;
    $match =~ s{\s+}{ }xmsg if $INLINE;
    $match =~ s{\n}{\n$INDENT}xmsg;

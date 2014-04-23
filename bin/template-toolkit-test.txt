@@ -2,6 +2,7 @@ Test file for ls-tt-tags.pl containing sample Template::Toolkit vars and directi
 
 $this
 $this.that
+${obj.id}
 
 [% DIRECTIVE %]
 [% DIRECTIVE 

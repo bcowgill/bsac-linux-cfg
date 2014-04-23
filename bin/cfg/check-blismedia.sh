@@ -103,7 +103,6 @@ else
    echo NOT OK user $USER does not have sudo privileges
 fi
 
-
 check_linux $UBUNTU
 
 touch go.sudo; rm go.sudo
