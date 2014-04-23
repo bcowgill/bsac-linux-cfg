@@ -808,6 +808,7 @@ function file_has_text {
       echo OK file has text: "$file" "$text"
    else
       echo NOT OK file missing text: "$file" "$text" [$message]
+      echo grep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -824,6 +825,7 @@ function file_contains_text {
       echo OK file contains regex: "$file" "$text"
    else
       echo NOT OK file missing regex: egrep \"$text\" \"$file\" [$message]
+      echo egrep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -840,6 +842,7 @@ function file_must_not_have_text {
       return 1
    else
       echo OK file does not have text: "$file" "$text"
+      echo grep \""$text"\" \""$file"\"
    fi
    return 0
 }

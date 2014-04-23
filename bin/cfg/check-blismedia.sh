@@ -150,7 +150,28 @@ file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWin
 #TODO KATE color check
 #./.kde/share/config/colors/Recent_Colors
 #./.kde/share/config/kateschemarc
-#./.kde/share/config/katerc
+
+FILE=.kde/share/config/katerc
+file_has_text "$FILE" "Indent On Backspace=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Indent On Text Paste=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Indentation Width=3" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Newline At EOF=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "PageUp/PageDown Moves Cursor=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Remove Spaces=1" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Show Spaces=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Word Wrap=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Word Wrap Column=128" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Animate Bracket Matching=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Show Indentation Lines=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Show Whole Bracket Expression=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Word Wrap Marker=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Dynamic Word Wrap=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Dynamic Word Wrap Align Indent=80" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Dynamic Word Wrap Indicators=1" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Smart Copy Cut=true" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "toolbar actions=home,mkdir,up,back,forward,show hidden,short view,detailed view,tree view,detailed tree view,bookmarks,sync_dir,configure" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
+
 
 dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"
