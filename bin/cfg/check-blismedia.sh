@@ -625,8 +625,8 @@ FILE=.kde/share/config/kwinrc
 
 # Screen saver
 FILE=.kde/share/config/kscreensaverrc
-## TODO file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
-file_has_text "$FILE" "Saver=bsod.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+#file_has_text "$FILE" "Saver=bsod.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
 file_has_text "$FILE" "Timeout=1200" "screensaver activation time configured"
 file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
 
