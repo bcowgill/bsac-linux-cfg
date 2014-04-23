@@ -5,11 +5,15 @@
 # Provides perl test case like output
 # OK something worked
 # NOT OK something failed
-# Make sure you set -e on your setup script to it will terminate on first failure
+# Make sure you set -e on your setup script so it will terminate on first failure
 #
 # Example:
 # set -e
 # file_exists something-i-need.txt "need this config file"
+# produces output:
+# OK file exists: something-i-need.txt
+# or
+# NOT OK file missing: something-i-need.txt [need this config file]
 
 #============================================================================
 # Flow control
@@ -17,14 +21,14 @@
 function pause {
    local message input
    message="$1"
-   echo PAUSE $message press ENTER to continue.
+   echo NOT OK PAUSE $message press ENTER to continue.
    read input
 }
 
 function stop {
    local message
    message="$1"
-   echo STOPPED: $message
+   echo NOT OK STOPPED: $message
    exit 1
 }
 
