@@ -1,0 +1,13 @@
+Test file for ls-tt-tags.pl containing sample Template::Toolkit vars and directives
+
+$this
+$this.that
+
+[% DIRECTIVE %]
+[% DIRECTIVE 
+      multiple lines
+%]
+[%# commented out %]
+[% DIRECTIVE # with line comments
+   # more line comments
+%]
