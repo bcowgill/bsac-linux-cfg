@@ -436,8 +436,11 @@ file_has_text $FILE "displayFontSize>16" "charles font config"
 file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
 FILE=.kde/share/config/kioslaverc
-file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
-file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
+# when system not proxied through charles
+file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
+# when proxying system through charles
+#file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
+file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
 
 DIR=.local/share/applications
 dir_exists $DIR "KDE applications folder"
