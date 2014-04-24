@@ -182,6 +182,7 @@ if [ ! -z $USE_JAVA ]; then
    dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
 fi
 
+
 dir_exists  bin/cfg "bin configuration missing"
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
@@ -190,6 +191,8 @@ make_dir_exist $INI_DIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
+make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
+dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
 
 file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
 file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
