@@ -622,7 +622,7 @@ function perl_module_version_exists {
    module="$1"
    version="$2"
    message="$3"
-   if perl -M$module -e 'my $ver = eval "\$$ARGV[0]::VERSION"; my $msg = "OK perl module $ARGV[0] v$ver is installed, expected v$ARGV[1]\n"; if ($ver eq $ARGV[1]) { print $msg; } else { print "NOT $msg"; exit 1; }' $module $version; then
+   if perl -M$module -e 'my $ver = eval "\$$ARGV[0]::VERSION"; my $msg = "NOT OK perl module $ARGV[0] v$ver is installed, expected v$ARGV[1]\n"; if ($ver ne $ARGV[1]) { print $msg; exit 1; }' $module $version; then
       echo OK perl module $module version $version is installed
    else
       echo NOT OK perl module $module version $version is not installed [$message]
@@ -681,6 +681,44 @@ function force_install_perl_modules {
       echo NOT OK errors for force_install_perl_modules $modules
    fi
    return $error
+}
+
+# Install a specific version of a perl module from a locally downloaded archive
+function install_perl_module_version_from_archive {
+   local module version location archive message
+   module="$1"
+   version="$2"
+   location="$3"
+   archive="$4"
+   message="$5"
+   if perl_module_version_exists "$module" "$version" "$message"; then
+      return 0
+   else
+      dir_exists "$location" "directory for local archive file"
+      file_exists "$location/$archive.tar.gz" "local archive file for $message"
+      tar xvzf "$location/$archive.tar.gz" && dir_exists "$archive" "extracted archive not in expected location"
+      build_perl_project "$archive"
+      perl_module_version_exists "$module" "$version" "$message"
+   fi
+}
+
+# Install a specific version of a perl module from a locally downloaded archive without tests
+function install_perl_module_version_from_archive_no_tests {
+   local module version location archive message
+   module="$1"
+   version="$2"
+   location="$3"
+   archive="$4"
+   message="$5"
+   if perl_module_version_exists "$module" "$version" "$message"; then
+      return 0
+   else
+      dir_exists "$location" "directory for local archive file"
+      file_exists "$location/$archive.tar.gz" "local archive file for $message"
+      tar xvzf "$location/$archive.tar.gz" && dir_exists "$archive" "extracted archive not in expected location"
+      build_perl_project_no_tests "$archive"
+      perl_module_version_exists "$module" "$version" "$message"
+   fi
 }
 
 # Install perl project dependencies
