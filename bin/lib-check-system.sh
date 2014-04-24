@@ -92,10 +92,51 @@ function make_root_file_exist {
    file_exists "$file" "$message"
 }
 
+# removes a file
 function remove_file {
-   local file
+   local file message
+   file="$1"
+   message="$2"
    if [ -f "$file" ]; then
-      rm "$file"
+      if rm "$file"; then
+         echo OK file removed "$file" [$message]
+      else
+         echo MAYBE NOT OK unable to remove file "$file" [$message]
+         echo was in dir `pwd`
+         set +e
+         ls -al "$file"
+         set -e
+      fi
+   else
+      echo MAYBE NOT OK unable to remove file "$file" not found [message]
+      echo was in dir `pwd`
+      set +e
+      ls -al "$file"
+      set -e
+   fi
+}
+
+# removes a symbolic link
+function remove_symlink {
+   local file message
+   file="$1"
+   message="$2"
+   if [ -L "$file" ]; then
+      if rm "$file"; then
+         echo OK symlink removed "$file" [$message]
+      else
+         echo MAYBE NOT OK unable to remove symlink "$file" [$message]
+         echo was in dir `pwd`
+         set +e
+         ls -al "$file"
+         set -e
+      fi
+   else
+      echo MAYBE NOT OK unable to remove symlink "$file" not found [message]
+      echo was in dir `pwd`
+      set +e
+      ls -al "$file"
+      set -e
    fi
 }
 
@@ -284,8 +325,46 @@ function install_git_repo_branch {
    url="$4"
    message="$5"
    dir_exists "$dir" "$message"
-   dir_exists "$dir/$subdir" > /dev/null || (echo "NOT OK get git repo $mesasge from $url"; pushd "$dir" && git clone "$url" "$subdir" && cd "$subdir" && git checkout --track $branch ; popd)
-   dir_exists "$dir/$subdir" "$message"
+   if check_git_repo_branch "$dir/$subdir" "$branch" "$message"; then
+      return 0
+   else
+      echo NOT OK will get git repo "$message" branch "$branch" from "$url"
+      pushd "$dir" > /dev/null
+      if [ ! -d "$subdir" ]; then
+         git clone "$url" "$subdir"
+      fi
+      dir_exists "$subdir" "$message"
+      cd "$subdir" && git checkout --track $branch
+      popd > /dev/null
+      check_git_repo_branch "$dir/$subdir" "$branch" "$message"
+   fi
+}
+
+# Check that a checked out git repository is on the correct branch
+function check_git_repo_branch {
+   local dir branch message error
+   dir="$1"
+   branch="$2"
+   message="$3"
+   error=0
+   dir_exists "$dir" "$message"
+   pushd "$dir" > /dev/null
+      if git branch | grep '*' | grep "$branch"; then
+         # TODO could be only a substring match of the branch
+         echo OK git repo "$dir" is on branch "$branch"
+      else
+         branch=`perl -e '$ARGV[0] =~ s{\A origin/}{}xms; print $ARGV[0]' "$branch"`
+	 if git branch | grep '*' | grep "$branch"; then
+	    # TODO could be only a substring match of the branch
+	    echo OK git repo "$dir" is on branch "$branch"
+	 else
+            git branch
+            echo NOT OK git repo "$dir" is not on branch "$branch"
+            error=1
+         fi
+      fi
+   popd > /dev/null
+   return $error
 }
 
 #============================================================================
