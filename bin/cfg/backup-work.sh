@@ -16,6 +16,7 @@ HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
 ROOTCFG="/etc/mtab /etc/fstab"
 #ROOTCFG="/etc/X11/xorg.conf /etc/mtab /etc/fstab"
 WORKCFG="workspace/.metadata"
+WORKSTYLE="workspace/projects"
 
 echo ======================================================================
 date
@@ -37,7 +38,7 @@ tar cvzf backup/work-stuff.tgz play/ charles-config/ projects/
 cp backup/$COMPANY-notes.tgz $DROP
 cp backup/$COMPANY-bin.tgz $DROP
 cp backup/$COMPANY-home-cfg.tgz $DROP
-cp backup/work-stuff $DROP
+cp backup/work-stuff.tgz $DROP
 
 date
 echo Backup complete: $DROP
