@@ -140,6 +140,20 @@ function remove_symlink {
    fi
 }
 
+# check that a file is present somewhere on the system using locate
+function file_present {
+   local file message
+   file="$1"
+   message="$2"
+   if locate "$file"; then
+      echo OK file "$file" is present on system [$message]
+   else
+      echo NOT OK file "$file" is NOT present on system [$message]
+      return 1
+   fi
+   return 0
+}
+
 function file_exists {
    local file message
    file="$1"

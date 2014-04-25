@@ -36,9 +36,9 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 NODE="nodejs npm grunt grunt-init uglifyjs phantomjs"
 NODE_VER="v0.10.25"
 NODE_CMD="nodejs"
-NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
+NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM=""
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower prettydiff"
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 CHARLES="charles"
@@ -425,6 +425,19 @@ install_git_repo "workspace/play" jshint-test https://github.com/bcowgill/jshint
 install_git_repo "workspace/play" grunt-test https://github.com/bcowgill/grunt-test.git "my grunt build system"
 install_git_repo "workspace/play" bsac-linux-cfg https://github.com/bcowgill/bsac-linux-cfg.git "my linux config scripts"
 
+# flash player in google chrome
+# http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
+# TODO can't find the config files to copy
+# http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/flashplayer_11_plugin_debug.i386.tar.gz
+#file_present "libflashplayer.so" "flash player for google chrome"
+#dir_exists "/usr/lib/chromium-browser/plugins" "google chrome browser plugins directory"
+#file_exists "/usr/lib/chromium-browser/plugins/libflashplayer.so" "will install flash player to google chrome plugins dir" || cp /usr/lib/flashplugin-installer/libflashplayer.so /usr/lib/chromium-browser/plugins/
+#file_exists "/usr/lib/chromium-browser/plugins/libflashplayer.so" "flash player to google chrome plugins
+
+#============================================================================
+# end of main installing, now configuring
+
+
 # Check charles configuration options
 FILE=.charles.config
 make_dir_exist tx/mirror/web "charles mirroring area"
@@ -437,10 +450,11 @@ file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mir
 
 FILE=.kde/share/config/kioslaverc
 # when system not proxied through charles
-file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
+#file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
+#file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
 # when proxying system through charles
-#file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
-file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
+file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
+file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
 
 DIR=.local/share/applications
 dir_exists $DIR "KDE applications folder"
@@ -653,6 +667,8 @@ file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings 
 #file_has_text "$FILE" "" "Tools / Options / Appearance"
 #file_has_text "$FILE" "" "Tools / Options / Appearance"
 
+file_present prettydiff.js "html beautifier file"
+
 popd
 
 echo COMMANDS="$COMMANDS"
@@ -661,7 +677,7 @@ echo PACKAGES="$PACKAGES"
 echo TODO VIRTUALBOX SETUP
 echo TODO SUBLIME THEME OVERRIDES
 echo TODO WINDOW MANAGER SPECIAL EFFECTS
-echo TODO SCREEN SAVER SLIDER
+echo TODO google chrome flash player
 
 echo OK all checks complete
 
