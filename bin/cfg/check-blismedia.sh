@@ -38,7 +38,7 @@ NODE_VER="v0.10.25"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which"
 INSTALL_NPM_FROM=""
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower"
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower prettydiff"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 CHARLES="charles"
@@ -153,7 +153,7 @@ file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWin
 FILE=.kde/share/config/katerc
 file_has_text "$FILE" "Indent On Backspace=true" "Settings / Configure Kate / Editor"
 file_has_text "$FILE" "Indent On Text Paste=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Indentation Width=3" "Settings / Configure Kate / Editor"
+file_has_text "$FILE" "Indentation Width=4" "Settings / Configure Kate / Editor"
 file_has_text "$FILE" "Newline At EOF=true" "Settings / Configure Kate / Editor"
 file_has_text "$FILE" "PageUp/PageDown Moves Cursor=true" "Settings / Configure Kate / Editor"
 file_has_text "$FILE" "Remove Spaces=1" "Settings / Configure Kate / Editor"
@@ -642,6 +642,16 @@ file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
 # uk/us keyboard layout
 FILE=.kde/share/config/kxkbrc
 file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
+
+# libreoffice color changes
+# difficult because of so much punctutation
+#FILE=.config/libreoffice/4/user/registrymodifications.xcu
+#filter-punct.pl $FILE > $FILE.nopunct
+#file_has_text "$FILE.nopunct" #"LibreOffice']/CalcNotesBackground"><prop oor:name="Color" #oor:op="fuse"><value>1842204" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
 
 popd
 
