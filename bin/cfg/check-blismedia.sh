@@ -82,6 +82,12 @@ GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 SKYPE=skype
 SKYPE_PKG="skype skype-bin"
 
+FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
+FLASH_EXTRACTED_DIR="$HOME/Downloads/$FLASH_ARCHIVE"
+FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
+FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
+CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
+
 INI_DIR=check-iniline
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext"
@@ -427,12 +433,13 @@ install_git_repo "workspace/play" bsac-linux-cfg https://github.com/bcowgill/bsa
 
 # flash player in google chrome
 # http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
-# TODO can't find the config files to copy
-# http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/flashplayer_11_plugin_debug.i386.tar.gz
-#file_present "libflashplayer.so" "flash player for google chrome"
-#dir_exists "/usr/lib/chromium-browser/plugins" "google chrome browser plugins directory"
-#file_exists "/usr/lib/chromium-browser/plugins/libflashplayer.so" "will install flash player to google chrome plugins dir" || cp /usr/lib/flashplugin-installer/libflashplayer.so /usr/lib/chromium-browser/plugins/
-#file_exists "/usr/lib/chromium-browser/plugins/libflashplayer.so" "flash player to google chrome plugins
+
+install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
+dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
+file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
+file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
+file_exists "/usr/bin/flash-player-properties" > /dev/null || (echo "NOT OK flash player settings missing, will copy them" ; sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
+file_exists "/usr/bin/flash-player-properties"
 
 #============================================================================
 # end of main installing, now configuring

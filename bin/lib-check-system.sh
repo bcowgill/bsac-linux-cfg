@@ -301,14 +301,42 @@ function install_file_from_url {
    file_exists "$file" "$message"
 }
 
+# Install a file from a downloaded archive which creates its own subdirectory
 function install_file_from_url_zip {
-   local file package url
+   local file package url message
    file="$1"
    package="$2"
    url="$3"
    message="$4"
-   install_file_from_url "$file" "$package" "$url" > /dev/null || (pushd $HOME/Downloads/ && unzip $HOME/Downloads/$package && popd)
+   install_file_from_url "$file" "$package" "$url" > /dev/null || (pushd "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && popd)
    file_exists "$file" "$message"
+}
+
+# Install a file from a downloaded archive which doesn't create its own subdirectory
+function install_file_from_url_zip_subdir {
+   local file package subdir url message
+   file="$1"
+   package="$2"
+   subdir="$3"
+   url="$4"
+   message="$5"
+   install_file_from_url "$file" "$package" "$url" > /dev/null || (pushd "$HOME/Downloads/" && mkdir -p   "$subdir" && cd "$subdir" && extract_archive "$HOME/Downloads/$package" && popd)
+   file_exists "$file" "$message"
+}
+
+# Extract files from an archive
+function extract_archive {
+   local archive
+   archive="$1"
+   if echo "$archive" | grep ".zip"; then
+      unzip "$archive"
+   else
+      if echo "$archive" | grep ".tar.gz"; then
+         tar xvzf "$archive"
+      else
+         echo NOT OK archive "$archive" is not a known type
+      fi
+   fi
 }
 
 function install_file_manually {
