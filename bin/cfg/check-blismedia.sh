@@ -649,6 +649,19 @@ FILE=.kde/share/config/kwinrc
 #FILE=.kde/share/config/kwinrc
 #file_has_text $FILE ""
 
+# gitk configuration
+FILE=.config/git/gitk
+# There are other colors in the config file which are not in the UI
+file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
+file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
+file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
+file_has_text "$FILE" "set uicolor #000000" "Edit / Preferences / Colors"
+file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
+file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"
+file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences / Colors"
+file_has_text "$FILE" "set markbgcolor #002c39" "Edit / Preferences / Colors"
+file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
+
 # Screen saver
 FILE=.kde/share/config/kscreensaverrc
 file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
