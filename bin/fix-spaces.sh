@@ -1,6 +1,7 @@
 #!/bin/bash
 # fix up spacing in a file
 
+# TODO make these flags accessible on command line
 INDENT_TAB=0
 INDENT=4
 INPLACE=-i.bak
@@ -17,7 +18,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ "${INDENT_TAB:-0}" == 1 ]; then
-   echo THIS IS NOT WORKING
+   echo TODO THIS IS NOT WORKING
    exit 1
    perl $INPLACE -pne 'BEGIN { our $indent = shift; our $tabstop = " " x $indent; }; s{\s+ \z}{\n}xmsg; while (s{\A ($tabstop)}{ "\t" x (length($1)/$indent) }xmsge) { last unless length($1); } ;' $INDENT $*
 else
