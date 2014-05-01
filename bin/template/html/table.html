@@ -1,0 +1,95 @@
+<!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table -->
+
+<style>
+.columnone {
+	background: grey;
+}
+.columntwo {
+	background: cyan;
+}
+
+caption {
+	caption-side: top; /* top bottom inherit [left right nonstandard] */
+	text-align: center; /* left right center justify start end match-parent [start end] "." [start "."] ["." end] inherit */
+}
+details {
+	caption-side: bottom;
+	text-align: left;
+}
+</style>
+
+<table class="no-spacing">
+	<!-- caption must be first -->
+	<caption>
+		<b>Table 1:</b> <i>Table caption</i></b>
+		<!-- details or can put table in a figure element with figcaption -->
+		<details>Table details for visually-impaired people</details>
+	</caption>
+	<!-- colgroup must be before thead tbody tfoot -->
+	<colgroup width="150px" span="1" class="columnone" />
+	<colgroup width="350px" span="1" class="columntwo" />
+	<!-- thead,tfoot optional but before tbody -->
+	<thead>
+		<tr>
+			<th title="tooltip long description of column 1">Header content 1</th>
+			<th title="tooltip long description of column 2">Header content 2</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Footer content 1</th>
+			<td>Footer content 2</th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td contenteditable="true" spellcheck="true">Body content 1</th>
+			<td contenteditable="false">Body content 2</th>
+		</tr>
+	</tbody>
+	<tbody>
+		<tr>
+			<td contenteditable="true" spellcheck="true">Body content 1</th>
+			<td contenteditable="false">Body content 2</th>
+		</tr>
+	</tbody>
+</table>
+<hr/>
+<table class="no-spacing">
+	<!-- caption must be first -->
+	<caption>
+		<b>Table 2:</b> <i>Table caption</i></b>
+		<!-- details or can put table in a figure element with figcaption -->
+		<details>Table details for visually-impaired people</details>
+	</caption>
+	<!-- colgroup must be before thead tbody tfoot -->
+	<colgroup >
+		<col width="150px" span="1" class="columnone" />
+		<col width="350px" span="1" class="columntwo" />
+	</colgroup>
+	<!-- thead,tfoot optional but before tbody -->
+	<thead>
+		<tr>
+			<th title="tooltip long description of column 1">Header content 1</th>
+			<th title="tooltip long description of column 2">Header content 2</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th>Footer content 1</th>
+			<td>Footer content 2</th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td contenteditable="true" spellcheck="true">Body content 1</th>
+			<td contenteditable="false">Body content 2</th>
+		</tr>
+	</tbody>
+	<tbody>
+		<tr>
+			<td contenteditable="true" spellcheck="true">Body content 1</th>
+			<td contenteditable="false">Body content 2</th>
+		</tr>
+	</tbody>
+</table>
