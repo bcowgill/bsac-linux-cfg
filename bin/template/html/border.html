@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head><title>template for border CSS</title>
+<style>
+div {
+	width: 300px;
+	height: 100px;
+
+	border-color: red;
+	border-width: 1px 10px 20px 40px; /* top right bottom left */
+	border-width: thick; /* thin medium thick*/
+
+	border-style: solid; /* none solid hidden dashed dotted double groove inset outset ridge */
+
+	/* these work best with a thick, solid colour */
+	border-color: red;
+	border-width: 40px;
+	border-style: outset;
+	border-style: inset;
+	border-style: ridge;
+	border-style: groove;
+
+	/* changing each side as you go */
+	border-color: red green blue black;
+	border-style: none solid hidden solid;
+	border-style: solid dotted dashed double;
+
+	/* longhand for each side property */
+	border: thick solid green;
+	border-left-style: dashed;
+	border-left-color: blue;
+	border-left-width: medium;
+
+	/* border-image example: http://codepen.io/SitePoint/pen/DvhKL */
+}
+div:hover {
+	/* border-style: none; */ /* bad - content moves as you hover */
+	border-color: transparent; /* good - border invisible so content stays put */
+}
+
+</style>
+<head>
+<body>
+</body>
+
+<div>
+	something with a border
+</div>

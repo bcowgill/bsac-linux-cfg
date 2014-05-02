@@ -7,7 +7,6 @@
 .columntwo {
 	background: cyan;
 }
-
 caption {
 	caption-side: top; /* top bottom inherit [left right nonstandard] */
 	text-align: center; /* left right center justify start end match-parent [start end] "." [start "."] ["." end] inherit */
@@ -15,6 +14,10 @@ caption {
 details {
 	caption-side: bottom;
 	text-align: left;
+}
+table {
+  empty-cells: show; /* show/hide */
+  word-wrap: normal; /* normal/break-word useful to cause long URLs to wrap */
 }
 </style>
 
@@ -89,7 +92,11 @@ details {
 	<tbody>
 		<tr>
 			<td contenteditable="true" spellcheck="true">Body content 1</th>
-			<td contenteditable="false">Body content 2</th>
+			<td contenteditable="false"></th>
+		</tr>
+		<tr>
+			<td contenteditable="true" spellcheck="true">Body content 1</th>
+			<td contenteditable="false"></th>
 		</tr>
 	</tbody>
 </table>
