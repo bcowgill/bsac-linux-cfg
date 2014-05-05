@@ -1,7 +1,9 @@
 #!/bin/bash
 # lookup an english word for hangman type games
 # lookup-english.sh .re.ter
-# R='[^delnrst]'; lookup-english.sh ${R}el${R}${R}es
+# for hanging with friends, no vowels possible after last one given
+# so we make two vars one for vowelless guesses and one for vowel including guesses
+# V='aeiou'; G='delnrst'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}el${C}${C}s
 
 WORDS=`which lookup-english.sh`
 WORDS=`dirname $WORDS`
@@ -29,6 +31,7 @@ fi
 if [ -z $1 ]; then
    echo Usage example: match .el..es omitting letters already guessed
    echo "R='[^delnrst]'; lookup-english.sh \${R}el\${R}\${R}es"
+   echo "V='aeiou'; G='delnrst'; R=\"[^\$G]\"; C=\"[^\$V\$G]\"; lookup-english.sh ${R}el${C}${C}s"
    exit 1
 fi
 echo regex: "\A $1 \b"
