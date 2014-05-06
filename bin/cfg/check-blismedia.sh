@@ -451,7 +451,8 @@ FILE=.charles.config
 make_dir_exist tx/mirror/web "charles mirroring area"
 file_has_text $FILE "port>58008" "charles port config Proxy / Proxy Settings"
 file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
-file_has_text $FILE "lookAndFeel>GTK+" "charles look and feel Edit / Preferences / User Interface"
+# this setting has just vanished in charles
+#file_has_text $FILE "lookAndFeel>GTK+" "charles look and feel Edit / Preferences / User Interface"
 file_has_text $FILE "displayFont>ProFontWindows" "charles font config Edit / Preferences / User Interface"
 file_has_text $FILE "displayFontSize>20" "charles font config Edit / Preferences / User Interface"
 file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
