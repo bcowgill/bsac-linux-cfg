@@ -1,11 +1,18 @@
+<!DOCTYPE html>
 <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>template for border CSS</title>
 
 <style>
 .columnone {
 	background: grey;
+	width: 150px;
 }
 .columntwo {
 	background: cyan;
+	width: 350px;
 }
 caption {
 	caption-side: top; /* top bottom inherit [left right nonstandard] */
@@ -20,17 +27,18 @@ table {
   word-wrap: normal; /* normal/break-word useful to cause long URLs to wrap */
 }
 </style>
-
+</head>
+<body>
 <table class="no-spacing">
 	<!-- caption must be first -->
 	<caption>
-		<b>Table 1:</b> <i>Table caption</i></b>
+		<b>Table 1:</b> <i>Table caption</i>
 		<!-- details or can put table in a figure element with figcaption -->
-		<details>Table details for visually-impaired people</details>
+		<details><summary>Table details for visually-impaired people</summary></details>
 	</caption>
 	<!-- colgroup must be before thead tbody tfoot -->
-	<colgroup width="150px" span="1" class="columnone" />
-	<colgroup width="350px" span="1" class="columntwo" />
+	<colgroup span="1" class="columnone"></colgroup>
+	<colgroup span="1" class="columntwo"></colgroup>
 	<!-- thead,tfoot optional but before tbody -->
 	<thead>
 		<tr>
@@ -41,19 +49,19 @@ table {
 	<tfoot>
 		<tr>
 			<th>Footer content 1</th>
-			<td>Footer content 2</th>
+			<td>Footer content 2</td>
 		</tr>
 	</tfoot>
 	<tbody>
 		<tr>
-			<td contenteditable="true" spellcheck="true">Body content 1</th>
-			<td contenteditable="false">Body content 2</th>
+			<td contenteditable="true" spellcheck="true">Body content 1</td>
+			<td contenteditable="false">Body content 2</td>
 		</tr>
 	</tbody>
 	<tbody>
 		<tr>
-			<td contenteditable="true" spellcheck="true">Body content 1</th>
-			<td contenteditable="false">Body content 2</th>
+			<td contenteditable="true" spellcheck="true">Body content 1</td>
+			<td contenteditable="false">Body content 2</td>
 		</tr>
 	</tbody>
 </table>
@@ -61,14 +69,14 @@ table {
 <table class="no-spacing">
 	<!-- caption must be first -->
 	<caption>
-		<b>Table 2:</b> <i>Table caption</i></b>
+		<b>Table 2:</b> <i>Table caption</i>
 		<!-- details or can put table in a figure element with figcaption -->
-		<details>Table details for visually-impaired people</details>
+		<details><summary>Table details for visually-impaired people</summary></details>
 	</caption>
 	<!-- colgroup must be before thead tbody tfoot -->
-	<colgroup >
-		<col width="150px" span="1" class="columnone" />
-		<col width="350px" span="1" class="columntwo" />
+	<colgroup>
+		<col span="1" class="columnone" />
+		<col span="1" class="columntwo" />
 	</colgroup>
 	<!-- thead,tfoot optional but before tbody -->
 	<thead>
@@ -80,23 +88,25 @@ table {
 	<tfoot>
 		<tr>
 			<th>Footer content 1</th>
-			<td>Footer content 2</th>
+			<td>Footer content 2</td>
 		</tr>
 	</tfoot>
 	<tbody>
 		<tr>
-			<td contenteditable="true" spellcheck="true">Body content 1</th>
-			<td contenteditable="false">Body content 2</th>
+			<td contenteditable="true" spellcheck="true">Body content 1</td>
+			<td contenteditable="false">Body content 2</td>
 		</tr>
 	</tbody>
 	<tbody>
 		<tr>
-			<td contenteditable="true" spellcheck="true">Body content 1</th>
-			<td contenteditable="false"></th>
+			<td contenteditable="true" spellcheck="true">Body content 1</td>
+			<td contenteditable="false"></td>
 		</tr>
 		<tr>
-			<td contenteditable="true" spellcheck="true">Body content 1</th>
-			<td contenteditable="false"></th>
+			<td contenteditable="true" spellcheck="true">Body content 1</td>
+			<td contenteditable="false"></td>
 		</tr>
 	</tbody>
 </table>
+</body>
+</html>
