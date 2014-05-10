@@ -4,6 +4,10 @@
 # or
 # git mergetool --no-prompt filename
 # https://sourcegear.com/diffmerge/webhelp/sec__git__linux.html
+#
+# Using it on a merge:
+# git merge something   indicates conflicts
+# git mergetool
 
 if [ "x$1" == "xfalse" ]; then
    git config --global --unset diff.tool

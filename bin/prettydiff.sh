@@ -11,8 +11,9 @@ FILE="$1"
 OUTPUT="$2"
 if [ -z "$1" ]; then
    echo "Usage: $0 source [output]"
-   echo "Will beautify an HTML file (with tabs: ${INDENT_TABS:-0} or with $INDENT_SIZE spaces)"
-   echo "Might beautify javascript and XML as well, haven't tried."
+   echo "Will beautify an HTML file"
+   echo " (with tabs: ${INDENT_TABS:-0} or with $INDENT_SIZE spaces)"
+   echo "Might beautify javascript, css and XML as well, haven't tried."
    exit 1
 fi
 if [ -z "$OUTPUT" ]; then

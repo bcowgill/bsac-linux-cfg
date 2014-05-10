@@ -692,6 +692,11 @@ file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings 
 
 file_present prettydiff.js "html beautifier file"
 
+# okular PDF viewer invert colours
+FILE=.kde/share/config/okularpartrc
+ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
+ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
+
 popd
 
 echo COMMANDS="$COMMANDS"

@@ -1032,6 +1032,17 @@ function ini_file_has_text {
    file_has_text "$INI_DIR/$file" "$text" "$message"
 }
 
+function ini_file_must_not_have_text {
+   local dir file text message
+   dir=`dirname "$1"`
+   file=`basename "$1"`
+   text="$2"
+   message="$3"
+   file_exists "$dir/$file"
+   file_exists "$INI_DIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
+   file_must_not_have_text "$INI_DIR/$file" "$text" "$message"
+}
+
 function crontab_has_command {
    local command config message
    command="$1"
