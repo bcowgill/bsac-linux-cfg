@@ -45,7 +45,7 @@ perl.pl [options] [file ...]
 
 =head1 EXAMPLES
 
- template/perl.pl --length=32 --file=this filename --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width   -- --also-a-file
+ template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
 =cut
 
@@ -68,11 +68,14 @@ my %Vars = (
 			verbose => 1, # default value for verbose
 			debug => 0,
 			man => 0,     # show full help page
+			map => {},
+			name => [],
 		},
 		raFile => [],
 	},
 	rhGetopt => {
 		result => undef,
+		raErrors => [],
 		raConfig => [
 			"bundling",     # bundle single char options ie ps -aux
 			"auto_version", # supplies --version option
@@ -87,6 +90,8 @@ my %Vars = (
 # cannot repeat when bundling is turned on
 #		"point:f{2}", # two floats separated by comma --point=1.3,24.5
 			"file=s",     # string required --file or -f (implicit)
+			"in:s",       # to test stdin=-
+			"out:s",      # to test stdout=-
 			"name|n=s@",  # multivalued array string
 			"map|m=s%",   # multivalued hash key=value
 			"debug|d+",   # incremental keep specifying to increase
@@ -110,22 +115,69 @@ sub main
 # Must manually check mandatory values present
 sub checkOptions
 {
-	my ($rhOpts, $raFiles, $use_stdio) = @ARG;
-	if (!exists($rhOpts->{length}))
+	my ($raErrors, $rhOpts, $raFiles, $use_stdio) = @ARG;
+	checkMandatoryOptions($raErrors, $rhOpts);
+	if (scalar(@{$Vars{rhGetopt}{raErrors}}))
 	{
-		usage("--length value is a mandatory parameter.");
+		usage(join("\n", @{$Vars{rhGetopt}{raErrors}}));
 	}
+}
+
+sub checkMandatoryOptions
+{
+	my ($raErrors, $rhOpts) = @ARG;
+
+	foreach my $option (@{$Vars{rhGetopt}{raOpts}})
+	{
+		# Getopt option has = sign for mandatory options
+		if ($option =~ m{\A (\w+) .* =}xms)
+		{
+			my $optName = $1;
+			my $error = 0;
+			my $type = "value"; # TODO =f =s =p =i and @ or % in config string
+			if (exists($rhOpts->{$optName}))
+			{
+				my $ref = ref($rhOpts->{$optName});
+				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpts->{$optName}}))
+				{
+					$error = 1;
+					$type = "multi-value";
+				}
+				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpts->{$optName}})))
+				{
+					$error = 1;
+					$type = "key/value pair";
+				}
+			}
+			else
+			{
+				$error = 1;
+			}
+			# TODO type = string, number, etc possible
+			push(@$raErrors, "--$optName $type is a mandatory parameter.") if $error;
+		}
+	}
+	return $raErrors;
 }
 
 # Perform command line option processing and call main function.
 sub getOptions
 {
 	$Vars{rhGetopt}{roParser}->configure(@{$Vars{rhGetopt}{raConfig}});
-	if ($Vars{rhGetopt}{result} = $Vars{rhGetopt}{roParser}->getoptions($Vars{rhArg}{rhOpt}, @{$Vars{rhGetopt}{raOpts}}))
+	$Vars{rhGetopt}{result} = 	$Vars{rhGetopt}{roParser}->getoptions(
+		$Vars{rhArg}{rhOpt},
+		@{$Vars{rhGetopt}{raOpts}}
+	);
+	if ($Vars{rhGetopt}{result})
 	{
 		manual() if $Vars{rhArg}{rhOpt}{man};
 		$Vars{rhArg}{raFile} = \@ARGV;
-		checkOptions($Vars{rhArg}{rhOpt}, $Vars{rhArg}{raFile}, $Vars{rhArg}{rhOpt}{''});
+		checkOptions(
+			$Vars{rhGetopt}{raErrors},
+			$Vars{rhArg}{rhOpt},
+			$Vars{rhArg}{raFile},
+			$Vars{rhArg}{rhOpt}{''}
+		);
 		main($Vars{rhArg}{rhOpt}, $Vars{rhArg}{raFile}, $Vars{rhArg}{rhOpt}{''});
 	}
 	else
