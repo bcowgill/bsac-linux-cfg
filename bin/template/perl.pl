@@ -98,6 +98,7 @@ my %Vars = (
 			"",           # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
 		],
+		raMandatory => [], # additional mandatory paramters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
 );
@@ -115,7 +116,7 @@ sub main
 sub checkOptions
 {
 	my ($raErrors, $rhOpts, $raFiles, $use_stdio) = @ARG;
-	checkMandatoryOptions($raErrors, $rhOpts);
+	checkMandatoryOptions($raErrors, $rhOpts, $Vars{rhGetopt}{raMandatory});
 	if (scalar(@{$Vars{rhGetopt}{raErrors}}))
 	{
 		usage(join("\n", @{$Vars{rhGetopt}{raErrors}}));
@@ -124,15 +125,20 @@ sub checkOptions
 
 sub checkMandatoryOptions
 {
-	my ($raErrors, $rhOpts) = @ARG;
+	my ($raErrors, $rhOpts, $raMandatory) = @ARG;
 
+	$raMandatory = $raMandatory || [];
 	foreach my $option (@{$Vars{rhGetopt}{raOpts}})
 	{
 		# Getopt option has = sign for mandatory options
-		if ($option =~ m{\A (\w+) .* =}xms)
+		my $optName = undef;
+		$optName = $1 if $option =~ m{\A (\w+)}xms;
+		if ($option =~ m{\A (\w+) .* =}xms
+			|| ($optName && grep { $ARG eq $optName } @{$raMandatory}))
 		{
-			my $optName = $1;
 			my $error = 0;
+
+			# Work out what type of parameter it might be
 			my $type = "value";
 			$type = 'number value' if $option =~ m{=f}xms;
 			$type = 'integer value' if $option =~ m{=i}xms;
@@ -142,17 +148,20 @@ sub checkMandatoryOptions
 			$type = 'string value' if $option =~ m{=s}xms;
 			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
 			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
+
 			if (exists($rhOpts->{$optName}))
 			{
 				my $ref = ref($rhOpts->{$optName});
 				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpts->{$optName}}))
 				{
 					$error = 1;
+					# type might not be configured but we know it now
 					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
 				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpts->{$optName}})))
 				{
 					$error = 1;
+					# type might not be configured but we know it now
 					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
 				}
 			}
