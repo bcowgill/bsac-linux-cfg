@@ -10,7 +10,7 @@ Brent S.A. Cowgill
 
 =head1 SYNOPSIS
 
-perl.pl [options] [file ...]
+perl.pl [options] [@options-file ...] [file ...]
 
  Options:
    --version        display program version
@@ -52,12 +52,16 @@ perl.pl [options] [file ...]
 use strict;
 use warnings;
 use English -no_match_vars;
+use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
-use Getopt::ArgvFile; # TODO make use of this
 use Pod::Usage;
 #use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
 #use Switch;
 use Data::Dumper;
+
+use File::Copy qw(cp); # copy and preserve source files permissions
+use File::Slurp qw(:std :edit);
+use Fatal qw(cp);
 
 our $VERSION = 0.1; # shown by --version option
 
@@ -89,6 +93,7 @@ my %Vars = (
 # cannot repeat when bundling is turned on
 #		"point:f{2}", # two floats separated by comma --point=1.3,24.5
 			"file=s",     # string required --file or -f (implicit)
+			"splat:s",    # a file to edit in place
 			"in:s",       # to test stdin=-
 			"out:s",      # to test stdout=-
 			"name|n=s@",  # multivalued array string
@@ -109,7 +114,68 @@ sub main
 {
 	my ($rhOpts, $raFiles, $use_stdio) = @ARG;
 	print "Vars: " . Dumper \%Vars;
-	print "main() rhOpts: " . Dumper($rhOpts) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\b";
+	print "main() rhOpts: " . Dumper($rhOpts) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n";
+
+	if ($use_stdio)
+	{
+		processStdio($rhOpts);
+	}
+	processFiles($raFiles, $rhOpts);
+
+	# Example in-place editing of file
+	if (exists $rhOpts->{splat})
+	{
+		editFileInPlace($rhOpts->{splat}, ".bak", $rhOpts);
+	}
+}
+
+sub processStdio
+{
+	my ($rhOpts) = @ARG;
+	print "processStdio()\n";
+	my $rContent = read_file(\*STDIN, scalar_ref => 1);
+	doReplacement($rContent);
+	print $$rContent;
+}
+
+sub processFiles
+{
+	my ($raFiles, $rhOpts) = @ARG;
+	print "processFiles()\n";
+	foreach my $fileName (@$raFiles)
+	{
+		processFile($fileName, $rhOpts);
+	}
+}
+
+sub processFile
+{
+	my ($fileName, $rhOpts) = @ARG;
+	print "processFile($fileName)\n";
+
+	# example slurp in the file and show something
+	my $rContent = read_file($fileName, scalar_ref => 1);
+	print "length: " . length($$rContent) . "\n";
+	doReplacement($rContent);
+	print $$rContent;
+}
+
+sub doReplacement
+{
+	my ($rContent) = @ARG;
+	my $regex = qr{\A}xms;
+	$$rContent =~ s{$regex}{splatted\n}xms;
+	return $rContent;
+}
+
+sub editFileInPlace
+{
+	my ($fileName, $suffix, $rhOpts) = @ARG;
+	my $fileNameBackup = "$fileName$suffix";
+	print "editFileInPlace($fileName) backup to $fileNameBackup\n";
+
+	cp($fileName, $fileNameBackup);
+	edit_file { doReplacement(\$ARG) } $fileName;
 }
 
 # Must manually check mandatory values present
@@ -117,9 +183,12 @@ sub checkOptions
 {
 	my ($raErrors, $rhOpts, $raFiles, $use_stdio) = @ARG;
 	checkMandatoryOptions($raErrors, $rhOpts, $Vars{rhGetopt}{raMandatory});
-	if (scalar(@{$Vars{rhGetopt}{raErrors}}))
+
+	# Check additional parameter dependencies and push onto error array
+
+	if (scalar(@$raErrors))
 	{
-		usage(join("\n", @{$Vars{rhGetopt}{raErrors}}));
+		usage(join("\n", @$raErrors));
 	}
 }
 
