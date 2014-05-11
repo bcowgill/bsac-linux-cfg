@@ -61,15 +61,14 @@ use Data::Dumper;
 
 our $VERSION = 0.1; # shown by --version option
 
+# Big hash of vars and constants for the program
 my %Vars = (
 	rhArg => {
 		rhOpt => {
-			'' => 0, # indicates standart in/out as - on command line
+			'' => 0, # indicates standard in/out as - on command line
 			verbose => 1, # default value for verbose
 			debug => 0,
 			man => 0,     # show full help page
-			map => {},
-			name => [],
 		},
 		raFile => [],
 	},
@@ -134,26 +133,33 @@ sub checkMandatoryOptions
 		{
 			my $optName = $1;
 			my $error = 0;
-			my $type = "value"; # TODO =f =s =p =i and @ or % in config string
+			my $type = "value";
+			$type = 'number value' if $option =~ m{=f}xms;
+			$type = 'integer value' if $option =~ m{=i}xms;
+			$type = 'incremental value' if $option =~ m{\+}xms;
+			$type = 'negatable value' if $option =~ m{\!}xms;
+			$type = 'decimal/oct/hex/binary value' if $option =~ m{=o}xms;
+			$type = 'string value' if $option =~ m{=s}xms;
+			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
+			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
 			if (exists($rhOpts->{$optName}))
 			{
 				my $ref = ref($rhOpts->{$optName});
 				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpts->{$optName}}))
 				{
 					$error = 1;
-					$type = "multi-value";
+					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
 				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpts->{$optName}})))
 				{
 					$error = 1;
-					$type = "key/value pair";
+					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
 				}
 			}
 			else
 			{
 				$error = 1;
 			}
-			# TODO type = string, number, etc possible
 			push(@$raErrors, "--$optName $type is a mandatory parameter.") if $error;
 		}
 	}
