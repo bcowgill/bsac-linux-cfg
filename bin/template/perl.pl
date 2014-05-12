@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+# POD in 5 mins http://juerd.nl/site.plp/perlpodtut
+
 =head1 NAME
 
 sample - Using GetOpt::Long and Pod::Usage
