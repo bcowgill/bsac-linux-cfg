@@ -1,0 +1,27 @@
+color: white;
+color: #fFfFfF;
+color: #FFF;
+color: rgb(255,255,255);
+color: rgb(100%,100%,100%);
+color: rgba(255,255,255,0);
+color: rgba(100%,100%,100%,0);
+color: rgba(255,255,255,0.4);
+color: rgba(100%,100%,100%,0.5);
+color: rgb(  255  ,  255  ,  255  );
+color: rgb(  100%  ,  100%  ,  100%  );
+color: rgba(  255  ,  255  ,  255  ,  0  );
+color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+color: rgba(  255  ,  255  ,  255  ,  0.4  );
+color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+color: hsl(360,100%,100%);
+color: hsl(  360  ,  100%  ,  100%  );
+color: hsla(360,100%,100%,0);
+color: hsla(  360  ,  100%  ,  100%  ,  0);
+color: hsla(  360  ,  100%  ,  100%  ,  0.4);
+* { color: hsl(0, 100%, 50%) }   /* red */
+* { color: hsl(120, 100%, 50%) } /* lime */
+* { color: hsl(120, 100%, 25%) } /* dark green */
+* { color: hsl(120, 100%, 75%) } /* light green */
+* { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+em { color: hsl(120, 100%, 50%) }     /* green */
+em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
