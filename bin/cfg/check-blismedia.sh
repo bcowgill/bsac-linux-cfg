@@ -33,6 +33,8 @@ INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk $MVN_PKG"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
+PERL_MODULES="Getopt::ArgvFile"
+
 NODE="nodejs npm grunt grunt-init uglifyjs phantomjs"
 NODE_VER="v0.10.25"
 NODE_CMD="nodejs"
@@ -91,7 +93,7 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 INI_DIR=check-iniline
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext"
-COMMANDS="apt-file wcd.exec gettext git $NODE_CMD $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
+COMMANDS="apt-file wcd.exec gettext git perl $NODE_CMD $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
 PACKAGES="$INSTALL apt-file wcd bash-completion $NODE_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $VIRTUALBOX_PKG $SCREENSAVER"
 
 source `which lib-check-system.sh`
@@ -362,6 +364,7 @@ install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
 install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
+install_perl_modules "$PERL_MODULES"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
