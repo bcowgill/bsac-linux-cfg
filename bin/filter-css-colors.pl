@@ -1,79 +1,247 @@
 #!/usr/bin/env perl
-# find all CSS color declarations in a file
-# http://www.w3.org/TR/css3-color/
 
-# TODO use getopt to change settings on command line
-# TODO create a template perl file
+=head1 NAME
+
+filter-css-colors.pl - Find all CSS color declarations in files
+
+=head1 AUTHOR
+
+Brent S.A. Cowgill
+
+=head1 SYNOPSIS
+
+perl.pl [options] [@options-file ...] [file ...]
+
+ Options:
+   --color-only     only show lines with CSS color declarations
+   --reverse        show all lines not matching a CSS color declaration
+   --remap          remap all colors to names in place where possible
+   --names          convert colors to standard names where possible
+   --canonical      convert colors to canonical form i.e. #fff -> #ffffff
+   --echo           display original line when performing replacements
+   --version        display program version and exit
+   --debug          display debugging info. incremental
+   --help -?        brief help message and exit
+   --man            full help message and exit
+
+=head1 OPTIONS
+
+=over 8
+
+=item B<--color-only>
+
+ Only display the CSS color declarations. Useful to identify all unique colors used.
+
+=item B<--reverse>
+
+ Only display lines that do not contain CSS color declarations.
+
+=item B<--remap>
+
+ Remap colors to names in place where possible. May not produce
+ valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+
+=item B<--names>
+
+ Show colors as standard names where possible. i.e. #fff becomes white.
+ Implies --canonical as well.
+
+=item B<--canonical>
+
+ Show colors in canonical form i.e. #fff becomes #ffffff
+
+
+=item B<--echo>
+
+ When in a replacement mode, display the original line as well.
+
+=item B<--version>
+
+ Prints the program version and exit.
+
+=item B<--help> or B<-?>
+
+ Print a brief help message and exit.
+
+=item B<--man>
+
+ Print the full help message and exit.
+
+=back
+
+=head1 DESCRIPTION
+
+ Template for a perl script with the usual bells and whistles.
+ Supports long option parsing and perldoc perl.pl to show pod.
+
+ B<This program> will read the given input file(s) and do something
+ useful with the contents thereof.
+
+=head1 SEE ALSO
+
+ CSS Color specs L<http://www.w3.org/TR/css3-color/>
+
+=head1 EXAMPLES
+
+ template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+
+
+=cut
 
 use strict;
 use warnings;
 use English -no_match_vars;
+use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
+use Getopt::Long;
+use Pod::Usage;
+#use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
+#use Switch;
 use Data::Dumper;
 
-my $ECHO = 1;
-my $REVERSE = 0;
-my $COLOR_ONLY = 0;
-my $REMAP = 1;
-my $CANONICAL = 1;
-my $USE_NAMES = 1;
-if ($USE_NAMES)
+use File::Copy qw(cp); # copy and preserve source files permissions
+use File::Slurp qw(:std :edit);
+use Fatal qw(cp);
+
+our $VERSION = 0.1; # shown by --version option
+
+# Big hash of vars and constants for the program
+my %Var = (
+	rhArg => {
+		rhOpt => {
+			'' => 0,      # indicates standard in/out as - on command line
+			debug => 0,   # output debug info
+			man => 0,     # show full help page
+		},
+		raFile => [],
+	},
+	rhGetopt => {
+		result => undef,
+		raErrors => [],
+		raConfig => [
+			"bundling",     # bundle single char options ie ps -aux
+			"auto_version", # supplies --version option
+			"auto_help",    # supplies --help -? options to show usage in POD SYNOPSIS
+#			"debug",        # debug the argument processing
+		],
+		raOpts => [
+			"color-only!",
+			"reverse!",
+			"remap!",
+			"names!",
+			"canonical!",
+			"echo!",
+			"debug",
+			"man",
+
+			"",           # empty string allows - to signify standard in/out as a file
+		],
+		raMandatory => [], # additional mandatory parameters not defined by = above.
+		roParser => Getopt::Long::Parser->new,
+	},
+	'raColorNames' => ['transparent'],
+	'rhColorNamesMap' => {},
+	'regex' => {
+		'line' => '', # populated in setup()
+		'transparent' => qr{ (rgb|hsl) a \( [^\)]+ , \s* [0\.]+ \) }xmsi,
+		'opaque' => qr{ (rgb|hsl) a ( \([^\)]+) , \s* 1(\.0*)? \) }xmsi,
+		'rgba' => qr{ \A rgba\( \s* (\d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%?) (\s* , \s* [^\)]+) \) }xms,
+		'hsl' => qr{ hsl \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* \) }xms,
+		'hsla' => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% (\s* , \s* [^\)]+) \) }xms,
+	},
+);
+
+getOptions();
+
+sub main
 {
-   $CANONICAL = 1;
+	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
+	debug("Var: " . Dumper(\%Var), 2);
+	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
+
+	$use_stdio = 1 unless scalar(@$raFiles);
+	if ($use_stdio)
+	{
+		processStdio($rhOpt);
+	}
+	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
+
+	# Example in-place editing of file
+	if (exists $rhOpt->{splat})
+	{
+		editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
+	}
 }
 
-my @ColorNames = qw(transparent);
-my %ColorNameMap = ();
-
-
-my $regex_data = qr{ \A \s* (\w+) \s+ (\#[0-9a-f]{6}) \s+ (\d+,\d+,\d+) }xmsi;
-# read from __DATA__ below to get names of hex color values
-while (my $line = <DATA>)
+sub setup
 {
-   if ($line =~ m{ $regex_data }xmsi)
-   {
-      push(@ColorNames, $1);
-      $ColorNameMap{lc($2)} = $1;
-      $ColorNameMap{"rgb($3)"} = $1;
-      $ColorNameMap{$3} = $1;
-   }
+	my ($rhOpt) = @ARG;
+	my $regex_data = qr{ \A \s* (\w+) \s+ (\#[0-9a-f]{6}) \s+ (\d+,\d+,\d+) }xmsi;
+	# read from __DATA__ below to get names of hex color values
+	while (my $line = <DATA>)
+	{
+		if ($line =~ m{ $regex_data }xmsi)
+		{
+			push(@{$Var{'raColorNames'}}, $1);
+			$Var{'rhColorNameMap'}{lc($2)} = $1;
+			$Var{'rhColorNameMap'}{"rgb($3)"} = $1;
+			$Var{'rhColorNameMap'}{$3} = $1;
+		}
+	}
+	debug("ColorNameMap " . Dumper($Var{'rhColorNameMap'}), 2);
+	my $colors = join('|', @{$Var{'raColorNames'}});
+	debug("colors regex: $colors\n", 2);
+	$Var{'regex'}{'line'} = qr{ ( \#[0-9a-f]{3,6}\b | rgba?\([^\)]+\) | hsla?\([^\)]+\) | \b($colors)\b ) }xmsi;
 }
-#print Dumper(\%ColorNameMap);
-my $colors = join('|', @ColorNames);
-#print "colors regex: $colors\n";
 
-my $regex = qr{ ( \#[0-9a-f]{3,6}\b | rgba?\([^\)]+\) | hsla?\([^\)]+\) | \b($colors)\b ) }xmsi;
-my $regex_transparent = qr{ (rgb|hsl) a \( [^\)]+ , \s* [0\.]+ \) }xmsi;
-my $regex_opaque = qr{ (rgb|hsl) a ( \([^\)]+) , \s* 1(\.0*)? \) }xmsi;
-my $regex_rgba = qr{ \A rgba\( \s* (\d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%?) (\s* , \s* [^\)]+) \) }xms;
-my $regex_hsl = qr{ hsl \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* \) }xms;
-my $regex_hsla = qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% (\s* , \s* [^\)]+) \) }xms;
-
-while (my $line = <>)
+sub processStdio
 {
-   my $match = 0;
-   # unfortunately the color name matching could match comments, or class/id names in the CSS
-   # and can't check for a : before because rule could be split across two lines
-   # maybe using negative lookbefore for # - . could handle the color names would also have to strip comments first
-   $match = ($line =~ $regex);
-   $match = $REVERSE ? !$match : $match;
-   if ($match)
-   {
-      $line =~ s{ \A \s+ }{}xms;
-      if ($COLOR_ONLY && !$REVERSE)
-      {
-         $line =~ tr[A-Z][a-z];
-         $line =~ s{$regex}{ print remap($1) . "\n" }ge;
-      }
-      else
-      {
-         if ($ECHO)
-         {
-            print "\nwas: $line     ";
-         }
-         print remap($line);
-      }
-   }
+	my ($rhOpt) = @ARG;
+	debug("processStdio()\n");
+	my $rContent = read_file(\*STDIN, scalar_ref => 1);
+	doReplacement($rContent);
+	print $$rContent;
 }
+
+sub processFiles
+{
+	my ($raFiles, $rhOpt) = @ARG;
+	debug("processFiles()\n");
+	foreach my $fileName (@$raFiles)
+	{
+		processFile($fileName, $rhOpt);
+	}
+}
+
+sub processFile
+{
+	my ($fileName, $rhOpt) = @ARG;
+	debug("processFile($fileName)\n");
+
+	# example slurp in the file and show something
+	my $rContent = read_file($fileName, scalar_ref => 1);
+	print "length: " . length($$rContent) . "\n";
+	doReplacement($rContent);
+	print $$rContent;
+}
+
+sub doReplacement
+{
+	my ($rContent) = @ARG;
+	my $regex = qr{\A}xms;
+	$$rContent =~ s{$regex}{splatted\n}xms;
+	return $rContent;
+}
+
+sub editFileInPlace
+{
+	my ($fileName, $suffix, $rhOpt) = @ARG;
+	my $fileNameBackup = "$fileName$suffix";
+	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
+
+	cp($fileName, $fileNameBackup);
+	edit_file { doReplacement(\$ARG) } $fileName;
+}
+
 
 # remap color values in place, where possible
 # this may not produce valid CSS output.
@@ -81,9 +249,9 @@ while (my $line = <>)
 sub remap
 {
    my ($line) = @ARG;
-   if ($REMAP)
+   if ($Var{'rhArg'}{'rhOpt'}{'remap'})
    {
-      $line =~ s{$regex}{ names(canonical($1)) }ge;
+      $line =~ s{$Var{'regex'}{'line'}}{ names(canonical($1)) }ge;
    }
    return $line;
 }
@@ -92,12 +260,12 @@ sub remap
 sub canonical
 {
    my ($color) = @ARG;
-   if ($CANONICAL)
+   if ($Var{'rhArg'}{'rhOpt'}{'canon'})
    {
       # alpha = 0 is transparent
-      $color =~ s{ $regex_transparent }{transparent}xmsg;
+      $color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
       # alpha = 1 is opaque convert to hsl or rgb
-      $color =~ s{ $regex_opaque }{$1$2)}xmsg;
+      $color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
       $color =~ s{\# ([0-9a-f]{3}) \b }{
          '#' . (substr($1,0,1) x 2) .
          (substr($1,1,1) x 2) .
@@ -114,21 +282,21 @@ sub canonical
 sub names
 {
    my ($color) = @ARG;
-   if ($USE_NAMES)
+   if ($Var{'rhArg'}{'rhOpt'}{'names'})
    {
-      $color = $ColorNameMap{lc(trim(rgbval($color)))} || $color;
-      if ($color =~ m{ $regex_rgba }xms)
+      $color = $Var{'rhColorNameMap'}{lc(trim(rgbval($color)))} || $color;
+      if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
       {
-         if (exists $ColorNameMap{trim(rgbval($1))})
+         if (exists $Var{'rhColorNameMap'}{trim(rgbval($1))})
          {
-            $color = "rgba($ColorNameMap{trim(rgbval($1))}$2)";
+            $color = "rgba($Var{'rhColorNameMap'}{trim(rgbval($1))}$2)";
          }
       }
-      if ($color =~ m{ $regex_hsla }xms)
+      if ($color =~ m{ $Var{'regex'}{'hsla'} }xms)
       {
-         if (exists $ColorNameMap{trim(hsl_to_rgb($1, $2, $3))})
+         if (exists $Var{'rhColorNameMap'}{trim(hsl_to_rgb($1, $2, $3))})
          {
-            $color = "rgba($ColorNameMap{trim(hsl_to_rgb($1, $2, $3))}$4)";
+            $color = "rgba($Var{'rhColorNameMap'}{trim(hsl_to_rgb($1, $2, $3))}$4)";
          }
       }
    }
@@ -141,7 +309,7 @@ sub names
 sub rgbval
 {
    my ($vals) = @ARG;
-   $vals =~ s{ $regex_hsl }{ "rgb(" . hsl_to_rgb($1, $2, $3) . ")"}xmse;
+   $vals =~ s{ $Var{'regex'}{'hsl'} }{ "rgb(" . hsl_to_rgb($1, $2, $3) . ")"}xmse;
    $vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
    return $vals;
 }
@@ -188,6 +356,127 @@ sub trim
    my ($str) = @ARG;
    $str =~ s{\s+}{}xmsg;
    return $str;
+}
+
+# Must manually check mandatory values present
+sub checkOptions
+{
+	my ($raErrors, $rhOpt, $raFiles, $use_stdio) = @ARG;
+	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
+
+	# Check additional parameter dependencies and push onto error array
+
+	if (scalar(@$raErrors))
+	{
+		usage(join("\n", @$raErrors));
+	}
+}
+
+sub checkMandatoryOptions
+{
+	my ($raErrors, $rhOpt, $raMandatory) = @ARG;
+
+	$raMandatory = $raMandatory || [];
+	foreach my $option (@{$Var{rhGetopt}{raOpts}})
+	{
+		# Getopt option has = sign for mandatory options
+		my $optName = undef;
+		$optName = $1 if $option =~ m{\A (\w+)}xms;
+		if ($option =~ m{\A (\w+) .* =}xms
+			|| ($optName && grep { $ARG eq $optName } @{$raMandatory}))
+		{
+			my $error = 0;
+
+			# Work out what type of parameter it might be
+			my $type = "value";
+			$type = 'number value' if $option =~ m{=f}xms;
+			$type = 'integer value' if $option =~ m{=i}xms;
+			$type = 'incremental value' if $option =~ m{\+}xms;
+			$type = 'negatable value' if $option =~ m{\!}xms;
+			$type = 'decimal/oct/hex/binary value' if $option =~ m{=o}xms;
+			$type = 'string value' if $option =~ m{=s}xms;
+			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
+			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
+
+			if (exists($rhOpt->{$optName}))
+			{
+				my $ref = ref($rhOpt->{$optName});
+				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpt->{$optName}}))
+				{
+					$error = 1;
+					# type might not be configured but we know it now
+					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
+				}
+				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpt->{$optName}})))
+				{
+					$error = 1;
+					# type might not be configured but we know it now
+					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
+				}
+			}
+			else
+			{
+				$error = 1;
+			}
+			push(@$raErrors, "--$optName $type is a mandatory parameter.") if $error;
+		}
+	}
+	return $raErrors;
+}
+
+# Perform command line option processing and call main function.
+sub getOptions
+{
+	$Var{rhGetopt}{roParser}->configure(@{$Var{rhGetopt}{raConfig}});
+	$Var{rhGetopt}{result} = 	$Var{rhGetopt}{roParser}->getoptions(
+		$Var{rhArg}{rhOpt},
+		@{$Var{rhGetopt}{raOpts}}
+	);
+	if ($Var{rhGetopt}{result})
+	{
+		manual() if $Var{rhArg}{rhOpt}{man};
+		$Var{rhArg}{raFile} = \@ARGV;
+		checkOptions(
+			$Var{rhGetopt}{raErrors},
+			$Var{rhArg}{rhOpt},
+			$Var{rhArg}{raFile},
+			$Var{rhArg}{rhOpt}{''}
+		);
+		setup($Var{rhArg}{rhOpt});
+		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+	}
+	else
+	{
+		# Here if unknown option provided
+		usage();
+	}
+}
+
+sub debug
+{
+	my ($msg, $level) = @ARG;
+	$level ||= 1;
+	#print "debug @{[substr($msg,0,10)]} $Var{'rhArg'}{'rhOpt'}{'debug'} $level\n";
+	print $msg if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+}
+
+sub usage
+{
+	my ($msg) = @ARG;
+	my %Opts = (
+		-exitval => 1,
+		-verbose => 1,
+	);
+	$Opts{-msg} = $msg if $msg;
+	pod2usage(%Opts);
+}
+
+sub manual
+{
+	pod2usage(
+		-exitval => 0,
+		-verbose => 2,
+	);
 }
 
 __DATA__

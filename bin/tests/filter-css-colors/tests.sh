@@ -3,18 +3,20 @@ set -e
 
 PROGRAM=../../filter-css-colors.pl
 SAMPLE=filter-css-colors-test.txt
+DEBUG=--debug
+DEBUG=
 
 source ../shell-test.sh
 
 [ -d out ] || mkdir out
 
-TEST=noecho-reverse-nocolor-noremap-nocanon-nonames
+TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames
 OUT=out/$TEST.out
 BASE=base/$TEST.base
-$PROGRAM < $SAMPLE > $OUT
+$PROGRAM $DEBUG --noecho --noreverse --nocolor-only --noremap --nocanon --nonames < $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
-TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames
+TEST=noecho-reverse-nocolor-noremap-nocanon-nonames
 OUT=out/$TEST.out
 BASE=base/$TEST.base
 $PROGRAM < $SAMPLE > $OUT
