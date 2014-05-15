@@ -29,7 +29,7 @@ MVN_CMD=""
 #MVN_PKG="mvn:maven"
 #MVN_VER="3.0.4"
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk $MVN_PKG"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc $MVN_PKG"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
