@@ -4,6 +4,11 @@
 # for hanging with friends, no vowels possible after last one given
 # so we make two vars one for vowelless guesses and one for vowel including guesses
 # V='aeiou'; G='delnrst'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}el${C}${C}s
+# filter out bad replies
+# V='aeiou'; G='aenrsty'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}${R}ery |  grep   -v '-' | grep -v '(' | grep -v "'" | uniq
+# remove guessed letters and show a histogram of frequency for possible letters
+#  V='aeiou'; export G='aensty'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}${R}e${C}y |  grep -v regex | grep   -v '-' | grep -v '(' | grep -v "'" | uniq | perl -pne 's{[$ENV{G}]}{}g;s{([a-z])}{$1\n}g' | sort | perl -pne 's{\n}{}g'
+
 
 WORDS=`which lookup-english.sh`
 WORDS=`dirname $WORDS`
