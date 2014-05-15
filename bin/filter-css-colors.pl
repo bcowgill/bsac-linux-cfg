@@ -197,9 +197,9 @@ sub processStdio
 {
 	my ($rhOpt) = @ARG;
 	debug("processStdio()\n");
-	my $rContent = read_file(\*STDIN, scalar_ref => 1);
-	doReplacement($rContent);
-	print $$rContent;
+	my $raContent = read_file(\*STDIN, array_ref => 1);
+	doReplacement($raContent);
+	####print join("\n", $raContent);
 }
 
 sub processFiles
@@ -218,18 +218,41 @@ sub processFile
 	debug("processFile($fileName)\n");
 
 	# example slurp in the file and show something
-	my $rContent = read_file($fileName, scalar_ref => 1);
-	print "length: " . length($$rContent) . "\n";
-	doReplacement($rContent);
-	print $$rContent;
+	my $raContent = read_file($fileName, array_ref => 1);
+	doReplacement($raContent);
+	####print join("\n", $raContent);
 }
 
 sub doReplacement
 {
-	my ($rContent) = @ARG;
-	my $regex = qr{\A}xms;
-	$$rContent =~ s{$regex}{splatted\n}xms;
-	return $rContent;
+	my ($raContent) = @ARG;
+	foreach my $line (@$raContent)
+	{
+		my $match = 0;
+		# unfortunately the color name matching could match comments, or class/id names in the CSS
+		# and can't check for a : before because rule could be split across two lines
+		# maybe using negative lookbefore for # - . could handle the color names would also have to strip comments first
+		$match = ($line =~ $Var{'regex'}{'line'});
+		$match = $Var{'rhArg'}{'rhOpt'}{'reverse'} ? !$match : $match;
+		if ($match)
+		{
+			$line =~ s{ \A \s+ }{}xms;
+			if ($Var{'rhArg'}{'rhOpt'}{'color-only'} && !$Var{'rhArg'}{'rhOpt'}{'referse'})
+			{
+				$line =~ tr[A-Z][a-z];
+				$line =~ s{$Var{'regex'}{'line'}}{ print remap($1) . "\n" }ge;
+			}
+			else
+			{
+				if ($Var{'rhArg'}{'rhOpt'}{'echo'})
+				{
+					print "\nwas: $line     ";
+				}
+				print remap($line);
+			}
+		}
+	}
+	return $raContent;
 }
 
 sub editFileInPlace
@@ -260,7 +283,7 @@ sub remap
 sub canonical
 {
    my ($color) = @ARG;
-   if ($Var{'rhArg'}{'rhOpt'}{'canon'})
+   if ($Var{'rhArg'}{'rhOpt'}{'canonical'})
    {
       # alpha = 0 is transparent
       $color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;

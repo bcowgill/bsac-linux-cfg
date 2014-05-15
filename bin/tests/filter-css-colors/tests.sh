@@ -13,25 +13,25 @@ source ../shell-test.sh
 TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames
 OUT=out/$TEST.out
 BASE=base/$TEST.base
-$PROGRAM $DEBUG --noecho --noreverse --nocolor-only --noremap --nocanon --nonames < $SAMPLE > $OUT
+$PROGRAM $DEBUG --noecho --noreverse --nocolor-only --noremap --nocanonical --nonames < $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
 TEST=noecho-reverse-nocolor-noremap-nocanon-nonames
 OUT=out/$TEST.out
 BASE=base/$TEST.base
-$PROGRAM < $SAMPLE > $OUT
+$PROGRAM $DEBUG --noecho --reverse --nocolor-only --noremap --nocanonical --nonames $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
 TEST=noecho-noreverse-nocolor-remap-canon-names
 OUT=out/$TEST.out
 BASE=base/$TEST.base
-$PROGRAM < $SAMPLE > $OUT
+$PROGRAM $DEBUG --noecho --noreverse --nocolor-only --remap --canonical --names < $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
 TEST=echo-noreverse-nocolor-remap-canon-names
 OUT=out/$TEST.out
 BASE=base/$TEST.base
-$PROGRAM < $SAMPLE > $OUT
+$PROGRAM $DEBUG --echo --noreverse --nocolor-only --remap --canonical --names < $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
 echo OK All tests complete
