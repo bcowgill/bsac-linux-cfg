@@ -4,6 +4,13 @@
 
 filter-css-colors.pl - Find all CSS color declarations in files
 
+=head1 TODO
+
+--inplace modify file in place
+--foreground=xxxx substitute a color for all foreground colors
+--background=xxxx you get color: #fff /* original color */;
+--undo undo a foreground/background change
+
 =head1 AUTHOR
 
 Brent S.A. Cowgill
@@ -13,11 +20,12 @@ Brent S.A. Cowgill
 perl.pl [options] [@options-file ...] [file ...]
 
  Options:
-   --color-only     only show lines with CSS color declarations
-   --reverse        show all lines not matching a CSS color declaration
-   --remap          remap all colors to names in place where possible
+   --color-only     only show the color values, not the entire line.
+   --reverse        show all lines not matching a CSS color declaration.
+   --remap          remap all colors to names in place where possible.
    --names          convert colors to standard names where possible
    --canonical      convert colors to canonical form i.e. #fff -> #ffffff
+   --valid-only     do not perform remappings which are invalid CSS
    --echo           display original line when performing replacements
    --version        display program version and exit
    --debug          display debugging info. incremental
@@ -30,7 +38,7 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =item B<--color-only>
 
- Only display the CSS color declarations. Useful to identify all unique colors used.
+ Only display the CSS color values used. Useful to identify all unique colors used.
 
 =item B<--reverse>
 
@@ -38,22 +46,29 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =item B<--remap>
 
- Remap colors to names in place where possible. May not produce
- valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+ Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+
+ You should specify --names or --canonical as well to have any effect.
 
 =item B<--names>
 
  Show colors as standard names where possible. i.e. #fff becomes white.
  Implies --canonical as well.
+ Implies --remap as well.
 
 =item B<--canonical>
 
- Show colors in canonical form i.e. #fff becomes #ffffff
+ Show colors in canonical form i.e. #fff becomes '#ffffff'.
+ Implies --remap as well.
 
+=item B<--valid-only>
+
+ Do not perform name remappings which are invalid css3
+ i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
 
 =item B<--echo>
 
- When in a replacement mode, display the original line as well.
+ When in a --remap mode, display the original line as well.
 
 =item B<--version>
 
@@ -108,6 +123,7 @@ our $VERSION = 0.1; # shown by --version option
 my %Var = (
 	rhArg => {
 		rhOpt => {
+			'valid-only' => 0,
 			'' => 0,      # indicates standard in/out as - on command line
 			debug => 0,   # output debug info
 			man => 0,     # show full help page
@@ -129,6 +145,7 @@ my %Var = (
 			"remap!",
 			"names!",
 			"canonical!",
+			"valid-only",
 			"echo!",
 			"debug",
 			"man",
@@ -141,12 +158,13 @@ my %Var = (
 	'raColorNames' => ['transparent'],
 	'rhColorNamesMap' => {},
 	'regex' => {
-		'line' => '', # populated in setup()
-		'transparent' => qr{ (rgb|hsl) a \( [^\)]+ , \s* [0\.]+ \) }xmsi,
-		'opaque' => qr{ (rgb|hsl) a ( \([^\)]+) , \s* 1(\.0*)? \) }xmsi,
-		'rgba' => qr{ \A rgba\( \s* (\d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%?) (\s* , \s* [^\)]+) \) }xms,
-		'hsl' => qr{ hsl \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* \) }xms,
-		'hsla' => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% (\s* , \s* [^\)]+) \) }xms,
+		'data'        => qr{ \A \s* (\w+) \s+ ( \#[0-9a-f]{6} ) \s+ ( \d+,\d+,\d+ ) }xmsi,
+		'line'        => '', # populated in setup()
+		'transparent' => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
+		'opaque'      => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 1(\.0*)? \s* \) }xmsi,
+		'rgba'        => qr{ \A rgba\( \s* ( \d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
+		'hsl'         => qr{ hsl \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* \) }xms,
+		'hsla'        => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
 	},
 );
 
@@ -175,22 +193,22 @@ sub main
 sub setup
 {
 	my ($rhOpt) = @ARG;
-	my $regex_data = qr{ \A \s* (\w+) \s+ (\#[0-9a-f]{6}) \s+ (\d+,\d+,\d+) }xmsi;
+
 	# read from __DATA__ below to get names of hex color values
 	while (my $line = <DATA>)
 	{
-		if ($line =~ m{ $regex_data }xmsi)
+		if ($line =~ m{ $Var{'regex'}{'data'} }xmsi)
 		{
 			push(@{$Var{'raColorNames'}}, $1);
-			$Var{'rhColorNameMap'}{lc($2)} = $1;
-			$Var{'rhColorNameMap'}{"rgb($3)"} = $1;
-			$Var{'rhColorNameMap'}{$3} = $1;
+			$Var{'rhColorNamesMap'}{lc($2)} = $1;
+			$Var{'rhColorNamesMap'}{"rgb($3)"} = $1;
+			$Var{'rhColorNamesMap'}{$3} = $1;
 		}
 	}
-	debug("ColorNameMap " . Dumper($Var{'rhColorNameMap'}), 2);
+	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 2);
 	my $colors = join('|', @{$Var{'raColorNames'}});
 	debug("colors regex: $colors\n", 2);
-	$Var{'regex'}{'line'} = qr{ ( \#[0-9a-f]{3,6}\b | rgba?\([^\)]+\) | hsla?\([^\)]+\) | \b($colors)\b ) }xmsi;
+	$Var{'regex'}{'line'} = qr{ ( \#[0-9a-f]{3,6}\b | (rgb|hsl)a?\([^\)]+\) | \b($colors)\b ) }xmsi;
 }
 
 sub processStdio
@@ -285,10 +303,6 @@ sub canonical
    my ($color) = @ARG;
    if ($Var{'rhArg'}{'rhOpt'}{'canonical'})
    {
-      # alpha = 0 is transparent
-      $color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
-      # alpha = 1 is opaque convert to hsl or rgb
-      $color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
       $color =~ s{\# ([0-9a-f]{3}) \b }{
          '#' . (substr($1,0,1) x 2) .
          (substr($1,1,1) x 2) .
@@ -307,19 +321,24 @@ sub names
    my ($color) = @ARG;
    if ($Var{'rhArg'}{'rhOpt'}{'names'})
    {
-      $color = $Var{'rhColorNameMap'}{lc(trim(rgbval($color)))} || $color;
-      if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
+      # alpha = 0 is transparent
+      $color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
+      # alpha = 1 is opaque convert to hsl or rgb
+      $color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
+
+      $color = $Var{'rhColorNamesMap'}{lc(trim(rgbval($color)))} || $color;
+      if (!$Var{'rhArg'}{'rhOpt'}{'valid-only'} && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
       {
-         if (exists $Var{'rhColorNameMap'}{trim(rgbval($1))})
+         if (exists $Var{'rhColorNamesMap'}{trim(rgbval($1))})
          {
-            $color = "rgba($Var{'rhColorNameMap'}{trim(rgbval($1))}$2)";
+            $color = "rgba($Var{'rhColorNamesMap'}{trim(rgbval($1))}$2)";
          }
       }
-      if ($color =~ m{ $Var{'regex'}{'hsla'} }xms)
+      if (!$Var{'rhArg'}{'rhOpt'}{'valid-only'} && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
       {
-         if (exists $Var{'rhColorNameMap'}{trim(hsl_to_rgb($1, $2, $3))})
+         if (exists $Var{'rhColorNamesMap'}{trim(hsl_to_rgb($1, $2, $3))})
          {
-            $color = "rgba($Var{'rhColorNameMap'}{trim(hsl_to_rgb($1, $2, $3))}$4)";
+            $color = "rgba($Var{'rhColorNamesMap'}{trim(hsl_to_rgb($1, $2, $3))}$4)";
          }
       }
    }
@@ -388,6 +407,10 @@ sub checkOptions
 	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
 
 	# Check additional parameter dependencies and push onto error array
+
+	# Force some flags when others turned on
+	$rhOpt->{'canonical'} = 1 if ($rhOpt->{'names'});
+	$rhOpt->{'remap'} = 1 if ($rhOpt->{'names'} || $rhOpt->{'canonical'});
 
 	if (scalar(@$raErrors))
 	{
