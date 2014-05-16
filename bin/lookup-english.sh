@@ -8,6 +8,8 @@
 # V='aeiou'; G='aenrsty'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}${R}ery |  grep   -v '-' | grep -v '(' | grep -v "'" | uniq
 # remove guessed letters and show a histogram of frequency for possible letters
 #  V='aeiou'; export G='aensty'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}${R}e${C}y |  grep -v regex | grep   -v '-' | grep -v '(' | grep -v "'" | uniq | perl -pne 's{[$ENV{G}]}{}g;s{([a-z])}{$1\n}g' | sort | perl -pne 's{\n}{}g'
+# Show letter distribution for possible gueses
+# V='aeiou'; export G='adersty'; R="[^$G]"; C="[^$V$G]"; lookup-english.sh ${R}a${R}ter | grep -v regex | uniq | perl -pne 's{[$ENV{G}]}{}g;s{([a-z])}{$1\n}g' | sort | perl -pne 's{\n}{}g' | perl -MData::Dumper -ne 'BEGIN { %L = () } END { print Dumper \%L} s{(.)}{$L{$1} += 1}xmsge' 
 
 
 WORDS=`which lookup-english.sh`
@@ -40,5 +42,5 @@ if [ -z $1 ]; then
    exit 1
 fi
 echo regex: "\A $1 \b"
-LOOKUP=$1 perl -ne 'print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
+LOOKUP=$1 perl -ne '$squote="\x27"; next if m{[\-$squote\(]}xms; print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
 
