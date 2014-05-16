@@ -1,0 +1,86 @@
+FILTER-CSS-COLORS(1)  User Contributed Perl Documentation FILTER-CSS-COLORS(1)
+
+
+
+NNAAMMEE
+       filter-css-colors.pl - Find all CSS color declarations in files
+
+TTOODDOO
+       --inplace modify file in place --foreground=xxxx substitute a color for
+       all foreground colors --background=xxxx you get color: #fff /* original
+       color */; --undo undo a foreground/background change
+
+AAUUTTHHOORR
+       Brent S.A. Cowgill
+
+SSYYNNOOPPSSIISS
+       perl.pl [options] [@options-file ...] [file ...]
+
+        Options:
+          --color-only     only show the color values, not the entire line.
+          --reverse        show all lines not matching a CSS color declaration.
+          --remap          remap all colors to names in place where possible.
+          --names          convert colors to standard names where possible
+          --canonical      convert colors to canonical form i.e. #fff -> #ffffff
+          --valid-only     do not perform remappings which are invalid CSS
+          --inplace        specify to modify files in place creating a backup first
+          --echo           display original line when performing replacements
+          --version        display program version and exit
+          --debug          display debugging info. incremental
+          --help -?        brief help message and exit
+          --man            full help message and exit
+
+OOPPTTIIOONNSS
+       ----ccoolloorr--oonnllyy
+                Only display the CSS color values used. Useful to identify all unique colors used.
+
+       ----rreevveerrssee
+                Only display lines that do not contain CSS color declarations.
+
+       ----rreemmaapp
+                Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+
+                You should specify --names or --canonical as well to have any effect.
+
+       ----nnaammeess
+                Show colors as standard names where possible. i.e. #fff becomes white.
+                Implies --canonical as well.
+                Implies --remap as well.
+
+       ----ccaannoonniiccaall
+                Show colors in canonical form i.e. #fff becomes '#ffffff'.
+                Implies --remap as well.
+
+       ----vvaalliidd--oonnllyy
+                Do not perform name remappings which are invalid css3
+                i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
+
+       ----iinnppllaaccee==..ssuuffffiixx
+                Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
+
+       ----eecchhoo
+                When in a --remap mode, display the original line as well.
+
+       ----vveerrssiioonn
+                Prints the program version and exit.
+
+       ----hheellpp or --??
+                Print a brief help message and exit.
+
+       ----mmaann
+                Print the full help message and exit.
+
+DDEESSCCRRIIPPTTIIOONN
+        Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
+
+        B<This program> will read the given input file(s) and do something useful with the contents thereof.
+
+SSEEEE AALLSSOO
+        CSS Color specs L<http://www.w3.org/TR/css3-color/>
+
+EEXXAAMMPPLLEESS
+        TODO template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+
+
+
+perl v5.18.2                      2014-05-16              FILTER-CSS-COLORS(1)

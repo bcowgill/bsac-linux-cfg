@@ -26,6 +26,7 @@ perl.pl [options] [@options-file ...] [file ...]
    --names          convert colors to standard names where possible
    --canonical      convert colors to canonical form i.e. #fff -> #ffffff
    --valid-only     do not perform remappings which are invalid CSS
+   --inplace        specify to modify files in place creating a backup first
    --echo           display original line when performing replacements
    --version        display program version and exit
    --debug          display debugging info. incremental
@@ -66,6 +67,10 @@ perl.pl [options] [@options-file ...] [file ...]
  Do not perform name remappings which are invalid css3
  i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
 
+=item B<--inplace=.suffix>
+
+ Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
+
 =item B<--echo>
 
  When in a --remap mode, display the original line as well.
@@ -86,11 +91,9 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =head1 DESCRIPTION
 
- Template for a perl script with the usual bells and whistles.
- Supports long option parsing and perldoc perl.pl to show pod.
+ Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
 
- B<This program> will read the given input file(s) and do something
- useful with the contents thereof.
+ B<This program> will read the given input file(s) and do something useful with the contents thereof.
 
 =head1 SEE ALSO
 
@@ -98,7 +101,7 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =head1 EXAMPLES
 
- template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+ TODO template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
 
 =cut
@@ -125,8 +128,8 @@ my %Var = (
 		rhOpt => {
 			'valid-only' => 0,
 			'' => 0,      # indicates standard in/out as - on command line
-			debug => 0,   # output debug info
-			man => 0,     # show full help page
+			'debug' => 0,   # output debug info
+			'man' => 0,     # show full help page
 		},
 		raFile => [],
 	},
@@ -146,6 +149,7 @@ my %Var = (
 			"names!",
 			"canonical!",
 			"valid-only",
+			"inplace:s",
 			"echo!",
 			"debug",
 			"man",
@@ -181,13 +185,8 @@ sub main
 	{
 		processStdio($rhOpt);
 	}
-	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
 
-	# Example in-place editing of file
-	if (exists $rhOpt->{splat})
-	{
-		editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
-	}
+	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
 }
 
 sub setup
@@ -217,7 +216,7 @@ sub processStdio
 	debug("processStdio()\n");
 	my $raContent = read_file(\*STDIN, array_ref => 1);
 	doReplacement($raContent);
-	####print join("\n", $raContent);
+	print join("", @$raContent);
 }
 
 sub processFiles
@@ -226,7 +225,14 @@ sub processFiles
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		processFile($fileName, $rhOpt);
+		if (exists($rhOpt->{'inplace'}))
+		{
+			editFileInPlace($fileName, $rhOpt->{'inplace'}, $rhOpt);
+		}
+		else
+		{
+			processFile($fileName, $rhOpt);
+		}
 	}
 }
 
@@ -238,7 +244,7 @@ sub processFile
 	# example slurp in the file and show something
 	my $raContent = read_file($fileName, array_ref => 1);
 	doReplacement($raContent);
-	####print join("\n", $raContent);
+	print join("", @$raContent);
 }
 
 sub doReplacement
@@ -246,31 +252,39 @@ sub doReplacement
 	my ($raContent) = @ARG;
 	foreach my $line (@$raContent)
 	{
-		my $match = 0;
-		# unfortunately the color name matching could match comments, or class/id names in the CSS
-		# and can't check for a : before because rule could be split across two lines
-		# maybe using negative lookbefore for # - . could handle the color names would also have to strip comments first
-		$match = ($line =~ $Var{'regex'}{'line'});
-		$match = $Var{'rhArg'}{'rhOpt'}{'reverse'} ? !$match : $match;
-		if ($match)
-		{
-			$line =~ s{ \A \s+ }{}xms;
-			if ($Var{'rhArg'}{'rhOpt'}{'color-only'} && !$Var{'rhArg'}{'rhOpt'}{'referse'})
-			{
-				$line =~ tr[A-Z][a-z];
-				$line =~ s{$Var{'regex'}{'line'}}{ print remap($1) . "\n" }ge;
-			}
-			else
-			{
-				if ($Var{'rhArg'}{'rhOpt'}{'echo'})
-				{
-					print "\nwas: $line     ";
-				}
-				print remap($line);
-			}
-		}
+		$line = doReplaceLine($line);
 	}
 	return $raContent;
+}
+
+sub doReplaceLine
+{
+	my ($line) = @ARG;
+	my $match = 0;
+	my @Lines = ();
+	# unfortunately the color name matching could match comments, or class/id names in the CSS
+	# and can't check for a : before because rule could be split across two lines
+	# maybe using negative lookbefore for # - . could handle the color names would also have to strip comments first
+	$match = ($line =~ $Var{'regex'}{'line'});
+	$match = $Var{'rhArg'}{'rhOpt'}{'reverse'} ? !$match : $match;
+	if ($match)
+	{
+		$line =~ s{ \A \s+ }{}xms;
+		if ($Var{'rhArg'}{'rhOpt'}{'color-only'} && !$Var{'rhArg'}{'rhOpt'}{'reverse'})
+		{
+			$line =~ tr[A-Z][a-z];
+			$line =~ s{$Var{'regex'}{'line'}}{ push(@Lines, remap($1) . "\n"); "" }ge;
+		}
+		else
+		{
+			if ($Var{'rhArg'}{'rhOpt'}{'echo'})
+			{
+				push(@Lines, "\nwas: $line     ");
+			}
+			push(@Lines, remap($line));
+		}
+	}
+	return join("", @Lines);
 }
 
 sub editFileInPlace
@@ -280,7 +294,7 @@ sub editFileInPlace
 	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
 
 	cp($fileName, $fileNameBackup);
-	edit_file { doReplacement(\$ARG) } $fileName;
+	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
 }
 
 
@@ -407,6 +421,11 @@ sub checkOptions
 	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
 
 	# Check additional parameter dependencies and push onto error array
+	if ($rhOpt->{'inplace'})
+	{
+	   push(@$raErrors, "You cannot specify standard input when using the --inplace option") if $use_stdio;
+	   push(@$raErrors, "You must supply files to process when using the --inplace option.") unless scalar($raFiles);
+	}
 
 	# Force some flags when others turned on
 	$rhOpt->{'canonical'} = 1 if ($rhOpt->{'names'});

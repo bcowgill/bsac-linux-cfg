@@ -1,0 +1,58 @@
+Unknown option: unknown-option
+Usage:
+    perl.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --color-only     only show the color values, not the entire line.
+       --reverse        show all lines not matching a CSS color declaration.
+       --remap          remap all colors to names in place where possible.
+       --names          convert colors to standard names where possible
+       --canonical      convert colors to canonical form i.e. #fff -> #ffffff
+       --valid-only     do not perform remappings which are invalid CSS
+       --inplace        specify to modify files in place creating a backup first
+       --echo           display original line when performing replacements
+       --version        display program version and exit
+       --debug          display debugging info. incremental
+       --help -?        brief help message and exit
+       --man            full help message and exit
+
+Options:
+    --color-only
+             Only display the CSS color values used. Useful to identify all unique colors used.
+
+    --reverse
+             Only display lines that do not contain CSS color declarations.
+
+    --remap
+             Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+
+             You should specify --names or --canonical as well to have any effect.
+
+    --names
+             Show colors as standard names where possible. i.e. #fff becomes white.
+             Implies --canonical as well.
+             Implies --remap as well.
+
+    --canonical
+             Show colors in canonical form i.e. #fff becomes '#ffffff'.
+             Implies --remap as well.
+
+    --valid-only
+             Do not perform name remappings which are invalid css3
+             i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
+
+    --inplace=.suffix
+             Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
+
+    --echo
+             When in a --remap mode, display the original line as well.
+
+    --version
+             Prints the program version and exit.
+
+    --help or -?
+             Print a brief help message and exit.
+
+    --man
+             Print the full help message and exit.
+

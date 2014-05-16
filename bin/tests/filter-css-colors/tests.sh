@@ -9,6 +9,28 @@ DEBUG=
 source ../shell-test.sh
 
 [ -d out ] || mkdir out
+rm out/* || echo OK output dir ready
+
+echo TEST --version option
+TEST=version-option
+OUT=out/$TEST.out
+BASE=base/$TEST.base
+$PROGRAM $DEBUG --version < $SAMPLE > $OUT
+assertFilesEqual "$OUT" "$BASE" "$TEST"
+
+echo TEST unknown option
+TEST=unknown-option
+OUT=out/$TEST.out
+BASE=base/$TEST.base
+$PROGRAM $DEBUG --unknown-option < $SAMPLE > $OUT 2>&1 || echo OK program exit with $?
+assertFilesEqual "$OUT" "$BASE" "$TEST"
+
+echo TEST --man option
+TEST=man-option
+OUT=out/$TEST.out
+BASE=base/$TEST.base
+$PROGRAM $DEBUG --man < $SAMPLE > $OUT
+assertFilesEqual "$OUT" "$BASE" "$TEST"
 
 echo TEST no options set
 TEST=no-options
@@ -80,4 +102,16 @@ BASE=base/$TEST.base
 $PROGRAM $DEBUG --valid-only --names < $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
-echo OK All tests complete
+echo TEST --inplace=.bak --names test in place modification with backup file
+TEST=inplace
+OUT=out/$TEST.out
+BASE=base/$TEST.base
+cp $SAMPLE $OUT
+$PROGRAM $DEBUG --inplace=.bak --names $OUT
+# check original was backed up
+assertFilesEqual "$SAMPLE" "$OUT.bak" "$TEST backup created"
+assertFilesEqual "$OUT" "$BASE" "$TEST"
+
+# clean up output directory if no failures
+rm out/* && rmdir out
+echo OK All tests complete `pwd`/out cleaned up
