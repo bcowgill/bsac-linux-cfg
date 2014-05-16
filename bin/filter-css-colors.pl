@@ -140,7 +140,7 @@ my %Var = (
 			"bundling",     # bundle single char options ie ps -aux
 			"auto_version", # supplies --version option
 			"auto_help",    # supplies --help -? options to show usage in POD SYNOPSIS
-#			"debug",        # debug the argument processing
+#			"debug",       # debug the argument processing
 		],
 		raOpts => [
 			"color-only!",
@@ -151,7 +151,7 @@ my %Var = (
 			"valid-only",
 			"inplace:s",
 			"echo!",
-			"debug",
+			"debug+",
 			"man",
 
 			"",           # empty string allows - to signify standard in/out as a file
@@ -421,10 +421,10 @@ sub checkOptions
 	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
 
 	# Check additional parameter dependencies and push onto error array
-	if ($rhOpt->{'inplace'})
+	if (exists($rhOpt->{'inplace'}))
 	{
 	   push(@$raErrors, "You cannot specify standard input when using the --inplace option") if $use_stdio;
-	   push(@$raErrors, "You must supply files to process when using the --inplace option.") unless scalar($raFiles);
+	   push(@$raErrors, "You must supply files to process when using the --inplace option.") unless scalar(@$raFiles);
 	}
 
 	# Force some flags when others turned on
@@ -521,7 +521,7 @@ sub debug
 {
 	my ($msg, $level) = @ARG;
 	$level ||= 1;
-	#print "debug @{[substr($msg,0,10)]} $Var{'rhArg'}{'rhOpt'}{'debug'} $level\n";
+#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
 	print $msg if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
 }
 
