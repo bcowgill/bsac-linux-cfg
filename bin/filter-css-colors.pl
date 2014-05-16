@@ -293,7 +293,10 @@ sub editFileInPlace
 	my $fileNameBackup = "$fileName$suffix";
 	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
 
-	cp($fileName, $fileNameBackup);
+	unless ($fileName eq $fileNameBackup)
+	{
+		cp($fileName, $fileNameBackup);
+	}
 	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
 }
 
