@@ -8,7 +8,8 @@ NNAAMMEE
 TTOODDOO
        --inplace modify file in place --foreground=xxxx substitute a color for
        all foreground colors --background=xxxx you get color: #fff /* original
-       color */; --undo undo a foreground/background change
+       color */; --undo undo a foreground/background change --rgb convert
+       #ffffff to rgb(255,255,255)
 
 AAUUTTHHOORR
        Brent S.A. Cowgill
@@ -79,8 +80,12 @@ SSEEEE AALLSSOO
         CSS Color specs L<http://www.w3.org/TR/css3-color/>
 
 EEXXAAMMPPLLEESS
+        Find all unique colors used in all CSS files somewhere
+
+        filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
+
         TODO template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
 
 
-perl v5.18.2                      2014-05-16              FILTER-CSS-COLORS(1)
+perl v5.14.4                      2014-05-18              FILTER-CSS-COLORS(1)

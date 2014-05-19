@@ -81,6 +81,13 @@ BASE=base/$TEST.base
 $PROGRAM $DEBUG --noecho --noreverse --nocolor-only --noremap --nocanonical --names < $SAMPLE > $OUT
 assertFilesEqual "$OUT" "$BASE" "$TEST"
 
+echo TEST --rgb only implies --remap and --canonical
+TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames-rgb
+OUT=out/$TEST.out
+BASE=base/$TEST.base
+$PROGRAM $DEBUG --noecho --noreverse --nocolor-only --noremap --nocanonical --nonames --rgb < $SAMPLE > $OUT
+assertFilesEqual "$OUT" "$BASE" "$TEST"
+
 echo TEST --remap --canonical and --names against previous test base file
 TEST=noecho-noreverse-nocolor-remap-canon-names
 OUT=out/$TEST.out
