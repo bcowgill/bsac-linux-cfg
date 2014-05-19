@@ -32,6 +32,7 @@ do
       echo `date --rfc-3339=seconds` "building ($BUILD) because of something new"
       $BUILD
       touch $TOUCH
+      LOOPS=0
    fi
    sleep $WAIT
    LOOPS=$(( $LOOPS + 1 ))
