@@ -44,12 +44,16 @@ q:before, q:after {
     content:'';
     content:none;
 }
-a {
+a,.link {
     margin:0;
     padding:0;
     font-size:100%;
     vertical-align:baseline;
     background:transparent;
+    text-decoration: underline;
+}
+a:visited,.visited {
+    text-decoration: none;
 }
 /* change colours to suit your needs */
 ins {
@@ -66,6 +70,41 @@ mark {
 }
 del {
     text-decoration: line-through;
+}
+/* when user selects text with mouse or keyboard*/
+*::-moz-selection {
+    background: #0f0;
+    color: #f00;
+}
+*::selection,.selection {
+    background: #0f0;
+    color: #f00;
+}
+a,.link {
+    color: #00e;
+}
+a:visited,.visited {
+    color: #d0d;
+}
+a:focus,.focus {
+    color: #700;
+    text-decoration: underline;
+}
+a:hover,.hover {
+    color: #009;
+    text-decoration: underline;
+}
+a:active,.active {
+    color: #f00;
+    text-decoration: underline;
+}
+[contenteditable="true"] {
+    padding: 10px;
+    outline: 2px dashed silver;
+}
+[contenteditable="true"]:hover {
+    padding: 10px;
+    outline: 2px dashed silver;
 }
 abbr[title], dfn[title] {
     border-bottom:1px dotted;
