@@ -1,0 +1,26 @@
+/**
+ * darkness.css
+ * Brent Cowgill
+ */
+body {
+    background-color: black;
+    color: yellow;
+}
+/* change colours to suit your needs */
+ins {
+    background-color: green;
+    color: black;
+}
+/* change colours to suit your needs */
+mark {
+    background-color:teal;
+    color:black;
+}
+del {
+    background-color:maroon;
+    color:black;
+}
+/* change border colour to suit your needs */
+hr {
+    border-top:1px solid lime;
+}
