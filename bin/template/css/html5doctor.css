@@ -25,6 +25,9 @@ time, mark, audio, video {
 }
 body {
     line-height:1;
+    background-color: white;
+    color: black;
+    font-family: ProFontWindows;
 }
 article,aside,details,figcaption,figure,
 footer,header,hgroup,menu,nav,section {
