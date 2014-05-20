@@ -17,19 +17,21 @@ while  [ /bin/true ]
 do
    BUILDIT=0
    if [ -f $TOUCH ]; then
-      if [ `find .. -newer $TOUCH | wc -l` == 0 ]; then
+      if [ `find .. -newer $TOUCH -type f | wc -l` == 0 ]; then
          if [ $LOOPS -gt $TIMES ]; then
             echo `date --rfc-3339=seconds` still nothing new...
             LOOPS=0
          fi
       else
+         echo `date --rfc-3339=seconds` "building ($BUILD) because of something new"
+         find .. -newer $TOUCH -type f | head
          BUILDIT=1
       fi
    else
+      echo `date --rfc-3339=seconds` "building ($BUILD) because of no $TOUCH file"
       BUILDIT=1
    fi
    if [ $BUILDIT == 1 ]; then
-      echo `date --rfc-3339=seconds` "building ($BUILD) because of something new"
       $BUILD
       touch $TOUCH
       LOOPS=0
