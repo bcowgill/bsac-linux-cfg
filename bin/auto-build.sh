@@ -4,7 +4,7 @@ TOUCH=last-build.timestamp
 WAIT=6
 TIMES=50
 LOOPS=0
-IGNORE='\.kate-swp|/\.git/'
+IGNORE='\.swp|\.kate-swp|/\.git/'
 
 if [ -z "$1" ]; then
    echo You must supply a build command to run.
