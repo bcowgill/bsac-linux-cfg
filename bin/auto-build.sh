@@ -4,6 +4,7 @@ TOUCH=last-build.timestamp
 WAIT=6
 TIMES=50
 LOOPS=0
+IGNORE='\.kate-swp|/\.git/'
 
 if [ -z "$1" ]; then
    echo You must supply a build command to run.
@@ -12,19 +13,20 @@ fi
 BUILD="$1"
 echo BUILD=$BUILD
 echo TOUCH=$TOUCH
+echo IGNORE="$IGNORE"
 
 while  [ /bin/true ]
 do
    BUILDIT=0
    if [ -f $TOUCH ]; then
-      if [ `find .. -newer $TOUCH -type f | wc -l` == 0 ]; then
+      if [ `find .. -newer $TOUCH -type f | egrep -v "$IGNORE" | wc -l` == 0 ]; then
          if [ $LOOPS -gt $TIMES ]; then
             echo `date --rfc-3339=seconds` still nothing new...
             LOOPS=0
          fi
       else
          echo `date --rfc-3339=seconds` "building ($BUILD) because of something new"
-         find .. -newer $TOUCH -type f | head
+         find .. -newer $TOUCH -type f | egrep -v "$IGNORE" | head
          BUILDIT=1
       fi
    else
