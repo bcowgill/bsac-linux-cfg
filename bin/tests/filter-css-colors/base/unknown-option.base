@@ -3,39 +3,46 @@ Usage:
     perl.pl [options] [@options-file ...] [file ...]
 
      Options:
-       --color-only     only show the color values, not the entire line.
-       --reverse        show all lines not matching a CSS color declaration.
-       --remap          remap all colors to names in place where possible.
-       --names          convert colors to standard names where possible
-       --canonical      convert colors to canonical form i.e. #fff -> #ffffff
-       --valid-only     do not perform remappings which are invalid CSS
-       --inplace        specify to modify files in place creating a backup first
-       --echo           display original line when performing replacements
-       --version        display program version and exit
-       --debug          display debugging info. incremental
-       --help -?        brief help message and exit
-       --man            full help message and exit
+            --color-only     negatable. only show the color values, not the entire line.
+            --reverse        negatable. show all lines not matching a CSS color declaration.
+            --remap          negatable. remap all colors to names in place where possible.
+            --names          negatable. convert colors to standard names where possible
+            --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+            --rgb            negatable. convert colors to rgb() form
+            --valid-only     do not perform remappings which are invalid CSS
+            --inplace        specify to modify files in place creating a backup first
+            --foreground     specify a color value to use for all foreground colors.
+            --background     specify a color value to use for all background colors.
+            --echo           negatable. display original line when performing replacements
+            --version        display program version and exit
+            --debug          incremental. display debugging info.
+            --help -?        brief help message and exit
+            --man            full help message and exit
 
 Options:
-    --color-only
+    --color-only or --nocolor-only
              Only display the CSS color values used. Useful to identify all unique colors used.
 
-    --reverse
+    --reverse or --noreverse
              Only display lines that do not contain CSS color declarations.
 
-    --remap
+    --remap or --noremap
              Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
              You should specify --names or --canonical as well to have any effect.
 
-    --names
+    --names or --nonames
              Show colors as standard names where possible. i.e. #fff becomes white.
              Implies --canonical as well.
              Implies --remap as well.
 
-    --canonical
+    --canonical or --nocanonical
              Show colors in canonical form i.e. #fff becomes '#ffffff'.
              Implies --remap as well.
+
+    --rgb or --norgb
+             Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
+             Implies --canonical as well. Cannot use --names with --rgb.
 
     --valid-only
              Do not perform name remappings which are invalid css3
@@ -44,7 +51,13 @@ Options:
     --inplace=.suffix
              Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
 
-    --echo
+    --foreground=color or --fg=color
+             Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
+
+    --background=color or --bg=color
+             Specify a color value to use to replace all background colors with. Cannot work with --color-only.
+
+    --echo or --noecho
              When in a --remap mode, display the original line as well.
 
     --version

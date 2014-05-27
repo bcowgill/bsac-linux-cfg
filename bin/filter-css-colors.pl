@@ -6,11 +6,9 @@ filter-css-colors.pl - Find all CSS color declarations in files
 
 =head1 TODO
 
---inplace modify file in place
 --foreground=xxxx substitute a color for all foreground colors
 --background=xxxx you get color: #fff /* original color */;
 --undo undo a foreground/background change
---rgb convert #ffffff to rgb(255,255,255)
 
 =head1 AUTHOR
 
@@ -21,17 +19,19 @@ Brent S.A. Cowgill
 perl.pl [options] [@options-file ...] [file ...]
 
  Options:
-	--color-only     only show the color values, not the entire line.
-	--reverse        show all lines not matching a CSS color declaration.
-	--remap          remap all colors to names in place where possible.
-	--names          convert colors to standard names where possible
-	--canonical      convert colors to canonical form i.e. #fff -> #ffffff
-	--rgb            convert colors to rgb() form
+	--color-only     negatable. only show the color values, not the entire line.
+	--reverse        negatable. show all lines not matching a CSS color declaration.
+	--remap          negatable. remap all colors to names in place where possible.
+	--names          negatable. convert colors to standard names where possible
+	--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+	--rgb            negatable. convert colors to rgb() form
 	--valid-only     do not perform remappings which are invalid CSS
 	--inplace        specify to modify files in place creating a backup first
-	--echo           display original line when performing replacements
+	--foreground     specify a color value to use for all foreground colors.
+	--background     specify a color value to use for all background colors.
+	--echo           negatable. display original line when performing replacements
 	--version        display program version and exit
-	--debug          display debugging info. incremental
+	--debug          incremental. display debugging info.
 	--help -?        brief help message and exit
 	--man            full help message and exit
 
@@ -39,35 +39,35 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =over 8
 
-=item B<--color-only>
+=item B<--color-only> or B<--nocolor-only>
 
  Only display the CSS color values used. Useful to identify all unique colors used.
 
-=item B<--reverse>
+=item B<--reverse> or B<--noreverse>
 
  Only display lines that do not contain CSS color declarations.
 
-=item B<--remap>
+=item B<--remap> or B<--noremap>
 
  Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
  You should specify --names or --canonical as well to have any effect.
 
-=item B<--names>
+=item B<--names> or B<--nonames>
 
  Show colors as standard names where possible. i.e. #fff becomes white.
  Implies --canonical as well.
  Implies --remap as well.
 
-=item B<--canonical>
+=item B<--canonical> or B<--nocanonical>
 
  Show colors in canonical form i.e. #fff becomes '#ffffff'.
  Implies --remap as well.
 
-=item B<--rgb>
+=item B<--rgb>  or B<--norgb>
 
  Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
- Implies --canonical as well.
+ Implies --canonical as well. Cannot use --names with --rgb.
 
 =item B<--valid-only>
 
@@ -78,7 +78,15 @@ perl.pl [options] [@options-file ...] [file ...]
 
  Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
 
-=item B<--echo>
+=item B<--foreground=color> or B<--fg=color>
+
+ Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
+
+=item B<--background=color> or B<--bg=color>
+
+ Specify a color value to use to replace all background colors with. Cannot work with --color-only.
+
+=item B<--echo> or B<--noecho>
 
  When in a --remap mode, display the original line as well.
 
@@ -160,7 +168,9 @@ my %Var = (
 			"canonical!",
 			"rgb!",
 			"valid-only",
-			"inplace:s",
+			"inplace|i:s",
+			"foreground|fg:s",
+			"background|bg:s",
 			"echo!",
 			"debug+",
 			"man",
@@ -344,13 +354,15 @@ sub canonical
 sub rgb
 {
 	my ($color) = @ARG;
+	$DB::single = 1;  # MUSTDO REMOVE THIS
 	if ($Var{'rhArg'}{'rhOpt'}{'rgb'})
 	{
-		# MUSTDO convert hex to decimal here...
-		$color =~ s{ \# ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }{ "rgb(" . $1 . ", " . $2 . ", " . $3 . ")" }xmsgie;
+		$color =~ s{ \# ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }{ "rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")" }xmsgie;
 	}
 	return $color;
 }
+
+# MUSTDO implement foreground/background
 
 # convert color value to color name if $USE_NAMES set
 # color could be #rrggbb or r,g,b triplet or r%,g%,b%
@@ -452,10 +464,20 @@ sub checkOptions
 		push(@$raErrors, "You cannot specify standard input when using the --inplace option") if $use_stdio;
 		push(@$raErrors, "You must supply files to process when using the --inplace option.") unless scalar(@$raFiles);
 	}
+	if ($rhOpt->{'color-only'})
+	{
+		push(@$raErrors, "You cannot specify --foreground when using the --color-only option") if exists($rhOpt->{'foreground'});
+		push(@$raErrors, "You cannot specify --background when using the --color-only option") if exists($rhOpt->{'background'});
+	}
 
 	# Force some flags when others turned on
-	$rhOpt->{'canonical'} = 1 if ($rhOpt->{'names'});
+	$rhOpt->{'canonical'} = 1 if ($rhOpt->{'names'} || $rhOpt->{'rgb'});
 	$rhOpt->{'remap'} = 1 if ($rhOpt->{'names'} || $rhOpt->{'canonical'});
+
+	if ($rhOpt->{'rgb'})
+	{
+		push(@$raErrors, "You cannot specify --names when using the --rgb option") if $rhOpt->{'names'};
+	}
 
 	if (scalar(@$raErrors))
 	{
@@ -564,6 +586,8 @@ sub usage
 
 sub manual
 {
+	$DB::single = 1; # MUSTDO REMOVE THIS
+
 	pod2usage(
 		-exitval => 0,
 		-verbose => 2,

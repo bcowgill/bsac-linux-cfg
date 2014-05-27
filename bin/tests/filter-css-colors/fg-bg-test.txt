@@ -1,0 +1,7 @@
+/* test file for foreground/background replacements */
+
+em { color: hsl(120, 100%, 50%); }     /* green */
+em { color: hsla(120, 100%, 50%, 1); } /* the same, with explicit opacity of 1 */
+
+em { background: hsl(120, 100%, 50%); }     /* green */
+em { background-color: hsla(120, 100%, 50%, 1); } /* the same, with explicit opacity of 1 */

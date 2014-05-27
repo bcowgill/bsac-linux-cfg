@@ -6,10 +6,9 @@ NNAAMMEE
        filter-css-colors.pl - Find all CSS color declarations in files
 
 TTOODDOO
-       --inplace modify file in place --foreground=xxxx substitute a color for
-       all foreground colors --background=xxxx you get color: #fff /* original
-       color */; --undo undo a foreground/background change --rgb convert
-       #ffffff to rgb(255,255,255)
+       --foreground=xxxx substitute a color for all foreground colors
+       --background=xxxx you get color: #fff /* original color */; --undo undo
+       a foreground/background change
 
 AAUUTTHHOORR
        Brent S.A. Cowgill
@@ -18,39 +17,46 @@ SSYYNNOOPPSSIISS
        perl.pl [options] [@options-file ...] [file ...]
 
         Options:
-          --color-only     only show the color values, not the entire line.
-          --reverse        show all lines not matching a CSS color declaration.
-          --remap          remap all colors to names in place where possible.
-          --names          convert colors to standard names where possible
-          --canonical      convert colors to canonical form i.e. #fff -> #ffffff
-          --valid-only     do not perform remappings which are invalid CSS
-          --inplace        specify to modify files in place creating a backup first
-          --echo           display original line when performing replacements
-          --version        display program version and exit
-          --debug          display debugging info. incremental
-          --help -?        brief help message and exit
-          --man            full help message and exit
+               --color-only     negatable. only show the color values, not the entire line.
+               --reverse        negatable. show all lines not matching a CSS color declaration.
+               --remap          negatable. remap all colors to names in place where possible.
+               --names          negatable. convert colors to standard names where possible
+               --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+               --rgb            negatable. convert colors to rgb() form
+               --valid-only     do not perform remappings which are invalid CSS
+               --inplace        specify to modify files in place creating a backup first
+               --foreground     specify a color value to use for all foreground colors.
+               --background     specify a color value to use for all background colors.
+               --echo           negatable. display original line when performing replacements
+               --version        display program version and exit
+               --debug          incremental. display debugging info.
+               --help -?        brief help message and exit
+               --man            full help message and exit
 
 OOPPTTIIOONNSS
-       ----ccoolloorr--oonnllyy
+       ----ccoolloorr--oonnllyy or ----nnooccoolloorr--oonnllyy
                 Only display the CSS color values used. Useful to identify all unique colors used.
 
-       ----rreevveerrssee
+       ----rreevveerrssee or ----nnoorreevveerrssee
                 Only display lines that do not contain CSS color declarations.
 
-       ----rreemmaapp
+       ----rreemmaapp or ----nnoorreemmaapp
                 Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
                 You should specify --names or --canonical as well to have any effect.
 
-       ----nnaammeess
+       ----nnaammeess or ----nnoonnaammeess
                 Show colors as standard names where possible. i.e. #fff becomes white.
                 Implies --canonical as well.
                 Implies --remap as well.
 
-       ----ccaannoonniiccaall
+       ----ccaannoonniiccaall or ----nnooccaannoonniiccaall
                 Show colors in canonical form i.e. #fff becomes '#ffffff'.
                 Implies --remap as well.
+
+       ----rrggbb  or ----nnoorrggbb
+                Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
+                Implies --canonical as well. Cannot use --names with --rgb.
 
        ----vvaalliidd--oonnllyy
                 Do not perform name remappings which are invalid css3
@@ -59,7 +65,13 @@ OOPPTTIIOONNSS
        ----iinnppllaaccee==..ssuuffffiixx
                 Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
 
-       ----eecchhoo
+       ----ffoorreeggrroouunndd==ccoolloorr or ----ffgg==ccoolloorr
+                Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
+
+       ----bbaacckkggrroouunndd==ccoolloorr or ----bbgg==ccoolloorr
+                Specify a color value to use to replace all background colors with. Cannot work with --color-only.
+
+       ----eecchhoo or ----nnooeecchhoo
                 When in a --remap mode, display the original line as well.
 
        ----vveerrssiioonn
@@ -88,4 +100,4 @@ EEXXAAMMPPLLEESS
 
 
 
-perl v5.14.4                      2014-05-18              FILTER-CSS-COLORS(1)
+perl v5.18.2                      2014-05-27              FILTER-CSS-COLORS(1)
