@@ -6,13 +6,53 @@ function testSuite
    local dir suite
    dir="$1"
    suite="$2"
-   pushd "$dir" > /dev/null
    echo ======================================================================
    echo TEST SUITE in "$dir" : $suite
+   pushd "$dir" > /dev/null
    [ -d out ] || mkdir out
    [ -d base ] || mkdir base
-   ./tests.sh
+   if [ -x ./tests.sh ]; then
+      ./tests.sh
+   else
+      echo NOT OK ./tests.sh does not exist in `pwd`
+      return 1
+   fi
    popd > /dev/null
+   return 0
+}
+
+# Ensure a just executed command succeeded.
+# usage:
+# program-to-test $ARGS || assertCommandSuccess $? "program-to-test $ARGS"
+function assertCommandSuccess
+{
+   local err cmd
+   err="$1"
+   cmd="$2"
+   if [ 0 == $err ]; then
+      echo OK command executed without error
+   else
+      echo NOT OK exit code $err for "$cmd"
+      return 1
+   fi
+   return 0
+}
+
+# Ensure a just executed command failed.
+# usage:
+function assertCommandFails
+{
+   local err expect cmd
+   err="$1"
+   expect="$2"
+   cmd="$3"
+   if [ $expect == $err ]; then
+      echo OK command failed with exit code $expect
+   else
+      echo NOT OK expected exit code $expect but got $err for "$cmd"
+      return 1
+   fi
+   return 0
 }
 
 function assertFilesEqual
