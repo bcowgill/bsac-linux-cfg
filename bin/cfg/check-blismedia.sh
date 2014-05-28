@@ -43,6 +43,11 @@ INSTALL_NPM_FROM=""
 INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower lessc:less"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
+# Chrome download page
+GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
+GOOGLE_CHROME=google-chrome
+GOOGLE_CHROME_PKG=google-chrome-stable_current_amd64.deb
+
 CHARLES="charles"
 CHARLES_PKG=charles-proxy
 
@@ -52,6 +57,7 @@ VIRTUALBOX_CMDS="dkms VirtualBox"
 VIRTUALBOX_PKG="dkms virtualbox-4.3"
 VIRTUALBOX_REL="raring"
 
+# http://sourcegear.com/diffmerge/downloads.php
 DIFFMERGE=diffmerge
 DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
@@ -437,6 +443,12 @@ install_git_repo "workspace/play" bsac-linux-cfg https://github.com/bcowgill/bsa
 
 # flash player in google chrome
 # http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
+
+# Linux Google Chrome v Chromium
+# https://code.google.com/p/chromium/wiki/ChromiumBrowserVsGoogleChrome
+# configs ~/.config/chromium or ~/.config/google-chrome for the different versions
+
+install_command_package $GOOGLE_CHROME "$GOOGLE_CHROME_PKG" "Google Chrome for Linux from manual download $GOOGLE_CHROME_URL"
 
 install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
 dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"

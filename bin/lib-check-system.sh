@@ -546,15 +546,24 @@ function force_install_commands_from {
    return $error
 }
 
-# Install a package downloaded from a url
+# Install a command from a package (.deb) already downloaded manually
+function install_command_package {
+   local cmd package message
+   cmd="$1"
+   package="$2"
+   message="$3"
+   cmd_exists "$cmd" > /dev/null || (file_exists "$HOME/Downloads/$package" "$message" && sudo dpkg --install "$HOME/Downloads/$package")
+   cmd_exists "$cmd" $message || return 1
+}
+
+# Install a package (.deb) downloaded from a url
 function install_command_package_from_url {
    local cmd package url message
    cmd="$1"
    package="$2"
    url="$3"
    message="$4"
-   cmd_exists "$cmd" > /dev/null || (echo Try to install $cmd from $package at $url $message; wget --output-document $HOME/Downloads/$package $url && sudo dpkg --install $HOME/Downloads/$package)
-   cmd_exists "$cmd" $message || return 1
+   install_command_package $cmd "$package" > /dev/null || (echo Try to install $cmd from $package at $url $message; wget --output-document $HOME/Downloads/$package $url && install_command_package $cmd "$package" "$message")
 }
 
 # Check if a server (just a command) is running
