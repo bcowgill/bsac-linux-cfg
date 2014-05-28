@@ -1,0 +1,23 @@
+Unknown option: unknown-option
+Usage:
+    render-tt.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --var            define a simple variable for the template
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
+
+Options:
+    --var="key=value"
+             Defines a simple page variable for use when doing template substitutions.
+
+    --version
+             Prints the program version and exit.
+
+    --help or -?
+             Print a brief help message and exit.
+
+    --man
+             Print the full help message and exit.
+

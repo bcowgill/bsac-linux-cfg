@@ -1,0 +1,42 @@
+RENDER-TT(1)          User Contributed Perl Documentation         RENDER-TT(1)
+
+
+
+NNAAMMEE
+       render-tt.pl - Render a Template::Toolkit template page using specific
+       variables
+
+AAUUTTHHOORR
+       Brent S.A. Cowgill
+
+SSYYNNOOPPSSIISS
+       render-tt.pl [options] [@options-file ...] [file ...]
+
+        Options:
+          --var            define a simple variable for the template
+          --version        display program version
+          --help -?        brief help message
+          --man            full help message
+
+OOPPTTIIOONNSS
+       ----vvaarr==""kkeeyy==vvaalluuee""
+                Defines a simple page variable for use when doing template substitutions.
+
+       ----vveerrssiioonn
+                Prints the program version and exit.
+
+       ----hheellpp or --??
+                Print a brief help message and exit.
+
+       ----mmaann
+                Print the full help message and exit.
+
+DDEESSCCRRIIPPTTIIOONN
+        B<render-tt.pl> will perform perl Template::Toolkit transformation of a template file using specific variables as inputs. It is useful for unit testing all possible outputs of a template page.
+
+EEXXAAMMPPLLEESS
+        render-tt.pl --var="this=that" < in/template.tt > out/template.html
+
+
+
+perl v5.18.2                      2014-05-28                      RENDER-TT(1)
