@@ -9,7 +9,7 @@ DEBUG=
 source ../shell-test.sh
 
 [ -d out ] || mkdir out
-rm out/* || echo OK output dir ready
+rm out/* > /dev/null 2>&1 || echo OK output dir ready
 
 echo TEST basic operation
 TEST=basic-operation
