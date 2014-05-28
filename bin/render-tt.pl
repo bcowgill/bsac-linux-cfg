@@ -13,32 +13,6 @@ my $rhVars = {
    'value' => 'value value',
    'this' => { 'that' => 'value this.that' },
    'obj' => { 'id' => 'value obj.id' },
-
-
-
-
-
-   'nothing' => 'title of page',
-   'campaign_id' => 42,
-   'base_campaign_id' => 67,
-   'approval_id' => 23,
-   'isAgencyCampaign' => 0,
-   'targeting_type' => 'TargType',
-   'targeting_type_name' => 'TargTypeName',
-   'dashboard_user' => {
-      'organisation_type' => 'superuser' # also agency
-   },
-   'clients' => [
-      {
-         'id' => 12,
-         'name' => 'client 1',
-      },
-      {
-         'id' => 52,
-         'name' => 'client 2',
-      }
-   ],
-
 };
 
 my $oTemplate = Template->new({
