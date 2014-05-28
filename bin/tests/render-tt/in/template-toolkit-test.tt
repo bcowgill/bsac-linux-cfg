@@ -1,0 +1,21 @@
+Test file for render-tt.pl containing sample Template::Toolkit vars and directives
+
+$value
+$this.that
+${obj.id}
+
+[% BLOCK %] a block [% END %]
+[% BLOCK 
+      multiple_lines
+-%]
+  a multiple line block
+[%- END %]
+
+[%# commented out %]
+[% BLOCK # with line comments
+   # more line comments
+%]
+  multiple line block with comments
+[% END %]
+
+[% PROCESS multiple_lines %]

@@ -7,9 +7,17 @@ use English -no_match_vars;
 use Data::Dumper;
 use Template;
 
-my $template = "views/campaign_details.tt";
-my $params = "views/tests/campaign_details_1.json";
+my $template = "in/template-toolkit-test.tt";
+my $params = "in/template-toolkit-test.vars";
 my $rhVars = {
+   'value' => 'value value',
+   'this' => { 'that' => 'value this.that' },
+   'obj' => { 'id' => 'value obj.id' },
+
+
+
+
+
    'nothing' => 'title of page',
    'campaign_id' => 42,
    'base_campaign_id' => 67,

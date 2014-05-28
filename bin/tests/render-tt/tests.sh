@@ -4,7 +4,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../render-tt.pl
-SAMPLE=template-toolkit-test.txt
+SAMPLE=in/template-toolkit-test.tt
 DEBUG=--debug
 DEBUG=
 SKIP=0
