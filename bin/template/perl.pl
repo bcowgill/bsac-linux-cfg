@@ -115,8 +115,8 @@ getOptions();
 sub main
 {
 	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
-	debug("Var: " . Dumper(\%Var), 0); # 2 usually
-	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 0); # 2 usually
+	debug("Var: " . Dumper(\%Var), 2);
+	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
 
 	$use_stdio = 1 unless scalar(@$raFiles);
 
@@ -131,6 +131,13 @@ sub main
 	{
 		editFileInPlace($rhOpts->{splat}, ".bak", $rhOpts);
 	}
+}
+
+sub setup
+{
+	my ($rhOpt) = @ARG;
+	debug("Var: " . Dumper(\%Var), 2);
+	debug("setup() rhOpt: " . Dumper($rhOpt), 2);
 }
 
 sub processStdio
@@ -266,6 +273,7 @@ sub getOptions
 			$Var{rhArg}{raFile},
 			$Var{rhArg}{rhOpt}{''}
 		);
+		setup($Var{rhArg}{rhOpt});
 		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
 	}
 	else
