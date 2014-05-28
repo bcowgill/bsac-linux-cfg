@@ -13,20 +13,25 @@ Brent S.A. Cowgill
 render-tt.pl [options] [@options-file ...] [file ...]
 
  Options:
-   --var            multiple. define a simple variable for the template
-   --version        display program version
-   --help -?        brief help message
-   --man            full help message
+   --page-vars=file    set the page variables by reading in a perl hash object from file.
+   --var=key=val       multiple. define a simple variable for the template
+   --version           display program version
+   --help -?           brief help message
+   --man               full help message
 
 =head1 OPTIONS
 
 =over 8
 
+=item B<--page-vars=file.vars>
+
+ Specifies a file to read in to set all the template page vars in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+
 =item B<--var="key=value">
 
  Defines a simple page variable for use when doing template substitutions.
  You can specify this multiple times to define many variables.
- Key can be this.that to define a hash object called this with a key of that
+ Key can be this.that to define a hash object called this with a key of that.
 
 =item B<--version>
 
@@ -89,6 +94,7 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
+			"page-vars:s",
 			"var:s%",     # multivalued hash key=value
 			"debug|d+",   # incremental keep specifying to increase
 			"",           # empty string allows - to signify standard in/out as a file
@@ -120,6 +126,16 @@ sub main
 sub setup
 {
 	my ($rhOpt) = @ARG;
+
+	# Populate the rhPageVars by slurping in a file with Data::Dumper output in it
+	if ($rhOpt->{'page-vars'})
+	{
+		my $rContent = read_file($rhOpt->{'page-vars'}, scalar_ref => 1);
+		$$rContent =~ s{\A \s* \$VAR1 \s* = \s* }{}xms;
+		$$rContent = "\$Var{rhPageVars} = $$rContent;";
+		eval $$rContent;
+		die "Error loading --page-vars from $rhOpt->{'page-vars'}: $EVAL_ERROR" if $EVAL_ERROR;
+	}
 
 	# Populate the rhPageVars with the --var options
 	# a key of this.long.path will autovivify the intervening hashes
