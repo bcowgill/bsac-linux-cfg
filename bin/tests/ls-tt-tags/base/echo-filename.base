@@ -1,0 +1,12 @@
+template-toolkit-test.txt
+   $this
+   $this.that
+   ${obj.id}
+   [% DIRECTIVE %]
+   [% DIRECTIVE 
+         multiple lines
+   %]
+   [%# commented out %]
+   [% DIRECTIVE # with line comments
+      # more line comments
+   %]
