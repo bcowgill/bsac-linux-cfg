@@ -13,8 +13,14 @@ Brent S.A. Cowgill
 render-tt.pl [options] [@options-file ...] [file ...]
 
  Options:
-   --page-vars=file    set the page variables by reading in a perl hash object from file.
-   --var=key=val       multiple. define a simple variable for the template
+   --page-vars=file    set the page VARIABLEs by reading in a perl hash object from file.
+   --page-consts=file   set the page CONSTANTs by reading in a perl hash object from file.
+   --var=key=val       multiple. define a simple VARIABLE for the template
+   --const=key=val     multiple. define a CONSTANT for the template
+   --absolute          turn on the ABSOLUTE option for Template::Toolkit
+   --relative          turn on the RELATIVE option for Template::Toolkit
+   --anycase           turn on the ANYCASE option for Template::Toolkit
+   --interpolate       turn on the INTERPOLATE option for Template::Toolkit (default)
    --version           display program version
    --help -?           brief help message
    --man               full help message
@@ -23,15 +29,41 @@ render-tt.pl [options] [@options-file ...] [file ...]
 
 =over 8
 
-=item B<--page-vars=file.vars>
+=item B<--page-vars=file.vars> or B<--variables=file.vars> or B<--pre-define=file.vars>
 
- Specifies a file to read in to set all the template page vars in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+ Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+
+=item B<--page-consts=file.vars> or B<--constants=file.vars>
+
+ Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
 
 =item B<--var="key=value">
 
- Defines a simple page variable for use when doing template substitutions.
- You can specify this multiple times to define many variables.
+ Defines a simple page VARIABLE for use when doing template substitutions.
+ You can specify this multiple times to define many VARIABLEs.
  Key can be this.that to define a hash object called this with a key of that.
+
+=item B<--const="key=value">
+
+ Defines a simple page CONSTANT for use when doing template substitutions.
+ You can specify this multiple times to define many CONSTANTs.
+ Key can be this.that to define a hash object called this with a key of that.
+
+=item B<--absolute> or B<--noabsolute>
+
+ Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
+
+=item B<--relative> or B<--norelative>
+
+ Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
+
+=item B<--anycase> or B<--noanycase>
+
+ Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
+
+=item B<--interpolate> or B<--nointerpolate>
+
+ Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
 
 =item B<--version>
 
@@ -79,6 +111,10 @@ my %Var = (
 		rhOpt => {
 			'' => 0, # indicates standard in/out as - on command line
 			var => {},
+			absolute => 0,
+			relative => 0,
+			anycase => 0,
+			interpolate => 1,
 			debug => 0,
 			man => 0,     # show full help page
 		},
@@ -94,8 +130,14 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
-			"page-vars:s",
-			"var:s%",     # multivalued hash key=value
+			"absolute!",
+			"relative!",
+			"anycase!",
+			"interpolate!",
+			"page-vars|variables|pre_define:s",
+			"page-consts|constants:s",
+			"var|variable:s%",     # multivalued hash key=value
+			"const|constant:s%",   # multivalued hash key=value
 			"debug|d+",   # incremental keep specifying to increase
 			"",           # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
@@ -103,7 +145,8 @@ my %Var = (
 		raMandatory => [], # additional mandatory paramters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
-	rhPageVars => {},
+	rhPageVar => {},
+	rhPageConst => {},
 );
 
 getOptions();
@@ -123,33 +166,37 @@ sub main
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
 }
 
-sub setup
+# Populate the rhPageVar/rhPageConst by slurping in a file with Data::Dumper output in it
+sub loadPageParameters
 {
-	my ($rhOpt) = @ARG;
+	my ($fileName, $var, $option) = @ARG;
 
-	# Populate the rhPageVars by slurping in a file with Data::Dumper output in it
-	if ($rhOpt->{'page-vars'})
+	if ($fileName)
 	{
-		my $rContent = read_file($rhOpt->{'page-vars'}, scalar_ref => 1);
+		my $rContent = read_file($fileName, scalar_ref => 1);
 		$$rContent =~ s{\A \s* \$VAR1 \s* = \s* }{}xms;
-		$$rContent = "\$Var{rhPageVars} = $$rContent;";
+		$$rContent = "\$Var{$var} = $$rContent;";
 		eval $$rContent;
-		die "Error loading --page-vars from $rhOpt->{'page-vars'}: $EVAL_ERROR" if $EVAL_ERROR;
+		die "Error loading --$option from $fileName: $EVAL_ERROR" if $EVAL_ERROR;
 	}
+}
 
-	# Populate the rhPageVars with the --var options
+# Populate the rhPageVar with the --var options (also rhPageConst)
+sub defineValues
+{
+	my ($rhVar, $var) = @ARG;
 	# a key of this.long.path will autovivify the intervening hashes
-	foreach my $key (keys %{$rhOpt->{'var'}})
+	foreach my $key (keys %$rhVar)
 	{
 		my @Chain = split(/\./, $key);
-		my $rhScope = $Var{rhPageVars};
+		my $rhScope = $Var{$var};
 		while (scalar(@Chain))
 		{
 			my $thisKey = shift(@Chain);
 			if (0 == scalar(@Chain))
 			{
 				# final key in the chain, set the value
-				$rhScope->{$thisKey} = $rhOpt->{'var'}{$key};
+				$rhScope->{$thisKey} = $rhVar->{$key};
 			}
 			else
 			{
@@ -158,6 +205,19 @@ sub setup
 			}
 		}
 	}
+}
+
+sub setup
+{
+	my ($rhOpt) = @ARG;
+
+	# Populate the rhPageVar by slurping in a file with Data::Dumper output in it
+	loadPageParameters($rhOpt->{'page-vars'}, 'rhPageVar', 'page-vars');
+	loadPageParameters($rhOpt->{'page-consts'}, 'rhPageConst', 'page-consts');
+
+	# Populate the rhPageVar with the --var options
+	defineValues($rhOpt->{'var'}, 'rhPageVar');
+	defineValues($rhOpt->{'const'}, 'rhPageConst');
 }
 
 sub processStdio
@@ -186,10 +246,15 @@ sub processFile
 
 	my $oTemplate = Template->new({
 		INCLUDE_PATH => '.',
-		INTERPOLATE => 1,
+		INTERPOLATE => $rhOpt->{'interpolate'},
+		ABSOLUTE => $rhOpt->{'absolute'},
+		RELATIVE => $rhOpt->{'relative'},
+		ANYCASE => $rhOpt->{'anycase'},
+		VARIABLES => $Var{rhPageVar},
+		CONSTANTS => $Var{rhPageConst},
 	}) || die "$Template::ERROR\n";
 
-	$oTemplate->process($fileName, $Var{rhPageVars})
+	$oTemplate->process($fileName)
 	|| die ($oTemplate->error() . "\n");
 }
 

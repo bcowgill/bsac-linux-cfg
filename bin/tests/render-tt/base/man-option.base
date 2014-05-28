@@ -13,20 +13,47 @@ SSYYNNOOPPSSIISS
        render-tt.pl [options] [@options-file ...] [file ...]
 
         Options:
-          --page-vars=file    set the page variables by reading in a perl hash object from file.
-          --var=key=val       multiple. define a simple variable for the template
+          --page-vars=file    set the page VARIABLEs by reading in a perl hash object from file.
+          --page-consts=file   set the page CONSTANTs by reading in a perl hash object from file.
+          --var=key=val       multiple. define a simple VARIABLE for the template
+          --const=key=val     multiple. define a CONSTANT for the template
+          --absolute          turn on the ABSOLUTE option for Template::Toolkit
+          --relative          turn on the RELATIVE option for Template::Toolkit
+          --anycase           turn on the ANYCASE option for Template::Toolkit
+          --interpolate       turn on the INTERPOLATE option for Template::Toolkit (default)
           --version           display program version
           --help -?           brief help message
           --man               full help message
 
 OOPPTTIIOONNSS
-       ----ppaaggee--vvaarrss==ffiillee..vvaarrss
-                Specifies a file to read in to set all the template page vars in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+       ----ppaaggee--vvaarrss==ffiillee..vvaarrss or ----vvaarriiaabblleess==ffiillee..vvaarrss or
+       ----pprree--ddeeffiinnee==ffiillee..vvaarrss
+                Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+
+       ----ppaaggee--ccoonnssttss==ffiillee..vvaarrss or ----ccoonnssttaannttss==ffiillee..vvaarrss
+                Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
 
        ----vvaarr==""kkeeyy==vvaalluuee""
-                Defines a simple page variable for use when doing template substitutions.
-                You can specify this multiple times to define many variables.
+                Defines a simple page VARIABLE for use when doing template substitutions.
+                You can specify this multiple times to define many VARIABLEs.
                 Key can be this.that to define a hash object called this with a key of that.
+
+       ----ccoonnsstt==""kkeeyy==vvaalluuee""
+                Defines a simple page CONSTANT for use when doing template substitutions.
+                You can specify this multiple times to define many CONSTANTs.
+                Key can be this.that to define a hash object called this with a key of that.
+
+       ----aabbssoolluuttee or ----nnooaabbssoolluuttee
+                Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
+
+       ----rreellaattiivvee or ----nnoorreellaattiivvee
+                Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
+
+       ----aannyyccaassee or ----nnooaannyyccaassee
+                Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
+
+       ----iinntteerrppoollaattee or ----nnooiinntteerrppoollaattee
+                Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
 
        ----vveerrssiioonn
                 Prints the program version and exit.
