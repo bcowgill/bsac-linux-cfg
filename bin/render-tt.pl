@@ -13,7 +13,7 @@ Brent S.A. Cowgill
 render-tt.pl [options] [@options-file ...] [file ...]
 
  Options:
-   --var            define a simple variable for the template
+   --var            multiple. define a simple variable for the template
    --version        display program version
    --help -?        brief help message
    --man            full help message
@@ -25,6 +25,8 @@ render-tt.pl [options] [@options-file ...] [file ...]
 =item B<--var="key=value">
 
  Defines a simple page variable for use when doing template substitutions.
+ You can specify this multiple times to define many variables.
+ Key can be this.that to define a hash object called this with a key of that
 
 =item B<--version>
 
@@ -71,6 +73,7 @@ my %Var = (
 	rhArg => {
 		rhOpt => {
 			'' => 0, # indicates standard in/out as - on command line
+			var => {},
 			debug => 0,
 			man => 0,     # show full help page
 		},
@@ -86,9 +89,7 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
-			"var:s",
-			"array:s@",   # multivalued array string
-			"map|m:s%",   # multivalued hash key=value
+			"var:s%",     # multivalued hash key=value
 			"debug|d+",   # incremental keep specifying to increase
 			"",           # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
@@ -96,6 +97,7 @@ my %Var = (
 		raMandatory => [], # additional mandatory paramters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
+	rhPageVars => {},
 );
 
 getOptions();
@@ -103,8 +105,8 @@ getOptions();
 sub main
 {
 	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
-	debug("Var: " . Dumper(\%Var), 0); # 2 usually
-	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 0); # 2 usually
+	debug("Var: " . Dumper(\%Var), 2);
+	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
 
 	$use_stdio = 1 unless scalar(@$raFiles);
 
@@ -113,6 +115,33 @@ sub main
 		processStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
+}
+
+sub setup
+{
+	my ($rhOpt) = @ARG;
+
+	# Populate the rhPageVars with the --var options
+	# a key of this.long.path will autovivify the intervening hashes
+	foreach my $key (keys %{$rhOpt->{'var'}})
+	{
+		my @Chain = split(/\./, $key);
+		my $rhScope = $Var{rhPageVars};
+		while (scalar(@Chain))
+		{
+			my $thisKey = shift(@Chain);
+			if (0 == scalar(@Chain))
+			{
+				# final key in the chain, set the value
+				$rhScope->{$thisKey} = $rhOpt->{'var'}{$key};
+			}
+			else
+			{
+				$rhScope->{$thisKey} = $rhScope->{$thisKey} || {};
+				$rhScope = $rhScope->{$thisKey};
+			}
+		}
+	}
 }
 
 sub processStdio
@@ -139,26 +168,13 @@ sub processFile
 	my ($fileName, $rhOpt) = @ARG;
 	debug("processFile($fileName)\n");
 
-	my $rhVars = {
-		'value' => 'value value',
-		'this' => { 'that' => 'value this.that' },
-		'obj' => { 'id' => 'value obj.id' },
-	};
-
 	my $oTemplate = Template->new({
 		INCLUDE_PATH => '.',
 		INTERPOLATE => 1,
 	}) || die "$Template::ERROR\n";
 
-	$oTemplate->process($fileName, $rhVars)
+	$oTemplate->process($fileName, $Var{rhPageVars})
 	|| die ($oTemplate->error() . "\n");
-
-
-#	# example slurp in the file and show something
-#	my $rContent = read_file($fileName, scalar_ref => 1);
-#	print "length: " . length($$rContent) . "\n";
-#	doReplacement($rContent);
-#	print $$rContent;
 }
 
 sub doReplacement
@@ -253,6 +269,7 @@ sub getOptions
 			$Var{rhArg}{raFile},
 			$Var{rhArg}{rhOpt}{''}
 		);
+		setup($Var{rhArg}{rhOpt});
 		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
 	}
 	else

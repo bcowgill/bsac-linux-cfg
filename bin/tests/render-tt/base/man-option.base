@@ -13,7 +13,7 @@ SSYYNNOOPPSSIISS
        render-tt.pl [options] [@options-file ...] [file ...]
 
         Options:
-          --var            define a simple variable for the template
+          --var            multiple. define a simple variable for the template
           --version        display program version
           --help -?        brief help message
           --man            full help message
@@ -21,6 +21,8 @@ SSYYNNOOPPSSIISS
 OOPPTTIIOONNSS
        ----vvaarr==""kkeeyy==vvaalluuee""
                 Defines a simple page variable for use when doing template substitutions.
+                You can specify this multiple times to define many variables.
+                Key can be this.that to define a hash object called this with a key of that
 
        ----vveerrssiioonn
                 Prints the program version and exit.

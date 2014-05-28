@@ -1,8 +1,8 @@
 Test file for render-tt.pl containing sample Template::Toolkit vars and directives
 
-value value
-value this.that
-value obj.id
+value-value
+value-this.that
+value-obj.id
 
  a block 
 
