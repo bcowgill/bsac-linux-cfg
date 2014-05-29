@@ -13,17 +13,18 @@ SSYYNNOOPPSSIISS
        render-tt.pl [options] [@options-file ...] [file ...]
 
         Options:
-          --page-vars=file    set the page VARIABLEs by reading in a perl hash object from file.
-          --page-consts=file   set the page CONSTANTs by reading in a perl hash object from file.
-          --var=key=val       multiple. define a simple VARIABLE for the template
-          --const=key=val     multiple. define a CONSTANT for the template
-          --absolute          turn on the ABSOLUTE option for Template::Toolkit
-          --relative          turn on the RELATIVE option for Template::Toolkit
-          --anycase           turn on the ANYCASE option for Template::Toolkit
-          --interpolate       turn on the INTERPOLATE option for Template::Toolkit (default)
-          --version           display program version
-          --help -?           brief help message
-          --man               full help message
+          --page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
+          --page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
+          --var=key=val               multiple. define a simple VARIABLE for the template
+          --const=key=val             multiple. define a CONSTANT for the template
+          --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
+          --absolute                  turn on the ABSOLUTE option for Template::Toolkit
+          --relative                  turn on the RELATIVE option for Template::Toolkit
+          --anycase                   turn on the ANYCASE option for Template::Toolkit
+          --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+          --version                   display program version
+          --help -?                   brief help message
+          --man                       full help message
 
 OOPPTTIIOONNSS
        ----ppaaggee--vvaarrss==ffiillee..vvaarrss or ----vvaarriiaabblleess==ffiillee..vvaarrss or
@@ -42,6 +43,9 @@ OOPPTTIIOONNSS
                 Defines a simple page CONSTANT for use when doing template substitutions.
                 You can specify this multiple times to define many CONSTANTs.
                 Key can be this.that to define a hash object called this with a key of that.
+
+       ----ccoonnssttaannttss--nnaammeessppaaccee==""nnaammee""
+                Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
        ----aabbssoolluuttee or ----nnooaabbssoolluuttee
                 Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
@@ -72,4 +76,4 @@ EEXXAAMMPPLLEESS
 
 
 
-perl v5.18.2                      2014-05-28                      RENDER-TT(1)
+perl v5.18.2                      2014-05-29                      RENDER-TT(1)

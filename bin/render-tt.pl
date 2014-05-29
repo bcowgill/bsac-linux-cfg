@@ -13,17 +13,18 @@ Brent S.A. Cowgill
 render-tt.pl [options] [@options-file ...] [file ...]
 
  Options:
-   --page-vars=file    set the page VARIABLEs by reading in a perl hash object from file.
-   --page-consts=file   set the page CONSTANTs by reading in a perl hash object from file.
-   --var=key=val       multiple. define a simple VARIABLE for the template
-   --const=key=val     multiple. define a CONSTANT for the template
-   --absolute          turn on the ABSOLUTE option for Template::Toolkit
-   --relative          turn on the RELATIVE option for Template::Toolkit
-   --anycase           turn on the ANYCASE option for Template::Toolkit
-   --interpolate       turn on the INTERPOLATE option for Template::Toolkit (default)
-   --version           display program version
-   --help -?           brief help message
-   --man               full help message
+   --page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
+   --page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
+   --var=key=val               multiple. define a simple VARIABLE for the template
+   --const=key=val             multiple. define a CONSTANT for the template
+   --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
+   --absolute                  turn on the ABSOLUTE option for Template::Toolkit
+   --relative                  turn on the RELATIVE option for Template::Toolkit
+   --anycase                   turn on the ANYCASE option for Template::Toolkit
+   --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+   --version                   display program version
+   --help -?                   brief help message
+   --man                       full help message
 
 =head1 OPTIONS
 
@@ -48,6 +49,10 @@ render-tt.pl [options] [@options-file ...] [file ...]
  Defines a simple page CONSTANT for use when doing template substitutions.
  You can specify this multiple times to define many CONSTANTs.
  Key can be this.that to define a hash object called this with a key of that.
+
+=item B<--constants-namespace="name">
+
+ Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
 =item B<--absolute> or B<--noabsolute>
 
@@ -113,6 +118,7 @@ my %Var = (
 			var => {},
 			absolute => 0,
 			relative => 0,
+			'constants-namespace' => 'constants',
 			anycase => 0,
 			interpolate => 1,
 			debug => 0,
@@ -138,6 +144,7 @@ my %Var = (
 			"page-consts|constants:s",
 			"var|variable:s%",     # multivalued hash key=value
 			"const|constant:s%",   # multivalued hash key=value
+			"constants-namespace:s",
 			"debug|d+",   # incremental keep specifying to increase
 			"",           # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
@@ -252,6 +259,7 @@ sub processFile
 		ANYCASE => $rhOpt->{'anycase'},
 		VARIABLES => $Var{rhPageVar},
 		CONSTANTS => $Var{rhPageConst},
+		CONSTANTS_NAMESPACE => $rhOpt->{'constants-namespace'},
 	}) || die "$Template::ERROR\n";
 
 	$oTemplate->process($fileName)

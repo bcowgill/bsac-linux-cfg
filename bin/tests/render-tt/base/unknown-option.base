@@ -3,17 +3,18 @@ Usage:
     render-tt.pl [options] [@options-file ...] [file ...]
 
      Options:
-       --page-vars=file    set the page VARIABLEs by reading in a perl hash object from file.
-       --page-consts=file   set the page CONSTANTs by reading in a perl hash object from file.
-       --var=key=val       multiple. define a simple VARIABLE for the template
-       --const=key=val     multiple. define a CONSTANT for the template
-       --absolute          turn on the ABSOLUTE option for Template::Toolkit
-       --relative          turn on the RELATIVE option for Template::Toolkit
-       --anycase           turn on the ANYCASE option for Template::Toolkit
-       --interpolate       turn on the INTERPOLATE option for Template::Toolkit (default)
-       --version           display program version
-       --help -?           brief help message
-       --man               full help message
+       --page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
+       --page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
+       --var=key=val               multiple. define a simple VARIABLE for the template
+       --const=key=val             multiple. define a CONSTANT for the template
+       --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
+       --absolute                  turn on the ABSOLUTE option for Template::Toolkit
+       --relative                  turn on the RELATIVE option for Template::Toolkit
+       --anycase                   turn on the ANYCASE option for Template::Toolkit
+       --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+       --version                   display program version
+       --help -?                   brief help message
+       --man                       full help message
 
 Options:
     --page-vars=file.vars or --variables=file.vars or --pre-define=file.vars
@@ -31,6 +32,9 @@ Options:
              Defines a simple page CONSTANT for use when doing template substitutions.
              You can specify this multiple times to define many CONSTANTs.
              Key can be this.that to define a hash object called this with a key of that.
+
+    --constants-namespace="name"
+             Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
     --absolute or --noabsolute
              Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
