@@ -146,7 +146,7 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
-SKIP="NOT YET IMPLEMENTED"
+#SKIP="NOT YET IMPLEMENTED"
 
 echo TEST --rgb only implies --remap and --canonical
 TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames-rgb

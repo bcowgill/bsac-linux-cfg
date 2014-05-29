@@ -72,3 +72,31 @@ function assertFilesEqual
    fi
    return 0
 }
+
+# On successful completion of a test plan, show OK message
+COMPLETE_ERROR=0
+function complete()
+{
+   if [ $COMPLETE_ERROR == 0 ]; then
+      echo OK test plan $0 completed in `pwd`
+   fi
+}
+trap complete 0
+
+# An error handler to trap premature terminations.
+# source: http://stackoverflow.com/questions/64786/error-handling-in-bash
+function error()
+{
+   local parent_lineno="$1"
+   local message="$2"
+   local code="${3:-1}"
+   COMPLETE_ERROR=1
+   echo NOT OK test plan $0 terminated by error in `pwd`
+   if [[ -n "$message" ]] ; then
+      echo "NOT OK on or near line ${parent_lineno}: ${message}; exiting with status ${code}"
+   else
+      echo "NOT OK on or near line ${parent_lineno}; exiting with status ${code}"
+   fi
+   exit "${code}"
+}
+trap 'error ${LINENO}' ERR
