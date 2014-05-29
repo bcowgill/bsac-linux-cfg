@@ -1,4 +1,7 @@
 # some functions for testing things from shell scripts
+# Brent S.A. Cowgill
+# License: Unlicense http://unlicense.org/:wq
+# Github original: https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/tests/shell-test.sh
 # have a look into shUnit http://shunit2.googlecode.com/svn/trunk/source/2.1/doc/shunit2.html#id16
 
 function testSuite
