@@ -8,6 +8,14 @@ render-tt.pl - Render a Template::Toolkit template page using specific variables
 
 Brent S.A. Cowgill
 
+=head1 LICENSE
+
+Unlicense http://unlicense.org
+
+=head1 SOURCE
+
+https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/render-tt.pl
+
 =head1 SYNOPSIS
 
 render-tt.pl [options] [@options-file ...] [file ...]

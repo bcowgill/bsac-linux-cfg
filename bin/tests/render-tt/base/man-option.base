@@ -9,6 +9,12 @@ NNAAMMEE
 AAUUTTHHOORR
        Brent S.A. Cowgill
 
+LLIICCEENNSSEE
+       Unlicense http://unlicense.org
+
+SSOOUURRCCEE
+       https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/render-tt.pl
+
 SSYYNNOOPPSSIISS
        render-tt.pl [options] [@options-file ...] [file ...]
 
