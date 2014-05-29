@@ -9,5 +9,10 @@ pushd ~/workspace/play/open-layers/dist
 webserver.sh 9191 &
 popd
 
+# Start up infinity plus dashboard dev instance
+pushd ~/workspace/projects/infinity-plus-dashboard/setup
+./start-app.sh
+popd
+
 echo You need to start Charles before the browsers!
 
