@@ -9,6 +9,11 @@ pushd ~/workspace/play/open-layers/dist
 webserver.sh 9191 &
 popd
 
+mkdir -p  ~/workspace/projects/infinity-plus-dashboard/test/campaign_details/out
+pushd ~/workspace/projects/infinity-plus-dashboard/test/campaign_details/out
+webserver.sh 8888 &
+popd
+
 # Start up infinity plus dashboard dev instance
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
 ./start-app.sh
