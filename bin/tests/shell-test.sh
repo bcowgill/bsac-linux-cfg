@@ -4,6 +4,20 @@
 # Github original: https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/tests/shell-test.sh
 # have a look into shUnit http://shunit2.googlecode.com/svn/trunk/source/2.1/doc/shunit2.html#id16
 
+function pause {
+   local message input
+   message="$1"
+   echo NOT OK PAUSE $message press ENTER to continue.
+   read input
+}
+
+function stop {
+   local message
+   message="$1"
+   echo NOT OK STOPPED: $message
+   exit 1
+}
+
 function testSuite
 {
    local dir suite

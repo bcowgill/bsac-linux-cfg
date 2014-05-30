@@ -69,6 +69,8 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
+stop "simulating a failure so all .html output remains behind for front end behaviour verification"
+
 # clean up output directory if no failures
 rm out/* && rmdir out
 echo OK All tests complete `pwd`/out cleaned up
