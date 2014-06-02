@@ -8,6 +8,7 @@ LOOPS=0
 IGNORE='\.swp|\.kate-swp|/\.git/'
 
 if [ -z "$1" ]; then
+   echo Usage: $0 build-command [watch-dir]
    echo You must supply a build command to run.
    exit 1
 fi
