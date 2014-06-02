@@ -81,6 +81,19 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST pre/post chomp values specified
+TEST=chomp
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --pre-chomp=1 --post-chomp=2 --page-vars=in/template-toolkit-test.vars $SAMPLE"
+	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+   echo SKIP $TEST "$SKIP"
+fi
+
 # clean up output directory if no failures
 rm out/* && rmdir out
 echo OK All tests complete `pwd`/out cleaned up

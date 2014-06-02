@@ -12,6 +12,8 @@ Usage:
        --relative                  turn on the RELATIVE option for Template::Toolkit
        --anycase                   turn on the ANYCASE option for Template::Toolkit
        --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+       --pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
+       --post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
        --version                   display program version
        --help -?                   brief help message
        --man                       full help message
@@ -47,6 +49,12 @@ Options:
 
     --interpolate or --nointerpolate
              Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
+
+    --pre-chomp=N
+             Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+
+    --post-chomp=N
+             Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
 
     --version
              Prints the program version and exit.

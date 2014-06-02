@@ -30,6 +30,8 @@ render-tt.pl [options] [@options-file ...] [file ...]
    --relative                  turn on the RELATIVE option for Template::Toolkit
    --anycase                   turn on the ANYCASE option for Template::Toolkit
    --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+   --pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
+   --post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
    --version                   display program version
    --help -?                   brief help message
    --man                       full help message
@@ -77,6 +79,14 @@ render-tt.pl [options] [@options-file ...] [file ...]
 =item B<--interpolate> or B<--nointerpolate>
 
  Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
+
+=item B<--pre-chomp=N>
+
+ Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+
+=item B<--post-chomp=N>
+
+ Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
 
 =item B<--version>
 
@@ -129,6 +139,8 @@ my %Var = (
 			'constants-namespace' => 'constants',
 			anycase => 0,
 			interpolate => 1,
+			'pre-chomp' => 0,
+			'post-chomp' => 0,
 			debug => 0,
 			man => 0,     # show full help page
 		},
@@ -148,6 +160,8 @@ my %Var = (
 			"relative!",
 			"anycase!",
 			"interpolate!",
+			"pre-chomp:i",
+			"post-chomp:i",
 			"page-vars|variables|pre_define:s",
 			"page-consts|constants:s",
 			"var|variable:s%",     # multivalued hash key=value
@@ -262,6 +276,8 @@ sub processFile
 	my $oTemplate = Template->new({
 		INCLUDE_PATH => '.',
 		INTERPOLATE => $rhOpt->{'interpolate'},
+		PRE_CHOMP => $rhOpt->{'pre-chomp'},
+		POST_CHOMP => $rhOpt->{'post-chomp'},
 		ABSOLUTE => $rhOpt->{'absolute'},
 		RELATIVE => $rhOpt->{'relative'},
 		ANYCASE => $rhOpt->{'anycase'},

@@ -28,6 +28,8 @@ SSYYNNOOPPSSIISS
           --relative                  turn on the RELATIVE option for Template::Toolkit
           --anycase                   turn on the ANYCASE option for Template::Toolkit
           --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+          --pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
+          --post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
           --version                   display program version
           --help -?                   brief help message
           --man                       full help message
@@ -65,6 +67,12 @@ OOPPTTIIOONNSS
        ----iinntteerrppoollaattee or ----nnooiinntteerrppoollaattee
                 Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
 
+       ----pprree--cchhoommpp==NN
+                Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+
+       ----ppoosstt--cchhoommpp==NN
+                Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
+
        ----vveerrssiioonn
                 Prints the program version and exit.
 
@@ -82,4 +90,4 @@ EEXXAAMMPPLLEESS
 
 
 
-perl v5.18.2                      2014-05-29                      RENDER-TT(1)
+perl v5.18.2                      2014-06-02                      RENDER-TT(1)
