@@ -12,12 +12,12 @@ if [ -z "$1" ]; then
    echo You must supply a build command to run.
    exit 1
 fi
-if [ -z "$2" ]; then
-   echo Will watch for file changes in dir $WATCHDIR.
-   exit 1
+if [ ! -z "$2" ]; then
+   WATCHDIR="$2"
 fi
 BUILD="$1"
 echo BUILD=$BUILD
+echo WATCHDIR="$WATCHDIR"
 echo TOUCH=$TOUCH
 echo IGNORE="$IGNORE"
 
