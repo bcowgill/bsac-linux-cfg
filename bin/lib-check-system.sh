@@ -54,7 +54,7 @@ function dir_exists {
    if [ -d "$dir" ]; then
       echo OK directory exists: $dir
    else
-      echo NOT OK directory missing: $dir [$message]
+      echo NOT OK directory missing: $dir [pwd=$(pwd)] [$message]
       return 1
    fi
    return 0
@@ -69,7 +69,7 @@ function push_dir {
       pushd "$dir" > /dev/null
       echo $message in dir `pwd`
    else
-      echo NOT OK directory missing: $dir [$message]
+      echo NOT OK directory missing: $dir [pwd=$(pwd)] [$message]
       return 1
    fi
 }
@@ -161,7 +161,7 @@ function file_exists {
    if [ -f "$file" ]; then
       echo OK file exists: $file
    else
-      echo NOT OK file missing: $file [$message]
+      echo NOT OK file missing: $file [pwd=$(pwd)] [$message]
       return 1
    fi
    return 0
@@ -174,7 +174,7 @@ function file_link_exists {
    if [ -L "$file" ]; then
       echo OK symlink exists: $file
    else
-      echo NOT OK symlink missing: $file [$message]
+      echo NOT OK symlink missing: $file [pwd=$(pwd)] [$message]
       return 1
    fi
    return 0
@@ -187,7 +187,7 @@ function dir_link_exists {
    if [ -L "$dir" ]; then
       echo OK symlink dir exists: $dir
    else
-      echo NOT OK symlink dir missing: $dir [$message]
+      echo NOT OK symlink dir missing: $dir [pwd=$(pwd)] [$message]
       return 1
    fi
    return 0
