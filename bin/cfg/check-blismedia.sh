@@ -461,6 +461,10 @@ file_exists "/usr/bin/flash-player-properties"
 #============================================================================
 # end of main installing, now configuring
 
+# Check mysql configuration options
+FILE=.my.cnf
+file_has_text "$FILE" "safe-updates" "prevent big deletes from tables"
+file_must_not_have_text "$FILE" "#safe-updates" "make sure not commented out"
 
 # Check charles configuration options
 FILE=.charles.config
