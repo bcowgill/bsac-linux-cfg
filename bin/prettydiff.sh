@@ -1,5 +1,6 @@
 #!/bin/bash
 # use prettydiff javascript to clean up html
+# License: http://unlicense.org
 # online formatter: http://prettydiff.com/?m=beautify&html
 # source: https://github.com/austincheney/Pretty-Diff/blob/master/lib/markup_beauty.js
 # npm install prettydiff
