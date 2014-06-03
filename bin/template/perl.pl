@@ -118,8 +118,6 @@ sub main
 	debug("Var: " . Dumper(\%Var), 2);
 	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
 
-	$use_stdio = 1 unless scalar(@$raFiles);
-
 	if ($use_stdio)
 	{
 		processStdio($rhOpt);
@@ -267,11 +265,13 @@ sub getOptions
 	{
 		manual() if $Var{rhArg}{rhOpt}{man};
 		$Var{rhArg}{raFile} = \@ARGV;
+		# set stdio option if no file names provided
+		$Var{rhArg}{rhOpt}{''} = 1 unless scalar(@{$Var{rhArg}{raFile}});
 		checkOptions(
 			$Var{rhGetopt}{raErrors},
 			$Var{rhArg}{rhOpt},
 			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''}
+			$Var{rhArg}{rhOpt}{''} ## use_stdio option
 		);
 		setup($Var{rhArg}{rhOpt});
 		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});

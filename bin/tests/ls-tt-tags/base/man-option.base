@@ -1,0 +1,49 @@
+LS-TT-TAGS(1)         User Contributed Perl Documentation        LS-TT-TAGS(1)
+
+
+
+NNAAMMEE
+       ls-tt-tags.pl - List all Template::Toolkit processing tags in files
+
+AAUUTTHHOORR
+       Brent S.A. Cowgill
+
+SSYYNNOOPPSSIISS
+       ls-tt-tags.pl [options] [@options-file ...] [file ...]
+
+        Options:
+          --inline-block   display multiline processing blocks in a single line of output.
+          --echo-filename  display filename being processed.
+          --version        display program version.
+          --help -?        brief help message.
+          --man            full help message.
+
+OOPPTTIIOONNSS
+       ----iinnlliinnee--bblloocckk or ----nnooiinnlliinnee--bblloocckk
+                negatable. Displays multiline processing blocks in a single line of output.
+
+       ----eecchhoo--ffiilleennaammee or ----nnooeecchhoo--ffiilleennaammee
+                negatable. Prints name of file being processed.
+
+       ----vveerrssiioonn
+                Prints the program version and exit.
+
+       ----hheellpp or --??
+                Print a brief help message and exit.
+
+       ----mmaann
+                Print the full help message and exit.
+
+DDEESSCCRRIIPPTTIIOONN
+        B<This program> will read the given input file(s) and display Template::Toolkit processing instructions found within it.
+
+EEXXAAMMPPLLEESS
+        find all unique template toolkit blocks
+        find . -name '*.tt' -exec ls-tt-tags.pl --inline-block {} \; | sort | uniq
+
+        find template files and show markup with filename.
+        find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;
+
+
+
+perl v5.14.4                      2014-06-04                     LS-TT-TAGS(1)

@@ -1,0 +1,27 @@
+Unknown option: unknown-option
+Usage:
+    ls-tt-tags.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --inline-block   display multiline processing blocks in a single line of output.
+       --echo-filename  display filename being processed.
+       --version        display program version.
+       --help -?        brief help message.
+       --man            full help message.
+
+Options:
+    --inline-block or --noinline-block
+             negatable. Displays multiline processing blocks in a single line of output.
+
+    --echo-filename or --noecho-filename
+             negatable. Prints name of file being processed.
+
+    --version
+             Prints the program version and exit.
+
+    --help or -?
+             Print a brief help message and exit.
+
+    --man
+             Print the full help message and exit.
+
