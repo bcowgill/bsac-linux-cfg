@@ -6,7 +6,7 @@
 # npm install prettydiff
 PRETTYDIFF=/usr/local/lib/node_modules/prettydiff/api/node-local.js
 INDENT_TABS=1
-INDENT_SIZE=2
+INDENT_SIZE=4
 
 FILE="$1"
 OUTPUT="$2"
