@@ -1,0 +1,16 @@
+## .perltidyrc settings for BlisMedia
+--maximum-line-length=78
+--indent-columns=4
+--continuation-indentation=4
+--vertical-tightness=2
+--standard-error-output
+#--standard-output
+--closing-token-indentation=0
+--paren-tightness=1
+--brace-tightness=1
+--square-bracket-tightness=1
+--space-terminal-semicolon
+--block-brace-tightness=1
+--nospace-for-semicolon
+--nooutdent-long-quotes
+--want-break-before="% + - * / x != == >= <= =~ < > | & **= += *= &= <<= &&= -= /= |= + >>= ||= .= %= ^= x="

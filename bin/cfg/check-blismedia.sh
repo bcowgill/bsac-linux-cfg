@@ -215,7 +215,8 @@ file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
 file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
-file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
+#file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
+file_linked_to .perltidyrc bin/cfg/.perltidyrc-blismedia "perltidyrc configured for blis media"
 
 if [ ! -z $MOUNT_DATA ]; then
    if [ -d /data/UNMOUNTED ]; then

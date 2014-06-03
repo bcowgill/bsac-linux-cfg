@@ -1,7 +1,36 @@
 # perl tidy configuration
+# man perltidy for explanation of options here.
+# http://perltidy.sourceforge.net/perltidy.html
+
+# for initial transition to closing side comments use
+# --closing-side-comment-warnings
+
+# get list of token types
+# perltidy --dump-token-types
+
+# debug perltidyrc configuration
+# perltidy --dump-profile
+# --dump-options --dump-defaults --dump-long-names --dump-short-names
+
+# make perl unreadable
+# perltidy --mangle
+# perltidy --extrude
+
+# tidy a badly formatted script by creating max number of one line blocks
+# perltidy --mangle myfile.pl -st | perltidy -o myfile.pl.new
+
+#----------------------------------------------------------------------------
+# start of configuration
 
 #--output-line-ending=unix
 #--preserve-line-endings
+
+# pass sections of code through without changing formatting
+#  #<<< no perltidy here
+#  #>>> end no perltidy formatting
+--format-skipping
+--format-skipping-begin="#<<<"
+--format-skipping-end="#>>>"
 
 --iterations=2
 
@@ -17,10 +46,26 @@
 #--freeze-newlines
 #--freeze-whitespace
 #--freeze-blank-lines
+--add-whitespace
+--delete-old-whitespace
 
 #--entab-leading-whitespace=4
 
+#--vertical-tightness=0
 #--line-up-parentheses
+#--vertical-tightness-closing=0
+
+--opening-brace-on-new-line
+--opening-sub-brace-on-new-line
+--opening-anonymous-sub-brace-on-new-line
+#--opening-brace-always-on-right
+#--brace-left-and-indent
+#--brace-left-and-indent-list=""
+
+#--opening-token-right
+#--opening-paren-right
+#--opening-hash-brace-right
+#--opening-square-bracket-right
 
 --closing-token-indentation=0
 #--closing-paren-indentation=0
@@ -34,4 +79,53 @@
 --outdent-keywords
 #--outdent-keyword-list=
 
---paren-tightness=
+--paren-tightness=1
+--square-bracket-tightness=1
+--brace-tightness=1
+--block-brace-tightness=1
+
+--nospace-terminal-semicolon
+--space-for-semicolon
+--add-semicolons
+#--delete-semicolons
+
+# perltidy --dump-token-types to get list of tokens for these options:
+#--want-left-spaces=""
+#--want-right-spaces=""
+#--nowant-left-spaces=""
+#--nowant-right-spaces=""
+
+# Default space after keywords list:
+#   my local our and or eq ne if else elsif until unless
+#   while for foreach return switch case given when
+#--space-after-keywords="*"
+#--nospace-after-keywords="*"
+
+#--space-keyword-paren
+#--space-function-paren
+
+--trim-qw
+
+--indent-block-comments
+--indent-spaced-block-comments
+--minimum-space-to-comment=4
+--fixed-position-side-comment=0
+--hanging-side-comments
+--closing-side-comments
+#--delete-closing-side-comments
+--closing-side-comment-interval=6
+--closing-side-comment-prefix="## end"
+#--closing-side-comment-list-string="sub : BEGIN END"
+--closing-side-comment-maximum-text=20
+--closing-side-comments-balanced
+--closing-side-comment-else-flag=0
+#--closing-side-comment-warnings
+
+# keeps ## comment blocks in place
+--static-block-comments
+--static-block-comment-prefix="##"
+#--outdent-static-block-comments
+--static-side-comments
+--static-side-comment-prefix="##"
+
+--nocuddled-else

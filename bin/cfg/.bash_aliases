@@ -72,6 +72,9 @@ alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginf
 alias charles-up='source `which proxy-to-charles.sh`'
 alias charles-down='source `which proxy-off.sh`'
 
+# First perltidy run on a file preserve any existing closing side comments
+alias perltidy-firsttime='perltidy --closing-side-comment-warning'
+
 # Template Toolkit helpful alias find all markup
 alias findtt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; export LS_TT_TAGS_ECHO=1; find . -name *.tt -exec ls-tt-tags.pl {} \; ; export LS_TT_TAGS_ECHO=$HOLD_ECHO)'
 alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export LS_TT_TAGS_ECHO=0; export LS_TT_TAGS_INLINE=1; find . -name *.tt -exec ls-tt-tags.pl {} \; | sort | uniq ; export LS_TT_TAGS_ECHO=$HOLD_ECHO; export LS_TT_TAGS_INLINE=$HOLD_INLINE)'
