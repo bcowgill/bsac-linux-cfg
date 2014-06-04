@@ -22,6 +22,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --version"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
    echo SKIP $TEST "$SKIP"
@@ -50,6 +51,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --man"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
    echo SKIP $TEST "$SKIP"
