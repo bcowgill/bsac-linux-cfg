@@ -39,7 +39,7 @@
 
 --maximum-line-length=80
 --indent-columns=4
---continuation-indentation=4
+--continuation-indentation=2
 #--starting-indentation-level=0
 
 --indent-only
