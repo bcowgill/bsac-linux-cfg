@@ -722,7 +722,7 @@ sub bits_to_english {
             #push @hunks, sprintf "every %s day of the week", freq($bit->[1]);
             #  the above was ambiguous -- "every third day of the week"
             #  sounds synonymous with just "3"
-            if($bit->[1] eq 2) {
+            if($bit->[1] == 2) {
               # common and unambiguous case.
               push @hunks, "every other day of the week";
             } else {
