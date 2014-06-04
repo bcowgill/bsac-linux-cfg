@@ -26,6 +26,7 @@ function testSuite
    echo ======================================================================
    echo TEST SUITE in "$dir" : $suite
    pushd "$dir" > /dev/null
+   [ -d in ] || mkdir in
    [ -d out ] || mkdir out
    [ -d base ] || mkdir base
    if [ -x ./tests.sh ]; then

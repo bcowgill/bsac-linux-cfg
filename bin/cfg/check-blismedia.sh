@@ -35,12 +35,12 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 
 PERL_MODULES="Getopt::ArgvFile"
 
-NODE="nodejs npm grunt grunt-init uglifyjs phantomjs"
+NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs"
 NODE_VER="v0.10.25"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM=""
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower lessc:less"
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower yo lessc:less"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # Chrome download page
@@ -428,7 +428,8 @@ install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 cmd_exists git "need git installed before configure sublime"
 cmd_exists grunt "need grunt installed before configure sublime for it"
 
-file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
+# package nodejs-legacy provides node -> nodejs symlink
+#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
 cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
 install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
 install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
