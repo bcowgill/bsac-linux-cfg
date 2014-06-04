@@ -8,10 +8,17 @@ NNAAMMEE
 AAUUTTHHOORR
        Brent S.A. Cowgill
 
+LLIICCEENNSSEE
+       Unlicense http://unlicense.org
+
+SSOOUURRCCEE
+       https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/ls-tt-tags.pl
+
 SSYYNNOOPPSSIISS
        ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
         Options:
+          --common         convert processing markers to common format.
           --inline-block   display multiline processing blocks in a single line of output.
           --echo-filename  display filename being processed.
           --version        display program version.
@@ -19,6 +26,12 @@ SSYYNNOOPPSSIISS
           --man            full help message.
 
 OOPPTTIIOONNSS
+       ----ccoommmmoonn or ----nnooccoommmmoonn negatable. Convert processing markers to common
+       format. This removes the pre/post whitespace stripping markers. See
+       Template::Toolkit docs for more information
+       http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP
+                i.e. [%- END ~%] becomes [% END %]
+
        ----iinnlliinnee--bblloocckk or ----nnooiinnlliinnee--bblloocckk
                 negatable. Displays multiline processing blocks in a single line of output.
 
@@ -39,7 +52,7 @@ DDEESSCCRRIIPPTTIIOONN
 
 EEXXAAMMPPLLEESS
         find all unique template toolkit blocks
-        find . -name '*.tt' -exec ls-tt-tags.pl --inline-block {} \; | sort | uniq
+        find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
 
         find template files and show markup with filename.
         find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;

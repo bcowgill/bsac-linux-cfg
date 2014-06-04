@@ -4,7 +4,7 @@ $this
 $this.that
 ${obj.id}
 
-[% DIRECTIVE %]
+[%+ DIRECTIVE %]
 [% DIRECTIVE 
       multiple lines
 %]
@@ -12,3 +12,8 @@ ${obj.id}
 [% DIRECTIVE # with line comments
    # more line comments
 %]
+
+[%- CHOMP -%]
+[%~ CHOMP ~%]
+[%= CHOMP =%]
+[%+ CHOMP +%]

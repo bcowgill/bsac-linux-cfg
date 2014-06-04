@@ -1,8 +1,8 @@
-template-toolkit-test.txt
+in/template-toolkit-test.txt
    $this
    $this.that
    ${obj.id}
-   [% DIRECTIVE %]
+   [%+ DIRECTIVE %]
    [% DIRECTIVE 
          multiple lines
    %]
@@ -10,3 +10,7 @@ template-toolkit-test.txt
    [% DIRECTIVE # with line comments
       # more line comments
    %]
+   [%- CHOMP -%]
+   [%~ CHOMP ~%]
+   [%= CHOMP =%]
+   [%+ CHOMP +%]

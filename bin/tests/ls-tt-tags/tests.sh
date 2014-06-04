@@ -4,7 +4,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../ls-tt-tags.pl
-SAMPLE=template-toolkit-test.txt
+SAMPLE=in/template-toolkit-test.txt
 DEBUG=--debug
 DEBUG=
 SKIP=0
@@ -94,6 +94,20 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --inline-block --noecho-filename $SAMPLE"
 
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $?
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+   echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST normalize markers to common format
+TEST=normalize-markers
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --noinline-block --noecho-filename --common"
+
+	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
    echo SKIP $TEST "$SKIP"

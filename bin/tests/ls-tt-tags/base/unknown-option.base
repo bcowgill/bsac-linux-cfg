@@ -3,6 +3,7 @@ Usage:
     ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
      Options:
+       --common         convert processing markers to common format.
        --inline-block   display multiline processing blocks in a single line of output.
        --echo-filename  display filename being processed.
        --version        display program version.
@@ -10,6 +11,13 @@ Usage:
        --man            full help message.
 
 Options:
+    --common or --nocommon negatable. Convert processing markers to common
+    format. This removes the pre/post whitespace stripping markers. See
+    Template::Toolkit docs for more information
+    http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOM
+    P_POST_CHOMP
+             i.e. [%- END ~%] becomes [% END %]
+
     --inline-block or --noinline-block
              negatable. Displays multiline processing blocks in a single line of output.
 

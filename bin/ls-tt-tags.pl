@@ -8,11 +8,20 @@ ls-tt-tags.pl - List all Template::Toolkit processing tags in files
 
 Brent S.A. Cowgill
 
+=head1 LICENSE
+
+Unlicense http://unlicense.org
+
+=head1 SOURCE
+
+https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/ls-tt-tags.pl
+
 =head1 SYNOPSIS
 
 ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
  Options:
+   --common         convert processing markers to common format.
    --inline-block   display multiline processing blocks in a single line of output.
    --echo-filename  display filename being processed.
    --version        display program version.
@@ -22,6 +31,12 @@ ls-tt-tags.pl [options] [@options-file ...] [file ...]
 =head1 OPTIONS
 
 =over 8
+
+=item B<--common> or B<--nocommon>
+ negatable. Convert processing markers to common format. This removes the pre/post whitespace stripping markers.
+ See Template::Toolkit docs for more information http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP
+
+ i.e. [%- END ~%] becomes [% END %]
 
 =item B<--inline-block> or B<--noinline-block>
 
@@ -52,7 +67,7 @@ ls-tt-tags.pl [options] [@options-file ...] [file ...]
 =head1 EXAMPLES
 
  find all unique template toolkit blocks
- find . -name '*.tt' -exec ls-tt-tags.pl --inline-block {} \; | sort | uniq
+ find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
 
  find template files and show markup with filename.
  find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;
@@ -80,6 +95,7 @@ my %Var = (
 	rhArg => {
 		rhOpt => {
 			'' => 0, # indicates standard in/out as - on command line
+			'common' => 0,
 			'inline-block' => 0,
 			'echo-filename' => 0,
 			'debug' => 0,
@@ -97,6 +113,7 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
+			"common!",
 			"inline-block!",
 			"echo-filename!",
 			'debug|d+',
@@ -176,6 +193,8 @@ sub doReplacement
 	$$rContent =~ s{( \[ \% .+? \% \] | \$(\w|\.|\$|\{|\})+ )}{
 		my $match = $1;
 		$match =~ s{\s+}{ }xmsg if $Var{rhArg}{rhOpt}{'inline-block'};
+		$match =~ s{\[\%[\+\-\~\=]}{[%}xmsg if $Var{rhArg}{rhOpt}{'common'};
+		$match =~ s{[\+\-\~\=]\%\]}{%]}xmsg if $Var{rhArg}{rhOpt}{'common'};
 		$match =~ s{\n}{\n$Var{'indent'}}xmsg;
 		print "$Var{'indent'}$match\n";
 		""
