@@ -74,6 +74,8 @@ alias charles-down='source `which proxy-off.sh`'
 
 # First perltidy run on a file preserve any existing closing side comments
 alias perltidy-firsttime='perltidy --closing-side-comment-warning'
+alias perltidy-mine='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc ~/.perltidyrc'
+alias perltidy-work='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc-blismedia ~/.perltidyrc'
 
 # Template Toolkit helpful alias find all markup
 alias findtt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; export LS_TT_TAGS_ECHO=1; find . -name *.tt -exec ls-tt-tags.pl {} \; ; export LS_TT_TAGS_ECHO=$HOLD_ECHO)'
