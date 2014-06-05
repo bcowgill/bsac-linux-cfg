@@ -29,13 +29,16 @@ MVN_CMD=""
 #MVN_PKG="mvn:maven"
 #MVN_VER="3.0.4"
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc $MVN_PKG"
+POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
+POSTGRES_NODE_PKG="node-pg"
+
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc $MVN_PKG $POSTGRES_PKG_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 PERL_MODULES="Getopt::ArgvFile"
 
-NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs"
+NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_VER="v0.10.25"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
@@ -100,7 +103,7 @@ INI_DIR=check-iniline
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext"
 COMMANDS="apt-file wcd.exec gettext git perl $NODE_CMD $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
-PACKAGES="$INSTALL apt-file wcd bash-completion $NODE_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $VIRTUALBOX_PKG $SCREENSAVER"
+PACKAGES="$INSTALL apt-file wcd bash-completion $NODE_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER"
 
 source `which lib-check-system.sh`
 
