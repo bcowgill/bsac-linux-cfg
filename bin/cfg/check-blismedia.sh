@@ -31,6 +31,7 @@ MVN_CMD=""
 
 POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
+POSTGRES_NPM_PKG="node-dbi"
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc $MVN_PKG $POSTGRES_PKG_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
@@ -42,7 +43,7 @@ NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NOD
 NODE_VER="v0.10.25"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
-INSTALL_NPM_FROM=""
+INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
 INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower yo lessc:less"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
@@ -422,7 +423,7 @@ else
 fi
 
 npm config set registry https://registry.npmjs.org/
-#install_npm_commands_from "$INSTALL_NPM_FROM" 
+#install_npm_commands_from "$INSTALL_NPM_FROM"
 install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
 make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
