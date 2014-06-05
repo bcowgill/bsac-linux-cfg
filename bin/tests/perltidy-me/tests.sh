@@ -9,7 +9,7 @@ SAMPLE=in/perltidy-me.pl
 DEBUG=--debug
 DEBUG=
 SKIP=0
-TIDYARGS="--standard-output --standard-error-output --warning-output --logfile --DEBUG"
+TIDYARGS="--standard-output --standard-error-output --warning-output --check-syntax --output-line-ending=unix --logfile --DEBUG"
 PROFILE=--noprofile
 
 # Include testing library and make output dir exist

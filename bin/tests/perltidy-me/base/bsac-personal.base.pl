@@ -88,8 +88,7 @@ my %Var = (
 			"auto_version",    # supplies --version option
 			"auto_help"
 			,    # supplies --help -? options to show usage in POD SYNOPSIS
-
-			#			"debug",        # debug the argument processing
+##			"debug",        # debug the argument processing
 		],
 		raOpts => [
 			"length|l=i",   # numeric required --length or -l (explicit defined)
@@ -98,9 +97,8 @@ my %Var = (
 			"ratio|r:f",    # float optional
 			"hex=o"
 			,    # extended integer a number in decimal, octal, hex or binary
-
-			# cannot repeat when bundling is turned on
-			#		"point:f{2}", # two floats separated by comma --point=1.3,24.5
+## cannot repeat when bundling is turned on
+##		"point:f{2}", # two floats separated by comma --point=1.3,24.5
 			"file=s",        # string required --file or -f (implicit)
 			"splat:s",       # a file to edit in place
 			"in:s",          # to test stdin=-
@@ -289,8 +287,7 @@ sub getOptions {
 sub debug {
 	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
-
-#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
+##	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
 	print $msg if ( $Var{'rhArg'}{'rhOpt'}{'debug'} >= $level );
 }
 

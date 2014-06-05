@@ -19,7 +19,7 @@
 --break-at-old-keyword-breakpoints
 --break-at-old-logical-breakpoints
 --break-at-old-ternary-breakpoints
---nocheck-syntax
+--check-syntax
 --closing-brace-indentation=0
 --closing-paren-indentation=0
 --closing-side-comment-else-flag=0
@@ -44,7 +44,7 @@
 --html-table-of-contents
 --indent-block-comments
 --indent-columns=4
---iterations=1
+--iterations=4
 --keep-old-blank-lines=1
 --logfile
 --long-block-line-count=8
@@ -57,6 +57,7 @@
 --outdent-labels
 --outdent-long-comments
 --outdent-long-quotes
+--output-line-ending="unix"
 --paren-tightness=1
 --paren-vertical-tightness=0
 --paren-vertical-tightness-closing=0

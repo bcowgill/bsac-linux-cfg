@@ -17,6 +17,8 @@
 
 # no code tidying, just line ending changes and pre-post filtering
 # perltidy --notidy
+# only change indenting and blank lines (very fast, useful for finding mismatched braces)
+# perltidy --indent-only
 
 # make perl unreadable
 # perltidy --mangle
@@ -35,8 +37,20 @@
 --tabs
 #--default-tabsize=4 perltidy v20140328
 
+## Slower but does multiple passes to ensure formatting is stable
+#--converge perltidy v20140328 == 4 iterations
+--iterations=4
+
+# Syntax checking before/after tidy with taint checking
+#--check-syntax
+#--perl-syntax-check-flags="-c -T"
+
 #--output-line-ending=unix
 #--preserve-line-endings
+
+--continuation-indentation=2
+
+## HEREIAM ##
 
 # pass sections of code through without changing formatting
 #  #<<< no perltidy here
@@ -45,12 +59,9 @@
 #--format-skipping-begin="#<<<"
 #--format-skipping-end="#>>>"
 
-#--iterations=2
 
-#--check-syntax
 #--warning-output
 
-#--continuation-indentation=2
 #--starting-indentation-level=0
 
 #--indent-only

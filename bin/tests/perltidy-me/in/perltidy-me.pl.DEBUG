@@ -75,8 +75,8 @@ Use -dump-token-types (-dtt) to get a list of token type codes
 86: QQQQQQQQQQQQQQ,b###########################
 87: "auto_help",    # supplies --help -? options to show usage in POD SYNOPSIS
 87: QQQQQQQQQQQ,bbbb##########################################################
-88: #			"debug",        # debug the argument processing
-88: ###################################################
+88: ##			"debug",        # debug the argument processing
+88: ####################################################
 89: ],
 89: },
 90: raOpts => [
@@ -89,10 +89,10 @@ Use -dump-token-types (-dtt) to get a list of token type codes
 93: QQQQQQQQQQQ,bb################
 94: "hex=o",      # extended integer a number in decimal, octal, hex or binary
 94: QQQQQQQ,bbbbbb############################################################
-95: # cannot repeat when bundling is turned on
-95: ##########################################
-96: #		"point:f{2}", # two floats separated by comma --point=1.3,24.5
-96: #################################################################
+95: ## cannot repeat when bundling is turned on
+95: ###########################################
+96: ##		"point:f{2}", # two floats separated by comma --point=1.3,24.5
+96: ##################################################################
 97: "file=s",     # string required --file or -f (implicit)
 97: QQQQQQQQ,bbbbb#########################################
 98: "splat:s",    # a file to edit in place
@@ -479,8 +479,8 @@ Use -dump-token-types (-dtt) to get a list of token type codes
 288: kkb{iiii,biiiiii}b=biiii;
 289: $level ||= 1;
 289: iiiiiib||=bn;
-290: #	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-290: ##############################################################################################
+290: ##	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
+290: ###############################################################################################
 291: print $msg if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
 291: kkkkkbZZZZbkkb{iiiiLQQQQQQQRLQQQQQQQRLQQQQQQQRb>=biiiiii};
 292: }
