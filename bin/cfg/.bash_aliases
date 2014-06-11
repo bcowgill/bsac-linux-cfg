@@ -81,6 +81,10 @@ alias perltidy-work='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc-blismedia ~/.
 alias findtt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; export LS_TT_TAGS_ECHO=1; find . -name *.tt -exec ls-tt-tags.pl {} \; ; export LS_TT_TAGS_ECHO=$HOLD_ECHO)'
 alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export LS_TT_TAGS_ECHO=0; export LS_TT_TAGS_INLINE=1; find . -name *.tt -exec ls-tt-tags.pl {} \; | sort | uniq ; export LS_TT_TAGS_ECHO=$HOLD_ECHO; export LS_TT_TAGS_INLINE=$HOLD_INLINE)'
 
+# Blismedia database aliases
+alias dbinf='mysql -u root -p -D infinity_dashboard'
+alias dbp42='psql -h pg-project42 geodata postgres'
+
 if [ `hostname` == blismedia  ]; then
    #echo modifying aliases for host bcowgill-dt
    # = --compact-tree not present. use -ga mode instead
