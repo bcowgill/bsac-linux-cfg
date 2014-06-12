@@ -4,7 +4,7 @@
 if [ -z "$1" ]; then
    RUN='npm start'
 else
-   RUN=$1
+   RUN="$*"
 fi
 
 while  [ /bin/true ]
@@ -12,4 +12,5 @@ do
    echo Press ^C to stop keeping it up [ $RUN ]
    sleep 2
    $RUN
+   echo Exit $? from [ $RUN ]
 done
