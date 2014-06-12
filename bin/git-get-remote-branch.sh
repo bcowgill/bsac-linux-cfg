@@ -5,6 +5,6 @@ if [ -z $branch ]; then
    git branch --remote
    echo Specify a branch name minus the origin i.e. ENG-2353
 else
-   git checkout --track origin/$branch
+   git fetch && git checkout --track origin/$branch
 fi
 
