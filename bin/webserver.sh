@@ -24,7 +24,7 @@ fi
 [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
 LOG=/tmp/$USER/webserver-$PORT.log
 pushd $DOCROOT
-rm $LOG
+[ -f $LOG ] && rm $LOG
 (echo Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
 python -m $HTTP_MOD $PORT >> $LOG 2>&1 &
 sleep 2
