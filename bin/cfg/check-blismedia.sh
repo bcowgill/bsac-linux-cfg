@@ -723,6 +723,35 @@ FILE=.kde/share/config/okularpartrc
 ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
 ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
 
+# Postgres pgadmin3 setup
+FILE=.pgadmin3
+WHAT="Postgres pgadmin3 color scheme File / Options / Colours"
+ini_file_has_text "$FILE" "////Font=ProFontWindows 14" "$WHAT"
+ini_file_has_text "$FILE" "////DDFont=ProFontWindows 14" "$WHAT"
+ini_file_has_text "$FILE" "/frmQuery/Font=ProFontWindows 14" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/MarginBackgroundColour=rgb(31, 5, 65)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/ColourCaret=yellow" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour1=rgb(0, 127, 0)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour2=rgb(0, 127, 0)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour3=rgb(127, 127, 127)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour4=rgb(0, 127, 127)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour5=rgb(4, 194, 251)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour6=rgb(127, 0, 127)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour7=rgb(127, 0, 127)" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour10=yellow" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/Colour11=red" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/UseSystemBackground=false" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/UseSystemForeground=false" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/ColourBackground=black" "$WHAT"
+ini_file_has_text "$FILE" "/ctlSQLBox/ColourForeground=yellow" "$WHAT"
+
+WHAT="Postgres pgadmin3 misc settinggs"
+ini_file_has_text "$FILE" "////LogLevel=3" "$WHAT"
+ini_file_has_text "$FILE" "////ColumnNames=true" "$WHAT"
+ini_file_has_text "$FILE" "////KeywordsInUppercase=true" "$WHAT"
+ini_file_has_text "$FILE" "/Copy/ColSeparator=," "$WHAT"
+ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
+
 popd
 
 echo COMMANDS="$COMMANDS"
