@@ -4,6 +4,11 @@
 # Github original: https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/tests/shell-test.sh
 # have a look into shUnit http://shunit2.googlecode.com/svn/trunk/source/2.1/doc/shunit2.html#id16
 
+# Reset this to 0 to let test plans carry on to the end if they fail to match base file.
+# Other types of test failures still stop the suite.
+ERROR_STOP=1
+TEST_FAILURES=0
+
 function pause {
    local message input
    message="$1"
@@ -86,7 +91,8 @@ function assertFilesEqual
    else
       echo "NOT OK files differ - $test"
       echo vdiff "$actual" "$expected"
-      return 1
+      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
+      return $ERROR_STOP
    fi
    return 0
 }
@@ -96,7 +102,11 @@ COMPLETE_ERROR=0
 function complete()
 {
    if [ $COMPLETE_ERROR == 0 ]; then
-      echo OK test plan $0 completed in `pwd`
+      if [ $TEST_FAILURES == 0 ]; then
+         echo OK test plan $0 completed in `pwd`
+      else
+         echo NOT OK test plan $0 completed with $TEST_FAILURES failures in `pwd`
+      fi
    fi
 }
 trap complete 0

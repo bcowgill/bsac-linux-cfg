@@ -17,6 +17,9 @@ source ../shell-test.sh
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || echo OK output dir ready
 
+# Do not terminate test plan if out/base comparison fails.
+ERROR_STOP=0
+
 echo TEST perltidy token type dump
 TEST=token-type-dump
 if [ 0 == "$SKIP" ]; then
@@ -154,5 +157,7 @@ else
 fi
 
 # clean up output directory if no failures
-rm out/* && rmdir out
-echo OK All tests complete `pwd`/out cleaned up
+if [ $TEST_FAILURES == 0 ]; then
+	rm out/* && rmdir out
+	echo OK All tests complete `pwd`/out cleaned up
+fi
