@@ -84,6 +84,7 @@ alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export
 # Blismedia database aliases
 alias dbinf='mysql -u root -p -D infinity_dashboard'
 alias dbp42='psql -h pg-project42 geodata postgres'
+alias dbp42aws='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser'
 
 if [ `hostname` == blismedia  ]; then
    #echo modifying aliases for host bcowgill-dt
