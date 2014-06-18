@@ -11,6 +11,7 @@ HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
    .config/VirtualBox VirtualBox* \
    .mozilla/firefox/$MOZZ/prefs.js .mozilla/firefox/$MOZZ/sessionstore.js .mozilla/firefox/$MOZZ/search.json .mozilla/firefox/$MOZZ/bookmarkbackups \
    .SourceGear* \
+   .pg* .my* \
    .dropbox"
 #  .thunderbird/$THUNDER/prefs.js .thunderbird/$THUNDER/session.json \
 ROOTCFG="/etc/mtab /etc/fstab"
