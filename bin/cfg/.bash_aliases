@@ -82,9 +82,10 @@ alias findtt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; export LS_TT_TAGS_ECHO=1; find . -nam
 alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export LS_TT_TAGS_ECHO=0; export LS_TT_TAGS_INLINE=1; find . -name *.tt -exec ls-tt-tags.pl {} \; | sort | uniq ; export LS_TT_TAGS_ECHO=$HOLD_ECHO; export LS_TT_TAGS_INLINE=$HOLD_INLINE)'
 
 # Blismedia database aliases
+# add for output to CSV format: -F ',' --no-align
 alias dbinf='mysql -u root -p -D infinity_dashboard'
-alias dbp42='psql -h pg-project42 geodata postgres'
-alias dbp42aws='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser'
+alias dbp42davide='psql -h pg-project42 geodata postgres'
+alias dbp42='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser -F "," --no-align'
 
 if [ `hostname` == blismedia  ]; then
    #echo modifying aliases for host bcowgill-dt
