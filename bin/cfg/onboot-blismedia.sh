@@ -7,7 +7,7 @@ pushd ~/workspace/play/
 webserver.sh 9999 &
 popd
 
-echo === Start up node app for project42
+echo === Start up node app for project42 and an auto-build to restart it when files change and pass validation.
 pushd ~/workspace/play/project42/
 [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
 PORT=3333
@@ -15,6 +15,13 @@ LOG=/tmp/$USER/nodeserver-$PORT.log
 [ -f $LOG ] && rm $LOG
 (echo Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
 keep-it-up.sh npm start >> $LOG 2>&1 &
+
+cd scripts
+LOG=/tmp/$USER/auto-build-project42.log
+[ -f $LOG ] && rm $LOG
+(echo Auto build in `pwd`; echo logging to $LOG) | tee $LOG
+auto-build.sh ./build.sh .. >> $LOG 2>&1 &
+
 popd
 
 echo === Start up a local webserver for openlayers
