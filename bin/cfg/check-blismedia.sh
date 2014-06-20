@@ -410,6 +410,14 @@ else
    git config --global user.email $EMAIL
 fi
 
+if git config --global --list | grep rerere ]; then
+   echo OK git config rerere has been set up
+else
+   echo NOT OK git config rerere not set. trying to do so
+   git config --global rerere.enabled true
+   git config --global rerere.autoupdate true
+fi
+
 if $NODE_CMD --version | grep $NODE_VER; then
    echo OK node command version correct
 else
