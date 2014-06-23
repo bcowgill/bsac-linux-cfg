@@ -324,6 +324,17 @@ function install_file_from_url_zip_subdir {
    file_exists "$file" "$message"
 }
 
+# Install a file from a manually downloaded archive which creates its own subdirectory
+function install_file_from_zip {
+   local file package message
+   file="$1"
+   package="$2"
+   message="$3"
+   file_exists "$HOME/Downloads/$package" "$message"
+   file_exists "$file" "$message" > /dev/null || (pushd "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && popd)
+   file_exists "$file" "$message"
+}
+
 # Extract files from an archive
 function extract_archive {
    local archive
@@ -334,7 +345,11 @@ function extract_archive {
       if echo "$archive" | grep ".tar.gz"; then
          tar xvzf "$archive"
       else
-         echo NOT OK archive "$archive" is not a known type
+         if echo "$archive" | grep ".tgz"; then
+            tar xvzf "$archive"
+         else
+            echo NOT OK archive "$archive" is not a known type
+         fi
       fi
    fi
 }

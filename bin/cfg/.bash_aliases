@@ -28,13 +28,17 @@ alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END 
 # use source gear diffmerge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
 alias gitdiff='git difftool --no-prompt'
-if which sgdm.exe >> /dev/null; then
-   alias vdiff='sgdm.exe'
+if which p4merge >> /dev/null; then
+   alias vdiff='p4merge'
 else
-   if which diffmerge >> /dev/null; then
-      alias vdiff='diffmerge --nosplash'
+   if which sgdm.exe >> /dev/null; then
+      alias vdiff='sgdm.exe'
    else
-      alias vdiff='vimdiff'
+      if which diffmerge >> /dev/null; then
+         alias vdiff='diffmerge --nosplash'
+      else
+         alias vdiff='vimdiff'
+      fi
    fi
 fi
 

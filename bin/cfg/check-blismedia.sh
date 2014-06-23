@@ -66,6 +66,11 @@ DIFFMERGE=diffmerge
 DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
+# Perforce p4merge tool
+P4MERGE="$HOME/Downloads/p4v-2014.1.827578/bin/p4merge"
+P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
+P4MERGE_PKG=p4v.tgz
+
 SUBLIME=subl
 SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3047_amd64.deb
@@ -372,6 +377,9 @@ fi
 file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
 install_command_package_from_url $DIFFMERGE $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
 
+install_file_from_zip $P4MERGE $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
+file_linked_to "$HOME/bin/p4merge" "$P4MERGE" "Perforce p4merge link"
+
 echo BIG INSTALL $INSTALL
 install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
@@ -410,7 +418,7 @@ else
    git config --global user.email $EMAIL
 fi
 
-if git config --global --list | grep rerere ]; then
+if git config --global --list | grep rerere; then
    echo OK git config rerere has been set up
 else
    echo NOT OK git config rerere not set. trying to do so
