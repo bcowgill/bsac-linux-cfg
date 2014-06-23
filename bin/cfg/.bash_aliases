@@ -30,6 +30,8 @@ alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
 alias gitdiff='git difftool --no-prompt'
 if which p4merge >> /dev/null; then
    alias vdiff='p4merge'
+   # p4merge is a good visual diff tool for image files.
+   alias imgdiff='p4merge'
 else
    if which sgdm.exe >> /dev/null; then
       alias vdiff='sgdm.exe'
