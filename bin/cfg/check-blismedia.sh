@@ -634,6 +634,17 @@ ini_file_has_text "$FILE" "/Folder/Color/Folders/bg=0"
 ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
 ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
 
+# Perforce p4merge colors
+FILE=".p4merge/ApplicationSettings.xml"
+file_has_text $FILE "<family>ProFontWindows" "Edit / Preferences"
+file_has_text $FILE "<pointSize>14" "Edit / Preferences"
+file_contains_text $FILE "<String varName=.DiffOption.>db" "Edit / Preferences"
+file_contains_text $FILE "<Bool varName=.ShowTabsSpaces.>true" "Edit / Preferences"
+file_contains_text $FILE "<Bool varName=.TabInsertsSpaces.>false" "Edit / Preferences"
+file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
+file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
+
+
 # Accessibility
 FILE=.kde/share/config/kaccessrc
 file_has_text $FILE "SystemBell=true" "System Settings / Accessibility / Bell"
