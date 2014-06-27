@@ -25,23 +25,22 @@ alias ........='cd ../../../../../../..'
 alias cdiff='colordiff'
 alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 
-# use source gear diffmerge or vimdiff as a visual diff program
+# use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
 alias gitdiff='git difftool --no-prompt'
-if which p4merge >> /dev/null; then
-   alias vdiff='p4merge'
-   # p4merge is a good visual diff tool for image files.
-   alias imgdiff='p4merge'
+if which sgdm.exe >> /dev/null; then
+   alias vdiff='sgdm.exe'
 else
-   if which sgdm.exe >> /dev/null; then
-      alias vdiff='sgdm.exe'
+   if which diffmerge >> /dev/null; then
+      alias vdiff='diffmerge --nosplash'
    else
-      if which diffmerge >> /dev/null; then
-         alias vdiff='diffmerge --nosplash'
-      else
-         alias vdiff='vimdiff'
-      fi
+      alias vdiff='vimdiff'
    fi
+fi
+if which p4merge >> /dev/null; then
+   # p4merge is a good visual diff tool for image files but not so good for text.
+   alias imgdiff='p4merge'
+   #alias vdiff='p4merge -fg yellow -bg black' does not work
 fi
 
 # use fdupes to do something like my delsame.pl
