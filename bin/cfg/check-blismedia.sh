@@ -426,6 +426,13 @@ else
    git config --global rerere.autoupdate true
 fi
 
+if git config --global --list | grep alias.graph; then
+   echo OK git config alias.graph has been set up
+else
+   echo NOT OK git config alias.graph not set. trying to do so
+   git config --global --add alias.graph "log --oneline --graph --decorate --all"
+fi
+
 if $NODE_CMD --version | grep $NODE_VER; then
    echo OK node command version correct
 else
