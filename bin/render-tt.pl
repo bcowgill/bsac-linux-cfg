@@ -83,6 +83,11 @@ render-tt.pl [options] [@options-file ...] [file ...]
 =item B<--pre-chomp=N>
 
  Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+ See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
+ [%+ +%] disable chomp
+ [%- -%] CHOMP_ONE = whitespace and one newline
+ [%= =%] CHOMP_COLLAPSE = all whitespace and newlines
+ [%~ ~%] CHOMP_GREEDY = all whitespace to a single space
 
 =item B<--post-chomp=N>
 
