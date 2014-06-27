@@ -36,7 +36,8 @@ auto-build.sh ./build.sh >> $LOG 2>&1 &
 popd
 
 echo === Start up local webserver for test plan output
-DIR=~/workspace/projects/infinity-plus-dashboard/test/campaign_details/out
+#DIR=~/workspace/projects/infinity-plus-dashboard/test/campaign_details/out
+DIR=~/workspace/projects/infinity-plus-dashboard/test/add_targeting_profile/out
 [ ! -d $DIR ] && mkdir -p  $DIR
 pushd $DIR
 webserver.sh 8888 &
