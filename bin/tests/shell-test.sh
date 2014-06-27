@@ -23,13 +23,29 @@ function stop {
    exit 1
 }
 
+# TODO add terminal color escape sequences
+function OK {
+   local message
+   message="$1"
+   echo OK "$message"
+   return 0
+}
+
+# TODO add terminal color escape sequences
+function NOT_OK {
+   local message
+   message="$1"
+   echo NOT OK "$message"
+   return 1
+}
+
 function testSuite
 {
    local dir suite
    dir="$1"
    suite="$2"
    echo ======================================================================
-   echo TEST SUITE in "$dir" : $suite
+   echo TEST SUITE in "./$dir/" : $suite
    pushd "$dir" > /dev/null
    [ -d in ] || mkdir in
    [ -d out ] || mkdir out
@@ -90,7 +106,9 @@ function assertFilesEqual
       echo "OK $test output equals base file"
    else
       echo "NOT OK files differ - $test"
+      echo " "
       echo vdiff "$actual" "$expected"
+      echo " " 
       TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
       return $ERROR_STOP
    fi
