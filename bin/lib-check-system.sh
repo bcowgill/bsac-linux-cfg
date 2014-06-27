@@ -615,7 +615,7 @@ function is_port_listening {
    host="$1"
    port="$2"
    message="$3"
-   if nc localhost 3000 < /dev/null > /dev/null; then
+   if nc localhost "$port" < /dev/null > /dev/null; then
       echo  OK $host:$port is listening
    else
       echo NOT OK $host:$port is not listening [$message]
@@ -630,7 +630,7 @@ function port_should_not_be_listening {
    host="$1"
    port="$2"
    message="$3"
-   if nc localhost 3000 < /dev/null > /dev/null; then
+   if nc localhost "$port" < /dev/null > /dev/null; then
       echo NOT OK $host:$port should not be listening [$message]
       return 1
    else
@@ -1142,7 +1142,7 @@ function mysql_check_for_database {
    database=$1
    user=$2
    # optional password
-   password=$2
+   password=$3
    echo Check for mysql database $database with user $user
    if mysql -u $user -p$password -e "SELECT schema_name, 'exists' FROM information_schema.schemata WHERE schema_name = '$database';" | grep $database; then
       echo OK $database exists on mysql localhost
@@ -1158,7 +1158,9 @@ function mysql_make_database_exist {
    local database user
    database=$1
    user=$2
-   if mysql_check_for_database $database $user > /dev/null; then
+   # optional password
+   password=$3
+   if mysql_check_for_database $database $user $password > /dev/null; then
       echo OK $database exists on mysql localhost
    else
       echo NOT OK $database does not exist on mysql localhost will try to create with user $user
