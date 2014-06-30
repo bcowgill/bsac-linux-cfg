@@ -1,0 +1,8 @@
+#!/bin/sh
+# Git hook to prefix a commit message with the branch name.
+# copy this file to your repository .git/hooks/prepare-commit-msg
+ 
+NAME=$(git branch | grep '*' | sed 's/* //')
+MSG=`mktemp`
+echo "$NAME: " | cat - "$1" >> "$MSG" && mv "$MSG" "$1"
+
