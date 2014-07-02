@@ -1,0 +1,3 @@
+before
+[% PROCESS template-toolkit-test.tt %]
+after

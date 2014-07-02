@@ -18,6 +18,8 @@ rm out/* > /dev/null 2>&1 || echo OK output dir ready
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
+NOT_OK "need to write a test for --include-path"
+
 echo TEST --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then

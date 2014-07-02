@@ -27,6 +27,7 @@ render-tt.pl [options] [@options-file ...] [file ...]
    --const=key=val             multiple. define a CONSTANT for the template
    --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
    --absolute                  turn on the ABSOLUTE option for Template::Toolkit
+   --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
    --relative                  turn on the RELATIVE option for Template::Toolkit
    --anycase                   turn on the ANYCASE option for Template::Toolkit
    --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
@@ -63,6 +64,10 @@ render-tt.pl [options] [@options-file ...] [file ...]
 =item B<--constants-namespace="name">
 
  Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
+
+=item B<--include-path>
+
+ Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
 
 =item B<--absolute> or B<--noabsolute>
 
@@ -139,6 +144,7 @@ my %Var = (
 		rhOpt => {
 			'' => 0, # indicates standard in/out as - on command line
 			var => {},
+			'include-path' => ['.'],
 			absolute => 0,
 			relative => 0,
 			'constants-namespace' => 'constants',
@@ -161,6 +167,7 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
+			"include-path:s@",
 			"absolute!",
 			"relative!",
 			"anycase!",
@@ -279,7 +286,7 @@ sub processFile
 	debug("processFile($fileName)\n");
 
 	my $oTemplate = Template->new({
-		INCLUDE_PATH => '.',
+		INCLUDE_PATH => $rhOpt->{'include-path'},
 		INTERPOLATE => $rhOpt->{'interpolate'},
 		PRE_CHOMP => $rhOpt->{'pre-chomp'},
 		POST_CHOMP => $rhOpt->{'post-chomp'},
