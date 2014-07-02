@@ -6,6 +6,7 @@ set -e
 # What we're testing and sample input data
 PROGRAM=../../render-tt.pl
 SAMPLE=in/template-toolkit-test.tt
+SAMPLE_INCLUDE=in/frame/template-frame.tt
 DEBUG=--debug
 DEBUG=
 SKIP=0
@@ -17,8 +18,6 @@ rm out/* > /dev/null 2>&1 || echo OK output dir ready
 
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
-
-NOT_OK "need to write a test for --include-path"
 
 echo TEST --version option
 TEST=version-option
@@ -96,6 +95,19 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --pre-chomp=1 --post-chomp=2 --page-vars=in/template-toolkit-test.vars $SAMPLE"
+	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+   echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST include-path setting
+TEST=include-path
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --include-path=.. --include-path=subdir --page-vars=in/template-toolkit-test.vars $SAMPLE_INCLUDE"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

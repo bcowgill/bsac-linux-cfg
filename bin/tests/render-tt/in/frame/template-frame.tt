@@ -1,3 +1,6 @@
+template-frame.tt
 before
 [% PROCESS template-toolkit-test.tt %]
 after
+[% PROCESS subdir.tt %]
+end
