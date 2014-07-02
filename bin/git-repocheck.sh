@@ -20,6 +20,7 @@ do
    else
       pwd
       git status
+      echo `pwd` will not try to pull from remote
    fi
    popd > /dev/null
 done
