@@ -227,6 +227,7 @@ file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
 file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 #file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .perltidyrc bin/cfg/.perltidyrc-blismedia "perltidyrc configured for blis media"
+file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 
 if [ ! -z $MOUNT_DATA ]; then
    if [ -d /data/UNMOUNTED ]; then
