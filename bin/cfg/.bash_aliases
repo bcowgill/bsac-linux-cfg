@@ -24,6 +24,7 @@ alias ........='cd ../../../../../../..'
 # default options for some commands
 alias cdiff='colordiff'
 alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
+alias egrep='\egrep --exclude-dir=.git'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
@@ -78,6 +79,9 @@ alias charles-up='source `which proxy-to-charles.sh`'
 alias charles-down='source `which proxy-off.sh`'
 
 # First perltidy run on a file preserve any existing closing side comments
+# perltidy -b file.pl    to tidy file in place
+# perltidy -g file.pl    shows nesting of braces, brackets, etc
+# perltidy -st file.pl   tidies to standard output
 alias perltidy-firsttime='perltidy --closing-side-comment-warning'
 alias perltidy-mine='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc ~/.perltidyrc'
 alias perltidy-work='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc-blismedia ~/.perltidyrc'
