@@ -1,3 +1,5 @@
+"TODO config - show whitespace chars
+"TODO bs/cursor does not wrap past left/right
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Maintainer: 
 "       Amir Salihefendic
@@ -111,10 +113,10 @@ set showmatch
 set mat=2
 
 " No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
+"BSAC set noerrorbells
+"BSAC set novisualbell
+"BSAC set t_vb=
+"BSAC set tm=500
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -154,7 +156,7 @@ set noswapfile
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Use spaces instead of tabs
-set expandtab
+"BSAC set expandtab
 
 " Be smart when using tabs ;)
 set smarttab
@@ -166,6 +168,7 @@ set tabstop=4
 " Linebreak on 500 characters
 set lbr
 set tw=500
+"TODO is this an actual break at 500 or a virtual one?
 
 set ai "Auto indent
 set si "Smart indent
@@ -273,6 +276,7 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
+"TODO also for JS, html
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
