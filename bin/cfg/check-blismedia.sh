@@ -149,6 +149,9 @@ install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "ht
 install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
 install_file_from_url_zip Downloads/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
 
+install_file_from_url_zip Downloads/SourceCodePro_WebFontsOnly-1.017/SVG/SourceCodePro-Black.svg SourceCodePro_WebFontsOnly-1.017.zip "http://sourceforge.net/projects/sourcecodepro.adobe/files/SourceCodePro_WebFontsOnly-1.017.zip/download" "Source Code Pro Web font package"
+install_file_from_url_zip Downloads/SourceCodePro_FontsOnly-1.017/OTF/SourceCodePro-Black.otf SourceCodePro_FontsOnly-1.017.zip "http://sourceforge.net/projects/sourcecodepro.adobe/files/SourceCodePro_FontsOnly-1.017.zip/download" "Source Code Pro font package"
+
 cmd_exists kfontinst
 FILE=.fonts/p/ProFontWindows.ttf
 file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
@@ -227,7 +230,8 @@ file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
 file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 #file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .perltidyrc bin/cfg/.perltidyrc-blismedia "perltidyrc configured for blis media"
-file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
+file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
+#file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 
 if [ ! -z $MOUNT_DATA ]; then
    if [ -d /data/UNMOUNTED ]; then
