@@ -1,8 +1,11 @@
 #!/bin/sh
 # Git hook to prefix a commit message with the branch name.
+# Also shows the last 3 commit log messages for reference
+# And tells you how to abort the commit using VIM
 # copy this file to your repository .git/hooks/prepare-commit-msg
  
 NAME=$(git branch | grep '*' | sed 's/* //')
 MSG=`mktemp`
-echo "$NAME: " | cat - "$1" >> "$MSG" && mv "$MSG" "$1"
-
+perl -e "print qq{$NAME: \n# VIM use :cq to abort the commit\n}" | cat - "$1" >> "$MSG" \
+	&& git log -3 | perl -pne 'BEGIN { print "# Previous few commits:\n"; }; s{\A}{#\t}xms' >> "$MSG" \
+	&& mv "$MSG" "$1"
