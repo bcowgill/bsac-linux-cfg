@@ -33,7 +33,7 @@ POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin
 POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc $MVN_PKG $POSTGRES_PKG_FROM"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc ssh:openssh-client sshd:openssh-server $MVN_PKG $POSTGRES_PKG_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
