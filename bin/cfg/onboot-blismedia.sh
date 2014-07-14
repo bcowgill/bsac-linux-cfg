@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#if /bin/false; then
+#if /bin/true; then
 
 echo === Start up a local webserver for the play/ area
 pushd ~/workspace/play/
@@ -43,8 +43,6 @@ pushd $DIR
 webserver.sh 8888 &
 popd
 
-#fi
-
 echo === Start up the karma runner server
 pushd $DIR/../..
 LOG=/tmp/$USER/karma-dashboard-9876.log
@@ -53,10 +51,13 @@ LOG=/tmp/$USER/karma-dashboard-9876.log
 karma start >> $LOG 2>&1 &
 popd
 
-#if /bin/false; then
-
-echo === Start up infinity plus dashboard dev instance
+echo === Start up auto build for infinity plus dashboard
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
+LOG=/tmp/$USER/auto-build-dashboard.log
+[ -f $LOG ] && rm $LOG
+(echo Auto build in `pwd`; echo logging to $LOG) | tee $LOG
+auto-build.sh ./grunt-dash.sh .. >> $LOG 2>&1 &
+echo === Start up infinity plus dashboard dev instance
 ./start-app.sh
 popd
 
