@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#if /bin/true; then
+#if /bin/false; then
 
 echo === Start up a local webserver for the play/ area
 pushd ~/workspace/play/
@@ -37,12 +37,14 @@ popd
 
 echo === Start up local webserver for test plan output
 #DIR=~/workspace/projects/infinity-plus-dashboard/test/campaign_details/out
+#fi
 DIR=~/workspace/projects/infinity-plus-dashboard/test/add_targeting_profile/out
+#if /bin/false; then
 [ ! -d $DIR ] && mkdir -p  $DIR
 pushd $DIR
 webserver.sh 8888 &
 popd
-
+#fi
 echo === Start up the karma runner server
 pushd $DIR/../..
 LOG=/tmp/$USER/karma-dashboard-9876.log
@@ -50,6 +52,8 @@ LOG=/tmp/$USER/karma-dashboard-9876.log
 (echo Karma test runner server in `pwd`; echo logging to $LOG) | tee $LOG
 karma start >> $LOG 2>&1 &
 popd
+
+#if /bin/false; then
 
 echo === Start up auto build for infinity plus dashboard
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
@@ -61,7 +65,7 @@ echo === Start up infinity plus dashboard dev instance
 ./start-app.sh
 popd
 
-#fi
 
 echo You need to start Charles before the browsers!
 
+#fi
