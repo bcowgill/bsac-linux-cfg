@@ -16,9 +16,9 @@ PASS="OK"
 FAIL="NOT OK"
 
 if [ "$UC_SHELL_TEST" == "" ]; then
-	# TAP protocol wants lower case
-	PASS="ok"
-	FAIL="not ok"
+   # TAP protocol wants lower case
+   PASS="ok"
+   FAIL="not ok"
 fi
 
 # convert echo OK / echo NOT OK to function calls for TAP

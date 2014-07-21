@@ -22,9 +22,9 @@ PASS="OK"
 FAIL="NOT OK"
 
 if [ "$UC_SHELL_TEST" == "" ]; then
-	# TAP expects lower case
-	PASS="ok"
-	FAIL="not ok"
+   # TAP expects lower case
+   PASS="ok"
+   FAIL="not ok"
 fi
 
 # Specify the number of test cases you expect to run.
