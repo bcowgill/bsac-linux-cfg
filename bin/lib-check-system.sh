@@ -474,23 +474,27 @@ function commands_exist {
 }
 
 # Install a single command from a differently named package
+# options --assume-yes is useful to preven asking questions
 function install_command_from {
-   local command package
+   local command package options
    command="$1"
    package="$2"
+   options="$3"
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get install "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get $options install "$package")
    cmd_exists "$command" || return 1
 }
 
 # Install a single command but using a list of packages
+# options --assume-yes is useful to preven asking questions
 function install_command_from_packages {
-   local command packages
+   local command packages options
    command="$1"
    packages="$2"
-   cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get install $packages)
+   options="$3"
+   cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get $options install $packages)
    cmd_exists "$command" || return 1
 }
 
@@ -700,6 +704,18 @@ function install_npm_global_command_from {
    cmd_exists "$command"
 }
 
+# Force Install a global command with the node package manager
+function force_install_npm_global_command_from {
+   local command package
+   command="$1"
+   package="$2"
+   if [ -z "$package" ]; then
+      package="$command"
+   fi
+   sudo npm install --force -g "$package"
+   cmd_exists "$command"
+}
+
 # Install a bunch of  global commands with the node package manager
 function install_npm_global_commands_from {
    local list cmd_pkg cmd package error
@@ -715,6 +731,36 @@ function install_npm_global_commands_from {
       echo NOT OK errors for install_npm_global_commands_from $list
    fi
    return $error
+}
+
+# Force Install a bunch of  global commands with the node package manager
+function force_install_npm_global_commands_from {
+   local list cmd_pkg cmd package error
+   list="$1"
+   error=0
+   for cmd_pkg in $list
+   do
+      # split the cmd:pkg string into vars
+      IFS=: read cmd package <<< $cmd_pkg
+      force_install_npm_global_command_from $cmd $package || error=1
+   done
+   if [ $error == 1 ]; then
+      echo NOT OK errors for force_install_npm_global_commands_from $list
+   fi
+   return $error
+}
+
+# Check if an npm package is installed
+function is_npm_global_package_installed {
+   local package
+   package="$1"
+   if npm ls -g | grep $package > /dev/null; then
+      echo OK npm global package $package is installed
+   else
+      echo NOT OK npm global package $package is not installed
+      return 1
+   fi
+   return 0
 }
 
 # Install a new project template for grunt system
@@ -786,7 +832,7 @@ function perl_modules_exist {
       perl_module_exists "$mod" "sudo cpanp install $mod" || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for perl_modules_exist $modules 
+      echo NOT OK errors for perl_modules_exist $modules
    fi
    return $error
 }
@@ -796,15 +842,17 @@ function install_perl_modules {
    local modules error
    modules="$1"
    error=0
+
    for mod in $modules
    do
       if [ ! -z "$mod" ]; then
-         perl_module_exists $mod > /dev/null || (echo want to install perl module $mod ; sudo cpanp install "$mod")
+##         perl_module_exists $mod > /dev/null || (echo want to install perl module $mod ; sudo cpanp install "$mod")
+         perl_module_exists $mod > /dev/null || (echo want to install perl module $mod ; sudo cpanm "$mod")
          perl_module_exists $mod || error=1
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_perl_modules $modules 
+      echo NOT OK errors for install_perl_modules $modules
    fi
    return $error
 }
@@ -818,7 +866,8 @@ function force_install_perl_modules {
    do
       if [ ! -z "$mod" ]; then
          echo forced to install perl module $mod
-         sudo cpanp install "$mod"
+##         sudo cpanp install "$mod"
+         sudo cpanm "$mod"
          perl_module_exists $mod || error=1
       fi
    done
@@ -885,7 +934,7 @@ function install_perl_project_dependencies {
    fi
    popd > /dev/null
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_perl_project_dependencies $dir 
+      echo NOT OK errors for install_perl_project_dependencies $dir
    fi
    return $error
 }
@@ -902,7 +951,7 @@ function install_all_perl_project_dependencies {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_all_perl_project_dependencies $dirs 
+      echo NOT OK errors for install_all_perl_project_dependencies $dirs
    fi
    return $error
 }
@@ -927,7 +976,7 @@ function build_perl_project {
    find . -newer before_build.timestamp
    popd > /dev/null
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_project $dir 
+      echo NOT OK errors for build_perl_project $dir
    fi
    return $error
 }
@@ -953,7 +1002,7 @@ function build_perl_project_no_tests {
    find . -newer before_build.timestamp
    popd > /dev/null
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_project_no_tests $dir 
+      echo NOT OK errors for build_perl_project_no_tests $dir
    fi
    return $error
 }
@@ -970,7 +1019,7 @@ function build_perl_projects {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_projects $dirs 
+      echo NOT OK errors for build_perl_projects $dirs
    fi
    return $error
 }
@@ -987,7 +1036,7 @@ function build_perl_projects_no_tests {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_projects_no_tests $dirs 
+      echo NOT OK errors for build_perl_projects_no_tests $dirs
    fi
    return $error
 }
@@ -1164,8 +1213,8 @@ function mysql_make_database_exist {
       echo OK $database exists on mysql localhost
    else
       echo NOT OK $database does not exist on mysql localhost will try to create with user $user
-      mysql -u $user -p -e "CREATE DATABASE $database"
-      mysql_check_for_database $database $user || return 1
+      mysql -u $user -p$password -e "CREATE DATABASE $database"
+      mysql_check_for_database $database $user $password || return 1
    fi
    return 0
 }
@@ -1181,7 +1230,7 @@ function mysql_make_test_user_exist_on_database {
    else
       echo NOT OK $user not configured. Will set it up with $superuser mysql account
       # drop and recreate user with no errors
-      mysql -u $superuser -D mysql -p <<SQL
+      mysql -u $superuser -D mysql -p$password <<SQL
       GRANT USAGE ON *.* TO '$user'@'localhost';
       DROP USER '$user'@'localhost';
       CREATE USER '$user'@'localhost' IDENTIFIED BY '$password';
@@ -1207,4 +1256,3 @@ function has_ssh_keys {
    file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/id_rsa.pub
    file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/id_rsa
 }
-
