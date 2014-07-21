@@ -7,6 +7,8 @@
 # Reset this to 0 to let test plans carry on to the end if they fail to match base file.
 # Other types of test failures still stop the suite.
 ERROR_STOP=1
+TEST_PLAN=
+TEST_CASES=0
 TEST_FAILURES=0
 PASS="OK"
 FAIL="NOT OK"
@@ -18,20 +20,32 @@ fi
 
 # perl -i.bak -pne 'chomp; s{echo \s OK \s+ (.*) \z}{OK "$1"}xms; s{echo \s NOT \s OK \s+ (.*) \z}{NOT_OK "$1"}xms; $_ .= "\n"' lib-check-system.sh
 
+# Specify the number of test cases you expect to run.
+# For Test Anything Protocol compatability http://testanything.org/tap-specification.html
+function PLAN {
+   local number
+   number=$1
+   if [ "$TEST_PLAN" == "" ]; then
+      TEST_PLAN=$number
+      echo "1..$number"
+   fi
+}
+
 # TODO add terminal color escape sequences
 function OK {
    local message
    message="$1"
-   echo $PASS "$message"
-   return 0
+
+   TEST_CASES=$(( $TEST_CASES + 1 ))
+   echo $PASS $TEST_CASES "$message"
 }
 
 # TODO add terminal color escape sequences
 function NOT_OK {
    local message
    message="$1"
-   echo "$FAIL $message"
-   return 1
+   TEST_CASES=$(( $TEST_CASES + 1 ))
+   echo "$FAIL $TEST_CASES $message"
 }
 
 function pause {
@@ -134,6 +148,7 @@ function complete()
       else
          NOT_OK "test plan $0 completed with $TEST_FAILURES failures in `pwd`"
       fi
+      PLAN $TEST_CASES
    fi
 }
 trap complete 0
@@ -152,6 +167,7 @@ function error()
    else
       NOT_OK "on or near line ${parent_lineno}; exiting with status ${code}"
    fi
+   PLAN $TEST_CASES
    exit "${code}"
 }
 trap 'error ${LINENO}' ERR

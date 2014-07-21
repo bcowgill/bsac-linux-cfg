@@ -14,6 +14,8 @@ PROFILE=--noprofile
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
+PLAN 13
+
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
 
