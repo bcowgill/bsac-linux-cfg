@@ -12,6 +12,9 @@ alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
 alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
 alias prompter='source `which toggle-prompt.sh`'
 
+#  like mkdir -p for files you want to touch
+alias touch-p='touch_p'
+
 # go up the dir tree quickly
 alias ..='cd ..'
 alias ...='cd ../..'

@@ -1,6 +1,14 @@
 # bash functions
 # Brent S.A. Cowgill
 
+# touch_p function like mkdir -p
+touch_p () {
+	local dir
+	dir=`dirname "$1"` 
+    [ -d "$dir" ] || mkdir -p "$dir"
+	touch "$1"
+}
+
 # iselect command example of an enhanced cd command
 #   database scan for enhanced cd command
 which iselect > /dev/null 2>&1
