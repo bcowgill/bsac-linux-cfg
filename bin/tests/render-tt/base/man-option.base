@@ -25,6 +25,7 @@ SSYYNNOOPPSSIISS
           --const=key=val             multiple. define a CONSTANT for the template
           --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
           --absolute                  turn on the ABSOLUTE option for Template::Toolkit
+          --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
           --relative                  turn on the RELATIVE option for Template::Toolkit
           --anycase                   turn on the ANYCASE option for Template::Toolkit
           --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
@@ -55,6 +56,9 @@ OOPPTTIIOONNSS
        ----ccoonnssttaannttss--nnaammeessppaaccee==""nnaammee""
                 Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
+       ----iinncclluuddee--ppaatthh
+                Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
+
        ----aabbssoolluuttee or ----nnooaabbssoolluuttee
                 Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
 
@@ -69,6 +73,11 @@ OOPPTTIIOONNSS
 
        ----pprree--cchhoommpp==NN
                 Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+                See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
+                [%+ +%] disable chomp
+                [%- -%] CHOMP_ONE = whitespace and one newline
+                [%= =%] CHOMP_COLLAPSE = all whitespace and newlines
+                [%~ ~%] CHOMP_GREEDY = all whitespace to a single space
 
        ----ppoosstt--cchhoommpp==NN
                 Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
@@ -90,4 +99,4 @@ EEXXAAMMPPLLEESS
 
 
 
-perl vX.XX                      2014-06-02                      RENDER-TT(1)
+perl vX.XX                      2014-07-02                      RENDER-TT(1)

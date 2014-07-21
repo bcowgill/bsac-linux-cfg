@@ -107,7 +107,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --include-path=.. --include-path=subdir --page-vars=in/template-toolkit-test.vars $SAMPLE_INCLUDE"
+	ARGS="$DEBUG --include-path=in --include-path=in/frame/subdir --page-vars=in/template-toolkit-test.vars $SAMPLE_INCLUDE"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
