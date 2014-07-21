@@ -7,4 +7,4 @@ testSuite render-tt "render a perl Template::Toolkit page with specific variable
 testSuite filter-css-colors "filter and replace CSS colors in files"
 testSuite perltidy-me "evaluate perltidy formatting options"
 
-echo OK all test suites completed
+OK "all test suites completed"

@@ -15,20 +15,44 @@
 # or
 # NOT OK file missing: something-i-need.txt [need this config file]
 
+PASS="OK"
+FAIL="NOT OK"
+
+if [ "$UC_SHELL_TEST" == "" ]; then
+	PASS="ok"
+	FAIL="not ok"
+fi
+
+# TODO add terminal color escape sequences
+function OK {
+   local message
+   message="$1"
+   echo $PASS "$message"
+   return 0
+}
+
+# TODO add terminal color escape sequences
+function NOT_OK {
+   local message
+   message="$1"
+   echo "$FAIL $message"
+   return 1
+}
+
 #============================================================================
 # Flow control
 
 function pause {
    local message input
    message="$1"
-   echo NOT OK PAUSE $message press ENTER to continue.
+   NOT_OK "PAUSE $message press ENTER to continue."
    read input
 }
 
 function stop {
    local message
    message="$1"
-   echo NOT OK STOPPED: $message
+   NOT_OK "STOPPED: $message"
    exit 1
 }
 
@@ -36,9 +60,9 @@ function check_linux {
    local version
    version="$1"
    if [ $(lsb_release -sc) == $version ]; then
-      echo OK ubuntu version $version
+      OK "ubuntu version $version"
    else
-      echo NOT OK ubuntu version not $version
+      NOT_OK "ubuntu version not $version"
       return 1
    fi
    return 0
@@ -52,9 +76,9 @@ function dir_exists {
    dir="$1"
    message="$2"
    if [ -d "$dir" ]; then
-      echo OK directory exists: $dir
+      OK "directory exists: $dir"
    else
-      echo NOT OK directory missing: $dir [pwd=$(pwd)] [$message]
+      NOT_OK "directory missing: $dir [pwd=$(pwd)] [$message]"
       return 1
    fi
    return 0
@@ -69,7 +93,7 @@ function push_dir {
       pushd "$dir" > /dev/null
       echo $message in dir `pwd`
    else
-      echo NOT OK directory missing: $dir [pwd=$(pwd)] [$message]
+      NOT_OK "directory missing: $dir [pwd=$(pwd)] [$message]"
       return 1
    fi
 }
@@ -99,7 +123,7 @@ function remove_file {
    message="$2"
    if [ -f "$file" ]; then
       if rm "$file"; then
-         echo OK file removed "$file" [$message]
+         OK "file removed \"$file\" [$message]"
       else
          echo MAYBE NOT OK unable to remove file "$file" [$message]
          echo was in dir `pwd`
@@ -123,7 +147,7 @@ function remove_symlink {
    message="$2"
    if [ -L "$file" ]; then
       if rm "$file"; then
-         echo OK symlink removed "$file" [$message]
+         OK "symlink removed \"$file\" [$message]"
       else
          echo MAYBE NOT OK unable to remove symlink "$file" [$message]
          echo was in dir `pwd`
@@ -146,9 +170,9 @@ function file_present {
    file="$1"
    message="$2"
    if locate "$file"; then
-      echo OK file "$file" is present on system [$message]
+      OK "file "$file" is present on system [$message]"
    else
-      echo NOT OK file "$file" is NOT present on system [$message]
+      NOT_OK "file "$file" is NOT present on system [$message]"
       return 1
    fi
    return 0
@@ -159,9 +183,9 @@ function file_exists {
    file="$1"
    message="$2"
    if [ -f "$file" ]; then
-      echo OK file exists: $file
+      OK "file exists: $file"
    else
-      echo NOT OK file missing: $file [pwd=$(pwd)] [$message]
+      NOT_OK "file missing: $file [pwd=$(pwd)] [$message]"
       return 1
    fi
    return 0
@@ -172,9 +196,9 @@ function file_link_exists {
    file="$1"
    message="$2"
    if [ -L "$file" ]; then
-      echo OK symlink exists: $file
+      OK "symlink exists: $file"
    else
-      echo NOT OK symlink missing: $file [pwd=$(pwd)] [$message]
+      NOT_OK "symlink missing: $file [pwd=$(pwd)] [$message]"
       return 1
    fi
    return 0
@@ -185,9 +209,9 @@ function dir_link_exists {
    dir="$1"
    message="$2"
    if [ -L "$dir" ]; then
-      echo OK symlink dir exists: $dir
+      OK "symlink dir exists: $dir"
    else
-      echo NOT OK symlink dir missing: $dir [pwd=$(pwd)] [$message]
+      NOT_OK "symlink dir missing: $dir [pwd=$(pwd)] [$message]"
       return 1
    fi
    return 0
@@ -203,7 +227,7 @@ function file_linked_to {
    link=`readlink "$name"`
    set -e
    if [ "${link:-}" == "$target" ]; then
-      echo OK symlink $name links to $target
+      OK "symlink $name links to $target"
       return 0
    else
       file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && mv "$name" "$name.orig"
@@ -222,7 +246,7 @@ function file_linked_to_root {
    link=`readlink "$name"`
    set -e
    if [ "${link:-}" == "$target" ]; then
-      echo OK symlink $name links to $target
+      OK "symlink $name links to $target"
       return 0
    else
       file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && sudo mv "$name" "$name.orig"
@@ -253,19 +277,19 @@ function dir_linked_to {
       link=`readlink "$name"`
       set -e
       if [ "${link:-}" == "$target" ]; then
-         echo OK symlink $name links to dir $target
+         OK "symlink $name links to dir $target"
          return 0
       else
          if [ "${link:-}" == "$target/" ]; then
-            echo OK symlink $name links to dir $target/
+            OK "symlink $name links to dir $target/"
             return 0
          else
-            echo NOT OK already exists: "$name" cannot create as a link to dir "$target" [$message] `readlink "$name"`
+            NOT_OK "already exists: "$name" cannot create as a link to dir "$target" [$message] `readlink "$name"`"
             return 1
          fi
       fi
    else
-      echo NOT OK symlink $name missing will try to create
+      NOT_OK "symlink $name missing will try to create"
       echo ln -s "$target" "$name"
       if [ -z "$root" ]; then
          ln -s "$target" "$name"
@@ -348,7 +372,7 @@ function extract_archive {
          if echo "$archive" | grep ".tgz"; then
             tar xvzf "$archive"
          else
-            echo NOT OK archive "$archive" is not a known type
+            NOT_OK "archive \"$archive\" is not a known type"
          fi
       fi
    fi
@@ -385,7 +409,7 @@ function install_git_repo_branch {
    if check_git_repo_branch "$dir/$subdir" "$branch" "$message"; then
       return 0
    else
-      echo NOT OK will get git repo "$message" branch "$branch" from "$url"
+      NOT_OK "will get git repo \"$message\" branch \"$branch\" from \"$url\""
       pushd "$dir" > /dev/null
       if [ ! -d "$subdir" ]; then
          git clone "$url" "$subdir"
@@ -408,15 +432,15 @@ function check_git_repo_branch {
    pushd "$dir" > /dev/null
       if git branch | grep '*' | grep "$branch"; then
          # TODO could be only a substring match of the branch
-         echo OK git repo "$dir" is on branch "$branch"
+         OK "git repo "$dir" is on branch \"$branch\""
       else
          branch=`perl -e '$ARGV[0] =~ s{\A origin/}{}xms; print $ARGV[0]' "$branch"`
 	 if git branch | grep '*' | grep "$branch"; then
 	    # TODO could be only a substring match of the branch
-	    echo OK git repo "$dir" is on branch "$branch"
+	    OK "git repo "$dir" is on branch \"$branch\""
 	 else
             git branch
-            echo NOT OK git repo "$dir" is not on branch "$branch"
+            NOT_OK "git repo \"$dir\" is not on branch \"$branch\""
             error=1
          fi
       fi
@@ -435,9 +459,9 @@ function check_version {
    version="$4"
    message="$5"
    if $cmd $opt | grep "$find" | grep "$version"; then
-      echo OK $cmd is correct version [$version]
+      OK "$cmd is correct version [$version]"
    else
-      echo NOT OK $cmd is not version [$version] `$cmd $opt` your mileage may vary setting this up
+      NOT_OK "$cmd is not version [$version] `$cmd $opt` your mileage may vary setting this up"
       return 1
    fi
    return 0
@@ -448,12 +472,12 @@ function cmd_exists {
    cmd="$1"
    message="$2"
    if which "$cmd"; then
-      echo OK command $cmd exists
+      OK "command $cmd exists"
    else
       if [ -z "$message" ]; then
          message="sudo apt-get install $cmd"
       fi
-      echo NOT OK command $cmd missing [$message]
+      NOT_OK "command $cmd missing [$message]"
       return 1
    fi
    return 0
@@ -468,7 +492,7 @@ function commands_exist {
       cmd_exists "$cmd" || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for commands_exist $commands
+      NOT_OK "errors for commands_exist $commands"
    fi
    return $error
 }
@@ -511,7 +535,7 @@ function install_commands {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_commands $commands
+      NOT_OK "errors for install_commands $commands"
    fi
    return $error
 }
@@ -529,7 +553,7 @@ function install_commands_from {
       install_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_commands_from $list
+      NOT_OK "errors for install_commands_from $list"
    fi
    return $error
 }
@@ -560,7 +584,7 @@ function force_install_commands_from {
       force_install_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for force_install_commands_from $list
+      NOT_OK "errors for force_install_commands_from $list"
    fi
    return $error
 }
@@ -591,9 +615,9 @@ function is_server_running {
    cmd="$1"
    message="$2"
    if ps -ef | grep $cmd | grep -v grep ; then
-      echo OK $cmd is running
+      OK "$cmd is running"
    else
-      echo NOT OK $cmd is not running [$message]
+      NOT_OK "$cmd is not running [$message]"
       return 1
    fi
    return 0
@@ -605,10 +629,10 @@ function server_should_not_be_running {
    cmd="$1"
    message="$2"
    if ps -ef | grep $cmd | grep -v grep ; then
-      echo NOT OK $cmd should not be running [$message]
+      NOT_OK "$cmd should not be running [$message]"
       return 1
    else
-      echo OK $cmd is not running
+      OK "$cmd is not running"
    fi
    return 0
 }
@@ -622,7 +646,7 @@ function is_port_listening {
    if nc localhost "$port" < /dev/null > /dev/null; then
       echo  OK $host:$port is listening
    else
-      echo NOT OK $host:$port is not listening [$message]
+      NOT_OK "$host:$port is not listening [$message]"
       return 1
    fi
    return 0
@@ -635,7 +659,7 @@ function port_should_not_be_listening {
    port="$2"
    message="$3"
    if nc localhost "$port" < /dev/null > /dev/null; then
-      echo NOT OK $host:$port should not be listening [$message]
+      NOT_OK "$host:$port should not be listening [$message]"
       return 1
    else
       echo  OK $host:$port is not listening
@@ -651,9 +675,9 @@ function http_request_show {
    log="$3"
    echo Send a request to $url [$message]
    if wget --output-document=- "$url" ; then
-      echo OK got response to $url
+      OK "got response to $url"
    else
-      echo NOT OK no response from $url [$message]
+      NOT_OK "no response from $url [$message]"
       if [ ! -z "$log" ]; then
          cat "$log"
       fi
@@ -687,7 +711,7 @@ function install_npm_commands_from {
       install_npm_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_npm_commands_from $list
+      NOT_OK "errors for install_npm_commands_from $list"
    fi
    return $error
 }
@@ -728,7 +752,7 @@ function install_npm_global_commands_from {
       install_npm_global_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_npm_global_commands_from $list
+      NOT_OK "errors for install_npm_global_commands_from $list"
    fi
    return $error
 }
@@ -745,7 +769,7 @@ function force_install_npm_global_commands_from {
       force_install_npm_global_command_from $cmd $package || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for force_install_npm_global_commands_from $list
+      NOT_OK "errors for force_install_npm_global_commands_from $list"
    fi
    return $error
 }
@@ -755,9 +779,9 @@ function is_npm_global_package_installed {
    local package
    package="$1"
    if npm ls -g | grep $package > /dev/null; then
-      echo OK npm global package $package is installed
+      OK "npm global package $package is installed"
    else
-      echo NOT OK npm global package $package is not installed
+      NOT_OK "npm global package $package is not installed"
       return 1
    fi
    return 0
@@ -785,7 +809,7 @@ function install_grunt_templates_from {
       install_grunt_template_from $template $package || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_grunt_templates_from $list
+      NOT_OK "errors for install_grunt_templates_from $list"
    fi
    return $error
 }
@@ -799,9 +823,9 @@ function perl_module_exists {
    module="$1"
    message="$2"
    if perl -M$module -e 'my $ver = eval "\$$ARGV[0]::VERSION"; print "OK perl module $ARGV[0] v$ver is installed\n"' $module > /dev/null; then
-      echo OK perl module $module is installed
+      OK "perl module $module is installed"
    else
-      echo NOT OK perl module $module is not installed [$message]
+      NOT_OK "perl module $module is not installed [$message]"
       return 1
    fi
    return 0
@@ -814,9 +838,9 @@ function perl_module_version_exists {
    version="$2"
    message="$3"
    if perl -M$module -e 'my $ver = eval "\$$ARGV[0]::VERSION"; my $msg = "NOT OK perl module $ARGV[0] v$ver is installed, expected v$ARGV[1]\n"; if ($ver ne $ARGV[1]) { print $msg; exit 1; }' $module $version; then
-      echo OK perl module $module version $version is installed
+      OK "perl module $module version $version is installed"
    else
-      echo NOT OK perl module $module version $version is not installed [$message]
+      NOT_OK "perl module $module version $version is not installed [$message]"
       return 1
    fi
    return 0
@@ -832,7 +856,7 @@ function perl_modules_exist {
       perl_module_exists "$mod" "sudo cpanp install $mod" || error=1
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for perl_modules_exist $modules
+      NOT_OK "errors for perl_modules_exist $modules"
    fi
    return $error
 }
@@ -852,7 +876,7 @@ function install_perl_modules {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_perl_modules $modules
+      NOT_OK "errors for install_perl_modules $modules"
    fi
    return $error
 }
@@ -872,7 +896,7 @@ function force_install_perl_modules {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for force_install_perl_modules $modules
+      NOT_OK "errors for force_install_perl_modules $modules"
    fi
    return $error
 }
@@ -934,7 +958,7 @@ function install_perl_project_dependencies {
    fi
    popd > /dev/null
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_perl_project_dependencies $dir
+      NOT_OK "errors for install_perl_project_dependencies $dir"
    fi
    return $error
 }
@@ -951,7 +975,7 @@ function install_all_perl_project_dependencies {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for install_all_perl_project_dependencies $dirs
+      NOT_OK "errors for install_all_perl_project_dependencies $dirs"
    fi
    return $error
 }
@@ -976,7 +1000,7 @@ function build_perl_project {
    find . -newer before_build.timestamp
    popd > /dev/null
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_project $dir
+      NOT_OK "errors for build_perl_project $dir"
    fi
    return $error
 }
@@ -1002,7 +1026,7 @@ function build_perl_project_no_tests {
    find . -newer before_build.timestamp
    popd > /dev/null
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_project_no_tests $dir
+      NOT_OK "errors for build_perl_project_no_tests $dir"
    fi
    return $error
 }
@@ -1019,7 +1043,7 @@ function build_perl_projects {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_projects $dirs
+      NOT_OK "errors for build_perl_projects $dirs"
    fi
    return $error
 }
@@ -1036,7 +1060,7 @@ function build_perl_projects_no_tests {
       fi
    done
    if [ $error == 1 ]; then
-      echo NOT OK errors for build_perl_projects_no_tests $dirs
+      NOT_OK "errors for build_perl_projects_no_tests $dirs"
    fi
    return $error
 }
@@ -1052,9 +1076,9 @@ function file_has_text {
    message="$3"
    file_exists "$file" "$message"
    if grep "$text" "$file" > /dev/null; then
-      echo OK file has text: "$file" "$text"
+      OK "file has text: \"$file\" \"$text\""
    else
-      echo NOT OK file missing text: "$file" "$text" [$message]
+      NOT_OK "file missing text: \"$file\" \"$text\" [$message]"
       echo grep \""$text"\" \""$file"\"
       return 1
    fi
@@ -1069,9 +1093,9 @@ function file_contains_text {
    message="$3"
    file_exists "$file"
    if egrep "$text" "$file" > /dev/null; then
-      echo OK file contains regex: "$file" "$text"
+      OK "file contains regex: \"$file\" \"$text\""
    else
-      echo NOT OK file missing regex: egrep \"$text\" \"$file\" [$message]
+      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]"
       echo egrep \""$text"\" \""$file"\"
       return 1
    fi
@@ -1085,10 +1109,10 @@ function file_must_not_have_text {
    message="$3"
    file_exists "$file"
    if grep "$text" "$file" > /dev/null; then
-      echo NOT OK file should not have text: "$file" "$text" [$message]
+      NOT_OK "file should not have text: "$file" "$text" [$message]"
       return 1
    else
-      echo OK file does not have text: "$file" "$text"
+      OK "file does not have text: \"$file\" \"$text\""
       echo grep \""$text"\" \""$file"\"
    fi
    return 0
@@ -1122,9 +1146,9 @@ function crontab_has_command {
    config="$2"
    message="$3"
    if crontab -l | grep "$command"; then
-      echo OK crontab has command $command
+      OK "crontab has command $command"
    else
-      echo NOT OK crontab missing command $oommand trying to install [$message]
+      NOT_OK "crontab missing command $oommand trying to install [$message]"
       (crontab -l; echo "$config" ) | crontab -
       return 1
    fi
@@ -1154,14 +1178,14 @@ function apt_has_key {
    url="$2"
    message="$3"
    if sudo apt-key list | grep "$key"; then
-      echo OK apt-key has $key
+      OK "apt-key has $key"
    else
-      echo NOT OK apt-key missing $key trying to install [$message]
+      NOT_OK "apt-key missing $key trying to install [$message]"
       wget -q "$url" -O- | sudo apt-key add -
       if sudo apt-key list | grep "$key"; then
-         echo OK apt-key installed $key
+         OK "apt-key installed $key"
       else
-         echo NOT OK apt-key could not install $key
+         NOT_OK "apt-key could not install $key"
          return 1
       fi
    fi
@@ -1177,9 +1201,9 @@ function mysql_connection_check {
    password=$2
    echo Checking mysql connection to localhost for user $user
    if mysql -u $user -p$password -e 'SHOW DATABASES; SHOW GRANTS;'; then
-      echo OK $user can connect to mysql on localhost
+      OK "$user can connect to mysql on localhost"
    else
-      echo NOT OK $user cannot connect to mysql on localhost
+      NOT_OK "$user cannot connect to mysql on localhost"
       return 1
    fi
    return 0
@@ -1194,9 +1218,9 @@ function mysql_check_for_database {
    password=$3
    echo Check for mysql database $database with user $user
    if mysql -u $user -p$password -e "SELECT schema_name, 'exists' FROM information_schema.schemata WHERE schema_name = '$database';" | grep $database; then
-      echo OK $database exists on mysql localhost
+      OK "$database exists on mysql localhost"
    else
-      echo NOT OK $database does not exist on mysql localhost for user $user
+      NOT_OK "$database does not exist on mysql localhost for user $user"
       return 1
    fi
    return 0
@@ -1210,9 +1234,9 @@ function mysql_make_database_exist {
    # optional password
    password=$3
    if mysql_check_for_database $database $user $password > /dev/null; then
-      echo OK $database exists on mysql localhost
+      OK "$database exists on mysql localhost"
    else
-      echo NOT OK $database does not exist on mysql localhost will try to create with user $user
+      NOT_OK "$database does not exist on mysql localhost will try to create with user $user"
       mysql -u $user -p$password -e "CREATE DATABASE $database"
       mysql_check_for_database $database $user $password || return 1
    fi
@@ -1226,9 +1250,9 @@ function mysql_make_test_user_exist_on_database {
    database=$3
    superuser=$4
    if mysql -u $user -p$password -e 'SHOW GRANTS;' | grep $user; then
-      echo OK $user exists with grants
+      OK "$user exists with grants"
    else
-      echo NOT OK $user not configured. Will set it up with $superuser mysql account
+      NOT_OK "$user not configured. Will set it up with $superuser mysql account"
       # drop and recreate user with no errors
       mysql -u $superuser -D mysql -p$password <<SQL
       GRANT USAGE ON *.* TO '$user'@'localhost';

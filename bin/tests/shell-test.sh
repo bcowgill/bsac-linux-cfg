@@ -8,26 +8,21 @@
 # Other types of test failures still stop the suite.
 ERROR_STOP=1
 TEST_FAILURES=0
+PASS="OK"
+FAIL="NOT OK"
 
-function pause {
-   local message input
-   message="$1"
-   echo NOT OK PAUSE $message press ENTER to continue.
-   read input
-}
+if [ "$UC_SHELL_TEST" == "" ]; then
+	PASS="ok"
+	FAIL="not ok"
+fi
 
-function stop {
-   local message
-   message="$1"
-   echo NOT OK STOPPED: $message
-   exit 1
-}
+# perl -i.bak -pne 'chomp; s{echo \s OK \s+ (.*) \z}{OK "$1"}xms; s{echo \s NOT \s OK \s+ (.*) \z}{NOT_OK "$1"}xms; $_ .= "\n"' lib-check-system.sh
 
 # TODO add terminal color escape sequences
 function OK {
    local message
    message="$1"
-   echo OK "$message"
+   echo $PASS "$message"
    return 0
 }
 
@@ -35,8 +30,22 @@ function OK {
 function NOT_OK {
    local message
    message="$1"
-   echo NOT OK "$message"
+   echo "$FAIL $message"
    return 1
+}
+
+function pause {
+   local message input
+   message="$1"
+   NOT_OK "PAUSE $message press ENTER to continue."
+   read input
+}
+
+function stop {
+   local message
+   message="$1"
+   NOT_OK "STOPPED: $message"
+   exit 1
 }
 
 function testSuite
@@ -53,7 +62,7 @@ function testSuite
    if [ -x ./tests.sh ]; then
       ./tests.sh
    else
-      echo NOT OK ./tests.sh does not exist in `pwd`
+      NOT_OK "./tests.sh does not exist in `pwd`"
       return 1
    fi
    popd > /dev/null
@@ -69,9 +78,9 @@ function assertCommandSuccess
    err="$1"
    cmd="$2"
    if [ 0 == $err ]; then
-      echo OK command executed without error
+      OK "command executed without error"
    else
-      echo NOT OK exit code $err for "$cmd"
+      NOT_OK "exit code $err for \"$cmd\""
       return 1
    fi
    return 0
@@ -86,9 +95,9 @@ function assertCommandFails
    expect="$2"
    cmd="$3"
    if [ $expect == $err ]; then
-      echo OK command failed with exit code $expect
+      OK "command failed with exit code $expect"
    else
-      echo NOT OK expected exit code $expect but got $err for "$cmd"
+      NOT_OK "expected exit code $expect but got $err for \"$cmd\""
       return 1
    fi
    return 0
@@ -103,9 +112,9 @@ function assertFilesEqual
 
    [ -f "$expected" ] || touch "$expected"
    if diff "$actual" "$expected" > /dev/null; then
-      echo "OK $test output equals base file"
+      OK "$test output equals base file"
    else
-      echo "NOT OK files differ - $test"
+      NOT_OK "files differ - $test"
       echo " "
       echo vdiff "$actual" "$expected"
       echo " " 
@@ -121,9 +130,9 @@ function complete()
 {
    if [ $COMPLETE_ERROR == 0 ]; then
       if [ $TEST_FAILURES == 0 ]; then
-         echo OK test plan $0 completed in `pwd`
+         OK "test plan $0 completed in `pwd`"
       else
-         echo NOT OK test plan $0 completed with $TEST_FAILURES failures in `pwd`
+         NOT_OK "test plan $0 completed with $TEST_FAILURES failures in `pwd`"
       fi
    fi
 }
@@ -137,12 +146,13 @@ function error()
    local message="$2"
    local code="${3:-1}"
    COMPLETE_ERROR=1
-   echo NOT OK test plan $0 terminated by error in `pwd`
+   NOT_OK "test plan $0 terminated by error in `pwd`"
    if [[ -n "$message" ]] ; then
-      echo "NOT OK on or near line ${parent_lineno}: ${message}; exiting with status ${code}"
+      NOT_OK "on or near line ${parent_lineno}: ${message}; exiting with status ${code}"
    else
-      echo "NOT OK on or near line ${parent_lineno}; exiting with status ${code}"
+      NOT_OK "on or near line ${parent_lineno}; exiting with status ${code}"
    fi
    exit "${code}"
 }
 trap 'error ${LINENO}' ERR
+

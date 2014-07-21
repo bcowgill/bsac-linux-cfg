@@ -14,7 +14,7 @@ SKIP=0
 # Include testing library and make output dir exist
 source ../shell-test.sh
 [ -d out ] || mkdir out
-rm out/* > /dev/null 2>&1 || echo OK output dir ready
+rm out/* > /dev/null 2>&1 || OK "output dir ready"
 
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
@@ -117,5 +117,5 @@ fi
 # clean up output directory if no failures
 if [ $TEST_FAILURES == 0 ]; then
 	rm out/* && rmdir out
-	echo OK All tests complete `pwd`/out cleaned up
+	OK "All tests complete `pwd`/out cleaned up"
 fi

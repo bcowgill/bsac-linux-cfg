@@ -121,18 +121,18 @@ pushd $HOME
 id
 
 if grep $USER /etc/group | grep sudo; then
-   echo OK user $USER has sudo privileges
+   OK "user $USER has sudo privileges"
 else
-   echo NOT OK user $USER does not have sudo privileges
+   NOT_OK "user $USER does not have sudo privileges"
 fi
 
 check_linux $UBUNTU
 
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
-   echo OK ulimit for open files is good
+   OK "ulimit for open files is good"
 else
-   echo NOT OK ulimit for open files is bad need $ULIMITFILES
+   NOT_OK "ulimit for open files is bad need $ULIMITFILES"
    file_has_text /etc/security/limits.conf $USER "check limits file" || ( \
       echo echo \"$USER            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
       echo echo \"$USER            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
@@ -237,10 +237,10 @@ file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 
 if [ ! -z $MOUNT_DATA ]; then
    if [ -d /data/UNMOUNTED ]; then
-      echo OK /data/UNMOUNTED exists will try mounting it to check dirs
+      OK "/data/UNMOUNTED exists will try mounting it to check dirs"
       sudo mount /data
       if [ -d /data/UNMOUNTED ]; then
-         echo NOT OK unable to mount /data
+         NOT_OK "unable to mount /data"
 #   mkdir -p /data/UNMOUNTED
 #   blkid /dev/sdb1
 #   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" /data
@@ -299,33 +299,33 @@ FILE="/etc/apt/sources.list.d/WANdisco.list"
 make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
 file_has_text "$FILE" wandisco.com
 if svn --version | grep " version " | grep $SVN_VER; then
-   echo OK svn command version correct
+   OK "svn command version correct"
 else
-   echo NOT OK svn command version incorrect - will try update
+   NOT_OK "svn command version incorrect - will try update"
    # http://askubuntu.com/questions/312568/where-can-i-find-a-subversion-1-8-binary
    sudo apt-get update
    apt-cache show subversion | grep '^Version:'   
    sudo apt-get install $SVN_PKG
-   echo NOT OK exiting after svn update, try again.
+   NOT_OK "exiting after svn update, try again."
    exit 1
 fi
 else
-   echo OK will not configure subversion unless SVN_PKG is non-zero
+   OK "will not configure subversion unless SVN_PKG is non-zero"
 fi
 
 has_ssh_keys
 
 which git
 if git --version | grep " version " | grep $GIT_VER; then
-   echo OK git command version correct
+   OK "git command version correct"
 else
-   echo NOT OK git command version incorrect - will try update
+   NOT_OK "git command version incorrect - will try update"
    # http://blog.avirtualhome.com/git-ppa-for-ubuntu/
    apt_has_source ppa:pdoes/ppa "repository for git"
    sudo apt-get update
    apt-cache show git | grep '^Version:'
    sudo apt-get install $GIT_PKG $GIT_PKG_AFTER
-   echo NOT OK exiting after git update, try again.
+   NOT_OK "exiting after git update, try again."
    exit 1
    
    sudo apt-get install $GIT_PKG_MAKE
@@ -340,44 +340,44 @@ else
    sudo make prefix=/usr/local install
    sudo apt-get install $GIT_PKG_AFTER
    popd
-   echo NOT OK exiting after git update, try again.
+   NOT_OK "exiting after git update, try again."
    exit 1
 fi
 
 if [ ! -z $MVN_PKG ]; then
    cmd_exists mvn
    if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
-      echo OK mvn command version correct
+      OK "mvn command version correct"
    else
-      echo NOT OK mvn command version incorrect
+      NOT_OK "mvn command version incorrect"
       exit 1
    fi
 fi
 
 if [ "x$JAVA_HOME" == "x/usr/lib/jvm/jdk1.7.0_21" ]; then
-   echo OK JAVA_HOME set correctly
+   OK "JAVA_HOME set correctly"
 else
-   echo NOT OK JAVA_HOME is incorrect $JAVA_HOME
+   NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
    exit 1
 fi
 if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
-   echo OK M2_HOME set correctly
+   OK "M2_HOME set correctly"
 else
-   echo NOT OK M2_HOME is incorrect $M2_HOME
+   NOT_OK "M2_HOME is incorrect $M2_HOME"
    exit 1
 fi
 
 cmd_exists git
 if [ ! -z $GITSVN_PKG ]; then
 if [ -x $GITSVN ]; then
-   echo OK git svn command installed
+   OK "git svn command installed"
 else
-   echo NOT OK git svn command missing -- will try to install
+   NOT_OK "git svn command missing -- will try to install"
    sudo apt-get install $GITSVN_PKG
 fi
 cmd_exists $GITSVN
 else
-   echo OK will not configure git-svn unless GITSVN_PKG is non-zero
+   OK "will not configure git-svn unless GITSVN_PKG is non-zero"
 fi
 
 # git installs completion file but not in right place any more
@@ -418,32 +418,32 @@ crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME
 crontab_has_command "wcdscan.sh"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
-   echo OK git config has been set up
+   OK "git config has been set up"
 else
-   echo NOT OK git config not set. trying to do so
+   NOT_OK "git config not set. trying to do so"
    git config --global user.name "$MYNAME"
    git config --global user.email $EMAIL
 fi
 
 if git config --global --list | grep rerere; then
-   echo OK git config rerere has been set up
+   OK "git config rerere has been set up"
 else
-   echo NOT OK git config rerere not set. trying to do so
+   NOT_OK "git config rerere not set. trying to do so"
    git config --global rerere.enabled true
    git config --global rerere.autoupdate true
 fi
 
 if git config --global --list | grep alias.graph; then
-   echo OK git config alias.graph has been set up
+   OK "git config alias.graph has been set up"
 else
-   echo NOT OK git config alias.graph not set. trying to do so
+   NOT_OK "git config alias.graph not set. trying to do so"
    git config --global --add alias.graph "log --oneline --graph --decorate --all"
 fi
 
 if $NODE_CMD --version | grep $NODE_VER; then
-   echo OK node command version correct
+   OK "node command version correct"
 else
-   echo NOT OK node command version incorrect. trying to update
+   NOT_OK "node command version incorrect. trying to update"
    #https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
    sudo apt-get update
    sudo apt-get install -y python-software-properties python g++ make
@@ -570,7 +570,7 @@ file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
 #file_contains_text $FILE "msgcompose.background.color., .#333333"
 #file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
 else
-   echo OK thunderbird will not be configured unless THUNDER is non-zero
+   OK "thunderbird will not be configured unless THUNDER is non-zero"
 fi
 
 # System Settings
@@ -808,5 +808,5 @@ echo TODO SUBLIME THEME OVERRIDES
 echo TODO WINDOW MANAGER SPECIAL EFFECTS
 echo TODO google chrome flash player
 
-echo OK all checks complete
+OK "all checks complete"
 

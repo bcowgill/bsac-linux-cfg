@@ -155,3 +155,6 @@ export M2_HOME=/usr/share/maven
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
+
+# I like my NOT OK to be upcased
+export UC_SHELL_TEST=1
