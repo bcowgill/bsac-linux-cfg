@@ -7,17 +7,21 @@
 # Reset this to 0 to let test plans carry on to the end if they fail to match base file.
 # Other types of test failures still stop the suite.
 ERROR_STOP=1
+TEST_FAILURES=0
+
+# some definitions for TAP support
 TEST_PLAN=
 TEST_CASES=0
-TEST_FAILURES=0
 PASS="OK"
 FAIL="NOT OK"
 
 if [ "$UC_SHELL_TEST" == "" ]; then
+	# TAP protocol wants lower case
 	PASS="ok"
 	FAIL="not ok"
 fi
 
+# convert echo OK / echo NOT OK to function calls for TAP
 # perl -i.bak -pne 'chomp; s{echo \s OK \s+ (.*) \z}{OK "$1"}xms; s{echo \s NOT \s OK \s+ (.*) \z}{NOT_OK "$1"}xms; $_ .= "\n"' lib-check-system.sh
 
 # Specify the number of test cases you expect to run.

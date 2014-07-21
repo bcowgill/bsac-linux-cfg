@@ -14,15 +14,15 @@
 # OK file exists: something-i-need.txt
 # or
 # NOT OK file missing: something-i-need.txt [need this config file]
-TEST_PLAN=
-TEST_CASES=0
 
+# some definitions for TAP protocol support
 TEST_PLAN=
 TEST_CASES=0
 PASS="OK"
 FAIL="NOT OK"
 
 if [ "$UC_SHELL_TEST" == "" ]; then
+	# TAP expects lower case
 	PASS="ok"
 	FAIL="not ok"
 fi
