@@ -791,13 +791,14 @@ function force_install_npm_global_commands_from {
 
 # Check if an npm package is installed
 function is_npm_global_package_installed {
-   local package
+   local package message
    package="$1"
-   if npm ls -g | grep $package > /dev/null; then
-      OK "npm global package $package is installed"
-   else
-      NOT_OK "npm global package $package is not installed"
+   message="$2"
+   if npm ls -g $package | grep '(empty)' > /dev/null; then
+      NOT_OK "npm global package $package is not installed [$message]"
       return 1
+   else
+      OK "npm global package $package is installed"
    fi
    return 0
 }

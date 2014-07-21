@@ -453,9 +453,11 @@ else
    exit 1
 fi
 
+
 npm config set registry https://registry.npmjs.org/
 #install_npm_commands_from "$INSTALL_NPM_FROM"
 install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
+is_npm_global_package_installed grunt "need grunt installed to go further."
 make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
 install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
