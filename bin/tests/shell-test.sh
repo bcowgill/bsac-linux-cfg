@@ -15,7 +15,8 @@ TEST_CASES=0
 PASS="OK"
 FAIL="NOT OK"
 
-if [ "$UC_SHELL_TEST" == "" ]; then
+# When running under the prove command, lower case our output
+if [ ${HARNESS_ACTIVE:-0} == 1 ]; then
    # TAP protocol wants lower case
    PASS="ok"
    FAIL="not ok"
