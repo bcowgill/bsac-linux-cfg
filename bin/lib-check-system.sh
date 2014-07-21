@@ -14,7 +14,11 @@
 # OK file exists: something-i-need.txt
 # or
 # NOT OK file missing: something-i-need.txt [need this config file]
+TEST_PLAN=
+TEST_CASES=0
 
+TEST_PLAN=
+TEST_CASES=0
 PASS="OK"
 FAIL="NOT OK"
 
@@ -23,20 +27,31 @@ if [ "$UC_SHELL_TEST" == "" ]; then
 	FAIL="not ok"
 fi
 
+# Specify the number of test cases you expect to run.
+# For Test Anything Protocol compatability http://testanything.org/tap-specification.html
+function PLAN {
+   local number
+   number=$1
+   if [ "$TEST_PLAN" == "" ]; then
+      TEST_PLAN=$number
+      echo "1..$number"
+   fi
+}
+
 # TODO add terminal color escape sequences
 function OK {
    local message
    message="$1"
-   echo $PASS "$message"
-   return 0
+   TEST_CASES=$(( $TEST_CASES + 1 ))
+   echo $PASS "$TEST_CASES $message"
 }
 
 # TODO add terminal color escape sequences
 function NOT_OK {
    local message
    message="$1"
-   echo "$FAIL $message"
-   return 1
+   TEST_CASES=$(( $TEST_CASES + 1 ))
+   echo "$FAIL $TEST_CASES $message"
 }
 
 #============================================================================
