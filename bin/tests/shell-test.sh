@@ -30,6 +30,7 @@ fi
 function PLAN {
    local number
    number=$1
+   ERROR_STOP=0
    if [ "$TEST_PLAN" == "" ]; then
       TEST_PLAN=$number
       echo "1..$number"
@@ -69,9 +70,10 @@ function stop {
 
 function testSuite
 {
-   local dir suite
+   local dir suite prove
    dir="$1"
    suite="$2"
+   prove="$3"
    echo ======================================================================
    echo TEST SUITE in "./$dir/" : $suite
    pushd "$dir" > /dev/null
@@ -79,13 +81,22 @@ function testSuite
    [ -d out ] || mkdir out
    [ -d base ] || mkdir base
    if [ -x ./tests.sh ]; then
-      ./tests.sh
+      $prove ./tests.sh
    else
       NOT_OK "./tests.sh does not exist in `pwd`"
       return 1
    fi
    popd > /dev/null
    return 0
+}
+
+function cleanUpAfterTests
+{
+   # clean up output directory if no failures
+   if [ ${TEST_FAILURES:-0} == 0 ]; then
+      rm out/* && rmdir out
+      OK "All tests complete `pwd`/out cleaned up"
+   fi
 }
 
 # Ensure a just executed command succeeded.
