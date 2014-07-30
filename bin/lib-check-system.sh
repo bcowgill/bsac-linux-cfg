@@ -559,14 +559,16 @@ function install_commands {
 # Install commands from specific package specified as input list with : separation
 # cmd1:pkg2 cmd2:pkg2 ...
 function install_commands_from {
-   local list cmd_pkg cmd package error
+   local list message options cmd_pkg cmd package error
    list="$1"
+   message="$2"
+   options="$3"
    error=0
    for cmd_pkg in $list
    do
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
-      install_command_from $cmd $package || error=1
+      install_command_from $cmd $package $options || error=1
    done
    if [ $error == 1 ]; then
       NOT_OK "errors for install_commands_from $list"
@@ -576,28 +578,32 @@ function install_commands_from {
 
 # Force a command to be installed
 function force_install_command_from {
-   local command package
+   local command package message options
    command="$1"
    package="$2"
+   message="$3"
+   options="$4"
    if [ -z "$package" ]; then
       package="$command"
    fi
-   echo forced to install $command from $package
-   sudo apt-get install "$package"
+   echo forced to install $command from $package for "$message"
+   sudo apt-get $options install "$package"
    cmd_exists "$command" || return 1
 }
 
 # Force install commands from specific package specified as input list with : separation
 # cmd1:pkg2 cmd2:pkg2 ...
 function force_install_commands_from {
-   local list cmd_pkg cmd package error
+   local list message options cmd_pkg cmd package error
    list="$1"
+   message="$2"
+   options="$3"
    error=0
    for cmd_pkg in $list
    do
       # split the cmd:pkg string into vars
       IFS=: read cmd package <<< $cmd_pkg
-      force_install_command_from $cmd $package || error=1
+      force_install_command_from $cmd $package "$message" $options || error=1
    done
    if [ $error == 1 ]; then
       NOT_OK "errors for force_install_commands_from $list"
