@@ -1,8 +1,10 @@
 #!/bin/bash
 
+DOIT=/bin/false
+DOIT=/bin/true
 TEST_DIR=$HOME/workspace/projects/infinity-plus-dashboard/test
 
-if /bin/false; then
+if $DOIT; then
 
 echo === Start up a local webserver for the play/ area
 pushd ~/workspace/play/
@@ -46,7 +48,7 @@ pushd $DIR
    webserver.sh 8888 &
 popd
 
-fi # /bin/false
+fi # $DOIT
 
 echo === Start up the karma runner server
 pushd $TEST_DIR
@@ -56,7 +58,7 @@ pushd $TEST_DIR
    karma start >> $LOG 2>&1 &
 popd
 
-if /bin/false; then
+if $DOIT; then
 
 echo === Start up auto build for infinity plus dashboard
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
@@ -71,5 +73,12 @@ popd
 
 echo You need to start Charles before the browsers!
 
-fi # /bin/false
+fi # $DOIT
 
+echo konsole tabs pj42:
+echo "1: pushd ~/workspace/play/project42; tail -f /tmp/brent/auto-build-project42.log"
+echo "2: sudo -i"
+echo "3: pushd ~/workspace/play/project42"
+echo "4: dbinf"
+echo "5: dbp42"
+echo "6: pushd ~/workspace/play/project42; tail -f /tmp/brent/nodeserver-3333.log"
