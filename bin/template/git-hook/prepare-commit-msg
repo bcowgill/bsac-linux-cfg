@@ -4,7 +4,17 @@
 # And tells you how to abort the commit using VIM
 # copy this file to your repository .git/hooks/prepare-commit-msg
  
+# Prevents insertion of duplicate branch names in case of ammended commits
+if [ "$3" ]; then
+    exit;
+fi
+	 
 NAME=$(git branch | grep '*' | sed 's/* //')
+ 
+if echo "$NAME" | grep 'rebasing'; then
+   exit;
+fi
+
 MSG=`mktemp`
 perl -e "print qq{$NAME: \n# VIM use :cq to abort the commit\n}" | cat - "$1" >> "$MSG" \
 	&& git log -3 | perl -pne 'BEGIN { print "# Previous few commits:\n"; }; s{\A}{#\t}xms' >> "$MSG" \
