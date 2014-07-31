@@ -1,7 +1,12 @@
 #!/bin/bash
 
+# only run some things as needed
 DOIT=/bin/false
 DOIT=/bin/true
+
+# always run these
+RUNIT=/bin/true
+
 TEST_DIR=$HOME/workspace/projects/infinity-plus-dashboard/test
 
 if $DOIT; then
@@ -11,22 +16,35 @@ pushd ~/workspace/play/
    webserver.sh 9999 &
 popd
 
+fi # $DOIT
+
+if $RUNIT; then
+
 echo === Start up node app for project42 and an auto-build to restart it when files change and pass validation.
+
 pushd ~/workspace/play/project42/
+
    [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
    PORT=3333
    LOG=/tmp/$USER/nodeserver-$PORT.log
    [ -f $LOG ] && rm $LOG
    (echo Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
-   keep-it-up.sh npm start >> $LOG 2>&1 &
+   pushd scripts
+      keep-it-up.sh ./run-pj42.sh >> $LOG 2>&1 &
+   popd
+
 
    cd scripts
    LOG=/tmp/$USER/auto-build-project42.log
    [ -f $LOG ] && rm $LOG
    (echo Auto build in `pwd`; echo logging to $LOG) | tee $LOG
-   auto-build.sh ./build.sh .. >> $LOG 2>&1 &
+   auto-build.sh ./build-pj42.sh .. >> $LOG 2>&1 &
 
 popd
+
+fi # $DOIT
+
+if $DOIT; then
 
 echo === Start up a local webserver for openlayers
 pushd ~/workspace/play/open-layers/dist
@@ -39,7 +57,11 @@ pushd ~/workspace/play/open-layers/dist
    auto-build.sh ./build.sh >> $LOG 2>&1 &
 popd
 
-echo === Start up local webserver for test plan output
+fi # $DOIT
+
+if $DOIT; then
+
+echo === Start up local webserver for dashboard test plan output
 #DIR=$TEST_DIR/campaign_details/out
 DIR=$TEST_DIR/add_targeting_profile/out
 
@@ -50,13 +72,18 @@ popd
 
 fi # $DOIT
 
+if $RUNIT; then
+
 echo === Start up the karma runner server
+
 pushd $TEST_DIR
    LOG=/tmp/$USER/karma-dashboard-9876.log
    [ -f $LOG ] && rm $LOG
    (echo Karma test runner server in `pwd`; echo logging to $LOG) | tee $LOG
    karma start >> $LOG 2>&1 &
 popd
+
+fi # $DOIT
 
 if $DOIT; then
 
@@ -70,10 +97,9 @@ pushd ~/workspace/projects/infinity-plus-dashboard/setup
    ./start-app.sh
 popd
 
+fi # $DOIT
 
 echo You need to start Charles before the browsers!
-
-fi # $DOIT
 
 echo konsole tabs pj42:
 echo "1: pushd ~/workspace/play/project42; tail -f /tmp/brent/auto-build-project42.log"
