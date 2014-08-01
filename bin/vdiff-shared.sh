@@ -35,3 +35,16 @@ TO=$HOME/workspace/projects/infinity-plus-dashboard/test
 FILE=shell-test.sh
 diff_them $FILE $FROM $TO $REVERSE
 
+FROM=$HOME/bin
+TO=$HOME/workspace/projects/infinity-plus-dashboard/test
+FILE=ls-tt-tags.pl
+diff_them $FILE $FROM $TO $REVERSE
+FILE=render-tt.pl
+diff_them $FILE $FROM $TO $REVERSE
+
+if /bin/false; then
+FROM=$HOME/
+TO=$HOME/
+FILE=
+diff_them $FILE $FROM $TO $REVERSE
+fi

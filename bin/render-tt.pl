@@ -26,6 +26,7 @@ render-tt.pl [options] [@options-file ...] [file ...]
    --var=key=val               multiple. define a simple VARIABLE for the template
    --const=key=val             multiple. define a CONSTANT for the template
    --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
+   --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
    --absolute                  turn on the ABSOLUTE option for Template::Toolkit
    --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
    --relative                  turn on the RELATIVE option for Template::Toolkit
@@ -147,6 +148,7 @@ my %Var = (
 			'include-path' => ['.'],
 			absolute => 0,
 			relative => 0,
+			'include-path' => ['.'],
 			'constants-namespace' => 'constants',
 			anycase => 0,
 			interpolate => 1,
@@ -169,6 +171,7 @@ my %Var = (
 		raOpts => [
 			"include-path:s@",
 			"absolute!",
+			"include-path:s@",
 			"relative!",
 			"anycase!",
 			"interpolate!",

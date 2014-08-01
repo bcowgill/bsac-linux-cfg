@@ -13,6 +13,8 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
+PLAN 11
+
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
 
@@ -114,8 +116,4 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
-# clean up output directory if no failures
-if [ $TEST_FAILURES == 0 ]; then
-	rm out/* && rmdir out
-	OK "All tests complete `pwd`/out cleaned up"
-fi
+cleanUpAfterTests
