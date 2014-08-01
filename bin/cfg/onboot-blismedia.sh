@@ -33,12 +33,15 @@ pushd ~/workspace/play/project42/
       keep-it-up.sh ./run-pj42.sh >> $LOG 2>&1 &
    popd
 
+if $DOIT; then
 
    cd scripts
    LOG=/tmp/$USER/auto-build-project42.log
    [ -f $LOG ] && rm $LOG
    (echo Auto build in `pwd`; echo logging to $LOG) | tee $LOG
    auto-build.sh ./build-pj42.sh .. >> $LOG 2>&1 &
+
+fi # $DOIT
 
 popd
 
@@ -72,7 +75,7 @@ popd
 
 fi # $DOIT
 
-if $RUNIT; then
+if $DOIT; then
 
 echo === Start up the karma runner server
 
