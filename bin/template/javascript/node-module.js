@@ -1,15 +1,23 @@
+/*jshint node: true */
 /**
 	@file lib/node-module.js
-	@module node-module
 	@author Brent S.A. Cowgill
 	@version 0.0.0
 	@license {@link http://unlicense.org The Unlicense}
 
+	@requires util
+	@see {@link module:node-module}
+
+	@description
+
+	File description
+*/
+/**
+	@module node-module
+
 	@description
 
 	Node Module to DO SOMETHING USEFUL.
-
-	@requires util
 
 	@example
 
@@ -36,3 +44,4 @@ module.exports = {
 	},
 	'-': '-'
 };
+

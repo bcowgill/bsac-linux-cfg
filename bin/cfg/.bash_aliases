@@ -33,7 +33,7 @@ alias egrep='\egrep --exclude-dir=.git'
 alias gmt='git mergetool'
 alias grc='git rebase --continue'
 alias grs='git rebase --skip'
-alias gs='git status'
+alias gss='git status'
 alias gfo='git f*ck off'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
