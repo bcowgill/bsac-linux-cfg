@@ -323,6 +323,20 @@ function file_exists_from_package {
    file_exists "$file" "sudo apt-get install $package"
 }
 
+function file_is_executable {
+   local file message
+   file="$1"
+   message="$2"
+   file_exists "$file" > /dev/null && chmod +x "$file"
+   if [ -x "$file" ]; then
+      OK "file is executable: $file"
+   else
+      NOT_OK "file is missing or not executable: $file [pwd=$(pwd)] [$message]"
+      return 1
+   fi
+   return 0
+}
+
 function install_file_from {
    local file package
    file="$1"

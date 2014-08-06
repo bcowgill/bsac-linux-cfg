@@ -494,8 +494,31 @@ install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FL
 dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
 file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
 file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
-file_exists "/usr/bin/flash-player-properties" > /dev/null || (echo "NOT OK flash player settings missing, will copy them" ; sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
+file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" ; sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
 file_exists "/usr/bin/flash-player-properties"
+
+# postgres JDBC driver for creating DB schema diagrams using schemacrawler
+# http://jdbc.postgresql.org/download.html
+POSTGRES_JDBC_JAR=postgresql-9.3-1102.jdbc41.jar
+POSTGRES_JDBC_URL=http://jdbc.postgresql.org/download/$POSTGRES_JDBC_JAR
+POSTGRES_JDBC_DIR=/usr/share/java
+cmd_exists java "must have java installed for JDBC/schemacrawler"
+install_file_from_url Downloads/$POSTGRES_JDBC_JAR $POSTGRES_JDBC_JAR "$POSTGRES_JDBC_URL" "postgres JDBC jar file for using schemacrawler"
+file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it";  sudo cp "Downloads/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
+file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR
+
+# schemacrawler with postgres JDBC driver included
+SCHEMA_VER=10.10.05
+SCHEMA_POSTGRES_ZIP=schemacrawler-postgresql-$SCHEMA_VER-distrib.zip
+SCHEMA_POSTGRES_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20PostgreSQL/$SCHEMA_VER/$SCHEMA_POSTGRES_ZIP/download
+install_file_from_url_zip Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh $SCHEMA_POSTGRES_ZIP "$SCHEMA_POSTGRES_URL" "schemacrawler with postgres JDBC driver"
+file_is_executable Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh "need executable permission"
+
+# schemacrawler with mysql JDBC driver included
+SCHEMA_MYSQL_ZIP=schemacrawler-mysql-$SCHEMA_VER-distrib.zip
+SCHEMA_MYSQL_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/$SCHEMA_VER/$SCHEMA_MYSQL_ZIP/download
+install_file_from_url_zip Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh $SCHEMA_MYSQL_ZIP "$SCHEMA_MYSQL_URL" "schemacrawler with mysql JDBC driver"
+file_is_executable Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh "need executable permission"
 
 #============================================================================
 # end of main installing, now configuring
