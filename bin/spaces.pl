@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # show spaces, tab, and carriage return/linefeed characters in standard input
-# spaces.pl spacetest.txt # to test output
+# spaces.pl spacetest.txt # MUSTDO test plan to test output
 
 use strict;
 use warnings;

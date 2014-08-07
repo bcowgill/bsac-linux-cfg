@@ -1,0 +1,2 @@
+MUSTDO vdiff function to compare files in dirs dir1:dir2 file file file
+then can diff dir1 v dir2 version or reversed.
