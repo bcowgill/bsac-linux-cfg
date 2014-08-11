@@ -42,5 +42,5 @@ if [ -z $1 ]; then
    exit 1
 fi
 echo regex: "\A $1 \b"
-LOOKUP=$1 perl -ne '$squote="\x27"; next if m{[\-$squote\(]}xms; print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
+LOOKUP=$1 perl -ne '$squote="\x27"; tr[é][e]; next if m{[\-$squote\(]}xms; print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
 
