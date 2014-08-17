@@ -5,7 +5,8 @@ WATCHDIR=..
 WAIT=6
 TIMES=50
 LOOPS=0
-IGNORE='\.swp|\.kate-swp|/\.git/'
+IGNORE='\.swp|\.kate-swp|/\.git/|/node_modules/'
+DEBUG=1
 
 if [ -z "$1" ]; then
    echo Usage: $0 build-command [watch-dir]
@@ -20,6 +21,15 @@ echo BUILD=$BUILD
 echo WATCHDIR="$WATCHDIR"
 echo TOUCH=$TOUCH
 echo IGNORE="$IGNORE"
+
+function debug
+{
+   local message
+   message=$1
+   if [ ${DEBUG:-0} == 1 ]; then
+      echo $message
+   fi
+}
 
 while  [ /bin/true ]
 do
@@ -41,6 +51,7 @@ do
    fi
    if [ $BUILDIT == 1 ]; then
       $BUILD
+      debug "build finished, touch timestamp and sleep..."
       touch $TOUCH
       LOOPS=0
    fi
