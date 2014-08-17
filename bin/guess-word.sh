@@ -1,6 +1,7 @@
 #!/bin/bash
+# guess-word.sh
 if [ "$WORD" == "" ] ; then
-	echo usage: 
+	echo usage:
 	echo "# export G= guessed letters"
 	echo "# L= non-guessed letters"
 	echo "# C= non-guessed consonants only"
@@ -26,6 +27,7 @@ else
     # remove guessed letters and show a histogram of frequency for possible letters
     grep -v regex $TEMP_FILE | grep -v '-' | grep -v '(' | grep -v "'" | uniq | perl -pne 's{[$ENV{G}]}{}g;s{([a-z])}{$1\n}g' | sort | perl -pne 's{\n}{}g'
 
+	rm $TEMP_FILE
 fi
 
 
