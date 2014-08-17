@@ -5,7 +5,7 @@
 WORDS=`which lookup-english.sh`
 WORDS=`dirname $WORDS`
 WORDS="$WORDS/english"
-WORDLISTS="$WORDS/english-words.txt $WORDS/english-open-word-list.txt $WORDS/american-english.txt $WORDS/british-english.txt"
+WORDLISTS="$WORDS/english-words.txt $WORDS/english-open-word-list.txt $WORDS/american-english.txt $WORDS/british-english.txt $WORDS/custom-words.txt"
 [ -d $WORDS ] || mkdir -p $WORDS
 
 if [ ! -f $WORDS/english-words.txt ]; then
