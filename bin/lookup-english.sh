@@ -37,8 +37,8 @@ fi
 
 if [ -z $1 ]; then
    echo Usage example: match .el..es omitting letters already guessed
-   echo "R='[^delnrst]'; lookup-english.sh \${R}el\${R}\${R}es"
-   echo "V='aeiou'; export G='delnrst'; R=\"[^\$G]\"; C=\"[^\$V\$G]\"; WORD=\${R}el\${C}\${C}s; lookup-english.sh \$WORD"
+   echo "L='[^delnrst]'; lookup-english.sh \${L}el\${L}\${L}es"
+   echo "V='aeiou'; export G='bdenr'; L=\"[^\$G]\"; C=\"[^\$V\$G]\"; WORD=be\${L}\${L}e\${C}; lookup-english.sh \$WORD"
    exit 1
 fi
 echo regex: "\A $1 \b"
