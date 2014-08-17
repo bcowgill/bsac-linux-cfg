@@ -100,14 +100,14 @@ alias perltidy-work='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc-blismedia ~/.
 alias findtt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; export LS_TT_TAGS_ECHO=1; find . -name *.tt -exec ls-tt-tags.pl {} \; ; export LS_TT_TAGS_ECHO=$HOLD_ECHO)'
 alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export LS_TT_TAGS_ECHO=0; export LS_TT_TAGS_INLINE=1; find . -name *.tt -exec ls-tt-tags.pl {} \; | sort | uniq ; export LS_TT_TAGS_ECHO=$HOLD_ECHO; export LS_TT_TAGS_INLINE=$HOLD_INLINE)'
 
-# Blismedia database aliases
-# add for output to CSV format: -F ',' --no-align
-alias dbinf='mysql -u root -p -D infinity_dashboard'
-alias dbp42davide='psql -h pg-project42 geodata postgres'
-alias dbp42='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser -F "," --no-align'
+if [ `hostname` == WYATT  ]; then
+   # home machine cygwin clear screen command missing
+   alias cls='perl -e "print qq{\n} x 80"'
+   alias clear='perl -e "print qq{\n} x 80"'
+fi
 
 if [ `hostname` == blismedia  ]; then
-   #echo modifying aliases for host bcowgill-dt
+   #echo modifying aliases for host blismedia
    # = --compact-tree not present. use -ga mode instead
    # -T = --ascii-tree
    # -gc = --center-tree
@@ -122,6 +122,13 @@ if [ `hostname` == blismedia  ]; then
    alias wcdls='wcd -z50 -od'
    alias wcdscan='wcd -z50 -s &'
    alias wcdv='wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+
+   # Blismedia database aliases
+   # add for output to CSV format: -F ',' --no-align
+   alias dbinf='mysql -u root -p -D infinity_dashboard'
+   alias dbp42davide='psql -h pg-project42 geodata postgres'
+   alias dbp42='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser -F "," --no-align'
+
 fi
 
 ############################################################################
