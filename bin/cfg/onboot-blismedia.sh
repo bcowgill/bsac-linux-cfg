@@ -33,7 +33,7 @@ pushd ~/workspace/play/project42/
       keep-it-up.sh ./run-pj42.sh >> $LOG 2>&1 &
    popd
 
-if $DOIT; then
+if $RUNIT; then
 
    cd scripts
    LOG=/tmp/$USER/auto-build-project42.log

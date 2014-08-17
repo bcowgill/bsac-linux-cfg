@@ -1,14 +1,18 @@
 "TODO config - show whitespace chars
 "TODO bs/cursor does not wrap past left/right
+"HELP :r! cat  -- use to paste text without auto indent
+"HELP :dig     -- shows how to type special characters
+"HELP :set list -- turn on display of whitespace chars set list! to turn off
+"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
+" Maintainer:
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version: 
+" Version:
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post: 
+" Blog_post:
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -21,7 +25,7 @@
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version: 
+" Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
@@ -85,9 +89,12 @@ set cmdheight=2
 " A buffer becomes hidden when it is abandoned
 set hid
 
-" Configure backspace so it acts as it should act
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
+" Configure backspace so it doesn't wrap to previous line
+set backspace=start,indent
+" BSAC set backspace=eol,start,indent
+" Configure onlly h,l keys allowed to move off current line arrow keys stop at first column and last column.
+set whichwrap+=h,l
+" BSAC set whichwrap+=<,>,h,l
 
 " Ignore case when searching
 set ignorecase
@@ -174,6 +181,20 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+"BSAC Added Highlight extra whitespaces
+"http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+"BSAC Show trailing whitepace and spaces before a tab:
+autocmd Syntax * syn match ExtraWhitespace /\s\+$\| \+\ze\t/
+
+"BSAC use set list to turn on special markers for whitespace set list! to turn off
+" :help listchars for explanation
+set list listchars=tab:»·,trail:·,eol:¶,nbsp:«,precedes:«,extends:»
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -323,7 +344,6 @@ map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -335,8 +355,6 @@ map <leader>q :e ~/buffer<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -397,4 +415,19 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+
+"BSAC added function
+" http://stackoverflow.com/questions/2035799/pressing-home-in-vim-on-an-indented-line
+" from Chronial
+" Here’s what I have in my .vimrc. This maps Home to move to the beginning of the text if you are anywhere in the line, and column 0 if you are at the beginning of the text.
+function ExtendedHome()
+    let column = col('.')
+    normal! ^
+    if column == col('.')
+        normal! 0
+    endif
+endfunction
+noremap <silent> <Home> :call ExtendedHome()<CR>
+inoremap <silent> <Home> <C-O>:call ExtendedHome()<CR>
 
