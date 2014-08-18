@@ -102,9 +102,9 @@ alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export
 
 if [ `hostname` == WYATT  ]; then
    # home machine cygwin clear screen command missing
-   alias cls='perl -e "print qq{\n} x 80"'
    alias clear='perl -e "print qq{\n} x 80"'
 fi
+alias cls=clear
 
 if [ `hostname` == blismedia  ]; then
    #echo modifying aliases for host blismedia
