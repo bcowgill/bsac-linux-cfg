@@ -2,23 +2,26 @@
 
 # only run some things as needed
 DOIT=/bin/false
-DOIT=/bin/true
+#DOIT=/bin/true
+
+PJ42=/bin/false
+DASH=/bin/true
 
 # always run these
 RUNIT=/bin/true
 
 TEST_DIR=$HOME/workspace/projects/infinity-plus-dashboard/test
 
-if $DOIT; then
+if $RUNIT; then
 
 echo === Start up a local webserver for the play/ area
 pushd ~/workspace/play/
    webserver.sh 9999 &
 popd
 
-fi # $DOIT
+fi # $RUNIT
 
-if $RUNIT; then
+if $PJ42; then
 
 echo === Start up node app for project42 and an auto-build to restart it when files change and pass validation.
 
@@ -41,11 +44,11 @@ if $RUNIT; then
    (echo Auto build in `pwd`; echo logging to $LOG) | tee $LOG
    auto-build.sh ./build-pj42.sh .. >> $LOG 2>&1 &
 
-fi # $DOIT
+fi # $RUNIT
 
 popd
 
-fi # $DOIT
+fi # $PJ42
 
 if $DOIT; then
 
@@ -62,7 +65,7 @@ popd
 
 fi # $DOIT
 
-if $DOIT; then
+if $DASH; then
 
 echo === Start up local webserver for dashboard test plan output
 #DIR=$TEST_DIR/campaign_details/out
@@ -73,9 +76,9 @@ pushd $DIR
    webserver.sh 8888 &
 popd
 
-fi # $DOIT
+fi # $DASH
 
-if $DOIT; then
+if $DASH; then
 
 echo === Start up the karma runner server
 
@@ -86,9 +89,9 @@ pushd $TEST_DIR
    karma start >> $LOG 2>&1 &
 popd
 
-fi # $DOIT
+fi # $DASH
 
-if $DOIT; then
+if $DASH; then
 
 echo === Start up auto build for infinity plus dashboard
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
@@ -100,7 +103,7 @@ pushd ~/workspace/projects/infinity-plus-dashboard/setup
    ./start-app.sh
 popd
 
-fi # $DOIT
+fi # $DASH
 
 echo You need to start Charles before the browsers!
 
@@ -111,3 +114,6 @@ echo "3: pushd ~/workspace/play/project42"
 echo "4: dbinf"
 echo "5: dbp42"
 echo "6: pushd ~/workspace/play/project42; tail -f /tmp/brent/nodeserver-3333.log"
+
+echo konsole tabs dash:
+
