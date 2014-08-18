@@ -107,6 +107,7 @@ fi # $DASH
 
 echo You need to start Charles before the browsers!
 
+if $PJ42; then
 echo konsole tabs pj42:
 echo "1: pushd ~/workspace/play/project42; tail -f /tmp/brent/auto-build-project42.log"
 echo "2: sudo -i"
@@ -114,6 +115,14 @@ echo "3: pushd ~/workspace/play/project42"
 echo "4: dbinf"
 echo "5: dbp42"
 echo "6: pushd ~/workspace/play/project42; tail -f /tmp/brent/nodeserver-3333.log"
+fi
 
+if $DASH; then
 echo konsole tabs dash:
+echo "1: pushd ~/workspace/projects/infinity-plus-dashboard/; tail -f /tmp/brent/auto-build-dashboard.log"
+echo "2: sudo -i"
+echo "3: pushd ~/workspace/projects/infinity-plus-dashboard/"
+echo "4: dbinf"
+echo "5: dbp42"
+fi
 
