@@ -1,6 +1,6 @@
 #!/bin/bash
 # get a remote branch from git
-branch="$1"
+branch=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
 if [ -z $branch ]; then
    git branch --remote
    echo Specify a branch name minus the origin i.e. ENG-2353
