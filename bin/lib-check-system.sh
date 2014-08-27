@@ -114,6 +114,14 @@ function push_dir {
    fi
 }
 
+# Pop a directory off the stack (can debug the trail)
+function pop_dir {
+   echo DEBUG pushpop
+   echo DEBUG about to popd dir stack:
+   dirs
+   popd
+}
+
 function make_dir_exist {
    local dir message
    dir="$1"
@@ -362,7 +370,7 @@ function install_file_from_url_zip {
    package="$2"
    url="$3"
    message="$4"
-   install_file_from_url "$file" "$package" "$url" > /dev/null || (pushd "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && popd)
+   install_file_from_url "$file" "$package" "$url" > /dev/null || (push_dir "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && pop_dir)
    file_exists "$file" "$message"
 }
 
@@ -374,7 +382,7 @@ function install_file_from_url_zip_subdir {
    subdir="$3"
    url="$4"
    message="$5"
-   install_file_from_url "$file" "$package" "$url" > /dev/null || (pushd "$HOME/Downloads/" && mkdir -p   "$subdir" && cd "$subdir" && extract_archive "$HOME/Downloads/$package" && popd)
+   install_file_from_url "$file" "$package" "$url" > /dev/null || (push_dir "$HOME/Downloads/" && mkdir -p   "$subdir" && cd "$subdir" && extract_archive "$HOME/Downloads/$package" && pop_dir)
    file_exists "$file" "$message"
 }
 
@@ -385,7 +393,7 @@ function install_file_from_zip {
    package="$2"
    message="$3"
    file_exists "$HOME/Downloads/$package" "$message"
-   file_exists "$file" "$message" > /dev/null || (pushd "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && popd)
+   file_exists "$file" "$message" > /dev/null || (push_dir "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && pop_dir)
    file_exists "$file" "$message"
 }
 
@@ -423,7 +431,7 @@ function install_git_repo {
    url="$3"
    message="$4"
    dir_exists "$dir" "$message"
-   dir_exists "$dir/$subdir" > /dev/null || (echo "NOT OK get git repo $mesasge from $url"; pushd "$dir" && git clone "$url" "$subdir"; popd)
+   dir_exists "$dir/$subdir" > /dev/null || (echo "NOT OK get git repo $mesasge from $url"; push_dir "$dir" && git clone "$url" "$subdir"; pop_dir)
    dir_exists "$dir/$subdir" "$message"
 }
 
@@ -440,13 +448,13 @@ function install_git_repo_branch {
       return 0
    else
       NOT_OK "will get git repo \"$message\" branch \"$branch\" from \"$url\""
-      pushd "$dir" > /dev/null
+      push_dir "$dir"
       if [ ! -d "$subdir" ]; then
          git clone "$url" "$subdir"
       fi
       dir_exists "$subdir" "$message"
       cd "$subdir" && git checkout --track $branch
-      popd > /dev/null
+      pop_dir
       check_git_repo_branch "$dir/$subdir" "$branch" "$message"
    fi
 }
@@ -459,22 +467,22 @@ function check_git_repo_branch {
    message="$3"
    error=0
    dir_exists "$dir" "$message"
-   pushd "$dir" > /dev/null
+   push_dir "$dir"
       if git branch | grep '*' | grep "$branch"; then
          # TODO could be only a substring match of the branch
          OK "git repo "$dir" is on branch \"$branch\""
       else
          branch=`perl -e '$ARGV[0] =~ s{\A origin/}{}xms; print $ARGV[0]' "$branch"`
-	 if git branch | grep '*' | grep "$branch"; then
-	    # TODO could be only a substring match of the branch
-	    OK "git repo "$dir" is on branch \"$branch\""
-	 else
+      if git branch | grep '*' | grep "$branch"; then
+         # TODO could be only a substring match of the branch
+         OK "git repo "$dir" is on branch \"$branch\""
+      else
             git branch
             NOT_OK "git repo \"$dir\" is not on branch \"$branch\""
             error=1
          fi
       fi
-   popd > /dev/null
+      pop_dir
    return $error
 }
 
@@ -1022,7 +1030,7 @@ function build_perl_project {
    local dir error
    dir="$1"
    error=1
-   pushd "$dir" > /dev/null
+   push_dir "$dir"
    echo build perl project in dir `pwd`
    touch before_build.timestamp
    if [ -f Build.PL ]; then
@@ -1035,7 +1043,7 @@ function build_perl_project {
       fi
    fi
    find . -newer before_build.timestamp
-   popd > /dev/null
+   pop_dir
    if [ $error == 1 ]; then
       NOT_OK "errors for build_perl_project $dir"
    fi
@@ -1047,7 +1055,7 @@ function build_perl_project_no_tests {
    local dir error
    dir="$1"
    error=1
-   pushd "$dir" > /dev/null
+   push_dir "$dir"
    echo Build perl project in dir `pwd`
    touch before_build.timestamp
    echo WARNING: build will skip test phase, may install with failing tests.
@@ -1061,7 +1069,7 @@ function build_perl_project_no_tests {
       fi
    fi
    find . -newer before_build.timestamp
-   popd > /dev/null
+   pop_dir
    if [ $error == 1 ]; then
       NOT_OK "errors for build_perl_project_no_tests $dir"
    fi
