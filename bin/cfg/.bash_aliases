@@ -106,8 +106,8 @@ if [ `hostname` == WYATT  ]; then
 fi
 alias cls=clear
 
-if [ `hostname` == blismedia  ]; then
-   #echo modifying aliases for host blismedia
+if [ `hostname` == slug  ]; then
+   #echo modifying aliases for host at blismedia
    # = --compact-tree not present. use -ga mode instead
    # -T = --ascii-tree
    # -gc = --center-tree
