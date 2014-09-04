@@ -1,3 +1,3 @@
 #!/bin/bash
 # grep through code for some stuff
-egrep -rl "$1" . | egrep -v '/\.svn/|\.git/|/docs/|\.(pdf|class)$'
+egrep -rli "$1" . | egrep -v '/\.svn/|\.git/|/docs/|/test/(base|out)/\.(pdf|class)$'
