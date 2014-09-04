@@ -6,13 +6,14 @@ DOIT=/bin/false
 
 PJ42=/bin/false
 DASH=/bin/true
+KARMA=/bin/true
 
 # always run these
 RUNIT=/bin/true
 
 TEST_DIR=$HOME/workspace/projects/infinity-plus-dashboard/test
 
-if $RUNIT; then
+if $DOIT; then
 
 echo === Start up a local webserver for the play/ area
 pushd ~/workspace/play/
@@ -67,7 +68,10 @@ fi # $DOIT
 
 if $DASH; then
 
+if $DOIT; then
+
 echo === Start up local webserver for dashboard test plan output
+
 #DIR=$TEST_DIR/campaign_details/out
 DIR=$TEST_DIR/add_targeting_profile/out
 
@@ -76,9 +80,9 @@ pushd $DIR
    webserver.sh 8888 &
 popd
 
-fi # $DASH
+fi # $DOIT
 
-if $DASH; then
+if $KARMA; then
 
 echo === Start up the karma runner server
 
@@ -89,9 +93,9 @@ pushd $TEST_DIR
    karma start >> $LOG 2>&1 &
 popd
 
-fi # $DASH
+fi # $KARMA
 
-if $DASH; then
+if $DOIT; then
 
 echo === Start up auto build for infinity plus dashboard
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
@@ -102,6 +106,8 @@ pushd ~/workspace/projects/infinity-plus-dashboard/setup
    echo === Start up infinity plus dashboard dev instance
    ./start-app.sh
 popd
+
+fi # $DOIT
 
 fi # $DASH
 
