@@ -350,7 +350,27 @@ function install_file_from {
    file="$1"
    package="$2"
    file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
-   file_exists "$file"
+   file_exists "$file" "use dpkg -L $package to get list of files installed by package"
+}
+
+# Install files from specific packages specified as input list with : separation
+# file1:pkg1 file2:pkg2 ...
+function install_files_from {
+   local list message options file_pkg file package error
+   list="$1"
+   message="$2"
+   options="$3"
+   error=0
+   for file_pkg in $list
+   do
+      # split the file:pkg string into vars
+      IFS=: read file package <<< $file_pkg
+      install_file_from $file $package $options || error=1
+   done
+   if [ $error == 1 ]; then
+      NOT_OK "errors for install_files_from $list"
+   fi
+   return $error
 }
 
 function install_file_from_url {
@@ -579,7 +599,7 @@ function install_commands {
 }
 
 # Install commands from specific package specified as input list with : separation
-# cmd1:pkg2 cmd2:pkg2 ...
+# cmd1:pkg1 cmd2:pkg2 ...
 function install_commands_from {
    local list message options cmd_pkg cmd package error
    list="$1"
@@ -614,7 +634,7 @@ function force_install_command_from {
 }
 
 # Force install commands from specific package specified as input list with : separation
-# cmd1:pkg2 cmd2:pkg2 ...
+# cmd1:pkg1 cmd2:pkg2 ...
 function force_install_commands_from {
    local list message options cmd_pkg cmd package error
    list="$1"

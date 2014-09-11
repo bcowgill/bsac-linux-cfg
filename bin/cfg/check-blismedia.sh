@@ -33,11 +33,19 @@ POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin
 POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM"
+# BlisMedia Druid reporting requirements
+DRUID_INSTALL_FROM="apache2"
+DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
+DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
+
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
-PERL_MODULES="Getopt::ArgvFile"
+# Packages to install specific files
+INSTALL_FILE_PACKAGES="$DRUID_PACKAGES"
+
+PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_VER="v0.10.25"
@@ -393,6 +401,7 @@ install_commands_from "$INSTALL_FROM"
 install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
 install_perl_modules "$PERL_MODULES"
+install_files_from "$INSTALL_FILE_PACKAGES"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
