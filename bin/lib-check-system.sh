@@ -21,6 +21,12 @@ TEST_CASES=0
 PASS="OK"
 FAIL="NOT OK"
 
+# Default is to let NOT_OK continue sometimes you want an end to the script
+# on the first unhandled NOT_OK.
+# so  NOT_OK "something" || echo " "   will suppress ending the script
+# if you still need to handle a NOT_OK to prevent script ending.
+STOP_ON_FAIL=0
+
 # When running under the prove command, lower case our output
 if [ ${HARNESS_ACTIVE:-0} == 1 ]; then
    # TAP expects lower case
@@ -53,6 +59,10 @@ function NOT_OK {
    message="$1"
    TEST_CASES=$(( $TEST_CASES + 1 ))
    echo "$FAIL $TEST_CASES $message"
+   if [ $STOP_ON_FAIL == 1 ]; then
+      return 1
+   fi
+   return 0
 }
 
 #============================================================================
@@ -61,8 +71,7 @@ function NOT_OK {
 function pause {
    local message input
    message="$1"
-   NOT_OK "PAUSE $message press ENTER to continue."
-   read input
+   NOT_OK "PAUSE $message press ENTER to continue." || read input
 }
 
 function stop {
@@ -116,8 +125,8 @@ function push_dir {
 
 # Pop a directory off the stack (can debug the trail)
 function pop_dir {
-   echo DEBUG pushpop
-   echo DEBUG about to popd dir stack:
+   #echo DEBUG pushpop
+   #echo DEBUG about to popd dir stack:
    dirs
    popd
 }
@@ -313,8 +322,7 @@ function dir_linked_to {
          fi
       fi
    else
-      NOT_OK "symlink $name missing will try to create"
-      echo ln -s "$target" "$name"
+      NOT_OK "symlink $name missing will try to create" || echo ln -s "$target" "$name"
       if [ -z "$root" ]; then
          ln -s "$target" "$name"
       else
@@ -467,7 +475,7 @@ function install_git_repo_branch {
    if check_git_repo_branch "$dir/$subdir" "$branch" "$message"; then
       return 0
    else
-      NOT_OK "will get git repo \"$message\" branch \"$branch\" from \"$url\""
+      NOT_OK "will get git repo \"$message\" branch \"$branch\" from \"$url\"" || echo " "
       push_dir "$dir"
       if [ ! -d "$subdir" ]; then
          git clone "$url" "$subdir"
@@ -741,10 +749,11 @@ function http_request_show {
    if wget --output-document=- "$url" ; then
       OK "got response to $url"
    else
-      NOT_OK "no response from $url [$message]"
+      NOT_OK "no response from $url [$message]" || echo " "
       if [ ! -z "$log" ]; then
          cat "$log"
       fi
+      return 1
    fi
 }
 
@@ -1143,8 +1152,7 @@ function file_has_text {
    if grep "$text" "$file" > /dev/null; then
       OK "file has text: \"$file\" \"$text\""
    else
-      NOT_OK "file missing text: \"$file\" \"$text\" [$message]"
-      echo grep \""$text"\" \""$file"\"
+      NOT_OK "file missing text: \"$file\" \"$text\" [$message]" || echo grep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -1160,8 +1168,7 @@ function file_contains_text {
    if egrep "$text" "$file" > /dev/null; then
       OK "file contains regex: \"$file\" \"$text\""
    else
-      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]"
-      echo egrep \""$text"\" \""$file"\"
+      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]" || echo egrep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -1213,8 +1220,7 @@ function crontab_has_command {
    if crontab -l | grep "$command"; then
       OK "crontab has command $command"
    else
-      NOT_OK "crontab missing command $oommand trying to install [$message]"
-      (crontab -l; echo "$config" ) | crontab -
+      NOT_OK "crontab missing command $command trying to install [$message]" || (crontab -l; echo "$config" ) | crontab -
       return 1
    fi
    return 0
@@ -1245,7 +1251,7 @@ function apt_has_key {
    if sudo apt-key list | grep "$key"; then
       OK "apt-key has $key"
    else
-      NOT_OK "apt-key missing $key trying to install [$message]"
+      NOT_OK "apt-key missing $key trying to install [$message]" || echo " "
       wget -q "$url" -O- | sudo apt-key add -
       if sudo apt-key list | grep "$key"; then
          OK "apt-key installed $key"
@@ -1301,8 +1307,7 @@ function mysql_make_database_exist {
    if mysql_check_for_database $database $user $password > /dev/null; then
       OK "$database exists on mysql localhost"
    else
-      NOT_OK "$database does not exist on mysql localhost will try to create with user $user"
-      mysql -u $user -p$password -e "CREATE DATABASE $database"
+      NOT_OK "$database does not exist on mysql localhost will try to create with user $user" || mysql -u $user -p$password -e "CREATE DATABASE $database"
       mysql_check_for_database $database $user $password || return 1
    fi
    return 0
@@ -1317,9 +1322,8 @@ function mysql_make_test_user_exist_on_database {
    if mysql -u $user -p$password -e 'SHOW GRANTS;' | grep $user; then
       OK "$user exists with grants"
    else
-      NOT_OK "$user not configured. Will set it up with $superuser mysql account"
       # drop and recreate user with no errors
-      mysql -u $superuser -D mysql -p$password <<SQL
+      NOT_OK "$user not configured. Will set it up with $superuser mysql account" || mysql -u $superuser -D mysql -p$password <<SQL
       GRANT USAGE ON *.* TO '$user'@'localhost';
       DROP USER '$user'@'localhost';
       CREATE USER '$user'@'localhost' IDENTIFIED BY '$password';
