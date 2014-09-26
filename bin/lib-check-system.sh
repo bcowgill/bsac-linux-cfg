@@ -1140,6 +1140,58 @@ function build_perl_projects_no_tests {
 }
 
 #============================================================================
+# ruby related setup
+
+# Check that a ruby gem module is available
+function ruby_gem_exists {
+   local gem message
+   gem="$1"
+   message="$2"
+   if gem list --local | grep "^$gem (" > /dev/null; then
+      OK "ruby gem $gem is installed"
+   else
+      NOT_OK "ruby gem $gem is not installed [$message]"
+      return 1
+   fi
+   return 0
+}
+
+# Check that a bunch of ruby gems are available
+function ruby_gems_exist {
+   local gems error
+   gems="$1"
+   error=0
+   for gem in $gems
+   do
+      ruby_gem_exists "$gem" "sudo gem install $gem" || error=1
+   done
+   if [ $error == 1 ]; then
+      NOT_OK "errors for ruby_gems_exist $gems"
+   fi
+   return $error
+}
+
+# Install as many ruby gems as possible
+function install_ruby_gems {
+   local gems error
+   gems="$1"
+   error=0
+
+   for mod in $gems
+   do
+      if [ ! -z "$mod" ]; then
+##         ruby_gem_exists $mod > /dev/null || (echo want to install ruby gem $mod ; sudo cpanp install "$mod")
+         ruby_gem_exists $mod > /dev/null || (echo want to install ruby gem $mod ; sudo gem install "$mod")
+         ruby_gem_exists $mod || error=1
+      fi
+   done
+   if [ $error == 1 ]; then
+      NOT_OK "errors for install_ruby_gems $gems"
+   fi
+   return $error
+}
+
+#============================================================================
 # check configuration within files
 
 # exact check for text in file
