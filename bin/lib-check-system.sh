@@ -1158,7 +1158,7 @@ function ruby_gem_exists {
 
 # Check that a bunch of ruby gems are available
 function ruby_gems_exist {
-   local gems error
+   local gems error gem
    gems="$1"
    error=0
    for gem in $gems
@@ -1172,17 +1172,25 @@ function ruby_gems_exist {
 }
 
 # Install as many ruby gems as possible
+# the list of gems may contain a version number
+# gem1:ver1 gem2:ver2 ...
 function install_ruby_gems {
-   local gems error
+   local gems error gem_ver gem version
    gems="$1"
    error=0
 
-   for mod in $gems
+   for gem_ver in $gems
    do
-      if [ ! -z "$mod" ]; then
-##         ruby_gem_exists $mod > /dev/null || (echo want to install ruby gem $mod ; sudo cpanp install "$mod")
-         ruby_gem_exists $mod > /dev/null || (echo want to install ruby gem $mod ; sudo gem install "$mod")
-         ruby_gem_exists $mod || error=1
+      # split the gem:ver string into vars
+      IFS=: read gem version <<< $gem_ver
+      if [ ! -z "$gem" ]; then
+         if [ ! -z "$version" ]; then
+            # version number given
+            version="--version=$version"
+         fi
+         # maybe do a version check also
+         ruby_gem_exists $gem > /dev/null || (echo want to install ruby gem $gem ; sudo gem install "$gem" $version)
+         ruby_gem_exists $gem || error=1
       fi
    done
    if [ $error == 1 ]; then

@@ -38,7 +38,7 @@ DRUID_INSTALL_FROM="apache2"
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
-RUBY_GEMS="sass compass compass-validator foundation"
+RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
