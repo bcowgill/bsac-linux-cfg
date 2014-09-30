@@ -71,7 +71,7 @@ function NOT_OK {
 function pause {
    local message input
    message="$1"
-   NOT_OK "PAUSE $message press ENTER to continue." || read input
+   NOT_OK "PAUSE $message press ENTER to continue." && read input
 }
 
 function stop {
@@ -357,7 +357,7 @@ function install_file_from {
    local file package
    file="$1"
    package="$2"
-   file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
+   file_exists "$file" > /dev/null || (echo want to install file $file from $package; sudo apt-get install "$package")
    file_exists "$file" "use dpkg -L $package to get list of files installed by package"
 }
 
@@ -573,7 +573,7 @@ function install_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get $options install "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install command $command from $package; sudo apt-get $options install "$package")
    cmd_exists "$command" || return 1
 }
 
@@ -584,7 +584,7 @@ function install_command_from_packages {
    command="$1"
    packages="$2"
    options="$3"
-   cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get $options install $packages)
+   cmd_exists "$command" > /dev/null || (echo want to install command $command from $packages; sudo apt-get $options install $packages)
    cmd_exists "$command" || return 1
 }
 
@@ -596,7 +596,7 @@ function install_commands {
    for cmd in $commands
    do
       if [ ! -z "$cmd" ]; then
-         cmd_exists $cmd > /dev/null || (echo want to install $cmd ; sudo apt-get install "$cmd")
+         cmd_exists $cmd > /dev/null || (echo want to install command $cmd ; sudo apt-get install "$cmd")
          cmd_exists $cmd || error=1
       fi
    done
@@ -768,7 +768,7 @@ function install_npm_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install npm command $command from npm $package; sudo npm install "$package")
    cmd_exists "$command" || return 1
 }
 
@@ -797,7 +797,7 @@ function install_npm_global_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install global $command from npm $package; sudo npm install -g "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install npm global command $command from npm $package; sudo npm install -g "$package")
    cmd_exists "$command"
 }
 
@@ -1189,7 +1189,7 @@ function install_ruby_gems {
             version="--version=$version"
          fi
          # maybe do a version check also
-         ruby_gem_exists $gem > /dev/null || (echo want to install ruby gem $gem ; sudo gem install "$gem" $version)
+         ruby_gem_exists $gem > /dev/null || (echo want to install ruby gem $gem_ver ; sudo gem install "$gem" $version)
          ruby_gem_exists $gem || error=1
       fi
    done
