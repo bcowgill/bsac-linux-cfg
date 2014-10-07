@@ -39,6 +39,7 @@ alias gfo='git f*ck off'
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
 alias gitdiff='git difftool --no-prompt'
+alias gitdiffns='git difftool --no-prompt --ignore-all-space'
 if which sgdm.exe >> /dev/null; then
    alias vdiff='sgdm.exe'
 else
@@ -122,6 +123,8 @@ if [ `hostname` == slug  ]; then
    alias wcdls='wcd -z50 -od'
    alias wcdscan='wcd -z50 -s &'
    alias wcdv='wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+
+   alias gitdiffns='git difftool --no-prompt --ignore-all-space --ignore-blank-lines'
 
    # Blismedia database aliases
    # add for output to CSV format: -F ',' --no-align
