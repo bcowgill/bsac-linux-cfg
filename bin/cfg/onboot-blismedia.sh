@@ -2,7 +2,7 @@
 
 # only run some things as needed
 DOIT=/bin/false
-#DOIT=/bin/true
+DOIT=/bin/true
 
 PJ42=/bin/false
 DASH=/bin/true

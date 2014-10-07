@@ -21,6 +21,12 @@ TEST_CASES=0
 PASS="OK"
 FAIL="NOT OK"
 
+# Default is to let NOT_OK continue sometimes you want an end to the script
+# on the first unhandled NOT_OK.
+# so  NOT_OK "something" || echo " "   will suppress ending the script
+# if you still need to handle a NOT_OK to prevent script ending.
+STOP_ON_FAIL=0
+
 # When running under the prove command, lower case our output
 if [ ${HARNESS_ACTIVE:-0} == 1 ]; then
    # TAP expects lower case
@@ -53,6 +59,10 @@ function NOT_OK {
    message="$1"
    TEST_CASES=$(( $TEST_CASES + 1 ))
    echo "$FAIL $TEST_CASES $message"
+   if [ $STOP_ON_FAIL == 1 ]; then
+      return 1
+   fi
+   return 0
 }
 
 #============================================================================
@@ -61,8 +71,7 @@ function NOT_OK {
 function pause {
    local message input
    message="$1"
-   NOT_OK "PAUSE $message press ENTER to continue."
-   read input
+   NOT_OK "PAUSE $message press ENTER to continue." && read input
 }
 
 function stop {
@@ -116,8 +125,8 @@ function push_dir {
 
 # Pop a directory off the stack (can debug the trail)
 function pop_dir {
-   echo DEBUG pushpop
-   echo DEBUG about to popd dir stack:
+   #echo DEBUG pushpop
+   #echo DEBUG about to popd dir stack:
    dirs
    popd
 }
@@ -313,8 +322,7 @@ function dir_linked_to {
          fi
       fi
    else
-      NOT_OK "symlink $name missing will try to create"
-      echo ln -s "$target" "$name"
+      NOT_OK "symlink $name missing will try to create" || echo ln -s "$target" "$name"
       if [ -z "$root" ]; then
          ln -s "$target" "$name"
       else
@@ -349,7 +357,7 @@ function install_file_from {
    local file package
    file="$1"
    package="$2"
-   file_exists "$file" > /dev/null || (echo want to install $file from $package; sudo apt-get install "$package")
+   file_exists "$file" > /dev/null || (echo want to install file $file from $package; sudo apt-get install "$package")
    file_exists "$file" "use dpkg -L $package to get list of files installed by package"
 }
 
@@ -467,7 +475,7 @@ function install_git_repo_branch {
    if check_git_repo_branch "$dir/$subdir" "$branch" "$message"; then
       return 0
    else
-      NOT_OK "will get git repo \"$message\" branch \"$branch\" from \"$url\""
+      NOT_OK "will get git repo \"$message\" branch \"$branch\" from \"$url\"" || echo " "
       push_dir "$dir"
       if [ ! -d "$subdir" ]; then
          git clone "$url" "$subdir"
@@ -565,7 +573,7 @@ function install_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install $command from $package; sudo apt-get $options install "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install command $command from $package; sudo apt-get $options install "$package")
    cmd_exists "$command" || return 1
 }
 
@@ -576,7 +584,7 @@ function install_command_from_packages {
    command="$1"
    packages="$2"
    options="$3"
-   cmd_exists "$command" > /dev/null || (echo want to install $command from $packages; sudo apt-get $options install $packages)
+   cmd_exists "$command" > /dev/null || (echo want to install command $command from $packages; sudo apt-get $options install $packages)
    cmd_exists "$command" || return 1
 }
 
@@ -588,7 +596,7 @@ function install_commands {
    for cmd in $commands
    do
       if [ ! -z "$cmd" ]; then
-         cmd_exists $cmd > /dev/null || (echo want to install $cmd ; sudo apt-get install "$cmd")
+         cmd_exists $cmd > /dev/null || (echo want to install command $cmd ; sudo apt-get install "$cmd")
          cmd_exists $cmd || error=1
       fi
    done
@@ -741,10 +749,11 @@ function http_request_show {
    if wget --output-document=- "$url" ; then
       OK "got response to $url"
    else
-      NOT_OK "no response from $url [$message]"
+      NOT_OK "no response from $url [$message]" || echo " "
       if [ ! -z "$log" ]; then
          cat "$log"
       fi
+      return 1
    fi
 }
 
@@ -759,7 +768,7 @@ function install_npm_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install $command from npm $package; sudo npm install "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install npm command $command from npm $package; sudo npm install "$package")
    cmd_exists "$command" || return 1
 }
 
@@ -788,7 +797,7 @@ function install_npm_global_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install global $command from npm $package; sudo npm install -g "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install npm global command $command from npm $package; sudo npm install -g "$package")
    cmd_exists "$command"
 }
 
@@ -1131,6 +1140,66 @@ function build_perl_projects_no_tests {
 }
 
 #============================================================================
+# ruby related setup
+
+# Check that a ruby gem module is available
+function ruby_gem_exists {
+   local gem message
+   gem="$1"
+   message="$2"
+   if gem list --local | grep "^$gem (" > /dev/null; then
+      OK "ruby gem $gem is installed"
+   else
+      NOT_OK "ruby gem $gem is not installed [$message]"
+      return 1
+   fi
+   return 0
+}
+
+# Check that a bunch of ruby gems are available
+function ruby_gems_exist {
+   local gems error gem
+   gems="$1"
+   error=0
+   for gem in $gems
+   do
+      ruby_gem_exists "$gem" "sudo gem install $gem" || error=1
+   done
+   if [ $error == 1 ]; then
+      NOT_OK "errors for ruby_gems_exist $gems"
+   fi
+   return $error
+}
+
+# Install as many ruby gems as possible
+# the list of gems may contain a version number
+# gem1:ver1 gem2:ver2 ...
+function install_ruby_gems {
+   local gems error gem_ver gem version
+   gems="$1"
+   error=0
+
+   for gem_ver in $gems
+   do
+      # split the gem:ver string into vars
+      IFS=: read gem version <<< $gem_ver
+      if [ ! -z "$gem" ]; then
+         if [ ! -z "$version" ]; then
+            # version number given
+            version="--version=$version"
+         fi
+         # maybe do a version check also
+         ruby_gem_exists $gem > /dev/null || (echo want to install ruby gem $gem_ver ; sudo gem install "$gem" $version)
+         ruby_gem_exists $gem || error=1
+      fi
+   done
+   if [ $error == 1 ]; then
+      NOT_OK "errors for install_ruby_gems $gems"
+   fi
+   return $error
+}
+
+#============================================================================
 # check configuration within files
 
 # exact check for text in file
@@ -1143,8 +1212,7 @@ function file_has_text {
    if grep "$text" "$file" > /dev/null; then
       OK "file has text: \"$file\" \"$text\""
    else
-      NOT_OK "file missing text: \"$file\" \"$text\" [$message]"
-      echo grep \""$text"\" \""$file"\"
+      NOT_OK "file missing text: \"$file\" \"$text\" [$message]" || echo grep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -1160,8 +1228,7 @@ function file_contains_text {
    if egrep "$text" "$file" > /dev/null; then
       OK "file contains regex: \"$file\" \"$text\""
    else
-      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]"
-      echo egrep \""$text"\" \""$file"\"
+      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]" || echo egrep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -1213,8 +1280,7 @@ function crontab_has_command {
    if crontab -l | grep "$command"; then
       OK "crontab has command $command"
    else
-      NOT_OK "crontab missing command $oommand trying to install [$message]"
-      (crontab -l; echo "$config" ) | crontab -
+      NOT_OK "crontab missing command $command trying to install [$message]" || (crontab -l; echo "$config" ) | crontab -
       return 1
    fi
    return 0
@@ -1245,7 +1311,7 @@ function apt_has_key {
    if sudo apt-key list | grep "$key"; then
       OK "apt-key has $key"
    else
-      NOT_OK "apt-key missing $key trying to install [$message]"
+      NOT_OK "apt-key missing $key trying to install [$message]" || echo " "
       wget -q "$url" -O- | sudo apt-key add -
       if sudo apt-key list | grep "$key"; then
          OK "apt-key installed $key"
@@ -1301,8 +1367,7 @@ function mysql_make_database_exist {
    if mysql_check_for_database $database $user $password > /dev/null; then
       OK "$database exists on mysql localhost"
    else
-      NOT_OK "$database does not exist on mysql localhost will try to create with user $user"
-      mysql -u $user -p$password -e "CREATE DATABASE $database"
+      NOT_OK "$database does not exist on mysql localhost will try to create with user $user" || mysql -u $user -p$password -e "CREATE DATABASE $database"
       mysql_check_for_database $database $user $password || return 1
    fi
    return 0
@@ -1317,9 +1382,8 @@ function mysql_make_test_user_exist_on_database {
    if mysql -u $user -p$password -e 'SHOW GRANTS;' | grep $user; then
       OK "$user exists with grants"
    else
-      NOT_OK "$user not configured. Will set it up with $superuser mysql account"
       # drop and recreate user with no errors
-      mysql -u $superuser -D mysql -p$password <<SQL
+      NOT_OK "$user not configured. Will set it up with $superuser mysql account" || mysql -u $superuser -D mysql -p$password <<SQL
       GRANT USAGE ON *.* TO '$user'@'localhost';
       DROP USER '$user'@'localhost';
       CREATE USER '$user'@'localhost' IDENTIFIED BY '$password';

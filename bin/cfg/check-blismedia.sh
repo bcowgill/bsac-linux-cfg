@@ -38,6 +38,9 @@ DRUID_INSTALL_FROM="apache2"
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
+RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
+SASS_COMMANDS="ruby gem sass compass foundation"
+
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
@@ -115,9 +118,9 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 INI_DIR=check-iniline
 
-INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext runit mc"
-COMMANDS="apt-file wcd.exec gettext git perl runit dot $NODE_CMD $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER"
+INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext ruby runit mc"
+COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER"
 
 source `which lib-check-system.sh`
 
@@ -401,6 +404,7 @@ install_commands_from "$INSTALL_FROM"
 install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 install_command_from_packages kslideshow.kss "$SCREENSAVER"
 install_perl_modules "$PERL_MODULES"
+install_ruby_gems "$RUBY_GEMS"
 install_files_from "$INSTALL_FILE_PACKAGES"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
