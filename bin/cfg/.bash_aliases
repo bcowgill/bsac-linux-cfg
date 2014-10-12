@@ -24,6 +24,21 @@ alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 
+if [ `hostname` == WYATT  ]; then
+   # home machine drive letters
+   alias clear='perl -e "print qq{\n} x 80"'
+   export C=/cygdrive/c
+   export D=/cygdrive/d
+   export F=/cygdrive/f
+   export K=/cygdrive/k
+   alias c:='pushd $C'
+   alias d:='pushd $D'
+   alias f:='pushd $F'
+   alias k:='pushd $K'
+
+   alias subl='"$C/Program Files/Sublime Text 2/sublime_text.exe"'
+fi
+
 # default options for some commands
 alias cdiff='colordiff'
 alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
