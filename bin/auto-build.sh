@@ -5,7 +5,7 @@ WATCHDIR=..
 WAIT=6
 TIMES=50
 LOOPS=0
-IGNORE='\.log|\.swp|\.kate-swp|/\.git/|/node_modules/'
+IGNORE='\.log|\.swp|\.yml|\.kate-swp|/\.git/|/node_modules/|/public/doc/'
 DEBUG=1
 
 if [ -z "$1" ]; then
