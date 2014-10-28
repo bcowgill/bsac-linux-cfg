@@ -40,7 +40,7 @@ find $dir \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|MUSTDO|FIXME|REFACTOR|QN|maxcomplexity|maxstatements|latedef|strict\s*:|ENG-\d+' \
+'\@todo|MUSTDO|FIXME|REFACTOR|QN|maxcomplexity|maxstatements|latedef|strict\s*:|unused\s*:|ENG-\d+' \
 {} \; \
 \)
 
