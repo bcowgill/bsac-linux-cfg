@@ -7,6 +7,7 @@ DOIT=/bin/true
 PJ42=/bin/false
 DASH=/bin/true
 KARMA=/bin/true
+KARMA=/bin/false
 
 # always run these
 RUNIT=/bin/true
