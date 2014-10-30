@@ -197,15 +197,37 @@ function remove_symlink {
    fi
 }
 
+# take ownership recursively of the given dir if it exists
+# silently ignore it if it does not exist
+function take_ownership_of {
+   local dir message MYGROUP
+
+   dir="$1"
+   message="$2"
+
+   MYGROUP=`groups | cut -f 1 -d " "`
+  
+   [[ ! -d "$dir" ]] && return 0
+
+   if sudo chown -R $USER:$MYGROUP "$dir" 
+   then 
+     OK "directory $dir is now owned by you [$message]"
+   else
+     NOT_OK "directory $dir unable to change ownership to $USER:$MYGROUP [$message]"
+     return 1
+   fi 
+   return 0
+}
+
 # check that a file is present somewhere on the system using locate
 function file_present {
    local file message
    file="$1"
    message="$2"
    if locate "$file"; then
-      OK "file "$file" is present on system [$message]"
+      OK "file $file is present on system [$message]"
    else
-      NOT_OK "file "$file" is NOT present on system [$message]"
+      NOT_OK "file $file is NOT present on system [$message]"
       return 1
    fi
    return 0
@@ -768,7 +790,7 @@ function install_npm_command_from {
    if [ -z "$package" ]; then
       package="$command"
    fi
-   cmd_exists "$command" > /dev/null || (echo want to install npm command $command from npm $package; sudo npm install "$package")
+   cmd_exists "$command" > /dev/null || (echo want to install npm command $command from npm $package; npm install "$package")
    cmd_exists "$command" || return 1
 }
 
