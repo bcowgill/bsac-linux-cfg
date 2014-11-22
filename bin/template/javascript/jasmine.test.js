@@ -53,7 +53,7 @@ describe('test/PATH/FILENAME.test.js', function() {
 
 		// Simple test suite with not very deeply nested describes.
 		describe('OBJECT.method()', function() {
-			it('Should return something ', function() {
+			it('TODO AUTHOR TO IMPLEMENT Should return something ', function() {
 				expect(false)
 					.toBeFalsy();
 			});
@@ -76,7 +76,7 @@ describe('test/PATH/FILENAME.test.js', function() {
 					expect(true).toBeTruthy();
 				});
 
-				it('Should return something ', function() {
+				it('TODO AUTHOR TO IMPLEMENT Should return something ', function() {
 					expect(false)
 						.toBeFalsy();
 				});
