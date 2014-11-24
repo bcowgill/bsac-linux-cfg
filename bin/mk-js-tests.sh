@@ -1,15 +1,19 @@
 #!/bin/bash
 # Generate stub test plan files for all javascript files using a template.
 # Not a generic script, you have to customise a few things here to work with your layout.
-find public/blis-assets/ -name '*.js' > js-objects.txt
+FILE=js-objects.txt
+#FILE=js-test.txt
+find public/blis-assets/ -name '*.js' > $FILE 
 perl -ne  '
 	BEGIN {
 		use File::Slurp;
 		our $OVERWRITE = 0;
+		our $DRYRUN = 1;
 		# for random assignment of test plans to team members
 		our @PEOPLE = qw(Brent Evgkeni Abdel);
 		# test plan template file with substitution markers
-		our $TEMPLATE = q{/home/me/workbin/template/javascript/jasmine.test.js};
+		#our $TEMPLATE = q{/home/me/workbin/template/javascript/jasmine.test.js};
+		our $TEMPLATE = q{/home/brent/workspace/play/bsac-linux-cfg/bin/template/javascript/jasmine.test.js};
 		warn qq{slurp $TEMPLATE\n};
 		$TEMPLATE = read_file($TEMPLATE);
 	}
@@ -17,7 +21,7 @@ perl -ne  '
 		my $SOURCE = $1;
 		my $PATH = $2;
 		my $FILENAME=$3;
-		my $WHERE=qq{test/$PATH};
+		my $WHERE=qq{test/$SOURCE};
 		my $PLAN=qq{$FILENAME.test.js};
 		my $FULL = qq{$WHERE/$PLAN};
 		my $OUT = qq{$FULL\n};
@@ -45,8 +49,10 @@ perl -ne  '
 			# if you can identify the js object being tested from the source code
 			$PLAN =~ s{OBJECT}{OBJECT}xmsg;
 			$PLAN =~ s{AUTHOR}{$AUTHOR}xmsg;
-			system(qq{mkdir -p $WHERE});
-			write_file($FULL, $PLAN);
+			unless ($DRYRUN) {
+				system(qq{mkdir -p $WHERE});
+				write_file($FULL, $PLAN);
+			}
 			$OUT = qq{$AUTHOR $OUT};
 		}
 		else {
@@ -54,5 +60,5 @@ perl -ne  '
 		}
 		print $OUT;
 	}xmse;
-' js-objects.txt
+' $FILE
 
