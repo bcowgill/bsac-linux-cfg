@@ -8,8 +8,19 @@ use warnings;
 use English;
 use File::Slurp;
 
-local $INPUT_RECORD_SEPARATOR = undef;
 my $DEBUG = 0;
+
+# CUSTOM CHANGES HERE
+# open and close tag to find for splitting template
+my $open = '<dd \s+ class="accordion-navigation (?:\s+ active)?">';
+my $close = '</dd>';
+
+my $views = "views";
+my $fragments = "fragments";
+my $template_file = 'targeting_profile';
+my @Parts = qw(visibility schedule country category device location demographics exchange domain);
+
+local $INPUT_RECORD_SEPARATOR = undef;
 
 # Remove a constant amount of whitespace indentation from the content
 sub unindent {
@@ -35,10 +46,7 @@ my $template = <>;
 my $sol = '[\ \t]*';  # start of line whitespace
 my $eol = '[\ \t]*\n';  # whitespace and end of line
 
-# open and close tag to find for splitting template
-my $open = '<dd \s+ class="accordion-navigation (?:\s+ active)?">';
-my $close = '</dd>';
-
+# CUSTOM CHANGES HERE
 ($template =~ m{
 	\A
 	(.+? $eol)
@@ -48,6 +56,7 @@ my $close = '</dd>';
 	(.*)
 	\z}xms);
 
+# CUSTOM CHANGES HERE
 my ($head, $body, $sliver, $script, $footer) = ($1, $2, $3, $4, $5);
 
 print join("\n", 
@@ -59,28 +68,27 @@ print join("\n",
 	"===== ") 
 	if $DEBUG;
 
-# CUSTOM CHANGES HERE
-my $template_file = 'targeting_profile';
-my @Parts = qw(visibility schedule country category device location demographics exchange domain);
 
+
+# CUSTOM CHANGES HERE
 my $new_template = join("",
 	$head,
-	(map { "[% INCLUDE fragments/${template_file}_$ARG.tt %]\n" } @Parts),
+	(map { "[% INCLUDE $fragments/${template_file}_$ARG.tt %]\n" } @Parts),
 	$sliver,
-	"[% INCLUDE fragments/${template_file}_script.tt %]\n",
+	"[% INCLUDE $fragments/${template_file}_script.tt %]\n",
 	$footer
 );
-print wrap("views/$template_file.tt", $new_template);
+print wrap("$views/$template_file.tt", $new_template);
 print "=======\n" if $DEBUG;
 
-my $file = "views/fragments/${template_file}_script.tt";
+my $file = "$views/$fragments/${template_file}_script.tt";
 print "$file:\n" . unindent($script) if $DEBUG;
 write_file($file, wrap($file, $script));
 
 my $idx = 0;
 
 $body =~ s{($sol $open .+? $close $eol )}{
-	$file = "views/fragments/${template_file}_$Parts[$idx++].tt";
+	$file = "$views/$fragments/${template_file}_$Parts[$idx++].tt";
 	write_file($file, wrap($file, $1));
 	print "=======\n$file:\n" . wrap($file, $1) if $DEBUG;
 	"";
