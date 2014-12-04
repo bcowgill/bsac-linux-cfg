@@ -35,42 +35,45 @@ my $template = <>;
 ($template =~ m{
 	\A
 	(.+?[\ \t]*\n)
-	([\ \t]*<dd \s+ class="accordion-navigation \s+ active">.+</dd>[\ \t]*\n)
-	(.+?[\ \t]*\n)
-	([\ \t]*<script>.+</script>[\ \t]*\n)
+	([\ \t]*<dd \s+ class="accordion-navigation (?:\s+ active)?">.+</dd>[\ \t]*\n)
+	(.+[\ \t]*\n)
+	([\ \t]*<!-- \s+ script \s+ -->.+</script>[\ \t]*\n)
 	(.*)
 	\z}xms);
 
 my ($head, $body, $sliver, $script, $footer) = ($1, $2, $3, $4, $5);
 
 print join("\n", 
-	"===== HEAD", $head, 
-	"===== BODY", $body, 
+	"===== HEAD", $head,
+	"===== BODY", $body,
 	"===== SLIVER", $sliver, 
 	"===== SCRIPT", $script, 
 	"===== FOOTER", $footer, 
 	"===== ") 
 	if $DEBUG;
 
-my @Parts = qw(details targeting budget retargeting);
+# CUSTOM CHANGES HERE
+my $template_file = 'targeting_profile';
+my @Parts = qw(visibility schedule country category device location demographics exchange domain);
+
 my $new_template = join("",
 	$head,
-	(map { "[% INCLUDE fragments/campaign_details_$ARG.tt %]\n" } @Parts),
+	(map { "[% INCLUDE fragments/${template_file}_$ARG.tt %]\n" } @Parts),
 	$sliver,
-	"[% INCLUDE fragments/campaign_details_script.tt %]\n",
+	"[% INCLUDE fragments/${template_file}_script.tt %]\n",
 	$footer
 );
-print wrap("views/campaign_details.tt", $new_template);
+print wrap("views/$template_file.tt", $new_template);
 print "=======\n" if $DEBUG;
 
-my $file = "views/fragments/campaign_details_script.tt";
+my $file = "views/fragments/${template_file}_script.tt";
 print "$file:\n" . unindent($script) if $DEBUG;
 write_file($file, wrap($file, $script));
 
 my $idx = 0;
 
 $body =~ s{([\ \t]*<dd \s+ class="accordion-navigation (?:\s+ active)?">.+?</dd>[\ \t]*\n)}{
-	$file = "views/fragments/campaign_details_$Parts[$idx++].tt";
+	$file = "views/fragments/${template_file}_$Parts[$idx++].tt";
 	write_file($file, wrap($file, $1));
 	print "=======\n$file:\n" . wrap($file, $1) if $DEBUG;
 	"";
