@@ -1,0 +1,530 @@
+[% IF template_test_plan -%]
+<!DOCTYPE html>
+<!-- START views/add_targeting_profile.tt -->
+<html>
+<head>
+<title>Test [% nothing -%] [%- page_title -%]</title>
+</head>
+<body>
+[% END %]
+<script>
+$(document).foundation('accordion');
+</script>
+
+
+<div id="section-add-targeting-profile">
+	<form name="creativeform"
+		action="/datasource/store/targeting_profile/single"
+		method="POST">
+
+		<input
+			name="targeting_profile_id"
+			type="hidden"
+			value="[% targeting_profile_id | html %]"
+			/>
+		<input
+			name="return_url"
+			type="hidden"
+			value="creative.html?campaign_id=[% campaign_id | html %]"
+			/>
+		[% IF current_targeting.targeting_profile.associated_campaign_id %]
+		<input
+			name="associated_campaign_id"
+			type="hidden"
+			value="[% current_targeting.targeting_profile.associated_campaign_id | html %]"
+			/>
+		[% ELSE %]
+		<input
+			name="associated_campaign_id"
+			type="hidden"
+			value="[% campaign_id | html %]"
+			/>
+		[% END %]
+		[% IF current_targeting.targeting_profile.creator_id %]
+		<input
+			name="creator_id"
+			type="hidden"
+			value="[% current_targeting.targeting_profile.creator_id | html %]"
+			/>
+		[% ELSE %]
+		<input
+			name="creator_id"
+			type="hidden"
+			value="[% dashboard_user.organisation_obj.id | html %]"
+			/>
+		[% END %]
+
+		<p><a onclick="dashboard.switchToSection('creative'); return false;" id="back">&laquo; Return to campaign creatives</a></p>
+
+		<p>[% IF targeting_profile_id %]
+			Edit / View targeting profile
+		[% ELSE %]
+			Add new targeting profile
+		[% END %]</p>
+
+		<div id="error_submit"></div>
+		<dl class="accordion" data-accordion>
+			<dd class="accordion-navigation active">
+				<a href="#panel-basic">Basic Settings</a>
+				<div id="panel-basic" class="content active">
+					<fieldset>
+						<div class="row">
+							<div class="large-4 columns">
+								<label for="name"><b>Targeting Profile name </b> <span id="name_error"></span> *</label>
+								<input id="name" name="name" type="text" value="[% current_targeting.targeting_profile.name | html %]"/>
+							</div>
+						</div> <!-- row -->
+						<div class="row">
+							<div class="large-4 columns">
+								<label><b>Targeting Profile visibility</b></label>
+								[% IF campaign_id %]
+								<input [% IF current_targeting.targeting_profile.visibility == 'campaign' %]checked="checked"[% END %] id="visibility_campaign" name="visibility" type="radio" value="campaign"/>
+								<label for="visibility_campaign">This campaign</label>
+								[% END %]
+
+								[% IF dashboard_user.organisation_obj.type == 'client' %]
+								<input [% IF current_targeting.targeting_profile.visibility == 'client' %]checked="checked"[% END %] id="visibility_client" name="visibility" type="radio" value="client"/>
+								<label for="visibility_client">[% dashboard_user.organisation_obj.name | html %]</label>
+								[% END %]
+
+								[% IF dashboard_user.organisation_obj.type == 'agency' %]
+								<input [% IF current_targeting.targeting_profile.visibility == 'client' %]checked="checked"[% END %] id="visibility_client" name="visibility" type="radio" value="client"/>
+								<label for="visibility_client">This client</label>
+
+								<input [% IF current_targeting.targeting_profile.visibility == 'agency' %]checked="checked"[% END %] id="visibility_agency" name="visibility" type="radio" value="agency"/>
+								<label for="visibility_agency">[% dashboard_user.organisation_obj.name | html %]</label>
+								[% END %]
+
+								[% IF dashboard_user.organisation_obj.type == 'superuser' %]
+								<input [% IF current_targeting.targeting_profile.visibility == 'agency' %]checked="checked"[% END %] id="visibility_agency" name="visibility" type="radio" value="agency"/>
+								<label for="visibility_agency">BlisMedia</label>
+
+								<input [% IF current_targeting.targeting_profile.visibility == 'global' %]checked="checked"[% END %] id="visibility_global" name="visibility" type="radio" value="global"/>
+								<label for="visibility_global">Global</label>
+								[% END %]
+							</div>
+						</div> <!-- row -->
+						[% IF client_selection_is_hidden_for_now %]
+						<div class="row">
+							<div class="large-6 columns">
+								<label for="name"><b>Client</b></label>
+								<select id="client_id" name="client_id">
+									<option value="0">Unassigned</option>[% FOREACH client IN clients %]
+									<option [% IF current_targeting.targeting_profile.client_id == client.id %]selected[% END %] value="[% client.id | html %]">[% client.name | html %]</option>[% END %]
+								</select>
+							</div>
+						</div> <!-- row -->
+						[% END %]
+					</fieldset>
+				</div> <!-- panel-basic -->
+			</dd>
+
+			<dd class="accordion-navigation">
+				<a href="#panel-schedule">Date and Time Targeting</a>
+				<div id="panel-schedule" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<p class="panel">
+									Scheduling lets you specify certain hours or days of the week when you want this campaign to operate.
+									<br/>
+									You can shift click to select or unselect a block of time in the schedule.
+									<br/>
+									Please note the times set below are based on
+									<strong>[% timezone | html %]</strong>
+									<!-- <a target="worldclock" href="http://www.timeanddate.com/worldclock/">World Clock</a> -->
+								</p>
+									<input [% UNLESS current_targeting.schedule.has_schedule %]checked="checked"[% END %] id="schedule_always" name="schedule_always" type="checkbox" value="1"/>
+									<label for="schedule_always">Operate this campaign on all hours and days in the week.</label>
+								<!-- Begin Schedule table -->
+								<table class="bliscreative" width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<th>Day</th>
+										<th>Midnight</th>
+										<th>4:00</th>
+										<th>8:00</th>
+										<th>Noon</th>
+										<th>16:00</th>
+										<th>20:00</th>
+									</tr>
+									<tr>
+										<td><b>Select all</b></td>
+										[% FOREACH sextile IN [0 .. 5] %]
+										<td>
+											[% FOREACH hour IN [0 .. 3] %]
+											<input id="everyDay[% (sextile * 4) + hour %]" name="everyDay[% (sextile * 4) + hour %]" onclick="selectEveryDay([% (sextile * 4) + hour %]);" type="checkbox" value="0"/>&nbsp;
+											[% END %]
+										</td>
+										[% END %]
+									</tr>
+									[% FOREACH schedule_day IN schedule_days %]
+									<tr>
+										<td id="schedule_day_[% schedule_day.code | html %]">
+											<input id="allDay_[% schedule_day.code | html %]" name="allDay_[% schedule_day.code | html %]" onclick="selectAllDay('[% schedule_day.id | html %]');" type="checkbox" value="0"/>&nbsp;
+											<label for="allDay_[% schedule_day.code | html %]">[% schedule_day.full | html %]</label>
+										</td>
+										[% FOREACH sextile IN [0 .. 5] %]
+										<td>
+											[% FOREACH hour IN [0 .. 3] %]
+											<input [% IF current_targeting.schedule.live_hours.item(schedule_day.code _ ((sextile * 4) + hour)) == 1 %]checked="checked"[% END %] id="schedule_[% schedule_day.code | html %][% (sextile * 4) + hour %]" name="schedule_[% schedule_day.code | html %][% (sextile * 4) + hour %]" onclick="clickScheduleItem('[% schedule_day.id | html %]', [% (sextile * 4) + hour %]);" type="checkbox" value="1"/>&nbsp;
+											[% END %]
+										</td>
+										[% END %]
+									</tr>
+									[% END %]
+								</table><!-- End Schedule table -->
+							</div>
+						</div> <!-- end row -->
+					</fieldset>
+				</div> <!-- panel-schedule -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-countries">Country Targeting</a>
+				<div id="panel-countries" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<div class="k-content" id="country-treeview"></div>
+							</div>
+						</div>
+					</fieldset>
+				</div> <!-- panel-countries -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-categories">Category Targeting</a>
+				<div id="panel-categories" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<p class="panel">
+									Category Targeting lets you control your ad exposure. Note - if you don't select any categories, your ad will be served across all inventory regardless of category.
+								</p>
+								<div class="k-content" id="category-treeview"></div>
+							</div>
+						</div>
+					</fieldset>
+				</div> <!-- panel-categories -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-devices">Device Targeting</a>
+				<div id="panel-devices" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<div class="k-content" id="device-treeview"></div>
+							</div>
+						</div>
+					</fieldset>
+				</div> <!-- panel-devices -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-locations">Location Targeting</a>
+				<div id="panel-locations" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<div id="locationpanel" >
+									<div id="locationgroup_controls_container" >
+										<p class="panel">Use the text box to search for a particular location group (or groups) or select items from the list. Then use the Add/Remove/Replace buttons to manipulate the location groups shown on the right.</p>
+										<div class="row">
+											<div class="large-4 columns">
+												<label>Filter Location Groups</label>
+												<input id="searchlocationgroup" name="searchlocationgroup" onkeyup="typedLocationGroup();" type="text"/>
+												<p><a class="button secondary small" onclick="resetLocationGroupsFilter();" href="javascript:void(0);">Clear Filter</a></p>
+											</div>
+										</div> <!-- end row -->
+										<div class="row">
+											<div class="large-12 columns">
+												<div id="locationgroups_selection_list"></div>
+
+												<button class="button secondary small" onclick="addLocationGroups();" type="button">Add</button>
+												<button class="button secondary small" onclick="removeLocationGroups();" type="button">Remove</button>
+												<button class="button secondary small" onclick="replaceLocationGroups();" type="button">Replace</button>
+												<button class="button secondary small" onclick="checkLocationGroupSelectionList(1);" type="button">Check All</button>
+												<button class="button secondary small" onclick="checkLocationGroupSelectionList(0);" type="button">Uncheck All</button>
+												<br/><br/>
+												<label>
+													<input style="margin-right:10px;" id="selectedlocgrpsonly_shortlist" name="selectedlocgrpsonly_shortlist" onclick="showSelectedLocGrps();" type="checkbox"/>
+													Show selected location groups only
+												</label>
+											</div>
+										</div> <!-- end row -->
+									</div> <!-- end locationgroup_controls_container -->
+									<div id="locationgroups_list_container">
+										<div id="locationgroups_list"></div>
+										<!-- End location -->
+										<h3 id="locationgroup_counter">
+											Items: XX
+										</h3>
+										<button class="button secondary small" onclick="checkLocationGroupList(0);" type="button">Uncheck All</button>
+										<button class="button secondary small" onclick="checkLocationGroupList(1);" type="button">Check All</button>
+										<br/><br/>
+										<label>
+											<input style="margin-right:10px;" checked="checked" id="showuncheckedlocationgroups" name="showuncheckedlocationgroups" onclick="toggleShowUncheckedLocationGroups();" type="checkbox"/>
+											Show unchecked items
+										</label>
+									</div> <!-- End locationgroups_list_container -->
+								</div> <!-- end locationpanel -->
+							</div>
+						</div> <!-- end row -->
+					</fieldset>
+				</div> <!-- panel-locations -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-demographics">Age and Gender Targeting</a>
+				<div id="panel-demographics" class="content">
+					<fieldset>
+						[% IF can_demo_target %]
+						<div class="row">
+							<div class="large-12 columns">
+								<div id="demopanel">
+									<div id="age_container">
+										<div class="row">
+											<div class="large-4 columns">
+												<label for="from_age"><b>Age from</b></label>
+												<input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age > 0 %][% current_targeting.from_age %][% END %]"/>
+												<input id="no_min_age" name="no_min_age" type="checkbox" value="1"/><label for="no_min_age">No min. age</label>
+											</div>
+										</div> <!-- end row -->
+										<div class="row">
+											<div class="large-4 columns">
+												<label for="to_age"><b>Age to</b></label>
+												<input id="to_age" name="to_age" type="text" value="[% IF current_targeting.to_age AND current_targeting.to_age < 150 %][% current_targeting.to_age %][% END %]"/>
+												<input id="no_max_age" name="no_max_age" type="checkbox" value="1"/><label for="no_max_age">No max. age</label>
+											</div>
+										</div> <!-- end row -->
+									</div> <!-- end agecontainer -->
+									<div id="gender_container">
+										<div class="row">
+											<div class="large-6 columns">
+												<label><b>Gender</b></label>
+												<input id="gender_target_male" name="gender_target" type="radio" value="4"[% IF current_targeting.gender_targets.item(4) %]checked="checked"[% END %]/>
+												<label for="gender_target_male">Male</label>
+												<input id="gender_target_female" name="gender_target" type="radio" value="2"[% IF current_targeting.gender_targets.item(2) %]checked="checked"[% END %]/>
+												<label for="gender_target_female">Female</label>
+												<input id="gender_target_both" name="gender_target" type="radio" value="0"[% IF current_targeting.gender_targets.item(0) %]checked="checked"[% END %]/>
+												<label for="gender_target_both">Both</label>
+											</div> <!-- end demopanel -->
+										</div> <!-- end row -->
+									</div> <!-- end gender_container -->
+									<div class="leftarea"></div>
+								</div> <!-- end demopanel -->
+							</div>
+						</div> <!-- end row -->
+						[% END # can_demo_target %]
+					</fieldset>
+				</div> <!-- panel-demographics -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-exchanges">SSP and Exchange Targeting</a>
+				<div id="panel-exchanges" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<input id="Ad_X" name="active_ssp_29" [% UNLESS current_targeting.blocked_ssps.item(29) %]checked="checked"[% END %] type="checkbox" value="1"/>
+								<label for="Ad_X">Ad-X
+								</label>
+							</div>
+						</div> <!-- end row -->
+						<div class="row">
+							<div class="large-12 columns">
+								<input id="Smaato" name="active_ssp_27" [% UNLESS current_targeting.blocked_ssps.item(27) %]checked="checked"[% END %] type="checkbox" value="1"/>
+								<label for="Smaato">Smaato
+								</label>
+							</div>
+						</div> <!-- end row -->
+						<div class="row">
+							<div class="large-12 columns">
+								<input id="Rubicon" name="active_ssp_36" [% UNLESS current_targeting.blocked_ssps.item(36) %]checked="checked"[% END %] type="checkbox" value="1"/>
+								<label for="Rubicon">Rubicon
+								</label>
+							</div>
+						</div> <!-- end row -->
+						<div class="row">
+							<div class="large-12 columns">
+								<input id="MoPub" name="active_ssp_40" [% UNLESS current_targeting.blocked_ssps.item(40) %]checked="checked"[% END %] type="checkbox" value="1"/>
+								<label for="MoPub">MoPub 2.1
+								</label>
+							</div>
+						</div> <!-- end row -->
+						<div class="row">
+							<div class="large-12 columns">
+								<input id="Nexage" name="active_ssp_41" [% UNLESS current_targeting.blocked_ssps.item(41) %]checked="checked"[% END %] type="checkbox" value="1"/>
+								<label for="Nexage">Nexage 2.1
+								</label>
+							</div>
+						</div> <!-- end row -->
+						<div class="row">
+							<div class="large-12 columns">
+								<input id="Rubicon_2_2" name="active_ssp_42"[% UNLESS current_targeting.blocked_ssps.item(42) %] checked="checked"[% END %] type="checkbox" value="1" />
+								<label for="Rubicon_2_2">Rubicon 2.2
+								</label>
+							</div>
+						</div> <!-- end row -->
+					</fieldset>
+				</div> <!-- panel-exchanges -->
+			</dd>
+			<dd class="accordion-navigation">
+				<a href="#panel-domains">Domain Targeting</a>
+				<div id="panel-domains" class="content">
+					<fieldset>
+						<div class="row">
+							<div class="large-12 columns">
+								<div id="domainpanel">
+									<div id="controls_container">
+										<div class="highlightbox" id="domainlistselector"></div>
+
+										<p class="panel">Use the Select button to pick a TXT or CSV file and the Add/Remove/Replace buttons to manipulate the items shown on the right.</p>
+
+										<div class="row">
+											<div class="large-4 columns">
+												<label>Single App./Domain:</label>
+												<input id="singledomain" name="singledomain" type="text"/>
+												<button class="button secondary small" onclick="addSingleDomain();" type="button">Add</button>
+												<button class="button secondary small" onclick="removeSingleDomain();" type="button">Remove</button>
+											</div> <!-- end columns -->
+
+											<div class="large-6 large-offset-2 end columns">
+												<label>Multiple Apps/Domains:</label>
+
+												<input id="multipledomains" name="multipledomains" style="margin-bottom: 10px;" type="file"/>
+
+												<button class="button secondary small" onclick="addMultipleDomains();" type="button">Add</button>
+												<button class="button secondary small" onclick="removeMultipleDomains();" type="button">Remove</button>
+												<button class="button secondary small" onclick="replaceDomains();" type="button">Replace</button>
+												<button class="button secondary small" id="next_csv_column" onclick="shiftCSVColumn(1);" >Next Column</button>
+												<button class="button secondary small" id="prev_csv_column" onclick="shiftCSVColumn(0);"  type="button">Prev. Column</button>
+												<div id="domains_preview_list"></div>
+											</div> <!-- end columns -->
+										</div> <!-- end row -->
+
+										<div class="row">
+											<div class="large-12 columns">
+												<div id="list_container">
+													<div id="whitelist_domains_list"></div>
+													<div id="blocked_domains_list"></div>
+													<h3 id="domain_counter">
+														Items: XX
+													</h3>
+													<button class="button secondary small" onclick="checkDomainList(0);" type="button">Uncheck All</button>
+													<button class="button secondary small" onclick="checkDomainList(1);" type="button">Check All</button>
+												</div>
+											</div>
+										</div> <!-- end row -->
+										<div class="row">
+											<div class="large-12 columns">
+
+												<input checked="checked" id="showuncheckeddomains" name="showuncheckeddomains" onclick="toggleShowUncheckedDomains();" type="checkbox"/>
+												<label for="showuncheckeddomains">Show unchecked items</label>
+											</div>
+										</div> <!-- end row -->
+									</div><!-- End controls_container -->
+								</div><!-- End domainpanel -->
+							</div>
+						</div> <!-- end row -->
+					</fieldset>
+				</div> <!-- end panel-domains -->
+			</dd>
+		</dl>
+
+		<div class="form-actions">
+			<input class="button large secondary" type="submit" value="Submit"/>
+			<button class="button large secondary" type="button" onclick="dashboard.switchToSection('creative'); return false;">Cancel</button>
+		</div> <!-- end form-actions -->
+	</form><!-- End creativeForm" -->
+</div> <!-- end section-add-targeting-profile -->
+<!-- script -->
+<!-- First, third party JS libs -->
+<script src="/lib/jquery/jquery.csv-0.71.min.js"></script>
+
+<!-- Then blis JS needed to set up global data -->
+<script src="/blis-assets/js/blis-utils.js?cache_buster=[% cache_buster %]"></script>
+<script src="/blis-assets/js/blis-domains-and-locations.js?cache_buster=[% cache_buster %]"></script>
+<!-- Then configure vars from template back end -->
+<script>
+	blis.utils.setGlobal(
+		'blis.ui.targetingProfile', {
+			organisationType: "[% dashboard_user.organisation_obj.type | html %]",
+			currentIabCategoryTargets: [
+				[%= separator = '' ~%][%~ FOREACH iab_category IN current_targeting.iab_category_targets.keys.sort ~%][%~ separator ~%]
+				"[% iab_category FILTER replace('\"', '\\"') %]"
+				[%~ separator = ',' ~%][%~ END =%]
+			],
+			currentIabCategories: [
+				[%= separator = '' ~%][%~ FOREACH iab_category IN current_targeting.iab_categories.keys.sort ~%][%~ separator ~%]
+				"[% iab_category FILTER replace('\"', '\\"') %]"
+				[%~ separator = ',' ~%][%~ END =%]
+			],
+			currentDevices: [
+				[%= separator = '' ~%][%~ FOREACH device IN current_targeting.regexes.keys.sort ~%][%~ separator ~%]
+				"[% device  FILTER replace('\"', '\\"') %]"
+				[%~ separator = ',' ~%][%~ END =%]
+			],
+			currentCountries: [
+				[%= separator = '' ~%][%~ FOREACH country IN current_targeting.countries.keys.sort ~%][%~ separator ~%]
+				"[% country FILTER replace('\"', '\\"') %]"
+				[%~ separator = ',' ~%][%~ END =%]
+			],
+			iabCategories: [
+				[%- separator = '' -%][%- FOREACH iab_category IN iab_categories -%][%- separator -%]{
+					id: [% iab_category.id %],
+					text       : "[% iab_category.category_name FILTER replace('\"', '\\"') %]",
+					category_id: "[% iab_category.category_id %]"
+				}[%- separator = ',' -%][%- END ~%]
+			],
+			devices: [
+				[%- separator = '' -%][%- FOREACH device IN devices -%][%- separator -%]{
+					[%+ IF current_targeting.regexes.item(device.id) ~%]
+					checked: true,
+					[%+ END ~%]
+					id  : [% device.id | html %],
+					text: "[% device.name FILTER replace('\"', '\\"') %]"
+				}[%- separator = ',' -%][%- END ~%]
+			],
+			countries: [
+				[%- separator = '' -%][%- FOREACH country IN countries -%][%- separator -%]{
+					[%+ IF current_targeting.countries.item(country.id) ~%]
+					checked: true,
+					[%+ END ~%]
+					id  : [% country.id | html %],
+					text: "[% country.country_name FILTER replace('\"', '\\"') %]"
+				}[%- separator = ',' -%][%- END ~%]
+			],
+			locationGroups: [
+				[%- separator = '' -%][%- FOREACH location_group IN location_groups -%][%- separator -%]{
+					id: [% location_group.id %],
+					featured: [% current_targeting.location_groups.item(location_group.id) ? 1 : 0 %],
+					selected: [% current_targeting.location_groups.item(location_group.id) ? 1 : 0 %],
+					shortlisted: 0,
+					pending: 0,
+					location_group: "[% location_group.name FILTER replace('\"', '\\"') %]"
+				}[%- separator = ',' -%][%- END ~%]
+			],
+			whitelistDomains: [
+				[%- separator = '' -%][%- FOREACH whitelist_domain IN whitelist_domains -%][%- separator -%]{
+					id: [% whitelist_domain.id %],
+					selected: 1,
+					domain: "[% whitelist_domain.whitelist_domain FILTER replace('\"', '\\"') %]"
+				}[%- separator = ',' -%][%- END ~%]
+			],
+			blockedDomains: [
+				[%- separator = '' -%][%- FOREACH blocked_domain IN blocked_domains -%][%- separator -%]{
+					id: [% blocked_domain.id %],
+					selected:1,
+					domain: "[% blocked_domain.blocked_domain FILTER replace('\"', '\\"')%]"
+				}[%- separator = ',' -%][%- END ~%]
+			]
+		}
+	);
+</script>
+
+<!-- Finally, Blis JS needed for this page UI -->
+<script src="/blis-assets/js/blis-targeting.js?cache_buster=[% cache_buster %]"></script>
+<script src="/blis-assets/js/model/targeting-profile.js?cache_buster=[% cache_buster %]"></script>
+<script src="/blis-assets/js/ui/blis-ui-add-targeting-profile.js?cache_buster=[% cache_buster %]"></script>
+
+[% IF template_test_plan %]
+</body>
+</html>
+[% END %]
+<!-- END views/add_targeting_profile.tt -->

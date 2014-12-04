@@ -32,12 +32,19 @@ sub wrap {
 # Get the whole template and split into header, body, sliver between, script and footer.
 my $template = <>;
 
+my $sol = '[\ \t]*';  # start of line whitespace
+my $eol = '[\ \t]*\n';  # whitespace and end of line
+
+# open and close tag to find for splitting template
+my $open = '<dd \s+ class="accordion-navigation (?:\s+ active)?">';
+my $close = '</dd>';
+
 ($template =~ m{
 	\A
-	(.+?[\ \t]*\n)
-	([\ \t]*<dd \s+ class="accordion-navigation (?:\s+ active)?">.+</dd>[\ \t]*\n)
-	(.+[\ \t]*\n)
-	([\ \t]*<!-- \s+ script \s+ -->.+</script>[\ \t]*\n)
+	(.+? $eol)
+	($sol $open .+ $close $eol)
+	(.+ $eol)
+	($sol <!-- \s+ script \s+ --> .+ </script> $eol)
 	(.*)
 	\z}xms);
 
@@ -72,7 +79,7 @@ write_file($file, wrap($file, $script));
 
 my $idx = 0;
 
-$body =~ s{([\ \t]*<dd \s+ class="accordion-navigation (?:\s+ active)?">.+?</dd>[\ \t]*\n)}{
+$body =~ s{($sol $open .+? $close $eol )}{
 	$file = "views/fragments/${template_file}_$Parts[$idx++].tt";
 	write_file($file, wrap($file, $1));
 	print "=======\n$file:\n" . wrap($file, $1) if $DEBUG;
