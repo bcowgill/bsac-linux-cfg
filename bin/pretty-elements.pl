@@ -4,6 +4,8 @@
 # id class name data-bind
 
 # ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt
+# ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt 2>&1 | less
+
 
 use strict;
 use warnings;
@@ -16,7 +18,7 @@ $Data::Dumper::Terse = 1;
 
 my $DEBUG = 1;
 
-my @AttrOrder = qw(id class name type value method title alt data-bind action);
+my @AttrOrder = qw(id name type tabindex class style value method title alt data-bind action target href);
 my @Elements = qw(input textarea select option button div iframe form dl a);
 my $elements = join('|', @Elements);
 
@@ -81,9 +83,52 @@ sub get_attributes
 	return \%Attribs;
 }
 
+sub format_attr
+{
+	my ($attr, $value) = @ARG;
+	if ($value eq '__TRUE__')
+	{
+		$value = $empty;
+	}
+	else
+	{
+		$value = qq{=$value};
+	}
+	return qq{$attr$value};
+}
+
 sub format_element
 {
-	my () = @ARG
+	my ($all, $element, $rhAttribs, $ending) = @ARG;
+	my @Attribs = ();
+
+	# capture the initial indentation of the element
+	$all =~ m{\A (\s*)}xms;
+	my $leadin = $1 || "";
+
+	# handle the template toolkit blocks
+	my @TTBlocks = @{$rhAttribs->{'__TT_BLOCKS__'}};
+	delete($rhAttribs->{'__TT_BLOCKS__'});
+
+	foreach my $attr (@AttrOrder)
+	{
+		push(@Attribs, format_attr($attr, $rhAttribs->{$attr})) if exists($rhAttribs->{$attr});
+		delete($rhAttribs->{$attr});
+	}
+	foreach my $attr (sort(keys(%$rhAttribs)))
+	{
+		push(@Attribs, format_attr($attr, $rhAttribs->{$attr}));
+	}
+
+	my $attribs = join("\n$leadin\t", @Attribs, @TTBlocks, $ending);
+	if (scalar(@Attribs) + scalar(@TTBlocks) == 1)
+	{
+		$attribs = join("", @Attribs, @TTBlocks, $ending);
+	}
+
+	$attribs = " " . $attribs if length($attribs);
+	my $formatted = qq{$leadin<$element$attribs};
+	return "FORMATTED:\n$formatted";
 }
 
 sub register_id
