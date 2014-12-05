@@ -1,565 +1,565 @@
 <div id="section-add-targeting-profile">
-<form name="creativeform"
+	<form name="creativeform"
 		action="/datasource/store/targeting_profile/single"
 		method="POST">
-<input
+		<input
 			name="targeting_profile_id"
 			type="hidden"
 			value="[% targeting_profile_id | html %]"
 			/>
-<input
+		<input
 			name="return_url"
 			type="hidden"
 			value="creative.html?campaign_id=[% campaign_id | html %]"
 			/>
-<input
+		<input
 			name="associated_campaign_id"
 			type="hidden"
 			value="[% current_targeting.targeting_profile.associated_campaign_id | html %]"
 			/>
-<input
+		<input
 			name="associated_campaign_id"
 			type="hidden"
 			value="[% campaign_id | html %]"
 			/>
-<input
+		<input
 			name="creator_id"
 			type="hidden"
 			value="[% current_targeting.targeting_profile.creator_id | html %]"
 			/>
-<input
+		<input
 			name="creator_id"
 			type="hidden"
 			value="[% dashboard_user.organisation_obj.id | html %]"
 			/>
 <a onclick="dashboard.switchToSection('creative'); return false;" id="back">
-<div id="error_submit">
-<dl class="accordion" data-accordion>
-<div class="form-actions">
-<input class="button large secondary" type="submit" value="Submit"/>
-<button class="button large secondary" type="button" onclick="dashboard.switchToSection('creative'); return false;">
-<div class="search">
-<input type="text" id="search_field" name="search_field" style="width: 150px" />
+		<div id="error_submit">
+		<dl class="accordion" data-accordion>
+		<div class="form-actions">
+			<input class="button large secondary" type="submit" value="Submit"/>
+			<button class="button large secondary" type="button" onclick="dashboard.switchToSection('creative'); return false;">
+		<div class="search">
+			<input type="text" id="search_field" name="search_field" style="width: 150px" />
+	<div class="container">
+	    <div class="customername">
+	    <div id="adv1" class="blistabs">
+				<a href="/admin.html">
+				<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
+				<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
+				<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
+				<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
+				<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
+			<div class="whitebg k-content">
+			    <div id="location_group_grid">
+			<div class="search">
+				<input type="text" id="search_field" style="width: 150px"/>
+		<div class="k-edit-label">
+		<input type="text" class="k-input k-textbox" name="name" data-bind="value:name">
+		<div class="k-edit-label">
+		<input name="type" data-bind="value:type" data-value-field="type" data-text-field="type" data-source="typeDataSource" data-role="dropdownlist" />
+		<input name="location_group_id" class="k-input" type="hidden" data-bind="value:location_group_id">
+		<div id="details-container">
+					<input type="button" class="k-button" value="Search" onclick="codeAddress()" />
+					<input id="map_address" class="k-textbox" type="text" value="" />
+					<input type="button" class="k-button" value="Add polygon" onclick="addPolygon()" />
+					<input type="button" class="k-button" value="Add geofence" onclick="addGeofence()" />
+					<input id="geofence_radius" class="k-textbox" type="text" size="8" value="250" />
+					<input type="button" class="k-button" value="Save changes" onclick="storeGeofenceData()" />
+			<div id="map_canvas">
+			<div id="geofence_grid">
+		<div id="details-container">
+			<div id="iprange_grid">
+		<div id="details-container">
+			<input id="location_group_chooser" />
+			<input type="button" class="k-button" value="Add" onclick="addLocationGroup()" />
+			<div id="location_group_grid">
+	<div class="container">
+		<div class="customername">
+		<div id="adv1" class="blistabs">
+				<a href="/admin.html">
+				<a href="/admin/list_location_items" [% IF tab_selected == 'list_location_items' %]class="selected"[% END %] >
+				<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
+				<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
+				<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
+				<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
+				<div id="whitetable" class="k-content">
+					<div id="grid">
+					<div id="geofence">
+					<div id="iprange">
+					<div id="location_group">
+    <div id="details-container">
+        <div id="operator_iprange_grid">
+	<div class="k-edit-label">
+	<input type="text" class="k-input k-textbox" name="operator_name" data-bind="value:operator_name">
+	<div class="k-edit-label">
+	<input name="operator_country" data-bind="value:operator_country" data-value-field="alpha3_country_code" data-text-field="country_name" data-source="operatorCountryDS" data-role="dropdownlist" />
 <div class="container">
-<div class="customername">
-<div id="adv1" class="blistabs">
-<a href="/admin.html">
-<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
-<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
-<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
-<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
-<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
-<div class="whitebg k-content">
-<div id="location_group_grid">
-<div class="search">
-<input type="text" id="search_field" style="width: 150px"/>
-<div class="k-edit-label">
-<input type="text" class="k-input k-textbox" name="name" data-bind="value:name">
-<div class="k-edit-label">
-<input name="type" data-bind="value:type" data-value-field="type" data-text-field="type" data-source="typeDataSource" data-role="dropdownlist" />
-<input name="location_group_id" class="k-input" type="hidden" data-bind="value:location_group_id">
-<div id="details-container">
-<input type="button" class="k-button" value="Search" onclick="codeAddress()" />
-<input id="map_address" class="k-textbox" type="text" value="" />
-<input type="button" class="k-button" value="Add polygon" onclick="addPolygon()" />
-<input type="button" class="k-button" value="Add geofence" onclick="addGeofence()" />
-<input id="geofence_radius" class="k-textbox" type="text" size="8" value="250" />
-<input type="button" class="k-button" value="Save changes" onclick="storeGeofenceData()" />
-<div id="map_canvas">
-<div id="geofence_grid">
-<div id="details-container">
-<div id="iprange_grid">
-<div id="details-container">
-<input id="location_group_chooser" />
-<input type="button" class="k-button" value="Add" onclick="addLocationGroup()" />
-<div id="location_group_grid">
-<div class="container">
-<div class="customername">
-<div id="adv1" class="blistabs">
-<a href="/admin.html">
-<a href="/admin/list_location_items" [% IF tab_selected == 'list_location_items' %]class="selected"[% END %] >
-<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
-<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
-<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
-<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
-<div id="whitetable" class="k-content">
-<div id="grid">
-<div id="geofence">
-<div id="iprange">
-<div id="location_group">
-<div id="details-container">
-<div id="operator_iprange_grid">
-<div class="k-edit-label">
-<input type="text" class="k-input k-textbox" name="operator_name" data-bind="value:operator_name">
-<div class="k-edit-label">
-<input name="operator_country" data-bind="value:operator_country" data-value-field="alpha3_country_code" data-text-field="country_name" data-source="operatorCountryDS" data-role="dropdownlist" />
-<div class="container">
-<div class="customername">
-<div id="adv1" class="blistabs">
-<a href="/admin.html">
-<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
-<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
-<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
-<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
-<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
-<div id="whitetable" class="k-content">
-<div id="operator_grid">
-<div id="operator_iprange">
-<div class="break">
-<div class="break">
-<div class="search">
-<input type="text" id="search_field" style="width: 150px"/>
-<div class="k-edit-label">
-<input name="kind" id="kind" data-bind="value:kind" data-value-field="kind" data-text-field="kind" data-source="retargetingFunctionsKinds" data-role="dropdownlist" />
-<div class="separator">
-<div class="separator">
-<div class="k-edit-label">
-<input type="text" class="k-input k-textbox" name="parameters" id="parameters" data-bind="value:parameters" />
-<div class="separator">
-<div class="k-edit-label">
-<input type="checkbox" class="k-input k-checkbox" name="enabled" id="enabled" data-bind="value:enabled" />
-<div class="separator">
-<div class="k-edit-label">
-<input type="checkbox" class="k-input k-checkbox" name="persistent_records" id="persistent_records" data-bind="value:persistent_records" />
-<div class="separator">
-<div class="k-edit-label">
-<input type="text" class="k-input k-text" name="from_date" id="from_date" data-bind="value:from_date" data-format="yyyy-MM-dd" data-role="datepicker" />
-<div class="k-edit-label">
-<input type="text" class="k-input k-text" name="to_date" id="to_date" data-bind="value:to_date" data-format="yyyy-MM-dd" data-role="datepicker" />
-<div class="container">
-<div class="customername">
-<div id="adv1" class="blistabs">
-<a href="/admin.html">
-<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
-<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
-<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
-<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
-<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
-<div id="whitetable" class="k-content">
-<div id="grid">
-<div class="container admin">
-<div class="customername">
-<div id="adv1" class="blistabs">
-<a href="#t1" class="selected" >
-<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
-<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
-<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
-<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
-<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
-<iframe name="masquerade" src="masquerade_users.html">
-<div class="container">
-<div class="customername">
-<div id="adv1" class="blistabs">
-<a href="/admin.html">
-<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
-<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
-<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
-<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
-<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
-<div id="whitetable" class="k-content">
-<form id="upload_locations" method="POST" action="/admin/view_campaign_heatmap" enctype="multipart/form-data">
-<input type="file" name="coordinates" accept="text/csv" />
-<input type="checkbox" id="map_location_groups" name="map_location_groups" value="1"[% IF map_location_groups == 1 %] checked="checked"[% END %] />
-<input type="submit" value="Upload file" />
-<div id="map_canvas">
-<div class="container agencies-dashboard">
-<div class="row">
-<div class="large-12 column">
-<div class="row">
-<div class="large-2 column actions">
-<dl class="tabs vertical main-tab-selectors">
-<a role="button"
+  <div class="customername">
+  <div id="adv1" class="blistabs">
+			<a href="/admin.html">
+			<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
+			<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
+			<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
+			<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
+			<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
+  <div id="whitetable" class="k-content">
+    <div id="operator_grid">
+    <div id="operator_iprange">
+      <div class="break">
+  <div class="break">
+			<div class="search">
+				<input type="text" id="search_field" style="width: 150px"/>
+		<div class="k-edit-label">
+		<input name="kind" id="kind" data-bind="value:kind" data-value-field="kind" data-text-field="kind" data-source="retargetingFunctionsKinds" data-role="dropdownlist" />
+		<div class="separator">
+		<div class="separator">
+		<div class="k-edit-label">
+			<input type="text" class="k-input k-textbox" name="parameters" id="parameters" data-bind="value:parameters" />
+		<div class="separator">
+		<div class="k-edit-label">
+			<input type="checkbox" class="k-input k-checkbox" name="enabled" id="enabled" data-bind="value:enabled" />
+		<div class="separator">
+		<div class="k-edit-label">
+			<input type="checkbox" class="k-input k-checkbox" name="persistent_records" id="persistent_records" data-bind="value:persistent_records" />
+		<div class="separator">
+		<div class="k-edit-label">
+			<input type="text" class="k-input k-text" name="from_date" id="from_date" data-bind="value:from_date" data-format="yyyy-MM-dd" data-role="datepicker" />
+		<div class="k-edit-label">
+			<input type="text" class="k-input k-text" name="to_date" id="to_date" data-bind="value:to_date" data-format="yyyy-MM-dd" data-role="datepicker" />
+	<div class="container">
+	    <div class="customername">
+	    <div id="adv1" class="blistabs">
+				<a href="/admin.html">
+				<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
+				<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
+				<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
+				<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
+				<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
+			<div id="whitetable" class="k-content">
+			    <div id="grid">
+		<div class="container admin">
+			<div class="customername">
+			<div id="adv1" class="blistabs">
+						<a href="#t1" class="selected" >
+						<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
+						<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
+						<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
+						<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
+						<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
+					<iframe name="masquerade" src="masquerade_users.html">
+		<div class="container">
+  			<div class="customername">
+ 			<div id="adv1" class="blistabs">
+					<a href="/admin.html">
+					<a href="/admin/list_location_items" [% IF tab_selected == 'location_item_list' %]class="selected"[% END %] >
+					<a href="/admin/list_location_groups" [% IF tab_selected == 'list_location_groups' %]class="selected"[% END %] >
+					<a href="/admin/list_retargeting_functions" [% IF tab_selected == 'retargeting_functions' %]class="selected"[% END %] >
+					<a href="/admin/list_operators" [% IF tab_selected == 'list_operators' %]class="selected"[% END %] >
+					<a href="/admin/view_campaign_heatmap" [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] >
+  						<div id="whitetable" class="k-content">
+							<form id="upload_locations" method="POST" action="/admin/view_campaign_heatmap" enctype="multipart/form-data">
+									<input type="file" name="coordinates" accept="text/csv" />
+									<input type="checkbox" id="map_location_groups" name="map_location_groups" value="1"[% IF map_location_groups == 1 %] checked="checked"[% END %] />
+									<input type="submit" value="Upload file" />
+    						<div id="map_canvas">
+		<div class="container agencies-dashboard">
+				<div class="row">
+					<div class="large-12 column">
+				<div class="row">
+					<div class="large-2 column actions">
+						<dl class="tabs vertical main-tab-selectors">
+								<a role="button"
 									 aria-label="add agency"
 									 title="Add a new agency"
 									 data-bind="click: createClick"
 									 class="info add-agency">
-<a role="button"
+								<a role="button"
 									 class="info"
 									 href="#tab-list-agencies">
-<a role="button"
+								<a role="button"
 									 class="info"
 									 href="#tab-list-agency-users"
 									 data-button-target="add-agency-user">
-<div class="large-10 column">
-<div class="main-tab-content">
-<div id="tab-list-agencies"
+					<div class="large-10 column">
+						<div class="main-tab-content">
+							<div id="tab-list-agencies"
 									 data-section="list_agencies"
 									 class="content">
-<div id="tab-list-agency-users"
+							<div id="tab-list-agency-users"
 									 data-section="list_agency_users"
 									 class="content">
-<div class="overlay secondary-tab-content">
-<div id="tab-user">
-<div id="tab-agency">
+		<div class="overlay secondary-tab-content">
+			<div id="tab-user">
+			<div id="tab-agency">
 <div id="bliscampaigndetails" class="agency_details">
 <a class="link" title="Return to agency dashboard"
 				onclick="dashboard.switchToSection('list_agencies'); return false"
 				>
-<div id="form-container">
-<div class="form" id="agency_details_form">
-<input type="hidden" data-bind="value: data.id" id="id" name="id">
-<div id="form_status">
-<dl class="accordion" data-accordion>
-<a href="#panel1">
-<div id="panel1" class="content active">
-<div class="row">
-<div class="large-4 columns">
-<input autofocus type="text" data-bind="value: data.name"
+	<div id="form-container">
+		<div class="form" id="agency_details_form">
+			<input type="hidden" data-bind="value: data.id" id="id" name="id">
+			<div id="form_status">
+			<dl class="accordion" data-accordion>
+					<a href="#panel1">
+					<div id="panel1" class="content active">
+							<div class="row">
+								<div class="large-4 columns">
+									<input autofocus type="text" data-bind="value: data.name"
 												 id="name" name="name" tabindex="1" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.budget"
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.budget"
 												 id="budget" name="budget" tabindex="2"/>
-<a href="#panel2">
-<div id="panel2" class="content">
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.standardmediacharge"
+					<a href="#panel2">
+					<div id="panel2" class="content">
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.standardmediacharge"
 												 id="standardmediacharge" name="standardmediacharge" tabindex="3" />
-<div class="row">
-<div class="large-4  columns">
-<input type="text" data-bind="value: data.sectordatacharge"
+							<div class="row">
+								<div class="large-4  columns">
+									<input type="text" data-bind="value: data.sectordatacharge"
 												 id="sectordatacharge" name="sectordatacharge" tabindex="4" />
-<div class="large-6 columns">
-<input tabindex="5"
+								<div class="large-6 columns">
+									<input tabindex="5"
 												 data-bind="checked: data.sectordatacharge_format"
 												 name="sectordatacharge_format"
 												 id="sectordatacharge_format_percentnage"
 												 type="radio"
 												 value="1" />
-<input tabindex="6"
+									<input tabindex="6"
 												 data-bind="checked: data.sectordatacharge_format"
 												 name="sectordatacharge_format"
 												 id="sectordatacharge_format_fixed"
 												 type="radio"
 												 value="2" />
-<div class="row">
-<div class="large-4 columns">
-<input tabindex="7" type="text" data-bind="value: data.transparentlocationcharge"
+							<div class="row">
+								<div class="large-4 columns">
+									<input tabindex="7" type="text" data-bind="value: data.transparentlocationcharge"
 												 id="transparentlocationcharge" name="transparentlocationcharge" />
-<div class="large-6 columns">
-<input tabindex="8"
+								<div class="large-6 columns">
+									<input tabindex="8"
 												 data-bind="checked: data.transparentlocationcharge_format"
 												 name="transparentlocationcharge_format"
 												 id="transparentlocationcharge_format_percentage"
 												 type="radio" value="1"/>
-<input tabindex="9"
+									<input tabindex="9"
 												 data-bind="checked: data.transparentlocationcharge_format"
 												 name="transparentlocationcharge_format"
 												 id="transparentlocationcharge_format_fixed"
 												 type="radio"
 												 value="2"/>
-<div class="row">
-<div class="large-4 columns">
-<input tabindex="10" type="text" data-bind="value: data.locationretargetingcharge"
+							<div class="row">
+								<div class="large-4 columns">
+									<input tabindex="10" type="text" data-bind="value: data.locationretargetingcharge"
 												 id="locationretargetingcharge" name="locationretargetingcharge" />
-<a href="#panel3">
-<div id="panel3" class="content">
+					<a href="#panel3">
+					<div id="panel3" class="content">
 <div class="row">
-<div class="large-4 columns">
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businessforename" id="businessforename" name="businessforename" tabindex="11" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businesssurname" id="businesssurname" name="businesssurname"  tabindex="12" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businessemail" id="businessemail" name="businessemail"  tabindex="13" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businessaddress1"
+							<div class="large-4 columns">
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businessforename" id="businessforename" name="businessforename" tabindex="11" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businesssurname" id="businesssurname" name="businesssurname"  tabindex="12" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businessemail" id="businessemail" name="businessemail"  tabindex="13" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businessaddress1"
 												 id="businessaddress1" name="businessaddress1"  tabindex="14" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businessaddress2" id="businessaddress2" name="businessaddress2" tabindex="15" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businessaddress3" id="businessaddress3" name="businessaddress3" tabindex="16" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businesscity" id="businesscity" name="businesscity"  tabindex="17" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businesspostcode" id="businesspostcode" name="businesspostcode" tabindex="18" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.businessregion" id="businessregion" name="businessregion"  tabindex="19" />
+							<div class="row">
+								<div class="large-4 columns">
+									<select id="businessCountryDropdown" data-bind="value: data.businesscountry" name="businesscountry"   tabindex="20">
+										<option value="">
+											<option value="[% country.id %]">
+					<a href="#panel4">
+					<div id="panel4" class="content">
 <div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businessaddress2" id="businessaddress2" name="businessaddress2" tabindex="15" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businessaddress3" id="businessaddress3" name="businessaddress3" tabindex="16" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businesscity" id="businesscity" name="businesscity"  tabindex="17" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businesspostcode" id="businesspostcode" name="businesspostcode" tabindex="18" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.businessregion" id="businessregion" name="businessregion"  tabindex="19" />
-<div class="row">
-<div class="large-4 columns">
-<select id="businessCountryDropdown" data-bind="value: data.businesscountry" name="businesscountry"   tabindex="20">
-<option value="">
-<option value="[% country.id %]">
-<a href="#panel4">
-<div id="panel4" class="content">
-<div class="row">
-<div class="large-4 columns">
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingforename" id="billingforename" name="billingforename"  tabindex="21" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingsurname" id="billingsurname" name="billingsurname"  tabindex="22" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingemail" id="billingemail" name="billingemail"  tabindex="23" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingaddress1" id="billingaddress1" name="billingaddress1"  tabindex="24" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingaddress2" id="billingaddress2" name="billingaddress2"  tabindex="25" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingaddress3" id="billingaddress3" name="billingaddress3"  tabindex="26" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingcity"
+							<div class="large-4 columns">
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingforename" id="billingforename" name="billingforename"  tabindex="21" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingsurname" id="billingsurname" name="billingsurname"  tabindex="22" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingemail" id="billingemail" name="billingemail"  tabindex="23" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingaddress1" id="billingaddress1" name="billingaddress1"  tabindex="24" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingaddress2" id="billingaddress2" name="billingaddress2"  tabindex="25" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingaddress3" id="billingaddress3" name="billingaddress3"  tabindex="26" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingcity"
 												 id="billingcity" name="billingcity"  tabindex="27" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingpostcode" id="billingpostcode" name="billingpostcode"  tabindex="28" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.billingregion" id="billingregion" name="billingregion"  tabindex="29" />
-<div class="row">
-<div class="large-4 columns">
-<select id="billingCountryDropdown" data-bind="value: data.billingcountry"
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingpostcode" id="billingpostcode" name="billingpostcode"  tabindex="28" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.billingregion" id="billingregion" name="billingregion"  tabindex="29" />
+							<div class="row">
+								<div class="large-4 columns">
+									<select id="billingCountryDropdown" data-bind="value: data.billingcountry"
 													name="billingcountry" tabindex="30">
-<option value="">
-<option value="[% country.id %]">
-<a href="#panel5">
-<div id="panel5" class="content">
+										<option value="">
+											<option value="[% country.id %]">
+					<a href="#panel5">
+					<div id="panel5" class="content">
 <div class="row">
-<div class="large-4 columns">
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.techforename" id="techforename" name="techforename"  tabindex="31" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.techsurname" id="techsurname" name="techsurname" tabindex="32" />
-<div class="row">
-<div class="large-4 columns">
-<input type="text" data-bind="value: data.techemail" id="techemail" name="techemail"  tabindex="33" />
-<div class="form-actions">
-<button tabindex="34" class="button large secondary" type="submit" id="submit-agency" data-bind="click: save">
-<button class="button large secondary"
+							<div class="large-4 columns">
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.techforename" id="techforename" name="techforename"  tabindex="31" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.techsurname" id="techsurname" name="techsurname" tabindex="32" />
+							<div class="row">
+								<div class="large-4 columns">
+									<input type="text" data-bind="value: data.techemail" id="techemail" name="techemail"  tabindex="33" />
+			<div class="form-actions">
+				<button tabindex="34" class="button large secondary" type="submit" id="submit-agency" data-bind="click: save">
+				<button class="button large secondary"
 								onclick="dashboard.switchToSection('list_agencies'); return false"
 								type="reset">
 <div id="bliscampaigndetails" class="agency-user-details">
-<a class="link" title="Return to agency dashboard"
+		<a class="link" title="Return to agency dashboard"
 				onclick="dashboard.hideOverlay(); return false"
 				>
-<div id="form-container">
-<div id="form_status">
-<div class="row">
-<div class="large-6 columns">
-<select id="userAgencyDropdown" name="agency"
+	<div id="form-container">
+		<div id="form_status">
+			<div class="row">
+				<div class="large-6 columns">
+					<select id="userAgencyDropdown" name="agency"
 									data-bind="
 										options: agencyDropDownData,
 										optionsText: 'name',
 										optionsValue: 'id',
 										value: data.organisation_id
 									">
-<form class="form" action="javascript:void(0);">
-<input type="hidden" data-bind="value: agency_user_id" id="id" name="id" />
-<input type="hidden" data-bind="value: data.organisation_id" id="organisation_id" name="organisation_id" />
-<div class="row">
-<div class="large-6 columns">
-<div class="row">
-<div class="large-6 columns">
-<input autofocus type="text" data-bind="value: data.name" class="k-textbox" id="forename" name="forename" tabindex=1 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: data.surname" class="k-textbox" id="surname" name="surname" tabindex=2 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: data.email" class="k-textbox" id="email" name="email" tabindex=3 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: data.job_title" class="k-textbox" id="job_title" name="job_title" tabindex=4 />
-<div class="row">
-<div class="large-6 columns">
-<input tabindex=5 type="radio" name="role" checked="checked" id="viewer" value=1
+		<form class="form" action="javascript:void(0);">
+			<input type="hidden" data-bind="value: agency_user_id" id="id" name="id" />
+			<input type="hidden" data-bind="value: data.organisation_id" id="organisation_id" name="organisation_id" />
+				<div class="row">
+					<div class="large-6 columns">
+				<div class="row">
+					<div class="large-6 columns">
+						<input autofocus type="text" data-bind="value: data.name" class="k-textbox" id="forename" name="forename" tabindex=1 />
+				<div class="row">
+					<div class="large-6 columns">
+						<input type="text" data-bind="value: data.surname" class="k-textbox" id="surname" name="surname" tabindex=2 />
+				<div class="row">
+					<div class="large-6 columns">
+						<input type="text" data-bind="value: data.email" class="k-textbox" id="email" name="email" tabindex=3 />
+				<div class="row">
+					<div class="large-6 columns">
+						<input type="text" data-bind="value: data.job_title" class="k-textbox" id="job_title" name="job_title" tabindex=4 />
+				<div class="row">
+					<div class="large-6 columns">
+						<input tabindex=5 type="radio" name="role" checked="checked" id="viewer" value=1
 									 data-bind="checked: data.role" />
-<input type="radio" name="role" id="user" value=3 data-bind="checked: data.role" />
-<input type="radio" name="role" id="admin" value=7 data-bind="checked: data.role" />
-<div class="form-actions">
-<button tabindex=6 class="button large info" type="submit" id="submit-user" data-bind="click: save">
-<button tabindex=7 class="button large secondary"
+						<input type="radio" name="role" id="user" value=3 data-bind="checked: data.role" />
+						<input type="radio" name="role" id="admin" value=7 data-bind="checked: data.role" />
+			<div class="form-actions">
+				<button tabindex=6 class="button large info" type="submit" id="submit-user" data-bind="click: save">
+				<button tabindex=7 class="button large secondary"
 								onclick="dashboard.hideOverlay(); return false"
 								type="reset">
-<div class="row">
-<div class="large-10 columns">
-<textarea id="comments" value="" />
-<div class="row">
-<div class="large-10 columns">
-<input type="button" class="button tiny secondary" value="Cancel" id="cancel_edit"	/>
-<input id="submit_response" type="button" class="button tiny info"value="Apply" />
-<div style="min-height:300px;">
-<div id="response">
-<div id="approvals-grid">
+			<div class="row">
+				<div class="large-10 columns">
+					<textarea id="comments" value="" />
+			<div class="row">
+				<div class="large-10 columns">
+					<input type="button" class="button tiny secondary" value="Cancel" id="cancel_edit"	/>
+					<input id="submit_response" type="button" class="button tiny info"value="Apply" />
+		<div style="min-height:300px;">
+		<div id="response">
+			<div id="approvals-grid">
 <div class="contain-to-grid sticky">
-<a href="#">
+				<a href="#">
 <div class="row">
-<div class="large-4 large-offset-4 small-12 column" style="text-align:center;border:1px solid #ddd;margin:100px auto;padding:80px 0;background:#f8f8f8">
-<div class="login">
-<form class="blisloginform" action="[% request.uri_base %]/auth/google">
-<input class="button large rounded" type="submit" name="submit" value="Sign in with Google OAuth">
+	<div class="large-4 large-offset-4 small-12 column" style="text-align:center;border:1px solid #ddd;margin:100px auto;padding:80px 0;background:#f8f8f8">
+			<div class="login">
+				<form class="blisloginform" action="[% request.uri_base %]/auth/google">
+					<input class="button large rounded" type="submit" name="submit" value="Sign in with Google OAuth">
 <div id="bliscampaigndetails" class="campaign_details">
-<div id="form-container">
-<div id="campaignEdit">
-<div data-bind="html: approvalMessage" id="approvalMessage">
-<form class="form" action="javascript:void(0);">
-<input data-bind="value: sourceView.id" id="id" name="id" type="hidden" />
-<input data-bind="value: sourceView.approval_status" id="approval_status" name="approval_status" type="hidden" />
-<input data-bind="value: sourceView.status" id="status" name="status" type="hidden" />
-<input data-bind="value: sourceView.organisation_targeting_type_id" id="organisation_targeting_type_id"
+	<div id="form-container">
+		<div id="campaignEdit">
+			<div data-bind="html: approvalMessage" id="approvalMessage">
+			<form class="form" action="javascript:void(0);">
+				<input data-bind="value: sourceView.id" id="id" name="id" type="hidden" />
+				<input data-bind="value: sourceView.approval_status" id="approval_status" name="approval_status" type="hidden" />
+				<input data-bind="value: sourceView.status" id="status" name="status" type="hidden" />
+				<input data-bind="value: sourceView.organisation_targeting_type_id" id="organisation_targeting_type_id"
 				name="organisation_targeting_type_id" type="hidden" />
-<input data-bind="value: sourceView.operator_iprange_type_target" id="operator_iprange_type_target" name="operator_iprange_type_target" type="hidden" />
-<div id="form_status">
-<dl class="accordion" data-accordion>
-<div class="form-actions">
-<button class="button large secondary" type="submit" id="submit-campaign" data-bind="click: save">
-<button class="button large secondary" data-bind="click: save_and_show">
-<button class="button large secondary"
+				<input data-bind="value: sourceView.operator_iprange_type_target" id="operator_iprange_type_target" name="operator_iprange_type_target" type="hidden" />
+				<div id="form_status">
+				<dl class="accordion" data-accordion>
+				<div class="form-actions">
+					<button class="button large secondary" type="submit" id="submit-campaign" data-bind="click: save">
+					<button class="button large secondary" data-bind="click: save_and_show">
+					<button class="button large secondary"
 									onclick="window.dashboard.hideModal(); return false"
 									type="reset">
 <div id="whitebg" class="k-content">
-<div id="bliscampaigndetails campaign-in-review">
-<div class="blistitle">
-<div id="approvalMessage">
-<div id="form-container">
-<div id="campaignEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
+  <div id="bliscampaigndetails campaign-in-review">
+    <div class="blistitle">
+	<div id="approvalMessage">
+    <div id="form-container">
+        <div id="campaignEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
 <div id="response">
 <div id="campaigns-grid">
-<div id="bliscampaigndetails" class="client_details">
-<div id="form-container">
-<div id="clientEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
-<form class="form" action="javascript:void(0);">
-<input type="hidden" data-bind="value: id" id="id" name="id" />
-<div id="form_status">
-<div class="row">
-<div class="large-6 columns">
-<input autofocus type="text" data-bind="value: name" id="name" name="name" tabindex=1 />
-<div class="form-actions">
-<button tabindex=2 class="button large secondary" type="submit" id="submit-client" data-bind="click: save">
-<button tabindex=3 class="button large secondary close-overlay" type="reset">
-<div class="container clients-dashboard">
-<div class="row">
-<div class="large-12 column">
-<div class="row">
-<div class="large-2 column actions">
-<a role="button" aria-label="add client" title="Add a new client"  href="javascript:void(0);" data-overlay-id="add-client-overlay" class="info button add-client edit-overlay">
-<a role="button" aria-label="add client user" title="Add a new client user"  href="javascript:void(0);" data-overlay-id="add-client-user-overlay" class="info button add-client-user edit-overlay">
-<dl class="tabs vertical" data-tab data-options="deep_linking: true; scroll_to_content: false" >
+		<div id="bliscampaigndetails" class="client_details">
+			<div id="form-container">
+				<div id="clientEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
+					<form class="form" action="javascript:void(0);">
+							<input type="hidden" data-bind="value: id" id="id" name="id" />
+							<div id="form_status">
+								<div class="row">
+									<div class="large-6 columns">
+										<input autofocus type="text" data-bind="value: name" id="name" name="name" tabindex=1 />
+									<div class="form-actions">
+										<button tabindex=2 class="button large secondary" type="submit" id="submit-client" data-bind="click: save">
+										<button tabindex=3 class="button large secondary close-overlay" type="reset">
+		<div class="container clients-dashboard">
+				<div class="row">
+					<div class="large-12 column">
+				<div class="row">
+					<div class="large-2 column actions">
+								<a role="button" aria-label="add client" title="Add a new client"  href="javascript:void(0);" data-overlay-id="add-client-overlay" class="info button add-client edit-overlay">
+								<a role="button" aria-label="add client user" title="Add a new client user"  href="javascript:void(0);" data-overlay-id="add-client-user-overlay" class="info button add-client-user edit-overlay">
+						<dl class="tabs vertical" data-tab data-options="deep_linking: true; scroll_to_content: false" >
 <a href="#panel1" data-button-target="add-client">
 <a href="#panel2" data-button-target="add-client-user">
-<div class="large-10 column">
-<div class="tabs-content">
-<div id="panel1" class="content active">
-<iframe width="100%" scrolling="no" frameborder="0" id="clientslistform" src="list_clients.html">
-<div id="panel2" class="content">
-<iframe width="100%" scrolling="no" frameborder="0" id="clientuserlistform" src="list_client_users.html">
-<div id="add-client-overlay" class="overlay">
+					<div class="large-10 column">
+						<div class="tabs-content">
+							<div id="panel1" class="content active">
+								<iframe width="100%" scrolling="no" frameborder="0" id="clientslistform" src="list_clients.html">
+							<div id="panel2" class="content">
+								<iframe width="100%" scrolling="no" frameborder="0" id="clientuserlistform" src="list_client_users.html">
+			<div id="add-client-overlay" class="overlay">
 <a class="close-overlay link" title="Return to client dashboard">
-<iframe width="100%" scrolling="no"  frameborder="0" id="addclientform" src="client_details.html?client_id=[% client_id %]">
-<div id="add-client-user-overlay" class="overlay">
+				<iframe width="100%" scrolling="no"  frameborder="0" id="addclientform" src="client_details.html?client_id=[% client_id %]">
+			<div id="add-client-user-overlay" class="overlay">
 <a class="close-overlay link" title="Return to client dashboard">
-<iframe width="100%" scrolling="no"  frameborder="0" id="addclientuserform" src="client_user_details.html">
-<div id="bliscampaigndetails" class="client-user-details">
-<div id="form-container">
-<div id="form_status">
-<div class="row">
-<div class="large-6 columns">
-<select id="userClientDropdown" name="client">
-<div id="userEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
-<form class="form" action="javascript:void(0);">
-<input type="hidden" data-bind="value: id" id="id" name="id" />
-<input type="hidden" data-bind="value: organisation_id" id="organisation_id" name="organisation_id" />
-<div class="row">
-<div class="large-6 columns">
-<div class="row">
-<div class="large-6 columns">
-<input autofocus type="text" data-bind="value: name" class="k-textbox" id="forename" name="forename" tabindex=1 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: surname" class="k-textbox" id="surname" name="surname" tabindex=2 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: email" class="k-textbox" id="email" name="email" tabindex=3 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: job_title" class="k-textbox" id="job_title" name="job_title" tabindex=4 />
-<div class="row">
-<div class="large-6 columns">
-<input tabindex="5" type="radio" checked="checked" name="role" id="viewer" value=1 data-bind="checked: role" />
-<input tabindex="6" type="radio" name="role" id="user" value=3 data-bind="checked: role" />
-<div class="form-actions">
-<button tabindex="7" class="button large secondary" type="submit" id="submit-user" data-bind="click: save">
-<button tabindex="8" class="button large secondary close-overlay" type="reset">
-<div class="row">
-<div class="large-12 column">
-<div class="row overview-target" data-equalizer style="display:none;">
-<div class="large-4 column">
-<div class="campaign-overview-tile" data-equalizer-watch>
-<iframe width="100%" frameborder="0" name="campaignstats" src="/barchart.html">
-<div class="large-4 column">
-<div class="campaign-overview-tile" data-equalizer-watch>
-<iframe width="100%" frameborder="0" name="dailyspends" src="/dailyspend.html">
-<div class="large-4 column">
-<div class="campaign-overview-tile" data-equalizer-watch>
-<iframe width="100%" frameborder="0" name="campaignstats" src="/barchart_2.html">
-<div id="adv1" class="blistabs">
-<div class="row">
-<div class="large-2 column actions">
-<a role="button" aria-label="add campaign" title="Add a new campaign"
+				<iframe width="100%" scrolling="no"  frameborder="0" id="addclientuserform" src="client_user_details.html">
+		<div id="bliscampaigndetails" class="client-user-details">
+			<div id="form-container">
+				<div id="form_status">
+					<div class="row">
+						<div class="large-6 columns">
+							<select id="userClientDropdown" name="client">
+				<div id="userEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
+					<form class="form" action="javascript:void(0);">
+						<input type="hidden" data-bind="value: id" id="id" name="id" />
+						<input type="hidden" data-bind="value: organisation_id" id="organisation_id" name="organisation_id" />
+							<div class="row">
+								<div class="large-6 columns">
+							<div class="row">
+								<div class="large-6 columns">
+									<input autofocus type="text" data-bind="value: name" class="k-textbox" id="forename" name="forename" tabindex=1 />
+							<div class="row">
+								<div class="large-6 columns">
+									<input type="text" data-bind="value: surname" class="k-textbox" id="surname" name="surname" tabindex=2 />
+							<div class="row">
+								<div class="large-6 columns">
+									<input type="text" data-bind="value: email" class="k-textbox" id="email" name="email" tabindex=3 />
+							<div class="row">
+								<div class="large-6 columns">
+									<input type="text" data-bind="value: job_title" class="k-textbox" id="job_title" name="job_title" tabindex=4 />
+							<div class="row">
+								<div class="large-6 columns">
+									<input tabindex="5" type="radio" checked="checked" name="role" id="viewer" value=1 data-bind="checked: role" />
+									<input tabindex="6" type="radio" name="role" id="user" value=3 data-bind="checked: role" />
+								<div class="form-actions">
+									<button tabindex="7" class="button large secondary" type="submit" id="submit-user" data-bind="click: save">
+									<button tabindex="8" class="button large secondary close-overlay" type="reset">
+			<div class="row">
+				<div class="large-12 column">
+			<div class="row overview-target" data-equalizer style="display:none;">
+				<div class="large-4 column">
+					<div class="campaign-overview-tile" data-equalizer-watch>
+						<iframe width="100%" frameborder="0" name="campaignstats" src="/barchart.html">
+				<div class="large-4 column">
+					<div class="campaign-overview-tile" data-equalizer-watch>
+						<iframe width="100%" frameborder="0" name="dailyspends" src="/dailyspend.html">
+				<div class="large-4 column">
+					<div class="campaign-overview-tile" data-equalizer-watch>
+						<iframe width="100%" frameborder="0" name="campaignstats" src="/barchart_2.html">
+			<div id="adv1" class="blistabs">
+				<div class="row">
+					<div class="large-2 column actions">
+								<a role="button" aria-label="add campaign" title="Add a new campaign"
 									 href="javascript:void(0);" class="info button add-campaign edit-overlay">
-<dl class="tabs vertical main-tab-selectors" data-tab data-options="deep_linking: false; scroll_to_content: false" >
+						<dl class="tabs vertical main-tab-selectors" data-tab data-options="deep_linking: false; scroll_to_content: false" >
 <a data-section="campaign_list" href="#tab-campaign-list">
 <a data-section="submissions" href="#tab-submissions">
 <a data-section="approvals" href="#tab-approvals">
-<div class="large-10 column">
-<div class="main-tab-content tabs-content">
-<div id="tab-campaign-list" class="content active">
-<div id="tab-submissions" class="content">
-<div id="tab-approvals" class="content">
-<div class="break">
-<div id="add-campaign-overlay" class="overlay">
+					<div class="large-10 column">
+						<div class="main-tab-content tabs-content">
+							<div id="tab-campaign-list" class="content active">
+								<div id="tab-submissions" class="content">
+								<div id="tab-approvals" class="content">
+				<div class="break">
+		<div id="add-campaign-overlay" class="overlay">
 <a class="close-overlay link" title="Return to campaign dashboard" onclick="window.dashboard.hideModal(); return false">
-<a data-section="campaign_details" href="#tab-campaign-details"
+					<a data-section="campaign_details" href="#tab-campaign-details"
 						 class="button secondary small">
-<a data-section="creative" href="#tab-creative"
+					<a data-section="creative" href="#tab-creative"
 						 class="button secondary small">
-<a data-section="statistics" href="#tab-statistics"
+					<a data-section="statistics" href="#tab-statistics"
 						 class="button secondary small">
-<div class="secondary-tab-content">
-<div id="tab-campaign-details">
-<div id="tab-creative" data-bind="if: campaignId()">
-<div id="tab-statistics">
+			<div class="secondary-tab-content">
+				<div id="tab-campaign-details">
+				<div id="tab-creative" data-bind="if: campaignId()">
+				<div id="tab-statistics">
 <div id="whitebg" class="k-content">
-<div id="bliscampaigndetails">
-<div class="blistitle create-new-campaign">
-<div id="form-container">
-<form name="campaign_start" action="/campaign_details.html" method="post">
-<div class="formbackground" style="margin-top: 10px;">
-<div class="campaignTypes">
-<div class="campaignType">
-<div class="campaignTypeRadio">
-<input type="radio" name="targeting_type" value="[% targeting_type.id %]" [% IF loop.first %]checked[% END %]/>
-<div class="campaignTypeExplanation">
-<div class="reset">
-<div class="formbackground" style="margin-top: 10px;">
-<div class="baseCampaigns">
-<select id="baseCampaign" name="baseCampaign" data-role="dropdownlist">
-<option value="0">
-<option value="[% campaign.id %]">
-<button class="k-button" type="submit" id="submit-campaign" data-bind="click: save">
-<div class='uploadEntry#= rowColour #'>
-<div class='uploadOptions'>
-<div class='uploadStatus #= progStatus #'>
-<div class='uploadFilename' style='width: #= progWidth #px;'>
-<div class='k-grid k-widget' style='width: 670px;margin-top:20px;'>
+	<div id="bliscampaigndetails">
+		<div class="blistitle create-new-campaign">
+			<div id="form-container">
+      			<form name="campaign_start" action="/campaign_details.html" method="post">
+					<div class="formbackground" style="margin-top: 10px;">
+						<div class="campaignTypes">
+							<div class="campaignType">
+								<div class="campaignTypeRadio">
+									<input type="radio" name="targeting_type" value="[% targeting_type.id %]" [% IF loop.first %]checked[% END %]/>
+								<div class="campaignTypeExplanation">
+								<div class="reset">
+					<div class="formbackground" style="margin-top: 10px;">
+						<div class="baseCampaigns">
+							<select id="baseCampaign" name="baseCampaign" data-role="dropdownlist">
+									<option value="0">
+										<option value="[% campaign.id %]">
+					<button class="k-button" type="submit" id="submit-campaign" data-bind="click: save">
+	<div class='uploadEntry#= rowColour #'>
+		<div class='uploadOptions'>
+		<div class='uploadStatus #= progStatus #'>
+		<div class='uploadFilename' style='width: #= progWidth #px;'>
+	<div class='k-grid k-widget' style='width: 670px;margin-top:20px;'>
 <input id='creativeName#= bannerId #' type='text' class='k-textbox' style='width: 360px;' value='#= creativeName #' />
 <a class='k-button k-button-context' href='#= clearCreativeName #'>
 <input id='bannerTargetUrl#= bannerId #' type='text' class='k-textbox' style='width: 360px;' value='#= targetUrl #' />
@@ -568,69 +568,69 @@
 <a class='k-button k-button-context' href='#= clearBeaconUrl #'>
 <input id='bannerRedirectUrl#= bannerId #' type='text' class='k-textbox' style='width: 360px;' value='#= redirectUrl #' />
 <a class='k-button k-button-context' href='#= clearRedirectUrl #'>
-<input id='retargetingExpression#= bannerId #' onChange='this.setAttribute("data-changed","changed");' type='text' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
-<input id='orgRetargetingExpression#= bannerId #' type='hidden' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
+							<input id='retargetingExpression#= bannerId #' onChange='this.setAttribute("data-changed","changed");' type='text' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
+							<input id='orgRetargetingExpression#= bannerId #' type='hidden' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
 <a class='k-button k-button-context' href='#= clearRetargetingExpression #'>
-<div style='width: 670px;'>
-<div style='alight: right;'>
-<a class='k-button k-button-context' style='float: right; padding: 0px; margin: 4px 22px 6px 0px;' href='#= applyUrl #'>
-<div class='k-grid-content' style='height: auto; overflow-y: visible;'>
+	<div style='width: 670px;'>
+		<div style='alight: right;'>
+			<a class='k-button k-button-context' style='float: right; padding: 0px; margin: 4px 22px 6px 0px;' href='#= applyUrl #'>
+		<div class='k-grid-content' style='height: auto; overflow-y: visible;'>
 <input id='creativeName#= bannerId #' type='text' class='k-textbox' style='width: 360px;' value='#= creativeName #' />
 <a class='k-button k-button-context' href='#= clearCreativeName #'>
-<input id='retargetingExpression#= bannerId #' onChange='this.setAttribute("data-changed","changed");' type='text' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
-<input id='orgRetargetingExpression#= bannerId #' type='hidden' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
+							<input id='retargetingExpression#= bannerId #' onChange='this.setAttribute("data-changed","changed");' type='text' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
+							<input id='orgRetargetingExpression#= bannerId #' type='hidden' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />
 <a class='k-button k-button-context' href='#= clearRetargetingExpression #'>
-<div style='width: 670px;'>
-<div style='alight: right;'>
-<a class='button info small' style='float: right; padding: 0px; margin: 4px 22px 6px 0px;' href='#= applyUrl #'>
+	<div style='width: 670px;'>
+		<div style='alight: right;'>
+			<a class='button info small' style='float: right; padding: 0px; margin: 4px 22px 6px 0px;' href='#= applyUrl #'>
 <div class="row">
-<div class="creative" id="creative">
-<div id="targeting_profile_grid">
-<div class="form-actions">
-<a class="button secondary" id="create"  onclick="dashboard.switchToSection('add_targeting_profile'); return false;" href="#" target="parent">
-<div id="target_grid">
+	<div class="creative" id="creative">
+		<div id="targeting_profile_grid">
+		<div class="form-actions">
+			<a class="button secondary" id="create"  onclick="dashboard.switchToSection('add_targeting_profile'); return false;" href="#" target="parent">
+		<div id="target_grid">
 <div class="row">
-<div id="popupArea" class="popupArea">
-<div id="grid">
-<div class="form-actions">
-<a class="button secondary" id="hidebutton3" href="javascript:void(0);">
-<div id="previewWindow">
+	<div id="popupArea" class="popupArea">
+	<div id="grid">
+	<div class="form-actions">
+		<a class="button secondary" id="hidebutton3" href="javascript:void(0);">
+	<div id="previewWindow">
 <div class="row">
-<div id="hide3" style="display:none;">
-<div id="tabstrip">
-<div id="creative-banner">
-<div class="panels">
-<form method="post" action="submit">
-<div class="row">
-<div class="large-6 columns">
-<input id="bannerTypeDropdown" class="banner-type-dropdown" />
-<div class="break">
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: textBannerDesc" id="textBannerDesc" />
-<div class="row">
-<div class="large-12 columns">
-<input name="upload_banner_file" id="upload_banner_file" type="file" />
-<div class="break">
-<div id="up_files">
-<div class="break">
-<input
+	<div id="hide3" style="display:none;">
+		<div id="tabstrip">
+			<div id="creative-banner">
+				<div class="panels">
+					<form method="post" action="submit">
+						<div class="row">
+							<div class="large-6 columns">
+								<input id="bannerTypeDropdown" class="banner-type-dropdown" />
+						<div class="break">
+						<div class="row">
+							<div class="large-6 columns">
+								<input type="text" data-bind="value: textBannerDesc" id="textBannerDesc" />
+						<div class="row">
+							<div class="large-12 columns">
+								<input name="upload_banner_file" id="upload_banner_file" type="file" />
+								<div class="break">
+									<div id="up_files">
+						<div class="break">
+						<input
 							id="bannerApply"
 							class="button secondary small"
 							type="submit"
 							value="Apply"
 							/>
-<div id="creative-rich-media">
-<div style="margin: 8px 0px 0px 0px;">
-<input id="creative_list_dropdown" class="creative-list-dropdwon" />
-<div class="panels" data-bind="visible:celtraIsVisible" id="celtra_wrapper">
-<form method="post" action="submit">
-<div class="background">
-<input type="text" data-bind="value: textCeltraurl" id="textCeltraURL" />
-<div class="break">
-<div class="background">
-<input type="text" data-bind="value: textCeltraDesc" id="textCeltraDesc" />
-<div class="break">
+ 			<div id="creative-rich-media">
+				<div style="margin: 8px 0px 0px 0px;">
+					<input id="creative_list_dropdown" class="creative-list-dropdwon" />
+				<div class="panels" data-bind="visible:celtraIsVisible" id="celtra_wrapper">
+					<form method="post" action="submit">
+						<div class="background">
+							<input type="text" data-bind="value: textCeltraurl" id="textCeltraURL" />
+						<div class="break">
+						<div class="background">
+							<input type="text" data-bind="value: textCeltraDesc" id="textCeltraDesc" />
+							<div class="break">
 <input type="checkbox" name="ssptraffic_mopub_app" id="ssptraffic_mopub_app"/>
 <input type="checkbox" name="ssptraffic_nexage_web" id="ssptraffic_nexage_web"/>
 <input type="checkbox" name="ssptraffic_nexage_app" id="ssptraffic_nexage_app"/>
@@ -640,150 +640,150 @@
 <input type="checkbox" name="ssptraffic_adx_app" id="ssptraffic_adx_app"/>
 <input type="checkbox" name="ssptraffic_rubicon_web" id="ssptraffic_rubicon_web"/>
 <input type="checkbox" name="ssptraffic_rubicon_app" id="ssptraffic_rubicon_app"/>
-<div class="break">
-<div class="break">
-<div class="background">
+							<div class="break">
+						<div class="break">
+						<div class="background">
 <input type="checkbox" name="expandable" id="celtraExpandable" checked/>
-<div class="break">
-<div class="background">
-<div style="margin: 0px 0px 8px 0px;">
-<input id="celtraTypeDropdown" class="celtra-type-dropdown"/>
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<input name="celtra_file" id="celtra_file" type="file" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<div id="celtra_files" style="margin-bottom: 10px;">
-<div class="break">
-<div class="break">
-<input type="submit" value="Apply" class="k-button" id="celtraApply" />
-<div class="panels" data-bind="visible:dfaIsVisible" id="dfa_wrapper">
-<form method="post" action="submit">
-<div class="background">
-<input type="text" data-bind="value: textDFAImpTrackerURL" id="textDFAImpTrackerURL" />
-<div class="break" style="height: 5px">
-<input type="text" data-bind="value: textDFAClickTrackerURL" id="textDFAClickTrackerURL" />
-<div class="break">
-<div class="background">
-<input type="text" data-bind="value: textDFADesc" id="textDFADesc" />
-<div class="break">
+						<div class="break">
+						<div class="background">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input id="celtraTypeDropdown" class="celtra-type-dropdown"/>
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input name="celtra_file" id="celtra_file" type="file" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<div id="celtra_files" style="margin-bottom: 10px;">
+								<div class="break">
+						<div class="break">
+						<input type="submit" value="Apply" class="k-button" id="celtraApply" />
+				<div class="panels" data-bind="visible:dfaIsVisible" id="dfa_wrapper">
+					<form method="post" action="submit">
+						<div class="background">
+								<input type="text" data-bind="value: textDFAImpTrackerURL" id="textDFAImpTrackerURL" />
+							<div class="break" style="height: 5px">
+								<input type="text" data-bind="value: textDFAClickTrackerURL" id="textDFAClickTrackerURL" />
+							<div class="break">
+						<div class="background">
+							<input type="text" data-bind="value: textDFADesc" id="textDFADesc" />
+							<div class="break">
 <input type="checkbox" name="dfatracking_host_ext" id="dfatracking_host_ext" />
 <input type="checkbox" name="dfatracking_dedicated_click" id="dfatracking_dedicated_click" checked />
 <input type="checkbox" name="expandable" id="dfaExpandable" checked/>
-<div class="break">
-<div class="background">
-<div style="margin: 0px 0px 8px 0px;">
-<input id="dfaTypeDropdown" class="dfa-type-dropdown" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<input name="dfa_file" id="dfa_file" type="file" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<div id="dfa_files">
-<div class="break">
-<input type="submit" value="Apply" class="k-button" id="dfaApply" />
-<div class="panels" data-bind="visible:dfaFlashIsVisible" id="dfa_flash_wrapper">
-<form method="post" action="submit">
-<div class="background">
-<textarea rows="8" data-bind="value: dfaFlashJavascript" id="dfaFlashJavascript">
-<div class="break">
-<div class="background">
-<input type="text" data-bind="value: dfaFlash_desc" id="dfaFlash_desc" />
-<div class="break">
-<div class="background">
-<div style="margin: 0px 0px 8px 0px;">
-<input id="dfaFlashTypeDropdown" class="dfa-flash-type-dropdown" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<input name="dfa_flash_file" id="dfa_flash_file" type="file" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<div id="dfaFlash_files">
-<div class="break">
-<div class="background">
+							<div class="break">
+						<div class="background">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input id="dfaTypeDropdown" class="dfa-type-dropdown" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input name="dfa_file" id="dfa_file" type="file" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<div id="dfa_files">
+						<div class="break">
+						<input type="submit" value="Apply" class="k-button" id="dfaApply" />
+				<div class="panels" data-bind="visible:dfaFlashIsVisible" id="dfa_flash_wrapper">
+					<form method="post" action="submit">
+						<div class="background">
+								<textarea rows="8" data-bind="value: dfaFlashJavascript" id="dfaFlashJavascript">
+							<div class="break">
+						<div class="background">
+							<input type="text" data-bind="value: dfaFlash_desc" id="dfaFlash_desc" />
+							<div class="break">
+						<div class="background">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input id="dfaFlashTypeDropdown" class="dfa-flash-type-dropdown" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input name="dfa_flash_file" id="dfa_flash_file" type="file" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<div id="dfaFlash_files">
+						<div class="break">
+						<div class="background">
 <input type="checkbox" name="expandable" id="flashExpandable" checked/>
-<div class="break">
-<input type="submit" value="Apply" class="k-button" id="dfaFlashApply" />
-<div
+						<div class="break">
+						<input type="submit" value="Apply" class="k-button" id="dfaFlashApply" />
+				<div
 					id="flashTalking_wrapper"
 					class="panels"
 					data-bind="visible:flashTalkingIsVisible"
 					>
-<form method="post" action="submit">
-<div class="background">
-<div class="tag_field">
-<textarea rows="8" data-bind="value: flashTalkingJavascript" id="flashTalkingJavascript">
-<div class="break">
+					<form method="post" action="submit">
+						<div class="background">
+							<div class="tag_field">
+								<textarea rows="8" data-bind="value: flashTalkingJavascript" id="flashTalkingJavascript">
+								<div class="break">
 <input type="checkbox" name="flash_talking_web" id="flash_talking_web" />
 <input type="checkbox" name="flash_talking_app" id="flash_talking_app" />
 <input type="checkbox" name="expandable" id="flashTalkingExpandable" checked/>
-<div class="break">
-<div class="background">
-<input type="text" data-bind="value: flash_talking_desc" id="flash_talking_desc" />
-<div class="break">
-<div class="background">
-<div style="margin: 0px 0px 8px 0px;">
-<input id="flashTalkingTypeDropdown" class="flash-talking-type-dropdown" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<input name="flash_talking_file" id="flash_talking_file" type="file" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<div id="flashTalking_files">
-<div class="break">
-<input type="submit" value="Apply" class="k-button" id="flashTalkingApply" />
-<div id="simplytics_wrapper"
+							<div class="break">
+						<div class="background">
+							<input type="text" data-bind="value: flash_talking_desc" id="flash_talking_desc" />
+							<div class="break">
+						<div class="background">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input id="flashTalkingTypeDropdown" class="flash-talking-type-dropdown" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input name="flash_talking_file" id="flash_talking_file" type="file" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<div id="flashTalking_files">
+						<div class="break">
+						<input type="submit" value="Apply" class="k-button" id="flashTalkingApply" />
+				<div id="simplytics_wrapper"
 					class="panels"
 					data-bind="visible:simplyticsIsVisible" >
-<form method="post" action="submit">
-<div class="background">
-<input
+					<form method="post" action="submit">
+						<div class="background">
+							<input
 								id="simplytics_desc"
 								name="simplytics_desc"
 								type="text"
 								data-bind="value: simplytics_desc"
 							/>
-<div class="break">
-<div class="background">
-<div style="margin: 0px 0px 8px 0px;">
-<input name="simplytics_file" id="simplytics_file" type="file" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<div id="simplytics_files">
-<div class="break">
-<div class="background">
-<div style="margin: 0px 0px 8px 0px;">
-<input name="simplytics_tag_file" id="simplytics_tag_file" type="file" />
-<div class="break">
-<div style="margin: 0px 0px 8px 0px;">
-<div id="simplytics_tag_files">
-<div class="break">
-<input type="submit" value="Apply" class="k-button" id="simplyticsApply" />
-<div id="creative-video">
-<div class="panels">
-<form method="post" action="submit">
-<div class="background">
-<textarea rows="8" data-bind="value: videoTag" id="videoTag">
-<div class="break">
-<input id="videoAdServerTypeDropdown" class="video-ad-server-type-dropdown" />
-<div class="break">
-<div class="background">
-<input type="text" data-bind="value: video_desc" id="video_desc" />
-<div class="break">
+							<div class="break">
+						<div class="background">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input name="simplytics_file" id="simplytics_file" type="file" />
+								<div class="break">
+						<div style="margin: 0px 0px 8px 0px;">
+							<div id="simplytics_files">
+						<div class="break">
+						<div class="background">
+							<div style="margin: 0px 0px 8px 0px;">
+								<input name="simplytics_tag_file" id="simplytics_tag_file" type="file" />
+								<div class="break">
+							<div style="margin: 0px 0px 8px 0px;">
+								<div id="simplytics_tag_files">
+						<div class="break">
+						<input type="submit" value="Apply" class="k-button" id="simplyticsApply" />
+			<div id="creative-video">
+				<div class="panels">
+					<form method="post" action="submit">
+						<div class="background">
+								<textarea rows="8" data-bind="value: videoTag" id="videoTag">
+								<div class="break">
+								<input id="videoAdServerTypeDropdown" class="video-ad-server-type-dropdown" />
+							<div class="break">
+						<div class="background">
+							<input type="text" data-bind="value: video_desc" id="video_desc" />
+							<div class="break">
 <input type="text" data-bind="value: video_time" id="video_time" />
 <input type="checkbox" name="video_skippable" id="video_skippable" />
-<div class="break">
-<div class="background">
-<div class="margin-bottom-8px">
-<input id="videoTypeDropdown" class="video-type-dropdown" />
-<div class="break">
-<div class="margin-bottom-8px">
-<input name="video_file" id="video_file" type="file" />
-<div class="break">
-<div class="margin-bottom-8px">
-<div id="video_files">
-<div class="break">
-<input type="submit" value="Apply" class="k-button" id="videoApply" />
+							<div class="break">
+						<div class="background">
+							<div class="margin-bottom-8px">
+								<input id="videoTypeDropdown" class="video-type-dropdown" />
+								<div class="break">
+							<div class="margin-bottom-8px">
+								<input name="video_file" id="video_file" type="file" />
+								<div class="break">
+							<div class="margin-bottom-8px">
+								<div id="video_files">
+						<div class="break">
+						<input type="submit" value="Apply" class="k-button" id="videoApply" />
 <div class="container">
 <div id="main">
 <div id="blis" class="k-content absConf">
@@ -806,134 +806,134 @@
 <div id="company-filtering-tabs" class="filtering-tabs">
 <div class="company-info" id="RichMedia">
 <div class="break">
-<div id="grid-list-agencies">
-<div style="min-height:400px;" class="section-list-agency-users">
-<div class="row">
-<div class="large-6 columns">
-<select id="agencydropdown" name="agencydropdown">
-<div id="grid-list-agency-users">
-<div id="grid">
-<div style="min-height:400px;">
-<div class="row">
-<div class="large-6 columns">
-<select id="clientdropdown" name="clientdropdown">
-<div id="grid">
-<div class ="blistitle">
-<div id="profile_list">
-<div class="columnbox" id="available_profiles">
-<div class="profile_list">
-<div id="profile_[% profile_id %]" class="k-block k-shadow profile">
-<div class="columnbox" id="campaign_profiles">
-<div class="profile_list">
-<div id="profile_[% profile_id %]" class="k-block k-shadow profile">
-<div class="columnbox" id="banner_profiles">
-<div class="profile_list">
-<div id="profile_[% profile_id %]" class="k-block k-shadow profile">
-<div class="button secondary" >
+      <div id="grid-list-agencies">
+		<div style="min-height:400px;" class="section-list-agency-users">
+				<div class="row">
+					<div class="large-6 columns">
+						<select id="agencydropdown" name="agencydropdown">
+			<div id="grid-list-agency-users">
+		<div id="grid">
+		<div style="min-height:400px;">
+				<div class="row">
+					<div class="large-6 columns">
+					<select id="clientdropdown" name="clientdropdown">
+		<div id="grid">
+	    <div class ="blistitle">
+	    <div id="profile_list">
+		<div class="columnbox" id="available_profiles">
+		    <div class="profile_list">
+			<div id="profile_[% profile_id %]" class="k-block k-shadow profile">
+		<div class="columnbox" id="campaign_profiles">
+		    <div class="profile_list">
+			<div id="profile_[% profile_id %]" class="k-block k-shadow profile">
+		<div class="columnbox" id="banner_profiles">
+		    <div class="profile_list">
+				<div id="profile_[% profile_id %]" class="k-block k-shadow profile">
+	    <div class="button secondary" >
 <a id="back" href="#">
-<div class="k-edit-label">
-<div data-container-for="forename" class="k-edit-field">
-<input type="text" class="k-input k-textbox" name="sorename" data-bind="value:name">
-<div class="k-edit-label">
-<div data-container-for="edit" class="k-edit-field">
-<input type="text" class="k-input k-textbox" name="surname" data-bind="value:surname">
-<div class="k-edit-label">
-<div data-container-for="job_title" class="k-edit-field">
-<input type="text" class="k-input k-textbox" name="job_title" data-bind="value:job_title">
-<div class="k-edit-label">
-<div data-container-for="email" class="k-edit-field">
-<input type="text" class="k-input k-textbox" name="email" data-bind="value:email">
-<div class="k-edit-label">
-<div data-container-for="role" class="k-edit-field">
-<input name="role" data-bind="value:role" data-value-field="id" data-text-field="role" data-source="roleDataSource" data-role="dropdownlist" />
-<div id="grid">
-<div class="k-content whitebg masquerade">
-<div id="form-container">
-<div class="formbackground">
-<select id="agencydropdown" name="agencydropdown">
-<div id="grid">
-<div class="k-content" id="whitebg">
-<div id="section-optimize-locations">
+		<div class="k-edit-label">
+		<div data-container-for="forename" class="k-edit-field">
+			<input type="text" class="k-input k-textbox" name="sorename" data-bind="value:name">
+		<div class="k-edit-label">
+		<div data-container-for="edit" class="k-edit-field">
+			<input type="text" class="k-input k-textbox" name="surname" data-bind="value:surname">
+		<div class="k-edit-label">
+		<div data-container-for="job_title" class="k-edit-field">
+			<input type="text" class="k-input k-textbox" name="job_title" data-bind="value:job_title">
+		<div class="k-edit-label">
+		<div data-container-for="email" class="k-edit-field">
+			<input type="text" class="k-input k-textbox" name="email" data-bind="value:email">
+		<div class="k-edit-label">
+		<div data-container-for="role" class="k-edit-field">
+			<input name="role" data-bind="value:role" data-value-field="id" data-text-field="role" data-source="roleDataSource" data-role="dropdownlist" />
+		<div id="grid">
+	<div class="k-content whitebg masquerade">
+	    <div id="form-container">
+		<div class="formbackground">
+				<select id="agencydropdown" name="agencydropdown">
+	    <div id="grid">
+		<div class="k-content" id="whitebg">
+			<div id="section-optimize-locations">
 <div id="whitebg" class="k-content">
-<div id="blis_show_campaign_config">
-<div class="k-button">
-<a class="back" href="campaign_details.html?campaign_id=[% campaign_id | html %]">
-<dl class="property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="horizontal_property_list">
-<dl class="property_list">
+  <div id="blis_show_campaign_config">
+    <div class="k-button">
+			<a class="back" href="campaign_details.html?campaign_id=[% campaign_id | html %]">
+    <dl class="property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+        <dl class="horizontal_property_list">
+    <dl class="property_list">
 <div class="break">
 <div class="k-button">
-<a class="back" href="campaign_details.html?campaign_id=[% campaign_id | html %]">
-<div class="statistics-dashboard">
-<div id="statisticschart" class="p-content absConf">
-<div class="chart-wrapper">
-<div id="averagechart">
-<div id="statstabstrip">
-<div class="panels">
-<div id="clicksgridarea">
-<div id="ClicksGrid" >
-<div class="panels">
-<div id="bidwinchartarea">
-<div class="chart-wrapper">
-<div id="bidwinchart">
-<div id="bidwingrid">
+	<a class="back" href="campaign_details.html?campaign_id=[% campaign_id | html %]">
+	<div class="statistics-dashboard">
+	    <div id="statisticschart" class="p-content absConf">
+		<div class="chart-wrapper">
+		    <div id="averagechart">
+	    <div id="statstabstrip">
+		    <div class="panels">
+			<div id="clicksgridarea">
+			    <div id="ClicksGrid" >
+		    <div class="panels">
+			<div id="bidwinchartarea">
+			    <div class="chart-wrapper">
+				<div id="bidwinchart">
+				<div id="bidwingrid">
 <div id="approvalMessages" class="approvalMessages">
-<div id="am_[% response.campaign_id %]" class="approvalComment commentHide">
+		<div id="am_[% response.campaign_id %]" class="approvalComment commentHide">
 <div id="whitetable" class="k-content">
-<div id="grid-submissions">
-<div id="bliscampaigndetails" class="user_details">
-<div id="form-container">
-<div id="userEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
-<div class="form">
-<input type="hidden" data-bind="value: id" id="id" name="id" />
-<input type="hidden" data-bind="value: organisation_id" id="organisation_id" name="organisation_id" />
-<div id="form_status">
-<div class="row">
-<div class="large-6 columns">
-<div class="row">
-<div class="large-6 columns">
-<input autofocus type="text" data-bind="value: name" id="forename" name="forename" tabindex=1 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: surname" id="surname" name="surname" tabindex=2 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: job_title" id="job_title" name="job_title" tabindex=3 />
-<div class="row">
-<div class="large-6 columns">
-<input type="text" data-bind="value: email" id="email" name="email" tabindex=4 />
-<div class="row">
-<div class="large-6 columns">
-<input tabindex=5 type="radio" checked="checked" name="role" id="viewer" value="1" data-bind="checked: role" />
-<input tabindex=6 type="radio" name="role" id="user" value="3" data-bind="checked: role" />
-<input tabindex=7 type="radio" name="role" id="admin" value="7" data-bind="checked: role" />
-<div class="form-actions">
-<button tabindex=8 class="button large secondary" type="submit" id="submit-user"
+	<div id="grid-submissions">
+		<div id="bliscampaigndetails" class="user_details">
+			<div id="form-container">
+				<div id="userEdit" data-role="listview" data-template="template" data-bind="source: dataSource">
+				<div class="form">
+					<input type="hidden" data-bind="value: id" id="id" name="id" />
+					<input type="hidden" data-bind="value: organisation_id" id="organisation_id" name="organisation_id" />
+					<div id="form_status">
+						<div class="row">
+							<div class="large-6 columns">
+						<div class="row">
+							<div class="large-6 columns">
+								<input autofocus type="text" data-bind="value: name" id="forename" name="forename" tabindex=1 />
+						<div class="row">
+							<div class="large-6 columns">
+								<input type="text" data-bind="value: surname" id="surname" name="surname" tabindex=2 />
+						<div class="row">
+							<div class="large-6 columns">
+								<input type="text" data-bind="value: job_title" id="job_title" name="job_title" tabindex=3 />
+						<div class="row">
+							<div class="large-6 columns">
+								<input type="text" data-bind="value: email" id="email" name="email" tabindex=4 />
+						<div class="row">
+							<div class="large-6 columns">
+								<input tabindex=5 type="radio" checked="checked" name="role" id="viewer" value="1" data-bind="checked: role" />
+								<input tabindex=6 type="radio" name="role" id="user" value="3" data-bind="checked: role" />
+								<input tabindex=7 type="radio" name="role" id="admin" value="7" data-bind="checked: role" />
+					<div class="form-actions">
+						<button tabindex=8 class="button large secondary" type="submit" id="submit-user"
 						data-bind="click: save">
-<button tabindex=9 class="button large secondary close-overlay"
+						<button tabindex=9 class="button large secondary close-overlay"
 						type="reset"
 						data-bind="click: cancel">
-<div class="container users-dashboard">
-<div class="row">
-<div class="large-12 column">
-<div class="row">
-<div class="large-2 column">
-<a role="button" aria-label="create user" title="Create user"
+		<div class="container users-dashboard">
+				<div class="row">
+					<div class="large-12 column">
+				<div class="row">
+					<div class="large-2 column">
+								<a role="button" aria-label="create user" title="Create user"
 									 href="#" class="info button add-agency"
 									 onclick="dashboard.switchToSection('user')">
-<div class="large-10 column">
-<div class="main-tab-content">
-<div id="tab-user-list" data-section="user_list">
-<div id="add-user-overlay" class="overlay">
+					<div class="large-10 column">
+						<div class="main-tab-content">
+							<div id="tab-user-list" data-section="user_list">
+			<div id="add-user-overlay" class="overlay">
 <a class="close-overlay link" title="Return to user dashboard"
 							onclick="window.dashboard.hideModal(); return false">
-<div class="secondary-tab-content">
-<div id="tab-user">
+				<div class="secondary-tab-content">
+					<div id="tab-user">
