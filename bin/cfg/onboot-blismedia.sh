@@ -2,7 +2,7 @@
 
 # only run some things as needed
 DOIT=/bin/false
-DOIT=/bin/true
+#DOIT=/bin/true
 
 PJ42=/bin/false
 DASH=/bin/true
@@ -21,7 +21,7 @@ pushd ~/workspace/play/
    webserver.sh 9999 &
 popd
 
-fi # $RUNIT
+fi # $DOIT
 
 if $PJ42; then
 
@@ -96,7 +96,7 @@ popd
 
 fi # $KARMA
 
-if $DOIT; then
+if $RUNIT; then
 
 echo === Start up auto build for infinity plus dashboard
 pushd ~/workspace/projects/infinity-plus-dashboard/setup
