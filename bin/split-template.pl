@@ -5,7 +5,7 @@
 
 use strict;
 use warnings;
-use English;
+use English -no_match_vars;
 use File::Slurp;
 
 my $DEBUG = 0;
