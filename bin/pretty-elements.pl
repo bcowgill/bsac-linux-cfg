@@ -1,11 +1,16 @@
 #!/usr/bin/env perl
-# space out attributes of long elements so there is one attribute per line where possible
-# also put some attributes in a specific order for consistency
-# id class name data-bind
+# space out attributes of long HTML elements so there is one attribute per
+# line where possible also put some attributes in a specific order for
+# consistency i.e. id class name data-bind
 
+# Examples
 # ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt
 # ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt 2>&1 | less
 
+# find some types of tags which might have lots of attributes
+# perl -ne 'sub BEGIN { $/ = undef; } s{([\ \t]*<(input|textarea|select|option|button|div|iframe|form|dl|a) \s+ [^>]+ >)}{print qq{$1\n}}xmsge; ' views/*.tt | less
+# find anything and print by length of the tag
+# perl -ne 'sub BEGIN { $/ = undef; } s{(<[a-zA-Z] [^>]* >)}{my $tag = $1; my $otag = $1; $tag =~ s{(\s)\s*}{\ }xmsg; print qq{@{[length($otag)]} $tag\n}}xmsge; ' views/*.tt | sort -n -r | less
 
 use strict;
 use warnings;
@@ -17,6 +22,9 @@ $Data::Dumper::Indent = 1;
 $Data::Dumper::Terse = 1;
 
 my $DEBUG = 1;
+my $WARN_FILENAME = 0; # show filename on every warning line
+
+$OUTPUT_AUTOFLUSH = 1 if $DEBUG;
 
 my @AttrOrder = qw(id name type tabindex class style value method title alt data-bind action target href);
 my @Elements = qw(input textarea select option button div iframe form dl a);
@@ -29,24 +37,44 @@ my $eol = '[\ \t]*\n';    # whitespace and end of line
 my $empty = "";
 
 my $reElement = qr{ ( $sol < ($elements) \s+ (.+?) (/?>) ) }xms;
-# handle [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] and similar
+# handle Template Toolkit
+# [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] and similar
 my $reTTBlock = qr{ ( \[ \% .? \s* IF .+ \% \] ) }xms;
 my $reAttrib = qr{ \b ([\w|-]+) \s* = ( \d+ | ([$q]) (.*?) \3 ) }xms;
 my $reAttribTrue = qr{ \b ([\w|-]+) \b }xms;
 
-my %IDs = ();
+debug("reElement: $reElement");
+debug("reAttrib: $reAttrib");
+debug("reAttribTrue: $reAttribTrue");
+debug("reTTBlock: $reTTBlock");
 
-# Remove a constant amount of whitespace indentation from the content
-sub unindent
+my %IDs = ();
+my %Files = ();
+my $filename = $ARGV[0];
+
+# make tabs 3 spaces
+sub tab
 {
-	my ($content) = @ARG;
-	if ($content =~ m{\A (\s+)}xms)
+	my ($message) = @ARG;
+	$message =~ s{\t}{   }xmsg;
+	return $message;
+}
+
+sub debug
+{
+	my ($debug) = @ARG;
+	print tab($debug . "\n") if $DEBUG;
+}
+
+sub warning
+{
+	my ($filename, $warning) = @ARG;
+	unless (exists($Files{$filename}) && !$WARN_FILENAME)
 	{
-		print "unindent: [$1]\n" if $DEBUG > 1;
-		my $spaces = quotemeta($1);
-		$content =~ s{(\A|\n)$spaces}{$1}xmsg;
+		$warning = "$filename: $warning";
 	}
-	return $content;
+	$Files{$filename}++;
+	warn("WARN: " . tab($warning));
 }
 
 sub get_attributes
@@ -77,7 +105,7 @@ sub get_attributes
 	$attributes =~ s{\A \s+ \z}{}xms;
 	if ($attributes ne $empty)
 	{
-		warn("WARN: leftovers in element: [$attributes]\n   [$all]");
+		warning($filename, "leftovers in element: [$attributes]\n   $all");
 		$Attribs{'__LEFTOVERS__'} = $attributes;
 	}
 	return \%Attribs;
@@ -128,7 +156,14 @@ sub format_element
 
 	$attribs = " " . $attribs if length($attribs);
 	my $formatted = qq{$leadin<$element$attribs};
-	return "FORMATTED:\n$formatted";
+	return $DEBUG ? "FORMATTED:\n$formatted" : $formatted;
+}
+
+sub trim
+{
+	my ($string) = @ARG;
+	$string =~ s{ \A \s+ }{}xms;
+	return $string;
 }
 
 sub register_id
@@ -137,7 +172,7 @@ sub register_id
 	$rhAttribs->{'id'} = $id;
 	if (exists($IDs{$id}))
 	{
-		warn("\nWARN: duplicate id seen [$id]\n   [$all]\n   [$IDs{$id}[0]]\n");
+		warning($filename, "duplicate id seen [$id]\n   [@{[trim($all)]}]\n   [@{[trim($IDs{$id}[0])]}]\n");
 	}
 	push(@{$IDs{$id}}, $all);
 }
@@ -173,7 +208,7 @@ sub handle_id_name
 		}
 		if ($mismatch)
 		{
-			warn("\nWARN: id/name mismatch in element: [$element]\n   [$all]");
+			warning($filename, "id/name mismatch in element: [$element]\n   [$all]");
 		}
 	}
 }
@@ -185,25 +220,16 @@ sub handle_element
 
 	handle_id_name($all, $element, $rhAttribs);
 
-	print qq{\n[$all]\n   [$element] [$ending] [$attribs]} if $DEBUG;
-	print Dumper($rhAttribs) if $DEBUG;
+	debug(qq{\n[$all]\n   [$element] [$ending] [$attribs]});
+	debug(Dumper($rhAttribs));
 	return format_element($all, $element, $rhAttribs, $ending);
 }
 
 # Get the whole file and walk through the selected element types.
 my $content = <>;
 
-print "reElement: $reElement\n" if $DEBUG;
-print "reAttrib: $reAttrib\n" if $DEBUG;
-
 $content =~ s{ $reElement }{
 	my ($all, $element, $attribs, $ending) = ($1, $2, $3, $4);
 	print(handle_element($all, $element, $attribs, $ending) . "\n");
 	"";
 }xmsge;
-
-# find some types of tags which might have lots of attributes
-# perl -ne 'sub BEGIN { $/ = undef; } s{([\ \t]*<(input|textarea|select|option|button|div|iframe|form|dl|a) \s+ [^>]+ >)}{print qq{$1\n}}xmsge; ' views/*.tt | less
-# find anything and print by length of the tag
-# perl -ne 'sub BEGIN { $/ = undef; } s{(<[a-zA-Z] [^>]* >)}{my $tag = $1; my $otag = $1; $tag =~ s{(\s)\s*}{\ }xmsg; print qq{@{[length($otag)]} $tag\n}}xmsge; ' views/*.tt | sort -n -r | less
-
