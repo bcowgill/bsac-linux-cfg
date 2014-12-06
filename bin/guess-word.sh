@@ -14,6 +14,9 @@ if [ "$WORD" == "" ] ; then
 	echo For hanging with friends, no vowels possible after last one given in the puzzle.
 	echo "So we make two vars one for vowelless guesses (C) and one for vowel including guesses (L)."
 
+	echo The inverse problem, get highest scoring words
+	echo "perl -ne 'sub score { my (\$w, \$v) = @_; \$v *= 2 if length(\$w) >= 7; return \$v; }; \$TILES = q{evrtdhaiyw}; %V = qw( a 1 e 1 i 1   d 2 h 3 r 1 t 1 v 5 w 4 y 3 ); chomp; next if length(\$_) > 8; next if length(\$_) < 4; if (\$_ =~ m{\A [\$TILES]+ \z}xms) { \$v = 0; \$w = \$_; s{(.)}{\$v += \$V{\$1}; qq{\$1 \$V{\$1}   };}xmsge; \$score = score(\$w, \$v); print qq{\$score \$v \$w \$_\n}; } ' english/british-english.txt | sort -n"
+
 else
 	TEMP_FILE=`mktemp /tmp/lookup-english-XXXXXXXXX`
     echo G="$G"
