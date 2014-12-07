@@ -37,7 +37,7 @@ OOPPTTIIOONNSS
                 Print the full help message and exit.
 
 DDEESSCCRRIIPPTTIIOONN
-        B<This program> will read the given input file(s) and format some
+        This program will read the given input file(s) and format some
         of the HTML elements with one attribute per line. Also puts some
         attributes into specific order for consistency i.e. id class name.
 

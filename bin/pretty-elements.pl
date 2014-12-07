@@ -49,7 +49,7 @@ pretty-elements.pl [options] [@options-file ...] [file ...]
 
 =head1 DESCRIPTION
 
- B<This program> will read the given input file(s) and format some
+ This program will read the given input file(s) and format some
  of the HTML elements with one attribute per line. Also puts some
  attributes into specific order for consistency i.e. id class name.
 
