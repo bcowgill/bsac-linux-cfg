@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>[% nothing %]</title>
+		[% INCLUDE fragments/dashboard_refresh_head_includes.tt %]
+		[% INCLUDE fragments/dashboard_refresh_style_includes.tt %]
+		[% INCLUDE fragments/dashboard_refresh_foundation_includes.tt %]
+		[% INCLUDE fragments/dashboard_refresh_kendo_includes.tt %]
+		[% IF template_test_plan %]
+		[% INCLUDE fragments/dashboard_bottom_includes.tt %]
+		[%- END -%]
+		<style>
+			/* MUSTDO inline style to separate style sheet */
+			body {
+				font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+				font-size: 11.5px;
+				margin: 0;
+			}
+			.k-grid-content {
+				height: auto;
+			}
+			div.k-grid-header, div.k-grid-footer {
+				padding-right: 0;
+			}
+			.k-picker-wrap {
+				background:#fff!important;
+			}
+		</style>
+	</head>
+
+	<body class="refresh">
+		<div id="bliscampaigndetails"
+			class="user_details"
+			>
+			<div id="form-container">
+				<div id="campaignEdit">
+					<div id="approvalMessage"
+						data-bind="html: approvalMessage"
+						></div>
+					<div class="form">
+						<input id="id"
+							name="id"
+							type="hidden"
+							data-bind="value: sourceView.id"
+							/>
+						<input id="approval_status"
+							name="approval_status"
+							type="hidden"
+							data-bind="value: sourceView.approval_status"
+							/>
+						<input id="status"
+							name="status"
+							type="hidden"
+							data-bind="value: sourceView.status"
+							/>
+						<input id="organisation_targeting_type_id"
+							name="organisation_targeting_type_id"
+							type="hidden"
+							data-bind="value: sourceView.organisation_targeting_type_id"
+							/>
+						<input id="operator_iprange_type_target"
+							name="operator_iprange_type_target"
+							type="hidden"
+							data-bind="value: sourceView.operator_iprange_type_target"
+							/>
+						<div id="form_status"></div>
+						<fieldset>
+							<div class="row">
+								<div class="large-6 columns">
+									<h4>Campaign details</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="name"><b>Campaign name</b> <span id="name_error"></span> *</label>
+									<input id="name"
+										name="name"
+										type="text"
+										data-bind="value: sourceView.name"
+										autofocus
+										/>
+								</div>
+								<div class="large-5 columns">
+									[% IF (dashboard_user.organisation_type != 'superuser') || dashboard_user.can_admin %]
+									<label><b>[% IF dashboard_user.organisation_type != 'superuser' || isAgencyCampaign %]Initial [% END %]Campaign Status</b></label>
+									[% IF dashboard_user.organisation_type != 'superuser' || isAgencyCampaign %]
+									<p class="helper">After approval, new or modified campaigns have this as their default status.</p>
+									[% END %]
+									<input id="campaign_status_active"
+										name="initial_status"
+										type="radio"
+										value="active"
+										data-bind="checked: sourceView.initial_status"
+										/><label for="campaign_status_active">Active</label>
+									<input id="campaign_status_paused"
+										name="initial_status"
+										type="radio"
+										value="paused"
+										data-bind="checked: sourceView.initial_status"
+										/><label for="campaign_status_paused">Paused</label><input id="campaign_status_inactive"
+	name="initial_status"
+	type="radio"
+	value="inactive"
+	data-bind="checked: sourceView.initial_status"
+	/><label for="campaign_status_inactive">Inactive</label>
+
+									[% END %]
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-2 columns">
+									<label for="start_date"><b>Start Date</b> <span id="start_date_error"></span> *</label>
+									<input id="start_date"
+										name="start_date"
+										data-bind="value: sourceView.start_date"
+										data-format="dd MMM yyyy"
+										data-role="datepicker"
+										/>
+								</div>
+								<div class="large-2 columns end">
+									<label for="end_date"><b>End Date</b> <span id="end_date_error"></span> *</label>
+									<input id="end_date"
+										name="end_date"
+										data-bind="value: sourceView.end_date"
+										data-format="dd MMM yyyy"
+										data-role="datepicker"
+										/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="advertiser_domain"><b>Advertiser Domain</b> <span id="advertiser_domain_error"></span> *</label>
+									<input id="advertiser_domain"
+										name="advertiser_domain"
+										type="text"
+										data-bind="value: sourceView.advertiser_domain"
+										/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="target_url"><b>Advertiser Target URL (inc. http://)</b> <span id="target_url_error"></span> *</label>
+									<input id="target_url"
+										name="target_url"
+										type="text"
+										data-bind="value: sourceView.target_url"
+										/>
+								</div>
+							</div>
+							[% IF isAgencyCampaign && campaign_id != 0 %]
+							<div class="row">
+								<div class="large-6 columns">
+									<p>Campaign Type</p>
+									<p>[% targeting_type_name %]</p>
+								</div>
+							</div>
+							[% END %]
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="iab_category"><b>Advertiser IAB Category</b> <span id="iab_category_error"></span> *</label>
+									<input id="iab_category_id"
+										name="iab_category_id"
+										type="hidden"
+										data-bind="value: sourceView.iab_category_id"
+										/>
+									<input id="iab_category"
+										name="iab_category"
+										class="change-on-keyup change-on-click"
+										style="min-width:350px;"
+										data-bind="value: sourceView.iab_category"
+										data-animation-close-effects="fadeOut zoom:out"
+										data-animation-open-effects="fadeIn zoom:in"
+										data-filter="contains"
+										data-highlight-first="true"
+										data-ignore-case="true"
+										data-min-length="1"
+										data-placeholder="Which IAB category is it? Type : to see all."
+										data-role="autocomplete"
+										data-source="blis.ui.campaignDetails.iabCategories"
+										data-template="iab_category_template"
+										data-text-field="search"
+										/>
+									<script id="iab_category_template" type="text/x-kendo-template">
+										<span>#: category_name # : #: category_id #</span>
+									</script>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="clientDropdown">Client</label>
+									<select id="clientDropdown"
+										name="clientDropdown"
+										data-bind="value: sourceView.client_id"
+										data-role="dropdownlist"
+										>
+										<option value="0">Unassigned</option>[% FOREACH client IN clients %]
+										<option value="[% client.id %]">[% client.name %]</option>[% END %]
+									</select>
+								</div>
+							</div>
+							[% IF dashboard_user.organisation_type == 'superuser' %]
+							<div class="row">
+								<div class="large-6 columns">
+									<input id="polygon_match"
+										name="polygon_match"
+										type="checkbox"
+										data-bind="checked: sourceView.disable_pip_match"
+										/><label for="polygon_match">Disable point-in-polygon location match</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-12 columns">
+									<label for="target_url"><b>Location Optimisation</b></label>
+									<input id="optimise_campaign_location_targeting"
+										name="optimise_campaign_location_targeting"
+										type="checkbox"
+										data-bind="checked: sourceView.location_optimisation_enabled, enabled: optimiseCampaignLocationEnabled"
+										/>
+									<label for="optimise_campaign_location_targeting" data-bind="enabled: optimiseCampaignLocationEnabled">
+										Optimise campaign location targeting | <span data-tooltip aria-haspopup="true" class="has-tip"  title="Note: the campaign must have some location group targeting profiles to enable this. Once enabled, you will be able to optimise the individual location items targeted">Explain</span></label>
+									<input id="remove_existing_location_optimisations"
+										name="remove_existing_location_optimisations"
+										type="checkbox"
+										data-bind="checked: sourceView.location_optimisation_create_new, enabled: optimiseCampaignLocationCreateNewEnabled"
+										/>
+									<label for="remove_existing_location_optimisations" data-bind="enabled: optimiseCampaignLocationCreateNewEnabled">
+										Remove existing location optimisations | <span data-tooltip aria-haspopup="true" class="has-tip"  title="Note: this campaign has a previously deactivated location optimisation. Select this to remove it and create a new one from the current campaign location group. targeting.">Explain</span></label>
+								</div>
+							</div>
+							[% END %]
+						</fieldset>
+						<fieldset>
+							<div class="row">
+								<div class="large-6 columns">
+									<h4>Targeting settings</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label><b>Traffic Type</b> <span id="target_site_app_error"></span> *</label>
+									<input id="target_sites"
+										name="target_site_app"
+										type="radio"
+										value="1"
+										data-bind="checked: sourceView.target_site_app"
+										/>
+									<label for="target_sites">	Sites
+									</label>
+									<input id="target_apps"
+										name="target_site_app"
+										type="radio"
+										value="2"
+										data-bind="checked: sourceView.target_site_app"
+										/>
+									<label for="target_apps">	Apps
+									</label>
+									<input id="target_both"
+										name="target_site_app"
+										type="radio"
+										value="0"
+										data-bind="checked: sourceView.target_site_app"
+										/>
+									<label for="target_both">Both
+									</label>
+								</div>
+								<div class="large-6 columns">
+									<label for="enable_budget_spread_quickly"><b>Delivery</b></label>
+									<input id="enable_budget_spread_quickly"
+										name="enable_budget_spread"
+										type="radio"
+										value="0"
+										data-bind="checked: sourceView.enable_budget_spread"
+										/><label for="enable_budget_spread_quickly">Show ads as quickly as possible</label>
+									<input id="enable_budget_spread_even"
+										name="enable_budget_spread"
+										type="radio"
+										value="1"
+										data-bind="checked: sourceView.enable_budget_spread"
+										/><label for="enable_budget_spread_even">Display ads evenly over time</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label><b>Campaign banner position</b> <span id="banner_position_error"></span></label>
+
+									<input id="banner_position_no_pref"
+										name="banner_position_no_pref"
+										type="checkbox"
+										data-bind="
+									checked: sourceView.banner_position_no_pref,
+									enabled: hasSiteTargeting"
+										/>
+									<label for="banner_position_no_pref">No preference
+									</label>
+									<input id="banner_position_above"
+										name="banner_position_above"
+										type="checkbox"
+										data-bind="
+									enabled: bannerPositionPrefEnabled,
+									checked: sourceView.banner_position_above"
+										/>
+									<label for="banner_position_above">	Above the fold
+									</label>
+									<input id="banner_position_below"
+										name="banner_position_below"
+										type="checkbox"
+										data-bind="
+									enabled: bannerPositionPrefEnabled,
+									checked: sourceView.banner_position_below"
+										/>
+									<label for="banner_position_below">Below the fold
+									</label>
+								</div>
+								<div class="large-6 columns">
+									<label><b>Operator Types</b> <span id="operator_iprange_type_target_error"></span> *</label>
+									<input id="operator_off"
+										name="target_operator"
+										type="radio"
+										value="off"
+										data-bind="checked: sourceView.target_operator"
+										/>
+									<label for="operator_off">	OFF (No filtering)
+									</label>
+									<input id="operator_mobile"
+										name="target_operator"
+										type="radio"
+										value="mobile"
+										data-bind="checked: sourceView.target_operator"
+										/>
+									<label for="operator_mobile">	Mobile Operator
+									</label>
+									<input id="operator_isp"
+										name="target_operator"
+										type="radio"
+										value="isp"
+										data-bind="checked: sourceView.target_operator"
+										/>
+									<label for="operator_isp">	WiFi (and fixed broadband)
+									</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label><b>Frequency Capping</b></label>
+									<input id="fcapping_no"
+										name="fcapping"
+										type="radio"
+										class="checkbox"
+										value="no"
+										data-bind="checked: sourceView.has_frequency_capping"
+										/>
+									<label class="checkbox" for="fcapping_no">No cap on frequency</label>
+									<input id="fcapping_yes"
+										name="fcapping"
+										type="radio"
+										class="checkbox"
+										value="yes"
+										data-bind="checked: sourceView.has_frequency_capping"
+										/>
+									<label class="checkbox" for="fcapping_yes">Capped at:</label>
+								</div>
+								[% IF dashboard_user.organisation_type == 'superuser' %]
+								<div class="large-6 columns">
+									<label for="O2"><b>ISPs</b></label>
+									<input id="O2"
+										name="O2"
+										type="checkbox"
+										data-bind="checked: O2ISP"
+										/><label for="O2">O2</label>
+									<input id="BSkyB"
+										name="BSkyB"
+										type="checkbox"
+										data-bind="checked: BSkyBISP"
+										/><label for="BSkyB">BSkyB</label>
+								</div>
+								[% END %]
+							</div>
+							<div class="row">
+								<div class="large-3 columns">
+									<label for="win_frequency_compute_how_many"><b>How Many Times</b><span id="win_frequency_compute_how_many_error"></span> *</label>
+									<input id="win_frequency_compute_how_many"
+										name="win_frequency_compute_how_many"
+										type="text"
+										class="change-on-keyup"
+										data-bind="
+									enabled: isFrequencyCapped,
+									value: sourceView.win_frequency_compute_how_many"
+										size="15"
+										/>
+								</div>
+								<div class="large-3 columns end">
+									<label for="win_frequency_limit_quantity"><b>Total User Cap over Campaign</b> <span id="win_frequency_limit_quantity_error"></span> *</label>
+									<input id="win_frequency_limit_quantity"
+										name="win_frequency_limit_quantity"
+										type="text"
+										data-bind="
+									enabled: isFrequencyCapped,
+									value: sourceView.win_frequency_limit_quantity"
+										/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="win_frequency_compute_how_many">Shown Per<span id="win_frequency_compute_period_error"></span> *</label>
+									<select id="win_frequency_compute_period"
+										name="win_frequency_compute_period"
+										data-bind="
+										enabled: isFrequencyCapped,
+										value: sourceView.win_frequency_compute_period"
+										data-role="dropdownlist"
+										>
+										<option value="0">Choose Time Period</option>
+										<option value="86400">Day</option>
+										<option value="604800">Week</option>
+										<option value="2592000">Month</option>
+									</select>
+								</div>
+							</div>
+							<input id="win_frequency_timeout_period"
+								name="win_frequency_timeout_period"
+								type="hidden"
+								data-bind="value: sourceView.win_frequency_timeout_period"
+								/>
+						</fieldset>
+						<fieldset>
+							<div class="row">
+								<div class="large-6 columns">
+									<h4>Budget</h4>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<input id="estimate_volume"
+										name="estimate_volume"
+										type="checkbox"
+										data-bind="checked: sourceView.estimate_volume"
+										/>	<label for="estimate_volume">Test as ghost campaign for volume estimation</label>
+								</div>
+							</div>
+
+							<div class="row">
+								[% IF dashboard_user.organisation_type == 'superuser' %]
+								<div class="large-2 columns">
+									<label for="total_budget"><b>Total Budget[% IF !isAgencyCampaign %] (BUY)[% END %] $</b>
+									<span id="total_budget_error"></span> *</label>
+									<input id="total_budget"
+										name="total_budget"
+										type="text"
+										class="change-on-keyup"
+										data-bind="disabled: isVolumeEstimation,
+										value: sourceView.budget"
+										[%- IF isAgencyCampaign %] readonly [%- END %]
+										/>
+								</div>
+								<div class="large-2 columns end">
+									<label for="sell_total_budget"><b>Total Budget[% IF dashboard_user.organisation_type == 'superuser' %] ([% IF isAgencyCampaign %]Agency[% ELSE %]SELL[% END %])[% END %] $</b> <span id="sell_total_budget_error"></span>[% IF isAgencyCampaign %] * [% END %]</label>
+									<input id="sell_total_budget"
+										name="sell_total_budget"
+										type="text"
+										class="change-on-keyup"
+										data-bind="
+									disabled: isVolumeEstimation,
+									value: sourceView.s_budget"
+										[% IF dashboard_user.organisation_type == 'superuser' && isAgencyCampaign %] readonly [%- END %]
+										/>
+								</div>
+								[% END %]
+							</div>
+							<div class="row">
+								[% IF dashboard_user.organisation_type == 'superuser' %]
+								<div class="large-2 columns">
+									<label for="daily_limit_static"><b>Daily Budget $</b> <span id="daily_limit_static_error"></span> *</label>
+									<input id="daily_limit_static"
+										name="daily_limit_static"
+										type="text"
+										data-bind="
+									disabled: isVolumeEstimation,
+									value: sourceView.daily_limit_static"
+										[% IF isAgencyCampaign %] readonly [%- END %]
+										/>
+								</div>
+								[% END %]
+								[% IF isAgencyCampaign %]
+								<div class="large-2 columns end">
+									<label for="sell_daily_limit_static"><b>Daily Budget[% IF dashboard_user.organisation_type == 'superuser' %] (Agency)[% END %] $</b> <span id="sell_daily_limit_static_error"></span></label>
+									<input id="sell_daily_limit_static"
+										name="sell_daily_limit_static"
+										type="text"
+										data-bind="
+									disabled: isVolumeEstimation,
+									value: sourceView.s_daily_limit_static"
+										[%- IF dashboard_user.organisation_type == 'superuser' %] readonly [%- END %]
+										/>
+								</div>
+								[% END %]
+							</div>
+							[% IF dashboard_user.organisation_type == 'superuser' %]
+							<div class="row">
+								<div class="large-2 columns">
+									<label for="bid_price"><b>CPM or CPC rate (BUY) $</b>
+									<span id="bid_price_error"></span> *</label>
+									<input id="bid_price"
+										name="bid_price"
+										type="text"
+										data-bind="value: sourceView.cpm"
+										/>
+								</div>
+								<div class="large-2 columns end">
+									<label for="s_bid_price"><b>CPM or CPC rate[% IF dashboard_user.organisation_type == 'superuser' %] (SELL)[% IF approval_id> 0 %](LOCKED)[% END %][% END %] $</b>
+									<span id="s_bid_price_error"></span> *</label>
+									<input id="s_bid_price"
+										name="s_bid_price"
+										type="text"
+										data-bind="
+									enabled: rateEditingEnabled,
+									value: sourceView.s_cpm"
+										/>
+								</div>
+							</div>
+							[% END %]
+							<div class="row">
+								<div class="large-2 columns end">
+									<label for="total_impression_limit"><b>Total Impressions</b> <span id="total_impression_limit_error"></span> *</label>
+									<input id="total_impression_limit"
+										name="total_impression_limit"
+										type="text"
+										data-bind="value: total_impression_limit"
+										disabled
+										size="15"
+										/>
+								</div>
+								<div class="large-2 columns end">
+									<label for="impression_limit"><b>Daily Impressions</b>
+									<span id="impression_limit_error"></span> *</label>
+									<input id="impression_limit"
+										name="impression_limit"
+										type="text"
+										data-bind="value: sourceView.impression_limit"
+										disabled
+										readonly
+										size="15"
+										/>
+								</div>
+							</div>
+							[% IF dashboard_user.organisation_type == 'superuser' %]
+							<div class="row">
+								<div class="large-6 columns">
+									<label for="ccapping_no"><b>Click Capping</b></label>
+									<input id="ccapping_no"
+										name="ccapping"
+										type="radio"
+										class="checkbox"
+										value="no"
+										data-bind="
+									disabled: isVolumeEstimation,
+									checked: sourceView.has_click_limit"
+										/>
+									<label class="checkbox" for="ccapping_no">No cap on clicks</label>
+									<input id="ccapping_yes"
+										name="ccapping"
+										type="radio"
+										class="checkbox"
+										value="yes"
+										data-bind="
+									disabled: isVolumeEstimation,
+									checked: sourceView.has_click_limit"
+										/>
+									<label class="checkbox" for="ccapping_yes">Clicks a day</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-2 columns">
+									<input id="click_limit"
+										name="click_limit"
+										type="text"
+										data-bind="
+									disabled: clickLimitDisabled,
+									value: sourceView.click_limit"
+										size="15"
+										/>
+								</div>
+							</div>
+							[% END %]
+						</fieldset>
+						<fieldset>
+							<div class="row">
+								<div class="large-6 columns">
+									<h4>Retargeting expression</h4>
+									<p>Setting the retargeting expression here will set it at campaign level, overwriting any existing expressions at banner level, any new creatives added to this campaign will automatically inherit this expression.</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<input id="and_retargeting_expression"
+										name="and_retargeting_expression"
+										type="text"
+										data-bind="value: sourceView.and_retargeting_expression"
+										size="15"
+										/>
+								</div>
+							</div>
+							[% IF dashboard_user.organisation_type == 'superuser' %]
+							<div class="row">
+								<div class="large-6 columns">
+									<h4>Auto Optimisation</h4>
+									<p>Infinity+ will optimise based on performing sites, locations, handsets and demographics. The algorithm starts working after 24 hours of data is captured. If you edit any parameters of the campaign while optimisation is running the 24 hour period will start again (i.e. optimisation will be paused for 24 hours)</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="large-6 columns">
+									<input id="optimise"
+										name="optimise"
+										type="radio"
+										value="autooptimise"
+										data-bind="checked: sourceView.optimiseValue"
+										/><label for="optimise">Auto optimise</label>
+									<input id="do_not_optimise"
+										name="optimise"
+										type="radio"
+										value="donotoptimise"
+										data-bind="checked: sourceView.optimiseValue"
+										/><label for="do_not_optimise">Do not auto optimise</label>
+								</div>
+							</div>
+							[% END %]
+							<div class="row">
+								<div class="large-6 columns"
+									style="margin-top:20px;"
+									>
+									<button id="submit-campaign"
+										type="submit"
+										class="button large info"
+										data-bind="click: save"
+										>Publish All Changes</button>
+									[% IF campaign_id> 0 %]
+									<button class="button large info"
+										data-bind="click: save_and_show"
+										>Show Full Campaign Config</button>
+									[% END %]
+								</div>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			(function () {
+				var opIpRangeTypes = [
+				[% FOREACH op_ip_type IN operator_iprange_type %]
+					[% delim %]{ code : [% op_ip_type.code %], category : "[% op_ip_type.category %]", usage : "[% op_ip_type.usage %]", name: "[% op_ip_type.name %]" }
+						[%- delim = ',' -%]
+					[% END %]
+				];
+
+				var aIABCategories = [
+					[%= separator = '' ~%][%~ FOREACH category_id IN iab_category_lookup.keys.sort ~%][%~ separator ~%]{
+						category_id: "[% category_id  FILTER replace('\"', '\\"') %]",
+						category_name: "[% iab_category_lookup.$category_id  FILTER replace('\"', '\\"') %]",
+						search: "[% iab_category_lookup.$category_id  FILTER replace('\"', '\\"') %] : [% category_id  FILTER replace('\"', '\\"') %]"
+					}[%- separator = ',' -%][%- END ~%]
+				], oOptions = {
+					isAgencyCampaign: [% IF isAgencyCampaign %]true[% ELSE %]false[% END %],
+					organisationType: '[% dashboard_user.organisation_type %]',
+					campaignId: [% IF campaign_id ; campaign_id ; ELSE %]0[% END %],
+					baseCampaignId: [% IF base_campaign_id ; base_campaign_id ; ELSE %]null[% END %],
+					targetingType: [% IF targeting_type ; targeting_type ; ELSE %]null[% END %],
+					iabCategories: {
+						data: []
+					},
+					operatorIpRangeTypes: opIpRangeTypes,
+					equalRetargetingExpressions:'[% equal_retargeting_expressions %]',
+				};
+				oOptions.iabCategories.data = aIABCategories.sort(function (oIABLess, oIABMore) {
+					return blis.utils.sortLabels(oIABLess.category_name, oIABMore.category_name);
+				});
+				blis.utils.setGlobal(
+					'blis.ui.campaignDetails',
+					$.extend(
+						blis.utils.getGlobal('blis.ui.campaignDetails'),
+						oOptions
+					));
+			})()
+		</script>
+	</body>
+</html>
