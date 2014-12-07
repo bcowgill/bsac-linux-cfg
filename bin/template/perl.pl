@@ -60,6 +60,9 @@ use Pod::Usage;
 #use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
 #use Switch;
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Indent = 1;
+$Data::Dumper::Terse = 1;
 
 use File::Copy qw(cp); # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
@@ -134,6 +137,7 @@ sub main
 sub setup
 {
 	my ($rhOpt) = @ARG;
+	$OUTPUT_AUTOFLUSH = 1 if $rhOpt->{debug};
 	debug("Var: " . Dumper(\%Var), 2);
 	debug("setup() rhOpt: " . Dumper($rhOpt), 2);
 }
