@@ -1,5 +1,6 @@
 #!/bin/bash
 # Shell script based test plan
+# set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e
 
 # What we're testing and sample input data
@@ -30,7 +31,7 @@ if [ 0 == "$SKIP" ]; then
 	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST unknown option
@@ -45,7 +46,7 @@ if [ 0 == "$SKIP" ]; then
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --man option
@@ -56,10 +57,10 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --man"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms' "$OUT"
+	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms; s{\d\d\d\d-\d\d-\d\d}{YYYY-MM-DD}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST basic operation
@@ -73,7 +74,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST echo filename
@@ -87,7 +88,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $?
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST tags inline
@@ -101,7 +102,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $?
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST normalize markers to common format
@@ -115,7 +116,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST echo filename and standard input is error
@@ -130,7 +131,7 @@ if [ 0 == "$SKIP" ]; then
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 cleanUpAfterTests

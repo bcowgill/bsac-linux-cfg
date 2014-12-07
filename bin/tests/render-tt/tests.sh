@@ -32,7 +32,7 @@ if [ 0 == "$SKIP" ]; then
 	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST unknown option
@@ -47,7 +47,7 @@ if [ 0 == "$SKIP" ]; then
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --man option
@@ -58,10 +58,10 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --man"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms' "$OUT"
+	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms; s{\d\d\d\d-\d\d-\d\d}{YYYY-MM-DD}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST basic operation with --var
@@ -74,7 +74,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST page vars slurped from file
@@ -87,7 +87,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST pre/post chomp values specified
@@ -100,7 +100,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST include-path setting
@@ -113,7 +113,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 cleanUpAfterTests

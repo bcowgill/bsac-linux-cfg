@@ -1,5 +1,6 @@
 #!/bin/bash
 # Shell script based test plan
+# set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e
 
 # What we're testing and sample input data
@@ -15,6 +16,7 @@ PLAN 19
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
+
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
@@ -29,7 +31,7 @@ if [ 0 == "$SKIP" ]; then
 	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST unknown option
@@ -44,7 +46,7 @@ if [ 0 == "$SKIP" ]; then
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --man option
@@ -55,10 +57,10 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --man"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms' "$OUT"
+	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms; s{\d\d\d\d-\d\d-\d\d}{YYYY-MM-DD}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST no options set
@@ -71,7 +73,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $DEBUG < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST all options turned off acts as a grep for CSS color declarations
@@ -84,7 +86,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST From file and --reverse only acts as a grep -v for CSS color declarations
@@ -97,7 +99,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --color-only greps and shows only the CSS color values
@@ -110,7 +112,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --remap only without --names or --canonical just acts as grep
@@ -123,7 +125,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --canonical only implies --remap
@@ -136,7 +138,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --names only implies --remap and --canonical
@@ -149,7 +151,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 SKIP="NOT YET IMPLEMENTED"
@@ -164,7 +166,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 SKIP=0
@@ -179,7 +181,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --echo --names shows original line and changed line
@@ -192,7 +194,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo "TEST --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
@@ -205,7 +207,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 echo TEST --inplace=.bak --names test in place modification with backup file
@@ -222,7 +224,7 @@ if [ 0 == "$SKIP" ]; then
 	assertFilesEqual "$SAMPLE" "$OUT.bak" "$TEST backup created"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
-   echo SKIP $TEST "$SKIP"
+	echo SKIP $TEST "$SKIP"
 fi
 
 cleanUpAfterTests
