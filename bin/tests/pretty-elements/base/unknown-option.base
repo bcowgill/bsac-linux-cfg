@@ -1,0 +1,29 @@
+Unknown option: unknown-option
+Usage:
+    pretty-elements.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --edit           edit the files in place
+       --warn-files     turn on display of filename for every warning
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
+
+Options:
+    --edit or --noedit
+             Causes HTML elements to be edited in place in the input files.
+
+    --warn-files or --nowarn-files
+             Causes the file name to be shown for all warning messages.
+             Normally it only prints the file name for the first warning in a
+             given file.
+
+    --version
+             Prints the program version and exit.
+
+    --help or -?
+             Print a brief help message and exit.
+
+    --man
+             Print the full help message and exit.
+
