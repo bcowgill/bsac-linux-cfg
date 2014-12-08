@@ -41,7 +41,7 @@ DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 

@@ -13,11 +13,13 @@ HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
    .SourceGear* \
    .pg* .my* \
    .dropbox"
+HOMECFG_EXCLUDE="--exclude=.local/share/baloo"
+
 #  .thunderbird/$THUNDER/prefs.js .thunderbird/$THUNDER/session.json \
 ROOTCFG="/etc/mtab /etc/fstab"
 #ROOTCFG="/etc/X11/xorg.conf /etc/mtab /etc/fstab"
 WORKCFG="workspace/.metadata"
-WORKSTYLE="workspace/projects"
+PLAY="play/project42 play/schema play/graphviz play/mapping-with-jquery"
 
 echo ======================================================================
 date
@@ -27,13 +29,13 @@ crontab -l > ~/bin/cfg/crontab-$HOSTNAME
 pushd ~
 mkdir -p workspace/backup
 
-tar cvzf workspace/backup/$COMPANY-home-cfg.tgz $HOMECFG $WORKCFG $ROOTCFG
+tar cvzf workspace/backup/$COMPANY-home-cfg.tgz $HOMECFG_EXCLUDE $HOMECFG $WORKCFG $ROOTCFG
 popd
 
 pushd ~/workspace
 tar cvzf backup/$COMPANY-notes.tgz *.txt
 tar cvzf backup/$COMPANY-bin.tgz bin/
-tar cvzf backup/work-stuff.tgz play/ charles-config/ projects/
+tar cvzf backup/work-stuff.tgz $PLAY charles-config/
 
 #cp ~/Documents/PhoenixYard*.pdf $DROP
 cp backup/$COMPANY-notes.tgz $DROP
