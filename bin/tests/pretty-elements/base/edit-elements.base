@@ -3,33 +3,27 @@
 		method="POST"
 		action="/datasource/store/targeting_profile/single"
 		>
-		<input id="targeting_profile_id"
-			name="targeting_profile_id"
+		<input name="targeting_profile_id"
 			type="hidden"
 			value="[% targeting_profile_id | html %]"
 			/>
-		<input id="return_url"
-			name="return_url"
+		<input name="return_url"
 			type="hidden"
 			value="creative.html?campaign_id=[% campaign_id | html %]"
 			/>
-		<input id="associated_campaign_id"
-			name="associated_campaign_id"
+		<input name="associated_campaign_id"
 			type="hidden"
 			value="[% current_targeting.targeting_profile.associated_campaign_id | html %]"
 			/>
-		<input id="associated_campaign_id"
-			name="associated_campaign_id"
+		<input name="associated_campaign_id"
 			type="hidden"
 			value="[% campaign_id | html %]"
 			/>
-		<input id="creator_id"
-			name="creator_id"
+		<input name="creator_id"
 			type="hidden"
 			value="[% current_targeting.targeting_profile.creator_id | html %]"
 			/>
-		<input id="creator_id"
-			name="creator_id"
+		<input name="creator_id"
 			type="hidden"
 			value="[% dashboard_user.organisation_obj.id | html %]"
 			/>
@@ -100,8 +94,7 @@
 			data-text-field="type"
 			data-value-field="type"
 			/>
-		<input id="location_group_id"
-			name="location_group_id"
+		<input name="location_group_id"
 			type="hidden"
 			class="k-input"
 			data-bind="value:location_group_id"

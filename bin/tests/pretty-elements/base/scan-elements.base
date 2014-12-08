@@ -1,26 +1,4 @@
-WARN: in/sample-html-elements.txt: duplicate id seen ["associated_campaign_id"]
-   [<input
-         name="associated_campaign_id"
-         type="hidden"
-         value="[% campaign_id | html %]"
-         />]
-   [<input
-         name="associated_campaign_id"
-         type="hidden"
-         value="[% current_targeting.targeting_profile.associated_campaign_id | html %]"
-         />]
-WARN: duplicate id seen ["creator_id"]
-   [<input
-         name="creator_id"
-         type="hidden"
-         value="[% dashboard_user.organisation_obj.id | html %]"
-         />]
-   [<input
-         name="creator_id"
-         type="hidden"
-         value="[% current_targeting.targeting_profile.creator_id | html %]"
-         />]
-WARN: duplicate id seen ["search_field"]
+WARN: in/sample-html-elements.txt: duplicate id seen ["search_field"]
    [<input type="text" id="search_field" style="width: 150px"/>]
    [<input type="text" id="search_field" name="search_field" style="width: 150px" />]
 WARN: duplicate id seen ["search_field"]
@@ -77,13 +55,13 @@ WARN: duplicate id seen ['orgRetargetingExpression#= bannerId #']
    [<input id='orgRetargetingExpression#= bannerId #' type='hidden' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />]
    [<input id='orgRetargetingExpression#= bannerId #' type='hidden' class='k-textbox' style='width: 360px;' value='#= retargetingExpression #' />]
 WARN: id/name mismatch in element: [input]
-   [<input type="checkbox" name="expandable" id="celtraExpandable" checked/>] at ../../pretty-elements.pl line 526.
+   [<input type="checkbox" name="expandable" id="celtraExpandable" checked/>] at ../../pretty-elements.pl line NNNN.
 WARN: id/name mismatch in element: [input]
-   [<input type="checkbox" name="expandable" id="dfaExpandable" checked/>] at ../../pretty-elements.pl line 526.
+   [<input type="checkbox" name="expandable" id="dfaExpandable" checked/>] at ../../pretty-elements.pl line NNNN.
 WARN: id/name mismatch in element: [input]
-   [<input type="checkbox" name="expandable" id="flashExpandable" checked/>] at ../../pretty-elements.pl line 526.
+   [<input type="checkbox" name="expandable" id="flashExpandable" checked/>] at ../../pretty-elements.pl line NNNN.
 WARN: id/name mismatch in element: [input]
-   [<input type="checkbox" name="expandable" id="flashTalkingExpandable" checked/>] at ../../pretty-elements.pl line 526.
+   [<input type="checkbox" name="expandable" id="flashTalkingExpandable" checked/>] at ../../pretty-elements.pl line NNNN.
 WARN: duplicate id seen ["surname"]
    [<input type="text" class="k-input k-textbox" name="surname" data-bind="value:surname">]
    [<input type="text" data-bind="value: data.surname" class="k-textbox" id="surname" name="surname" tabindex=2 />]
@@ -126,33 +104,27 @@ WARN: duplicate id seen ["admin"]
 		method="POST"
 		action="/datasource/store/targeting_profile/single"
 		>
-		<input id="targeting_profile_id"
-			name="targeting_profile_id"
+		<input name="targeting_profile_id"
 			type="hidden"
 			value="[% targeting_profile_id | html %]"
 			/>
-		<input id="return_url"
-			name="return_url"
+		<input name="return_url"
 			type="hidden"
 			value="creative.html?campaign_id=[% campaign_id | html %]"
 			/>
-		<input id="associated_campaign_id"
-			name="associated_campaign_id"
+		<input name="associated_campaign_id"
 			type="hidden"
 			value="[% current_targeting.targeting_profile.associated_campaign_id | html %]"
 			/>
-		<input id="associated_campaign_id"
-			name="associated_campaign_id"
+		<input name="associated_campaign_id"
 			type="hidden"
 			value="[% campaign_id | html %]"
 			/>
-		<input id="creator_id"
-			name="creator_id"
+		<input name="creator_id"
 			type="hidden"
 			value="[% current_targeting.targeting_profile.creator_id | html %]"
 			/>
-		<input id="creator_id"
-			name="creator_id"
+		<input name="creator_id"
 			type="hidden"
 			value="[% dashboard_user.organisation_obj.id | html %]"
 			/>
@@ -223,8 +195,7 @@ WARN: duplicate id seen ["admin"]
 			data-text-field="type"
 			data-value-field="type"
 			/>
-		<input id="location_group_id"
-			name="location_group_id"
+		<input name="location_group_id"
 			type="hidden"
 			class="k-input"
 			data-bind="value:location_group_id"

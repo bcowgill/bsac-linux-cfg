@@ -358,7 +358,9 @@ sub handle_id_name
 		}
 		elsif (exists($rhAttribs->{'name'}))
 		{
-			register_id($all, $rhAttribs->{'name'}, $rhAttribs);
+			# No need to set the ID for hidden fields
+			register_id($all, $rhAttribs->{'name'}, $rhAttribs) 
+				unless exists($rhAttribs->{'type'}) && $rhAttribs->{'type'} eq '"hidden"';
 		}
 		if (exists($rhAttribs->{'type'}) && $rhAttribs->{'type'} eq '"radio"')
 		{

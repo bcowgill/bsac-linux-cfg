@@ -1,10 +1,10 @@
 WARN: in/complex.txt: leftovers in element: [   ="[%  .  . ]
-                              <input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age > at ../../pretty-elements.pl line 526.
+                              <input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age > at ../../pretty-elements.pl line NNNN.
 WARN: duplicate id seen ["from_age"]
    [<input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age FIXGT 0 %][% current_targeting.from_age %][% END %]"/>]
    [<input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age >]
 WARN: id/name mismatch in element: [input]
-   [                           <input id="Ad_X" name="active_ssp_29" [% UNLESS current_targeting.blocked_ssps.item(29) %]checked="checked"[% END %] type="checkbox" value="1"/>] at ../../pretty-elements.pl line 526.
+   [                           <input id="Ad_X" name="active_ssp_29" [% UNLESS current_targeting.blocked_ssps.item(29) %]checked="checked"[% END %] type="checkbox" value="1"/>] at ../../pretty-elements.pl line NNNN.
 FAILING TAG due to the greater than
 									<input id="from_age"
 										name="from_age"

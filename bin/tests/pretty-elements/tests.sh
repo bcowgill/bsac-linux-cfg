@@ -71,6 +71,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	perl -i -pne 's{(pl \s+ line \s+) \d+}{${1}NNNN}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -86,6 +87,7 @@ if [ 0 == "$SKIP" ]; then
 	cp $SAMPLE $OUT
 	chmod +w $OUT
 	$PROGRAM $ARGS > $OUT.warn 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	perl -i -pne 's{(pl \s+ line \s+) \d+}{${1}NNNN}xms' "$OUT.warn"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$OUT.warn" "$BASE.warn" "$TEST"
 else
@@ -103,6 +105,7 @@ if [ 0 == "$SKIP" ]; then
 	cp $SAMPLE $OUT
 	chmod +w $OUT
 	$PROGRAM $ARGS > $OUT.warn 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	perl -i -pne 's{(pl \s+ line \s+) \d+}{${1}NNNN}xms' "$OUT.warn"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$OUT.warn" "$BASE.warn" "$TEST"
 else
@@ -118,6 +121,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	perl -i -pne 's{(pl \s+ line \s+) \d+}{${1}NNNN}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
