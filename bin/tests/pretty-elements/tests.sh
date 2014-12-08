@@ -4,15 +4,15 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../ls-tt-tags.pl
-SAMPLE=in/template-toolkit-test.txt
+PROGRAM=../../pretty-elements.pl
+SAMPLE=in/sample-html-elements.txt
 DEBUG=--debug
 DEBUG=
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 13
+PLAN 12
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -63,76 +63,50 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST basic operation
-TEST=basic-operation
+echo TEST scanning for elements
+TEST=scan-elements
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --noinline-block --noecho-filename"
-
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG $SAMPLE"
+	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST echo filename
-TEST=echo-filename
+echo TEST inplace edit of elements
+TEST=edit-elements
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --noinline-block --echo-filename $SAMPLE"
-
-	$PROGRAM $ARGS > $OUT || assertCommandSuccess $?
+	ARGS="$DEBUG --edit $OUT"
+	cp $SAMPLE $OUT
+	chmod +w $OUT
+	$PROGRAM $ARGS > $OUT.warn 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$OUT.warn" "$BASE.warn" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST tags inline
-TEST=tags-inline
+echo TEST inplace edit of a template
+TEST=edit-template
+SAMPLE=in/campaign_details.tt
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --inline-block --noecho-filename $SAMPLE"
-
-	$PROGRAM $ARGS > $OUT || assertCommandSuccess $?
+	ARGS="$DEBUG --edit $OUT"
+	cp $SAMPLE $OUT
+	chmod +w $OUT
+	$PROGRAM $ARGS > $OUT.warn 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST normalize markers to common format
-TEST=normalize-markers
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --noinline-block --noecho-filename --common"
-
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST echo filename and standard input is error
-TEST=echo-filename-stdin-error
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --noinline-block --echo-filename"
-
-	$PROGRAM $ARGS < $SAMPLE > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$OUT.warn" "$BASE.warn" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
 cleanUpAfterTests
-

@@ -60,6 +60,9 @@ use Pod::Usage;
 #use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
 #use Switch;
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Indent = 1;
+$Data::Dumper::Terse = 1;
 
 use File::Copy qw(cp); # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
@@ -105,7 +108,7 @@ my %Var = (
 			"",           # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
 		],
-		raMandatory => [], # additional mandatory paramters not defined by = above.
+		raMandatory => [], # additional mandatory parameters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
 );
@@ -125,15 +128,16 @@ sub main
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
 
 	# Example in-place editing of file
-	if (exists $rhOpts->{splat})
+	if (exists $rhOpt->{splat})
 	{
-		editFileInPlace($rhOpts->{splat}, ".bak", $rhOpts);
+		editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
 	}
 }
 
 sub setup
 {
 	my ($rhOpt) = @ARG;
+	$OUTPUT_AUTOFLUSH = 1 if $rhOpt->{debug};
 	debug("Var: " . Dumper(\%Var), 2);
 	debug("setup() rhOpt: " . Dumper($rhOpt), 2);
 }
@@ -179,7 +183,7 @@ sub doReplacement
 
 sub editFileInPlace
 {
-	my ($fileName, $suffix, $rhOpts) = @ARG;
+	my ($fileName, $suffix, $rhOpt) = @ARG;
 	my $fileNameBackup = "$fileName$suffix";
 	print "editFileInPlace($fileName) backup to $fileNameBackup\n";
 
@@ -283,12 +287,26 @@ sub getOptions
 	}
 }
 
+# make tabs 3 spaces
+sub tab
+{
+	my ($message) = @ARG;
+	$message =~ s{\t}{   }xmsg;
+	return $message;
+}
+
+sub warning
+{
+	my ($warning) = @ARG;
+	warn("WARN: " . tab($warning));
+}
+
 sub debug
 {
 	my ($msg, $level) = @ARG;
 	$level ||= 1;
 #	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-	print $msg if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+	print tab($msg) if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
 }
 
 sub usage

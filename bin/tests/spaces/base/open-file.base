@@ -1,0 +1,13 @@
+...spacesLF
+\t\ttabsLF
+LF
+LF
+..carriage.return.linefeed.CRLF
+..LF
+LF
+..carriage.return.only.CRCRCR...LF
+another.test.with.linefeed.carriage.return.linefeed.LF
+CRLF
+another.test.with.carriage.return.linefeed.carriage.returnCRLF
+CR.....CRLF
+\0\0\0.....end
