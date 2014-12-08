@@ -1,0 +1,138 @@
+perltidy version 20120701 log file on a linux system, OLD_PERL_VERSION=5.018002
+Found Configuration File >>> /home/brent/bin/cfg/.perltidyrc-blismedia 
+Configuration and command line parameters for this run:
+--maximum-line-length=78 --indent-columns=4 --continuation-indentation=4 --vertical-tightness=2 --standard-error-output --closing-token-indentation=0 --paren-tightness=1 --brace-tightness=1 --square-bracket-tightness=1 --space-terminal-semicolon --block-brace-tightness=1 --nospace-for-semicolon --nooutdent-long-quotes --want-break-before=% + - * / x != == >= <= =~ < > | & **= += *= &= <<= &&= -= /= |= + >>= ||= .= %= ^= x= -standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -profile=/home/brent/bin/cfg/.perltidyrc-blismedia
+Final parameter set for this run
+------------------------------------
+# Final parameter set for this run.
+# See utility 'perltidyrc_dump.pl' for nicer formatting.
+--DEBUG
+--add-newlines
+--add-semicolons
+--add-whitespace
+--backup-file-extension="bak"
+--blank-lines-before-packages=1
+--blank-lines-before-subs=1
+--blanks-before-blocks
+--blanks-before-comments
+--block-brace-tightness=1
+--block-brace-vertical-tightness=0
+--nobrace-left-and-indent
+--brace-tightness=1
+--brace-vertical-tightness=2
+--brace-vertical-tightness-closing=0
+--break-at-old-attribute-breakpoints
+--break-at-old-keyword-breakpoints
+--break-at-old-logical-breakpoints
+--break-at-old-ternary-breakpoints
+--check-syntax
+--closing-brace-indentation=0
+--closing-paren-indentation=0
+--closing-side-comment-else-flag=0
+--closing-side-comment-interval=6
+--closing-side-comment-maximum-text=20
+--closing-side-comments-balanced
+--closing-square-bracket-indentation=0
+--comma-arrow-breakpoints=1
+--continuation-indentation=4
+--nocuddled-else
+--delete-old-newlines
+--nodelete-old-whitespace
+--delete-semicolons
+--format="tidy"
+--format-skipping
+--fuzzy-line-length
+--hanging-side-comments
+--nohtml
+--html-entities
+--html-table-of-contents
+--indent-block-comments
+--indent-columns=4
+--iterations=1
+--keep-old-blank-lines=1
+--logfile
+--long-block-line-count=8
+--look-for-autoloader
+--look-for-selfloader
+--maximum-consecutive-blank-lines=1
+--maximum-fields-per-table=0
+--maximum-line-length=78
+--minimum-space-to-comment=4
+--outdent-labels
+--outdent-long-comments
+--nooutdent-long-quotes
+--output-line-ending="unix"
+--paren-tightness=1
+--paren-vertical-tightness=2
+--paren-vertical-tightness-closing=0
+--pass-version-line
+--perl-syntax-check-flags="-c -T"
+--pod2html
+--profile="/home/brent/bin/cfg/.perltidyrc-blismedia"
+--noquiet
+--recombine
+--short-concatenation-item-length=8
+--noshow-options
+--nospace-for-semicolon
+--space-terminal-semicolon
+--square-bracket-tightness=1
+--square-bracket-vertical-tightness=2
+--square-bracket-vertical-tightness-closing=0
+--standard-error-output
+--standard-output
+--static-block-comments
+--nostatic-side-comments
+--notabs
+--trim-qw
+--valign
+--want-break-before="% + - * / x != == >= <= =~ < > | & **= += *= &= <<= &&= -= /= |= + >>= ||= .= %= ^= x="
+--warning-output
+------------------------------------
+To find error messages search for 'WARNING' with your editor
+Note: --syntax check will be skipped because standard output is used
+Indentation will be with 4 spaces
+Line 1 implies starting-indentation-level = 0
+The nesting depths in the table below are at the start of the lines.
+The indicated output line numbers are not always exact.
+ci = levels of continuation indentation; bk = 1 if in BLOCK, 0 if not.
+
+in:out indent c b  nesting   code + messages; (messages begin with >>>)
+lines  levels i k            (code begins with one '.' per indent level)
+------  ----- - - --------   -------------------------------------------
+L3:3     i0:0 0 1            >>>Entering POD section
+L3:3     i0:0 0 1            >>>Line length exceeded by 150 characters
+L3:3     i0:0 0 1            >>>Exiting POD section
+L54:54   i0:0 0 1            use strict;
+L58:59   i0:0 0 1            >>>Line length exceeded by 5 characters
+L62:64   i0:0 0 1            >>>Line length exceeded by 46 characters
+L68:70   i0:0 0 1            >>>passing VERSION line; -npvl deactivates
+L71:73   i0:0 0 1            >>>Guessing old indentation was tab character
+L93:97   i3:3 0 0 ({[        >>>Line length exceeded by 75 characters
+L104:109 i3:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
+L115:121 i0:0 0 1            sub main
+L134:144 i0:0 0 1            sub setup
+L141:150 i0:0 0 1            sub processStdio
+L150:158 i0:0 0 1            sub processFiles
+L160:166 i0:0 0 1            sub processFile
+L172:177 i0:0 0 1            sub doReplacement
+L180:184 i0:0 0 1            sub editFileInPlace
+L191:194 i0:0 0 1            sub checkOptions
+L204:205 i0:0 0 1            sub checkMandatoryOptions
+L254:259 i0:0 0 1 {          }
+L257:262 i0:0 0 1            sub getOptions
+L286:292 i0:0 0 1            sub debug
+L290:295 i0:1 0 1 {          >>>Line length exceeded by 17 characters
+L294:299 i0:0 0 1            sub usage
+L305:309 i0:0 0 1            sub manual
+L311:314 i0:0 0 1 {          >>>Starting __END__ section
+No indentation disagreement seen
+
+2 long lines were outdented:
+  First at output line 62
+   Last at output line 62
+  use -noll to prevent outdenting, -l=n to increase line length
+
+5 output lines exceeded 78 characters:
+ First at line 50 by 150 characters
+ Maximum at line 50 by 150 characters
+ Last at line 295 by 17 characters
