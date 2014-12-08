@@ -135,7 +135,7 @@ my %Var = (
 	empty => '',
 	# handle Template Toolkit
 	# [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] and similar
-	reTTBlock => qr{ ( \[ \% .? \s* IF .+ \% \] ) }xms,
+	reTTBlock => qr{ ( \[ \% .? \s* (?:IF|UNLESS) .+?  END .? \% \] ) }xms,
 	reAttribTrue => qr{ \b ([\w|-]+) \b }xms,
 
 	# Some vars for the program

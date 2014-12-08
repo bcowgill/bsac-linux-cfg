@@ -1,0 +1,21 @@
+WARN: in/complex.txt: id/name mismatch in element: [input]
+   [                           <input id="Ad_X" name="active_ssp_29" [% UNLESS current_targeting.blocked_ssps.item(29) %]checked="checked"[% END %] type="checkbox" value="1"/>] at ../../pretty-elements.pl line 526.
+									<input id="to_age"
+										name="to_age"
+										type="text"
+										value=""
+										[% IF current_targeting.to_age AND current_targeting.to_age < 150 %][% current_targeting.to_age %][% END %]
+										/>
+									<input id="Ad_X"
+										name="active_ssp_29"
+										type="checkbox"
+										value="1"
+										[% UNLESS current_targeting.blocked_ssps.item(29) %]checked="checked"[% END %]
+										/>
+                        <input id="schedule_[% schedule_day.code | html %][% (sextile * 4) + hour %]"
+                        	name="schedule_[% schedule_day.code | html %][% (sextile * 4) + hour %]"
+                        	type="checkbox"
+                        	value="1"
+                        	onclick="clickScheduleItem('[% schedule_day.id | html %]', [% (sextile * 4) + hour %]);"
+                        	[% IF current_targeting.schedule.live_hours.item(schedule_day.code _ ((sextile * 4) + hour)) == 1 %]checked="checked"[% END %]
+                        	/>
