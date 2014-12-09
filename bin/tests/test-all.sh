@@ -11,6 +11,7 @@ testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE
 testSuite perltidy-me "evaluate perltidy formatting options" $PROVE
 testSuite pretty-elements "format HTML elements nicely" $PROVE
 testSuite spaces "show spaces nulls and end of lines" $PROVE
+testSuite ls-tabs "report on tab indentation in file" $PROVE
 
 PLAN 2
 OK "all test suites completed"
