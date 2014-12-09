@@ -1,0 +1,9 @@
+2 |..|prefix spaces 4
+4 ...prefix spaces 3
+5 |..|..TTTmixed spaces and tab prefix
+=====
+8 lines read
+3 lines with prefix spacing
+4 lines with prefix tabs
+spacing which mismatches tab depth (TAB_STOP=4) found.
+mixed tabs and spaces found.
