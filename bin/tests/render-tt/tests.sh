@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../render-tt.pl
+CMD=`basename $PROGRAM`
 SAMPLE=in/template-toolkit-test.tt
 SAMPLE_INCLUDE=in/frame/template-frame.tt
 DEBUG=--debug

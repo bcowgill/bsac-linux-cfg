@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../ls-tt-tags.pl
+CMD=`basename $PROGRAM`
 SAMPLE=in/template-toolkit-test.txt
 DEBUG=--debug
 DEBUG=

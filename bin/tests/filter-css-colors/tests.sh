@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../filter-css-colors.pl
+CMD=`basename $PROGRAM`
 SAMPLE=filter-css-colors-test.txt
 DEBUG=--debug
 DEBUG=

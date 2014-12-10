@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../template/perl.pl
+CMD=`basename $PROGRAM`
 SAMPLE=in/sample.txt
 DEBUG=--debug
 DEBUG=

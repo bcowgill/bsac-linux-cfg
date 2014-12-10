@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../spaces.pl
+CMD=`basename $PROGRAM`
 SAMPLE=in/spaces.txt
 DEBUG=
 SKIP=0
