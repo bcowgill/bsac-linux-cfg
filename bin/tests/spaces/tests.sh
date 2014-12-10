@@ -20,7 +20,7 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-echo TEST open file
+echo TEST $CMD open file
 TEST=open-file
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -33,7 +33,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST standard input
+echo TEST $CMD standard input
 TEST=stdin
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -46,7 +46,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST input pipe
+echo TEST $CMD input pipe
 TEST=input-pipe
 if [ 0 == "$SKIP" ]; then
 	ERR=0
