@@ -1,0 +1,19 @@
+Unknown option: unknown-option
+Usage:
+    perl.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
+
+Options:
+    --version
+             Prints the program version and exit.
+
+    --help or -?
+             Print a brief help message and exit.
+
+    --man
+             Print the full help message and exit.
+

@@ -121,17 +121,18 @@ sub main
 	debug("Var: " . Dumper(\%Var), 2);
 	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
 
+	# Example in-place editing of file
+	if (exists $rhOpt->{splat})
+	{
+		editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
+		exit 0;
+	}
+
 	if ($use_stdio)
 	{
 		processStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
-
-	# Example in-place editing of file
-	if (exists $rhOpt->{splat})
-	{
-		editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
-	}
 }
 
 sub setup
