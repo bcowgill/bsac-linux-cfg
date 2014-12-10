@@ -1,21 +1,15 @@
-WARN: in/complex.txt: leftovers in element: [   ="[%  .  . ]
-                              <input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age > at ../../pretty-elements.pl line NNNN.
-WARN: duplicate id seen ["from_age"]
+WARN: in/complex.txt: duplicate id seen ["from_age"]
    [<input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age FIXGT 0 %][% current_targeting.from_age %][% END %]"/>]
-   [<input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age >]
+   [<input id="from_age" name="from_age" type="text" value="[% IF current_targeting.from_age AND current_targeting.from_age > 0 %][% current_targeting.from_age %][% END %]"/>]
 WARN: id/name mismatch in element: [input]
    [                           <input id="Ad_X" name="active_ssp_29" [% UNLESS current_targeting.blocked_ssps.item(29) %]checked="checked"[% END %] type="checkbox" value="1"/>] at ../../pretty-elements.pl line NNNN.
 FAILING TAG due to the greater than
 									<input id="from_age"
 										name="from_age"
 										type="text"
-										value
-										AND
-										IF
-										__LEFTOVERS__=   ="[%  .  . 
-										current_targeting
-										from_age
-										> 0 %][% current_targeting.from_age %][% END %]"/>
+										value=""
+										[% IF current_targeting.from_age AND current_targeting.from_age > 0 %][% current_targeting.from_age %][% END %]
+										/>
 
 just change to FIXGT to make work temporarily
 									<input id="from_age"
@@ -44,3 +38,5 @@ just change to FIXGT to make work temporarily
                         	onclick="clickScheduleItem('[% schedule_day.id | html %]', [% (sextile * 4) + hour %]);"
                         	[% IF current_targeting.schedule.live_hours.item(schedule_day.code _ ((sextile * 4) + hour)) == 1 %]checked="checked"[% END %]
                         	/>
+
+<label for="s_bid_price"><b>CPM or CPC rate[% IF dashboard_user.organisation_type == 'superuser' %] (SELL)[% IF approval_id> 0 %](LOCKED)[% END %][% END %] $</b>

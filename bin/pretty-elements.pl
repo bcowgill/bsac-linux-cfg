@@ -136,6 +136,10 @@ my %Var = (
 	# handle Template Toolkit
 	# [% IF tab_selected == 'view_campaign_heatmap' %]class="selected"[% END %] and similar
 	reTTBlock => qr{ ( \[ \% .? \s* (?:IF|UNLESS) .+?  END .? \% \] ) }xms,
+	# handle greater than within a Template Toolkit block with a temporary substitution
+	# [% IF current_targeting.from_age AND current_targeting.from_age > 0 %][% current_targeting.from_age %][% END %]
+	reTTGreater => qr{ ( \[ \% .? \s* (?:IF|UNLESS) [^%]+? ) > ( .+? \% \] ) }xms,
+	tt_greater => '__HACK_FOR_GREATER_THAN__',
 	reAttribTrue => qr{ \b ([\w|-]+) \b }xms,
 
 	# Some vars for the program
@@ -239,7 +243,8 @@ sub get_attributes
 	# First pull out any Template toolkit conditions
 	$attributes =~ s{ $Var{reTTBlock} }{
 		my ($condition) = ($1);
-		push(@{$Attribs{'__TT_BLOCKS__'}}, $condition);
+		# unreplace the greater than sign marker now
+		push(@{$Attribs{'__TT_BLOCKS__'}}, unhack($condition));
 		$Var{'empty'};
 	}xmsge;
 
@@ -259,7 +264,7 @@ sub get_attributes
 	$attributes =~ s{\A \s+ \z}{}xms;
 	if ($attributes ne $Var{'empty'})
 	{
-		warning($Var{'filename'}, "leftovers in element: [$attributes]\n   $all");
+		warning($Var{'filename'}, "leftovers in element: [$attributes]\n   unhack($all)");
 		$Attribs{'__LEFTOVERS__'} = $attributes;
 	}
 	return \%Attribs;
@@ -324,6 +329,14 @@ sub trim
 	return $string;
 }
 
+# Unhack the greater than signs
+sub unhack
+{
+	my ($string) = @ARG;
+	$string =~ s[ $Var{'tt_greater'} ][>]xmsg;
+	return $string;
+}
+
 # Update register of all id values seen to locate duplicates
 sub register_id
 {
@@ -331,9 +344,9 @@ sub register_id
 	$rhAttribs->{'id'} = $id;
 	if (exists($Var{'rhIDs'}{$id}))
 	{
-		warning($Var{'filename'}, "duplicate id seen [$id]\n   [@{[trim($all)]}]\n   [@{[trim($Var{'rhIDs'}{$id}[0])]}]\n");
+		warning($Var{'filename'}, "duplicate id seen [$id]\n   [@{[unhack(trim($all))]}]\n   [@{[trim($Var{'rhIDs'}{$id}[0])]}]\n");
 	}
-	push(@{$Var{'rhIDs'}{$id}}, $all);
+	push(@{$Var{'rhIDs'}{$id}}, unhack($all));
 }
 
 # If id/name missing for an input, add it
@@ -393,10 +406,14 @@ sub doReplacement
 {
 	my ($rContent) = @ARG;
 
-	$$rContent =~ s{ $Var{reElement} }{
+	# Hack to handle a greater than within a template toolkit IF block,
+	# replace it with some obscure text and unreplace it later when formatting.
+	$$rContent =~ s{ $Var{'reTTGreater'} }{$1$Var{'tt_greater'}$2}xmsg;
+	$$rContent =~ s{ $Var{'reElement'} }{
 		my ($all, $element, $attribs, $ending) = ($1, $2, $3, $4);
 		handle_element($all, $element, $attribs, $ending);
 	}xmsge;
+	$$rContent =~ s{ $Var{'tt_greater'} }{>}xmsg;
 
 	return $rContent;
 }
