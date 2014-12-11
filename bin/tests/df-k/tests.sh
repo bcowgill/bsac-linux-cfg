@@ -4,15 +4,16 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../spaces.pl
+PROGRAM=../../df-k.pl
 CMD=`basename $PROGRAM`
-SAMPLE=in/spaces.txt
+SAMPLE=in/sample.txt
+DEBUG=--debug
 DEBUG=
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 6
+PLAN 3
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -20,8 +21,8 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-echo TEST $CMD open file
-TEST=open-file
+echo TEST $CMD basic operation
+TEST=basic-operation
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -33,30 +34,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD standard input
-TEST=stdin
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD input pipe
-TEST=input-pipe
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG"
-	cat $SAMPLE | $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
+#stop "simulating a failure so all .html output remains behind for front end behaviour verification"
 
 cleanUpAfterTests
+

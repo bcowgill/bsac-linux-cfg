@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=perltidy
+CMD=`basename $PROGRAM`
 SAMPLE=in/perltidy-me.pl
 DEBUG=--debug
 DEBUG=

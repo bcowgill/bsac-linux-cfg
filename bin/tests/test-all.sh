@@ -6,6 +6,7 @@ PROVE=${1:-}
 source ./shell-test.sh
 
 testSuite template-perl "perl template for scanning and editing files in place" $PROVE
+testSuite df-k "format df -k command output more legibly" $PROVE
 testSuite ls-tabs "report on tab indentation in file" $PROVE
 testSuite ls-tt-tags "list template toolkit tags in templates" $PROVE
 testSuite render-tt "render a perl Template::Toolkit page with specific variables set" $PROVE

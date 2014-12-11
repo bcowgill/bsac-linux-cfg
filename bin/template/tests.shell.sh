@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../bin/program.pl
+CMD=`basename $PROGRAM`
 SAMPLE=in/input.txt
 DEBUG=--debug
 DEBUG=
@@ -15,7 +16,7 @@ source shell-test.sh
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || echo OK output dir ready
 
-echo TEST --version option
+echo TEST $CMD --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -29,7 +30,7 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST unknown option
+echo TEST $CMD unknown option
 TEST=unknown-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -44,7 +45,7 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --man option
+echo TEST $CMD --man option
 TEST=man-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -58,7 +59,7 @@ else
    echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST basic operation
+echo TEST $CMD basic operation
 TEST=basic-operation
 if [ 0 == "$SKIP" ]; then
 	ERR=0

@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../pretty-elements.pl
+CMD=`basename $PROGRAM`
 SAMPLE=in/sample-html-elements.txt
 DEBUG=--debug
 DEBUG=
@@ -20,7 +21,7 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-echo TEST --version option
+echo TEST $CMD --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -34,7 +35,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST unknown option
+echo TEST $CMD unknown option
 TEST=unknown-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -49,7 +50,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --man option
+echo TEST $CMD --man option
 TEST=man-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -63,7 +64,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST scanning for elements
+echo TEST $CMD scanning for elements
 TEST=scan-elements
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -77,7 +78,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST inplace edit of elements
+echo TEST $CMD inplace edit of elements
 TEST=edit-elements
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -94,7 +95,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST inplace edit of a template
+echo TEST $CMD inplace edit of a template
 TEST=edit-template
 SAMPLE=in/campaign_details.tt
 if [ 0 == "$SKIP" ]; then
@@ -112,7 +113,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST scanning for complex elements
+echo TEST $CMD scanning for complex elements
 TEST=scan-complex
 SAMPLE=in/complex.txt
 if [ 0 == "$SKIP" ]; then

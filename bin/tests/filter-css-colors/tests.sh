@@ -5,6 +5,7 @@ set -e
 
 # What we're testing and sample input data
 PROGRAM=../../filter-css-colors.pl
+CMD=`basename $PROGRAM`
 SAMPLE=filter-css-colors-test.txt
 DEBUG=--debug
 DEBUG=
@@ -20,7 +21,7 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-echo TEST --version option
+echo TEST $CMD --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -34,7 +35,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST unknown option
+echo TEST $CMD unknown option
 TEST=unknown-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -49,7 +50,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --man option
+echo TEST $CMD --man option
 TEST=man-option
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -63,7 +64,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST no options set
+echo TEST $CMD no options set
 TEST=no-options
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -76,7 +77,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST all options turned off acts as a grep for CSS color declarations
+echo TEST $CMD all options turned off acts as a grep for CSS color declarations
 TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -89,7 +90,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST From file and --reverse only acts as a grep -v for CSS color declarations
+echo TEST $CMD From file and --reverse only acts as a grep -v for CSS color declarations
 TEST=noecho-reverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -102,7 +103,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --color-only greps and shows only the CSS color values
+echo TEST $CMD --color-only greps and shows only the CSS color values
 TEST=noecho-noreverse-color-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -115,7 +116,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --remap only without --names or --canonical just acts as grep
+echo TEST $CMD --remap only without --names or --canonical just acts as grep
 TEST=noecho-noreverse-nocolor-remap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -128,7 +129,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --canonical only implies --remap
+echo TEST $CMD --canonical only implies --remap
 TEST=noecho-noreverse-nocolor-noremap-canon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -141,7 +142,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --names only implies --remap and --canonical
+echo TEST $CMD --names only implies --remap and --canonical
 TEST=noecho-noreverse-nocolor-noremap-nocanon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -156,7 +157,7 @@ fi
 
 SKIP="NOT YET IMPLEMENTED"
 
-echo TEST --rgb only implies --remap and --canonical
+echo TEST $CMD --rgb only implies --remap and --canonical
 TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -171,7 +172,7 @@ fi
 
 SKIP=0
 
-echo TEST --remap --canonical and --names against previous test base file
+echo TEST $CMD --remap --canonical and --names against previous test base file
 TEST=noecho-noreverse-nocolor-remap-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -184,7 +185,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --echo --names shows original line and changed line
+echo TEST $CMD --echo --names shows original line and changed line
 TEST=echo-noreverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -197,7 +198,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo "TEST --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
+echo "TEST $CMD --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
 TEST=validonly-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -210,7 +211,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST --inplace=.bak --names test in place modification with backup file
+echo TEST $CMD --inplace=.bak --names test in place modification with backup file
 TEST=inplace
 if [ 0 == "$SKIP" ]; then
 	ERR=0
