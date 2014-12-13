@@ -9,7 +9,7 @@ AAUUTTHHOORR
        Brent S.A. Cowgill
 
 SSYYNNOOPPSSIISS
-       perl.pl [options] [@options-file ...] [file ...]
+       perl-inplace.pl [options] [@options-file ...] [file ...]
 
         Options:
           --version        display program version
@@ -28,13 +28,13 @@ OOPPTTIIOONNSS
 
 DDEESSCCRRIIPPTTIIOONN
         Template for a perl script with the usual bells and whistles.
-        Supports long option parsing and perldoc perl.pl to show pod.
+        Supports long option parsing and perldoc perl-inplace.pl to show pod.
 
         B<This program> will read the given input file(s) and do something
         useful with the contents thereof.
 
 EEXXAAMMPPLLEESS
-        template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+        template/perl-inplace.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
 
 

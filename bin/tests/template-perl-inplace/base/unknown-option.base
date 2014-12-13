@@ -1,6 +1,6 @@
 Unknown option: unknown-option
 Usage:
-    perl.pl [options] [@options-file ...] [file ...]
+    perl-inplace.pl [options] [@options-file ...] [file ...]
 
      Options:
        --version        display program version

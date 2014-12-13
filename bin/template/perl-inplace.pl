@@ -113,6 +113,13 @@ my %Var = (
 	},
 );
 
+# Return the value of a command line option
+sub opt
+{
+	my ($opt) = @ARG;
+	return $Var{'rhArg'}{'rhOpt'}{$opt};
+}
+
 getOptions();
 
 sub main
@@ -133,6 +140,13 @@ sub main
 		processStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
+	summary($rhOpt);
+}
+
+sub summary
+{
+	my ($rhOpt) = @ARG;
+	print "=====\nsummary after processing\n";
 }
 
 sub setup
@@ -148,7 +162,7 @@ sub processStdio
 	my ($rhOpt) = @ARG;
 	debug("processStdio()\n");
 	my $rContent = read_file(\*STDIN, scalar_ref => 1);
-	doReplacement($rContent);
+	doReplacement($rContent, $rhOpt);
 	print $$rContent;
 }
 
@@ -170,13 +184,13 @@ sub processFile
 	# example slurp in the file and show something
 	my $rContent = read_file($fileName, scalar_ref => 1);
 	print "length: " . length($$rContent) . "\n";
-	doReplacement($rContent);
+	doReplacement($rContent, $rhOpt);
 	print $$rContent;
 }
 
 sub doReplacement
 {
-	my ($rContent) = @ARG;
+	my ($rContent, $rhOpt) = @ARG;
 	my $regex = qr{\A}xms;
 	$$rContent =~ s{$regex}{splatted\n}xms;
 	return $rContent;
@@ -299,15 +313,15 @@ sub tab
 sub warning
 {
 	my ($warning) = @ARG;
-	warn("WARN: " . tab($warning));
+	warn("WARN: " . tab($warning) . "\n");
 }
 
 sub debug
 {
 	my ($msg, $level) = @ARG;
 	$level ||= 1;
-#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-	print tab($msg) if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+#	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
+	print tab($msg) . "\n" if (opt('debug') >= $level);
 }
 
 sub usage

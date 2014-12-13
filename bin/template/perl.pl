@@ -108,6 +108,14 @@ my %Var = (
 	},
 );
 
+# Return the value of a command line option
+sub opt
+{
+	my ($opt) = @ARG;
+	return $Var{'rhArg'}{'rhOpt'}{$opt};
+}
+
+my $lines_seen = 0;
 getOptions();
 
 sub main
@@ -121,6 +129,13 @@ sub main
 		processStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
+	summary($rhOpt);
+}
+
+sub summary
+{
+	my ($rhOpt) = @ARG;
+	print "=====\n$lines_seen lines read\n";
 }
 
 sub setup
@@ -139,7 +154,7 @@ sub processStdio
 	while (my $line = <STDIN>)
 	{
 		debug("line: $line");
-		($line, $print) = doLine($line, $print);
+		($line, $print) = doLine($rhOpt, $line, $print);
 		print $line if $print;
 	}
 }
@@ -159,20 +174,22 @@ sub processFile
 	my ($fileName, $rhOpt) = @ARG;
 	debug("processFile($fileName)\n");
 
-	# example slurp in the file and show something
+	# example read the file and show something line by line
 	my $print = 0;
 	my $fh;
 	open($fh, "<", $fileName);
 	while (my $line = <$fh>)
 	{
-		($line, $print) = doLine($line, $print);
+		($line, $print) = doLine($rhOpt, $line, $print);
 		print $line if $print;
 	}
+	close($fh);
 }
 
 sub doLine
 {
-	my ($line, $print) = @ARG;
+	my ($rhOpt, $line, $print) = @ARG;
+	++$lines_seen;
 	my $regex = qr{\A}xms;
 	$line =~ s{$regex}{length($line) . q{ }}xmse;
 	$print = 1;
@@ -286,15 +303,15 @@ sub tab
 sub warning
 {
 	my ($warning) = @ARG;
-	warn("WARN: " . tab($warning));
+	warn("WARN: " . tab($warning) . "\n");
 }
 
 sub debug
 {
 	my ($msg, $level) = @ARG;
 	$level ||= 1;
-#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-	print tab($msg) if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+#	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
+	print tab($msg) . "\n" if (opt('debug') >= $level);
 }
 
 sub usage
