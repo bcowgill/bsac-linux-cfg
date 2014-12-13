@@ -12,7 +12,7 @@ Brent S.A. Cowgill
 
 =head1 SYNOPSIS
 
-perl.pl [options] [@options-file ...] [file ...]
+perl-inplace.pl [options] [@options-file ...] [file ...]
 
  Options:
    --version        display program version
@@ -40,14 +40,14 @@ perl.pl [options] [@options-file ...] [file ...]
 =head1 DESCRIPTION
 
  Template for a perl script with the usual bells and whistles.
- Supports long option parsing and perldoc perl.pl to show pod.
+ Supports long option parsing and perldoc perl-inplace.pl to show pod.
 
  B<This program> will read the given input file(s) and do something
  useful with the contents thereof.
 
 =head1 EXAMPLES
 
- template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+ template/perl-inplace.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
 =cut
 

@@ -43,7 +43,7 @@ perl.pl [options] [@options-file ...] [file ...]
  Supports long option parsing and perldoc perl.pl to show pod.
 
  B<This program> will read the given input file(s) and do something
- useful with the contents thereof.
+ useful with the contents thereof. It does not modify the input files.
 
 =head1 EXAMPLES
 
@@ -64,17 +64,13 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent = 1;
 $Data::Dumper::Terse = 1;
 
-use File::Copy qw(cp); # copy and preserve source files permissions
-use File::Slurp qw(:std :edit);
-use Fatal qw(cp);
-
 our $VERSION = 0.1; # shown by --version option
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			'' => 0, # indicates standard in/out as - on command line
+			'' => 0,      # indicates standard in/out as - on command line
 			verbose => 1, # default value for verbose
 			debug => 0,
 			man => 0,     # show full help page
@@ -98,7 +94,6 @@ my %Var = (
 # cannot repeat when bundling is turned on
 #		"point:f{2}", # two floats separated by comma --point=1.3,24.5
 			"file=s",     # string required --file or -f (implicit)
-			"splat:s",    # a file to edit in place
 			"in:s",       # to test stdin=-
 			"out:s",      # to test stdout=-
 			"name|n=s@",  # multivalued array string
@@ -121,13 +116,6 @@ sub main
 	debug("Var: " . Dumper(\%Var), 2);
 	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
 
-	# Example in-place editing of file
-	if (exists $rhOpt->{splat})
-	{
-		editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
-		exit 0;
-	}
-
 	if ($use_stdio)
 	{
 		processStdio($rhOpt);
@@ -146,10 +134,14 @@ sub setup
 sub processStdio
 {
 	my ($rhOpt) = @ARG;
+	my $print = 0;
 	debug("processStdio()\n");
-	my $rContent = read_file(\*STDIN, scalar_ref => 1);
-	doReplacement($rContent);
-	print $$rContent;
+	while (my $line = <STDIN>)
+	{
+		debug("line: $line");
+		($line, $print) = doLine($line, $print);
+		print $line if $print;
+	}
 }
 
 sub processFiles
@@ -168,28 +160,23 @@ sub processFile
 	debug("processFile($fileName)\n");
 
 	# example slurp in the file and show something
-	my $rContent = read_file($fileName, scalar_ref => 1);
-	print "length: " . length($$rContent) . "\n";
-	doReplacement($rContent);
-	print $$rContent;
+	my $print = 0;
+	my $fh;
+	open($fh, "<", $fileName);
+	while (my $line = <$fh>)
+	{
+		($line, $print) = doLine($line, $print);
+		print $line if $print;
+	}
 }
 
-sub doReplacement
+sub doLine
 {
-	my ($rContent) = @ARG;
+	my ($line, $print) = @ARG;
 	my $regex = qr{\A}xms;
-	$$rContent =~ s{$regex}{splatted\n}xms;
-	return $rContent;
-}
-
-sub editFileInPlace
-{
-	my ($fileName, $suffix, $rhOpt) = @ARG;
-	my $fileNameBackup = "$fileName$suffix";
-	print "editFileInPlace($fileName) backup to $fileNameBackup\n";
-
-	cp($fileName, $fileNameBackup);
-	edit_file { doReplacement(\$ARG) } $fileName;
+	$line =~ s{$regex}{length($line) . q{ }}xmse;
+	$print = 1;
+	return ($line, $print);
 }
 
 # Must manually check mandatory values present

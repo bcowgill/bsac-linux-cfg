@@ -15,7 +15,7 @@ MANDATORY="--length=42 --hex=0x3c7e --file=filename --name=name --map key=value"
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 12
+PLAN 9
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -89,23 +89,6 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG $SAMPLE $MANDATORY"
 	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD editing operation
-TEST=edit
-SAMPLE=in/sample.txt
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --splat=$OUT $MANDATORY"
-	cp $SAMPLE $OUT
-	$PROGRAM $ARGS > $OUT.stdout || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	assertFilesEqual "$OUT.stdout" "$BASE.stdout" "$TEST stdout correct"
-	assertFilesEqual "$OUT.bak" "$SAMPLE" "$TEST backup kept"
 else
 	echo SKIP $TEST "$SKIP"
 fi
