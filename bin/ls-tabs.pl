@@ -96,13 +96,13 @@ my %Var = (
 		raMandatory => [], # additional mandatory parameters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
-);
 
-my $prefix_tabs = 0;
-my $prefix_spaces = 0;
-my $uneven_spacing = 0;
-my $code = 0;
-my $lines_seen = 0;
+	prefix_tabs => 0,
+	prefix_spaces => 0,
+	uneven_spacing => 0,
+	code => 0,
+	lines_seen => 0,
+);
 
 getOptions();
 
@@ -123,22 +123,22 @@ sub main
 sub summary
 {
 	my ($rhOpt) = @ARG;
-	print "=====\n$lines_seen lines read\n";
-	print "$prefix_spaces lines with prefix spacing\n";
-	print "$prefix_tabs lines with prefix tabs\n";
-	if ($uneven_spacing)
+	print "=====\n$Var{'lines_seen'} lines read\n";
+	print "$Var{'prefix_spaces'} lines with prefix spacing\n";
+	print "$Var{'prefix_tabs'} lines with prefix tabs\n";
+	if ($Var{'uneven_spacing'})
 	{
 		print "spacing which mismatches tab depth (spaces=$rhOpt->{spaces}) found.\n";
-		$code = 2;
+		$Var{'code'} = 2;
 	}
-	if ($prefix_tabs && $prefix_spaces)
+	if ($Var{'prefix_tabs'} && $Var{'prefix_spaces'})
 	{
 		print "mixed tabs and spaces found.\n";
-		$code = 1;
+		$Var{'code'} = 1;
 	}
 
-	print "spacing ok for tab stop $rhOpt->{spaces}\n" if $code == 0;
-	exit($code);
+	print "spacing ok for tab stop $rhOpt->{spaces}\n" if $Var{'code'} == 0;
+	exit($Var{'code'});
 }
 
 sub setup
@@ -196,7 +196,7 @@ sub show_line
 	}{
 		mark_spacing($1) . $2;
 	}xmsge;
-	return "$lines_seen $line";
+	return "$Var{'lines_seen'} $line";
 }
 
 sub mark_spacing
@@ -206,7 +206,7 @@ sub mark_spacing
 	my $TAB_STOP = $Var{rhArg}{rhOpt}{spaces};
 	$prefix =~ s{ \ {$TAB_STOP} }{ '|' . ('.' x ($TAB_STOP - 2)) . '|' }xmsge;
 	$prefix =~ tr[ \t][.T];
-	$uneven_spacing++ if ($prefix =~ m{\.}xms);
+	$Var{'uneven_spacing'}++ if ($prefix =~ m{\.}xms);
 	return $prefix;
 }
 
@@ -214,10 +214,10 @@ sub doLine
 {
 	my ($rhOpt, $line) = @ARG;
 
-	++$lines_seen;
+	++$Var{'lines_seen'};
 	# ignore lines with no lead spacing
 	my $print = 0;
-	debug("$lines_seen: $line");
+	debug("$Var{'lines_seen'}: $line");
 	return ($line, $print) if ($line =~ m{\A \S}xms);
 	debug("past gate1, has some lead space");
 	return ($line, $print) if ($line =~ m{\A (\n|\z)}xms);
@@ -226,12 +226,12 @@ sub doLine
 	# ignore lines with tabs only, but count them
 	if ($line =~ m{\A \t+ (\n|\S|\z)}xms)
 	{
-		$prefix_tabs++;
+		$Var{'prefix_tabs'}++;
 		return ($line, $print);
 	}
 	debug("past gate3, not lead tabs only");
 
-	$prefix_spaces++;
+	$Var{'prefix_spaces'}++;
 	# handle lines with lead space only
 	if ($line =~ m{\A \ + (\S|\z)}xms)
 	{
@@ -244,7 +244,7 @@ sub doLine
 	{
 		debug("mixed spaces and tabs");
 		# handle lines with mixed spaces and tabs
-		$prefix_tabs++;
+		$Var{'prefix_tabs'}++;
 		$line = show_line($line);
 		$print = 1;
 	}
