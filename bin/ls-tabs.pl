@@ -1,10 +1,8 @@
 #!/usr/bin/env perl
 
-# POD in 5 mins http://juerd.nl/site.plp/perlpodtut
-
 =head1 NAME
 
-sample - Using GetOpt::Long and Pod::Usage
+ls-tabs.pl - List tab and space inconsistencies in files
 
 =head1 AUTHOR
 
@@ -12,9 +10,10 @@ Brent S.A. Cowgill
 
 =head1 SYNOPSIS
 
-perl.pl [options] [@options-file ...] [file ...]
+ls-tabs.pl [options] [@options-file ...] [file ...]
 
  Options:
+   --spaces=N       optional. number of spaced per tab stop. default 4
    --version        display program version
    --help -?        brief help message
    --man            full help message
@@ -22,6 +21,11 @@ perl.pl [options] [@options-file ...] [file ...]
 =head1 OPTIONS
 
 =over 8
+
+=item B<--spaces>
+
+ optional. Set the number of spaces to use per tab stop.
+ default 4
 
 =item B<--version>
 
@@ -39,15 +43,12 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =head1 DESCRIPTION
 
- Template for a perl script with the usual bells and whistles.
- Supports long option parsing and perldoc perl.pl to show pod.
-
- B<This program> will read the given input file(s) and do something
- useful with the contents thereof. It does not modify the input files.
+ This program will read the given input file(s) and show you lines
+ which have inconsistent tabs and spaces.
 
 =head1 EXAMPLES
 
- template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+ ls-tabs.pl --spaces=3 hello.c
 
 =cut
 
@@ -70,8 +71,8 @@ our $VERSION = 0.1; # shown by --version option
 my %Var = (
 	rhArg => {
 		rhOpt => {
+			spaces => 4,  # default number of spaces per tab stop
 			'' => 0,      # indicates standard in/out as - on command line
-			verbose => 1, # default value for verbose
 			debug => 0,
 			man => 0,     # show full help page
 		},
@@ -87,35 +88,22 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
-			"length|l=i", # numeric required --length or -l (explicit defined)
-			"width:3",    # numeric optional with default value if none given on command line but not necessarily the default assigned if not present on command line
-			"ratio|r:f",  # float optional
-			"hex=o",      # extended integer a number in decimal, octal, hex or binary
-# cannot repeat when bundling is turned on
-#		"point:f{2}", # two floats separated by comma --point=1.3,24.5
-			"file=s",     # string required --file or -f (implicit)
-			"in:s",       # to test stdin=-
-			"out:s",      # to test stdout=-
-			"name|n=s@",  # multivalued array string
-			"map|m=s%",   # multivalued hash key=value
+			"spaces|s:i", # option sets the number of spaces per tab
 			"debug|d+",   # incremental keep specifying to increase
-			"verbose|v!", # flag --verbose or --noverbose
 			"",           # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
 		],
 		raMandatory => [], # additional mandatory parameters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
+
+	prefix_tabs => 0,
+	prefix_spaces => 0,
+	uneven_spacing => 0,
+	code => 0,
+	lines_seen => 0,
 );
 
-# Return the value of a command line option
-sub opt
-{
-	my ($opt) = @ARG;
-	return $Var{'rhArg'}{'rhOpt'}{$opt};
-}
-
-my $lines_seen = 0;
 getOptions();
 
 sub main
@@ -135,7 +123,22 @@ sub main
 sub summary
 {
 	my ($rhOpt) = @ARG;
-	print "=====\n$lines_seen lines read\n";
+	print "=====\n$Var{'lines_seen'} lines read\n";
+	print "$Var{'prefix_spaces'} lines with prefix spacing\n";
+	print "$Var{'prefix_tabs'} lines with prefix tabs\n";
+	if ($Var{'uneven_spacing'})
+	{
+		print "spacing which mismatches tab depth (spaces=$rhOpt->{spaces}) found.\n";
+		$Var{'code'} = 2;
+	}
+	if ($Var{'prefix_tabs'} && $Var{'prefix_spaces'})
+	{
+		print "mixed tabs and spaces found.\n";
+		$Var{'code'} = 1;
+	}
+
+	print "spacing ok for tab stop $rhOpt->{spaces}\n" if $Var{'code'} == 0;
+	exit($Var{'code'});
 }
 
 sub setup
@@ -174,25 +177,77 @@ sub processFile
 	my ($fileName, $rhOpt) = @ARG;
 	debug("processFile($fileName)\n");
 
-	# example read the file and show something line by line
 	my $print = 0;
 	my $fh;
 	open($fh, "<", $fileName);
 	while (my $line = <$fh>)
 	{
-		($line, $print) = doLine($rhOpt, $line, $print);
+		($line, $print) = doLine($rhOpt, $line);
 		print $line if $print;
 	}
 	close($fh);
 }
 
+sub show_line
+{
+	my ($line) = @ARG;
+	$line =~ s{
+		\A ([\ \t]+) (\n|\S|\z)
+	}{
+		mark_spacing($1) . $2;
+	}xmsge;
+	return "$Var{'lines_seen'} $line";
+}
+
+sub mark_spacing
+{
+	# mark spaces '.' tabs 'T' and a tab's worth of spaces as '|..|'
+	my ($prefix) = @ARG;
+	my $TAB_STOP = $Var{rhArg}{rhOpt}{spaces};
+	$prefix =~ s{ \ {$TAB_STOP} }{ '|' . ('.' x ($TAB_STOP - 2)) . '|' }xmsge;
+	$prefix =~ tr[ \t][.T];
+	$Var{'uneven_spacing'}++ if ($prefix =~ m{\.}xms);
+	return $prefix;
+}
+
 sub doLine
 {
-	my ($rhOpt, $line, $print) = @ARG;
-	++$lines_seen;
-	my $regex = qr{\A}xms;
-	$line =~ s{$regex}{length($line) . q{ }}xmse;
-	$print = 1;
+	my ($rhOpt, $line) = @ARG;
+
+	++$Var{'lines_seen'};
+	# ignore lines with no lead spacing
+	my $print = 0;
+	debug("$Var{'lines_seen'}: $line");
+	return ($line, $print) if ($line =~ m{\A \S}xms);
+	debug("past gate1, has some lead space");
+	return ($line, $print) if ($line =~ m{\A (\n|\z)}xms);
+	debug("past gate2, not an empty line");
+
+	# ignore lines with tabs only, but count them
+	if ($line =~ m{\A \t+ (\n|\S|\z)}xms)
+	{
+		$Var{'prefix_tabs'}++;
+		return ($line, $print);
+	}
+	debug("past gate3, not lead tabs only");
+
+	$Var{'prefix_spaces'}++;
+	# handle lines with lead space only
+	if ($line =~ m{\A \ + (\S|\z)}xms)
+	{
+		debug("lead space only");
+		$line = show_line($line);
+		$print = 1;
+#		return ($line, $print) if $line =~ m{\A \ + (\n|\z)}xms;
+	}
+	else
+	{
+		debug("mixed spaces and tabs");
+		# handle lines with mixed spaces and tabs
+		$Var{'prefix_tabs'}++;
+		$line = show_line($line);
+		$print = 1;
+	}
 	return ($line, $print);
 }
 
@@ -310,8 +365,8 @@ sub debug
 {
 	my ($msg, $level) = @ARG;
 	$level ||= 1;
-#	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
-	print tab($msg) . "\n" if (opt('debug') >= $level);
+#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
+	print tab($msg) . "\n" if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
 }
 
 sub usage
@@ -333,4 +388,3 @@ sub manual
 	);
 }
 
-__END__

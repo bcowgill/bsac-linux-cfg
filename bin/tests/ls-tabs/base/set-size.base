@@ -5,5 +5,5 @@
 8 lines read
 3 lines with prefix spacing
 4 lines with prefix tabs
-spacing which mismatches tab depth (TAB_STOP=3) found.
+spacing which mismatches tab depth (spaces=3) found.
 mixed tabs and spaces found.

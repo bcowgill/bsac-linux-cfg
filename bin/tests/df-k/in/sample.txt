@@ -1,0 +1,6 @@
+Filesystem      1K-blocks      Used Available Use% Mounted on
+C:/cygwin64/bin 327983836 103773032 224210804  32% /usr/bin
+C:/cygwin64/lib 327983836 103773032 224210804  32% /usr/lib
+C:/cygwin64     327983836 103773032 224210804  32% /
+C:              327983836 103773032 224210804  32% /cygdrive/c
+D:              384001692 146104044 237897648  39% /cygdrive/d

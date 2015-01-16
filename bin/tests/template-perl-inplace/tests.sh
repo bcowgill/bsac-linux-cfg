@@ -4,16 +4,18 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../ls-tabs.pl
+PROGRAM=../../template/perl-inplace.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/sample.txt
 DEBUG=--debug
 DEBUG=
 SKIP=0
+MANDATORY="--length=42 --hex=0x3c7e --file=filename --name=name --map key=value"
+
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 8
+PLAN 12
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -21,7 +23,6 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-SKIP=1
 echo TEST $CMD --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then
@@ -65,43 +66,46 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-SKIP=0
-echo TEST $CMD normal operation
-TEST=normal
+echo TEST $CMD stdin operation
+TEST=stdin
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG $SAMPLE"
+	ARGS="$DEBUG $MANDATORY"
+	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+
+echo TEST $CMD filename operation
+TEST=filename
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG $SAMPLE $MANDATORY"
 	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD tabsize override
-TEST=set-size
+echo TEST $CMD editing operation
+TEST=edit
+SAMPLE=in/sample.txt
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --spaces=3 $SAMPLE"
-	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	ARGS="$DEBUG --splat=$OUT $MANDATORY"
+	cp $SAMPLE $OUT
+	$PROGRAM $ARGS > $OUT.stdout || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD good indentation file
-TEST=good
-SAMPLE=in/good.txt
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --spaces=3"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$OUT.stdout" "$BASE.stdout" "$TEST stdout correct"
+	assertFilesEqual "$OUT.bak" "$SAMPLE" "$TEST backup kept"
 else
 	echo SKIP $TEST "$SKIP"
 fi

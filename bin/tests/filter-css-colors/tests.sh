@@ -198,7 +198,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo "TEST --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
+echo "TEST $CMD --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
 TEST=validonly-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0

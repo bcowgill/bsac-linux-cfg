@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# construct some mysql to generate a perl hash
+# construct some mysql to generate CSV or a perl hash
 
 my $user = shift;
 my $db = shift;
