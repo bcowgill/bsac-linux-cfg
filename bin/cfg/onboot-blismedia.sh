@@ -132,5 +132,6 @@ echo "3: pushd ~/workspace/projects/infinity-plus-dashboard/"
 echo "4: dbinf"
 echo "5: dbp42"
 echo "6: pushd ~/workspace/projects/review-infinity-plus-dashboard/"
+echo "7: watch-apps.sh"
 fi
 
