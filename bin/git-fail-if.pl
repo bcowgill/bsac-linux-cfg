@@ -27,14 +27,41 @@
 
 =item EXAMPLE
 
-    git bisect start 
-    git bisect bad  
-    git checkout HEAD~20 
+    Use the prove command to run tests and have STDERR examined by git-fail-if
+
+    git bisect start; 
+    git bisect bad;  
+    git checkout HEAD~20; 
     prove ...
-    git bisect good
+    git bisect good;
 
     git bisect run git-fail-if.pl --contains "Field 'user' doesn't have a default value" \
         prove t/path/to/test/that/sometimes/fails/in/different/ways.t
+
+    Use a script which greps for some text and says whether the checkout is good or bad based on that
+
+    git checkout develop
+    git bisect start
+    ./good-bad.sh 
+    git bisect bad
+    git checkout 748b7c399b770753c97d22b99227f56c1508bf54
+    good-bad.sh 
+    git bisect good
+    git bisect run git-fail-if.pl --contains "CHECKOUT IS BAD" good-bad.sh
+
+
+   good-bad.sh contains something like this:
+
+   #!/bin/bash
+   CHECK=`egrep has_click_limit views/fragments/campaign_details_budget.tt | wc -l`
+   echo CHECK=$CHECK
+   if [ 0 == $CHECK ] ; then
+        perl -e 'print STDERR qq{CHECKOUT IS BAD\n}'
+        exit 1
+   else
+        perl -e 'print STDERR qq{CHECKOUT IS GOOD\n}'
+        exit 0
+   fi
 
 =cut
 

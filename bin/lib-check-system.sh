@@ -1276,11 +1276,28 @@ function file_contains_text {
    file="$1"
    text="$2"
    message="$3"
-   file_exists "$file"
+   file_exists "$file" "$message"
    if egrep "$text" "$file" > /dev/null; then
       OK "file contains regex: \"$file\" \"$text\""
    else
-      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]" || echo egrep \""$text"\" \""$file"\"
+      NOT_OK "file missing regex: egrep \"$text\" \"$file\" [$message]"
+      return 1
+   fi
+   return 0
+}
+
+# regex check for text in file grepping for key to filter on
+function file_contains_key_value {
+   local file key text message
+   file="$1"
+   key="$2"
+   text="$3"
+   message="$4"
+   file_exists "$file" "$message"
+   if egrep "$key" "$file" | egrep "$text" > /dev/null; then
+      OK "file contains key value regex: \"$file\" \"$key\" \"$text\""
+   else
+      NOT_OK "file missing key value regex: egrep \"$key\" \"$file\" | egrep \"$text\" [$message]" && egrep "$key" "$file"
       return 1
    fi
    return 0
@@ -1291,7 +1308,7 @@ function file_must_not_have_text {
    file="$1"
    text="$2"
    message="$3"
-   file_exists "$file"
+   file_exists "$file" "$message"
    if grep "$text" "$file" > /dev/null; then
       NOT_OK "file should not have text: "$file" "$text" [$message]"
       return 1
@@ -1308,8 +1325,8 @@ function ini_file_has_text {
    file=`basename "$1"`
    text="$2"
    message="$3"
-   file_exists "$dir/$file"
-   file_exists "$INI_DIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
+   file_exists "$dir/$file" "$message"
+   file_exists "$INI_DIR/$file" "$message" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
    file_has_text "$INI_DIR/$file" "$text" "$message"
 }
 
@@ -1319,9 +1336,21 @@ function ini_file_must_not_have_text {
    file=`basename "$1"`
    text="$2"
    message="$3"
-   file_exists "$dir/$file"
-   file_exists "$INI_DIR/$file" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
+   file_exists "$dir/$file" "$message"
+   file_exists "$INI_DIR/$file" "$message" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
    file_must_not_have_text "$INI_DIR/$file" "$text" "$message"
+}
+
+function ini_file_contains_key_value {
+   local dir file key text message
+   dir=`dirname "$1"`
+   file=`basename "$1"`
+   key="$2"
+   text="$3"
+   message="$4"
+   file_exists "$dir/$file" "$message"
+   file_exists "$INI_DIR/$file" "$message" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
+   file_contains_key_value "$INI_DIR/$file" "$key" "$text" "$message"
 }
 
 function crontab_has_command {

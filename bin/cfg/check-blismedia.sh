@@ -798,6 +798,15 @@ file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings 
 
 file_present prettydiff.js "html beautifier file"
 
+# baloo KDE file indexer can choke on big files, set it up better
+# If you see baloo_file_extractor hogging your CPU do this to find out which files are the problem
+# ps -ef | grep baloo_file_extractor
+# to see the ID's being scanned
+# balooshow ID ID ID
+FILE=.kde/share/config/baloofilerc
+ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.CSV" "baloo KDE file indexer can choke on big files, set it up better"
+ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.csv" "baloo KDE file indexer can choke on big files, set it up better"
+
 # okular PDF viewer invert colours
 FILE=.kde/share/config/okularpartrc
 ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
