@@ -12,13 +12,13 @@ my $DEBUG = 0;
 
 # CUSTOM CHANGES HERE
 # open and close tag to find for splitting template
-my $open = '<!-- \s+ Begin \s+ Tab \s+ [^>]+ \s+ -->';
-my $close = '<!-- \s+ End \s+ Tab \s+ [^>]+ \s+ -->';
+my $open = '<!-- \s+ Begin \s+ Panel \s+ [^>]+? \s+ -->';
+my $close = '<!-- \s+ End \s+ Panel \s+ [^>]+? \s+ -->';
 
 my $views = "views";
 my $fragments = "fragments";
-my $template_file = "creative";
-my @Parts = qw(banner richmedia video);
+my $template_file = "creative_richmedia";
+my @Parts = qw(celtra dfa dfa_flash flashtalking simplytics html5 dfa_html5);
 
 local $INPUT_RECORD_SEPARATOR = undef;
 
@@ -57,13 +57,14 @@ my $eol = '[\ \t]*\n';  # whitespace and end of line
 	\A
 	(.+? $eol)          # for $head
 	($sol $open .+ $close $eol)   # for $body
-	(.+? $eol)   # for $sliver
-	($sol <script \s+ .+ </script> $eol) # for $script
+#	(.+? $eol)   # for $sliver
+#	($sol <script \s+ .+ </script> $eol) # for $script
 	(.*) # for footer
 	\z}xms);
 
 # CUSTOM CHANGES HERE
-my ($head, $body, $sliver, $script, $footer) = ($1, $2, $3, $4, $5);
+#my ($head, $body, $sliver, $script, $footer) = ($1, $2, $3, $4, $5);
+my ($head, $body, $footer, $sliver, $script) = ($1, $2, $3);
 
 print join("\n", 
 	"===== HEAD", $head,
@@ -78,8 +79,8 @@ print join("\n",
 my $new_template = join("",
 	$head,
 	(map { "[% INCLUDE $fragments/${template_file}_$ARG.tt %]\n" } @Parts),
-	$sliver,
-	"[% INCLUDE $fragments/${template_file}_script.tt %]\n",
+#	$sliver,
+#	"[% INCLUDE $fragments/${template_file}_script.tt %]\n",
 	$footer
 );
 print unwrapped("$views/$template_file.tt", $new_template);
@@ -87,7 +88,7 @@ print "=======\n" if $DEBUG;
 
 my $file = "$views/$fragments/${template_file}_script.tt";
 print "$file:\n" . unindent($script) if $DEBUG;
-write_file($file, wrap($file, $script));
+write_file($file, wrap($file, $script)) if length($script);
 
 my $idx = 0;
 $body =~ s{($sol $open .+? $close $eol )}{
