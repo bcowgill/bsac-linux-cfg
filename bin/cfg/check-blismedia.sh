@@ -84,7 +84,7 @@ P4MERGE_PKG=p4v.tgz
 
 SUBLIME=subl
 SUBLIME_CFG=.config/sublime-text-3
-SUBLIME_PKG=sublime-text_build-3047_amd64.deb
+SUBLIME_PKG=sublime-text_build-3065_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
 ECLIPSE=""
