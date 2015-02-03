@@ -36,7 +36,7 @@
 # start of configuration
 --starting-indentation-level=0
 --indent-columns=4
---maximum-line-length=80
+--maximum-line-length=128
 #--variable-maximum-line-length perltidy v20140328
 #--whitespace-cycle perltidy v20140328
 --entab-leading-whitespace=4
