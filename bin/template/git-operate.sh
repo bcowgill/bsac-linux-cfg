@@ -7,4 +7,6 @@ echo Added
 git status --porcelain | perl -ne 's{\A A \s+}{}xms && print;'
 echo Renamed
 git status --porcelain | perl -ne 's{\A R \s+ .+? \s+ -> \s+ }{}xms && print;'
+echo Renamed and Modified
+git status --porcelain | perl -ne 's{\A R M .+? \s+ -> \s+ }{}xms && print;'
 
