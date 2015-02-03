@@ -15,4 +15,5 @@ if [ -f $RC ]; then
 else
 	echo "You need to have perltidy configured with the team's settings."
 	echo "You can copy/symlink it from infinity-plus-dashboard/setup/perltidyrc to $RC"
+	echo "Then you can run this from the top of your git repository."
 fi
