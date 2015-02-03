@@ -27,8 +27,14 @@
 # tidy a badly formatted script by creating max number of one line blocks
 # perltidy --mangle myfile.pl -st | perltidy -o myfile.pl.new
 
+# Telling perltidy some things in the code
+#         ## two hashes tells perltidy to leave comment indent level as it is
+#         #<<< tells perltidy to leave this section alone
+#         #>>> end perltidy ignore
+
 #----------------------------------------------------------------------------
 # start of configuration
+--starting-indentation-level=0
 --indent-columns=4
 --maximum-line-length=80
 #--variable-maximum-line-length perltidy v20140328
@@ -48,40 +54,33 @@
 #--output-line-ending=unix
 #--preserve-line-endings
 
+--trim-qw
+
+--add-whitespace
+--delete-old-whitespace
+
 --continuation-indentation=2
 
-## HEREIAM ##
+--outdent-long-quotes
+--outdent-long-comments
 
-# pass sections of code through without changing formatting
-#  #<<< no perltidy here
-#  #>>> end no perltidy formatting
-#--format-skipping
-#--format-skipping-begin="#<<<"
-#--format-skipping-end="#>>>"
+--outdent-labels
+--outdent-keywords
+#  By default, these keywords are redo, next, last, goto, and return.
+#--outdent-keyword-list=
 
+--nocuddled-else
 
-#--warning-output
+--paren-tightness=1
+--square-bracket-tightness=1
+--brace-tightness=1
+--block-brace-tightness=0
 
-#--starting-indentation-level=0
-
-#--indent-only
-#--freeze-newlines
-#--freeze-whitespace
-#--freeze-blank-lines
-#--add-whitespace
-#--delete-old-whitespace
-
-#--entab-leading-whitespace=4
-
-#--vertical-tightness=0
-#--line-up-parentheses
-#--vertical-tightness-closing=0
-
-#--opening-brace-on-new-line
-#--opening-sub-brace-on-new-line
-#--opening-anonymous-sub-brace-on-new-line
-#--opening-brace-always-on-right
-#--brace-left-and-indent
+--opening-brace-on-new-line
+--opening-sub-brace-on-new-line
+--opening-anonymous-sub-brace-on-new-line
+--noopening-brace-always-on-right
+--nobrace-left-and-indent
 #--brace-left-and-indent-list=""
 
 #--opening-token-right
@@ -89,27 +88,42 @@
 #--opening-hash-brace-right
 #--opening-square-bracket-right
 
-#--closing-token-indentation=0
-#--closing-paren-indentation=0
-#--closing-square-bracket-indentation=0
-#--closing-brace-indentation=0
+--closing-token-indentation=0
+--closing-paren-indentation=0
+--closing-square-bracket-indentation=0
+--closing-brace-indentation=0
 
-#--outdent-long-quotes
-#--outdent-long-comments
+--nospace-terminal-semicolon
+--nospace-for-semicolon
+--add-semicolons
+--delete-semicolons
 
-#--outdent-labels
-#--outdent-keywords
-#--outdent-keyword-list=
+# Default space after keywords list:
+#   my local our and or eq ne if else elsif until unless
+#   while for foreach return switch case given when
+--space-after-keyword="*"
+#--nospace-after-keyword="*"
+#--space-keyword-paren
+#--space-function-paren
 
-#--paren-tightness=1
-#--square-bracket-tightness=1
-#--brace-tightness=1
-#--block-brace-tightness=1
+# pass sections of code through without changing formatting
+#  #<<< no perltidy here
+#  #>>> end no perltidy formatting
+--format-skipping
+--format-skipping-begin="#<<<"
+--format-skipping-end="#>>>"
 
-#--nospace-terminal-semicolon
-#--space-for-semicolon
-#--add-semicolons
-#--delete-semicolons
+#--warning-output
+
+#--indent-only
+#--freeze-newlines
+#--freeze-whitespace
+#--freeze-blank-lines
+
+# don't specify these
+#--vertical-tightness=0
+#--line-up-parentheses
+#--vertical-tightness-closing=0
 
 # perltidy --dump-token-types to get list of tokens for these options:
 #--want-left-spaces=""
@@ -117,37 +131,28 @@
 #--nowant-left-spaces=""
 #--nowant-right-spaces=""
 
-# Default space after keywords list:
-#   my local our and or eq ne if else elsif until unless
-#   while for foreach return switch case given when
-#--space-after-keywords="*"
-#--nospace-after-keywords="*"
-
-#--space-keyword-paren
-#--space-function-paren
-
-#--trim-qw
-
-#--indent-block-comments
+--indent-block-comments
 #--indent-spaced-block-comments
-#--minimum-space-to-comment=4
+--minimum-space-to-comment=4
 #--fixed-position-side-comment=0
-#--hanging-side-comments
+--hanging-side-comments
+
+# turning this on is nice, but could be a problem if done always
+# best to run it manually when taking over a file
+# marks the close of a block with a comment so you can match the if to the end.
 #--closing-side-comments
+--closing-side-comment-warnings
 #--delete-closing-side-comments
 #--closing-side-comment-interval=6
 #--closing-side-comment-prefix="## end"
 #--closing-side-comment-list-string="sub : BEGIN END"
 #--closing-side-comment-maximum-text=20
-#--closing-side-comments-balanced
+--closing-side-comments-balanced
 #--closing-side-comment-else-flag=0
-#--closing-side-comment-warnings
 
 # keeps ## comment blocks in place
-#--static-block-comments
+--static-block-comments
 #--static-block-comment-prefix="##"
 #--outdent-static-block-comments
-#--static-side-comments
+--static-side-comments
 #--static-side-comment-prefix="##"
-
-#--nocuddled-else
