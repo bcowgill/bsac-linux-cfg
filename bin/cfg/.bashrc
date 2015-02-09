@@ -110,7 +110,7 @@ fi
 
 #==========================================================================
 # BSAC custom changes from /etc/skel
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:/opt/slickedit/bin:$PATH
 export EDITOR=/usr/bin/vim
 export WCDSCAN=$HOME
 

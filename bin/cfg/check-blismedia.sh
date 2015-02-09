@@ -87,6 +87,12 @@ SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3065_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
+VSLICK=vs
+VSLICK_ARCHIVE=se_19000101_linux64
+VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
+VSLICK_EXTRACTED_DIR="$HOME/Downloads/$VSLICK_ARCHIVE"
+VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
+
 ECLIPSE=""
 
 SVN_PKG=""
@@ -487,6 +493,9 @@ install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Cont
 install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 ## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+
+install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
+cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
 
 cmd_exists git "need git to clone repos"
 make_dir_exist workspace/play "github repo play area"

@@ -403,6 +403,7 @@ function install_files_from {
    return $error
 }
 
+# Download a file from a URL if it doesn't exist
 function install_file_from_url {
    local file package url message
    file="$1"
@@ -420,7 +421,12 @@ function install_file_from_url_zip {
    package="$2"
    url="$3"
    message="$4"
-   install_file_from_url "$file" "$package" "$url" > /dev/null || (push_dir "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && pop_dir)
+   if [ ! -f "$file" ]; then
+      if [ ! -f "$HOME/Downloads/$package" ]; then
+         install_file_from_url "$file" "$package" "$url" "$message"
+      fi
+      install_file_from_zip "$file" "$package" "$message"
+   fi
    file_exists "$file" "$message"
 }
 
