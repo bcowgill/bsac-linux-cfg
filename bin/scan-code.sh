@@ -16,7 +16,7 @@ find $dir \
 -o -name out -prune \
 -o -name _notes -prune \
 -o -name .sass-cache -prune \
--o -name 'jquery*.min.*' -prune \
+-o -name '*.min.*' -prune \
 -o -name 'kendo.mobile.*.min.css' -prune \
 -o -name 'kendo.icenium.min.css' -prune \
 -o -name '*.log' -prune \
@@ -40,7 +40,7 @@ find $dir \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|MUSTDO|FIXME|REFACTOR|QN|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
+'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
 {} \; \
 \)
 
