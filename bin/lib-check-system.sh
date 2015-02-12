@@ -291,6 +291,25 @@ function file_linked_to {
    fi
 }
 
+# Check that relative symlink exists.
+function file_relative_linked_to {
+   local name target message link
+   name="$1"
+   target="$2"
+   message="$3"
+   set +e
+   link=`readlink "$name"`
+   set -e
+   if [ "${link:-}" == "$target" ]; then
+      OK "symlink $name links to $target"
+      return 0
+   else
+      file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && mv "$name" "$name.orig"
+      file_link_exists "$name" "try creating for $message" || ln -s "$target" "$name"
+      file_link_exists "$name" "$message"
+   fi
+}
+
 function file_linked_to_root {
    local name target message link
    name="$1"
