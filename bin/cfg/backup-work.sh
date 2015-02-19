@@ -11,6 +11,7 @@ HOMECFG=".gitconfig .viminfo .lesshist .bash_history \
    .config/VirtualBox VirtualBox* \
    .mozilla/firefox/$MOZZ/prefs.js .mozilla/firefox/$MOZZ/sessionstore.js .mozilla/firefox/$MOZZ/search.json .mozilla/firefox/$MOZZ/bookmarkbackups \
    .SourceGear* \
+   .slickedit \
    .pg* .my* \
    .dropbox"
 HOMECFG_EXCLUDE="--exclude=.local/share/baloo"
@@ -20,6 +21,7 @@ ROOTCFG="/etc/mtab /etc/fstab"
 #ROOTCFG="/etc/X11/xorg.conf /etc/mtab /etc/fstab"
 WORKCFG="workspace/.metadata"
 PLAY="play/project42 play/schema play/graphviz play/mapping-with-jquery"
+VSLICK_FILES='Downloads/[sS][eE]_*.*'
 
 echo ======================================================================
 date
@@ -28,6 +30,9 @@ crontab -l > ~/bin/cfg/crontab-$HOSTNAME
 
 pushd ~
 mkdir -p workspace/backup
+mkdir -p $DROP/vslick
+
+cp $VSLICK_FILES $DROP/vslick
 
 tar cvzf workspace/backup/$COMPANY-home-cfg.tgz $HOMECFG_EXCLUDE $HOMECFG $WORKCFG $ROOTCFG
 popd
