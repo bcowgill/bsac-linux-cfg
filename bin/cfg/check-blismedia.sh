@@ -162,6 +162,14 @@ else
    exit 1
 fi
 
+# ensure /boot doesn't get too full
+if df -k /boot | egrep 9[0-9]% ; then
+   NOT_OK "/boot is nearly full, will clean up some space now."
+   sudo apt-get autoremove
+else
+   OK "plenty of space on /boot"
+fi
+
 install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
 install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
 install_file_from_url_zip Downloads/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
