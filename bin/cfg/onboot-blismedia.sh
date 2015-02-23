@@ -126,12 +126,12 @@ fi
 
 if $DASH; then
 echo konsole tabs dash:
-echo "1: pushd ~/workspace/projects/infinity-plus-dashboard/; tail -f /tmp/brent/auto-build-dashboard.log"
+echo "1: pushd ~/workspace/projects/infinity-plus-dashboard/setup/; tail -f /tmp/brent/auto-build-dashboard.log"
 echo "2: sudo -i"
-echo "3: pushd ~/workspace/projects/infinity-plus-dashboard/"
+echo "3: pushd ~/workspace/projects/infinity-plus-dashboard/setup/"
 echo "4: dbinf"
 echo "5: dbp42"
-echo "6: pushd ~/workspace/projects/review-infinity-plus-dashboard/"
+echo "6: pushd ~/workspace/projects/review-infinity-plus-dashboard/setup/"
 echo "7: watch-apps.sh"
 fi
 
