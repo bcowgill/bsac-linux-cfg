@@ -647,7 +647,10 @@ file_has_text $FILE "toolBarFont=Ubuntu,10"
 file_has_text $FILE "fixed=ProFontWindows,14"
 
 FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
+# this scheme is very dark but not so good with Visual Slick Edit
+#file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
+# this scheme is dark and works well with Visual Slick Edit
+file_has_text $FILE "ColorScheme=Obsidian Coast" "System Settings / Application Appearance / Colors"
 # Unity settings
 
 # KDE settings
