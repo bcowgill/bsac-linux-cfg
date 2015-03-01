@@ -291,6 +291,25 @@ function file_linked_to {
    fi
 }
 
+# Check that relative symlink exists.
+function file_relative_linked_to {
+   local name target message link
+   name="$1"
+   target="$2"
+   message="$3"
+   set +e
+   link=`readlink "$name"`
+   set -e
+   if [ "${link:-}" == "$target" ]; then
+      OK "symlink $name links to $target"
+      return 0
+   else
+      file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && mv "$name" "$name.orig"
+      file_link_exists "$name" "try creating for $message" || ln -s "$target" "$name"
+      file_link_exists "$name" "$message"
+   fi
+}
+
 function file_linked_to_root {
    local name target message link
    name="$1"
@@ -403,6 +422,7 @@ function install_files_from {
    return $error
 }
 
+# Download a file from a URL if it doesn't exist
 function install_file_from_url {
    local file package url message
    file="$1"
@@ -420,7 +440,12 @@ function install_file_from_url_zip {
    package="$2"
    url="$3"
    message="$4"
-   install_file_from_url "$file" "$package" "$url" > /dev/null || (push_dir "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && pop_dir)
+   if [ ! -f "$file" ]; then
+      if [ ! -f "$HOME/Downloads/$package" ]; then
+         install_file_from_url "$file" "$package" "$url" "$message"
+      fi
+      install_file_from_zip "$file" "$package" "$message"
+   fi
    file_exists "$file" "$message"
 }
 

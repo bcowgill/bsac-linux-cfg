@@ -1,7 +1,7 @@
 perltidy version 20120701 log file on a linux system, OLD_PERL_VERSION=5.018002
 Found Configuration File >>> /home/brent/bin/cfg/.perltidyrc-blismedia 
 Configuration and command line parameters for this run:
---maximum-line-length=78 --indent-columns=4 --continuation-indentation=4 --vertical-tightness=2 --standard-error-output --closing-token-indentation=0 --paren-tightness=1 --brace-tightness=1 --square-bracket-tightness=1 --space-terminal-semicolon --block-brace-tightness=1 --nospace-for-semicolon --nooutdent-long-quotes --want-break-before=% + - * / x != == >= <= =~ < > | & **= += *= &= <<= &&= -= /= |= + >>= ||= .= %= ^= x= -standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -profile=/home/brent/bin/cfg/.perltidyrc-blismedia
+--starting-indentation-level=0 --indent-columns=4 --maximum-line-length=100 --iterations=4 --trim-qw --add-whitespace --delete-old-whitespace --continuation-indentation=4 --outdent-long-quotes --outdent-long-comments --nocuddled-else --paren-tightness=1 --square-bracket-tightness=1 --brace-tightness=1 --block-brace-tightness=0 --opening-brace-on-new-line --opening-sub-brace-on-new-line --opening-anonymous-sub-brace-on-new-line --noopening-brace-always-on-right --nobrace-left-and-indent --closing-token-indentation=0 --closing-paren-indentation=0 --closing-square-bracket-indentation=0 --closing-brace-indentation=0 --nospace-terminal-semicolon --nospace-for-semicolon --add-semicolons --delete-semicolons --space-after-keyword=* --format-skipping --format-skipping-begin=#<<< --format-skipping-end=#>>> --indent-block-comments --minimum-space-to-comment=4 --hanging-side-comments --closing-side-comment-warnings --closing-side-comments-balanced --static-block-comments --static-side-comments -standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -profile=/home/brent/bin/cfg/.perltidyrc-blismedia
 Final parameter set for this run
 ------------------------------------
 # Final parameter set for this run.
@@ -15,11 +15,11 @@ Final parameter set for this run
 --blank-lines-before-subs=1
 --blanks-before-blocks
 --blanks-before-comments
---block-brace-tightness=1
+--block-brace-tightness=0
 --block-brace-vertical-tightness=0
 --nobrace-left-and-indent
 --brace-tightness=1
---brace-vertical-tightness=2
+--brace-vertical-tightness=0
 --brace-vertical-tightness-closing=0
 --break-at-old-attribute-breakpoints
 --break-at-old-keyword-breakpoints
@@ -31,16 +31,19 @@ Final parameter set for this run
 --closing-side-comment-else-flag=0
 --closing-side-comment-interval=6
 --closing-side-comment-maximum-text=20
+--closing-side-comment-warnings
 --closing-side-comments-balanced
 --closing-square-bracket-indentation=0
 --comma-arrow-breakpoints=1
 --continuation-indentation=4
 --nocuddled-else
 --delete-old-newlines
---nodelete-old-whitespace
+--delete-old-whitespace
 --delete-semicolons
 --format="tidy"
 --format-skipping
+--format-skipping-begin="#<<<"
+--format-skipping-end="#>>>"
 --fuzzy-line-length
 --hanging-side-comments
 --nohtml
@@ -48,7 +51,7 @@ Final parameter set for this run
 --html-table-of-contents
 --indent-block-comments
 --indent-columns=4
---iterations=1
+--iterations=4
 --keep-old-blank-lines=1
 --logfile
 --long-block-line-count=8
@@ -56,14 +59,18 @@ Final parameter set for this run
 --look-for-selfloader
 --maximum-consecutive-blank-lines=1
 --maximum-fields-per-table=0
---maximum-line-length=78
+--maximum-line-length=100
 --minimum-space-to-comment=4
+--opening-anonymous-sub-brace-on-new-line
+--noopening-brace-always-on-right
+--opening-brace-on-new-line
+--opening-sub-brace-on-new-line
 --outdent-labels
 --outdent-long-comments
---nooutdent-long-quotes
+--outdent-long-quotes
 --output-line-ending="unix"
 --paren-tightness=1
---paren-vertical-tightness=2
+--paren-vertical-tightness=0
 --paren-vertical-tightness-closing=0
 --pass-version-line
 --perl-syntax-check-flags="-c -T"
@@ -73,25 +80,25 @@ Final parameter set for this run
 --recombine
 --short-concatenation-item-length=8
 --noshow-options
+--space-after-keyword="*"
 --nospace-for-semicolon
---space-terminal-semicolon
+--nospace-terminal-semicolon
 --square-bracket-tightness=1
---square-bracket-vertical-tightness=2
+--square-bracket-vertical-tightness=0
 --square-bracket-vertical-tightness-closing=0
 --standard-error-output
 --standard-output
+--starting-indentation-level=0
 --static-block-comments
---nostatic-side-comments
+--static-side-comments
 --notabs
 --trim-qw
 --valign
---want-break-before="% + - * / x != == >= <= =~ < > | & **= += *= &= <<= &&= -= /= |= + >>= ||= .= %= ^= x="
 --warning-output
 ------------------------------------
 To find error messages search for 'WARNING' with your editor
 Note: --syntax check will be skipped because standard output is used
 Indentation will be with 4 spaces
-Line 1 implies starting-indentation-level = 0
 The nesting depths in the table below are at the start of the lines.
 The indicated output line numbers are not always exact.
 ci = levels of continuation indentation; bk = 1 if in BLOCK, 0 if not.
@@ -100,31 +107,29 @@ in:out indent c b  nesting   code + messages; (messages begin with >>>)
 lines  levels i k            (code begins with one '.' per indent level)
 ------  ----- - - --------   -------------------------------------------
 L3:3     i0:0 0 1            >>>Entering POD section
-L3:3     i0:0 0 1            >>>Line length exceeded by 150 characters
+L3:3     i0:0 0 1            >>>Line length exceeded by 128 characters
 L3:3     i0:0 0 1            >>>Exiting POD section
 L54:54   i0:0 0 1            use strict;
-L58:59   i0:0 0 1            >>>Line length exceeded by 5 characters
-L62:64   i0:0 0 1            >>>Line length exceeded by 46 characters
+L62:64   i0:0 0 1            >>>Line length exceeded by 24 characters
 L68:70   i0:0 0 1            >>>passing VERSION line; -npvl deactivates
 L71:73   i0:0 0 1            >>>Guessing old indentation was tab character
-L93:97   i3:3 0 0 ({[        >>>Line length exceeded by 75 characters
-L104:109 i3:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
-L115:121 i0:0 0 1            sub main
+L93:96   i3:3 0 0 ({[        >>>Line length exceeded by 53 characters
+L104:107 i3:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
+L115:118 i0:0 0 1            sub main
 L134:144 i0:0 0 1            sub setup
-L141:150 i0:0 0 1            sub processStdio
-L150:158 i0:0 0 1            sub processFiles
-L160:166 i0:0 0 1            sub processFile
-L172:177 i0:0 0 1            sub doReplacement
-L180:184 i0:0 0 1            sub editFileInPlace
-L191:194 i0:0 0 1            sub checkOptions
-L204:205 i0:0 0 1            sub checkMandatoryOptions
-L254:259 i0:0 0 1 {          }
-L257:262 i0:0 0 1            sub getOptions
-L286:292 i0:0 0 1            sub debug
-L290:295 i0:1 0 1 {          >>>Line length exceeded by 17 characters
-L294:299 i0:0 0 1            sub usage
-L305:309 i0:0 0 1            sub manual
-L311:314 i0:0 0 1 {          >>>Starting __END__ section
+L141:151 i0:0 0 1            sub processStdio
+L150:160 i0:0 0 1            sub processFiles
+L160:170 i0:0 0 1            sub processFile
+L172:182 i0:0 0 1            sub doReplacement
+L180:190 i0:0 0 1            sub editFileInPlace
+L191:201 i0:0 0 1            sub checkOptions
+L204:214 i0:0 0 1            sub checkMandatoryOptions
+L254:266 i0:0 0 1 {          }
+L257:269 i0:0 0 1            sub getOptions
+L286:297 i0:0 0 1            sub debug
+L294:305 i0:0 0 1            sub usage
+L305:316 i0:0 0 1            sub manual
+L311:322 i0:0 0 1 {          >>>Starting __END__ section
 No indentation disagreement seen
 
 2 long lines were outdented:
@@ -132,7 +137,8 @@ No indentation disagreement seen
    Last at output line 62
   use -noll to prevent outdenting, -l=n to increase line length
 
-5 output lines exceeded 78 characters:
- First at line 50 by 150 characters
- Maximum at line 50 by 150 characters
- Last at line 295 by 17 characters
+3 output lines exceeded 100 characters:
+ First at line 50 by 128 characters
+ Maximum at line 50 by 128 characters
+ Last at line 95 by 53 characters
+Converged.  Output for iteration 2 same as for iter 1.

@@ -87,6 +87,12 @@ SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3065_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
+VSLICK=vs
+VSLICK_ARCHIVE=se_19000101_linux64
+VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
+VSLICK_EXTRACTED_DIR="$HOME/Downloads/$VSLICK_ARCHIVE"
+VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
+
 ECLIPSE=""
 
 SVN_PKG=""
@@ -154,6 +160,14 @@ else
    file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
    echo YOUDO You have to logout/login again for ulimit to take effect.
    exit 1
+fi
+
+# ensure /boot doesn't get too full
+if df -k /boot | egrep 9[0-9]% ; then
+   NOT_OK "/boot is nearly full, will clean up some space now."
+   sudo apt-get autoremove
+else
+   OK "plenty of space on /boot"
 fi
 
 install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
@@ -488,6 +502,9 @@ install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-p
 install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 ## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
 
+install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
+cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
+
 cmd_exists git "need git to clone repos"
 make_dir_exist workspace/play "github repo play area"
 install_git_repo "workspace/play" jshint-test https://github.com/bcowgill/jshint-test.git "my jshint build system"
@@ -630,7 +647,10 @@ file_has_text $FILE "toolBarFont=Ubuntu,10"
 file_has_text $FILE "fixed=ProFontWindows,14"
 
 FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
+# this scheme is very dark but not so good with Visual Slick Edit
+#file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
+# this scheme is dark and works well with Visual Slick Edit
+file_has_text $FILE "ColorScheme=Obsidian Coast" "System Settings / Application Appearance / Colors"
 # Unity settings
 
 # KDE settings

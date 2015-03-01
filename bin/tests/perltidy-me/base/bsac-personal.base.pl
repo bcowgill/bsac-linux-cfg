@@ -53,9 +53,8 @@ perl.pl [options] [@options-file ...] [file ...]
 
 use strict;
 use warnings;
-use English -no_match_vars;
-use Getopt::ArgvFile defult => 1
-  ; # allows specifying an @options file to read more command line arguments from
+use English-no_match_vars;
+use Getopt::ArgvFile defult => 1;    # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
 use Pod::Usage;
 
@@ -63,20 +62,20 @@ use Pod::Usage;
 #use Switch;
 use Data::Dumper;
 
-use File::Copy qw(cp);    # copy and preserve source files permissions
+use File::Copy qw(cp);               # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use Fatal qw(cp);
 
-our $VERSION = 0.1;       # shown by --version option
+our $VERSION = 0.1;                  # shown by --version option
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			''      => 0,    # indicates standard in/out as - on command line
-			verbose => 1,    # default value for verbose
+			''      => 0,            # indicates standard in/out as - on command line
+			verbose => 1,            # default value for verbose
 			debug   => 0,
-			man     => 0,    # show full help page
+			man     => 0,            # show full help page
 		},
 		raFile => [],
 	},
@@ -84,70 +83,65 @@ my %Var = (
 		result   => undef,
 		raErrors => [],
 		raConfig => [
-			"bundling",        # bundle single char options ie ps -aux
-			"auto_version",    # supplies --version option
-			"auto_help"
-			,    # supplies --help -? options to show usage in POD SYNOPSIS
+			"bundling",              # bundle single char options ie ps -aux
+			"auto_version",          # supplies --version option
+			"auto_help",             # supplies --help -? options to show usage in POD SYNOPSIS
 ##			"debug",        # debug the argument processing
 		],
 		raOpts => [
-			"length|l=i",   # numeric required --length or -l (explicit defined)
+			"length|l=i",            # numeric required --length or -l (explicit defined)
 			"width:3"
 			, # numeric optional with default value if none given on command line but not necessarily the default assigned if not present on command line
 			"ratio|r:f",    # float optional
-			"hex=o"
-			,    # extended integer a number in decimal, octal, hex or binary
+			"hex=o",        # extended integer a number in decimal, octal, hex or binary
 ## cannot repeat when bundling is turned on
 ##		"point:f{2}", # two floats separated by comma --point=1.3,24.5
-			"file=s",        # string required --file or -f (implicit)
-			"splat:s",       # a file to edit in place
-			"in:s",          # to test stdin=-
-			"out:s",         # to test stdout=-
-			"name|n=s@",     # multivalued array string
-			"map|m=s%",      # multivalued hash key=value
-			"debug|d+",      # incremental keep specifying to increase
-			"verbose|v!",    # flag --verbose or --noverbose
-			"",     # empty string allows - to signify standard in/out as a file
-			"man",  # show manual page only
+			"file=s",       # string required --file or -f (implicit)
+			"splat:s",      # a file to edit in place
+			"in:s",         # to test stdin=-
+			"out:s",        # to test stdout=-
+			"name|n=s@",    # multivalued array string
+			"map|m=s%",     # multivalued hash key=value
+			"debug|d+",     # incremental keep specifying to increase
+			"verbose|v!",   # flag --verbose or --noverbose
+			"",             # empty string allows - to signify standard in/out as a file
+			"man",          # show manual page only
 		],
-		raMandatory => []
-		,           # additional mandatory paramters not defined by = above.
-		roParser => Getopt::Long::Parser->new,
+		raMandatory => [],                          # additional mandatory paramters not defined by = above.
+		roParser    => Getopt::Long::Parser->new,
 	},
 );
 
 getOptions();
 
-sub main {
+sub main
+{
 	my ( $rhOpt, $raFiles, $use_stdio ) = @ARG;
-	debug( "Var: " . Dumper( \%Var ), 2 );
-	debug(
-		"main() rhOpt: "
-		  . Dumper($rhOpt)
-		  . "\nraFiles: "
-		  . Dumper($raFiles)
-		  . "\nuse_stdio: $use_stdio\n",
-		2
-	);
+	debug( "Var: " . Dumper( \%Var ),                                                                          2 );
+	debug( "main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2 );
 
-	if ($use_stdio) {
+	if ($use_stdio)
+	{
 		processStdio($rhOpt);
 	}
 	processFiles( $raFiles, $rhOpt ) if scalar(@$raFiles);
 
 	# Example in-place editing of file
-	if ( exists $rhOpts->{splat} ) {
+	if ( exists $rhOpts->{splat} )
+	{
 		editFileInPlace( $rhOpts->{splat}, ".bak", $rhOpts );
 	}
 }
 
-sub setup {
+sub setup
+{
 	my ($rhOpt) = @ARG;
 	debug( "Var: " . Dumper( \%Var ),          2 );
 	debug( "setup() rhOpt: " . Dumper($rhOpt), 2 );
 }
 
-sub processStdio {
+sub processStdio
+{
 	my ($rhOpt) = @ARG;
 	debug("processStdio()\n");
 	my $rContent = read_file( \*STDIN, scalar_ref => 1 );
@@ -155,15 +149,18 @@ sub processStdio {
 	print $$rContent;
 }
 
-sub processFiles {
+sub processFiles
+{
 	my ( $raFiles, $rhOpt ) = @ARG;
 	debug("processFiles()\n");
-	foreach my $fileName (@$raFiles) {
+	foreach my $fileName (@$raFiles)
+	{
 		processFile( $fileName, $rhOpt );
 	}
 }
 
-sub processFile {
+sub processFile
+{
 	my ( $fileName, $rhOpt ) = @ARG;
 	debug("processFile($fileName)\n");
 
@@ -174,14 +171,16 @@ sub processFile {
 	print $$rContent;
 }
 
-sub doReplacement {
+sub doReplacement
+{
 	my ($rContent) = @ARG;
 	my $regex = qr{\A}xms;
 	$$rContent =~ s{$regex}{splatted\n}xms;
-	return $rContent;
+  return $rContent;
 }
 
-sub editFileInPlace {
+sub editFileInPlace
+{
 	my ( $fileName, $suffix, $rhOpts ) = @ARG;
 	my $fileNameBackup = "$fileName$suffix";
 	print "editFileInPlace($fileName) backup to $fileNameBackup\n";
@@ -191,23 +190,26 @@ sub editFileInPlace {
 }
 
 # Must manually check mandatory values present
-sub checkOptions {
+sub checkOptions
+{
 	my ( $raErrors, $rhOpt, $raFiles, $use_stdio ) = @ARG;
 	checkMandatoryOptions( $raErrors, $rhOpt, $Var{rhGetopt}{raMandatory} );
 
 	# Check additional parameter dependencies and push onto error array
 
-	if ( scalar(@$raErrors) ) {
+	if ( scalar(@$raErrors) )
+	{
 		usage( join( "\n", @$raErrors ) );
 	}
 }
 
-sub checkMandatoryOptions {
+sub checkMandatoryOptions
+{
 	my ( $raErrors, $rhOpt, $raMandatory ) = @ARG;
 
 	$raMandatory = $raMandatory || [];
-	foreach my $option ( @{ $Var{rhGetopt}{raOpts} } ) {
-
+	foreach my $option ( @{ $Var{rhGetopt}{raOpts} } )
+	{
 		# Getopt option has = sign for mandatory options
 		my $optName = undef;
 		$optName = $1 if $option =~ m{\A (\w+)}xms;
@@ -227,43 +229,41 @@ sub checkMandatoryOptions {
 			$type =~ s{value}{multi-value}xms    if $option =~ m{\@}xms;
 			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
 
-			if ( exists( $rhOpt->{$optName} ) ) {
+			if ( exists( $rhOpt->{$optName} ) )
+			{
 				my $ref = ref( $rhOpt->{$optName} );
 				if ( 'ARRAY' eq $ref && 0 == scalar( @{ $rhOpt->{$optName} } ) )
 				{
 					$error = 1;
 
 					# type might not be configured but we know it now
-					$type =~ s{value}{multi-value}xms
-					  unless $type =~ m{multi-value}xms;
+					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
-				if ( 'HASH' eq $ref
-					&& 0 == scalar( keys( %{ $rhOpt->{$optName} } ) ) )
+				if ( 'HASH' eq $ref && 0 == scalar( keys( %{ $rhOpt->{$optName} } ) ) )
 				{
 					$error = 1;
 
 					# type might not be configured but we know it now
-					$type =~ s{value}{key/value pair}xms
-					  unless $type =~ m{key/value}xms;
+					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
 				}
 			}
-			else {
+			else
+			{
 				$error = 1;
 			}
-			push( @$raErrors, "--$optName $type is a mandatory parameter." )
-			  if $error;
+			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
-	return $raErrors;
+  return $raErrors;
 }
 
 # Perform command line option processing and call main function.
-sub getOptions {
+sub getOptions
+{
 	$Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
-	$Var{rhGetopt}{result} =
-	  $Var{rhGetopt}{roParser}
-	  ->getoptions( $Var{rhArg}{rhOpt}, @{ $Var{rhGetopt}{raOpts} } );
-	if ( $Var{rhGetopt}{result} ) {
+	$Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}->getoptions( $Var{rhArg}{rhOpt}, @{ $Var{rhGetopt}{raOpts} } );
+	if ( $Var{rhGetopt}{result} )
+	{
 		manual() if $Var{rhArg}{rhOpt}{man};
 		$Var{rhArg}{raFile} = \@ARGV;
 
@@ -273,25 +273,28 @@ sub getOptions {
 			$Var{rhGetopt}{raErrors},
 			$Var{rhArg}{rhOpt},
 			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''}    ## use_stdio option
+			$Var{rhArg}{rhOpt}{''} ## use_stdio option
 		);
 		setup( $Var{rhArg}{rhOpt} );
 		main( $Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''} );
 	}
-	else {
+	else
+	{
 		# Here if unknown option provided
 		usage();
 	}
 }
 
-sub debug {
+sub debug
+{
 	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
 ##	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
 	print $msg if ( $Var{'rhArg'}{'rhOpt'}{'debug'} >= $level );
 }
 
-sub usage {
+sub usage
+{
 	my ($msg) = @ARG;
 	my %Opts = (
 		-exitval => 1,
@@ -301,7 +304,8 @@ sub usage {
 	pod2usage(%Opts);
 }
 
-sub manual {
+sub manual
+{
 	pod2usage(
 		-exitval => 0,
 		-verbose => 2,
