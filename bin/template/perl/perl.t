@@ -11,7 +11,7 @@
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
 
-use Test::More tests => 10;
+use Test::More tests => 12;
 
 our $EXPECT = 2;
 our $EXPECT_FAIL = $EXPECT;
@@ -30,11 +30,16 @@ ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" );
 
 # Test::More adds is()
 
-diag "Test::More";
+diag "Test::More is/isnt check";
 is ( 1 + 1, $EXPECT);
 is ( 1 + 1, $EXPECT, "should be $EXPECT");
 isnt ( 1 + 1, $EXPECT_FAIL, "should be $EXPECT also");
 
+diag "like/unlike for regex match";
+like ( 'result', qr{esu}, "should match esu" );
+unlike ( 'result', qr{ESU}, "should not match ESU" );
+
+diag "skip and TODO";
 SKIP: {
 	my $SKIP_TESTS = 2; # two tests to skip
 	skip('not going to work on this OS', $SKIP_TESTS) unless $^O eq 'not this';
