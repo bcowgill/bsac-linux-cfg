@@ -1,4 +1,7 @@
+#!/usr/bin/perl -Tw
+# above line to test in taint mode
 #!/usr/bin/env perl
+# above line for non-taint testing
 
 # template for a perl test plan based on Test::Tutorial
 # perldoc Test::Tutorial
@@ -8,7 +11,7 @@
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
 
-use Test::More tests => 9;
+use Test::More tests => 10;
 
 our $EXPECT = 2;
 our $EXPECT_FAIL = $EXPECT;
@@ -48,4 +51,5 @@ TODO: {
 
     # the tests run, look like failures but don't count as failures overall
 	is('flibble', 'something', 'flibble should be something');
+	is('flibble', 'flibble', 'flibble should be flibble');
 }
