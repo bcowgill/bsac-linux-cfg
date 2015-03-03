@@ -10,36 +10,70 @@
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
-
-use Test::More tests => 12;
+use Test::More tests => 21;
+# or if you have to calculate the number of tests
+# plan tests => $number_of_tests;
+# or if this test plan doesn't work on this OS
+#if ( $^O eq 'not this' ) {
+#	plan skip_all => 'Test irrelevant on this OS';
+#}
+#else {
+#	plan tests => 42;
+#}
+# or if you can't pre-calculate number of tests
+# ... do all testing
+# done_testing($number_of_tests_if_known);
 
 our $EXPECT = 2;
 our $EXPECT_FAIL = $EXPECT;
+our $DEEP = {};
+our $DEEP_FAIL = { this => that };
 
 if (@ARGV)
 {
 	$EXPECT_FAIL = 13; # make all test pass
+	$DEEP_FAIL = $DEEP;
 }
 
-# Test::Simple ok() only
-
-diag "Test::Simple";
+diag "Test::Simple ok() only";
 ok ( 1 + 1 == $EXPECT );
 ok ( 1 + 1 == $EXPECT, "should be $EXPECT" );
 ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" );
 
-# Test::More adds is()
+BEGIN {
+	diag "Test::More use_ok() before the rest";
+	# check module can be loaded
+	use_ok( 'File::Copy' );
+	# and that it exports some methods...
+	use_ok( 'File::Copy' , "copy", "move" );
+}
 
-diag "Test::More is/isnt check";
+diag "Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that";
 is ( 1 + 1, $EXPECT);
 is ( 1 + 1, $EXPECT, "should be $EXPECT");
 isnt ( 1 + 1, $EXPECT_FAIL, "should be $EXPECT also");
+is ($not_me, undef, "should be undefined");
 
-diag "like/unlike for regex match";
+diag "like()/unlike() for regex match";
 like ( 'result', qr{esu}, "should match esu" );
 unlike ( 'result', qr{ESU}, "should not match ESU" );
 
-diag "skip and TODO";
+diag "cmp_ok()";
+cmp_ok(1 + 1, '==', $EXPECT, "should be $EXPECT");
+cmp_ok(1 + 12, '==', $EXPECT_FAIL, "should be $EXPECT also");
+cmp_ok(2, '<', $EXPECT_FAIL, "should be less than $EXPECT");
+
+diag "is_deeply() for deep comparison";
+is_deeply({}, $DEEP, "should be identical objects");
+is_deeply({}, $DEEP_FAIL, "should be identical objects");
+
+#can_ok
+#isa_ok
+#pass
+#fail
+#BAIL_OUT
+
+diag "skip() and TODO";
 SKIP: {
 	my $SKIP_TESTS = 2; # two tests to skip
 	skip('not going to work on this OS', $SKIP_TESTS) unless $^O eq 'not this';
@@ -58,3 +92,6 @@ TODO: {
 	is('flibble', 'something', 'flibble should be something');
 	is('flibble', 'flibble', 'flibble should be flibble');
 }
+
+diag "require_ok() for checking module can be required";
+require_ok( 'File::Path' );
