@@ -2,5 +2,6 @@
 
 # template for a perl test plan
 
-print "1..1\n";
-print 1+1 == 2 ? "ok 1\n" : "not ok 1\n";
+use Test::Simple tests => 1;
+
+ok ( 1 + 1 == 2 );
