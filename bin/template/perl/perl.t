@@ -10,7 +10,7 @@
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
-use Test::More tests => 21;
+use Test::More tests => 22;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -28,23 +28,26 @@ our $EXPECT = 2;
 our $EXPECT_FAIL = $EXPECT;
 our $DEEP = {};
 our $DEEP_FAIL = { this => that };
+our @CAN = qw(copy move notthisone);
 
 if (@ARGV)
 {
 	$EXPECT_FAIL = 13; # make all test pass
 	$DEEP_FAIL = $DEEP;
+	pop(@CAN);
 }
 
 diag "Test::Simple ok() only";
 ok ( 1 + 1 == $EXPECT );
 ok ( 1 + 1 == $EXPECT, "should be $EXPECT" );
-ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" );
+ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" )
+  or diag("some diagnosis on failure of test...");
 
 BEGIN {
 	diag "Test::More use_ok() before the rest";
 	# check module can be loaded
 	use_ok( 'File::Copy' );
-	# and that it exports some methods...
+	# and specify what to export...
 	use_ok( 'File::Copy' , "copy", "move" );
 }
 
@@ -67,11 +70,17 @@ diag "is_deeply() for deep comparison";
 is_deeply({}, $DEEP, "should be identical objects");
 is_deeply({}, $DEEP_FAIL, "should be identical objects");
 
-#can_ok
+diag "can_ok() for checking method availability";
+can_ok( 'File::Copy', @CAN );
+
 #isa_ok
+#new_ok
 #pass
 #fail
 #BAIL_OUT
+#subtest
+#Test::Differences
+#Test::Deep
 
 diag "skip() and TODO";
 SKIP: {
