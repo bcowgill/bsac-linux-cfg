@@ -33,7 +33,7 @@ ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" );
 diag "Test::More";
 is ( 1 + 1, $EXPECT);
 is ( 1 + 1, $EXPECT, "should be $EXPECT");
-is ( 1 + 12, $EXPECT_FAIL, "should be $EXPECT also");
+isnt ( 1 + 1, $EXPECT_FAIL, "should be $EXPECT also");
 
 SKIP: {
 	my $SKIP_TESTS = 2; # two tests to skip
