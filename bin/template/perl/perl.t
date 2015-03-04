@@ -10,7 +10,7 @@
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
-use Test::More tests => 30;
+use Test::More tests => 32;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -32,6 +32,7 @@ BEGIN {
 	our $DEEP_FAIL = { this => 'that' };
 	our $ISA = 'FileHandle';
 	our $ISA_FAIL = 'Thingie';
+	our @USE = qw(Cwd This/one/is/gone);
 	our @CAN = qw(copy move not_this_one);
 
 	if (@ARGV)
@@ -40,6 +41,8 @@ BEGIN {
 		$EXPECT_FAIL = 13; # make all test pass
 		$DEEP_FAIL = $DEEP;
 		$ISA_FAIL = $ISA;
+		pop(@USE);
+		push(@USE, 'Data::Dumper');
 		pop(@CAN);
 	}
 }
@@ -101,6 +104,9 @@ is_deeply({}, $DEEP_FAIL, "should be identical objects")
 
 diag "Object Oriented testing methods";
 
+diag "require_ok() for checking module can be required";
+require_ok( 'File::Path' );
+
 diag "isa_ok() - was something created of a given type";
 my $fh = FileHandle->new($0,"r");
 isa_ok([], 'ARRAY', "should be ARRAY");
@@ -119,10 +125,6 @@ $fh = new_ok(
 	'should be FileHandle'    # object name/test message
 );
 
-#pass
-#
-#fail
-#BAIL_OUT
 #subtest
 #Test::Differences
 #Test::Deep
@@ -149,5 +151,8 @@ TODO: {
 
 #todo_skip()
 
-diag "require_ok() for checking module can be required";
-require_ok( 'File::Path' );
+diag "BAIL_OUT() abort test plan if cannot carry on";
+# stop testing if any of your modules will not load
+for my $module (@USE) {
+	require_ok $module or BAIL_OUT "Can't load $module";
+}
