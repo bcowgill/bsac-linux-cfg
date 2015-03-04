@@ -4,6 +4,7 @@
 # above line for non-taint testing
 
 # template for a perl test plan based on Test::Tutorial
+# gives a full demonstration of all Test::More functionality
 # perldoc Test::Tutorial
 # ./perl.t; echo == $? ==        # to see all the tests in gory detail
 # ./perl.t pass; echo == $? ==   # to see the tests pass
