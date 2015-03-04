@@ -111,8 +111,13 @@ is_deeply({}, $DEEP_FAIL, "should be identical objects")
 
 diag "subtest() to run a set of tests as a sub-test nicely indented";
 
+subtest 'subtest() with plan skip_all' => sub {
+	plan skip_all => 'cuz I said so';
+	pass('this test will never be run');
+};
+
 $SUBTEST = "Object Oriented testing methods";
-subtest $SUBTEST => sub
+my $passed = subtest $SUBTEST => sub
 {
 	plan tests => 7;
 
@@ -140,6 +145,7 @@ subtest $SUBTEST => sub
 	diag "BAIL_OUT() in a subtest will also abort the whole plan not just the sub test";
 	diag "end subtest $SUBTEST";
 }; # subtest Object Oriented
+diag "subtest() return val can be checked did it pass? $passed";
 
 #Test::Differences
 #Test::Deep
