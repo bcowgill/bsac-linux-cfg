@@ -20,6 +20,7 @@
 #Test::Class xUnit like
 #Test::Inline embed testing in your modules
 #Bundle::Test whole bunch of test modules to install
+# Test::Exception
 
 #use threads; # must precede Test::More if you are threading
 use Test::More tests => 28;
