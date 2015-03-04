@@ -13,7 +13,7 @@
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 # prove ./perl.t :: bail         # pass args to test plan to BAIL_OUT
 
-use Test::More tests => 26;
+use Test::More tests => 28;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -159,14 +159,16 @@ my $passed = subtest $SUBTEST => sub
 }; # subtest Object Oriented
 diag "subtest() return val can be checked did it pass? $passed";
 
-#todo_skip()
 #Test::Differences
 #Test::Deep
 
 diag "skip() and TODO for broken and unimplemented tests";
 SKIP: {
 	my $SKIP_TESTS = 2; # two tests to skip
-	skip('not going to work on this OS', $SKIP_TESTS) unless $^O eq 'not this';
+	skip(
+		'not going to work on this OS',
+		$SKIP_TESTS)
+		unless $^O eq 'not this';
 
 	# tests don't run and don't count as failures
 	is('some', 'test', 'unsupported on this OS');
@@ -175,6 +177,7 @@ SKIP: {
 	die "horribly, see never gets here it is totally skipped";
 }
 
+diag "TODO: runs tests but expect to fail";
 TODO: {
 	local $TODO = "flibble() not yet implemented";
 
@@ -183,6 +186,19 @@ TODO: {
 	is('flibble', 'flibble', 'flibble should be flibble');
 }
 
+diag "todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them";
+TODO: {
+	local $TODO = "waffle() just crashes and burns";
+	my $SKIP_TESTS = 2; # two tests to skip
+	todo_skip(
+		$TODO,
+		$SKIP_TESTS)
+		unless $^O eq 'not this';
+
+	# the tests DIE HORRIBLY if run, so we skip but know they are TODO
+	is([die, die, die], 'something', 'waffle should be something');
+	is('waffle', 'waffle', 'waffle should be waffle');
+}
 
 diag "BAIL_OUT() abort test plan if cannot carry on -- doesn't give an ending summary when in harness";
 # stop testing if any of your modules will not load
