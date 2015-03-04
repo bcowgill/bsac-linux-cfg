@@ -10,7 +10,7 @@
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
-use Test::More tests => 32;
+use Test::More tests => 26;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -102,30 +102,38 @@ is_deeply({}, $DEEP, "should be identical objects");
 is_deeply({}, $DEEP_FAIL, "should be identical objects")
    or diag explain $DEEP_FAIL;
 
-diag "Object Oriented testing methods";
+diag "subtest() to run a set of tests as a sub-test nicely indented";
 
-diag "require_ok() for checking module can be required";
-require_ok( 'File::Path' );
+my $SUBTEST = "Object Oriented testing methods";
+subtest $SUBTEST => sub
+{
+	plan tests => 7;
 
-diag "isa_ok() - was something created of a given type";
-my $fh = FileHandle->new($0,"r");
-isa_ok([], 'ARRAY', "should be ARRAY");
-isa_ok($fh, $ISA);
-isa_ok($fh, $ISA_FAIL, "should be FileHandle");
+	diag "require_ok() for checking module can be required";
+	require_ok( 'File::Path' );
 
-diag "can_ok() for checking method availability on module or object - cannot specify a custom message";
-can_ok( 'File::Copy', @CAN );
-can_ok( $fh, 'new' );
+	diag "isa_ok() - was something created of a given type";
+	my $fh = FileHandle->new($0,"r");
+	isa_ok([], 'ARRAY', "should be ARRAY");
+	isa_ok($fh, $ISA);
+	isa_ok($fh, $ISA_FAIL, "should be FileHandle");
 
-diag "new_ok() create object and check class type all in one go";
-$fh->close();
-$fh = new_ok(
-	'FileHandle'     # class to instantiate from
-	=> [$0, "r"],    # params to FileHandle->new() 
-	'should be FileHandle'    # object name/test message
-);
+	diag "can_ok() for checking method availability on module or object - cannot specify a custom message";
+	can_ok( 'File::Copy', @CAN );
+	can_ok( $fh, 'new' );
 
-#subtest
+	diag "new_ok() create object and check class type all in one go";
+	$fh->close();
+	$fh = new_ok(
+		'FileHandle'     # class to instantiate from
+		=> [$0, "r"],    # params to FileHandle->new()
+		'should be FileHandle'    # object name/test message
+	);
+
+	diag "BAIL_OUT() in a subtest will also abort the whole plan not just the sub test";
+	diag "end subtest $SUBTEST";
+}; # subtest Object Oriented
+
 #Test::Differences
 #Test::Deep
 
