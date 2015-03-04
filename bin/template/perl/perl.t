@@ -13,6 +13,15 @@
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 # prove ./perl.t :: bail         # pass args to test plan to BAIL_OUT
 
+# TODO
+#Test::Differences
+#Test::Deep
+#builder() Test::Builder access
+#Test::Class xUnit like
+#Test::Inline embed testing in your modules
+#Bundle::Test whole bunch of test modules to install
+
+#use threads; # must precede Test::More if you are threading
 use Test::More tests => 28;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
@@ -60,6 +69,14 @@ BEGIN {
 	}
 }
 
+BEGIN {
+	# handle utf8 characters to avoid Wide character in print errors
+	my $builder = Test::More->builder;
+	binmode $builder->output,         ":utf8";
+	binmode $builder->failure_output, ":utf8";
+	binmode $builder->todo_output,    ":utf8";
+}
+
 diag "Test::Simple ok() only";
 ok ( 1 + 1 == $EXPECT );
 ok ( 1 + 1 == $EXPECT, "should be $EXPECT" );
@@ -80,25 +97,28 @@ BEGIN {
 	$SUBTEST = "Test::More use_ok() in a BEGIN block ";
 	subtest $SUBTEST => sub
 	{
-		plan tests => 2;
+		plan tests => 3;
 
 		note "use_ok() cannot specify a test message";
+		note "use module with default methods import";
 		use_ok( 'FileHandle' );
-		# and specify what to export...
+		note "use module and specify specific methods to import";
 		use_ok( 'File::Copy' , "copy", "move" );
+		note "use module and prevent any methods from being imported";
+		require_ok( 'File::Slurp' ); # will not import read_file function
 		note "end subtest $SUBTEST";
 	}
 }
 
 diag "Test::More pass()/fail() for absolute control";
-pass("some test passed");
+pass("pass() - some test passed");
 if ($ALL_PASS)
 {
-	pass("some test failed - not now");
+	pass("fail() - some test failed - not now");
 }
 else
 {
-	fail("some test failed");
+	fail("fail() - some test failed");
 }
 
 diag "Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that";
@@ -131,9 +151,9 @@ subtest 'subtest() with plan skip_all' => sub {
 $SUBTEST = "Object Oriented testing methods";
 my $passed = subtest $SUBTEST => sub
 {
-	plan tests => 7;
+	plan tests => 8;
 
-	diag "require_ok() for checking module can be required";
+	diag "require_ok() for checking module can be required - will not import any symbols";
 	require_ok( 'File::Path' );
 
 	diag "isa_ok() - was something created of a given type";
@@ -145,6 +165,15 @@ my $passed = subtest $SUBTEST => sub
 	diag "can_ok() for checking method availability on module or object - cannot specify a custom message";
 	can_ok( 'File::Copy', @CAN );
 	can_ok( $fh, 'new' );
+
+	if ($ALL_PASS) {
+		can_ok(__PACKAGE__, 'copy'); # imported from File::Copy
+	}
+	else
+	{
+		note "can_ok() read_file fails because we required File::Slurp instead of used it above";
+		can_ok(__PACKAGE__, 'read_file');
+	}
 
 	diag "new_ok() create object and check class type all in one go";
 	$fh->close();
@@ -158,9 +187,6 @@ my $passed = subtest $SUBTEST => sub
 	diag "end subtest $SUBTEST";
 }; # subtest Object Oriented
 diag "subtest() return val can be checked did it pass? $passed";
-
-#Test::Differences
-#Test::Deep
 
 diag "skip() and TODO for broken and unimplemented tests";
 SKIP: {
