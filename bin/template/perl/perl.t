@@ -10,7 +10,7 @@
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
-use Test::More tests => 23;
+use Test::More tests => 30;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -25,6 +25,7 @@ use Test::More tests => 23;
 # done_testing($number_of_tests_if_known);
 
 BEGIN {
+	our $ALL_PASS = 0;
 	our $EXPECT = 2;
 	our $EXPECT_FAIL = $EXPECT;
 	our $DEEP = {};
@@ -35,6 +36,7 @@ BEGIN {
 
 	if (@ARGV)
 	{
+		$ALL_PASS = 1;
 		$EXPECT_FAIL = 13; # make all test pass
 		$DEEP_FAIL = $DEEP;
 		$ISA_FAIL = $ISA;
@@ -64,6 +66,17 @@ BEGIN {
 	use_ok( 'FileHandle' );
 	# and specify what to export...
 	use_ok( 'File::Copy' , "copy", "move" );
+}
+
+diag "Test::More pass()/fail() for absolute control";
+pass("some test passed");
+if ($ALL_PASS)
+{
+	pass("some test failed - not now");
+}
+else
+{
+	fail("some test failed");
 }
 
 diag "Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that";
