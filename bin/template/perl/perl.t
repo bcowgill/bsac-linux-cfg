@@ -25,7 +25,6 @@ use Test::More tests => 23;
 # done_testing($number_of_tests_if_known);
 
 BEGIN {
-
 	our $EXPECT = 2;
 	our $EXPECT_FAIL = $EXPECT;
 	our $DEEP = {};
@@ -38,23 +37,25 @@ BEGIN {
 		$DEEP_FAIL = $DEEP;
 		pop(@CAN);
 	}
+}
 
-	diag "Test::Simple ok() only";
-	ok ( 1 + 1 == $EXPECT );
-	ok ( 1 + 1 == $EXPECT, "should be $EXPECT" );
-	ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" )
-	  or diag("some diagnosis on failure of test...");
+diag "Test::Simple ok() only";
+ok ( 1 + 1 == $EXPECT );
+ok ( 1 + 1 == $EXPECT, "should be $EXPECT" );
+ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" )
+  or diag("some diagnosis on failure of test...");
 
-	diag("Test::More note() diag() explain() for diagnostics");
-	note "note() - does not show in when running in a harness";
-	note("i am invisible in the harness (or prove) but not when running normally");
-	diag "diag() - shows message always";
-	ok(1 + 12 == $EXPECT_FAIL)
-		|| map { diag($_) } (
-		'array = ',
-		explain [qw(explain() dumps structures nicely)]
-	);
+diag("Test::More note() diag() explain() for diagnostics");
+note "note() - does not show in when running in a harness";
+note("i am invisible in the harness (or prove) but not when running normally");
+diag "diag() - shows message always";
+ok(1 + 12 == $EXPECT_FAIL)
+	|| map { diag($_) } (
+	'array = ',
+	explain [qw(explain() dumps structures nicely)]
+);
 
+BEGIN {
 	diag "Test::More use_ok() in a BEGIN block";
 	# check module can be loaded
 	use_ok( 'File::Copy' );
