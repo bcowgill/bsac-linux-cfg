@@ -7,11 +7,13 @@
 # gives a full demonstration of all Test::More functionality
 # perldoc Test::Tutorial
 # ./perl.t; echo == $? ==        # to see all the tests in gory detail
-# ./perl.t pass; echo == $? ==   # to see the tests pass
+# ./perl.t pass; echo == $? ==   # to see all the tests pass
+# ./perl.t bail; echo == $? ==   # to see what BAIL_OUT does
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
+# prove ./perl.t :: bail         # pass args to test plan to BAIL_OUT
 
-use Test::More tests => 25;
+use Test::More tests => 26;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -28,6 +30,7 @@ use Test::More tests => 25;
 BEGIN {
 	our $SUBTEST = 'main';
 	our $ALL_PASS = 0;
+	our $BAIL = 0;
 	our $EXPECT = 2;
 	our $EXPECT_FAIL = $EXPECT;
 	our $DEEP = {};
@@ -39,13 +42,21 @@ BEGIN {
 
 	if (@ARGV)
 	{
-		$ALL_PASS = 1;
-		$EXPECT_FAIL = 13; # make all test pass
-		$DEEP_FAIL = $DEEP;
-		$ISA_FAIL = $ISA;
-		pop(@USE);
-		push(@USE, 'Data::Dumper');
-		pop(@CAN);
+		my $mode = shift;
+		if ($mode eq 'bail')
+		{
+			$BAIL = 1;
+		}
+		else
+		{
+			$ALL_PASS = 1;
+			$EXPECT_FAIL = 13; # make all test pass
+			$DEEP_FAIL = $DEEP;
+			$ISA_FAIL = $ISA;
+			pop(@USE);
+			push(@USE, 'Data::Dumper');
+			pop(@CAN);
+		}
 	}
 }
 
@@ -173,8 +184,8 @@ TODO: {
 }
 
 
-diag "BAIL_OUT() abort test plan if cannot carry on";
+diag "BAIL_OUT() abort test plan if cannot carry on -- doesn't give an ending summary when in harness";
 # stop testing if any of your modules will not load
 for my $module (@USE) {
-	require_ok $module or BAIL_OUT "Can't load $module";
+	require_ok $module or ($BAIL && BAIL_OUT "Can't load $module");
 }
