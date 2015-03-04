@@ -148,6 +148,7 @@ my $passed = subtest $SUBTEST => sub
 }; # subtest Object Oriented
 diag "subtest() return val can be checked did it pass? $passed";
 
+#todo_skip()
 #Test::Differences
 #Test::Deep
 
@@ -171,7 +172,6 @@ TODO: {
 	is('flibble', 'flibble', 'flibble should be flibble');
 }
 
-#todo_skip()
 
 diag "BAIL_OUT() abort test plan if cannot carry on";
 # stop testing if any of your modules will not load
