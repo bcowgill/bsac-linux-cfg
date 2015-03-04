@@ -43,6 +43,8 @@ ok ( 1 + 1 == $EXPECT, "should be $EXPECT" );
 ok ( 1 + 12 == $EXPECT_FAIL, "should be $EXPECT also" )
   or diag("some diagnosis on failure of test...");
 
+note("i am invisible in the harness (or prove) but not when running normally");
+
 BEGIN {
 	diag "Test::More use_ok() before the rest";
 	# check module can be loaded
@@ -68,7 +70,10 @@ cmp_ok(2, '<', $EXPECT_FAIL, "should be less than $EXPECT");
 
 diag "is_deeply() for deep comparison";
 is_deeply({}, $DEEP, "should be identical objects");
-is_deeply({}, $DEEP_FAIL, "should be identical objects");
+is_deeply({}, $DEEP_FAIL, "should be identical objects")
+   or diag explain $DEEP_FAIL;
+
+# explain is a nice dump command
 
 diag "can_ok() for checking method availability";
 can_ok( 'File::Copy', @CAN );
@@ -101,6 +106,8 @@ TODO: {
 	is('flibble', 'something', 'flibble should be something');
 	is('flibble', 'flibble', 'flibble should be flibble');
 }
+
+#todo_skip()
 
 diag "require_ok() for checking module can be required";
 require_ok( 'File::Path' );
