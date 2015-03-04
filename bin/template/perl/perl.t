@@ -10,7 +10,7 @@
 # prove perl.t; echo == $? ==    # to just see summary results of tests
 # prove ./perl.t :: pass         # pass args to test plan to make test pass
 
-use Test::More tests => 26;
+use Test::More tests => 25;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -25,6 +25,7 @@ use Test::More tests => 26;
 # done_testing($number_of_tests_if_known);
 
 BEGIN {
+	our $SUBTEST = 'main';
 	our $ALL_PASS = 0;
 	our $EXPECT = 2;
 	our $EXPECT_FAIL = $EXPECT;
@@ -64,11 +65,17 @@ ok(1 + 12 == $EXPECT_FAIL)
 );
 
 BEGIN {
-	diag "Test::More use_ok() in a BEGIN block";
-	note "use_ok() cannot specify a test message";
-	use_ok( 'FileHandle' );
-	# and specify what to export...
-	use_ok( 'File::Copy' , "copy", "move" );
+	$SUBTEST = "Test::More use_ok() in a BEGIN block ";
+	subtest $SUBTEST => sub
+	{
+		plan tests => 2;
+
+		note "use_ok() cannot specify a test message";
+		use_ok( 'FileHandle' );
+		# and specify what to export...
+		use_ok( 'File::Copy' , "copy", "move" );
+		note "end subtest $SUBTEST";
+	}
 }
 
 diag "Test::More pass()/fail() for absolute control";
@@ -104,7 +111,7 @@ is_deeply({}, $DEEP_FAIL, "should be identical objects")
 
 diag "subtest() to run a set of tests as a sub-test nicely indented";
 
-my $SUBTEST = "Object Oriented testing methods";
+$SUBTEST = "Object Oriented testing methods";
 subtest $SUBTEST => sub
 {
 	plan tests => 7;
