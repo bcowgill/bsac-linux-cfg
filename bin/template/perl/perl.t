@@ -29,12 +29,15 @@ BEGIN {
 	our $EXPECT_FAIL = $EXPECT;
 	our $DEEP = {};
 	our $DEEP_FAIL = { this => 'that' };
-	our @CAN = qw(copy move notthisone);
+	our $ISA = 'FileHandle';
+	our $ISA_FAIL = 'Thingie';
+	our @CAN = qw(copy move not_this_one);
 
 	if (@ARGV)
 	{
 		$EXPECT_FAIL = 13; # make all test pass
 		$DEEP_FAIL = $DEEP;
+		$ISA_FAIL = $ISA;
 		pop(@CAN);
 	}
 }
@@ -57,8 +60,8 @@ ok(1 + 12 == $EXPECT_FAIL)
 
 BEGIN {
 	diag "Test::More use_ok() in a BEGIN block";
-	# check module can be loaded
-	use_ok( 'File::Copy' );
+	note "use_ok() cannot specify a test message";
+	use_ok( 'FileHandle' );
 	# and specify what to export...
 	use_ok( 'File::Copy' , "copy", "move" );
 }
@@ -83,12 +86,20 @@ is_deeply({}, $DEEP, "should be identical objects");
 is_deeply({}, $DEEP_FAIL, "should be identical objects")
    or diag explain $DEEP_FAIL;
 
-diag "can_ok() for checking method availability";
+diag "Object Oriented testing methods";
+
+diag "isa_ok() - was something created of a given type";
+my $fh = FileHandle->new($0,"r");
+isa_ok($fh, $ISA);
+isa_ok($fh, $ISA_FAIL, "should be FileHandle");
+
+diag "can_ok() for checking method availability on module or object - cannot specify a custom message";
 can_ok( 'File::Copy', @CAN );
 
-#isa_ok
+
 #new_ok
 #pass
+#
 #fail
 #BAIL_OUT
 #subtest
