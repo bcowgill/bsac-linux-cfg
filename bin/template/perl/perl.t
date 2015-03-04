@@ -90,14 +90,22 @@ diag "Object Oriented testing methods";
 
 diag "isa_ok() - was something created of a given type";
 my $fh = FileHandle->new($0,"r");
+isa_ok([], 'ARRAY', "should be ARRAY");
 isa_ok($fh, $ISA);
 isa_ok($fh, $ISA_FAIL, "should be FileHandle");
 
 diag "can_ok() for checking method availability on module or object - cannot specify a custom message";
 can_ok( 'File::Copy', @CAN );
+can_ok( $fh, 'new' );
 
+diag "new_ok() create object and check class type all in one go";
+$fh->close();
+$fh = new_ok(
+	'FileHandle'     # class to instantiate from
+	=> [$0, "r"],    # params to FileHandle->new() 
+	'should be FileHandle'    # object name/test message
+);
 
-#new_ok
 #pass
 #
 #fail
