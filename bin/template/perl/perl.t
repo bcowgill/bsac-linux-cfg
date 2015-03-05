@@ -27,7 +27,7 @@ use Test::More tests => 28;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
-#if ( $^O eq 'not this' ) {
+#if ( $OSNAME eq 'not this' ) {
 #	plan skip_all => 'Test irrelevant on this OS';
 #}
 #else {
@@ -37,43 +37,46 @@ use Test::More tests => 28;
 # ... do all testing
 # done_testing($number_of_tests_if_known);
 
-BEGIN {
-	our $SUBTEST = 'main';
-	our $ALL_PASS = 0;
-	our $BAIL = 0;
-	our $EXPECT = 2;
-	our $EXPECT_FAIL = $EXPECT;
-	our $DEEP = {};
-	our $DEEP_FAIL = { this => 'that' };
-	our $ISA = 'FileHandle';
-	our $ISA_FAIL = 'Thingie';
-	our @USE = qw(Cwd This/one/is/gone);
-	our @CAN = qw(copy move not_this_one);
-	our @MODULES = qw(
-		Test::Differences
-		Test::Deep
-		Test::Exception
-		Test::Class
-		Test::Inline
-	);
+# because all good code starts with...
+use strict;
+use warnings;
+use English -no_match_vars;
 
-	if (@ARGV)
+our $ALL_PASS = 0;
+our $BAIL = 0;
+our $SUBTEST = 'main';
+our $DEEP = {};
+our $EXPECT = 2;
+our $EXPECT_FAIL = $EXPECT;
+our $DEEP_FAIL = { this => 'that' };
+our $ISA = 'FileHandle';
+our $ISA_FAIL = 'Thingie';
+our @USE = qw(Cwd This/one/is/gone);
+our @CAN = qw(copy move not_this_one);
+our @MODULES = qw(
+	Test::Differences
+	Test::Deep
+	Test::Exception
+	Test::Class
+	Test::Inline
+);
+
+if (@ARGV)
+{
+	my $mode = shift;
+	if ($mode eq 'bail')
 	{
-		my $mode = shift;
-		if ($mode eq 'bail')
-		{
-			$BAIL = 1;
-		}
-		else
-		{
-			$ALL_PASS = 1;
-			$EXPECT_FAIL = 13; # make all test pass
-			$DEEP_FAIL = $DEEP;
-			$ISA_FAIL = $ISA;
-			pop(@USE);
-			push(@USE, 'Data::Dumper');
-			pop(@CAN);
-		}
+		$BAIL = 1;
+	}
+	else
+	{
+		$ALL_PASS = 1;
+		$EXPECT_FAIL = 13; # make all test pass
+		$DEEP_FAIL = $DEEP;
+		$ISA_FAIL = $ISA;
+		pop(@USE);
+		push(@USE, 'Data::Dumper');
+		pop(@CAN);
 	}
 }
 
@@ -96,7 +99,7 @@ note "note() - does not show in when running in a harness";
 note("i am invisible in the harness (or prove) but not when running normally");
 diag "diag() - shows message always";
 ok(1 + 12 == $EXPECT_FAIL)
-	|| map { diag($_) } (
+	|| map { diag($ARG) } (
 	'array = ',
 	explain [qw(explain() dumps structures nicely)]
 );
@@ -133,6 +136,7 @@ diag "Test::More adds is()/isnt() uses eq and ne operators, not good for true/fa
 is ( 1 + 1, $EXPECT);
 is ( 1 + 1, $EXPECT, "should be $EXPECT");
 isnt ( 1 + 1, $EXPECT_FAIL, "should be $EXPECT also");
+my $not_me;
 is ($not_me, undef, "should be undefined ");
 
 diag "like()/unlike() for regex match";
@@ -163,10 +167,10 @@ my $passed = subtest $SUBTEST => sub
 
 	diag "require_ok() for checking module can be required - will not import any symbols";
 	require_ok( 'File::Path' );
-	map { require_ok($ALL_PASS ? 'Test::More' : $_) } @MODULES;
+	map { require_ok($ALL_PASS ? 'Test::More' : $ARG) } @MODULES;
 
 	diag "isa_ok() - was something created of a given type";
-	my $fh = FileHandle->new($0,"r");
+	my $fh = FileHandle->new($PROGRAM_NAME,"r");
 	isa_ok([], 'ARRAY', "should be ARRAY");
 	isa_ok($fh, $ISA);
 	isa_ok($fh, $ISA_FAIL, "should be FileHandle");
@@ -188,7 +192,7 @@ my $passed = subtest $SUBTEST => sub
 	$fh->close();
 	$fh = new_ok(
 		'FileHandle'     # class to instantiate from
-		=> [$0, "r"],    # params to FileHandle->new()
+		=> [$PROGRAM_NAME, "r"],  # params to FileHandle->new()
 		'should be FileHandle'    # object name/test message
 	);
 
@@ -203,7 +207,7 @@ SKIP: {
 	skip(
 		'not going to work on this OS',
 		$SKIP_TESTS)
-		unless $^O eq 'not this';
+		unless $OSNAME eq 'not this';
 
 	# tests don't run and don't count as failures
 	is('some', 'test', 'unsupported on this OS');
@@ -228,7 +232,7 @@ TODO: {
 	todo_skip(
 		$TODO,
 		$SKIP_TESTS)
-		unless $^O eq 'not this';
+		unless $OSNAME eq 'not this';
 
 	# the tests DIE HORRIBLY if run, so we skip but know they are TODO
 	is([die, die, die], 'something', 'waffle should be something');
