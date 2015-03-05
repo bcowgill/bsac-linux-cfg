@@ -153,6 +153,9 @@ is_deeply({}, $DEEP, "should be identical objects");
 is_deeply({}, $DEEP_FAIL, "should be identical objects")
    or diag explain $DEEP_FAIL;
 
+# dump an object for putting it into the test plan as data/expected result
+#dumpForDeep(\@MODULES);
+
 diag "subtest() to run a set of tests as a sub-test nicely indented";
 
 subtest 'subtest() with plan skip_all' => sub {
@@ -244,3 +247,20 @@ diag "BAIL_OUT() abort test plan if cannot carry on -- doesn't give an ending su
 for my $module (@USE) {
 	require_ok $module or ($BAIL && BAIL_OUT "Can't load $module");
 }
+
+# Dump some object for use as base data in a
+# Test::Deep cmp_deeply comparison
+# or Test::More is_deeply test
+sub dumpForDeep
+{
+    my $obj = shift;
+
+    use Data::Dumper;
+
+    local $Data::Dumper::Sortkeys = 1;
+    local $Data::Dumper::Indent = 1;
+    local $Data::Dumper::Terse = 1;
+
+    print Dumper($obj);
+}
+
