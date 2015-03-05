@@ -49,6 +49,13 @@ BEGIN {
 	our $ISA_FAIL = 'Thingie';
 	our @USE = qw(Cwd This/one/is/gone);
 	our @CAN = qw(copy move not_this_one);
+	our @MODULES = qw(
+		Test::Differences
+		Test::Deep
+		Test::Exception
+		Test::Class
+		Test::Inline
+	);
 
 	if (@ARGV)
 	{
@@ -152,10 +159,11 @@ subtest 'subtest() with plan skip_all' => sub {
 $SUBTEST = "Object Oriented testing methods";
 my $passed = subtest $SUBTEST => sub
 {
-	plan tests => 8;
+	plan tests => 8 + scalar(@MODULES);
 
 	diag "require_ok() for checking module can be required - will not import any symbols";
 	require_ok( 'File::Path' );
+	map { require_ok($ALL_PASS ? 'Test::More' : $_) } @MODULES;
 
 	diag "isa_ok() - was something created of a given type";
 	my $fh = FileHandle->new($0,"r");
