@@ -53,6 +53,7 @@ our $ISA = 'FileHandle';
 our $ISA_FAIL = 'Thingie';
 our @USE = qw(Cwd This/one/is/gone);
 our @CAN = qw(copy move not_this_one);
+
 our @MODULES = qw(
 	Test::Differences
 	Test::Deep
@@ -60,6 +61,7 @@ our @MODULES = qw(
 	Test::Class
 	Test::Inline
 );
+our %HAS_MODULE = ();
 
 if (@ARGV)
 {
@@ -170,7 +172,13 @@ my $passed = subtest $SUBTEST => sub
 
 	diag "require_ok() for checking module can be required - will not import any symbols";
 	require_ok( 'File::Path' );
-	map { require_ok($ALL_PASS ? 'Test::More' : $ARG) } @MODULES;
+
+	foreach my $module (@MODULES)
+	{
+		$module = $ALL_PASS ? 'Test::More' : $module;
+		$HAS_MODULE{$module} = use_ok($module);
+	}
+	diag explain \%HAS_MODULE;
 
 	diag "isa_ok() - was something created of a given type";
 	my $fh = FileHandle->new($PROGRAM_NAME,"r");
