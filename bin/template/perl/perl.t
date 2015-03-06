@@ -42,6 +42,8 @@ use strict;
 use warnings;
 use English -no_match_vars;
 
+use utf8; # if Test::Difference used on unicode text
+
 our $ALL_PASS = 0;
 our $BAIL = 0;
 our $SUBTEST = 'main';
@@ -80,6 +82,12 @@ if (@ARGV)
 		push(@USE, 'Data::Dumper');
 		pop(@CAN);
 	}
+}
+
+BEGIN {
+	# Test::Differences to make unicode diffs better
+	# before loading Test::Differences
+	$ENV{DIFF_OUTPUT_UNICODE} = 1
 }
 
 BEGIN {
@@ -253,6 +261,7 @@ TODO: {
 $SUBTEST = "Test::Differences";
 subtest $SUBTEST => sub
 {
+	diag "$SUBTEST - for comparing bodies of text, deep structures or SQL records";
 	if ($HAS_MODULE{$SUBTEST}) {
 		plan tests => 1;
 	}
@@ -260,6 +269,37 @@ subtest $SUBTEST => sub
 	{
 		plan skip_all => "module $SUBTEST unavailable";
 	}
+
+	#TODO
+
+	# Needed if diffing unicode text
+	# use utf8;
+	# BEGIN { $ENV{DIFF_OUTPUT_UNICODE} = 1; use Test::Differences; }
+    my $want_utf = { 'Traditional Chinese' => '中國' };
+    my $have_utf = { 'Traditional Chinese' => '中国' };
+
+    eq_or_diff $have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby';
+
+	my $long_string = join '' => 1..40;
+	my $expected = '-' . $long_string;
+
+	# this is the default and does not need to explicitly set unless you need
+	# to reset it back from another diff type
+	table_diff();
+	eq_or_diff($long_string, $expected, 'eq_or_diff() example table diff');
+
+	unified_diff();
+	eq_or_diff($long_string, $expected, 'eq_or_diff() example unified diff');
+
+	context_diff();
+	eq_or_diff($long_string, $expected, 'eq_or_diff() example context diff');
+
+	oldstyle_diff();
+	eq_or_diff($long_string, $expected, 'eq_or_diff() example oldstyle diff');
+
+	#eq_or_diff
+	#eq_or_diff_data
+	#eq_or_diff_text
 	ok(1, "$SUBTEST test");
 };
 
