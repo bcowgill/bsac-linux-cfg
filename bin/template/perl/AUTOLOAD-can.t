@@ -32,6 +32,20 @@ sub new
 # automatic method generation via AUTOLOAD
 # source: http://www.perlmonks.org/?node_id=8227
 # TODO i wonder if there is a cpan module method maker? automethod?
+# Class::MakeMethods::Autoload - creates methods whenever they are used.
+#     no restriction on names of methods
+#     http://search.cpan.org/~evo/Class-MakeMethods-1.01/MakeMethods/Docs/Examples.pod#Changing_Method_Names
+#     http://search.cpan.org/~evo/Class-MakeMethods-1.01/MakeMethods/Template.pm#Selecting_Interfaces
+#     http://search.cpan.org/~evo/Class-MakeMethods-1.01/MakeMethods/Template/Generic.pm#scalar_Accessor
+#  uses java like getX setX for method names
+#  package MyStruct;
+#  use Class::MakeMethods::Template::Hash (
+#    'new'     => 'new',
+#    'scalar'  => '--java Foo',
+#  );
+
+# Class::AutoloadCAN
+# http://search.cpan.org/~tilly/Class-AutoloadCAN-0.03/lib/Class/AutoloadCAN.pm
 
 sub DESTROY { }    # prevent AUTOLOAD getting this
 sub AUTOLOAD
