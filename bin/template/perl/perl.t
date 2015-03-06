@@ -23,7 +23,7 @@
 # Test::Exception
 
 #use threads; # must precede Test::More if you are threading
-use Test::More tests => 28;
+use Test::More tests => 33;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -249,6 +249,71 @@ TODO: {
 	is([die, die, die], 'something', 'waffle should be something');
 	is('waffle', 'waffle', 'waffle should be waffle');
 }
+
+$SUBTEST = "Test::Differences";
+subtest $SUBTEST => sub
+{
+	if ($HAS_MODULE{$SUBTEST}) {
+		plan tests => 1;
+	}
+	else
+	{
+		plan skip_all => "module $SUBTEST unavailable";
+	}
+	ok(1, "$SUBTEST test");
+};
+
+$SUBTEST = "Test::Deep";
+subtest $SUBTEST => sub
+{
+	if ($HAS_MODULE{$SUBTEST}) {
+		plan tests => 1;
+	}
+	else
+	{
+		plan skip_all => "module $SUBTEST unavailable";
+	}
+	ok(1, "$SUBTEST test");
+};
+
+$SUBTEST = "Test::Exception";
+subtest $SUBTEST => sub
+{
+	if ($HAS_MODULE{$SUBTEST}) {
+		plan tests => 1;
+	}
+	else
+	{
+		plan skip_all => "module $SUBTEST unavailable";
+	}
+	ok(1, "$SUBTEST test");
+};
+
+$SUBTEST = "Test::Inline";
+subtest $SUBTEST => sub
+{
+	if ($HAS_MODULE{$SUBTEST}) {
+		plan tests => 1;
+	}
+	else
+	{
+		plan skip_all => "module $SUBTEST unavailable";
+	}
+	ok(1, "$SUBTEST test");
+};
+
+$SUBTEST = "Test::Class";
+subtest $SUBTEST => sub
+{
+	if ($HAS_MODULE{$SUBTEST}) {
+		plan tests => 1;
+	}
+	else
+	{
+		plan skip_all => "module $SUBTEST unavailable";
+	}
+	ok(1, "$SUBTEST test");
+};
 
 diag "BAIL_OUT() abort test plan if cannot carry on -- doesn't give an ending summary when in harness";
 # stop testing if any of your modules will not load
