@@ -65,6 +65,15 @@ our @MODULES = qw(
 );
 our %HAS_MODULE = ();
 
+# Construct a few lines of random text for testing
+our $BIG_TEXT = join(
+	"",
+	map { $ARG =~ s{ 9 [04] }{\n}xmsg; $ARG; }
+	map { rand($ARG); } (1 .. 20));
+our $BIG_TEXT_FAIL = $BIG_TEXT;
+	$BIG_TEXT_FAIL =~ s{ 3 ([72]) }{${1}3}xmsg;
+	$BIG_TEXT_FAIL = "a$BIG_TEXT_FAIL";
+
 if (@ARGV)
 {
 	my $mode = shift;
@@ -78,6 +87,7 @@ if (@ARGV)
 		$EXPECT_FAIL = 13; # make all test pass
 		$DEEP_FAIL = $DEEP;
 		$ISA_FAIL = $ISA;
+		$BIG_TEXT_FAIL = $BIG_TEXT;
 		pop(@USE);
 		push(@USE, 'Data::Dumper');
 		pop(@CAN);
@@ -239,7 +249,7 @@ diag "TODO: runs tests but expect to fail";
 TODO: {
 	local $TODO = "flibble() not yet implemented";
 
-    # the tests run, look like failures but don't count as failures overall
+	# the tests run, look like failures but don't count as failures overall
 	is('flibble', 'something', 'flibble should be something');
 	is('flibble', 'flibble', 'flibble should be flibble');
 }
@@ -262,40 +272,37 @@ $SUBTEST = "Test::Differences";
 subtest $SUBTEST => sub
 {
 	diag "$SUBTEST - for comparing bodies of text, deep structures or SQL records";
-	if ($HAS_MODULE{$SUBTEST}) {
-		plan tests => 1;
-	}
-	else
-	{
-		plan skip_all => "module $SUBTEST unavailable";
-	}
+	test_or_skip($SUBTEST, 1);
 
-	#TODO
+	#TODO http://search.cpan.org/~dcantrell/Test-Differences-0.63/lib/Test/Differences.pm
 
 	# Needed if diffing unicode text
 	# use utf8;
 	# BEGIN { $ENV{DIFF_OUTPUT_UNICODE} = 1; use Test::Differences; }
-    my $want_utf = { 'Traditional Chinese' => '中國' };
-    my $have_utf = { 'Traditional Chinese' => '中国' };
+	my $want_utf = { 'Traditional Chinese' => '中國' };
+	my $have_utf = { 'Traditional Chinese' => '中国' };
+	if ($ALL_PASS) {
+		$want_utf = $have_utf;
+	}
 
-    eq_or_diff $have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby';
+	# comparison of Test::More handling of big text vs Test::Differences
+	is_deeply($BIG_TEXT, $BIG_TEXT_FAIL, "Test::More is_deeply() for text comparison");
 
-	my $long_string = join '' => 1..40;
-	my $expected = '-' . $long_string;
+	eq_or_diff $have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby';
 
 	# this is the default and does not need to explicitly set unless you need
 	# to reset it back from another diff type
 	table_diff();
-	eq_or_diff($long_string, $expected, 'eq_or_diff() example table diff');
+	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example table diff');
 
 	unified_diff();
-	eq_or_diff($long_string, $expected, 'eq_or_diff() example unified diff');
+	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example unified diff');
 
 	context_diff();
-	eq_or_diff($long_string, $expected, 'eq_or_diff() example context diff');
+	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example context diff');
 
 	oldstyle_diff();
-	eq_or_diff($long_string, $expected, 'eq_or_diff() example oldstyle diff');
+	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example oldstyle diff');
 
 	#eq_or_diff
 	#eq_or_diff_data
@@ -306,52 +313,28 @@ subtest $SUBTEST => sub
 $SUBTEST = "Test::Deep";
 subtest $SUBTEST => sub
 {
-	if ($HAS_MODULE{$SUBTEST}) {
-		plan tests => 1;
-	}
-	else
-	{
-		plan skip_all => "module $SUBTEST unavailable";
-	}
+	test_or_skip($SUBTEST, 1);
 	ok(1, "$SUBTEST test");
 };
 
 $SUBTEST = "Test::Exception";
 subtest $SUBTEST => sub
 {
-	if ($HAS_MODULE{$SUBTEST}) {
-		plan tests => 1;
-	}
-	else
-	{
-		plan skip_all => "module $SUBTEST unavailable";
-	}
+	test_or_skip($SUBTEST, 1);
 	ok(1, "$SUBTEST test");
 };
 
 $SUBTEST = "Test::Inline";
 subtest $SUBTEST => sub
 {
-	if ($HAS_MODULE{$SUBTEST}) {
-		plan tests => 1;
-	}
-	else
-	{
-		plan skip_all => "module $SUBTEST unavailable";
-	}
+	test_or_skip($SUBTEST, 1);
 	ok(1, "$SUBTEST test");
 };
 
 $SUBTEST = "Test::Class";
 subtest $SUBTEST => sub
 {
-	if ($HAS_MODULE{$SUBTEST}) {
-		plan tests => 1;
-	}
-	else
-	{
-		plan skip_all => "module $SUBTEST unavailable";
-	}
+	test_or_skip($SUBTEST, 1);
 	ok(1, "$SUBTEST test");
 };
 
@@ -361,19 +344,32 @@ for my $module (@USE) {
 	require_ok $module or ($BAIL && BAIL_OUT "Can't load $module");
 }
 
+# Conditional subtests, test or skip based on existence of a module
+sub test_or_skip
+{
+	my ($module, $tests) = @ARG;
+	if ($HAS_MODULE{$module}) {
+		plan tests => $tests;
+	}
+	else
+	{
+		plan skip_all => "module $module unavailable";
+	}
+}
+
 # Dump some object for use as base data in a
 # Test::Deep cmp_deeply comparison
 # or Test::More is_deeply test
 sub dumpForDeep
 {
-    my $obj = shift;
+	my $obj = shift;
 
-    use Data::Dumper;
+	use Data::Dumper;
 
-    local $Data::Dumper::Sortkeys = 1;
-    local $Data::Dumper::Indent = 1;
-    local $Data::Dumper::Terse = 1;
+	local $Data::Dumper::Sortkeys = 1;
+	local $Data::Dumper::Indent = 1;
+	local $Data::Dumper::Terse = 1;
 
-    print Dumper($obj);
+	print Dumper($obj);
 }
 
