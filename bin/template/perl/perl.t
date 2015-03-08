@@ -313,7 +313,70 @@ subtest $SUBTEST => sub
 $SUBTEST = "Test::Deep";
 subtest $SUBTEST => sub
 {
+	diag "$SUBTEST - for data structures with regex checking of items";
 	test_or_skip($SUBTEST, 1);
+
+	#TODO http://search.cpan.org/~rjbs/Test-Deep-0.115/lib/Test/Deep.pm#Without_Test::Deep
+
+	my $rhPerson = {
+		Name => 'Mister Johnson',
+		Phone => '054322334',
+		Difficult => 'value varies and is too difficult to validate here',
+		ChildNames => ['peter', 'Mr paul', 'Miss mary']
+	};
+	if ($ALL_PASS) {
+		$rhPerson->{Name} = 'Mr Johnson';
+		shift(@{$rhPerson->{ChildNames}});
+	}
+
+	my $name_re = re('^(Mr|Mrs|Miss) \w+ \w+$');
+	cmp_deeply(
+		$rhPerson,
+		{
+			Name => $name_re,
+			Phone => re('^0d{6}$'),
+			ChildNames => array_each($name_re),
+			Difficult => ignore()
+		},
+		"cmp_deeply()/re()/array_each() - deep validation of structured data"
+	);
+
+	# cmp_bag()
+	# cmp_set()
+	# cmp_methods()
+	# eq_deeply()
+	# cmp_details()
+	# all()
+	# any()
+
+	# scalar checks
+	# ignore()
+	# re()
+
+	# ref checks
+	# shallow()
+	# noclass()
+	# useclass()
+	# isa() or Isa()
+
+	# array checks
+	# array_each()
+	# bag()
+	# set()
+	# noneof()
+	# superbagof()
+	# subbagof()
+	# supersetof()
+	# subsetof()
+
+	# hash/obj checks
+	# obj_isa()
+	# superhashof()
+	# subhashof()
+
+	# methods()
+	# listmethods()
+
 	ok(1, "$SUBTEST test");
 };
 
