@@ -21,9 +21,11 @@
 #Test::Inline embed testing in your modules
 #Bundle::Test whole bunch of test modules to install
 # Test::Exception
+# Test::Warn
+# Test::NoWarnings
 
 #use threads; # must precede Test::More if you are threading
-use Test::More tests => 33;
+use Test::More tests => 35;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
@@ -62,6 +64,8 @@ our @MODULES = qw(
 	Test::Exception
 	Test::Class
 	Test::Inline
+	Test::Warn
+	Test::NoWarnings
 );
 our %HAS_MODULE = ();
 
@@ -288,7 +292,7 @@ subtest $SUBTEST => sub
 	# comparison of Test::More handling of big text vs Test::Differences
 	is_deeply($BIG_TEXT, $BIG_TEXT_FAIL, "Test::More is_deeply() for text comparison");
 
-	eq_or_diff $have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby';
+	eq_or_diff($have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby');
 
 	# this is the default and does not need to explicitly set unless you need
 	# to reset it back from another diff type
@@ -346,12 +350,17 @@ subtest $SUBTEST => sub
 	# cmp_methods()
 	# eq_deeply()
 	# cmp_details()
+	# deep_diag()
 	# all()
 	# any()
+	# code()
 
 	# scalar checks
 	# ignore()
 	# re()
+	# str()
+	# num()
+	# bool()
 
 	# ref checks
 	# shallow()
@@ -371,6 +380,7 @@ subtest $SUBTEST => sub
 
 	# hash/obj checks
 	# obj_isa()
+	# hash_each()
 	# superhashof()
 	# subhashof()
 
@@ -384,6 +394,27 @@ $SUBTEST = "Test::Exception";
 subtest $SUBTEST => sub
 {
 	test_or_skip($SUBTEST, 1);
+	sub death { die 'I have died!'; };
+	sub simple_death { die Error::Simple->new('i die') };
+	sub life { return 'I live!';};
+
+	#TODO http://search.cpan.org/~ether/Test-Exception-0.38/lib/Test/Exception.pm
+
+	throws_ok { return life() } qr/division by zero/, 'throws_ok() should be division by zero';
+	throws_ok { return 42 / 0 } qr/division by zero/, 'throws_ok() match against stringified exception';
+	# $@ $EVAL_ERROR are preserved after throws_ok() so you can do further processing
+	note explain $EVAL_ERROR;
+	throws_ok { return death(); } 'Error::Simple', 'throws_ok() match against error class name';
+	throws_ok { return death(); } Error::Simple->new(), 'throws_ok() match against instance of the exception';
+	diag 'throws_ok() with no test message given';
+	throws_ok { return simple_death(); } 'what';
+
+	dies_ok { return life(); } 'dies_ok() should die in some manner';
+	lives_ok(sub { return death(); }, 'lives_ok() should not die');
+	lives_and {
+		is(death(), 'I live!', 'should return string');
+	} 'lives_and() should not die and allows further testing';
+
 	ok(1, "$SUBTEST test");
 };
 
@@ -395,6 +426,20 @@ subtest $SUBTEST => sub
 };
 
 $SUBTEST = "Test::Class";
+subtest $SUBTEST => sub
+{
+	test_or_skip($SUBTEST, 1);
+	ok(1, "$SUBTEST test");
+};
+
+$SUBTEST = "Test::Warn";
+subtest $SUBTEST => sub
+{
+	test_or_skip($SUBTEST, 1);
+	ok(1, "$SUBTEST test");
+};
+
+$SUBTEST = "Test::NoWarnings";
 subtest $SUBTEST => sub
 {
 	test_or_skip($SUBTEST, 1);
