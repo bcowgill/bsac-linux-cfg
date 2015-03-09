@@ -74,9 +74,23 @@ our $BIG_TEXT = join(
 	"",
 	map { $ARG =~ s{ 9 [04] }{\n}xmsg; $ARG; }
 	map { rand($ARG); } (1 .. 20));
+$BIG_TEXT =~ s{([^\n]{50})}{$1\n}xmsg;
 our $BIG_TEXT_FAIL = $BIG_TEXT;
 	$BIG_TEXT_FAIL =~ s{ 3 ([72]) }{${1}3}xmsg;
 	$BIG_TEXT_FAIL = "a$BIG_TEXT_FAIL";
+
+# Construct a structure for testing deep comparisons
+our $STRUCT = {
+	'key' => 'value',
+	'arr' => [1,2,3,4,5],
+	'obj' => { 'k' => 'v', 'j' => 'k', 'm' => 'n' },
+};
+our $STRUCT_FAIL = {
+	'key' => 'value',
+	'arr' => [1,2,5,4,5,42],
+	'another' => 'val',
+	'obj' => { 'k' => 'v', 'm' => 'n', 'z' => 'p' },
+};
 
 if (@ARGV)
 {
@@ -92,6 +106,7 @@ if (@ARGV)
 		$DEEP_FAIL = $DEEP;
 		$ISA_FAIL = $ISA;
 		$BIG_TEXT_FAIL = $BIG_TEXT;
+		$STRUCT_FAIL = $STRUCT;
 		pop(@USE);
 		push(@USE, 'Data::Dumper');
 		pop(@CAN);
@@ -276,7 +291,7 @@ $SUBTEST = "Test::Differences";
 subtest $SUBTEST => sub
 {
 	diag "$SUBTEST - for comparing bodies of text, deep structures or SQL records";
-	test_or_skip($SUBTEST, 1);
+	test_or_skip($SUBTEST, 12);
 
 	#TODO http://search.cpan.org/~dcantrell/Test-Differences-0.63/lib/Test/Differences.pm
 
@@ -284,34 +299,38 @@ subtest $SUBTEST => sub
 	# use utf8;
 	# BEGIN { $ENV{DIFF_OUTPUT_UNICODE} = 1; use Test::Differences; }
 	my $want_utf = { 'Traditional Chinese' => '中國' };
+
 	my $have_utf = { 'Traditional Chinese' => '中国' };
+
 	if ($ALL_PASS) {
 		$want_utf = $have_utf;
 	}
 
+	eq_or_diff($have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby');
+
 	# comparison of Test::More handling of big text vs Test::Differences
 	is_deeply($BIG_TEXT, $BIG_TEXT_FAIL, "Test::More is_deeply() for text comparison");
-
-	eq_or_diff($have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby');
+	is_deeply($STRUCT, $STRUCT_FAIL, "Test::More is_deeply() for structure comparison");
 
 	# this is the default and does not need to explicitly set unless you need
 	# to reset it back from another diff type
 	table_diff();
-	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example table diff');
+	eq_or_diff_text($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff_text() (lines count from 1) example table diff of text');
+	eq_or_diff_data($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff_data() (lines count from 0) example table diff of text');
+	eq_or_diff($STRUCT, $STRUCT_FAIL, 'eq_or_diff() example table diff of a perl structure');
 
 	unified_diff();
 	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example unified diff');
+	eq_or_diff($STRUCT, $STRUCT_FAIL, 'eq_or_diff() example unified diff of a perl structure');
 
 	context_diff();
 	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example context diff');
+	eq_or_diff($STRUCT, $STRUCT_FAIL, 'eq_or_diff() example context diff of a perl structure');
 
 	oldstyle_diff();
 	eq_or_diff($BIG_TEXT, $BIG_TEXT_FAIL, 'eq_or_diff() example oldstyle diff');
+	eq_or_diff($STRUCT, $STRUCT_FAIL, 'eq_or_diff() example oldstyle diff of a perl structure - note very good');
 
-	#eq_or_diff
-	#eq_or_diff_data
-	#eq_or_diff_text
-	ok(1, "$SUBTEST test");
 };
 
 $SUBTEST = "Test::Deep";
