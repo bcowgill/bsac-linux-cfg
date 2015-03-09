@@ -14,7 +14,6 @@
 # prove ./perl.t :: bail         # pass args to test plan to BAIL_OUT
 
 # TODO
-#Test::Differences
 #Test::Deep
 #builder() Test::Builder access
 #Test::Class xUnit like
@@ -293,7 +292,7 @@ subtest $SUBTEST => sub
 	diag "$SUBTEST - for comparing bodies of text, deep structures or SQL records";
 	test_or_skip($SUBTEST, 12);
 
-	#TODO http://search.cpan.org/~dcantrell/Test-Differences-0.63/lib/Test/Differences.pm
+	# Docs http://search.cpan.org/~dcantrell/Test-Differences-0.63/lib/Test/Differences.pm
 
 	# Needed if diffing unicode text
 	# use utf8;
@@ -308,7 +307,7 @@ subtest $SUBTEST => sub
 
 	eq_or_diff($have_utf, $want_utf, 'eq_or_diff() should do Unicode, baby');
 
-	# comparison of Test::More handling of big text vs Test::Differences
+	diag "comparison of Test::More handling of big text vs Test::Differences";
 	is_deeply($BIG_TEXT, $BIG_TEXT_FAIL, "Test::More is_deeply() for text comparison");
 	is_deeply($STRUCT, $STRUCT_FAIL, "Test::More is_deeply() for structure comparison");
 
