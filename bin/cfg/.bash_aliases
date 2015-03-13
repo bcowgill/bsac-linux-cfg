@@ -50,6 +50,8 @@ alias grc='git rebase --continue'
 alias grs='git rebase --skip'
 alias gss='git status'
 alias gfo='git f*ck off'
+alias glog='git log --oneline --graph --decorate --all'
+alias ggraph='git graph --simplify-by-decoration'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
