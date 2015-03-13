@@ -143,6 +143,7 @@ function make_root_file_exist {
    local file contents message temp_file
    file="$1"
    contents="$2"
+
    temp_file=`mktemp --tmpdir=/tmp/$USER`
    file_exists "$file" > /dev/null || (echo "$contents" >> $temp_file; chmod go+r $temp_file; sudo cp $temp_file "$file")
    rm $temp_file
@@ -1151,7 +1152,7 @@ function build_perl_project {
    echo build perl project in dir `pwd`
    touch before_build.timestamp
    if [ -f Build.PL ]; then
-      perl Build.PL && ./Build && ./Build test && ./Build install && error=0
+      perl Build.PL && ./Build && ./Build test && sudo ./Build install && error=0
    else
       if [ -f Makefile.PL ]; then
          perl Makefile.PL && make && make test && sudo make install && error=0
@@ -1510,6 +1511,33 @@ function mysql_make_test_user_exist_on_database {
 SQL
      mysql_connection_check $user $password
   fi
+}
+
+# run a mysql script against a database an fail if there were any errors
+function mysql_run_script_on_database {
+   local sql_file user password database message
+   sql_file=$1
+   user=$2
+   password=$3
+   database=$4
+   message=$5
+   temp_file=`mktemp --tmpdir=/tmp/$USER`
+   file_exists $sql_file "sql file for $message"
+   if mysql -u $user -p$password -D $database < $sql_file 2> $temp_file; then
+      if [ -s $temp_file ]; then
+          echo "ERROR in $sql_file:"
+          cat $temp_file
+          rm $temp_file
+          NOT_OK "script $sql_file has ERRORS on database $database [$message]"
+      else
+          OK "script $sql_file ran on database $database [$message]"
+      fi
+   else
+      echo "ERROR in $sql_file:"
+      cat $temp_file
+      rm $temp_file
+      NOT_OK "script $sql_file FAILED on database $database [$message]"
+   fi
 }
 
 # check for user account on localhost mysql
