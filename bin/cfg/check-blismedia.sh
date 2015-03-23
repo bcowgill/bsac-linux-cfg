@@ -162,7 +162,9 @@ else
    exit 1
 fi
 
-#update-initramfs -u -k 3.13.0-46-generic
+# try a different kernel:
+# ls /boot
+# update-initramfs -u -k 3.13.0-46-generic
 
 # ensure /boot doesn't get too full
 if df -k /boot | egrep 9[0-9]% ; then
