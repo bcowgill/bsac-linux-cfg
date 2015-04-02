@@ -95,6 +95,10 @@ render-tt.pl [options] [@options-file ...] [file ...]
  [%= =%] CHOMP_COLLAPSE = all whitespace and newlines
  [%~ ~%] CHOMP_GREEDY = all whitespace to a single space
 
+ Examples:
+
+ <span class="[% active -%] content">  removes spaces if active is empty otherwise lets space remain
+
 =item B<--post-chomp=N>
 
  Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
