@@ -4,7 +4,7 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../template/perl-inplace.pl
+PROGRAM=../../template/perl/perl-inplace.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/sample.txt
 DEBUG=--debug
