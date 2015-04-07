@@ -1,0 +1,2168 @@
+1..35
+    # Subtest: Test::More use_ok() in a BEGIN block 
+    1..3
+    # use_ok() cannot specify a test message
+    # use module with default methods import
+    ok 1 - use FileHandle;
+    # use module and specify specific methods to import
+    ok 2 - use File::Copy;
+    # use module and prevent any methods from being imported
+    ok 3 - require File::Slurp;
+    # end subtest Test::More use_ok() in a BEGIN block 
+ok 1 - Test::More use_ok() in a BEGIN block 
+# Test::Simple ok() only
+ok 2
+ok 3 - should be 2
+not ok 4 - should be 2 also
+#   Failed test 'should be 2 also'
+#   at ./perl.t line 134.
+# some diagnosis on failure of test...
+# Test::More note() diag() explain() for diagnostics
+# note() - does not show in when running in a harness
+# i am invisible in the harness (or prove) but not when running normally
+# diag() - shows message always
+not ok 5
+#   Failed test at ./perl.t line 142.
+# [
+#   'explain()',
+#   'dumps',
+#   'structures',
+#   'nicely'
+# ]
+# array = 
+# 0
+# Test::More pass()/fail() for absolute control
+ok 6 - pass() - some test passed
+not ok 7 - fail() - some test failed
+#   Failed test 'fail() - some test failed'
+#   at ./perl.t line 172.
+# Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that
+ok 8
+ok 9 - should be 2
+not ok 10 - should be 2 also
+#   Failed test 'should be 2 also'
+#   at ./perl.t line 178.
+#          got: '2'
+#     expected: anything else
+ok 11 - should be undefined 
+# like()/unlike() for regex match
+ok 12 - should match esu
+ok 13 - should not match ESU
+# cmp_ok() for any comparison operator
+ok 14 - should be 2
+not ok 15 - should be 2 also
+#   Failed test 'should be 2 also'
+#   at ./perl.t line 188.
+#          got: 13
+#     expected: 2
+not ok 16 - should be less than 2
+#   Failed test 'should be less than 2'
+#   at ./perl.t line 189.
+#     '2'
+#         <
+#     '2'
+# is_deeply() for deep structure comparison
+ok 17 - should be identical objects
+not ok 18 - should be identical objects
+#   Failed test 'should be identical objects'
+#   at ./perl.t line 193.
+#     Structures begin differing at:
+#          $got->{this} = Does not exist
+#     $expected->{this} = 'that'
+# {
+#   'this' => 'that'
+# }
+# 0
+# subtest() to run a set of tests as a sub-test nicely indented
+    # Subtest: subtest() with plan skip_all
+    1..0 # SKIP cuz I said so
+ok 19 # skip cuz I said so
+    # Subtest: Object Oriented testing methods
+    1..15
+    # require_ok() for checking module can be required - will not import any symbols
+    ok 1 - require File::Path;
+    ok 2 - use Test::Differences;
+    ok 3 - use Test::Deep;
+    ok 4 - use Test::Exception;
+    not ok 5 - use Test::Class;
+    #   Failed test 'use Test::Class;'
+    #   at ./perl.t line 217.
+    #     Tried to use 'Test::Class'.
+    #     Error:  Can't locate Test/Class.pm in @INC (you may need to install the Test::Class module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at ./perl.t line 217.
+    # BEGIN failed--compilation aborted at ./perl.t line 217.
+    not ok 6 - use Test::Inline;
+    #   Failed test 'use Test::Inline;'
+    #   at ./perl.t line 217.
+    #     Tried to use 'Test::Inline'.
+    #     Error:  Can't locate Test/Inline.pm in @INC (you may need to install the Test::Inline module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at ./perl.t line 217.
+    # BEGIN failed--compilation aborted at ./perl.t line 217.
+    ok 7 - use Test::Warn;
+    ok 8 - use Test::NoWarnings;
+    # {
+    #   'Test::Class' => 0,
+    #   'Test::Deep' => 1,
+    #   'Test::Differences' => 1,
+    #   'Test::Exception' => 1,
+    #   'Test::Inline' => 0,
+    #   'Test::NoWarnings' => 1,
+    #   'Test::Warn' => 1
+    # }
+    # 0
+    # isa_ok() - was something created of a given type
+    ok 9 - 'should be ARRAY' isa 'ARRAY'
+    ok 10 - An object of class 'FileHandle' isa 'FileHandle'
+    not ok 11 - 'should be FileHandle' isa 'Thingie'
+    #   Failed test ''should be FileHandle' isa 'Thingie''
+    #   at ./perl.t line 225.
+    #     'should be FileHandle' isn't a 'Thingie'
+    # can_ok() for checking method availability on module or object - cannot specify a custom message
+    not ok 12 - File::Copy->can(...)
+    #   Failed test 'File::Copy->can(...)'
+    #   at ./perl.t line 228.
+    #     File::Copy->can('not_this_one') failed
+    ok 13 - FileHandle->can('new')
+    # can_ok() read_file fails because we required File::Slurp instead of used it above
+    not ok 14 - main->can('read_file')
+    #   Failed test 'main->can('read_file')'
+    #   at ./perl.t line 237.
+    #     main->can('read_file') failed
+    # new_ok() create object and check class type all in one go
+    ok 15 - 'should be FileHandle' isa 'FileHandle'
+    # BAIL_OUT() in a subtest will also abort the whole plan not just the sub test
+    # end subtest Object Oriented testing methods
+    # Looks like you failed 5 tests of 15.
+not ok 20 - Object Oriented testing methods
+#   Failed test 'Object Oriented testing methods'
+#   at ./perl.t line 250.
+# subtest() return val can be checked did it pass? 0
+# skip() and TODO for broken and unimplemented tests
+ok 21 # skip not going to work on this OS
+ok 22 # skip not going to work on this OS
+# TODO: runs tests but expect to fail
+not ok 23 - flibble should be something # TODO flibble() not yet implemented
+#   Failed (TODO) test 'flibble should be something'
+#   at ./perl.t line 273.
+#          got: 'flibble'
+#     expected: 'something'
+ok 24 - flibble should be flibble # TODO flibble() not yet implemented
+# todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them
+not ok 25 # TODO & SKIP waffle() just crashes and burns
+not ok 26 # TODO & SKIP waffle() just crashes and burns
+    # Subtest: Test::Differences
+    # Test::Differences - for comparing bodies of text, deep structures or SQL records
+    1..12
+    not ok 1 - eq_or_diff() should do Unicode, baby
+    #   Failed test 'eq_or_diff() should do Unicode, baby'
+    #   at ./perl.t line 310.
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'中国'                   |'中國'                   *
+    # +----+-----------------------+-----------------------+
+    # comparison of Test::More handling of big text vs Test::Differences
+    not ok 2 - Test::More is_deeply() for text comparison
+    #   Failed test 'Test::More is_deeply() for text comparison'
+    #   at ./perl.t line 313.
+    #          got: '0.1758706630
+    # 4321.4
+    # 383971197791.783628674571821.245971672596884.79264
+    # 9968935995.440935971127972.964341099166984.2393
+    # 938
+    # 1282.938473
+    # 4473752.792763445183
+    # 3.5451465
+    # 46775.653956452269747.4573035507172311.02545865832
+    # 5713.434715465343711.60008026054316.0224510514
+    # 416.164686581336915.652083304298318.6953240647746'
+    #     expected: 'a0.1758706630
+    # 4231.4
+    # 383971197791.783628674571821.245971672596884.79264
+    # 9968935995.440935971127972.964341099166984.2393
+    # 938
+    # 1282.938473
+    # 4477352.792763445183
+    # 3.5451465
+    # 46775.653956452269747.4573035507172311.02545865823
+    # 5713.434715465347311.60008026054316.0224510514
+    # 416.164686581336915.652083304298318.6952340647746'
+    not ok 3 - Test::More is_deeply() for structure comparison
+    #   Failed test 'Test::More is_deeply() for structure comparison'
+    #   at ./perl.t line 314.
+    #     Structures begin differing at:
+    #          $got->{another} = Does not exist
+    #     $expected->{another} = 'val'
+    not ok 4 - eq_or_diff_text() (lines count from 1) example table diff of text
+    #   Failed test 'eq_or_diff_text() (lines count from 1) example table diff of text'
+    #   at ./perl.t line 319.
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # | Ln|Got                                                 |Expected                                            |
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # *  1|'0.1758706630                                       |'a0.1758706630                                      *
+    # *  2|4321.4                                              |4231.4                                              *
+    # |  3|383971197791.783628674571821.245971672596884.79264  |383971197791.783628674571821.245971672596884.79264  |
+    # |  4|9968935995.440935971127972.964341099166984.2393     |9968935995.440935971127972.964341099166984.2393     |
+    # |  5|938                                                 |938                                                 |
+    # |  6|1282.938473                                         |1282.938473                                         |
+    # *  7|4473752.792763445183                                |4477352.792763445183                                *
+    # |  8|3.5451465                                           |3.5451465                                           |
+    # *  9|46775.653956452269747.4573035507172311.02545865832  |46775.653956452269747.4573035507172311.02545865823  *
+    # * 10|5713.434715465343711.60008026054316.0224510514      |5713.434715465347311.60008026054316.0224510514      *
+    # * 11|416.164686581336915.652083304298318.6953240647746'  |416.164686581336915.652083304298318.6952340647746'  *
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    not ok 5 - eq_or_diff_data() (lines count from 0) example table diff of text
+    #   Failed test 'eq_or_diff_data() (lines count from 0) example table diff of text'
+    #   at ./perl.t line 320.
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # | Elt|Got                                                 |Expected                                            |
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # *   0|'0.1758706630                                       |'a0.1758706630                                      *
+    # *   1|4321.4                                              |4231.4                                              *
+    # |   2|383971197791.783628674571821.245971672596884.79264  |383971197791.783628674571821.245971672596884.79264  |
+    # |   3|9968935995.440935971127972.964341099166984.2393     |9968935995.440935971127972.964341099166984.2393     |
+    # |   4|938                                                 |938                                                 |
+    # |   5|1282.938473                                         |1282.938473                                         |
+    # *   6|4473752.792763445183                                |4477352.792763445183                                *
+    # |   7|3.5451465                                           |3.5451465                                           |
+    # *   8|46775.653956452269747.4573035507172311.02545865832  |46775.653956452269747.4573035507172311.02545865823  *
+    # *   9|5713.434715465343711.60008026054316.0224510514      |5713.434715465347311.60008026054316.0224510514      *
+    # *  10|416.164686581336915.652083304298318.6953240647746'  |416.164686581336915.652083304298318.6952340647746'  *
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    not ok 6 - eq_or_diff() example table diff of a perl structure
+    #   Failed test 'eq_or_diff() example table diff of a perl structure'
+    #   at ./perl.t line 321.
+    # +----+-------------------+----+---------------------+
+    # | Elt|Got                | Elt|Expected             |
+    # +----+-------------------+----+---------------------+
+    # |   0|{                  |   0|{                    |
+    # |    |                   *   1|  another => 'val',  *
+    # |   1|  arr => [         |   2|  arr => [           |
+    # |   2|    1,             |   3|    1,               |
+    # |   3|    2,             |   4|    2,               |
+    # *   4|    3,             *   5|    5,               *
+    # |   5|    4,             |   6|    4,               |
+    # *   6|    5              *   7|    5,               *
+    # |    |                   *   8|    42               *
+    # |   7|  ],               |   9|  ],                 |
+    # |   8|  key => 'value',  |  10|  key => 'value',    |
+    # |   9|  obj => {         |  11|  obj => {           |
+    # *  10|    j => 'k',      *    |                     |
+    # |  11|    k => 'v',      |  12|    k => 'v',        |
+    # *  12|    m => 'n'       *  13|    m => 'n',        *
+    # |    |                   *  14|    z => 'p'         *
+    # |  13|  }                |  15|  }                  |
+    # |  14|}                  |  16|}                    |
+    # +----+-------------------+----+---------------------+
+    not ok 7 - eq_or_diff() example unified diff
+    #   Failed test 'eq_or_diff() example unified diff'
+    #   at ./perl.t line 324.
+    # --- Got
+    # +++ Expected
+    # @@ -1,11 +1,11 @@
+    # -'0.1758706630
+    # -4321.4
+    # +'a0.1758706630
+    # +4231.4
+    #  383971197791.783628674571821.245971672596884.79264
+    #  9968935995.440935971127972.964341099166984.2393
+    #  938
+    #  1282.938473
+    # -4473752.792763445183
+    # +4477352.792763445183
+    #  3.5451465
+    # -46775.653956452269747.4573035507172311.02545865832
+    # +46775.653956452269747.4573035507172311.02545865823
+    # -5713.434715465343711.60008026054316.0224510514
+    # +5713.434715465347311.60008026054316.0224510514
+    # -416.164686581336915.652083304298318.6953240647746'+416.164686581336915.652083304298318.6952340647746'
+    not ok 8 - eq_or_diff() example unified diff of a perl structure
+    #   Failed test 'eq_or_diff() example unified diff of a perl structure'
+    #   at ./perl.t line 325.
+    # --- Got
+    # +++ Expected
+    # @@ -1,15 +1,17 @@
+    #  {
+    # +  another => 'val',
+    #    arr => [
+    #      1,
+    #      2,
+    # -    3,
+    # +    5,
+    #      4,
+    # -    5
+    # +    5,
+    # +    42
+    #    ],
+    #    key => 'value',
+    #    obj => {
+    # -    j => 'k',
+    #      k => 'v',
+    # -    m => 'n'
+    # +    m => 'n',
+    # +    z => 'p'
+    #    }
+    #  }
+    not ok 9 - eq_or_diff() example context diff
+    #   Failed test 'eq_or_diff() example context diff'
+    #   at ./perl.t line 328.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,11 ****
+    # ! '0.1758706630
+    # ! 4321.4
+    #   383971197791.783628674571821.245971672596884.79264
+    #   9968935995.440935971127972.964341099166984.2393
+    #   938
+    #   1282.938473
+    # ! 4473752.792763445183
+    #   3.5451465
+    # ! 46775.653956452269747.4573035507172311.02545865832
+    # ! 5713.434715465343711.60008026054316.0224510514
+    # ! 416.164686581336915.652083304298318.6953240647746'--- 1,11 ----
+    # ! 'a0.1758706630
+    # ! 4231.4
+    #   383971197791.783628674571821.245971672596884.79264
+    #   9968935995.440935971127972.964341099166984.2393
+    #   938
+    #   1282.938473
+    # ! 4477352.792763445183
+    #   3.5451465
+    # ! 46775.653956452269747.4573035507172311.02545865823
+    # ! 5713.434715465347311.60008026054316.0224510514
+    # ! 416.164686581336915.652083304298318.6952340647746'
+    not ok 10 - eq_or_diff() example context diff of a perl structure
+    #   Failed test 'eq_or_diff() example context diff of a perl structure'
+    #   at ./perl.t line 329.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,15 ****
+    #   {
+    #     arr => [
+    #       1,
+    #       2,
+    # !     3,
+    #       4,
+    # !     5
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    # -     j => 'k',
+    #       k => 'v',
+    # !     m => 'n'
+    #     }
+    #   }
+    # --- 1,17 ----
+    #   {
+    # +   another => 'val',
+    #     arr => [
+    #       1,
+    #       2,
+    # !     5,
+    #       4,
+    # !     5,
+    # !     42
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    #       k => 'v',
+    # !     m => 'n',
+    # !     z => 'p'
+    #     }
+    #   }
+    not ok 11 - eq_or_diff() example oldstyle diff
+    #   Failed test 'eq_or_diff() example oldstyle diff'
+    #   at ./perl.t line 332.
+    # 1,2c1,2
+    # < '0.1758706630
+    # < 4321.4
+    # ---
+    # > 'a0.1758706630
+    # > 4231.4
+    # 7c7
+    # < 4473752.792763445183
+    # ---
+    # > 4477352.792763445183
+    # 9,11c9,11
+    # < 46775.653956452269747.4573035507172311.02545865832
+    # < 5713.434715465343711.60008026054316.0224510514
+    # < 416.164686581336915.652083304298318.6953240647746'---
+    # > 46775.653956452269747.4573035507172311.02545865823
+    # > 5713.434715465347311.60008026054316.0224510514
+    # > 416.164686581336915.652083304298318.6952340647746'
+    not ok 12 - eq_or_diff() example oldstyle diff of a perl structure - note very good
+    #   Failed test 'eq_or_diff() example oldstyle diff of a perl structure - note very good'
+    #   at ./perl.t line 333.
+    # 1a2
+    # >   another => 'val',
+    # 5c6
+    # <     3,
+    # ---
+    # >     5,
+    # 7c8,9
+    # <     5
+    # ---
+    # >     5,
+    # >     42
+    # 11d12
+    # <     j => 'k',
+    # 13c14,15
+    # <     m => 'n'
+    # ---
+    # >     m => 'n',
+    # >     z => 'p'
+    # Looks like you failed 12 tests of 12.
+not ok 27 - Test::Differences
+#   Failed test 'Test::Differences'
+#   at ./perl.t line 335.
+    # Subtest: Test::Deep
+    # Test::Deep - for data structures with regex checking of items
+    1..1
+    not ok 1 - cmp_deeply()/re()/array_each() - deep validation of structured data
+    #   Failed test 'cmp_deeply()/re()/array_each() - deep validation of structured data'
+    #   at ./perl.t line 357.
+    # Using Regexp on $data->{"Name"}
+    #    got : 'Mister Johnson'
+    # expect : (?^:^(Mr|Mrs|Miss) \w+ \w+$)
+    ok 2 - Test::Deep test
+    # Looks like you planned 1 test but ran 2.
+    # Looks like you failed 1 test of 2 run.
+not ok 28 - Test::Deep
+#   Failed test 'Test::Deep'
+#   at ./perl.t line 411.
+    # Subtest: Test::Exception
+    1..1
+    not ok 1 - throws_ok() should be division by zero
+    #   Failed test 'throws_ok() should be division by zero'
+    #   at ./perl.t line 423.
+    # expecting: Regexp ((?^:division by zero))
+    # found: normal exit
+    ok 2 - throws_ok() match against stringified exception
+    # Illegal division by zero at ./perl.t line 424.
+    # 0
+    not ok 3 - throws_ok() match against error class name
+    #   Failed test 'throws_ok() match against error class name'
+    #   at ./perl.t line 427.
+    # expecting: Error::Simple
+    # found: I have died! at ./perl.t line 417.
+Can't locate object method "new" via package "Error::Simple" (perhaps you forgot to load "Error::Simple"?) at ./perl.t line 428.
+Cannot run test (no warnings) with active children at /usr/local/share/perl/5.18.2/Test/NoWarnings.pm line 107.
+END failed--call queue aborted at ./perl.t line 279.
+# Looks like you planned 35 tests but ran 28.
+# Looks like you failed 10 tests of 28 run.
+# Looks like your test exited with 22 just after 28.
+1..35
+    # Subtest: Test::More use_ok() in a BEGIN block 
+    1..3
+    # use_ok() cannot specify a test message
+    # use module with default methods import
+    ok 1 - use FileHandle;
+    # use module and specify specific methods to import
+    ok 2 - use File::Copy;
+    # use module and prevent any methods from being imported
+    ok 3 - require File::Slurp;
+    # end subtest Test::More use_ok() in a BEGIN block 
+ok 1 - Test::More use_ok() in a BEGIN block 
+# Test::Simple ok() only
+ok 2
+ok 3 - should be 2
+not ok 4 - should be 2 also
+#   Failed test 'should be 2 also'
+#   at ./perl.t line 134.
+# some diagnosis on failure of test...
+# Test::More note() diag() explain() for diagnostics
+# note() - does not show in when running in a harness
+# i am invisible in the harness (or prove) but not when running normally
+# diag() - shows message always
+not ok 5
+#   Failed test at ./perl.t line 142.
+# [
+#   'explain()',
+#   'dumps',
+#   'structures',
+#   'nicely'
+# ]
+# array = 
+# 0
+# Test::More pass()/fail() for absolute control
+ok 6 - pass() - some test passed
+not ok 7 - fail() - some test failed
+#   Failed test 'fail() - some test failed'
+#   at ./perl.t line 172.
+# Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that
+ok 8
+ok 9 - should be 2
+not ok 10 - should be 2 also
+#   Failed test 'should be 2 also'
+#   at ./perl.t line 178.
+#          got: '2'
+#     expected: anything else
+ok 11 - should be undefined 
+# like()/unlike() for regex match
+ok 12 - should match esu
+ok 13 - should not match ESU
+# cmp_ok() for any comparison operator
+ok 14 - should be 2
+not ok 15 - should be 2 also
+#   Failed test 'should be 2 also'
+#   at ./perl.t line 188.
+#          got: 13
+#     expected: 2
+not ok 16 - should be less than 2
+#   Failed test 'should be less than 2'
+#   at ./perl.t line 189.
+#     '2'
+#         <
+#     '2'
+# is_deeply() for deep structure comparison
+ok 17 - should be identical objects
+not ok 18 - should be identical objects
+#   Failed test 'should be identical objects'
+#   at ./perl.t line 193.
+#     Structures begin differing at:
+#          $got->{this} = Does not exist
+#     $expected->{this} = 'that'
+# {
+#   'this' => 'that'
+# }
+# 0
+# subtest() to run a set of tests as a sub-test nicely indented
+    # Subtest: subtest() with plan skip_all
+    1..0 # SKIP cuz I said so
+ok 19 # skip cuz I said so
+    # Subtest: Object Oriented testing methods
+    1..15
+    # require_ok() for checking module can be required - will not import any symbols
+    ok 1 - require File::Path;
+    ok 2 - use Test::Differences;
+    ok 3 - use Test::Deep;
+    ok 4 - use Test::Exception;
+    not ok 5 - use Test::Class;
+    #   Failed test 'use Test::Class;'
+    #   at ./perl.t line 217.
+    #     Tried to use 'Test::Class'.
+    #     Error:  Can't locate Test/Class.pm in @INC (you may need to install the Test::Class module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at ./perl.t line 217.
+    # BEGIN failed--compilation aborted at ./perl.t line 217.
+    not ok 6 - use Test::Inline;
+    #   Failed test 'use Test::Inline;'
+    #   at ./perl.t line 217.
+    #     Tried to use 'Test::Inline'.
+    #     Error:  Can't locate Test/Inline.pm in @INC (you may need to install the Test::Inline module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at ./perl.t line 217.
+    # BEGIN failed--compilation aborted at ./perl.t line 217.
+    ok 7 - use Test::Warn;
+    ok 8 - use Test::NoWarnings;
+    # {
+    #   'Test::Class' => 0,
+    #   'Test::Deep' => 1,
+    #   'Test::Differences' => 1,
+    #   'Test::Exception' => 1,
+    #   'Test::Inline' => 0,
+    #   'Test::NoWarnings' => 1,
+    #   'Test::Warn' => 1
+    # }
+    # 0
+    # isa_ok() - was something created of a given type
+    ok 9 - 'should be ARRAY' isa 'ARRAY'
+    ok 10 - An object of class 'FileHandle' isa 'FileHandle'
+    not ok 11 - 'should be FileHandle' isa 'Thingie'
+    #   Failed test ''should be FileHandle' isa 'Thingie''
+    #   at ./perl.t line 225.
+    #     'should be FileHandle' isn't a 'Thingie'
+    # can_ok() for checking method availability on module or object - cannot specify a custom message
+    not ok 12 - File::Copy->can(...)
+    #   Failed test 'File::Copy->can(...)'
+    #   at ./perl.t line 228.
+    #     File::Copy->can('not_this_one') failed
+    ok 13 - FileHandle->can('new')
+    # can_ok() read_file fails because we required File::Slurp instead of used it above
+    not ok 14 - main->can('read_file')
+    #   Failed test 'main->can('read_file')'
+    #   at ./perl.t line 237.
+    #     main->can('read_file') failed
+    # new_ok() create object and check class type all in one go
+    ok 15 - 'should be FileHandle' isa 'FileHandle'
+    # BAIL_OUT() in a subtest will also abort the whole plan not just the sub test
+    # end subtest Object Oriented testing methods
+    # Looks like you failed 5 tests of 15.
+not ok 20 - Object Oriented testing methods
+#   Failed test 'Object Oriented testing methods'
+#   at ./perl.t line 250.
+# subtest() return val can be checked did it pass? 0
+# skip() and TODO for broken and unimplemented tests
+ok 21 # skip not going to work on this OS
+ok 22 # skip not going to work on this OS
+# TODO: runs tests but expect to fail
+not ok 23 - flibble should be something # TODO flibble() not yet implemented
+#   Failed (TODO) test 'flibble should be something'
+#   at ./perl.t line 273.
+#          got: 'flibble'
+#     expected: 'something'
+ok 24 - flibble should be flibble # TODO flibble() not yet implemented
+# todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them
+not ok 25 # TODO & SKIP waffle() just crashes and burns
+not ok 26 # TODO & SKIP waffle() just crashes and burns
+    # Subtest: Test::Differences
+    # Test::Differences - for comparing bodies of text, deep structures or SQL records
+    1..12
+    not ok 1 - eq_or_diff() should do Unicode, baby
+    #   Failed test 'eq_or_diff() should do Unicode, baby'
+    #   at ./perl.t line 310.
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'中国'                   |'中國'                   *
+    # +----+-----------------------+-----------------------+
+    # comparison of Test::More handling of big text vs Test::Differences
+    not ok 2 - Test::More is_deeply() for text comparison
+    #   Failed test 'Test::More is_deeply() for text comparison'
+    #   at ./perl.t line 313.
+    #          got: '0.30
+    # 259207873660.1653495055570032.014
+    # 5179571811.234144807221842.203928427248153.6083541
+    # 34397731.573175311812866.80
+    # 18424108845.610616310421110.4681860428604526.60742
+    # 31496929511.42104882176664.560727371525767.1658799
+    # 85529248.4356207015729911.11367968609739.835993292
+    # 7250.335
+    # 182124913817.250225419697515.0142705827786'
+    #     expected: 'a0.30
+    # 259207873660.1653495055570023.014
+    # 5179571811.234144807221842.203928427248153.6083541
+    # 34397731.573175311812866.80
+    # 18424108845.610616310421110.4681860428604526.60742
+    # 31496929511.42104882176664.560727731525767.1658799
+    # 85529248.4356207015729911.11367968609739.835992392
+    # 7250.335
+    # 182124913817.250225419697515.0142705827786'
+    not ok 3 - Test::More is_deeply() for structure comparison
+    #   Failed test 'Test::More is_deeply() for structure comparison'
+    #   at ./perl.t line 314.
+    #     Structures begin differing at:
+    #          $got->{another} = Does not exist
+    #     $expected->{another} = 'val'
+    not ok 4 - eq_or_diff_text() (lines count from 1) example table diff of text
+    #   Failed test 'eq_or_diff_text() (lines count from 1) example table diff of text'
+    #   at ./perl.t line 319.
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # | Ln|Got                                                 |Expected                                            |
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # *  1|'0.30                                               |'a0.30                                              *
+    # *  2|259207873660.1653495055570032.014                   |259207873660.1653495055570023.014                   *
+    # |  3|5179571811.234144807221842.203928427248153.6083541  |5179571811.234144807221842.203928427248153.6083541  |
+    # |  4|34397731.573175311812866.80                         |34397731.573175311812866.80                         |
+    # |  5|18424108845.610616310421110.4681860428604526.60742  |18424108845.610616310421110.4681860428604526.60742  |
+    # *  6|31496929511.42104882176664.560727371525767.1658799  |31496929511.42104882176664.560727731525767.1658799  *
+    # *  7|85529248.4356207015729911.11367968609739.835993292  |85529248.4356207015729911.11367968609739.835992392  *
+    # |  8|7250.335                                            |7250.335                                            |
+    # |  9|182124913817.250225419697515.0142705827786'         |182124913817.250225419697515.0142705827786'         |
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    not ok 5 - eq_or_diff_data() (lines count from 0) example table diff of text
+    #   Failed test 'eq_or_diff_data() (lines count from 0) example table diff of text'
+    #   at ./perl.t line 320.
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # | Elt|Got                                                 |Expected                                            |
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # *   0|'0.30                                               |'a0.30                                              *
+    # *   1|259207873660.1653495055570032.014                   |259207873660.1653495055570023.014                   *
+    # |   2|5179571811.234144807221842.203928427248153.6083541  |5179571811.234144807221842.203928427248153.6083541  |
+    # |   3|34397731.573175311812866.80                         |34397731.573175311812866.80                         |
+    # |   4|18424108845.610616310421110.4681860428604526.60742  |18424108845.610616310421110.4681860428604526.60742  |
+    # *   5|31496929511.42104882176664.560727371525767.1658799  |31496929511.42104882176664.560727731525767.1658799  *
+    # *   6|85529248.4356207015729911.11367968609739.835993292  |85529248.4356207015729911.11367968609739.835992392  *
+    # |   7|7250.335                                            |7250.335                                            |
+    # |   8|182124913817.250225419697515.0142705827786'         |182124913817.250225419697515.0142705827786'         |
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    not ok 6 - eq_or_diff() example table diff of a perl structure
+    #   Failed test 'eq_or_diff() example table diff of a perl structure'
+    #   at ./perl.t line 321.
+    # +----+-------------------+----+---------------------+
+    # | Elt|Got                | Elt|Expected             |
+    # +----+-------------------+----+---------------------+
+    # |   0|{                  |   0|{                    |
+    # |    |                   *   1|  another => 'val',  *
+    # |   1|  arr => [         |   2|  arr => [           |
+    # |   2|    1,             |   3|    1,               |
+    # |   3|    2,             |   4|    2,               |
+    # *   4|    3,             *   5|    5,               *
+    # |   5|    4,             |   6|    4,               |
+    # *   6|    5              *   7|    5,               *
+    # |    |                   *   8|    42               *
+    # |   7|  ],               |   9|  ],                 |
+    # |   8|  key => 'value',  |  10|  key => 'value',    |
+    # |   9|  obj => {         |  11|  obj => {           |
+    # *  10|    j => 'k',      *    |                     |
+    # |  11|    k => 'v',      |  12|    k => 'v',        |
+    # *  12|    m => 'n'       *  13|    m => 'n',        *
+    # |    |                   *  14|    z => 'p'         *
+    # |  13|  }                |  15|  }                  |
+    # |  14|}                  |  16|}                    |
+    # +----+-------------------+----+---------------------+
+    not ok 7 - eq_or_diff() example unified diff
+    #   Failed test 'eq_or_diff() example unified diff'
+    #   at ./perl.t line 324.
+    # --- Got
+    # +++ Expected
+    # @@ -1,9 +1,9 @@
+    # -'0.30
+    # -259207873660.1653495055570032.014
+    # +'a0.30
+    # +259207873660.1653495055570023.014
+    #  5179571811.234144807221842.203928427248153.6083541
+    #  34397731.573175311812866.80
+    #  18424108845.610616310421110.4681860428604526.60742
+    # -31496929511.42104882176664.560727371525767.1658799
+    # -85529248.4356207015729911.11367968609739.835993292
+    # +31496929511.42104882176664.560727731525767.1658799
+    # +85529248.4356207015729911.11367968609739.835992392
+    #  7250.335
+    #  182124913817.250225419697515.0142705827786'
+    not ok 8 - eq_or_diff() example unified diff of a perl structure
+    #   Failed test 'eq_or_diff() example unified diff of a perl structure'
+    #   at ./perl.t line 325.
+    # --- Got
+    # +++ Expected
+    # @@ -1,15 +1,17 @@
+    #  {
+    # +  another => 'val',
+    #    arr => [
+    #      1,
+    #      2,
+    # -    3,
+    # +    5,
+    #      4,
+    # -    5
+    # +    5,
+    # +    42
+    #    ],
+    #    key => 'value',
+    #    obj => {
+    # -    j => 'k',
+    #      k => 'v',
+    # -    m => 'n'
+    # +    m => 'n',
+    # +    z => 'p'
+    #    }
+    #  }
+    not ok 9 - eq_or_diff() example context diff
+    #   Failed test 'eq_or_diff() example context diff'
+    #   at ./perl.t line 328.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,9 ****
+    # ! '0.30
+    # ! 259207873660.1653495055570032.014
+    #   5179571811.234144807221842.203928427248153.6083541
+    #   34397731.573175311812866.80
+    #   18424108845.610616310421110.4681860428604526.60742
+    # ! 31496929511.42104882176664.560727371525767.1658799
+    # ! 85529248.4356207015729911.11367968609739.835993292
+    #   7250.335
+    #   182124913817.250225419697515.0142705827786'--- 1,9 ----
+    # ! 'a0.30
+    # ! 259207873660.1653495055570023.014
+    #   5179571811.234144807221842.203928427248153.6083541
+    #   34397731.573175311812866.80
+    #   18424108845.610616310421110.4681860428604526.60742
+    # ! 31496929511.42104882176664.560727731525767.1658799
+    # ! 85529248.4356207015729911.11367968609739.835992392
+    #   7250.335
+    #   182124913817.250225419697515.0142705827786'
+    not ok 10 - eq_or_diff() example context diff of a perl structure
+    #   Failed test 'eq_or_diff() example context diff of a perl structure'
+    #   at ./perl.t line 329.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,15 ****
+    #   {
+    #     arr => [
+    #       1,
+    #       2,
+    # !     3,
+    #       4,
+    # !     5
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    # -     j => 'k',
+    #       k => 'v',
+    # !     m => 'n'
+    #     }
+    #   }
+    # --- 1,17 ----
+    #   {
+    # +   another => 'val',
+    #     arr => [
+    #       1,
+    #       2,
+    # !     5,
+    #       4,
+    # !     5,
+    # !     42
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    #       k => 'v',
+    # !     m => 'n',
+    # !     z => 'p'
+    #     }
+    #   }
+    not ok 11 - eq_or_diff() example oldstyle diff
+    #   Failed test 'eq_or_diff() example oldstyle diff'
+    #   at ./perl.t line 332.
+    # 1,2c1,2
+    # < '0.30
+    # < 259207873660.1653495055570032.014
+    # ---
+    # > 'a0.30
+    # > 259207873660.1653495055570023.014
+    # 6,7c6,7
+    # < 31496929511.42104882176664.560727371525767.1658799
+    # < 85529248.4356207015729911.11367968609739.835993292
+    # ---
+    # > 31496929511.42104882176664.560727731525767.1658799
+    # > 85529248.4356207015729911.11367968609739.835992392
+    not ok 12 - eq_or_diff() example oldstyle diff of a perl structure - note very good
+    #   Failed test 'eq_or_diff() example oldstyle diff of a perl structure - note very good'
+    #   at ./perl.t line 333.
+    # 1a2
+    # >   another => 'val',
+    # 5c6
+    # <     3,
+    # ---
+    # >     5,
+    # 7c8,9
+    # <     5
+    # ---
+    # >     5,
+    # >     42
+    # 11d12
+    # <     j => 'k',
+    # 13c14,15
+    # <     m => 'n'
+    # ---
+    # >     m => 'n',
+    # >     z => 'p'
+    # Looks like you failed 12 tests of 12.
+not ok 27 - Test::Differences
+#   Failed test 'Test::Differences'
+#   at ./perl.t line 335.
+    # Subtest: Test::Deep
+    # Test::Deep - for data structures with regex checking of items
+    1..1
+    not ok 1 - cmp_deeply()/re()/array_each() - deep validation of structured data
+    #   Failed test 'cmp_deeply()/re()/array_each() - deep validation of structured data'
+    #   at ./perl.t line 357.
+    # Using Regexp on $data->{"ChildNames"}->[0]
+    #    got : 'peter'
+    # expect : (?^:^(Mr|Mrs|Miss) \w+ \w+$)
+    ok 2 - Test::Deep test
+    # Looks like you planned 1 test but ran 2.
+    # Looks like you failed 1 test of 2 run.
+not ok 28 - Test::Deep
+#   Failed test 'Test::Deep'
+#   at ./perl.t line 411.
+    # Subtest: Test::Exception
+    1..1
+    not ok 1 - throws_ok() should be division by zero
+    #   Failed test 'throws_ok() should be division by zero'
+    #   at ./perl.t line 423.
+    # expecting: Regexp ((?^:division by zero))
+    # found: normal exit
+    ok 2 - throws_ok() match against stringified exception
+    # Illegal division by zero at ./perl.t line 424.
+    # 0
+    not ok 3 - throws_ok() match against error class name
+    #   Failed test 'throws_ok() match against error class name'
+    #   at ./perl.t line 427.
+    # expecting: Error::Simple
+    # found: I have died! at ./perl.t line 417.
+Can't locate object method "new" via package "Error::Simple" (perhaps you forgot to load "Error::Simple"?) at ./perl.t line 428.
+Cannot run test (no warnings) with active children at /usr/local/share/perl/5.18.2/Test/NoWarnings.pm line 107.
+END failed--call queue aborted at ./perl.t line 279.
+# Looks like you planned 35 tests but ran 28.
+# Looks like you failed 10 tests of 28 run.
+# Looks like your test exited with 22 just after 28.
+1..35
+    # Subtest: Test::More use_ok() in a BEGIN block 
+    1..3
+    # use_ok() cannot specify a test message
+    # use module with default methods import
+    ok 1 - use FileHandle;
+    # use module and specify specific methods to import
+    ok 2 - use File::Copy;
+    # use module and prevent any methods from being imported
+    ok 3 - require File::Slurp;
+    # end subtest Test::More use_ok() in a BEGIN block 
+ok 1 - Test::More use_ok() in a BEGIN block 
+# Test::Simple ok() only
+ok 2
+ok 3 - should be 2
+ok 4 - should be 2 also
+# Test::More note() diag() explain() for diagnostics
+# note() - does not show in when running in a harness
+# i am invisible in the harness (or prove) but not when running normally
+# diag() - shows message always
+ok 5
+# Test::More pass()/fail() for absolute control
+ok 6 - pass() - some test passed
+ok 7 - fail() - some test failed - not now
+# Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that
+ok 8
+ok 9 - should be 2
+ok 10 - should be 2 also
+ok 11 - should be undefined 
+# like()/unlike() for regex match
+ok 12 - should match esu
+ok 13 - should not match ESU
+# cmp_ok() for any comparison operator
+ok 14 - should be 2
+ok 15 - should be 2 also
+ok 16 - should be less than 2
+# is_deeply() for deep structure comparison
+ok 17 - should be identical objects
+ok 18 - should be identical objects
+# subtest() to run a set of tests as a sub-test nicely indented
+    # Subtest: subtest() with plan skip_all
+    1..0 # SKIP cuz I said so
+ok 19 # skip cuz I said so
+    # Subtest: Object Oriented testing methods
+    1..15
+    # require_ok() for checking module can be required - will not import any symbols
+    ok 1 - require File::Path;
+    ok 2 - use Test::More;
+    ok 3 - use Test::More;
+    ok 4 - use Test::More;
+    ok 5 - use Test::More;
+    ok 6 - use Test::More;
+    ok 7 - use Test::More;
+    ok 8 - use Test::More;
+    # {
+    #   'Test::More' => 1
+    # }
+    # 0
+    # isa_ok() - was something created of a given type
+    ok 9 - 'should be ARRAY' isa 'ARRAY'
+    ok 10 - An object of class 'FileHandle' isa 'FileHandle'
+    ok 11 - 'should be FileHandle' isa 'FileHandle'
+    # can_ok() for checking method availability on module or object - cannot specify a custom message
+    ok 12 - File::Copy->can(...)
+    ok 13 - FileHandle->can('new')
+    ok 14 - main->can('copy')
+    # new_ok() create object and check class type all in one go
+    ok 15 - 'should be FileHandle' isa 'FileHandle'
+    # BAIL_OUT() in a subtest will also abort the whole plan not just the sub test
+    # end subtest Object Oriented testing methods
+ok 20 - Object Oriented testing methods
+# subtest() return val can be checked did it pass? 1
+# skip() and TODO for broken and unimplemented tests
+ok 21 # skip not going to work on this OS
+ok 22 # skip not going to work on this OS
+# TODO: runs tests but expect to fail
+not ok 23 - flibble should be something # TODO flibble() not yet implemented
+#   Failed (TODO) test 'flibble should be something'
+#   at ./perl.t line 273.
+#          got: 'flibble'
+#     expected: 'something'
+ok 24 - flibble should be flibble # TODO flibble() not yet implemented
+# todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them
+not ok 25 # TODO & SKIP waffle() just crashes and burns
+not ok 26 # TODO & SKIP waffle() just crashes and burns
+    # Subtest: Test::Differences
+    # Test::Differences - for comparing bodies of text, deep structures or SQL records
+    1..0 # SKIP module Test::Differences unavailable
+ok 27 # skip module Test::Differences unavailable
+    # Subtest: Test::Deep
+    # Test::Deep - for data structures with regex checking of items
+    1..0 # SKIP module Test::Deep unavailable
+ok 28 # skip module Test::Deep unavailable
+    # Subtest: Test::Exception
+    1..0 # SKIP module Test::Exception unavailable
+ok 29 # skip module Test::Exception unavailable
+    # Subtest: Test::Inline
+    1..0 # SKIP module Test::Inline unavailable
+ok 30 # skip module Test::Inline unavailable
+    # Subtest: Test::Class
+    1..0 # SKIP module Test::Class unavailable
+ok 31 # skip module Test::Class unavailable
+    # Subtest: Test::Warn
+    1..0 # SKIP module Test::Warn unavailable
+ok 32 # skip module Test::Warn unavailable
+    # Subtest: Test::NoWarnings
+    1..0 # SKIP module Test::NoWarnings unavailable
+ok 33 # skip module Test::NoWarnings unavailable
+# BAIL_OUT() abort test plan if cannot carry on -- doesn't give an ending summary when in harness
+ok 34 - require Cwd;
+ok 35 - require Data::Dumper;
+# Test::Simple ok() only
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 134.
+# some diagnosis on failure of test...
+# Test::More note() diag() explain() for diagnostics
+# diag() - shows message always
+
+#   Failed test at perl.t line 142.
+# array = 
+# 0
+# Test::More pass()/fail() for absolute control
+
+#   Failed test 'fail() - some test failed'
+#   at perl.t line 172.
+# Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 178.
+#          got: '2'
+#     expected: anything else
+# like()/unlike() for regex match
+# cmp_ok() for any comparison operator
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 188.
+#          got: 13
+#     expected: 2
+
+#   Failed test 'should be less than 2'
+#   at perl.t line 189.
+#     '2'
+#         <
+#     '2'
+# is_deeply() for deep structure comparison
+
+#   Failed test 'should be identical objects'
+#   at perl.t line 193.
+#     Structures begin differing at:
+#          $got->{this} = Does not exist
+#     $expected->{this} = 'that'
+# 0
+# subtest() to run a set of tests as a sub-test nicely indented
+    # require_ok() for checking module can be required - will not import any symbols
+    
+    #   Failed test 'use Test::Class;'
+    #   at perl.t line 217.
+    #     Tried to use 'Test::Class'.
+    #     Error:  Can't locate Test/Class.pm in @INC (you may need to install the Test::Class module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at perl.t line 217.
+    # BEGIN failed--compilation aborted at perl.t line 217.
+    
+    #   Failed test 'use Test::Inline;'
+    #   at perl.t line 217.
+    #     Tried to use 'Test::Inline'.
+    #     Error:  Can't locate Test/Inline.pm in @INC (you may need to install the Test::Inline module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at perl.t line 217.
+    # BEGIN failed--compilation aborted at perl.t line 217.
+    # 0
+    # isa_ok() - was something created of a given type
+    
+    #   Failed test ''should be FileHandle' isa 'Thingie''
+    #   at perl.t line 225.
+    #     'should be FileHandle' isn't a 'Thingie'
+    # can_ok() for checking method availability on module or object - cannot specify a custom message
+    
+    #   Failed test 'File::Copy->can(...)'
+    #   at perl.t line 228.
+    #     File::Copy->can('not_this_one') failed
+    
+    #   Failed test 'main->can('read_file')'
+    #   at perl.t line 237.
+    #     main->can('read_file') failed
+    # new_ok() create object and check class type all in one go
+    # BAIL_OUT() in a subtest will also abort the whole plan not just the sub test
+    # end subtest Object Oriented testing methods
+    # Looks like you failed 5 tests of 15.
+
+#   Failed test 'Object Oriented testing methods'
+#   at perl.t line 250.
+# subtest() return val can be checked did it pass? 0
+# skip() and TODO for broken and unimplemented tests
+# TODO: runs tests but expect to fail
+# todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them
+    # Test::Differences - for comparing bodies of text, deep structures or SQL records
+    
+    #   Failed test 'eq_or_diff() should do Unicode, baby'
+    #   at perl.t line 310.
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'中国'                   |'中國'                   *
+    # +----+-----------------------+-----------------------+
+    # comparison of Test::More handling of big text vs Test::Differences
+    
+    #   Failed test 'Test::More is_deeply() for text comparison'
+    #   at perl.t line 313.
+    #          got: '0.7866
+    # 9846934540.8311205415001842.058213139999143.713688
+    # 259372962.225141460717544.47099
+    # 20998776.354257092371322.352613896459561.155108896
+    # 238461.47197049868513.303588179350965.096004173976
+    # 073.7240131813276511.65043495
+    # 2581.2645834986391914.09151625400585.
+    # 9915792078064.75337291
+    # 97052.
+    # 28628769769914.6116319918839'
+    #     expected: 'a0.7866
+    # 9846934540.8311205415001842.058213139999143.713688
+    # 259732962.225141460717544.47099
+    # 20998776.354257092731232.352613896459561.155108896
+    # 238461.47197049868513.303588179350965.096004173976
+    # 073.7240131812376511.65043495
+    # 2581.2645834986391914.09151625400585.
+    # 9915792078064.75373291
+    # 97052.
+    # 28628769769914.6116319918839'
+    
+    #   Failed test 'Test::More is_deeply() for structure comparison'
+    #   at perl.t line 314.
+    #     Structures begin differing at:
+    #          $got->{obj}{z} = Does not exist
+    #     $expected->{obj}{z} = 'p'
+    
+    #   Failed test 'eq_or_diff_text() (lines count from 1) example table diff of text'
+    #   at perl.t line 319.
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # | Ln|Got                                                 |Expected                                            |
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # *  1|'0.7866                                             |'a0.7866                                            *
+    # |  2|9846934540.8311205415001842.058213139999143.713688  |9846934540.8311205415001842.058213139999143.713688  |
+    # *  3|259372962.225141460717544.47099                     |259732962.225141460717544.47099                     *
+    # *  4|20998776.354257092371322.352613896459561.155108896  |20998776.354257092731232.352613896459561.155108896  *
+    # |  5|238461.47197049868513.303588179350965.096004173976  |238461.47197049868513.303588179350965.096004173976  |
+    # *  6|073.7240131813276511.65043495                       |073.7240131812376511.65043495                       *
+    # |  7|2581.2645834986391914.09151625400585.               |2581.2645834986391914.09151625400585.               |
+    # *  8|9915792078064.75337291                              |9915792078064.75373291                              *
+    # |  9|97052.                                              |97052.                                              |
+    # | 10|28628769769914.6116319918839'                       |28628769769914.6116319918839'                       |
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    
+    #   Failed test 'eq_or_diff_data() (lines count from 0) example table diff of text'
+    #   at perl.t line 320.
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # | Elt|Got                                                 |Expected                                            |
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # *   0|'0.7866                                             |'a0.7866                                            *
+    # |   1|9846934540.8311205415001842.058213139999143.713688  |9846934540.8311205415001842.058213139999143.713688  |
+    # *   2|259372962.225141460717544.47099                     |259732962.225141460717544.47099                     *
+    # *   3|20998776.354257092371322.352613896459561.155108896  |20998776.354257092731232.352613896459561.155108896  *
+    # |   4|238461.47197049868513.303588179350965.096004173976  |238461.47197049868513.303588179350965.096004173976  |
+    # *   5|073.7240131813276511.65043495                       |073.7240131812376511.65043495                       *
+    # |   6|2581.2645834986391914.09151625400585.               |2581.2645834986391914.09151625400585.               |
+    # *   7|9915792078064.75337291                              |9915792078064.75373291                              *
+    # |   8|97052.                                              |97052.                                              |
+    # |   9|28628769769914.6116319918839'                       |28628769769914.6116319918839'                       |
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    
+    #   Failed test 'eq_or_diff() example table diff of a perl structure'
+    #   at perl.t line 321.
+    # +----+-------------------+----+---------------------+
+    # | Elt|Got                | Elt|Expected             |
+    # +----+-------------------+----+---------------------+
+    # |   0|{                  |   0|{                    |
+    # |    |                   *   1|  another => 'val',  *
+    # |   1|  arr => [         |   2|  arr => [           |
+    # |   2|    1,             |   3|    1,               |
+    # |   3|    2,             |   4|    2,               |
+    # *   4|    3,             *   5|    5,               *
+    # |   5|    4,             |   6|    4,               |
+    # *   6|    5              *   7|    5,               *
+    # |    |                   *   8|    42               *
+    # |   7|  ],               |   9|  ],                 |
+    # |   8|  key => 'value',  |  10|  key => 'value',    |
+    # |   9|  obj => {         |  11|  obj => {           |
+    # *  10|    j => 'k',      *    |                     |
+    # |  11|    k => 'v',      |  12|    k => 'v',        |
+    # *  12|    m => 'n'       *  13|    m => 'n',        *
+    # |    |                   *  14|    z => 'p'         *
+    # |  13|  }                |  15|  }                  |
+    # |  14|}                  |  16|}                    |
+    # +----+-------------------+----+---------------------+
+    
+    #   Failed test 'eq_or_diff() example unified diff'
+    #   at perl.t line 324.
+    # --- Got
+    # +++ Expected
+    # @@ -1,10 +1,10 @@
+    # -'0.7866
+    # +'a0.7866
+    #  9846934540.8311205415001842.058213139999143.713688
+    # -259372962.225141460717544.47099
+    # -20998776.354257092371322.352613896459561.155108896
+    # +259732962.225141460717544.47099
+    # +20998776.354257092731232.352613896459561.155108896
+    #  238461.47197049868513.303588179350965.096004173976
+    # -073.7240131813276511.65043495
+    # +073.7240131812376511.65043495
+    #  2581.2645834986391914.09151625400585.
+    # -9915792078064.75337291
+    # +9915792078064.75373291
+    #  97052.
+    #  28628769769914.6116319918839'
+    
+    #   Failed test 'eq_or_diff() example unified diff of a perl structure'
+    #   at perl.t line 325.
+    # --- Got
+    # +++ Expected
+    # @@ -1,15 +1,17 @@
+    #  {
+    # +  another => 'val',
+    #    arr => [
+    #      1,
+    #      2,
+    # -    3,
+    # +    5,
+    #      4,
+    # -    5
+    # +    5,
+    # +    42
+    #    ],
+    #    key => 'value',
+    #    obj => {
+    # -    j => 'k',
+    #      k => 'v',
+    # -    m => 'n'
+    # +    m => 'n',
+    # +    z => 'p'
+    #    }
+    #  }
+    
+    #   Failed test 'eq_or_diff() example context diff'
+    #   at perl.t line 328.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,10 ****
+    # ! '0.7866
+    #   9846934540.8311205415001842.058213139999143.713688
+    # ! 259372962.225141460717544.47099
+    # ! 20998776.354257092371322.352613896459561.155108896
+    #   238461.47197049868513.303588179350965.096004173976
+    # ! 073.7240131813276511.65043495
+    #   2581.2645834986391914.09151625400585.
+    # ! 9915792078064.75337291
+    #   97052.
+    #   28628769769914.6116319918839'--- 1,10 ----
+    # ! 'a0.7866
+    #   9846934540.8311205415001842.058213139999143.713688
+    # ! 259732962.225141460717544.47099
+    # ! 20998776.354257092731232.352613896459561.155108896
+    #   238461.47197049868513.303588179350965.096004173976
+    # ! 073.7240131812376511.65043495
+    #   2581.2645834986391914.09151625400585.
+    # ! 9915792078064.75373291
+    #   97052.
+    #   28628769769914.6116319918839'
+    
+    #   Failed test 'eq_or_diff() example context diff of a perl structure'
+    #   at perl.t line 329.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,15 ****
+    #   {
+    #     arr => [
+    #       1,
+    #       2,
+    # !     3,
+    #       4,
+    # !     5
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    # -     j => 'k',
+    #       k => 'v',
+    # !     m => 'n'
+    #     }
+    #   }
+    # --- 1,17 ----
+    #   {
+    # +   another => 'val',
+    #     arr => [
+    #       1,
+    #       2,
+    # !     5,
+    #       4,
+    # !     5,
+    # !     42
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    #       k => 'v',
+    # !     m => 'n',
+    # !     z => 'p'
+    #     }
+    #   }
+    
+    #   Failed test 'eq_or_diff() example oldstyle diff'
+    #   at perl.t line 332.
+    # 1c1
+    # < '0.7866
+    # ---
+    # > 'a0.7866
+    # 3,4c3,4
+    # < 259372962.225141460717544.47099
+    # < 20998776.354257092371322.352613896459561.155108896
+    # ---
+    # > 259732962.225141460717544.47099
+    # > 20998776.354257092731232.352613896459561.155108896
+    # 6c6
+    # < 073.7240131813276511.65043495
+    # ---
+    # > 073.7240131812376511.65043495
+    # 8c8
+    # < 9915792078064.75337291
+    # ---
+    # > 9915792078064.75373291
+    
+    #   Failed test 'eq_or_diff() example oldstyle diff of a perl structure - note very good'
+    #   at perl.t line 333.
+    # 1a2
+    # >   another => 'val',
+    # 5c6
+    # <     3,
+    # ---
+    # >     5,
+    # 7c8,9
+    # <     5
+    # ---
+    # >     5,
+    # >     42
+    # 11d12
+    # <     j => 'k',
+    # 13c14,15
+    # <     m => 'n'
+    # ---
+    # >     m => 'n',
+    # >     z => 'p'
+    # Looks like you failed 12 tests of 12.
+
+#   Failed test 'Test::Differences'
+#   at perl.t line 335.
+    # Test::Deep - for data structures with regex checking of items
+    
+    #   Failed test 'cmp_deeply()/re()/array_each() - deep validation of structured data'
+    #   at perl.t line 357.
+    # Using Regexp on $data->{"Name"}
+    #    got : 'Mister Johnson'
+    # expect : (?^:^(Mr|Mrs|Miss) \w+ \w+$)
+    # Looks like you planned 1 test but ran 2.
+    # Looks like you failed 1 test of 2 run.
+
+#   Failed test 'Test::Deep'
+#   at perl.t line 411.
+    
+    #   Failed test 'throws_ok() should be division by zero'
+    #   at perl.t line 423.
+    # expecting: Regexp ((?^:division by zero))
+    # found: normal exit
+    
+    #   Failed test 'throws_ok() match against error class name'
+    #   at perl.t line 427.
+    # expecting: Error::Simple
+    # found: I have died! at perl.t line 417.
+Can't locate object method "new" via package "Error::Simple" (perhaps you forgot to load "Error::Simple"?) at perl.t line 428.
+Cannot run test (no warnings) with active children at /usr/local/share/perl/5.18.2/Test/NoWarnings.pm line 107.
+END failed--call queue aborted at perl.t line 279.
+# Looks like you planned 35 tests but ran 28.
+# Looks like you failed 10 tests of 28 run.
+# Looks like your test exited with 22 just after 28.
+perl.t .. 
+Dubious, test returned 22 (wstat 5632, 0x1600)
+Failed 17/35 subtests 
+	(less 3 skipped subtests: 15 okay)
+	(1 TODO test unexpectedly succeeded)
+
+Test Summary Report
+-------------------
+perl.t (Wstat: 5632 Tests: 28 Failed: 10)
+  Failed tests:  4-5, 7, 10, 15-16, 18, 20, 27-28
+  TODO passed:   24
+  Non-zero exit status: 22
+  Parse errors: Bad plan.  You planned 35 tests but ran 28.
+Files=1, Tests=28,  0 wallclock secs ( 0.03 usr  0.01 sys +  0.14 cusr  0.01 csys =  0.19 CPU)
+Result: FAIL
+# Test::Simple ok() only
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 134.
+# some diagnosis on failure of test...
+# Test::More note() diag() explain() for diagnostics
+# diag() - shows message always
+
+#   Failed test at perl.t line 142.
+# array = 
+# 0
+# Test::More pass()/fail() for absolute control
+
+#   Failed test 'fail() - some test failed'
+#   at perl.t line 172.
+# Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 178.
+#          got: '2'
+#     expected: anything else
+# like()/unlike() for regex match
+# cmp_ok() for any comparison operator
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 188.
+#          got: 13
+#     expected: 2
+
+#   Failed test 'should be less than 2'
+#   at perl.t line 189.
+#     '2'
+#         <
+#     '2'
+# is_deeply() for deep structure comparison
+
+#   Failed test 'should be identical objects'
+#   at perl.t line 193.
+#     Structures begin differing at:
+#          $got->{this} = Does not exist
+#     $expected->{this} = 'that'
+# 0
+# subtest() to run a set of tests as a sub-test nicely indented
+    # require_ok() for checking module can be required - will not import any symbols
+    
+    #   Failed test 'use Test::Class;'
+    #   at perl.t line 217.
+    #     Tried to use 'Test::Class'.
+    #     Error:  Can't locate Test/Class.pm in @INC (you may need to install the Test::Class module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at perl.t line 217.
+    # BEGIN failed--compilation aborted at perl.t line 217.
+    
+    #   Failed test 'use Test::Inline;'
+    #   at perl.t line 217.
+    #     Tried to use 'Test::Inline'.
+    #     Error:  Can't locate Test/Inline.pm in @INC (you may need to install the Test::Inline module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at perl.t line 217.
+    # BEGIN failed--compilation aborted at perl.t line 217.
+    # 0
+    # isa_ok() - was something created of a given type
+    
+    #   Failed test ''should be FileHandle' isa 'Thingie''
+    #   at perl.t line 225.
+    #     'should be FileHandle' isn't a 'Thingie'
+    # can_ok() for checking method availability on module or object - cannot specify a custom message
+    
+    #   Failed test 'File::Copy->can(...)'
+    #   at perl.t line 228.
+    #     File::Copy->can('not_this_one') failed
+    
+    #   Failed test 'main->can('read_file')'
+    #   at perl.t line 237.
+    #     main->can('read_file') failed
+    # new_ok() create object and check class type all in one go
+    # BAIL_OUT() in a subtest will also abort the whole plan not just the sub test
+    # end subtest Object Oriented testing methods
+    # Looks like you failed 5 tests of 15.
+
+#   Failed test 'Object Oriented testing methods'
+#   at perl.t line 250.
+# subtest() return val can be checked did it pass? 0
+# skip() and TODO for broken and unimplemented tests
+# TODO: runs tests but expect to fail
+# todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them
+    # Test::Differences - for comparing bodies of text, deep structures or SQL records
+    
+    #   Failed test 'eq_or_diff() should do Unicode, baby'
+    #   at perl.t line 310.
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'中国'                   |'中國'                   *
+    # +----+-----------------------+-----------------------+
+    # comparison of Test::More handling of big text vs Test::Differences
+    
+    #   Failed test 'Test::More is_deeply() for text comparison'
+    #   at perl.t line 313.
+    #          got: '0.6472749731774491.09626742191081.227005757040763.
+    # 184842097932
+    # 2.744835799735863.93776593953
+    # 51.30
+    # 21
+    # 7204875.697872277677285.591793856272216.1
+    # 03105520866.598800187875640.835507686135068.461399
+    # 2063503711.3126308887524.6787588809888315.93995743
+    # 012231.7032930112744711.41771468867825.00493927095
+    # 7535.
+    # 
+    # 992061911'
+    #     expected: 'a0.6472749731774491.09626742191081.227005757040763.
+    # 184842097923
+    # 2.744835799735863.97376593953
+    # 51.30
+    # 21
+    # 7204875.697872277677285.591793856272216.1
+    # 03105520866.598800187875640.835507686135068.461399
+    # 2063507311.3126308887524.6787588809888315.93995743
+    # 012231.7023930112744711.41771468867825.00493927095
+    # 7535.
+    # 
+    # 992061911'
+    
+    #   Failed test 'Test::More is_deeply() for structure comparison'
+    #   at perl.t line 314.
+    #     Structures begin differing at:
+    #          $got->{obj}{z} = Does not exist
+    #     $expected->{obj}{z} = 'p'
+    
+    #   Failed test 'eq_or_diff_text() (lines count from 1) example table diff of text'
+    #   at perl.t line 319.
+    # +---+-----------------------------------------------------+------------------------------------------------------+
+    # | Ln|Got                                                  |Expected                                              |
+    # +---+-----------------------------------------------------+------------------------------------------------------+
+    # *  1|'0.6472749731774491.09626742191081.227005757040763.  |'a0.6472749731774491.09626742191081.227005757040763.  *
+    # *  2|184842097932                                         |184842097923                                          *
+    # *  3|2.744835799735863.93776593953                        |2.744835799735863.97376593953                         *
+    # |  4|51.30                                                |51.30                                                 |
+    # |  5|21                                                   |21                                                    |
+    # |  6|7204875.697872277677285.591793856272216.1            |7204875.697872277677285.591793856272216.1             |
+    # |  7|03105520866.598800187875640.835507686135068.461399   |03105520866.598800187875640.835507686135068.461399    |
+    # *  8|2063503711.3126308887524.6787588809888315.93995743   |2063507311.3126308887524.6787588809888315.93995743    *
+    # *  9|012231.7032930112744711.41771468867825.00493927095   |012231.7023930112744711.41771468867825.00493927095    *
+    # | 10|7535.                                                |7535.                                                 |
+    # | 11|                                                     |                                                      |
+    # | 12|992061911'                                           |992061911'                                            |
+    # +---+-----------------------------------------------------+------------------------------------------------------+
+    
+    #   Failed test 'eq_or_diff_data() (lines count from 0) example table diff of text'
+    #   at perl.t line 320.
+    # +----+-----------------------------------------------------+------------------------------------------------------+
+    # | Elt|Got                                                  |Expected                                              |
+    # +----+-----------------------------------------------------+------------------------------------------------------+
+    # *   0|'0.6472749731774491.09626742191081.227005757040763.  |'a0.6472749731774491.09626742191081.227005757040763.  *
+    # *   1|184842097932                                         |184842097923                                          *
+    # *   2|2.744835799735863.93776593953                        |2.744835799735863.97376593953                         *
+    # |   3|51.30                                                |51.30                                                 |
+    # |   4|21                                                   |21                                                    |
+    # |   5|7204875.697872277677285.591793856272216.1            |7204875.697872277677285.591793856272216.1             |
+    # |   6|03105520866.598800187875640.835507686135068.461399   |03105520866.598800187875640.835507686135068.461399    |
+    # *   7|2063503711.3126308887524.6787588809888315.93995743   |2063507311.3126308887524.6787588809888315.93995743    *
+    # *   8|012231.7032930112744711.41771468867825.00493927095   |012231.7023930112744711.41771468867825.00493927095    *
+    # |   9|7535.                                                |7535.                                                 |
+    # |  10|                                                     |                                                      |
+    # |  11|992061911'                                           |992061911'                                            |
+    # +----+-----------------------------------------------------+------------------------------------------------------+
+    
+    #   Failed test 'eq_or_diff() example table diff of a perl structure'
+    #   at perl.t line 321.
+    # +----+-------------------+----+---------------------+
+    # | Elt|Got                | Elt|Expected             |
+    # +----+-------------------+----+---------------------+
+    # |   0|{                  |   0|{                    |
+    # |    |                   *   1|  another => 'val',  *
+    # |   1|  arr => [         |   2|  arr => [           |
+    # |   2|    1,             |   3|    1,               |
+    # |   3|    2,             |   4|    2,               |
+    # *   4|    3,             *   5|    5,               *
+    # |   5|    4,             |   6|    4,               |
+    # *   6|    5              *   7|    5,               *
+    # |    |                   *   8|    42               *
+    # |   7|  ],               |   9|  ],                 |
+    # |   8|  key => 'value',  |  10|  key => 'value',    |
+    # |   9|  obj => {         |  11|  obj => {           |
+    # *  10|    j => 'k',      *    |                     |
+    # |  11|    k => 'v',      |  12|    k => 'v',        |
+    # *  12|    m => 'n'       *  13|    m => 'n',        *
+    # |    |                   *  14|    z => 'p'         *
+    # |  13|  }                |  15|  }                  |
+    # |  14|}                  |  16|}                    |
+    # +----+-------------------+----+---------------------+
+    
+    #   Failed test 'eq_or_diff() example unified diff'
+    #   at perl.t line 324.
+    # --- Got
+    # +++ Expected
+    # @@ -1,12 +1,12 @@
+    # -'0.6472749731774491.09626742191081.227005757040763.
+    # -184842097932
+    # -2.744835799735863.93776593953
+    # +'a0.6472749731774491.09626742191081.227005757040763.
+    # +184842097923
+    # +2.744835799735863.97376593953
+    #  51.30
+    #  21
+    #  7204875.697872277677285.591793856272216.1
+    #  03105520866.598800187875640.835507686135068.461399
+    # -2063503711.3126308887524.6787588809888315.93995743
+    # -012231.7032930112744711.41771468867825.00493927095
+    # +2063507311.3126308887524.6787588809888315.93995743
+    # +012231.7023930112744711.41771468867825.00493927095
+    #  7535.
+    #  
+    #  992061911'
+    
+    #   Failed test 'eq_or_diff() example unified diff of a perl structure'
+    #   at perl.t line 325.
+    # --- Got
+    # +++ Expected
+    # @@ -1,15 +1,17 @@
+    #  {
+    # +  another => 'val',
+    #    arr => [
+    #      1,
+    #      2,
+    # -    3,
+    # +    5,
+    #      4,
+    # -    5
+    # +    5,
+    # +    42
+    #    ],
+    #    key => 'value',
+    #    obj => {
+    # -    j => 'k',
+    #      k => 'v',
+    # -    m => 'n'
+    # +    m => 'n',
+    # +    z => 'p'
+    #    }
+    #  }
+    
+    #   Failed test 'eq_or_diff() example context diff'
+    #   at perl.t line 328.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,12 ****
+    # ! '0.6472749731774491.09626742191081.227005757040763.
+    # ! 184842097932
+    # ! 2.744835799735863.93776593953
+    #   51.30
+    #   21
+    #   7204875.697872277677285.591793856272216.1
+    #   03105520866.598800187875640.835507686135068.461399
+    # ! 2063503711.3126308887524.6787588809888315.93995743
+    # ! 012231.7032930112744711.41771468867825.00493927095
+    #   7535.
+    #   
+    #   992061911'--- 1,12 ----
+    # ! 'a0.6472749731774491.09626742191081.227005757040763.
+    # ! 184842097923
+    # ! 2.744835799735863.97376593953
+    #   51.30
+    #   21
+    #   7204875.697872277677285.591793856272216.1
+    #   03105520866.598800187875640.835507686135068.461399
+    # ! 2063507311.3126308887524.6787588809888315.93995743
+    # ! 012231.7023930112744711.41771468867825.00493927095
+    #   7535.
+    #   
+    #   992061911'
+    
+    #   Failed test 'eq_or_diff() example context diff of a perl structure'
+    #   at perl.t line 329.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,15 ****
+    #   {
+    #     arr => [
+    #       1,
+    #       2,
+    # !     3,
+    #       4,
+    # !     5
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    # -     j => 'k',
+    #       k => 'v',
+    # !     m => 'n'
+    #     }
+    #   }
+    # --- 1,17 ----
+    #   {
+    # +   another => 'val',
+    #     arr => [
+    #       1,
+    #       2,
+    # !     5,
+    #       4,
+    # !     5,
+    # !     42
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    #       k => 'v',
+    # !     m => 'n',
+    # !     z => 'p'
+    #     }
+    #   }
+    
+    #   Failed test 'eq_or_diff() example oldstyle diff'
+    #   at perl.t line 332.
+    # 1,3c1,3
+    # < '0.6472749731774491.09626742191081.227005757040763.
+    # < 184842097932
+    # < 2.744835799735863.93776593953
+    # ---
+    # > 'a0.6472749731774491.09626742191081.227005757040763.
+    # > 184842097923
+    # > 2.744835799735863.97376593953
+    # 8,9c8,9
+    # < 2063503711.3126308887524.6787588809888315.93995743
+    # < 012231.7032930112744711.41771468867825.00493927095
+    # ---
+    # > 2063507311.3126308887524.6787588809888315.93995743
+    # > 012231.7023930112744711.41771468867825.00493927095
+    
+    #   Failed test 'eq_or_diff() example oldstyle diff of a perl structure - note very good'
+    #   at perl.t line 333.
+    # 1a2
+    # >   another => 'val',
+    # 5c6
+    # <     3,
+    # ---
+    # >     5,
+    # 7c8,9
+    # <     5
+    # ---
+    # >     5,
+    # >     42
+    # 11d12
+    # <     j => 'k',
+    # 13c14,15
+    # <     m => 'n'
+    # ---
+    # >     m => 'n',
+    # >     z => 'p'
+    # Looks like you failed 12 tests of 12.
+
+#   Failed test 'Test::Differences'
+#   at perl.t line 335.
+    # Test::Deep - for data structures with regex checking of items
+    
+    #   Failed test 'cmp_deeply()/re()/array_each() - deep validation of structured data'
+    #   at perl.t line 357.
+    # Using Regexp on $data->{"Name"}
+    #    got : 'Mister Johnson'
+    # expect : (?^:^(Mr|Mrs|Miss) \w+ \w+$)
+    # Looks like you planned 1 test but ran 2.
+    # Looks like you failed 1 test of 2 run.
+
+#   Failed test 'Test::Deep'
+#   at perl.t line 411.
+    
+    #   Failed test 'throws_ok() should be division by zero'
+    #   at perl.t line 423.
+    # expecting: Regexp ((?^:division by zero))
+    # found: normal exit
+    
+    #   Failed test 'throws_ok() match against error class name'
+    #   at perl.t line 427.
+    # expecting: Error::Simple
+    # found: I have died! at perl.t line 417.
+Can't locate object method "new" via package "Error::Simple" (perhaps you forgot to load "Error::Simple"?) at perl.t line 428.
+Cannot run test (no warnings) with active children at /usr/local/share/perl/5.18.2/Test/NoWarnings.pm line 107.
+END failed--call queue aborted at perl.t line 279.
+# Looks like you planned 35 tests but ran 28.
+# Looks like you failed 10 tests of 28 run.
+# Looks like your test exited with 22 just after 28.
+perl.t .. 
+Dubious, test returned 22 (wstat 5632, 0x1600)
+Failed 17/35 subtests 
+	(less 3 skipped subtests: 15 okay)
+	(1 TODO test unexpectedly succeeded)
+Cannot detect source of 'bail'! at /usr/local/share/perl/5.18.2/TAP/Parser/IteratorFactory.pm line 261.
+	TAP::Parser::IteratorFactory::detect_source('TAP::Parser::IteratorFactory=HASH(0x1519b00)', 'TAP::Parser::Source=HASH(0x1539060)') called at /usr/local/share/perl/5.18.2/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator('TAP::Parser::IteratorFactory=HASH(0x1519b00)', 'TAP::Parser::Source=HASH(0x1539060)') called at /usr/local/share/perl/5.18.2/TAP/Parser.pm line 470
+	TAP::Parser::_initialize('TAP::Parser=HASH(0x149af00)', 'HASH(0x131c988)') called at /usr/local/share/perl/5.18.2/TAP/Object.pm line 55
+	TAP::Object::new('TAP::Parser', 'HASH(0x131c988)') called at /usr/local/share/perl/5.18.2/TAP/Object.pm line 130
+	TAP::Object::_construct('TAP::Harness=HASH(0xc320e0)', 'TAP::Parser', 'HASH(0x131c988)') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 793
+	TAP::Harness::make_parser('TAP::Harness=HASH(0xc320e0)', 'TAP::Parser::Scheduler::Job=HASH(0x11661e0)') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 592
+	TAP::Harness::_aggregate_single('TAP::Harness=HASH(0xc320e0)', 'TAP::Parser::Aggregator=HASH(0x1164e80)', 'TAP::Parser::Scheduler=HASH(0x1166288)') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 684
+	TAP::Harness::aggregate_tests('TAP::Harness=HASH(0xc320e0)', 'TAP::Parser::Aggregator=HASH(0x1164e80)', 'perl.t', 'bail') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 499
+	TAP::Harness::__ANON__() called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 512
+	TAP::Harness::runtests('TAP::Harness=HASH(0xc320e0)', 'perl.t', 'bail') called at /usr/local/share/perl/5.18.2/App/Prove.pm line 553
+	App::Prove::_runtests('App::Prove=HASH(0xc0eec0)', 'HASH(0x11234a8)', 'TAP::Harness', 'perl.t', 'bail') called at /usr/local/share/perl/5.18.2/App/Prove.pm line 511
+	App::Prove::run('App::Prove=HASH(0xc0eec0)') called at /usr/local/bin/prove line 12
+# Test::Simple ok() only
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 134.
+# some diagnosis on failure of test...
+# Test::More note() diag() explain() for diagnostics
+# diag() - shows message always
+
+#   Failed test at perl.t line 142.
+# array = 
+# 0
+# Test::More pass()/fail() for absolute control
+
+#   Failed test 'fail() - some test failed'
+#   at perl.t line 172.
+# Test::More adds is()/isnt() uses eq and ne operators, not good for true/false checks, use ok() for that
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 178.
+#          got: '2'
+#     expected: anything else
+# like()/unlike() for regex match
+# cmp_ok() for any comparison operator
+
+#   Failed test 'should be 2 also'
+#   at perl.t line 188.
+#          got: 13
+#     expected: 2
+
+#   Failed test 'should be less than 2'
+#   at perl.t line 189.
+#     '2'
+#         <
+#     '2'
+# is_deeply() for deep structure comparison
+
+#   Failed test 'should be identical objects'
+#   at perl.t line 193.
+#     Structures begin differing at:
+#          $got->{this} = Does not exist
+#     $expected->{this} = 'that'
+# 0
+# subtest() to run a set of tests as a sub-test nicely indented
+    # require_ok() for checking module can be required - will not import any symbols
+    
+    #   Failed test 'use Test::Class;'
+    #   at perl.t line 217.
+    #     Tried to use 'Test::Class'.
+    #     Error:  Can't locate Test/Class.pm in @INC (you may need to install the Test::Class module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at perl.t line 217.
+    # BEGIN failed--compilation aborted at perl.t line 217.
+    
+    #   Failed test 'use Test::Inline;'
+    #   at perl.t line 217.
+    #     Tried to use 'Test::Inline'.
+    #     Error:  Can't locate Test/Inline.pm in @INC (you may need to install the Test::Inline module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at perl.t line 217.
+    # BEGIN failed--compilation aborted at perl.t line 217.
+    # 0
+    # isa_ok() - was something created of a given type
+    
+    #   Failed test ''should be FileHandle' isa 'Thingie''
+    #   at perl.t line 225.
+    #     'should be FileHandle' isn't a 'Thingie'
+    # can_ok() for checking method availability on module or object - cannot specify a custom message
+    
+    #   Failed test 'File::Copy->can(...)'
+    #   at perl.t line 228.
+    #     File::Copy->can('not_this_one') failed
+    
+    #   Failed test 'main->can('read_file')'
+    #   at perl.t line 237.
+    #     main->can('read_file') failed
+    # new_ok() create object and check class type all in one go
+    # BAIL_OUT() in a subtest will also abort the whole plan not just the sub test
+    # end subtest Object Oriented testing methods
+    # Looks like you failed 5 tests of 15.
+
+#   Failed test 'Object Oriented testing methods'
+#   at perl.t line 250.
+# subtest() return val can be checked did it pass? 0
+# skip() and TODO for broken and unimplemented tests
+# TODO: runs tests but expect to fail
+# todo_skip: when you can't even run the TODO tests to see if they fail, this will skip them
+    # Test::Differences - for comparing bodies of text, deep structures or SQL records
+    
+    #   Failed test 'eq_or_diff() should do Unicode, baby'
+    #   at perl.t line 310.
+    # +----+-----------------------+-----------------------+
+    # | Elt|Got                    |Expected               |
+    # +----+-----------------------+-----------------------+
+    # |   0|'Traditional Chinese'  |'Traditional Chinese'  |
+    # *   1|'中国'                   |'中國'                   *
+    # +----+-----------------------+-----------------------+
+    # comparison of Test::More handling of big text vs Test::Differences
+    
+    #   Failed test 'Test::More is_deeply() for text comparison'
+    #   at perl.t line 313.
+    #          got: '0.34
+    # 009159776431.776127962576480.9
+    # 4262570919912.821992596040024.5430
+    # 714783295.370710247574525.411986511692142.76258432
+    # 897
+    # 72.055706740511328.357848830644348.258712330312599
+    # .7911597796498612.854
+    # 705095787.562363933517841.1127951111915913.8701916
+    # 31374716.4593270711
+    # 24.803863693711323.478770544107225.21417452635447'
+    #     expected: 'a0.34
+    # 009159776431.776127962576480.9
+    # 4262570919912.821992596040024.5430
+    # 714782395.730710247574525.411986511692142.76258423
+    # 897
+    # 72.055706740511238.357848830644348.258712330312599
+    # .7911597796498612.854
+    # 705095787.562363933517841.1127951111915913.8701916
+    # 31734716.4592370711
+    # 24.803863697311233.478770544107225.21417452635447'
+    
+    #   Failed test 'Test::More is_deeply() for structure comparison'
+    #   at perl.t line 314.
+    #     Structures begin differing at:
+    #          $got->{another} = Does not exist
+    #     $expected->{another} = 'val'
+    
+    #   Failed test 'eq_or_diff_text() (lines count from 1) example table diff of text'
+    #   at perl.t line 319.
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # | Ln|Got                                                 |Expected                                            |
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    # *  1|'0.34                                               |'a0.34                                              *
+    # |  2|009159776431.776127962576480.9                      |009159776431.776127962576480.9                      |
+    # |  3|4262570919912.821992596040024.5430                  |4262570919912.821992596040024.5430                  |
+    # *  4|714783295.370710247574525.411986511692142.76258432  |714782395.730710247574525.411986511692142.76258423  *
+    # |  5|897                                                 |897                                                 |
+    # *  6|72.055706740511328.357848830644348.258712330312599  |72.055706740511238.357848830644348.258712330312599  *
+    # |  7|.7911597796498612.854                               |.7911597796498612.854                               |
+    # |  8|705095787.562363933517841.1127951111915913.8701916  |705095787.562363933517841.1127951111915913.8701916  |
+    # *  9|31374716.4593270711                                 |31734716.4592370711                                 *
+    # * 10|24.803863693711323.478770544107225.21417452635447'  |24.803863697311233.478770544107225.21417452635447'  *
+    # +---+----------------------------------------------------+----------------------------------------------------+
+    
+    #   Failed test 'eq_or_diff_data() (lines count from 0) example table diff of text'
+    #   at perl.t line 320.
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # | Elt|Got                                                 |Expected                                            |
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    # *   0|'0.34                                               |'a0.34                                              *
+    # |   1|009159776431.776127962576480.9                      |009159776431.776127962576480.9                      |
+    # |   2|4262570919912.821992596040024.5430                  |4262570919912.821992596040024.5430                  |
+    # *   3|714783295.370710247574525.411986511692142.76258432  |714782395.730710247574525.411986511692142.76258423  *
+    # |   4|897                                                 |897                                                 |
+    # *   5|72.055706740511328.357848830644348.258712330312599  |72.055706740511238.357848830644348.258712330312599  *
+    # |   6|.7911597796498612.854                               |.7911597796498612.854                               |
+    # |   7|705095787.562363933517841.1127951111915913.8701916  |705095787.562363933517841.1127951111915913.8701916  |
+    # *   8|31374716.4593270711                                 |31734716.4592370711                                 *
+    # *   9|24.803863693711323.478770544107225.21417452635447'  |24.803863697311233.478770544107225.21417452635447'  *
+    # +----+----------------------------------------------------+----------------------------------------------------+
+    
+    #   Failed test 'eq_or_diff() example table diff of a perl structure'
+    #   at perl.t line 321.
+    # +----+-------------------+----+---------------------+
+    # | Elt|Got                | Elt|Expected             |
+    # +----+-------------------+----+---------------------+
+    # |   0|{                  |   0|{                    |
+    # |    |                   *   1|  another => 'val',  *
+    # |   1|  arr => [         |   2|  arr => [           |
+    # |   2|    1,             |   3|    1,               |
+    # |   3|    2,             |   4|    2,               |
+    # *   4|    3,             *   5|    5,               *
+    # |   5|    4,             |   6|    4,               |
+    # *   6|    5              *   7|    5,               *
+    # |    |                   *   8|    42               *
+    # |   7|  ],               |   9|  ],                 |
+    # |   8|  key => 'value',  |  10|  key => 'value',    |
+    # |   9|  obj => {         |  11|  obj => {           |
+    # *  10|    j => 'k',      *    |                     |
+    # |  11|    k => 'v',      |  12|    k => 'v',        |
+    # *  12|    m => 'n'       *  13|    m => 'n',        *
+    # |    |                   *  14|    z => 'p'         *
+    # |  13|  }                |  15|  }                  |
+    # |  14|}                  |  16|}                    |
+    # +----+-------------------+----+---------------------+
+    
+    #   Failed test 'eq_or_diff() example unified diff'
+    #   at perl.t line 324.
+    # --- Got
+    # +++ Expected
+    # @@ -1,10 +1,10 @@
+    # -'0.34
+    # +'a0.34
+    #  009159776431.776127962576480.9
+    #  4262570919912.821992596040024.5430
+    # -714783295.370710247574525.411986511692142.76258432
+    # +714782395.730710247574525.411986511692142.76258423
+    #  897
+    # -72.055706740511328.357848830644348.258712330312599
+    # +72.055706740511238.357848830644348.258712330312599
+    #  .7911597796498612.854
+    #  705095787.562363933517841.1127951111915913.8701916
+    # -31374716.4593270711
+    # +31734716.4592370711
+    # -24.803863693711323.478770544107225.21417452635447'+24.803863697311233.478770544107225.21417452635447'
+    
+    #   Failed test 'eq_or_diff() example unified diff of a perl structure'
+    #   at perl.t line 325.
+    # --- Got
+    # +++ Expected
+    # @@ -1,15 +1,17 @@
+    #  {
+    # +  another => 'val',
+    #    arr => [
+    #      1,
+    #      2,
+    # -    3,
+    # +    5,
+    #      4,
+    # -    5
+    # +    5,
+    # +    42
+    #    ],
+    #    key => 'value',
+    #    obj => {
+    # -    j => 'k',
+    #      k => 'v',
+    # -    m => 'n'
+    # +    m => 'n',
+    # +    z => 'p'
+    #    }
+    #  }
+    
+    #   Failed test 'eq_or_diff() example context diff'
+    #   at perl.t line 328.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,10 ****
+    # ! '0.34
+    #   009159776431.776127962576480.9
+    #   4262570919912.821992596040024.5430
+    # ! 714783295.370710247574525.411986511692142.76258432
+    #   897
+    # ! 72.055706740511328.357848830644348.258712330312599
+    #   .7911597796498612.854
+    #   705095787.562363933517841.1127951111915913.8701916
+    # ! 31374716.4593270711
+    # ! 24.803863693711323.478770544107225.21417452635447'--- 1,10 ----
+    # ! 'a0.34
+    #   009159776431.776127962576480.9
+    #   4262570919912.821992596040024.5430
+    # ! 714782395.730710247574525.411986511692142.76258423
+    #   897
+    # ! 72.055706740511238.357848830644348.258712330312599
+    #   .7911597796498612.854
+    #   705095787.562363933517841.1127951111915913.8701916
+    # ! 31734716.4592370711
+    # ! 24.803863697311233.478770544107225.21417452635447'
+    
+    #   Failed test 'eq_or_diff() example context diff of a perl structure'
+    #   at perl.t line 329.
+    # *** Got
+    # --- Expected
+    # ***************
+    # *** 1,15 ****
+    #   {
+    #     arr => [
+    #       1,
+    #       2,
+    # !     3,
+    #       4,
+    # !     5
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    # -     j => 'k',
+    #       k => 'v',
+    # !     m => 'n'
+    #     }
+    #   }
+    # --- 1,17 ----
+    #   {
+    # +   another => 'val',
+    #     arr => [
+    #       1,
+    #       2,
+    # !     5,
+    #       4,
+    # !     5,
+    # !     42
+    #     ],
+    #     key => 'value',
+    #     obj => {
+    #       k => 'v',
+    # !     m => 'n',
+    # !     z => 'p'
+    #     }
+    #   }
+    
+    #   Failed test 'eq_or_diff() example oldstyle diff'
+    #   at perl.t line 332.
+    # 1c1
+    # < '0.34
+    # ---
+    # > 'a0.34
+    # 4c4
+    # < 714783295.370710247574525.411986511692142.76258432
+    # ---
+    # > 714782395.730710247574525.411986511692142.76258423
+    # 6c6
+    # < 72.055706740511328.357848830644348.258712330312599
+    # ---
+    # > 72.055706740511238.357848830644348.258712330312599
+    # 9,10c9,10
+    # < 31374716.4593270711
+    # < 24.803863693711323.478770544107225.21417452635447'---
+    # > 31734716.4592370711
+    # > 24.803863697311233.478770544107225.21417452635447'
+    
+    #   Failed test 'eq_or_diff() example oldstyle diff of a perl structure - note very good'
+    #   at perl.t line 333.
+    # 1a2
+    # >   another => 'val',
+    # 5c6
+    # <     3,
+    # ---
+    # >     5,
+    # 7c8,9
+    # <     5
+    # ---
+    # >     5,
+    # >     42
+    # 11d12
+    # <     j => 'k',
+    # 13c14,15
+    # <     m => 'n'
+    # ---
+    # >     m => 'n',
+    # >     z => 'p'
+    # Looks like you failed 12 tests of 12.
+
+#   Failed test 'Test::Differences'
+#   at perl.t line 335.
+    # Test::Deep - for data structures with regex checking of items
+    
+    #   Failed test 'cmp_deeply()/re()/array_each() - deep validation of structured data'
+    #   at perl.t line 357.
+    # Using Regexp on $data->{"Phone"}
+    #    got : '054322334'
+    # expect : (?^:^0d{6}$)
+    # Looks like you planned 1 test but ran 2.
+    # Looks like you failed 1 test of 2 run.
+
+#   Failed test 'Test::Deep'
+#   at perl.t line 411.
+    
+    #   Failed test 'throws_ok() should be division by zero'
+    #   at perl.t line 423.
+    # expecting: Regexp ((?^:division by zero))
+    # found: normal exit
+    
+    #   Failed test 'throws_ok() match against error class name'
+    #   at perl.t line 427.
+    # expecting: Error::Simple
+    # found: I have died! at perl.t line 417.
+Can't locate object method "new" via package "Error::Simple" (perhaps you forgot to load "Error::Simple"?) at perl.t line 428.
+Cannot run test (no warnings) with active children at /usr/local/share/perl/5.18.2/Test/NoWarnings.pm line 107.
+END failed--call queue aborted at perl.t line 279.
+# Looks like you planned 35 tests but ran 28.
+# Looks like you failed 10 tests of 28 run.
+# Looks like your test exited with 22 just after 28.
+perl.t .. 
+Dubious, test returned 22 (wstat 5632, 0x1600)
+Failed 17/35 subtests 
+	(less 3 skipped subtests: 15 okay)
+	(1 TODO test unexpectedly succeeded)
+Cannot detect source of 'pass'! at /usr/local/share/perl/5.18.2/TAP/Parser/IteratorFactory.pm line 261.
+	TAP::Parser::IteratorFactory::detect_source('TAP::Parser::IteratorFactory=HASH(0xf41e70)', 'TAP::Parser::Source=HASH(0xf92740)') called at /usr/local/share/perl/5.18.2/TAP/Parser/IteratorFactory.pm line 211
+	TAP::Parser::IteratorFactory::make_iterator('TAP::Parser::IteratorFactory=HASH(0xf41e70)', 'TAP::Parser::Source=HASH(0xf92740)') called at /usr/local/share/perl/5.18.2/TAP/Parser.pm line 470
+	TAP::Parser::_initialize('TAP::Parser=HASH(0xfa7e58)', 'HASH(0xe29878)') called at /usr/local/share/perl/5.18.2/TAP/Object.pm line 55
+	TAP::Object::new('TAP::Parser', 'HASH(0xe29878)') called at /usr/local/share/perl/5.18.2/TAP/Object.pm line 130
+	TAP::Object::_construct('TAP::Harness=HASH(0x73ebd0)', 'TAP::Parser', 'HASH(0xe29878)') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 793
+	TAP::Harness::make_parser('TAP::Harness=HASH(0x73ebd0)', 'TAP::Parser::Scheduler::Job=HASH(0xc73230)') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 592
+	TAP::Harness::_aggregate_single('TAP::Harness=HASH(0x73ebd0)', 'TAP::Parser::Aggregator=HASH(0xc71ed0)', 'TAP::Parser::Scheduler=HASH(0xc732d8)') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 684
+	TAP::Harness::aggregate_tests('TAP::Harness=HASH(0x73ebd0)', 'TAP::Parser::Aggregator=HASH(0xc71ed0)', 'perl.t', 'pass') called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 499
+	TAP::Harness::__ANON__() called at /usr/local/share/perl/5.18.2/TAP/Harness.pm line 512
+	TAP::Harness::runtests('TAP::Harness=HASH(0x73ebd0)', 'perl.t', 'pass') called at /usr/local/share/perl/5.18.2/App/Prove.pm line 553
+	App::Prove::_runtests('App::Prove=HASH(0x71bec0)', 'HASH(0xc30508)', 'TAP::Harness', 'perl.t', 'pass') called at /usr/local/share/perl/5.18.2/App/Prove.pm line 511
+	App::Prove::run('App::Prove=HASH(0x71bec0)') called at /usr/local/bin/prove line 12
