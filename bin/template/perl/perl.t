@@ -40,8 +40,8 @@ use Test::Most tests => 35;
 # done_testing($number_of_tests_if_known);
 
 # because all good code starts with...
-use strict;
-use warnings;
+#use strict; # not needed Test::Most does this
+#use warnings; # not needed Test::Most does this
 use English -no_match_vars;
 
 use utf8; # if Test::Difference used on unicode text
@@ -58,6 +58,7 @@ our $ISA_FAIL = 'Thingie';
 our @USE = qw(Cwd This/one/is/gone);
 our @CAN = qw(copy move not_this_one);
 
+# Test::Exception, Test::Differences, Test::Deep and Test::Warn are included by Test::Most
 our @MODULES = qw(
 	Test::Differences
 	Test::Deep
