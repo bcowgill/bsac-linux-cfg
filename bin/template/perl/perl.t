@@ -24,7 +24,8 @@
 # Test::NoWarnings
 
 #use threads; # must precede Test::More if you are threading
-use Test::More tests => 35;
+use Test::Most tests => 35;
+#use Test::More tests => 35;
 # or if you have to calculate the number of tests
 # plan tests => $number_of_tests;
 # or if this test plan doesn't work on this OS
