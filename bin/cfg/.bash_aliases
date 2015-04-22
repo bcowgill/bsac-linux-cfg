@@ -115,6 +115,7 @@ alias perltidy-mine='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc ~/.perltidyrc
 alias perltidy-work='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc-blismedia ~/.perltidyrc'
 
 # General Database aliases
+alias myhist='cat ~/.mysql_history'
 alias myhistory='cat ~/.mysql_history'
 
 # Template Toolkit helpful alias find all markup
