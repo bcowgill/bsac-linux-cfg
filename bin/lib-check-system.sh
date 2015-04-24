@@ -805,7 +805,7 @@ function is_port_listening {
    port="$2"
    message="$3"
    if nc localhost "$port" < /dev/null > /dev/null; then
-      echo  OK $host:$port is listening
+      OK "$host:$port is listening"
    else
       NOT_OK "$host:$port is not listening [$message]"
       return 1
@@ -823,7 +823,7 @@ function port_should_not_be_listening {
       NOT_OK "$host:$port should not be listening [$message]"
       return 1
    else
-      echo  OK $host:$port is not listening
+      OK "$host:$port is not listening"
    fi
    return 0
 }
@@ -1112,8 +1112,8 @@ function install_perl_project_dependencies {
       perl Build.PL && sudo ./Build installdeps && error=0
    else
       if [ -f Makefile.PL ]; then
-         # This will only tell you about missing pre-requisites, not install them
-         perl Makefile.PL && error=0
+
+         perl Makefile.PL && cpanm --installdeps --sudo . && error=0
       else
          echo MAYBE NOT OK "$dir" no Build.PL or Makefile.PL found so no dependencies to install
          error=0
@@ -1485,7 +1485,7 @@ function mysql_make_database_exist {
    if mysql_check_for_database $database $user $password > /dev/null; then
       OK "$database exists on mysql localhost"
    else
-      NOT_OK "$database does not exist on mysql localhost will try to create with user $user" || mysql -u $user -p$password -e "CREATE DATABASE $database"
+      NOT_OK "MAYBE $database does not exist on mysql localhost will try to create with user $user" || mysql -u $user -p$password -e "CREATE DATABASE $database"
       mysql_check_for_database $database $user $password || return 1
    fi
    return 0
