@@ -4,8 +4,8 @@
 CHECK_FILE="$1"
 SOMETHING="$2"
 SOMETHINGELSE="$3"
-FIND_ALL=1
-FIND_TO_ROOT=1
+FIND_ALL=0
+FIND_TO_ROOT=0
 
 ORIGIN="$(git branch | grep \\* | cut -c 3-)"
 BRANCH="x$ORIGIN"
