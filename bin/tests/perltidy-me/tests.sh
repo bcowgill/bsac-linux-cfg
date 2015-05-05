@@ -30,7 +30,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $TIDYARGS $PROFILE --dump-token-types $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS > $OUT 2>&1 && assertCommandFails $? "$PROGRAM $ARGS"
 	perl -i -pne 's{ \A ([a-z]) }{--$1}xms' $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -44,7 +44,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $TIDYARGS $PROFILE --dump-defaults $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS > $OUT 2>&1 && assertCommandFails $? "$PROGRAM $ARGS"
 	perl -i -pne 's{ \A ([a-z]) }{--$1}xms' $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
