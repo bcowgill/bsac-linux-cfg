@@ -122,11 +122,13 @@ FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
+PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
+
 INI_DIR=check-iniline
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext ruby runit mc"
-COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS"
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER"
+COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 
 source `which lib-check-system.sh`
 
@@ -167,7 +169,7 @@ fi
 # update-initramfs -u -k 3.13.0-46-generic
 
 # ensure /boot doesn't get too full
-if df -k /boot | egrep 9[0-9]% ; then
+if df -k /boot | egrep [89][0-9]% ; then
    NOT_OK "/boot is nearly full, will clean up some space now."
    sudo apt-get autoremove
 else
