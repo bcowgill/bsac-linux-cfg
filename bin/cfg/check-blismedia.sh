@@ -123,6 +123,7 @@ FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_A
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
+# TODO check for /usr/lib/pidgin/guifications.so pidgin-guifications
 
 INI_DIR=check-iniline
 
