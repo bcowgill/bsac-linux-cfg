@@ -123,10 +123,11 @@ FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_A
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
+# TODO check for /usr/lib/pidgin/guifications.so pidgin-guifications
 
 INI_DIR=check-iniline
 
-INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext ruby runit mc"
+INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail screen chromium-browser cmatrix gettext ruby runit mc"
 COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 
