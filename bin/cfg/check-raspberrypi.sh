@@ -40,14 +40,12 @@ DRUID_INSTALL_FROM="apache2"
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
-RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
+#RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
+RUBY_GEMS="sass compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
-
-# Packages to install specific files
-INSTALL_FILE_PACKAGES="$DRUID_PACKAGES"
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_VER="v0.10.25"
@@ -149,8 +147,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	POSTGRES_PKG_FROM=""
 	DRUID_INSTALL_FROM=""
 	DRUID_PERL_MODULES=""
+	DRUID_PACKAGES=""
 	SCREENSAVER=""
 	NODE_PKG=""
+	RUBY_GEMS="sass foundation"
 fi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -162,11 +162,16 @@ PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
+# Packages to install specific files
+INSTALL_FILE_PACKAGES="$DRUID_PACKAGES"
+
 echo CONFIG INSTALL=$INSTALL
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG COMMANDS=$COMMANDS
 echo CONFIG PACKAGES=$PACKAGES
 echo CONFIG PERL_MODULES=$PERL_MODULES
+echo CONFIG RUBY_GEMS=$RUBY_GEMS
+echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
 
 #============================================================================
 # begin actual system checking
@@ -528,10 +533,11 @@ else
 	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
 fi
 
-
 echo BIG INSTALL $INSTALL
 echo BIG INSTALL FROM $INSTALL_FROM
 echo BIG PERL MODULES $PERL_MODULES
+echo BIG RUBY GEMS $RUBY_GEMS
+echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 
 install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
@@ -540,11 +546,12 @@ install_commands_from "$INSTALL_FROM"
 [ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
 install_perl_modules "$PERL_MODULES"
+install_ruby_gems "$RUBY_GEMS"
+
+
+install_files_from "$INSTALL_FILE_PACKAGES"
 
 exit 3
-
-install_ruby_gems "$RUBY_GEMS"
-install_files_from "$INSTALL_FILE_PACKAGES"
 
 make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -999,6 +1006,7 @@ echo TODO VIRTUALBOX SETUP
 echo TODO SUBLIME THEME OVERRIDES
 echo TODO WINDOW MANAGER SPECIAL EFFECTS
 echo TODO google chrome flash player
+echo TODO gvim font setting config
 
 OK "all checks complete"
 
