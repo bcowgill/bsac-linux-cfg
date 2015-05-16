@@ -86,6 +86,9 @@ alias pkgless='pkgless.sh'
 alias pkgfiles='pkgfiles.sh'
 alias pkgls='dpkg -L'
 
+# use midnight commander to select a directory to pushd
+alias pushmc='. $HOME/bin/mc-wrapper.sh'
+
 # wcd default color graphic selector. 
 # wcdls just list what dirs match. 
 # wcds show the wcd dir stack

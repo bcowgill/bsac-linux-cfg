@@ -143,13 +143,13 @@ PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT
 if [ 0 == 1 ]; then
 pushd ~
 echo initial bootstrap will vary
-exit 1
+exit 2
 mkdir -p workspace/play
 mv ~/bin ~/bin.saved
 mv ~/bsac-linux-cfg ~/workspace/play
 ln -s workspace/play/bsac-linux-cfg/bin
 popd
-exit 1
+exit 2
 fi
 
 pushd $HOME
@@ -161,6 +161,8 @@ if grep $USER /etc/group | grep sudo; then
 else
    NOT_OK "user $USER does not have sudo privileges"
 fi
+
+check_linux "$UBUNTU"
 
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
@@ -179,10 +181,17 @@ file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
 file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
-dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
+if dir_exists tmp "tmp dir in user home" ; then
+   /bin/true
+else
+   dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
+fi
 make_dir_exist $INI_DIR "output area for checking INI file settings"
 
-check_linux "$UBUNTU"
+make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
+make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
+make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
+dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
 
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
@@ -244,9 +253,6 @@ file_exists $FILE "ProFontWindows still not installed"
 FILE=.fonts/p/ProFontWindows_Bold.ttf
 file_exists $FILE > /dev/null || kfontinst Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
 file_exists $FILE "ProFontWindows Bold still not installed"
-fi
-
-exit 1
 
 file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
 file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,18" "ProFontWindows in kate editor Settings / Configure Kate / Fonts & Colors"
@@ -283,15 +289,13 @@ file_has_text "$FILE" "Smart Copy Cut=true" "Settings / Configure Kate / Editor"
 file_has_text "$FILE" "toolbar actions=home,mkdir,up,back,forward,show hidden,short view,detailed view,tree view,detailed tree view,bookmarks,sync_dir,configure" "Settings / Configure Kate / Editor"
 file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
 
+fi # kfontinst command exists
 
 if [ ! -z $USE_JAVA ]; then
    dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
 fi
 
-make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
-make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
-make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
-dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
+exit 3
 
 file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home.sh "home work unpacker configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"

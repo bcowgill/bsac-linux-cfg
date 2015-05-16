@@ -46,6 +46,35 @@ if [ "$?" == "0" ]; then
    fi
 fi
 
+# some functions for time/weather
+
+function clock
+{
+	local line
+	line="==============="
+	while true; do
+		clear
+		echo $line
+		date +%r
+		echo $line
+		sleep 1
+	done
+}
+
+function weather
+{
+	local postcode URL
+	postcode=${1:-SE3}
+	URL="http://www.google.com/search?hl=en&lr=&client=firefox-a&rls=org.mozilla%3Aen-US%3Aofficial&q=weather+$postcode&btnG=Search"
+	echo $URL
+	declare -a WEATHERARRAY
+	
+	# to debug why it might not work.
+	lynx "$URL"
+	#WEATHERARRAY=( `lynx -dump "$URL" | grep -A 5 -m 1 "Weather in $postcode"` )
+	#echo ${WEATHERARRAY[@]}
+}
+
 ############################################################################
 # Some example functions:(from cygwin default .bashrc file)
 #

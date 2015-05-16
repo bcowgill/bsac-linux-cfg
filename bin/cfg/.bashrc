@@ -113,6 +113,7 @@ fi
 export PATH=$HOME/bin:/opt/slickedit/bin:$PATH
 export EDITOR=/usr/bin/vim
 export WCDSCAN=$HOME
+export TZ=Europe/London
 
 # BSAC show git branch on command prompt
 # see /etc/bash_completion.d/git for options
