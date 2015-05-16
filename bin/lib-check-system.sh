@@ -25,6 +25,7 @@ FAIL="NOT OK"
 # on the first unhandled NOT_OK.
 # so  NOT_OK "something" || echo " "   will suppress ending the script
 # if you still need to handle a NOT_OK to prevent script ending.
+# also NOT_OK "MAYBE will try" && make_it_happen   allow you to show a not ok and then try to fix it.
 STOP_ON_FAIL=0
 
 # When running under the prove command, lower case our output
@@ -384,7 +385,7 @@ function dir_linked_to {
          fi
       fi
    else
-      NOT_OK "symlink $name missing will try to create" || echo ln -s "$target" "$name"
+      NOT_OK "symlink $name missing will try to create" && echo ln -s "$target" "$name"
       if [ -z "$root" ]; then
          ln -s "$target" "$name"
       else
@@ -1321,7 +1322,7 @@ function file_has_text {
    if grep "$text" "$file" > /dev/null; then
       OK "file has text: \"$file\" \"$text\""
    else
-      NOT_OK "file missing text: \"$file\" \"$text\" [$message]" || echo grep \""$text"\" \""$file"\"
+      NOT_OK "file missing text: \"$file\" \"$text\" [$message]" && echo grep \""$text"\" \""$file"\"
       return 1
    fi
    return 0
@@ -1418,7 +1419,7 @@ function crontab_has_command {
    if crontab -l | grep "$command"; then
       OK "crontab has command $command"
    else
-      NOT_OK "crontab missing command $command trying to install [$message]" || (crontab -l; echo "$config" ) | crontab -
+      NOT_OK "crontab missing command $command trying to install [$message]" && (crontab -l; echo "$config" ) | crontab -
       return 1
    fi
    return 0
@@ -1505,7 +1506,7 @@ function mysql_make_database_exist {
    if mysql_check_for_database $database $user $password > /dev/null; then
       OK "$database exists on mysql localhost"
    else
-      NOT_OK "MAYBE $database does not exist on mysql localhost will try to create with user $user" || mysql -u $user -p$password -e "CREATE DATABASE $database"
+      NOT_OK "MAYBE $database does not exist on mysql localhost will try to create with user $user" && mysql -u $user -p$password -e "CREATE DATABASE $database"
       mysql_check_for_database $database $user $password || return 1
    fi
    return 0
@@ -1521,7 +1522,7 @@ function mysql_make_test_user_exist_on_database {
       OK "$user exists with grants"
    else
       # drop and recreate user with no errors
-      NOT_OK "$user not configured. Will set it up with $superuser mysql account" || mysql -u $superuser -D mysql -p$password <<SQL
+      NOT_OK "$user not configured. Will set it up with $superuser mysql account" && mysql -u $superuser -D mysql -p$password <<SQL
       GRANT USAGE ON *.* TO '$user'@'localhost';
       DROP USER '$user'@'localhost';
       CREATE USER '$user'@'localhost' IDENTIFIED BY '$password';

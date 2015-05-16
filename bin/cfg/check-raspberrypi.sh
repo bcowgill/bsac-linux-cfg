@@ -598,11 +598,11 @@ else
    git config --global --add alias.graph "log --oneline --graph --decorate --all"
 fi
 
-exit 3
+NOT_OK "this" && echo that
 
-#cp bin/ontology/backup-work* bin/cfg/
-file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work.sh "daily backup script"
-file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual.sh "manual backup script"
+file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work-$COMPANY.sh "daily backup script"
+file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual-$COMPANY.sh "manual backup script"
+file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "unpacker script for work at home"
 cmd_exists backup-work.sh "backup script missing"
 cmd_exists get-from-home.sh "unpacker script for work at home"
 
@@ -613,6 +613,8 @@ crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh >
 crontab_has_command "backup-work.sh"
 crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
+
+exit 3
 
 if $NODE_CMD --version | grep $NODE_VER; then
    OK "node command version correct"
