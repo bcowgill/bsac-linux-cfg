@@ -572,10 +572,10 @@ fi
 
 commands_exist "$COMMANDS"
 
-exit 3
-
 file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
 file_exists workspace/cfgrec.txt "configuration record files"
+
+exit 3
 
 #cp bin/ontology/backup-work* bin/cfg/
 file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work.sh "daily backup script"
