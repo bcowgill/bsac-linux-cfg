@@ -48,7 +48,7 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
-NODE_VER="v0.10.25"
+NODE_VER="v0.10.28"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
@@ -161,6 +161,8 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	DROPBOX_URL=""
 	SUBLIME=""
 	PIDGIN=""
+	SUBLIME_PKG=""
+	VSLICK=""
 fi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -305,7 +307,7 @@ if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
-	file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf 
+	file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows still not installed"
 
 	FILE=.fonts/p/ProFontWindows_Bold.ttf
@@ -416,7 +418,7 @@ if [ ! -z $VIRTUALBOX_PKG ]; then
 
 	cmd_exists dkms "need dkms command for VirtualBox"
 	cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
-	cmd_exists $VIRTUALBOX 
+	cmd_exists $VIRTUALBOX
 else
 	OK "will not configure virtualbox unless VIRTUALBOX_PKG is non-zero"
 fi # VIRTUALBOX_PKG
@@ -598,8 +600,7 @@ else
    git config --global --add alias.graph "log --oneline --graph --decorate --all"
 fi
 
-NOT_OK "this" && echo that
-
+echo CRON table setup
 file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work-$COMPANY.sh "daily backup script"
 file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual-$COMPANY.sh "manual backup script"
 file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "unpacker script for work at home"
@@ -614,8 +615,6 @@ crontab_has_command "backup-work.sh"
 crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
 
-exit 3
-
 if $NODE_CMD --version | grep $NODE_VER; then
    OK "node command version correct"
 else
@@ -629,6 +628,7 @@ else
    exit 1
 fi
 
+exit 3
 
 npm config set registry https://registry.npmjs.org/
 #install_npm_commands_from "$INSTALL_NPM_FROM"
@@ -638,6 +638,7 @@ make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
 install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
+if [ ! -z $SUBLIME_PKG ]; then
 cmd_exists git "need git installed before configure sublime"
 cmd_exists grunt "need grunt installed before configure sublime for it"
 
@@ -650,9 +651,12 @@ install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Cont
 install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 ## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+fi # SUBLIME_PKG
 
+if [ ! -z $VSLICK ]; then
 install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
 cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
+fi # VSLICK
 
 cmd_exists git "need git to clone repos"
 make_dir_exist workspace/play "github repo play area"
@@ -673,7 +677,7 @@ install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FL
 dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
 file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
 file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
-file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" ; sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
+file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" && sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
 file_exists "/usr/bin/flash-player-properties"
 
 # postgres JDBC driver for creating DB schema diagrams using schemacrawler
@@ -683,7 +687,7 @@ POSTGRES_JDBC_URL=http://jdbc.postgresql.org/download/$POSTGRES_JDBC_JAR
 POSTGRES_JDBC_DIR=/usr/share/java
 cmd_exists java "must have java installed for JDBC/schemacrawler"
 install_file_from_url Downloads/$POSTGRES_JDBC_JAR $POSTGRES_JDBC_JAR "$POSTGRES_JDBC_URL" "postgres JDBC jar file for using schemacrawler"
-file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it";  sudo cp "Downloads/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
+file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it"&& sudo cp "Downloads/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
 file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR
 
 # schemacrawler with postgres JDBC driver included
@@ -706,45 +710,6 @@ file_is_executable Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh "need executa
 FILE=.my.cnf
 file_has_text "$FILE" "safe-updates" "prevent big deletes from tables"
 file_must_not_have_text "$FILE" "#safe-updates" "make sure not commented out"
-
-# Check charles configuration options
-FILE=.charles.config
-make_dir_exist tx/mirror/web "charles mirroring area"
-file_has_text $FILE "port>58008" "charles port config Proxy / Proxy Settings"
-file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
-# this setting has just vanished in charles
-#file_has_text $FILE "lookAndFeel>GTK+" "charles look and feel Edit / Preferences / User Interface"
-file_has_text $FILE "displayFont>ProFontWindows" "charles font config Edit / Preferences / User Interface"
-file_has_text $FILE "displayFontSize>20" "charles font config Edit / Preferences / User Interface"
-file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
-file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
-
-if [ -d .kde ]; then
-	FILE=.kde/share/config/kioslaverc
-	# when system not proxied through charles
-	#file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
-	#file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
-	# when proxying system through charles
-	file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
-	file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
-
-	DIR=.local/share/applications
-	dir_exists $DIR "KDE applications folder"
-fi # .kde dir
-
-# Eclipse configuration (shortcut and font)
-if [ ! -z "$ECLIPSE" ]; then
-	DIR=.local/share/applications
-	file_exists eclipse/eclipse "Eclipse program"
-	file_exists eclipse/Eclipse.desktop "Eclipse launcher"
-	file_exists $DIR/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop $DIR/Eclipse.desktop
-
-	TEXT="ProFontWindows"
-	DIR=workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings
-	file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
-	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
-	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
-fi # ECLIPSE
 
 # Dropbox configuration
 dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
@@ -782,6 +747,9 @@ fi # THUNDER
 #============================================================================
 # KDE configuration files here
 if [ -d .kde ]; then
+DIR=.local/share/applications
+dir_exists $DIR "KDE applications folder"
+
 # System Settings
 FILE=.kde/share/config/kcminputrc
 file_has_text $FILE "MouseButtonMapping=LeftHanded" "Mouse settings System Settings / Input Devices / Mouse Settings"
@@ -902,6 +870,46 @@ ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
 fi # .kde dir
 # End KDE configuration
 #============================================================================
+
+if [ ! -z $CHARLES_PKG ]; then
+# Check charles configuration options
+FILE=.charles.config
+make_dir_exist tx/mirror/web "charles mirroring area"
+file_has_text $FILE "port>58008" "charles port config Proxy / Proxy Settings"
+file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
+# this setting has just vanished in charles
+#file_has_text $FILE "lookAndFeel>GTK+" "charles look and feel Edit / Preferences / User Interface"
+file_has_text $FILE "displayFont>ProFontWindows" "charles font config Edit / Preferences / User Interface"
+file_has_text $FILE "displayFontSize>20" "charles font config Edit / Preferences / User Interface"
+file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
+file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
+
+	if [ -d .kde ]; then
+		FILE=.kde/share/config/kioslaverc
+		# when system not proxied through charles
+		#file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
+		#file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
+		# when proxying system through charles
+		file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
+		file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
+
+	fi # .kde dir
+
+fi # CHARLES_PKG
+
+# Eclipse configuration (shortcut and font)
+if [ ! -z "$ECLIPSE" ]; then
+	DIR=.local/share/applications
+	file_exists eclipse/eclipse "Eclipse program"
+	file_exists eclipse/Eclipse.desktop "Eclipse launcher"
+	file_exists $DIR/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop $DIR/Eclipse.desktop
+
+	TEXT="ProFontWindows"
+	DIR=workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings
+	file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
+	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
+	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
+fi # ECLIPSE
 
 file_present prettydiff.js "html beautifier file"
 
