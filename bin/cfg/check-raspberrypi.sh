@@ -185,6 +185,7 @@ echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
 echo CONFIG COMMANDS=$COMMANDS
+echo CONFIG INSTALL_NPM_GLOBAL_FROM+$INSTALL_NPM_GLOBAL_FROM
 
 #============================================================================
 # begin actual system checking
@@ -552,6 +553,7 @@ echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
+echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
 
 install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
@@ -628,8 +630,6 @@ else
    exit 1
 fi
 
-exit 3
-
 npm config set registry https://registry.npmjs.org/
 #install_npm_commands_from "$INSTALL_NPM_FROM"
 install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
@@ -663,6 +663,13 @@ make_dir_exist workspace/play "github repo play area"
 install_git_repo "workspace/play" jshint-test https://github.com/bcowgill/jshint-test.git "my jshint build system"
 install_git_repo "workspace/play" grunt-test https://github.com/bcowgill/grunt-test.git "my grunt build system"
 install_git_repo "workspace/play" bsac-linux-cfg https://github.com/bcowgill/bsac-linux-cfg.git "my linux config scripts"
+# probably want to comment some of these out when setting up at work
+install_git_repo "workspace/play" perljs https://github.com/bcowgill/perljs.git "my perl node module"
+install_git_repo "workspace/play" knockout-test https://github.com/bcowgill/knockout-test.git "my knockout test area"
+install_git_repo "workspace/play" foundation-test https://github.com/bcowgill/foundation-test.git "my foundation test area"
+install_git_repo "workspace/play" jsclass-test https://github.com/bcowgill/jsclass-test.git "my javascript class test area"
+
+exit 3
 
 # flash player in google chrome
 # http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
