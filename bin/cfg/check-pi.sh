@@ -213,6 +213,7 @@ else
    OK "plenty of space on /boot"
 fi
 
+# https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
 install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
 install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
