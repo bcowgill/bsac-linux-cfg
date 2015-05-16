@@ -10,6 +10,7 @@ alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
 alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
+alias vivim='$EDITOR ~/.vimrc'
 alias prompter='source `which toggle-prompt.sh`'
 
 #  like mkdir -p for files you want to touch
