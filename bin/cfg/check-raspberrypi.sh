@@ -575,22 +575,6 @@ commands_exist "$COMMANDS"
 file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
 file_exists workspace/cfgrec.txt "configuration record files"
 
-exit 3
-
-#cp bin/ontology/backup-work* bin/cfg/
-file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work.sh "daily backup script"
-file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual.sh "manual backup script"
-cmd_exists backup-work.sh "backup script missing"
-cmd_exists get-from-home.sh "unpacker script for work at home"
-
-file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
-crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
-crontab_has_command "mkdir"
-crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
-crontab_has_command "backup-work.sh"
-crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
-crontab_has_command "wcdscan.sh"
-
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
    OK "git config has been set up"
 else
@@ -613,6 +597,22 @@ else
    NOT_OK "git config alias.graph not set. trying to do so"
    git config --global --add alias.graph "log --oneline --graph --decorate --all"
 fi
+
+exit 3
+
+#cp bin/ontology/backup-work* bin/cfg/
+file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work.sh "daily backup script"
+file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual.sh "manual backup script"
+cmd_exists backup-work.sh "backup script missing"
+cmd_exists get-from-home.sh "unpacker script for work at home"
+
+file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
+crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
+crontab_has_command "mkdir"
+crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
+crontab_has_command "backup-work.sh"
+crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
+crontab_has_command "wcdscan.sh"
 
 if $NODE_CMD --version | grep $NODE_VER; then
    OK "node command version correct"
