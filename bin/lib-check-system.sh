@@ -1567,7 +1567,7 @@ function mysql_run_script_on_database {
 # miscellaneous configuration
 
 function has_ssh_keys {
-# need to upload ssh public key to github before getting grunt templates
+   # need to upload ssh public key to github before getting grunt templates
    #file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
    #file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
    #mv .ssh/id_rsa* $HOME/bin/cfg/
