@@ -43,14 +43,11 @@ DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 # Packages to install specific files
 INSTALL_FILE_PACKAGES="$DRUID_PACKAGES"
-
-PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_VER="v0.10.25"
@@ -128,7 +125,9 @@ PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 
 INI_DIR=check-iniline
 
-INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext ruby runit mc"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc"
+
+TODO=audacity
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
@@ -147,13 +146,27 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
+	POSTGRES_PKG_FROM=""
+	DRUID_INSTALL_FROM=""
+	DRUID_PERL_MODULES=""
+	SCREENSAVER=""
+	NODE_PKG=""
 fi
 
 ONBOOT=onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
+PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
+PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
+
+echo CONFIG INSTALL=$INSTALL
+echo CONFIG INSTALL_FROM=$INSTALL_FROM
+echo CONFIG COMMANDS=$COMMANDS
+echo CONFIG PACKAGES=$PACKAGES
+echo CONFIG PERL_MODULES=$PERL_MODULES
 
 #============================================================================
 # begin actual system checking
@@ -515,14 +528,21 @@ else
 	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
 fi
 
-exit 3
 
 echo BIG INSTALL $INSTALL
+echo BIG INSTALL FROM $INSTALL_FROM
+echo BIG PERL MODULES $PERL_MODULES
+
 install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
-install_command_from_packages "$NODE_CMD" "$NODE_PKG"
-install_command_from_packages kslideshow.kss "$SCREENSAVER"
+
+[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
+[ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+
 install_perl_modules "$PERL_MODULES"
+
+exit 3
+
 install_ruby_gems "$RUBY_GEMS"
 install_files_from "$INSTALL_FILE_PACKAGES"
 

@@ -1,6 +1,9 @@
-# list if CPAN modules to install for this tree and apt packages too
+# list of CPAN modules to install for this tree and apt packages too
 # apt-get install perl-doc perltidy
 # cpanm --sudo `grep -v '#' cpanminus`
+# PERL_MODULES="`grep -v '#' cpanminus | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg;'`"
 File/Slurp.pm
 Getopt/ArgvFile.pm
 Template.pm
+Test/Most.pm
+Pod/Usage.pm
