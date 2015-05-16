@@ -133,9 +133,15 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
 
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
+	UBUNTU="wheezy"
 	ULIMITFILES=1024
 	COMPANY=raspberrypi
 	EMAIL=zardoz@infoserve.net
+	CHARLES_PKG=""
+	VIRTUALBOX_CMDS=""
+	VIRTUALBOX_PKG=""
+	SKYPE_PKG=""
+	SVN_PKG=""
 fi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -165,9 +171,9 @@ pushd $HOME
 id
 
 if grep $USER /etc/group | grep sudo; then
-   OK "user $USER has sudo privileges"
+	OK "user $USER has sudo privileges"
 else
-   NOT_OK "user $USER does not have sudo privileges"
+	NOT_OK "user $USER does not have sudo privileges"
 fi
 
 check_linux "$UBUNTU"
@@ -190,9 +196,9 @@ file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
 if dir_exists tmp "tmp dir in user home" ; then
-   /bin/true
+	/bin/true
 else
-   dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
+	dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
 fi
 make_dir_exist $INI_DIR "output area for checking INI file settings"
 
@@ -203,19 +209,19 @@ dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures d
 
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
-   OK "ulimit for open files is good"
+	OK "ulimit for open files is good"
 else
-   NOT_OK "ulimit for open files is bad need $ULIMITFILES"
-   file_has_text /etc/security/limits.conf $USER "check limits file" || ( \
-      echo echo \"$USER            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
-      echo echo \"$USER            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
-      chmod +x go.sudo;
-      sudo ./go.sudo\
-   )
-   file_has_text /etc/security/limits.conf $USER "check username in limits file"
-   file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
-   echo YOUDO You have to logout/login again for ulimit to take effect.
-   exit 1
+	NOT_OK "ulimit for open files is bad need $ULIMITFILES"
+	file_has_text /etc/security/limits.conf $USER "check limits file" || ( \
+		echo echo \"$USER            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
+		echo echo \"$USER            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
+		chmod +x go.sudo;
+		sudo ./go.sudo\
+	)
+	file_has_text /etc/security/limits.conf $USER "check username in limits file"
+	file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
+	echo YOUDO You have to logout/login again for ulimit to take effect.
+	exit 1
 fi
 
 # try a different kernel:
@@ -224,10 +230,10 @@ fi
 
 # ensure /boot doesn't get too full
 if df -k /boot | egrep [89][0-9]% ; then
-   NOT_OK "/boot is nearly full, will clean up some space now."
-   sudo apt-get autoremove
+	NOT_OK "/boot is nearly full, will clean up some space now."
+	sudo apt-get autoremove
 else
-   OK "plenty of space on /boot"
+	OK "plenty of space on /boot"
 fi
 
 # Shell configuration files
@@ -262,67 +268,67 @@ cp Downloads/ProFontWinTweaked/ProFontWindows.ttf .fonts
 #fc-list
 
 if cmd_exists kfontinst > /dev/null ; then
-cmd_exists kfontinst
-FILE=.fonts/p/ProFontWindows.ttf
-file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
-file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf 
-file_exists $FILE "ProFontWindows still not installed"
+	cmd_exists kfontinst
+	FILE=.fonts/p/ProFontWindows.ttf
+	file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
+	file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf 
+	file_exists $FILE "ProFontWindows still not installed"
 
-FILE=.fonts/p/ProFontWindows_Bold.ttf
-file_exists $FILE > /dev/null || kfontinst Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
-file_exists $FILE "ProFontWindows Bold still not installed"
+	FILE=.fonts/p/ProFontWindows_Bold.ttf
+	file_exists $FILE > /dev/null || kfontinst Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
+	file_exists $FILE "ProFontWindows Bold still not installed"
 
-file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
-file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,18" "ProFontWindows in kate editor Settings / Configure Kate / Fonts & Colors"
-file_has_text .kde/share/config/kateschemarc "Solarized (dark)" "Solarized Dark schema in kate editor"
-# adjusted Solarized (dark) color for some barely visible items
-file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff930093,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
-#file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff7b007b,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
+	file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
+	file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,18" "ProFontWindows in kate editor Settings / Configure Kate / Fonts & Colors"
+	file_has_text .kde/share/config/kateschemarc "Solarized (dark)" "Solarized Dark schema in kate editor"
+	# adjusted Solarized (dark) color for some barely visible items
+	file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff930093,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
+	#file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:OtherCommand=1,ff7b007b,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
 
-file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:Redirection=1,ff293ea6,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
-file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font System Settings / Application Appearance / Fonts"
+	file_has_text .kde/share/config/katesyntaxhighlightingrc "Bash:Redirection=1,ff293ea6,ff839496,1,,,,,,,---" "Settings / Configure Kate / Fonts & Colors / Highlighting Text Styles"
+	file_has_text .kde/share/config/kdeglobals "fixed=ProFontWindows,14" "ProFontWindows for System fixed width font System Settings / Application Appearance / Fonts"
 
-#TODO KATE color check
-#./.kde/share/config/colors/Recent_Colors
-#./.kde/share/config/kateschemarc
+	#TODO KATE color check
+	#./.kde/share/config/colors/Recent_Colors
+	#./.kde/share/config/kateschemarc
 
-FILE=.kde/share/config/katerc
-file_has_text "$FILE" "Indent On Backspace=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Indent On Text Paste=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Indentation Width=4" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Newline At EOF=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "PageUp/PageDown Moves Cursor=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Remove Spaces=1" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Show Spaces=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Word Wrap=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Word Wrap Column=128" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Animate Bracket Matching=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Show Indentation Lines=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Show Whole Bracket Expression=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Word Wrap Marker=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Dynamic Word Wrap=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Dynamic Word Wrap Align Indent=80" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Dynamic Word Wrap Indicators=1" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "Smart Copy Cut=true" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "toolbar actions=home,mkdir,up,back,forward,show hidden,short view,detailed view,tree view,detailed tree view,bookmarks,sync_dir,configure" "Settings / Configure Kate / Editor"
-file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
+	FILE=.kde/share/config/katerc
+	file_has_text "$FILE" "Indent On Backspace=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Indent On Text Paste=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Indentation Width=4" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Newline At EOF=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "PageUp/PageDown Moves Cursor=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Remove Spaces=1" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Show Spaces=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Word Wrap=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Word Wrap Column=128" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Animate Bracket Matching=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Show Indentation Lines=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Show Whole Bracket Expression=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Word Wrap Marker=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Dynamic Word Wrap=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Dynamic Word Wrap Align Indent=80" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Dynamic Word Wrap Indicators=1" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "Smart Copy Cut=true" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "toolbar actions=home,mkdir,up,back,forward,show hidden,short view,detailed view,tree view,detailed tree view,bookmarks,sync_dir,configure" "Settings / Configure Kate / Editor"
+	file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
 
 fi # kfontinst command exists
 
 if [ ! -z $USE_JAVA ]; then
-   dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
+	dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
 fi
 
-exit 3
-
-file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home.sh "home work unpacker configured"
+if [ "$HOSTNAME" != "raspberrypi" ]; then
+	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "home work unpacker configured"
+fi
 
 if [ ! -z $MOUNT_DATA ]; then
-   if [ -d /data/UNMOUNTED ]; then
-      OK "/data/UNMOUNTED exists will try mounting it to check dirs"
-      sudo mount /data
-      if [ -d /data/UNMOUNTED ]; then
-         NOT_OK "unable to mount /data"
+	if [ -d /data/UNMOUNTED ]; then
+		OK "/data/UNMOUNTED exists will try mounting it to check dirs"
+		sudo mount /data
+		if [ -d /data/UNMOUNTED ]; then
+			NOT_OK "unable to mount /data"
 #   mkdir -p /data/UNMOUNTED
 #   blkid /dev/sdb1
 #   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" /data
@@ -330,70 +336,85 @@ if [ ! -z $MOUNT_DATA ]; then
 #   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
 #   mkdir -p /data/$USER
 #   chown -R $USER:domusers /data/$USER
-         exit 1
-      fi
-   fi
-   dir_exists /data/$USER "personal area on data dir missing"
-   #sudo mkdir -p /data/$USER
-   #sudo chown $USER:$USER /data/$USER
-   make_dir_exist /data/$USER/backup "backup dir on /data"
-   make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
+			exit 1
+		fi
+	fi
+	dir_exists /data/$USER "personal area on data dir missing"
+	#sudo mkdir -p /data/$USER
+	#sudo chown $USER:$USER /data/$USER
+	make_dir_exist /data/$USER/backup "backup dir on /data"
+	make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 fi
 
+# provides lsb_release command as well.
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
-# update apt sources list with needed values to install some more complicated programs
-touch go.sudo; rm go.sudo
-apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy missing"
-apt_must_not_have_source "deb-src http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy wrong"
-[ -f go.sudo ] && (wget -q -O - http://www.charlesproxy.com/packages/apt/PublicKey | sudo apt-key add - )
-apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
-apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
-apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
-
-apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox missing trusty must use raring for now"
-apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox wrong"
-apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
-apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
-
-echo Checking for apt-keys...
-apt_has_key charlesproxy http://www.charlesproxy.com/packages/apt/PublicKey "key fingerprint for Charles Proxy missing"
-apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
-
-cmd_exists dkms "need dkms command for VirtualBox"
-cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
-cmd_exists $VIRTUALBOX 
-
-echo MAYBE DO MANUALLY apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG
-[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
-
-cmd_exists $CHARLES
-cmd_exists $SKYPE
+if [ ! -z $CHARLES_PKG ]; then
+	# update apt sources list with needed values to install some more complicated programs
+	touch go.sudo; rm go.sudo
+	apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy missing"
+	apt_must_not_have_source "deb-src http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy wrong"
+	[ -f go.sudo ] && (wget -q -O - http://www.charlesproxy.com/packages/apt/PublicKey | sudo apt-key add - )
+	apt_has_key charlesproxy http://www.charlesproxy.com/packages/apt/PublicKey "key fingerprint for Charles Proxy missing"
+fi # CHARLES_PKG
 
 if [ ! -z $SVN_PKG ]; then
-cmd_exists svn
-file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
-dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
-apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
-FILE="/etc/apt/sources.list.d/WANdisco.list"
-make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
-file_has_text "$FILE" wandisco.com
-if svn --version | grep " version " | grep $SVN_VER; then
-   OK "svn command version correct"
-else
-   NOT_OK "svn command version incorrect - will try update"
-   # http://askubuntu.com/questions/312568/where-can-i-find-a-subversion-1-8-binary
-   sudo apt-get update
-   apt-cache show subversion | grep '^Version:'
-   sudo apt-get install $SVN_PKG
-   NOT_OK "exiting after svn update, try again."
-   exit 1
-fi
-else
-   OK "will not configure subversion unless SVN_PKG is non-zero"
+	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
+	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
 fi
 
+if [ ! -z $SKYPE_PKG ]; then
+	apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
+fi # SKYPE_PKG
+
+if [ ! -z $VIRTUALBOX_PKG ]; then
+	apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox missing trusty must use raring for now"
+	apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox wrong"
+	apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+	apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+	apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
+
+	cmd_exists dkms "need dkms command for VirtualBox"
+	cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
+	cmd_exists $VIRTUALBOX 
+
+fi # VIRTUALBOX_PKG
+
+if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
+
+	echo MAYBE DO MANUALLY apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG
+	[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
+fi
+
+[ ! -z $CHARLES_PKG ] && cmd_exists $CHARLES
+[ ! -z $SKYPE_PKG ] && cmd_exists $SKYPE
+
+if [ ! -z $SVN_PKG ]; then
+	cmd_exists svn
+	file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
+	dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
+	apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
+	FILE="/etc/apt/sources.list.d/WANdisco.list"
+	make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
+	file_has_text "$FILE" wandisco.com
+	if svn --version | grep " version " | grep $SVN_VER; then
+		OK "svn command version correct"
+else
+		NOT_OK "svn command version incorrect - will try update"
+		# http://askubuntu.com/questions/312568/where-can-i-find-a-subversion-1-8-binary
+		sudo apt-get update
+		apt-cache show subversion | grep '^Version:'
+		sudo apt-get install $SVN_PKG
+		NOT_OK "exiting after svn update, try again."
+		exit 1
+	fi
+	else
+		OK "will not configure subversion unless SVN_PKG is non-zero"
+fi # SVN_PKG
+
 has_ssh_keys
+
+exit 3
 
 which git
 if git --version | grep " version " | grep $GIT_VER; then
