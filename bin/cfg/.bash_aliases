@@ -25,6 +25,9 @@ alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 
+# see what is taking up disk space in home dir
+alias duse='(pushd ~ > /dev/null; du-sk.sh | tee _usage.log; popd > /dev/null)'
+
 if [ `hostname` == WYATT  ]; then
    # home machine drive letters
    alias clear='perl -e "print qq{\n} x 80"'
