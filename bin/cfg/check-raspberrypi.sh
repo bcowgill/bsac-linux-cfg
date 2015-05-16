@@ -222,6 +222,17 @@ else
    OK "plenty of space on /boot"
 fi
 
+# Shell configuration files
+file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
+file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
+file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
+file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
+file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
+file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
+#file_linked_to .perltidyrc bin/cfg/.perltidyrc-$COMPANY "perltidyrc configured for $COMPANY"
+file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
+#file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
+
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
 install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
@@ -298,15 +309,6 @@ fi
 exit 3
 
 file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home.sh "home work unpacker configured"
-file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
-file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
-file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
-file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
-file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
-#file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
-file_linked_to .perltidyrc bin/cfg/.perltidyrc-blismedia "perltidyrc configured for blis media"
-file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
-#file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 
 if [ ! -z $MOUNT_DATA ]; then
    if [ -d /data/UNMOUNTED ]; then
