@@ -82,12 +82,32 @@ function stop {
 }
 
 function check_linux {
-   local version
+   local version check file
    version="$1"
-   if [ $(lsb_release -sc) == $version ]; then
-      OK "ubuntu version $version"
+   if which lsb_release; then
+      check=$(lsb_release -sc 2> /dev/null)  
    else
-      NOT_OK "ubuntu version not $version"
+      file=/etc/issue
+      if [ -f $file ]; then
+         check="$file: `cat $file`"
+      fi
+      file=/etc/os-release
+      if [ -f $file ]; then
+         check="$file: `cat $file | grep PRETTY_NAME`"
+      fi
+      file=/etc/debian_version
+      if [ -f $file ]; then
+         check="$file: `cat $file`"
+      fi
+      file=/etc/rpi-issue
+      if [ -f $file ]; then
+         check="$file: `cat $file | grep Raspberry`"
+      fi
+   fi 
+   if [ "${check:-unknown}" == "$version" ]; then
+      OK "linux version $version"
+   else
+      NOT_OK "linux version not $version [$check]"
       return 1
    fi
    return 0

@@ -7,11 +7,17 @@ set -e
 # turn on trace of currently running command if you need it
 #set -x
 
-UBUNTU=trusty
-ULIMITFILES=8196
-EMAIL=brent@blismedia.com
+if which lib-check-system.sh; then
+   source `which lib-check-system.sh`
+fi
+
+UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
+#UBUNTU=trusty
+ULIMITFILES=1024
+#was ULIMITFILES=8096
+EMAIL=zardoz@infoserve.net
 MYNAME="Brent S.A. Cowgill"
-COMPANY=blismedia
+COMPANY=raspberrypi
 ONBOOT=onboot-$COMPANY.sh
 MOUNT_DATA=""
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
@@ -130,10 +136,21 @@ INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv isel
 COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 
-source `which lib-check-system.sh`
-
 #============================================================================
 # begin actual system checking
+
+# chicken egg bootstrap:
+if [ 0 == 1 ]; then
+pushd ~
+echo initial bootstrap will vary
+exit 1
+mkdir -p workspace/play
+mv ~/bin ~/bin.saved
+mv ~/bsac-linux-cfg ~/workspace/play
+ln -s workspace/play/bsac-linux-cfg/bin
+popd
+exit 1
+fi
 
 pushd $HOME
 
@@ -145,7 +162,27 @@ else
    NOT_OK "user $USER does not have sudo privileges"
 fi
 
-check_linux $UBUNTU
+make_dir_exist workspace/play "workspace play area missing"
+make_dir_exist workspace/tx   "workspace transfer area missing"
+make_dir_exist workspace/projecs "workspace projects area missing"
+make_dir_exist Downloads "Downloads area missing"
+make_dir_exist $DROP_BACKUP "Dropbox backup area"
+
+dir_linked_to sandbox workspace "sandbox alias for workspace"
+dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"
+dir_linked_to tx workspace/tx "transfer area in workspace"
+dir_linked_to projects workspace/projects "projects area in workspace"
+dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
+
+dir_exists  bin/cfg "bin configuration missing"
+file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
+file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
+rm -rf $INI_DIR
+make_dir_exist /tmp/$USER "user's own temporary directory"
+dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
+make_dir_exist $INI_DIR "output area for checking INI file settings"
+
+check_linux "$UBUNTU"
 
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
@@ -176,15 +213,27 @@ else
    OK "plenty of space on /boot"
 fi
 
+cmd_exists wget
 install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
 install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
 install_file_from_url_zip Downloads/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
 echo YOUDO You have to manually install ProFontWindows with your Font Manager from Downloads/MProFont/ProFontWindows.ttf
 
-install_file_from_url_zip Downloads/SourceCodePro_WebFontsOnly-1.017/SVG/SourceCodePro-Black.svg SourceCodePro_WebFontsOnly-1.017.zip "http://sourceforge.net/projects/sourcecodepro.adobe/files/SourceCodePro_WebFontsOnly-1.017.zip/download" "Source Code Pro Web font package"
-install_file_from_url_zip Downloads/SourceCodePro_FontsOnly-1.017/OTF/SourceCodePro-Black.otf SourceCodePro_FontsOnly-1.017.zip "http://sourceforge.net/projects/sourcecodepro.adobe/files/SourceCodePro_FontsOnly-1.017.zip/download" "Source Code Pro font package"
-echo YOUDO You have to manually install SourceCodePro with your Font Manager from Downloads/SourceCodePro_FontsOnly-1.017/OTF/SourceCodePro-Black.otf
 
+SC_PRO_VERSION=1.017R
+SC_PRO_ARCHIVE=source-code-pro-$SC_PRO_VERSION
+install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
+install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
+echo YOUDO You have to manually install SourceCodePro with your Font Manager from Downloads/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf
+
+# install fonts locally ?
+#mkdir -p .fonts
+cp Downloads/ProFontWinTweaked/ProFontWindows.ttf .fonts
+#cp Downloads/$SC_PRO_ARCHIVE/OTF/*.otf   .fonts
+#fc-cache
+#fc-list
+
+if cmd_exists kfontinst > /dev/null ; then
 cmd_exists kfontinst
 FILE=.fonts/p/ProFontWindows.ttf
 file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
@@ -194,6 +243,9 @@ file_exists $FILE "ProFontWindows still not installed"
 FILE=.fonts/p/ProFontWindows_Bold.ttf
 file_exists $FILE > /dev/null || kfontinst Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
 file_exists $FILE "ProFontWindows Bold still not installed"
+fi
+
+exit 1
 
 file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
 file_has_text .kde/share/config/kateschemarc "Font=ProFontWindows,18" "ProFontWindows in kate editor Settings / Configure Kate / Fonts & Colors"
@@ -231,30 +283,15 @@ file_has_text "$FILE" "toolbar actions=home,mkdir,up,back,forward,show hidden,sh
 file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
 
 
-dir_linked_to sandbox workspace "sandbox alias for workspace"
-dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"
-#dir_linked_to bin workspace/bin "transfer area in workspace"
-dir_linked_to tx workspace/tx "transfer area in workspace"
-dir_linked_to projects workspace/projects "projects area in workspace"
-dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 if [ ! -z $USE_JAVA ]; then
    dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
 fi
 
-
-dir_exists  bin/cfg "bin configuration missing"
-rm -rf $INI_DIR
-make_dir_exist /tmp/$USER "user's own temporary directory"
-dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
-make_dir_exist $INI_DIR "output area for checking INI file settings"
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
-make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
 dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
 
-file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
-file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
 file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home.sh "home work unpacker configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
@@ -290,7 +327,6 @@ dir_exists /data/$USER "personal area on data dir missing"
 make_dir_exist /data/$USER/backup "backup dir on /data"
 make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 
-cmd_exists wget
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
 # update apt sources list with needed values to install some more complicated programs
