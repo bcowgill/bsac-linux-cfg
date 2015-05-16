@@ -145,6 +145,8 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	SVN_PKG=""
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
+	DIFFMERGE_PKG=""
+	P4MERGE_PKG=""
 fi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -347,7 +349,9 @@ if [ ! -z $MOUNT_DATA ]; then
 	#sudo chown $USER:$USER /data/$USER
 	make_dir_exist /data/$USER/backup "backup dir on /data"
 	make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
-fi
+else
+	OK "will not configure mounting /data partition unless MOUNT_DATA is non-zero"
+fi # MOUNT_DATA
 
 # provides lsb_release command as well.
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
@@ -359,6 +363,8 @@ if [ ! -z $CHARLES_PKG ]; then
 	apt_must_not_have_source "deb-src http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy wrong"
 	[ -f go.sudo ] && (wget -q -O - http://www.charlesproxy.com/packages/apt/PublicKey | sudo apt-key add - )
 	apt_has_key charlesproxy http://www.charlesproxy.com/packages/apt/PublicKey "key fingerprint for Charles Proxy missing"
+else
+	OK "will not configure charles proxy unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
 if [ ! -z $SVN_PKG ]; then
@@ -368,6 +374,8 @@ fi
 
 if [ ! -z $SKYPE_PKG ]; then
 	apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
+else
+	OK "will not configure skype unless SKYPE_PKG is non-zero"
 fi # SKYPE_PKG
 
 if [ ! -z $VIRTUALBOX_PKG ]; then
@@ -380,7 +388,8 @@ if [ ! -z $VIRTUALBOX_PKG ]; then
 	cmd_exists dkms "need dkms command for VirtualBox"
 	cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
 	cmd_exists $VIRTUALBOX 
-
+else
+	OK "will not configure virtualbox unless VIRTUALBOX_PKG is non-zero"
 fi # VIRTUALBOX_PKG
 
 if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
@@ -470,29 +479,43 @@ if [ "x$JAVA_HOME" == "x/usr/lib/jvm/$JAVA_VER" ]; then
 else
 	NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
 	exit 1
-fi
-
-exit 3
+fi # JAVA_HOME
 
 cmd_exists git
 if [ ! -z $GITSVN_PKG ]; then
-if [ -x $GITSVN ]; then
-   OK "git svn command installed"
+	if [ -x $GITSVN ]; then
+		OK "git svn command installed"
+	else
+		NOT_OK "git svn command missing -- will try to install"
+		sudo apt-get install $GITSVN_PKG
+	fi
+	cmd_exists $GITSVN
 else
-   NOT_OK "git svn command missing -- will try to install"
-   sudo apt-get install $GITSVN_PKG
-fi
-cmd_exists $GITSVN
+	OK "will not configure git-svn unless GITSVN_PKG is non-zero"
+fi # GITSVN_PKG
+
+GIT_COMPLETE=/usr/share/bash-completion/completions/git
+if file_exists "$GIT_COMPLETE" > /dev/null ; then
+	# git installs completion file but not in right place any more
+	file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
 else
-   OK "will not configure git-svn unless GITSVN_PKG is non-zero"
+	file_exists /etc/bash_completion.d/git "git completeion file in etc"
 fi
 
-# git installs completion file but not in right place any more
-file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
-install_command_package_from_url $DIFFMERGE $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
+if [ ! -z $DIFFMERGE_PKG ]; then
+	install_command_package_from_url $DIFFMERGE $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
+else
+	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"
+fi
 
-install_file_from_zip $P4MERGE $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
-file_linked_to "$HOME/bin/p4merge" "$P4MERGE" "Perforce p4merge link"
+if [ ! -z $P4MERGE_PKG ]; then
+	install_file_from_zip $P4MERGE $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
+	file_linked_to "$HOME/bin/p4merge" "$P4MERGE" "Perforce p4merge link"
+else
+	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
+fi
+
+exit 3
 
 echo BIG INSTALL $INSTALL
 install_commands "$INSTALL"
