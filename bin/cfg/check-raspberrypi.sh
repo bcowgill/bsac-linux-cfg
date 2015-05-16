@@ -11,20 +11,15 @@ if which lib-check-system.sh; then
    source `which lib-check-system.sh`
 fi
 
-UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
-#UBUNTU=trusty
-ULIMITFILES=1024
-#was ULIMITFILES=8096
-EMAIL=zardoz@infoserve.net
 MYNAME="Brent S.A. Cowgill"
+EMAIL=zardoz@infoserve.net
+UBUNTU=trusty
 COMPANY=raspberrypi
-ONBOOT=onboot-$COMPANY.sh
+ULIMITFILES=8096
 MOUNT_DATA=""
-DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 THUNDER=""
 #THUNDER=ryu9c8b3.default
-
 DOWNLOAD=$HOME/Downloads
 
 USE_JAVA=""
@@ -133,6 +128,19 @@ PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 INI_DIR=check-iniline
 
 INSTALL="vim curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail chromium-browser cmatrix gettext ruby runit mc"
+
+if [ "$HOSTNAME" == "raspberrypi" ]; then
+	# Change settings for the raspberry pi
+
+	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
+	ULIMITFILES=1024
+	COMPANY=raspberrypi
+	EMAIL=zardoz@infoserve.net
+fi
+
+ONBOOT=onboot-$COMPANY.sh
+DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
+
 COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 
@@ -141,15 +149,15 @@ PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT
 
 # chicken egg bootstrap:
 if [ 0 == 1 ]; then
-pushd ~
-echo initial bootstrap will vary
-exit 2
-mkdir -p workspace/play
-mv ~/bin ~/bin.saved
-mv ~/bsac-linux-cfg ~/workspace/play
-ln -s workspace/play/bsac-linux-cfg/bin
-popd
-exit 2
+	pushd ~
+	echo initial bootstrap will vary
+	exit 2
+	mkdir -p workspace/play
+	mv ~/bin ~/bin.saved
+	mv ~/bsac-linux-cfg ~/workspace/play
+	ln -s workspace/play/bsac-linux-cfg/bin
+	popd
+	exit 2
 fi
 
 pushd $HOME
@@ -240,7 +248,6 @@ install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFont
 install_file_from_url_zip Downloads/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
 echo YOUDO You have to manually install ProFontWindows with your Font Manager from Downloads/MProFont/ProFontWindows.ttf
 
-
 SC_PRO_VERSION=1.017R
 SC_PRO_ARCHIVE=source-code-pro-$SC_PRO_VERSION
 install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
@@ -326,13 +333,12 @@ if [ ! -z $MOUNT_DATA ]; then
          exit 1
       fi
    fi
+   dir_exists /data/$USER "personal area on data dir missing"
+   #sudo mkdir -p /data/$USER
+   #sudo chown $USER:$USER /data/$USER
+   make_dir_exist /data/$USER/backup "backup dir on /data"
+   make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 fi
-dir_exists /data/$USER "personal area on data dir missing"
-#sudo mkdir -p /data/$USER
-#sudo chown $USER:$USER /data/$USER
-
-make_dir_exist /data/$USER/backup "backup dir on /data"
-make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
@@ -378,7 +384,7 @@ else
    NOT_OK "svn command version incorrect - will try update"
    # http://askubuntu.com/questions/312568/where-can-i-find-a-subversion-1-8-binary
    sudo apt-get update
-   apt-cache show subversion | grep '^Version:'   
+   apt-cache show subversion | grep '^Version:'
    sudo apt-get install $SVN_PKG
    NOT_OK "exiting after svn update, try again."
    exit 1
@@ -401,7 +407,7 @@ else
    sudo apt-get install $GIT_PKG $GIT_PKG_AFTER
    NOT_OK "exiting after git update, try again."
    exit 1
-   
+
    sudo apt-get install $GIT_PKG_MAKE
    # upgrading git on ubuntu
    # https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
