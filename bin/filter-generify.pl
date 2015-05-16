@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # remove date from config output to make generic and comparable
+# used by snapshot.sh to get a snapshot of linux setup
 
 use strict;
 use warnings;
