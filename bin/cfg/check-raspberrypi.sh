@@ -23,6 +23,7 @@ THUNDER=""
 DOWNLOAD=$HOME/Downloads
 
 USE_JAVA=""
+JAVA_VER=jdk1.7.0_21
 
 MVN_PKG=""
 MVN_CMD=""
@@ -142,6 +143,8 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	VIRTUALBOX_PKG=""
 	SKYPE_PKG=""
 	SVN_PKG=""
+	GIT_VER="1.7.10.4"
+	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
 fi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -316,7 +319,7 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 
 if [ ! -z $USE_JAVA ]; then
-	dir_linked_to jdk workspace/jdk1.7.0_21 "shortcut to current java dev kit"
+	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 fi
 
 if [ "$HOSTNAME" != "raspberrypi" ]; then
@@ -414,59 +417,62 @@ fi # SVN_PKG
 
 has_ssh_keys
 
-exit 3
-
 which git
 if git --version | grep " version " | grep $GIT_VER; then
-   OK "git command version correct"
+	OK "git command version correct"
 else
-   NOT_OK "git command version incorrect - will try update"
-   # http://blog.avirtualhome.com/git-ppa-for-ubuntu/
-   apt_has_source ppa:pdoes/ppa "repository for git"
-   sudo apt-get update
-   apt-cache show git | grep '^Version:'
-   sudo apt-get install $GIT_PKG $GIT_PKG_AFTER
-   NOT_OK "exiting after git update, try again."
-   exit 1
+	NOT_OK "git command version incorrect - will try update"
+	# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
+	apt_has_source ppa:pdoes/ppa "repository for git"
+	sudo apt-get update
+	apt-cache show git | grep '^Version:'
+	sudo apt-get install $GIT_PKG $GIT_PKG_AFTER
+	NOT_OK "exiting after git update, try again."
+	exit 1
 
-   sudo apt-get install $GIT_PKG_MAKE
-   # upgrading git on ubuntu
-   # https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
-   make_dir_exist $DOWNLOAD
-   pushd $DOWNLOAD
-   wget $GIT_URL
-   tar xvzf $GIT_TAR.tar.gz
-   cd $GIT_TAR
-   make prefix=/usr/local all
-   sudo make prefix=/usr/local install
-   sudo apt-get install $GIT_PKG_AFTER
-   popd
-   NOT_OK "exiting after git update, try again."
-   exit 1
-fi
+	sudo apt-get install $GIT_PKG_MAKE
+	# upgrading git on ubuntu
+	# https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
+	make_dir_exist $DOWNLOAD
+	pushd $DOWNLOAD
+	wget $GIT_URL
+	tar xvzf $GIT_TAR.tar.gz
+	cd $GIT_TAR
+	make prefix=/usr/local all
+	sudo make prefix=/usr/local install
+	sudo apt-get install $GIT_PKG_AFTER
+	popd
+	NOT_OK "exiting after git update, try again."
+	exit 1
+fi # GIT_VER
 
 if [ ! -z $MVN_PKG ]; then
-   cmd_exists mvn
-   if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
-      OK "mvn command version correct"
-   else
-      NOT_OK "mvn command version incorrect"
-      exit 1
-   fi
+	cmd_exists mvn
+	if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
+		OK "mvn command version correct"
+	else
+		NOT_OK "mvn command version incorrect"
+		exit 1
+	fi
+
+	if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
+		OK "M2_HOME set correctly"
+	else
+		NOT_OK "M2_HOME is incorrect $M2_HOME"
+		exit 1
+	fi
+
+fi # MVN_PKG
+
+if [ "x$JAVA_HOME" == "x/usr/lib/jvm/$JAVA_VER" ]; then
+	OK "JAVA_HOME set correctly"
+	file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
+else
+	NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
+	exit 1
 fi
 
-if [ "x$JAVA_HOME" == "x/usr/lib/jvm/jdk1.7.0_21" ]; then
-   OK "JAVA_HOME set correctly"
-else
-   NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
-   exit 1
-fi
-if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
-   OK "M2_HOME set correctly"
-else
-   NOT_OK "M2_HOME is incorrect $M2_HOME"
-   exit 1
-fi
+exit 3
 
 cmd_exists git
 if [ ! -z $GITSVN_PKG ]; then

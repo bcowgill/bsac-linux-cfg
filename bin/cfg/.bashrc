@@ -152,6 +152,11 @@ export SVN_MERGE=$HOME/bin/svndiffmergeconflict.sh
 export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_21
 export M2_HOME=/usr/share/maven
 
+# BSAC raspberrypi setup
+if [ $HOSTNAME == raspberrypi ]; then
+    export JAVA_HOME=/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt
+fi
+
 #BSAC match cygwin put functions in separate sourced file
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
