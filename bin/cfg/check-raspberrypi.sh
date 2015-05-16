@@ -113,6 +113,8 @@ GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 SKYPE=skype
 SKYPE_PKG="skype skype-bin"
 
+DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
+
 FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
 FLASH_EXTRACTED_DIR="$HOME/Downloads/$FLASH_ARCHIVE"
 FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
@@ -135,14 +137,17 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	ULIMITFILES=1024
 	COMPANY=raspberrypi
 	EMAIL=zardoz@infoserve.net
+	CHARLES=""
 	CHARLES_PKG=""
 	VIRTUALBOX_CMDS=""
 	VIRTUALBOX_PKG=""
 	SKYPE_PKG=""
+	SKYPE=""
 	SVN_PKG=""
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
 	DIFFMERGE_PKG=""
+	DIFFMERGE=""
 	P4MERGE_PKG=""
 	POSTGRES_PKG_FROM=""
 	DRUID_INSTALL_FROM=""
@@ -150,14 +155,19 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	DRUID_PACKAGES=""
 	SCREENSAVER=""
 	NODE_PKG=""
+	NODE_CMD="node"
 	RUBY_GEMS="sass foundation"
+	SASS_COMMANDS="ruby gem $RUBY_GEMS"
+	DROPBOX_URL=""
+	SUBLIME=""
+	PIDGIN=""
 fi
 
 ONBOOT=onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
-COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD  $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
@@ -172,6 +182,7 @@ echo CONFIG PACKAGES=$PACKAGES
 echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
+echo CONFIG COMMANDS=$COMMANDS
 
 #============================================================================
 # begin actual system checking
@@ -538,6 +549,7 @@ echo BIG INSTALL FROM $INSTALL_FROM
 echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
+echo BIG COMMANDS $COMMANDS
 
 install_commands "$INSTALL"
 install_commands_from "$INSTALL_FROM"
@@ -551,13 +563,16 @@ install_ruby_gems "$RUBY_GEMS"
 
 install_files_from "$INSTALL_FILE_PACKAGES"
 
-exit 3
-
-make_dir_exist workspace/dropbox-dist "dropbox distribution files"
-file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
-file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
+# TODO install from url zip ??
+if [ ! -z $DROPBOX_URL ]; then
+	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
+	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
+	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
+fi
 
 commands_exist "$COMMANDS"
+
+exit 3
 
 file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
 file_exists workspace/cfgrec.txt "configuration record files"
