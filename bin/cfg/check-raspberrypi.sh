@@ -125,7 +125,7 @@ PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 
 INI_DIR=check-iniline
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc lsof fbcat"
 
 TODO=audacity
 
@@ -166,7 +166,7 @@ fi
 ONBOOT=onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
@@ -717,30 +717,32 @@ file_has_text $FILE "displayFontSize>20" "charles font config Edit / Preferences
 file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
 file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
-FILE=.kde/share/config/kioslaverc
-# when system not proxied through charles
-#file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
-#file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
-# when proxying system through charles
-file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
-file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
+if [ -d .kde ]; then
+	FILE=.kde/share/config/kioslaverc
+	# when system not proxied through charles
+	#file_has_text $FILE "ProxyType=0" "system proxy config Alt-F2 / Proxy"
+	#file_has_text $FILE "httpProxy=localhost:58008" "system proxy config to charles"
+	# when proxying system through charles
+	file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
+	file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
 
-DIR=.local/share/applications
-dir_exists $DIR "KDE applications folder"
+	DIR=.local/share/applications
+	dir_exists $DIR "KDE applications folder"
+fi # .kde dir
 
 # Eclipse configuration (shortcut and font)
 if [ ! -z "$ECLIPSE" ]; then
-DIR=.local/share/applications
-file_exists eclipse/eclipse "Eclipse program"
-file_exists eclipse/Eclipse.desktop "Eclipse launcher"
-file_exists $DIR/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop $DIR/Eclipse.desktop
+	DIR=.local/share/applications
+	file_exists eclipse/eclipse "Eclipse program"
+	file_exists eclipse/Eclipse.desktop "Eclipse launcher"
+	file_exists $DIR/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop $DIR/Eclipse.desktop
 
-TEXT="ProFontWindows"
-DIR=workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings
-file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
-file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
-file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
-fi
+	TEXT="ProFontWindows"
+	DIR=workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings
+	file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
+	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
+	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
+fi # ECLIPSE
 
 # Dropbox configuration
 dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
@@ -773,8 +775,11 @@ file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
 #file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
 else
    OK "thunderbird will not be configured unless THUNDER is non-zero"
-fi
+fi # THUNDER
 
+#============================================================================
+# KDE configuration files here
+if [ -d .kde ]; then
 # System Settings
 FILE=.kde/share/config/kcminputrc
 file_has_text $FILE "MouseButtonMapping=LeftHanded" "Mouse settings System Settings / Input Devices / Mouse Settings"
@@ -814,6 +819,89 @@ FILE=.kde/share/config/sonnetrc
 file_has_text $FILE "backgroundCheckerEnabled=true" "System Settings / Locale / Spell Checker"
 file_has_text $FILE "checkerEnabledByDefault=true"
 file_has_text $FILE "defaultLanguage=en_GB"
+
+# Accessibility
+FILE=.kde/share/config/kaccessrc
+file_has_text $FILE "SystemBell=true" "System Settings / Accessibility / Bell"
+file_has_text $FILE "VisibleBell=true"
+file_has_text $FILE "VisibleBellInvert=false"
+file_has_text $FILE "AccessXBeep=true"
+file_has_text $FILE "BounceKeysRejectBeep=true"
+file_has_text $FILE "GestureConfirmation=true" "System Settings / Accessibility / Activation Gestures"
+file_has_text $FILE "SlowKeysAcceptBeep=true"
+file_has_text $FILE "SlowKeysPressBeep=true"
+file_has_text $FILE "SlowKeysRejectBeep=true"
+file_has_text $FILE "StickyKeysBeep=true"
+file_has_text $FILE "StickyKeysLatch=true"
+file_has_text $FILE "ToggleKeysBeep=true"
+file_has_text $FILE "kNotifyAccessX=true"
+file_has_text $FILE "kNotifyModifiers=true"
+
+# Startup
+FILE=.kde/share/config/systemsettingsrc
+file_has_text $FILE "ksysguard"
+# TODO file_has_text $FILE "dropboxd"
+
+# Default Applications
+if [ ! -z $THUNDER ]; then
+FILE=.kde/share/config/emaildefaults
+file_contains_text $FILE "EmailClient..e.=thunderbird"
+fi
+
+FILE=.kde/share/config/kdeglobals
+file_has_text $FILE "BrowserApplication=chromium-browser.desktop"
+#KDE file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
+
+# KDE Desktop Effects
+FILE=.kde/share/config/kwinrc
+## TODO special window effects
+## TODO file_has_text $FILE "kwin4_effect_cubeEnabled=false"
+## TODO file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
+## TODO file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
+## TODO file_has_text $FILE "kwin4_effect_zoomEnabled=true"
+## TODO file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
+
+#FILE=.kde/share/config/kwinrc
+#file_has_text $FILE ""
+
+# Screen saver
+FILE=.kde/share/config/kscreensaverrc
+file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+#file_has_text "$FILE" "Saver=bsod.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+file_has_text "$FILE" "Timeout=1200" "screensaver activation time configured"
+file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
+
+FILE=.kde/share/config/kslideshow.kssrc
+file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
+file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
+
+# uk/us keyboard layout
+FILE=.kde/share/config/kxkbrc
+file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
+
+# baloo KDE file indexer can choke on big files, set it up better
+# If you see baloo_file_extractor hogging your CPU do this to find out which files are the problem
+# ps -ef | grep baloo_file_extractor
+# to see the ID's being scanned
+# balooshow ID ID ID
+FILE=.kde/share/config/baloofilerc
+ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.CSV" "baloo KDE file indexer can choke on big files, set it up better"
+ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.csv" "baloo KDE file indexer can choke on big files, set it up better"
+
+# okular PDF viewer invert colours
+FILE=.kde/share/config/okularpartrc
+ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
+ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
+
+fi # .kde dir
+# End KDE configuration
+#============================================================================
+
+file_present prettydiff.js "html beautifier file"
 
 # Sourcegear Diffmerge colors
 FILE=".SourceGear DiffMerge"
@@ -863,39 +951,6 @@ file_contains_text $FILE "<Bool varName=.TabInsertsSpaces.>false" "Edit / Prefer
 file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
 file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
 
-
-# Accessibility
-FILE=.kde/share/config/kaccessrc
-file_has_text $FILE "SystemBell=true" "System Settings / Accessibility / Bell"
-file_has_text $FILE "VisibleBell=true"
-file_has_text $FILE "VisibleBellInvert=false"
-file_has_text $FILE "AccessXBeep=true"
-file_has_text $FILE "BounceKeysRejectBeep=true"
-file_has_text $FILE "GestureConfirmation=true" "System Settings / Accessibility / Activation Gestures"
-file_has_text $FILE "SlowKeysAcceptBeep=true"
-file_has_text $FILE "SlowKeysPressBeep=true"
-file_has_text $FILE "SlowKeysRejectBeep=true"
-file_has_text $FILE "StickyKeysBeep=true"
-file_has_text $FILE "StickyKeysLatch=true"
-file_has_text $FILE "ToggleKeysBeep=true"
-file_has_text $FILE "kNotifyAccessX=true"
-file_has_text $FILE "kNotifyModifiers=true"
-
-# Startup
-FILE=.kde/share/config/systemsettingsrc
-file_has_text $FILE "ksysguard"
-# TODO file_has_text $FILE "dropboxd"
-
-# Default Applications
-if [ ! -z $THUNDER ]; then
-FILE=.kde/share/config/emaildefaults
-file_contains_text $FILE "EmailClient..e.=thunderbird"
-fi
-
-FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "BrowserApplication=chromium-browser.desktop"
-#KDE file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
-
 # sublime configuration
 FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
 file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
@@ -908,22 +963,6 @@ FILE="$DIR/Default.sublime-theme"
 ## TODO dir_exists "$DIR" "sublime theme override dir"
 ## TODO file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
 ## TODO file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
-
-# KDE Desktop Effects
-FILE=.kde/share/config/kwinrc
-## TODO special window effects
-## TODO file_has_text $FILE "kwin4_effect_cubeEnabled=false"
-## TODO file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
-## TODO file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_zoomEnabled=true"
-## TODO file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
-
-#FILE=.kde/share/config/kwinrc
-#file_has_text $FILE ""
 
 # gitk configuration
 FILE=.config/git/gitk
@@ -938,21 +977,6 @@ file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences
 file_has_text "$FILE" "set markbgcolor #002c39" "Edit / Preferences / Colors"
 file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
 
-# Screen saver
-FILE=.kde/share/config/kscreensaverrc
-file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
-#file_has_text "$FILE" "Saver=bsod.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
-file_has_text "$FILE" "Timeout=1200" "screensaver activation time configured"
-file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
-
-FILE=.kde/share/config/kslideshow.kssrc
-file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
-file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
-
-# uk/us keyboard layout
-FILE=.kde/share/config/kxkbrc
-file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
-
 # libreoffice color changes
 # difficult because of so much punctutation
 #FILE=.config/libreoffice/4/user/registrymodifications.xcu
@@ -962,22 +986,6 @@ file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings 
 #file_has_text "$FILE" "" "Tools / Options / Appearance"
 #file_has_text "$FILE" "" "Tools / Options / Appearance"
 #file_has_text "$FILE" "" "Tools / Options / Appearance"
-
-file_present prettydiff.js "html beautifier file"
-
-# baloo KDE file indexer can choke on big files, set it up better
-# If you see baloo_file_extractor hogging your CPU do this to find out which files are the problem
-# ps -ef | grep baloo_file_extractor
-# to see the ID's being scanned
-# balooshow ID ID ID
-FILE=.kde/share/config/baloofilerc
-ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.CSV" "baloo KDE file indexer can choke on big files, set it up better"
-ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.csv" "baloo KDE file indexer can choke on big files, set it up better"
-
-# okular PDF viewer invert colours
-FILE=.kde/share/config/okularpartrc
-ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
-ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
 
 # Postgres pgadmin3 setup
 FILE=.pgadmin3
