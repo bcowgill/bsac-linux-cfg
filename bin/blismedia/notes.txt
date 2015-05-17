@@ -1,0 +1,599 @@
+Notes about code checkins (log messages, tags, etc)
+# a new line with   now | line.sh >> ~/workspace/notes.txt
+# NOW=`mktemp`; now | line.sh | cat - ~/workspace/notes.txt > $NOW && mv $NOW ~/workspace/notes.txt; NOW=
+
+=== 2014-11-04 09:18:13+00:00 Tue  ===========================================
+Monday: auto update script for redesign, orienteering adam to the wall, system overview meeting - very useful, daily metrics and projected and date for trading desk Jan 13. Reviewing Edan's changes for merge to redesign
+Today: Sprint review, planning, go over project docs with adam. More redesign review
+
+CMT=a4a265f0174caf6
+git rev-list --reverse ${CMT}..redesign-lick1 -- .gitignore
+git rev-list --reverse ${CMT}..redesign-lick1 -- .gitignore | git cherry-pick --no-commit --stdin
+
+.gitignore
+package.json
+Gruntfile.js
+
+Pull request for ENG-3323
+ENG-3323 Lick of paint build configs
+
+I have  pulled in all the setup and build config changes from Edan's work for review.
+
+# Testing #
+
+
+```
+#!bash
+npm install
+grunt # to perform a normal build, check and test run
+grunt redesign # to perform a minimal check and then watch the files (what Edan had as normal grunt command operation)
+```
+
+
+=== 2014-10-01 09:56:20+01:00 Wed  ===========================================
+first lost tomato, kanban kata print, team mtg arrange, prep room for retrospective.
+
+=== 2014-09-26 12:28:06+01:00 Fri  ===========================================
+ENG-2923 location optimisation - checkbox name fix after rebase
+campaign_details.tt - checkbox fix here.
+Campaign.pm - log the value of MOCK flag
+
+Screen shots of the campaign details checkbox/info states
+id616 not possible https://docs.google.com/a/blismedia.com/file/d/0B5RNeRpBtm9cY0dLc3hoaThwclk/edit?usp=drivesdk
+id617 possible not enabled yet https://docs.google.com/a/blismedia.com/file/d/0B5RNeRpBtm9cWXFhWDJnV3hpdms/edit?usp=drivesdk
+id279 possible, enabled, exists https://docs.google.com/a/blismedia.com/file/d/0B5RNeRpBtm9cMlltdi1iU0wxNU0/edit?usp=drivesdk
+id629 possible but not enabled though a record exists (for reactivation)
+initially loaded https://docs.google.com/a/blismedia.com/file/d/0B5RNeRpBtm9cOGgwelJtTWlJTUk/edit?usp=drivesdk
+after click to enable https://docs.google.com/a/blismedia.com/file/d/0B5RNeRpBtm9caHZySEtGWU8xRWs/edit?usp=drivesdk
+
+
+=== 2014-09-24 10:17:55+01:00 Wed  ===========================================
+ENG-2923 location optimisation - checkbox states for error/edge cases
+blis-ui-campaign-details.js
+   makeWatcher() function to capture the initial state of a datasource value
+      move to blis.utils probably (REFACTOR)
+   onChangeForLocationOptimisationEnable() handles enable state of the location optimisation enabled checkbox
+   optimiseCampaignLocationCreateNewEnabled() - handles enable state of the location optimisation create new checkbox
+campaign.js
+   added datasource fields for location optimisation
+campaign_details.tt
+   adding location optimisation checkboxes and info balloons
+   adding template_test_plan if block to include JS when running page as a test.blismedia.com page
+
+ENG-2923 location optimisation - refactor makeWatcher into blis-utils
+
+
+
+=== 2014-09-16 14:02:59+01:00 Tue  ===========================================
+id 616 0 0 0 -- test disabled
+id 628 not possible, not enabled, exists -- error state
+id 618 not possible, enabled, not exists -- error state
+id 638 not possible, enabled, exists -- error state
+id 617 possible, not enabled, not exists -- test enabled, not checked
+id 629 possible, not enabled, exists -- test of reactivation
+id 923 possible, enabled, not exists -- error state
+id 279 possible, enabled, exists -- test turn off
+
+
+=== 2014-09-15 14:08:19+01:00 Mon  ===========================================
+
+ENG-2921 location optimisation - checkbox alignment
+
+Created a .less file for blis-validation.css
+Removed the in-page styles from campaign_details.tt and moved to·
+kendo.blisform.min.less and blis-validation.less
+
+=== 2014-09-12 15:52:08+01:00 Fri  ============ble, enabled, exists -- test turn off
+===============================
+
+setup-dashboard.sh
+gen-schema.pl invocation changed to work with https://bitbucket.org/blismedia/libblis-infinity-schema-perl/pull-request/56/eng-3023-add-radius-field-to/diff
+infinity_schema_test database created and populated from infinityplus/config/schema.sql file
+generates setup/infinity-columns.txt listing of all table/columns/comments
+FORCE_SCHEMA_OVERWRITE setting to control gen-schema.pl need to FORCE_SCHEMA_OVERWRITE
+use STOP_ON_FAIL after dependency check to prevent setup carrying on if it fails.
+
+lib-check-system.sh STOP_ON_FAIL added to stop the setup on failure after initial checks.
+install_files_from function added as needed by front end druid setup of an apache module which has noble, enabled, exists -- test turn off
+ executable file associated with it.
+
+https://bitbucket.org/blismedia/infinity-plus-dashboard/pull-request/185/eng-3040-setup-dashboard-create
+
+
+fad2b505bafb709a09aa637f3dd0834afd1cc7a2
+
+=== 2014-09-04 15:33:22+01:00 Thu  ===========================================
+Dashboard
+
+ENG-2958
+Refactored kendo datasource error handler into blis-utils.js and used it in campaign.js
+
+Potential files to extend this to.
+egrep -rl 'dataSource = new kendo.data.DataSource' .
+./public/js/kendo/datasources/location_item.js
+./public/js/kendo/datasources/campaign.js
+./public/js/kendo/datasources/banner_type.js
+./public/js/kendo/datasources/users.js
+./public/js/kendo/datasources/iprange.js
+./public/js/kendo/datasources/operator_iprange_type.js
+./public/js/kendo/datasources/campaign_banner_click_tracker.js
+./public/js/kendo/datasources/campaign_location_statistics.js
+./public/js/kendo/datasources/location_group.js
+./public/js/kendo/datasources/operator_iprange.js
+./public/js/kendo/datasources/campaign_statistics.js
+./public/js/kendo/datasources/clients.js
+./public/js/kendo/datasources/country_codes.js
+./public/js/kendo/datasources/campaign_banner.js
+./public/js/kendo/datasources/agencies.js
+./public/js/kendo/datasources/targeting_profile.js
+./public/js/kendo/datasources/operator.js
+
+
+=== 2014-08-27 09:21:00+01:00 Wed  ===========================================
+Project 42
+
+When polygon clicked info window comes up sized propertly and shows id and coordinate
+
+Added /api/sample/random/ handler to generate a random circular data sample for testing
+
+Dashboard Commit
+setup-dashboard.sh remove check for Blis::Auth::Oauth2::Client as it seems no longer being built
+switched bips_modules to libblis-modules-perl as that seems the right thing to do. David can confirm I hope.
+lib-check-system.sh updated to latest. pushd_dir/pop_dir/file_is_executable
+
+Project 42 commit
+making date/time in URL easier
+routes/api.js cleanDateTime() and cleanTimeRanges() added to convert 2014-07-12.13.45.12 to 2014-07-12 13:45:12 for passing to the database
+
+map-polygon.js - checking first/last polygon point, if same pop last one off, google closes polygons automatically
+
+# Changes #
+
+* libblis-modules-perl used instead of bips_modules as that seems right. David can perhaps confirm.
+* removed check for Blis::Auth::Oauth2::Client as it seems that is no longer built
+* update lib-check-system.sh to latest (push_dir/pop_dir/file_is_executable)
+
+# Test #
+
+You need to run the setup because things have changed.
+Turn on the FORCE_PERL setting in your setup/my-setttings.sh then run the setup:
+```
+#!bash
+cd setup
+./setup-dashboard.sh
+
+```
+
+=== 2014-08-26 08:53:18+01:00 Tue  ===========================================
+Project 42
+first implementation of polygon mapping widget.
+
+/api/map/polygon/location/group/polygons/vertices/id/:location_group_id/bounds/lat/:lat_min/lon/:lon_min/lat/:lat_max/lon/:lon_max
+javascript/map-polygon.js added to draw the polygon map
+views/map-polygon.jade added to render the polygon map
+routes/api.js
+ addMap() map_points/map_polygon option added
+
+Adding constant options for display of polygons.
+Added a simple click handler for polygons.
+
+getGeometry() scalePolygons() added to test GEODESIC mode
+
+=== 2014-08-22 15:42:32+01:00 Fri  ===========================================
+ENG-2906: kendo datasource error handling on campaign details page.
+
+Have added an error handler to the datasource which logs the error JSON·
+to the browser and then hides the please wait dialog.
+Removed the sneaky error handler Ev added to silently carry on as if nothing
+happened.
+
+
+=== 2014-08-21 09:22:44+01:00 Thu  ===========================================
+Dashboard Commit
+ENG-2911: karma spec reporter - jasmine v0.2 fix, prove test-js.sh
+package.json karma-jasmine V 0.2.0 -- run npm install when you pull
+test-all.sh -- removed repeated tests (probably from a bad rebase)
+test-js.sh -- run karma tests for javascript. called from test-all.sh (works with prove cmd)
+
+
+=== 2014-08-20 14:10:42+01:00 Wed  ===========================================
+Dashboard Commit
+ENG-2911 javascript tests use karma spec reporter
+
+can see actual test case output now.
+standard start of test plan contains test plan file name and name of javascript file being tested.
+
+ENG-2900 jshint and tests fixed on develop
+
+fixed test base files due to DOCTYPE bug from chris' ENG-2878 fix
+
+ENG-2900 fixing jshint and tests on develop - spy functions working again
+
+spyOn().and.callThrough() failure => spyOn().andCallThrough()
+expect(method.any()).toEqual(false) => expect(method.callCount).toBe(0)
+
+ENG-2911: karma spec output reporter - karma jasmine V1.5! all tests pass
+
+Note another pull request is around using karma jasmine V2.0 so npm install before testing this.
+
+ENG-2900: fixing jshint and tests on develop - karma tests npm install requirejs karma-requirejs
+
+
+
+=== 2014-08-19 11:48:24+01:00 Tue  ===========================================
+Dashboard Commit
+ENG-2900 fixing jshint and test plans
+ fixing jshint warnings in tests and front end javascripts
+ removing jshint setting banners now that .jshintrc files are in the project
+ add_targeting_profile.tt corrected a misplaced <style> element which was indicated by the lint5 checker.
+  Element “style” is missing required attribute “scoped”.
+ updated base files for template tests.
+   mostly whitespace changes, css changes.
+
+ENG-2902: setup-dashboard my-settings for mysql version, etc
+
+script now sources settings.sh then my-settings.sh so you can keep my-settings.sh very small, only the values you override.
+settings for version of mysql, perl are in settings.sh instead of main script so you can override them.
+
+=== 2014-08-15 12:31:23+01:00 Fri  ===========================================
+Project 42 commit
+Adding handlers for point/radius boundaries
+/api/map/sample/grid/4/radius/degrees/1/lat/:lat_center/lon/:lon_center/
+/api/map/sample/grid/4/radius/km/10/lat/:lat_center/lon/:lon_center/
+routes/api.js
+ sampleDataGrid() offset the grid so it's centered in the min/max area
+ addBoundaryPoints() added radius_km, radius_deg, lon_center, lat_center
+ computeBoundaryPoints() works out center, radius and min/max given other parameters
+
+ map-heat.js added a GRADIENT_PALETTE and random gradient selection
+ map-points.js added loads of standard google map marker images to the ICON_PALETTE
+
+ 	sql: 'SELECT SUM(g.weight) AS hits, ST_X(g.coordinate) AS longitude, ST_Y(g.coordinate) AS latitude FROM geodata AS g WHERE g.coordinate && ST_MAKEENVELOPE( :LON_MIN , :LAT_MIN , :LON_MAX , :LAT_MAX ) AND g.ts >= :START AND g.ts < :END GROUP BY g.coordinate LIMIT :MAX_ROWS ;',
+
+ 	sql: 'SELECT SUM(g.weight) AS hits, ST_X(g.coordinate) AS longitude, ST_Y(g.coordinate) AS latitude FROM geodata AS g WHERE ST_DWITHIN(GEOGRAPHY(g.coordinate), GEOGRAPHY(ST_MAKEPOINT( :LON_CENTER , :LAT_CENTER )), 1000 * :RADIUS_KM ) AND g.ts >= :START AND g.ts < :END GROUP BY g.coordinate LIMIT :MAX_ROWS ;',
+
+
+
+=== 2014-08-14 09:32:17+01:00 Thu  ===========================================
+ENG-2862 merged to develop - start/stop/tail scripts my-settings
+ENG-2769 merged to develop - TAP protocol on tests
+ENG-2888 merged to develop - emergency fix for karma and test-all.sh
+
+Project 42 commit
+/map/heat changes to animate opacity of heatmap to aid in spotting lightly heated areas.
+
+/map/points/radius handler added
+ radius handler draws circles and other google built in shapes in different size and colours the radius is a screen radius, not a physical map distance radius
+
+Video ghosting problems.
+3 reboots
+
+chrome urls
+
+postgreSQL docs
+http://www.postgresql.org/docs/8.1/interactive/tutorial-agg.html
+
+postgres node stackoverflow
+http://stackoverflow.com/questions/9205496/play-with-postgres-through-node-js
+
+node-postgres
+https://github.com/brianc/node-postgres/wiki/Client
+
+node-dbi docs
+https://github.com/DrBenton/Node-DBI
+
+named bind vars for node-dbi
+https://github.com/DrBenton/Node-DBI/issues/28
+
+express api docs
+http://expressjs.com/4x/api.html#router
+
+yeoman docs
+https://github.com/yeoman/yeoman/wiki
+
+javascript help object keys
+http://stackoverflow.com/questions/7440001/iterate-over-object-keys-in-node-js
+
+grunt mocha chai sinon
+https://github.com/thepeg/grunt-mocha-chai-sinon
+
+nodeunit exceptions in test code missed
+https://github.com/caolan/nodeunit/issues/244
+
+node.js tutorial
+https://www.udemy.com/blog/node-js-express-tutorial/
+
+node CSV module
+http://www.adaltas.com/projects/node-csv/
+
+url decoder/encoder
+http://meyerweb.com/eric/tools/dencoder/
+
+node docs cluster fork
+http://nodejs.org/api/cluster.html#cluster_cluster_fork_env
+
+node docs child processes
+http://nodejs.org/api/child_process.html#child_process_event_error
+
+node docs on clusters
+http://rowanmanning.com/posts/node-cluster-and-express/
+
+jsdoc documentation
+http://usejsdoc.org/tags-link.html
+
+chai docs
+http://chaijs.com/guide/styles/
+
+jade docs
+http://jade-lang.com/reference/includes/
+
+google tutorial on maps
+https://developers.google.com/maps/tutorials/visualizing/earthquakes
+
+google using markers on maps
+https://developers.google.com/maps/documentation/javascript/markers
+
+google image search map point icons
+https://www.google.com/search?q=map+markers&biw=960&bih=498&site=imghp&tbm=isch&source=lnt&tbs=isz:ex,iszw:20,iszh:32#q=map+markers&tbas=0&tbm=isch&tbs=isz:ex,iszw:20,iszh:32,ic:trans&facrc=_&imgdii=_&imgrc=83UlyEb2gJcR3M%253A%3BG-ISLtB5lz9PiM%3Bhttp%253A%252F%252Fwww.mapservices.org%252Fmyguestmap%252Fimages%252Ficonsets%252Fsquare_pants%252F27.gif%3Bhttp%253A%252F%252Fwww.mapservices.org%252Fmyguestmap%252Fmap%252FUDDSG2%252Fmessage_board%3B20%3B32
+
+google complex icons on maps
+https://developers.google.com/maps/documentation/javascript/examples/icon-complex
+
+
+=== 2014-08-13 09:22:04+01:00 Wed  ===========================================
+Start of Sprint
+Project 42 commit
+coding /map/points/ handler to indicate points on the map
+map-heat.js
+ added a MAP_TYPE constant
+ removed some logging.
+map-points.js
+ basic implementation of map with pin markers.
+ animation selection DROP will drop pins in batches
+ BOUNCE will just make pins bounce
+ animation limits when too many pins on the map.
+ click the pin to BOUNCE/stop
+ draggable setting to move pins.
+routes/api.js
+ sampleDataGrid() added a random number to data for sorting. and a title.
+
+map-points.js
+ added getIcon()
+ added ICON_PALETTE witha small assortment of icons for map markers.
+
+map-points.js
+ added DANCE_OFF setting for fun. data points randomly start/stop dancing.
+
+
+=== 2014-08-12 09:13:11+01:00 Tue  ===========================================
+End of Sprint
+Project 42 commit
+/sample/grid/:points api and map added for testing mapping visualisations
+
+ public/api.txt added containing a dump of the api url interface
+ map-points.js
+  constants for map parameters added.
+  heat map weighting done correctly now.
+ routes/api.js
+  sampleDataGrid() added to provide sample weighted data for testing heatmaps
+
+Project 42 commit
+/api/map/heat/ and /api/map/points/ handlers added
+ map-heat.js/.jade copied from the map-points versions as start point.
+ routes/api.js addMapType() added and addMap() refactored.
+
+=== 2014-08-11 15:38:44+01:00 Mon  ===========================================
+Project 42 commit
+Try to get hits within location groups but query is complex. Go for a query of location item ids in viewport first then query against them?
+routes/api.js
+ /location/group/points/id-list/id/:location_group_id' + urlBounds api handler added
+ /location/group/polygon/id-list/id/:location_group_id' + urlBounds
+ sendAsText() - handler to send query results as key=id-list-comma-separated
+ addRouterGet() - helper to add an api route and log the full path/params created
+ apiQueryList() - API function to do a query for a list of id's
+ locationGroupPointsIdList() - api to get point location items in a geofence
+ locationGroupPolygonIdList() - api to get polygin location items in a geofence
+ locationGroupUniqueViews modified from locationsEstateAgencies but not working.
+
+=== 2014-08-08 10:58:17+01:00 Fri  ===========================================
+Project 42 commit
+routes/api.js
+ added geofenced boundary to queries for location items.
+ addBoundariesToResult() - added function to put lat/lon boundaries in json result
+ addBoundariesToFilename() - added function to put lat/lon boundaries in filename
+ apiQuery() - added some values to json result in dev only (debug sql, bind params)
+
+Project 42 commit
+/api/map/location/group/points/id/:location_group_id handler added
+jade template worked in to display a map widget stub
+routes/api.js
+   sendMap() added to send the map-points.jade template
+   mapPoints() stub added for /map/ handler
+   addMap() added to set up an api route and handler for map widget.
+   map-points.jade template added for a map of data points
+
+Project 42 commit
+map-points.js - map data ajax query with loading and error animations working.
+routes/api.js - convert numeric parameters to number from string before store in json response
+
+Project 42 commit
+heatmap visualisation of location group points now works!!
+
+map-points.js - fetches map data and shows a heatmap.
+map-points.jade - added google map library to template
+
+=== 2014-08-07 11:56:57+01:00 Thu  ===========================================
+Project 42 commit
+app.js
+ adding a getFullUrl custom function to the request object prototype.
+ registerCustomFunctions() - added getFullUrl() and getReleaseEnv() functions to the request object
+lib/database.js
+ .truncate(str, max) method added to truncate a string with elipsis
+ MAX_RESULT_DUMP constant prevents huge query rows getting logged.
+lib/sql-query-bind.js
+ added SQL query to ERR_FEW_BIND_VARS_GIVEN error message
+routes/api.js
+ /location/group/points/id/:location_group_id handler added
+ MAX_ROWS constant prevents huge query results coming back.
+ apiQuery() api_url returned in results.
+  warning provided in results if query hit max rows
+  order of fields in result is better. rows appear last.
+ locationGroupPoints() added to retrieve location groups which are a collection of points.
+ sendCSVFile() append the release environment to CSV file name so live/dev data can be differentiated
+
+Project 42 commit
+api handlers added:
+   /location/group/polygons/vertices/id/:location_group_id
+   /location/group/polygons/centroid/id/:location_group_id
+
+=== 2014-08-06 16:46:03+01:00 Wed  ===========================================
+Project 42 commit
+routes/api.js
+ /api/location/groups api handler added to app
+ /api/error/apiQuery api handler added to test the apiQuery function in DEV mode.
+ apiQuery()/testApiQuery() function added to perform an API database query.
+ locationGroups() function added to perform a location groups list query
+ debugging the estate agents query. turns out DB schema has changed so old query won't work now.
+
+ MUSTDO select * from table limit 1; can be used as a way to identify columns in a table.!!
+
+
+=== 2014-08-04 09:43:02+01:00 Mon  ===========================================
+Project 42 commit
+
+adding jsdoc tags to document the app and master objects.
+
+also fixed up file/module sections of other files so that the index page contains files and links to the corresponding module page.
+
+
+=== 2014-08-01 16:09:55+01:00 Fri  ===========================================
+project 42 commit for cluster experimentation
+bin/www
+added cluster object and master/worker experimental code. tests message passing and handling all events. Needs refactoring and cleanup.
+app.js
+/exit/:code handler for testing process.exit(code)
+/die handler exits with code 42 to signal master to terminate
+/suicide handler stub. should use worker.kill() to see how worker suicide works.
+
+master.js/worker.js added to separate logic from bin/www
+master.js implemented and put into bin/www
+
+
+=== 2014-07-31 14:58:45+01:00 Thu  ===========================================
+Project 42 commit
+addDevelopmentRoutes() method
+/api/test handler to return 'ok' as an upness test
+/fail/sync and /fail/async handlers moved to /api/fail/sync...
+database.js added bind parameters to .count, .fetchOne and .fetchAll methods
+
+Just an adjustment to sql-query-bind error message.
+
+tried writing a test for lowercase bind markers but realise cannot make a reliable
+warning as could pass in an object with more variables than markers as normal operation
+so can't compare number of bind markers vs number of keys in the object. As a result
+incorrectly marked queries will just generate database query parse errors.
+
+
+=== 2014-07-18 13:46:02+01:00 Fri  ===========================================
+more commits from peer review.
+
+approval_comments.js some changes to make code testable
+test function for processResponseCallback to verify chris' issues.
+
+moved javascript test plans from /js/ /content/ to /public/* to match the layout of the code being tested. adjusted karma config, gruntfile, etc.
+
+
+=== 2014-07-17 11:11:59+01:00 Thu  ===========================================
+more commits for IAB cats. setup fix.
+
+setup-dashboard is no longer destructive unless you set I_TAKE_RISKS in your
+own personal settings file. Copy settings.sh to my-settings.sh and set what you like.
+
+Corrected bug in dependency checking code.
+
+Run the setup to install all the node/npm commands needed.
+added tidy, perltidy, grunt. lessc, jsdoc, mocha, karma to global npm commands
+added other dev packages to package.json
+
+For javascript/html/css code quality build use the command
+grunt  from your infinity-plus-dashboard directory
+
+
+=== 2014-07-15 17:25:34+01:00 Tue  ===========================================
+commit changes for IAB categories
+
+added cleanLabel/sortLabels functions to blis utils with test plan.
+added a TODO about dataView/sourceView issue.
+adding jshint:test to grunt make for jshintall.
+fixed jshint problems in existing karma tests.
+
+some karma setup to see the tests as they run.
+http://www.google.com/url?q=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F17289423%2Fkarma-jasmine-output&sa=D&sntz=1&usg=AFQjCNHhRHcaEBQqBzcrp9yPuOGeRmvMiQ
+
+used CSS to set mandatory fields with a class=mandatory
+javascript split out of campaign details template.
+jshint validation set up in the Gruntfile configuration and many front end JS and test plan JS's validated.
+shell-test.sh improvements so tests don't stop on first failure.
+setup-dashboard.sh changes for personal settings.
+
+
+=== 2014-07-14 10:22:29+01:00 Mon  ===========================================
+Friday: IAB categories front and back end communicating. Just a few things to finish up before ready to release. Today: Back on Project 42 finish testing SQL bind params. Look at David's heatmap code to see if suitable for use. Blockers: none
+
+commit changes for project42
+estate agent query converted to use sql-query-bind object.
+app.js development /fail/sync and /fail/async handlers added for testing error handling.
+api.js /api/error/query and /api/error/query-bind handlers added for testing database query errors.
+
+
+=== 2014-05-13 10:28:45+01:00 Tue  ===========================================
+I'll start.
+
+Yesterday. Converted radio  buttons  for banner_position selection on campaign details to checkboxes. Meeting about Project 42 with Talon and BitPoster Today hopefully get the camp. det page finished before Parvesz is gone. Play around with GIS visualizations Have Laser op at noon so might be out for the rest of the afternoon.
+
+=== 2014-04-30 09:38:28+01:00 Wed  ===========================================
+Yesterday: google chat with Greg about Project 42. Will need to talk to Davide about getting some sample data from the Kafka stream. Redesigned campaign edit page and added new fields for new bidder feature control. Amy and Fran happy with layout. Today figure  out how to connect up the new UI controls to the database.
+
+GIT-BISECT(1)                                                          Git Manual                                                          GIT-BISECT(1)
+
+NAME
+       git-bisect - Find by binary search the change that introduced a bug
+
+SYNOPSIS
+       git bisect <subcommand> <options>
+
+DESCRIPTION
+       The command takes various subcommands, and different options depending on the subcommand:
+
+           git bisect help
+           git bisect start [--no-checkout] [<bad> [<good>...]] [--] [<paths>...]
+           git bisect bad [<rev>]
+           git bisect good [<rev>...]
+           git bisect skip [(<rev>|<range>)...]
+           git bisect reset [<commit>]
+           git bisect visualize
+           git bisect replay <logfile>
+           git bisect log
+           git bisect run <cmd>...
+
+       This command uses git rev-list --bisect to help drive the binary search process to find which change introduced a bug, given an old "good" commit
+       object name and a later "bad" commit object name.
+
+       git bisect start HEAD template-prettified^
+
+=== 2014-04-22 09:51:13+01:00 Tue  ===========================================
+from Engineering 2014 road map Q2
+https://docs.google.com/a/blismedia.com/document/d/1CKt28qLZ-Ookh3Lrm6zaMMcVS7a9t_tL8FT7u5ca_hs/edit#heading=h.d8rawjdv0bvf
+
+Post-click tracking integration with UI - ENG-1315
+This will integrate post-click tracking systems into the Dashboard. Currently, these are very manual to set-up and report on. This will cover: web-based tracking through the Blis tracker; third-party web-based tracking through systems like DoubleClick; in-app tracking through Hasoffers, Apptimizer etc.; any extra tracking required to support video. (Brent)
+
+Allow the UI to fully set-up campaigns with new bidder features
+All features supported by the bidder should have concomitant sections in the Dashboard, at least for Ad Ops to use. Nothing should rely on Parvez or other engineers editing the database directly. This is an ongoing job as the bidder is developed, obviously, but the Q2 work specifically covers the features already in the bidder with no current Dashboard UI. Ideally, this should be completed in the next couple of sprints, before Parvez goes on holiday. (Brent, Parvez)
+
+UI Redesign
+Alongside developing the current Dashboard, we will look at a complete redesign, with reference to other industry-standard Dashboards. In Q2, the focus will be on collecting ideas and scoping out a high-level design, rather than implementation. (Chris, Brent, Amy, Frances)
+
+Project 42
+This is a tool to gain insight into how customers move around, and will be an aid to both Blis and Talon when planning campaigns. The proposed visualisation is a map overlaid with a dynamic heatmap drawn from our lat/long data and tracking the same user/device IDs over time. (Brent)
+

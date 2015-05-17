@@ -1,0 +1,66 @@
+Ubuntu workstation setup:
+TODO-HOSTNAME
+
+Markers in use:
+BACKUP
+BASH
+CHARLES
+CHROME
+COLOR
+CFG
+DEV
+ECLIPSE
+FONT
+INSTALL
+KDE
+SYS
+TODO
+TROUBLE
+UBUNTU
+URL
+VM
+WIKI
+XWIN
+
+# get listing of markers
+( grep '+++' ../cfgrec.txt | perl -ne 'if (s{\A\+\++\s*([^\s]+).*\z}{$1\n}xms) { s{:}{\n}xmg; print}' |  grep '+++' ../cfgrec.txt | perl -neA\+\++\s*([^\s]+).*\z}{$1\n}xms) { s{:}{\n}xmg; print}' | sort | uniq )
+# generate timestamp banner line
+now | line.sh >> ~/workspace/cfgrec.txt
+
+=== 2014-04-17 17:12:42+01:00 Thu  ===========================================
++++DEV got infinity dashboard app working using Christopher's instructions and some help from David.
+   wrote a setup-dashboard.sh script to set everything up automatically
+   
+   VIRTUALBOX URLS
+
+IE11 Win7
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Linux/IE11.Win7.ForLinuxVirtualBox.part1.sfx
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Linux/IE11.Win7.ForLinuxVirtualBox.part2.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Linux/IE11.Win7.ForLinuxVirtualBox.part3.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE11_Win7/Linux/IE11.Win7.ForLinuxVirtualBox.part4.rar
+   
+IE10 Win7
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Linux/IE10.Win7.For.LinuxVirtualBox.part1.sfx
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Linux/IE10.Win7.For.LinuxVirtualBox.part2.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Linux/IE10.Win7.For.LinuxVirtualBox.part3.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE10_Win7/Linux/IE10.Win7.For.LinuxVirtualBox.part4.rar
+   
+IE9 Win7
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Linux/IE9.Win7.For.LinuxVirtualBox.part1.sfx
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Linux/IE9.Win7.For.LinuxVirtualBox.part2.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Linux/IE9.Win7.For.LinuxVirtualBox.part3.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE9_Win7/Linux/IE9.Win7.For.LinuxVirtualBox.part4.rar
+   
+IE8 Win7   
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Linux/IE8.Win7.For.LinuxVirtualBox.part1.sfx
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Linux/IE8.Win7.For.LinuxVirtualBox.part2.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Linux/IE8.Win7.For.LinuxVirtualBox.part3.rar
+https://az412801.vo.msecnd.net/vhd/VMBuild_20131127/VirtualBox/IE8_Win7/Linux/IE8.Win7.For.LinuxVirtualBox.part4.rar
+
+=== 2014-04-16 18:18:08+01:00 Wed  ===========================================
++++INSTALL got VirtualBox to install using check-system.sh script by pointing ot the ubuntu raring release instead of trusty.
+
+
+=== 2014-04-14 14:21:18+01:00 Mon  ===========================================
++++CFG Initial setup with check-system.sh complete apart from VirtualBox, sublime theme overrides and window manager special effects
+
