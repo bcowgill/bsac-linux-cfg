@@ -163,4 +163,5 @@ layout save OM
 
 # finish up with just one big screen
 layout new
+only
 license
