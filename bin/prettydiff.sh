@@ -2,8 +2,9 @@
 # use prettydiff javascript to clean up html
 # License: http://unlicense.org
 # online formatter: http://prettydiff.com/?m=beautify&html
+# source: https://github.com/prettydiff/prettydiff
 # source: https://github.com/austincheney/Pretty-Diff/blob/master/lib/markup_beauty.js
-# npm install prettydiff
+# npm install -g prettydiff
 PRETTYDIFF=/usr/local/lib/node_modules/prettydiff/api/node-local.js
 INDENT_TABS=1
 INDENT_SIZE=4

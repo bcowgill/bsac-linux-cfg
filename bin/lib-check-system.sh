@@ -18,6 +18,7 @@
 # some definitions for TAP protocol support
 TEST_PLAN=
 TEST_CASES=0
+TEST_FAILS=0
 PASS="OK"
 FAIL="NOT OK"
 
@@ -59,11 +60,18 @@ function NOT_OK {
    local message
    message="$1"
    TEST_CASES=$(( $TEST_CASES + 1 ))
+   TEST_FAILS=$(( $TEST_FAILS + 1 ))
    echo "$FAIL $TEST_CASES $message"
    if [ $STOP_ON_FAIL == 1 ]; then
       return 1
    fi
    return 0
+}
+
+# Show summary of failures and total tests
+function ENDS {
+   echo "$TEST_FAILS test failures (may be hidden)"
+   echo "$TEST_CASES test cases"
 }
 
 #============================================================================
@@ -83,10 +91,11 @@ function stop {
 }
 
 function check_linux {
-   local version check file
+   local version check file which
    version="$1"
-   if which lsb_release; then
-      check=$(lsb_release -sc 2> /dev/null)  
+   which=`which lsb_release`
+   if [ ! -z "$which" ]; then
+      check=$(lsb_release -sc 2> /dev/null)
    else
       file=/etc/issue
       if [ -f $file ]; then
@@ -104,7 +113,7 @@ function check_linux {
       if [ -f $file ]; then
          check="$file: `cat $file | grep Raspberry`"
       fi
-   fi 
+   fi
    if [ "${check:-unknown}" == "$version" ]; then
       OK "linux version $version"
    else
@@ -416,6 +425,45 @@ function file_is_executable {
    return 0
 }
 
+# install a command or file from a package
+function install_from {
+   local file package which
+   file="$1"
+   package="$2"
+   which=`which "$file"`
+   if [ ! -z "$which" ] ; then
+      OK "command $file exists [$which]"
+   else
+      file_exists "$file" > /dev/null || (echo want to install cmd/file $file from $package; sudo apt-get install "$package")
+      which=`which "$file"`
+      if [ ! -z "$which" ] ; then
+         OK "command $file exists [$which]"
+      else
+         file_exists "$file" "use dpkg -L $package to get list of files installed by package"
+      fi
+   fi
+}
+
+# Install commands/files from specific packages specified as input list with : separation
+# cmd1:pkg1 file2:pkg2 ...
+function installs_from {
+   local list message file_pkg file package error
+   list="$1"
+   message="$2"
+   error=0
+   for file_pkg in $list
+   do
+      # split the file:pkg string into vars
+      IFS=: read file package <<< $file_pkg
+      install_from $file $package || error=1
+   done
+   if [ $error == 1 ]; then
+      NOT_OK "errors for install_from $list"
+   fi
+   return $error
+}
+
+# install a file from a given package
 function install_file_from {
    local file package
    file="$1"
@@ -603,11 +651,12 @@ function check_version {
 }
 
 function cmd_exists {
-   local cmd message npm
+   local cmd message which
    cmd="$1"
    message="$2"
-   if which "$cmd"; then
-      OK "command $cmd exists"
+   which=`which "$cmd"`
+   if [ ! -z "$which" ] ; then
+      OK "command $cmd exists [$which]"
    else
       if [ -z "$message" ]; then
          message="sudo apt-get install $cmd"
@@ -633,7 +682,7 @@ function commands_exist {
 }
 
 # Install a single command from a differently named package
-# options --assume-yes is useful to preven asking questions
+# options --assume-yes is useful to prevent asking questions
 function install_command_from {
    local command package options
    command="$1"
@@ -658,6 +707,7 @@ function install_command_from_packages {
 }
 
 # Install a bunch of commands if possible
+# prefer using installs_from as it handles files and commands
 function install_commands {
    local commands error
    commands="$1"
@@ -677,6 +727,7 @@ function install_commands {
 
 # Install commands from specific package specified as input list with : separation
 # cmd1:pkg1 cmd2:pkg2 ...
+# prefer to use installs_from as it handles both files and commands
 function install_commands_from {
    local list message options cmd_pkg cmd package error
    list="$1"
