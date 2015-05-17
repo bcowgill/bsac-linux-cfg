@@ -1,3 +1,4 @@
+"Personal changes marked BSAC
 "TODO config - show whitespace chars
 "TODO bs/cursor does not wrap past left/right
 "HELP :r! cat  -- use to paste text without auto indent
@@ -71,6 +72,10 @@ nmap <leader>w :w!<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"BSAC activate mouse so you can click on help hyperlinks
+"BSAC use shift key to use the mouse as normally to select/paste
+set mouse=a
+
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
@@ -431,3 +436,17 @@ endfunction
 noremap <silent> <Home> :call ExtendedHome()<CR>
 inoremap <silent> <Home> <C-O>:call ExtendedHome()<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => BSAC Custom
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"BSAC diff configuration
+set diffopt=filler,vertical
+
+"BSAC ripped from vimrc_example.vim from the vim distribution
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+  \ | wincmd p | diffthis
+endif
