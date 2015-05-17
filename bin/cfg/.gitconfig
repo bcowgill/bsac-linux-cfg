@@ -1,0 +1,19 @@
+[user]
+	name = Brent S.A. Cowgill
+	email = brent@blismedia.com
+[push]
+	default = simple
+[diff]
+	tool = diffmerge
+[difftool "diffmerge"]
+	cmd = /usr/bin/diffmerge --nosplash \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = diffmerge
+[mergetool "diffmerge"]
+	trustExitCode = true
+	cmd = /usr/bin/diffmerge --nosplash --merge --result=\"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+[rerere]
+	enabled = true
+	autoupdate = true
+[alias]
+	graph = log --oneline --graph --decorate --all
