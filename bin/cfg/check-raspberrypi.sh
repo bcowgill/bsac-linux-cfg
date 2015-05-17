@@ -55,7 +55,7 @@ NODE_VER="v0.10.28"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 grunt:grunt-cli grunt-init bower yo lessc:less jsdoc mocha karma:karma-cli express:express-generator@4"
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 prettydiff grunt:grunt-cli grunt-init bower yo lessc:less jsdoc mocha karma:karma-cli express:express-generator@4"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # Chrome download page
@@ -174,7 +174,7 @@ ONBOOT=onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
-COMMANDS="apt-file wcd.exec gettext git perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+COMMANDS="apt-file wcd.exec gettext git gitk perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
@@ -323,6 +323,8 @@ else
 	NOT_OK "SourceCodePro font is not cached"
 fi
 
+# Find all the .kde config files referenced herein:
+# grep \.kde/ check-system.sh | perl -pne 's{\s* (FILE=|file_has_text \s*)}{}xms; s{\s*".+\z}{\n}xms; s{\s+\#}{}xms;s{\./}{}xms ' | sort | uniq > ~/xxx
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
@@ -953,70 +955,76 @@ else
 	OK "eclipse will not be configured unless ECLIPSE is non-zero"
 fi # ECLIPSE
 
-exit 3
-
 file_present prettydiff.js "html beautifier file"
 
 # Sourcegear Diffmerge colors
-FILE=".SourceGear DiffMerge"
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
-ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
-ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
-ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
-ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
-ini_file_has_text "$FILE" "/File/Color/Caret/fg=16777215"
-ini_file_has_text "$FILE" "/File/Color/Conflict/bg=4194304"
-ini_file_has_text "$FILE" "/File/Color/Conflict/fg=16744576"
-ini_file_has_text "$FILE" "/File/Color/Conflict/IL/bg=4721920"
-ini_file_has_text "$FILE" "/File/Color/EolUnknown/fg=1973790"
-ini_file_has_text "$FILE" "/File/Color/LineNr/bg=0"
-ini_file_has_text "$FILE" "/File/Color/NoneEqual/bg=4194304"
-ini_file_has_text "$FILE" "/File/Color/NoneEqual/fg=16711680"
-ini_file_has_text "$FILE" "/File/Color/NoneEqual/IL/bg=4194304"
-ini_file_has_text "$FILE" "/File/Color/Omit/bg=0"
-ini_file_has_text "$FILE" "/File/Color/Omit/fg=3552822"
-ini_file_has_text "$FILE" "/File/Color/Selection/fg=16776960"
-ini_file_has_text "$FILE" "/File/Color/SubEqual/bg=16384"
-ini_file_has_text "$FILE" "/File/Color/SubEqual/fg=65280"
-ini_file_has_text "$FILE" "/File/Color/SubEqual/IL/bg=32768"
-ini_file_has_text "$FILE" "/File/Color/SubNotEqual/bg=64"
-ini_file_has_text "$FILE" "/File/Color/SubNotEqual/fg=65535"
-ini_file_has_text "$FILE" "/File/Color/SubNotEqual/IL/bg=64"
-ini_file_has_text "$FILE" "/File/Color/Void/bg=0"
-ini_file_has_text "$FILE" "/File/Color/Void/fg=2631720"
-ini_file_has_text "$FILE" "/File/Color/Window/bg=0"
-ini_file_has_text "$FILE" "/Folder/Font=16:76:ProFontWindows"
-ini_file_has_text "$FILE" "/Folder/Color/Different/bg=0"
-ini_file_has_text "$FILE" "/Folder/Color/Equal/bg=0"
-ini_file_has_text "$FILE" "/Folder/Color/Equal/fg=16777215"
-ini_file_has_text "$FILE" "/Folder/Color/Equivalent/bg=0"
-ini_file_has_text "$FILE" "/Folder/Color/Error/bg=1"
-ini_file_has_text "$FILE" "/Folder/Color/Folders/bg=0"
-ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
-ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
+FILE=".SourceGear DiffMerge"
+if [ -f "$FILE" ]; then
+	ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
+	ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
+	ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
+	ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
+	ini_file_has_text "$FILE" "/File/Color/Caret/fg=16777215"
+	ini_file_has_text "$FILE" "/File/Color/Conflict/bg=4194304"
+	ini_file_has_text "$FILE" "/File/Color/Conflict/fg=16744576"
+	ini_file_has_text "$FILE" "/File/Color/Conflict/IL/bg=4721920"
+	ini_file_has_text "$FILE" "/File/Color/EolUnknown/fg=1973790"
+	ini_file_has_text "$FILE" "/File/Color/LineNr/bg=0"
+	ini_file_has_text "$FILE" "/File/Color/NoneEqual/bg=4194304"
+	ini_file_has_text "$FILE" "/File/Color/NoneEqual/fg=16711680"
+	ini_file_has_text "$FILE" "/File/Color/NoneEqual/IL/bg=4194304"
+	ini_file_has_text "$FILE" "/File/Color/Omit/bg=0"
+	ini_file_has_text "$FILE" "/File/Color/Omit/fg=3552822"
+	ini_file_has_text "$FILE" "/File/Color/Selection/fg=16776960"
+	ini_file_has_text "$FILE" "/File/Color/SubEqual/bg=16384"
+	ini_file_has_text "$FILE" "/File/Color/SubEqual/fg=65280"
+	ini_file_has_text "$FILE" "/File/Color/SubEqual/IL/bg=32768"
+	ini_file_has_text "$FILE" "/File/Color/SubNotEqual/bg=64"
+	ini_file_has_text "$FILE" "/File/Color/SubNotEqual/fg=65535"
+	ini_file_has_text "$FILE" "/File/Color/SubNotEqual/IL/bg=64"
+	ini_file_has_text "$FILE" "/File/Color/Void/bg=0"
+	ini_file_has_text "$FILE" "/File/Color/Void/fg=2631720"
+	ini_file_has_text "$FILE" "/File/Color/Window/bg=0"
+	ini_file_has_text "$FILE" "/Folder/Font=16:76:ProFontWindows"
+	ini_file_has_text "$FILE" "/Folder/Color/Different/bg=0"
+	ini_file_has_text "$FILE" "/Folder/Color/Equal/bg=0"
+	ini_file_has_text "$FILE" "/Folder/Color/Equal/fg=16777215"
+	ini_file_has_text "$FILE" "/Folder/Color/Equivalent/bg=0"
+	ini_file_has_text "$FILE" "/Folder/Color/Error/bg=1"
+	ini_file_has_text "$FILE" "/Folder/Color/Folders/bg=0"
+	ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
+	ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
+fi # diffmerge config file
 
 # Perforce p4merge colors
 FILE=".p4merge/ApplicationSettings.xml"
-file_has_text $FILE "<family>ProFontWindows" "Edit / Preferences"
-file_has_text $FILE "<pointSize>14" "Edit / Preferences"
-file_contains_text $FILE "<String varName=.DiffOption.>db" "Edit / Preferences"
-file_contains_text $FILE "<Bool varName=.ShowTabsSpaces.>true" "Edit / Preferences"
-file_contains_text $FILE "<Bool varName=.TabInsertsSpaces.>false" "Edit / Preferences"
-file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
-file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
+if [ -f "$FILE" ]; then
+	file_has_text $FILE "<family>ProFontWindows" "Edit / Preferences"
+	file_has_text $FILE "<pointSize>14" "Edit / Preferences"
+	file_contains_text $FILE "<String varName=.DiffOption.>db" "Edit / Preferences"
+	file_contains_text $FILE "<Bool varName=.ShowTabsSpaces.>true" "Edit / Preferences"
+	file_contains_text $FILE "<Bool varName=.TabInsertsSpaces.>false" "Edit / Preferences"
+	file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
+	file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
+fi # perforce merge config file
 
-# sublime configuration
-FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
-file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
-file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
-file_has_text $FILE "ProFontWindows"
-file_contains_text $FILE "font_size.: 16"
+if [ ! -z $SUBLIME_PKG ]; then
+	# sublime configuration
+	FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
+	file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
+	file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
+	file_has_text $FILE "ProFontWindows"
+	file_contains_text $FILE "font_size.: 16"
 
-DIR="$SUBLIME_CFG/Packages/Theme - Default"
-FILE="$DIR/Default.sublime-theme"
-## TODO dir_exists "$DIR" "sublime theme override dir"
-## TODO file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
-## TODO file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
+	DIR="$SUBLIME_CFG/Packages/Theme - Default"
+	FILE="$DIR/Default.sublime-theme"
+	## TODO dir_exists "$DIR" "sublime theme override dir"
+	## TODO file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
+	## TODO file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
+fi # SUBLIME_PKG
+
+exit 3
 
 # gitk configuration
 FILE=.config/git/gitk
@@ -1086,4 +1094,3 @@ echo TODO google chrome flash player
 echo TODO gvim font setting config
 
 OK "all checks complete"
-
