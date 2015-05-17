@@ -1328,6 +1328,15 @@ function file_has_text {
    return 0
 }
 
+# exact check for text in file if file exists
+function maybe_file_has_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   [ -f "$file" ] && file_has_text "$file" "$text" "$message"
+}
+
 # regex check for text in file
 function file_contains_text {
    local file text message

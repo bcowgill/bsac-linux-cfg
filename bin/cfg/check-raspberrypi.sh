@@ -737,6 +737,9 @@ if [ ! -z $USE_SCHEMACRAWLER ]; then
 	fi # USE_MYSQL
 fi # USE_SCHEMACRAWLER
 
+FILE=".config/leafpad/leafpadrc"
+maybe_file_has_text $FILE "ProFontWindows 18"
+
 exit 3
 
 #============================================================================
