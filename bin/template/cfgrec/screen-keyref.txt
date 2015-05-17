@@ -1,0 +1,5 @@
+screen command quick reference
+
+.screenrc file to configure startup options
+
+KEY:SCREEN: Ctrl-a c
