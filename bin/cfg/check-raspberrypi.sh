@@ -8,7 +8,7 @@ set -e
 #set -x
 
 if which lib-check-system.sh; then
-   source `which lib-check-system.sh`
+	source `which lib-check-system.sh`
 fi
 
 MYNAME="Brent S.A. Cowgill"
@@ -163,7 +163,9 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	PIDGIN=""
 	SUBLIME_PKG=""
 	VSLICK=""
-fi
+	GOOGLE_CHROME_PKG=""
+	FLASH_URL=""
+fi # raspberrypi
 
 ONBOOT=onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
@@ -580,26 +582,26 @@ file_exists workspace/cfgrec.txt "configuration record files will copy from temp
 file_exists workspace/cfgrec.txt "configuration record files"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
-   OK "git config has been set up"
+	OK "git config has been set up"
 else
-   NOT_OK "git config not set. trying to do so"
-   git config --global user.name "$MYNAME"
-   git config --global user.email $EMAIL
+	NOT_OK "git config not set. trying to do so"
+	git config --global user.name "$MYNAME"
+	git config --global user.email $EMAIL
 fi
 
 if git config --global --list | grep rerere; then
-   OK "git config rerere has been set up"
+	OK "git config rerere has been set up"
 else
-   NOT_OK "git config rerere not set. trying to do so"
-   git config --global rerere.enabled true
-   git config --global rerere.autoupdate true
+	NOT_OK "git config rerere not set. trying to do so"
+	git config --global rerere.enabled true
+	git config --global rerere.autoupdate true
 fi
 
 if git config --global --list | grep alias.graph; then
-   OK "git config alias.graph has been set up"
+	OK "git config alias.graph has been set up"
 else
-   NOT_OK "git config alias.graph not set. trying to do so"
-   git config --global --add alias.graph "log --oneline --graph --decorate --all"
+	NOT_OK "git config alias.graph not set. trying to do so"
+	git config --global --add alias.graph "log --oneline --graph --decorate --all"
 fi
 
 echo CRON table setup
@@ -618,16 +620,16 @@ crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME
 crontab_has_command "wcdscan.sh"
 
 if $NODE_CMD --version | grep $NODE_VER; then
-   OK "node command version correct"
+	OK "node command version correct"
 else
-   NOT_OK "node command version incorrect. trying to update"
-   #https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
-   sudo apt-get update
-   sudo apt-get install -y python-software-properties python g++ make
-   sudo add-apt-repository ppa:chris-lea/node.js
-   sudo apt-get update
-   sudo apt-get install nodejs
-   exit 1
+	NOT_OK "node command version incorrect. trying to update"
+	#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
+	sudo apt-get update
+	sudo apt-get install -y python-software-properties python g++ make
+	sudo add-apt-repository ppa:chris-lea/node.js
+	sudo apt-get update
+	sudo apt-get install nodejs
+	exit 1
 fi
 
 npm config set registry https://registry.npmjs.org/
@@ -639,23 +641,23 @@ make_dir_exist $HOME/.grunt-init "grunt template dir"
 install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
 if [ ! -z $SUBLIME_PKG ]; then
-cmd_exists git "need git installed before configure sublime"
-cmd_exists grunt "need grunt installed before configure sublime for it"
+	cmd_exists git "need git installed before configure sublime"
+	cmd_exists grunt "need grunt installed before configure sublime for it"
 
-# package nodejs-legacy provides node -> nodejs symlink
-#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
-cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
-install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
-install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
-#cp Downloads/Package-Control.sublime-package.zip ".config/sublime-text-3/Installed Packages/Package Control.sublime-package"
-install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
-install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
-## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+	# package nodejs-legacy provides node -> nodejs symlink
+	#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
+	cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
+	install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
+	install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
+	#cp Downloads/Package-Control.sublime-package.zip ".config/sublime-text-3/Installed Packages/Package Control.sublime-package"
+	install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
+	install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
+	## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
 fi # SUBLIME_PKG
 
 if [ ! -z $VSLICK ]; then
-install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
-cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
+	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
+	cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
 fi # VSLICK
 
 cmd_exists git "need git to clone repos"
@@ -669,23 +671,27 @@ install_git_repo "workspace/play" knockout-test https://github.com/bcowgill/knoc
 install_git_repo "workspace/play" foundation-test https://github.com/bcowgill/foundation-test.git "my foundation test area"
 install_git_repo "workspace/play" jsclass-test https://github.com/bcowgill/jsclass-test.git "my javascript class test area"
 
+if [ ! -z $GOOGLE_CHROME_PKG ]; then
+	# flash player in google chrome
+	# http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
+
+	# Linux Google Chrome v Chromium
+	# https://code.google.com/p/chromium/wiki/ChromiumBrowserVsGoogleChrome
+	# configs ~/.config/chromium or ~/.config/google-chrome for the different versions
+
+	install_command_package $GOOGLE_CHROME "$GOOGLE_CHROME_PKG" "Google Chrome for Linux from manual download $GOOGLE_CHROME_URL"
+
+	if [ ! -z $FLASH_URL ]; then
+		install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
+		dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
+		file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
+		file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
+		file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" && sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
+		file_exists "/usr/bin/flash-player-properties"
+	fi # FLASH_URL
+fi # GOOGLE_CHROME_PKG
+
 exit 3
-
-# flash player in google chrome
-# http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
-
-# Linux Google Chrome v Chromium
-# https://code.google.com/p/chromium/wiki/ChromiumBrowserVsGoogleChrome
-# configs ~/.config/chromium or ~/.config/google-chrome for the different versions
-
-install_command_package $GOOGLE_CHROME "$GOOGLE_CHROME_PKG" "Google Chrome for Linux from manual download $GOOGLE_CHROME_URL"
-
-install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
-dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
-file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
-file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
-file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" && sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
-file_exists "/usr/bin/flash-player-properties"
 
 # postgres JDBC driver for creating DB schema diagrams using schemacrawler
 # http://jdbc.postgresql.org/download.html
