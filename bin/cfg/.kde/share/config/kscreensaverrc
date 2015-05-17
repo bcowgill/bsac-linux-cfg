@@ -1,0 +1,7 @@
+[ScreenSaver]
+Enabled=true
+LegacySaverEnabled=true
+LockGrace=60000
+PlasmaEnabled=false
+Saver=KSlideshow.desktop
+Timeout=1200

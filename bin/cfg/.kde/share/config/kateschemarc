@@ -1,0 +1,9 @@
+[Normal]
+dummy=prevent-empty-group
+
+[Solarized (dark)]
+Font=ProFontWindows,18,-1,5,50,0,0,0,0,0
+dummy=prevent-empty-group
+
+[Vim (dark)]
+dummy=prevent-empty-group

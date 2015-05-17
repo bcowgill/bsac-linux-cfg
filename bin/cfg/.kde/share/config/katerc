@@ -1,0 +1,363 @@
+[$Version]
+update_info=kate-2.4.upd:kate2.4
+
+[Colors]
+CurrentPalette=Forty Colors
+
+[Document 0]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=HTML
+Indentation Mode=normal
+Mode=HTML
+URL=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+
+[Document 1]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=Bash
+Indentation Mode=normal
+Mode=Bash
+URL=file:///home/brent/workspace/play/open-layers/scripts/build.sh
+
+[Document 2]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=JavaScript
+Indentation Mode=cstyle
+Mode=JavaScript
+URL=file:///home/brent/workspace/play/open-layers/lib/vis.js
+
+[Document 3]
+Bookmarks=
+Encoding=UTF-8
+Highlighting=CSS
+Indentation Mode=cstyle
+Mode=CSS
+URL=file:///home/brent/workspace/play/open-layers/css/style.css
+
+[General]
+Days Meta Infos=30
+Last Session=projects.katesession
+Modified Notification=true
+Restore Window Configuration=true
+Save Meta Infos=true
+Show Full Path in Title=true
+Show Menu Bar=true
+Show Status Bar=true
+Startup Session=manual
+
+[KFileDialog Settings]
+Height 1080=525
+Recent Files[$e]=$HOME/workspace/play/project42/routes/api.js,$HOME/projects/infinity-plus-dashboard/changelog.txt,$HOME/projects/review-infinity-plus-dashboard/new-tree.txt,$HOME/projects/review-infinity-plus-dashboard/moved.txt,$HOME/projects/review-infinity-plus-dashboard/uniq.assets.log,$HOME/Documents/refactoring-session.txt,$HOME/workspace/projects/creatives-support/ENG-3241-wickes-ad-silverpop-xml-data-transfer/blistestrig.html,$HOME/workspace/projects/creatives-support/ENG-3241-wickes-ad-silverpop-xml-data-transfer/xmlAPIServlet.html,$HOME/workspace/projects/creatives-support/ENG-3241-wickes-ad-silverpop-xml-data-transfer/Silverpop XML APIs - Test Harness.html,$HOME/workspace/play/perljs/lib/perl.js,$HOME/workspace/projects/infinity-plus-dashboard/setup/setup-dashboard.sh,$HOME/projects/infinity-plus-dashboard/public/content/shared/js/blis-ui-cpm-dashboard.js,$HOME/projects/infinity-plus-dashboard/public/content/shared/js/blis-ui-creative.js,$HOME/projects/infinity-plus-dashboard/.jshintrc,$HOME/projects/infinity-plus-dashboard/node_modules/grunt-contrib-jshint/node_modules/jshint/src/messages.js,$HOME/projects/infinity-plus-dashboard/.jshintrc-sloppy
+Recent URLs[$e]=$HOME/projects/infinity-plus-dashboard/public/content/shared/,$HOME/workspace/projects/infinity-plus-dashboard/setup/,$HOME/workspace/projects/cartographer/scripts/re_geofence/,$HOME/workspace/play/perljs/lib/,$HOME/workspace/projects/creatives-support/ENG-3241-wickes-ad-silverpop-xml-data-transfer/,$HOME/projects/review-infinity-plus-dashboard/,$HOME/projects/infinity-plus-dashboard/
+Width 1920=958
+
+[Kate Document Defaults]
+Allow End of Line Detection=true
+Allow Simple Mode=true
+BOM=false
+Backup Flags=0
+Backup Prefix=
+Backup Suffix=~
+Encoding=UTF-8
+End of Line=0
+Indent On Backspace=true
+Indent On Tab=true
+Indent On Text Paste=true
+Indentation Mode=normal
+Indentation Width=4
+Keep Extra Spaces=false
+Line Length Limit=4096
+Newline At EOF=true
+No sync=false
+On-The-Fly Spellcheck=false
+Overwrite Mode=false
+PageUp/PageDown Moves Cursor=true
+Remove Spaces=1
+ReplaceTabsDyn=false
+Search Dir Config Depth=9
+Show Spaces=true
+Show Tabs=true
+Smart Home=true
+Tab Handling=2
+Tab Width=4
+Word Wrap=false
+Word Wrap Column=128
+
+[Kate Part Defaults]
+Encoding Prober Type=1
+Fallback Encoding=ISO-8859-15
+
+[Kate Plugins]
+kate_kttsd=false
+katebacktracebrowserplugin=false
+katebuildplugin=false
+katecloseexceptplugin=true
+katectagsplugin=false
+katefilebrowserplugin=true
+katefiletemplates=false
+katefiletreeplugin=true
+kategdbplugin=false
+katekonsoleplugin=false
+katemailfilesplugin=false
+kateopenheaderplugin=false
+katepateplugin=false
+kateprojectplugin=true
+katereplicodeplugin=false
+katesearchplugin=true
+katesnippetsplugin=false
+katesqlplugin=false
+katesymbolviewerplugin=false
+katetabbarextensionplugin=false
+katetabifyplugin=true
+katetextfilterplugin=false
+katexmlcheckplugin=false
+katexmltoolsplugin=false
+
+[Kate Renderer Defaults]
+Animate Bracket Matching=true
+Schema=Solarized (dark)
+Show Indentation Lines=true
+Show Whole Bracket Expression=true
+Word Wrap Marker=true
+
+[Kate Vi Input Mode Settings]
+Command Mode Mapping Keys=
+Command Mode Mappings=
+Command Mode Mappings Recursion=
+Insert Mode Mapping Keys=
+Insert Mode Mappings=
+Insert Mode Mappings Recursion=
+Macro Completions=
+Macro Contents=
+Macro Registers=
+Normal Mode Mapping Keys=
+Normal Mode Mappings=
+Normal Mode Mappings Recursion=
+Visual Mode Mapping Keys=
+Visual Mode Mappings=
+Visual Mode Mappings Recursion=
+
+[Kate View Defaults]
+Allow Mark Menu=true
+Auto Center Lines=0
+Auto Completion=true
+Bookmark Menu Sorting=0
+Default Mark Type=1
+Dynamic Word Wrap=true
+Dynamic Word Wrap Align Indent=80
+Dynamic Word Wrap Indicators=1
+Folding Bar=true
+Icon Bar=false
+Keyword Completion=true
+Line Modification=false
+Line Numbers=false
+Maximum Search History Size=100
+Persistent Selection=false
+Replacement Text History=,\\\\t,$DASH_DIR,target_radius,address,idx,$MYSQL_ROOT,location_name,$ARG,scale_factor,input_file,input_file_name,send_yesno(0),\\\\t\\\\t,gem,ruby,',MUSTDO:BSAC:,location_optimisation_enabled,sourceView,num,pop_dir,push_dir,//\\\\t\\\\t',\\\\t\\\\t',map-canvas,ST_Y,ST_X,MYSQL,getDebugSQL,oRequest\\, oResponse,MUSTDOshush,MUSTDOshushj,shush,// , ===   0, === 0,[],<,UTIL,  ,options,",   ,    ,return $ERROR_STOP,; padding: 0px; border-spacing: 0px;",style="width: ,<br />,rhPageVar,oStaticIpLayer,oMap,oActiveLayer,oHeatMapLayer,data-bind,data-NOT-bind,class="break",updateTrafficType,disable-if,disable-if-estimate-volume,disable-if-ghost,\\\\n,-%],[%-
+Scroll Bar Marks=false
+Scroll Bar Mini Map=false
+Scroll Bar Mini Map All=false
+Scroll Bar Mini Map Width=60
+Scroll Past End=false
+Search Pattern History============,img,enableTabs,alert,MUSTDO,/* MUSTDO,iframe,dl,data-tab,\\\\[\\\\% cache_buster \\\\%\\\\],style,dl class,clients-dashboard,SHOW_DEV,win_frequency_timeout_period,win_frequency_timeout,for="",label for=,_status_paused,  ,blis_tabs,console,prototype.select,select,simplytics,views/,//,bower_components,jquery,foundation.min.js,jshint,aCSSFiles,glob,csslint,creative,grunt-sass,infinity-plus-dashboard,infinity-plus,overwrite,target_radius,radius,headers,min_weight,identify,latitude,jsdoc,infinityplus,a csv file,scale_factor,region,name_idx,company,address1,prefix,location_group_names,name,country_id,debug,city_idx,postcode_idx,Fields,say,prefix_name,../../var/postcodes,address fields,root,settings,city_id,show_row,dry_run,@Fields,store_name,city,postcode,\\\\@_,@_,\\\\$_,$_,input_file,store_file,store_file_name,slug,send_yesno\\\\(\\\\),send_yesno,note,Location,hidebutton3,#create,create,\\\\t \\\\t,^ \\\\t,^    ,\\\\s+$,^\\\\s*$,datasource,data-bind,k-button,profile,NOT_OK,dashboard_user
+Search/Replace Flags=1036
+Show Scrollbars=0
+Smart Copy Cut=true
+Vi Input Mode=false
+Vi Input Mode Emulate Command Bar=false
+Vi Input Mode Steal Keys=false
+Word Completion=true
+Word Completion Minimal Word Length=3
+Word Completion Remove Tail=true
+
+[MainWindow]
+Height 1080=1081
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAO9AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAAAAADGgAAAAAAAAAA
+ToolBarsMovable=Disabled
+Width 1920=1921
+
+[MainWindow0]
+Active ViewSpace=1
+Characters Count Visible=false
+Cursor Position Visible=true
+Document Name Visible=true
+Encoding Visible=true
+Height 1080=1081
+Insertion Mode Visible=true
+Kate-MDI-H-Splitter=200,1688,200
+Kate-MDI-Sidebar-0-Splitter=0,0,957
+Kate-MDI-Sidebar-3-Splitter=0,0
+Kate-MDI-Sidebar-Style=2
+Kate-MDI-ToolView-kate_plugin_katesearch-Persistent=false
+Kate-MDI-ToolView-kate_plugin_katesearch-Position=3
+Kate-MDI-ToolView-kate_plugin_katesearch-Sidebar-Position=0
+Kate-MDI-ToolView-kate_plugin_katesearch-Visible=false
+Kate-MDI-ToolView-kate_private_plugin_katefileselectorplugin-Persistent=false
+Kate-MDI-ToolView-kate_private_plugin_katefileselectorplugin-Position=0
+Kate-MDI-ToolView-kate_private_plugin_katefileselectorplugin-Sidebar-Position=2
+Kate-MDI-ToolView-kate_private_plugin_katefileselectorplugin-Visible=true
+Kate-MDI-ToolView-kate_private_plugin_katefiletreeplugin-Persistent=false
+Kate-MDI-ToolView-kate_private_plugin_katefiletreeplugin-Position=0
+Kate-MDI-ToolView-kate_private_plugin_katefiletreeplugin-Sidebar-Position=0
+Kate-MDI-ToolView-kate_private_plugin_katefiletreeplugin-Visible=false
+Kate-MDI-ToolView-kateproject-Persistent=false
+Kate-MDI-ToolView-kateproject-Position=0
+Kate-MDI-ToolView-kateproject-Sidebar-Position=1
+Kate-MDI-ToolView-kateproject-Visible=false
+Kate-MDI-ToolView-kateprojectinfo-Persistent=false
+Kate-MDI-ToolView-kateprojectinfo-Position=3
+Kate-MDI-ToolView-kateprojectinfo-Sidebar-Position=1
+Kate-MDI-ToolView-kateprojectinfo-Visible=false
+Kate-MDI-V-Splitter=150,930,200
+Selection Mode Visible=true
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAO9AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAAAAADGgAAAAAAAAAA
+ToolBarsMovable=Disabled
+Width 1920=1921
+
+[MainWindow0 Settings]
+Height 1080=1081
+State=AAAA/wAAAAD9AAAAAAAAB4AAAAO9AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAAAAADGgAAAAAAAAAA
+ToolBarsMovable=Disabled
+Width 1920=1921
+WindowState=10
+
+[MainWindow0-Splitter 0]
+Children=MainWindow0-ViewSpace 0,MainWindow0-ViewSpace 1
+Sizes=287,1398
+
+[MainWindow0-ViewSpace 0]
+Active View=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+Count=1
+View 0=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+View 1=file:///home/brent/workspace/play/open-layers/lib/vis.js
+View 2=file:///home/brent/workspace/play/open-layers/html/style.html
+View 3=file:///home/brent/workspace/play/open-layers/css/style.css
+
+[MainWindow0-ViewSpace 0 file:///home/brent/Downloads/160x600_autoplay/js/mb_html5_160x600_ap.js]
+CursorColumn=2
+CursorLine=144
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 0 file:///home/brent/Downloads/160x600_autoplay/mb_html5_160x600_ap.html]
+CursorColumn=7
+CursorLine=32
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 0 file:///home/brent/Downloads/FASTLANE/ENG-3167.html]
+CursorColumn=0
+CursorLine=2
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/css/style.css]
+CursorColumn=6
+CursorLine=68
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/html/style.html]
+CursorColumn=68
+CursorLine=3
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/lib/vis.js]
+CursorColumn=15
+CursorLine=3
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/scripts/build.sh]
+CursorColumn=32
+CursorLine=23
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 1]
+Active View=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+Count=1
+View 0=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+
+[MainWindow0-ViewSpace 1 file:///home/brent/Downloads/FASTLANE/ENG-3167.html]
+CursorColumn=0
+CursorLine=2
+JumpList=
+ViMarks=
+
+[MainWindow0-ViewSpace 1 file:///home/brent/workspace/play/open-layers/html/style.html]
+CursorColumn=7
+CursorLine=38
+JumpList=
+ViMarks=
+
+[Notification Messages]
+DoNotShowAgainContinueSearchDialog=true
+
+[Open Documents]
+Count=1
+
+[Open MainWindows]
+Count=1
+
+[Plugin:katecloseexceptplugin:menu]
+ShowConfirmation=true
+
+[Plugin:katefilebrowserplugin:MainWindow:0]
+auto sync folder=false
+filter history=
+location[$e]=file://$HOME/workspace/play/open-layers/css/
+
+[Plugin:katefilebrowserplugin:MainWindow:0:dir]
+Decoration position=0
+Previews=false
+Show Preview=false
+Show hidden files=false
+Sort by=Name
+Sort directories first=true
+Sort reversed=false
+View Style=Detail
+detailedViewIconSize=0
+
+[Plugin:katesearchplugin:MainWindow:0:search-plugin]
+BinaryFiles=false
+CurrentExcludeFilter=-1
+CurrentFilter=-1
+ExcludeFilters=
+ExpandSearchResults=false
+Filters=
+FollowSymLink=false
+HiddenFiles=false
+MatchCase=false
+Place=1
+Recursive=true
+Search=
+SearchDiskFiles=
+SearchDiskFiless=
+UseRegExp=false
+
+[Recent Files]
+File1[$e]=$HOME/workspace/play/open-layers/lib/vis.js
+File2[$e]=$HOME/workspace/play/open-layers/scripts/build.sh
+File3[$e]=$HOME/workspace/play/open-layers/css/style.css
+File4[$e]=$HOME/workspace/play/open-layers/html/style.html
+File5[$e]=$HOME/Downloads/FASTLANE/ENG-3167.html
+Name1[$e]=vis.js
+Name2[$e]=build.sh
+Name3[$e]=style.css
+Name4[$e]=style.html
+Name5[$e]=ENG-3167.html
+
+[filebrowser]
+toolbar actions=home,mkdir,up,back,forward,show hidden,short view,detailed view,tree view,detailed tree view,bookmarks,sync_dir,configure
+
+[filetree]
+editShade=210,181,216
+listMode=false
+shadingEnabled=true
+showFullPathOnRoots=true
+sortRole=0
+viewShade=185,178,206
