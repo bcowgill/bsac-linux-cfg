@@ -1,0 +1,16 @@
+[KPropertiesDialog]
+Height 1080=387
+Width 1920=410
+
+[MainWindow]
+Height 1080=600
+Height 600=430
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAA1IAAAIrAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
+ToolBarsMovable=Disabled
+Width 1920=850
+Width 800=620
+
+[Open-with settings]
+CompletionMode=5
+History=ksysguard %U

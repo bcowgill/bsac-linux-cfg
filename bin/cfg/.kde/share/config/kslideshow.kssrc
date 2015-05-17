@@ -1,0 +1,9 @@
+[Settings]
+Delay=20
+Directory[$e]=$HOME/Dropbox/WorkSafe
+PrintName=true
+PrintPath=false
+RandomPosition=false
+ShowRandom=true
+SubDirectory=true
+ZoomImages=false

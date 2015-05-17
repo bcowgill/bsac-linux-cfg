@@ -1,0 +1,15 @@
+[$Version]
+update_info=okular.upd:sep_settings
+
+[Core General]
+ObeyDRM=false
+
+[Document]
+ChangeColors=true
+
+[General]
+ObeyDRM[$d]
+UseKTTSD=false
+
+[Main View]
+SplitterSizes=426,1408
