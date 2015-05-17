@@ -22,6 +22,8 @@ THUNDER=""
 #THUNDER=ryu9c8b3.default
 DOWNLOAD=$HOME/Downloads
 
+USE_SCHEMACRAWLER=""
+USE_MYSQL=""
 USE_JAVA=""
 JAVA_VER=jdk1.7.0_21
 
@@ -31,6 +33,7 @@ MVN_CMD=""
 #MVN_PKG="mvn:maven"
 #MVN_VER="3.0.4"
 
+USE_POSTGRES=""
 POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
@@ -299,12 +302,26 @@ install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg 
 install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
 echo YOUDO You have to manually install SourceCodePro with your Font Manager from Downloads/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf
 
-# install fonts locally ?
-#mkdir -p .fonts
-cp Downloads/ProFontWinTweaked/ProFontWindows.ttf .fonts
-#cp Downloads/$SC_PRO_ARCHIVE/OTF/*.otf   .fonts
-#fc-cache
-#fc-list
+FILE=.fonts/ProFontWindows.ttf
+make_dir_exist .fonts "locally installed fonts for X windows"
+file_exists $FILE || cp Downloads/ProFontWinTweaked/ProFontWindows.ttf .fonts
+file_exists $FILE "ProFontWindows still not installed"
+FILE=.fonts/SourceCodePro-Black.otf
+file_exists $FILE || cp Downloads/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
+file_exists $FILE "SourceCodePro fonts still not installed"
+cmd_exists fc-cache "font cache program needed"
+cmd_exists fc-list "font cache list program needed"
+fc-cache --verbose | grep 'new cache contents' || echo " "
+if ( fc-list | grep ProFontWindows ) ; then
+	OK "ProFontWindows font is cached"
+else
+	NOT_OK "ProFontWindows font is not cached"
+fi
+if ( fc-list | grep SourceCodePro ) ; then
+	OK "SourceCodePro font is cached"
+else
+	NOT_OK "SourceCodePro font is not cached"
+fi
 
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
@@ -691,30 +708,36 @@ if [ ! -z $GOOGLE_CHROME_PKG ]; then
 	fi # FLASH_URL
 fi # GOOGLE_CHROME_PKG
 
+if [ ! -z $USE_SCHEMACRAWLER ]; then
+	if [ ! -z $USE_POSTGRES ]; then
+		# postgres JDBC driver for creating DB schema diagrams using schemacrawler
+		# http://jdbc.postgresql.org/download.html
+		POSTGRES_JDBC_JAR=postgresql-9.3-1102.jdbc41.jar
+		POSTGRES_JDBC_URL=http://jdbc.postgresql.org/download/$POSTGRES_JDBC_JAR
+		POSTGRES_JDBC_DIR=/usr/share/java
+		cmd_exists java "must have java installed for JDBC/schemacrawler"
+		install_file_from_url Downloads/$POSTGRES_JDBC_JAR $POSTGRES_JDBC_JAR "$POSTGRES_JDBC_URL" "postgres JDBC jar file for using schemacrawler"
+		file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it"&& sudo cp "Downloads/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
+		file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR
+
+		# schemacrawler with postgres JDBC driver included
+		SCHEMA_VER=10.10.05
+		SCHEMA_POSTGRES_ZIP=schemacrawler-postgresql-$SCHEMA_VER-distrib.zip
+		SCHEMA_POSTGRES_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20PostgreSQL/$SCHEMA_VER/$SCHEMA_POSTGRES_ZIP/download
+		install_file_from_url_zip Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh $SCHEMA_POSTGRES_ZIP "$SCHEMA_POSTGRES_URL" "schemacrawler with postgres JDBC driver"
+		file_is_executable Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh "need executable permission"
+	fi # USE_POSTGRES
+
+	if [ ! -z $USE_MYSQL ]; then
+		# schemacrawler with mysql JDBC driver included
+		SCHEMA_MYSQL_ZIP=schemacrawler-mysql-$SCHEMA_VER-distrib.zip
+		SCHEMA_MYSQL_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/$SCHEMA_VER/$SCHEMA_MYSQL_ZIP/download
+		install_file_from_url_zip Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh $SCHEMA_MYSQL_ZIP "$SCHEMA_MYSQL_URL" "schemacrawler with mysql JDBC driver"
+		file_is_executable Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh "need executable permission"
+	fi # USE_MYSQL
+fi # USE_SCHEMACRAWLER
+
 exit 3
-
-# postgres JDBC driver for creating DB schema diagrams using schemacrawler
-# http://jdbc.postgresql.org/download.html
-POSTGRES_JDBC_JAR=postgresql-9.3-1102.jdbc41.jar
-POSTGRES_JDBC_URL=http://jdbc.postgresql.org/download/$POSTGRES_JDBC_JAR
-POSTGRES_JDBC_DIR=/usr/share/java
-cmd_exists java "must have java installed for JDBC/schemacrawler"
-install_file_from_url Downloads/$POSTGRES_JDBC_JAR $POSTGRES_JDBC_JAR "$POSTGRES_JDBC_URL" "postgres JDBC jar file for using schemacrawler"
-file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it"&& sudo cp "Downloads/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
-file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR
-
-# schemacrawler with postgres JDBC driver included
-SCHEMA_VER=10.10.05
-SCHEMA_POSTGRES_ZIP=schemacrawler-postgresql-$SCHEMA_VER-distrib.zip
-SCHEMA_POSTGRES_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20PostgreSQL/$SCHEMA_VER/$SCHEMA_POSTGRES_ZIP/download
-install_file_from_url_zip Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh $SCHEMA_POSTGRES_ZIP "$SCHEMA_POSTGRES_URL" "schemacrawler with postgres JDBC driver"
-file_is_executable Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh "need executable permission"
-
-# schemacrawler with mysql JDBC driver included
-SCHEMA_MYSQL_ZIP=schemacrawler-mysql-$SCHEMA_VER-distrib.zip
-SCHEMA_MYSQL_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/$SCHEMA_VER/$SCHEMA_MYSQL_ZIP/download
-install_file_from_url_zip Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh $SCHEMA_MYSQL_ZIP "$SCHEMA_MYSQL_URL" "schemacrawler with mysql JDBC driver"
-file_is_executable Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh "need executable permission"
 
 #============================================================================
 # end of main installing, now configuring
