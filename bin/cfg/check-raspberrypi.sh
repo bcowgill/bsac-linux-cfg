@@ -108,7 +108,7 @@ GITSVN_PKG=""
 GIT_VER="1.9.1"
 GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
 GIT_PKG=git
-GIT_PKG_AFTER="git-doc git-gui gitk tig $GITSVN_PKG"
+GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
 
 GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
@@ -482,13 +482,14 @@ has_ssh_keys
 which git
 if git --version | grep " version " | grep $GIT_VER; then
 	OK "git command version correct"
+	installs_from "$GIT_PKG_AFTER" "additional git packages"
 else
 	NOT_OK "git command version incorrect - will try update"
 	# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
 	apt_has_source ppa:pdoes/ppa "repository for git"
 	sudo apt-get update
 	apt-cache show git | grep '^Version:'
-	sudo apt-get install $GIT_PKG $GIT_PKG_AFTER
+	installs_from "$GIT_PKG_AFTER" "additional git packages"
 	NOT_OK "exiting after git update, try again."
 	exit 1
 
@@ -576,8 +577,8 @@ echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
 
-install_commands "$INSTALL"
-install_commands_from "$INSTALL_FROM"
+installs_from "$INSTALL"
+installs_from "$INSTALL_FROM"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 [ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
@@ -586,7 +587,7 @@ install_perl_modules "$PERL_MODULES"
 install_ruby_gems "$RUBY_GEMS"
 
 
-install_files_from "$INSTALL_FILE_PACKAGES"
+installs_from "$INSTALL_FILE_PACKAGES"
 
 # TODO install from url zip ??
 if [ ! -z $DROPBOX_URL ]; then
@@ -1024,20 +1025,20 @@ if [ ! -z $SUBLIME_PKG ]; then
 	## TODO file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
 fi # SUBLIME_PKG
 
-exit 3
-
 # gitk configuration
 FILE=.config/git/gitk
-# There are other colors in the config file which are not in the UI
-file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
-file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
-file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
-file_has_text "$FILE" "set uicolor #000000" "Edit / Preferences / Colors"
-file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
-file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"
-file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences / Colors"
-file_has_text "$FILE" "set markbgcolor #002c39" "Edit / Preferences / Colors"
-file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
+if [ -f "$FILE" ]; then
+	# There are other colors in the config file which are not in the UI
+	file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
+	file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
+	file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
+	file_has_text "$FILE" "set uicolor #000000" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set markbgcolor #002c39" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
+fi # gitk config file
 
 # libreoffice color changes
 # difficult because of so much punctutation
@@ -1051,46 +1052,46 @@ file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
 
 # Postgres pgadmin3 setup
 FILE=.pgadmin3
-WHAT="Postgres pgadmin3 color scheme File / Options / Colours"
-ini_file_has_text "$FILE" "////Font=ProFontWindows 14" "$WHAT"
-ini_file_has_text "$FILE" "////DDFont=ProFontWindows 14" "$WHAT"
-ini_file_has_text "$FILE" "/frmQuery/Font=ProFontWindows 14" "$WHAT"
-ini_file_has_text "$FILE" "/frmQuery/ShowIndentGuides=true" "$WHAT"
-ini_file_has_text "$FILE" "/frmQuery/ShowLineEnds=true" "$WHAT"
-ini_file_has_text "$FILE" "/frmQuery/ShowWhitespace=true" "$WHAT"
-ini_file_has_text "$FILE" "/frmQuery/ShowLineNumber=true" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/MarginBackgroundColour=rgb(31, 5, 65)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/ColourCaret=yellow" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour1=rgb(0, 127, 0)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour2=rgb(0, 127, 0)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour3=rgb(127, 127, 127)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour4=rgb(0, 127, 127)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour5=rgb(4, 194, 251)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour6=rgb(127, 0, 127)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour7=rgb(127, 0, 127)" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour10=yellow" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/Colour11=red" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/UseSystemBackground=false" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/UseSystemForeground=false" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/ColourBackground=black" "$WHAT"
-ini_file_has_text "$FILE" "/ctlSQLBox/ColourForeground=yellow" "$WHAT"
+if [ -f "$FILE" ]; then
+	WHAT="Postgres pgadmin3 color scheme File / Options / Colours"
+	ini_file_has_text "$FILE" "////Font=ProFontWindows 14" "$WHAT"
+	ini_file_has_text "$FILE" "////DDFont=ProFontWindows 14" "$WHAT"
+	ini_file_has_text "$FILE" "/frmQuery/Font=ProFontWindows 14" "$WHAT"
+	ini_file_has_text "$FILE" "/frmQuery/ShowIndentGuides=true" "$WHAT"
+	ini_file_has_text "$FILE" "/frmQuery/ShowLineEnds=true" "$WHAT"
+	ini_file_has_text "$FILE" "/frmQuery/ShowWhitespace=true" "$WHAT"
+	ini_file_has_text "$FILE" "/frmQuery/ShowLineNumber=true" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/MarginBackgroundColour=rgb(31, 5, 65)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/ColourCaret=yellow" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour1=rgb(0, 127, 0)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour2=rgb(0, 127, 0)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour3=rgb(127, 127, 127)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour4=rgb(0, 127, 127)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour5=rgb(4, 194, 251)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour6=rgb(127, 0, 127)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour7=rgb(127, 0, 127)" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour10=yellow" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/Colour11=red" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/UseSystemBackground=false" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/UseSystemForeground=false" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/ColourBackground=black" "$WHAT"
+	ini_file_has_text "$FILE" "/ctlSQLBox/ColourForeground=yellow" "$WHAT"
 
-WHAT="Postgres pgadmin3 misc settinggs"
-ini_file_has_text "$FILE" "////LogLevel=3" "$WHAT"
-ini_file_has_text "$FILE" "////ColumnNames=true" "$WHAT"
-ini_file_has_text "$FILE" "////KeywordsInUppercase=true" "$WHAT"
-ini_file_has_text "$FILE" "/Copy/ColSeparator=," "$WHAT"
-ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
+	WHAT="Postgres pgadmin3 misc settinggs"
+	ini_file_has_text "$FILE" "////LogLevel=3" "$WHAT"
+	ini_file_has_text "$FILE" "////ColumnNames=true" "$WHAT"
+	ini_file_has_text "$FILE" "////KeywordsInUppercase=true" "$WHAT"
+	ini_file_has_text "$FILE" "/Copy/ColSeparator=," "$WHAT"
+	ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
+fi # pgadmin3 config file
 
 popd
 
 echo COMMANDS="$COMMANDS"
 echo PACKAGES="$PACKAGES"
 
-echo TODO VIRTUALBOX SETUP
-echo TODO SUBLIME THEME OVERRIDES
-echo TODO WINDOW MANAGER SPECIAL EFFECTS
-echo TODO google chrome flash player
 echo TODO gvim font setting config
 
 OK "all checks complete"
+ENDS
+
