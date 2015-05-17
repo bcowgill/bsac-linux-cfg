@@ -1,0 +1,166 @@
+# resize +/-N to change region height by a few lines
+
+# example set up with two windows shell and a logged telnet
+# screen 1  # shell
+# screen -fn -t telnet-foobar -L 2 telnet foobar
+
+# idea for standard windows:
+# shell, manual, midnight, top, tests, logs
+
+#screen -t shell 0
+#screen -t midnight 1 
+#screen -t manual-page 2
+#screen -t top 3 nice top
+#screen -t test-plans 4
+#screen -t log-files 5
+
+# set up a screen saver program after 5 minutes
+blankerprg cmatrix -b -s -c magenta
+idle 300 blanker
+
+## Define screen region layouts which can be used with:
+# C-a : layout select OH
+# screen -X layout select OH
+
+# OH layout
+# +-+-+
+# | | |
+# | +-+
+# | | |
+# +-+-+
+#
+layout new OH
+split -v
+focus
+split
+focus
+focus
+layout save OH
+
+# HO layout
+# +-+-+
+# | | |
+# +-+ |
+# | | |
+# +-+-+
+#
+layout new HO
+split -v
+split
+focus
+focus
+focus
+layout save HO
+
+# OO layout
+# +-+-+
+# | | |
+# | | |
+# | | |
+# +-+-+
+#
+layout new OO
+split -v
+focus
+focus
+layout save OO
+
+# H layout
+# +---+
+# |   |
+# +---+
+# |   |
+# +---+
+#
+layout new H
+split
+focus
+focus
+layout save H
+
+
+# HH layout
+# +-+-+
+# | | |
+# +-+-+
+# | | |
+# +-+-+
+#
+layout new HH
+split -v
+split
+focus
+focus
+split
+focus
+layout save HH
+
+focus
+
+# W layout
+# +-+-+
+# | | |
+# +-+-+
+# |   |
+# +---+
+#
+layout new W
+split
+split -v
+focus
+focus
+focus
+layout save W
+
+# M layout
+# +---+
+# |   |
+# +-+-+
+# | | |
+# +-+-+
+#
+layout new M
+split
+focus
+split -v
+focus
+focus
+layout save M
+
+# OW layout
+# +---+-+-+
+# |   | | |
+# |   +-+-+
+# |   |   |
+# +---+---+
+#
+layout new OW
+split -v
+focus
+split
+split -v
+focus
+focus
+focus
+layout save OW
+
+# OM layout
+# +---+---+
+# |   |   |
+# |   +-+-+
+# |   | | |
+# +---+-+-+
+#
+layout new OM
+split -v
+focus
+split
+focus
+split -v
+focus
+focus
+layout save OM
+
+# finish up with just one big screen
+layout new
+license

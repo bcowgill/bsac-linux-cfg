@@ -2,4 +2,70 @@ screen command quick reference
 
 .screenrc file to configure startup options
 
-KEY:SCREEN: Ctrl-a c
+window = a numbered screen window which may or may not be visible and which has an app running in it (usually a shell)
+region = a region of the screen that is visible
+
+screen -U   UTF-8 mode
+screen -S session-title   give a name to the screen session
+screen -s tcsh   set shell to use with Ctrl-a c
+screen -L   turn on output logging for all windows
+screen -r   reattach a screen session
+screen -ls   list screen sessions available
+
+KEY:SCREEN:INFO Ctrl-a ? Help on Ctrl-a commands
+KEY:SCREEN:INFO Ctrl-a A Change the title of the current screen window
+KEY:SCREEN:INFO Ctrl-a Ctrl-g Toggle visible bell setting
+KEY:SCREEN:INFO Ctrl-a m Repeat the last message in the message line
+KEY:SCREEN:INFO Ctrl-a N Show which window you are in
+KEY:SCREEN:INFO Ctrl-a t Show time and date
+
+KEY:SCREEN:KEY Ctrl-a a A literal Ctrl-a passed through to the app in the region
+KEY:SCREEN:KEY Ctrl-a b Send a break to the app in the region
+
+KEY:SCREEN:LOG Ctrl-a h Write hardcopy of current region to file hardcopy.N
+KEY:SCREEN:LOG Ctrl-a H Log everything in the screen window to screenlog.N use less -R to view
+
+KEY:SCREEN:CTRL Ctrl-a d Detach screen session from terminal (screen -d)
+KEY:SCREEN:CTRL Ctrl-a z Suspend screen session and return to calling shell
+KEY:SCREEN:CTRL Ctrl-a \ Kill all windows and terminate screen session
+KEY:SCREEN:CTRL Ctrl-a : Command line mode
+KEY:SCREEN:CTRL Ctrl-a * Show all currently attached displays (multiuser mode)
+
+KEY:SCREEN:WIN Ctrl-a c Create a new window with shell in the current region
+KEY:SCREEN:WIN Ctrl-a | Split current screen region vertically in half
+KEY:SCREEN:WIN Ctrl-a S Split current screen region horizontally in half
+KEY:SCREEN:WIN Ctrl-a Q Unsplit to full screen
+KEY:SCREEN:WIN Ctrl-a X Kill/unsplit current region to produce a bigger region
+KEY:SCREEN:WIN Ctrl-a Tab Switch to the next screen region
+KEY:SCREEN:WIN Ctrl-a Number Display numbered screen window in current region
+KEY:SCREEN:WIN Ctrl-a " Select a screen window from list to display in current region
+KEY:SCREEN:WIN Ctrl-a C Clear the screen region
+KEY:SCREEN:WIN Ctrl-a K Kill the current window and put the next one in the current region
+KEY:SCREEN:WIN Ctrl-a Ctrl-K Kill the current window and put the next one in the current region
+KEY:SCREEN:WIN Ctrl-a Space Show next window in current region
+KEY:SCREEN:WIN Ctrl-a Backspace Show previous window in current region
+KEY:SCREEN:WIN Ctrl-a p Show previous window in current region
+KEY:SCREEN:WIN Ctrl-a Ctrl-h previous window in current region
+
+KEY:SCREEN:COPY Ctrl-a [ Enter copy mode (use Ctrl-a m to see if you're still in it)
+KEY:SCREEN:COPY Space Begin/End selection when in copy mode
+KEY:SCREEN:COPY Enter Begin/End selection when in copy mode (leaves copy mode)
+KEY:SCREEN:COPY Ctrl-a ] Paste the copied text
+KEY:SCREEN:COPY Ctrl-e Scroll up one line in copy mode
+KEY:SCREEN:COPY Ctrl-y Scroll down one line in copy mode
+KEY:SCREEN:COPY Ctrl-u Scroll up half a page in copy mode
+KEY:SCREEN:COPY Ctrl-d Scroll down half a page in copy mode
+KEY:SCREEN:COPY Ctrl-b Scroll up one page in copy mode
+KEY:SCREEN:COPY Ctrl-f Scroll down one page in copy mode
+KEY:SCREEN:COPY Y Mark a whole line in copy mode
+KEY:SCREEN:COPY y Mark from start of line in copy mode
+KEY:SCREEN:COPY w Move one word from current position in copy mode
+KEY:SCREEN:COPY g Move to top of buffer in copy mode
+KEY:SCREEN:COPY G Move to bottom of buffer in copy mode
+KEY:SCREEN:COPY ^ Move to first column in copy mode
+KEY:SCREEN:COPY $ Move to last column in copy mode
+KEY:SCREEN:COPY / Search forward in copy mode
+KEY:SCREEN:COPY ? Search backward in copy mode
+KEY:SCREEN:COPY n Go to next search match in copy mode
+KEY:SCREEN:COPY N Go to previous search match in copy mode
+
