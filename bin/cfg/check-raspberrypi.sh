@@ -12,9 +12,9 @@ if which lib-check-system.sh; then
 fi
 
 MYNAME="Brent S.A. Cowgill"
-EMAIL=zardoz@infoserve.net
+EMAIL=brent@blismedia.com
 UBUNTU=trusty
-COMPANY=raspberrypi
+COMPANY=blismedia
 ULIMITFILES=8096
 MOUNT_DATA=""
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
@@ -737,11 +737,6 @@ if [ ! -z $USE_SCHEMACRAWLER ]; then
 	fi # USE_MYSQL
 fi # USE_SCHEMACRAWLER
 
-FILE=".config/leafpad/leafpadrc"
-maybe_file_has_text $FILE "ProFontWindows 18"
-
-exit 3
-
 #============================================================================
 # end of main installing, now configuring
 
@@ -750,178 +745,184 @@ FILE=.my.cnf
 file_has_text "$FILE" "safe-updates" "prevent big deletes from tables"
 file_must_not_have_text "$FILE" "#safe-updates" "make sure not commented out"
 
-# Dropbox configuration
-dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
-file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
-file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+FILE=".config/leafpad/leafpadrc"
+maybe_file_has_text $FILE "ProFontWindows 18"
+
+if [ ! -z $DROPBOX_URL ]; then
+	# Dropbox configuration
+	dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
+	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
+	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+fi # DROPBOX_URL
 
 # Thunderbird
 if [ ! -z $THUNDER ]; then
-FILE=".thunderbird/$THUNDER/prefs.js"
-file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
-file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
-file_has_text $FILE "ProFontWindows"
-file_contains_text $FILE "browser.anchor_color., .#66FFFF"
-#file_contains_text $FILE "browser.anchor_color., .#99FFFF"
-file_contains_text $FILE "browser.display.background_color., .#000000"
-#file_contains_text $FILE "browser.display.background_color., .#666666"
-file_contains_text $FILE "browser.display.foreground_color., .#FFFF33"
-#file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
-#file_contains_text $FILE "browser.display.use_document_colors., false"
-file_contains_text $FILE "browser.visited_color., .#FF99FF"
-#file_contains_text $FILE "browser.visited_color., .#FFCCCC"
-file_contains_text $FILE "mail.citation_color., .#CCCCCC"
-#file_contains_text $FILE "mail.citation_color., .#FFCC66"
-file_contains_text $FILE "mailnews.tags..label1.color., .#FF0000"
-file_contains_text $FILE "mailnews.tags..label2.color., .#FF9900"
-file_contains_text $FILE "mailnews.tags..label3.color., .#009900"
-file_contains_text $FILE "mailnews.tags..label4.color., .#3333FF"
-file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
-#file_contains_text $FILE "msgcompose.background.color., .#333333"
-#file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
+	FILE=".thunderbird/$THUNDER/prefs.js"
+	file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
+	file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
+	file_has_text $FILE "ProFontWindows"
+	file_contains_text $FILE "browser.anchor_color., .#66FFFF"
+	#file_contains_text $FILE "browser.anchor_color., .#99FFFF"
+	file_contains_text $FILE "browser.display.background_color., .#000000"
+	#file_contains_text $FILE "browser.display.background_color., .#666666"
+	file_contains_text $FILE "browser.display.foreground_color., .#FFFF33"
+	#file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
+	#file_contains_text $FILE "browser.display.use_document_colors., false"
+	file_contains_text $FILE "browser.visited_color., .#FF99FF"
+	#file_contains_text $FILE "browser.visited_color., .#FFCCCC"
+	file_contains_text $FILE "mail.citation_color., .#CCCCCC"
+	#file_contains_text $FILE "mail.citation_color., .#FFCC66"
+	file_contains_text $FILE "mailnews.tags..label1.color., .#FF0000"
+	file_contains_text $FILE "mailnews.tags..label2.color., .#FF9900"
+	file_contains_text $FILE "mailnews.tags..label3.color., .#009900"
+	file_contains_text $FILE "mailnews.tags..label4.color., .#3333FF"
+	file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
+	#file_contains_text $FILE "msgcompose.background.color., .#333333"
+	#file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
 else
-   OK "thunderbird will not be configured unless THUNDER is non-zero"
+	OK "thunderbird will not be configured unless THUNDER is non-zero"
 fi # THUNDER
 
 #============================================================================
 # KDE configuration files here
 if [ -d .kde ]; then
-DIR=.local/share/applications
-dir_exists $DIR "KDE applications folder"
+	DIR=.local/share/applications
+	dir_exists $DIR "KDE applications folder"
 
-# System Settings
-FILE=.kde/share/config/kcminputrc
-file_has_text $FILE "MouseButtonMapping=LeftHanded" "Mouse settings System Settings / Input Devices / Mouse Settings"
-file_has_text $FILE "cursorTheme=redglass" "System Settings / Workspace Appearance / Cursor Theme"
-file_has_text $FILE "cursorSize=32" "System Settings / Workspace Appearance / Cursor Theme"
-file_has_text $FILE "RepeatDelay=150" "System Settings / Input Devices / Keyboard / Hardware"
-file_has_text $FILE "RepeatRate=50" "System Settings / Input Devices / Keyboard / Hardware"
+	# System Settings
+	FILE=.kde/share/config/kcminputrc
+	file_has_text $FILE "MouseButtonMapping=LeftHanded" "Mouse settings System Settings / Input Devices / Mouse Settings"
+	file_has_text $FILE "cursorTheme=redglass" "System Settings / Workspace Appearance / Cursor Theme"
+	file_has_text $FILE "cursorSize=32" "System Settings / Workspace Appearance / Cursor Theme"
+	file_has_text $FILE "RepeatDelay=150" "System Settings / Input Devices / Keyboard / Hardware"
+	file_has_text $FILE "RepeatRate=50" "System Settings / Input Devices / Keyboard / Hardware"
 
-FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "activeFont=Ubuntu,11" "System Settings / Application Appearance"
-file_has_text $FILE "desktopFont=Ubuntu,11"
-file_has_text $FILE "font=Ubuntu,11"
-file_has_text $FILE "menuFont=Ubuntu,11"
-file_has_text $FILE "taskbarFont=Ubuntu,11"
-file_has_text $FILE "smallestReadableFont=Ubuntu,10"
-file_has_text $FILE "toolBarFont=Ubuntu,10"
-file_has_text $FILE "fixed=ProFontWindows,14"
+	FILE=.kde/share/config/kdeglobals
+	file_has_text $FILE "activeFont=Ubuntu,11" "System Settings / Application Appearance"
+	file_has_text $FILE "desktopFont=Ubuntu,11"
+	file_has_text $FILE "font=Ubuntu,11"
+	file_has_text $FILE "menuFont=Ubuntu,11"
+	file_has_text $FILE "taskbarFont=Ubuntu,11"
+	file_has_text $FILE "smallestReadableFont=Ubuntu,10"
+	file_has_text $FILE "toolBarFont=Ubuntu,10"
+	file_has_text $FILE "fixed=ProFontWindows,14"
 
-FILE=.kde/share/config/kdeglobals
-# this scheme is very dark but not so good with Visual Slick Edit
-#file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
-# this scheme is dark and works well with Visual Slick Edit
-file_has_text $FILE "ColorScheme=Obsidian Coast" "System Settings / Application Appearance / Colors"
-# Unity settings
+	FILE=.kde/share/config/kdeglobals
+	# this scheme is very dark but not so good with Visual Slick Edit
+	#file_has_text $FILE "ColorScheme=Zion .Reversed." "System Settings / Application Appearance / Colors"
+	# this scheme is dark and works well with Visual Slick Edit
+	file_has_text $FILE "ColorScheme=Obsidian Coast" "System Settings / Application Appearance / Colors"
+	# Unity settings
 
-# KDE settings
-file_has_text $FILE "ToolButtonStyle=TextUnderIcon" "System Settings / Application Appearance / Style / Fine Tuning"
-file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
-file_has_text $FILE "DateFormatShort=%Y-%m-%d" "System Settings / Locale / Date & Time"
-file_has_text $FILE "BinaryUnitDialect=2"   # byte units kB, MB etc
-file_has_text $FILE "UseSystemBell=true" "System Settings / Notifications / System Bell"
+	# KDE settings
+	file_has_text $FILE "ToolButtonStyle=TextUnderIcon" "System Settings / Application Appearance / Style / Fine Tuning"
+	file_has_text $FILE "ToolButtonStyleOtherToolbars=TextUnderIcon"
+	file_has_text $FILE "DateFormatShort=%Y-%m-%d" "System Settings / Locale / Date & Time"
+	file_has_text $FILE "BinaryUnitDialect=2"   # byte units kB, MB etc
+	file_has_text $FILE "UseSystemBell=true" "System Settings / Notifications / System Bell"
 
-file_has_text .kde/share/config/plasmarc "name=oxygen" "System Settings / Workspace Appearaance / Desktop Theme"
+	file_has_text .kde/share/config/plasmarc "name=oxygen" "System Settings / Workspace Appearaance / Desktop Theme"
 
-# Spell checking settings
-FILE=.kde/share/config/sonnetrc
-file_has_text $FILE "backgroundCheckerEnabled=true" "System Settings / Locale / Spell Checker"
-file_has_text $FILE "checkerEnabledByDefault=true"
-file_has_text $FILE "defaultLanguage=en_GB"
+	# Spell checking settings
+	FILE=.kde/share/config/sonnetrc
+	file_has_text $FILE "backgroundCheckerEnabled=true" "System Settings / Locale / Spell Checker"
+	file_has_text $FILE "checkerEnabledByDefault=true"
+	file_has_text $FILE "defaultLanguage=en_GB"
 
-# Accessibility
-FILE=.kde/share/config/kaccessrc
-file_has_text $FILE "SystemBell=true" "System Settings / Accessibility / Bell"
-file_has_text $FILE "VisibleBell=true"
-file_has_text $FILE "VisibleBellInvert=false"
-file_has_text $FILE "AccessXBeep=true"
-file_has_text $FILE "BounceKeysRejectBeep=true"
-file_has_text $FILE "GestureConfirmation=true" "System Settings / Accessibility / Activation Gestures"
-file_has_text $FILE "SlowKeysAcceptBeep=true"
-file_has_text $FILE "SlowKeysPressBeep=true"
-file_has_text $FILE "SlowKeysRejectBeep=true"
-file_has_text $FILE "StickyKeysBeep=true"
-file_has_text $FILE "StickyKeysLatch=true"
-file_has_text $FILE "ToggleKeysBeep=true"
-file_has_text $FILE "kNotifyAccessX=true"
-file_has_text $FILE "kNotifyModifiers=true"
+	# Accessibility
+	FILE=.kde/share/config/kaccessrc
+	file_has_text $FILE "SystemBell=true" "System Settings / Accessibility / Bell"
+	file_has_text $FILE "VisibleBell=true"
+	file_has_text $FILE "VisibleBellInvert=false"
+	file_has_text $FILE "AccessXBeep=true"
+	file_has_text $FILE "BounceKeysRejectBeep=true"
+	file_has_text $FILE "GestureConfirmation=true" "System Settings / Accessibility / Activation Gestures"
+	file_has_text $FILE "SlowKeysAcceptBeep=true"
+	file_has_text $FILE "SlowKeysPressBeep=true"
+	file_has_text $FILE "SlowKeysRejectBeep=true"
+	file_has_text $FILE "StickyKeysBeep=true"
+	file_has_text $FILE "StickyKeysLatch=true"
+	file_has_text $FILE "ToggleKeysBeep=true"
+	file_has_text $FILE "kNotifyAccessX=true"
+	file_has_text $FILE "kNotifyModifiers=true"
 
-# Startup
-FILE=.kde/share/config/systemsettingsrc
-file_has_text $FILE "ksysguard"
-# TODO file_has_text $FILE "dropboxd"
+	# Startup
+	FILE=.kde/share/config/systemsettingsrc
+	file_has_text $FILE "ksysguard"
+	# TODO file_has_text $FILE "dropboxd"
 
-# Default Applications
-if [ ! -z $THUNDER ]; then
-FILE=.kde/share/config/emaildefaults
-file_contains_text $FILE "EmailClient..e.=thunderbird"
-fi
+	# Default Applications
+	if [ ! -z $THUNDER ]; then
+		FILE=.kde/share/config/emaildefaults
+		file_contains_text $FILE "EmailClient..e.=thunderbird"
+	fi
 
-FILE=.kde/share/config/kdeglobals
-file_has_text $FILE "BrowserApplication=chromium-browser.desktop"
-#KDE file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
+	FILE=.kde/share/config/kdeglobals
+	file_has_text $FILE "BrowserApplication=chromium-browser.desktop"
+	#KDE file_has_text $FILE "BrowserApplication..e.=chromium-browser.desktop"
 
-# KDE Desktop Effects
-FILE=.kde/share/config/kwinrc
-## TODO special window effects
-## TODO file_has_text $FILE "kwin4_effect_cubeEnabled=false"
-## TODO file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
-## TODO file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
-## TODO file_has_text $FILE "kwin4_effect_zoomEnabled=true"
-## TODO file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
+	# KDE Desktop Effects
+	FILE=.kde/share/config/kwinrc
+	## TODO special window effects
+	## TODO file_has_text $FILE "kwin4_effect_cubeEnabled=false"
+	## TODO file_has_text $FILE "kwin4_effect_desktopgridEnabled=true"
+	## TODO file_has_text $FILE "kwin4_effect_magnifierEnabled=false"
+	## TODO file_has_text $FILE "kwin4_effect_mousemarkEnabled=true"
+	## TODO file_has_text $FILE "kwin4_effect_presentwindowsEnabled=true"
+	## TODO file_has_text $FILE "kwin4_effect_trackmouseEnabled=true"
+	## TODO file_has_text $FILE "kwin4_effect_windowgeometryEnabled=true"
+	## TODO file_has_text $FILE "kwin4_effect_zoomEnabled=true"
+	## TODO file_must_not_have_text $FILE "kwin4_effect_snaphelperEnabled=true"
 
-#FILE=.kde/share/config/kwinrc
-#file_has_text $FILE ""
+	#FILE=.kde/share/config/kwinrc
+	#file_has_text $FILE ""
 
-# Screen saver
-FILE=.kde/share/config/kscreensaverrc
-file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
-#file_has_text "$FILE" "Saver=bsod.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
-file_has_text "$FILE" "Timeout=1200" "screensaver activation time configured"
-file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
+	# Screen saver
+	FILE=.kde/share/config/kscreensaverrc
+	file_has_text "$FILE" "Saver=KSlideshow.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+	#file_has_text "$FILE" "Saver=bsod.desktop" "screensaver configured System Settings / Display and Monitor / Screen Locker"
+	file_has_text "$FILE" "Timeout=1200" "screensaver activation time configured"
+	file_has_text "$FILE" "LockGrace=60000" "screensaver lock time configured"
 
-FILE=.kde/share/config/kslideshow.kssrc
-file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
-file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
+	FILE=.kde/share/config/kslideshow.kssrc
+	file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
+	file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
 
-# uk/us keyboard layout
-FILE=.kde/share/config/kxkbrc
-file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
+	# uk/us keyboard layout
+	FILE=.kde/share/config/kxkbrc
+	file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
 
-# baloo KDE file indexer can choke on big files, set it up better
-# If you see baloo_file_extractor hogging your CPU do this to find out which files are the problem
-# ps -ef | grep baloo_file_extractor
-# to see the ID's being scanned
-# balooshow ID ID ID
-FILE=.kde/share/config/baloofilerc
-ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.CSV" "baloo KDE file indexer can choke on big files, set it up better"
-ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.csv" "baloo KDE file indexer can choke on big files, set it up better"
+	# baloo KDE file indexer can choke on big files, set it up better
+	# If you see baloo_file_extractor hogging your CPU do this to find out which files are the problem
+	# ps -ef | grep baloo_file_extractor
+	# to see the ID's being scanned
+	# balooshow ID ID ID
+	FILE=.kde/share/config/baloofilerc
+	ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.CSV" "baloo KDE file indexer can choke on big files, set it up better"
+	ini_file_contains_key_value "$FILE" "/General/exclude filters" "*.csv" "baloo KDE file indexer can choke on big files, set it up better"
 
-# okular PDF viewer invert colours
-FILE=.kde/share/config/okularpartrc
-ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
-ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
-
+	# okular PDF viewer invert colours
+	FILE=.kde/share/config/okularpartrc
+	ini_file_has_text "$FILE" "/Core General//Document/ChangeColors=true" "okular invert colors Settings / Accessibility"
+	ini_file_must_not_have_text "$FILE" "/Core General//Document/RenderMode"
+else
+	OK "kde will not be configured unless .kde directory exists"
 fi # .kde dir
 # End KDE configuration
 #============================================================================
 
 if [ ! -z $CHARLES_PKG ]; then
-# Check charles configuration options
-FILE=.charles.config
-make_dir_exist tx/mirror/web "charles mirroring area"
-file_has_text $FILE "port>58008" "charles port config Proxy / Proxy Settings"
-file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
-# this setting has just vanished in charles
-#file_has_text $FILE "lookAndFeel>GTK+" "charles look and feel Edit / Preferences / User Interface"
-file_has_text $FILE "displayFont>ProFontWindows" "charles font config Edit / Preferences / User Interface"
-file_has_text $FILE "displayFontSize>20" "charles font config Edit / Preferences / User Interface"
-file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
-file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
+	# Check charles configuration options
+	FILE=.charles.config
+	make_dir_exist tx/mirror/web "charles mirroring area"
+	file_has_text $FILE "port>58008" "charles port config Proxy / Proxy Settings"
+	file_has_text $FILE "enableSOCKSTransparentHTTPProxying>true" "charles proxy config"
+	# this setting has just vanished in charles
+	#file_has_text $FILE "lookAndFeel>GTK+" "charles look and feel Edit / Preferences / User Interface"
+	file_has_text $FILE "displayFont>ProFontWindows" "charles font config Edit / Preferences / User Interface"
+	file_has_text $FILE "displayFontSize>20" "charles font config Edit / Preferences / User Interface"
+	file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
+	file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
 	if [ -d .kde ]; then
 		FILE=.kde/share/config/kioslaverc
@@ -931,9 +932,9 @@ file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mir
 		# when proxying system through charles
 		file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
 		file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
-
 	fi # .kde dir
-
+else
+	OK "charles will not be configured unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
 # Eclipse configuration (shortcut and font)
@@ -948,7 +949,11 @@ if [ ! -z "$ECLIPSE" ]; then
 	file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
 	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
 	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
+else
+	OK "eclipse will not be configured unless ECLIPSE is non-zero"
 fi # ECLIPSE
+
+exit 3
 
 file_present prettydiff.js "html beautifier file"
 
