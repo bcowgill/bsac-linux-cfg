@@ -752,6 +752,11 @@ file_must_not_have_text "$FILE" "#safe-updates" "make sure not commented out"
 FILE=".config/leafpad/leafpadrc"
 maybe_file_has_text $FILE "ProFontWindows 18"
 
+FILE=-.config/lxterminal/lxterminal.conf
+maybe_file_has_text $FILE "ProFontWindows 18"
+maybe_file_has_text $FILE "bgcolor=#000000000000"
+maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
+
 if [ ! -z $DROPBOX_URL ]; then
 	# Dropbox configuration
 	dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
