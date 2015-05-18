@@ -8,14 +8,14 @@
 # shell, manual, midnight, top, tests, logs
 
 #screen -t shell 0
-#screen -t midnight 1 
+#screen -t midnight 1
 #screen -t manual-page 2
 #screen -t top 3 nice top
 #screen -t test-plans 4
 #screen -t log-files 5
 
 # set up a screen saver program after 5 minutes
-blankerprg cmatrix -b -s -c magenta
+blankerprg cmatrix -b -s -C magenta
 idle 300 blanker
 
 ## Define screen region layouts which can be used with:
