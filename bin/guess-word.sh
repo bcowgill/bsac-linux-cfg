@@ -28,6 +28,7 @@ else
 
 	# remove guessed letters and show a histogram of frequency for possible letters
 	grep -v regex $TEMP_FILE | grep -v '-' | grep -v '(' | grep -v "'" | uniq | perl -pne 's{[$ENV{G}]}{}g;s{([a-z])}{$1\n}g' | sort | perl -pne 's{\n}{}g'
+	echo " "
 
 	rm $TEMP_FILE
 fi
