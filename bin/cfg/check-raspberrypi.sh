@@ -254,14 +254,14 @@ if [ `ulimit -n` == $ULIMITFILES ]; then
 	OK "ulimit for open files is good"
 else
 	NOT_OK "ulimit for open files is bad need $ULIMITFILES"
-	file_has_text /etc/security/limits.conf $USER "check limits file" || ( \
+	config_has_text /etc/security/limits.conf $USER "check limits file" || ( \
 		echo echo \"$USER            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
 		echo echo \"$USER            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
 		chmod +x go.sudo;
 		sudo ./go.sudo\
 	)
-	file_has_text /etc/security/limits.conf $USER "check username in limits file"
-	file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
+	config_has_text /etc/security/limits.conf $USER "check username in limits file"
+	config_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
 	echo YOUDO You have to logout/login again for ulimit to take effect.
 	exit 1
 fi
@@ -1090,6 +1090,12 @@ if [ -f "$FILE" ]; then
 	ini_file_has_text "$FILE" "/Copy/ColSeparator=," "$WHAT"
 	ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
 fi # pgadmin3 config file
+
+if [ "$HOSTNAME" == "raspberrypi" ]; then
+	FILE="/etc/rc.local"
+	config_must_have_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
+
+fi # raspberrypi
 
 popd
 
