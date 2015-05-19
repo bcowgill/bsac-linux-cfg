@@ -1096,9 +1096,15 @@ if [ -f "$FILE" ]; then
 	ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
 fi # pgadmin3 config file
 
+# Smartgit cannot run on Pi, ARM platform
+#SMARTGIT="http://www.syntevo.com/smartgit/download?file=smartgit/smartgit-generic-6_5_8.tar.gz"
+#SNARTGIT="http://www.syntevo.com/downloads/smartgit/smartgit-generic-6_5_8.tar.gz"
+#install_file_from_url_zip Downloads/smartgit/bin/smartgit.sh smartgit-generic-6_5_8.tar.gz "$SMARTGIT" "Smart Git package must manually download: links $SMARTGIT"
+
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	FILE="/etc/rc.local"
 	config_has_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
+
 
 fi # raspberrypi
 
