@@ -1,12 +1,16 @@
 # no shebang line or history.log will be empty.
 # Take a snapshot of the system for later comparison
+# snapshot.sh %d-directory  # will add the date to the directory created
 
 # Save a copy of the environment vars before we change it
 _TMP_SET=`mktemp`
 set | grep -v _TMP_SET >> $_TMP_SET
 
+# Replace %d in directory name with time now.
 NOW=`date +%F-%H-%M`
-DIR="${1:-sys-snapshot-$NOW}"
+DIR="${1:-sys-snapshot-%d}"
+DIR=`perl -e 'my ($dir, $now) = @ARGV; $dir =~ s{\%d}{$now}xmsg; print $dir;' "$DIR" $NOW`
+
 EXIT=0
 GENERIFY=`which filter-generify.pl`
 EDITOR=${EDITOR:-vim}
@@ -26,7 +30,7 @@ function main
 
 	FILE="$DIR/00-README.log"
 	echo " "
-	echo "### System snapshot $NOW"  > "$FILE"
+	echo "### System snapshot $NOW to $DIR"  > "$FILE"
 	echo ". describe the state of the machine or why the snapshot was taken..." >> "$FILE"
 	(\
 		echo date `date`; \
