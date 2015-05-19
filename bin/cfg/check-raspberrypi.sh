@@ -170,7 +170,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	VSLICK=""
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
-	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp"
+	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld"
 fi # raspberrypi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -1020,6 +1020,19 @@ if [ -f "$FILE" ]; then
 	file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
 	file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
 fi # perforce merge config file
+
+# Meld diff colors
+FILE=.gconf/apps/meld/%gconf.xml""
+if [ -f "$FILE" ]; then
+	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
+	file_has_text $FILE "custom_font" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
+	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>leafpad" "Edit / Preferences"
+	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"
+	file_contains_text $FILE "show_whitespace.+true" "Edit / Preferences"
+	file_contains_text $FILE "show_line_numbers.+true" "Edit / Preferences"
+fi # meld diff/merge config file
 
 if [ ! -z $SUBLIME_PKG ]; then
 	# sublime configuration
