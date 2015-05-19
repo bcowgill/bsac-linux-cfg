@@ -430,6 +430,9 @@ function install_from {
    local file package which
    file="$1"
    package="$2"
+   if [ -z "$package" ]; then
+      package="$file"
+   fi
    which=`which "$file"`
    if [ ! -z "$which" ] ; then
       OK "command $file exists [$which]"
