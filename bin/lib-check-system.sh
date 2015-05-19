@@ -1387,7 +1387,11 @@ function maybe_config_has_text {
    file="$1"
    text="$2"
    message="$3"
-   [ -f "$file" ] && config_has_text "$file" "$text" "$message"
+   if [ -f "$file" ] ; then
+      config_has_text "$file" "$text" "$message"
+   else
+      OK "config file \"$file\" not present to check contents"
+   fi
 }
 
 # Check that a config file has regex matches some text.
@@ -1429,7 +1433,11 @@ function maybe_file_has_text {
    file="$1"
    text="$2"
    message="$3"
-   [ -f "$file" ] && file_has_text "$file" "$text" "$message"
+   if [ -f "$file" ] ; then
+      file_has_text "$file" "$text" "$message"
+   else
+      OK "file \"$file\" not present to check contents"
+   fi
 }
 
 # regex check for text in file

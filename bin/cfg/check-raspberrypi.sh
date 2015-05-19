@@ -126,6 +126,8 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 
+PI_PKG=""
+
 INI_DIR=check-iniline
 
 INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc lsof fbcat"
@@ -168,6 +170,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	VSLICK=""
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
+	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp"
 fi # raspberrypi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -577,9 +580,11 @@ echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
+echo BIG PI PKG $PI_PKG
 
 installs_from "$INSTALL"
 installs_from "$INSTALL_FROM"
+installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 [ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
@@ -1093,7 +1098,7 @@ fi # pgadmin3 config file
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	FILE="/etc/rc.local"
-	config_must_have_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
+	config_has_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
 
 fi # raspberrypi
 
