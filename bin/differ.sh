@@ -6,6 +6,7 @@
 # started and they cannot diff dirs. Output piped to less for paging
 DIFFERWAIT='| less -R'
 DIFFERDIRS=0
+DIFFERGUI=0
 
 DIFFER=`which $1`
 
@@ -20,6 +21,7 @@ if echo $DIFFER | egrep 'diffmerge|meld' > /dev/null ; then
 	# because they are x windows apps
 	DIFFERWAIT='&'
 	DIFFERDIRS=1
+	DIFFERGUI=1
 fi
 
 if echo $DIFFER | grep diffmerge > /dev/null ; then
@@ -29,5 +31,5 @@ if echo $DIFFER | grep vimdiff > /dev/null ; then
 	DIFFERWAIT=";"
 fi
 
-echo "DIFFER: $DIFFER new old $DIFFERWAIT # Dirs? $DIFFERDIRS"
-export DIFFER DIFFERWAIT DIFFERDIRS
+echo "DIFFER: $DIFFER new old $DIFFERWAIT # Dirs? $DIFFERDIRS GUI? $DIFFERGUI"
+export DIFFER DIFFERWAIT DIFFERDIRS DIFFERGUI
