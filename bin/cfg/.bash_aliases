@@ -67,7 +67,11 @@ else
    if which diffmerge >> /dev/null; then
       alias vdiff='diffmerge --nosplash'
    else
-      alias vdiff='vimdiff'
+      if which meld >> /dev/null; then
+         alias vdiff='meld'
+      else
+         alias vdiff='vimdiff'
+      fi
    fi
 fi
 if which p4merge >> /dev/null 2>&1 ; then
