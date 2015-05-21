@@ -1,6 +1,9 @@
 for file in `find . -type f | grep -v diffetc`
 do
-	diff $file /$file > /dev/null
-	echo $file $?
+	if diff $file /$file > /dev/null ; then
+		echo same $file
+	else
+		echo diff $file
+	fi
 done
 
