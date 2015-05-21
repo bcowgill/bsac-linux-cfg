@@ -18,6 +18,8 @@ PIDFILE=/var/run/ntpd.pid
 
 test -x $DAEMON || exit 5
 
+echo `date` /etc/init.d/ntp ${1:-} >> /var/log/startup.log
+
 if [ -r /etc/default/ntp ]; then
 	. /etc/default/ntp
 fi

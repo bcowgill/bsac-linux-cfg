@@ -9,6 +9,8 @@
 ### END INIT INFO
 
 
+echo `date` /etc/init.d/rc.local ${1:-} >> /var/log/startup.log
+
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 
 . /lib/init/vars.sh

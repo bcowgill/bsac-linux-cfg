@@ -27,7 +27,8 @@ then
   exit 1
 fi
 
-cmdln=
+# BSAC flip the buttons around for left handed
+cmdln="-B 321"
 niceness=0
 ssd_args="--quiet --oknodo --nicelevel $niceness --pidfile $PIDFILE --exec $GPM"
 

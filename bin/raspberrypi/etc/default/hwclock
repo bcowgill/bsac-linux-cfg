@@ -7,7 +7,7 @@
 
 # Set this to yes if it is possible to access the hardware clock,
 # or no if it is not.
-#HWCLOCKACCESS=yes
+HWCLOCKACCESS=yes
 
 # Set this to any options you might need to give to hwclock, such
 # as machine hardware clock type for Alphas.
@@ -15,5 +15,9 @@
 
 # Set this to the hardware clock device you want to use, it should
 # probably match the CONFIG_RTC_HCTOSYS_DEVICE kernel config option.
-#HCTOSYS_DEVICE=rtc0
+HCTOSYS_DEVICE=rtc0
 
+# BSAC tell kernel about RTC device in rasp pi
+if [ ${HWCLOCKACCESS:-no}==yes ] && [ ! -z $HCTOSYS_DEVICE ] && [ ! -e /dev/$HCTOSYS_DEVICE ]; then
+   echo ds3231 0x68 > /sys/class/i2c-adapter/i2c-1/new_device
+fi

@@ -11,10 +11,18 @@
 #
 # By default this script does nothing.
 
+echo `date` /etc/rc.local ${1:-} >> /var/log/startup.log
+
+# Bring up the wireless lan interface
+ifup wlan0
+
 # Print the IP address
 _IP=$(hostname -I) || true
 if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+# set up real time clock device and set system time from it
+#echo ds3231 0x68 > /sys/class/i2c-adapter/i2c-1/new_device
+#hwclock --hctosys 
 exit 0

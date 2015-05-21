@@ -58,7 +58,7 @@ hwclocksh()
 	    # If the admin deleted the hwclock config, create a blank
 	    # template with the defaults.
 	    if [ -w /etc ] && [ ! -f /etc/adjtime ] && [ ! -e /etc/adjtime ]; then
-	        printf "0.0 0 0.0\n0\nUTC" > /etc/adjtime
+	        printf "0.0 0 0.0\n0\nUTC\n" > /etc/adjtime
 	    fi
 
 	    if [ -d /run/udev ] || [ -d /dev/.udev ]; then
