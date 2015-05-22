@@ -1,5 +1,5 @@
 #!/bin/bash
-# a text mode screen saver
+# a text mode screen saver for use with the screen program
 
 function choose
 {
@@ -13,6 +13,7 @@ function choose
 CHOICE=""
 while [ -z "$CHOICE" ];
 do
+	which linuxlogo > /dev/null && choose "logo-screen-saver.sh"
 	which cmatrix   > /dev/null && choose "cmatrix -b -s -C red"
 	which cmatrix   > /dev/null && choose "cmatrix -b -s -C white"
 	which cmatrix   > /dev/null && choose "cmatrix -b -s -C blue"
