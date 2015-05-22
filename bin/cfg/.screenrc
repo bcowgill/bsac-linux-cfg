@@ -15,7 +15,8 @@
 #screen -t log-files 5
 
 # set up a screen saver program after 5 minutes
-blankerprg cmatrix -b -s -C magenta
+blankerprg txt-screen-saver.sh
+#blankerprg cmatrix -b -s -C magenta
 idle 300 blanker
 
 ## Define screen region layouts which can be used with:
