@@ -430,6 +430,9 @@ function install_from {
    local file package which
    file="$1"
    package="$2"
+   if [ -z "$package" ]; then
+      package="$file"
+   fi
    which=`which "$file"`
    if [ ! -z "$which" ] ; then
       OK "command $file exists [$which]"
@@ -1363,6 +1366,54 @@ function install_ruby_gems {
 #============================================================================
 # check configuration within files
 
+# Check that a config file has exact text.
+# Will not look at lines commented out by a hash character.
+function config_has_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file" "$message"
+   if egrep -v '^\s*#' "$file" | grep "$text" > /dev/null; then
+      OK "config has text: \"$file\" \"$text\""
+   else
+      NOT_OK "config missing text: \"$file\" \"$text\" [$message]" && echo grep \""$text"\" \""$file"\"
+      return 1
+   fi
+   return 0
+}
+
+# Check that a config file has exact text, if the file exists.
+# Will not look at lines commented out by a hash character.
+function maybe_config_has_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   if [ -f "$file" ] ; then
+      config_has_text "$file" "$text" "$message"
+   else
+      OK "config file \"$file\" not present to check contents"
+   fi
+}
+
+# Check that a config file has regex matches some text.
+# Will not look at lines commented out by a hash character.
+function config_contains_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file" "$message"
+   if egrep -v '^\s*#' "$file" | egrep "$text" > /dev/null; then
+      OK "config contains regex: \"$file\" \"$text\""
+   else
+      NOT_OK "config missing regex: egrep \"$text\" \"$file\" [$message]"
+      return 1
+   fi
+   return 0
+}
+
 # exact check for text in file
 function file_has_text {
    local file text message
@@ -1385,7 +1436,11 @@ function maybe_file_has_text {
    file="$1"
    text="$2"
    message="$3"
-   [ -f "$file" ] && file_has_text "$file" "$text" "$message"
+   if [ -f "$file" ] ; then
+      file_has_text "$file" "$text" "$message"
+   else
+      OK "file \"$file\" not present to check contents"
+   fi
 }
 
 # regex check for text in file

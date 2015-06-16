@@ -1,0 +1,54 @@
+cmus quick reference
+
+console music player man cmus-tutorial or cmus-remote
+
+KEY:CMUS:CTRL :q quit the program
+KEY:CMUS:CTRL :save save configuration
+KEY:CMUS:TREE 1   Tree view for album and artist
+KEY:CMUS:TREE Space   Expand artist to see albums
+KEY:CMUS:TREE /   Search
+KEY:CMUS:TREE n   Next match when searching
+KEY:CMUS:TREE Tab   Switch between song and album/artist panel
+KEY:CMUS:LIB 2   Library view of all songs
+KEY:CMUS:LIB Enter   Play track now
+KEY:CMUS:LIB e   Queue song to play next
+KEY:CMUS:LIB y   Add song to play list
+KEY:CMUS:PLAY 3   Play list view
+KEY:CMUS:PLAY p   Move track down the play list
+KEY:CMUS:PLAY P   Move track up the play list
+KEY:CMUS:PLAY D   Delete track from play list
+KEY:CMUS:QUEUE 4   Play queue view
+KEY:CMUS:QUEUE p   Move track down the play queue
+KEY:CMUS:QUEUE P   Move track up the play queue
+KEY:CMUS:QUEUE D   Delete track from the play queue
+KEY:CMUS:QUEUE m   Change play mode now (all/artist/album/playlist)
+KEY:CMUS:QUEUE M   Change play mode after current song
+KEY:CMUS:FILE 5   File browser view
+KEY:CMUS:FILE a   Add file or directory to library
+KEY:CMUS:FILE u   Update view from file system
+KEY:CMUS:FILE Left   Move up one directory
+KEY:CMUS:FILE Space   Enter directory
+KEY:CMUS:FILE i   Show hidden files
+KEY:CMUS:FILTER 6   Filter view
+KEY:CMUS:INFO 7   Help view
+KEY:CMUS:COMMON c   Pause/play current track
+KEY:CMUS:COMMON Left   Seek -5 seconds in track
+KEY:CMUS:COMMON Right   Seek +5 seconds in track
+KEY:CMUS:COMMON h   Seek -5 seconds in track
+KEY:CMUS:COMMON l   Seek +5 seconds in track
+KEY:CMUS:COMMON ,   Seek -1 minute in track ( < key )
+KEY:CMUS:COMMON .   Seek +1 minute in track ( > key )
+KEY:CMUS:COMMON -   Volumne down
+KEY:CMUS:COMMON =   Volume up ( + key )
+KEY:CMUS:COMMON [   Left volume up
+KEY:CMUS:COMMON ]   Right volume up
+KEY:CMUS:COMMON {   Left volume down
+KEY:CMUS:COMMON }   Right volume down
+KEY:CMUS:COMMON t   Toggle time remaining / time now
+KEY:CMUS:COMMON z   Previous track in play queue
+KEY:CMUS:COMMON b   Next track in play queue
+KEY:CMUS:COMMON v   Stop playing track
+KEY:CMUS:COMMON x   Play track
+KEY:CMUS:COMMON r   Toggle repeat mode
+KEY:CMUS:COMMON s   Toggle shuffle mode
+KEY:CMUS:COMMON C   Toggle continuous mode

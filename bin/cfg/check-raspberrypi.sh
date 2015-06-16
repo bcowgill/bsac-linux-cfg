@@ -126,9 +126,11 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 
+PI_PKG=""
+
 INI_DIR=check-iniline
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc lsof fbcat"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc lsof fbcat htop ncdu"
 
 TODO=audacity
 
@@ -168,6 +170,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	VSLICK=""
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
+	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
 fi # raspberrypi
 
 ONBOOT=onboot-$COMPANY.sh
@@ -254,14 +257,14 @@ if [ `ulimit -n` == $ULIMITFILES ]; then
 	OK "ulimit for open files is good"
 else
 	NOT_OK "ulimit for open files is bad need $ULIMITFILES"
-	file_has_text /etc/security/limits.conf $USER "check limits file" || ( \
+	config_has_text /etc/security/limits.conf $USER "check limits file" || ( \
 		echo echo \"$USER            soft    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf > go.sudo;
 		echo echo \"$USER            hard    nofile          $ULIMITFILES\" \>\> /etc/security/limits.conf >> go.sudo;
 		chmod +x go.sudo;
 		sudo ./go.sudo\
 	)
-	file_has_text /etc/security/limits.conf $USER "check username in limits file"
-	file_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
+	config_has_text /etc/security/limits.conf $USER "check username in limits file"
+	config_has_text /etc/security/limits.conf $ULIMITFILES "check value in limits file"
 	echo YOUDO You have to logout/login again for ulimit to take effect.
 	exit 1
 fi
@@ -577,9 +580,11 @@ echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
+echo BIG PI PKG $PI_PKG
 
 installs_from "$INSTALL"
 installs_from "$INSTALL_FROM"
+installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 [ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
@@ -751,6 +756,11 @@ file_must_not_have_text "$FILE" "#safe-updates" "make sure not commented out"
 
 FILE=".config/leafpad/leafpadrc"
 maybe_file_has_text $FILE "ProFontWindows 18"
+
+FILE=-.config/lxterminal/lxterminal.conf
+maybe_file_has_text $FILE "ProFontWindows 18"
+maybe_file_has_text $FILE "bgcolor=#000000000000"
+maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
 if [ ! -z $DROPBOX_URL ]; then
 	# Dropbox configuration
@@ -1011,6 +1021,19 @@ if [ -f "$FILE" ]; then
 	file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
 fi # perforce merge config file
 
+# Meld diff colors
+FILE=.gconf/apps/meld/%gconf.xml""
+if [ -f "$FILE" ]; then
+	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
+	file_has_text $FILE "custom_font" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
+	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>leafpad" "Edit / Preferences"
+	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"
+	file_contains_text $FILE "show_whitespace.+true" "Edit / Preferences"
+	file_contains_text $FILE "show_line_numbers.+true" "Edit / Preferences"
+fi # meld diff/merge config file
+
 if [ ! -z $SUBLIME_PKG ]; then
 	# sublime configuration
 	FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
@@ -1085,6 +1108,18 @@ if [ -f "$FILE" ]; then
 	ini_file_has_text "$FILE" "/Copy/ColSeparator=," "$WHAT"
 	ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
 fi # pgadmin3 config file
+
+# Smartgit cannot run on Pi, ARM platform
+#SMARTGIT="http://www.syntevo.com/smartgit/download?file=smartgit/smartgit-generic-6_5_8.tar.gz"
+#SNARTGIT="http://www.syntevo.com/downloads/smartgit/smartgit-generic-6_5_8.tar.gz"
+#install_file_from_url_zip Downloads/smartgit/bin/smartgit.sh smartgit-generic-6_5_8.tar.gz "$SMARTGIT" "Smart Git package must manually download: links $SMARTGIT"
+
+if [ "$HOSTNAME" == "raspberrypi" ]; then
+	FILE="/etc/rc.local"
+	config_has_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
+
+
+fi # raspberrypi
 
 popd
 

@@ -1,0 +1,29 @@
+#!/bin/sh
+# periodically adjust hardware clock for drift then set the system time from it
+# needed if you are not running ntpd to keep the system clock up to date.
+# Read this to understand: /usr/share/doc/util-linux/README.Debian.hwclock
+
+echo `date` in /etc/cron.daily/hwclock-adjust >> /var/log/startup.log 
+
+if service ntp status 2>&1 | grep unrecognized > /dev/null ; then
+   TRY=1
+else
+   if service ntp status > /dev/null ; then
+      TRY=0 
+      # ntp running, remove the adjtime file, the next hwclock.sh
+      # service start will create a new one
+      echo `date` /etc/cron.daily/hwclock-adjust wipe adjtime >> /var/log/startup.log 
+      rm /etc/adjtime
+   else
+      TRY=1
+   fi
+fi
+
+if [ "$TRY"=="1" ]; then
+   if ( command -v hwclock > /dev/null 2>&1 ) ; then
+      touch /tmp/hwclock-adjust
+      echo `date` /etc/cron.daily/hwclock-adjust adjusting >> /var/log/startup.log 
+      hwclock --adjust
+      hwclock --hctosys
+   fi
+fi
