@@ -8,10 +8,8 @@
 	<h1>Test of Image maps with &lt;img&gt; &lt;map&gt; &lt;area&gt; elements</h1>
 	<p><a href="http://www.image-maps.com/map_image.php">Image map generator tool<a></p>
 	<ul>
-		<li>How to set default url for remaining image?</li>
-		<li>How to set a dead zone?</li>
 		<li>How to highlight the area on mouseover?</li>
-		<li>How to make all areas visible by opacitu?</li>
+		<li>How to make all areas visible by opacity?</li>
 	</ul>
 	<!-- http://www.southdreamz.com/wp-content/uploads/2010/06/Kelly-Brook-In-Bikini-03.jpg -->
 	<img id="Image-Maps-Com-image-maps-2015-06-17-070325"
@@ -99,5 +97,42 @@
 			target="_self"
 			data-maphilight='belly-hilight' />
 	</map>
+
+	<hr>
+	<p><a href="http://www.mobilefish.com/services/image_map/image_map.php">Another Image map generator tool<a></p>
+	<ul>
+		<li>Shows how to set default url for remaining image</li>
+		<li>Shows how to set a dead zone</li>
+	</ul>
+
+<!--
+How to install the image map:
+Copy and paste the img, map and area blocks into the body of your page.
+
+This imagemap is created at Mobilefish.com.
+http://www.mobilefish.com/services/image_map/image_map.php
+-->
+
+<!-- START COPY -->
+<img
+	src="../img/Kelly-Brook-In-Bikini-03.jpg"
+	usemap="#wg37850"
+	width="586"
+	height="868"
+	alt="click map"
+	border="0" />
+<map id="wg37850" name="wg37850">
+	<!-- Region 5 dead zone region no url -->
+	<area shape="circle" alt="belly button alt title" title="belly button alt title" coords="215,596,7.5" onMouseOver="inBellyButton()" onMouseOut="out()" onClick="clickBellyButton()" />
+	<!-- Region 4 polygon region description -->
+	<area shape="poly" alt="the belly alt title" title="the belly alt title" coords="187,619,212,651,239,665,271,660,294,638,297,611,284,578,261,552,255,532,242,519,220,510,207,509,192,512,176,521,164,536,168,553,179,582,183,600,187,619" href="#belly" target="_top" onMouseOver="inBelly()" onMouseOut="out()" onClick="clickBelly()" />
+	<!-- Region 3 circle region -->
+	<area shape="circle" alt="the face alt title" title="the face alt title" coords="311,169,74" href="#circle" target="_parent" onMouseOver="inFace()" onMouseOut="out()" onClick="clickFace()" />
+	<!-- Region 2 logo region description -->
+	<area shape="rect" alt="the logo alt and title" title="the logo alt and title" coords="332,790,551,845" href="#logo" target="_blank" onMouseOver="inLogo()" onMouseOut="out()" onClick="clickLogo()" />
+	<area shape="default" href="#default" alt="" />
+</map>
+<!-- END COPY -->
+
 </body>
 </html>
