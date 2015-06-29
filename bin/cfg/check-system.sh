@@ -1,5 +1,7 @@
-#COMMANDS!/bin/bash
+#!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
+# check-system.sh 2>&1 | tee ~/check.log | grep 'NOT OK'
+
 # search for 'begin' for start of script
 
 # terminate on first error
