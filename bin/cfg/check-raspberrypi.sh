@@ -87,6 +87,7 @@ P4MERGE="$HOME/Downloads/p4v-2014.1.827578/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
+USE_SUBLIME=1
 SUBLIME=subl
 SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3083_amd64.deb
@@ -147,6 +148,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	COMPANY=workshare
 	ULIMITFILES=1024
 	# Temporary until KDE set up
+	USE_SUBLIME=""
 	USE_KDE=""
 	CHARLES=""
 	CHARLES_PKG=""
@@ -197,6 +199,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	RUBY_GEMS="sass foundation"
 	SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	DROPBOX_URL=""
+	USE_SUBLIME=""
 	SUBLIME=""
 	PIDGIN=""
 	SUBLIME_PKG=""
@@ -705,6 +708,7 @@ make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
 install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
+if [ ! -z $USE_SUBLIME ]; then
 if [ ! -z $SUBLIME_PKG ]; then
 	cmd_exists git "need git installed before configure sublime"
 	cmd_exists grunt "need grunt installed before configure sublime for it"
@@ -720,6 +724,7 @@ if [ ! -z $SUBLIME_PKG ]; then
 	## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
 	commands_exist "$SUBLIME"
 fi # SUBLIME_PKG
+fi # USE_SUBLIME
 
 if [ ! -z $VSLICK ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
