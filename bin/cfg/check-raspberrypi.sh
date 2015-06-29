@@ -5,16 +5,19 @@
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
-#set -x
+set -x
 
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
+else
+	echo "NOT OK cannot find lib-check-system.sh"
+	exit 1
 fi
 
 MYNAME="Brent S.A. Cowgill"
-EMAIL=brent@blismedia.com
-UBUNTU=trusty
-COMPANY=blismedia
+EMAIL=brent.cowgill@workshare.com
+UBUNTU=vivid
+COMPANY=workshare
 ULIMITFILES=8096
 MOUNT_DATA=""
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
@@ -134,6 +137,11 @@ INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes m
 
 TODO=audacity
 
+if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
+	# Change settings for workshare linux laptop
+	COMPANY=workshare
+fi 
+
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
 
@@ -225,7 +233,7 @@ check_linux "$UBUNTU"
 
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
-make_dir_exist workspace/projecs "workspace projects area missing"
+make_dir_exist workspace/projects "workspace projects area missing"
 make_dir_exist Downloads "Downloads area missing"
 make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
