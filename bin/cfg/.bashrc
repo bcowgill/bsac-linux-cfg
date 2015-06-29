@@ -151,7 +151,7 @@ esac
 export SVN_MERGE=$HOME/bin/svndiffmergeconflict.sh
 
 # BSAC java setup for maven 3 builds
-export JAVA_HOME=/usr/lib/jvm/jdk1.7.0_21
+export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 export M2_HOME=/usr/share/maven
 
 # BSAC raspberrypi setup

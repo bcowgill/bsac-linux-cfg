@@ -29,7 +29,7 @@ USE_KDE=1
 USE_SCHEMACRAWLER=""
 USE_MYSQL=""
 USE_JAVA=""
-JAVA_VER=jdk1.7.0_21
+JAVA_VER=java-7-openjdk-amd64
 
 MVN_PKG=""
 MVN_CMD=""
@@ -109,7 +109,7 @@ GITSVN_PKG=""
 #GITSVN=/usr/lib/git-core/git-svn
 #GITSVN_PKG="libsvn-perl git-svn"
 
-GIT_VER="1.9.1"
+GIT_VER="2.1.4"
 GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
 GIT_PKG=git
 GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
@@ -506,6 +506,7 @@ if git --version | grep " version " | grep $GIT_VER; then
 	installs_from "$GIT_PKG_AFTER" "additional git packages"
 else
 	NOT_OK "git command version incorrect - will try update"
+	# old setup for git 1.9.1
 	# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
 	apt_has_source ppa:pdoes/ppa "repository for git"
 	sudo apt-get update
