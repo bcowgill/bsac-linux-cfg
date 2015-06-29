@@ -150,6 +150,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Temporary until KDE set up
 	USE_SUBLIME=""
 	USE_KDE=""
+	GOOGLE_CHROME_PKG=""
 	CHARLES=""
 	CHARLES_PKG=""
 	VIRTUALBOX_CMDS=""
@@ -809,7 +810,8 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
 if [ ! -z $DROPBOX_URL ]; then
 	# Dropbox configuration
-	dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
+	# TODO workshare re-enable
+	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
 	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
 fi # DROPBOX_URL
