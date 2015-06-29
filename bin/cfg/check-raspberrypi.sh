@@ -161,6 +161,8 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	DRUID_PERL_MODULES=""
 	DRUID_PACKAGES=""
 	VSLICK=""
+	RUBY_GEMS=""
+	SASS_COMMANDS=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
