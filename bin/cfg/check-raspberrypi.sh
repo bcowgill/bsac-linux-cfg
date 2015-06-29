@@ -1,4 +1,4 @@
-#!/bin/bash
+#COMMANDS!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # search for 'begin' for start of script
 
@@ -9,12 +9,15 @@ set -e
 
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
+else
+	echo "NOT OK cannot find lib-check-system.sh"
+	exit 1
 fi
 
 MYNAME="Brent S.A. Cowgill"
-EMAIL=brent@blismedia.com
-UBUNTU=trusty
-COMPANY=blismedia
+EMAIL=brent.cowgill@workshare.com
+UBUNTU=vivid
+COMPANY=workshare
 ULIMITFILES=8096
 MOUNT_DATA=""
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
@@ -22,10 +25,11 @@ THUNDER=""
 #THUNDER=ryu9c8b3.default
 DOWNLOAD=$HOME/Downloads
 
+USE_KDE=1
 USE_SCHEMACRAWLER=""
 USE_MYSQL=""
 USE_JAVA=""
-JAVA_VER=jdk1.7.0_21
+JAVA_VER=java-7-openjdk-amd64
 
 MVN_PKG=""
 MVN_CMD=""
@@ -39,7 +43,8 @@ POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
 
 # BlisMedia Druid reporting requirements
-DRUID_INSTALL_FROM="apache2"
+#DRUID_INSTALL_FROM="apache2"
+DRUID_INSTALL_FROM=""
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
@@ -51,7 +56,7 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
-NODE_VER="v0.10.28"
+NODE_VER="v0.12.5"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
@@ -82,9 +87,10 @@ P4MERGE="$HOME/Downloads/p4v-2014.1.827578/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
+USE_SUBLIME=1
 SUBLIME=subl
 SUBLIME_CFG=.config/sublime-text-3
-SUBLIME_PKG=sublime-text_build-3065_amd64.deb
+SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
 VSLICK=vs
@@ -105,7 +111,7 @@ GITSVN_PKG=""
 #GITSVN=/usr/lib/git-core/git-svn
 #GITSVN_PKG="libsvn-perl git-svn"
 
-GIT_VER="1.9.1"
+GIT_VER="2.1.4"
 GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
 GIT_PKG=git
 GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
@@ -130,9 +136,38 @@ PI_PKG=""
 
 INI_DIR=check-iniline
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc lsof fbcat htop ncdu"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu"
+# runit
+PERL_PKG="cpanm:cpanminus"
 
 TODO=audacity
+
+
+if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
+	# Change settings for workshare linux laptop
+	COMPANY=workshare
+	ULIMITFILES=1024
+	# Temporary until KDE set up
+	USE_SUBLIME=""
+	USE_KDE=""
+	GOOGLE_CHROME_PKG=""
+	CHARLES=""
+	CHARLES_PKG=""
+	VIRTUALBOX_CMDS=""
+	VIRTUALBOX_PKG=""
+	SKYPE_PKG=""
+	SKYPE=""
+	SVN_PKG=""
+	# no amd64 pkg for perforce merge
+	P4MERGE_PKG=""
+	POSTGRES_PKG_FROM=""
+	DRUID_INSTALL_FROM=""
+	DRUID_PERL_MODULES=""
+	DRUID_PACKAGES=""
+	VSLICK=""
+	RUBY_GEMS=""
+	SASS_COMMANDS=""
+fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
@@ -159,11 +194,13 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	DRUID_PERL_MODULES=""
 	DRUID_PACKAGES=""
 	SCREENSAVER=""
+	NODE_VER="v0.10.28"
 	NODE_PKG=""
 	NODE_CMD="node"
 	RUBY_GEMS="sass foundation"
 	SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	DROPBOX_URL=""
+	USE_SUBLIME=""
 	SUBLIME=""
 	PIDGIN=""
 	SUBLIME_PKG=""
@@ -173,11 +210,12 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
 fi # raspberrypi
 
-ONBOOT=onboot-$COMPANY.sh
+ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
-COMMANDS="apt-file wcd.exec gettext git gitk perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN"
+COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+#runit
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
@@ -225,7 +263,7 @@ check_linux "$UBUNTU"
 
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
-make_dir_exist workspace/projecs "workspace projects area missing"
+make_dir_exist workspace/projects "workspace projects area missing"
 make_dir_exist Downloads "Downloads area missing"
 make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
@@ -236,8 +274,8 @@ dir_linked_to projects workspace/projects "projects area in workspace"
 dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
-file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
-file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
+file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
+file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
 if dir_exists tmp "tmp dir in user home" ; then
@@ -329,6 +367,7 @@ fi
 
 # Find all the .kde config files referenced herein:
 # grep \.kde/ check-system.sh | perl -pne 's{\s* (FILE=|file_has_text \s*)}{}xms; s{\s*".+\z}{\n}xms; s{\s+\#}{}xms;s{\./}{}xms ' | sort | uniq > ~/xxx
+if [ ! -z $USE_KDE ]; then
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
@@ -376,13 +415,14 @@ if cmd_exists kfontinst > /dev/null ; then
 	file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
 
 fi # kfontinst command exists
+fi # USE_KDE set
 
 if [ ! -z $USE_JAVA ]; then
 	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 fi
 
 if [ "$HOSTNAME" != "raspberrypi" ]; then
-	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "home work unpacker configured"
+	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "home work unpacker configured"
 fi
 
 if [ ! -z $MOUNT_DATA ]; then
@@ -481,7 +521,7 @@ else
 		OK "will not configure subversion unless SVN_PKG is non-zero"
 fi # SVN_PKG
 
-has_ssh_keys
+has_ssh_keys $COMPANY
 
 which git
 if git --version | grep " version " | grep $GIT_VER; then
@@ -489,6 +529,7 @@ if git --version | grep " version " | grep $GIT_VER; then
 	installs_from "$GIT_PKG_AFTER" "additional git packages"
 else
 	NOT_OK "git command version incorrect - will try update"
+	# old setup for git 1.9.1
 	# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
 	apt_has_source ppa:pdoes/ppa "repository for git"
 	sudo apt-get update
@@ -587,7 +628,9 @@ installs_from "$INSTALL_FROM"
 installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
-[ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+if [ ! -z $USE_KDE ]; then
+[ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+fi
 
 install_perl_modules "$PERL_MODULES"
 install_ruby_gems "$RUBY_GEMS"
@@ -631,13 +674,13 @@ else
 fi
 
 echo CRON table setup
-file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work-$COMPANY.sh "daily backup script"
-file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual-$COMPANY.sh "manual backup script"
-file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "unpacker script for work at home"
-cmd_exists backup-work.sh "backup script missing"
+file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
+file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/$COMPANY/backup-work-manual-$COMPANY.sh "manual backup script"
+file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "unpacker script for work at home"
+cmd_exists backup-work.sh "backup script missing"/
 cmd_exists get-from-home.sh "unpacker script for work at home"
 
-file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
+file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
 crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
@@ -666,6 +709,7 @@ make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
 install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
+if [ ! -z $USE_SUBLIME ]; then
 if [ ! -z $SUBLIME_PKG ]; then
 	cmd_exists git "need git installed before configure sublime"
 	cmd_exists grunt "need grunt installed before configure sublime for it"
@@ -679,7 +723,9 @@ if [ ! -z $SUBLIME_PKG ]; then
 	install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 	install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 	## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+	commands_exist "$SUBLIME"
 fi # SUBLIME_PKG
+fi # USE_SUBLIME
 
 if [ ! -z $VSLICK ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
@@ -764,7 +810,8 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
 if [ ! -z $DROPBOX_URL ]; then
 	# Dropbox configuration
-	dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
+	# TODO workshare re-enable
+	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
 	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
 fi # DROPBOX_URL
@@ -799,6 +846,7 @@ fi # THUNDER
 
 #============================================================================
 # KDE configuration files here
+if [ ! -z $USE_KDE ]; then
 if [ -d .kde ]; then
 	DIR=.local/share/applications
 	dir_exists $DIR "KDE applications folder"
@@ -922,6 +970,7 @@ if [ -d .kde ]; then
 else
 	OK "kde will not be configured unless .kde directory exists"
 fi # .kde dir
+fi # USE_KDE
 # End KDE configuration
 #============================================================================
 
@@ -938,6 +987,7 @@ if [ ! -z $CHARLES_PKG ]; then
 	file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
 	file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
+	if [ ! -z $USE_KDE ]; then
 	if [ -d .kde ]; then
 		FILE=.kde/share/config/kioslaverc
 		# when system not proxied through charles
@@ -947,6 +997,7 @@ if [ ! -z $CHARLES_PKG ]; then
 		file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
 		file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
 	fi # .kde dir
+	fi # USE_KDE
 else
 	OK "charles will not be configured unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG

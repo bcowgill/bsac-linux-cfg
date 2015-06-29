@@ -7,4 +7,5 @@ backup-work-manual.sh
 backup-work.sh
 check-system.sh
 get-from-home.sh
-cfg/id_rsa
+cfg/*/id_rsa
+cfg/workshare/check-workshare.sh
