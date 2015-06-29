@@ -1,4 +1,4 @@
-#!/bin/bash
+#COMMANDS!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # search for 'begin' for start of script
 
@@ -207,8 +207,8 @@ fi # raspberrypi
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
-COMMANDS="apt-file wcd.exec gettext git gitk perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN"
+COMMANDS="apt-file wcd.exec gettext git gitk perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
@@ -715,6 +715,7 @@ if [ ! -z $SUBLIME_PKG ]; then
 	install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 	install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 	## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+	commands_exist "$SUBLIME"
 fi # SUBLIME_PKG
 
 if [ ! -z $VSLICK ]; then
