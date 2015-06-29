@@ -147,6 +147,8 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	USE_KDE=""
 	CHARLES=""
 	CHARLES_PKG=""
+	# no amd64 pkg for perforce merge
+	P4MERGE_PKG=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
@@ -817,6 +819,7 @@ fi # THUNDER
 
 #============================================================================
 # KDE configuration files here
+if [ ! -z $USE_KDE ]; then
 if [ -d .kde ]; then
 	DIR=.local/share/applications
 	dir_exists $DIR "KDE applications folder"
@@ -940,6 +943,7 @@ if [ -d .kde ]; then
 else
 	OK "kde will not be configured unless .kde directory exists"
 fi # .kde dir
+fi # USE_KDE
 # End KDE configuration
 #============================================================================
 
@@ -956,6 +960,7 @@ if [ ! -z $CHARLES_PKG ]; then
 	file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
 	file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
+	if [ ! -z $USE_KDE ]; then
 	if [ -d .kde ]; then
 		FILE=.kde/share/config/kioslaverc
 		# when system not proxied through charles
@@ -965,6 +970,7 @@ if [ ! -z $CHARLES_PKG ]; then
 		file_has_text $FILE "ProxyType=1" "system proxy config Alt-F2 / Proxy"
 		file_has_text $FILE "httpProxy=localhost 58008" "system proxy config to charles"
 	fi # .kde dir
+	fi # USE_KDE
 else
 	OK "charles will not be configured unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
