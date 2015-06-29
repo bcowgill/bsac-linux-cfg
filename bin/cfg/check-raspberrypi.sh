@@ -43,7 +43,8 @@ POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
 
 # BlisMedia Druid reporting requirements
-DRUID_INSTALL_FROM="apache2"
+#DRUID_INSTALL_FROM="apache2"
+DRUID_INSTALL_FROM=""
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
@@ -135,6 +136,7 @@ PI_PKG=""
 INI_DIR=check-iniline
 
 INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby runit mc lsof fbcat htop ncdu"
+PERL_PKG="cpanm:cpanminus"
 
 TODO=audacity
 
@@ -147,8 +149,18 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	USE_KDE=""
 	CHARLES=""
 	CHARLES_PKG=""
+	VIRTUALBOX_CMDS=""
+	VIRTUALBOX_PKG=""
+	SKYPE_PKG=""
+	SKYPE=""
+	SVN_PKG=""
 	# no amd64 pkg for perforce merge
 	P4MERGE_PKG=""
+	POSTGRES_PKG_FROM=""
+	DRUID_INSTALL_FROM=""
+	DRUID_PERL_MODULES=""
+	DRUID_PACKAGES=""
+	VSLICK=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
@@ -193,7 +205,7 @@ fi # raspberrypi
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
 COMMANDS="apt-file wcd.exec gettext git gitk perl ruby runit dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $SUBLIME $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
@@ -607,7 +619,9 @@ installs_from "$INSTALL_FROM"
 installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
-[ ! -z $SCREENSAVER ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+if [ ! -z $USE_KDE ]; then
+[ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+fi
 
 install_perl_modules "$PERL_MODULES"
 install_ruby_gems "$RUBY_GEMS"
