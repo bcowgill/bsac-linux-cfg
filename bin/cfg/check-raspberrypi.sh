@@ -145,7 +145,9 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	ULIMITFILES=1024
 	# Temporary until KDE set up
 	USE_KDE=""
-fi 
+	CHARLES=""
+	CHARLES_PKG=""
+fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
@@ -186,7 +188,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
 fi # raspberrypi
 
-ONBOOT=onboot-$COMPANY.sh
+ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM"
@@ -249,8 +251,8 @@ dir_linked_to projects workspace/projects "projects area in workspace"
 dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
-file_linked_to go.sh bin/cfg/$ONBOOT "on reboot script configured"
-file_linked_to bin/check-system.sh $HOME/bin/cfg/check-$COMPANY.sh "system check script configured"
+file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
+file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
 if dir_exists tmp "tmp dir in user home" ; then
@@ -397,7 +399,7 @@ if [ ! -z $USE_JAVA ]; then
 fi
 
 if [ "$HOSTNAME" != "raspberrypi" ]; then
-	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "home work unpacker configured"
+	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "home work unpacker configured"
 fi
 
 if [ ! -z $MOUNT_DATA ]; then
@@ -496,7 +498,7 @@ else
 		OK "will not configure subversion unless SVN_PKG is non-zero"
 fi # SVN_PKG
 
-has_ssh_keys
+has_ssh_keys $COMPANY
 
 which git
 if git --version | grep " version " | grep $GIT_VER; then
@@ -646,13 +648,13 @@ else
 fi
 
 echo CRON table setup
-file_linked_to bin/backup-work.sh $HOME/bin/cfg/backup-work-$COMPANY.sh "daily backup script"
-file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/backup-work-manual-$COMPANY.sh "manual backup script"
-file_linked_to bin/get-from-home.sh $HOME/bin/cfg/get-from-home-$COMPANY.sh "unpacker script for work at home"
-cmd_exists backup-work.sh "backup script missing"
+file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
+file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/$COMPANY/backup-work-manual-$COMPANY.sh "manual backup script"
+file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "unpacker script for work at home"
+cmd_exists backup-work.sh "backup script missing"/
 cmd_exists get-from-home.sh "unpacker script for work at home"
 
-file_exists bin/cfg/crontab-$HOSTNAME "crontab missing" || backup-work.sh
+file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
 crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
