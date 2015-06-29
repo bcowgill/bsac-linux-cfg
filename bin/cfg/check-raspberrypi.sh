@@ -25,6 +25,7 @@ THUNDER=""
 #THUNDER=ryu9c8b3.default
 DOWNLOAD=$HOME/Downloads
 
+USE_KDE=1
 USE_SCHEMACRAWLER=""
 USE_MYSQL=""
 USE_JAVA=""
@@ -142,6 +143,8 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
 	COMPANY=workshare
 	ULIMITFILES=1024
+	# Temporary until KDE set up
+	USE_KDE=""
 fi 
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
@@ -339,6 +342,7 @@ fi
 
 # Find all the .kde config files referenced herein:
 # grep \.kde/ check-system.sh | perl -pne 's{\s* (FILE=|file_has_text \s*)}{}xms; s{\s*".+\z}{\n}xms; s{\s+\#}{}xms;s{\./}{}xms ' | sort | uniq > ~/xxx
+if [ ! -z $USE_KDE ]; then
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
@@ -386,6 +390,7 @@ if cmd_exists kfontinst > /dev/null ; then
 	file_has_text "$FILE" "showFullPathOnRoots=true" "Settings / Configure Kate / Editor"
 
 fi # kfontinst command exists
+fi # USE_KDE set
 
 if [ ! -z $USE_JAVA ]; then
 	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
