@@ -5,7 +5,7 @@
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
-set -x
+#set -x
 
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
@@ -137,9 +137,11 @@ INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes m
 
 TODO=audacity
 
+
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
 	COMPANY=workshare
+	ULIMITFILES=1024
 fi 
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
