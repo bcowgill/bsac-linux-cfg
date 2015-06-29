@@ -275,7 +275,7 @@ dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
 file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
-file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
+#file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
 if dir_exists tmp "tmp dir in user home" ; then
