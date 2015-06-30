@@ -151,8 +151,8 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	COMPANY=workshare
 	ULIMITFILES=1024
 	# Temporary until KDE set up
-	USE_SUBLIME=""
-	USE_KDE=""
+	#USE_SUBLIME=""
+	#USE_KDE=""
 	GOOGLE_CHROME_PKG=""
 	CHARLES=""
 	CHARLES_PKG=""
@@ -385,6 +385,8 @@ if [ ! -z $USE_KDE ]; then
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
+	# TODO needed for workshare
+	FILE=.fonts/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
 	file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows still not installed"
