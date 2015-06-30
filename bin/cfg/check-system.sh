@@ -16,6 +16,7 @@ else
 	exit 1
 fi
 
+AUSER=bcowgill
 MYNAME="Brent S.A. Cowgill"
 EMAIL=brent.cowgill@workshare.com
 UBUNTU=vivid
@@ -257,9 +258,12 @@ id
 
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
+	sudo grep $AUSER /etc/passwd /etc/group /etc/sudoers
 else
 	NOT_OK "user $USER does not have sudo privileges"
 fi
+
+exit 1
 
 check_linux "$UBUNTU"
 
