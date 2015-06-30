@@ -252,6 +252,8 @@ if [ 0 == 1 ]; then
 	popd
 	git config --global user.email "brent.cowgill@workshare.com"
 	git config --global user.name "Brent S.A. Cowgill"
+	git config --global push.default simple
+
 	export PATH=$PATH:$HOME/bin
 
 	exit 2
