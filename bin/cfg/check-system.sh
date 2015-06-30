@@ -250,6 +250,10 @@ if [ 0 == 1 ]; then
 	mv ~/bsac-linux-cfg ~/workspace/play
 	ln -s workspace/play/bsac-linux-cfg/bin
 	popd
+	git config --global user.email "brent.cowgill@workshare.com"
+	git config --global user.name "Brent S.A. Cowgill"
+	export PATH=$PATH:$HOME/bin
+
 	exit 2
 fi
 
@@ -260,11 +264,13 @@ id
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
 	sudo grep $AUSER /etc/passwd /etc/group /etc/sudoers
+	#/etc/passwd:bcowgill:x:1001:1001:Brent Cowgill,,,:/home/bcowgill:/bin/bash
+	#/etc/group:sudo:x:27:workshare-xps,bcowgill
+	#/etc/group:bcowgill:x:1001:
+	#etc/sudoers:bcowgill   ALL=(ALL:ALL) ALL
 else
 	NOT_OK "user $USER does not have sudo privileges"
 fi
-
-exit 1
 
 check_linux "$UBUNTU"
 
