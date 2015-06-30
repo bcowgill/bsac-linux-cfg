@@ -830,6 +830,7 @@ if [ ! -z $DROPBOX_URL ]; then
 	# Dropbox configuration
 	# TODO workshare re-enable
 	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
+	# TODO workshare customise file and copy?
 	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
 fi # DROPBOX_URL
