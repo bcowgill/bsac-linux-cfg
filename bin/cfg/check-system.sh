@@ -246,6 +246,7 @@ if [ 0 == 1 ]; then
 	exit 2
 	mkdir -p workspace/play
 	mv ~/bin ~/bin.saved
+        git clone https://github.com/bcowgill/bsac-linux-cfg.git
 	mv ~/bsac-linux-cfg ~/workspace/play
 	ln -s workspace/play/bsac-linux-cfg/bin
 	popd
