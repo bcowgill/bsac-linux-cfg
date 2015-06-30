@@ -150,9 +150,9 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
 	COMPANY=workshare
 	ULIMITFILES=1024
-	# Temporary until KDE set up
-	#USE_SUBLIME=""
-	#USE_KDE=""
+	# TODO Temporary until KDE set up
+	USE_SUBLIME=""
+	USE_KDE=""
 	GOOGLE_CHROME_PKG=""
 	CHARLES=""
 	CHARLES_PKG=""

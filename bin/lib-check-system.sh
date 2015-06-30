@@ -1686,9 +1686,9 @@ function has_ssh_keys {
    local cfg
    cfg=$1
    # need to upload ssh public key to github before getting grunt templates
-   #file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
-   #file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
-   #mv .ssh/id_rsa* $HOME/bin/cfg/$cfg/
+#   file_exists $HOME/.ssh/id_rsa.pub > /dev/null || (ssh-keygen -t rsa)
+#   file_exists $HOME/.ssh/id_rsa.pub "ssh keys should exist"
+#   mv .ssh/id_rsa* $HOME/bin/cfg/$cfg/
 
    file_linked_to $HOME/.ssh/id_rsa.pub $HOME/bin/cfg/$cfg/id_rsa.pub "public SSH key"
    file_linked_to $HOME/.ssh/id_rsa $HOME/bin/cfg/$cfg/id_rsa "private SSH key"
