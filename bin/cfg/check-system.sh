@@ -96,6 +96,15 @@ SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
+
+USE_WEBSTORM=1
+WEBSTORM=wstorm
+WEBSTORM_ARCHIVE=WebStorm-10.0.4
+WEBSTORM_DIR=WebStorm-141.1550
+WEBSTORM_URL=https://www.jetbrains.com/webstorm/download/
+WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
+WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
+
 VSLICK=vs
 VSLICK_ARCHIVE=se_19000101_linux64
 VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
@@ -745,9 +754,14 @@ if [ ! -z $SUBLIME_PKG ]; then
 fi # SUBLIME_PKG
 fi # USE_SUBLIME
 
+if [ ! -z $WEBSTORM ]; then
+	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
+	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $HOME/Downloads/$WEBSTORM_ARCHIVE dir"
+fi # WEBSTORM
+
 if [ ! -z $VSLICK ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
-	cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
+	cmd_exists $VSLICK "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
 fi # VSLICK
 
 cmd_exists git "need git to clone repos"
