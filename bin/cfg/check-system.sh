@@ -184,6 +184,7 @@ fi
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
 
+	AUSER=$USER
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
 	UBUNTU="wheezy"
 	ULIMITFILES=1024
@@ -217,6 +218,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	PIDGIN=""
 	SUBLIME_PKG=""
 	VSLICK=""
+	WEBSTORM=""
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
 	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
