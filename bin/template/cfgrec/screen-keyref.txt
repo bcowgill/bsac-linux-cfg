@@ -37,6 +37,10 @@ KEY:SCREEN:WIN Ctrl-a S Split current screen region horizontally in half
 KEY:SCREEN:WIN Ctrl-a Q Unsplit to full screen
 KEY:SCREEN:WIN Ctrl-a X Kill/unsplit current region to produce a bigger region
 KEY:SCREEN:WIN Ctrl-a Tab Switch to the next screen region
+KEY:SCREEN:WIN Ctrl-a j Switch to the next screen region down
+KEY:SCREEN:WIN Ctrl-a k Switch to the next screen region up
+KEY:SCREEN:WIN Ctrl-a t Switch to the top screen region
+KEY:SCREEN:WIN Ctrl-a b Switch to the bottom screen region
 KEY:SCREEN:WIN Ctrl-a Number Display numbered screen window in current region
 KEY:SCREEN:WIN Ctrl-a " Select a screen window from list to display in current region
 KEY:SCREEN:WIN Ctrl-a C Clear the screen region
@@ -51,6 +55,8 @@ KEY:SCREEN:COPY Ctrl-a [ Enter copy mode (use Ctrl-a m to see if you're still in
 KEY:SCREEN:COPY Space Begin/End selection when in copy mode
 KEY:SCREEN:COPY Enter Begin/End selection when in copy mode (leaves copy mode)
 KEY:SCREEN:COPY Ctrl-a ] Paste the copied text
+KEY:SCREEN:COPY Ctrl-a > Write copied text to /tmp/screen-exchange file
+KEY:SCREEN:COPY Ctrl-a < Set copied text to content of /tmp/screen-exchange file
 KEY:SCREEN:COPY Ctrl-e Scroll up one line in copy mode
 KEY:SCREEN:COPY Ctrl-y Scroll down one line in copy mode
 KEY:SCREEN:COPY Ctrl-u Scroll up half a page in copy mode
