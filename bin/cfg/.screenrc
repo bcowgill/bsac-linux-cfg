@@ -14,6 +14,21 @@
 #screen -t test-plans 4
 #screen -t log-files 5
 
+# Move  the  input focus to the next region. This is done in a cyclic way
+# so that the top region is selected after the bottom one. If no
+# subcommand is given it defaults to `down'. `up' cycles in the opposite
+# order, `top' and `bottom' go to the top and bottom region respectively.
+# Useful bindings are (j and k as in vi)
+bind j focus down
+bind k focus up
+bind t focus top
+bind b focus bottom
+#bind b focus prev
+#bind b focus left
+#bind b focus right
+# Note that k is traditionally bound to the kill command.
+# Use C-a C-K to kill window when the bindings above are active
+
 # set up a screen saver program after 5 minutes
 blankerprg txt-screen-saver.sh
 #blankerprg cmatrix -b -s -C magenta

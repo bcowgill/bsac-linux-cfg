@@ -16,6 +16,7 @@ else
 	exit 1
 fi
 
+AUSER=bcowgill
 MYNAME="Brent S.A. Cowgill"
 EMAIL=brent.cowgill@workshare.com
 UBUNTU=vivid
@@ -95,6 +96,15 @@ SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
+
+USE_WEBSTORM=1
+WEBSTORM=wstorm
+WEBSTORM_ARCHIVE=WebStorm-10.0.4
+WEBSTORM_DIR=WebStorm-141.1550
+WEBSTORM_URL=https://www.jetbrains.com/webstorm/download/
+WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
+WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
+
 VSLICK=vs
 VSLICK_ARCHIVE=se_19000101_linux64
 VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
@@ -149,7 +159,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
 	COMPANY=workshare
 	ULIMITFILES=1024
-	# Temporary until KDE set up
+	# TODO Temporary until KDE set up
 	USE_SUBLIME=""
 	USE_KDE=""
 	GOOGLE_CHROME_PKG=""
@@ -174,6 +184,7 @@ fi
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
 
+	AUSER=$USER
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
 	UBUNTU="wheezy"
 	ULIMITFILES=1024
@@ -207,6 +218,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	PIDGIN=""
 	SUBLIME_PKG=""
 	VSLICK=""
+	WEBSTORM=""
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
 	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
@@ -245,9 +257,16 @@ if [ 0 == 1 ]; then
 	exit 2
 	mkdir -p workspace/play
 	mv ~/bin ~/bin.saved
+        git clone https://github.com/bcowgill/bsac-linux-cfg.git
 	mv ~/bsac-linux-cfg ~/workspace/play
 	ln -s workspace/play/bsac-linux-cfg/bin
 	popd
+	git config --global user.email "brent.cowgill@workshare.com"
+	git config --global user.name "Brent S.A. Cowgill"
+	git config --global push.default simple
+
+	export PATH=$PATH:$HOME/bin
+
 	exit 2
 fi
 
@@ -257,6 +276,11 @@ id
 
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
+	sudo grep $AUSER /etc/passwd /etc/group /etc/sudoers
+	#/etc/passwd:bcowgill:x:1001:1001:Brent Cowgill,,,:/home/bcowgill:/bin/bash
+	#/etc/group:sudo:x:27:workshare-xps,bcowgill
+	#/etc/group:bcowgill:x:1001:
+	#etc/sudoers:bcowgill   ALL=(ALL:ALL) ALL
 else
 	NOT_OK "user $USER does not have sudo privileges"
 fi
@@ -374,6 +398,8 @@ if [ ! -z $USE_KDE ]; then
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
+	# TODO needed for workshare
+	FILE=.fonts/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
 	file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows still not installed"
@@ -730,9 +756,14 @@ if [ ! -z $SUBLIME_PKG ]; then
 fi # SUBLIME_PKG
 fi # USE_SUBLIME
 
+if [ ! -z $WEBSTORM ]; then
+	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
+	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $HOME/Downloads/$WEBSTORM_ARCHIVE dir"
+fi # WEBSTORM
+
 if [ ! -z $VSLICK ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
-	cmd_exists vs "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
+	cmd_exists $VSLICK "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
 fi # VSLICK
 
 cmd_exists git "need git to clone repos"
@@ -815,6 +846,7 @@ if [ ! -z $DROPBOX_URL ]; then
 	# Dropbox configuration
 	# TODO workshare re-enable
 	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
+	# TODO workshare customise file and copy?
 	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
 fi # DROPBOX_URL
