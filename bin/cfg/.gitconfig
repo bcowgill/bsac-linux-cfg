@@ -1,6 +1,6 @@
 [user]
 	name = Brent S.A. Cowgill
-	email = brent@blismedia.com
+	email = brent.cowgill@workshare.com
 [push]
 	default = simple
 [diff]
@@ -17,3 +17,5 @@
 	autoupdate = true
 [alias]
 	graph = log --oneline --graph --decorate --all
+[gui]
+	fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0

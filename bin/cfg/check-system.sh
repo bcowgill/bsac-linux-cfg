@@ -1055,6 +1055,10 @@ fi # ECLIPSE
 
 file_present prettydiff.js "html beautifier file"
 
+# git gui Font
+FILE=".gitconfig"
+ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
+
 # Sourcegear Diffmerge colors
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
