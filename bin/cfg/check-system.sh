@@ -228,7 +228,7 @@ ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN"
-COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 #runit
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
