@@ -48,6 +48,8 @@ alias cdiff='colordiff'
 alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 alias egrep='\egrep --exclude-dir=.git'
 
+alias screenls='ls /var/run/screen/S-$USER'
+
 # some aliases for git rebasing
 alias gmt='git mergetool'
 alias grc='git rebase --continue'
