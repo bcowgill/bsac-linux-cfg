@@ -1,0 +1,91 @@
+<!-- Sample Handlebars template 
+http://handlebarsjs.com/ -->
+
+<script id="entry-template" type="text/x-handlebars-template">
+  <div class="entry">
+    <h1>{{title}}</h1>
+    <div class="body">
+      {{{body_html}}}
+    </div>
+  </div>
+</script>
+
+<h1>Comments</h1>
+
+<div id="comments">
+  {{#each comments}}
+  <h2><a href="/posts/{{../permalink}}#{{id}}">{{title}}</a></h2>
+  <div>{{body}}</div>
+  {{/each}}
+</div>
+
+
+<div class="entry">
+  {{!-- comments -- only output this author names if an author exists --}}
+  {{#if author}}
+    <h1>{{firstName}} {{lastName}}</h1>
+  {{/if}}
+</div>
+``
+<!--
+
+{{ result will be html escaped}}
+{{{ result will NOT be html escaped }}}
+{{object.attribute}}
+<p>{{./name}} or {{this/name}} or {{this.name}}</p> name conflict resolution
+
+
+
+in javascript compile the template for use.
+
+var source   = $("#entry-template").html();
+var template = Handlebars.compile(source);
+
+var context = {title: "My New Post", body_html: "<b>This is my first post!</b>"};
+var html    = template(context);
+
+prevent escaping with Handlebars.SafeString
+
+
+Handlebars.registerHelper('link', function(text, url) {
+  text = Handlebars.Utils.escapeExpression(text);
+  url  = Handlebars.Utils.escapeExpression(url);
+
+  var result = '<a href="' + url + '">' + text + '</a>';
+
+  return new Handlebars.SafeString(result);
+});
+
+TODO how do you use this link helper in the template?
+
+Lists of items using a block
+
+template
+{{#list people}}{{firstName}} {{lastName}}{{/list}}
+
+context object
+{
+  people: [
+    {firstName: "Yehuda", lastName: "Katz"},
+    {firstName: "Carl", lastName: "Lerche"},
+    {firstName: "Alan", lastName: "Johnson"}
+  ]
+}
+
+helper:
+
+Handlebars.registerHelper('list', function(items, options) {
+  var out = "<ul>";
+
+  for(var i=0, l=items.length; i<l; i++) {
+    out = out + "<li>" + options.fn(items[i]) + "</li>";
+  }
+
+  return out + "</ul>";
+});
+
+TODO expressions
+TODO precompilation
+TODO execution
+TODO block helpers
+-->
