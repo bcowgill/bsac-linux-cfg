@@ -10,4 +10,5 @@ firefox &
 sleep 1
 skype &
 
-
+pushd ~/projects/dealroom-ui
+grunt serve:test
