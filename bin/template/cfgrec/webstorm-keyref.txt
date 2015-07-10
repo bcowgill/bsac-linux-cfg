@@ -4,8 +4,13 @@ KEY:WEBSTORM:NAV Alt-Shift-1 Quickly find the currently edited file in another v
 KEY:WEBSTORM:NAV Escape in a tool window gets you to the editor
 KEY:WEBSTORM:NAV Shift-Escape in a tool window gets you to the editor and hides the tool window
 KEY:WEBSTORM:NAV F12 move from the editor to the last focussed tool window
+KEY:WEBSTORM:NAV Ctrl-Shift-Backspace [Navigate/Last Edit Location] jump back to the last place where you made changes to a file. keep pressing to go back further
 
 KEY:WEBSTORM:VIEW Shift-mousewheel horizontal scrolling of the window
+
+KEY:WEBSTORM:MARK Ctrl-Shift-7 [Edit/Find/Highlight Usages in File] to quickly highlight usages of some variable in current file
+KEY:WEBSTORM:MARK F3 jump to next highlighted term
+KEY:WEBSTORM:MARK Shift-F3 jump to previous highlighted term
 
 KEY:WEBSTORM:FIND Ctrl-Shift-N [Navigate/File] popup to open any file by incremental search
 KEY:WEBSTORM:FIND Ctrl-n [Navigate/Class] popup to find any class by incremental search use @class markers to mark your classes
@@ -15,10 +20,16 @@ KEY:WEBSTORM:FIND Ctrl-b jump to declaration of a class, method or variable at t
 KEY:WEBSTORM:FIND Ctrl MouseClick on symbol jump to declaration of a class, method or variable clicked
 KEY:WEBSTORM:FIND Ctrl-0 [Navigate/File Structure] show members of the current class and allow to jump straight to them incremental search
 
+KEY:WEBSTORM:PASTE Ctrl-w widen selection. keep pressing to select more: word, line, block, etc. Can also use double click to help widen
+KEY:WEBSTORM:PASTE Ctrl-d duplicates the selected block or current line
+
 KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, etc)
 KEY:WEBSTORM:CODE Tab insert selected code completion name and erase anything to right of cursor
 KEY:WEBSTORM:CODE Enter insert selected code completion name keeping anything to right of cursor
 KEY:WEBSTORM:CODE Shift-F6 [Refactor/Rename] rename class/methods/variables with automatic correction of all references.
+KEY:WEBSTORM:CODE Ctrl-p list parameters for function call when within parenthesis
+
+KEY:WEBSTORM:CODE Alt-Shift-v [Refactor/Extract Variable] pull the selected text out into a variable
 
 KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor
 
