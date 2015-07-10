@@ -95,10 +95,38 @@ Handlebars.registerHelper('list', function(items, options) {
   return out + "</ul>";
 });
 
-TODO precompilation
-TODO execution
-TODO block helpers
-TODO partials
-TODO built in helpers
+built in helpers
+#if / #else
+#unless
+#each / #else
+#with / #else
+
+raw-helper allows outputting things that look like handlebars templates
+{{{{raw-helper}}}}
+     {{bar}}
+{{{{/raw-helper}}}}
+
+partials
+Handlebars.registerPartial('myPartial', '{{name}}')
+
+calling the partial in a template
+
+{{> myPartial }}
+
+dynamically selecting partial using whichPartial function
+{{> (whichPartial) }}
+
+dynamically selecting a partial from a simple variable
+{{> (lookup . 'myVariable') }}
+
+invoke a partial with a new context
+{{> myPartial myOtherContext }}
+
+Custom data can be passed to partials through hash parameters.
+{{> myPartial parameter=value }}
+
+This is particularly useful for exposing data from parent contexts to the partial:
+{{> myPartial name=../name }}
+
 TODO API reference
 -->
