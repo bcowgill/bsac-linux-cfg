@@ -47,6 +47,7 @@ fi
 alias cdiff='colordiff'
 alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 alias egrep='\egrep --exclude-dir=.git'
+alias xterm='\xterm -fa "ProFontWindows" -fs 11'
 
 alias screenls='ls /var/run/screen/S-$USER'
 
