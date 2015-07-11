@@ -33,5 +33,5 @@ KEY:WEBSTORM:CODE Alt-Shift-v [Refactor/Extract Variable] pull the selected text
 
 KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor
 
-
-
+KEY:WEBSTORM:FIND Alt-{ CUSTOM move to matched brace
+KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
