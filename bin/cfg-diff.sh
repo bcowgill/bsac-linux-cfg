@@ -5,6 +5,7 @@
 
 DIR=workspace/backup/settings
 CONF="config kde gconf p4merge thunderbird"
+BACKUP=1
 
 if [ -z $DIFFER ]; then
 	source `which differ.sh`
@@ -12,37 +13,41 @@ fi
 
 pushd $HOME > /dev/null
 
-[ -d $DIR ] && rm -rf $DIR
-mkdir -p $DIR
+if [ $BACKUP == 1 ]; then
 
-# Make backup copies of likely config files
-for config in $CONF; do
-	echo cp .$config to $DIR/$config
-	[ -d .$config ] && cp -r .$config $DIR/$config
-done
-# postgres and mysql configs backed up
-cp .pg* .my* $DIR/
+	[ -d $DIR ] && rm -rf $DIR
+	mkdir -p $DIR
 
-echo "Configuration files with changes:" > reconfigure.newer
-touch reconfigure.timestamp
+	# Make backup copies of likely config files
+	for config in $CONF; do
+		echo cp .$config to $DIR/$config
+		[ -d .$config ] && cp -r .$config $DIR/$config
+	done
+	# postgres and mysql configs backed up
+	cp .pg* .my* $DIR/
 
-echo Backed up in $DIR/
-ls $DIR
-echo Make some configuration changes in GUI - KDE/firefox now!
-read WAIT
+	echo "Configuration files with changes:" > reconfigure.newer
+	touch reconfigure.timestamp
 
-# for testing manual directory diffing
-#touch .config/lxterminal/lxterminal.conf
-#touch .newfile
+	echo Backed up in $DIR/
+	ls $DIR
+	echo Make some configuration changes in GUI - KDE/firefox now!
+	read WAIT
 
-# Get list of files that have been changed, maybe due to the config changes you made.
-find . -newer reconfigure.timestamp -type f | grep -v reconfigure.newer >> reconfigure.newer
+	# for testing manual directory diffing
+	#touch .config/lxterminal/lxterminal.conf
+	#touch .newfile
+
+	# Get list of files that have been changed, maybe due to the config changes you made.
+	find . -newer reconfigure.timestamp -type f | grep -v reconfigure.newer >> reconfigure.newer
+fi
+
 less reconfigure.newer
 
 if [ $DIFFERDIRS == 1 ]; then
 	# Use diff tool to diff whole dirs
 	for config in $CONF; do
-		[ -d $DIR/$config ] && $DIFF .$config $DIR/$config
+		[ -d $DIR/$config ] && $DIFFER .$config $DIR/$config
 	done
 	#$DIFFER .pgadmin3 $DIR/.pgadmin3 $DIFFERWAIT
 else

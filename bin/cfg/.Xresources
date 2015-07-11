@@ -1,0 +1,7 @@
+! configure X program default settings
+
+! to reload this file after a change:
+! xrdb -merge ~/.Xresources
+xterm*font:     -*-courier 10 pitch-medium-r-*-*-28-*-*-*-*-*-*-*
+xterm.fullscreen:      false
+xterm.maximized:       true
