@@ -1063,7 +1063,8 @@ ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weigh
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
 if [ -f "$FILE" ]; then
-	ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
+	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
+	ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
