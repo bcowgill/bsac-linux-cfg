@@ -59,7 +59,7 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
-NODE_VER="v0.12.5"
+NODE_VER="v0.12.6"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
