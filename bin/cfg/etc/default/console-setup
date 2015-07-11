@@ -2,6 +2,7 @@
 
 # Consult the console-setup(5) manual page.
 # use setupcon command after login to set the font
+# http://unix.stackexchange.com/questions/49779/can-i-change-the-font-of-terminal
 
 ACTIVE_CONSOLES="/dev/tty[1-6]"
 
