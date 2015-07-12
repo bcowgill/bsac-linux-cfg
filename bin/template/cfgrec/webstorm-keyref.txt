@@ -5,6 +5,7 @@ KEY:WEBSTORM:NAV Escape in a tool window gets you to the editor
 KEY:WEBSTORM:NAV Shift-Escape in a tool window gets you to the editor and hides the tool window
 KEY:WEBSTORM:NAV F12 move from the editor to the last focussed tool window
 KEY:WEBSTORM:NAV Ctrl-Shift-Backspace [Navigate/Last Edit Location] jump back to the last place where you made changes to a file. keep pressing to go back further
+KEY:WEBSTORM:NAV Alt-Home Go to the breadcrumb navigation bar to navigate files/folders
 
 KEY:WEBSTORM:VIEW Shift-mousewheel horizontal scrolling of the window
 
@@ -19,6 +20,8 @@ KEY:WEBSTORM:FIND Alt-Shift-7 [RightClick/Find Usages] find usages of symbol at 
 KEY:WEBSTORM:FIND Ctrl-b jump to declaration of a class, method or variable at the cursor
 KEY:WEBSTORM:FIND Ctrl MouseClick on symbol jump to declaration of a class, method or variable clicked
 KEY:WEBSTORM:FIND Ctrl-0 [Navigate/File Structure] show members of the current class and allow to jump straight to them incremental search
+KEY:WEBSTORM:FIND Shift Shift Search everywhere
+KEY:WEBSTORM:FIND Ctrl-e popup to open recent files
 
 KEY:WEBSTORM:PASTE Ctrl-w widen selection. keep pressing to select more: word, line, block, etc. Can also use double click to help widen
 KEY:WEBSTORM:PASTE Ctrl-d duplicates the selected block or current line
