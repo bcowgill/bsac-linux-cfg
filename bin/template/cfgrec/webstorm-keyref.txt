@@ -38,3 +38,5 @@ KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for s
 
 KEY:WEBSTORM:FIND Alt-{ CUSTOM move to matched brace
 KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
+
+KEY:WEBSTORM:CODE Alt-Shift-r Run tests

@@ -42,7 +42,7 @@ find $dir \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|maxcomplexity\s*:|maxstatements\s*:|maxlen\s*:|latedef\s*:|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|console\.(log|info|warn|error)|alert\(|ENG-\d+|DAS-\d+' \
+'\@todo|\b(MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK\b)|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(' \
 {} \; \
 \)
 
