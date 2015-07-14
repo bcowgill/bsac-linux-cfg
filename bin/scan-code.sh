@@ -1,4 +1,5 @@
 #!/bin/bash
+# MUSTDO make a test file for checking this
 # scan the code for todo markers and other things.
 dir=$1
 
@@ -11,6 +12,7 @@ find $dir \
 -o -name CVS -prune \
 -o -name node_modules -prune \
 -o -name bower_components -prune \
+-o -name dist -prune \
 -o -name blib -prune \
 -o -name logs -prune \
 -o -name out -prune \
@@ -40,11 +42,13 @@ find $dir \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
+'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|maxcomplexity\s*:|maxstatements\s*:|maxlen\s*:|latedef\s*:|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|console\.(log|info|warn|error)|alert\(|ENG-\d+|DAS-\d+' \
 {} \; \
 \)
 
+# TODO xdescribe xit .skip( .only( console.log|error, etc
 
+#'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
 # 'TODO|\@todo|MUSTDO|FIXME|REFACTOR|QN|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+' \
 #-o \( -print \)
 #-o \( -type f -print \)
