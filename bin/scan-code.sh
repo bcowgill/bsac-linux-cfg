@@ -46,6 +46,9 @@ find $dir \
 {} \; \
 \)
 
+# look for @class mismatched with file name
+git grep '@class' | perl -ne 'print "ERROR \@class mismatch: $_" unless m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms'
+
 # TODO xdescribe xit .skip( .only( console.log|error, etc
 
 #'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
