@@ -12,12 +12,12 @@ KEY:WEBSTORM:MARK Ctrl-Shift-7 [Edit/Find/Highlight Usages in File] to quickly h
 KEY:WEBSTORM:MARK F3 jump to next highlighted term
 KEY:WEBSTORM:MARK Shift-F3 jump to previous highlighted term
 
-KEY:WEBSTORM:FIND Ctrl-Shift-N [Navigate/File] popup to open any file by incremental search
 KEY:WEBSTORM:FIND Ctrl-n [Navigate/Class] popup to find any class by incremental search use @class markers to mark your classes
+KEY:WEBSTORM:FIND Ctrl-Shift-n [Navigate/File] popup to open any file by incremental search
 KEY:WEBSTORM:FIND Ctrl-Alt-Shift-n [Navigate/Class] popup to find any symbol by incremental search
 KEY:WEBSTORM:FIND Alt-Shift-7 [RightClick/Find Usages] find usages of symbol at cursor show in the find window
 KEY:WEBSTORM:FIND Ctrl-b jump to declaration of a class, method or variable at the cursor
-KEY:WEBSTORM:FIND Ctrl MouseClick on symbol jump to declaration of a class, method or variable clicked
+KEY:WEBSTORM:FIND Ctrl-Click on symbol jump to declaration of a class, method or variable clicked
 KEY:WEBSTORM:FIND Ctrl-0 [Navigate/File Structure] show members of the current class and allow to jump straight to them incremental search
 
 KEY:WEBSTORM:PASTE Ctrl-w widen selection. keep pressing to select more: word, line, block, etc. Can also use double click to help widen
