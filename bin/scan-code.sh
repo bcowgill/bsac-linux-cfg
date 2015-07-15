@@ -42,12 +42,12 @@ find $dir \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|\b(MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK\b)|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(' \
+'\@todo|\b(MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK\b)|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(|\((ev|e)\)' \
 {} \; \
 \)
 
 # look for @class mismatched with file name
-git grep '@class' | perl -ne 'print "ERROR \@class mismatch: $_" unless m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms'
+git grep '@class' | perl -ne 'unless (m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms) { $_ =~ s{\@class}{ERROR \@class mismatch to filename:}xmsg; print; }'
 
 # TODO xdescribe xit .skip( .only( console.log|error, etc
 
