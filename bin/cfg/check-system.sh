@@ -59,7 +59,7 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
-NODE_VER="v0.12.5"
+NODE_VER="v0.12.7"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
@@ -1063,7 +1063,8 @@ ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weigh
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
 if [ -f "$FILE" ]; then
-	ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
+	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
+	ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"

@@ -1,0 +1,11 @@
+! configure X program default settings
+
+! to reload this file after a change:
+! xrdb -merge ~/.Xresources
+
+!xterm - Ctrl L/R Click for context menus
+
+! xterm -fa ProFontWindows -fs 18
+xterm*font:     -*-courier 10 pitch-medium-r-*-*-28-*-*-*-*-*-*-*
+xterm.fullscreen:      false
+xterm.maximized:       true

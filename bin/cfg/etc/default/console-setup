@@ -1,0 +1,18 @@
+# CONFIGURATION FILE FOR SETUPCON
+
+# Consult the console-setup(5) manual page.
+# use setupcon command after login to set the font
+# http://unix.stackexchange.com/questions/49779/can-i-change-the-font-of-terminal
+
+ACTIVE_CONSOLES="/dev/tty[1-6]"
+
+CHARMAP="UTF-8"
+
+CODESET="Lat15"
+FONTFACE="Terminus"
+FONTSIZE="16x32"
+
+VIDEOMODE=
+
+# The following is an example how to use a braille font
+# FONT='lat9w-08.psf.gz brl-8x8.psf'

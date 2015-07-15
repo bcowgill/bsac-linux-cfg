@@ -1,0 +1,5 @@
+# Webstorm IDE project directory
+.idea
+# Sublime editor project files
+*.sublime-project
+*.sublime-workspace

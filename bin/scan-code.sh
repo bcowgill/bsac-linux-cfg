@@ -1,4 +1,5 @@
 #!/bin/bash
+# MUSTDO make a test file for checking this
 # scan the code for todo markers and other things.
 dir=$1
 
@@ -11,6 +12,7 @@ find $dir \
 -o -name CVS -prune \
 -o -name node_modules -prune \
 -o -name bower_components -prune \
+-o -name dist -prune \
 -o -name blib -prune \
 -o -name logs -prune \
 -o -name out -prune \
@@ -40,11 +42,16 @@ find $dir \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
+'\@todo|\b(MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK\b)|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(' \
 {} \; \
 \)
 
+# look for @class mismatched with file name
+git grep '@class' | perl -ne 'print "ERROR \@class mismatch: $_" unless m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms'
 
+# TODO xdescribe xit .skip( .only( console.log|error, etc
+
+#'\@todo|MUSTDO|FIXME|REFACTOR|QN|[Hh]ack|HACK|bower_components|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+|DAS-\d+' \
 # 'TODO|\@todo|MUSTDO|FIXME|REFACTOR|QN|maxcomplexity|maxstatements|maxlen|latedef|strict\s*:|eqeqeq\s*:\s*false|unused\s*:|alert\(|ENG-\d+' \
 #-o \( -print \)
 #-o \( -type f -print \)
