@@ -1,6 +1,7 @@
 /** @todo marker in jsdoc */
 // MUSTDO:BSAC marker
 // FIXME marker
+// WARNING marker
 // REFACTOR marker
 // QN question marker
 // DEPR marker about deprecation
@@ -26,10 +27,14 @@ console.trace('caught a console trace message');
 console.assert('caught a console assert message');
 alert('caught an alert message');
 describe.skip('unit tests', function () {
-it.skip('should capitalise the string', function () {
+	it.skip('should capitalise the string', function () {
+	});
+	it.only('should capitalise the string', function () {
+	});
+	xit('should capitalise the string', function () {
+	});
 });
-it.only('should capitalise the string', function () {
-});
+xdescribe('unit tests', function () {
 });
 var handler = function (ev) {}
 var handler = function ( ev ) {}
