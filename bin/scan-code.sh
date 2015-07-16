@@ -1,7 +1,7 @@
 #!/bin/bash
 # MUSTDO make a test file for checking this
 # scan the code for todo markers and other things.
-dir=$1
+dir=${1:-.}
 
 #_notes/dwsync.xml is a dreamweaver sync file
 
@@ -19,8 +19,6 @@ find $dir \
 -o -name _notes -prune \
 -o -name .sass-cache -prune \
 -o -name '*.min.*' -prune \
--o -name 'kendo.mobile.*.min.css' -prune \
--o -name 'kendo.icenium.min.css' -prune \
 -o -name '*.log' -prune \
 -o -name '*.bak' -prune \
 -o -name '*.ico' -prune \
@@ -34,20 +32,22 @@ find $dir \
 -o -name '*.eot' -prune \
 -o -name '*.otf' -prune \
 -o -name '*.woff' -prune \
--o -name '*.gz' -prune \
 -o -name '*.class' -prune \
+-o -name '*.tgz' -prune \
+-o -name '*.gz' -prune \
 -o -name '*.tar' -prune \
 -o -name '*.zip' -prune \
 -o -name '*.bz' -prune \
 -o -name '*.csv' -prune \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
-'\@todo|\b(MUSTDO|FIXME|REFACTOR|QN|DEPR(ECATED)?|[Hh]ack|HACK\b)|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(|\((ev|e)\)|var\s+([a-zA-Z]\w?|\w\w)\b' \
+'\@todo|\b(MUSTDO|FIXME|REFACTOR|QN|DEPR(ECATED)?|[Hh]ack|HACK)\b|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(|\(\s*[a-zA-Z_]\w?\s*\)|var\s+([a-zA-Z]\w?|\w\w)\b|\b[a-zA-Z_]\w?\s*[,]' \
 {} \; \
 \)
 
 # look for @class mismatched with file name
-git grep '@class' | perl -ne 'unless (m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms) { $_ =~ s{\@class}{ERROR \@class mismatch to filename:}xmsg; print; }'
+pushd $dir > /dev/null; git grep '@class' | perl -ne 'unless (m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms) { $_ =~ s{\@class}{ERROR \@class mismatch to filename:}xmsg; print; }'
+popd > /dev/null
 
 # TODO xdescribe xit .skip( .only( console.log|error, etc
 
