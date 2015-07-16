@@ -54,7 +54,7 @@ find $dir \
 \)
 
 # look for @class mismatched with file name
-pushd $dir > /dev/null; git grep '@class' | perl -ne 'unless (m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms) { $_ =~ s{\@class}{ERROR \@class mismatch to filename:}xmsg; print; }'
+pushd $dir > /dev/null; git grep '@class' | perl -ne 'unless (m{([^/]+?)((?:\.spec)?\.js: .* \@class \s+ \1 \b)}xms) { $_ =~ s{\@class (\s+ \w+)}{ERROR \@class$1 mismatches filename}xmsg; print; }'
 popd > /dev/null
 
 # TODO xdescribe xit .skip( .only( console.log|error, etc

@@ -38,4 +38,4 @@ in/scanme.js:NN:catch ( e ) {}
 in/scanme.js:NN:var ii;
 in/scanme.js:NN:var j = 12;
 in/scanme.js:NN:var k = 12, i, j;
-scanme.js:/** ERROR @class mismatch to filename: ScanMe */
+scanme.js:/** ERROR @class ScanMe mismatches filename */
