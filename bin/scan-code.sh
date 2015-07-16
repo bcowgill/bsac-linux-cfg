@@ -42,7 +42,7 @@ find $dir \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
 '\@todo|\\
-\b(MUSTDO|FIXME|REFACTOR|QN|DEPR(ECATED)?|[Hh]ack|HACK)\b|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(|\(\s*[a-zA-Z_]\w?\s*\)|var\s+([a-zA-Z]\w?|\w\w)\b|\b[a-zA-Z_]\w?\s*[,]' \
+\b(MUSTDO|FIXME|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(|\(\s*[a-zA-Z_]\w?\s*\)|\bvar\s+([a-zA-Z]\w?|\w\w)\b' \
 {} \; \
 \)
 
