@@ -44,7 +44,8 @@ find $dir \
 '\@todo|\\
 \b(MUSTDO|FIXME|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\\
 \b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\\
-\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\\
+\b(eqeqeq\s*:\s*false)|\\
+\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\\
 \b(alert|xit|xdescribe)\(|\\
 \.(skip|only)\(|\\
 \(\s*[a-zA-Z_]\w?\s*\)|\\
