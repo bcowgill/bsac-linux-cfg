@@ -17,26 +17,29 @@ KEY:WEBSTORM:FIND Ctrl-n [Navigate/Class] popup to find any class by incremental
 KEY:WEBSTORM:FIND Ctrl-Shift-n [Navigate/File] popup to open any file by incremental search
 KEY:WEBSTORM:FIND Ctrl-Alt-Shift-n [Navigate/Class] popup to find any symbol by incremental search
 KEY:WEBSTORM:FIND Alt-Shift-7 [RightClick/Find Usages] find usages of symbol at cursor show in the find window
-KEY:WEBSTORM:FIND Ctrl-b jump to declaration of a class, method or variable at the cursor
+KEY:WEBSTORM:FIND Ctrl-b [Navigate/Declaration] jump to declaration of a class, method or variable at the cursor. works in code completion popup too.
 KEY:WEBSTORM:FIND Ctrl-Click on symbol jump to declaration of a class, method or variable clicked
 KEY:WEBSTORM:FIND Ctrl-0 [Navigate/File Structure] show members of the current class and allow to jump straight to them incremental search
 KEY:WEBSTORM:FIND Shift Shift Search everywhere
-KEY:WEBSTORM:FIND Ctrl-e popup to open recent files
+KEY:WEBSTORM:FIND Ctrl-e [View/Recent Files] popup to open recent files
+KEY:WEBSTORM:FIND Alt-{ CUSTOM move to matched brace
+KEY:WEBSTORM:FIND Alt-Up [Navigate/Previous Method] jump to method above
+KEY:WEBSTORM:FIND Alt-Down [Navigate/Next Method] jump to method below
 
 KEY:WEBSTORM:PASTE Ctrl-w widen selection. keep pressing to select more: word, line, block, etc. Can also use double click to help widen
 KEY:WEBSTORM:PASTE Ctrl-d duplicates the selected block or current line
+KEY:WEBSTORM:PASTE Ctrl-Shift-v [Edit/Paste from History] paste recent clipboard contents.
 
-KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, etc)
+KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, etc) use incremental search in the popup.
 KEY:WEBSTORM:CODE Tab insert selected code completion name and erase anything to right of cursor
 KEY:WEBSTORM:CODE Enter insert selected code completion name keeping anything to right of cursor
 KEY:WEBSTORM:CODE Shift-F6 [Refactor/Rename] rename class/methods/variables with automatic correction of all references.
-KEY:WEBSTORM:CODE Ctrl-p list parameters for function call when within parenthesis
-
+KEY:WEBSTORM:CODE Ctrl-p [View/Parameter Info] list parameters for function call when within parenthesis. works in code completion popup too.
 KEY:WEBSTORM:CODE Alt-Shift-v [Refactor/Extract Variable] pull the selected text out into a variable
 
-KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor
+KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor. works in code completion popup too.
 
-KEY:WEBSTORM:FIND Alt-{ CUSTOM move to matched brace
 KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
 
 KEY:WEBSTORM:CODE Alt-Shift-r Run tests
+
