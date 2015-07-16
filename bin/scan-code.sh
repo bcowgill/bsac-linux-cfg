@@ -1,6 +1,10 @@
 #!/bin/bash
 # MUSTDO make a test file for checking this
-# scan the code for todo markers and other things.
+# scan the code for todo markers and other things we frown upon:
+#	short variable names
+#	some jshint settings being turned off
+#	console.log, alert, debugger left in the code
+#   skip or only on unit test suites/cases
 dir=${1:-.}
 
 #_notes/dwsync.xml is a dreamweaver sync file
@@ -47,9 +51,13 @@ find $dir \
 \b(eqeqeq\s*:\s*false)|\\
 \bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\\
 \b(alert|xit|xdescribe)\(|\\
+\bdebugger\b|\\
 \.(skip|only)\(|\\
+\bvar\s+([a-zA-Z]\w?|\w\w)\b|\\
+,\s*[a-zA-Z_]\w?\s*,|\\
 \(\s*[a-zA-Z_]\w?\s*\)|\\
-\bvar\s+([a-zA-Z]\w?|\w\w)\b' \
+\+\+[a-zA-Z_]\w?|\\
+[a-zA-Z_]\w?\+\+' \
 {} \; \
 \)
 

@@ -16,6 +16,7 @@ in/scanme.js:NN:/*jshint latedef: false */
 in/scanme.js:NN:/*jshint strict: false */
 in/scanme.js:NN:/*jshint unused: false */
 in/scanme.js:NN:/*jshint eqeqeq: false */
+in/scanme.js:NN:debugger;
 in/scanme.js:NN:window.console.log('caught a console log');
 in/scanme.js:NN:console.info('caught a console info message');
 in/scanme.js:NN:console.warn('caught a console warn message');
@@ -38,4 +39,7 @@ in/scanme.js:NN:catch ( e ) {}
 in/scanme.js:NN:var ii;
 in/scanme.js:NN:var j = 12;
 in/scanme.js:NN:var k = 12, i, j;
+in/scanme.js:NN:	++i;
+in/scanme.js:NN:	 jk++;
+in/scanme.js:NN:var this, i, j = 12;
 scanme.js:/** ERROR @class ScanMe mismatches filename */

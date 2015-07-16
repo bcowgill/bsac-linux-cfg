@@ -16,6 +16,7 @@
 /*jshint strict: false */
 /*jshint unused: false */
 /*jshint eqeqeq: false */
+debugger;
 window.console.log('caught a console log');
 console.info('caught a console info message');
 console.warn('caught a console warn message');
@@ -46,6 +47,8 @@ var idx;
 var ii;
 var j = 12;
 var k = 12, i, j;
+	++i;
+	 jk++;
 var _ = require('underscore'); // allowed
 var this, i, j = 12;
 /** @class scanme */
