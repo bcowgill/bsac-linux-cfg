@@ -1,6 +1,10 @@
 #!/bin/bash
 # MUSTDO make a test file for checking this
-# scan the code for todo markers and other things.
+# scan the code for todo markers and other things we frown upon:
+#	short variable names
+#	some jshint settings being turned off
+#	console.log, alert, debugger left in the code
+#   skip or only on unit test suites/cases
 dir=${1:-.}
 
 #_notes/dwsync.xml is a dreamweaver sync file
@@ -42,12 +46,23 @@ find $dir \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
 '\@todo|\\
-\b(MUSTDO|FIXME|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\b(eqeqeq\s*:\s*false)|\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\balert\(|\.(skip|only)\(|\(\s*[a-zA-Z_]\w?\s*\)|\bvar\s+([a-zA-Z]\w?|\w\w)\b' \
+\b(MUSTDO|FIXME|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\\
+\b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\\
+\b(eqeqeq\s*:\s*false)|\\
+\bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\\
+\b(alert|xit|xdescribe)\(|\\
+\bdebugger\b|\\
+\.(skip|only)\(|\\
+\bvar\s+([a-zA-Z]\w?|\w\w)\b|\\
+,\s*[a-zA-Z_]\w?\s*,|\\
+\(\s*[a-zA-Z_]\w?\s*\)|\\
+\+\+[a-zA-Z_]\w?|\\
+[a-zA-Z_]\w?\+\+' \
 {} \; \
 \)
 
 # look for @class mismatched with file name
-pushd $dir > /dev/null; git grep '@class' | perl -ne 'unless (m{/([^/]+)((?:\.spec)?\.js: \s* \*? \s* \@class \s+ \1 \s* \z)}xms) { $_ =~ s{\@class}{ERROR \@class mismatch to filename:}xmsg; print; }'
+pushd $dir > /dev/null; git grep '@class' | perl -ne 'unless (m{([^/]+?)((?:\.spec)?\.js: .* \@class \s+ \1 \b)}xms) { $_ =~ s{\@class (\s+ \w+)}{ERROR \@class$1 mismatches filename}xmsg; print; }'
 popd > /dev/null
 
 # TODO xdescribe xit .skip( .only( console.log|error, etc

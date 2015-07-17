@@ -1,39 +1,45 @@
-in/scanme.js:1:/** @todo marker in jsdoc */
-in/scanme.js:2:// MUSTDO:BSAC marker
-in/scanme.js:3:// FIXME marker
-in/scanme.js:4:// REFACTOR marker
-in/scanme.js:5:// QN question marker
-in/scanme.js:6:// DEPR marker about deprecation
-in/scanme.js:7:// DEPRECATED marker in full
-in/scanme.js:8:// anything mentioning a hack
-in/scanme.js:9:// or a Hack
-in/scanme.js:10:// or a HACK
-in/scanme.js:11:/*jshint maxcomplexity: false */
-in/scanme.js:12:/*jshint maxstatements: false */
-in/scanme.js:13:/*jshint maxlen: false */
-in/scanme.js:14:/*jshint latedef: false */
-in/scanme.js:15:/*jshint strict: false */
-in/scanme.js:16:/*jshint unused: false */
-in/scanme.js:17:/*jshint eqeqeq: false */
-in/scanme.js:18:window.console.log('caught a console log');
-in/scanme.js:19:console.info('caught a console info message');
-in/scanme.js:20:console.warn('caught a console warn message');
-in/scanme.js:21:console.error('caught a console error message');
-in/scanme.js:22:console.dir('caught a console dir message');
-in/scanme.js:23:console.time('caught a console time message');
-in/scanme.js:24:console.timeEnd('caught a console timeEnd message');
-in/scanme.js:25:console.trace('caught a console trace message');
-in/scanme.js:26:console.assert('caught a console assert message');
-in/scanme.js:27:alert('caught an alert message');
-in/scanme.js:28:describe.skip('unit tests', function () {
-in/scanme.js:29:it.skip('should capitalise the string', function () {
-in/scanme.js:31:it.only('should capitalise the string', function () {
-in/scanme.js:34:var handler = function (ev) {}
-in/scanme.js:35:var handler = function ( ev ) {}
-in/scanme.js:38:catch (e) {}
-in/scanme.js:39:catch ( e ) {}
-in/scanme.js:41:var ii;
-in/scanme.js:42:var j = 12;
-in/scanme.js:43:var k = 12, i, j;
-in/scanme.js:45:var this, i, j = 12;
-scanme.js:/** ERROR @class mismatch to filename: ScanMe */
+in/scanme.js:NN:/** @todo marker in jsdoc */
+in/scanme.js:NN:// MUSTDO:BSAC marker
+in/scanme.js:NN:// FIXME marker
+in/scanme.js:NN:// WARNING marker
+in/scanme.js:NN:// REFACTOR marker
+in/scanme.js:NN:// QN question marker
+in/scanme.js:NN:// DEPR marker about deprecation
+in/scanme.js:NN:// DEPRECATED marker in full
+in/scanme.js:NN:// anything mentioning a hack
+in/scanme.js:NN:// or a Hack
+in/scanme.js:NN:// or a HACK
+in/scanme.js:NN:/*jshint maxcomplexity: false */
+in/scanme.js:NN:/*jshint maxstatements: false */
+in/scanme.js:NN:/*jshint maxlen: false */
+in/scanme.js:NN:/*jshint latedef: false */
+in/scanme.js:NN:/*jshint strict: false */
+in/scanme.js:NN:/*jshint unused: false */
+in/scanme.js:NN:/*jshint eqeqeq: false */
+in/scanme.js:NN:debugger;
+in/scanme.js:NN:window.console.log('caught a console log');
+in/scanme.js:NN:console.info('caught a console info message');
+in/scanme.js:NN:console.warn('caught a console warn message');
+in/scanme.js:NN:console.error('caught a console error message');
+in/scanme.js:NN:console.dir('caught a console dir message');
+in/scanme.js:NN:console.time('caught a console time message');
+in/scanme.js:NN:console.timeEnd('caught a console timeEnd message');
+in/scanme.js:NN:console.trace('caught a console trace message');
+in/scanme.js:NN:console.assert('caught a console assert message');
+in/scanme.js:NN:alert('caught an alert message');
+in/scanme.js:NN:describe.skip('unit tests', function () {
+in/scanme.js:NN:	it.skip('should capitalise the string', function () {
+in/scanme.js:NN:	it.only('should capitalise the string', function () {
+in/scanme.js:NN:	xit('should capitalise the string', function () {
+in/scanme.js:NN:xdescribe('unit tests', function () {
+in/scanme.js:NN:var handler = function (ev) {}
+in/scanme.js:NN:var handler = function ( ev ) {}
+in/scanme.js:NN:catch (e) {}
+in/scanme.js:NN:catch ( e ) {}
+in/scanme.js:NN:var ii;
+in/scanme.js:NN:var j = 12;
+in/scanme.js:NN:var k = 12, i, j;
+in/scanme.js:NN:	++i;
+in/scanme.js:NN:	 jk++;
+in/scanme.js:NN:var this, i, j = 12;
+scanme.js:/** ERROR @class ScanMe mismatches filename */
