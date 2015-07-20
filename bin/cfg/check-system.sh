@@ -97,7 +97,7 @@ SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
 I3WM=i3
-VPN=openvpn
+VPN="openvpn brctl:bridge-utils"
 
 USE_WEBSTORM=1
 WEBSTORM=wstorm
@@ -193,6 +193,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	COMPANY=raspberrypi
 	EMAIL=zardoz@infoserve.net
 	I3WM=""
+	VPN=""
 	CHARLES=""
 	CHARLES_PKG=""
 	VIRTUALBOX_CMDS=""
@@ -230,10 +231,10 @@ fi # raspberrypi
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN"
-COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $VPN $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $I3WM $VPN"
+COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 #runit
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG	 $GITSVN_PKG $I3WM $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
@@ -506,6 +507,14 @@ if [ ! -z $SKYPE_PKG ]; then
 else
 	OK "will not configure skype unless SKYPE_PKG is non-zero"
 fi # SKYPE_PKG
+
+# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
+# for VPN after installing bridge-utils need to restart network
+sudo /etc/init.d/networking restart
+# create /etc/network/interfaces.d/bridge-vpn
+FILE=/etc/network/interfaces.d/bridge-vpn
+file_has_text "$FILE" "iface br0 inet static"
+
 
 if [ ! -z $I3WM ]; then
 	FILE="/etc/apt/sources.list.d/i3window-manager.list"

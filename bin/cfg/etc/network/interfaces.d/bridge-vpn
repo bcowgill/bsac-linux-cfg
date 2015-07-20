@@ -1,0 +1,13 @@
+# for VPN to workshare
+auto br0
+iface br0 inet static
+        address 192.168.100.10
+        network 192.168.100.0
+        netmask 255.255.255.0
+        broadcast 192.168.100.255
+        gateway 192.168.100.1
+        bridge_ports eth0
+        bridge_fd 9
+        bridge_hello 2
+        bridge_maxage 12
+        bridge_stp off
