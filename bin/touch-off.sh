@@ -20,3 +20,5 @@ xmodmap -e "pointer = 3 2 1"
 #sudo kbdrate -r 30.0 -d 250 -s
 xset r rate 200 45
 
+# keyboard layout
+setxkbmap gb
