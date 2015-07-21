@@ -22,8 +22,10 @@ find $dir \
 -o -name out -prune \
 -o -name _notes -prune \
 -o -name .sass-cache -prune \
+-o -name '*.saved.js' -prune \
 -o -name '*.min.*' -prune \
 -o -name '*.log' -prune \
+-o -name '*.orig' -prune \
 -o -name '*.bak' -prune \
 -o -name '*.ico' -prune \
 -o -name '*.jpg' -prune \
@@ -56,8 +58,8 @@ find $dir \
 \bvar\s+([a-zA-Z]\w?|\w\w)\b|\\
 ,\s*[a-zA-Z_]\w?\s*,|\\
 \(\s*[a-zA-Z_]\w?\s*\)|\\
-\+\+[a-zA-Z_]\w?|\\
-[a-zA-Z_]\w?\+\+' \
+\+\+[a-zA-Z_]\w?\b|\\
+\b[a-zA-Z_]\w?\+\+' \
 {} \; \
 \)
 
