@@ -29,3 +29,6 @@ git gui &
 #WM_CLASS(STRING) = "diffmerge", "Diffmerge"
 #WM_CLASS(STRING) = "Navigator", "Firefox"
 #WM_CLASS(STRING) = "nautilus", "Nautilus"
+# system settings app
+#WM_CLASS(STRING) = "unity-control-center", "Unity-control-center"
+
