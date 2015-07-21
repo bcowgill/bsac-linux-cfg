@@ -25,3 +25,7 @@ git gui &
 #WM_CLASS(STRING) = "gnome-terminal-server", "Gnome-terminal"
 #WM_CLASS(STRING) = "xterm", "XTerm"
 #WM_CLASS(STRING) = "konsole", "konsole"
+#WM_CLASS(STRING) = "ksnapshot", "Ksnapshot"
+#WM_CLASS(STRING) = "diffmerge", "Diffmerge"
+#WM_CLASS(STRING) = "Navigator", "Firefox"
+#WM_CLASS(STRING) = "nautilus", "Nautilus"
