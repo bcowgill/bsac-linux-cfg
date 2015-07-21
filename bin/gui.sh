@@ -9,6 +9,19 @@ sleep 1
 firefox &
 sleep 1
 skype &
+sleep 1
+gnome-terminal&
 
 pushd ~/projects/dealroom-ui
-grunt serve:test
+git gui &
+#grunt serve:test
+
+# window class names: 
+#  xprop | grep WM_CLASS >> gui.sh
+#WM_CLASS(STRING) = "skype", "Skype"
+#WM_CLASS(STRING) = "git-gui", "Git-gui"
+#WM_CLASS(STRING) = "sun-awt-X11-XFramePeer", "jetbrains-webstorm"
+#WM_CLASS(STRING) = "Chromium-browser", "Chromium-browser"
+#WM_CLASS(STRING) = "gnome-terminal-server", "Gnome-terminal"
+#WM_CLASS(STRING) = "xterm", "XTerm"
+#WM_CLASS(STRING) = "konsole", "konsole"
