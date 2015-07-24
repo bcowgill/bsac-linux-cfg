@@ -1,6 +1,11 @@
 # bash functions
 # Brent S.A. Cowgill
 
+# rvdiff reverses the files being diffed
+rvdiff () {
+   vdiff $2 $1
+}
+
 # touch_p function like mkdir -p
 touch_p () {
    local dir

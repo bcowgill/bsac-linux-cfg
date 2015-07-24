@@ -77,6 +77,7 @@ else
       fi
    fi
 fi
+
 if which p4merge >> /dev/null 2>&1 ; then
    # p4merge is a good visual diff tool for image files but not so good for text.
    alias imgdiff='p4merge'
