@@ -12,6 +12,7 @@ dir=${1:-.}
 find $dir \
 -name sessions -prune \
 -o -name .git -prune \
+-o -name .tmp -prune \
 -o -name .svn -prune \
 -o -name CVS -prune \
 -o -name node_modules -prune \
