@@ -1005,6 +1005,9 @@ if [ -d .kde ]; then
 	file_has_text "$FILE" "Dropbox/WorkSafe" "screensaver dir configured"
 	file_has_text "$FILE" "SubDirectory=true" "screensaver subdirs"
 
+	# .xscreensaver
+	# Photopile is a good one
+
 	# uk/us keyboard layout
 	FILE=.kde/share/config/kxkbrc
 	file_has_text "$FILE" "LayoutList=gb(extd),us" "keyboard layout System Settings / Input Devices / Keyboard / Layouts / Configure Layouts"
