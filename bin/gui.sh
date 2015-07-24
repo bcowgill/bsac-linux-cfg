@@ -1,19 +1,31 @@
 #!/bin/bash
 # fire up programs when running in a gui
 #charles &
+
+[ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
+
+function run_logged
+{
+	local log cmd
+	log=$1
+	cmd="${2:-$1}"
+	$cmd > /tmp/$USER/$log.log 2>&1 &
+}
+
+xscreensaver -log /tmp/$USER/xscreensaver.log &
 #sleep 5
-wstorm &
+run_logged wstorm
 sleep 1
-chromium-browser &
+run_logged chromium-browser
 sleep 1
-firefox &
+run_logged firefox
 sleep 1
-skype &
+run_logged skype
 sleep 1
-gnome-terminal&
+run_logged gnome-terminal
 
 pushd ~/projects/dealroom-ui
-git gui &
+run_logged git-gui "git gui"
 #grunt serve:test
 
 # window class names: 
