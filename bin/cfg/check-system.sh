@@ -361,6 +361,7 @@ file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
+file_linked_to .i3/config bin/cfg/.i3-config "i3 window manager configuration"
 
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
@@ -513,7 +514,7 @@ fi # SKYPE_PKG
 sudo /etc/init.d/networking restart
 # create /etc/network/interfaces.d/bridge-vpn
 FILE=/etc/network/interfaces.d/bridge-vpn
-file_has_text "$FILE" "iface br0 inet static"
+#file_has_text "$FILE" "iface br0 inet static"
 
 
 if [ ! -z $I3WM ]; then

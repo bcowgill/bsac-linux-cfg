@@ -43,4 +43,5 @@ run_logged git-gui "git gui"
 #WM_CLASS(STRING) = "nautilus", "Nautilus"
 # system settings app
 #WM_CLASS(STRING) = "unity-control-center", "Unity-control-center"
-
+#WM_CLASS(STRING) = "topBox", "Xman"
+#WM_CLASS(STRING) = "manualBrowser", "Xman"
