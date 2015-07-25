@@ -11,6 +11,7 @@ alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
 alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
 alias vivim='$EDITOR ~/.vimrc'
+alias vii3='$EDITOR ~/bin/cfg/.i3-config ~/bin/i3start.sh'
 alias prompter='source `which toggle-prompt.sh`'
 
 #  like mkdir -p for files you want to touch
@@ -83,6 +84,9 @@ if which p4merge >> /dev/null 2>&1 ; then
    alias imgdiff='p4merge'
    #alias vdiff='p4merge -fg yellow -bg black' does not work
 fi
+
+# i3 window manager diff configuration
+alias i3diff='pushd ~/bin; git difftool --no-prompt  172c656043e8902d8ff7bf14af61145002445cb8 cfg/.i3-config ; popd'
 
 # use fdupes to do something like my delsame.pl
 alias delsame='fdupes --recurse --noempty --size --delete'
