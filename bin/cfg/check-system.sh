@@ -55,7 +55,8 @@ DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 RUBY_GEMS="sass compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
-SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xfishtank xdaliclock fortune"
+# webcollage screensaver pulls from the internet so not safe for work
+SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
@@ -150,7 +151,7 @@ PI_PKG=""
 
 INI_DIR=check-iniline
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode"
 # runit
 PERL_PKG="cpanm:cpanminus"
 
@@ -360,6 +361,7 @@ file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 #file_linked_to .perltidyrc bin/cfg/.perltidyrc-$COMPANY "perltidyrc configured for $COMPANY"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
+file_linked_to .xscreensaver bin/cfg/.xscreensaver "xscreensaver configuration"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg/.i3-config "i3 window manager configuration"
