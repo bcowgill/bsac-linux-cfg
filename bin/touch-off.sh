@@ -9,16 +9,5 @@ synclient TouchpadOff=1
 #xinput set-prop 13 "Device Enabled" 0
 xinput -disable 13
 
-# mouse buttons set for left handed
-# http://askubuntu.com/questions/151819/how-do-i-swap-mouse-buttons-to-be-left-handed-from-the-terminal
-xmodmap -e "pointer = 3 2 1"
-
-# keyboard repeat rate
-# http://askubuntu.com/questions/140255/how-to-override-the-new-limited-keyboard-repeat-rate-limit
-# also config file settings can be changed
-# /etc/kbd/config
-#sudo kbdrate -r 30.0 -d 250 -s
-xset r rate 200 45
-
-# keyboard layout
-setxkbmap gb
+mouse-left.sh
+keyboard-config.sh
