@@ -40,8 +40,9 @@ else
 			MAIN=${AUX:-$mon}
 			AUX=$mon
 		done
-		xrandr --output $MAIN --mode $RES \
-			--output $AUX --same-as $MAIN
+# set both outputs to the same to reset a bad rotation
+#		xrandr --output $MAIN --mode $RES \
+#			--output $AUX --same-as $MAIN
 		xrandr --output $MAIN --mode $RES \
 			--output $AUX --primary --mode $RES --left-of $MAIN 
 	else
