@@ -28,8 +28,9 @@ pushd ~/projects/dealroom-ui
 run_logged git-gui "git gui"
 #grunt serve:test
 
-# window class names: 
+# window class names:
 #  xprop | grep WM_CLASS >> gui.sh
+#                  instance, class
 #WM_CLASS(STRING) = "skype", "Skype"
 #WM_CLASS(STRING) = "git-gui", "Git-gui"
 #WM_CLASS(STRING) = "sun-awt-X11-XFramePeer", "jetbrains-webstorm"
