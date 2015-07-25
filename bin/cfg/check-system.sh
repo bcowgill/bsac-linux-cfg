@@ -361,7 +361,8 @@ file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
-file_linked_to .i3/config bin/cfg/.i3-config "i3 window manager configuration"
+make_dir_exist .config/i3 "i3 configuration file dir"
+file_linked_to .config/i3/config $HOME/bin/cfg/.i3-config "i3 window manager configuration"
 
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
