@@ -10,3 +10,39 @@ QqRrSsTtUuVvWwXx
 YyZz
 
 .,;:!? `"' £$€ @%&# <([{}])> _¬~-=+*^ \|/ 0123456789 AaBbCcDdEeFfGgHh IiJjKkLlMmNnOoPp QqRrSsTtUuVvWwXx YyZz
+
+unicode code points
+❤
+Heavy Black Heart
+Unicode number: U+2764
+HTML-code: &#10084;
+
+☀
+Black Sun with Rays
+Unicode number: U+2600
+HTML-code: &#9728;
+
+♞
+Black Chess Knight
+Unicode number: U+265E
+HTML-code: &#9822;
+
+☢
+Radioactive Sign
+Unicode number: U+2622
+HTML-code: &#9762;
+
+
+Backspace
+Unicode number: U+0008
+HTML-code: &#8;
+
+☎
+Black Telephone
+Unicode number: U+260E
+HTML-code: &#9742;
+
+☯
+Yin Yang
+Unicode number: U+262F
+HTML-code: &#9775;
