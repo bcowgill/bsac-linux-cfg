@@ -56,7 +56,7 @@ assign [class="^Git-gui$"] $shell
 assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
 
-assign [class="^Gnome-terminal$"] $shell
+#assign [class="^Gnome-terminal$"] $shell
 assign [class="^Chromium-browser$"] $app
 
 assign [class="^XTermBuild$"] $build
@@ -80,7 +80,8 @@ exec skype
 exec xbuild.sh
 exec firefox
 
-exec i3-sensible-terminal
+# should be workspace $shell
+exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
 exec xscreensaver
 
 #======================================================================
@@ -248,25 +249,11 @@ bar {
 # BSAC
 # hide the vertical borders at edge of screen
 hide_edge_borders vertical
-# assign specific windows to specific workspaces
-# use xprop command and click on a window to see its class
-# TODO get correct classes
-#assign [class="gnome-terminal-server"] shell
-#assign [class="firefox"] web
-#assign [class="Chromium-browser"] web
-#assign [class="jetbrains-webstorm"] code
-# start up specific programs
-#exec chromium
-
-# Key Bindings
-# xmodmap -pke # to see the current mapping of your keys
-# xev # to hit a key and see what keysym it is configured to
-
 
 # i3wm configuration suggestions
 #http://i3wm.org/docs/user-contributed/lzap-config.html
 #
 
 # activate workspaces 5 then 1 so both monitors are showing the right thing on startup
-exec --no-startup-id i3-activate.sh
+exec --no-startup-id i3-activate.sh $build $shell
 
