@@ -1,3 +1,3 @@
 #!/bin/bash
-# use an xterm to run the build
-myxterm.sh build.sh
+# use a terminal to build the dealroom
+mygterm.sh $HOME/projects/dealroom-ui build-test.sh
