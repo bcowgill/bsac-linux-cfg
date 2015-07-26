@@ -29,6 +29,11 @@ exec --no-startup-id $bin/i3start.sh
 
 # default workspaces layout with tabs default/stacking/tabbed
 workspace_layout tabbed
+# allow workspace toggling back and forth
+# i.e. press Mod+1 to check the web, press Mod+1 again to go back to the workspace you were in
+workspace_auto_back_and_forth yes
+# trackpad may make focus follows mouse useless
+focus_follows_mouse no
 
 # assign workspaces to monitors
 workspace 1   output $aux
@@ -55,8 +60,8 @@ assign [class="^Gnome-terminal$"] $shell
 assign [class="^Chromium-browser$"] $app
 
 assign [class="^XTermBuild$"] $build
-assign [class="^XTerm$"] $build
-assign [class="^konsole$"] $build
+#assign [class="^XTerm$"] $build
+#assign [class="^konsole$"] $build
 assign [class="^Firefox$"] $build
 
 #WM_CLASS(STRING) = "ksnapshot", "Ksnapshot"
@@ -257,11 +262,6 @@ hide_edge_borders vertical
 # xmodmap -pke # to see the current mapping of your keys
 # xev # to hit a key and see what keysym it is configured to
 
-# trackpad may make focus follows mouse useless
-focus_follows_mouse no
-# allow workspace toggling back and forth
-# i.e. press Mod+1 to check the web, press Mod+1 again to go back to the workspace you were in
-workspace_auto_back_and_forth yes
 
 # i3wm configuration suggestions
 #http://i3wm.org/docs/user-contributed/lzap-config.html
