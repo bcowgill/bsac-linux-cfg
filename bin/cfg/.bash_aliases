@@ -11,7 +11,7 @@ alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
 alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
 alias vivim='$EDITOR ~/.vimrc'
-alias vii3='$EDITOR ~/bin/cfg/.i3-config' # ~/bin/i3start.sh'
+alias vii3='$EDITOR ~/bin/cfg/.i3-config ~/bin/i3-launch.sh ~/bin/i3-start.sh'
 alias prompter='source `which toggle-prompt.sh`'
 
 #  like mkdir -p for files you want to touch

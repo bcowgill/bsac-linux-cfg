@@ -5,8 +5,22 @@
 # this file and re-run i3-config-wizard(1).
 #
 # http://i3wm.org/docs/userguide.html#configuring
-
+# i3wm configuration suggestions
+# http://i3wm.org/docs/user-contributed/lzap-config.html
+#
+# TODO:
+# do this http://i3wm.org/docs/user-contributed/lzap-config.html
+# install better x fonts http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
+# named workspaces
+# how to set a mark on a window during startup?
+# get proper layout of build/tomato screen
+# i3status configuration
+# dmenu default font configuration
+# i3-input default font configuration -font xfontspec
+# exit prompt default font configuration i3-nagbar -font xfontspec in command below
+# exit prompt bug? multiple prompts can be fired up. No keyboard control.
 #======================================================================
+
 # BSAC var settings
 set $bin /home/bcowgill/bin
 set $font_size 18
@@ -15,17 +29,24 @@ set $font_name ProFontWindows
 # define vars for monitor screens
 # use xrandr --current command to get monitor screen names
 set $main eDP1
-set $aux HDMI1
+set $aux HDMI1 # HOME
+#set $aux DPI1
 
 # define vars for workspaces
 set $shell 1
 set $edit 2
 set $app 3
+set $help 4
 set $build 5
 set $chat 6
 set $email 7
+set $files 8
 
-exec --no-startup-id $bin/i3start.sh
+set $exec exec --no-startup-id
+set $i3msg exec --no-startup-id i3-msg
+
+# Initialise monitor resolutions, mouse/trackpad/touch/keyboard setup
+exec --no-startup-id $bin/i3-start.sh
 
 # default workspaces layout with tabs default/stacking/tabbed
 workspace_layout tabbed
@@ -43,11 +64,13 @@ workspace 1   output $aux
 workspace 2   output $aux
 workspace 3   output $aux
 workspace 4   output $aux
+workspace 9   output $aux
 
 workspace 5   output $main
 workspace 6   output $main
 workspace 7   output $main
 workspace 8   output $main
+workspace 10  output $main
 
 # put clients on specific workspaces. The first matching rule below
 # determines where a window goes
@@ -55,17 +78,19 @@ workspace 8   output $main
 # xprop | grep WM_CLASS >> gui.sh
 #                   instance, class
 # WM_CLASS(STRING) = "skype", "Skype"
-assign [class="^Git-gui$"] $shell
-assign [class="^jetbrains-webstorm$"] $edit
-assign [class="^Skype$"] $chat
+#assign [class="^Git-gui$"] $shell
+#assign [class="^jetbrains-webstorm$"] $edit
+#assign [class="^Skype$"] $chat
 
 #assign [class="^Gnome-terminal$"] $shell
-assign [class="^Chromium-browser$"] $app
+#assign [class="^Chromium-browser$"] $app
 
-assign [class="^XTermBuild$"] $build
+#assign [class="^XTermBuild$"] $build
+#assign [class="^build.sh$"] $build
+#assign [class="^build-app.sh$"] $build
 #assign [class="^XTerm$"] $build
 #assign [class="^konsole$"] $build
-assign [class="^Firefox$"] $build
+#assign [class="^Firefox$"] $build
 
 #WM_CLASS(STRING) = "ksnapshot", "Ksnapshot"
 #WM_CLASS(STRING) = "diffmerge", "Diffmerge"
@@ -75,17 +100,23 @@ assign [class="^Firefox$"] $build
 #WM_CLASS(STRING) = "topBox", "Xman"
 #WM_CLASS(STRING) = "manualBrowser", "Xman"
 
-exec chromium-browser 'http://i3wm.org/docs/userguide.html#_automatically_putting_clients_on_specific_workspaces'
-exec wstorm
-exec git-gui.sh
+#$i3msg 'workspace 4; exec xman; workspace 3; exec chromium-browser; workspace 2; exec wstorm; workspace 1; exec git-gui.sh; exec i3-sensible-terminal'
+#$i3msg 'workspace 4; exec xman'
+#$i3msg 'workspace 3; exec chromium-browser'
+#$i3msg 'workspace 2; exec wstorm'
+#$i3msg 'workspace 1; exec git-gui.sh'
+#$i3msg '[class="^Git-gui$"] focus; mark git'
 
-exec skype
-exec xbuild.sh
-exec firefox
+#$i3msg 'workspace 6; exec skype'
+#exec xbuild.sh
+#exec --no-startup-id i3-msg '[class="^build.sh$"] focus; mark deal'
+#exec --no-startup-id i3-build-app.sh $build
+#exec --no-startup-id i3-msg '[class="^build-app.sh$"] focus; mark newui'
+#exec --no-startup-id i3-msg 'exec firefox; [class="^Firefox$"] focus; mark tomato'
 
 # should be workspace $shell
-exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal'
-exec xscreensaver
+#exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal; [class="^Gnome-terminal$"] focus; mark shell'
+#exec xscreensaver
 
 #======================================================================
 
@@ -117,8 +148,9 @@ font pango:$font_name $font_size
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# BSAC start a terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec mygterm.sh
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -128,7 +160,8 @@ bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# BSAC assigned to shifted dmenu key
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -178,6 +211,8 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
+# BSAC assign to z because it's below the focus parent key
+bindsym $mod+z focus child
 #bindsym $mod+d focus child
 
 # switch to workspace
@@ -249,10 +284,16 @@ bar {
         tray_output primary
 }
 
-# i3wm configuration suggestions
-#http://i3wm.org/docs/user-contributed/lzap-config.html
-#
+# BSAC bind these to some keys Mod+Shift+m to mark and Mod+g to go to mark
+# Ask for a mark name to mark the current window
+bindsym $mod+Shift+m exec i3-input -F 'mark %s' -l 15 -P 'Name for Window Mark: '
+# Go to the container marked with above example:
+bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 15 -P 'Go to Marked Window: '
 
-# activate workspaces 5 then 1 so both monitors are showing the right thing on startup
-exec --no-startup-id i3-activate.sh $build $shell
+# TEMPORARY BSAC start a browser or manual page browser with hot key
+bindsym $mod+p exec chromium-browser --incognito
+bindsym $mod+o exec xman
 
+# Use external script to launch all windows with apps where I want them, requires sleeps
+# this script does not use the $shell and other vars defined above though so possible problems
+exec --no-startup-id $bin/i3-launch.sh
