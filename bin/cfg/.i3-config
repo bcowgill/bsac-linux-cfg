@@ -35,6 +35,9 @@ workspace_auto_back_and_forth yes
 # trackpad may make focus follows mouse useless
 focus_follows_mouse no
 
+# hide the vertical borders at edge of screen
+hide_edge_borders vertical
+
 # assign workspaces to monitors
 workspace 1   output $aux
 workspace 2   output $aux
@@ -239,16 +242,12 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
         # BSAC configure bar to hide unless mod key (windows) pressed
-#        mode hide
-#        hidden_state hide
-#        modifier Mod4
+        mode hide
+        hidden_state hide
+        modifier $mod
         # put notification tray on main monitor only
         tray_output primary
 }
-
-# BSAC
-# hide the vertical borders at edge of screen
-hide_edge_borders vertical
 
 # i3wm configuration suggestions
 #http://i3wm.org/docs/user-contributed/lzap-config.html
