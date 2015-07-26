@@ -1,6 +1,9 @@
 #!/bin/bash
-pushd ~/projects/dealroom-ui
-# start a screen/tmux session for two builds
+# TODO maybe start a screen/tmux session for two builds ??
 grunt build
-sleep 5
+echo waiting to begin serving tests
+read wait
 grunt serve:test
+echo SHLVL=$SHLVL
+echo grunt build; grunt serve:test
+$SHELL
