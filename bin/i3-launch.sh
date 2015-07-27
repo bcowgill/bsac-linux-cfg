@@ -8,7 +8,7 @@
 i3-msg "workspace 8; exec mygterm.sh $HOME/projects/dealroom-ui mc $HOME/projects/dealroom-ui $HOME"
 sleep 1
 # $email
-i3-msg 'workspace 7; exec xman' # just a placeholder until something useful
+i3-msg 'workspace 7; exec xscreensaver-demo' # placeholder to lock screen
 sleep 1
 # $help
 i3-msg 'workspace 4; exec chromium-browser --incognito http://google.co.uk' # just a placeholder until something useful needed
@@ -51,4 +51,5 @@ sleep 1
 i3-msg 'workspace 6; exec skype'
 sleep 3
 
+xscreensaver &
 

@@ -29,8 +29,8 @@ set $font_name ProFontWindows
 # define vars for monitor screens
 # use xrandr --current command to get monitor screen names
 set $main eDP1
-set $aux HDMI1 # HOME
-#set $aux DPI1
+#set $aux HDMI1 # HOME
+set $aux DP1
 
 # define vars for workspaces
 set $shell 1
