@@ -419,3 +419,5 @@ FEATURE: Unauthorized access generates info toast
   THEN the page is reloaded
    and an information toast appears saying 'You are not authorized to perform this action'
 
+perl -pne 's{FOR \s+ \$(\w+) \s+ IN \s+ (.+) \n \z}{qq{GIVEN a table of $1 values:\n  |@{[join(qq{|\n}, split(/,\s+/,$2))]}}}xmse' gherkin-cucumber.feature | less
+
