@@ -1,18 +1,4 @@
-Conditions of Satisfaction for Feature 28395
-(aka Acceptance Criteria)
-
-14 Features / 38 Scenarios
-
-(
-   Structure of language explained here:
-
-   https://cucumber.io/docs/reference#gherkin
-   https://github.com/cucumber/cucumber/wiki/Gherkin
-   https://github.com/cucumber/cucumber/wiki/Feature-Introduction
-   https://github.com/cucumber/cucumber/wiki/Given-When-Then
-)
-
-# Sample of cucumber syntax from 
+# Sample of cucumber syntax from
 # https://cucumber.io/docs/reference#gherkin
 # should be one Feature per .feature file
 Feature: Refund item
@@ -38,7 +24,7 @@ Scenario: feeding a small suckler cow
   But the fat should only be 14 g
 
 # Putting as many @Tags as you like before a Feature/Scenario
-# will make it easy to run a subset of scenarios which match 
+# will make it easy to run a subset of scenarios which match
 # or exclude specific tags.
 # https://cucumber.io/docs/reference#tagged-hooks
 @demo @withtable
@@ -56,7 +42,7 @@ Scenario Outline: feeding a suckler cow
     |    600 |  37000 |     305 |
 
 @demo
-Scenario: demonstrating a multiline doc string 
+Scenario: demonstrating a multiline doc string
   Given a blog post named "Random" with Markdown body
     """
     Some Title, Eh?
