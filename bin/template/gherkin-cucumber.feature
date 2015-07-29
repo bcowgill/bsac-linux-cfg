@@ -10,7 +10,6 @@ Conditions of Satisfaction for Feature 28395
    https://github.com/cucumber/cucumber/wiki/Gherkin
    https://github.com/cucumber/cucumber/wiki/Feature-Introduction
    https://github.com/cucumber/cucumber/wiki/Given-When-Then
-   FOR .. IN and SETTING .. TO are NOT part of gherkin/cucumber (they may have something similar)
 )
 
 # Sample of cucumber syntax from 
@@ -80,16 +79,16 @@ Scenario: demonstrating a data table in a scenario
 FEATURE: Grant/remove admin status on Participants page
  SCENARIO: Owner,Admin user for Owner participant
   GIVEN a table of logins and target user types with values:
-  |UserType|ParticipantType|
-  |Owner    |Owner           |
-  |Admin    |Owner           |
-  |Admin    |Admin           |
-  |Member   |Owner           |
-  |Member   |Admin           |
-  |Member   |Member          |
-   and a $UserType user is on the Participants page
-  WHEN the $ParticipantType user is shown on the list of participants
-  THEN there should be no menu icon for the $ParticipantType user
+        |UserType|ParticipantType|
+        |Owner   |Owner          |
+        |Admin   |Owner          |
+        |Admin   |Admin          |
+        |Member  |Owner          |
+        |Member  |Admin          |
+        |Member  |Member         |
+   and a <UserType> user is on the Participants page
+  WHEN the <ParticipantType> user is shown on the list of participants
+  THEN there should be no menu icon for the <ParticipantType> user
 
  SCENARIO: Owner user for a Member
   GIVEN an Owner user is on the Participants page
@@ -129,16 +128,22 @@ FEATURE: Delete Deal on Dealroom page
   THEN the Delete Deal item should be present under Admin Actions
 
  SCENARIO: Admin,Member user can NOT delete deal
-  FOR $UserType IN Admin, Member
-  GIVEN a $UserType user is on the Dealroom page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Admin   |
+        |Member  |
+  GIVEN a <UserType> user is on the Dealroom page
   WHEN the user clicks the Actions menu icon
   THEN the Delete Deal item should NOT be present at all
 
 
 FEATURE: Invite new Member on Dealroom page
  SCENARIO: Owner,Admin user can invite new members
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Dealroom page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Dealroom page
   WHEN the user clicks the Actions menu icon
   THEN the Invite New User item should be present under Admin Actions
 
@@ -150,8 +155,11 @@ FEATURE: Invite new Member on Dealroom page
 
 FEATURE: Invite new Member on Participants page
  SCENARIO: Owner,Admin user can invite new members
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Participants page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Participants page
   WHEN the user hovers over the Invite new participants button
   THEN the Invite new participants button is enabled
    and there is NO tooltip shown
@@ -165,10 +173,13 @@ FEATURE: Invite new Member on Participants page
 
 FEATURE: Remove from deal on Participants page
  SCENARIO: Owner user for an Admin,Member
-  FOR $UserType IN Admin, Member
+  GIVEN a table of UserType values:
+        |UserType|
+        |Admin   |
+        |Member  |
   GIVEN an Owner user is on the Participants page
-   and there is a $UserType user on the list of participants
-  WHEN the user activates the context menu for the $UserType user
+   and there is a <UserType> user on the list of participants
+  WHEN the user activates the context menu for the <UserType> user
   THEN the menu should contain an entry called Remove from deal
 
  SCENARIO: Admin user for a Member
@@ -180,8 +191,11 @@ FEATURE: Remove from deal on Participants page
 
 FEATURE: Edit Checklist on Dealroom page
  SCENARIO: Owner,Admin user can edit checklist
-  FOR $UserType IN Owner, Admin
-  GIVEN an $UserType user is on the Dealroom page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN an <UserType> user is on the Dealroom page
   WHEN the user clicks the Actions menu icon
   THEN the Edit Checklist item should be present under Admin Actions
 
@@ -192,8 +206,11 @@ FEATURE: Edit Checklist on Dealroom page
 
 FEATURE: Remove document version on Documents checklist page
  SCENARIO: Owners,Admins can delete versions
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
   WHEN the user hovers over the Delete Version link
   THEN there is a Delete Version link displayed
@@ -208,7 +225,6 @@ FEATURE: Remove document version on Documents checklist page
    and the Delete Version link is DISABLED
    and a tooltip is shown saying 'Only admins or the owner can perform this action'
 
-HEREIAM
  SCENARIO: Members can delete their own versions
   GIVEN a Member user is on the Documents Checklist page
    and the last version of the document was created by the Member
@@ -220,8 +236,11 @@ HEREIAM
 
 FEATURE: Edit files on Documents checklist page
  SCENARIO: Owners,Admins can Edit files from others
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
   WHEN the user hovers over the Edit files link
   THEN there is an Edit files link displayed
@@ -257,8 +276,11 @@ FEATURE: Edit files on Documents checklist page
 
 FEATURE: Members Remove Draft from upload dialog
  SCENARIO: Owners,Admins can remove draft for versions created by others
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
    and the last version has no comparison file uploaded
   WHEN the user has clicked the Edit files link to open the uploader
@@ -274,8 +296,11 @@ FEATURE: Members Remove Draft from upload dialog
 
 FEATURE: Remove document version on Document Details page
  SCENARIO: Owners,Admins can delete versions
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
   WHEN the user has clicked the Details link to view document details
    and the user hovers over the Delete Version link in the Latest Version section
@@ -304,8 +329,11 @@ FEATURE: Remove document version on Document Details page
 
 FEATURE: Edit files on Document Details page
  SCENARIO: Owners,Admins can Edit files from others
-  FOR $UserType IN Owner, Admin
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
   WHEN the user has clicked the Details link to view document details
    and the user hovers over the Edit files link in the Latest Version section
@@ -345,79 +373,104 @@ FEATURE: Edit files on Document Details page
 
 FEATURE: Edit/Delete Status on Documents checklist page
  SCENARIO: Owners,Admins can Edit/Delete status
-  FOR $UserType IN Owner, Admin
-  FOR $Link IN Edit, Delete
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a table of Link values:
+        |Link    |
+        |Edit    |
+        |Delete  |
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
    and there is a status note that was created by someone else
-  WHEN the user hovers over the $Link link in the Status column
-  THEN the $Link link in the Status column is enabled
+  WHEN the user hovers over the <Link> link in the Status column
+  THEN the <Link> link in the Status column is enabled
    and there is NO tooltip shown
 
  SCENARIO: Members can NOT Edit/Delete status
-  FOR $Link IN Edit, Delete
+  GIVEN a table of Link values:
+        |Link  |
+        |Edit  |
+        |Delete|
   GIVEN a Member user is on the Documents Checklist page
    and the last version of the document was created by someone else
    and there is a status note that was created by someone else
-  WHEN the user hovers over the $Link link in the Status column
-  THEN the $Link link in the Status column is DISABLED
+  WHEN the user hovers over the <Link> link in the Status column
+  THEN the <Link> link in the Status column is DISABLED
    and a tooltip is shown saying 'Only admins or the owner can perform this action'
 
 
 FEATURE: Edit/Delete Status on View all Status Notes from Documents Checklist page
  SCENARIO: Owners,Admins can Edit/Delete status
-  FOR $UserType IN Owner, Admin
-  FOR $Link IN Edit, Delete
-  GIVEN a $UserType user is on the Documents Checklist page
+  GIVEN a table of UserType values:
+        |UserType|
+        |Owner   |
+        |Admin   |
+  GIVEN a table of Link values:
+        |Link  |
+        |Edit  |
+        |Delete|
+  GIVEN a <UserType> user is on the Documents Checklist page
    and the last version of the document was created by someone else
    and there is a status note that was created by someone else
   WHEN the user clicks the View All link in the Status column
    and a number of status updates are shown to the user
-   and the user hovers over the $Link link for a status update
-  THEN all the $Link links are enabled
+   and the user hovers over the <Link> link for a status update
+  THEN all the <Link> links are enabled
    and there is NO tooltip shown
 
  SCENARIO: Members can NOT Edit/Delete status
-  FOR $Link IN Edit, Delete
+  GIVEN a table of Link values:
+        |Link  |
+        |Edit  |
+        |Delete|
   GIVEN a Member user is on the Documents Checklist page
    and the last version of the document was created by someone else
    and there is a status note that was created by someone else
   WHEN the user clicks the View All link in the Status column
    and a number of status updates are shown to the user
-   and the user hovers over the $Link link for a status update
-  THEN all the $Link links are DISABLED
+   and the user hovers over the <Link> link for a status update
+  THEN all the <Link> links are DISABLED
    and a tooltip is shown saying 'Only admins or the owner can perform this action'
 
 
 FEATURE: Unauthorized access generates info toast
  SCENARIO: Member user hacks the site
-  FOR $HackType IN
-   the DISABLED Documents Checklist Delete Version link
-   the DISABLED Documents Checklist Edit files link
-   the DISABLED Document Details Delete Version link
-   the DISABLED Document Details Edit files link
-   the DISABLED Document Checklist Status Edit/Delete link in the Status column
-   the DISABLED Document Checklist Status Edit/Delete link on the View All Status page
-   the HIDDEN Dealroom page Invite New Member menu option
-   the HIDDEN Dealroom page Edit checklist menu option
-   the HIDDEN Participants page Invite New Member button
-  GIVEN a Member user has bypassed button enablement for $HackType
+  GIVEN a table of HackType values:
+        |HackType|
+        |the DISABLED Documents Checklist Delete Version link|
+        |the DISABLED Documents Checklist Edit files link|
+        |the DISABLED Document Details Delete Version link|
+        |the DISABLED Document Details Edit files link|
+        |the DISABLED Document Checklist Status Edit/Delete link in the Status column|
+        |the DISABLED Document Checklist Status Edit/Delete link on the View All Status page|
+        |the HIDDEN Dealroom page Invite New Member menu option|
+        |the HIDDEN Dealroom page Edit checklist menu option|
+        |the HIDDEN Participants page Invite New Member button|
+  GIVEN a Member user has bypassed button enablement for <HackType>
   WHEN the user submits the unauthorized request
   THEN the page is reloaded
    and an information toast appears saying 'You are not authorized to perform this action'
 
  SCENARIO: Admin,Member user hacks the site
-  FOR $UserType in Admin, Member
-  FOR $TargetType in Owner, Admin, Member
-  FOR $HackType IN
-   Grant admin rights to $TargetType
-   Remove admin rights from $TargetType
-   Remove $TargetType from deal
-   Remove deal
-  GIVEN a $UserType user has bypassed enablement for $HackType
+  GIVEN a table of UserType values:
+        |UserType|
+        |Admin   |
+        |Member  |
+  GIVEN a table of TargetType values:
+        |TargetType|
+        |Owner     |
+        |Admin     |
+        |Member    |
+  GIVEN a table of HackType values:
+        |HackType|
+        |Grant admin rights to <TargetType>|
+        |Remove admin rights from <TargetType>|
+        |Remove <TargetType> from deal|
+        |Remove deal|
+  GIVEN a <UserType> user has bypassed enablement for <HackType>
   WHEN the user submits the unauthorized request
   THEN the page is reloaded
    and an information toast appears saying 'You are not authorized to perform this action'
-
-perl -pne 's{FOR \s+ \$(\w+) \s+ IN \s+ (.+) \n \z}{qq{GIVEN a table of $1 values:\n  |@{[join(qq{|\n}, split(/,\s+/,$2))]}}}xmse' gherkin-cucumber.feature | less
 
