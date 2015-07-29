@@ -5,22 +5,89 @@ Conditions of Satisfaction for Feature 28395
 
 (
    Structure of language explained here:
+
+   https://cucumber.io/docs/reference#gherkin
    https://github.com/cucumber/cucumber/wiki/Gherkin
    https://github.com/cucumber/cucumber/wiki/Feature-Introduction
    https://github.com/cucumber/cucumber/wiki/Given-When-Then
    FOR .. IN and SETTING .. TO are NOT part of gherkin/cucumber (they may have something similar)
 )
 
+# Sample of cucumber syntax from 
+# https://cucumber.io/docs/reference#gherkin
+# Background: clauses will execute for all scenarios in the file
+Background:
+  Given some state present in all features
+  And some more state for all features
+
+Feature: Refund item
+
+  Sales assistants should be able to refund customers' purchases.
+  This is required by the law, and is also essential in order to
+  keep customers happy.
+
+  Rules:
+  - Customer must present proof of purchase
+  - Purchase must be less than 30 days ago
+
+Scenario: feeding a small suckler cow
+  Given the cow weighs 450 kg
+  When we calculate the feeding requirements
+  Then the energy should be 26500 MJ
+  And the protein should be 215 kg
+  But the fat should only be 14 g
+
+@demo @withtable
+Scenario Outline: feeding a suckler cow
+  Given the cow weighs <weight> kg
+  When we calculate the feeding requirements
+  Then the energy should be <energy> MJ
+  And the protein should be <protein> kg
+
+  Examples:
+    | weight | energy | protein |
+    |    450 |  26500 |     215 |
+    |    500 |  29500 |     245 |
+    |    575 |  31500 |     255 |
+    |    600 |  37000 |     305 |
+
+@demo
+Scenario: demonstrating a multiline doc string 
+  Given a blog post named "Random" with Markdown body
+    """
+    Some Title, Eh?
+    ===============
+    Here is the first paragraph of my blog post. Lorem ipsum dolor sit amet,
+    consectetur adipiscing elit.
+    """
+
+@demo @withtable @task2341 @wip
+Scenario: demonstrating a data table in a scenario
+  Given the following users exist:
+    | name   | email              | twitter         |
+    | Aslak  | aslak@cucumber.io  | @aslak_hellesoy |
+    | Julien | julien@cucumber.io | @jbpros         |
+    | Matt   | matt@cucumber.io   | @mattwynne      |
+  When the user types <name> TODO what syntax to acces the vars?
+
+# Putting as many @Tags as you like before a Feature/Scenario
+# will make it easy to run a subset of scenarios which match 
+# or exclude specific tags.
+
+# https://cucumber.io/docs/reference#tagged-hooks
+
+
 FEATURE: Grant/remove admin status on Participants page
  SCENARIO: Owner,Admin user for Owner participant
-  SETTING ($UserType, $ParticipantType) TO
-   Owner, Owner
-   Admin, Owner
-   Admin, Admin
-   Member, Owner
-   Member, Admin
-   Member, Member
-  GIVEN a $UserType user is on the Participants page
+  GIVEN a table of logins and target user types with values:
+  |$UserType|$ParticipantType|
+  |Owner    |Owner           |
+  |Admin    |Owner           |
+  |Admin    |Admin           |
+  |Member   |Owner           |
+  |Member   |Admin           |
+  |Member   |Member          |
+   and a $UserType user is on the Participants page
   WHEN the $ParticipantType user is shown on the list of participants
   THEN there should be no menu icon for the $ParticipantType user
 
