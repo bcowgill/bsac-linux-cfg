@@ -32,6 +32,9 @@ set $main eDP1
 #set $aux HDMI1 # HOME
 set $aux DP1
 
+# lemonchiffon = FFFACD
+set $lockcolor FFFACD
+
 # define vars for workspaces
 set $shell 1
 set $edit 2
@@ -52,7 +55,9 @@ exec --no-startup-id $bin/i3-start.sh
 workspace_layout tabbed
 # allow workspace toggling back and forth
 # i.e. press Mod+1 to check the web, press Mod+1 again to go back to the workspace you were in
-workspace_auto_back_and_forth yes
+# turning this off, use Win-Tab
+workspace_auto_back_and_forth no
+
 # trackpad may make focus follows mouse useless
 focus_follows_mouse no
 
@@ -117,6 +122,10 @@ workspace 10  output $main
 # should be workspace $shell
 #exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal; [class="^Gnome-terminal$"] focus; mark shell'
 #exec xscreensaver
+
+# define names for the mod keys when we want to be specific
+set $alt Mod1
+set $win Mod4
 
 #======================================================================
 
@@ -275,6 +284,7 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        position top
         status_command i3status
         # BSAC configure bar to hide unless mod key (windows) pressed
         mode hide
@@ -290,9 +300,27 @@ bindsym $mod+Shift+m exec i3-input -F 'mark %s' -l 15 -P 'Name for Window Mark: 
 # Go to the container marked with above example:
 bindsym $mod+g exec i3-input -F '[con_mark="%s"] focus' -l 15 -P 'Go to Marked Window: '
 
+# BSAC next set of key bindings inspired/copied from
+# http://i3wm.org/docs/user-contributed/lzap-config.html
+# screen locker (first move to "safe" workspace without any chat app)
+bindsym Control+$alt+Shift+l exec i3-msg workspace 1 && i3lock -c $lockcolor -d
+bindsym Control+$alt+l exec i3-msg workspace 1 && xscreensaver-command -lock
+
+# next/previous workspace
+bindsym $alt+Tab focus right
+bindsym $alt+Shift+Tab focus left
+bindsym $win+Tab workspace back_and_forth
+
+# border changing
+bindsym $mod+b border toggle
+
+# scratchpad
+bindsym $mod+m move scratchpad
+bindsym $mod+o scratchpad show
+#
 # TEMPORARY BSAC start a browser or manual page browser with hot key
 bindsym $mod+p exec chromium-browser --incognito
-bindsym $mod+o exec xman
+#bindsym $mod+o exec xman
 
 # Use external script to launch all windows with apps where I want them, requires sleeps
 # this script does not use the $shell and other vars defined above though so possible problems
