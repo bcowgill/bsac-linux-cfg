@@ -15,11 +15,7 @@ Conditions of Satisfaction for Feature 28395
 
 # Sample of cucumber syntax from 
 # https://cucumber.io/docs/reference#gherkin
-# Background: clauses will execute for all scenarios in the file
-Background:
-  Given some state present in all features
-  And some more state for all features
-
+# should be one Feature per .feature file
 Feature: Refund item
 
   Sales assistants should be able to refund customers' purchases.
@@ -30,6 +26,11 @@ Feature: Refund item
   - Customer must present proof of purchase
   - Purchase must be less than 30 days ago
 
+# Background: clauses will execute for all scenarios in the feature
+Background:
+  Given some state present in all features
+  And some more state for all features
+
 Scenario: feeding a small suckler cow
   Given the cow weighs 450 kg
   When we calculate the feeding requirements
@@ -37,6 +38,10 @@ Scenario: feeding a small suckler cow
   And the protein should be 215 kg
   But the fat should only be 14 g
 
+# Putting as many @Tags as you like before a Feature/Scenario
+# will make it easy to run a subset of scenarios which match 
+# or exclude specific tags.
+# https://cucumber.io/docs/reference#tagged-hooks
 @demo @withtable
 Scenario Outline: feeding a suckler cow
   Given the cow weighs <weight> kg
@@ -70,17 +75,12 @@ Scenario: demonstrating a data table in a scenario
     | Matt   | matt@cucumber.io   | @mattwynne      |
   When the user types <name> TODO what syntax to acces the vars?
 
-# Putting as many @Tags as you like before a Feature/Scenario
-# will make it easy to run a subset of scenarios which match 
-# or exclude specific tags.
-
-# https://cucumber.io/docs/reference#tagged-hooks
 
 
 FEATURE: Grant/remove admin status on Participants page
  SCENARIO: Owner,Admin user for Owner participant
   GIVEN a table of logins and target user types with values:
-  |$UserType|$ParticipantType|
+  |UserType|ParticipantType|
   |Owner    |Owner           |
   |Admin    |Owner           |
   |Admin    |Admin           |
