@@ -76,9 +76,9 @@ Scenario: demonstrating a data table in a scenario
 
 
 
-FEATURE: Grant/remove admin status on Participants page
- SCENARIO: Owner,Admin user for Owner participant
-  GIVEN a table of logins and target user types with values:
+Feature: Grant/remove admin status on Participants page
+ Scenario: Owner,Admin user for Owner participant
+  Given a table of logins and target user types with values:
         |UserType|ParticipantType|
         |Owner   |Owner          |
         |Admin   |Owner          |
@@ -86,358 +86,358 @@ FEATURE: Grant/remove admin status on Participants page
         |Member  |Owner          |
         |Member  |Admin          |
         |Member  |Member         |
-   and a <UserType> user is on the Participants page
-  WHEN the <ParticipantType> user is shown on the list of participants
-  THEN there should be no menu icon for the <ParticipantType> user
+   And a <UserType> user is on the Participants page
+  When the <ParticipantType> user is shown on the list of participants
+  Then there should be no menu icon for the <ParticipantType> user
 
- SCENARIO: Owner user for a Member
-  GIVEN an Owner user is on the Participants page
-   and there is a Member user on the list of participants
-  WHEN the user activates the context menu for the Member user
-  THEN the menu should contain an entry called Grant admin rights
-   and the menu should NOT contain an entry called Remove admin rights
+ Scenario: Owner user for a Member
+  Given an Owner user is on the Participants page
+   And there is a Member user on the list of participants
+  When the user activates the context menu for the Member user
+  Then the menu should contain an entry called Grant admin rights
+   And the menu should NOT contain an entry called Remove admin rights
 
- SCENARIO: Owner user for an Admin
-  GIVEN an Owner user is on the Participants page
-   and there is an Admin user on the list of participants
-  WHEN the user activates the context menu for the Admin user
-  THEN the menu should contain an entry called Remove admin rights
-   and the menu should NOT contain an entry called Grant admin rights
+ Scenario: Owner user for an Admin
+  Given an Owner user is on the Participants page
+   And there is an Admin user on the list of participants
+  When the user activates the context menu for the Admin user
+  Then the menu should contain an entry called Remove admin rights
+   And the menu should NOT contain an entry called Grant admin rights
 
- SCENARIO: Admin user for a Member
-  GIVEN an Admin user is on the Participants page
-   and there is a Member user on the list of participants
-  WHEN the user activates the context menu for the Member user
-  THEN the menu should NOT contain an entry called Grant admin rights
+ Scenario: Admin user for a Member
+  Given an Admin user is on the Participants page
+   And there is a Member user on the list of participants
+  When the user activates the context menu for the Member user
+  Then the menu should NOT contain an entry called Grant admin rights
 
- SCENARIO: Admin user for an Admin
-  GIVEN an Admin user is on the Participants page
-  WHEN there is an Admin user on the list of participants
-  THEN there should be no menu icon for the Admin user
+ Scenario: Admin user for an Admin
+  Given an Admin user is on the Participants page
+  When there is an Admin user on the list of participants
+  Then there should be no menu icon for the Admin user
 
- SCENARIO: Member user
-  GIVEN a Member user is on the Participants page
-  WHEN the Member user is shown on the list of participants
-  THEN there should be no menu icon for any user type
+ Scenario: Member user
+  Given a Member user is on the Participants page
+  When the Member user is shown on the list of participants
+  Then there should be no menu icon for any user type
 
 
-FEATURE: Delete Deal on Dealroom page
- SCENARIO: Owner user can delete deal
-  GIVEN an Owner user is on the Dealroom page
-  WHEN the user clicks the Actions menu icon
-  THEN the Delete Deal item should be present under Admin Actions
+Feature: Delete Deal on Dealroom page
+ Scenario: Owner user can delete deal
+  Given an Owner user is on the Dealroom page
+  When the user clicks the Actions menu icon
+  Then the Delete Deal item should be present under Admin Actions
 
- SCENARIO: Admin,Member user can NOT delete deal
-  GIVEN a table of UserType values:
+ Scenario: Admin,Member user can NOT delete deal
+  Given a table of UserType values:
         |UserType|
         |Admin   |
         |Member  |
-  GIVEN a <UserType> user is on the Dealroom page
-  WHEN the user clicks the Actions menu icon
-  THEN the Delete Deal item should NOT be present at all
+  Given a <UserType> user is on the Dealroom page
+  When the user clicks the Actions menu icon
+  Then the Delete Deal item should NOT be present at all
 
 
-FEATURE: Invite new Member on Dealroom page
- SCENARIO: Owner,Admin user can invite new members
-  GIVEN a table of UserType values:
+Feature: Invite new Member on Dealroom page
+ Scenario: Owner,Admin user can invite new members
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Dealroom page
-  WHEN the user clicks the Actions menu icon
-  THEN the Invite New User item should be present under Admin Actions
+  Given a <UserType> user is on the Dealroom page
+  When the user clicks the Actions menu icon
+  Then the Invite New User item should be present under Admin Actions
 
- SCENARIO: Member user can NOT invite new members
-  GIVEN a Member user is on the Dealroom page
-  WHEN the user clicks the Actions menu icon
-  THEN the Invite New User item should NOT be present at all
+ Scenario: Member user can NOT invite new members
+  Given a Member user is on the Dealroom page
+  When the user clicks the Actions menu icon
+  Then the Invite New User item should NOT be present at all
 
 
-FEATURE: Invite new Member on Participants page
- SCENARIO: Owner,Admin user can invite new members
-  GIVEN a table of UserType values:
+Feature: Invite new Member on Participants page
+ Scenario: Owner,Admin user can invite new members
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Participants page
-  WHEN the user hovers over the Invite new participants button
-  THEN the Invite new participants button is enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Participants page
+  When the user hovers over the Invite new participants button
+  Then the Invite new participants button is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Member user can NOT invite new members
-  GIVEN a Member user is on the Participants page
-  WHEN the user hovers over the Invite new participants button
-  THEN the Invite new participants button is disabled
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+ Scenario: Member user can NOT invite new members
+  Given a Member user is on the Participants page
+  When the user hovers over the Invite new participants button
+  Then the Invite new participants button is disabled
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
 
-FEATURE: Remove from deal on Participants page
- SCENARIO: Owner user for an Admin,Member
-  GIVEN a table of UserType values:
+Feature: Remove from deal on Participants page
+ Scenario: Owner user for an Admin,Member
+  Given a table of UserType values:
         |UserType|
         |Admin   |
         |Member  |
-  GIVEN an Owner user is on the Participants page
-   and there is a <UserType> user on the list of participants
-  WHEN the user activates the context menu for the <UserType> user
-  THEN the menu should contain an entry called Remove from deal
+  Given an Owner user is on the Participants page
+   And there is a <UserType> user on the list of participants
+  When the user activates the context menu for the <UserType> user
+  Then the menu should contain an entry called Remove from deal
 
- SCENARIO: Admin user for a Member
-  GIVEN an Admin user is on the Participants page
-   and there is a Member user on the list of participants
-  WHEN the user activates the context menu for the Member user
-  THEN the menu should contain an entry called Remove from deal
+ Scenario: Admin user for a Member
+  Given an Admin user is on the Participants page
+   And there is a Member user on the list of participants
+  When the user activates the context menu for the Member user
+  Then the menu should contain an entry called Remove from deal
 
 
-FEATURE: Edit Checklist on Dealroom page
- SCENARIO: Owner,Admin user can edit checklist
-  GIVEN a table of UserType values:
+Feature: Edit Checklist on Dealroom page
+ Scenario: Owner,Admin user can edit checklist
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN an <UserType> user is on the Dealroom page
-  WHEN the user clicks the Actions menu icon
-  THEN the Edit Checklist item should be present under Admin Actions
+  Given an <UserType> user is on the Dealroom page
+  When the user clicks the Actions menu icon
+  Then the Edit Checklist item should be present under Admin Actions
 
- SCENARIO: Member user can NOT invite new members
-  GIVEN a Member user is on the Dealroom page
-  WHEN the user clicks the Actions menu icon
-  THEN the Edit Checklist item should NOT be present at all
+ Scenario: Member user can NOT invite new members
+  Given a Member user is on the Dealroom page
+  When the user clicks the Actions menu icon
+  Then the Edit Checklist item should NOT be present at all
 
-FEATURE: Remove document version on Documents checklist page
- SCENARIO: Owners,Admins can delete versions
-  GIVEN a table of UserType values:
+Feature: Remove document version on Documents checklist page
+ Scenario: Owners,Admins can delete versions
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-  WHEN the user hovers over the Delete Version link
-  THEN there is a Delete Version link displayed
-   and the Delete Version link is enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+  When the user hovers over the Delete Version link
+  Then there is a Delete Version link displayed
+   And the Delete Version link is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can NOT delete versions from others
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-  WHEN the user hovers over the Delete Version link
-  THEN there is a Delete Version link displayed
-   and the Delete Version link is DISABLED
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+ Scenario: Members can NOT delete versions from others
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+  When the user hovers over the Delete Version link
+  Then there is a Delete Version link displayed
+   And the Delete Version link is DISABLED
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
- SCENARIO: Members can delete their own versions
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by the Member
-  WHEN the user hovers over the Delete Version link
-  THEN there is a Delete Version link displayed
-   and the Delete Version link is enabled
-   and there is NO tooltip shown
+ Scenario: Members can delete their own versions
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by the Member
+  When the user hovers over the Delete Version link
+  Then there is a Delete Version link displayed
+   And the Delete Version link is enabled
+   And there is NO tooltip shown
 
 
-FEATURE: Edit files on Documents checklist page
- SCENARIO: Owners,Admins can Edit files from others
-  GIVEN a table of UserType values:
+Feature: Edit files on Documents checklist page
+ Scenario: Owners,Admins can Edit files from others
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-  WHEN the user hovers over the Edit files link
-  THEN there is an Edit files link displayed
-   and the Edit files link is enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+  When the user hovers over the Edit files link
+  Then there is an Edit files link displayed
+   And the Edit files link is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can NOT Edit files from others
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and the last version has a comparison file uploaded
-  WHEN the user hovers over the Edit files link
-  THEN there is an Edit files link displayed
-   and the Edit files link is DISABLED
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+ Scenario: Members can NOT Edit files from others
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And the last version has a comparison file uploaded
+  When the user hovers over the Edit files link
+  Then there is an Edit files link displayed
+   And the Edit files link is DISABLED
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
- SCENARIO: Members can Edit files for their own versions
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by the Member
-  WHEN the user hovers over the Edit files link
-  THEN there is an Edit files link displayed
-   and the Edit files link is enabled
-   and there is NO tooltip shown
+ Scenario: Members can Edit files for their own versions
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by the Member
+  When the user hovers over the Edit files link
+  Then there is an Edit files link displayed
+   And the Edit files link is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can Edit files for others when there is no comparison file
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and the last version has no comparison file uploaded
-  WHEN the user hovers over the Edit files link
-  THEN there is an Edit files link displayed
-   and the Edit files link is enabled
-   and there is NO tooltip shown
+ Scenario: Members can Edit files for others when there is no comparison file
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And the last version has no comparison file uploaded
+  When the user hovers over the Edit files link
+  Then there is an Edit files link displayed
+   And the Edit files link is enabled
+   And there is NO tooltip shown
 
 
-FEATURE: Members Remove Draft from upload dialog
- SCENARIO: Owners,Admins can remove draft for versions created by others
-  GIVEN a table of UserType values:
+Feature: Members Remove Draft from upload dialog
+ Scenario: Owners,Admins can remove draft for versions created by others
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and the last version has no comparison file uploaded
-  WHEN the user has clicked the Edit files link to open the uploader
-  THEN there should be an enabled icon to remove the draft file
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And the last version has no comparison file uploaded
+  When the user has clicked the Edit files link to open the uploader
+  Then there should be an enabled icon to remove the draft file
 
- SCENARIO: Members can NOT remove draft for versions created by others
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and the last version has no comparison file uploaded
-  WHEN the user has clicked the Edit files link to open the uploader
-  THEN there should NOT be an icon to remove the draft file
+ Scenario: Members can NOT remove draft for versions created by others
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And the last version has no comparison file uploaded
+  When the user has clicked the Edit files link to open the uploader
+  Then there should NOT be an icon to remove the draft file
 
 
-FEATURE: Remove document version on Document Details page
- SCENARIO: Owners,Admins can delete versions
-  GIVEN a table of UserType values:
+Feature: Remove document version on Document Details page
+ Scenario: Owners,Admins can delete versions
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Delete Version link in the Latest Version section
-  THEN there is a Delete Version link displayed
-   and the Delete Version link is enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Delete Version link in the Latest Version section
+  Then there is a Delete Version link displayed
+   And the Delete Version link is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can NOT delete versions from others
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Delete Version link in the Latest Version section
-  THEN there is a Delete Version link displayed
-   and the Delete Version link is DISABLED
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+ Scenario: Members can NOT delete versions from others
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Delete Version link in the Latest Version section
+  Then there is a Delete Version link displayed
+   And the Delete Version link is DISABLED
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
- SCENARIO: Members can delete their own versions
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by the Member
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Delete Version link in the Latest Version section
-  THEN there is a Delete Version link displayed
-   and the Delete Version link is enabled
-   and there is NO tooltip shown
+ Scenario: Members can delete their own versions
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by the Member
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Delete Version link in the Latest Version section
+  Then there is a Delete Version link displayed
+   And the Delete Version link is enabled
+   And there is NO tooltip shown
 
 
-FEATURE: Edit files on Document Details page
- SCENARIO: Owners,Admins can Edit files from others
-  GIVEN a table of UserType values:
+Feature: Edit files on Document Details page
+ Scenario: Owners,Admins can Edit files from others
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Edit files link in the Latest Version section
-  THEN there is an Edit files link displayed
-   and the Edit files link is enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Edit files link in the Latest Version section
+  Then there is an Edit files link displayed
+   And the Edit files link is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can NOT Edit files from others
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and the last version has a comparison file uploaded
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Edit files link in the Latest Version section
-  THEN there is an Edit files link displayed
-   and the Edit files link is DISABLED
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+ Scenario: Members can NOT Edit files from others
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And the last version has a comparison file uploaded
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Edit files link in the Latest Version section
+  Then there is an Edit files link displayed
+   And the Edit files link is DISABLED
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
- SCENARIO: Members can Edit files for their own versions
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by the Member
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Edit files link in the Latest Version section
-  THEN there is an Edit files link displayed
-   and the Edit files link is enabled
-   and there is NO tooltip shown
+ Scenario: Members can Edit files for their own versions
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by the Member
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Edit files link in the Latest Version section
+  Then there is an Edit files link displayed
+   And the Edit files link is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can Edit files for others when there is no comparison file
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and the last version has no comparison file uploaded
-  WHEN the user has clicked the Details link to view document details
-   and the user hovers over the Edit files link in the Latest Version section
-  THEN there is an Edit files link displayed
-   and the Edit files link is enabled
-   and there is NO tooltip shown
+ Scenario: Members can Edit files for others when there is no comparison file
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And the last version has no comparison file uploaded
+  When the user has clicked the Details link to view document details
+   And the user hovers over the Edit files link in the Latest Version section
+  Then there is an Edit files link displayed
+   And the Edit files link is enabled
+   And there is NO tooltip shown
 
 
-FEATURE: Edit/Delete Status on Documents checklist page
- SCENARIO: Owners,Admins can Edit/Delete status
-  GIVEN a table of UserType values:
+Feature: Edit/Delete Status on Documents checklist page
+ Scenario: Owners,Admins can Edit/Delete status
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a table of Link values:
+  Given a table of Link values:
         |Link    |
         |Edit    |
         |Delete  |
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and there is a status note that was created by someone else
-  WHEN the user hovers over the <Link> link in the Status column
-  THEN the <Link> link in the Status column is enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And there is a status note that was created by someone else
+  When the user hovers over the <Link> link in the Status column
+  Then the <Link> link in the Status column is enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can NOT Edit/Delete status
-  GIVEN a table of Link values:
+ Scenario: Members can NOT Edit/Delete status
+  Given a table of Link values:
         |Link  |
         |Edit  |
         |Delete|
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and there is a status note that was created by someone else
-  WHEN the user hovers over the <Link> link in the Status column
-  THEN the <Link> link in the Status column is DISABLED
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And there is a status note that was created by someone else
+  When the user hovers over the <Link> link in the Status column
+  Then the <Link> link in the Status column is DISABLED
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
 
-FEATURE: Edit/Delete Status on View all Status Notes from Documents Checklist page
- SCENARIO: Owners,Admins can Edit/Delete status
-  GIVEN a table of UserType values:
+Feature: Edit/Delete Status on View all Status Notes from Documents Checklist page
+ Scenario: Owners,Admins can Edit/Delete status
+  Given a table of UserType values:
         |UserType|
         |Owner   |
         |Admin   |
-  GIVEN a table of Link values:
+  Given a table of Link values:
         |Link  |
         |Edit  |
         |Delete|
-  GIVEN a <UserType> user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and there is a status note that was created by someone else
-  WHEN the user clicks the View All link in the Status column
-   and a number of status updates are shown to the user
-   and the user hovers over the <Link> link for a status update
-  THEN all the <Link> links are enabled
-   and there is NO tooltip shown
+  Given a <UserType> user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And there is a status note that was created by someone else
+  When the user clicks the View All link in the Status column
+   And a number of status updates are shown to the user
+   And the user hovers over the <Link> link for a status update
+  Then all the <Link> links are enabled
+   And there is NO tooltip shown
 
- SCENARIO: Members can NOT Edit/Delete status
-  GIVEN a table of Link values:
+ Scenario: Members can NOT Edit/Delete status
+  Given a table of Link values:
         |Link  |
         |Edit  |
         |Delete|
-  GIVEN a Member user is on the Documents Checklist page
-   and the last version of the document was created by someone else
-   and there is a status note that was created by someone else
-  WHEN the user clicks the View All link in the Status column
-   and a number of status updates are shown to the user
-   and the user hovers over the <Link> link for a status update
-  THEN all the <Link> links are DISABLED
-   and a tooltip is shown saying 'Only admins or the owner can perform this action'
+  Given a Member user is on the Documents Checklist page
+   And the last version of the document was created by someone else
+   And there is a status note that was created by someone else
+  When the user clicks the View All link in the Status column
+   And a number of status updates are shown to the user
+   And the user hovers over the <Link> link for a status update
+  Then all the <Link> links are DISABLED
+   And a tooltip is shown saying 'Only admins or the owner can perform this action'
 
 
-FEATURE: Unauthorized access generates info toast
- SCENARIO: Member user hacks the site
-  GIVEN a table of HackType values:
+Feature: Unauthorized access generates info toast
+ Scenario: Member user hacks the site
+  Given a table of HackType values:
         |HackType|
         |the DISABLED Documents Checklist Delete Version link|
         |the DISABLED Documents Checklist Edit files link|
@@ -448,29 +448,29 @@ FEATURE: Unauthorized access generates info toast
         |the HIDDEN Dealroom page Invite New Member menu option|
         |the HIDDEN Dealroom page Edit checklist menu option|
         |the HIDDEN Participants page Invite New Member button|
-  GIVEN a Member user has bypassed button enablement for <HackType>
-  WHEN the user submits the unauthorized request
-  THEN the page is reloaded
-   and an information toast appears saying 'You are not authorized to perform this action'
+  Given a Member user has bypassed button enablement for <HackType>
+  When the user submits the unauthorized request
+  Then the page is reloaded
+   And an information toast appears saying 'You are not authorized to perform this action'
 
- SCENARIO: Admin,Member user hacks the site
-  GIVEN a table of UserType values:
+ Scenario: Admin,Member user hacks the site
+  Given a table of UserType values:
         |UserType|
         |Admin   |
         |Member  |
-  GIVEN a table of TargetType values:
+  Given a table of TargetType values:
         |TargetType|
         |Owner     |
         |Admin     |
         |Member    |
-  GIVEN a table of HackType values:
+  Given a table of HackType values:
         |HackType|
         |Grant admin rights to <TargetType>|
         |Remove admin rights from <TargetType>|
         |Remove <TargetType> from deal|
         |Remove deal|
-  GIVEN a <UserType> user has bypassed enablement for <HackType>
-  WHEN the user submits the unauthorized request
-  THEN the page is reloaded
-   and an information toast appears saying 'You are not authorized to perform this action'
+  Given a <UserType> user has bypassed enablement for <HackType>
+  When the user submits the unauthorized request
+  Then the page is reloaded
+   And an information toast appears saying 'You are not authorized to perform this action'
 
