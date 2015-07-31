@@ -1,8 +1,13 @@
 #!/bin/bash
-# detect which monitors are attached and configure resolution/orientation with xrandr
+# detect which monitors are attached
 # source `which detect-monitors.sh` will define OUTPUT_MAIN/OUTPUT_AUX/OUTPUT_RES
+# detect-monitors.sh show -- shows detail about monitors
+# detect-monitors.sh i3-update -- will update then i3-config file with then connected monitors
 
 RES=1920x1080
+OUTPUT_MAIN=
+OUTPUT_AUX=
+OUTPUT_RES=
 
 if [ ${1:-quiet} == show ]; then
 	# if show option provided, show all resolutions with computed aspect ratio
@@ -32,7 +37,6 @@ if [ $MONITORS == 1 ]; then
 	# set up single monitor
 	MAIN=$MONITOR_NAMES
 	AUX=$MAIN
-	xrandr --output $MAIN --mode $RES
 else
 	if [ $MONITORS == 2 ]; then
 		# set up dual monitors to show in same resolution
@@ -40,11 +44,6 @@ else
 			MAIN=${AUX:-$mon}
 			AUX=$mon
 		done
-# set both outputs to the same to reset a bad rotation
-#		xrandr --output $MAIN --mode $RES \
-#			--output $AUX --same-as $MAIN
-		xrandr --output $MAIN --mode $RES \
-			--output $AUX --primary --mode $RES --left-of $MAIN
 	else
 		echo $MONITORS monitors found, unexpected
 		echo $MONITOR_NAMES
@@ -59,3 +58,7 @@ export OUTPUT_MAIN OUTPUT_AUX OUTPUT_RES
 echo OUTPUT_MAIN=$OUTPUT_MAIN
 echo OUTPUT_AUX=$OUTPUT_AUX
 echo OUTPUT_RES=$OUTPUT_RES
+
+if [ ${1:-i3-update} == show ]; then
+	i3-update-config.sh
+fi
