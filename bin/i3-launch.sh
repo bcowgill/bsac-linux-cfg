@@ -43,7 +43,6 @@ xrdb -merge ~/.Xresources &
 #xsetroot -solid '#101010' &
 xsetroot -mod 16 16 -bg '#000000' -fg '#ff0000'
 #feh --bg-scale "$HOME/Dropbox/WorkSafe/velda-dhc-photo-shoot-3.jpg" &
-random-desktop.sh
 
 ## Set startup volume (use pactl info to determine sink name)
 #pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
@@ -146,6 +145,8 @@ i3-msg mark shell
 # $chat
 i3-msg "workspace $chat; exec skype"
 sleep 3
+
+random-desktop.sh
 
 xrefresh &
 
