@@ -98,7 +98,7 @@ SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
 I3WM=i3
-I3WM_PKG="i3 xdotool xmousepos:xautomation"
+I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
 VPN="openvpn brctl:bridge-utils"
 
 USE_WEBSTORM=1

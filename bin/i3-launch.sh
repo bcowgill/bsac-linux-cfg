@@ -36,6 +36,14 @@ wait_for_program () {
   done
 }
 
+## Merge Xresources
+xrdb -merge ~/.Xresources &
+
+## Desktop background or picture
+#xsetroot -solid '#101010' &
+xsetroot -mod 16 16 -bg '#000000' -fg '#ff0000'
+feh --bg-scale "$HOME/Dropbox/WorkSafe/velda-dhc-photo-shoot-3.jpg" &
+
 # $files
 i3-msg "workspace $file; exec mygterm.sh $HOME/projects/dealroom-ui mc $HOME/projects/dealroom-ui $HOME"
 sleep 1
@@ -64,12 +72,17 @@ sleep 1
 i3-msg workspace $build
 xbuild-deal.sh &
 sleep 1
+i3-msg mark deal
+
 i3-msg "layout default; split v"
 xbuild-newui.sh &
 sleep 1
+i3-msg mark newui
+
 i3-msg "focus parent; split h"
 firefox &
 sleep 2
+i3-msg mark tomato
 
 # $edit
 i3-msg "workspace $edit; exec wstorm"
@@ -78,8 +91,11 @@ sleep 17
 # $shell
 i3-msg "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
 sleep 1
+i3-msg mark git
+
 i3-msg "focus left"
 sleep 1
+i3-msg mark shell
 
 # $chat
 i3-msg "workspace $chat; exec skype"

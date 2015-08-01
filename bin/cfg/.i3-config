@@ -10,10 +10,9 @@
 #
 # TODO:
 # do this http://i3wm.org/docs/user-contributed/lzap-config.html
+# do this https://github.com/lzap/doti3/blob/master/autostart
 # install better x fonts http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 # named workspaces
-# how to set a mark on a window during startup?
-# get proper layout of build/tomato screen
 # i3status configuration
 # dmenu default font configuration
 # i3-input default font configuration -font xfontspec
@@ -87,16 +86,19 @@ workspace 10  output $main
 # WM_CLASS(STRING) = "skype", "Skype"
 
 assign [class="^Git-gui$"] $shell
-for_window [class="^Git-gui--askpass$"] floating enable
 assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
-for_window [class="^Skype$"] floating disable
 assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
+
+# Force some windows to float
+for_window [class="^Git-gui--askpass$"] floating enable
+
+# Force other windows not to float
+#for_window [class="^Skype$"] floating disable
 
 #assign [class="^Gnome-terminal$"] $shell
 #assign [class="^Chromium-browser$"] $app
 
-#assign [class="^XTermBuild$"] $build
 #assign [class="^build.sh$"] $build
 #assign [class="^build-app.sh$"] $build
 #assign [class="^XTerm$"] $build
@@ -110,24 +112,6 @@ assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
 #WM_CLASS(STRING) = "unity-control-center", "Unity-control-center"
 #WM_CLASS(STRING) = "topBox", "Xman"
 #WM_CLASS(STRING) = "manualBrowser", "Xman"
-
-#$i3msg 'workspace 4; exec xman; workspace 3; exec chromium-browser; workspace 2; exec wstorm; workspace 1; exec git-gui.sh; exec i3-sensible-terminal'
-#$i3msg 'workspace 4; exec xman'
-#$i3msg 'workspace 3; exec chromium-browser'
-#$i3msg 'workspace 2; exec wstorm'
-#$i3msg 'workspace 1; exec git-gui.sh'
-#$i3msg '[class="^Git-gui$"] focus; mark git'
-
-#$i3msg 'workspace 6; exec skype'
-#exec xbuild.sh
-#exec --no-startup-id i3-msg '[class="^build.sh$"] focus; mark deal'
-#exec --no-startup-id i3-build-app.sh $build
-#exec --no-startup-id i3-msg '[class="^build-app.sh$"] focus; mark newui'
-#exec --no-startup-id i3-msg 'exec firefox; [class="^Firefox$"] focus; mark tomato'
-
-# should be workspace $shell
-#exec --no-startup-id i3-msg 'workspace 1; exec i3-sensible-terminal; [class="^Gnome-terminal$"] focus; mark shell'
-#exec xscreensaver
 
 # define names for the mod keys when we want to be specific
 set $alt Mod1
