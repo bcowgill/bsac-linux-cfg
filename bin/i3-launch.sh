@@ -42,7 +42,53 @@ xrdb -merge ~/.Xresources &
 ## Desktop background or picture
 #xsetroot -solid '#101010' &
 xsetroot -mod 16 16 -bg '#000000' -fg '#ff0000'
-feh --bg-scale "$HOME/Dropbox/WorkSafe/velda-dhc-photo-shoot-3.jpg" &
+#feh --bg-scale "$HOME/Dropbox/WorkSafe/velda-dhc-photo-shoot-3.jpg" &
+random-desktop.sh
+
+## Set startup volume (use pactl info to determine sink name)
+#pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
+
+## Load "funny" sample
+#pactl upload-sample ~/.i3/that_was_easy.wav that_was_easy &
+#pactl upload-sample ~/.i3/volume_blip.wav volume_blip &
+
+## Disable beeps
+xset -b &
+# Display current xset settings for kb,mouse,power, etc
+#xset -q
+
+## Keybord layout setting
+#setxkbmap -layout cz,us -option grp:shift_shift_toggle &
+
+## C-A-Backspace to kill X
+#setxkbmap -option terminate:ctrl_alt_bksp &
+
+## Turns on the numlock key in X11
+#numlockx on &
+
+## Disable monitor power management
+xset -dpms &
+## DPMS monitor setting (standby -> suspend -> off) (seconds)
+#xset dpms 600 1200 2000 &
+
+## Set LCD brightness
+xbacklight -set 100 &
+
+## Gamma correction through the X server
+#xgamma -gamma 1.1 &
+
+## Composite manager
+#xcompmgr -cf -r 0 -D 6 &
+
+## Applets
+# clipboard manager
+#LC_ALL=C parcellite &
+# gnome network manager notification applet
+LC_ALL=C nm-applet &
+
+## OSD
+# TODO desktop notifications, configure font
+#dunst &
 
 # $files
 i3-msg "workspace $file; exec mygterm.sh $HOME/projects/dealroom-ui mc $HOME/projects/dealroom-ui $HOME"
@@ -101,4 +147,10 @@ i3-msg mark shell
 i3-msg "workspace $chat; exec skype"
 sleep 3
 
+xrefresh &
 
+## Special keys
+#sleep 5s && xmodmap /home/lzap/.Xmodmap &
+
+## Start Workrave
+#workrave &
