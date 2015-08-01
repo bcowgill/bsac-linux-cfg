@@ -78,15 +78,19 @@ workspace 8   output $main
 workspace 10  output $main
 
 # put clients on specific workspaces. The first matching rule below
-# determines where a window goes
+# determines where a window goes.
+# allowed matching criteria:
+# http://i3wm.org/docs/userguide.html#command_criteria
 # window class names:
 # xprop | grep WM_CLASS >> gui.sh
 #                   instance, class
 # WM_CLASS(STRING) = "skype", "Skype"
+
 assign [class="^Git-gui$"] $shell
 for_window [class="^Git-gui--askpass$"] floating enable
 assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
+for_window [class="^Skype$"] floating disable
 assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
 
 #assign [class="^Gnome-terminal$"] $shell

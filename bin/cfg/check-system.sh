@@ -98,6 +98,7 @@ SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
 I3WM=i3
+I3WM_PKG="i3 xdotool xmousepos:xautomation"
 VPN="openvpn brctl:bridge-utils"
 
 USE_WEBSTORM=1
@@ -232,10 +233,10 @@ fi # raspberrypi
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $I3WM $VPN"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $I3WM_PKG $VPN"
 COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 #runit
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
@@ -1092,7 +1093,8 @@ cmd_exists ini-inline.pl "missing command to convert INI file to inline settings
 FILE=".SourceGear DiffMerge"
 if [ -f "$FILE" ]; then
 	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
-	ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
+	#ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
+	ini_file_has_text "$FILE" "/File/Font=18:76:ProFontWindows"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
 	ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
