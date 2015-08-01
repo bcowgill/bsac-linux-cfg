@@ -84,6 +84,7 @@ workspace 10  output $main
 #                   instance, class
 # WM_CLASS(STRING) = "skype", "Skype"
 assign [class="^Git-gui$"] $shell
+for_window [class="^Git-gui--askpass$"] floating enable
 assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
 assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
