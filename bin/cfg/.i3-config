@@ -39,10 +39,10 @@ set $lockcolor FFFACD
 set $shell 1
 set $edit 2
 set $app 3
-set $help 4
+set $email 4
 set $build 5
 set $chat 6
-set $email 7
+set $help 7
 set $files 8
 
 set $exec exec --no-startup-id
@@ -83,9 +83,10 @@ workspace 10  output $main
 # xprop | grep WM_CLASS >> gui.sh
 #                   instance, class
 # WM_CLASS(STRING) = "skype", "Skype"
-#assign [class="^Git-gui$"] $shell
-#assign [class="^jetbrains-webstorm$"] $edit
-#assign [class="^Skype$"] $chat
+assign [class="^Git-gui$"] $shell
+assign [class="^jetbrains-webstorm$"] $edit
+assign [class="^Skype$"] $chat
+assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
 
 #assign [class="^Gnome-terminal$"] $shell
 #assign [class="^Chromium-browser$"] $app
