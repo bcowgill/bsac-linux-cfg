@@ -12,7 +12,8 @@ fi
 xrandr --output $OUTPUT_AUX --left-of $OUTPUT_MAIN --auto
 #pacmd set-sink-port 0 analog-output
 sleep 3
-for WORKSPACE in 1 2 3 4 9; do
+i3-msg "workspace 5"
+for WORKSPACE in 9 4 3 2 1; do
 	i3-msg "workspace $WORKSPACE; move workspace to output $OUTPUT_AUX"
 done
 sleep 1

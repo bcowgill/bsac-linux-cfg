@@ -2,7 +2,8 @@
 # detect which monitors are attached and configure resolution/orientation with xrandr
 # source `which setup-monitors.sh` will define OUTPUT_MAIN/OUTPUT_AUX/OUTPUT_RES
 
-source `which detect-monitors.sh i3-update`
+detect-monitors.sh i3-update
+source `which detect-monitors.sh` > /dev/null
 
 if [ ${OUTPUT_RES:-error} == error ]; then
 	exit 1

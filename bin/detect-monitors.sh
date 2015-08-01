@@ -59,6 +59,6 @@ echo OUTPUT_MAIN=$OUTPUT_MAIN
 echo OUTPUT_AUX=$OUTPUT_AUX
 echo OUTPUT_RES=$OUTPUT_RES
 
-if [ ${1:-i3-update} == show ]; then
-	i3-update-config.sh
+if [ ${1:-normal} == i3-update ]; then
+	i3-config-update.sh
 fi
