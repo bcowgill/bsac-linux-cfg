@@ -14,9 +14,11 @@ xrandr --output $OUTPUT_AUX --left-of $OUTPUT_MAIN --auto
 sleep 3
 i3-msg "workspace 5"
 for WORKSPACE in 9 4 3 2 1; do
-	i3-msg "workspace $WORKSPACE; move workspace to output $OUTPUT_AUX"
+	echo move workspace $WORKSPACE to output $OUTPUT_AUX
+	i3-msg "workspace $WORKSPACE; move workspace to output $OUTPUT_AUX" > /dev/null
 done
 sleep 1
 #xmodmap /home/lzap/.Xmodmap
 #configure-input-devices
 i3-config-update.sh
+touch-off.sh
