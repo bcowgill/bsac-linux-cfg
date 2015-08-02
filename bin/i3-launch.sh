@@ -146,6 +146,11 @@ i3-msg mark shell
 i3-msg "workspace $chat; exec skype"
 sleep 3
 
+# scratchpad setup with a terminal
+mygterm.sh
+sleep 1
+i3-msg "border 1pixel; move scratchpad"
+
 random-desktop.sh
 
 xrefresh &
