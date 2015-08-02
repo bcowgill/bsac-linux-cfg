@@ -1,0 +1,25 @@
+http://www.cl.cam.ac.uk/~mgk25/unicode.html#perl
+
+What are useful Perl one-liners for working with UTF-8?
+
+These examples assume that you have Perl 5.8.1 or newer and that you work in a UTF-8 locale (i.e., “locale charmap” outputs “UTF-8”).
+
+For Perl 5.8.0, option -C is not needed and the examples without -C will not work in a UTF-8 locale. You really should no longer use Perl 5.8.0, as its Unicode support had lots of bugs.
+
+Print the euro sign (U+20AC) to stdout:
+
+  perl -C -e 'print pack("U",0x20ac)."\n"'
+  perl -C -e 'print "\x{20ac}\n"'           # works only from U+0100 upwards
+Locate malformed UTF-8 sequences:
+
+  perl -ne '/^(([\x00-\x7f]|[\xc0-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xf7][\x80-\xbf]{3})*)(.*)$/;print "$ARGV:$.:".($-[3]+1).":$_" if length($3)'
+Locate non-ASCII bytes:
+
+  perl -ne '/^([\x00-\x7f]*)(.*)$/;print "$ARGV:$.:".($-[2]+1).":$_" if length($2)'
+Convert non-ASCII characters into SGML/HTML/XML-style decimal numeric character references (e.g. Ş becomes &#350;):
+
+  perl -C -pe 's/([^\x00-\x7f])/sprintf("&#%d;", ord($1))/ge;'
+Convert (hexa)decimal numeric character references to UTF-8:
+
+  perl -C -pe 's/&\#(\d+);/chr($1)/ge;s/&\#x([a-fA-F\d]+);/chr(hex($1))/ge;'
+
