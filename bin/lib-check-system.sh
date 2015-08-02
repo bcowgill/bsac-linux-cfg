@@ -506,6 +506,21 @@ function install_file_from_url {
    file_exists "$file" "$message"
 }
 
+# Download files from a URL if it doesn't exist
+function install_files_from_url {
+   local package url files message dir file
+   package="$1"
+   url="$2"
+   files="$3"
+   message="$4"
+   dir="$HOME/Downloads/$package"
+   make_dir_exist "$dir" "$message"
+   for file in $files
+   do
+      install_file_from_url "$dir/$file" "$package/$file" "$url/$file" "$message $file"
+   done
+}
+
 # Install a file from a downloaded archive which creates its own subdirectory
 function install_file_from_url_zip {
    local file package url message

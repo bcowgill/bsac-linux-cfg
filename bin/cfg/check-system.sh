@@ -402,6 +402,45 @@ else
 	NOT_OK "SourceCodePro font is not cached"
 fi
 
+# Get unicode fonts and examples
+# http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quick-intro.txt
+# http://www.cl.cam.ac.uk/~mgk25/unicode.html#x11
+URL=http://www.cl.cam.ac.uk/~mgk25
+if [ ! -f xlsfonts.lst  ]; then
+	locale -a > locale-a.lst
+	xset q > xset-q.lst
+	xlsfonts > xlsfonts.lst
+	fc-list > fc-list.lst
+fi
+CHECK=`LC_CTYPE=en_GB.UTF-8 locale charmap`
+if [ ${CHECK:-NOTOK} == UTF-8 ]; then
+	OK "UTF-8 locale is supported"
+else
+	NOT_OK "UTF-8 locale is not supported:: $CHECK"
+fi
+install_file_from_url_zip_subdir "Downloads/ucs-fonts/examples/UTF-8-test.txt" "ucs-fonts.tar.gz" ucs-fonts $URL/download/ucs-fonts.tar.gz "Misc Fixed unicode fonts"
+install_file_from_url_zip_subdir "Downloads/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
+install_file_from_url "Downloads/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
+dir_linked_to bin/template/unicode "$HOME/Downloads/ucs-fonts/examples" "symlink to sample unicode files"
+
+if xlsfonts | grep xyzzy > /dev/null ; then
+	OK "ucs unicode fonts are installed"
+else
+	NOT_OK "MAYBE install ucs unicode fonts"
+	pushd Downloads/ucs-fonts/submission
+	make
+	ls *.pcf.gz
+	#sudo mv -b *.pcf.gz /usr/share/fonts/X11/misc
+	#sudo mkfontdir /usr/share/fonts/X11/misc
+	#xset fp rehash
+	popd
+fi
+
+# Install the X fonts!
+# display all the glyphs in a random UTF font
+# xfd -fn `grep -i ISO10646 xlsfonts.lst | choose.pl `
+
 # Find all the .kde config files referenced herein:
 # grep \.kde/ check-system.sh | perl -pne 's{\s* (FILE=|file_has_text \s*)}{}xms; s{\s*".+\z}{\n}xms; s{\s+\#}{}xms;s{\./}{}xms ' | sort | uniq > ~/xxx
 if [ ! -z $USE_KDE ]; then
