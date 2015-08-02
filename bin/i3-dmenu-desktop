@@ -41,7 +41,8 @@ sub slurp {
 
 my @entry_types;
 #BSAC configured the dmenu command at bottom of screen, ignore case, with nicer font
-my $dmenu_cmd = 'dmenu -b -i -fn "-bitstream-courier 10 pitch-bold-r-normal--0-0-0-0-m-0-iso8859-1"';
+my $dmenu_cmd = 'dmenu -b -i -fn "12x24"';
+#my $dmenu_cmd = 'dmenu -b -i -fn "-bitstream-courier 10 pitch-bold-r-normal--0-0-0-0-m-0-iso8859-1"';
 my $result = GetOptions(
     'dmenu=s' => \$dmenu_cmd,
     'entry-type=s' => \@entry_types,

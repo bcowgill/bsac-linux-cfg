@@ -9,15 +9,12 @@
 # http://i3wm.org/docs/user-contributed/lzap-config.html
 #
 # TODO:
-# do this http://i3wm.org/docs/user-contributed/lzap-config.html
-# do this https://github.com/lzap/doti3/blob/master/autostart
 # install better x fonts http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 # named workspaces
 # try dunst
 # try workrave
-# terminal on scratchpad
 # i3status configuration
-# dmenui_desktop default font configuration problem passing dmenu command with font
+# dmenu_desktop default font configuration problem passing dmenu command with font
 # config show errors - better terminal font
 # exit prompt bug? multiple prompts can be fired up. No keyboard control.
 #======================================================================
@@ -37,6 +34,9 @@ set $aux HDMI1
 
 # lemonchiffon = FFFACD
 set $lockcolor FFFACD
+# brick = 683232
+set $lockcolor 683232
+set $lockcolor 4c4444
 
 # define vars for workspaces
 set $shell 1
@@ -54,6 +54,7 @@ set $i3msg exec --no-startup-id i3-msg
 # define fonts available
 # use xfontsel -print to pick and get a font definition
 # or xlsfonts
+set $popup_font 12x24
 set $courier -bitstream-courier 10 pitch-bold-r-normal--0-0-0-0-m-0-iso8859-1
 set $courierUTF -bitstream-courier 10 pitch-bold-r-normal--0-0-0-0-m-0-iso10646-1
 set $charterUTF -bitstream-bitstream charter-bold-r-normal--0-0-0-0-p-0-iso10646-1
@@ -108,6 +109,12 @@ for_window [class="^Git-gui--askpass$"] floating enable
 
 # Force other windows not to float
 #for_window [class="^Skype$"] floating disable
+for_window [class="^XCalc$"] floating enable
+for_window [class="^Workrave$"] floating enable
+
+# Force some windows to fullscreen
+for_window [class="^Meld$"] fullscreen
+for_window [class="^Diffmerge$"] fullscreen
 
 # Force others to the scratchpad
 #for_window [class="^Gnome-terminal$" instance="scratchpad"] border 1pixel; move scratchpad
@@ -174,7 +181,7 @@ bindsym $mod+Shift+q kill
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
 # BSAC set up dmenu on bottom, ignore case,  with font
-bindsym $mod+d exec dmenu_run -b -i -fn "$courier"
+bindsym $mod+d exec dmenu_run -b -i -fn "$popup_font"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -267,7 +274,7 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # BSAC more readable font on exit prompt
-bindsym $mod+Shift+e exec "i3-nagbar -f '$courierUTF' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -f '$popup_font' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -310,9 +317,9 @@ bar {
 
 # BSAC bind these to some keys Mod+Shift+m to mark and Mod+g to go to mark
 # Ask for a mark name to mark the current window
-bindsym $mod+Shift+m exec i3-input -f '$courierUTF' -F 'mark %s' -l 15 -P 'Name for Window Mark: '
+bindsym $mod+Shift+m exec i3-input -f '$popup_font' -F 'mark %s' -l 15 -P 'Name for Window Mark: '
 # Go to the container marked with above example:
-bindsym $mod+g exec i3-input -f '$courierUTF' -F '[con_mark="%s"] focus' -l 15 -P 'Go to Marked Window: '
+bindsym $mod+g exec i3-input -f '$popup_font' -F '[con_mark="%s"] focus' -l 15 -P 'Go to Marked Window: '
 
 # BSAC next set of key bindings inspired/copied from
 # http://i3wm.org/docs/user-contributed/lzap-config.html

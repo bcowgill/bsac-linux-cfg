@@ -1,0 +1,3 @@
+#!/bin/sh
+# use a terminal with a good font size
+exec gnome-terminal --window-with-profile=ProFontWindows18pt "$@"
