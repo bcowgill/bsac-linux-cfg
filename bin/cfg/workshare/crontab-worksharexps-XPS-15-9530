@@ -1,3 +1,5 @@
+PATH=/home/bcowgill/bin:/opt/slickedit/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 * * * * * mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log 2>&1
 30 17,18 * * * $HOME/bin/backup-work.sh > /tmp/$LOGNAME/crontab-backup-work.log 2>&1
 */10 9,10,11,12,13,14,15,16,17,18 * * * $HOME/bin/wcdscan.sh > /tmp/$LOGNAME/crontab-wcdscan.log 2>&1
+0,15,30,45 * * * * DISPLAY=:0 $HOME/bin/random-desktop.sh > /tmp/$LOGNAME/crontab-random-desktop.log 2>&1
