@@ -164,3 +164,5 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
