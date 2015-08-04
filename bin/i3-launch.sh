@@ -149,7 +149,7 @@ sleep 3
 # scratchpad setup with a terminal
 mygterm.sh
 sleep 1
-i3-msg "border 1pixel; move scratchpad"
+i3-msg "move scratchpad"
 
 random-desktop.sh
 
