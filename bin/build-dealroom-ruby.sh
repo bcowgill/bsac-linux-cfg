@@ -11,7 +11,7 @@ redis-server &
 echo SHLVL=$SHLVL
 echo waiting to begin serving the dealroom ruby app...
 read wait
-bundle exec rails server -p 3001
+RAILS_RELATIVE_URL_ROOT='/dealroom' bundle exec rails server -p 3001
 echo SHLVL=$SHLVL
 echo 'bundle exec rails server -p 3001'
 
