@@ -16,6 +16,8 @@ while (my $line = <>)
    $line = "${prefix}EXPRESS       $line\n" if $line =~ m{node(js)? .+ \./bin/www}xms;
    $line = "${prefix}DASHBOARD     $line\n" if $line =~ m{perl .+ infinity-plus-dashboard/bin/app\.pl}xms;
    $line = "${prefix}UPDAEMON      $line\n" if $line =~ m{perl .+ blis-location-uploadd.pl}xms;
+   $line = "${prefix}RAILS SERVER  $line\n" if $line =~ m{ruby .+ rails \s+ s(erver)?}xms;
+   $line = "${prefix}GRUNT BUILD   $line\n" if $line =~ m{grunt}xms;
 
    $line = "${prefix}AUTOBUILD     $line\n" if $line =~ m{auto-build\.sh}xms;
    $line = "${prefix}KEEP IT UP    $line\n" if $line =~ m{keep-it-up\.sh}xms;
