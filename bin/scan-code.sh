@@ -23,6 +23,10 @@ find $dir \
 -o -name out -prune \
 -o -name _notes -prune \
 -o -name .sass-cache -prune \
+-o -name '*.BACKUP.*' -prune \
+-o -name '*.BASE.*' -prune \
+-o -name '*.LOCAL.*' -prune \
+-o -name '*.REMOTE.*' -prune \
 -o -name '*.saved.js' -prune \
 -o -name '*.min.*' -prune \
 -o -name '*.log' -prune \
