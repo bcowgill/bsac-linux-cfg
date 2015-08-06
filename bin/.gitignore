@@ -1,6 +1,7 @@
 java
 p4merge
 *~
+*.bak
 *.kate-swp
 wcd.go
 backup-work-manual.sh
