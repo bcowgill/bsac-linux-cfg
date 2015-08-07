@@ -94,6 +94,7 @@ i3-msg "workspace $file; exec mygterm.sh $HOME/projects/dealroom-ui mc $HOME/pro
 sleep 1
 # $help
 xscreensaver &
+dropbox.sh &
 sleep 1
 i3-msg "workspace $help; exec xscreensaver-demo" # placeholder to lock screen
 sleep 1
