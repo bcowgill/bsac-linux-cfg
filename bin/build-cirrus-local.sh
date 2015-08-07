@@ -4,6 +4,8 @@
 LOGC=/tmp/bcowgill/build-cirrus-local-cirrus.log
 LOGD=/tmp/bcowgill/build-cirrus-local-dealroom.log
 
+#GRUNT=0
+
 # Configure changes to run things locally
 pushd ~/projects/new-ui
 
@@ -80,7 +82,9 @@ popd
 
 # Terminate any running builds now
 killall --wait --regexp ruby
-killall --wait grunt
+if [ ${GRUNT:-1} == 1 ]; then
+	killall --wait grunt
+fi
 
 rm $LOGC $LOGD
 touch $LOGC
@@ -105,15 +109,19 @@ popd
 
 # Get grunt tasks running in the dealroom
 pushd ~/projects/dealroom-ui
-	grunt build 2>&1 | tee --append $LOGC
-	( grunt watch 2>&1 | tee --append $LOGC ) &
-	( grunt serve:tests 2>&1 | tee --append $LOGC ) &
+	if [ ${GRUNT:-1} == 1 ]; then
+		grunt build 2>&1 | tee --append $LOGC
+		( grunt watch 2>&1 | tee --append $LOGC ) &
+		( grunt serve:tests 2>&1 | tee --append $LOGC ) &
+	fi
 popd
 
 # Get grunt tasks running for new-ui
 pushd ~/projects/new-ui
-	grunt build 2>&1 | tee --append $LOGC
-	( grunt serve --cirrus-env=local 2>&1 | tee --append $LOGC ) &
+	if [ ${GRUNT:-1} == 1 ]; then
+		grunt build 2>&1 | tee --append $LOGC
+		( grunt serve --cirrus-env=local 2>&1 | tee --append $LOGC ) &
+	fi
 popd
 
 echo In the browser, clear your cookies and go to http://localhost:9000
