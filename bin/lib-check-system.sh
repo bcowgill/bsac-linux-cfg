@@ -573,7 +573,11 @@ function extract_archive {
          if echo "$archive" | grep ".tgz"; then
             tar xvzf "$archive"
          else
-            NOT_OK "archive \"$archive\" is not a known type"
+            if echo "$archive" | grep ".tar.bz2"; then
+               tar xvjf "$archive"
+            else
+               NOT_OK "archive \"$archive\" is not a known type"
+            fi
          fi
       fi
    fi

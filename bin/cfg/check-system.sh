@@ -147,6 +147,10 @@ FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_A
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
+PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
+PIDGIN_SKYPE_PKG="$PIDGIN_SKYPE:pidgin-skype"
+PIDGIN_SRC="pidgin-2.10.11"
+PIDGIN_ZIP="$PIDGIN_SRC.tar.bz2"
 
 PI_PKG=""
 
@@ -195,13 +199,16 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	COMPANY=raspberrypi
 	EMAIL=zardoz@infoserve.net
 	I3WM=""
-	VPN=""
 	CHARLES=""
 	CHARLES_PKG=""
 	VIRTUALBOX_CMDS=""
 	VIRTUALBOX_PKG=""
 	SKYPE_PKG=""
 	SKYPE=""
+	PIDGIN=""
+	PIDGIN_SKYPE=""
+	PIDGIN_SKYPE_PKG=""
+	PIDGIN_SRC=""
 	SVN_PKG=""
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
@@ -221,7 +228,6 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	DROPBOX_URL=""
 	USE_SUBLIME=""
 	SUBLIME=""
-	PIDGIN=""
 	SUBLIME_PKG=""
 	VSLICK=""
 	WEBSTORM=""
@@ -233,10 +239,10 @@ fi # raspberrypi
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $I3WM_PKG $VPN"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN"
 COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
 #runit
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
@@ -420,10 +426,12 @@ else
 	NOT_OK "UTF-8 locale is not supported:: $CHECK"
 fi
 install_file_from_url_zip_subdir "Downloads/ucs-fonts/examples/UTF-8-test.txt" "ucs-fonts.tar.gz" ucs-fonts $URL/download/ucs-fonts.tar.gz "Misc Fixed unicode fonts"
-install_file_from_url_zip_subdir "Downloads/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
-install_file_from_url "Downloads/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
+#install_file_from_url_zip_subdir "Downloads/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
+#install_file_from_url "Downloads/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
 dir_linked_to bin/template/unicode "$HOME/Downloads/ucs-fonts/examples" "symlink to sample unicode files"
 
+# MUSTDO finish this
+if /bin/false ; then
 if xlsfonts | grep xyzzy > /dev/null ; then
 	OK "ucs unicode fonts are installed"
 else
@@ -435,6 +443,7 @@ else
 	#sudo mkfontdir /usr/share/fonts/X11/misc
 	#xset fp rehash
 	popd
+fi
 fi
 
 # Install the X fonts!
@@ -559,7 +568,6 @@ sudo /etc/init.d/networking restart
 # create /etc/network/interfaces.d/bridge-vpn
 FILE=/etc/network/interfaces.d/bridge-vpn
 #file_has_text "$FILE" "iface br0 inet static"
-
 
 if [ ! -z $I3WM ]; then
 	FILE="/etc/apt/sources.list.d/i3window-manager.list"
@@ -1280,6 +1288,15 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 
 
 fi # raspberrypi
+
+if [ ! -z "$PIDGIN_SKYPE_PKG" ]; then
+	if dpkg -l libpurple0 | grep 2.10.9 ; then
+		NOT_OK "need version 2.10.11+ of libpurple for pidgin skype" || echo " "
+	else
+		NOT_OK "MAYBE you may be able to get pidgin skype working you need libpurple0 2.10.11 or better" || \
+		dpkg -l libpurple0
+	fi
+fi
 
 popd
 
