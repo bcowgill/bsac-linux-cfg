@@ -1,11 +1,16 @@
 Webstorm editor command quick reference
 
+KEY:WEBSTORM:EDIT Ctrl-Shift-j [Edit/Join Lines] Join two lines removing unnecessary space
+KEY:WEBSTORM:EDIT Ctrl-/ Line Comment/Uncomment the current line or selected lines
+KEY:WEBSTORM:EDIT Ctrl-Shift-/ Block Comment/uncomment the current line or selected lines
+
 KEY:WEBSTORM:NAV Alt-Shift-1 Quickly find the currently edited file in another view (Project/Structure etc)
 KEY:WEBSTORM:NAV Escape in a tool window gets you to the editor
 KEY:WEBSTORM:NAV Shift-Escape in a tool window gets you to the editor and hides the tool window
 KEY:WEBSTORM:NAV F12 move from the editor to the last focussed tool window
 KEY:WEBSTORM:NAV Ctrl-Shift-Backspace [Navigate/Last Edit Location] jump back to the last place where you made changes to a file. keep pressing to go back further
 KEY:WEBSTORM:NAV Alt-Home Go to the breadcrumb navigation bar to navigate files/folders
+KEY:WEBSTORM:NAV Ctrl-h [Navigate/Type Hierarchy] View inheritance hierarchy for selected function or class
 
 KEY:WEBSTORM:VIEW Shift-mousewheel horizontal scrolling of the window
 
@@ -26,20 +31,34 @@ KEY:WEBSTORM:FIND Alt-{ CUSTOM move to matched brace
 KEY:WEBSTORM:FIND Alt-Up [Navigate/Previous Method] jump to method above
 KEY:WEBSTORM:FIND Alt-Down [Navigate/Next Method] jump to method below
 
-KEY:WEBSTORM:PASTE Ctrl-w widen selection. keep pressing to select more: word, line, block, etc. Can also use double click to help widen
+KEY:WEBSTORM:PASTE Ctrl-w [Edit/Extend Selection] widen selection. keep pressing to select more: word, line, block, etc. Can also use double click to help widen
 KEY:WEBSTORM:PASTE Ctrl-d duplicates the selected block or current line
 KEY:WEBSTORM:PASTE Ctrl-Shift-v [Edit/Paste from History] paste recent clipboard contents.
 
-KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, etc) use incremental search in the popup.
+KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, text, comments, etc) use incremental search in the popup.
 KEY:WEBSTORM:CODE Tab insert selected code completion name and erase anything to right of cursor
 KEY:WEBSTORM:CODE Enter insert selected code completion name keeping anything to right of cursor
+KEY:WEBSTORM:CODE . , ; insert selected code completion name and append the . , or ; character
 KEY:WEBSTORM:CODE Shift-F6 [Refactor/Rename] rename class/methods/variables with automatic correction of all references.
 KEY:WEBSTORM:CODE Ctrl-p [View/Parameter Info] list parameters for function call when within parenthesis. works in code completion popup too.
 KEY:WEBSTORM:CODE Alt-Shift-v [Refactor/Extract Variable] pull the selected text out into a variable
+KEY:WEBSTORM:CODE Ctrl-Shift-i [View/Quick Definition] popup to show definition of a symbol. can use in the code completion popup as well
+KEY:WEBSTORM:CODE Ctrl-Shift-Enter complete statement if,do-while,try-catch etc
+KEY:WEBSTORM:CODE Alt-q [View/Context Info] see declaration of current method without scrolling to it
+
+HEREIAM
+KEY:WEBSTORM:CODE Ctrl-Alt-t [Code/Surround With] Wrap line/selected text with a code construct if/while, etc
 
 KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor. works in code completion popup too.
 
 KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
 
 KEY:WEBSTORM:CODE Alt-Shift-r Run tests
+
+KEY:WEBSTORM:BUILD F2 [Navigate/Next Highlighted Error] Jump to next syntax error
+KEY:WEBSTORM:BUILD Shift-F2 [Navigate/Previous Highlighted Error] Jump to previous syntax error
+KEY:WEBSTORM:BUILD Ctrl-Alt-Up/Down Jump between compiler error messages or search operation results
+
+KEY:WEBSTORM:DEBUGGER Alt-Shift-8 [Run/Evaluate Expression] evaluate value of selected text when debugging
+KEY:WEBSTORM:DEBUGGER Right-Click on a breakpoint in the left gutter for Context menu to set conditions
 
