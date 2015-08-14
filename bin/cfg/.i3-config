@@ -30,7 +30,7 @@ set $font_name ProFontWindows
 # use xrandr --current command to get monitor screen names
 # should match OUTPUT_MAIN/OUTPUT_AUX from detect-monitors.sh
 set $main eDP1
-set $aux DP1
+set $aux eDP1
 
 # lemonchiffon = FFFACD
 set $lockcolor FFFACD
@@ -104,9 +104,6 @@ assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
 assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
 
-# Force some windows to float
-for_window [class="^Git-gui--askpass$"] floating enable
-
 # Force other windows not to float
 #for_window [class="^Skype$"] floating disable
 for_window [class="^XCalc$"] floating enable
@@ -114,7 +111,12 @@ for_window [class="^Workrave$"] floating enable
 
 # Force some windows to fullscreen
 for_window [class="^Meld$"] fullscreen
-for_window [class="^Diffmerge$"] fullscreen
+#for_window [class="^Diffmerge$"] fullscreen
+
+# Force some windows to float
+for_window [class="^Git-gui--askpass$"] floating enable
+for_window [class="^Diffmerge$" title="SourceGear DiffMerge - Registration Information"] floating enable
+for_window [class="^Diffmerge$" title="Files Changed on Disk"] floating enable
 
 # Force others to the scratchpad
 #for_window [class="^Gnome-terminal$" instance="scratchpad"] border 1pixel; move scratchpad
