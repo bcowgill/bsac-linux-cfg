@@ -5,7 +5,6 @@
 # source: https://github.com/prettydiff/prettydiff
 # source: https://github.com/austincheney/Pretty-Diff/blob/master/lib/markup_beauty.js
 # npm install -g prettydiff
-PRETTYDIFF=/usr/local/lib/node_modules/prettydiff/api/node-local.js
 INDENT_TABS=1
 INDENT_SIZE=4
 
@@ -18,6 +17,12 @@ if [ -z "$1" ]; then
    echo "Might beautify javascript, css and XML as well, haven't tried."
    exit 1
 fi
+
+PRETTYDIFF=/usr/local/lib/node_modules/prettydiff/api/node-local.js
+if [ ! -f $PRETTYDIFF ]; then
+    PRETTYDIFF=/usr/lib/node_modules/prettydiff/api/node-local.js
+fi
+
 if [ -z "$OUTPUT" ]; then
    METHOD=filescreen
 else
