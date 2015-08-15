@@ -1,4 +1,19 @@
-A long time ago, in a galaxy far, far away ...
+A long time ago, in a galaxy far,                         .
+far away....                                              .
+
+.          ________________.  ___     .______             .
+.         /@@@@@@@@@@@@@@@@| /@@@\    |@@@@@@\            .
+.        |@@@(-----|@@|----`/@@^@@\   |@@|_)@@|           .
+.         \@@@\    |@@|    /@@/_\@@\  |@@@@@@/            .
+.    .-----)@@@|   |@@|   /@@@@@@@@@\ |@@|\@@\-------.    .
+.    |@@@@@@@@/    |@@|  /@@/     \@@\|@@| `.@@@@@@@@|    .
+.     ____    __    ____  ___     .______    ________.    .
+.     \@@@\  /@@\  /@@@/ /@@@\    |@@@@@@\  /@@@@@@@@|    .
+.      \@@@\/@@@@\/@@@/ /@@^@@\   |@@|_)@@||@@@(-----`    .
+.       \@@@@@@@@@@@@/ /@@/_\@@\  |@@@@@@/  \@@@\         .
+.        \@@@@/\@@@@/ /@@@@@@@@@\ |@@|\@@\---)@@@|        .
+.         \@@/  \@@/ /@@/     \@@\|@@| `.@@@@@@@/         .
+
 
 Episode I
 THE PHANTOM MENACE
@@ -8,3 +23,4 @@ Turmoil has engulfed the Galactic Republic. The taxation of trade routes to outl
 Hoping to resolve the matter with a blockade of deadly battleships, the greedy Trade Federation has stopped all shipping to the small planet of Naboo.
 
 While the congress of the Republic endlessly debates this alarming chain of events, the Supreme Chancellor has secretly dispatched two Jedi Knights, the guardians of peace and justice in the galaxy, to settle the conflict....
+
