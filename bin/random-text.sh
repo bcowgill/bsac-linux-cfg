@@ -60,7 +60,7 @@ function pickN
 }
 
 #CHOICE=chosen
-#cat $HOME/bin/template/text/starwars-episode-iv.wrapped.txt
+#cat $HOME/bin/template/text/starwars/starwars-episode-iv.wrapped.txt
 
 pick_mode
 
@@ -69,7 +69,7 @@ do
 	if [ $MODE == text ]; then
 		pick fortune
 		which fortune   > /dev/null && choose "fortune -l"
-		which cat       > /dev/null && choose "cat `find $HOME/bin/template/text/ -type f | choose.pl`"
+		which cat       > /dev/null && choose "cat `find $HOME/bin/template/text/starwars/ -type f | choose.pl`"
 		which cat       > /dev/null && chooseN "cat `find $HOME/bin/template/unicode/ -type f | choose.pl`"
 	else
 		pick date
