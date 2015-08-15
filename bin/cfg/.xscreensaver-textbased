@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.30 for bcowgill on Sat Aug 15 17:50:51 2015.
+# Written by xscreensaver-demo 5.30 for bcowgill on Sat Aug 15 17:57:14 2015.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:05:00
@@ -58,10 +58,10 @@ programs:								      \
 -				qix -root				    \n\
 -				rocks -root				    \n\
 -				rorschach -root				    \n\
-				decayscreen -root			    \n\
+-				decayscreen -root			    \n\
 -				flame -root				    \n\
 -				halo -root				    \n\
-				slidescreen -root			    \n\
+-				slidescreen -root			    \n\
 -				pedal -root				    \n\
 -				bouboule -root				    \n\
 -				braid -root				    \n\
@@ -96,14 +96,14 @@ programs:								      \
 -				triangle -root				    \n\
 				xjack -root				    \n\
 -				xlyap -root				    \n\
-  GL: 				atlantis -root -size 10000 -fps		    \n\
+- GL: 				atlantis -root -size 10000 -fps		    \n\
 				bsod -root -atari -bsd -sparclinux	    \n\
 - GL: 				bubble3d -root				    \n\
 - GL: 				cage -root				    \n\
 -				crystal -root				    \n\
 -				cynosure -root				    \n\
 -				discrete -root				    \n\
-				distort -root				    \n\
+-				distort -root				    \n\
 -				epicycle -root				    \n\
 -				flow -root				    \n\
 - GL: 				glplanet -root				    \n\
@@ -114,8 +114,8 @@ programs:								      \
 - GL: 				sonar -root				    \n\
 - GL: 				stairs -root				    \n\
 -				truchet -root				    \n\
-				vidwhacker -root			    \n\
-				blaster -root -fps			    \n\
+-				vidwhacker -root			    \n\
+-				blaster -root -fps			    \n\
 -				bumps -root				    \n\
 -				ccurve -root				    \n\
 -				compass -root				    \n\
@@ -123,37 +123,37 @@ programs:								      \
 -				demon -root				    \n\
 - GL: 				extrusion -root				    \n\
 -				loop -root				    \n\
-				penetrate -root -smart -fps		    \n\
+-				penetrate -root -smart -fps		    \n\
 -				petri -root				    \n\
 				phosphor -root -fg #ff7900		    \n\
 - GL: 				pulsar -root				    \n\
-				ripples -root				    \n\
+-				ripples -root				    \n\
 -				shadebobs -root				    \n\
 - GL: 				sierpinski3d -root			    \n\
 -				spotlight -root				    \n\
 -				squiral -root				    \n\
 -				wander -root				    \n\
 -				webcollage -root			    \n\
-				xflame -root				    \n\
+-				xflame -root				    \n\
 				xmatrix -root				    \n\
-  GL: 				gflux -root				    \n\
+- GL: 				gflux -root				    \n\
 -				nerverot -root				    \n\
 -				xrayswarm -root				    \n\
 -				xspirograph -root			    \n\
 - GL: 				circuit -root				    \n\
 - GL: 				dangerball -root			    \n\
-  GL: 				engine -root				    \n\
-  GL: 				flipscreen3d -root -fps			    \n\
+- GL: 				engine -root				    \n\
+- GL: 				flipscreen3d -root -fps			    \n\
 - GL: 				gltext -root				    \n\
 - GL: 				menger -root				    \n\
 - GL: 				molecule -root				    \n\
-				rotzoomer -root				    \n\
+-				rotzoomer -root				    \n\
 -				speedmine -root				    \n\
   GL: 				starwars -root -no-fade -fps -font 12x24    \n\
 - GL: 				stonerview -root			    \n\
 -				vermiculate -root			    \n\
 -				whirlwindwarp -root			    \n\
-				zoom -root				    \n\
+-				zoom -root				    \n\
 -				anemone -root				    \n\
 -				apollonian -root			    \n\
 - GL: 				boxed -root				    \n\
@@ -172,9 +172,9 @@ programs:								      \
 - GL: 				sballs -root				    \n\
 - GL: 				spheremonics -root			    \n\
 -				thornbird -root				    \n\
-				twang -root				    \n\
+-				twang -root				    \n\
 - GL: 				antspotlight -root			    \n\
-				apple2 -root				    \n\
+-				apple2 -root				    \n\
 - GL: 				atunnel -root				    \n\
 				barcode -root -mode clock24 -fps	    \n\
 - GL: 				blinkbox -root				    \n\
@@ -182,34 +182,34 @@ programs:								      \
 - GL: 				bouncingcow -root			    \n\
 -				cloudlife -root				    \n\
 - GL: 				cubestorm -root				    \n\
-				eruption -root				    \n\
+-				eruption -root				    \n\
 - GL: 				flipflop -root				    \n\
-  GL: 				flyingtoasters -root			    \n\
+- GL: 				flyingtoasters -root			    \n\
 				fontglide -root				    \n\
 - GL: 				gleidescope -root			    \n\
 - GL: 				glknots -root				    \n\
   GL: 				glmatrix -root				    \n\
-  GL: 				glslideshow -root -zoom 83		    \n\
+- GL: 				glslideshow -root -zoom 83		    \n\
 - GL: 				hypertorus -root			    \n\
 - GL: 				jigglypuff -root			    \n\
 -				metaballs -root				    \n\
-  GL: 				mirrorblob -root			    \n\
+- GL: 				mirrorblob -root			    \n\
 -				piecewise -root				    \n\
 - GL: 				polytopes -root				    \n\
-				pong -root -clock			    \n\
+-				pong -root -clock			    \n\
 -				popsquares -root			    \n\
 - GL: 				surfaces -root				    \n\
-				xanalogtv -root				    \n\
+-				xanalogtv -root				    \n\
 -				abstractile -root			    \n\
 -				anemotaxis -root			    \n\
 - GL: 				antinspect -root			    \n\
-				fireworkx -root				    \n\
+-				fireworkx -root				    \n\
 -				fuzzyflakes -root			    \n\
 -				interaggregate -root			    \n\
 -				intermomentary -root			    \n\
 -				memscroller -root			    \n\
 - GL: 				noof -root				    \n\
-				pacman -root -fps			    \n\
+-				pacman -root -fps			    \n\
 - GL: 				pinion -root				    \n\
 - GL: 				polyhedra -root				    \n\
 - GL: 				providence -root			    \n\
@@ -218,7 +218,7 @@ programs:								      \
 - GL: 				antmaze -root				    \n\
 - GL: 				boing -root				    \n\
 -				boxfit -root				    \n\
-  GL: 				carousel -root				    \n\
+- GL: 				carousel -root				    \n\
 -				celtic -root				    \n\
 - GL: 				crackberg -root				    \n\
 - GL: 				cube21 -root				    \n\
@@ -234,13 +234,13 @@ programs:								      \
 - GL: 				gears -root				    \n\
 - GL: 				glcells -root				    \n\
 - GL: 				lockward -root				    \n\
-				m6502 -root				    \n\
+-				m6502 -root				    \n\
 - GL: 				moebiusgears -root			    \n\
 - GL: 				voronoi -root				    \n\
 - GL: 				hypnowheel -root			    \n\
 - GL: 				klein -root				    \n\
 -				lcdscrub -root				    \n\
-  GL: 				photopile -root -scale 0.9		    \n\
+- GL: 				photopile -root -scale 0.9		    \n\
 - GL: 				skytentacles -root			    \n\
 - GL: 				rubikblocks -root			    \n\
 - GL: 				companioncube -root			    \n\
