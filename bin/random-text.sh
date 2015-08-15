@@ -60,7 +60,7 @@ function pickN
 }
 
 #CHOICE=chosen
-#cat $HOME/bin/template/text/starwars-episode-i.txt
+#cat $HOME/bin/template/text/starwars-episode-iv.wrapped.txt
 
 pick_mode
 
