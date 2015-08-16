@@ -1,5 +1,8 @@
 #!/bin/bash
 # guess-word.sh
+# google's list of most common english words
+# git clone https://github.com/first20hours/google-10000-english.git
+
 if [ "$WORD" == "" ] ; then
 	echo usage:
 	echo "# export G= guessed letters"

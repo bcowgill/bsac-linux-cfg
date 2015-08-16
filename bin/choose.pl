@@ -21,5 +21,6 @@ while (<>)
 	}
 }
 
+splice(@Lines, $MAX) if scalar(@Lines) > $MAX;
 die "FAILED" unless scalar(@Lines <= $MAX);
 print join('', @Lines);

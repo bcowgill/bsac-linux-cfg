@@ -25,6 +25,7 @@ function choose
 	run="$1"
 	roll
 	if [ ! -z "$CHOICE" ]; then
+		#echo chose "$run"
 		$run
 		echo $END
 		exit 0
@@ -37,6 +38,7 @@ function chooseN
 	run="$1"
 	roll
 	if [ ! -z "$CHOICE" ]; then
+		#echo chose "$run"
 		$run | choose.pl $LINES
 		echo $END
 		exit 0
@@ -71,12 +73,15 @@ do
 		which fortune   > /dev/null && choose "fortune -l"
 		which cat       > /dev/null && choose "cat `find $HOME/bin/template/text/starwars/ -type f | choose.pl`"
 		which cat       > /dev/null && chooseN "cat `find $HOME/bin/template/unicode/ -type f | choose.pl`"
+		which man       > /dev/null && chooseN "man `ls -1 /usr/local/sbin/ /usr/local/bin/ /usr/sbin/ /sbin/ /bin/ /usr/games/ /usr/local/games | choose.pl`"
+		which man       > /dev/null && chooseN "man -k `choose.pl < /usr/share/dict/words`"
+		chooseN "cat `ls /usr/share/dict/*-english | choose.pl`"
 	else
 		pick date
 		pick uptime
 		pick who
 		pick ifconfig
-		pick lspci
+		pickN lspci
 		pick lsusb
 		pick lsblk
 		pick lscpu
@@ -93,7 +98,6 @@ do
 		pickN ls-fonts.sh
 		pick what-apps.sh
 
-		which man       > /dev/null && chooseN "man -k `choose.pl < /usr/share/dict/american-english`"
 		which top       > /dev/null && chooseN "top -bn1"
 		which lsb_release > /dev/null && choose "lsb_release --all"
 		which strings   > /dev/null && chooseN "strings `find /usr/bin -type f | choose.pl`"
