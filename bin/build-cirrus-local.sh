@@ -206,9 +206,9 @@ else
 fi
 
 if ps -ef | grep ruby | grep rackup > /dev/null ; then
-	echo OK ruby dealroom sidekiq rackup running
+	echo OK ruby dealroom rackup running
 else
-	echo NOT OK ruby dealroom sidekiq rackup is NOT running
+	echo NOT OK ruby dealroom rackup is NOT running
 fi
 
 if ps -ef | grep ruby | grep '/cli start' > /dev/null ; then
@@ -223,6 +223,11 @@ else
 	echo NOT OK ruby rails cirrus server is NOT running
 fi
 
+if ps -ef | grep sidekiq > /dev/null; then
+	echo OK dealroom sidekiq is running
+else
+	echo NOT OK dealroom sidekiq is NOT running
+fi
 
 echo In the browser, clear your cookies and go to http://localhost:9000
 echo and login successfuly with u: admin@email.com pass: fishpaste
