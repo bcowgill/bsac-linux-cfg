@@ -50,6 +50,11 @@ scan-js.pl [options] [@options-file ...] [file ...]
 
  scan-js.pl template/unminified/jquery-2.1.1.js
 
+ scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
+
+ scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
+
+
 =cut
 
 use strict;
@@ -94,6 +99,9 @@ my %Var = (
 		raMandatory => [], # additional mandatory parameters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
+	raFunctions => [],    # names of functions found
+	rhFunctions => {},    # names of functions found with line number and callers
+	raLinesInFile => [],  # buffered lines for second pass
 );
 
 # Return the value of a command line option
@@ -117,6 +125,7 @@ sub main
 		processStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
+	secondPass($Var{raLinesInFile}, $rhOpt);
 	summary($rhOpt);
 }
 
@@ -124,6 +133,19 @@ sub summary
 {
 	my ($rhOpt) = @ARG;
 	print "=====\n$lines_seen lines read\n";
+	debug("summary() raFunctions:" . Dumper($Var{raFunctions}), 3);
+	debug("summary() rhFunctions:" . Dumper($Var{rhFunctions}), 4);
+	foreach my $function (@{$Var{raFunctions}})
+	{
+		my $rhFunction = $Var{rhFunctions}{$function};
+		my $definedAt = $rhFunction->{line};
+		my $firstCallAt = $rhFunction->{callers}[0];
+		if ($firstCallAt)
+		{
+			print "$function() \@ $definedAt called @{[scalar(@{$rhFunction->{callers}})]} time(s) first at $firstCallAt\n";
+			warning("$function() \@ $definedAt called before defined") if $firstCallAt < $definedAt;
+		}
+	}
 }
 
 sub setup
@@ -174,14 +196,77 @@ sub processFile
 	close($fh);
 }
 
+sub secondPass
+{
+	my ($raLines, $rhOpt) = @ARG;
+	my $regex = join('|', @{$Var{raFunctions}});
+	debug("secondPass() regex: $regex", 3);
+
+	for (my $idx = 0; $idx < scalar(@$raLines); ++$idx)
+	{
+		my $line = $raLines->[$idx];
+		debug("secondPass() $line", 4);
+		$line =~ s{($regex)}{
+			registerCaller($1, $idx + 1);
+		}xmsge;
+	}
+
+}
+
 sub doLine
 {
 	my ($rhOpt, $line, $print) = @ARG;
 	++$lines_seen;
-	my $regex = qr{\A}xms;
-	$line =~ s{$regex}{length($line) . q{ }}xmse;
-	$print = 1;
+
+	push(@{$Var{raLinesInFile}}, $line);
+	findFunction($line);
+
+	$print = 0;
 	return ($line, $print);
+}
+
+sub findFunction
+{
+	my ($line) = @ARG;
+
+	# something = function (
+	#	something: function (
+	#	function something(
+
+	$line =~ s{(\w+) \s* [=:] \s* function \s* \(}{
+		registerFunction($1, $lines_seen)
+	}xmsge;
+	$line =~ s{function \s+ (\w+) \s* \(}{
+		registerFunction($1, $lines_seen)
+	}xmsge;
+}
+
+sub registerFunction
+{
+	my ($function, $line) = @ARG;
+
+	if ($Var{rhFunctions}{$function})
+	{
+		warning("function $function defined again");
+	}
+	else
+	{
+		push(@{$Var{raFunctions}}, $function);
+		$Var{rhFunctions}{$function} = {
+			line => $line,
+			callers => [],
+		}
+	}
+}
+
+sub registerCaller
+{
+	my ($function, $line) = @ARG;
+	debug("registerCaller() function: $function", 4);
+	if ($line != $Var{rhFunctions}{$function}{line})
+	{
+		push(@{$Var{rhFunctions}{$function}{callers}}, $line);
+	}
 }
 
 # Must manually check mandatory values present
