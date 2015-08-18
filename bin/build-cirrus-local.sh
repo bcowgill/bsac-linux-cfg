@@ -7,17 +7,53 @@
 # git clone http://github.com/workshare/content-service.git
 # rvm install ruby-1.9.3-p392
 # apt-get install graphviz libxml2-dev libxslt-dev
+# rake db:migrate  in dealroom and cirrus
 
 LOGC=/tmp/bcowgill/build-cirrus-local-cirrus.log
 LOGD=/tmp/bcowgill/build-cirrus-local-dealroom.log
 LOGSK=/tmp/bcowgill/build-cirrus-local-dealroom-sidekiq.log
+LOGCU=/tmp/bcowgill/build-cirrus-local-core-ui.log
 LOGDU=/tmp/bcowgill/build-cirrus-local-dealroom-ui.log
 LOGNU=/tmp/bcowgill/build-cirrus-local-new-ui.log
 LOGCS=/tmp/bcowgill/build-cirrus-local-content-service.log
+LOGS="$LOGC $LOGD $LOGSK $LOGCU $LOGDU $LOGNU $LOGCS"
 
 #GRUNT=0
 
 # Configure changes to run things locally
+pushd ~/projects/core-ui
+
+if grep '9000:9000' lib/scripts/fileupload/controllers/FileUploadManagerController.js > /dev/null ; then
+	echo OK FileUploadManagerController.js configured for local dealroom back end server
+else
+	echo NOT OK MAYBE FileUploadManagerController.js is not configured for local dealroom back end server, will try to configure it.
+
+	# Modify this line (which occurs twice) in FileUploadManagerController.js so the uploaders work.
+	# uploadUrl = ajaxdata.complete_file.upload.action;
+	# becomes
+	# uploadUrl = ajaxdata.complete_file.upload.action.replace(/9000:9000/, 9000);
+
+	perl -i.bak -e '
+		local $/ = undef;
+		local $comment = qq{/* MUSTDO NOT COMMIT THIS CHANGE FOR LOCAL CIRRUS */};
+		$file = <>;
+		$file =~ s{
+			\n (\s*?)
+			(uploadUrl \s+ = \s+ ajaxdata\.complete_file\.upload\.action) ; \s*? \n
+		}{\n$1$comment\n$1$2.replace(/9000:9000/, 9000);\n$1$comment\n}xmsg;
+		print $file;
+	' lib/scripts/fileupload/controllers/FileUploadManagerController.js
+
+fi
+
+if grep '9000:9000' lib/scripts/fileupload/controllers/FileUploadManagerController.js > /dev/null ; then
+	echo OK FileUploadManagerController.js configured for local dealroom back end server
+else
+	echo NOT OK FileUploadManagerController.js is not configured for local dealroom back end server
+fi
+
+popd
+
 pushd ~/projects/new-ui
 
 if egrep 'port:\s*3001' Gruntfile.js > /dev/null ; then
@@ -97,13 +133,11 @@ if [ ${GRUNT:-1} == 1 ]; then
 	killall --wait grunt
 fi
 
-rm $LOGC $LOGD $LOGSK $LOGDU $LOGNU $LOGCS
-touch $LOGC
-touch $LOGD
-touch $LOGSK
-touch $LOGDU
-touch $LOGNU
-touch $LOGCS
+for $log in $LOGS;
+do
+	[ -f $log ] && rm $log
+	touch $log
+done
 
 # Get back ends going
 
@@ -130,6 +164,13 @@ pushd ~/projects/content-service
 	bundle exec ./cli start
 popd
 
+# Get grunt tasks running in core-ui
+pushd ~/projects/core-ui
+	if [ ${GRUNT:-1} == 1 ]; then
+		grunt build 2>&1 | tee --append $LOGCU
+	fi
+popd
+
 # Get grunt tasks running in the dealroom
 pushd ~/projects/dealroom-ui
 	if [ ${GRUNT:-1} == 1 ]; then
@@ -146,6 +187,16 @@ pushd ~/projects/new-ui
 		( grunt serve --cirrus-env=local 2>&1 | tee --append $LOGNU ) &
 	fi
 popd
+
+# Check all the grunts are running
+
+GRUNTS=3
+if [ `ps -ef | grep grunt | grep -v grep | wc -l` == $GRUNTS ] ; then
+	echo OK all grunts are running
+else
+	echo NOT OK not all grunts are running should be $GRUNTS
+	ps -ef | grep grunt | grep -v grep
+fi
 
 # Check all the back ends are running
 if ps -ef | grep ruby | grep '2\.1' | grep rails | grep 3001 > /dev/null ; then
