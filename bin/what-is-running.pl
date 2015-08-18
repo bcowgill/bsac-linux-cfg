@@ -16,7 +16,9 @@ while (my $line = <>)
    $line = "${prefix}EXPRESS       $line\n" if $line =~ m{node(js)? .+ \./bin/www}xms;
    $line = "${prefix}DASHBOARD     $line\n" if $line =~ m{perl .+ infinity-plus-dashboard/bin/app\.pl}xms;
    $line = "${prefix}UPDAEMON      $line\n" if $line =~ m{perl .+ blis-location-uploadd.pl}xms;
+   #/home/bcowgill/.rvm/rubies/ruby-2.1.5/bin/ruby bin/rails server -p 3001
    $line = "${prefix}RAILS SERVER  $line\n" if $line =~ m{ruby .+ rails \s+ s(erver)?}xms;
+   $line = "${prefix}CONT SERVICE  $line\n" if $line =~ m{ruby \s+ \./cli \s+ start}xms;
    $line = "${prefix}GRUNT BUILD   $line\n" if $line =~ m{grunt}xms;
 
    $line = "${prefix}AUTOBUILD     $line\n" if $line =~ m{auto-build\.sh}xms;
