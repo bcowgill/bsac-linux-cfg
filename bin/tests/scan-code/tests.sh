@@ -1,6 +1,4 @@
 #!/bin/bash
-
-#!/bin/bash
 # Shell script based test plan
 # set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e

@@ -53,6 +53,7 @@ perl.pl [options] [@options-file ...] [file ...]
 
 use strict;
 use warnings;
+use autodie qw(open);
 use English -no_match_vars;
 use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
@@ -65,12 +66,13 @@ $Data::Dumper::Indent = 1;
 $Data::Dumper::Terse = 1;
 
 our $VERSION = 0.1; # shown by --version option
+our $STDIO = "";
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			'' => 0,      # indicates standard in/out as - on command line
+			$STDIO => 0,      # indicates standard in/out as - on command line
 			verbose => 1, # default value for verbose
 			debug => 0,
 			man => 0,     # show full help page
@@ -100,7 +102,7 @@ my %Var = (
 			"map|m=s%",   # multivalued hash key=value
 			"debug|d+",   # incremental keep specifying to increase
 			"verbose|v!", # flag --verbose or --noverbose
-			"",           # empty string allows - to signify standard in/out as a file
+			$STDIO,     # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
 		],
 		raMandatory => [], # additional mandatory parameters not defined by = above.
@@ -166,6 +168,8 @@ sub processFiles
 	foreach my $fileName (@$raFiles)
 	{
 		processFile($fileName, $rhOpt);
+# option to process entire file rather then line by line
+#		processEntireFile($fileName, $rhOpt);
 	}
 }
 
@@ -184,6 +188,45 @@ sub processFile
 		print $line if $print;
 	}
 	close($fh);
+}
+
+sub processEntireFile
+{
+	my ($fileName, $rhOpt) = @ARG;
+	debug("processFile($fileName)\n");
+
+	# example read the entire file and show something line by line
+	my $print = 0;
+	my $fh;
+	local $INPUT_RECORD_SEPARATOR = undef;
+	open($fh, "<", $fileName);
+	my $file = <$fh>;
+	$lines_seen += getLinesInFile($file);
+	print $file if $print;
+	close($fh);
+}
+
+sub getLinesInFile
+{
+	my ($file) = @ARG;
+	my $lines = 0;
+
+	if (length($file))
+	{
+		if ($file =~ m{\n}xms)
+		{
+			$lines += $file =~ tr[\n][\n];
+			if ($file =~ m{\n [^\n]+ \z}xms)
+			{
+				++$lines;
+			}
+		}
+		else
+		{
+			++$lines;
+		}
+	}
+	return $lines;
 }
 
 sub doLine
@@ -272,18 +315,18 @@ sub getOptions
 	);
 	if ($Var{rhGetopt}{result})
 	{
-		manual() if $Var{rhArg}{rhOpt}{man};
+		manual() if opt('man');
 		$Var{rhArg}{raFile} = \@ARGV;
 		# set stdio option if no file names provided
-		$Var{rhArg}{rhOpt}{''} = 1 unless scalar(@{$Var{rhArg}{raFile}});
+		$Var{rhArg}{rhOpt}{$STDIO} = 1 unless scalar(@{$Var{rhArg}{raFile}});
 		checkOptions(
 			$Var{rhGetopt}{raErrors},
 			$Var{rhArg}{rhOpt},
 			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''} ## use_stdio option
+			$Var{rhArg}{rhOpt}{$STDIO} ## use_stdio option
 		);
 		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, opt($STDIO));
 	}
 	else
 	{

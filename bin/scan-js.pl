@@ -14,6 +14,9 @@ Brent S.A. Cowgill
 scan-js.pl [options] [@options-file ...] [file ...]
 
  Options:
+   --show-code      show the code after comment and string extraction
+   --comment-char   use character to replace text in comment extraction
+   --string-char    use character to replace text in string extraction
    --version        display program version
    --help -?        brief help message
    --man            full help message
@@ -21,6 +24,24 @@ scan-js.pl [options] [@options-file ...] [file ...]
 =head1 OPTIONS
 
 =over 8
+
+=item B<--show-code> or B<--noshow-code>
+
+ negatable. Print out the source code after comments and strings have been extracted.
+ This allow you to diagnose code which might be excessively tricky.
+
+=item B<--comment-char=s>
+
+ optional. Defaults to '-'. Set the character to use to replace the text
+ found in comments. Used with --show-code. If set to the empty string
+ --comment-char='' then comments will not be stripped from the code.
+
+=item B<--string-char=s>
+
+ optional. Defaults to '_'. Set the character to use to replace the text
+ found in strings. Used with --show-code. If set to the empty string
+ --string-char='' then strings will not be stripped from the code.
+ This is useful if functions are referred to by name in some strings.
 
 =item B<--version>
 
@@ -59,6 +80,7 @@ scan-js.pl [options] [@options-file ...] [file ...]
 
 use strict;
 use warnings;
+use autodie qw(open);
 use English -no_match_vars;
 use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
@@ -69,12 +91,16 @@ $Data::Dumper::Indent = 1;
 $Data::Dumper::Terse = 1;
 
 our $VERSION = 0.1; # shown by --version option
+our $STDIO = "";
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-#			'' => 0,      # indicates standard in/out as - on command line
+			$STDIO => 0,      # indicates standard in/out as - on command line
+			"show-code" => 0,
+			"comment-char" => '-',
+			"string-char" => '_',
 			verbose => 1, # default value for verbose
 			debug => 0,
 			man => 0,     # show full help page
@@ -91,9 +117,12 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
+			"show-code!",     # flag to print out code after comment and string extraction
+			"comment-char:s", # char to replace text in comments
+			"string-char:s",  # char to replace text in strings
 			"debug|d+",   # incremental keep specifying to increase
 			"verbose|v!", # flag --verbose or --noverbose
-			"",           # empty string allows - to signify standard in/out as a file
+			$STDIO,       # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
 		],
 		raMandatory => [], # additional mandatory parameters not defined by = above.
@@ -175,7 +204,7 @@ sub processFiles
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		processFile($fileName, $rhOpt);
+		processEntireFile($fileName, $rhOpt);
 	}
 }
 
@@ -194,6 +223,76 @@ sub processFile
 		print $line if $print;
 	}
 	close($fh);
+}
+
+sub processEntireFile
+{
+	my ($fileName, $rhOpt) = @ARG;
+	debug("processFile($fileName)\n");
+
+	# example read the entire file and show something line by line
+	my $print = $rhOpt->{'show-code'};
+	my $fh;
+	local $INPUT_RECORD_SEPARATOR = undef;
+	open($fh, "<", $fileName);
+	my $file = <$fh>;
+	$Var{entireFile} = $file;
+	$lines_seen += getLinesInFile($file);
+	pullOutComments() if opt('comment-char');
+	pullOutStrings() if opt('string-char');
+	print $Var{entireFile} if $print;
+	close($fh);
+}
+
+sub pullOutComments
+{
+	$Var{entireFile} =~ s{/\* (.+?) \*/}{
+		"/*" . blotOut($1, opt('comment-char')) . "*/"
+	}xmsge;
+	$Var{entireFile} =~ s{// (.+?) (\n|\z)}{
+		"//" . blotOut($1, opt('comment-char')) . $2
+	}xmsge;
+}
+
+sub pullOutStrings
+{
+	$Var{entireFile} =~ s{" ((?:[^"]|\\")*) "}{
+		'"' . blotOut($1, opt('string-char')) . '"'
+	}xmsge;
+	$Var{entireFile} =~ s{' ((?:[^']|\\')*) '}{
+		"'" . blotOut($1, opt('string-char')) . "'"
+	}xmsge;
+}
+
+sub blotOut
+{
+	my ($text, $char) = @ARG;
+	$char = substr($char, 0, 1);
+	$text =~ s{[^\s]}{$char}xmsg;
+	return $text;
+}
+
+sub getLinesInFile
+{
+	my ($file) = @ARG;
+	my $lines = 0;
+
+	if (length($file))
+	{
+		if ($file =~ m{\n}xms)
+		{
+			$lines += $file =~ tr[\n][\n];
+			if ($file =~ m{\n [^\n]+ \z}xms)
+			{
+				++$lines;
+			}
+		}
+		else
+		{
+			++$lines;
+		}
+	}
+	return $lines;
 }
 
 sub secondPass
@@ -345,18 +444,18 @@ sub getOptions
 	);
 	if ($Var{rhGetopt}{result})
 	{
-		manual() if $Var{rhArg}{rhOpt}{man};
+		manual() if opt('man');
 		$Var{rhArg}{raFile} = \@ARGV;
 		# set stdio option if no file names provided
-		$Var{rhArg}{rhOpt}{''} = 1 unless scalar(@{$Var{rhArg}{raFile}});
+		$Var{rhArg}{rhOpt}{$STDIO} = 1 unless scalar(@{$Var{rhArg}{raFile}});
 		checkOptions(
 			$Var{rhGetopt}{raErrors},
 			$Var{rhArg}{rhOpt},
 			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''} ## use_stdio option
+			$Var{rhArg}{rhOpt}{$STDIO} ## use_stdio option
 		);
 		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, opt($STDIO));
 	}
 	else
 	{

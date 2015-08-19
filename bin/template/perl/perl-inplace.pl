@@ -43,7 +43,7 @@ perl-inplace.pl [options] [@options-file ...] [file ...]
  Supports long option parsing and perldoc perl-inplace.pl to show pod.
 
  B<This program> will read the given input file(s) and do something
- useful with the contents thereof.
+ useful with the contents thereof and write it back out to the same file.
 
 =head1 EXAMPLES
 
@@ -66,18 +66,19 @@ $Data::Dumper::Terse = 1;
 
 use File::Copy qw(cp); # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
-use Fatal qw(cp);
+use autodie qw(cp);
 
 our $VERSION = 0.1; # shown by --version option
+our $STDIO = "";
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			'' => 0, # indicates standard in/out as - on command line
-			verbose => 1, # default value for verbose
+			$STDIO => 0, # indicates standard in/out as - on command line
+			verbose => 1,  # default value for verbose
 			debug => 0,
-			man => 0,     # show full help page
+			man => 0,      # show full help page
 		},
 		raFile => [],
 	},
@@ -105,7 +106,7 @@ my %Var = (
 			"map|m=s%",   # multivalued hash key=value
 			"debug|d+",   # incremental keep specifying to increase
 			"verbose|v!", # flag --verbose or --noverbose
-			"",           # empty string allows - to signify standard in/out as a file
+			$STDIO,     # empty string allows - to signify standard in/out as a file
 			"man",        # show manual page only
 		],
 		raMandatory => [], # additional mandatory parameters not defined by = above.
@@ -282,18 +283,18 @@ sub getOptions
 	);
 	if ($Var{rhGetopt}{result})
 	{
-		manual() if $Var{rhArg}{rhOpt}{man};
+		manual() if opt('man');
 		$Var{rhArg}{raFile} = \@ARGV;
 		# set stdio option if no file names provided
-		$Var{rhArg}{rhOpt}{''} = 1 unless scalar(@{$Var{rhArg}{raFile}});
+		$Var{rhArg}{rhOpt}{$STDIO} = 1 unless scalar(@{$Var{rhArg}{raFile}});
 		checkOptions(
 			$Var{rhGetopt}{raErrors},
 			$Var{rhArg}{rhOpt},
 			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''} ## use_stdio option
+			$Var{rhArg}{rhOpt}{$STDIO} ## use_stdio option
 		);
 		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, opt($STDIO));
 	}
 	else
 	{
