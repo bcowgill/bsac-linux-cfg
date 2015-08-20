@@ -1,0 +1,37 @@
+Unknown option: unknown-option
+Usage:
+    scan-js.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --show-code      show the code after comment and string extraction
+       --comment-char   use character to replace text in comment extraction
+       --string-char    use character to replace text in string extraction
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
+
+Options:
+    --show-code or --noshow-code
+             negatable. Print out the source code after comments and strings have been extracted.
+             This allow you to diagnose code which might be excessively tricky.
+
+    --comment-char=s
+             optional. Defaults to '-'. Set the character to use to replace the text
+             found in comments. Used with --show-code. If set to the empty string
+             --comment-char='' then comments will not be stripped from the code.
+
+    --string-char=s
+             optional. Defaults to '_'. Set the character to use to replace the text
+             found in strings. Used with --show-code. If set to the empty string
+             --string-char='' then strings will not be stripped from the code.
+             This is useful if functions are referred to by name in some strings.
+
+    --version
+             Prints the program version and exit.
+
+    --help or -?
+             Print a brief help message and exit.
+
+    --man
+             Print the full help message and exit.
+
