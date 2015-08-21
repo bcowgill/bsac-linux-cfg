@@ -49,7 +49,6 @@ KEY:WEBSTORM:CODE Ctrl-Shift-i [View/Quick Definition] popup also shows the imag
 KEY:WEBSTORM:CODE Ctrl-Shift-Enter complete statement if,do-while,try-catch etc
 KEY:WEBSTORM:CODE Alt-q [View/Context Info] see declaration of current method without scrolling to it
 
-HEREIAM
 KEY:WEBSTORM:CODE Ctrl-Alt-t [Code/Surround With] Wrap line/selected text with a code construct if/while, etc
 
 KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor. works in code completion popup too.
@@ -68,3 +67,6 @@ KEY:WEBSTORM:DEBUGGER Alt-Shift-F9 Quick Debug/Run popup menu
 KEY:WEBSTORM:DEBUGGER Right-Click on a breakpoint in the left gutter for Context menu to set conditions
 
 KEY:WEBSTORM:CONFIG Ctrl-` [View/Quick Switch Scheme Alt-v q] quick switch colour/style/keys/view/theme
+
+HEREIAM
+last tips Alt-Home, Alt-9 changes
