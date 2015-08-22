@@ -1,7 +1,7 @@
-perltidy version 20120701 log file on a linux system, OLD_PERL_VERSION=5.018002
-Found Configuration File >>> /home/brent/bin/cfg/.perltidyrc-blismedia 
+perltidy version 20140328 log file on a linux system, OLD_PERL_VERSION=5.020002
+Found Configuration File >>> /home/bcowgill/bin/cfg/.perltidyrc-blismedia 
 Configuration and command line parameters for this run:
---starting-indentation-level=0 --indent-columns=4 --maximum-line-length=100 --iterations=4 --trim-qw --add-whitespace --delete-old-whitespace --continuation-indentation=4 --outdent-long-quotes --outdent-long-comments --nocuddled-else --paren-tightness=1 --square-bracket-tightness=1 --brace-tightness=1 --block-brace-tightness=0 --opening-brace-on-new-line --opening-sub-brace-on-new-line --opening-anonymous-sub-brace-on-new-line --noopening-brace-always-on-right --nobrace-left-and-indent --closing-token-indentation=0 --closing-paren-indentation=0 --closing-square-bracket-indentation=0 --closing-brace-indentation=0 --nospace-terminal-semicolon --nospace-for-semicolon --add-semicolons --delete-semicolons --space-after-keyword=* --format-skipping --format-skipping-begin=#<<< --format-skipping-end=#>>> --indent-block-comments --minimum-space-to-comment=4 --hanging-side-comments --closing-side-comment-warnings --closing-side-comments-balanced --static-block-comments --static-side-comments -standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -profile=/home/brent/bin/cfg/.perltidyrc-blismedia
+--starting-indentation-level=0 --indent-columns=4 --maximum-line-length=100 --iterations=4 --trim-qw --add-whitespace --delete-old-whitespace --continuation-indentation=4 --outdent-long-quotes --outdent-long-comments --nocuddled-else --paren-tightness=1 --square-bracket-tightness=1 --brace-tightness=1 --block-brace-tightness=0 --opening-brace-on-new-line --opening-sub-brace-on-new-line --opening-anonymous-sub-brace-on-new-line --noopening-brace-always-on-right --nobrace-left-and-indent --closing-token-indentation=0 --closing-paren-indentation=0 --closing-square-bracket-indentation=0 --closing-brace-indentation=0 --nospace-terminal-semicolon --nospace-for-semicolon --add-semicolons --delete-semicolons --space-after-keyword=* --format-skipping --format-skipping-begin=#<<< --format-skipping-end=#>>> --indent-block-comments --minimum-space-to-comment=4 --hanging-side-comments --closing-side-comment-warnings --closing-side-comments-balanced --static-block-comments --static-side-comments -standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -profile=/home/bcowgill/bin/cfg/.perltidyrc-blismedia
 Final parameter set for this run
 ------------------------------------
 # Final parameter set for this run.
@@ -34,9 +34,10 @@ Final parameter set for this run
 --closing-side-comment-warnings
 --closing-side-comments-balanced
 --closing-square-bracket-indentation=0
---comma-arrow-breakpoints=1
+--comma-arrow-breakpoints=5
 --continuation-indentation=4
 --nocuddled-else
+--default-tabsize=8
 --delete-old-newlines
 --delete-old-whitespace
 --delete-semicolons
@@ -60,6 +61,7 @@ Final parameter set for this run
 --maximum-consecutive-blank-lines=1
 --maximum-fields-per-table=0
 --maximum-line-length=100
+--memoize
 --minimum-space-to-comment=4
 --opening-anonymous-sub-brace-on-new-line
 --noopening-brace-always-on-right
@@ -75,7 +77,7 @@ Final parameter set for this run
 --pass-version-line
 --perl-syntax-check-flags="-c -T"
 --pod2html
---profile="/home/brent/bin/cfg/.perltidyrc-blismedia"
+--profile="/home/bcowgill/bin/cfg/.perltidyrc-blismedia"
 --noquiet
 --recombine
 --short-concatenation-item-length=8
@@ -112,14 +114,26 @@ L3:3     i0:0 0 1            >>>Exiting POD section
 L54:54   i0:0 0 1            use strict;
 L62:64   i0:0 0 1            >>>Line length exceeded by 24 characters
 L68:70   i0:0 0 1            >>>passing VERSION line; -npvl deactivates
-L71:73   i0:0 0 1            >>>Guessing old indentation was tab character
-L93:96   i3:3 0 0 ({[        >>>Line length exceeded by 53 characters
-L104:107 i3:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
+L72:73   i2:1 0 0 (          >>>Start indentation disagreement: input=2; output=1
+L93:96   i6:3 0 0 ({[        >>>Line length exceeded by 53 characters
+L104:107 i6:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
+L113:116 i0:0 0 1            >>>End indentation disagreement from input line 72
 L115:118 i0:0 0 1            sub main
+L117:120 i2:1 0 1 {          >>>Start indentation disagreement: input=2; output=1
+L132:141 i0:0 0 1 {          >>>End indentation disagreement from input line 117
 L134:144 i0:0 0 1            sub setup
+L136:146 i2:1 0 1 {          >>>Start indentation disagreement: input=2; output=1
+L139:149 i0:0 0 1 {          >>>End indentation disagreement from input line 136
 L141:151 i0:0 0 1            sub processStdio
+L143:153 i2:1 0 1 {          >>>Start indentation disagreement: input=2; output=1
+L148:158 i0:0 0 1 {          >>>End indentation disagreement from input line 143
 L150:160 i0:0 0 1            sub processFiles
+L152:162 i2:1 0 1 {          >>>Start indentation disagreement: input=2; output=1
+L158:167 i0:0 0 1 {          >>>End indentation disagreement from input line 152
 L160:170 i0:0 0 1            sub processFile
+L162:172 i2:1 0 1 {          >>>Start indentation disagreement: input=2; output=1
+L170:180 i0:0 0 1 {          >>>End indentation disagreement from input line 162
+L170:180 i0:0 0 1 {          >>>No further tabbing disagreements will be noted
 L172:182 i0:0 0 1            sub doReplacement
 L180:190 i0:0 0 1            sub editFileInPlace
 L191:201 i0:0 0 1            sub checkOptions
@@ -130,7 +144,9 @@ L286:297 i0:0 0 1            sub debug
 L294:305 i0:0 0 1            sub usage
 L305:316 i0:0 0 1            sub manual
 L311:322 i0:0 0 1 {          >>>Starting __END__ section
-No indentation disagreement seen
+First indentation disagreement seen at input line 72
+Last indentation disagreement seen at input line 309
+Note: Indentation disagreement detection is not accurate for outdenting and -lp.
 
 2 long lines were outdented:
   First at output line 62

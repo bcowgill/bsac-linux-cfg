@@ -1,66 +1,59 @@
-PRETTY-ELEMENTS(1)    User Contributed Perl Documentation   PRETTY-ELEMENTS(1)
+[1mNAME[0m
+    pretty-elements.pl - Format some HTML elements one attribute per line.
 
+[1mAUTHOR[0m
+    Brent S.A. Cowgill
 
+[1mSYNOPSIS[0m
+    pretty-elements.pl [options] [@options-file ...] [file ...]
 
-NNAAMMEE
-       pretty-elements.pl - Format some HTML elements one attribute per line.
+     Options:
+       --edit           edit the files in place
+       --warn-files     turn on display of filename for every warning
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
 
-AAUUTTHHOORR
-       Brent S.A. Cowgill
+[1mOPTIONS[0m
+    [1m--edit[0m or [1m--noedit[0m
+             Causes HTML elements to be edited in place in the input files.
 
-SSYYNNOOPPSSIISS
-       pretty-elements.pl [options] [@options-file ...] [file ...]
+    [1m--warn-files[0m or [1m--nowarn-files[0m
+             Causes the file name to be shown for all warning messages.
+             Normally it only prints the file name for the first warning in a
+             given file.
 
-        Options:
-          --edit           edit the files in place
-          --warn-files     turn on display of filename for every warning
-          --version        display program version
-          --help -?        brief help message
-          --man            full help message
+    [1m--version[0m
+             Prints the program version and exit.
 
-OOPPTTIIOONNSS
-       ----eeddiitt or ----nnooeeddiitt
-                Causes HTML elements to be edited in place in the input files.
+    [1m--help[0m or [1m-?[0m
+             Print a brief help message and exit.
 
-       ----wwaarrnn--ffiilleess or ----nnoowwaarrnn--ffiilleess
-                Causes the file name to be shown for all warning messages.
-                Normally it only prints the file name for the first warning in a
-                given file.
+    [1m--man[0m
+             Print the full help message and exit.
 
-       ----vveerrssiioonn
-                Prints the program version and exit.
+[1mDESCRIPTION[0m
+     This program will read the given input file(s) and format some
+     of the HTML elements with one attribute per line. Also puts some
+     attributes into specific order for consistency i.e. id class name.
 
-       ----hheellpp or --??
-                Print a brief help message and exit.
+     It does a check on id/name attributes and gives warnings about
+     duplicate id's and mismatches in id/name for form input fields.
 
-       ----mmaann
-                Print the full help message and exit.
+     It has some support for Template::Toolkit and tries to work around
+     attributes which are included within [% IF %] blocks.
 
-DDEESSCCRRIIPPTTIIOONN
-        This program will read the given input file(s) and format some
-        of the HTML elements with one attribute per line. Also puts some
-        attributes into specific order for consistency i.e. id class name.
+[1mEXAMPLES[0m
+     pretty-elements.pl views/*.tt
 
-        It does a check on id/name attributes and gives warnings about
-        duplicate id's and mismatches in id/name for form input fields.
+     ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt
+     ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt 2>&1 | less
 
-        It has some support for Template::Toolkit and tries to work around
-        attributes which are included within [% IF %] blocks.
+     find some types of tags which might have lots of attributes
 
-EEXXAAMMPPLLEESS
-        pretty-elements.pl views/*.tt
+     perl -ne 'sub BEGIN { $/ = undef; } s{([\ \t]*<(input|textarea|select|option|button|div|iframe|form|dl|a) \s+ [^>]+ >)}{print qq{$1\n}}xmsge; ' views/*.tt | less
 
-        ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt
-        ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt 2>&1 | less
+     find anything and print by length of the tag
 
-        find some types of tags which might have lots of attributes
+     perl -ne 'sub BEGIN { $/ = undef; } s{(<[a-zA-Z] [^>]* >)}{my $tag = $1; my $otag = $1; $tag =~ s{(\s)\s*}{\ }xmsg; print qq{@{[length($otag)]} $tag\n}}xmsge; ' views/*.tt | sort -n -r | less
 
-        perl -ne 'sub BEGIN { $/ = undef; } s{([\ \t]*<(input|textarea|select|option|button|div|iframe|form|dl|a) \s+ [^>]+ >)}{print qq{$1\n}}xmsge; ' views/*.tt | less
-
-        find anything and print by length of the tag
-
-        perl -ne 'sub BEGIN { $/ = undef; } s{(<[a-zA-Z] [^>]* >)}{my $tag = $1; my $otag = $1; $tag =~ s{(\s)\s*}{\ }xmsg; print qq{@{[length($otag)]} $tag\n}}xmsge; ' views/*.tt | sort -n -r | less
-
-
-
-perl vX.XX                      YYYY-MM-DD                PRETTY-ELEMENTS(1)

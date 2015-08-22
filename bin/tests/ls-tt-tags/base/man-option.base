@@ -1,62 +1,56 @@
-LS-TT-TAGS(1)         User Contributed Perl Documentation        LS-TT-TAGS(1)
+[1mNAME[0m
+    ls-tt-tags.pl - List all Template::Toolkit processing tags in files
 
+[1mAUTHOR[0m
+    Brent S.A. Cowgill
 
+[1mLICENSE[0m
+    Unlicense http://unlicense.org
 
-NNAAMMEE
-       ls-tt-tags.pl - List all Template::Toolkit processing tags in files
+[1mSOURCE[0m
+    https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/ls-tt-tags.pl
 
-AAUUTTHHOORR
-       Brent S.A. Cowgill
+[1mSYNOPSIS[0m
+    ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
-LLIICCEENNSSEE
-       Unlicense http://unlicense.org
+     Options:
+       --common         convert processing markers to common format.
+       --inline-block   display multiline processing blocks in a single line of output.
+       --echo-filename  display filename being processed.
+       --version        display program version.
+       --help -?        brief help message.
+       --man            full help message.
 
-SSOOUURRCCEE
-       https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/ls-tt-tags.pl
+[1mOPTIONS[0m
+    [1m--common[0m or [1m--nocommon[0m negatable. Convert processing markers to common
+    format. This removes the pre/post whitespace stripping markers. See
+    Template::Toolkit docs for more information
+    http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_
+    POST_CHOMP
+             i.e. [%- END ~%] becomes [% END %]
 
-SSYYNNOOPPSSIISS
-       ls-tt-tags.pl [options] [@options-file ...] [file ...]
+    [1m--inline-block[0m or [1m--noinline-block[0m
+             negatable. Displays multiline processing blocks in a single line of output.
 
-        Options:
-          --common         convert processing markers to common format.
-          --inline-block   display multiline processing blocks in a single line of output.
-          --echo-filename  display filename being processed.
-          --version        display program version.
-          --help -?        brief help message.
-          --man            full help message.
+    [1m--echo-filename[0m or [1m--noecho-filename[0m
+             negatable. Prints name of file being processed.
 
-OOPPTTIIOONNSS
-       ----ccoommmmoonn or ----nnooccoommmmoonn negatable. Convert processing markers to common
-       format. This removes the pre/post whitespace stripping markers. See
-       Template::Toolkit docs for more information
-       http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP
-                i.e. [%- END ~%] becomes [% END %]
+    [1m--version[0m
+             Prints the program version and exit.
 
-       ----iinnlliinnee--bblloocckk or ----nnooiinnlliinnee--bblloocckk
-                negatable. Displays multiline processing blocks in a single line of output.
+    [1m--help[0m or [1m-?[0m
+             Print a brief help message and exit.
 
-       ----eecchhoo--ffiilleennaammee or ----nnooeecchhoo--ffiilleennaammee
-                negatable. Prints name of file being processed.
+    [1m--man[0m
+             Print the full help message and exit.
 
-       ----vveerrssiioonn
-                Prints the program version and exit.
+[1mDESCRIPTION[0m
+     B<This program> will read the given input file(s) and display Template::Toolkit processing instructions found within it.
 
-       ----hheellpp or --??
-                Print a brief help message and exit.
+[1mEXAMPLES[0m
+     find all unique template toolkit blocks
+     find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
 
-       ----mmaann
-                Print the full help message and exit.
+     find template files and show markup with filename.
+     find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;
 
-DDEESSCCRRIIPPTTIIOONN
-        B<This program> will read the given input file(s) and display Template::Toolkit processing instructions found within it.
-
-EEXXAAMMPPLLEESS
-        find all unique template toolkit blocks
-        find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
-
-        find template files and show markup with filename.
-        find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;
-
-
-
-perl vX.XX                      YYYY-MM-DD                     LS-TT-TAGS(1)

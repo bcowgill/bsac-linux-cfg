@@ -136,8 +136,8 @@ sub main {
     processFiles( $raFiles, $rhOpt ) if scalar(@$raFiles);
 
     # Example in-place editing of file
-    if ( exists $rhOpts->{splat} ) {
-        editFileInPlace( $rhOpts->{splat}, ".bak", $rhOpts );
+    if ( exists $rhOpt->{splat} ) {
+        editFileInPlace( $rhOpt->{splat}, ".bak", $rhOpt );
     }
 }
 
@@ -260,8 +260,7 @@ sub checkMandatoryOptions {
 # Perform command line option processing and call main function.
 sub getOptions {
     $Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
-    $Var{rhGetopt}{result} =
-      $Var{rhGetopt}{roParser}
+    $Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}
       ->getoptions( $Var{rhArg}{rhOpt}, @{ $Var{rhGetopt}{raOpts} } );
     if ( $Var{rhGetopt}{result} ) {
         manual() if $Var{rhArg}{rhOpt}{man};

@@ -1,103 +1,96 @@
-FILTER-CSS-COLORS(1)  User Contributed Perl Documentation FILTER-CSS-COLORS(1)
+[1mNAME[0m
+    filter-css-colors.pl - Find all CSS color declarations in files
 
+[1mTODO[0m
+    --foreground=xxxx substitute a color for all foreground colors
+    --background=xxxx you get color: #fff /* original color */; --undo undo a
+    foreground/background change
 
+[1mAUTHOR[0m
+    Brent S.A. Cowgill
 
-NNAAMMEE
-       filter-css-colors.pl - Find all CSS color declarations in files
+[1mSYNOPSIS[0m
+    perl.pl [options] [@options-file ...] [file ...]
 
-TTOODDOO
-       --foreground=xxxx substitute a color for all foreground colors
-       --background=xxxx you get color: #fff /* original color */; --undo undo
-       a foreground/background change
+     Options:
+            --color-only     negatable. only show the color values, not the entire line.
+            --reverse        negatable. show all lines not matching a CSS color declaration.
+            --remap          negatable. remap all colors to names in place where possible.
+            --names          negatable. convert colors to standard names where possible
+            --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+            --rgb            negatable. convert colors to rgb() form
+            --valid-only     do not perform remappings which are invalid CSS
+            --inplace        specify to modify files in place creating a backup first
+            --foreground     specify a color value to use for all foreground colors.
+            --background     specify a color value to use for all background colors.
+            --echo           negatable. display original line when performing replacements
+            --version        display program version and exit
+            --debug          incremental. display debugging info.
+            --help -?        brief help message and exit
+            --man            full help message and exit
 
-AAUUTTHHOORR
-       Brent S.A. Cowgill
+[1mOPTIONS[0m
+    [1m--color-only[0m or [1m--nocolor-only[0m
+             Only display the CSS color values used. Useful to identify all unique colors used.
 
-SSYYNNOOPPSSIISS
-       perl.pl [options] [@options-file ...] [file ...]
+    [1m--reverse[0m or [1m--noreverse[0m
+             Only display lines that do not contain CSS color declarations.
 
-        Options:
-               --color-only     negatable. only show the color values, not the entire line.
-               --reverse        negatable. show all lines not matching a CSS color declaration.
-               --remap          negatable. remap all colors to names in place where possible.
-               --names          negatable. convert colors to standard names where possible
-               --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
-               --rgb            negatable. convert colors to rgb() form
-               --valid-only     do not perform remappings which are invalid CSS
-               --inplace        specify to modify files in place creating a backup first
-               --foreground     specify a color value to use for all foreground colors.
-               --background     specify a color value to use for all background colors.
-               --echo           negatable. display original line when performing replacements
-               --version        display program version and exit
-               --debug          incremental. display debugging info.
-               --help -?        brief help message and exit
-               --man            full help message and exit
+    [1m--remap[0m or [1m--noremap[0m
+             Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
-OOPPTTIIOONNSS
-       ----ccoolloorr--oonnllyy or ----nnooccoolloorr--oonnllyy
-                Only display the CSS color values used. Useful to identify all unique colors used.
+             You should specify --names or --canonical as well to have any effect.
 
-       ----rreevveerrssee or ----nnoorreevveerrssee
-                Only display lines that do not contain CSS color declarations.
+    [1m--names[0m or [1m--nonames[0m
+             Show colors as standard names where possible. i.e. #fff becomes white.
+             Implies --canonical as well.
+             Implies --remap as well.
 
-       ----rreemmaapp or ----nnoorreemmaapp
-                Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+    [1m--canonical[0m or [1m--nocanonical[0m
+             Show colors in canonical form i.e. #fff becomes '#ffffff'.
+             Implies --remap as well.
 
-                You should specify --names or --canonical as well to have any effect.
+    [1m--rgb[0m or [1m--norgb[0m
+             Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
+             Implies --canonical as well. Cannot use --names with --rgb.
 
-       ----nnaammeess or ----nnoonnaammeess
-                Show colors as standard names where possible. i.e. #fff becomes white.
-                Implies --canonical as well.
-                Implies --remap as well.
+    [1m--valid-only[0m
+             Do not perform name remappings which are invalid css3
+             i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
 
-       ----ccaannoonniiccaall or ----nnooccaannoonniiccaall
-                Show colors in canonical form i.e. #fff becomes '#ffffff'.
-                Implies --remap as well.
+    [1m--inplace=.suffix[0m
+             Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
 
-       ----rrggbb  or ----nnoorrggbb
-                Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
-                Implies --canonical as well. Cannot use --names with --rgb.
+    [1m--foreground=color[0m or [1m--fg=color[0m
+             Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
 
-       ----vvaalliidd--oonnllyy
-                Do not perform name remappings which are invalid css3
-                i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
+    [1m--background=color[0m or [1m--bg=color[0m
+             Specify a color value to use to replace all background colors with. Cannot work with --color-only.
 
-       ----iinnppllaaccee==..ssuuffffiixx
-                Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
+    [1m--echo[0m or [1m--noecho[0m
+             When in a --remap mode, display the original line as well.
 
-       ----ffoorreeggrroouunndd==ccoolloorr or ----ffgg==ccoolloorr
-                Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
+    [1m--version[0m
+             Prints the program version and exit.
 
-       ----bbaacckkggrroouunndd==ccoolloorr or ----bbgg==ccoolloorr
-                Specify a color value to use to replace all background colors with. Cannot work with --color-only.
+    [1m--help[0m or [1m-?[0m
+             Print a brief help message and exit.
 
-       ----eecchhoo or ----nnooeecchhoo
-                When in a --remap mode, display the original line as well.
+    [1m--man[0m
+             Print the full help message and exit.
 
-       ----vveerrssiioonn
-                Prints the program version and exit.
+[1mDESCRIPTION[0m
+     Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
 
-       ----hheellpp or --??
-                Print a brief help message and exit.
+     B<This program> will read the given input file(s) and do something useful with the contents thereof.
 
-       ----mmaann
-                Print the full help message and exit.
+[1mSEE ALSO[0m
+     CSS Color specs L<http://www.w3.org/TR/css3-color/>
 
-DDEESSCCRRIIPPTTIIOONN
-        Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
+[1mEXAMPLES[0m
+     Find all unique colors used in all CSS files somewhere
 
-        B<This program> will read the given input file(s) and do something useful with the contents thereof.
+     filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 
-SSEEEE AALLSSOO
-        CSS Color specs L<http://www.w3.org/TR/css3-color/>
+     TODO template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
-EEXXAAMMPPLLEESS
-        Find all unique colors used in all CSS files somewhere
-
-        filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
-
-        TODO template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
-
-
-
-perl vX.XX                      YYYY-MM-DD              FILTER-CSS-COLORS(1)

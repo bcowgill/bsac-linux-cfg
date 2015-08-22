@@ -28,9 +28,10 @@
 --closing-side-comment-warnings
 --closing-side-comments-balanced
 --closing-square-bracket-indentation=0
---comma-arrow-breakpoints=1
+--comma-arrow-breakpoints=5
 --continuation-indentation=2
 --nocuddled-else
+--default-tabsize=4
 --delete-old-newlines
 --delete-old-whitespace
 --delete-semicolons
@@ -56,6 +57,7 @@
 --maximum-consecutive-blank-lines=1
 --maximum-fields-per-table=0
 --maximum-line-length=128
+--memoize
 --minimum-space-to-comment=4
 --opening-anonymous-sub-brace-on-new-line
 --noopening-brace-always-on-right
@@ -72,7 +74,7 @@
 --pass-version-line
 --perl-syntax-check-flags="-c -T"
 --pod2html
---profile="/home/brent/bin/cfg/.perltidyrc"
+--profile="/home/bcowgill/bin/cfg/.perltidyrc"
 --noquiet
 --recombine
 --short-concatenation-item-length=8

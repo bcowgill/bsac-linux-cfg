@@ -1,3 +1,4 @@
+This is perltidy, v20140328
 Default command line options:
 --add-newlines
 --add-semicolons
@@ -15,7 +16,7 @@ Default command line options:
 --break-at-old-ternary-breakpoints
 --break-at-old-attribute-breakpoints
 --break-at-old-keyword-breakpoints
---comma-arrow-breakpoints=1
+--comma-arrow-breakpoints=5
 --nocheck-syntax
 --closing-side-comment-interval=6
 --closing-side-comment-maximum-text=20
@@ -39,6 +40,7 @@ Default command line options:
 --maximum-consecutive-blank-lines=1
 --maximum-fields-per-table=0
 --maximum-line-length=80
+--memoize
 --minimum-space-to-comment=4
 --nobrace-left-and-indent
 --nocuddled-else
@@ -69,6 +71,7 @@ Default command line options:
 --format=tidy
 --backup-file-extension=bak
 --format-skipping
+--default-tabsize=8
 --pod2html
 --html-table-of-contents
 --html-entities

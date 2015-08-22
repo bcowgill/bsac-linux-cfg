@@ -12,6 +12,7 @@ DEBUG=
 SKIP=0
 TIDYARGS="--standard-output --standard-error-output --warning-output --check-syntax --output-line-ending=unix --logfile --DEBUG"
 PROFILE=--noprofile
+TIDYVERSION=`perltidy -version | grep 'is perltidy'`
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
@@ -30,7 +31,8 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $TIDYARGS $PROFILE --dump-token-types $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 && assertCommandFails $? "$PROGRAM $ARGS"
+	echo $TIDYVERSION > $OUT
+	$PROGRAM $ARGS >> $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{ \A ([a-z]) }{--$1}xms' $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -44,7 +46,8 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $TIDYARGS $PROFILE --dump-defaults $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 && assertCommandFails $? "$PROGRAM $ARGS"
+	echo $TIDYVERSION > $OUT
+	$PROGRAM $ARGS >> $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{ \A ([a-z]) }{--$1}xms' $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -58,7 +61,8 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $TIDYARGS $PROFILE --dump-want-left-space $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	echo $TIDYVERSION > $OUT
+	$PROGRAM $ARGS >> $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
    echo SKIP $TEST "$SKIP"
@@ -71,7 +75,8 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $TIDYARGS $PROFILE --dump-want-right-space $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	echo $TIDYVERSION > $OUT
+	$PROGRAM $ARGS >> $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
    echo SKIP $TEST "$SKIP"

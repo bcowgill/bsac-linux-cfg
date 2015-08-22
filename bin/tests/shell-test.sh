@@ -124,7 +124,7 @@ function assertCommandFails
    err="$1"
    expect="$2"
    cmd="$3"
-   if [ $expect == $err ]; then
+   if [ "$expect" == "$err" ]; then
       OK "command failed with exit code $expect"
    else
       NOT_OK "expected exit code $expect but got $err for \"$cmd\""
@@ -162,7 +162,8 @@ function complete()
       if [ $TEST_FAILURES == 0 ]; then
          OK "test plan $0 completed in `pwd`"
       else
-         NOT_OK "test plan $0 completed with $TEST_FAILURES failures in `pwd`"
+         NOT_OK "test plan :1
+         $0 completed with $TEST_FAILURES failures in `pwd`"
       fi
       PLAN $TEST_CASES
    fi

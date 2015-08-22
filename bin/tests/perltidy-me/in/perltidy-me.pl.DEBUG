@@ -155,12 +155,12 @@ Use -dump-token-types (-dtt) to get a list of token type codes
 126: 
 127: # Example in-place editing of file
 127: ##################################
-128: if (exists $rhOpts->{splat})
-128: kkb{kkkkkkbiiiiiii->LwwwwwR}
+128: if (exists $rhOpt->{splat})
+128: kkb{kkkkkkbiiiiii->LwwwwwR}
 129: {
 129: {
-130: editFileInPlace($rhOpts->{splat}, ".bak", $rhOpts);
-130: UUUUUUUUUUUUUUU{iiiiiii->LwwwwwR,bQQQQQQ,biiiiiii};
+130: editFileInPlace($rhOpt->{splat}, ".bak", $rhOpt);
+130: UUUUUUUUUUUUUUU{iiiiii->LwwwwwR,bQQQQQQ,biiiiii};
 131: }
 131: }
 132: }

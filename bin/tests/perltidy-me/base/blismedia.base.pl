@@ -135,9 +135,9 @@ sub main
     processFiles( $raFiles, $rhOpt ) if scalar(@$raFiles);
 
     # Example in-place editing of file
-    if ( exists $rhOpts->{splat} )
+    if ( exists $rhOpt->{splat} )
     {
-        editFileInPlace( $rhOpts->{splat}, ".bak", $rhOpts );
+        editFileInPlace( $rhOpt->{splat}, ".bak", $rhOpt );
     }
 }
 

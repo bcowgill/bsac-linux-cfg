@@ -1,107 +1,100 @@
-RENDER-TT(1)          User Contributed Perl Documentation         RENDER-TT(1)
+[1mNAME[0m
+    render-tt.pl - Render a Template::Toolkit template page using specific
+    variables
 
+[1mAUTHOR[0m
+    Brent S.A. Cowgill
 
+[1mLICENSE[0m
+    Unlicense http://unlicense.org
 
-NNAAMMEE
-       render-tt.pl - Render a Template::Toolkit template page using specific
-       variables
+[1mSOURCE[0m
+    https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/render-tt.pl
 
-AAUUTTHHOORR
-       Brent S.A. Cowgill
+[1mSYNOPSIS[0m
+    render-tt.pl [options] [@options-file ...] [file ...]
 
-LLIICCEENNSSEE
-       Unlicense http://unlicense.org
+     Options:
+       --page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
+       --page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
+       --var=key=val               multiple. define a simple VARIABLE for the template
+       --const=key=val             multiple. define a CONSTANT for the template
+       --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
+       --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
+       --absolute                  turn on the ABSOLUTE option for Template::Toolkit
+       --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
+       --relative                  turn on the RELATIVE option for Template::Toolkit
+       --anycase                   turn on the ANYCASE option for Template::Toolkit
+       --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+       --pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
+       --post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
+       --version                   display program version
+       --help -?                   brief help message
+       --man                       full help message
 
-SSOOUURRCCEE
-       https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/render-tt.pl
+[1mOPTIONS[0m
+    [1m--page-vars=file.vars[0m or [1m--variables=file.vars[0m or
+    [1m--pre-define=file.vars[0m
+             Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
 
-SSYYNNOOPPSSIISS
-       render-tt.pl [options] [@options-file ...] [file ...]
+    [1m--page-consts=file.vars[0m or [1m--constants=file.vars[0m
+             Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
 
-        Options:
-          --page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
-          --page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
-          --var=key=val               multiple. define a simple VARIABLE for the template
-          --const=key=val             multiple. define a CONSTANT for the template
-          --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
-          --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
-          --absolute                  turn on the ABSOLUTE option for Template::Toolkit
-          --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
-          --relative                  turn on the RELATIVE option for Template::Toolkit
-          --anycase                   turn on the ANYCASE option for Template::Toolkit
-          --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
-          --pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
-          --post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
-          --version                   display program version
-          --help -?                   brief help message
-          --man                       full help message
+    [1m--var="key=value"[0m
+             Defines a simple page VARIABLE for use when doing template substitutions.
+             You can specify this multiple times to define many VARIABLEs.
+             Key can be this.that to define a hash object called this with a key of that.
 
-OOPPTTIIOONNSS
-       ----ppaaggee--vvaarrss==ffiillee..vvaarrss or ----vvaarriiaabblleess==ffiillee..vvaarrss or
-       ----pprree--ddeeffiinnee==ffiillee..vvaarrss
-                Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+    [1m--const="key=value"[0m
+             Defines a simple page CONSTANT for use when doing template substitutions.
+             You can specify this multiple times to define many CONSTANTs.
+             Key can be this.that to define a hash object called this with a key of that.
 
-       ----ppaaggee--ccoonnssttss==ffiillee..vvaarrss or ----ccoonnssttaannttss==ffiillee..vvaarrss
-                Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
+    [1m--constants-namespace="name"[0m
+             Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
-       ----vvaarr==""kkeeyy==vvaalluuee""
-                Defines a simple page VARIABLE for use when doing template substitutions.
-                You can specify this multiple times to define many VARIABLEs.
-                Key can be this.that to define a hash object called this with a key of that.
+    [1m--include-path[0m
+             Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
 
-       ----ccoonnsstt==""kkeeyy==vvaalluuee""
-                Defines a simple page CONSTANT for use when doing template substitutions.
-                You can specify this multiple times to define many CONSTANTs.
-                Key can be this.that to define a hash object called this with a key of that.
+    [1m--absolute[0m or [1m--noabsolute[0m
+             Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
 
-       ----ccoonnssttaannttss--nnaammeessppaaccee==""nnaammee""
-                Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
+    [1m--relative[0m or [1m--norelative[0m
+             Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
 
-       ----iinncclluuddee--ppaatthh
-                Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
+    [1m--anycase[0m or [1m--noanycase[0m
+             Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
 
-       ----aabbssoolluuttee or ----nnooaabbssoolluuttee
-                Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
+    [1m--interpolate[0m or [1m--nointerpolate[0m
+             Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
 
-       ----rreellaattiivvee or ----nnoorreellaattiivvee
-                Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
+    [1m--pre-chomp=N[0m
+             Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+             See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
+             [%+ +%] disable chomp
+             [%- -%] CHOMP_ONE = whitespace and one newline
+             [%= =%] CHOMP_COLLAPSE = all whitespace and newlines
+             [%~ ~%] CHOMP_GREEDY = all whitespace to a single space
 
-       ----aannyyccaassee or ----nnooaannyyccaassee
-                Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
+             Examples:
 
-       ----iinntteerrppoollaattee or ----nnooiinntteerrppoollaattee
-                Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
+             <span class="[% active -%] content">  removes spaces if active is empty otherwise lets space remain
 
-       ----pprree--cchhoommpp==NN
-                Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
-                See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
-                [%+ +%] disable chomp
-                [%- -%] CHOMP_ONE = whitespace and one newline
-                [%= =%] CHOMP_COLLAPSE = all whitespace and newlines
-                [%~ ~%] CHOMP_GREEDY = all whitespace to a single space
+    [1m--post-chomp=N[0m
+             Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
 
-                Examples:
+    [1m--version[0m
+             Prints the program version and exit.
 
-                <span class="[% active -%] content">  removes spaces if active is empty otherwise lets space remain
+    [1m--help[0m or [1m-?[0m
+             Print a brief help message and exit.
 
-       ----ppoosstt--cchhoommpp==NN
-                Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
+    [1m--man[0m
+             Print the full help message and exit.
 
-       ----vveerrssiioonn
-                Prints the program version and exit.
+[1mDESCRIPTION[0m
+     B<render-tt.pl> will perform perl Template::Toolkit transformation of a template file using specific variables as inputs. It is useful for unit testing all possible outputs of a template page.
 
-       ----hheellpp or --??
-                Print a brief help message and exit.
+[1mEXAMPLES[0m
+     render-tt.pl --var="this=that" < in/template.tt > out/template.html
 
-       ----mmaann
-                Print the full help message and exit.
-
-DDEESSCCRRIIPPTTIIOONN
-        B<render-tt.pl> will perform perl Template::Toolkit transformation of a template file using specific variables as inputs. It is useful for unit testing all possible outputs of a template page.
-
-EEXXAAMMPPLLEESS
-        render-tt.pl --var="this=that" < in/template.tt > out/template.html
-
-
-
-perl vX.XX                      YYYY-MM-DD                      RENDER-TT(1)

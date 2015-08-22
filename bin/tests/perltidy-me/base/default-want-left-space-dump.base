@@ -1,3 +1,4 @@
+This is perltidy, v20140328
 These values are the main control of whitespace to the left of a token type;
 They may be altered with the -wls parameter.
 For a list of token types, use perltidy --dump-token-types (-dtt)
@@ -58,7 +59,6 @@ C	1
 F	1
 G	1
 J	-1
-L	-1
 R	-1
 U	1
 Y	1

@@ -1,41 +1,34 @@
-PERL(1)               User Contributed Perl Documentation              PERL(1)
+[1mNAME[0m
+    sample - Using GetOpt::Long and Pod::Usage
 
+[1mAUTHOR[0m
+    Brent S.A. Cowgill
 
+[1mSYNOPSIS[0m
+    perl.pl [options] [@options-file ...] [file ...]
 
-NNAAMMEE
-       sample - Using GetOpt::Long and Pod::Usage
+     Options:
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
 
-AAUUTTHHOORR
-       Brent S.A. Cowgill
+[1mOPTIONS[0m
+    [1m--version[0m
+             Prints the program version and exit.
 
-SSYYNNOOPPSSIISS
-       perl.pl [options] [@options-file ...] [file ...]
+    [1m--help[0m or [1m-?[0m
+             Print a brief help message and exit.
 
-        Options:
-          --version        display program version
-          --help -?        brief help message
-          --man            full help message
+    [1m--man[0m
+             Print the full help message and exit.
 
-OOPPTTIIOONNSS
-       ----vveerrssiioonn
-                Prints the program version and exit.
+[1mDESCRIPTION[0m
+     Template for a perl script with the usual bells and whistles.
+     Supports long option parsing and perldoc perl.pl to show pod.
 
-       ----hheellpp or --??
-                Print a brief help message and exit.
+     B<This program> will read the given input file(s) and do something
+     useful with the contents thereof. It does not modify the input files.
 
-       ----mmaann
-                Print the full help message and exit.
+[1mEXAMPLES[0m
+     template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
-DDEESSCCRRIIPPTTIIOONN
-        Template for a perl script with the usual bells and whistles.
-        Supports long option parsing and perldoc perl.pl to show pod.
-
-        B<This program> will read the given input file(s) and do something
-        useful with the contents thereof. It does not modify the input files.
-
-EEXXAAMMPPLLEESS
-        template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
-
-
-
-perl vX.XX                      YYYY-MM-DD                           PERL(1)

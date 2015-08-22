@@ -1,3 +1,4 @@
+This is perltidy, v20140328
 
 Here is a list of the token types currently used for lines of type 'CODE'.  
 For the following tokens, the "type" of a token is just the token itself.  
@@ -17,7 +18,7 @@ The following additional token types are defined:
     [    left non-structural square bracket (enclosing an array index)
     ]    right non-structural square bracket
     (    left non-structural paren (all but a list right of an =)
-    )    right non-structural parena
+    )    right non-structural paren
     L    left non-structural curly brace (enclosing a key)
     R    right non-structural curly brace 
     ;    terminal semicolon
