@@ -75,7 +75,6 @@ scan-js.pl [options] [@options-file ...] [file ...]
 
  scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
 
-
 =cut
 
 use strict;
@@ -154,7 +153,8 @@ sub main
 		processStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
-	secondPass($Var{raLinesInFile}, $rhOpt);
+	my $Lines = split("\n", $Var{entireFile});
+	secondPass(\$Lines, $rhOpt);
 	summary($rhOpt);
 }
 
@@ -228,10 +228,11 @@ sub processFile
 sub processEntireFile
 {
 	my ($fileName, $rhOpt) = @ARG;
-	debug("processFile($fileName)\n");
+	debug("processEntireFile($fileName)\n");
 
 	# example read the entire file and show something line by line
 	my $print = $rhOpt->{'show-code'};
+	debug("print: $print");
 	my $fh;
 	local $INPUT_RECORD_SEPARATOR = undef;
 	open($fh, "<", $fileName);
@@ -303,7 +304,7 @@ sub secondPass
 
 	for (my $idx = 0; $idx < scalar(@$raLines); ++$idx)
 	{
-		my $line = $raLines->[$idx];
+		my $line = $raLines->[$idx] . "\n";
 		debug("secondPass() $line", 4);
 		$line =~ s{($regex)}{
 			registerCaller($1, $idx + 1);
