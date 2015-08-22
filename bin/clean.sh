@@ -1,3 +1,3 @@
 #!/bin/bash
-DIR=.
-find $DIR -type f -name '*.bak' -exec rm {} \;
+# find and delete backup files
+find-bak.sh -delete
