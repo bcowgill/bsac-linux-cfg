@@ -127,9 +127,10 @@ my %Var = (
 		raMandatory => [], # additional mandatory parameters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
-	raFunctions => [],    # names of functions found
-	rhFunctions => {},    # names of functions found with line number and callers
-	raLinesInFile => [],  # buffered lines for second pass
+	fileName => '<STDIN>', # name of file
+	entireFile => '',      # entire file contents for processing
+	raFunctions => [],     # names of functions found
+	rhFunctions => {},     # names of functions found with line number and callers
 );
 
 # Return the value of a command line option
@@ -150,20 +151,17 @@ sub main
 
 	if ($use_stdio)
 	{
-		processStdio($rhOpt);
+#		processStdio($rhOpt);
+		processEntireStdio($rhOpt);
 	}
 	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
-	my $Lines = split("\n", $Var{entireFile});
-	secondPass(\$Lines, $rhOpt);
 	summary($rhOpt);
 }
 
-sub summary
+sub summaryOfFile
 {
-	my ($rhOpt) = @ARG;
-	print "=====\n$lines_seen lines read\n";
-	debug("summary() raFunctions:" . Dumper($Var{raFunctions}), 3);
-	debug("summary() rhFunctions:" . Dumper($Var{rhFunctions}), 4);
+	debug("summaryOfFile() raFunctions:" . Dumper($Var{raFunctions}), 3);
+	debug("summaryOfFile() rhFunctions:" . Dumper($Var{rhFunctions}), 4);
 	foreach my $function (@{$Var{raFunctions}})
 	{
 		my $rhFunction = $Var{rhFunctions}{$function};
@@ -175,6 +173,12 @@ sub summary
 			warning("$function() \@ $definedAt called before defined") if $firstCallAt < $definedAt;
 		}
 	}
+}
+
+sub summary
+{
+	my ($rhOpt) = @ARG;
+	print "=====\n$lines_seen lines read\n";
 }
 
 sub setup
@@ -190,12 +194,26 @@ sub processStdio
 	my ($rhOpt) = @ARG;
 	my $print = 0;
 	debug("processStdio()\n");
+	$Var{fileName} = "<STDIN>";
 	while (my $line = <STDIN>)
 	{
 		debug("line: $line");
 		($line, $print) = doLine($rhOpt, $line, $print);
 		print $line if $print;
 	}
+}
+
+sub processEntireStdio
+{
+	my ($rhOpt) = @ARG;
+
+	debug("processEntireStdio()\n");
+	local $INPUT_RECORD_SEPARATOR = undef;
+	my $file = <STDIN>;
+
+	$Var{fileName} = "<STDIN>";
+	$Var{entireFile} = $file;
+	analyseEntireFile($rhOpt);
 }
 
 sub processFiles
@@ -214,6 +232,7 @@ sub processFile
 	debug("processFile($fileName)\n");
 
 	# example read the file and show something line by line
+	$Var{fileName} = $fileName;
 	my $print = 0;
 	my $fh;
 	open($fh, "<", $fileName);
@@ -231,18 +250,33 @@ sub processEntireFile
 	debug("processEntireFile($fileName)\n");
 
 	# example read the entire file and show something line by line
-	my $print = $rhOpt->{'show-code'};
-	debug("print: $print");
-	my $fh;
 	local $INPUT_RECORD_SEPARATOR = undef;
+	my $fh;
 	open($fh, "<", $fileName);
 	my $file = <$fh>;
+	close($fh);
+
+	$Var{fileName} = $fileName;
 	$Var{entireFile} = $file;
-	$lines_seen += getLinesInFile($file);
+	analyseEntireFile($rhOpt);
+}
+
+sub analyseEntireFile
+{
+	my ($rhOpt) = @ARG;
+	my $print = $rhOpt->{'show-code'};
+	debug("print: $print");
+	print "$Var{fileName}\n";
+	$Var{rhFunctions} = {};
+	$Var{raFunctions} = [];
 	pullOutComments() if opt('comment-char');
 	pullOutStrings() if opt('string-char');
 	print $Var{entireFile} if $print;
-	close($fh);
+
+	my @Lines = split("\n", $Var{entireFile});
+	findFunctionDefinitions(\@Lines, $rhOpt);
+	findFunctionReferences(\@Lines, $rhOpt);
+	summaryOfFile();
 }
 
 sub pullOutComments
@@ -257,11 +291,8 @@ sub pullOutComments
 
 sub pullOutStrings
 {
-	$Var{entireFile} =~ s{" ((?:[^"]|\\")*) "}{
-		'"' . blotOut($1, opt('string-char')) . '"'
-	}xmsge;
-	$Var{entireFile} =~ s{' ((?:[^']|\\')*) '}{
-		"'" . blotOut($1, opt('string-char')) . "'"
+	$Var{entireFile} =~ s{ ([\"']) ( (?:\\\1|.)*? ) \1 }{
+		$1 . blotOut($2, opt('string-char')) . $1
 	}xmsge;
 }
 
@@ -296,21 +327,36 @@ sub getLinesInFile
 	return $lines;
 }
 
-sub secondPass
+sub findFunctionDefinitions
 {
 	my ($raLines, $rhOpt) = @ARG;
-	my $regex = join('|', @{$Var{raFunctions}});
-	debug("secondPass() regex: $regex", 3);
-
 	for (my $idx = 0; $idx < scalar(@$raLines); ++$idx)
 	{
 		my $line = $raLines->[$idx] . "\n";
-		debug("secondPass() $line", 4);
-		$line =~ s{($regex)}{
-			registerCaller($1, $idx + 1);
-		}xmsge;
+		debug("findFunctionDefinitions() $line", 4);
+		doLine($rhOpt, $line);
 	}
+}
 
+sub findFunctionReferences
+{
+	my ($raLines, $rhOpt) = @ARG;
+	my $regex = join('|', @{$Var{raFunctions}});
+	debug("findFunctionReferences() regex: $regex", 3);
+	if (length($regex)) {
+		for (my $idx = 0; $idx < scalar(@$raLines); ++$idx)
+		{
+			my $line = $raLines->[$idx] . "\n";
+			debug("findFunctionReferences() $line", 4);
+			$line =~ s{($regex)}{
+				registerCaller($1, $idx + 1);
+			}xmsge;
+		}
+	}
+	else
+	{
+		warning("no functions found.");
+	}
 }
 
 sub doLine
@@ -318,14 +364,13 @@ sub doLine
 	my ($rhOpt, $line, $print) = @ARG;
 	++$lines_seen;
 
-	push(@{$Var{raLinesInFile}}, $line);
-	findFunction($line);
+	findFunctions($line);
 
 	$print = 0;
 	return ($line, $print);
 }
 
-sub findFunction
+sub findFunctions
 {
 	my ($line) = @ARG;
 

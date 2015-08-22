@@ -64,9 +64,9 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-SKIP=0
 echo TEST $CMD normal operation
 TEST=normal
+#DEBUG="--debug --debug --debug --debug"
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -78,6 +78,31 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD stdin-show-code operation
+TEST=show-code
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-code --comment-char=: --string-char=;"
+	cat $SAMPLE | $PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD keep-all operation
+TEST=keep-all
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG $SAMPLE --show-code --comment-char= --string-char="
+	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
 
 cleanUpAfterTests
 
