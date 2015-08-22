@@ -73,12 +73,12 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $MANDATORY"
+#	echo $PROGRAM $ARGS from $SAMPLE to $OUT
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
-
 
 echo TEST $CMD filename operation
 TEST=filename
@@ -102,6 +102,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --splat=$OUT $MANDATORY"
 	cp $SAMPLE $OUT
+#	echo $PROGRAM $ARGS
 	$PROGRAM $ARGS > $OUT.stdout || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$OUT.stdout" "$BASE.stdout" "$TEST stdout correct"

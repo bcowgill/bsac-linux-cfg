@@ -53,7 +53,7 @@ perl.pl [options] [@options-file ...] [file ...]
 
 use strict;
 use warnings;
-use autodie qw(open);
+
 use English qw(-no_match_vars);
 use Getopt::ArgvFile defult => 1;    # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
@@ -66,7 +66,10 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-our $VERSION = 0.1;    # shown by --version option
+use File::Slurp qw(:std);
+use autodie qw(open);
+
+our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 
 # Big hash of vars and constants for the program
@@ -88,7 +91,7 @@ my %Var = (
 			"auto_version",    # supplies --version option
 			"auto_help",       # supplies --help -? options to show usage in POD SYNOPSIS
 
-##			"debug",        # debug the argument processing
+##			"debug",           # debug the argument processing
 		],
 		raOpts => [
 			"entire!",         # process entire file instead of reading line by line
@@ -114,7 +117,6 @@ my %Var = (
 	},
 	fileName   => '<STDIN>',    # name of file
 	entireFile => '',           # entire file contents for processing
-
 );
 
 # Return the value of a command line option
@@ -174,7 +176,7 @@ sub main
 			processStdio();
 		}
 	}
-	processFiles($raFiles) if scalar(@$raFiles);
+	processFiles( $raFiles ) if scalar(@$raFiles);
 	summary();
 }
 
@@ -204,11 +206,10 @@ sub processStdio
 sub processEntireStdio
 {
 	debug("processEntireStdio()\n");
-	local $INPUT_RECORD_SEPARATOR = undef;
-	my $file = <STDIN>;
+	$Var{fileName} = "<STDIN>";
+	my $rContent = read_file( \*STDIN, scalar_ref => 1 );
 
-	$Var{fileName}   = "<STDIN>";
-	$Var{entireFile} = $file;
+	$Var{entireFile} = $$rContent;
 	doEntireLines();
 }
 
@@ -220,7 +221,7 @@ sub processFiles
 	{
 		if ( opt('entire') )
 		{
-			processEntireFile($fileName);
+			processEntireFile( $fileName );
 		}
 		else
 		{
@@ -251,15 +252,10 @@ sub processEntireFile
 	my ($fileName) = @ARG;
 	debug("processEntireFile($fileName)\n");
 
-	# example read the entire file and show something line by line
-	local $INPUT_RECORD_SEPARATOR = undef;
-	my $fh;
-	open( $fh, "<", $fileName );
-	my $file = <$fh>;
-	close($fh);
-
-	$Var{fileName}   = $fileName;
-	$Var{entireFile} = $file;
+	# example slurp in the file and show something line by line
+	$Var{fileName} = $fileName;
+	my $rContent = read_file( $fileName, scalar_ref => 1 );
+	$Var{entireFile} = $$rContent;
 	doEntireLines();
 }
 
@@ -274,29 +270,6 @@ sub doEntireLines
 		$line = $Lines[$idx] . "\n";
 		( $line, $print ) = doLine( $line, $print );
 	}
-}
-
-sub getLinesInFile
-{
-	my ($file) = @ARG;
-	my $lines = 0;
-
-	if ( length($file) )
-	{
-		if ( $file =~ m{\n}xms )
-		{
-			$lines += $file =~ tr[\n][\n];
-			if ( $file =~ m{\n [^\n]+ \z}xms )
-			{
-				++$lines;
-			}
-		}
-		else
-		{
-			++$lines;
-		}
-	}
-  return $lines;
 }
 
 sub doLine
