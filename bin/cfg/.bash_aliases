@@ -4,6 +4,7 @@
 
 # Show the path split into one dir per line
 alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
+# Unique path, remove duplicate dirs from path
 alias upath='PATH=`echo $PATH | upath.sh`'
 
 # edit config files and re-source them
