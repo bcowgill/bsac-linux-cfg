@@ -78,53 +78,57 @@ pretty-elements.pl [options] [@options-file ...] [file ...]
 
 use strict;
 use warnings;
-use English -no_match_vars;
-use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
+
+use English qw(-no_match_vars);
+use Getopt::ArgvFile defult => 1;    # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
 use Pod::Usage;
+
 #use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
 #use Switch;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
-$Data::Dumper::Indent = 1;
-$Data::Dumper::Terse = 1;
+$Data::Dumper::Indent   = 1;
+$Data::Dumper::Terse    = 1;
 
-use File::Copy qw(cp); # copy and preserve source files permissions
+use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
-use Fatal qw(cp);
+use autodie qw(cp);
 
-our $VERSION = 0.1; # shown by --version option
+our $VERSION = 0.1;       # shown by --version option
+our $STDIO   = "";
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			'' => 0,      # indicates standard in/out as - on command line
-			verbose => 1, # default value for verbose
-			debug => 0,
-			man => 0,     # show full help page
+			$STDIO  => 0,    # indicates standard in/out as - on command line
+			verbose => 1,    # default value for verbose
+			debug   => 0,
+			man     => 0,    # show full help page
 		},
 		raFile => [],
 	},
 	rhGetopt => {
-		result => undef,
+		result   => undef,
 		raErrors => [],
 		raConfig => [
-			"bundling",     # bundle single char options ie ps -aux
-			"auto_version", # supplies --version option
-			"auto_help",    # supplies --help -? options to show usage in POD SYNOPSIS
-#			"debug",        # debug the argument processing
+			"bundling",        # bundle single char options ie ps -aux
+			"auto_version",    # supplies --version option
+			"auto_help",       # supplies --help -? options to show usage in POD SYNOPSIS
+
+##			"debug",           # debug the argument processing
 		],
 		raOpts => [
 			"edit|e!",    # flag --edit or --noedit
 			"warn-files|w!", # flag to show filename for every warning
-			"debug|d+",   # incremental keep specifying to increase
-			"verbose|v!", # flag --verbose or --noverbose
-			"",           # empty string allows - to signify standard in/out as a file
-			"man",        # show manual page only
+			"debug|d+",      # incremental keep specifying to increase
+			"verbose|v!",    # flag --verbose or --noverbose
+			$STDIO,          # empty string allows - to signify standard in/out as a file
+			"man",           # show manual page only
 		],
-		raMandatory => [], # additional mandatory parameters not defined by = above.
-		roParser => Getopt::Long::Parser->new,
+		raMandatory => [],    # additional mandatory parameters not defined by = above.
+		roParser    => Getopt::Long::Parser->new,
 	},
 	# Some constants for the program
 	raAttrOrder => [qw(id name type tabindex class style value method title alt data-bind action target href)],
@@ -143,70 +147,86 @@ my %Var = (
 	reAttribTrue => qr{ \b ([\w|-]+) \b }xms,
 
 	# Some vars for the program
+	fileName   => '<STDIN>',    # name of file
 	rhIDs => {},
 	rhWarnFiles => {},
-	filename => 'STDIN',
 );
 $Var{elements} = join('|', @{$Var{raElements}});
 $Var{reElement} = qr{ ( $Var{sol} < ($Var{elements}) \s+ (.+?) (/?>) ) }xms;
 $Var{reAttrib} = qr{ \b ([\w|-]+) \s* = ( \d+ | ([$Var{q}]) (.*?) \3 ) }xms;
 
+# Return the value of a command line option
+sub opt
+{
+	my ($opt) = @ARG;
+	return defined($opt) ?
+		$Var{'rhArg'}{'rhOpt'}{$opt} :
+		$Var{'rhArg'}{'rhOpt'};
+}
+
+sub hasOpt
+{
+	my ($opt) = @ARG;
+	return exists( $Var{'rhArg'}{'rhOpt'}{$opt} );
+}
+
+sub setOpt
+{
+	my ( $opt, $value ) = @ARG;
+	return $Var{'rhArg'}{'rhOpt'}{$opt} = $value;
+}
+
+sub arg
+{
+	my ($arg) = @ARG;
+	return defined($arg) ?
+		$Var{'rhArg'}{$arg} :
+		$Var{'rhArg'};
+}
+
+sub setArg
+{
+	my ( $arg, $value ) = @ARG;
+	return $Var{'rhArg'}{$arg} = $value;
+}
+
 getOptions();
 
 sub main
 {
-	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
-	debug("Var: " . Dumper(\%Var), 2);
-	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
+	my ($raFiles) = @ARG;
+	debug( "Var: " . Dumper( \%Var ), 2 );
+	debug( "main() rhOpt: " . Dumper( opt() ) .
+		"\nraFiles: " . Dumper($raFiles) .
+		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
 
-	if ($use_stdio)
+	if ( opt($STDIO) )
 	{
-		processStdio($rhOpt);
+		processEntireStdio();
 	}
 	if (scalar(@$raFiles))
 	{
-		if (exists $rhOpt->{edit})
+		if (hasOpt('edit'))
 		{
-			editFilesInPlace($raFiles, ".bak", $rhOpt);
+			editFilesInPlace( $raFiles, ".bak" );
 		}
 		else
 		{
-			processFiles($raFiles, $rhOpt)
+			processFiles( $raFiles );
 		}
 	}
 }
 
 sub setup
 {
-	my ($rhOpt) = @ARG;
-	$OUTPUT_AUTOFLUSH = 1 if $rhOpt->{debug};
+	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
 
 	debug("reElement: $Var{reElement}");
 	debug("reAttrib: $Var{reAttrib}");
 	debug("reAttribTrue: $Var{reAttribTrue}");
 	debug("reTTBlock: $Var{reTTBlock}");
-	debug("Var: " . Dumper(\%Var), 2);
-	debug("setup() rhOpt: " . Dumper($rhOpt), 2);
-}
-
-sub processStdio
-{
-	my ($rhOpt) = @ARG;
-	debug("processStdio()\n");
-	my $rContent = read_file(\*STDIN, scalar_ref => 1);
-	$Var{'filename'} = 'STDIN';
-	doReplacement($rContent);
-	print $$rContent;
-}
-
-sub processFiles
-{
-	my ($raFiles, $rhOpt) = @ARG;
-	debug("processFiles()\n");
-	foreach my $fileName (@$raFiles)
-	{
-		processFile($fileName, $rhOpt);
-	}
+	debug( "Var: " . Dumper( \%Var ), 2 );
+	debug( "setup() rhOpt: " . Dumper( opt() ), 2 );
 }
 
 sub editFilesInPlace
@@ -219,19 +239,52 @@ sub editFilesInPlace
 	}
 }
 
-sub processFile
+sub editFileInPlace
 {
-	my ($fileName, $rhOpt) = @ARG;
-	debug("processFile($fileName)\n");
+	my ( $fileName, $suffix ) = @ARG;
+	$Var{fileName} = $fileName;
+	my $fileNameBackup = "$fileName$suffix";
+	debug("editFileInPlace($fileName) backup to $fileNameBackup");
 
-	# example slurp in the file and show something
-	$Var{'filename'} = $fileName;
-	my $rContent = read_file($fileName, scalar_ref => 1);
-	doReplacement($rContent);
+	unless ($fileName eq $fileNameBackup)
+	{
+		cp( $fileName, $fileNameBackup );
+	}
+	edit_file { doReplacement( \$ARG ) } $fileName;
+}
+
+sub processEntireStdio
+{
+	debug("processEntireStdio()\n");
+	$Var{fileName} = "<STDIN>";
+	my $rContent = read_file( \*STDIN, scalar_ref => 1 );
+	doReplacement( $rContent );
 	print $$rContent;
 }
 
-# Get the attributes form an element.
+sub processFiles
+{
+	my ($raFiles) = @ARG;
+	debug("processFiles()\n");
+	foreach my $fileName (@$raFiles)
+	{
+		processEntireFile( $fileName );
+	}
+}
+
+sub processEntireFile
+{
+	my ($fileName) = @ARG;
+	debug("processEntireFile($fileName)\n");
+
+	# example slurp in the file and show something
+	$Var{fileName} = $fileName;
+	my $rContent = read_file( $fileName, scalar_ref => 1 );
+	doReplacement( $rContent );
+	print $$rContent;
+}
+
+# Get the attributes from an element.
 # Store any Template Toolkit IF blocks separately (in key __TT_BLOCKS__)
 # If there was anything unparseable leftover it goes into __LEFTOVERS__ key
 # and generates a warning.
@@ -264,7 +317,7 @@ sub get_attributes
 	$attributes =~ s{\A \s+ \z}{}xms;
 	if ($attributes ne $Var{'empty'})
 	{
-		warning($Var{'filename'}, "leftovers in element: [$attributes]\n   unhack($all)");
+		warning($Var{'fileName'}, "leftovers in element: [$attributes]\n   unhack($all)");
 		$Attribs{'__LEFTOVERS__'} = $attributes;
 	}
 	return \%Attribs;
@@ -318,7 +371,7 @@ sub format_element
 
 	$attribs = " " . $attribs if length($attribs);
 	my $formatted = qq{$leadin<$element$attribs};
-	return $Var{'rhArg'}{'rhOpt'}{'debug'} ? "FORMATTED:\n$formatted" : $formatted;
+	return opt('debug') ? "FORMATTED:\n$formatted" : $formatted;
 }
 
 # Trim leading space from string
@@ -344,7 +397,7 @@ sub register_id
 	$rhAttribs->{'id'} = $id;
 	if (exists($Var{'rhIDs'}{$id}))
 	{
-		warning($Var{'filename'}, "duplicate id seen [$id]\n   [@{[unhack(trim($all))]}]\n   [@{[trim($Var{'rhIDs'}{$id}[0])]}]\n");
+		warning($Var{'fileName'}, "duplicate id seen [$id]\n   [@{[unhack(trim($all))]}]\n   [@{[trim($Var{'rhIDs'}{$id}[0])]}]\n");
 	}
 	push(@{$Var{'rhIDs'}{$id}}, unhack($all));
 }
@@ -382,7 +435,7 @@ sub handle_id_name
 		}
 		if ($mismatch)
 		{
-			warning($Var{'filename'}, "id/name mismatch in element: [$element]\n   [$all]");
+			warning($Var{'fileName'}, "id/name mismatch in element: [$element]\n   [$all]");
 		}
 	}
 }
@@ -418,69 +471,61 @@ sub doReplacement
 	return $rContent;
 }
 
-sub editFileInPlace
-{
-	my ($fileName, $suffix, $rhOpt) = @ARG;
-	$Var{'filename'} = $fileName;
-	my $fileNameBackup = "$fileName$suffix";
-	debug("editFileInPlace($fileName) backup to $fileNameBackup");
-
-	cp($fileName, $fileNameBackup);
-	edit_file { doReplacement(\$ARG) } $fileName;
-}
-
 # Must manually check mandatory values present
 sub checkOptions
 {
-	my ($raErrors, $rhOpt, $raFiles, $use_stdio) = @ARG;
-	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
+	my ( $raErrors, $raFiles ) = @ARG;
+	checkMandatoryOptions( $raErrors, $Var{rhGetopt}{raMandatory} );
 
 	# Check additional parameter dependencies and push onto error array
 
-	if (scalar(@$raErrors))
+	if ( scalar(@$raErrors) )
 	{
-		usage(join("\n", @$raErrors));
+		usage( join( "\n", @$raErrors ) );
 	}
 }
 
 sub checkMandatoryOptions
 {
-	my ($raErrors, $rhOpt, $raMandatory) = @ARG;
+	my ( $raErrors, $raMandatory ) = @ARG;
 
 	$raMandatory = $raMandatory || [];
-	foreach my $option (@{$Var{rhGetopt}{raOpts}})
+	foreach my $option ( @{ $Var{rhGetopt}{raOpts} } )
 	{
 		# Getopt option has = sign for mandatory options
 		my $optName = undef;
 		$optName = $1 if $option =~ m{\A (\w+)}xms;
-		if ($option =~ m{\A (\w+) .* =}xms
-			|| ($optName && grep { $ARG eq $optName } @{$raMandatory}))
+		if ( $option =~ m{\A (\w+) .* =}xms
+			|| ( $optName && grep { $ARG eq $optName } @{$raMandatory} ) )
 		{
 			my $error = 0;
 
 			# Work out what type of parameter it might be
 			my $type = "value";
-			$type = 'number value' if $option =~ m{=f}xms;
-			$type = 'integer value' if $option =~ m{=i}xms;
-			$type = 'incremental value' if $option =~ m{\+}xms;
-			$type = 'negatable value' if $option =~ m{\!}xms;
+			$type = 'number value'                 if $option =~ m{=f}xms;
+			$type = 'integer value'                if $option =~ m{=i}xms;
+			$type = 'incremental value'            if $option =~ m{\+}xms;
+			$type = 'negatable value'              if $option =~ m{\!}xms;
 			$type = 'decimal/oct/hex/binary value' if $option =~ m{=o}xms;
-			$type = 'string value' if $option =~ m{=s}xms;
-			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
+			$type = 'string value'                 if $option =~ m{=s}xms;
+			$type =~ s{value}{multi-value}xms    if $option =~ m{\@}xms;
 			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
 
-			if (exists($rhOpt->{$optName}))
+			if ( hasOpt($optName) )
 			{
-				my $ref = ref($rhOpt->{$optName});
-				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpt->{$optName}}))
+				my $opt = opt($optName);
+				my $ref = ref($opt);
+				if ( 'ARRAY' eq $ref && 0 == scalar(@$opt) )
 				{
 					$error = 1;
+
 					# type might not be configured but we know it now
 					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
-				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpt->{$optName}})))
+				if ( 'HASH' eq $ref && 0 == scalar( keys(%$opt) ) )
 				{
 					$error = 1;
+
 					# type might not be configured but we know it now
 					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
 				}
@@ -489,7 +534,7 @@ sub checkMandatoryOptions
 			{
 				$error = 1;
 			}
-			push(@$raErrors, "--$optName $type is a mandatory parameter.") if $error;
+			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
 	return $raErrors;
@@ -498,25 +543,18 @@ sub checkMandatoryOptions
 # Perform command line option processing and call main function.
 sub getOptions
 {
-	$Var{rhGetopt}{roParser}->configure(@{$Var{rhGetopt}{raConfig}});
-	$Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}->getoptions(
-		$Var{rhArg}{rhOpt},
-		@{$Var{rhGetopt}{raOpts}}
-	);
-	if ($Var{rhGetopt}{result})
+	$Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
+	$Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}->getoptions( opt(), @{ $Var{rhGetopt}{raOpts} } );
+	if ( $Var{rhGetopt}{result} )
 	{
-		manual() if $Var{rhArg}{rhOpt}{man};
-		$Var{rhArg}{raFile} = \@ARGV;
+		manual() if opt('man');
+		setArg( 'raFile', \@ARGV );
+
 		# set stdio option if no file names provided
-		$Var{rhArg}{rhOpt}{''} = 1 unless scalar(@{$Var{rhArg}{raFile}});
-		checkOptions(
-			$Var{rhGetopt}{raErrors},
-			$Var{rhArg}{rhOpt},
-			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''} ## use_stdio option
-		);
-		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+		setOpt( $STDIO, 1 ) unless scalar( @{ arg('raFile') } );
+		checkOptions( $Var{rhGetopt}{raErrors}, arg('raFile') );
+		setup();
+		main( arg('raFile'), opt($STDIO) );
 	}
 	else
 	{
@@ -529,28 +567,30 @@ sub getOptions
 sub tab
 {
 	my ($message) = @ARG;
-	$message =~ s{\t}{   }xmsg;
+	my $THREE_SPACES = ' ' x 3;
+	$message =~ s{\t}{$THREE_SPACES}xmsg;
 	return $message;
 }
 
 sub warning
 {
-	my ($filename, $warning) = @ARG;
-	unless (exists($Var{'rhWarnFiles'}{$filename})
-		&& !$Var{'rhArg'}{'rhOpt'}{'warn-files'})
+	my ($fileName, $warning) = @ARG;
+	unless (exists($Var{'rhWarnFiles'}{$fileName})
+		&& !opt('warn-files'))
 	{
-		$warning = "$filename: $warning";
+		$warning = "$fileName: $warning";
 	}
-	$Var{'rhWarnFiles'}{$filename}++;
-	warn("WARN: " . tab($warning));
+	$Var{'rhWarnFiles'}{$fileName}++;
+	warn( "WARN: " . tab($warning) );
 }
 
 sub debug
 {
-	my ($msg, $level) = @ARG;
+	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
-#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-	print tab($msg . "\n") if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+
+##	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
+	print tab($msg . "\n") if ( opt('debug') >= $level );
 }
 
 sub usage
@@ -571,3 +611,5 @@ sub manual
 		-verbose => 2,
 	);
 }
+
+__END__
