@@ -137,7 +137,30 @@ my %Var = (
 sub opt
 {
 	my ($opt) = @ARG;
-	return $Var{'rhArg'}{'rhOpt'}{$opt};
+	return defined($opt) ? $Var{'rhArg'}{'rhOpt'}{$opt} : $Var{'rhArg'}{'rhOpt'};
+}
+sub hasOpt
+{
+	my ($opt) = @ARG;
+	return exists($Var{'rhArg'}{'rhOpt'}{$opt});
+}
+
+sub setOpt
+{
+	my ($opt, $value) = @ARG;
+	return $Var{'rhArg'}{'rhOpt'}{$opt} = $value;
+}
+
+sub arg
+{
+	my ($arg) = @ARG;
+	return defined($arg) ? $Var{'rhArg'}{$arg} : $Var{'rhArg'};
+}
+
+sub setArg
+{
+	my ($arg, $value) = @ARG;
+	return $Var{'rhArg'}{$arg} = $value;
 }
 
 my $lines_seen = 0;
@@ -145,17 +168,16 @@ getOptions();
 
 sub main
 {
-	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
+	my ($raFiles) = @ARG;
 	debug("Var: " . Dumper(\%Var), 2);
-	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
+	debug("main() rhOpt: " . Dumper(opt()) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: @{[opt($STDIO)]}\n", 2);
 
-	if ($use_stdio)
+	if (opt($STDIO))
 	{
-#		processStdio($rhOpt);
-		processEntireStdio($rhOpt);
+		processEntireStdio();
 	}
-	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
-	summary($rhOpt);
+	processFiles($raFiles) if scalar(@$raFiles);
+	summary();
 }
 
 sub summaryOfFile
@@ -177,58 +199,51 @@ sub summaryOfFile
 
 sub summary
 {
-	my ($rhOpt) = @ARG;
 	print "=====\n$lines_seen lines read\n";
 }
 
 sub setup
 {
-	my ($rhOpt) = @ARG;
-	$OUTPUT_AUTOFLUSH = 1 if $rhOpt->{debug};
+	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
 	debug("Var: " . Dumper(\%Var), 2);
-	debug("setup() rhOpt: " . Dumper($rhOpt), 2);
+	debug("setup() rhOpt: " . Dumper(opt()), 2);
 }
 
 sub processStdio
 {
-	my ($rhOpt) = @ARG;
 	my $print = 0;
 	debug("processStdio()\n");
 	$Var{fileName} = "<STDIN>";
 	while (my $line = <STDIN>)
 	{
-		debug("line: $line");
-		($line, $print) = doLine($rhOpt, $line, $print);
-		print $line if $print;
+		($line, $print) = doLine($line, $print);
 	}
 }
 
 sub processEntireStdio
 {
-	my ($rhOpt) = @ARG;
-
 	debug("processEntireStdio()\n");
 	local $INPUT_RECORD_SEPARATOR = undef;
 	my $file = <STDIN>;
 
 	$Var{fileName} = "<STDIN>";
 	$Var{entireFile} = $file;
-	analyseEntireFile($rhOpt);
+	analyseEntireFile();
 }
 
 sub processFiles
 {
-	my ($raFiles, $rhOpt) = @ARG;
+	my ($raFiles) = @ARG;
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		processEntireFile($fileName, $rhOpt);
+		processEntireFile($fileName);
 	}
 }
 
 sub processFile
 {
-	my ($fileName, $rhOpt) = @ARG;
+	my ($fileName) = @ARG;
 	debug("processFile($fileName)\n");
 
 	# example read the file and show something line by line
@@ -238,15 +253,14 @@ sub processFile
 	open($fh, "<", $fileName);
 	while (my $line = <$fh>)
 	{
-		($line, $print) = doLine($rhOpt, $line, $print);
-		print $line if $print;
+		($line, $print) = doLine($line, $print);
 	}
 	close($fh);
 }
 
 sub processEntireFile
 {
-	my ($fileName, $rhOpt) = @ARG;
+	my ($fileName) = @ARG;
 	debug("processEntireFile($fileName)\n");
 
 	# example read the entire file and show something line by line
@@ -258,13 +272,12 @@ sub processEntireFile
 
 	$Var{fileName} = $fileName;
 	$Var{entireFile} = $file;
-	analyseEntireFile($rhOpt);
+	analyseEntireFile();
 }
 
 sub analyseEntireFile
 {
-	my ($rhOpt) = @ARG;
-	my $print = $rhOpt->{'show-code'};
+	my $print = opt('show-code');
 	debug("print: $print");
 	print "$Var{fileName}\n";
 	$Var{rhFunctions} = {};
@@ -274,8 +287,8 @@ sub analyseEntireFile
 	print $Var{entireFile} if $print;
 
 	my @Lines = split("\n", $Var{entireFile});
-	findFunctionDefinitions(\@Lines, $rhOpt);
-	findFunctionReferences(\@Lines, $rhOpt);
+	findFunctionDefinitions(\@Lines);
+	findFunctionReferences(\@Lines);
 	summaryOfFile();
 }
 
@@ -304,43 +317,20 @@ sub blotOut
 	return $text;
 }
 
-sub getLinesInFile
-{
-	my ($file) = @ARG;
-	my $lines = 0;
-
-	if (length($file))
-	{
-		if ($file =~ m{\n}xms)
-		{
-			$lines += $file =~ tr[\n][\n];
-			if ($file =~ m{\n [^\n]+ \z}xms)
-			{
-				++$lines;
-			}
-		}
-		else
-		{
-			++$lines;
-		}
-	}
-	return $lines;
-}
-
 sub findFunctionDefinitions
 {
-	my ($raLines, $rhOpt) = @ARG;
+	my ($raLines) = @ARG;
 	for (my $idx = 0; $idx < scalar(@$raLines); ++$idx)
 	{
 		my $line = $raLines->[$idx] . "\n";
 		debug("findFunctionDefinitions() $line", 4);
-		doLine($rhOpt, $line);
+		doLine($line);
 	}
 }
 
 sub findFunctionReferences
 {
-	my ($raLines, $rhOpt) = @ARG;
+	my ($raLines) = @ARG;
 	my $regex = join('|', @{$Var{raFunctions}});
 	debug("findFunctionReferences() regex: $regex", 3);
 	if (length($regex)) {
@@ -361,7 +351,7 @@ sub findFunctionReferences
 
 sub doLine
 {
-	my ($rhOpt, $line, $print) = @ARG;
+	my ($line, $print) = @ARG;
 	++$lines_seen;
 
 	findFunctions($line);
@@ -417,8 +407,8 @@ sub registerCaller
 # Must manually check mandatory values present
 sub checkOptions
 {
-	my ($raErrors, $rhOpt, $raFiles, $use_stdio) = @ARG;
-	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
+	my ($raErrors, $raFiles) = @ARG;
+	checkMandatoryOptions($raErrors, $Var{rhGetopt}{raMandatory});
 
 	# Check additional parameter dependencies and push onto error array
 
@@ -430,7 +420,7 @@ sub checkOptions
 
 sub checkMandatoryOptions
 {
-	my ($raErrors, $rhOpt, $raMandatory) = @ARG;
+	my ($raErrors, $raMandatory) = @ARG;
 
 	$raMandatory = $raMandatory || [];
 	foreach my $option (@{$Var{rhGetopt}{raOpts}})
@@ -454,16 +444,17 @@ sub checkMandatoryOptions
 			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
 			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
 
-			if (exists($rhOpt->{$optName}))
+			if (hasOpt($optName))
 			{
-				my $ref = ref($rhOpt->{$optName});
-				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpt->{$optName}}))
+				my $opt = opt($optName);
+				my $ref = ref($opt);
+				if ('ARRAY' eq $ref && 0 == scalar(@$opt))
 				{
 					$error = 1;
 					# type might not be configured but we know it now
 					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
-				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpt->{$optName}})))
+				if ('HASH' eq $ref && 0 == scalar(keys(%$opt)))
 				{
 					$error = 1;
 					# type might not be configured but we know it now
@@ -485,23 +476,21 @@ sub getOptions
 {
 	$Var{rhGetopt}{roParser}->configure(@{$Var{rhGetopt}{raConfig}});
 	$Var{rhGetopt}{result} = 	$Var{rhGetopt}{roParser}->getoptions(
-		$Var{rhArg}{rhOpt},
+		opt(),
 		@{$Var{rhGetopt}{raOpts}}
 	);
 	if ($Var{rhGetopt}{result})
 	{
 		manual() if opt('man');
-		$Var{rhArg}{raFile} = \@ARGV;
+		setArg('raFile', \@ARGV);
 		# set stdio option if no file names provided
-		$Var{rhArg}{rhOpt}{$STDIO} = 1 unless scalar(@{$Var{rhArg}{raFile}});
+		setOpt($STDIO, 1) unless scalar(@{arg('raFile')});
 		checkOptions(
 			$Var{rhGetopt}{raErrors},
-			$Var{rhArg}{rhOpt},
-			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{$STDIO} ## use_stdio option
+			arg('raFile')
 		);
-		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, opt($STDIO));
+		setup();
+		main(arg('raFile'), opt($STDIO));
 	}
 	else
 	{
@@ -514,7 +503,8 @@ sub getOptions
 sub tab
 {
 	my ($message) = @ARG;
-	$message =~ s{\t}{   }xmsg;
+	my $THREE_SPACES = ' ' x 3;
+	$message =~ s{\t}{$THREE_SPACES}xmsg;
 	return $message;
 }
 
