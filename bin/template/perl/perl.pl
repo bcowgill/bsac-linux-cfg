@@ -101,7 +101,7 @@ my %Var = (
 			"hex=o",           # extended integer a number in decimal, octal, hex or binary
 
 			# cannot repeat when bundling is turned on
-##		"point:f{2}", # two floats separated by comma --point=1.3,24.5
+##			"point:f{2}",    # two floats separated by comma --point=1.3,24.5
 			"file=s",        # string required --file or -f (implicit)
 			"in:s",          # to test stdin=-
 			"out:s",         # to test stdout=-
@@ -225,7 +225,7 @@ sub processFiles
 		}
 		else
 		{
-			processFile($fileName);
+			processFile( $fileName );
 		}
 	}
 }

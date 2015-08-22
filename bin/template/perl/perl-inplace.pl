@@ -95,15 +95,15 @@ my %Var = (
 ##			"debug",           # debug the argument processing
 		],
 		raOpts => [
+			"splat:s",         # a file to edit in place
 			"length|l=i",      # numeric required --length or -l (explicit defined)
 			"width:3",         # numeric optional with default value if none given on command line but not necessarily the default assigned if not present on command line
 			"ratio|r:f",       # float optional
 			"hex=o",           # extended integer a number in decimal, octal, hex or binary
 
 			# cannot repeat when bundling is turned on
-##		"point:f{2}",      # two floats separated by comma --point=1.3,24.5
+##			"point:f{2}",    # two floats separated by comma --point=1.3,24.5
 			"file=s",        # string required --file or -f (implicit)
-			"splat:s",       # a file to edit in place
 			"in:s",          # to test stdin=-
 			"out:s",         # to test stdout=-
 			"name|n=s@",     # multivalued array string
@@ -154,7 +154,6 @@ sub setArg
 	return $Var{'rhArg'}{$arg} = $value;
 }
 
-
 getOptions();
 
 sub main
@@ -168,7 +167,7 @@ sub main
 	# Example in-place editing of file
 	if ( hasOpt('splat') )
 	{
-		editFileInPlace( opt('splat'), ".bak");
+		editFileInPlace( opt('splat'), ".bak" );
 		exit 0;
 	}
 
@@ -192,12 +191,26 @@ sub setup
 	debug( "setup() rhOpt: " . Dumper( opt() ), 2 );
 }
 
+sub editFileInPlace
+{
+	my ( $fileName, $suffix ) = @ARG;
+	$Var{fileName} = $fileName;
+	my $fileNameBackup = "$fileName$suffix";
+	print("editFileInPlace($fileName) backup to $fileNameBackup\n");
+
+	unless ($fileName eq $fileNameBackup)
+	{
+		cp( $fileName, $fileNameBackup );
+	}
+	edit_file { doReplacement( \$ARG ) } $fileName;
+}
+
 sub processEntireStdio
 {
 	debug("processEntireStdio()\n");
 	$Var{fileName} = "<STDIN>";
 	my $rContent = read_file( \*STDIN, scalar_ref => 1 );
-	doReplacement( $rContent);
+	doReplacement( $rContent );
 	print $$rContent;
 }
 
@@ -229,21 +242,7 @@ sub doReplacement
 	my ( $rContent ) = @ARG;
 	my $regex = qr{\A}xms;
 	$$rContent =~ s{$regex}{splatted\n}xms;
-  return $rContent;
-}
-
-sub editFileInPlace
-{
-	my ( $fileName, $suffix ) = @ARG;
-	$Var{fileName} = $fileName;
-	my $fileNameBackup = "$fileName$suffix";
-	print("editFileInPlace($fileName) backup to $fileNameBackup\n");
-
-	unless ($fileName eq $fileNameBackup)
-	{
-		cp( $fileName, $fileNameBackup );
-	}
-	edit_file { doReplacement( \$ARG ) } $fileName;
+	return $rContent;
 }
 
 # Must manually check mandatory values present

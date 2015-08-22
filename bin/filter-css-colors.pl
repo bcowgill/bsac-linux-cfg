@@ -16,7 +16,7 @@ Brent S.A. Cowgill
 
 =head1 SYNOPSIS
 
-perl.pl [options] [@options-file ...] [file ...]
+filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  Options:
 	--color-only     negatable. only show the color values, not the entire line.
@@ -120,45 +120,50 @@ perl.pl [options] [@options-file ...] [file ...]
 
  filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 
- TODO template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
-
 =cut
 
 use strict;
 use warnings;
-use English -no_match_vars;
-use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
+
+use English qw(-no_match_vars);
+use Getopt::ArgvFile defult => 1;    # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
 use Pod::Usage;
+
 #use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
 #use Switch;
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Indent   = 1;
+$Data::Dumper::Terse    = 1;
 
-use File::Copy qw(cp); # copy and preserve source files permissions
+use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
-use Fatal qw(cp);
+use autodie qw(open cp);
 
-our $VERSION = 0.1; # shown by --version option
+our $VERSION = 0.1;       # shown by --version option
+our $STDIO   = "";
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
 			'valid-only' => 0,
-			'' => 0,      # indicates standard in/out as - on command line
-			'debug' => 0,   # output debug info
-			'man' => 0,     # show full help page
+			$STDIO  => 0,    # indicates standard in/out as - on command line
+			debug   => 0,
+			man     => 0,    # show full help page
 		},
 		raFile => [],
 	},
 	rhGetopt => {
-		result => undef,
+		result   => undef,
 		raErrors => [],
 		raConfig => [
-			"bundling",     # bundle single char options ie ps -aux
-			"auto_version", # supplies --version option
-			"auto_help",    # supplies --help -? options to show usage in POD SYNOPSIS
-#			"debug",       # debug the argument processing
+			"bundling",        # bundle single char options ie ps -aux
+			"auto_version",    # supplies --version option
+			"auto_help",       # supplies --help -? options to show usage in POD SYNOPSIS
+
+##			"debug",           # debug the argument processing
 		],
 		raOpts => [
 			"color-only!",
@@ -172,14 +177,14 @@ my %Var = (
 			"foreground|fg:s",
 			"background|bg:s",
 			"echo!",
-			"debug+",
-			"man",
-
-			"",           # empty string allows - to signify standard in/out as a file
+			"debug|d+",      # incremental keep specifying to increase
+			$STDIO,          # empty string allows - to signify standard in/out as a file
+			"man",           # show manual page only
 		],
-		raMandatory => [], # additional mandatory parameters not defined by = above.
-		roParser => Getopt::Long::Parser->new,
+		raMandatory => [],    # additional mandatory parameters not defined by = above.
+		roParser    => Getopt::Long::Parser->new,
 	},
+	fileName   => '<STDIN>',    # name of file
 	'raColorNames' => ['transparent'],
 	'rhColorNamesMap' => {},
 	'regex' => {
@@ -193,26 +198,62 @@ my %Var = (
 	},
 );
 
+# Return the value of a command line option
+sub opt
+{
+	my ($opt) = @ARG;
+	return defined($opt) ?
+		$Var{'rhArg'}{'rhOpt'}{$opt} :
+		$Var{'rhArg'}{'rhOpt'};
+}
+
+sub hasOpt
+{
+	my ($opt) = @ARG;
+	return exists( $Var{'rhArg'}{'rhOpt'}{$opt} );
+}
+
+sub setOpt
+{
+	my ( $opt, $value ) = @ARG;
+	return $Var{'rhArg'}{'rhOpt'}{$opt} = $value;
+}
+
+sub arg
+{
+	my ($arg) = @ARG;
+	return defined($arg) ?
+		$Var{'rhArg'}{$arg} :
+		$Var{'rhArg'};
+}
+
+sub setArg
+{
+	my ( $arg, $value ) = @ARG;
+	return $Var{'rhArg'}{$arg} = $value;
+}
+
 getOptions();
 
 sub main
 {
-	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
-	debug("Var: " . Dumper(\%Var), 2);
-	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
+	my ($raFiles) = @ARG;
+	debug( "Var: " . Dumper( \%Var ), 2 );
+	debug( "main() rhOpt: " . Dumper( opt() ) .
+		"\nraFiles: " . Dumper($raFiles) .
+		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
 
-	$use_stdio = 1 unless scalar(@$raFiles);
-	if ($use_stdio)
+	if ( opt($STDIO) )
 	{
-		processStdio($rhOpt);
+		processEntireStdio();
 	}
 
-	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
+	processFiles($raFiles) if scalar(@$raFiles);
 }
 
 sub setup
 {
-	my ($rhOpt) = @ARG;
+	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
 
 	# read from __DATA__ below to get names of hex color values
 	while (my $line = <DATA>)
@@ -231,46 +272,61 @@ sub setup
 	$Var{'regex'}{'line'} = qr{ ( \#[0-9a-f]{3,6}\b | (rgb|hsl)a?\([^\)]+\) | \b($colors)\b ) }xmsi;
 }
 
-sub processStdio
+sub editFileInPlace
 {
-	my ($rhOpt) = @ARG;
-	debug("processStdio()\n");
+	my ( $fileName, $suffix ) = @ARG;
+	$Var{fileName} = $fileName;
+	my $fileNameBackup = "$fileName$suffix";
+	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
+
+	unless ($fileName eq $fileNameBackup)
+	{
+		cp( $fileName, $fileNameBackup );
+	}
+	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
+}
+
+sub processEntireStdio
+{
+	debug("processEntireStdio()\n");
+	$Var{fileName} = "<STDIN>";
 	my $raContent = read_file(\*STDIN, array_ref => 1);
-	doReplacement($raContent);
+	doReplacement( $raContent );
 	print join("", @$raContent);
 }
 
 sub processFiles
 {
-	my ($raFiles, $rhOpt) = @ARG;
+	my ($raFiles) = @ARG;
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		if (exists($rhOpt->{'inplace'}))
+		if ( opt('inplace') )
 		{
-			editFileInPlace($fileName, $rhOpt->{'inplace'}, $rhOpt);
+			editFileInPlace($fileName, opt('inplace'));
 		}
 		else
 		{
-			processFile($fileName, $rhOpt);
+			processEntireFile( $fileName );
 		}
 	}
 }
 
-sub processFile
+sub processEntireFile
 {
-	my ($fileName, $rhOpt) = @ARG;
-	debug("processFile($fileName)\n");
+	my ($fileName) = @ARG;
+	debug("processEntireFile($fileName)\n");
 
 	# example slurp in the file and show something
+	$Var{fileName} = $fileName;
 	my $raContent = read_file($fileName, array_ref => 1);
-	doReplacement($raContent);
+	doReplacement( $raContent );
 	print join("", @$raContent);
 }
 
 sub doReplacement
 {
-	my ($raContent) = @ARG;
+	my ( $raContent ) = @ARG;
 	foreach my $line (@$raContent)
 	{
 		$line = doReplaceLine($line);
@@ -287,18 +343,18 @@ sub doReplaceLine
 	# and can't check for a : before because rule could be split across two lines
 	# maybe using negative lookbefore for # - . could handle the color names would also have to strip comments first
 	$match = ($line =~ $Var{'regex'}{'line'});
-	$match = $Var{'rhArg'}{'rhOpt'}{'reverse'} ? !$match : $match;
+	$match = opt('reverse') ? !$match : $match;
 	if ($match)
 	{
 		$line =~ s{ \A \s+ }{}xms;
-		if ($Var{'rhArg'}{'rhOpt'}{'color-only'} && !$Var{'rhArg'}{'rhOpt'}{'reverse'})
+		if (opt('color-only') && !opt('reverse'))
 		{
 			$line =~ tr[A-Z][a-z];
 			$line =~ s{$Var{'regex'}{'line'}}{ push(@Lines, remap($1) . "\n"); "" }ge;
 		}
 		else
 		{
-			if ($Var{'rhArg'}{'rhOpt'}{'echo'})
+			if (opt('echo'))
 			{
 				push(@Lines, "\nwas: $line     ");
 			}
@@ -308,27 +364,13 @@ sub doReplaceLine
 	return join("", @Lines);
 }
 
-sub editFileInPlace
-{
-	my ($fileName, $suffix, $rhOpt) = @ARG;
-	my $fileNameBackup = "$fileName$suffix";
-	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
-
-	unless ($fileName eq $fileNameBackup)
-	{
-		cp($fileName, $fileNameBackup);
-	}
-	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
-}
-
-
 # remap color values in place, where possible
 # this may not produce valid CSS output.
 # for example rgba(0,0,0,0.5) can become rgba(black,0.5)
 sub remap
 {
 	my ($line) = @ARG;
-	if ($Var{'rhArg'}{'rhOpt'}{'remap'})
+	if (opt('remap'))
 	{
 		$line =~ s{$Var{'regex'}{'line'}}{ names(rgb(canonical($1))) }ge;
 	}
@@ -339,7 +381,7 @@ sub remap
 sub canonical
 {
 	my ($color) = @ARG;
-	if ($Var{'rhArg'}{'rhOpt'}{'canonical'})
+	if (opt('canonical'))
 	{
 		$color =~ s{ \# ([0-9a-f]{3}) \b }{
 			'#' . (substr($1,0,1) x 2) .
@@ -354,8 +396,8 @@ sub canonical
 sub rgb
 {
 	my ($color) = @ARG;
-	$DB::single = 1;  # MUSTDO REMOVE THIS
-	if ($Var{'rhArg'}{'rhOpt'}{'rgb'})
+#	$DB::single = 1;  # MUSTDO REMOVE THIS
+	if (opt('rgb'))
 	{
 		$color =~ s{ \# ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }{ "rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")" }xmsgie;
 	}
@@ -371,7 +413,7 @@ sub rgb
 sub names
 {
 	my ($color) = @ARG;
-	if ($Var{'rhArg'}{'rhOpt'}{'names'})
+	if (opt('names'))
 	{
 		# alpha = 0 is transparent
 		$color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
@@ -379,14 +421,14 @@ sub names
 		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
 
 		$color = $Var{'rhColorNamesMap'}{lc(trim(rgbval($color)))} || $color;
-		if (!$Var{'rhArg'}{'rhOpt'}{'valid-only'} && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
+		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
 			if (exists $Var{'rhColorNamesMap'}{trim(rgbval($1))})
 			{
 				$color = "rgba($Var{'rhColorNamesMap'}{trim(rgbval($1))}$2)";
 			}
 		}
-		if (!$Var{'rhArg'}{'rhOpt'}{'valid-only'} && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
+		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
 		{
 			if (exists $Var{'rhColorNamesMap'}{trim(hsl_to_rgb($1, $2, $3))})
 			{
@@ -455,74 +497,77 @@ sub trim
 # Must manually check mandatory values present
 sub checkOptions
 {
-	my ($raErrors, $rhOpt, $raFiles, $use_stdio) = @ARG;
-	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
+	my ( $raErrors, $raFiles ) = @ARG;
+	checkMandatoryOptions( $raErrors, $Var{rhGetopt}{raMandatory} );
 
 	# Check additional parameter dependencies and push onto error array
-	if (exists($rhOpt->{'inplace'}))
+	if (hasOpt('inplace'))
 	{
-		push(@$raErrors, "You cannot specify standard input when using the --inplace option") if $use_stdio;
+		push(@$raErrors, "You cannot specify standard input when using the --inplace option") if opt($STDIO);
 		push(@$raErrors, "You must supply files to process when using the --inplace option.") unless scalar(@$raFiles);
 	}
-	if ($rhOpt->{'color-only'})
+	if (opt('color-only'))
 	{
-		push(@$raErrors, "You cannot specify --foreground when using the --color-only option") if exists($rhOpt->{'foreground'});
-		push(@$raErrors, "You cannot specify --background when using the --color-only option") if exists($rhOpt->{'background'});
+		push(@$raErrors, "You cannot specify --foreground when using the --color-only option") if hasOpt('foreground');
+		push(@$raErrors, "You cannot specify --background when using the --color-only option") if hasOpt('background');
 	}
 
 	# Force some flags when others turned on
-	$rhOpt->{'canonical'} = 1 if ($rhOpt->{'names'} || $rhOpt->{'rgb'});
-	$rhOpt->{'remap'} = 1 if ($rhOpt->{'names'} || $rhOpt->{'canonical'});
+	setOpt('canonical', 1) if (opt('names') || opt('rgb'));
+	setOpt('remap', 1) if (opt('names') || opt('canonical'));
 
-	if ($rhOpt->{'rgb'})
+	if (opt('rgb'))
 	{
-		push(@$raErrors, "You cannot specify --names when using the --rgb option") if $rhOpt->{'names'};
+		push(@$raErrors, "You cannot specify --names when using the --rgb option") if opt('names');
 	}
 
-	if (scalar(@$raErrors))
+	if ( scalar(@$raErrors) )
 	{
-		usage(join("\n", @$raErrors));
+		usage( join( "\n", @$raErrors ) );
 	}
 }
 
 sub checkMandatoryOptions
 {
-	my ($raErrors, $rhOpt, $raMandatory) = @ARG;
+	my ( $raErrors, $raMandatory ) = @ARG;
 
 	$raMandatory = $raMandatory || [];
-	foreach my $option (@{$Var{rhGetopt}{raOpts}})
+	foreach my $option ( @{ $Var{rhGetopt}{raOpts} } )
 	{
 		# Getopt option has = sign for mandatory options
 		my $optName = undef;
 		$optName = $1 if $option =~ m{\A (\w+)}xms;
-		if ($option =~ m{\A (\w+) .* =}xms
-			|| ($optName && grep { $ARG eq $optName } @{$raMandatory}))
+		if ( $option =~ m{\A (\w+) .* =}xms
+			|| ( $optName && grep { $ARG eq $optName } @{$raMandatory} ) )
 		{
 			my $error = 0;
 
 			# Work out what type of parameter it might be
 			my $type = "value";
-			$type = 'number value' if $option =~ m{=f}xms;
-			$type = 'integer value' if $option =~ m{=i}xms;
-			$type = 'incremental value' if $option =~ m{\+}xms;
-			$type = 'negatable value' if $option =~ m{\!}xms;
+			$type = 'number value'                 if $option =~ m{=f}xms;
+			$type = 'integer value'                if $option =~ m{=i}xms;
+			$type = 'incremental value'            if $option =~ m{\+}xms;
+			$type = 'negatable value'              if $option =~ m{\!}xms;
 			$type = 'decimal/oct/hex/binary value' if $option =~ m{=o}xms;
-			$type = 'string value' if $option =~ m{=s}xms;
-			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
+			$type = 'string value'                 if $option =~ m{=s}xms;
+			$type =~ s{value}{multi-value}xms    if $option =~ m{\@}xms;
 			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
 
-			if (exists($rhOpt->{$optName}))
+			if ( hasOpt($optName) )
 			{
-				my $ref = ref($rhOpt->{$optName});
-				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpt->{$optName}}))
+				my $opt = opt($optName);
+				my $ref = ref($opt);
+				if ( 'ARRAY' eq $ref && 0 == scalar(@$opt) )
 				{
 					$error = 1;
+
 					# type might not be configured but we know it now
 					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
-				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpt->{$optName}})))
+				if ( 'HASH' eq $ref && 0 == scalar( keys(%$opt) ) )
 				{
 					$error = 1;
+
 					# type might not be configured but we know it now
 					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
 				}
@@ -531,32 +576,27 @@ sub checkMandatoryOptions
 			{
 				$error = 1;
 			}
-			push(@$raErrors, "--$optName $type is a mandatory parameter.") if $error;
+			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
-	return $raErrors;
+  return $raErrors;
 }
 
 # Perform command line option processing and call main function.
 sub getOptions
 {
-	$Var{rhGetopt}{roParser}->configure(@{$Var{rhGetopt}{raConfig}});
-	$Var{rhGetopt}{result} = 	$Var{rhGetopt}{roParser}->getoptions(
-		$Var{rhArg}{rhOpt},
-		@{$Var{rhGetopt}{raOpts}}
-	);
-	if ($Var{rhGetopt}{result})
+	$Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
+	$Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}->getoptions( opt(), @{ $Var{rhGetopt}{raOpts} } );
+	if ( $Var{rhGetopt}{result} )
 	{
-		manual() if $Var{rhArg}{rhOpt}{man};
-		$Var{rhArg}{raFile} = \@ARGV;
-		checkOptions(
-			$Var{rhGetopt}{raErrors},
-			$Var{rhArg}{rhOpt},
-			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''}
-		);
-		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+		manual() if opt('man');
+		setArg( 'raFile', \@ARGV );
+
+		# set stdio option if no file names provided
+		setOpt( $STDIO, 1 ) unless scalar( @{ arg('raFile') } );
+		checkOptions( $Var{rhGetopt}{raErrors}, arg('raFile') );
+		setup();
+		main( arg('raFile'), opt($STDIO) );
 	}
 	else
 	{
@@ -565,12 +605,28 @@ sub getOptions
 	}
 }
 
+# make tabs 3 spaces
+sub tab
+{
+	my ($message) = @ARG;
+	my $THREE_SPACES = ' ' x 3;
+	$message =~ s{\t}{$THREE_SPACES}xmsg;
+	return $message;
+}
+
+sub warning
+{
+	my ($warning) = @ARG;
+	warn( "WARN: " . tab($warning) . "\n" );
+}
+
 sub debug
 {
-	my ($msg, $level) = @ARG;
+	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
-#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-	print $msg if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+
+##	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
+	print tab($msg) . "\n" if ( opt('debug') >= $level );
 }
 
 sub usage
@@ -586,8 +642,6 @@ sub usage
 
 sub manual
 {
-	$DB::single = 1; # MUSTDO REMOVE THIS
-
 	pod2usage(
 		-exitval => 0,
 		-verbose => 2,

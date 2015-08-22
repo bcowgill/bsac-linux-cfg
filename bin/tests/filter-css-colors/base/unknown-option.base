@@ -1,6 +1,6 @@
 Unknown option: unknown-option
 Usage:
-    perl.pl [options] [@options-file ...] [file ...]
+    filter-css-colors.pl [options] [@options-file ...] [file ...]
 
      Options:
             --color-only     negatable. only show the color values, not the entire line.
