@@ -19,6 +19,8 @@ LOGCS=/tmp/bcowgill/build-cirrus-local-content-service.log
 LOGS="$LOGC $LOGD $LOGSK $LOGCU $LOGDU $LOGNU $LOGCS"
 
 #GRUNT=0
+#CONFIGONLY=1
+
 QUIET="> /dev/null"
 
 # Configure changes to run things locally
@@ -128,6 +130,10 @@ fi
 
 popd
 
+if [ ${CONFIGONLY:-0} == 1 ]; then
+	exit 0
+fi
+
 # Terminate any running builds now
 killall --wait --regexp ruby
 if [ ${GRUNT:-1} == 1 ]; then
@@ -147,22 +153,26 @@ rvm use 2.1.5
 redis-server &
 
 pushd ~/projects/dealroom
+bundle install 2>&1 | tee --append $LOGD $QUIET
 ( RAILS_RELATIVE_URL_ROOT='/dealroom' bundle exec rails server -p 3001 2>&1 | tee --append $LOGD $QUIET ) &
 ( bundle exec sidekiq 2>&1 | tee --append $LOGSK $QUIET )
 popd
 
 pushd ~/projects/cirrus
-	rvm use ruby-1.9.3-p551
+# rvm reinstall 1.9.3-p392
+	rvm use ruby-1.9.3-p392
+	bundle install 2>&1 | tee --append $LOGC $QUIET
 	bundle exec rake frontend_assets:clean 2>&1 | tee --append $LOGC $QUIET
-	bundle exec rake frontend_assets:download 2>&1 | tee --append $LOGC $QUIET
+	bundle exec rake frontend_assets:download 2>&1 | tee --append $logc $quiet
 
 	( bundle exec rails server 2>&1 | tee --append $LOGC $QUIET ) &
 popd
 
 pushd ~/projects/content-service
-	rvm use ruby-1.9.3-p551
+	rvm use ruby-1.9.3-p392
 	mkdir -p log
-	bundle exec ./cli start
+	bundle install 2>&1 | tee --append $LOGCS $QUIET
+	bundle exec ./cli start 2>&1 | tee --append $LOGCS $QUIET
 popd
 
 # Get grunt tasks running in core-ui
