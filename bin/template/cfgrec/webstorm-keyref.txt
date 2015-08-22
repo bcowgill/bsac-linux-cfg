@@ -11,6 +11,7 @@ KEY:WEBSTORM:NAV F12 move from the editor to the last focussed tool window
 KEY:WEBSTORM:NAV Ctrl-Shift-Backspace [Navigate/Last Edit Location] jump back to the last place where you made changes to a file. keep pressing to go back further
 KEY:WEBSTORM:NAV Alt-Home Go to the breadcrumb navigation bar to navigate files/folders
 KEY:WEBSTORM:NAV Ctrl-h [Navigate/Type Hierarchy] View inheritance hierarchy for selected function or class
+KEY:WEBSTORM:NAV Alt-9 Show list of all changed/added files in tool window and access version control
 
 KEY:WEBSTORM:VIEW Shift-mousewheel horizontal scrolling of the window
 
@@ -19,6 +20,7 @@ KEY:WEBSTORM:MARK F3 jump to next highlighted term
 KEY:WEBSTORM:MARK Shift-F3 jump to previous highlighted term
 
 KEY:WEBSTORM:FIND Ctrl-n [Navigate/Class] popup to find any class by incremental search use @class markers to mark your classes
+KEY:WEBSTORM:FIND Camel Case letters in Go to Class, Go to Symbol or Go to File Type DI to match DocumentsItem, etc...
 KEY:WEBSTORM:FIND Ctrl-Shift-n [Navigate/File] popup to open any file by incremental search
 KEY:WEBSTORM:FIND Ctrl-Alt-Shift-n [Navigate/Class] popup to find any symbol by incremental search
 KEY:WEBSTORM:FIND Alt-Shift-7 [RightClick/Find Usages] find usages of symbol at cursor show in the find window
@@ -35,18 +37,18 @@ KEY:WEBSTORM:PASTE Ctrl-w [Edit/Extend Selection] widen selection. keep pressing
 KEY:WEBSTORM:PASTE Ctrl-d duplicates the selected block or current line
 KEY:WEBSTORM:PASTE Ctrl-Shift-v [Edit/Paste from History] paste recent clipboard contents.
 
-KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, text, comments, etc) use incremental search in the popup.
+KEY:WEBSTORM:CODE Ctrl-Space code completion (html attributes, object properties, text, comments, src=image names etc) use incremental search in the popup.
 KEY:WEBSTORM:CODE Tab insert selected code completion name and erase anything to right of cursor
 KEY:WEBSTORM:CODE Enter insert selected code completion name keeping anything to right of cursor
 KEY:WEBSTORM:CODE . , ; insert selected code completion name and append the . , or ; character
-KEY:WEBSTORM:CODE Shift-F6 [Refactor/Rename] rename class/methods/variables with automatic correction of all references.
+KEY:WEBSTORM:CODE Shift-F6 [Refactor/Rename] rename class/methods/variables/css selectors with automatic correction of all references.
 KEY:WEBSTORM:CODE Ctrl-p [View/Parameter Info] list parameters for function call when within parenthesis. works in code completion popup too.
 KEY:WEBSTORM:CODE Alt-Shift-v [Refactor/Extract Variable] pull the selected text out into a variable
 KEY:WEBSTORM:CODE Ctrl-Shift-i [View/Quick Definition] popup to show definition of a symbol. can use in the code completion popup as well
+KEY:WEBSTORM:CODE Ctrl-Shift-i [View/Quick Definition] popup also shows the image in an img tag
 KEY:WEBSTORM:CODE Ctrl-Shift-Enter complete statement if,do-while,try-catch etc
 KEY:WEBSTORM:CODE Alt-q [View/Context Info] see declaration of current method without scrolling to it
 
-HEREIAM
 KEY:WEBSTORM:CODE Ctrl-Alt-t [Code/Surround With] Wrap line/selected text with a code construct if/while, etc
 
 KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor. works in code completion popup too.
@@ -60,5 +62,11 @@ KEY:WEBSTORM:BUILD Shift-F2 [Navigate/Previous Highlighted Error] Jump to previo
 KEY:WEBSTORM:BUILD Ctrl-Alt-Up/Down Jump between compiler error messages or search operation results
 
 KEY:WEBSTORM:DEBUGGER Alt-Shift-8 [Run/Evaluate Expression] evaluate value of selected text when debugging
+KEY:WEBSTORM:DEBUGGER Alt-Shift-F10 Quick Run/Debug popup menu
+KEY:WEBSTORM:DEBUGGER Alt-Shift-F9 Quick Debug/Run popup menu
 KEY:WEBSTORM:DEBUGGER Right-Click on a breakpoint in the left gutter for Context menu to set conditions
 
+KEY:WEBSTORM:CONFIG Ctrl-` [View/Quick Switch Scheme Alt-v q] quick switch colour/style/keys/view/theme
+
+HEREIAM
+last tips Alt-Home, Alt-9 changes

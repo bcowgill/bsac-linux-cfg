@@ -19,6 +19,7 @@ LOGCS=/tmp/bcowgill/build-cirrus-local-content-service.log
 LOGS="$LOGC $LOGD $LOGSK $LOGCU $LOGDU $LOGNU $LOGCS"
 
 #GRUNT=0
+QUIET="> /dev/null"
 
 # Configure changes to run things locally
 pushd ~/projects/core-ui
@@ -146,16 +147,16 @@ rvm use 2.1.5
 redis-server &
 
 pushd ~/projects/dealroom
-( RAILS_RELATIVE_URL_ROOT='/dealroom' bundle exec rails server -p 3001 2>&1 | tee --append $LOGD ) &
-( bundle exec sidekiq 2>&1 | tee --append $LOGSK )
+( RAILS_RELATIVE_URL_ROOT='/dealroom' bundle exec rails server -p 3001 2>&1 | tee --append $LOGD $QUIET ) &
+( bundle exec sidekiq 2>&1 | tee --append $LOGSK $QUIET )
 popd
 
 pushd ~/projects/cirrus
 	rvm use ruby-1.9.3-p551
-	bundle exec rake frontend_assets:clean 2>&1 | tee --append $LOGC
-	bundle exec rake frontend_assets:download 2>&1 | tee --append $LOGC
+	bundle exec rake frontend_assets:clean 2>&1 | tee --append $LOGC $QUIET
+	bundle exec rake frontend_assets:download 2>&1 | tee --append $LOGC $QUIET
 
-	( bundle exec rails server 2>&1 | tee --append $LOGC ) &
+	( bundle exec rails server 2>&1 | tee --append $LOGC $QUIET ) &
 popd
 
 pushd ~/projects/content-service
@@ -167,67 +168,28 @@ popd
 # Get grunt tasks running in core-ui
 pushd ~/projects/core-ui
 	if [ ${GRUNT:-1} == 1 ]; then
-		grunt build 2>&1 | tee --append $LOGCU
+		grunt build 2>&1 | tee --append $LOGCU $QUIET
 	fi
 popd
 
 # Get grunt tasks running in the dealroom
 pushd ~/projects/dealroom-ui
 	if [ ${GRUNT:-1} == 1 ]; then
-		grunt build 2>&1 | tee --append $LOGDU
-		( grunt watch 2>&1 | tee --append $LOGDU ) &
-		( grunt serve:tests 2>&1 | tee --append $LOGDU ) &
+		grunt build 2>&1 | tee --append $LOGDU $QUIET
+		( grunt watch 2>&1 | tee --append $LOGDU $QUIET ) &
+		( grunt serve:tests 2>&1 | tee --append $LOGDU $QUIET ) &
 	fi
 popd
 
 # Get grunt tasks running for new-ui
 pushd ~/projects/new-ui
 	if [ ${GRUNT:-1} == 1 ]; then
-		grunt build 2>&1 | tee --append $LOGNU
-		( grunt serve --cirrus-env=local 2>&1 | tee --append $LOGNU ) &
+		grunt build 2>&1 | tee --append $LOGNU $QUIET
+		( grunt serve --cirrus-env=local 2>&1 | tee --append $LOGNU  $QUIET ) &
 	fi
 popd
 
-# Check all the grunts are running
-
-GRUNTS=3
-if [ `ps -ef | grep grunt | grep -v grep | wc -l` == $GRUNTS ] ; then
-	echo OK all grunts are running
-else
-	echo NOT OK not all grunts are running should be $GRUNTS
-	ps -ef | grep grunt | grep -v grep
-fi
-
-# Check all the back ends are running
-if ps -ef | grep ruby | grep '2\.1' | grep rails | grep 3001 > /dev/null ; then
-	echo OK ruby rails dealroom server running
-else
-	echo NOT OK ruby rails dealroom server is NOT running
-fi
-
-if ps -ef | grep ruby | grep rackup > /dev/null ; then
-	echo OK ruby dealroom rackup running
-else
-	echo NOT OK ruby dealroom rackup is NOT running
-fi
-
-if ps -ef | grep ruby | grep '/cli start' > /dev/null ; then
-	echo OK ruby content service cli start running
-else
-	echo NOT OK ruby content service cli start is NOT running
-fi
-
-if ps -ef | grep ruby | grep '1\.9' | grep rails > /dev/null ; then
-	echo OK ruby rails cirrus server running
-else
-	echo NOT OK ruby rails cirrus server is NOT running
-fi
-
-if ps -ef | grep sidekiq > /dev/null; then
-	echo OK dealroom sidekiq is running
-else
-	echo NOT OK dealroom sidekiq is NOT running
-fi
+check-back-ends.sh
 
 echo In the browser, clear your cookies and go to http://localhost:9000
 echo and login successfuly with u: admin@email.com pass: fishpaste
