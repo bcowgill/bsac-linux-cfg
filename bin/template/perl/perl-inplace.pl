@@ -311,7 +311,7 @@ sub checkMandatoryOptions
 			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
-  return $raErrors;
+	return $raErrors;
 }
 
 # Perform command line option processing and call main function.

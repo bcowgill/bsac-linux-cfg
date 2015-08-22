@@ -281,7 +281,7 @@ sub doLine
 	$line =~ s{$regex}{length($line) . q{ }}xmse;
 	$print = 1;
 	print $line if $print;
-  return ( $line, $print );
+	return ( $line, $print );
 }
 
 # Must manually check mandatory values present
@@ -350,7 +350,7 @@ sub checkMandatoryOptions
 			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
-  return $raErrors;
+	return $raErrors;
 }
 
 # Perform command line option processing and call main function.

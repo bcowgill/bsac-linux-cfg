@@ -54,49 +54,53 @@ ls-tabs.pl [options] [@options-file ...] [file ...]
 
 use strict;
 use warnings;
-use English -no_match_vars;
-use Getopt::ArgvFile defult => 1; # allows specifying an @options file to read more command line arguments from
+
+use English qw(-no_match_vars);
+use Getopt::ArgvFile defult => 1;    # allows specifying an @options file to read more command line arguments from
 use Getopt::Long;
 use Pod::Usage;
+
 #use Getopt::Long::Descriptive; # https://github.com/rjbs/Getopt-Long-Descriptive/blob/master/lib/Getopt/Long/Descriptive.pm
 #use Switch;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
-$Data::Dumper::Indent = 1;
-$Data::Dumper::Terse = 1;
+$Data::Dumper::Indent   = 1;
+$Data::Dumper::Terse    = 1;
 
-our $VERSION = 0.1; # shown by --version option
+our $VERSION = 0.1;       # shown by --version option
+our $STDIO   = "";
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
 			spaces => 4,  # default number of spaces per tab stop
-			'' => 0,      # indicates standard in/out as - on command line
-			debug => 0,
-			man => 0,     # show full help page
+			$STDIO  => 0,    # indicates standard in/out as - on command line
+			debug   => 0,
+			man     => 0,    # show full help page
 		},
 		raFile => [],
 	},
 	rhGetopt => {
-		result => undef,
+		result   => undef,
 		raErrors => [],
 		raConfig => [
-			"bundling",     # bundle single char options ie ps -aux
-			"auto_version", # supplies --version option
-			"auto_help",    # supplies --help -? options to show usage in POD SYNOPSIS
-#			"debug",        # debug the argument processing
+			"bundling",        # bundle single char options ie ps -aux
+			"auto_version",    # supplies --version option
+			"auto_help",       # supplies --help -? options to show usage in POD SYNOPSIS
+
+##			"debug",           # debug the argument processing
 		],
 		raOpts => [
 			"spaces|s:i", # option sets the number of spaces per tab
-			"debug|d+",   # incremental keep specifying to increase
-			"",           # empty string allows - to signify standard in/out as a file
-			"man",        # show manual page only
+			"debug|d+",      # incremental keep specifying to increase
+			$STDIO,          # empty string allows - to signify standard in/out as a file
+			"man",           # show manual page only
 		],
-		raMandatory => [], # additional mandatory parameters not defined by = above.
-		roParser => Getopt::Long::Parser->new,
+		raMandatory => [],    # additional mandatory parameters not defined by = above.
+		roParser    => Getopt::Long::Parser->new,
 	},
-
+	fileName   => '<STDIN>',    # name of file
 	prefix_tabs => 0,
 	prefix_spaces => 0,
 	uneven_spacing => 0,
@@ -104,31 +108,67 @@ my %Var = (
 	lines_seen => 0,
 );
 
+# Return the value of a command line option
+sub opt
+{
+	my ($opt) = @ARG;
+	return defined($opt) ?
+		$Var{'rhArg'}{'rhOpt'}{$opt} :
+		$Var{'rhArg'}{'rhOpt'};
+}
+
+sub hasOpt
+{
+	my ($opt) = @ARG;
+	return exists( $Var{'rhArg'}{'rhOpt'}{$opt} );
+}
+
+sub setOpt
+{
+	my ( $opt, $value ) = @ARG;
+	return $Var{'rhArg'}{'rhOpt'}{$opt} = $value;
+}
+
+sub arg
+{
+	my ($arg) = @ARG;
+	return defined($arg) ?
+		$Var{'rhArg'}{$arg} :
+		$Var{'rhArg'};
+}
+
+sub setArg
+{
+	my ( $arg, $value ) = @ARG;
+	return $Var{'rhArg'}{$arg} = $value;
+}
+
 getOptions();
 
 sub main
 {
-	my ($rhOpt, $raFiles, $use_stdio) = @ARG;
-	debug("Var: " . Dumper(\%Var), 2);
-	debug("main() rhOpt: " . Dumper($rhOpt) . "\nraFiles: " . Dumper($raFiles) . "\nuse_stdio: $use_stdio\n", 2);
+	my ($raFiles) = @ARG;
+	debug( "Var: " . Dumper( \%Var ), 2 );
+	debug( "main() rhOpt: " . Dumper( opt() ) .
+		"\nraFiles: " . Dumper($raFiles) .
+		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
 
-	if ($use_stdio)
+	if ( opt($STDIO) )
 	{
-		processStdio($rhOpt);
+		processStdio();
 	}
-	processFiles($raFiles, $rhOpt) if scalar(@$raFiles);
-	summary($rhOpt);
+	processFiles( $raFiles ) if scalar(@$raFiles);
+	summary();
 }
 
 sub summary
 {
-	my ($rhOpt) = @ARG;
 	print "=====\n$Var{'lines_seen'} lines read\n";
 	print "$Var{'prefix_spaces'} lines with prefix spacing\n";
 	print "$Var{'prefix_tabs'} lines with prefix tabs\n";
 	if ($Var{'uneven_spacing'})
 	{
-		print "spacing which mismatches tab depth (spaces=$rhOpt->{spaces}) found.\n";
+		print "spacing which mismatches tab depth (spaces=@{[opt('spaces')]}) found.\n";
 		$Var{'code'} = 2;
 	}
 	if ($Var{'prefix_tabs'} && $Var{'prefix_spaces'})
@@ -137,52 +177,51 @@ sub summary
 		$Var{'code'} = 1;
 	}
 
-	print "spacing ok for tab stop $rhOpt->{spaces}\n" if $Var{'code'} == 0;
+	print "spacing ok for tab stop @{[opt('spaces')]}\n" if $Var{'code'} == 0;
 	exit($Var{'code'});
 }
 
 sub setup
 {
-	my ($rhOpt) = @ARG;
-	$OUTPUT_AUTOFLUSH = 1 if $rhOpt->{debug};
-	debug("Var: " . Dumper(\%Var), 2);
-	debug("setup() rhOpt: " . Dumper($rhOpt), 2);
+	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
+	debug( "Var: " . Dumper( \%Var ), 2 );
+	debug( "setup() rhOpt: " . Dumper( opt() ), 2 );
 }
 
 sub processStdio
 {
-	my ($rhOpt) = @ARG;
 	my $print = 0;
 	debug("processStdio()\n");
-	while (my $line = <STDIN>)
+	$Var{fileName} = "<STDIN>";
+	while ( my $line = <STDIN> )
 	{
-		debug("line: $line");
-		($line, $print) = doLine($rhOpt, $line, $print);
+		( $line, $print ) = doLine( $line, $print );
 		print $line if $print;
 	}
 }
 
 sub processFiles
 {
-	my ($raFiles, $rhOpt) = @ARG;
+	my ($raFiles) = @ARG;
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		processFile($fileName, $rhOpt);
+		processFile( $fileName );
 	}
 }
 
 sub processFile
 {
-	my ($fileName, $rhOpt) = @ARG;
+	my ($fileName) = @ARG;
 	debug("processFile($fileName)\n");
 
+	$Var{fileName} = $fileName;
 	my $print = 0;
 	my $fh;
-	open($fh, "<", $fileName);
-	while (my $line = <$fh>)
+	open( $fh, "<", $fileName );
+	while ( my $line = <$fh> )
 	{
-		($line, $print) = doLine($rhOpt, $line);
+		( $line, $print ) = doLine( $line, $print );
 		print $line if $print;
 	}
 	close($fh);
@@ -203,20 +242,22 @@ sub mark_spacing
 {
 	# mark spaces '.' tabs 'T' and a tab's worth of spaces as '|..|'
 	my ($prefix) = @ARG;
-	my $TAB_STOP = $Var{rhArg}{rhOpt}{spaces};
+	my $TAB_STOP = opt('spaces');
+	debug("TAB_STOP: [$TAB_STOP]", 2);
 	$prefix =~ s{ \ {$TAB_STOP} }{ '|' . ('.' x ($TAB_STOP - 2)) . '|' }xmsge;
 	$prefix =~ tr[ \t][.T];
 	$Var{'uneven_spacing'}++ if ($prefix =~ m{\.}xms);
+	debug("prefix: $prefix", 2);
 	return $prefix;
 }
 
 sub doLine
 {
-	my ($rhOpt, $line) = @ARG;
+	my ($line, $print) = @ARG;
 
 	++$Var{'lines_seen'};
 	# ignore lines with no lead spacing
-	my $print = 0;
+	$print = 0;
 	debug("$Var{'lines_seen'}: $line");
 	return ($line, $print) if ($line =~ m{\A \S}xms);
 	debug("past gate1, has some lead space");
@@ -238,7 +279,6 @@ sub doLine
 		debug("lead space only");
 		$line = show_line($line);
 		$print = 1;
-#		return ($line, $print) if $line =~ m{\A \ + (\n|\z)}xms;
 	}
 	else
 	{
@@ -254,55 +294,58 @@ sub doLine
 # Must manually check mandatory values present
 sub checkOptions
 {
-	my ($raErrors, $rhOpt, $raFiles, $use_stdio) = @ARG;
-	checkMandatoryOptions($raErrors, $rhOpt, $Var{rhGetopt}{raMandatory});
+	my ( $raErrors, $raFiles ) = @ARG;
+	checkMandatoryOptions( $raErrors, $Var{rhGetopt}{raMandatory} );
 
 	# Check additional parameter dependencies and push onto error array
 
-	if (scalar(@$raErrors))
+	if ( scalar(@$raErrors) )
 	{
-		usage(join("\n", @$raErrors));
+		usage( join( "\n", @$raErrors ) );
 	}
 }
 
 sub checkMandatoryOptions
 {
-	my ($raErrors, $rhOpt, $raMandatory) = @ARG;
+	my ( $raErrors, $raMandatory ) = @ARG;
 
 	$raMandatory = $raMandatory || [];
-	foreach my $option (@{$Var{rhGetopt}{raOpts}})
+	foreach my $option ( @{ $Var{rhGetopt}{raOpts} } )
 	{
 		# Getopt option has = sign for mandatory options
 		my $optName = undef;
 		$optName = $1 if $option =~ m{\A (\w+)}xms;
-		if ($option =~ m{\A (\w+) .* =}xms
-			|| ($optName && grep { $ARG eq $optName } @{$raMandatory}))
+		if ( $option =~ m{\A (\w+) .* =}xms
+			|| ( $optName && grep { $ARG eq $optName } @{$raMandatory} ) )
 		{
 			my $error = 0;
 
 			# Work out what type of parameter it might be
 			my $type = "value";
-			$type = 'number value' if $option =~ m{=f}xms;
-			$type = 'integer value' if $option =~ m{=i}xms;
-			$type = 'incremental value' if $option =~ m{\+}xms;
-			$type = 'negatable value' if $option =~ m{\!}xms;
+			$type = 'number value'                 if $option =~ m{=f}xms;
+			$type = 'integer value'                if $option =~ m{=i}xms;
+			$type = 'incremental value'            if $option =~ m{\+}xms;
+			$type = 'negatable value'              if $option =~ m{\!}xms;
 			$type = 'decimal/oct/hex/binary value' if $option =~ m{=o}xms;
-			$type = 'string value' if $option =~ m{=s}xms;
-			$type =~ s{value}{multi-value}xms if $option =~ m{\@}xms;
+			$type = 'string value'                 if $option =~ m{=s}xms;
+			$type =~ s{value}{multi-value}xms    if $option =~ m{\@}xms;
 			$type =~ s{value}{key/value pair}xms if $option =~ m{\%}xms;
 
-			if (exists($rhOpt->{$optName}))
+			if ( hasOpt($optName) )
 			{
-				my $ref = ref($rhOpt->{$optName});
-				if ('ARRAY' eq $ref && 0 == scalar(@{$rhOpt->{$optName}}))
+				my $opt = opt($optName);
+				my $ref = ref($opt);
+				if ( 'ARRAY' eq $ref && 0 == scalar(@$opt) )
 				{
 					$error = 1;
+
 					# type might not be configured but we know it now
 					$type =~ s{value}{multi-value}xms unless $type =~ m{multi-value}xms;
 				}
-				if ('HASH' eq $ref && 0 == scalar(keys(%{$rhOpt->{$optName}})))
+				if ( 'HASH' eq $ref && 0 == scalar( keys(%$opt) ) )
 				{
 					$error = 1;
+
 					# type might not be configured but we know it now
 					$type =~ s{value}{key/value pair}xms unless $type =~ m{key/value}xms;
 				}
@@ -311,7 +354,7 @@ sub checkMandatoryOptions
 			{
 				$error = 1;
 			}
-			push(@$raErrors, "--$optName $type is a mandatory parameter.") if $error;
+			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
 	return $raErrors;
@@ -320,25 +363,18 @@ sub checkMandatoryOptions
 # Perform command line option processing and call main function.
 sub getOptions
 {
-	$Var{rhGetopt}{roParser}->configure(@{$Var{rhGetopt}{raConfig}});
-	$Var{rhGetopt}{result} = 	$Var{rhGetopt}{roParser}->getoptions(
-		$Var{rhArg}{rhOpt},
-		@{$Var{rhGetopt}{raOpts}}
-	);
-	if ($Var{rhGetopt}{result})
+	$Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
+	$Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}->getoptions( opt(), @{ $Var{rhGetopt}{raOpts} } );
+	if ( $Var{rhGetopt}{result} )
 	{
-		manual() if $Var{rhArg}{rhOpt}{man};
-		$Var{rhArg}{raFile} = \@ARGV;
+		manual() if opt('man');
+		setArg( 'raFile', \@ARGV );
+
 		# set stdio option if no file names provided
-		$Var{rhArg}{rhOpt}{''} = 1 unless scalar(@{$Var{rhArg}{raFile}});
-		checkOptions(
-			$Var{rhGetopt}{raErrors},
-			$Var{rhArg}{rhOpt},
-			$Var{rhArg}{raFile},
-			$Var{rhArg}{rhOpt}{''} ## use_stdio option
-		);
-		setup($Var{rhArg}{rhOpt});
-		main($Var{rhArg}{rhOpt}, $Var{rhArg}{raFile}, $Var{rhArg}{rhOpt}{''});
+		setOpt( $STDIO, 1 ) unless scalar( @{ arg('raFile') } );
+		checkOptions( $Var{rhGetopt}{raErrors}, arg('raFile') );
+		setup();
+		main( arg('raFile'), opt($STDIO) );
 	}
 	else
 	{
@@ -351,22 +387,24 @@ sub getOptions
 sub tab
 {
 	my ($message) = @ARG;
-	$message =~ s{\t}{   }xmsg;
+	my $THREE_SPACES = ' ' x 3;
+	$message =~ s{\t}{$THREE_SPACES}xmsg;
 	return $message;
 }
 
 sub warning
 {
 	my ($warning) = @ARG;
-	warn("WARN: " . tab($warning) . "\n");
+	warn( "WARN: " . tab($warning) . "\n" );
 }
 
 sub debug
 {
-	my ($msg, $level) = @ARG;
+	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
-#	print "debug @{[substr($msg,0,10)]} debug: $Var{'rhArg'}{'rhOpt'}{'debug'} level: $level\n";
-	print tab($msg) . "\n" if ($Var{'rhArg'}{'rhOpt'}{'debug'} >= $level);
+
+##	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
+	print tab($msg) . "\n" if ( opt('debug') >= $level );
 }
 
 sub usage
@@ -388,3 +426,4 @@ sub manual
 	);
 }
 
+__END__

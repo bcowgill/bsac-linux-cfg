@@ -1,0 +1,36 @@
+[1mNAME[0m
+    ls-tabs.pl - List tab and space inconsistencies in files
+
+[1mAUTHOR[0m
+    Brent S.A. Cowgill
+
+[1mSYNOPSIS[0m
+    ls-tabs.pl [options] [@options-file ...] [file ...]
+
+     Options:
+       --spaces=N       optional. number of spaced per tab stop. default 4
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
+
+[1mOPTIONS[0m
+    [1m--spaces[0m
+             optional. Set the number of spaces to use per tab stop.
+             default 4
+
+    [1m--version[0m
+             Prints the program version and exit.
+
+    [1m--help[0m or [1m-?[0m
+             Print a brief help message and exit.
+
+    [1m--man[0m
+             Print the full help message and exit.
+
+[1mDESCRIPTION[0m
+     This program will read the given input file(s) and show you lines
+     which have inconsistent tabs and spaces.
+
+[1mEXAMPLES[0m
+     ls-tabs.pl --spaces=3 hello.c
+

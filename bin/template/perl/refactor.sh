@@ -24,11 +24,11 @@ $DIFF template/perl/perl.pl template/perl/perl-inplace.pl
 
 BASE=template/perl/perl.pl
 
+diff $BASE ls-tabs.pl
+exit 1
 diff $BASE scan-js.pl
 
-exit 1
 
-diff $BASE ls-tabs.pl
 diff $BASE render-tt.pl
 
 BASE=template/perl/perl-inplace.pl

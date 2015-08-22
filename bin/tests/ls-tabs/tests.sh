@@ -21,7 +21,6 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-SKIP=1
 echo TEST $CMD --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then
@@ -73,6 +72,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE"
+#	echo $PROGRAM $ARGS to $OUT
 	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
