@@ -1,4 +1,6 @@
 Var: {
+  'entireFile' => '',
+  'fileName' => '<STDIN>',
   'rhArg' => {
     'raFile' => [
       'in/sample.txt'
@@ -28,6 +30,7 @@ Var: {
     'raErrors' => [],
     'raMandatory' => [],
     'raOpts' => [
+      'entire!',
       'length|l=i',
       'width:3',
       'ratio|r:f',
@@ -83,6 +86,8 @@ setup() rhOpt: {
 }
 
 Var: {
+  'entireFile' => '',
+  'fileName' => '<STDIN>',
   'rhArg' => {
     'raFile' => [
       'in/sample.txt'
@@ -112,6 +117,7 @@ Var: {
     'raErrors' => [],
     'raMandatory' => [],
     'raOpts' => [
+      'entire!',
       'length|l=i',
       'width:3',
       'ratio|r:f',

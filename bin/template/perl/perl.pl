@@ -89,6 +89,7 @@ my %Var = (
 #			"debug",        # debug the argument processing
 		],
 		raOpts => [
+			"entire!",    # process entire file instead of reading line by line
 			"length|l=i", # numeric required --length or -l (explicit defined)
 			"width:3",    # numeric optional with default value if none given on command line but not necessarily the default assigned if not present on command line
 			"ratio|r:f",  # float optional
@@ -108,6 +109,9 @@ my %Var = (
 		raMandatory => [], # additional mandatory parameters not defined by = above.
 		roParser => Getopt::Long::Parser->new,
 	},
+	fileName => '<STDIN>', # name of file
+	entireFile => '',      # entire file contents for processing
+
 );
 
 # Return the value of a command line option
@@ -152,7 +156,14 @@ sub main
 
 	if (opt($STDIO))
 	{
-		processStdio();
+		if (opt('entire'))
+		{
+			processEntireStdio();
+		}
+		else
+		{
+			processStdio();
+		}
 	}
 	processFiles($raFiles) if scalar(@$raFiles);
 	summary();
@@ -174,10 +185,22 @@ sub processStdio
 {
 	my $print = 0;
 	debug("processStdio()\n");
+	$Var{fileName} = "<STDIN>";
 	while (my $line = <STDIN>)
 	{
 		($line, $print) = doLine($line, $print);
 	}
+}
+
+sub processEntireStdio
+{
+	debug("processEntireStdio()\n");
+	local $INPUT_RECORD_SEPARATOR = undef;
+	my $file = <STDIN>;
+
+	$Var{fileName} = "<STDIN>";
+	$Var{entireFile} = $file;
+	doEntireLines();
 }
 
 sub processFiles
@@ -186,9 +209,14 @@ sub processFiles
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		processFile($fileName);
-# option to process entire file rather then line by line
-#		processEntireFile($fileName);
+		if (opt('entire'))
+		{
+			processEntireFile($fileName);
+		}
+		else
+		{
+			processFile($fileName);
+		}
 	}
 }
 
@@ -198,6 +226,7 @@ sub processFile
 	debug("processFile($fileName)\n");
 
 	# example read the file and show something line by line
+	$Var{fileName} = $fileName;
 	my $print = 0;
 	my $fh;
 	open($fh, "<", $fileName);
@@ -211,17 +240,31 @@ sub processFile
 sub processEntireFile
 {
 	my ($fileName) = @ARG;
-	debug("processFile($fileName)\n");
+	debug("processEntireFile($fileName)\n");
 
 	# example read the entire file and show something line by line
-	my $print = 0;
-	my $fh;
 	local $INPUT_RECORD_SEPARATOR = undef;
+	my $fh;
 	open($fh, "<", $fileName);
 	my $file = <$fh>;
-	$lines_seen += getLinesInFile($file);
-	print $file if $print;
 	close($fh);
+
+	$Var{fileName} = $fileName;
+	$Var{entireFile} = $file;
+	doEntireLines();
+}
+
+sub doEntireLines
+{
+	my $line;
+	my $print = 0;
+	print "$Var{fileName}\n";
+	my @Lines = split("\n", $Var{entireFile});
+	for (my $idx = 0; $idx < scalar(@Lines); ++$idx)
+	{
+		$line = $Lines[$idx] . "\n";
+		($line, $print) = doLine($line, $print);
+	}
 }
 
 sub getLinesInFile
