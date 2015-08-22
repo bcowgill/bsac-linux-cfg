@@ -1,0 +1,192 @@
+Var: {
+  'rhArg' => {
+    'raFile' => [
+      'in/sample.txt'
+    ],
+    'rhOpt' => {
+      '' => 0,
+      'debug' => 4,
+      'file' => 'filename',
+      'hex' => 15486,
+      'length' => 42,
+      'man' => 0,
+      'map' => {
+        'key' => 'value'
+      },
+      'name' => [
+        'name'
+      ],
+      'verbose' => 1
+    }
+  },
+  'rhGetopt' => {
+    'raConfig' => [
+      'bundling',
+      'auto_version',
+      'auto_help'
+    ],
+    'raErrors' => [],
+    'raMandatory' => [],
+    'raOpts' => [
+      'length|l=i',
+      'width:3',
+      'ratio|r:f',
+      'hex=o',
+      'file=s',
+      'in:s',
+      'out:s',
+      'name|n=s@',
+      'map|m=s%',
+      'debug|d+',
+      'verbose|v!',
+      '',
+      'man'
+    ],
+    'result' => 1,
+    'roParser' => bless( {
+      'caller_pkg' => 'main',
+      'settings' => [
+        0,
+        0,
+        '2',
+        '42',
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        '(--|-|\\+)',
+        1,
+        1,
+        '(--)'
+      ]
+    }, 'Getopt::Long::Parser' )
+  }
+}
+
+setup() rhOpt: {
+  '' => 0,
+  'debug' => 4,
+  'file' => 'filename',
+  'hex' => 15486,
+  'length' => 42,
+  'man' => 0,
+  'map' => {
+    'key' => 'value'
+  },
+  'name' => [
+    'name'
+  ],
+  'verbose' => 1
+}
+
+Var: {
+  'rhArg' => {
+    'raFile' => [
+      'in/sample.txt'
+    ],
+    'rhOpt' => {
+      '' => 0,
+      'debug' => 4,
+      'file' => 'filename',
+      'hex' => 15486,
+      'length' => 42,
+      'man' => 0,
+      'map' => {
+        'key' => 'value'
+      },
+      'name' => [
+        'name'
+      ],
+      'verbose' => 1
+    }
+  },
+  'rhGetopt' => {
+    'raConfig' => [
+      'bundling',
+      'auto_version',
+      'auto_help'
+    ],
+    'raErrors' => [],
+    'raMandatory' => [],
+    'raOpts' => [
+      'length|l=i',
+      'width:3',
+      'ratio|r:f',
+      'hex=o',
+      'file=s',
+      'in:s',
+      'out:s',
+      'name|n=s@',
+      'map|m=s%',
+      'debug|d+',
+      'verbose|v!',
+      '',
+      'man'
+    ],
+    'result' => 1,
+    'roParser' => bless( {
+      'caller_pkg' => 'main',
+      'settings' => [
+        0,
+        0,
+        '2',
+        '42',
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        '(--|-|\\+)',
+        1,
+        1,
+        '(--)'
+      ]
+    }, 'Getopt::Long::Parser' )
+  }
+}
+
+main() rhOpt: {
+  '' => 0,
+  'debug' => 4,
+  'file' => 'filename',
+  'hex' => 15486,
+  'length' => 42,
+  'man' => 0,
+  'map' => {
+    'key' => 'value'
+  },
+  'name' => [
+    'name'
+  ],
+  'verbose' => 1
+}
+
+raFiles: [
+  'in/sample.txt'
+]
+
+use_stdio: 0
+
+processFiles()
+
+processFile(in/sample.txt)
+
+doLine: 
+
+1 
+doLine: one line
+
+9 one line
+doLine: and another
+
+12 and another
+doLine: 
+
+1 
+=====
+4 lines read

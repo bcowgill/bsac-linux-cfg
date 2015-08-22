@@ -176,9 +176,7 @@ sub processStdio
 	debug("processStdio()\n");
 	while (my $line = <STDIN>)
 	{
-		debug("line: $line");
 		($line, $print) = doLine($line, $print);
-		print $line if $print;
 	}
 }
 
@@ -206,7 +204,6 @@ sub processFile
 	while (my $line = <$fh>)
 	{
 		($line, $print) = doLine($line, $print);
-		print $line if $print;
 	}
 	close($fh);
 }
@@ -253,10 +250,12 @@ sub getLinesInFile
 sub doLine
 {
 	my ($line, $print) = @ARG;
+	debug("doLine: $line");
 	++$lines_seen;
 	my $regex = qr{\A}xms;
 	$line =~ s{$regex}{length($line) . q{ }}xmse;
 	$print = 1;
+	print $line if $print;
 	return ($line, $print);
 }
 
