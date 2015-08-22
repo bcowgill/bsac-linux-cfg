@@ -112,10 +112,21 @@ fi
 
 #==========================================================================
 # BSAC custom changes from /etc/skel
-export PATH=$HOME/bin:/opt/slickedit/bin:$PATH
+
+COMPANY=
+if [ $HOSTNAME == worksharexps-XPS-15-9530 ]; then
+	COMPANY=workshare
+	export PATH="/opt/slickedit/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+fi
+
+export PATH=$HOME/bin:$PATH
 export EDITOR=/usr/bin/vim
 export WCDSCAN=$HOME
 export TZ=Europe/London
+
+if [ ! -z $COMPANY ]; then
+	PATH=$HOME/bin/$COMPANY:$PATH
+fi
 
 # BSAC show git branch on command prompt
 # see /etc/bash_completion.d/git for options
@@ -163,6 +174,5 @@ fi
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
+export PATH=`upath.sh`
 
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
