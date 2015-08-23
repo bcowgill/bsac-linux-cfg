@@ -8,7 +8,10 @@ filter-css-colors.pl - Find all CSS color declarations in files
 
 --foreground=xxxx substitute a color for all foreground colors
 --background=xxxx you get color: #fff /* original color */;
+--closest mark hard coded colours with the closest named colour
 --undo undo a foreground/background change
+--constants  defined colour constants from hard coded values
+    fg_ bg_ etc
 
 =head1 AUTHOR
 
