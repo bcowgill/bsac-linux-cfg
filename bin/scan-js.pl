@@ -14,12 +14,16 @@ Brent S.A. Cowgill
 scan-js.pl [options] [@options-file ...] [file ...]
 
  Options:
-   --show-code      show the code after comment and string extraction
+   --show-code      negatable. show the code after comment and string extraction
+   --verbose        negatable. show more info about functions. default false
+   --mess           negatable. show more info about functions. default true
+   --summary        negatable. show summary of each file. default true
    --comment-char   use character to replace text in comment extraction
    --string-char    use character to replace text in string extraction
    --version        display program version
    --help -?        brief help message
    --man            full help message
+   --debug          incremental. increase the amount of debugging information shown
 
 =head1 OPTIONS
 
@@ -27,8 +31,22 @@ scan-js.pl [options] [@options-file ...] [file ...]
 
 =item B<--show-code> or B<--noshow-code>
 
- negatable. Print out the source code after comments and strings have been extracted.
- This allow you to diagnose code which might be excessively tricky.
+ negatable. default false. Print out the source code after comments and
+ strings have been extracted.  This allow you to diagnose code which might be
+ excessively tricky.
+
+=item B<--verbose> or B<--noverbose>
+
+ negatable. default false. Print out additional information instead of just
+ mess warnings.
+
+=item B<--mess> or B<--nomess>
+
+ negatable. default true. Print out warnings about possible messy code.
+
+=item B<--summary> or B<--nosummary>
+
+ negatable. default true. Print out summary of each file.
 
 =item B<--comment-char=s>
 
@@ -75,6 +93,18 @@ scan-js.pl [options] [@options-file ...] [file ...]
 
  scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
 
+=head1 TODO
+
+ order output with public then private
+ order output alphabetically
+ order output in line order
+ hide function listing unless warning
+ keep track of number of params perl function
+ percentage code vs comments/strings
+ use jshint to measure complexity of functions
+ omit counting jshint comment blocks
+ closeness of definitions of function to first caller
+
 =cut
 
 use strict;
@@ -103,7 +133,9 @@ my %Var = (
 			"show-code" => 0,
 			"comment-char" => '-',
 			"string-char" => '_',
-			verbose => 1,    # default value for verbose
+			mess    => 1,
+			verbose => 0,    # default value for verbose
+			summary => 1,
 			debug   => 0,
 			man     => 0,    # show full help page
 		},
@@ -121,18 +153,22 @@ my %Var = (
 		],
 		raOpts => [
 			"show-code!",     # flag to print out code after comment and string extraction
+			"verbose|v!",     # flag --verbose or --noverbose
+			"mess|m!",        # flag --mess or --nomess
+			"summary!",       # flag --summary or --nosummary
 			"comment-char:s", # char to replace text in comments
 			"string-char:s",  # char to replace text in strings
-			"debug|d+",      # incremental keep specifying to increase
-			"verbose|v!",    # flag --verbose or --noverbose
-			$STDIO,          # empty string allows - to signify standard in/out as a file
-			"man",           # show manual page only
+			"debug|d+",       # incremental keep specifying to increase
+			$STDIO,           # empty string allows - to signify standard in/out as a file
+			"man",            # show manual page only
 		],
 		raMandatory => [],    # additional mandatory parameters not defined by = above.
 		roParser    => Getopt::Long::Parser->new,
 	},
 	fileName   => '<STDIN>',    # name of file
 	entireFile => '',           # entire file contents for processing
+	warnings => 0,              # number of mess warnings for file
+	firstPrivateFunction => undef,
 	raFunctions => [],     # names of functions found
 	rhFunctions => {},     # names of functions found with line number and callers
 );
@@ -202,15 +238,21 @@ sub summaryOfFile
 		my $firstCallAt = $rhFunction->{callers}[0];
 		if ($firstCallAt)
 		{
-			print "$function() \@ $definedAt called @{[scalar(@{$rhFunction->{callers}})]} time(s) first at $firstCallAt\n";
-			warning("$function() \@ $definedAt called before defined") if $firstCallAt < $definedAt;
+			functionPrint($function, $definedAt, "called @{[scalar(@{$rhFunction->{callers}})]} time(s) first at $firstCallAt\n");
+			functionWarning($function, $definedAt, "defined before first call at $firstCallAt") if $firstCallAt > $definedAt;
 		}
+	}
+	if ($Var{warnings}) {
+		summarize("$Var{warnings} MESS warnings.");
+	}
+	else {
+		summarize("Clean code.");
 	}
 }
 
 sub summary
 {
-	print "=====\n$lines_seen lines read\n";
+	summarize("$lines_seen lines read");
 }
 
 sub setup
@@ -220,21 +262,10 @@ sub setup
 	debug( "setup() rhOpt: " . Dumper( opt() ), 2 );
 }
 
-sub processStdio
-{
-	my $print = 0;
-	debug("processStdio()\n");
-	$Var{fileName} = "<STDIN>";
-	while ( my $line = <STDIN> )
-	{
-		( $line, $print ) = doLine( $line, $print );
-	}
-}
-
 sub processEntireStdio
 {
 	debug("processEntireStdio()\n");
-	$Var{fileName} = "<STDIN>";
+	resetFileInfo("<STDIN>");
 	my $rContent = read_file( \*STDIN, scalar_ref => 1 );
 
 	$Var{entireFile} = $$rContent;
@@ -251,30 +282,12 @@ sub processFiles
 	}
 }
 
-sub processFile
-{
-	my ($fileName) = @ARG;
-	debug("processFile($fileName)\n");
-
-	# example read the file and show something line by line
-	$Var{fileName} = $fileName;
-	my $print = 0;
-	my $fh;
-	open( $fh, "<", $fileName );
-	while ( my $line = <$fh> )
-	{
-		( $line, $print ) = doLine( $line, $print );
-	}
-	close($fh);
-}
-
 sub processEntireFile
 {
 	my ($fileName) = @ARG;
 	debug("processEntireFile($fileName)\n");
 
-	# example slurp in the file and show something line by line
-	$Var{fileName} = $fileName;
+	resetFileInfo($fileName);
 	my $rContent = read_file( $fileName, scalar_ref => 1 );
 	$Var{entireFile} = $$rContent;
 	analyseEntireFile();
@@ -284,9 +297,6 @@ sub analyseEntireFile
 {
 	my $print = opt('show-code');
 	debug("print: $print");
-	print "$Var{fileName}\n";
-	$Var{rhFunctions} = {};
-	$Var{raFunctions} = [];
 	pullOutComments() if opt('comment-char');
 	pullOutStrings() if opt('string-char');
 	print $Var{entireFile} if $print;
@@ -295,6 +305,17 @@ sub analyseEntireFile
 	findFunctionDefinitions(\@Lines);
 	findFunctionReferences(\@Lines);
 	summaryOfFile();
+}
+
+sub resetFileInfo
+{
+	my ($fileName) = @ARG;
+	print "\n$fileName\n";
+	$Var{fileName} = $fileName;
+	$Var{rhFunctions} = {};
+	$Var{raFunctions} = [];
+	$Var{firstPrivateFunction} = undef;
+	$Var{warnings} = 0;
 }
 
 sub pullOutComments
@@ -374,17 +395,36 @@ sub findFunctions
 	#	function something(
 
 	$line =~ s{(\w+) \s* [=:] \s* function \s* \(}{
-		registerFunction($1, $lines_seen)
+		registerFunction({
+			function => $1,
+			access => getFunctionType($1),
+			line => $lines_seen,
+		});
+		""
 	}xmsge;
 	$line =~ s{function \s+ (\w+) \s* \(}{
-		registerFunction($1, $lines_seen)
+		debug("findFunctions match [$1]", 4);
+		debug("findFunctions lines_seen [$lines_seen]", 4);
+		registerFunction({
+			function => $1,
+			access => getFunctionType($1),
+			line => $lines_seen,
+		});
+		""
 	}xmsge;
+}
+
+sub getFunctionType
+{
+	my ($name) = @ARG;
+	return $name =~ m{ \A _ }xms ? 'private' : 'public';
 }
 
 sub registerFunction
 {
-	my ($function, $line) = @ARG;
+	my ($rhFunction) = @ARG;
 
+	my $function = $rhFunction->{function};
 	if ($Var{rhFunctions}{$function})
 	{
 		warning("function $function defined again");
@@ -392,10 +432,10 @@ sub registerFunction
 	else
 	{
 		push(@{$Var{raFunctions}}, $function);
-		$Var{rhFunctions}{$function} = {
-			line => $line,
-			callers => [],
-		}
+		$Var{rhFunctions}{$function} = $rhFunction;
+		$rhFunction->{callers} = [];
+		trackFirstPrivateFunction($rhFunction);
+		warnIfPublicFunctionAfterPrivates($rhFunction);
 	}
 }
 
@@ -406,6 +446,25 @@ sub registerCaller
 	if ($line != $Var{rhFunctions}{$function}{line})
 	{
 		push(@{$Var{rhFunctions}{$function}{callers}}, $line);
+	}
+}
+
+sub trackFirstPrivateFunction
+{
+	my ($rhFunction) = @ARG;
+	unless ($Var{firstPrivateFunction}) {
+		$Var{firstPrivateFunction} = $rhFunction->{function}
+		 	if $rhFunction->{access} eq 'private';
+	}
+}
+
+sub warnIfPublicFunctionAfterPrivates
+{
+	my ($rhFunction) = @ARG;
+
+	if ($Var{firstPrivateFunction}
+		&& $rhFunction->{access} ne 'private') {
+		functionWarning($rhFunction->{function}, $rhFunction->{line}, "$rhFunction->{access} function defined after first private function $Var{firstPrivateFunction}()");
 	}
 }
 
@@ -510,10 +569,33 @@ sub tab
 	return $message;
 }
 
+sub info
+{
+	print(@ARG) if opt('verbose');
+}
+
+sub summarize
+{
+	print(@ARG, "\n") if opt('summary');
+}
+
+sub functionPrint
+{
+	my ($function, $line, $message) = @ARG;
+	info("$function() \@ $line $message");
+}
+
+sub functionWarning
+{
+	my ($function, $line, $warning) = @ARG;
+	warning("$function() \@ $line $warning");
+}
+
 sub warning
 {
 	my ($warning) = @ARG;
-	warn( "WARN: " . tab($warning) . "\n" );
+	++$Var{warnings};
+	warn( "MESSY: " . tab($warning) . "\n" ) if opt('mess');
 }
 
 sub debug

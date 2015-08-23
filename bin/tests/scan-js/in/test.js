@@ -26,3 +26,9 @@ another(function () {
 	singleton.method(this);
 });
 
+function _private () {
+}
+
+function public () {
+}
+

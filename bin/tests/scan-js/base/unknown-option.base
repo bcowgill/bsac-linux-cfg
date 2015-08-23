@@ -3,17 +3,32 @@ Usage:
     scan-js.pl [options] [@options-file ...] [file ...]
 
      Options:
-       --show-code      show the code after comment and string extraction
+       --show-code      negatable. show the code after comment and string extraction
+       --verbose        negatable. show more info about functions. default false
+       --mess           negatable. show more info about functions. default true
+       --summary        negatable. show summary of each file. default true
        --comment-char   use character to replace text in comment extraction
        --string-char    use character to replace text in string extraction
        --version        display program version
        --help -?        brief help message
        --man            full help message
+       --debug          incremental. increase the amount of debugging information shown
 
 Options:
     --show-code or --noshow-code
-             negatable. Print out the source code after comments and strings have been extracted.
-             This allow you to diagnose code which might be excessively tricky.
+             negatable. default false. Print out the source code after comments and
+             strings have been extracted.  This allow you to diagnose code which might be
+             excessively tricky.
+
+    --verbose or --noverbose
+             negatable. default false. Print out additional information instead of just
+             mess warnings.
+
+    --mess or --nomess
+             negatable. default true. Print out warnings about possible messy code.
+
+    --summary or --nosummary
+             negatable. default true. Print out summary of each file.
 
     --comment-char=s
              optional. Defaults to '-'. Set the character to use to replace the text

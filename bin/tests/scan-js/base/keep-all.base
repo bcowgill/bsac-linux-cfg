@@ -1,3 +1,8 @@
+MESSY: public() @ 32 public function defined after first private function _private()
+MESSY: something() @ 9 defined before first call at 10
+MESSY: another() @ 13 defined before first call at 14
+MESSY: method() @ 19 defined before first call at 26
+
 in/test.js
 // inline comment
 
@@ -27,8 +32,11 @@ another(function () {
 	singleton.method(this);
 });
 
-something() @ 9 called 3 time(s) first at 10
-another() @ 13 called 3 time(s) first at 14
-method() @ 19 called 1 time(s) first at 26
-=====
-27 lines read
+function _private () {
+}
+
+function public () {
+}
+
+4 MESS warnings.
+33 lines read
