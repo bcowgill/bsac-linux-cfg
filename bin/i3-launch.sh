@@ -2,6 +2,9 @@
 # Launch windows on workspaces as desired when starting up i3 window manager
 # this does not require window classes to be mapped to workspaces
 
+WSBIN=$HOME/bin/workshare
+export PATH=$WSBIN:$PATH
+
 # TODO should use the $shell and other vars from i3-config if possible
 # instead of hard coded here
 shell=1
