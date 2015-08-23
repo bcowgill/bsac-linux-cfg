@@ -4,5 +4,7 @@ MESSY: another() @ 13 defined before first call at 21
 MESSY: method() @ 19 defined before first call at 26
 
 in/test.js
+code: 382 comments: 82 strings: 90
+78% code
 4 MESS warnings.
 33 lines read

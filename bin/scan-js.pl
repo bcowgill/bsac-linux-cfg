@@ -20,6 +20,7 @@ scan-js.pl [options] [@options-file ...] [file ...]
    --summary        negatable. show summary of each file. default true
    --comment-char   use character to replace text in comment extraction
    --string-char    use character to replace text in string extraction
+   --lint-length    allowed length of jshint control comments to ignore
    --version        display program version
    --help -?        brief help message
    --man            full help message
@@ -61,6 +62,12 @@ scan-js.pl [options] [@options-file ...] [file ...]
  --string-char='' then strings will not be stripped from the code.
  This is useful if functions are referred to by name in some strings.
 
+=item B<--lint-length=n>
+
+ optional. Defaults to 30. The maximum length of a jshint or jslint comment
+ for it to not count against the amount of comments in the file. If there
+ is only one such comment in the file it is also ignored.
+
 =item B<--version>
 
  Prints the program version and exit.
@@ -99,10 +106,8 @@ scan-js.pl [options] [@options-file ...] [file ...]
  order output alphabetically
  order output in line order
  hide function listing unless warning
- keep track of number of params perl function
- percentage code vs comments/strings
+ keep track of number of params per function
  use jshint to measure complexity of functions
- omit counting jshint comment blocks
  closeness of definitions of function to first caller
 
 =cut
@@ -133,6 +138,7 @@ my %Var = (
 			"show-code" => 0,
 			"comment-char" => '-',
 			"string-char" => '_',
+			"lint-length" => 30,
 			mess    => 1,
 			verbose => 0,    # default value for verbose
 			summary => 1,
@@ -158,6 +164,7 @@ my %Var = (
 			"summary!",       # flag --summary or --nosummary
 			"comment-char:s", # char to replace text in comments
 			"string-char:s",  # char to replace text in strings
+			"lint-length:n",
 			"debug|d+",       # incremental keep specifying to increase
 			$STDIO,           # empty string allows - to signify standard in/out as a file
 			"man",            # show manual page only
@@ -165,10 +172,14 @@ my %Var = (
 		raMandatory => [],    # additional mandatory parameters not defined by = above.
 		roParser    => Getopt::Long::Parser->new,
 	},
-	fileName   => '<STDIN>',    # name of file
 	entireFile => '',           # entire file contents for processing
+	fileName   => '<STDIN>',    # name of file
 	warnings => 0,              # number of mess warnings for file
 	firstPrivateFunction => undef,
+	lintComments => 0,
+	comments => 0,
+	strings => 0,
+	code => 0,
 	raFunctions => [],     # names of functions found
 	rhFunctions => {},     # names of functions found with line number and callers
 );
@@ -229,6 +240,7 @@ sub main
 
 sub summaryOfFile
 {
+	my $isClean = 1;
 	debug("summaryOfFile() raFunctions:" . Dumper($Var{raFunctions}), 3);
 	debug("summaryOfFile() rhFunctions:" . Dumper($Var{rhFunctions}), 4);
 	foreach my $function (@{$Var{raFunctions}})
@@ -242,12 +254,23 @@ sub summaryOfFile
 			functionWarning($function, $definedAt, "defined before first call at $firstCallAt") if $firstCallAt > $definedAt;
 		}
 	}
+	$isClean = computeCleanness();
 	if ($Var{warnings}) {
 		summarize("$Var{warnings} MESS warnings.");
+		$isClean = 0;
 	}
-	else {
+	if ($isClean) {
 		summarize("Clean code.");
 	}
+}
+
+sub computeCleanness
+{
+	$Var{code} = length($Var{entireFile}) - $Var{comments} - $Var{strings};
+	$Var{ratioComments} = $Var{comments} /  ($Var{code} || 0.5);
+	summarize("code: $Var{code} comments: $Var{comments} strings: $Var{strings}");
+	summarize(int(100 * (1-$Var{ratioComments})) . "% code");
+	return $Var{ratioComments} < 1/40;
 }
 
 sub summary
@@ -297,8 +320,8 @@ sub analyseEntireFile
 {
 	my $print = opt('show-code');
 	debug("print: $print");
-	pullOutComments() if opt('comment-char');
-	pullOutStrings() if opt('string-char');
+	pullOutComments();
+	pullOutStrings();
 	print $Var{entireFile} if $print;
 
 	my @Lines = split("\n", $Var{entireFile});
@@ -312,34 +335,74 @@ sub resetFileInfo
 	my ($fileName) = @ARG;
 	print "\n$fileName\n";
 	$Var{fileName} = $fileName;
-	$Var{rhFunctions} = {};
-	$Var{raFunctions} = [];
-	$Var{firstPrivateFunction} = undef;
 	$Var{warnings} = 0;
+	$Var{firstPrivateFunction} = undef;
+	$Var{lintComments} = 0;
+	$Var{comments} = 0;
+	$Var{strings} = 0;
+	$Var{code} = 0;
+	$Var{raFunctions} = [];
+	$Var{rhFunctions} = {};
 }
 
 sub pullOutComments
 {
 	$Var{entireFile} =~ s{/\* (.+?) \*/}{
-		"/*" . blotOut($1, opt('comment-char')) . "*/"
+		replaceComment("/*", $1, "*/");
 	}xmsge;
 	$Var{entireFile} =~ s{// (.+?) (\n|\z)}{
-		"//" . blotOut($1, opt('comment-char')) . $2
+		replaceComment("//", $1, $2);
 	}xmsge;
 }
 
 sub pullOutStrings
 {
 	$Var{entireFile} =~ s{ ([\"']) ( (?:\\\1|.)*? ) \1 }{
-		$1 . blotOut($2, opt('string-char')) . $1
+		replaceString($1, $2)
 	}xmsge;
+}
+
+sub replaceComment
+{
+	my ($before, $comment, $after) = @ARG;
+	trackComment($before, $comment, $after);
+	$comment = blotOut($comment, opt('comment-char'));
+	$comment = $before . $comment . $after;
+	return $comment;
+}
+
+sub replaceString
+{
+	my ($quote, $string) = @ARG;
+	$Var{strings} += 2 + length($string);
+	$string = blotOut($string, opt('string-char'));
+	$string = $quote . blotOut($string, opt('string-char')) . $quote;
+	return $string;
+}
+
+# track comments except for jshint control comments unless they are big
+sub trackComment
+{
+	my ($before, $comment, $after) = @ARG;
+	my $track = 1;
+	my $length = length($before . $comment . $after);
+	if ($comment =~ m{\s* (js[hl]int|globals?|property|exported) \b }xms) {
+		$track = 0 unless $Var{lintComments};
+		$track = 0 if $length <= opt('lint-length');
+		$Var{lintComments}++;
+		debug("trackComment() track: $track length:$length lintcomments: $Var{lintComments} $comment", 3);
+	}
+	$Var{comments} += $length if $track;
 }
 
 sub blotOut
 {
 	my ($text, $char) = @ARG;
-	$char = substr($char, 0, 1);
-	$text =~ s{[^\s]}{$char}xmsg;
+	if (length($char))
+	{
+		$char = substr($char, 0, 1);
+		$text =~ s{[^\s]}{$char}xmsg;
+	}
 	return $text;
 }
 

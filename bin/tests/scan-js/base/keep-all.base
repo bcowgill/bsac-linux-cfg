@@ -5,18 +5,18 @@ MESSY: method() @ 19 defined before first call at 26
 
 in/test.js
 // inline comment
-
+/*global window, alert, console, jquery, it, describe */
 /* Block Comment
  *
  *
  *
  * */
 
-function something (param) {
+function something (param) {/* jshint maxcomplexity: false */
 	var string = "a string 'to' \"be\" ignored something() ";
 }
 
-var another = function (param) {
+var another = function (param) {/* jshint -W034 */
 	var string = 'a string \'to\' "be" ignored another() ';
 	something('blue');
 }
@@ -38,5 +38,7 @@ function _private () {
 function public () {
 }
 
+code: 382 comments: 82 strings: 90
+78% code
 4 MESS warnings.
 33 lines read

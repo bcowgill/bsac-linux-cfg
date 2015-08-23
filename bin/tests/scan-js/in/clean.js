@@ -263,12 +263,10 @@ define(function (require) {
                 .always(_.bind(this._onUploadDone, this));
         },
 
-        /** @private */
         _isNewUploadVersion: function () {
             return !this.initOptions.isEditVersion;
         },
 
-        /** @private */
         _onUploadDone: function () {
             this.container.trigger('upload:done');
             if (this.uploaderController) {
@@ -276,27 +274,20 @@ define(function (require) {
             }
         },
 
-        /** @private */
         _autoComparisonGenerated: function (params) {
             this.container.trigger('autocomparison:generated', params);
         },
 
-        /** @private */
         _autoComparisonGeneratedFail: function (params) {
             this.container.trigger('autocomparison:fail:generated', params);
         },
 
-        /** @private */
         _onUnauthorizedAction: function (jxhr){
             if(jxhr.status === 403){
                 this._setInvalid();
             }
         },
 
-        // underscore doesn't have this method... cross between pick and defaults
-        // grab default values from an object renaming the key when
-        // copying it across, though removing the need to rename the keys
-        // may be better in the long run
         _defaultsRenamed: function (options, defaults, keys) {
             keys.forEach(function (keyToRename) {
                 var rename, original, aRename = keyToRename.split(':');
@@ -305,5 +296,5 @@ define(function (require) {
                 options[rename] = defaults[original];
             });
         }
-});
+    });
 });

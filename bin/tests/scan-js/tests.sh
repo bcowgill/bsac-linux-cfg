@@ -13,7 +13,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 13
+PLAN 14
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -124,6 +124,19 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="--nomess $DEBUG $SAMPLE"
+	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD lint-length test
+TEST=lint-length
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="--nomess --lint-length=3 $DEBUG $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

@@ -1,16 +1,16 @@
 // inline comment
-
+/*global window, alert, console, jquery, it, describe */
 /* Block Comment
  *
  *
  *
  * */
 
-function something (param) {
+function something (param) {/* jshint maxcomplexity: false */
 	var string = "a string 'to' \"be\" ignored something() ";
 }
 
-var another = function (param) {
+var another = function (param) {/* jshint -W034 */
 	var string = 'a string \'to\' "be" ignored another() ';
 	something('blue');
 }

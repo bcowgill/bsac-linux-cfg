@@ -9,6 +9,7 @@ Usage:
        --summary        negatable. show summary of each file. default true
        --comment-char   use character to replace text in comment extraction
        --string-char    use character to replace text in string extraction
+       --lint-length    allowed length of jshint control comments to ignore
        --version        display program version
        --help -?        brief help message
        --man            full help message
@@ -40,6 +41,11 @@ Options:
              found in strings. Used with --show-code. If set to the empty string
              --string-char='' then strings will not be stripped from the code.
              This is useful if functions are referred to by name in some strings.
+
+    --lint-length=n
+             optional. Defaults to 30. The maximum length of a jshint or jslint comment
+             for it to not count against the amount of comments in the file. If there
+             is only one such comment in the file it is also ignored.
 
     --version
              Prints the program version and exit.

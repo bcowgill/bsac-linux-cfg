@@ -5,18 +5,18 @@ MESSY: method() @ 19 defined before first call at 26
 
 <STDIN>
 // :::::: :::::::
-
+/*:::::: ::::::: :::::: :::::::: ::::::: ::: :::::::: */
 /* ::::: :::::::
  :
  :
  :
  : */
 
-function something (param) {
+function something (param) {/* :::::: :::::::::::::: ::::: */
 	var string = "; ;;;;;; ;;;; ;;;;;; ;;;;;;; ;;;;;;;;;;; ";
 }
 
-var another = function (param) {
+var another = function (param) {/* :::::: ::::: */
 	var string = '; ;;;;;; ;;;;;; ;;;; ;;;;;;; ;;;;;;;;; ';
 	something(';;;;');
 }
@@ -38,5 +38,7 @@ function _private () {
 function public () {
 }
 
+code: 382 comments: 82 strings: 90
+78% code
 4 MESS warnings.
 33 lines read
