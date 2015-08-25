@@ -109,7 +109,7 @@ alias bower-links=bower-links.sh
 alias bower-all-links='bower-links.sh ~'
 alias ls-bower-links=bower-links
 alias ls-bower-all-links=bower-all-links
-alias ls-bower='echo $HOME/.config/configstore; ls $HOME/.config/configstore'
+alias ls-bower='find . -name bower_components; echo $HOME/.config/configstore; ls $HOME/.config/configstore'
 alias bower-ls=ls-bower
 alias bower-unlink='bower uninstall'
 
