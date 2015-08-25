@@ -104,6 +104,12 @@ alias pkgless='pkgless.sh'
 alias pkgfiles='pkgfiles.sh'
 alias pkgls='dpkg -L'
 
+# some bower aliases
+alias ls-bower-links='echo $HOME/.local/share/bower/links; ls -al $HOME/.local/share/bower/links'
+alias ls-bower='echo $HOME/.config/configstore; ls $HOME/.config/configstore'
+alias bower-ls=ls-bower
+alias bower-links=ls-bower-links
+
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
