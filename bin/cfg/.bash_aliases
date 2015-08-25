@@ -105,20 +105,23 @@ alias pkgfiles='pkgfiles.sh'
 alias pkgls='dpkg -L'
 
 # some bower aliases
-alias ls-bower-links='echo $HOME/.local/share/bower/links; ls -al $HOME/.local/share/bower/links'
+alias bower-links=bower-links.sh
+alias bower-all-links='bower-links.sh ~'
+alias ls-bower-links=bower-links
+alias ls-bower-all-links=bower-all-links
 alias ls-bower='echo $HOME/.config/configstore; ls $HOME/.config/configstore'
 alias bower-ls=ls-bower
-alias bower-links=ls-bower-links
+alias bower-unlink='bower uninstall'
 
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
-# wcd default color graphic selector. 
-# wcdls just list what dirs match. 
+# wcd default color graphic selector.
+# wcdls just list what dirs match.
 # wcds show the wcd dir stack
 # wcdscan rescan configured directories in background
 # wcdv view configuration
-# wcdl for normal select list. 
+# wcdl for normal select list.
 # wcdo for stdio version select list
 alias wcd='\wcd -z50 -g --compact-tree --center-tree --color'
 alias wd='wcd'
