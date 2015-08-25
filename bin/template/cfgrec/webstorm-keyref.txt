@@ -1,4 +1,5 @@
 Webstorm editor command quick reference
+KEY:WEBSTORM:CONFIG Ctrl-Alt-s [File/Settings] incremental search for a setting
 
 KEY:WEBSTORM:EDIT Ctrl-Shift-j [Edit/Join Lines] Join two lines removing unnecessary space
 KEY:WEBSTORM:EDIT Ctrl-/ Line Comment/Uncomment the current line or selected lines
@@ -24,6 +25,7 @@ KEY:WEBSTORM:FIND Camel Case letters in Go to Class, Go to Symbol or Go to File 
 KEY:WEBSTORM:FIND Ctrl-Shift-n [Navigate/File] popup to open any file by incremental search
 KEY:WEBSTORM:FIND Ctrl-Alt-Shift-n [Navigate/Class] popup to find any symbol by incremental search
 KEY:WEBSTORM:FIND Alt-Shift-7 [RightClick/Find Usages] find usages of symbol at cursor show in the find window
+KEY:WEBSTORM:FIND Ctrl-Alt-7 [Edit/Find/Show Usages] popup list of all usages of class, method or variable
 KEY:WEBSTORM:FIND Ctrl-b [Navigate/Declaration] jump to declaration of a class, method or variable at the cursor. works in code completion popup too.
 KEY:WEBSTORM:FIND Ctrl-Click on symbol jump to declaration of a class, method or variable clicked
 KEY:WEBSTORM:FIND Ctrl-0 [Navigate/File Structure] show members of the current class and allow to jump straight to them incremental search
@@ -56,6 +58,7 @@ KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for s
 KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
 
 KEY:WEBSTORM:CODE Alt-Shift-r Run tests
+KEY:WEBSTORM:CODE Ctrl-Alt-Shift-i [Code/Run inspection by name] incremental search for a code inspection to run
 
 KEY:WEBSTORM:BUILD F2 [Navigate/Next Highlighted Error] Jump to next syntax error
 KEY:WEBSTORM:BUILD Shift-F2 [Navigate/Previous Highlighted Error] Jump to previous syntax error
@@ -68,5 +71,10 @@ KEY:WEBSTORM:DEBUGGER Right-Click on a breakpoint in the left gutter for Context
 
 KEY:WEBSTORM:CONFIG Ctrl-` [View/Quick Switch Scheme Alt-v q] quick switch colour/style/keys/view/theme
 
+KEY:WEBSTORM:CHANGES from Alt-9 Move to another changelist - stores changes for use on a different changelist (git stash?)
+KEY:WEBSTORM:CHANGES from Alt-9 Shelve Changes - stores changes for later (git stash?)
+
+KEY:WEBSTORM:HELP Ctrl-Shift-a [Help/Find Action] incremental search for commands by name
+
 HEREIAM
-last tips Alt-Home, Alt-9 changes
+last tips Ctrl-Shift-A, Ctrl-Alt-Shift-i, Settings/Preferences
