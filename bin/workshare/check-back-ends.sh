@@ -33,7 +33,7 @@ else
 	echo NOT OK ruby rails cirrus server is NOT running
 fi
 
-if ps -ef | grep sidekiq > /dev/null; then
+if ps -ef | grep sidekiq | grep -v grep > /dev/null; then
 	echo OK dealroom sidekiq is running
 else
 	echo NOT OK dealroom sidekiq is NOT running
