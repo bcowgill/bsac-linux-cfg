@@ -53,7 +53,7 @@ find $dir \
 -o -name '*.vars' -prune \
 -o \( -type f -exec egrep --with-filename --line-number \
 '\@todo|\\
-\b(MUSTDO|FIXME|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\\
+\b(MUSTDO|FIXME|BUGFIX|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\\
 \b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\\
 \b(eqeqeq\s*:\s*false)|\\
 \bconsole\.(log|info|warn|error|dir|time|timeEnd|trace|assert)|\\
