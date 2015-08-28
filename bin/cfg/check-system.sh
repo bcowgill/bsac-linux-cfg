@@ -87,7 +87,7 @@ DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
 # Perforce p4merge tool
-P4MERGE="$HOME/Downloads/p4v-2014.1.827578/bin/p4merge"
+P4MERGE="$HOME/Downloads/p4v-2014.3.1007540/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
@@ -179,7 +179,6 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	SKYPE=""
 	SVN_PKG=""
 	# no amd64 pkg for perforce merge
-	P4MERGE_PKG=""
 	POSTGRES_PKG_FROM=""
 	DRUID_INSTALL_FROM=""
 	DRUID_PERL_MODULES=""
