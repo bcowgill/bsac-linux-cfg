@@ -102,7 +102,7 @@ sleep 1
 i3-msg "workspace $help; exec xscreensaver-demo" # placeholder to lock screen
 sleep 1
 # $email
-#i3-msg "workspace $email; exec chromium-browser --incognito http://google.co.uk" # just a placeholder until something useful needed
+i3-msg "workspace $email; exec i3-sensible-terminal"
 sleep 1
 # $app
 i3-msg "workspace $app; exec chromium-browser"
