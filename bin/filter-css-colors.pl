@@ -16,21 +16,22 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--color-only     negatable. only show the color values, not the entire line.
 	--reverse        negatable. show all lines not matching a CSS color declaration.
 	--remap          negatable. remap all colors to names or constants in place where possible.
-	--names          negatable. convert colors to standard names where possible
+	--names          negatable. convert colors to standard names where possible.
 	--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
-	--rgb            negatable. convert colors to rgb() form
-	--show-const     negatable. show the table of defined constants
-	--const-type     specify what type of constants are being used (for less or sass)
-	--const          multiple. define a custom constant value
-	--valid-only     do not perform remappings which are invalid CSS
-	--inplace        specify to modify files in place creating a backup first
+	--rgb            negatable. convert colors to rgb() form.
+	--show-const     negatable. show the table of defined constants.
+	--const-type     specify what type of constants are being used (for less or sass.)
+	--const          multiple. define a custom constant value.
+	--const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
+	--valid-only     do not perform remappings which are invalid CSS.
+	--inplace        specify to modify files in place creating a backup first.
 	--foreground     [not implemented] specify a color value to use for all foreground colors.
 	--background     [not implemented] specify a color value to use for all background colors.
-	--echo           negatable. display original line when performing replacements
-	--version        display program version and exit
+	--echo           negatable. display original line when performing replacements.
+	--version        display program version and exit.
 	--debug          incremental. display debugging info.
-	--help -?        brief help message and exit
-	--man            full help message and exit
+	--help -?        brief help message and exit.
+	--man            full help message and exit.
 
 =head1 OPTIONS
 
@@ -84,6 +85,15 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  --const=button-background=#fff // default Less would be @button-background
  --const=$button-background=#fff
+
+=item B<--const-file=less-sass-css-filename>
+
+ Specify files to parse for color constant definitions. You must specify --const-type if
+ you are parsing CSS files for constants. The format of a color constant definition is:
+
+ less:  @name-of-constant: #color;
+ sass:  $name-of-constant: #color; // equivalent to $name_of_constant
+ css:   .name-of-constant { color: #color; }
 
 =item B<--valid-only>
 
@@ -143,9 +153,8 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 --undo undo a foreground/background change
 
 --closest mark hard coded colours with the closest named colour
---constants  define colour constants from hard coded values
-    fg_ bg_ etc
---defined=var=value defined custom vars
+--constants  automatically define colour constants from hard coded values
+    fg_1 bg_ etc
 --use-var=name  when multiple vars are possible for a colour, use the named one
 
 parse .less colour constants
@@ -182,6 +191,7 @@ use autodie qw(open cp);
 
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
+our $HASH    = '\#';
 
 # Big hash of vars and constants for the program
 my %Var = (
@@ -215,7 +225,8 @@ my %Var = (
 			"rgb!",
 			"show-const!",
 			"const-type:s",
-			"const:s%",
+			'const:s%',
+			'const-file:s@',
 			"valid-only",
 			"inplace|i:s",
 			"foreground|fg:s",
@@ -236,8 +247,12 @@ my %Var = (
 	'rhUndefinedConstantsMap' => {}, # @const1 => @const2
 	'rhColorConstantsMap' => {}, # #color => [@const, ... ]
 	'regex' => {
-		'data'        => qr{ \A \s* (\w+) \s+ ( \#[0-9a-f]{6} ) \s+ ( \d+,\d+,\d+ ) }xmsi,
+		'data'        => qr{ \A \s* (\w+) \s+ ( $HASH [0-9a-f]{6} ) \s+ ( \d+,\d+,\d+ ) }xmsi,
+		'cssConst'    => qr{ ( \. ([-\w]+) -defined \s* \{ \s* color \s* : \s* ([^;]+) \s* ; \s* \}) }xms,
+		'constDef'    => qr{ ( [\@\$] ([-\w]+) \s* : \s* ([^;]+) \s* ; ) }xms,
 		'line'        => '', # populated in setup()
+		'shortColor'  => qr{ $HASH ([0-9a-f]{3}) \b }xmsi,
+		'bytesColor'  => qr{ $HASH ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }xmsi,
 		'transparent' => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
 		'opaque'      => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 1(\.0*)? \s* \) }xmsi,
 		'rgba'        => qr{ \A rgba\( \s* ( \d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
@@ -307,6 +322,9 @@ sub setup
 	eval
 	{
 		constructConstantsTable();
+		debug("const files: " . Dumper(opt('const-file')), 2);
+		processConstantFiles() if (scalar(opt('const-file')));
+		resolveConstants();
 	};
 	if ($EVAL_ERROR)
 	{
@@ -336,13 +354,17 @@ sub readColorNameData
 
 sub constructConstantsTable
 {
+	debug("constructConstantsTable()\n");
 	my ($prefix, $rhConstOptions);
 
-	setOpt('const-type', '@') if opt('const-type') =~ m{\A [l\@]}xmsi;
-	setOpt('const-type', '$') if opt('const-type') =~ m{\A [s\$]}xmsi;
+	setOpt('const-type', '@') if (isUsingLess());
+	if (isUsingSass())
+	{
+		setOpt('const-type', '$');
+		setOpt('const-rigid', 0);
+	}
 	$prefix = opt('const-type');
 
-	setOpt('const-rigid', 0) if opt('const-type') eq '$';
 	debug("Constants " . opt('const-type') . " rigid? " . opt('const-rigid') );
 	debug("const options: " . Dumper(opt('const')), 2);
 
@@ -357,7 +379,52 @@ sub constructConstantsTable
 		$value || die "MUSTDO error constant $const has no assigned value";
 		registerConstant($const, $value);
 	}
-	resolveConstants();
+}
+
+sub processConstantFiles
+{
+	debug("processConstantFiles()\n");
+	my $raFiles = opt('const-file');
+	foreach my $file (@$raFiles)
+	{
+		processConstantFile($file);
+	}
+}
+
+sub processConstantFile
+{
+	my ($fileName) = @ARG;
+	debug("processConstantFile($fileName)\n");
+	my $prefix = opt('const-type');
+
+	$Var{fileName} = $fileName;
+	my $rContent = read_file($fileName, scalar_ref => 1);
+
+	$$rContent =~ s{
+		$Var{'regex'}{'cssConst'}
+	}{
+		my ($match, $const, $value) = ($1, $2, $3);
+		registerConstantFromFile($prefix . $const, $value, $match);
+		$match;
+	}xmsge;
+
+	$$rContent =~ s{
+		$Var{'regex'}{'constDef'}
+	}{
+		my ($match, $const, $value) = ($1, $2, $3);
+		registerConstantFromFile($prefix . $const, $value, $match);
+		$match;
+	}xmsge;
+}
+
+sub isUsingLess
+{
+	return opt('const-type') =~ m{\A [l\@]}xmsi;
+}
+
+sub isUsingSass
+{
+	return opt('const-type') =~ m{\A [s\$]}xmsi;
 }
 
 sub isConst
@@ -372,6 +439,14 @@ sub checkConstName
 	my ($const) = @ARG;
 	my $prefix = q{\\} . opt('const-type');
 	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO error in constant name $const";
+}
+
+sub registerConstantFromFile
+{
+	my ($const, $value, $match) = @ARG;
+	$match =~ s{\s\s+}{ }xmsg;
+	$Var{'constantContext'} = "in file $Var{fileName} at line [$match]";
+	registerConstant($const, $value);
 }
 
 sub registerConstant
@@ -509,7 +584,6 @@ sub processEntireFile
 	my ($fileName) = @ARG;
 	debug("processEntireFile($fileName)\n");
 
-	# example slurp in the file and show something
 	$Var{fileName} = $fileName;
 	my $raContent = read_file($fileName, array_ref => 1);
 	doReplacement( $raContent );
@@ -581,10 +655,12 @@ sub canonical
 	my ($color) = @ARG;
 	if (opt('canonical'))
 	{
-		$color =~ s{ \# ([0-9a-f]{3}) \b }{
-			'#' . (substr($1,0,1) x 2) .
-			(substr($1,1,1) x 2) .
-			(substr($1,2,1) x 2)
+		$color =~ s{
+			$Var{'regex'}{'shortColor'}
+		}{
+			'#' . (substr($1, 0, 1) x 2) .
+			(substr($1, 1, 1) x 2) .
+			(substr($1, 2, 1) x 2)
 		}xmsgie;
 	}
 	return $color;
@@ -594,10 +670,13 @@ sub canonical
 sub rgb
 {
 	my ($color) = @ARG;
-#	$DB::single = 1;  # MUSTDO REMOVE THIS
 	if (opt('rgb'))
 	{
-		$color =~ s{ \# ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }{ "rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")" }xmsgie;
+		$color =~ s{
+			$Var{'regex'}{'bytesColor'}
+		}{
+			"rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")"
+		}xmsgie;
 	}
 	return $color;
 }

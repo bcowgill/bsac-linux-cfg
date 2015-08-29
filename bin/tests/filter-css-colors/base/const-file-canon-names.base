@@ -1,0 +1,20 @@
+// Colour constant definitions:
+@css-gray-darker: #222222;
+@css-gray-dark: #333333;
+@brand-primary: #428bca;
+@link-color: #428bca;
+@sass-brand-primary: #428bca;
+@css-gray: #555555;
+@brand-success: #5cb85c;
+@sass-brand-success: #5cb85c;
+@css-gray-light: #777777;
+@sass-link-color: $brand-primary;
+@sass-text-color: $gray-base;
+@gray-base: black;
+@sass-gray-base: black;
+@text-color: black;
+@link-hover-color: darken(@link-color, 15%);
+@popover-arrow-outer-color: fadein(@popover-border-color, 5%);
+@gray-darker: lighten(@gray-base, 13.5%);
+@popover-border-color: rgba(black,.2);
+@sass-popover-border-color: rgba(black,.2);

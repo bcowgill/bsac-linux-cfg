@@ -1,0 +1,45 @@
+// Less constant definitions
+@gray-base:              #000;
+
+@brand-primary:         #428bca;
+@brand-success:         #5cb85c;
+
+// variable assignment
+@text-color:            @gray-base;
+@link-color:            @brand-primary;
+
+// assume commented value is correct
+@gray-darker:            lighten(@gray-base, 13.5%); // #222
+@link-hover-color:      darken(@link-color, 15%); // #2a6496
+
+
+@popover-border-color:                rgba(0,0,0,.2);
+@popover-arrow-outer-color:           fadein(@popover-border-color, 5%);
+
+// Sass constant definitions
+$sass-gray-base:              #000;
+
+$sass-brand-primary:         #428bca;
+$sass-brand-success:         #5cb85c;
+
+// variable assignment
+$sass-text-color:            $gray-base;
+$sass-link-color:            $brand-primary;
+
+$sass-popover-border-color:                rgba(0,0,0,.2);
+
+// CSS constant definitions use your sass/less processor to
+// create class rules with -defined suffix on them to assign the
+// exact computed value to the variable
+.css-gray-darker-defined {
+  color: #222222;
+}
+.css-gray-dark-defined {
+  color: #333333;
+}
+.css-gray-defined {
+  color: #555555;
+}
+.css-gray-light-defined {
+  color: #777777;
+}

@@ -12,21 +12,22 @@ SYNOPSIS
             --color-only     negatable. only show the color values, not the entire line.
             --reverse        negatable. show all lines not matching a CSS color declaration.
             --remap          negatable. remap all colors to names or constants in place where possible.
-            --names          negatable. convert colors to standard names where possible
+            --names          negatable. convert colors to standard names where possible.
             --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
-            --rgb            negatable. convert colors to rgb() form
-            --show-const     negatable. show the table of defined constants
-            --const-type     specify what type of constants are being used (for less or sass)
-            --const          multiple. define a custom constant value
-            --valid-only     do not perform remappings which are invalid CSS
-            --inplace        specify to modify files in place creating a backup first
+            --rgb            negatable. convert colors to rgb() form.
+            --show-const     negatable. show the table of defined constants.
+            --const-type     specify what type of constants are being used (for less or sass.)
+            --const          multiple. define a custom constant value.
+            --const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
+            --valid-only     do not perform remappings which are invalid CSS.
+            --inplace        specify to modify files in place creating a backup first.
             --foreground     [not implemented] specify a color value to use for all foreground colors.
             --background     [not implemented] specify a color value to use for all background colors.
-            --echo           negatable. display original line when performing replacements
-            --version        display program version and exit
+            --echo           negatable. display original line when performing replacements.
+            --version        display program version and exit.
             --debug          incremental. display debugging info.
-            --help -?        brief help message and exit
-            --man            full help message and exit
+            --help -?        brief help message and exit.
+            --man            full help message and exit.
 
 OPTIONS
     --color-only or --nocolor-only
@@ -68,6 +69,14 @@ OPTIONS
 
              --const=button-background=#fff // default Less would be @button-background
              --const=$button-background=#fff
+
+    --const-file=less-sass-css-filename
+             Specify files to parse for color constant definitions. You must specify --const-type if
+             you are parsing CSS files for constants. The format of a color constant definition is:
+
+             less:  @name-of-constant: #color;
+             sass:  $name-of-constant: #color; // equivalent to $name_of_constant
+             css:   .name-of-constant { color: #color; }
 
     --valid-only
              Do not perform name remappings which are invalid css3
