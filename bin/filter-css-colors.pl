@@ -4,29 +4,6 @@
 
 filter-css-colors.pl - Find all CSS color declarations in files
 
-=head1 TODO
-
---foreground=xxxx substitute a color for all foreground colors
---background=xxxx you get color: #fff /* original color */;
---closest mark hard coded colours with the closest named colour
---undo undo a foreground/background change
---constants  defined colour constants from hard coded values
-    fg_ bg_ etc
---defined=var=value defined custom vars
---use-var=name  when multiple vars are possible for a colour, use the named one
-
-parse .less colour constants
- perl -MData::Dumper -ne 'if (m{\A \s* ( \@ [\-\w]+ ) \s* : \s* ( \#[0-9a-f]+ ) \s* ;}xms) { push(@{$var{$2}}, $1) }; END { print Dumper(\%var)} '  `find /home/bcowgill/projects/files-ui/lib/bower_components/ -name variables.less`
--- need to also track @var1: @var2;
-
-for computed colours write a CSS rule to show what the computed value is
-cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1 { color: \@$1; }\n} };' | less
-egrep 'lighten|darken' $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* :}xms) { $_ .= qq{.$1 { color: \@$1; }\n} };'
-
-cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (darken|lighten)}xms) { $_ = qq{\n$_.$1 { color: \@$1; }\n} };' | less > my.less
-lessc my.less > my.css
-
-
 =head1 AUTHOR
 
 Brent S.A. Cowgill
@@ -136,6 +113,28 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
  Find all unique colors used in all CSS files somewhere
 
  filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
+
+=head1 TODO
+
+--foreground=xxxx substitute a color for all foreground colors
+--background=xxxx you get color: #fff /* original color */;
+--closest mark hard coded colours with the closest named colour
+--undo undo a foreground/background change
+--constants  defined colour constants from hard coded values
+    fg_ bg_ etc
+--defined=var=value defined custom vars
+--use-var=name  when multiple vars are possible for a colour, use the named one
+
+parse .less colour constants
+ perl -MData::Dumper -ne 'if (m{\A \s* ( \@ [\-\w]+ ) \s* : \s* ( \#[0-9a-f]+ ) \s* ;}xms) { push(@{$var{$2}}, $1) }; END { print Dumper(\%var)} '  `find /home/bcowgill/projects/files-ui/lib/bower_components/ -name variables.less`
+-- need to also track @var1: @var2;
+
+for computed colours write a CSS rule to show what the computed value is
+cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1 { color: \@$1; }\n} };' | less
+egrep 'lighten|darken' $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* :}xms) { $_ .= qq{.$1 { color: \@$1; }\n} };'
+
+cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (darken|lighten)}xms) { $_ = qq{\n$_.$1 { color: \@$1; }\n} };' | less > my.less
+lessc my.less > my.css
 
 =cut
 

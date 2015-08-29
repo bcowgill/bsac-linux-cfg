@@ -1,17 +1,17 @@
-[1mNAME[0m
+NAME
     render-tt.pl - Render a Template::Toolkit template page using specific
     variables
 
-[1mAUTHOR[0m
+AUTHOR
     Brent S.A. Cowgill
 
-[1mLICENSE[0m
+LICENSE
     Unlicense http://unlicense.org
 
-[1mSOURCE[0m
+SOURCE
     https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/render-tt.pl
 
-[1mSYNOPSIS[0m
+SYNOPSIS
     render-tt.pl [options] [@options-file ...] [file ...]
 
      Options:
@@ -32,43 +32,43 @@
        --help -?                   brief help message
        --man                       full help message
 
-[1mOPTIONS[0m
-    [1m--page-vars=file.vars[0m or [1m--variables=file.vars[0m or
-    [1m--pre-define=file.vars[0m
+OPTIONS
+    --page-vars=file.vars or --variables=file.vars or
+    --pre-define=file.vars
              Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
 
-    [1m--page-consts=file.vars[0m or [1m--constants=file.vars[0m
+    --page-consts=file.vars or --constants=file.vars
              Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
 
-    [1m--var="key=value"[0m
+    --var="key=value"
              Defines a simple page VARIABLE for use when doing template substitutions.
              You can specify this multiple times to define many VARIABLEs.
              Key can be this.that to define a hash object called this with a key of that.
 
-    [1m--const="key=value"[0m
+    --const="key=value"
              Defines a simple page CONSTANT for use when doing template substitutions.
              You can specify this multiple times to define many CONSTANTs.
              Key can be this.that to define a hash object called this with a key of that.
 
-    [1m--constants-namespace="name"[0m
+    --constants-namespace="name"
              Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
-    [1m--include-path[0m
+    --include-path
              Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
 
-    [1m--absolute[0m or [1m--noabsolute[0m
+    --absolute or --noabsolute
              Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
 
-    [1m--relative[0m or [1m--norelative[0m
+    --relative or --norelative
              Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
 
-    [1m--anycase[0m or [1m--noanycase[0m
+    --anycase or --noanycase
              Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
 
-    [1m--interpolate[0m or [1m--nointerpolate[0m
+    --interpolate or --nointerpolate
              Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
 
-    [1m--pre-chomp=N[0m
+    --pre-chomp=N
              Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
              See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
              [%+ +%] disable chomp
@@ -80,21 +80,21 @@
 
              <span class="[% active -%] content">  removes spaces if active is empty otherwise lets space remain
 
-    [1m--post-chomp=N[0m
+    --post-chomp=N
              Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
 
-    [1m--version[0m
+    --version
              Prints the program version and exit.
 
-    [1m--help[0m or [1m-?[0m
+    --help or -?
              Print a brief help message and exit.
 
-    [1m--man[0m
+    --man
              Print the full help message and exit.
 
-[1mDESCRIPTION[0m
+DESCRIPTION
      B<render-tt.pl> will perform perl Template::Toolkit transformation of a template file using specific variables as inputs. It is useful for unit testing all possible outputs of a template page.
 
-[1mEXAMPLES[0m
+EXAMPLES
      render-tt.pl --var="this=that" < in/template.tt > out/template.html
 

@@ -1,16 +1,16 @@
-[1mNAME[0m
+NAME
     ls-tt-tags.pl - List all Template::Toolkit processing tags in files
 
-[1mAUTHOR[0m
+AUTHOR
     Brent S.A. Cowgill
 
-[1mLICENSE[0m
+LICENSE
     Unlicense http://unlicense.org
 
-[1mSOURCE[0m
+SOURCE
     https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/ls-tt-tags.pl
 
-[1mSYNOPSIS[0m
+SYNOPSIS
     ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
      Options:
@@ -21,33 +21,33 @@
        --help -?        brief help message.
        --man            full help message.
 
-[1mOPTIONS[0m
-    [1m--common[0m or [1m--nocommon[0m negatable. Convert processing markers to common
+OPTIONS
+    --common or --nocommon negatable. Convert processing markers to common
     format. This removes the pre/post whitespace stripping markers. See
     Template::Toolkit docs for more information
     http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_
     POST_CHOMP
              i.e. [%- END ~%] becomes [% END %]
 
-    [1m--inline-block[0m or [1m--noinline-block[0m
+    --inline-block or --noinline-block
              negatable. Displays multiline processing blocks in a single line of output.
 
-    [1m--echo-filename[0m or [1m--noecho-filename[0m
+    --echo-filename or --noecho-filename
              negatable. Prints name of file being processed.
 
-    [1m--version[0m
+    --version
              Prints the program version and exit.
 
-    [1m--help[0m or [1m-?[0m
+    --help or -?
              Print a brief help message and exit.
 
-    [1m--man[0m
+    --man
              Print the full help message and exit.
 
-[1mDESCRIPTION[0m
+DESCRIPTION
      B<This program> will read the given input file(s) and display Template::Toolkit processing instructions found within it.
 
-[1mEXAMPLES[0m
+EXAMPLES
      find all unique template toolkit blocks
      find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
 

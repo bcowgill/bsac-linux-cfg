@@ -1,11 +1,11 @@
-[1mNAME[0m
+NAME
     scan-js.pl - scan a javascript file and see if the functions are arranged
     as suggested by Uncle Bob's Clean Code book.
 
-[1mAUTHOR[0m
+AUTHOR
     Brent S.A. Cowgill
 
-[1mSYNOPSIS[0m
+SYNOPSIS
     scan-js.pl [options] [@options-file ...] [file ...]
 
      Options:
@@ -21,48 +21,48 @@
        --man            full help message
        --debug          incremental. increase the amount of debugging information shown
 
-[1mOPTIONS[0m
-    [1m--show-code[0m or [1m--noshow-code[0m
+OPTIONS
+    --show-code or --noshow-code
              negatable. default false. Print out the source code after comments and
              strings have been extracted.  This allow you to diagnose code which might be
              excessively tricky.
 
-    [1m--verbose[0m or [1m--noverbose[0m
+    --verbose or --noverbose
              negatable. default false. Print out additional information instead of just
              mess warnings.
 
-    [1m--mess[0m or [1m--nomess[0m
+    --mess or --nomess
              negatable. default true. Print out warnings about possible messy code.
 
-    [1m--summary[0m or [1m--nosummary[0m
+    --summary or --nosummary
              negatable. default true. Print out summary of each file.
 
-    [1m--comment-char=s[0m
+    --comment-char=s
              optional. Defaults to '-'. Set the character to use to replace the text
              found in comments. Used with --show-code. If set to the empty string
              --comment-char='' then comments will not be stripped from the code.
 
-    [1m--string-char=s[0m
+    --string-char=s
              optional. Defaults to '_'. Set the character to use to replace the text
              found in strings. Used with --show-code. If set to the empty string
              --string-char='' then strings will not be stripped from the code.
              This is useful if functions are referred to by name in some strings.
 
-    [1m--lint-length=n[0m
+    --lint-length=n
              optional. Defaults to 30. The maximum length of a jshint or jslint comment
              for it to not count against the amount of comments in the file. If there
              is only one such comment in the file it is also ignored.
 
-    [1m--version[0m
+    --version
              Prints the program version and exit.
 
-    [1m--help[0m or [1m-?[0m
+    --help or -?
              Print a brief help message and exit.
 
-    [1m--man[0m
+    --man
              Print the full help message and exit.
 
-[1mDESCRIPTION[0m
+DESCRIPTION
      B<This program> will read the given Javascript file(s) and examine
      whether the functions are ordered from high level to low level as
      suggested by Robert C. Martin's book Clean Code.
@@ -71,19 +71,10 @@
      assumes the code is pretty clean, not minified, etc. It will not look
      for obfuscated function definitions for example.
 
-[1mEXAMPLES[0m
+EXAMPLES
      scan-js.pl template/unminified/jquery-2.1.1.js
 
      scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
 
      scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
-
-[1mTODO[0m
-     order output with public then private
-     order output alphabetically
-     order output in line order
-     hide function listing unless warning
-     keep track of number of params per function
-     use jshint to measure complexity of functions
-     closeness of definitions of function to first caller
 
