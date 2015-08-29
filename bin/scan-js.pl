@@ -110,6 +110,11 @@ scan-js.pl [options] [@options-file ...] [file ...]
  use jshint to measure complexity of functions
  closeness of definitions of function to first caller
 
+Law of demeter violation checker
+ perl -ne '$o = q{\w+ \s* \. \s*}; $m = q{\w+ \s* \s* (\([^\)]*\))? \s*}; print if ( m{ $o $m \. $m }xms );' demeter.js
+what about array access this.something[fe].method();
+
+
 =cut
 
 use strict;
