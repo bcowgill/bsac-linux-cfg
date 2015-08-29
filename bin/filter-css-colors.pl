@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-filter-css-colors.pl - Find all CSS color declarations in files
+filter-css-colors.pl - Find all CSS color declarations in files with option to replace then with standard colour name or Less/Sass constants.
 
 =head1 AUTHOR
 
@@ -15,14 +15,17 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
  Options:
 	--color-only     negatable. only show the color values, not the entire line.
 	--reverse        negatable. show all lines not matching a CSS color declaration.
-	--remap          negatable. remap all colors to names in place where possible.
+	--remap          negatable. remap all colors to names or constants in place where possible.
 	--names          negatable. convert colors to standard names where possible
 	--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
 	--rgb            negatable. convert colors to rgb() form
+	--show-const     negatable. show the table of defined constants
+	--const-type     specify what type of constants are being used (for less or sass)
+	--const          multiple. define a custom constant value
 	--valid-only     do not perform remappings which are invalid CSS
 	--inplace        specify to modify files in place creating a backup first
-	--foreground     specify a color value to use for all foreground colors.
-	--background     specify a color value to use for all background colors.
+	--foreground     [not implemented] specify a color value to use for all foreground colors.
+	--background     [not implemented] specify a color value to use for all background colors.
 	--echo           negatable. display original line when performing replacements
 	--version        display program version and exit
 	--debug          incremental. display debugging info.
@@ -43,7 +46,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 =item B<--remap> or B<--noremap>
 
- Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+ Remap colors to constants, canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
  You should specify --names or --canonical as well to have any effect.
 
@@ -62,6 +65,25 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
  Implies --canonical as well. Cannot use --names with --rgb.
+
+=item B<--show-const>  or B<--noshow-const>
+
+ Show a table of the defined constants.
+
+=item B<--const-type=s>
+
+ Define what type of constants are being used. Default is Less (@)
+ You can specify less, sass or a character to use as a prefix.
+
+ --const-type=less    @button-background:  #fff; // different from $button_background
+ --const-type=sass    $button-background:  #fff; // equivalent to $button_background
+
+=item B<--const=name=value>
+
+ Define a constant color value. You can omit the prefix character when defining a value.
+
+ --const=button-background=#fff // default Less would be @button-background
+ --const=$button-background=#fff
 
 =item B<--valid-only>
 
@@ -118,9 +140,10 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 --foreground=xxxx substitute a color for all foreground colors
 --background=xxxx you get color: #fff /* original color */;
---closest mark hard coded colours with the closest named colour
 --undo undo a foreground/background change
---constants  defined colour constants from hard coded values
+
+--closest mark hard coded colours with the closest named colour
+--constants  define colour constants from hard coded values
     fg_ bg_ etc
 --defined=var=value defined custom vars
 --use-var=name  when multiple vars are possible for a colour, use the named one
@@ -130,7 +153,7 @@ parse .less colour constants
 -- need to also track @var1: @var2;
 
 for computed colours write a CSS rule to show what the computed value is
-cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1 { color: \@$1; }\n} };' | less
+cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1-defined { color: \@$1; }\n} };' | less
 egrep 'lighten|darken' $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* :}xms) { $_ .= qq{.$1 { color: \@$1; }\n} };'
 
 cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (darken|lighten)}xms) { $_ = qq{\n$_.$1 { color: \@$1; }\n} };' | less > my.less
@@ -165,9 +188,11 @@ my %Var = (
 	rhArg => {
 		rhOpt => {
 			'valid-only' => 0,
-			$STDIO  => 0,    # indicates standard in/out as - on command line
+			'const-type' => '@', # assumes using less CSS compiler
+			'const-rigid' => 1,  # rigid constant considers - and _ as different in names
+			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
-			man     => 0,    # show full help page
+			man     => 0,        # show full help page
 		},
 		raFile => [],
 	},
@@ -188,6 +213,9 @@ my %Var = (
 			"names!",
 			"canonical!",
 			"rgb!",
+			"show-const!",
+			"const-type:s",
+			"const:s%",
 			"valid-only",
 			"inplace|i:s",
 			"foreground|fg:s",
@@ -202,7 +230,11 @@ my %Var = (
 	},
 	fileName   => '<STDIN>',    # name of file
 	'raColorNames' => ['transparent'],
+	'constantContext' => '',    # option or line where constant is defined
 	'rhColorNamesMap' => {},
+	'rhConstantsMap' => {},      # @const => #color
+	'rhUndefinedConstantsMap' => {}, # @const1 => @const2
+	'rhColorConstantsMap' => {}, # #color => [@const, ... ]
 	'regex' => {
 		'data'        => qr{ \A \s* (\w+) \s+ ( \#[0-9a-f]{6} ) \s+ ( \d+,\d+,\d+ ) }xmsi,
 		'line'        => '', # populated in setup()
@@ -254,7 +286,7 @@ getOptions();
 sub main
 {
 	my ($raFiles) = @ARG;
-	debug( "Var: " . Dumper( \%Var ), 2 );
+	debug( "Var: " . Dumper( \%Var ), 3 );
 	debug( "main() rhOpt: " . Dumper( opt() ) .
 		"\nraFiles: " . Dumper($raFiles) .
 		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
@@ -271,6 +303,20 @@ sub setup
 {
 	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
 
+	readColorNameData();
+	eval
+	{
+		constructConstantsTable();
+	};
+	if ($EVAL_ERROR)
+	{
+		die "Error $Var{constantContext}: $EVAL_ERROR\n";
+	}
+	showConstantsTable() if opt('show-const');
+}
+
+sub readColorNameData
+{
 	# read from __DATA__ below to get names of hex color values
 	while (my $line = <DATA>)
 	{
@@ -282,10 +328,140 @@ sub setup
 			$Var{'rhColorNamesMap'}{$3} = $1;
 		}
 	}
-	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 2);
+	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 3);
 	my $colors = join('|', @{$Var{'raColorNames'}});
 	debug("colors regex: $colors\n", 2);
 	$Var{'regex'}{'line'} = qr{ ( \#[0-9a-f]{3,6}\b | (rgb|hsl)a?\([^\)]+\) | \b($colors)\b ) }xmsi;
+}
+
+sub constructConstantsTable
+{
+	my ($prefix, $rhConstOptions);
+
+	setOpt('const-type', '@') if opt('const-type') =~ m{\A [l\@]}xmsi;
+	setOpt('const-type', '$') if opt('const-type') =~ m{\A [s\$]}xmsi;
+	$prefix = opt('const-type');
+
+	setOpt('const-rigid', 0) if opt('const-type') eq '$';
+	debug("Constants " . opt('const-type') . " rigid? " . opt('const-rigid') );
+	debug("const options: " . Dumper(opt('const')), 2);
+
+	$rhConstOptions = opt('const');
+	foreach my $const (sort(keys(%{$rhConstOptions})))
+	{
+		my $value = $rhConstOptions->{$const};
+		$Var{'constantContext'} = "in option --const=$const=$value";
+		debug("const: $Var{'constantContext'}", 2);
+		$const = "$prefix$const" unless isConst($const);
+		checkConstName($const);
+		$value || die "MUSTDO error constant $const has no assigned value";
+		registerConstant($const, $value);
+	}
+	resolveConstants();
+}
+
+sub isConst
+{
+	my ($const) = @ARG;
+	my $prefix = q{\\} . opt('const-type');
+	return $const =~ m{\A $prefix}xms;
+}
+
+sub checkConstName
+{
+	my ($const) = @ARG;
+	my $prefix = q{\\} . opt('const-type');
+	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO error in constant name $const";
+}
+
+sub registerConstant
+{
+	my ($const, $value) = @ARG;
+
+	$Var{'rhConstantsMap'}{$const} && die "MUSTDO error constant $const: $value already has a defined value: $Var{'rhConstantsMap'}{$const}";
+	if (isConst($value))
+	{
+		checkConstName($value);
+		if (isDefinedConst($value))
+		{
+			$value = getConstValue($value)
+		}
+		else
+		{
+			$Var{'rhUndefinedConstantsMap'}{$const} = $value;
+			$const = undef;
+		}
+	}
+	if ($const)
+	{
+		$value = renameColor($value);
+		$Var{'rhConstantsMap'}{$const} = $value;
+		push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
+		return 1;
+	}
+	return 0;
+}
+
+sub resolveConstants
+{
+	my @consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
+	my $limit = 1000;
+	while ($limit && scalar(@consts))
+	{
+		--$limit;
+		foreach my $const (@consts)
+		{
+			if (registerConstant($const, $Var{'rhUndefinedConstantsMap'}{$const}))
+			{
+				delete($Var{'rhUndefinedConstantsMap'}{$const});
+			}
+		}
+		@consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
+	}
+	die "MUSTDO unable to resolve some constant values" unless $limit;
+}
+
+sub isDefinedConst
+{
+	my ($const) = @ARG;
+
+	if (opt('const-rigid'))
+	{
+		return exists($Var{'rhConstantsMap'}{$const});
+	}
+	else
+	{
+		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
+	}
+}
+
+sub getConstValue
+{
+	my ($const) = @ARG;
+
+	if (opt('const-rigid'))
+	{
+		return $Var{'rhConstantsMap'}{$const};
+	}
+	else
+	{
+		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
+	}
+}
+
+sub showConstantsTable
+{
+	debug("constants: " . Dumper($Var{'rhConstantsMap'}), 2);
+	debug("colors" . Dumper($Var{'rhColorConstantsMap'}), 2);
+
+	print "// Colour constant definitions:\n";
+	foreach my $color (sort(keys(%{$Var{'rhColorConstantsMap'}})))
+	{
+		foreach my $const (sort(@{$Var{'rhColorConstantsMap'}{$color}}))
+		{
+			print "$const: $color;\n";
+		}
+	}
 }
 
 sub editFileInPlace
@@ -388,9 +564,15 @@ sub remap
 	my ($line) = @ARG;
 	if (opt('remap'))
 	{
-		$line =~ s{$Var{'regex'}{'line'}}{ names(rgb(canonical($1))) }ge;
+		$line =~ s{$Var{'regex'}{'line'}}{ renameColor($1) }ge;
 	}
 	return $line;
+}
+
+sub renameColor
+{
+	my ($color) = @ARG;
+	return names(rgb(canonical($color)));
 }
 
 # convert #rgb color to #rrggbb so output can be compared against uniqueness

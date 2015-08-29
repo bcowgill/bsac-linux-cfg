@@ -1,0 +1,5 @@
+// Colour constant definitions:
+@border: black;
+@fg: black;
+@shade: grey;
+@bg: rgb(51, 68, 85);

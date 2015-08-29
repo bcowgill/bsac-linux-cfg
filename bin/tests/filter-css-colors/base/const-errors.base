@@ -1,0 +1,2 @@
+Error in option --const=bg=#345: MUSTDO error constant @bg: #345 already has a defined value: duplicate at ../../filter-css-colors.pl line 381, <DATA> line 147.
+

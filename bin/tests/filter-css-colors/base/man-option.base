@@ -1,5 +1,6 @@
 NAME
-    filter-css-colors.pl - Find all CSS color declarations in files
+    filter-css-colors.pl - Find all CSS color declarations in files with
+    option to replace then with standard colour name or Less/Sass constants.
 
 AUTHOR
     Brent S.A. Cowgill
@@ -10,14 +11,17 @@ SYNOPSIS
      Options:
             --color-only     negatable. only show the color values, not the entire line.
             --reverse        negatable. show all lines not matching a CSS color declaration.
-            --remap          negatable. remap all colors to names in place where possible.
+            --remap          negatable. remap all colors to names or constants in place where possible.
             --names          negatable. convert colors to standard names where possible
             --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
             --rgb            negatable. convert colors to rgb() form
+            --show-const     negatable. show the table of defined constants
+            --const-type     specify what type of constants are being used (for less or sass)
+            --const          multiple. define a custom constant value
             --valid-only     do not perform remappings which are invalid CSS
             --inplace        specify to modify files in place creating a backup first
-            --foreground     specify a color value to use for all foreground colors.
-            --background     specify a color value to use for all background colors.
+            --foreground     [not implemented] specify a color value to use for all foreground colors.
+            --background     [not implemented] specify a color value to use for all background colors.
             --echo           negatable. display original line when performing replacements
             --version        display program version and exit
             --debug          incremental. display debugging info.
@@ -32,7 +36,7 @@ OPTIONS
              Only display lines that do not contain CSS color declarations.
 
     --remap or --noremap
-             Remap colors to canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+             Remap colors to constants, canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
              You should specify --names or --canonical as well to have any effect.
 
@@ -48,6 +52,22 @@ OPTIONS
     --rgb or --norgb
              Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
              Implies --canonical as well. Cannot use --names with --rgb.
+
+    --show-const or --noshow-const
+             Show a table of the defined constants.
+
+    --const-type=s
+             Define what type of constants are being used. Default is Less (@)
+             You can specify less, sass or a character to use as a prefix.
+
+             --const-type=less    @button-background:  #fff; // different from $button_background
+             --const-type=sass    $button-background:  #fff; // equivalent to $button_background
+
+    --const=name=value
+             Define a constant color value. You can omit the prefix character when defining a value.
+
+             --const=button-background=#fff // default Less would be @button-background
+             --const=$button-background=#fff
 
     --valid-only
              Do not perform name remappings which are invalid css3

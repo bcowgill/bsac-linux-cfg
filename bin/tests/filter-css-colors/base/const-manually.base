@@ -1,0 +1,4 @@
+// Colour constant definitions:
+@border: black;
+@fg: black;
+@bg: duplicate;

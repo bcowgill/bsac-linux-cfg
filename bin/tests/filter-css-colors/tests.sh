@@ -6,14 +6,16 @@ set -e
 # What we're testing and sample input data
 PROGRAM=../../filter-css-colors.pl
 CMD=`basename $PROGRAM`
-SAMPLE=filter-css-colors-test.txt
+SAMPLE=in/filter-css-colors-test.txt
+EMPTY=in/empty.txt
+VARS=in/vars-sample.txt
 DEBUG=--debug
 DEBUG=
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 19
+PLAN 29
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -228,5 +230,88 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-cleanUpAfterTests
+echo TEST $CMD --foreground --background not allowed with --color-only
+TEST=color-only-forground-background
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --color-only --foreground=yellow --background=black"
+	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
 
+echo TEST $CMD constants with errors
+TEST=const-errors
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=255
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --const-type=less --const=bg=#345 --const=@fg=#000 --const=border=@fg \
+	--const=@bg=duplicate --const=loop=@loop1 --const=@loop1=loop \
+	--const=err0= --const=err=@£42 --const=err2=@~42 --canonical --rgb"
+	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD lessc constants defined by hand canonical names
+TEST=const-manually-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=less --const=bg=#345 --const=fg=black --const=border=@fg \
+	--const=shade=grey"
+	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD lessc constants defined by hand canonical rgb
+TEST=const-manually-canon-rgb
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --rgb \
+	--const-type=less --const=bg=#345 --const=fg=black --const=border=@fg \
+	--const=shade=grey"
+	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD sass constants defined by hand canonical names
+TEST=const-sass-manually-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=255
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=sass --const=bg=#345 --const=fg=black --const=border=\$fg \
+	--const=bg=duplicate"
+	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+#	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+cleanUpAfterTests
