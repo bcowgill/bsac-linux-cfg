@@ -349,7 +349,9 @@ sub readColorNameData
 	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 3);
 	my $colors = join('|', @{$Var{'raColorNames'}});
 	debug("colors regex: $colors\n", 2);
-	$Var{'regex'}{'line'} = qr{ ( \#[0-9a-f]{3,6}\b | (rgb|hsl)a?\([^\)]+\) | \b($colors)\b ) }xmsi;
+	$Var{'regex'}{'line'} = qr{
+		( $HASH [0-9a-f]{3,6} \b | (rgb|hsl) a? \( [^\)]+ \) | \b ($colors) \b )
+	}xmsi;
 }
 
 sub constructConstantsTable
@@ -404,7 +406,7 @@ sub processConstantFile
 		$Var{'regex'}{'cssConst'}
 	}{
 		my ($match, $const, $value) = ($1, $2, $3);
-		registerConstantFromFile($prefix . $const, $value, $match);
+		registerConstantFromFile($prefix . $const, $value, $match) if isConstOrColor($value);
 		$match;
 	}xmsge;
 
@@ -412,7 +414,7 @@ sub processConstantFile
 		$Var{'regex'}{'constDef'}
 	}{
 		my ($match, $const, $value) = ($1, $2, $3);
-		registerConstantFromFile($prefix . $const, $value, $match);
+		registerConstantFromFile($prefix . $const, $value, $match) if isConstOrColor($value);
 		$match;
 	}xmsge;
 }
@@ -431,7 +433,27 @@ sub isConst
 {
 	my ($const) = @ARG;
 	my $prefix = q{\\} . opt('const-type');
-	return $const =~ m{\A $prefix}xms;
+	my $regex = qr{\A $prefix}xms;
+	debug("isConst($const) $regex " . $const =~ $regex, 4);
+	return $const =~ $regex;
+}
+
+sub isConstOrColor
+{
+	my ($const) = @ARG;
+	debug("isConstOrColor($const)", 4);
+	return isConst($const) || isColor($const);
+}
+
+sub isColor
+{
+	my ($value) = @ARG;
+	my $regex = qr{
+		\A $Var{'regex'}{'line'} \z
+	}xms;
+
+	debug("isColor($value) $regex " . $value =~ $regex, 4);
+	return $value =~ $regex;
 }
 
 sub checkConstName
@@ -453,6 +475,7 @@ sub registerConstant
 {
 	my ($const, $value) = @ARG;
 
+	debug("registerConstant($const, $value)", 3);
 	$Var{'rhConstantsMap'}{$const} && die "MUSTDO error constant $const: $value already has a defined value: $Var{'rhConstantsMap'}{$const}";
 	if (isConst($value))
 	{
