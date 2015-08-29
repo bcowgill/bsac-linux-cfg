@@ -1,5 +1,8 @@
 // Colour constant definitions:
 @bg: #334455;
+
 @border: black;
 @fg: black;
+
 @shade: grey;
+

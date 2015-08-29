@@ -159,7 +159,6 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 parse .less colour constants
  perl -MData::Dumper -ne 'if (m{\A \s* ( \@ [\-\w]+ ) \s* : \s* ( \#[0-9a-f]+ ) \s* ;}xms) { push(@{$var{$2}}, $1) }; END { print Dumper(\%var)} '  `find /home/bcowgill/projects/files-ui/lib/bower_components/ -name variables.less`
--- need to also track @var1: @var2;
 
 for computed colours write a CSS rule to show what the computed value is
 cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1-defined { color: \@$1; }\n} };' | less
@@ -381,6 +380,8 @@ sub constructConstantsTable
 		$value || die "MUSTDO error constant $const has no assigned value";
 		registerConstant($const, $value);
 	}
+	debug("constants: " . Dumper($Var{'rhConstantsMap'}), 2);
+	debug("colors" . Dumper($Var{'rhColorConstantsMap'}), 2);
 }
 
 sub processConstantFiles
@@ -503,6 +504,9 @@ sub registerConstant
 sub resolveConstants
 {
 	my @consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
+	$Var{'constantContext'} = "after reading all constant files";
+	debug("constants: " . Dumper($Var{'rhConstantsMap'}), 2);
+	debug("unresolved: " . Dumper($Var{'rhUndefinedConstantsMap'}), 2);
 	my $limit = 1000;
 	while ($limit && scalar(@consts))
 	{
@@ -516,7 +520,7 @@ sub resolveConstants
 		}
 		@consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
 	}
-	die "MUSTDO unable to resolve some constant values" unless $limit;
+	warning("MUSTDO unable to resolve some constant values") unless $limit;
 }
 
 sub isDefinedConst
@@ -559,6 +563,7 @@ sub showConstantsTable
 		{
 			print "$const: $color;\n";
 		}
+		print "\n";
 	}
 }
 

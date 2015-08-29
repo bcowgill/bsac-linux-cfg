@@ -1,15 +1,23 @@
 // Colour constant definitions:
 @css-gray-darker: #222222;
+
 @css-gray-dark: #333333;
+
 @brand-primary: #428bca;
 @link-color: #428bca;
 @sass-brand-primary: #428bca;
+
 @css-gray: #555555;
+
 @brand-success: #5cb85c;
 @sass-brand-success: #5cb85c;
+
 @css-gray-light: #777777;
+
 @gray-base: black;
 @sass-gray-base: black;
 @text-color: black;
+
 @popover-border-color: rgba(black,.2);
 @sass-popover-border-color: rgba(black,.2);
+
