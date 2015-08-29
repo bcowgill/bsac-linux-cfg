@@ -175,17 +175,7 @@ function assertFileHeadersEqual
    temp=`mktemp`
    head -$lines < "$actual" > $temp
    mv $temp "$actual"
-   if diff "$actual" "$expected" > /dev/null; then
-      OK "$test output equals base file"
-   else
-      NOT_OK "files differ - $test"
-      echo " "
-      echo vdiff "$actual" "$expected"
-      echo " "
-      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
-      return $ERROR_STOP
-   fi
-   return 0
+   assertFilesEqual "$actual" "$expected" "$test"
 }
 
 # On successful completion of a test plan, show OK message
