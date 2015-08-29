@@ -5,6 +5,7 @@ PROVE=${1:-}
 
 source ./shell-test.sh
 
+testSuite filter-man "filter perldoc man page output for test plan comparisons" $PROVE
 testSuite template-perl "perl template for scanning files" $PROVE
 testSuite template-perl-inplace "perl template for scanning and editing files in place" $PROVE
 testSuite df-k "format df -k command output more legibly" $PROVE
