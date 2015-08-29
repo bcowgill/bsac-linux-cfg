@@ -1,0 +1,96 @@
+SCAN-JS(1)            User Contributed Perl Documentation           SCAN-JS(1)
+
+
+
+NNAAMMEE
+       scan-js.pl - scan a javascript file and see if the functions are
+       arranged as suggested by Uncle Bob's Clean Code book.
+
+AAUUTTHHOORR
+       Brent S.A. Cowgill
+
+SSYYNNOOPPSSIISS
+       scan-js.pl [options] [@options-file ...] [file ...]
+
+        Options:
+          --show-code      negatable. show the code after comment and string extraction
+          --verbose        negatable. show more info about functions. default false
+          --mess           negatable. show more info about functions. default true
+          --summary        negatable. show summary of each file. default true
+          --comment-char   use character to replace text in comment extraction
+          --string-char    use character to replace text in string extraction
+          --lint-length    allowed length of jshint control comments to ignore
+          --version        display program version
+          --help -?        brief help message
+          --man            full help message
+          --debug          incremental. increase the amount of debugging information shown
+
+OOPPTTIIOONNSS
+       ----sshhooww--ccooddee or ----nnoosshhooww--ccooddee
+                negatable. default false. Print out the source code after comments and
+                strings have been extracted.  This allow you to diagnose code which might be
+                excessively tricky.
+
+       ----vveerrbboossee or ----nnoovveerrbboossee
+                negatable. default false. Print out additional information instead of just
+                mess warnings.
+
+       ----mmeessss or ----nnoommeessss
+                negatable. default true. Print out warnings about possible messy code.
+
+       ----ssuummmmaarryy or ----nnoossuummmmaarryy
+                negatable. default true. Print out summary of each file.
+
+       ----ccoommmmeenntt--cchhaarr==ss
+                optional. Defaults to '-'. Set the character to use to replace the text
+                found in comments. Used with --show-code. If set to the empty string
+                --comment-char='' then comments will not be stripped from the code.
+
+       ----ssttrriinngg--cchhaarr==ss
+                optional. Defaults to '_'. Set the character to use to replace the text
+                found in strings. Used with --show-code. If set to the empty string
+                --string-char='' then strings will not be stripped from the code.
+                This is useful if functions are referred to by name in some strings.
+
+       ----lliinntt--lleennggtthh==nn
+                optional. Defaults to 30. The maximum length of a jshint or jslint comment
+                for it to not count against the amount of comments in the file. If there
+                is only one such comment in the file it is also ignored.
+
+       ----vveerrssiioonn
+                Prints the program version and exit.
+
+       ----hheellpp or --??
+                Print a brief help message and exit.
+
+       ----mmaann
+                Print the full help message and exit.
+
+DDEESSCCRRIIPPTTIIOONN
+        B<This program> will read the given Javascript file(s) and examine
+        whether the functions are ordered from high level to low level as
+        suggested by Robert C. Martin's book Clean Code.
+
+        This program is not a general purpose Javascript analysis tool. It
+        assumes the code is pretty clean, not minified, etc. It will not look
+        for obfuscated function definitions for example.
+
+EEXXAAMMPPLLEESS
+        scan-js.pl template/unminified/jquery-2.1.1.js
+
+        scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
+
+        scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
+
+TTOODDOO
+        order output with public then private
+        order output alphabetically
+        order output in line order
+        hide function listing unless warning
+        keep track of number of params per function
+        use jshint to measure complexity of functions
+        closeness of definitions of function to first caller
+
+
+
+perl vX.XX                      YYYY-MM-DD                        SCAN-JS(1)
