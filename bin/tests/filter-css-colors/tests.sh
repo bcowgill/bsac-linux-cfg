@@ -11,11 +11,12 @@ EMPTY=in/empty.txt
 VARS=in/vars-sample.txt
 DEBUG=--debug
 DEBUG=
+LINES=5
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 29
+PLAN 33
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -47,7 +48,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --unknown-option"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -240,7 +241,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --color-only --foreground=yellow --background=black"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -257,7 +258,8 @@ if [ 0 == "$SKIP" ]; then
 	--const=err0= --const=err=@£42 --const=err2=@~42 --canonical --rgb"
 	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	stripLineReferences "$OUT"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -296,6 +298,22 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD constants defined in a file
+TEST=const-file-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=less --const-file=$VARS"
+	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 echo TEST $CMD sass constants defined by hand canonical names
 TEST=const-sass-manually-canon-names
 if [ 0 == "$SKIP" ]; then
@@ -309,7 +327,28 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 #	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
+#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	stripLineReferences "$OUT"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD sass constants defined in a file
+TEST=const-sass-file-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=255
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=sass --const-file=$VARS"
+	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+#	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	stripLineReferences "$OUT"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi

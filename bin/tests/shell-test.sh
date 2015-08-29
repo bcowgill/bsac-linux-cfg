@@ -99,6 +99,15 @@ function cleanUpAfterTests
    fi
 }
 
+# Remove references to line numbers from program scripts under test
+function stripLineReferences
+{
+	local file
+
+	file="$1"
+	perl -i -pne 's{ ( \.pl \s+ line \s+ ) \d+}{$1NNN}xmsg; s{ ( \<DATA\> \s+ line \s+ ) \d+ }{$1NNN}xmsg' $file
+}
+
 # Ensure a just executed command succeeded.
 # usage:
 # program-to-test $ARGS || assertCommandSuccess $? "program-to-test $ARGS"
@@ -148,6 +157,31 @@ function assertFilesEqual
       echo " "
       echo vdiff "$actual" "$expected"
       echo " " 
+      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
+      return $ERROR_STOP
+   fi
+   return 0
+}
+
+function assertFileHeadersEqual
+{
+   local lines actual expected test temp
+   lines=$1
+   actual="$2"
+   expected="$3"
+   test="$4"
+
+   [ -f "$expected" ] || touch "$expected"
+   temp=`mktemp`
+   head -$lines < "$actual" > $temp
+   mv $temp "$actual"
+   if diff "$actual" "$expected" > /dev/null; then
+      OK "$test output equals base file"
+   else
+      NOT_OK "files differ - $test"
+      echo " "
+      echo vdiff "$actual" "$expected"
+      echo " "
       TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
       return $ERROR_STOP
    fi
