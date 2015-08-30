@@ -14,6 +14,7 @@ SYNOPSIS
             --remap          negatable. remap all colors to names or constants in place where possible.
             --names          negatable. convert colors to standard names where possible.
             --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+            --shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
             --rgb            negatable. convert colors to rgb() form.
             --show-const     negatable. show the table of defined constants.
             --const-type     specify what type of constants are being used (for less or sass.)
@@ -49,6 +50,10 @@ OPTIONS
 
     --canonical or --nocanonical
              Show colors in canonical form i.e. #fff becomes '#ffffff'.
+             Implies --remap as well.
+
+    --shorten or --noshorten
+             Show colors in short form i.e. #ffffff becomes '#fff'.
              Implies --remap as well.
 
     --rgb or --norgb

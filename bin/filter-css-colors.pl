@@ -18,6 +18,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--remap          negatable. remap all colors to names or constants in place where possible.
 	--names          negatable. convert colors to standard names where possible.
 	--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+	--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
 	--rgb            negatable. convert colors to rgb() form.
 	--show-const     negatable. show the table of defined constants.
 	--const-type     specify what type of constants are being used (for less or sass.)
@@ -61,6 +62,11 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 =item B<--canonical> or B<--nocanonical>
 
  Show colors in canonical form i.e. #fff becomes '#ffffff'.
+ Implies --remap as well.
+
+=item B<--shorten> or B<--noshorten>
+
+ Show colors in short form i.e. #ffffff becomes '#fff'.
  Implies --remap as well.
 
 =item B<--rgb>  or B<--norgb>
@@ -228,6 +234,7 @@ my %Var = (
 			"remap!",
 			"names!",
 			"canonical!",
+			"shorten!",
 			"rgb!",
 			"show-const!",
 			"const-type:s",
@@ -259,6 +266,7 @@ my %Var = (
 		'constDef'    => qr{ ( [\@\$] ([-\w]+) \s* : \s* ([^;]+) \s* ; ) }xms,
 		'line'        => '', # populated in setup()
 		'shortColor'  => qr{ $HASH ([0-9a-f]{3}) \b }xmsi,
+		'canShortenColor' => qr{ $HASH ([0-9a-f])\1 ([0-9a-f])\2 ([0-9a-f])\3 \b }xmsi,
 		'bytesColor'  => qr{ $HASH ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }xmsi,
 		'transparent' => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
 		'opaque'      => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 1(\.0*)? \s* \) }xmsi,
@@ -722,21 +730,48 @@ sub lookupConstant
 sub renameColor
 {
 	my ($color) = @ARG;
-	return names(rgb(canonical($color)));
+	return names(rgb(canonical(shorten($color))));
 }
 
 # convert #rgb color to #rrggbb so output can be compared against uniqueness
+# and lower case the characters
 sub canonical
 {
 	my ($color) = @ARG;
 	if (opt('canonical'))
 	{
 		$color =~ s{
+			$Var{'regex'}{'bytesColor'}
+		}{
+			lc("#$1$2$3")
+		}xmsgie;
+		$color =~ s{
 			$Var{'regex'}{'shortColor'}
 		}{
-			'#' . (substr($1, 0, 1) x 2) .
+			lc('#' . (substr($1, 0, 1) x 2) .
 			(substr($1, 1, 1) x 2) .
-			(substr($1, 2, 1) x 2)
+			(substr($1, 2, 1) x 2))
+		}xmsgie;
+	}
+	return $color;
+}
+
+# convert #rrggbb color to #rgb so output can be compared against uniqueness
+# and lower case the characters
+sub shorten
+{
+	my ($color) = @ARG;
+	if (opt('shorten'))
+	{
+		$color =~ s{
+			$Var{'regex'}{'canShortenColor'}
+		}{
+			lc("#$1$2$3")
+		}xmsgie;
+		$color =~ s{
+			$Var{'regex'}{'shortColor'}
+		}{
+			lc("#$1")
 		}xmsgie;
 	}
 	return $color;
@@ -867,7 +902,7 @@ sub checkOptions
 
 	# Force some flags when others turned on
 	setOpt('canonical', 1) if (opt('names') || opt('rgb'));
-	setOpt('remap', 1) if (opt('names') || opt('canonical'));
+	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten'));
 
 	if (opt('rgb'))
 	{
