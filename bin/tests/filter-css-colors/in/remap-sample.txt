@@ -1,5 +1,5 @@
- // gray-base
- .something {
+// gray-base
+.something {
   color: #000;
 }
 
