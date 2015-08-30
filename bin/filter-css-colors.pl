@@ -315,6 +315,7 @@ sub main
 
 sub setup
 {
+	debug("setup()");
 	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
 
 	readColorNameData();
@@ -334,6 +335,7 @@ sub setup
 
 sub readColorNameData
 {
+	debug("readColorNameData()");
 	# read from __DATA__ below to get names of hex color values
 	while (my $line = <DATA>)
 	{
@@ -553,6 +555,7 @@ sub getConstValue
 
 sub showConstantsTable
 {
+	debug("showConstantsTable()\n");
 	debug("constants: " . Dumper($Var{'rhConstantsMap'}), 2);
 	debug("colors" . Dumper($Var{'rhColorConstantsMap'}), 2);
 
@@ -631,16 +634,20 @@ sub doReplacement
 sub doReplaceLine
 {
 	my ($line) = @ARG;
+	debug("doReplaceLine($line)", 3);
 	my $match = 0;
 	my @Lines = ();
 	# unfortunately the color name matching could match comments, or class/id names in the CSS
 	# and can't check for a : before because rule could be split across two lines
-	# maybe using negative lookbefore for # - . could handle the color names would also have to strip comments first
+	# maybe using negative lookbefore for # - . could handle the color names would also have
+	# to strip comments first
 	$match = ($line =~ $Var{'regex'}{'line'});
 	$match = opt('reverse') ? !$match : $match;
+	$match = 1 if opt('inplace');
 	if ($match)
 	{
-		$line =~ s{ \A \s+ }{}xms;
+		$line =~ s{ \A (\s*) }{}xms;
+		my $preSpace = (opt('inplace') ? $1: '') || '';
 		if (opt('color-only') && !opt('reverse'))
 		{
 			$line =~ tr[A-Z][a-z];
@@ -652,9 +659,10 @@ sub doReplaceLine
 			{
 				push(@Lines, "\nwas: $line     ");
 			}
-			push(@Lines, remap($line));
+			push(@Lines, $preSpace . remap($line));
 		}
 	}
+	debug("lines: " . Dumper(\@Lines));
 	return join("", @Lines);
 }
 
@@ -666,9 +674,21 @@ sub remap
 	my ($line) = @ARG;
 	if (opt('remap'))
 	{
-		$line =~ s{$Var{'regex'}{'line'}}{ renameColor($1) }ge;
+		$line =~ s{$Var{'regex'}{'line'}}{ substituteConstants($1) }ge;
 	}
 	return $line;
+}
+
+sub substituteConstants
+{
+	my ($color) = @ARG;
+	return lookupConstant(renameColor($color));
+}
+
+sub lookupConstant
+{
+	my ($color) = @ARG;
+	return ($Var{'rhColorConstantsMap'}{$color}) ? $Var{'rhColorConstantsMap'}{$color}[0]: $color;
 }
 
 sub renameColor

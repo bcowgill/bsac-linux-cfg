@@ -1,0 +1,67 @@
+ // gray-base
+ .something {
+  color: #000;
+}
+
+// brand-primary and brand-success
+.panel {
+  color: #428bca;
+  background: #5cb85c;
+}
+
+// gray-darker
+.button {
+  color: #222;
+}
+
+// link-hover-color
+.button:hover {
+  color: #2a6496;
+}
+
+
+// popover-border-color
+.popover {
+  color: rgba(0,0,0,.2);
+}
+
+// popover-arrow-outer-color
+.popover-arror {
+  color: fadein(@popover-border-color, 5%);
+}
+
+// sass-gray-base
+.sass {
+  color: #000;
+}
+
+// sass-brand-primary and sass-brand-success
+.sassy {
+  color: #428bca;
+  background: #5cb85c;
+}
+
+// sass-popover-border-color
+.popover {
+  color: rgba(0,0,0,.2);
+}
+
+// css-gray-darker
+.accordion {
+  color: #222222;
+}
+
+// css-gray-dark
+.accordion:hover  {
+  color: #333333;
+}
+
+// css-gray
+.accordion:before {
+  color: #555555;
+}
+
+// css-gray-light
+.accordion:after {
+  color: #777777;
+}

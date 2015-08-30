@@ -1,27 +1,41 @@
+/* some other stuff */
 color: white;
 color: white;
 color: white;
+
+/* some other stuff */
 color: white;
 color: white;
+
 color: transparent;
 color: transparent;
+
 color: rgba(white,0.4);
 color: rgba(white,0.5);
+
+/* some other stuff */
 color: white;
 color: white;
 color: transparent;
 color: rgba(white  ,  0.5);
 color: rgba(white  ,  0.4  );
 color: rgba(white  ,  0.5);
+
 color: white;
 color: white;
+
 color: transparent;
+
+/* some other stuff */
 color: transparent;
 color: rgba(white  ,  0.4);
+
 * { color: red }   /* red */
 * { color: lime } /* lime */
 * { color: hsl(120, 100%, 25%) } /* dark green */
 * { color: hsl(120, 100%, 75%) } /* light green */
 * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+
+/* some other stuff */
 em { color: lime }     /* green */
 em { color: lime } /* the same, with explicit opacity of 1 */

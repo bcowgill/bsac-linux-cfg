@@ -7,6 +7,7 @@ set -e
 PROGRAM=../../filter-css-colors.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/filter-css-colors-test.txt
+SAMPLE_REMAP=in/remap-sample.txt
 EMPTY=in/empty.txt
 VARS=in/vars-sample.txt
 DEBUG=--debug
@@ -16,7 +17,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 33
+PLAN 35
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -222,6 +223,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace=.bak --names $OUT"
 
+	#echo cp $SAMPLE $OUT\; $PROGRAM $ARGS
 	cp $SAMPLE $OUT
 	$PROGRAM $ARGS || assertCommandSuccess $? "$PROGRAM $ARGS"
 	# check original was backed up
@@ -349,6 +351,23 @@ if [ 0 == "$SKIP" ]; then
 #	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	stripLineReferences "$OUT"
 	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD remap colours with constants defined in a file
+TEST=const-file-remap
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --remap --inplace=.bak \
+	--const-type=less --const-file=$VARS"
+	cp $SAMPLE_REMAP $OUT
+	$PROGRAM $ARGS  $OUT 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
