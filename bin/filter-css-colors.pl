@@ -471,7 +471,7 @@ sub checkConstName
 {
 	my ($const) = @ARG;
 	my $prefix = q{\\} . opt('const-type');
-	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO error in constant name $const";
+	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO constant name/expression not supported [$const]";
 }
 
 sub registerConstantFromFile
@@ -479,7 +479,15 @@ sub registerConstantFromFile
 	my ($const, $value, $match) = @ARG;
 	$match =~ s{\s\s+}{ }xmsg;
 	$Var{'constantContext'} = "in file $Var{fileName} at line [$match]";
-	registerConstant($const, $value);
+	eval
+	{
+		registerConstant($const, $value);
+	};
+	if ($EVAL_ERROR)
+	{
+		warning("Error $Var{constantContext}: $EVAL_ERROR\n");
+		$EVAL_ERROR = undef;
+	}
 }
 
 sub registerConstant

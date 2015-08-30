@@ -17,7 +17,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 35
+PLAN 37
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -346,11 +346,10 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --show-const --canonical --names \
 	--const-type=sass --const-file=$VARS"
 	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-#	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	stripLineReferences "$OUT"
-	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
+#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFileHeadersEqual 10 "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
