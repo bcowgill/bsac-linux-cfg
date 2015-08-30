@@ -25,6 +25,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--const          multiple. define a custom constant value.
 	--const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
 	--const-list     list all possible constant names for a given color substitution in a comment.
+	--const-pull     pull colour values into new named constants.
 	--valid-only     do not perform remappings which are invalid CSS.
 	--inplace        specify to modify files in place creating a backup first.
 	--foreground     [not implemented] specify a color value to use for all foreground colors.
@@ -106,6 +107,12 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
  When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
 
  i.e. color: @background /* @background, @panel-background */;
+
+=item B<--const-pull>
+
+ If there is no constant defined for a color value it will define one for you automatically.
+ After scanning all files these newly defined constants will be displayed. Specify Less or Sass
+ defined constants using --const-type. You must specify --remap for this to have effect.
 
 =item B<--valid-only>
 
@@ -212,6 +219,7 @@ my %Var = (
 			'const-type' => '@', # assumes using less CSS compiler
 			'const-rigid' => 1,  # rigid constant considers - and _ as different in names
 			'const-list' => 0,
+			'const-pull' => 0,
 			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
 			man     => 0,        # show full help page
@@ -241,6 +249,7 @@ my %Var = (
 			'const:s%',
 			'const-file:s@',
 			'const-list!',
+			'const-pull!',
 			"valid-only",
 			"inplace|i:s",
 			"foreground|fg:s",
@@ -259,11 +268,13 @@ my %Var = (
 	'rhColorNamesMap' => {},
 	'rhConstantsMap' => {},      # @const => #color
 	'rhUndefinedConstantsMap' => {}, # @const1 => @const2
+	'raAutoConstants' => [],
 	'rhColorConstantsMap' => {}, # #color => [@const, ... ]
 	'regex' => {
 		'data'        => qr{ \A \s* (\w+) \s+ ( $HASH [0-9a-f]{6} ) \s+ ( \d+,\d+,\d+ ) }xmsi,
 		'cssConst'    => qr{ ( \. ([-\w]+) -defined \s* \{ \s* color \s* : \s* ([^;]+) \s* ; \s* \}) }xms,
 		'constDef'    => qr{ ( [\@\$] ([-\w]+) \s* : \s* ([^;]+) \s* ; ) }xms,
+		'names'       => '', # populated in setup()
 		'line'        => '', # populated in setup()
 		'shortColor'  => qr{ $HASH ([0-9a-f]{3}) \b }xmsi,
 		'canShortenColor' => qr{ $HASH ([0-9a-f])\1 ([0-9a-f])\2 ([0-9a-f])\3 \b }xmsi,
@@ -327,6 +338,7 @@ sub main
 	}
 
 	processFiles($raFiles) if scalar(@$raFiles);
+	summary();
 }
 
 sub setup
@@ -349,6 +361,22 @@ sub setup
 	showConstantsTable() if opt('show-const');
 }
 
+sub summary
+{
+	if (opt('const-pull'))
+	{
+
+		debug("summary: raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
+		debug("summary: rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
+		debug("summary: rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
+		foreach my $color (@{$Var{'raAutoConstants'}})
+		{
+			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
+			print "$const: $color;\n";
+		}
+	}
+}
+
 sub readColorNameData
 {
 	debug("readColorNameData()");
@@ -366,6 +394,7 @@ sub readColorNameData
 	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 3);
 	my $colors = join('|', @{$Var{'raColorNames'}});
 	debug("colors regex: $colors\n", 2);
+	$Var{'regex'}{'names'} = qr{ \b ($colors) \b }xmsi;
 	$Var{'regex'}{'line'} = qr{
 		( $HASH [0-9a-f]{3,6} \b | (rgb|hsl) a? \( [^\)]+ \) | \b ($colors) \b )
 	}xmsi;
@@ -519,7 +548,8 @@ sub registerConstant
 	}
 	if ($const)
 	{
-		$value = renameColor($value);
+		$value = uniqueColor($value);
+		debug("registerConstant() $value", 3);
 		$Var{'rhConstantsMap'}{$const} = $value;
 		push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
 		return 1;
@@ -698,21 +728,30 @@ sub remap
 	my ($line) = @ARG;
 	if (opt('remap'))
 	{
-		$line =~ s{$Var{'regex'}{'line'}}{ substituteConstants($1) }ge;
+		$line =~ s{$Var{'regex'}{'line'}}{ substituteConstants($1, $line) }ge;
 	}
 	return $line;
 }
 
 sub substituteConstants
 {
-	my ($color) = @ARG;
-	return lookupConstant(renameColor($color));
+	my ($color, $line) = @ARG;
+
+	debug("substituteConstants($color, $line)", 3);
+	$color = lookupConstant(renameColor($color));
+	debug("substituteConstants() lookup $color", 3);
+	if (opt('const-pull') && !isConst($color))
+	{
+		$color = defineAutoConstant($color, $line);
+		debug("substituteConstants() define $color", 3);
+	}
+	return $color;
 }
 
 sub lookupConstant
 {
 	my ($color) = @ARG;
-	my $raConstants = $Var{'rhColorConstantsMap'}{$color};
+	my $raConstants = $Var{'rhColorConstantsMap'}{uniqueColor($color)};
 	if ($raConstants)
 	{
 		if (opt('const-list') && (scalar(@$raConstants) > 1))
@@ -727,10 +766,47 @@ sub lookupConstant
 	return $color;
 }
 
+sub defineAutoConstant
+{
+	my ($color, $match) = @ARG;
+	debug("defineAutoConstant($color, $match)");
+
+	my $const = $color;
+	unless ($color =~ m{\A $Var{'regex'}{'names'} \z }xms)
+	{
+		$const = opt('const-type') . "autoConstant" . scalar(@{$Var{'raAutoConstants'}});
+		$color = uniqueColor($color);
+		push(@{$Var{'raAutoConstants'}}, $color);
+		registerConstantFromFile($const, $color, $match);
+	}
+	debug("defineAutoConstant() return $const");
+	return $const;
+}
+
 sub renameColor
 {
 	my ($color) = @ARG;
 	return names(rgb(canonical(shorten($color))));
+}
+
+sub uniqueColor
+{
+	my ($color) = @ARG;
+	return names(commas(strip(rgb(canonical(shorten($color))))));
+}
+
+sub strip
+{
+	my ($string) = @ARG;
+	$string =~ s{\s+}{}xmsg;
+	return $string;
+}
+
+sub commas
+{
+	my ($string) = @ARG;
+	$string =~ s{,([^\s])}{, $1}xmsg;
+	return $string;
 }
 
 # convert #rgb color to #rrggbb so output can be compared against uniqueness

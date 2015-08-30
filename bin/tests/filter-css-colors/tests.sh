@@ -17,7 +17,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 38
+PLAN 41
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -32,7 +32,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --version"
-	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -47,7 +47,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --unknown-option"
-	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS > "$OUT" 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
 else
@@ -61,7 +61,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --man"
-	$PROGRAM $ARGS | filter-man.pl > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS | filter-man.pl > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms; s{\d\d\d\d-\d\d-\d\d}{YYYY-MM-DD}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -75,7 +75,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS=""
-	$PROGRAM $DEBUG < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $DEBUG < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -88,7 +88,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --noremap --nocanonical --nonames"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -101,7 +101,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --reverse --nocolor-only --noremap --nocanonical --nonames $SAMPLE"
-	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -114,7 +114,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --color-only --noremap --nocanonical --nonames"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -127,7 +127,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --nocanonical --nonames"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -140,7 +140,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --noremap --canonical --nonames"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -153,8 +153,8 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --noremap --shorten --nonames"
-	echo $PROGRAM $ARGS $SAMPLE
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	#echo $PROGRAM $ARGS $SAMPLE
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -167,7 +167,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --noremap --nocanonical --names"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -182,7 +182,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --noremap --nocanonical --nonames --rgb"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -197,7 +197,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/noecho-noreverse-nocolor-noremap-nocanon-names.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --canonical --names"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -210,7 +210,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --names"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -223,7 +223,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --valid-only --names"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -238,7 +238,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --inplace=.bak --names $OUT"
 
 	#echo cp $SAMPLE $OUT\; $PROGRAM $ARGS
-	cp $SAMPLE $OUT
+	cp "$SAMPLE" "$OUT"
 	$PROGRAM $ARGS || assertCommandSuccess $? "$PROGRAM $ARGS"
 	# check original was backed up
 	assertFilesEqual "$SAMPLE" "$OUT.bak" "$TEST backup created"
@@ -255,7 +255,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --color-only --foreground=yellow --background=black"
-	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS > "$OUT" 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
 else
@@ -272,7 +272,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --show-const --const-type=less --const=bg=#345 --const=@fg=#000 --const=border=@fg \
 	--const=@bg=duplicate --const=loop=@loop1 --const=@loop1=loop \
 	--const=err0= --const=err=@£42 --const=err2=@~42 --canonical --rgb"
-	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	stripLineReferences "$OUT"
 	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
@@ -290,7 +290,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --show-const --canonical --names \
 	--const-type=less --const=bg=#345 --const=fg=black --const=border=@fg \
 	--const=shade=grey"
-	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -307,7 +307,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --show-const --canonical --rgb \
 	--const-type=less --const=bg=#345 --const=fg=black --const=border=@fg \
 	--const=shade=grey"
-	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -323,7 +323,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
 	--const-type=less --const-file=$VARS"
-	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -340,7 +340,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --show-const --canonical --names \
 	--const-type=sass --const=bg=#345 --const=fg=black --const=border=\$fg \
 	--const=bg=duplicate"
-	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 #	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 #	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -359,7 +359,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
 	--const-type=sass --const-file=$VARS"
-	$PROGRAM $ARGS < $EMPTY > $OUT 2>&1 || ERR=$?
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	stripLineReferences "$OUT"
 #	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -377,8 +377,8 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --remap --inplace=.bak \
 	--const-type=less --const-file=$VARS"
-	cp $SAMPLE_REMAP $OUT
-	$PROGRAM $ARGS  $OUT 2>&1 || ERR=$?
+	cp "$SAMPLE_REMAP" "$OUT"
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -394,9 +394,30 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --remap --inplace=.bak \
 	--const-type=less --const-file=$VARS --const-list"
-	cp $SAMPLE_REMAP $OUT
-	$PROGRAM $ARGS  $OUT 2>&1 || ERR=$?
+	cp "$SAMPLE_REMAP" "$OUT"
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD remap colours and pull new constants
+TEST=const-file-pull
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	OUT_NEW_CONST=out/$TEST.pulled.out
+	BASE=base/$TEST.base
+	BASE_NEW_CONST=base/$TEST.pulled.base
+	ARGS="$DEBUG --remap --shorten --inplace=.bak \
+	--const-type=less --const-pull"
+	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
+	cp "$SAMPLE" "$OUT"
+	$PROGRAM $ARGS "$OUT" > "$OUT_NEW_CONST" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

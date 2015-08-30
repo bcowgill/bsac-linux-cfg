@@ -21,6 +21,7 @@ SYNOPSIS
             --const          multiple. define a custom constant value.
             --const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
             --const-list     list all possible constant names for a given color substitution in a comment.
+            --const-pull     pull colour values into new named constants.
             --valid-only     do not perform remappings which are invalid CSS.
             --inplace        specify to modify files in place creating a backup first.
             --foreground     [not implemented] specify a color value to use for all foreground colors.
@@ -87,6 +88,11 @@ OPTIONS
              When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
 
              i.e. color: @background /* @background, @panel-background */;
+
+    --const-pull
+             If there is no constant defined for a color value it will define one for you automatically.
+             After scanning all files these newly defined constants will be displayed. Specify Less or Sass
+             defined constants using --const-type. You must specify --remap for this to have effect.
 
     --valid-only
              Do not perform name remappings which are invalid css3

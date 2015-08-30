@@ -1,0 +1,41 @@
+/* some other stuff */
+color: white;
+color: @autoConstant0;
+color: @autoConstant0;
+
+/* some other stuff */
+color: @autoConstant1;
+color: @autoConstant2;
+
+color: @autoConstant3;
+color: @autoConstant4;
+
+color: @autoConstant5;
+color: @autoConstant6;
+
+/* some other stuff */
+color: @autoConstant1;
+color: @autoConstant2;
+color: @autoConstant3;
+color: @autoConstant6;
+color: @autoConstant5;
+color: @autoConstant6;
+
+color: @autoConstant7;
+color: @autoConstant7;
+
+color: @autoConstant8;
+
+/* some other stuff */
+color: @autoConstant8;
+color: @autoConstant9;
+
+* { color: @autoConstant10 }   /* red */
+* { color: @autoConstant11 } /* lime */
+* { color: @autoConstant12 } /* dark green */
+* { color: @autoConstant13 } /* light green */
+* { color: @autoConstant14 }  /* pastel green, and so on */
+
+/* some other stuff */
+em { color: @autoConstant11 }     /* green */
+em { color: @autoConstant15 } /* the same, with explicit opacity of 1 */

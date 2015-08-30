@@ -18,6 +18,6 @@
 @sass-gray-base: black;
 @text-color: black;
 
-@popover-border-color: rgba(black,.2);
-@sass-popover-border-color: rgba(black,.2);
+@popover-border-color: rgba(black, .2);
+@sass-popover-border-color: rgba(black, .2);
 
