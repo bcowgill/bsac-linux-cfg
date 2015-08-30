@@ -1,0 +1,67 @@
+// gray-base
+.something {
+  color: @gray-base /* @gray-base, @text-color, @sass-gray-base*/;
+}
+
+// brand-primary and brand-success
+.panel {
+  color: @brand-primary /* @brand-primary, @link-color, @sass-brand-primary*/;
+  background: @brand-success /* @brand-success, @sass-brand-success*/;
+}
+
+// gray-darker
+.button {
+  color: #222;
+}
+
+// link-hover-color
+.button:hover {
+  color: #2a6496;
+}
+
+
+// popover-border-color
+.popover {
+  color: @popover-border-color /* @popover-border-color, @sass-popover-border-color*/;
+}
+
+// popover-arrow-outer-color
+.popover-arror {
+  color: fadein(@popover-border-color, 5%);
+}
+
+// sass-gray-base
+.sass {
+  color: @gray-base /* @gray-base, @text-color, @sass-gray-base*/;
+}
+
+// sass-brand-primary and sass-brand-success
+.sassy {
+  color: @brand-primary /* @brand-primary, @link-color, @sass-brand-primary*/;
+  background: @brand-success /* @brand-success, @sass-brand-success*/;
+}
+
+// sass-popover-border-color
+.popover {
+  color: @popover-border-color /* @popover-border-color, @sass-popover-border-color*/;
+}
+
+// css-gray-darker
+.accordion {
+  color: @css-gray-darker;
+}
+
+// css-gray-dark
+.accordion:hover  {
+  color: @css-gray-dark;
+}
+
+// css-gray
+.accordion:before {
+  color: @css-gray;
+}
+
+// css-gray-light
+.accordion:after {
+  color: @css-gray-light;
+}

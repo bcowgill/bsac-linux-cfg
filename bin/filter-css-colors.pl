@@ -23,6 +23,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--const-type     specify what type of constants are being used (for less or sass.)
 	--const          multiple. define a custom constant value.
 	--const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
+	--const-list     list all possible constant names for a given color substitution in a comment.
 	--valid-only     do not perform remappings which are invalid CSS.
 	--inplace        specify to modify files in place creating a backup first.
 	--foreground     [not implemented] specify a color value to use for all foreground colors.
@@ -88,12 +89,17 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 =item B<--const-file=less-sass-css-filename>
 
- Specify files to parse for color constant definitions. You must specify --const-type if
- you are parsing CSS files for constants. The format of a color constant definition is:
+ Specify files to parse for color constant definitions. You must specify --const-type if you are parsing CSS files for constants. The format of a color constant definition is:
 
  less:  @name-of-constant: #color;
  sass:  $name-of-constant: #color; // equivalent to $name_of_constant
  css:   .name-of-constant { color: #color; }
+
+=item B<--const-list> or B<--noconst-list>
+
+ When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
+
+ i.e. color: @background /* @background, @panel-background */;
 
 =item B<--valid-only>
 
@@ -199,6 +205,7 @@ my %Var = (
 			'valid-only' => 0,
 			'const-type' => '@', # assumes using less CSS compiler
 			'const-rigid' => 1,  # rigid constant considers - and _ as different in names
+			'const-list' => 0,
 			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
 			man     => 0,        # show full help page
@@ -226,6 +233,7 @@ my %Var = (
 			"const-type:s",
 			'const:s%',
 			'const-file:s@',
+			'const-list!',
 			"valid-only",
 			"inplace|i:s",
 			"foreground|fg:s",
@@ -688,7 +696,19 @@ sub substituteConstants
 sub lookupConstant
 {
 	my ($color) = @ARG;
-	return ($Var{'rhColorConstantsMap'}{$color}) ? $Var{'rhColorConstantsMap'}{$color}[0]: $color;
+	my $raConstants = $Var{'rhColorConstantsMap'}{$color};
+	if ($raConstants)
+	{
+		if (opt('const-list') && (scalar(@$raConstants) > 1))
+		{
+			$color = qq{$raConstants->[0] /* @{[join(', ', @$raConstants)]}*/};
+		}
+		else
+		{
+			$color = $raConstants->[0];
+		}
+	}
+	return $color;
 }
 
 sub renameColor

@@ -19,6 +19,7 @@ SYNOPSIS
             --const-type     specify what type of constants are being used (for less or sass.)
             --const          multiple. define a custom constant value.
             --const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
+            --const-list     list all possible constant names for a given color substitution in a comment.
             --valid-only     do not perform remappings which are invalid CSS.
             --inplace        specify to modify files in place creating a backup first.
             --foreground     [not implemented] specify a color value to use for all foreground colors.
@@ -71,12 +72,16 @@ OPTIONS
              --const=$button-background=#fff
 
     --const-file=less-sass-css-filename
-             Specify files to parse for color constant definitions. You must specify --const-type if
-             you are parsing CSS files for constants. The format of a color constant definition is:
+             Specify files to parse for color constant definitions. You must specify --const-type if you are parsing CSS files for constants. The format of a color constant definition is:
 
              less:  @name-of-constant: #color;
              sass:  $name-of-constant: #color; // equivalent to $name_of_constant
              css:   .name-of-constant { color: #color; }
+
+    --const-list or --noconst-list
+             When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
+
+             i.e. color: @background /* @background, @panel-background */;
 
     --valid-only
              Do not perform name remappings which are invalid css3

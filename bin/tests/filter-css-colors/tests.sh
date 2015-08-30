@@ -372,4 +372,21 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD remap colours with constants defined in a file list options
+TEST=const-file-remap-list
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --remap --inplace=.bak \
+	--const-type=less --const-file=$VARS --const-list"
+	cp $SAMPLE_REMAP $OUT
+	$PROGRAM $ARGS  $OUT 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 cleanUpAfterTests
