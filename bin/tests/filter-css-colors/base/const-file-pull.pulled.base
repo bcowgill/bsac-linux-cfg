@@ -1,16 +1,1 @@
 @autoConstant0: #fff;
-@autoConstant1: rgb(255, 255, 255);
-@autoConstant2: rgb(100%, 100%, 100%);
-@autoConstant3: rgba(255, 255, 255, 0);
-@autoConstant4: rgba(100%, 100%, 100%, 0);
-@autoConstant5: rgba(255, 255, 255, 0.4);
-@autoConstant6: rgba(100%, 100%, 100%, 0.5);
-@autoConstant7: hsl(360, 100%, 100%);
-@autoConstant8: hsla(360, 100%, 100%, 0);
-@autoConstant9: hsla(360, 100%, 100%, 0.4);
-@autoConstant10: hsl(0, 100%, 50%);
-@autoConstant11: hsl(120, 100%, 50%);
-@autoConstant12: hsl(120, 100%, 25%);
-@autoConstant13: hsl(120, 100%, 75%);
-@autoConstant14: hsl(120, 75%, 75%);
-@autoConstant15: hsla(120, 100%, 50%, 1);

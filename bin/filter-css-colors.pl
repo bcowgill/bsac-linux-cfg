@@ -276,6 +276,7 @@ my %Var = (
 		'constDef'    => qr{ ( [\@\$] ([-\w]+) \s* : \s* ([^;]+) \s* ; ) }xms,
 		'names'       => '', # populated in setup()
 		'line'        => '', # populated in setup()
+		'hashColor'   => qr{ $HASH ([0-9a-f]{3,6}) \b }xmsi,
 		'shortColor'  => qr{ $HASH ([0-9a-f]{3}) \b }xmsi,
 		'canShortenColor' => qr{ $HASH ([0-9a-f])\1 ([0-9a-f])\2 ([0-9a-f])\3 \b }xmsi,
 		'bytesColor'  => qr{ $HASH ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }xmsi,
@@ -385,10 +386,18 @@ sub readColorNameData
 	{
 		if ($line =~ m{ $Var{'regex'}{'data'} }xmsi)
 		{
-			push(@{$Var{'raColorNames'}}, $1);
-			$Var{'rhColorNamesMap'}{lc($2)} = $1;
-			$Var{'rhColorNamesMap'}{"rgb($3)"} = $1;
-			$Var{'rhColorNamesMap'}{$3} = $1;
+			my ($name, $color, $rgb) = ($1, $2, $3);
+
+			$color = lc($color);
+			$rgb = rgbColor($rgb);
+			push(@{$Var{'raColorNames'}}, $name);
+			$Var{'rhColorNamesMap'}{$color} = $name;
+			$color = shorten($color, 'force');
+			$Var{'rhColorNamesMap'}{$color} = $name;
+
+			$Var{'rhColorNamesMap'}{"rgb($rgb)"} = $name;
+			# TODO also add hsl version of color?
+			$Var{'rhColorNamesMap'}{$rgb} = $name;
 		}
 	}
 	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 3);
@@ -501,6 +510,17 @@ sub isColor
 	}xms;
 
 	debug("isColor($value) $regex " . $value =~ $regex, 4);
+	return $value =~ $regex;
+}
+
+sub isColorOkToConvertToConstant
+{
+	my ($value) = @ARG;
+	my $regex = qr{
+		\A ( $Var{'regex'}{'hashColor'}) \z
+	}xms;
+
+	debug("isColorOkToConvertToConstant($value) $regex " . $value =~ $regex, 4);
 	return $value =~ $regex;
 }
 
@@ -772,7 +792,7 @@ sub defineAutoConstant
 	debug("defineAutoConstant($color, $match)");
 
 	my $const = $color;
-	unless ($color =~ m{\A $Var{'regex'}{'names'} \z }xms)
+	if (isColorOkToConvertToConstant($color))
 	{
 		$const = opt('const-type') . "autoConstant" . scalar(@{$Var{'raAutoConstants'}});
 		$color = uniqueColor($color);
@@ -786,20 +806,29 @@ sub defineAutoConstant
 sub renameColor
 {
 	my ($color) = @ARG;
-	return names(rgb(canonical(shorten($color))));
+	return names(rgb(hashColor($color)));
 }
 
+# make #ffffff forms of colors the same based on command line options
+sub hashColor
+{
+	my ($color) = @ARG;
+	return canonical(shorten($color));
+}
+
+# make unique version of color based on command line options so that color
+# comparisons will work
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return names(commas(strip(rgb(canonical(shorten($color))))));
+	return names(rgbColor(rgb(hashColor($color))));
 }
 
-sub strip
+# fix comma spacing in rgb colors
+sub rgbColor
 {
-	my ($string) = @ARG;
-	$string =~ s{\s+}{}xmsg;
-	return $string;
+	my ($color) = @ARG;
+	return commas(trim($color));
 }
 
 sub commas
@@ -836,8 +865,8 @@ sub canonical
 # and lower case the characters
 sub shorten
 {
-	my ($color) = @ARG;
-	if (opt('shorten'))
+	my ($color, $bShorten) = @ARG;
+	if (opt('shorten') || $bShorten)
 	{
 		$color =~ s{
 			$Var{'regex'}{'canShortenColor'}
@@ -870,7 +899,7 @@ sub rgb
 
 # MUSTDO implement foreground/background
 
-# convert color value to color name if $USE_NAMES set
+# convert color value to color name if names option set
 # color could be #rrggbb or r,g,b triplet or r%,g%,b%
 # or rgb(...) rgba(...) hsl(...) hsla(...)
 # returns name of the color or the original color value
@@ -884,19 +913,19 @@ sub names
 		# alpha = 1 is opaque convert to hsl or rgb
 		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
 
-		$color = $Var{'rhColorNamesMap'}{lc(trim(rgbval($color)))} || $color;
+		$color = $Var{'rhColorNamesMap'}{lc(rgbval($color))} || $color;
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
-			if (exists $Var{'rhColorNamesMap'}{trim(rgbval($1))})
+			if (exists $Var{'rhColorNamesMap'}{rgbval($1)})
 			{
-				$color = "rgba($Var{'rhColorNamesMap'}{trim(rgbval($1))}$2)";
+				$color = "rgba($Var{'rhColorNamesMap'}{rgbval($1)}$2)";
 			}
 		}
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
 		{
-			if (exists $Var{'rhColorNamesMap'}{trim(hsl_to_rgb($1, $2, $3))})
+			if (exists $Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)})
 			{
-				$color = "rgba($Var{'rhColorNamesMap'}{trim(hsl_to_rgb($1, $2, $3))}$4)";
+				$color = "rgba($Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)}$4)";
 			}
 		}
 	}
@@ -911,7 +940,7 @@ sub rgbval
 	my ($vals) = @ARG;
 	$vals =~ s{ $Var{'regex'}{'hsl'} }{ "rgb(" . hsl_to_rgb($1, $2, $3) . ")"}xmse;
 	$vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
-	return $vals;
+	return rgbColor($vals);
 }
 
 # convert a hsl triplet to an rgb triplet
@@ -934,7 +963,7 @@ sub hsl_to_rgb
 	$r = int(255 * hue_to_rgb($m1, $m2, $hue + 1/3));
 	$g = int(255 * hue_to_rgb($m1, $m2, $hue));
 	$b = int(255 * hue_to_rgb($m1, $m2, $hue - 1/3));
-	return "$r,$g,$b"
+	return rgbColor("$r,$g,$b");
 }
 
 # convert a hue/sat to rgb value (0-1)

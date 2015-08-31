@@ -4,38 +4,38 @@ color: @autoConstant0;
 color: @autoConstant0;
 
 /* some other stuff */
-color: @autoConstant1;
-color: @autoConstant2;
+color: rgb(255,255,255);
+color: rgb(100%,100%,100%);
 
-color: @autoConstant3;
-color: @autoConstant4;
+color: rgba(255,255,255,0);
+color: rgba(100%,100%,100%,0);
 
-color: @autoConstant5;
-color: @autoConstant6;
-
-/* some other stuff */
-color: @autoConstant1;
-color: @autoConstant2;
-color: @autoConstant3;
-color: @autoConstant6;
-color: @autoConstant5;
-color: @autoConstant6;
-
-color: @autoConstant7;
-color: @autoConstant7;
-
-color: @autoConstant8;
+color: rgba(255,255,255,0.4);
+color: rgba(100%,100%,100%,0.5);
 
 /* some other stuff */
-color: @autoConstant8;
-color: @autoConstant9;
+color: rgb(  255  ,  255  ,  255  );
+color: rgb(  100%  ,  100%  ,  100%  );
+color: rgba(  255  ,  255  ,  255  ,  0  );
+color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+color: rgba(  255  ,  255  ,  255  ,  0.4  );
+color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
 
-* { color: @autoConstant10 }   /* red */
-* { color: @autoConstant11 } /* lime */
-* { color: @autoConstant12 } /* dark green */
-* { color: @autoConstant13 } /* light green */
-* { color: @autoConstant14 }  /* pastel green, and so on */
+color: hsl(360,100%,100%);
+color: hsl(  360  ,  100%  ,  100%  );
+
+color: hsla(360,100%,100%,0);
 
 /* some other stuff */
-em { color: @autoConstant11 }     /* green */
-em { color: @autoConstant15 } /* the same, with explicit opacity of 1 */
+color: hsla(  360  ,  100%  ,  100%  ,  0);
+color: hsla(  360  ,  100%  ,  100%  ,  0.4);
+
+* { color: hsl(0, 100%, 50%) }   /* red */
+* { color: hsl(120, 100%, 50%) } /* lime */
+* { color: hsl(120, 100%, 25%) } /* dark green */
+* { color: hsl(120, 100%, 75%) } /* light green */
+* { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+
+/* some other stuff */
+em { color: hsl(120, 100%, 50%) }     /* green */
+em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
