@@ -412,10 +412,10 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASE_NEW_CONST=base/$TEST.pulled.base
 	ARGS="$DEBUG --remap --shorten --names --valid \
-	--inplace=.bak --const-type=less --const-pull"
+	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
 	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"
-	$PROGRAM $ARGS "$OUT" > "$OUT_NEW_CONST" 2>&1 || ERR=$?
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

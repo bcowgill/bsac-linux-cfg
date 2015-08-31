@@ -1,4 +1,4 @@
-// Colour constant definitions:
+// Color constant definitions:
 @border: black;
 @fg: black;
 

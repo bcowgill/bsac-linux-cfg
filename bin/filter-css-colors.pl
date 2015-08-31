@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-filter-css-colors.pl - Find all CSS color declarations in files with option to replace then with standard colour name or Less/Sass constants.
+filter-css-colors.pl - Find all CSS color declarations in files with option to replace then with standard color name or Less/Sass constants.
 
 =head1 AUTHOR
 
@@ -23,9 +23,9 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--show-const     negatable. show the table of defined constants.
 	--const-type     specify what type of constants are being used (for less or sass.)
 	--const          multiple. define a custom constant value.
-	--const-file     multiple. specify a Less, Sass or CSS file to parse for colour constants.
+	--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
 	--const-list     list all possible constant names for a given color substitution in a comment.
-	--const-pull     pull colour values into new named constants.
+	--const-pull     pull color values into new named constants and output to file or standard output.
 	--valid-only     do not perform remappings which are invalid CSS.
 	--inplace        specify to modify files in place creating a backup first.
 	--foreground     [not implemented] specify a color value to use for all foreground colors.
@@ -108,11 +108,9 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  i.e. color: @background /* @background, @panel-background */;
 
-=item B<--const-pull>
+=item B<--const-pull=-|filename>
 
- If there is no constant defined for a color value it will define one for you automatically.
- After scanning all files these newly defined constants will be displayed. Specify Less or Sass
- defined constants using --const-type. You must specify --remap for this to have effect.
+ If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
 
 =item B<--valid-only>
 
@@ -171,15 +169,15 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 --background=xxxx you get color: #fff /* original color */;
 --undo undo a foreground/background change
 
---closest mark hard coded colours with the closest named colour
---constants  automatically define colour constants from hard coded values
+--closest mark hard coded colors with the closest named color
+--constants  automatically define color constants from hard coded values
     fg_1 bg_ etc
---use-var=name  when multiple vars are possible for a colour, use the named one
+--use-var=name  when multiple vars are possible for a color, use the named one
 
-parse .less colour constants
+parse .less color constants
  perl -MData::Dumper -ne 'if (m{\A \s* ( \@ [\-\w]+ ) \s* : \s* ( \#[0-9a-f]+ ) \s* ;}xms) { push(@{$var{$2}}, $1) }; END { print Dumper(\%var)} '  `find /home/bcowgill/projects/files-ui/lib/bower_components/ -name variables.less`
 
-for computed colours write a CSS rule to show what the computed value is
+for computed colors write a CSS rule to show what the computed value is
 cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1-defined { color: \@$1; }\n} };' | less
 egrep 'lighten|darken' $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* :}xms) { $_ .= qq{.$1 { color: \@$1; }\n} };'
 
@@ -219,7 +217,6 @@ my %Var = (
 			'const-type' => '@', # assumes using less CSS compiler
 			'const-rigid' => 1,  # rigid constant considers - and _ as different in names
 			'const-list' => 0,
-			'const-pull' => 0,
 			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
 			man     => 0,        # show full help page
@@ -249,7 +246,7 @@ my %Var = (
 			'const:s%',
 			'const-file:s@',
 			'const-list!',
-			'const-pull!',
+			'const-pull:s',
 			"valid-only",
 			"inplace|i:s",
 			"foreground|fg:s",
@@ -364,17 +361,20 @@ sub setup
 
 sub summary
 {
-	if (opt('const-pull'))
+	my $out = opt('const-pull');
+	if ($out)
 	{
-
+		my $fh = *STDOUT;
+		open($fh, '>>', $out) unless ($out eq '-');
 		debug("summary: raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
 		debug("summary: rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
 		debug("summary: rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
 		foreach my $color (@{$Var{'raAutoConstants'}})
 		{
 			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
-			print "$const: $color;\n";
+			print $fh "$const: $color;\n";
 		}
+		close($fh) unless ($out eq '-');
 	}
 }
 
@@ -641,7 +641,7 @@ sub showConstantsTable
 	debug("constants: " . Dumper($Var{'rhConstantsMap'}), 2);
 	debug("colors" . Dumper($Var{'rhColorConstantsMap'}), 2);
 
-	print "// Colour constant definitions:\n";
+	print "// Color constant definitions:\n";
 	foreach my $color (sort(keys(%{$Var{'rhColorConstantsMap'}})))
 	{
 		foreach my $const (sort(@{$Var{'rhColorConstantsMap'}{$color}}))

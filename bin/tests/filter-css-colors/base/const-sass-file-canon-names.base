@@ -4,7 +4,7 @@ WARN: Error in file in/vars-sample.txt at line [$sass-text-color: $gray-base;]: 
 WARN: Error in file in/vars-sample.txt at line [$sass-link-color: $brand-primary;]: MUSTDO not yet implemented for constants of type $ at ../../filter-css-colors.pl line NNN, <DATA> line NNN.
 
 
-// Colour constant definitions:
+// Color constant definitions:
 $css-gray-darker: #222222;
 
 $css-gray-dark: #333333;
