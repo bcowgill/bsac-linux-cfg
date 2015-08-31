@@ -1,1 +1,10 @@
-@autoConstant0: #fff;
+@autoConstant0: white;
+@autoConstant1: transparent;
+@autoConstant2: rgba(255, 255, 255, 0.4);
+@autoConstant3: rgba(100%, 100%, 100%, 0.5);
+@autoConstant4: hsla(360, 100%, 100%, 0.4);
+@autoConstant5: red;
+@autoConstant6: lime;
+@autoConstant7: hsl(120, 100%, 25%);
+@autoConstant8: hsl(120, 100%, 75%);
+@autoConstant9: hsl(120, 75%, 75%);

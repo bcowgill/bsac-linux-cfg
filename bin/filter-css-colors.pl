@@ -515,13 +515,21 @@ sub isColor
 
 sub isColorOkToConvertToConstant
 {
-	my ($value) = @ARG;
+	my ($value, $origValue, $match) = @ARG;
+	my $quoted = quotemeta($origValue);
+	my $regexContext = qr{
+		: \s* $quoted \s* [;\}]
+	}xms;
 	my $regex = qr{
-		\A ( $Var{'regex'}{'hashColor'}) \z
+		\A (
+			$Var{'regex'}{'hashColor'}
+		) \z
 	}xms;
 
+	debug("isColorOkToConvertToConstant() quoted $quoted", 4);
+	debug("isColorOkToConvertToConstant($match) $regexContext " . $match =~ $regexContext, 4);
 	debug("isColorOkToConvertToConstant($value) $regex " . $value =~ $regex, 4);
-	return $value =~ $regex;
+	return $match =~ $regexContext || $value =~ $regex;
 }
 
 sub checkConstName
@@ -757,12 +765,13 @@ sub substituteConstants
 {
 	my ($color, $line) = @ARG;
 
+	my $origColor = $color;
 	debug("substituteConstants($color, $line)", 3);
 	$color = lookupConstant(renameColor($color));
 	debug("substituteConstants() lookup $color", 3);
 	if (opt('const-pull') && !isConst($color))
 	{
-		$color = defineAutoConstant($color, $line);
+		$color = defineAutoConstant($color, $origColor, $line);
 		debug("substituteConstants() define $color", 3);
 	}
 	return $color;
@@ -788,11 +797,11 @@ sub lookupConstant
 
 sub defineAutoConstant
 {
-	my ($color, $match) = @ARG;
-	debug("defineAutoConstant($color, $match)");
+	my ($color, $origColor, $match) = @ARG;
+	debug("defineAutoConstant($color, $origColor, $match)");
 
 	my $const = $color;
-	if (isColorOkToConvertToConstant($color))
+	if (isColorOkToConvertToConstant($color, $origColor, $match))
 	{
 		$const = opt('const-type') . "autoConstant" . scalar(@{$Var{'raAutoConstants'}});
 		$color = uniqueColor($color);

@@ -1,41 +1,41 @@
 /* some other stuff */
-color: white;
+color: @autoConstant0;
+color: @autoConstant0;
+color: @autoConstant0;
+
+/* some other stuff */
 color: @autoConstant0;
 color: @autoConstant0;
 
-/* some other stuff */
-color: rgb(255,255,255);
-color: rgb(100%,100%,100%);
+color: @autoConstant1;
+color: @autoConstant1;
 
-color: rgba(255,255,255,0);
-color: rgba(100%,100%,100%,0);
-
-color: rgba(255,255,255,0.4);
-color: rgba(100%,100%,100%,0.5);
+color: @autoConstant2;
+color: @autoConstant3;
 
 /* some other stuff */
-color: rgb(  255  ,  255  ,  255  );
-color: rgb(  100%  ,  100%  ,  100%  );
-color: rgba(  255  ,  255  ,  255  ,  0  );
-color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
-color: rgba(  255  ,  255  ,  255  ,  0.4  );
-color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+color: @autoConstant0;
+color: @autoConstant0;
+color: @autoConstant1;
+color: @autoConstant3;
+color: @autoConstant2;
+color: @autoConstant3;
 
-color: hsl(360,100%,100%);
-color: hsl(  360  ,  100%  ,  100%  );
+color: @autoConstant0;
+color: @autoConstant0;
 
-color: hsla(360,100%,100%,0);
-
-/* some other stuff */
-color: hsla(  360  ,  100%  ,  100%  ,  0);
-color: hsla(  360  ,  100%  ,  100%  ,  0.4);
-
-* { color: hsl(0, 100%, 50%) }   /* red */
-* { color: hsl(120, 100%, 50%) } /* lime */
-* { color: hsl(120, 100%, 25%) } /* dark green */
-* { color: hsl(120, 100%, 75%) } /* light green */
-* { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+color: @autoConstant1;
 
 /* some other stuff */
-em { color: hsl(120, 100%, 50%) }     /* green */
-em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
+color: @autoConstant1;
+color: @autoConstant4;
+
+* { color: @autoConstant5 }   /* @autoConstant5 */
+* { color: @autoConstant6 } /* @autoConstant6 */
+* { color: @autoConstant7 } /* dark green */
+* { color: @autoConstant8 } /* light green */
+* { color: @autoConstant9 }  /* pastel green, and so on */
+
+/* some other stuff */
+em { color: @autoConstant6 }     /* green */
+em { color: @autoConstant6 } /* the same, with explicit opacity of 1 */

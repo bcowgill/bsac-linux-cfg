@@ -411,8 +411,8 @@ if [ 0 == "$SKIP" ]; then
 	OUT_NEW_CONST=out/$TEST.pulled.out
 	BASE=base/$TEST.base
 	BASE_NEW_CONST=base/$TEST.pulled.base
-	ARGS="$DEBUG --remap --shorten --inplace=.bak \
-	--const-type=less --const-pull"
+	ARGS="$DEBUG --remap --shorten --names --valid \
+	--inplace=.bak --const-type=less --const-pull"
 	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"
 	$PROGRAM $ARGS "$OUT" > "$OUT_NEW_CONST" 2>&1 || ERR=$?
