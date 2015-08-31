@@ -408,9 +408,9 @@ sub readColorNameData
 	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 3);
 	my $colors = join('|', @{$Var{'raColorNames'}});
 	debug("colors regex: $colors\n", 2);
-	$Var{'regex'}{'names'} = qr{ \b ($colors) \b }xmsi;
+	$Var{'regex'}{'names'} = qr{ (?<![-\w]) ($colors) (?![-\w]) }xmsi;
 	$Var{'regex'}{'line'} = qr{
-		( $HASH [0-9a-f]{3,6} \b | (rgb|hsl) a? \( [^\)]+ \) | \b ($colors) \b )
+		( $HASH [0-9a-f]{3,6} \b | (rgb|hsl) a? \( [^\)]+ \) | (?<![-\w]) ($colors) (?![-\w]) )
 	}xmsi;
 }
 
