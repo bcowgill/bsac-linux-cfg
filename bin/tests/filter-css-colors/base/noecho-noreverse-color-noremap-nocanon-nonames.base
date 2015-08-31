@@ -1,6 +1,7 @@
 white
 #ffffff
 #fff
+transparent
 rgb(255,255,255)
 rgb(100%,100%,100%)
 rgba(255,255,255,0)
@@ -31,3 +32,4 @@ green
 hsl(120, 100%, 50%)
 green
 hsla(120, 100%, 50%, 1)
+gray

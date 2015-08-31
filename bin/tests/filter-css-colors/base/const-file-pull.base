@@ -2,40 +2,44 @@
 color: @autoConstant0;
 color: @autoConstant0;
 color: @autoConstant0;
+color: transparent;
 
 /* some other stuff */
 color: @autoConstant0;
 color: @autoConstant0;
 
-color: @autoConstant1;
-color: @autoConstant1;
+color: transparent;
+color: transparent;
 
+color: @autoConstant1;
 color: @autoConstant2;
-color: @autoConstant3;
 
 /* some other stuff */
 color: @autoConstant0;
 color: @autoConstant0;
-color: @autoConstant1;
-color: @autoConstant3;
+color: transparent;
 color: @autoConstant2;
+color: @autoConstant1;
+color: @autoConstant2;
+
+color: @autoConstant0;
+color: @autoConstant0;
+
+color: transparent;
+
+/* some other stuff */
+color: transparent;
 color: @autoConstant3;
 
-color: @autoConstant0;
-color: @autoConstant0;
-
-color: @autoConstant1;
-
-/* some other stuff */
-color: @autoConstant1;
-color: @autoConstant4;
-
-* { color: @autoConstant5 }   /* @autoConstant5 */
-* { color: @autoConstant6 } /* @autoConstant6 */
-* { color: @autoConstant7 } /* dark green */
-* { color: @autoConstant8 } /* light green */
-* { color: @autoConstant9 }  /* pastel green, and so on */
+* { color: @autoConstant4 }   /* @autoConstant4 */
+* { color: @autoConstant5 } /* @autoConstant5 */
+* { color: @autoConstant6 } /* dark green */
+* { color: @autoConstant7 } /* light green */
+* { color: @autoConstant8 }  /* pastel green, and so on */
 
 /* some other stuff */
-em { color: @autoConstant6 }     /* green */
-em { color: @autoConstant6 } /* the same, with explicit opacity of 1 */
+em { color: @autoConstant5 }     /* green */
+em { color: @autoConstant5 } /* the same, with explicit opacity of 1 */
+
+/* some special cases */
+color: @something-dark-gray-named;

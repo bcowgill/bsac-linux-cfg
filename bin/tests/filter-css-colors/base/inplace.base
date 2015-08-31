@@ -2,6 +2,7 @@
 color: white;
 color: white;
 color: white;
+color: transparent;
 
 /* some other stuff */
 color: white;
@@ -39,3 +40,6 @@ color: rgba(white  ,  0.4);
 /* some other stuff */
 em { color: lime }     /* green */
 em { color: lime } /* the same, with explicit opacity of 1 */
+
+/* some special cases */
+color: @something-dark-gray-named;

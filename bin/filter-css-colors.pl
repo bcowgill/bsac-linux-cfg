@@ -529,7 +529,7 @@ sub isColorOkToConvertToConstant
 	debug("isColorOkToConvertToConstant() quoted $quoted", 4);
 	debug("isColorOkToConvertToConstant($match) $regexContext " . $match =~ $regexContext, 4);
 	debug("isColorOkToConvertToConstant($value) $regex " . $value =~ $regex, 4);
-	return $match =~ $regexContext || $value =~ $regex;
+	return ($value ne 'transparent') && ( $match =~ $regexContext || $value =~ $regex );
 }
 
 sub checkConstName
