@@ -42,4 +42,4 @@ em { color: lime }     /* green */
 em { color: lime } /* the same, with explicit opacity of 1 */
 
 /* some special cases */
-color: @something-dark-gray-named;
+@darker-grey: #f4f5f6;

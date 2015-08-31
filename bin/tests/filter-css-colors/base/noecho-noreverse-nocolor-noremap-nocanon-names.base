@@ -26,4 +26,4 @@ color: rgba(white  ,  0.4);
 * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
 em { color: lime }     /* green */
 em { color: lime } /* the same, with explicit opacity of 1 */
-color: @something-dark-gray-named;
+@darker-grey: #f4f5f6;

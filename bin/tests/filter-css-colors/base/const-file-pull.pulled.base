@@ -7,3 +7,4 @@
 @autoConstant6: hsl(120, 100%, 25%);
 @autoConstant7: hsl(120, 100%, 75%);
 @autoConstant8: hsl(120, 75%, 75%);
+@autoConstant9: #f4f5f6;

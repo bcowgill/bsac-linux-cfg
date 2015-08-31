@@ -42,4 +42,4 @@ em { color: @autoConstant5 }     /* green */
 em { color: @autoConstant5 } /* the same, with explicit opacity of 1 */
 
 /* some special cases */
-color: @something-dark-gray-named;
+@darker-grey: @autoConstant9;

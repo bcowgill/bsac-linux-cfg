@@ -361,6 +361,11 @@ sub setup
 
 sub summary
 {
+	showAutoContants();
+}
+
+sub showAutoContants
+{
 	my $out = opt('const-pull');
 	if ($out)
 	{

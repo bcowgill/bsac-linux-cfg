@@ -83,5 +83,5 @@ was: em { color: hsl(120, 100%, 50%) }     /* green */
 was: em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
      em { color: lime } /* the same, with explicit opacity of 1 */
 
-was: color: @something-dark-gray-named;
-     color: @something-dark-gray-named;
+was: @darker-grey: #f4f5f6;
+     @darker-grey: #f4f5f6;
