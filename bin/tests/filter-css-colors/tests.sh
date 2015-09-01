@@ -17,7 +17,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 41
+PLAN 44
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -412,6 +412,27 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASE_NEW_CONST=base/$TEST.pulled.base
 	ARGS="$DEBUG --remap --shorten --names --valid \
+	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
+	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
+	cp "$SAMPLE" "$OUT"
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD remap colours and pull new constants no rename
+TEST=const-file-pull-canonical
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	OUT_NEW_CONST=out/$TEST.pulled.out
+	BASE=base/$TEST.base
+	BASE_NEW_CONST=base/$TEST.pulled.base
+	ARGS="$DEBUG --valid --canonical \
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
 	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"

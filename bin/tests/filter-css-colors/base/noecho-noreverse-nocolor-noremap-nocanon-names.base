@@ -27,3 +27,4 @@ color: rgba(white  ,  0.4);
 em { color: lime }     /* green */
 em { color: lime } /* the same, with explicit opacity of 1 */
 @darker-grey: #f4f5f6;
+border-bottom: 4px solid transparent;

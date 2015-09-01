@@ -85,3 +85,6 @@ was: em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of
 
 was: @darker-grey: #f4f5f6;
      @darker-grey: #f4f5f6;
+
+was: border-bottom: 4px solid transparent;
+     border-bottom: 4px solid transparent;

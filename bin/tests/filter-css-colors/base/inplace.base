@@ -43,3 +43,4 @@ em { color: lime } /* the same, with explicit opacity of 1 */
 
 /* some special cases */
 @darker-grey: #f4f5f6;
+border-bottom: 4px solid transparent;

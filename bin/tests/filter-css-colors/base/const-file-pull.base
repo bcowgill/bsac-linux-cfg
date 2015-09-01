@@ -43,3 +43,4 @@ em { color: @autoConstant5 } /* the same, with explicit opacity of 1 */
 
 /* some special cases */
 @darker-grey: @autoConstant9;
+border-bottom: 4px solid transparent;
