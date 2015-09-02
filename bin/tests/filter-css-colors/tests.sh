@@ -8,6 +8,7 @@ PROGRAM=../../filter-css-colors.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/filter-css-colors-test.txt
 SAMPLE_REMAP=in/remap-sample.txt
+SAMPLE_RULE_PARAMS=in/rule-parameters.less
 EMPTY=in/empty.txt
 VARS=in/vars-sample.txt
 DEBUG=--debug
@@ -436,6 +437,28 @@ if [ 0 == "$SKIP" ]; then
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
 	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD parameters passed to rules
+TEST=const-rules-have-parameters
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	OUT_NEW_CONST=out/$TEST.pulled.out
+	BASE=base/$TEST.base
+	BASE_NEW_CONST=base/$TEST.pulled.base
+	ARGS="$DEBUG --valid --canonical \
+	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST\
+	--const-file=in/variables.less"
+	echo cp "$SAMPLE_RULE_PARAMS" "$OUT" \; $PROGRAM $ARGS "$OUT"
+	cp "$SAMPLE_RULE_PARAMS" "$OUT"
 	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"

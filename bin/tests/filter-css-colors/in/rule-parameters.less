@@ -1,0 +1,364 @@
+// Header Theme Mixin
+// ==========================================================================
+
+.header-theme(
+    @bg-color: #fff,
+    @border-color: #D6D7D8,
+    @sidemenu-btn-color: #aeb0b2,
+    @sidemenu-btn-hover-color: #727578,
+    @sidemenu-btn-active-color: #4a4e52,
+    @logo-color: #E6E7E8,
+    @label-bg: #B2E6FA,
+    @label-color: #4A4E52,
+    @label-border: #80D6F7,
+    @label-border-bottom: #62CDF5,
+    @label-arrow-border: #bae9fb,
+    @search-input-bg: rgba(255, 255, 255, 0.1),
+    @search-input-border: rgba(255, 255, 255, 0.15),
+    @user-dropdown-arrow-color: #01ADEF,
+    @user-dropdown-arrow-hover-color: #86898B,
+    @user-dropdown-hover-bg-color: #EAEBEB,
+    @user-dropdown-hover-border-color: #AEB0B2,
+    @user-name-hover-color: #86898B,
+    @user-dropdown-active-bg-color: #4A4E52,
+    @user-dropdown-active-border-color: #363A3E,
+    @user-dropdown-arrow-active-color: #fff,
+    @user-name-active-color: #fff,
+    @user-name-color: #363A3E
+) {
+    background-color: rgb(red(@bg-color), green(@bg-color), blue(@bg-color)); // Fallback colour
+    background-color: @bg-color;
+
+    border-bottom-color: rgb(red(@border-color), green(@border-color), blue(@border-color));// Fallback colour
+    border-bottom-color: rgba(red(@border-color), green(@border-color), blue(@border-color), 0.5);
+
+    .app-header-sidemenu-btn {
+        color: @sidemenu-btn-color;
+
+        &:hover, &:active {
+            color: @sidemenu-btn-hover-color;
+        }
+
+        &.isActive {
+            color: @sidemenu-btn-active-color;
+        }
+    }
+
+    .app-header-logo,
+    .app-header-small-logo {
+        color: rgb(red(@logo-color), green(@logo-color), blue(@logo-color));
+        color: @logo-color;
+    }
+
+    .app-header-search-input {
+        background-color: rgb(red(@search-input-bg), green(@search-input-bg), blue(@search-input-bg)); // Fallback colour
+        background-color: @search-input-bg;
+
+        border-color: rgb(red(@search-input-border), green(@search-input-border), blue(@search-input-border)); // Fallback colour
+        border-color: @search-input-border;
+
+        @search-placeholder-color: @user-name-color;
+
+        // NOTE: Do not group these rules, one invalid selector in a group makes the whole group invalid
+        &::-webkit-input-placeholder { color: @search-placeholder-color; line-height: 16px; }
+        &:-moz-placeholder { color: @search-placeholder-color; }
+        &::-moz-placeholder { color: @search-placeholder-color; }
+        &:-ms-input-placeholder { color: @search-placeholder-color; line-height: 16px; }
+        &.placeholder { color: @search-placeholder-color; line-height: 16px; }
+
+        &:focus {
+            &::-webkit-input-placeholder { color: #afb1b2; }
+            &:-moz-placeholder { color: #afb1b2; }
+            &::-moz-placeholder { color: #afb1b2; }
+            &:-ms-input-placeholder { color: #afb1b2; }
+            &.placeholder { color: #afb1b2; }
+        }
+    }
+
+    .app-header-search-button {
+        @search-btn-color: @user-name-color;
+
+        color: @search-btn-color;
+
+        &:hover {
+            color: darken(@search-btn-color, 10%);
+        }
+    }
+
+    .app-header-account-label {
+       // Label Styling
+       background-color: @label-bg;
+       border-color: @label-border @label-border @label-border-bottom @label-border;
+
+       // Text
+       color: @label-color;
+
+       // Arrow Border
+       &:before {
+           border-color: transparent transparent transparent @label-arrow-border;
+       }
+
+       // Arrow
+       &:after {
+           border-color: transparent transparent transparent @label-bg;
+       }
+    }
+
+   .app-header-usermenu-dropdown {
+        // Dropdown arrow
+        &:before {
+           color: @user-dropdown-arrow-color;
+        }
+
+        &:hover {
+            background-color: @user-dropdown-hover-bg-color;
+            border-bottom-color: @user-dropdown-hover-border-color;
+
+            // Dropdown arrow
+            &:before {
+               color: @user-dropdown-arrow-hover-color;
+            }
+
+            .app-header-usermenu-name {
+                color: @user-name-hover-color;
+            }
+        }
+
+        &.isActive {
+            background-color: @user-dropdown-active-bg-color;
+            border-bottom-color: @user-dropdown-active-border-color;
+
+            // Dropdown arrow
+            &:before {
+               color: @user-dropdown-arrow-active-color;
+            }
+
+            .app-header-usermenu-name {
+                color: @user-name-active-color;
+            }
+        }
+   }
+
+   .app-header-usermenu-name {
+       color: @user-name-color;
+   }
+};
+
+// Header Themes
+// ==========================================================================
+
+.app-header-region {
+    &.isWhite {
+        .header-theme(
+            @bg-color: #fff,
+            @border-color: #D6D7D8,
+            @sidemenu-btn-color: #aeb0b2,
+            @sidemenu-btn-hover-color: #727578,
+            @sidemenu-btn-active-color: #4a4e52,
+            @logo-color: #E6E7E8,
+            @search-input-bg: darken(#fff, 3%),
+            @search-input-border: darken(#fff, 10%),
+            @label-bg: #B2E6FA,
+            @label-color: #4A4E52,
+            @label-border: #80D6F7,
+            @label-border-bottom: #62CDF5,
+            @label-arrow-border: #bae9fb,
+            @user-dropdown-arrow-color: #363A3E,
+            @user-dropdown-arrow-hover-color: #86898B,
+            @user-dropdown-hover-bg-color: #EAEBEB,
+            @user-dropdown-hover-border-color: #AEB0B2,
+            @user-name-hover-color: #86898B,
+            @user-dropdown-active-bg-color: #4A4E52,
+            @user-dropdown-active-border-color: #363A3E,
+            @user-dropdown-arrow-active-color: #fff,
+            @user-name-color: #363A3E,
+            @user-name-active-color: #fff,
+        );
+    }
+
+    &.isGrey {
+        .header-theme(
+            @bg-color: #4A4E52,
+            @border-color: #363A3E,
+            @sidemenu-btn-color: #aeb0b2,
+            @sidemenu-btn-hover-color: #86898b,
+            @sidemenu-btn-active-color: #fff,
+            @logo-color: #5E6265,
+            @search-input-bg: darken(#4A4E52, 3%),
+            @label-bg: #86898B,
+            @label-color: #eaebeb,
+            @label-border: #AEB0B2,
+            @label-border-bottom: #363A3E,
+            @label-arrow-border: #d8dada,
+            @user-dropdown-arrow-color: #fff,
+            @user-dropdown-arrow-hover-color: #fff,
+            @user-dropdown-hover-bg-color: #363A3E,
+            @user-dropdown-hover-border-color: #000,
+            @user-dropdown-active-bg-color: #923990,
+            @user-dropdown-active-border-color: #912288,
+            @user-name-color: #fff,
+            @user-name-hover-color: #fff,
+            @user-name-active-color: #fff,
+        );
+    }
+
+    &.isNavy {
+        .header-theme(
+            @bg-color: #2B3D51,
+            @sidemenu-btn-color: #aab1b9,
+            @sidemenu-btn-hover-color: #fff,
+            @sidemenu-btn-active-color: #01adef,
+            @border-color: #1F2124,
+            @logo-color: #405062,
+            @label-bg: #808B97,
+            @label-color: #eaebeb,
+            @label-border: #AAB1B9,
+            @label-border-bottom: #1f2124,
+            @label-arrow-border: #dc9c99,
+            @user-dropdown-arrow-color: #fff,
+            @user-dropdown-arrow-hover-color: #fff,
+            @user-dropdown-hover-bg-color: #26292F,
+            @user-dropdown-hover-border-color: #000,
+            @user-dropdown-active-bg-color: #00ADEF,
+            @user-dropdown-active-border-color: #0075DB,
+            @user-name-color: #fff,
+            @user-name-hover-color: #fff,
+            @user-name-active-color: #fff,
+        );
+    }
+
+    &.isBlue {
+        .header-theme(
+            @bg-color: #0074DA,
+            @sidemenu-btn-color: #b2d5f4,
+            @sidemenu-btn-hover-color: #66ace9,
+            @sidemenu-btn-active-color: #fff,
+            @border-color: #0463B6,
+            @logo-color: #3794E6,
+            @label-bg: #66ACE9,
+            @label-color: #e5f1fb,
+            @label-border: #99C7F0,
+            @label-border-bottom: #0075DB,
+            @label-arrow-border: #93c4ef,
+            @user-dropdown-arrow-color: #fff,
+            @user-dropdown-arrow-hover-color: #fff,
+            @user-dropdown-hover-bg-color: #0059CD,
+            @user-dropdown-hover-border-color: #0249A8,
+            @user-dropdown-active-bg-color: #2A3C50,
+            @user-dropdown-active-border-color: #001C45,
+            @user-name-color: #fff,
+            @user-name-hover-color: #fff,
+            @user-name-active-color: #fff,
+        );
+    }
+
+    &.isRed {
+        .header-theme(
+            @bg-color: #B12620,
+            @sidemenu-btn-color: #e0a8a6,
+            @sidemenu-btn-hover-color: #c86762,
+            @sidemenu-btn-active-color: #fff,
+            @border-color: #981711,
+            @logo-color: #BE3F39,
+            @label-bg: #D07D79,
+            @label-color: #fff6f6,
+            @label-border: #DEA19E,
+            @label-border-bottom: #981711,
+            @label-arrow-border: #dc9c99,
+            @user-dropdown-arrow-color: #fff,
+            @user-dropdown-arrow-hover-color: #fff,
+            @user-dropdown-hover-bg-color: #981711,
+            @user-dropdown-hover-border-color: #790C09,
+            @user-dropdown-active-bg-color: #6A0302,
+            @user-dropdown-active-border-color: #3F0000,
+            @user-name-color: #fff,
+            @user-name-hover-color: #fff,
+            @user-name-active-color: #fff,
+        );
+    }
+
+    &.isGreen {
+        .header-theme(
+            @bg-color: #088E43,
+            @sidemenu-btn-color: #9cd2b4,
+            @sidemenu-btn-hover-color: #6abb8e,
+            @sidemenu-btn-active-color: #fff,
+            @border-color: #057637,
+            @logo-color: #259E5B,
+            @label-bg: #52B07B,
+            @label-color: #f6fcf8,
+            @label-border: #84C6A1,
+            @label-border-bottom: #057637,
+            @label-arrow-border: #7fc49d,
+            @user-dropdown-arrow-color: #fff,
+            @user-dropdown-arrow-hover-color: #fff,
+            @user-dropdown-hover-bg-color: #057637,
+            @user-dropdown-hover-border-color: #025621,
+            @user-dropdown-active-bg-color: #004F12,
+            @user-dropdown-active-border-color: #002504,
+            @user-name-color: #fff,
+            @user-name-hover-color: #fff,
+            @user-name-active-color: #fff,
+        );
+    }
+
+    &.isSilver {
+        .header-theme(
+            @bg-color: #EAEBEB,
+            @sidemenu-btn-color: #aeb0b2,
+            @sidemenu-btn-hover-color: #727578,
+            @sidemenu-btn-active-color: #4a4e52,
+            @border-color: #9A9D9F,
+            @logo-color: #D5D6D6,
+            @search-input-border: rgba(0, 0, 0, 0.1),
+            @label-bg: #D6D7D8,
+            @label-color: #363A3E,
+            @label-border: #C2C4C5,
+            @label-border-bottom: #9A9D9F,
+            @label-arrow-border: #c4c6c7,
+            @user-name-color: #363A3E,
+            @user-dropdown-arrow-color: #727578,
+            @user-dropdown-hover-bg-color: #D7D8D8,
+            @user-dropdown-hover-border-color: #AEB0B2,
+            @user-name-hover-color: #727578,
+            @user-dropdown-active-bg-color: #727578,
+            @user-dropdown-active-border-color: #4A4E52,
+        );
+    }
+
+    &.isTransparent {
+        .header-theme(
+            @bg-color: rgba(255, 255, 255, 0.7),
+            @sidemenu-btn-color: #4a4e52,
+            @sidemenu-btn-hover-color: #727578,
+            @sidemenu-btn-active-color: #363a3e,
+            @border-color: rgba(154, 157, 159, 0.5),
+            @logo-color: rgba(54, 58, 62, 0.3),
+            @search-input-bg: darken(rgba(255, 255, 255, 0.7), 3%),
+            @search-input-border: darken(rgba(255, 255, 255, 0.7), 10%),
+            @label-bg: #86898B,
+            @label-color: #eaebeb,
+            @label-border: #AEB0B2,
+            @label-border-bottom: #363A3E,
+            @label-arrow-border: #9ea0a2,
+            @user-name-color: #363A3E,
+            @user-dropdown-arrow-color: #363A3E,
+            @user-dropdown-hover-bg-color: #EAEBEB,
+            @user-dropdown-hover-border-color: #86898B,
+            @user-name-hover-color: #363A3E,
+            @user-dropdown-arrow-hover-color: #363A3E,
+            @user-dropdown-active-bg-color: #4A4E52,
+            @user-dropdown-active-border-color: #363A3E,
+        );
+
+        .isOffset& .app-header {
+            background-color: rgb(255, 255, 255);
+            background-color: rgba(255, 255, 255, 0.9);
+
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: rgb(154, 157, 159);
+            border-bottom-color: rgba(154, 157, 159, 0.5);
+        }
+    }
+}

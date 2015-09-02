@@ -1,0 +1,364 @@
+// Header Theme Mixin
+// ==========================================================================
+
+.header-theme(
+    @bg-color: @autoConstant0,
+    @border-color: @ws-colour-dark-grey-20,
+    @sidemenu-btn-color: @ws-colour-dark-grey-40,
+    @sidemenu-btn-hover-color: @ws-colour-dark-grey-70,
+    @sidemenu-btn-active-color: @ws-colour-dark-grey-90,
+    @logo-color: @autoConstant1,
+    @label-bg: @autoConstant2,
+    @label-color: @ws-colour-dark-grey-90,
+    @label-border: @autoConstant3,
+    @label-border-bottom: @autoConstant4,
+    @label-arrow-border: @autoConstant5,
+    @search-input-bg: rgba(255, 255, 255, 0.1), // should be pulled to const
+    @search-input-border: rgba(255, 255, 255, 0.15),
+    @user-dropdown-arrow-color: @ws-colour-light-blue,
+    @user-dropdown-arrow-hover-color: @ws-colour-dark-grey-60,
+    @user-dropdown-hover-bg-color: @ws-colour-dark-grey-10,
+    @user-dropdown-hover-border-color: @ws-colour-dark-grey-40,
+    @user-name-hover-color: @ws-colour-dark-grey-60,
+    @user-dropdown-active-bg-color: @ws-colour-dark-grey-90,
+    @user-dropdown-active-border-color: @ws-colour-dark-grey,
+    @user-dropdown-arrow-active-color: @autoConstant0,
+    @user-name-active-color: @autoConstant0,
+    @user-name-color: @ws-colour-dark-grey
+) {
+    background-color: rgb(red(@bg-color), green(@bg-color), blue(@bg-color)); // Fallback colour
+    background-color: @bg-color;
+
+    border-bottom-color: rgb(red(@border-color), green(@border-color), blue(@border-color));// Fallback colour
+    border-bottom-color: rgba(red(@border-color), green(@border-color), blue(@border-color), 0.5);
+
+    .app-header-sidemenu-btn {
+        color: @sidemenu-btn-color;
+
+        &:hover, &:active {
+            color: @sidemenu-btn-hover-color;
+        }
+
+        &.isActive {
+            color: @sidemenu-btn-active-color;
+        }
+    }
+
+    .app-header-logo,
+    .app-header-small-logo {
+        color: rgb(red(@logo-color), green(@logo-color), blue(@logo-color));
+        color: @logo-color;
+    }
+
+    .app-header-search-input {
+        background-color: rgb(red(@search-input-bg), green(@search-input-bg), blue(@search-input-bg)); // Fallback colour
+        background-color: @search-input-bg;
+
+        border-color: rgb(red(@search-input-border), green(@search-input-border), blue(@search-input-border)); // Fallback colour
+        border-color: @search-input-border;
+
+        @search-placeholder-color: @user-name-color;
+
+        // NOTE: Do not group these rules, one invalid selector in a group makes the whole group invalid
+        &::-webkit-input-placeholder { color: @search-placeholder-color; line-height: 16px; }
+        &:-moz-placeholder { color: @search-placeholder-color; }
+        &::-moz-placeholder { color: @search-placeholder-color; }
+        &:-ms-input-placeholder { color: @search-placeholder-color; line-height: 16px; }
+        &.placeholder { color: @search-placeholder-color; line-height: 16px; }
+
+        &:focus {
+            &::-webkit-input-placeholder { color: @autoConstant6; }
+            &:-moz-placeholder { color: @autoConstant6; }
+            &::-moz-placeholder { color: @autoConstant6; }
+            &:-ms-input-placeholder { color: @autoConstant6; }
+            &.placeholder { color: @autoConstant6; }
+        }
+    }
+
+    .app-header-search-button {
+        @search-btn-color: @user-name-color;
+
+        color: @search-btn-color;
+
+        &:hover {
+            color: darken(@search-btn-color, 10%);
+        }
+    }
+
+    .app-header-account-label {
+       // Label Styling
+       background-color: @label-bg;
+       border-color: @label-border @label-border @label-border-bottom @label-border;
+
+       // Text
+       color: @label-color;
+
+       // Arrow Border
+       &:before {
+           border-color: transparent transparent transparent @label-arrow-border;
+       }
+
+       // Arrow
+       &:after {
+           border-color: transparent transparent transparent @label-bg;
+       }
+    }
+
+   .app-header-usermenu-dropdown {
+        // Dropdown arrow
+        &:before {
+           color: @user-dropdown-arrow-color;
+        }
+
+        &:hover {
+            background-color: @user-dropdown-hover-bg-color;
+            border-bottom-color: @user-dropdown-hover-border-color;
+
+            // Dropdown arrow
+            &:before {
+               color: @user-dropdown-arrow-hover-color;
+            }
+
+            .app-header-usermenu-name {
+                color: @user-name-hover-color;
+            }
+        }
+
+        &.isActive {
+            background-color: @user-dropdown-active-bg-color;
+            border-bottom-color: @user-dropdown-active-border-color;
+
+            // Dropdown arrow
+            &:before {
+               color: @user-dropdown-arrow-active-color;
+            }
+
+            .app-header-usermenu-name {
+                color: @user-name-active-color;
+            }
+        }
+   }
+
+   .app-header-usermenu-name {
+       color: @user-name-color;
+   }
+};
+
+// Header Themes
+// ==========================================================================
+
+.app-header-region {
+    &.isWhite {
+        .header-theme(
+            @bg-color: @autoConstant0,
+            @border-color: @ws-colour-dark-grey-20,
+            @sidemenu-btn-color: @ws-colour-dark-grey-40,
+            @sidemenu-btn-hover-color: @ws-colour-dark-grey-70,
+            @sidemenu-btn-active-color: @ws-colour-dark-grey-90,
+            @logo-color: @autoConstant1,
+            @search-input-bg: darken(@autoConstant0, 3%),
+            @search-input-border: darken(@autoConstant0, 10%),
+            @label-bg: @autoConstant2,
+            @label-color: @ws-colour-dark-grey-90,
+            @label-border: @autoConstant3,
+            @label-border-bottom: @autoConstant4,
+            @label-arrow-border: @autoConstant5,
+            @user-dropdown-arrow-color: @ws-colour-dark-grey,
+            @user-dropdown-arrow-hover-color: @ws-colour-dark-grey-60,
+            @user-dropdown-hover-bg-color: @ws-colour-dark-grey-10,
+            @user-dropdown-hover-border-color: @ws-colour-dark-grey-40,
+            @user-name-hover-color: @ws-colour-dark-grey-60,
+            @user-dropdown-active-bg-color: @ws-colour-dark-grey-90,
+            @user-dropdown-active-border-color: @ws-colour-dark-grey,
+            @user-dropdown-arrow-active-color: @autoConstant0,
+            @user-name-color: @ws-colour-dark-grey,
+            @user-name-active-color: @autoConstant0,
+        );
+    }
+
+    &.isGrey {
+        .header-theme(
+            @bg-color: @ws-colour-dark-grey-90,
+            @border-color: @ws-colour-dark-grey,
+            @sidemenu-btn-color: @ws-colour-dark-grey-40,
+            @sidemenu-btn-hover-color: @ws-colour-dark-grey-60,
+            @sidemenu-btn-active-color: @autoConstant0,
+            @logo-color: @ws-colour-dark-grey-80,
+            @search-input-bg: darken(@ws-colour-dark-grey-90, 3%),
+            @label-bg: @ws-colour-dark-grey-60,
+            @label-color: @ws-colour-dark-grey-10,
+            @label-border: @ws-colour-dark-grey-40,
+            @label-border-bottom: @ws-colour-dark-grey,
+            @label-arrow-border: @autoConstant7,
+            @user-dropdown-arrow-color: @autoConstant0,
+            @user-dropdown-arrow-hover-color: @autoConstant0,
+            @user-dropdown-hover-bg-color: @ws-colour-dark-grey,
+            @user-dropdown-hover-border-color: @autoConstant8,
+            @user-dropdown-active-bg-color: @autoConstant9,
+            @user-dropdown-active-border-color: @autoConstant10,
+            @user-name-color: @autoConstant0,
+            @user-name-hover-color: @autoConstant0,
+            @user-name-active-color: @autoConstant0,
+        );
+    }
+
+    &.isNavy {
+        .header-theme(
+            @bg-color: @autoConstant11,
+            @sidemenu-btn-color: @ws-colour-darkest-blue-40,
+            @sidemenu-btn-hover-color: @autoConstant0,
+            @sidemenu-btn-active-color: @ws-colour-light-blue,
+            @border-color: @autoConstant12,
+            @logo-color: @ws-colour-darkest-blue-90,
+            @label-bg: @autoConstant13,
+            @label-color: @ws-colour-dark-grey-10,
+            @label-border: @ws-colour-darkest-blue-40,
+            @label-border-bottom: @autoConstant12,
+            @label-arrow-border: @autoConstant14,
+            @user-dropdown-arrow-color: @autoConstant0,
+            @user-dropdown-arrow-hover-color: @autoConstant0,
+            @user-dropdown-hover-bg-color: @autoConstant15,
+            @user-dropdown-hover-border-color: @autoConstant8,
+            @user-dropdown-active-bg-color: @autoConstant16,
+            @user-dropdown-active-border-color: @ws-colour-dark-blue,
+            @user-name-color: @autoConstant0,
+            @user-name-hover-color: @autoConstant0,
+            @user-name-active-color: @autoConstant0,
+        );
+    }
+
+    &.isBlue {
+        .header-theme(
+            @bg-color: @autoConstant17,
+            @sidemenu-btn-color: @autoConstant18,
+            @sidemenu-btn-hover-color: @autoConstant19,
+            @sidemenu-btn-active-color: @autoConstant0,
+            @border-color: @autoConstant20,
+            @logo-color: @autoConstant21,
+            @label-bg: @autoConstant19,
+            @label-color: @autoConstant22,
+            @label-border: @autoConstant23,
+            @label-border-bottom: @ws-colour-dark-blue,
+            @label-arrow-border: @autoConstant24,
+            @user-dropdown-arrow-color: @autoConstant0,
+            @user-dropdown-arrow-hover-color: @autoConstant0,
+            @user-dropdown-hover-bg-color: @autoConstant25,
+            @user-dropdown-hover-border-color: @autoConstant26,
+            @user-dropdown-active-bg-color: @autoConstant27,
+            @user-dropdown-active-border-color: @autoConstant28,
+            @user-name-color: @autoConstant0,
+            @user-name-hover-color: @autoConstant0,
+            @user-name-active-color: @autoConstant0,
+        );
+    }
+
+    &.isRed {
+        .header-theme(
+            @bg-color: @autoConstant29,
+            @sidemenu-btn-color: @autoConstant30,
+            @sidemenu-btn-hover-color: @autoConstant31,
+            @sidemenu-btn-active-color: @autoConstant0,
+            @border-color: @autoConstant32,
+            @logo-color: @autoConstant33,
+            @label-bg: @autoConstant34,
+            @label-color: @autoConstant35,
+            @label-border: @autoConstant36,
+            @label-border-bottom: @autoConstant32,
+            @label-arrow-border: @autoConstant14,
+            @user-dropdown-arrow-color: @autoConstant0,
+            @user-dropdown-arrow-hover-color: @autoConstant0,
+            @user-dropdown-hover-bg-color: @autoConstant32,
+            @user-dropdown-hover-border-color: @autoConstant37,
+            @user-dropdown-active-bg-color: @autoConstant38,
+            @user-dropdown-active-border-color: @autoConstant39,
+            @user-name-color: @autoConstant0,
+            @user-name-hover-color: @autoConstant0,
+            @user-name-active-color: @autoConstant0,
+        );
+    }
+
+    &.isGreen {
+        .header-theme(
+            @bg-color: @autoConstant40,
+            @sidemenu-btn-color: @autoConstant41,
+            @sidemenu-btn-hover-color: @autoConstant42,
+            @sidemenu-btn-active-color: @autoConstant0,
+            @border-color: @autoConstant43,
+            @logo-color: @autoConstant44,
+            @label-bg: @autoConstant45,
+            @label-color: @autoConstant46,
+            @label-border: @autoConstant47,
+            @label-border-bottom: @autoConstant43,
+            @label-arrow-border: @autoConstant48,
+            @user-dropdown-arrow-color: @autoConstant0,
+            @user-dropdown-arrow-hover-color: @autoConstant0,
+            @user-dropdown-hover-bg-color: @autoConstant43,
+            @user-dropdown-hover-border-color: @autoConstant49,
+            @user-dropdown-active-bg-color: @autoConstant50,
+            @user-dropdown-active-border-color: @autoConstant51,
+            @user-name-color: @autoConstant0,
+            @user-name-hover-color: @autoConstant0,
+            @user-name-active-color: @autoConstant0,
+        );
+    }
+
+    &.isSilver {
+        .header-theme(
+            @bg-color: @ws-colour-dark-grey-10,
+            @sidemenu-btn-color: @ws-colour-dark-grey-40,
+            @sidemenu-btn-hover-color: @ws-colour-dark-grey-70,
+            @sidemenu-btn-active-color: @ws-colour-dark-grey-90,
+            @border-color: @ws-colour-dark-grey-50,
+            @logo-color: @autoConstant52,
+            @search-input-border: rgba(0, 0, 0, 0.1),
+            @label-bg: @ws-colour-dark-grey-20,
+            @label-color: @ws-colour-dark-grey,
+            @label-border: @ws-colour-dark-grey-30,
+            @label-border-bottom: @ws-colour-dark-grey-50,
+            @label-arrow-border: @autoConstant53,
+            @user-name-color: @ws-colour-dark-grey,
+            @user-dropdown-arrow-color: @ws-colour-dark-grey-70,
+            @user-dropdown-hover-bg-color: @autoConstant54,
+            @user-dropdown-hover-border-color: @ws-colour-dark-grey-40,
+            @user-name-hover-color: @ws-colour-dark-grey-70,
+            @user-dropdown-active-bg-color: @ws-colour-dark-grey-70,
+            @user-dropdown-active-border-color: @ws-colour-dark-grey-90,
+        );
+    }
+
+    &.isTransparent {
+        .header-theme(
+            @bg-color: rgba(255, 255, 255, 0.7),
+            @sidemenu-btn-color: @ws-colour-dark-grey-90,
+            @sidemenu-btn-hover-color: @ws-colour-dark-grey-70,
+            @sidemenu-btn-active-color: @ws-colour-dark-grey,
+            @border-color: rgba(154, 157, 159, 0.5),
+            @logo-color: rgba(54, 58, 62, 0.3),
+            @search-input-bg: darken(rgba(255, 255, 255, 0.7), 3%),
+            @search-input-border: darken(rgba(255, 255, 255, 0.7), 10%),
+            @label-bg: @ws-colour-dark-grey-60,
+            @label-color: @ws-colour-dark-grey-10,
+            @label-border: @ws-colour-dark-grey-40,
+            @label-border-bottom: @ws-colour-dark-grey,
+            @label-arrow-border: @autoConstant55,
+            @user-name-color: @ws-colour-dark-grey,
+            @user-dropdown-arrow-color: @ws-colour-dark-grey,
+            @user-dropdown-hover-bg-color: @ws-colour-dark-grey-10,
+            @user-dropdown-hover-border-color: @ws-colour-dark-grey-60,
+            @user-name-hover-color: @ws-colour-dark-grey,
+            @user-dropdown-arrow-hover-color: @ws-colour-dark-grey,
+            @user-dropdown-active-bg-color: @ws-colour-dark-grey-90,
+            @user-dropdown-active-border-color: @ws-colour-dark-grey,
+        );
+
+        .isOffset& .app-header {
+            background-color: @autoConstant56;
+            background-color: @autoConstant57;
+
+            border-bottom-width: 1px;
+            border-bottom-style: solid;
+            border-bottom-color: @autoConstant58;
+            border-bottom-color: @autoConstant59;
+        }
+    }
+}
