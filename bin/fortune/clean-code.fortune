@@ -1,0 +1,17 @@
+Leave the code cleaner than you found it. If we all checked-in our code a little cleaner than when we checked it out, the code simply could not rot.
+Clean Code, Robert C. Martin, p14
+%
+Use Intention-Revealing Names
+The name of a variable, function, or class, should answer all the big questions. It should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent.
+Clean Code, Robert C. Martin, p18
+%
+The first rule of classes is that they should be small.
+The second rule of classes is that they should be smaller than that.
+Clean Code, Robert C. Martin, p136
+%
+The name of a class should describe what responsibilities it fulfills. In fact, naming is probably the first way of helping determine class size. If we cannot derive a concise name for a class, then it's likely too large. The more ambiguous the class name, the more likely it has too many responsibilities.
+Clean Code, Robert C. Martin, p138
+%
+We should be able to write a brief description of the class in about 25 words without using the words "if," "and," "or," or "but."
+Clean Code, Robert C. Martin, p138
+%
