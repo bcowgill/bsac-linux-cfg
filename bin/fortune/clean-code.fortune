@@ -1,17 +1,28 @@
 Leave the code cleaner than you found it. If we all checked-in our code a little cleaner than when we checked it out, the code simply could not rot.
 Clean Code, Robert C. Martin, p14
 %
-Use Intention-Revealing Names
+Names: Use Intention-Revealing Names
 The name of a variable, function, or class, should answer all the big questions. It should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent.
 Clean Code, Robert C. Martin, p18
 %
+Classes:
 The first rule of classes is that they should be small.
 The second rule of classes is that they should be smaller than that.
 Clean Code, Robert C. Martin, p136
 %
+Classes:
 The name of a class should describe what responsibilities it fulfills. In fact, naming is probably the first way of helping determine class size. If we cannot derive a concise name for a class, then it's likely too large. The more ambiguous the class name, the more likely it has too many responsibilities.
 Clean Code, Robert C. Martin, p138
 %
+Classes:
 We should be able to write a brief description of the class in about 25 words without using the words "if," "and," "or," or "but."
 Clean Code, Robert C. Martin, p138
+%
+Classes: Single Responsibility Principle:
+A class or module should have one, and only one, reason to change. Each small class encapsulates a single responsibility, has a single reason to change, and collaborates with a few others to achieve the desired system behaviors.
+Clean Code, Robert C. Martin, p138,140
+%
+Classes: Cohesion Should be High
+Classes should have a small number of instance variables. Each of the methods of a class should manipulate one or more of those variables. In general the more variables a method manipulates the more cohesive that method is to its class. A class in which each variable is used by each method is maximally cohesive.
+Clean Code, Robert C. Martin, p140
 %
