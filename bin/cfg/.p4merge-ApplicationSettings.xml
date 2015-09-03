@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--perforce-xml-version=1.0-->
-<PropertyList varName="ApplicationSettings" IsManaged="TRUE">
+<PropertyList IsManaged="TRUE" varName="ApplicationSettings">
  <Font varName="ApplicationFont">
   <family>ProFontWindows</family>
   <pointSize>14</pointSize>
-  <weight>Bold</weight>
+  <weight>Normal</weight>
   <italic>false</italic>
  </Font>
  <String varName="CharSet">utf8</String>
  <String varName="CompareUrl"></String>
- <PropertyList varName="Connection" IsManaged="TRUE">
+ <PropertyList IsManaged="TRUE" varName="Connection">
   <String varName="ApplicationLanguage">en</String>
  </PropertyList>
  <String varName="DiffOption">db</String>
@@ -21,30 +21,30 @@
  </Font>
  <Bool varName="InlineDiffsEnabled">true</Bool>
  <String varName="LineEnding">Unix</String>
- <PropertyList varName="PreferencesDialog" IsManaged="TRUE">
+ <PropertyList IsManaged="TRUE" varName="PreferencesDialog">
   <ByteArray varName="WindowGeometry">AdnQywABAAAAAAJ3AAAAfgAABf0AAAPLAAACeQAAAJUAAAX7AAADxwAAAAAAAA==</ByteArray>
  </PropertyList>
  <Bool varName="ShowTabsSpaces">true</Bool>
  <Bool varName="TabInsertsSpaces">false</Bool>
  <Int varName="TabWidth">4</Int>
- <PropertyList varName="Windows" IsManaged="TRUE">
-  <PropertyList varName="CompareDialog" IsManaged="TRUE">
+ <PropertyList IsManaged="TRUE" varName="Windows">
+  <PropertyList IsManaged="TRUE" varName="CompareDialog">
    <ByteArray varName="WindowGeometry">AdnQywABAAAAAAO9AAAB5QAABZ8AAALnAAADvwAAAfwAAAWdAAAC4wAAAAAAAA==</ByteArray>
   </PropertyList>
-  <PropertyList varName="Diff" IsManaged="TRUE">
+  <PropertyList IsManaged="TRUE" varName="Diff">
    <Bool varName="DiffCombined">false</Bool>
    <ByteArray varName="WindowGeometry">AdnQywABAAD////+/////QAAB4EAAAQYAAAAAAAAAAD////+/////gAAAAACAA==</ByteArray>
    <ByteArray varName="WindowState">AAAA/wAAAAD9AAAAAAAAB4AAAAPEAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAkAE0AYQBpAG4AVwBpAG4AZABvAHcAIABUAG8AbwBsAGIAYQByAQAAAAD/////AAAAAAAAAAA=</ByteArray>
   </PropertyList>
-  <PropertyList varName="ImageDiff" IsManaged="TRUE">
+  <PropertyList IsManaged="TRUE" varName="ImageDiff">
    <Bool varName="DiffCombined">false</Bool>
    <ByteArray varName="WindowGeometry">AdnQywABAAD////+/////QAAB4EAAAQYAAAAAAAAABQAAAUBAAACmQAAAAACAA==</ByteArray>
    <ByteArray varName="WindowState">AAAA/wAAAAD9AAAAAQAAAAAAAADEAAAD5vwCAAAAAfsAAAAcAEkAbQBnAEQAaQBmAGYAUABhAGwAZQB0AHQAZQEAAAAbAAAD5gAAAJ8A////AAAGtgAAA+YAAAAEAAAABAAAAAgAAAAI/AAAAAA=</ByteArray>
   </PropertyList>
-  <PropertyList varName="Merge" IsManaged="TRUE">
+  <PropertyList IsManaged="TRUE" varName="Merge">
    <Bool varName="ShowBase">true</Bool>
   </PropertyList>
-  <PropertyList varName="MergeDiff" IsManaged="TRUE">
+  <PropertyList IsManaged="TRUE" varName="MergeDiff">
    <Bool varName="ShowLineNumbers">true</Bool>
   </PropertyList>
  </PropertyList>

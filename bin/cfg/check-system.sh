@@ -1181,7 +1181,7 @@ FILE=".p4merge/ApplicationSettings.xml"
 if [ -f "$FILE" ]; then
 	file_has_text $FILE "<family>ProFontWindows" "Edit / Preferences"
 	file_has_text $FILE "<pointSize>14" "Edit / Preferences"
-	file_contains_text $FILE "<String varName=.DiffOption.>db" "Edit / Preferences"
+	file_contains_text $FILE "<String varName=.DiffOption.>db" "Edit / Preferences ignore line ending and white space length differences"
 	file_contains_text $FILE "<Bool varName=.ShowTabsSpaces.>true" "Edit / Preferences"
 	file_contains_text $FILE "<Bool varName=.TabInsertsSpaces.>false" "Edit / Preferences"
 	file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
