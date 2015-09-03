@@ -7,6 +7,9 @@ KEY:WEBSTORM:EDIT Ctrl-Shift-/ Block Comment/uncomment the current line or selec
 KEY:WEBSTORM:EDIT Alt-Shift-Up/Down Move the current selecion or line up/down
 
 KEY:WEBSTORM:NAV F12 move from the editor to the last focused tool window
+KEY:WEBSTORM:NAV Ctrl-Tab popup switcher to choose between tool windows and open files
+KEY:WEBSTORM:NAV switcher Ctrl-Up/Down/Tab/Alt,Shift-Tab to navigate around the switcher
+KEY:WEBSTORM:NAV switcher Delete/Backspace to close editor tab or hide tool window from the switcher
 KEY:WEBSTORM:NAV Alt-Shift-1 Quickly find the currently edited file in another view (Project/Structure etc)
 KEY:WEBSTORM:NAV Escape in a tool window gets you to the editor
 KEY:WEBSTORM:NAV Shift-Escape in a tool window gets you to the editor and hides the tool window
@@ -17,6 +20,8 @@ KEY:WEBSTORM:NAV Alt-9 Show list of all changed/added files in tool window and a
 KEY:WEBSTORM:NAV Ctrl-MouseClick on a File Tab to show the path and navigate to a directory
 
 KEY:WEBSTORM:VIEW Shift-MouseWheel horizontal scrolling of the window
+KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
+KEY:WEBSTORM:VIEW MouseClick Icon Lower Left - hide tool window bars then Alt Alt-Hold to show the window bars temporarily
 
 KEY:WEBSTORM:MARK Ctrl-Shift-7 [Edit/Find/Highlight Usages in File] to quickly highlight usages of some variable in current file
 KEY:WEBSTORM:MARK F3 jump to next highlighted term
@@ -61,7 +66,6 @@ KEY:WEBSTORM:CODE Ctrl-Alt-t [Code/Surround With] Wrap line/selected text with a
 
 KEY:WEBSTORM:DOC Ctrl-q [View/Quick Documentation] show @doc documentation for symbol at cursor. works in code completion popup too.
 
-KEY:WEBSTORM:VIEW Ctrl-Shift-0 CUSTOM reset font size
 
 KEY:WEBSTORM:CODE Alt-Shift-r Run tests
 KEY:WEBSTORM:CODE Ctrl-Alt-Shift-i [Code/Run inspection by name] incremental search for a code inspection to run
@@ -88,4 +92,4 @@ KEY:WEBSTORM:TABS Ctrl-MouseClick on a File Tab to show the path and navigate to
 KEY:WEBSTORM:HELP Ctrl-Shift-a [Help/Find Action] incremental search for commands by name
 
 HEREIAM
-last tips Settings/Preferences, Ctrl-f, Alt-Enter, Ctrl-Shift-n :line, Shift-MouseClick on Tab, Alt-MouseDrag
+last tips Ctrl-Shift-a, Ctrl-Shift-i, Alt-Home, Alt-9, Alt-Enter, Ctrl-Tab, Alt Alt-Hold tool window bars
