@@ -394,7 +394,7 @@ sub readColorNameData
 			my ($name, $color, $rgb) = ($1, $2, $3);
 
 			$color = lc($color);
-			$rgb = rgbColor($rgb);
+			$rgb = formatRgbColor($rgb);
 			push(@{$Var{'raColorNames'}}, $name);
 			$Var{'rhColorNamesMap'}{$color} = $name;
 			$color = shorten($color, 'force');
@@ -835,11 +835,11 @@ sub hashColor
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return names(rgbColor(rgb(hashColor($color))));
+	return names(formatRgbColor(rgb(hashColor($color))));
 }
 
 # fix comma spacing in rgb colors
-sub rgbColor
+sub formatRgbColor
 {
 	my ($color) = @ARG;
 	return commas(trim($color));
@@ -899,8 +899,8 @@ sub shorten
 # convert color value to rgb(R,G,B) format
 sub rgb
 {
-	my ($color) = @ARG;
-	if (opt('rgb'))
+	my ($color, $bAlways) = @ARG;
+	if (opt('rgb') || $bAlways)
 	{
 		$color =~ s{
 			$Var{'regex'}{'bytesColor'}
@@ -909,6 +909,22 @@ sub rgb
 		}xmsgie;
 	}
 	return $color;
+}
+
+# get both rgb and #color version of color
+sub getBothColorValues
+{
+	my ($color, $rgb) = @ARG;
+	if ($color =~ m{ \A (hsl|rgb)\( }xms)
+	{
+		$rgb = lc(rgbFromHslOrPercent($color));
+		$color = canonicalFromRgb($rgb);
+	}
+	else
+	{
+		$rgb = rgb($color, 'force');
+	}
+	return ($color, $rgb);
 }
 
 # MUSTDO implement foreground/background
@@ -927,12 +943,12 @@ sub names
 		# alpha = 1 is opaque convert to hsl or rgb
 		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
 
-		$color = $Var{'rhColorNamesMap'}{lc(rgbval($color))} || $color;
+		$color = $Var{'rhColorNamesMap'}{lc(rgbFromHslOrPercent($color))} || $color;
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
-			if (exists $Var{'rhColorNamesMap'}{rgbval($1)})
+			if (exists $Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)})
 			{
-				$color = "rgba($Var{'rhColorNamesMap'}{rgbval($1)}$2)";
+				$color = "rgba($Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)}$2)";
 			}
 		}
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
@@ -949,12 +965,21 @@ sub names
 # get rgb value from percentage or hsl
 # 100%,100%,100% becomes 255,255,255
 # hsl(h,s%,l%) becomes rgb(r,g,b)
-sub rgbval
+sub rgbFromHslOrPercent
 {
 	my ($vals) = @ARG;
 	$vals =~ s{ $Var{'regex'}{'hsl'} }{ "rgb(" . hsl_to_rgb($1, $2, $3) . ")"}xmse;
 	$vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
-	return rgbColor($vals);
+	return formatRgbColor($vals);
+}
+
+# get #color from rgb()
+sub canonicalFromRgb
+{
+	my ($vals) = @ARG;
+	$vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
+	$vals =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' toHex($1) . toHex($2) . toHex($3) }xmse;
+	return $vals;
 }
 
 # convert a hsl triplet to an rgb triplet
@@ -977,7 +1002,7 @@ sub hsl_to_rgb
 	$r = int(255 * hue_to_rgb($m1, $m2, $hue + 1/3));
 	$g = int(255 * hue_to_rgb($m1, $m2, $hue));
 	$b = int(255 * hue_to_rgb($m1, $m2, $hue - 1/3));
-	return rgbColor("$r,$g,$b");
+	return formatRgbColor("$r,$g,$b");
 }
 
 # convert a hue/sat to rgb value (0-1)
