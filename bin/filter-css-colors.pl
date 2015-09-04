@@ -279,6 +279,7 @@ my %Var = (
 		'bytesColor'  => qr{ $HASH ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }xmsi,
 		'transparent' => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
 		'opaque'      => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 1(\.0*)? \s* \) }xmsi,
+		'rgbCanon'    => qr{ rgb\( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \) }xmsi,
 		'rgba'        => qr{ \A rgba\( \s* ( \d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
 		'hsl'         => qr{ hsl \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* \) }xms,
 		'hsla'        => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
@@ -581,10 +582,13 @@ sub registerConstant
 	}
 	if ($const)
 	{
-		$value = uniqueColor($value);
-		debug("registerConstant() $value", 3);
+		my $rgb;
+		($value, $rgb) = getBothColorValues($value);
 		$Var{'rhConstantsMap'}{$const} = $value;
+		debug("registerConstant($const) 2 c=$value", 3);
 		push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
+		debug("registerConstant($const) 3 r=$rgb", 3);
+		push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
 		return 1;
 	}
 	return 0;
@@ -785,7 +789,10 @@ sub substituteConstants
 sub lookupConstant
 {
 	my ($color) = @ARG;
-	my $raConstants = $Var{'rhColorConstantsMap'}{uniqueColor($color)};
+	my ($rgb);
+	debug("lookupConstant($color)", 2);
+	($color, $rgb) = getBothColorValues(uniqueColor($color));
+	my $raConstants = $Var{'rhColorConstantsMap'}{$color} || $Var{'rhColorConstantsMap'}{$rgb};
 	if ($raConstants)
 	{
 		if (opt('const-list') && (scalar(@$raConstants) > 1))
@@ -914,7 +921,10 @@ sub rgb
 # get both rgb and #color version of color
 sub getBothColorValues
 {
-	my ($color, $rgb) = @ARG;
+	my ($color) = @ARG;
+	my $rgb;
+
+	debug("getBothColorValues(c=$color)", 2);
 	if ($color =~ m{ \A (hsl|rgb)\( }xms)
 	{
 		$rgb = lc(rgbFromHslOrPercent($color));
@@ -924,6 +934,7 @@ sub getBothColorValues
 	{
 		$rgb = rgb($color, 'force');
 	}
+	debug("getBothColorValues() return (c=$color, r=$rgb)", 3);
 	return ($color, $rgb);
 }
 
@@ -978,8 +989,14 @@ sub canonicalFromRgb
 {
 	my ($vals) = @ARG;
 	$vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
-	$vals =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' toHex($1) . toHex($2) . toHex($3) }xmse;
+	$vals =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' . toHex($1) . toHex($2) . toHex($3) }xmse;
 	return $vals;
+}
+
+sub toHex
+{
+	my ($val) = @ARG;
+	return sprintf("%02x", $val);
 }
 
 # convert a hsl triplet to an rgb triplet
