@@ -1,10 +1,10 @@
-/* some other stuff */
+/* names and hash colors */
 color: @autoConstant0;
 color: @autoConstant1;
 color: @autoConstant1;
 color: transparent;
 
-/* some other stuff */
+/* rgb colors and opacity */
 color: @autoConstant2;
 color: @autoConstant3;
 
@@ -14,7 +14,7 @@ color: @autoConstant5;
 color: @autoConstant6;
 color: @autoConstant7;
 
-/* some other stuff */
+/* preserve or remove spacing */
 color: @autoConstant2;
 color: @autoConstant3;
 color: @autoConstant4;
@@ -22,12 +22,13 @@ color: @autoConstant7;
 color: @autoConstant6;
 color: @autoConstant7;
 
+/* hsl conversion */
 color: @autoConstant8;
 color: @autoConstant8;
 
 color: @autoConstant9;
 
-/* some other stuff */
+/* hsl and spacing */
 color: @autoConstant9;
 color: @autoConstant10;
 
@@ -37,7 +38,7 @@ color: @autoConstant10;
 * { color: @autoConstant14 } /* light green */
 * { color: @autoConstant15 }  /* pastel green, and so on */
 
-/* some other stuff */
+/* opacity conversion */
 em { color: @autoConstant12 }     /* green */
 em { color: @autoConstant16 } /* the same, with explicit opacity of 1 */
 

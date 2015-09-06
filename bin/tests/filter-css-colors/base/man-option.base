@@ -1,132 +1,137 @@
 NAME
-    filter-css-colors.pl - Find all CSS color declarations in files with
-    option to replace then with standard color name or Less/Sass constants.
+       filter-css-colors.pl - Find all CSS color declarations in files with
+       option to replace then with standard color name or Less/Sass constants.
 
 AUTHOR
-    Brent S.A. Cowgill
+       Brent S.A. Cowgill
 
 SYNOPSIS
-    filter-css-colors.pl [options] [@options-file ...] [file ...]
+       filter-css-colors.pl [options] [@options-file ...] [file ...]
 
-     Options:
-            --color-only     negatable. only show the color values, not the entire line.
-            --reverse        negatable. show all lines not matching a CSS color declaration.
-            --remap          negatable. remap all colors to names or constants in place where possible.
-            --names          negatable. convert colors to standard names where possible.
-            --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
-            --shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
-            --rgb            negatable. convert colors to rgb() form.
-            --show-const     negatable. show the table of defined constants.
-            --const-type     specify what type of constants are being used (for less or sass.)
-            --const          multiple. define a custom constant value.
-            --const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
-            --const-list     list all possible constant names for a given color substitution in a comment.
-            --const-pull     pull color values into new named constants and output to file or standard output.
-            --valid-only     do not perform remappings which are invalid CSS.
-            --inplace        specify to modify files in place creating a backup first.
-            --foreground     [not implemented] specify a color value to use for all foreground colors.
-            --background     [not implemented] specify a color value to use for all background colors.
-            --echo           negatable. display original line when performing replacements.
-            --version        display program version and exit.
-            --debug          incremental. display debugging info.
-            --help -?        brief help message and exit.
-            --man            full help message and exit.
+        Options:
+               --color-only     negatable. only show the color values, not the entire line.
+               --reverse        negatable. show all lines not matching a CSS color declaration.
+               --remap          negatable. remap all colors to names or constants in place where possible.
+               --names          negatable. convert colors to standard names where possible.
+               --canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+               --shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
+               --rgb            negatable. convert colors to rgb() form.
+               --hash           negatable. convert rgb/hsl colors to #color form.
+               --show-const     negatable. show the table of defined constants.
+               --const-type     specify what type of constants are being used (for less or sass.)
+               --const          multiple. define a custom constant value.
+               --const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
+               --const-list     list all possible constant names for a given color substitution in a comment.
+               --const-pull     pull color values into new named constants and output to file or standard output.
+               --valid-only     do not perform remappings which are invalid CSS.
+               --inplace        specify to modify files in place creating a backup first.
+               --foreground     [not implemented] specify a color value to use for all foreground colors.
+               --background     [not implemented] specify a color value to use for all background colors.
+               --echo           negatable. display original line when performing replacements.
+               --version        display program version and exit.
+               --debug          incremental. display debugging info.
+               --help -?        brief help message and exit.
+               --man            full help message and exit.
 
 OPTIONS
-    --color-only or --nocolor-only
-             Only display the CSS color values used. Useful to identify all unique colors used.
+       --color-only or --nocolor-only
+                Only display the CSS color values used. Useful to identify all unique colors used.
 
-    --reverse or --noreverse
-             Only display lines that do not contain CSS color declarations.
+       --reverse or --noreverse
+                Only display lines that do not contain CSS color declarations.
 
-    --remap or --noremap
-             Remap colors to constants, canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+       --remap or --noremap
+                Remap colors to constants, canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
-             You should specify --names or --canonical as well to have any effect.
+                You should specify --names or --canonical as well to have any effect.
 
-    --names or --nonames
-             Show colors as standard names where possible. i.e. #fff becomes white.
-             Implies --canonical as well.
-             Implies --remap as well.
+       --names or --nonames
+                Show colors as standard names where possible. i.e. #fff becomes white.
+                Implies --canonical as well.
+                Implies --remap as well.
 
-    --canonical or --nocanonical
-             Show colors in canonical form i.e. #fff becomes '#ffffff'.
-             Implies --remap as well.
+       --canonical or --nocanonical
+                Show colors in canonical form i.e. #fff becomes '#ffffff'.
+                Implies --remap as well.
 
-    --shorten or --noshorten
-             Show colors in short form i.e. #ffffff becomes '#fff'.
-             Implies --remap as well.
+       --shorten or --noshorten
+                Show colors in short form i.e. #ffffff becomes '#fff'.
+                Implies --remap as well.
 
-    --rgb or --norgb
-             Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
-             Implies --canonical as well. Cannot use --names with --rgb.
+       --hash  or --nohash
+                Show rgb/hsl colors as #color i.e. rgb(255, 255, 255) becomes #fff or #ffffff.
+                Cannot use --rgb with --hash.
 
-    --show-const or --noshow-const
-             Show a table of the defined constants.
+       --rgb  or --norgb
+                Show colors in rgb() form i.e. #fff becomes rgb(255, 255, 255).
+                Implies --canonical as well. Cannot use --names or --hash with --rgb.
 
-    --const-type=s
-             Define what type of constants are being used. Default is Less (@)
-             You can specify less, sass or a character to use as a prefix.
+       --show-const  or --noshow-const
+                Show a table of the defined constants.
 
-             --const-type=less    @button-background:  #fff; // different from $button_background
-             --const-type=sass    $button-background:  #fff; // equivalent to $button_background
+       --const-type=s
+                Define what type of constants are being used. Default is Less (@)
+                You can specify less, sass or a character to use as a prefix.
 
-    --const=name=value
-             Define a constant color value. You can omit the prefix character when defining a value.
+                --const-type=less    @button-background:  #fff; // different from $button_background
+                --const-type=sass    $button-background:  #fff; // equivalent to $button_background
 
-             --const=button-background=#fff // default Less would be @button-background
-             --const=$button-background=#fff
+       --const=name=value
+                Define a constant color value. You can omit the prefix character when defining a value.
 
-    --const-file=less-sass-css-filename
-             Specify files to parse for color constant definitions. You must specify --const-type if you are parsing CSS files for constants. The format of a color constant definition is:
+                --const=button-background=#fff // default Less would be @button-background
+                --const=$button-background=#fff
 
-             less:  @name-of-constant: #color;
-             sass:  $name-of-constant: #color; // equivalent to $name_of_constant
-             css:   .name-of-constant { color: #color; }
+       --const-file=less-sass-css-filename
+                Specify files to parse for color constant definitions. You must specify --const-type if you are parsing CSS files for constants. The format of a color constant definition is:
 
-    --const-list or --noconst-list
-             When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
+                less:  @name-of-constant: #color;
+                sass:  $name-of-constant: #color; // equivalent to $name_of_constant
+                css:   .name-of-constant { color: #color; }
 
-             i.e. color: @background /* @background, @panel-background */;
+       --const-list or --noconst-list
+                When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
 
-    --const-pull=-|filename
-             If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
+                i.e. color: @background /* @background, @panel-background */;
 
-    --valid-only
-             Do not perform name remappings which are invalid css3
-             i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
+       --const-pull=-|filename
+                If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
 
-    --inplace=.suffix
-             Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
+       --valid-only
+                Do not perform name remappings which are invalid css3
+                i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
 
-    --foreground=color or --fg=color
-             Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
+       --inplace=.suffix
+                Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
 
-    --background=color or --bg=color
-             Specify a color value to use to replace all background colors with. Cannot work with --color-only.
+       --foreground=color or --fg=color
+                Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
 
-    --echo or --noecho
-             When in a --remap mode, display the original line as well.
+       --background=color or --bg=color
+                Specify a color value to use to replace all background colors with. Cannot work with --color-only.
 
-    --version
-             Prints the program version and exit.
+       --echo or --noecho
+                When in a --remap mode, display the original line as well.
 
-    --help or -?
-             Print a brief help message and exit.
+       --version
+                Prints the program version and exit.
 
-    --man
-             Print the full help message and exit.
+       --help or -?
+                Print a brief help message and exit.
+
+       --man
+                Print the full help message and exit.
 
 DESCRIPTION
-     Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
+        Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
 
-     B<This program> will read the given input file(s) and do something useful with the contents thereof.
+        B<This program> will read the given input file(s) and do something useful with the contents thereof.
 
 SEE ALSO
-     CSS Color specs L<http://www.w3.org/TR/css3-color/>
+        CSS Color specs L<http://www.w3.org/TR/css3-color/>
 
 EXAMPLES
-     Find all unique colors used in all CSS files somewhere
+        Find all unique colors used in all CSS files somewhere
 
-     filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
+        filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 

@@ -20,6 +20,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
 	--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
 	--rgb            negatable. convert colors to rgb() form.
+	--hash           negatable. convert rgb/hsl colors to #color form.
 	--show-const     negatable. show the table of defined constants.
 	--const-type     specify what type of constants are being used (for less or sass.)
 	--const          multiple. define a custom constant value.
@@ -70,10 +71,15 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
  Show colors in short form i.e. #ffffff becomes '#fff'.
  Implies --remap as well.
 
+=item B<--hash>  or B<--nohash>
+
+ Show rgb/hsl colors as #color i.e. rgb(255, 255, 255) becomes #fff or #ffffff.
+ Cannot use --rgb with --hash.
+
 =item B<--rgb>  or B<--norgb>
 
- Show colors in rgb() form i.e. #fff becomes rgb(255,255,255).
- Implies --canonical as well. Cannot use --names with --rgb.
+ Show colors in rgb() form i.e. #fff becomes rgb(255, 255, 255).
+ Implies --canonical as well. Cannot use --names or --hash with --rgb.
 
 =item B<--show-const>  or B<--noshow-const>
 
@@ -241,6 +247,7 @@ my %Var = (
 			"canonical!",
 			"shorten!",
 			"rgb!",
+			"hash!",
 			"show-const!",
 			"const-type:s",
 			'const:s%',
@@ -378,7 +385,8 @@ sub showAutoContants
 		foreach my $color (@{$Var{'raAutoConstants'}})
 		{
 			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
-			print $fh "$const: $color;\n";
+			my $rgb = rgb($color, 'force');
+			print $fh "$const: $color; // $rgb\n";
 		}
 		close($fh) unless ($out eq '-');
 	}
@@ -587,8 +595,11 @@ sub registerConstant
 		$Var{'rhConstantsMap'}{$const} = $value;
 		debug("registerConstant($const) 2 c=$value", 3);
 		push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
-		debug("registerConstant($const) 3 r=$rgb", 3);
-		push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
+		if ($value ne $rgb)
+		{
+			debug("registerConstant($const) 3 r=$rgb", 3);
+			push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
+		}
 		return 1;
 	}
 	return 0;
@@ -655,7 +666,18 @@ sub showConstantsTable
 	{
 		foreach my $const (sort(@{$Var{'rhColorConstantsMap'}{$color}}))
 		{
-			print "$const: $color;\n";
+			my $print = 1;
+			if ($color !~ m{\A (rgb|hsl)}xms)
+			{
+				# if color is name or #color suppress print #color if rgb mode
+				$print = 0 if opt('rgb') && $color =~ m{\A \#}xms;
+			}
+			else
+			{
+				# if color is rgba? or hsla? suppress print rgb if not rgb mode
+				$print = 0 if !opt('rgb') && $color =~ m{\A rgb \(}xms;
+			}
+			print "$const: $color;\n" if $print;
 		}
 		print "\n";
 	}
@@ -783,26 +805,38 @@ sub substituteConstants
 		$color = defineAutoConstant($color, $origColor, $line);
 		debug("substituteConstants() define $color", 3);
 	}
+	else
+	{
+		$color = renameColor($origColor);
+		debug("substituteConstants() nodefine $origColor $color", 3);
+	}
+
+	debug("substituteConstants() out $color", 3);
 	return $color;
 }
 
+# Given a color value see if there is a constant already defined
+# for that color value. Returns the constant name or original
+# color if none.
 sub lookupConstant
 {
 	my ($color) = @ARG;
-	my ($rgb);
-	debug("lookupConstant($color)", 2);
+	my ($origColor, $rgb) = ($color);
+	debug("lookupConstant($origColor)", 2);
 	($color, $rgb) = getBothColorValues(uniqueColor($color));
 	my $raConstants = $Var{'rhColorConstantsMap'}{$color} || $Var{'rhColorConstantsMap'}{$rgb};
 	if ($raConstants)
 	{
+		$color = $raConstants->[0];
 		if (opt('const-list') && (scalar(@$raConstants) > 1))
 		{
-			$color = qq{$raConstants->[0] /* @{[join(', ', @$raConstants)]}*/};
+			$color .= qq{ /* @{[join(', ', @$raConstants)]}*/};
 		}
-		else
-		{
-			$color = $raConstants->[0];
-		}
+	}
+	elsif ($color ne $origColor)
+	{
+		debug("lookupConstant() delta $color, $origColor", 3);
+		$color = $origColor;
 	}
 	return $color;
 }
@@ -824,14 +858,15 @@ sub defineAutoConstant
 	return $const;
 }
 
+# rename a color value based on command line options
 sub renameColor
 {
 	my ($color) = @ARG;
-	return names(rgb(hashColor($color)));
+	return names(rgb(hashColorStandard(toHashColor($color))));
 }
 
 # make #ffffff forms of colors the same based on command line options
-sub hashColor
+sub hashColorStandard
 {
 	my ($color) = @ARG;
 	return canonical(shorten($color));
@@ -842,7 +877,7 @@ sub hashColor
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return names(formatRgbColor(rgb(hashColor($color))));
+	return names(formatRgbColor(rgb(hashColorStandard($color))));
 }
 
 # fix comma spacing in rgb colors
@@ -863,8 +898,8 @@ sub commas
 # and lower case the characters
 sub canonical
 {
-	my ($color) = @ARG;
-	if (opt('canonical'))
+	my ($color, $bAlways) = @ARG;
+	if ($bAlways || opt('canonical'))
 	{
 		$color =~ s{
 			$Var{'regex'}{'bytesColor'}
@@ -932,10 +967,22 @@ sub getBothColorValues
 	}
 	else
 	{
+		$color = canonical($color, 'force');
 		$rgb = rgb($color, 'force');
 	}
 	debug("getBothColorValues() return (c=$color, r=$rgb)", 3);
 	return ($color, $rgb);
+}
+
+sub toHashColor
+{
+	my ($color, $bAlways) = @ARG;
+	if ($bAlways || opt('hash'))
+	{
+		my $rgb = lc(rgbFromHslOrPercent($color));
+		$color = canonicalFromRgb($rgb);
+	}
+	return $color;
 }
 
 # MUSTDO implement foreground/background

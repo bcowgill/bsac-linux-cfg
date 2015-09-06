@@ -16,6 +16,11 @@ DEBUG=
 LINES=5
 SKIP=0
 
+MANUAL_CONST="--const=bg=#345 --const=fg=black \
+	--const=border=@fg --const=shade=grey \
+	--const=rg1=rgba(1,2,3,0.5) --const=rg2=rgb(12,13,14) \
+	--const=hs1=hsla(32,45%,23%) --const=hs2=hsl(34,23%,67%)"
+
 # Include testing library and make output dir exist
 source ../shell-test.sh
 PLAN 44
@@ -121,7 +126,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --remap only without --names or --canonical just acts as grep
+echo TEST $CMD --remap only without --names or --canonical just acts as grep and replaces colors with defined constants
 TEST=noecho-noreverse-nocolor-remap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -289,8 +294,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
-	--const-type=less --const=bg=#345 --const=fg=black --const=border=@fg \
-	--const=shade=grey"
+		--const-type=less $MANUAL_CONST"
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -306,8 +310,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --rgb \
-	--const-type=less --const=bg=#345 --const=fg=black --const=border=@fg \
-	--const=shade=grey"
+	--const-type=less  $MANUAL_CONST"
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

@@ -1,8 +1,19 @@
 // Color constant definitions:
+@rg2: #0c0d0e;
+
 @bg: #334455;
+
+@hs2: #bead97;
 
 @border: black;
 @fg: black;
 
 @shade: grey;
+
+@hs1: hsla(32,45%,23%);
+
+
+
+
+@rg1: rgba(1,2,3,0.5);
 
