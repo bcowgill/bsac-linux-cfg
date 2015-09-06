@@ -74,8 +74,15 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD no options set
-TEST=no-options
+# test modes:
+# grep
+# echo replacements
+# inplace change
+# constant definitions
+# pull constants
+
+echo TEST $CMD GREPMODE no options set
+TEST=grep-no-options
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -87,8 +94,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD all options turned off acts as a grep for CSS color declarations
-TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames
+echo TEST $CMD GREPMODE all options turned off acts as a grep for CSS color declarations
+TEST=grep-noecho-noreverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -100,8 +107,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD From file and --reverse only acts as a grep -v for CSS color declarations
-TEST=noecho-reverse-nocolor-noremap-nocanon-nonames
+echo TEST $CMD GREPMODE From file and --reverse only acts as a grep -v for CSS color declarations
+TEST=grep-noecho-reverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -113,8 +120,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --color-only greps and shows only the CSS color values
-TEST=noecho-noreverse-color-noremap-nocanon-nonames
+echo TEST $CMD GREPMODE --color-only greps and shows only the CSS color values
+TEST=grep-noecho-noreverse-color-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
