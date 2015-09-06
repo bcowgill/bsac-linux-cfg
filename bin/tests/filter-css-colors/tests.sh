@@ -193,7 +193,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --noshorten --nonames --nocanonical --hash --valid-only"
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --noshorten --nonames --nocanonical --hash --novalid-only"
 	#echo $PROGRAM $ARGS $SAMPLE
 	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

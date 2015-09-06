@@ -18,16 +18,16 @@ was: color: rgb(100%,100%,100%);
      color: #ffffff;
 
 was: color: rgba(255,255,255,0);
-     color: rgba(255, 255, 255, 0);
+     color: rgba(#ffffff, 0);
 
 was: color: rgba(100%,100%,100%,0);
-     color: rgba(255, 255, 255, 0);
+     color: rgba(#ffffff, 0);
 
 was: color: rgba(255,255,255,0.4);
-     color: rgba(255, 255, 255, 0.4);
+     color: rgba(#ffffff, 0.4);
 
 was: color: rgba(100%,100%,100%,0.5);
-     color: rgba(255, 255, 255, 0.5);
+     color: rgba(#ffffff, 0.5);
 
 was: color: rgb(  255  ,  255  ,  255  );
      color: #ffffff;
@@ -36,16 +36,16 @@ was: color: rgb(  100%  ,  100%  ,  100%  );
      color: #ffffff;
 
 was: color: rgba(  255  ,  255  ,  255  ,  0  );
-     color: rgba(255, 255, 255, 0);
+     color: rgba(#ffffff, 0);
 
 was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
-     color: rgba(255, 255, 255, 0.5);
+     color: rgba(#ffffff, 0.5);
 
 was: color: rgba(  255  ,  255  ,  255  ,  0.4  );
-     color: rgba(255, 255, 255, 0.4);
+     color: rgba(#ffffff, 0.4);
 
 was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
-     color: rgba(255, 255, 255, 0.5);
+     color: rgba(#ffffff, 0.5);
 
 was: color: hsl(360,100%,100%);
      color: #ffffff;
@@ -54,13 +54,13 @@ was: color: hsl(  360  ,  100%  ,  100%  );
      color: #ffffff;
 
 was: color: hsla(360,100%,100%,0);
-     color: rgba(255, 255, 255, 0);
+     color: rgba(#ffffff, 0);
 
 was: color: hsla(  360  ,  100%  ,  100%  ,  0);
-     color: rgba(255, 255, 255, 0);
+     color: rgba(#ffffff, 0);
 
 was: color: hsla(  360  ,  100%  ,  100%  ,  0.4);
-     color: rgba(255, 255, 255, 0.4);
+     color: rgba(#ffffff, 0.4);
 
 was: * { color: hsl(0, 100%, 50%) }   /* red */
      * { color: #ff0000 }   /* red */
@@ -81,7 +81,7 @@ was: em { color: hsl(120, 100%, 50%) }     /* green */
      em { color: #00ff00 }     /* green */
 
 was: em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
-     em { color: rgba(0, 255, 0, 1) } /* the same, with explicit opacity of 1 */
+     em { color: rgba(#00ff00, 1) } /* the same, with explicit opacity of 1 */
 
 was: @darker-grey: #f4f5f6;
      @darker-grey: #f4f5f6;

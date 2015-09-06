@@ -27,7 +27,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
 	--const-list     list all possible constant names for a given color substitution in a comment.
 	--const-pull     pull color values into new named constants and output to file or standard output.
-	--valid-only     do not perform remappings which are invalid CSS.
+	--valid-only     negatable. do not perform remappings which are invalid CSS.
 	--inplace        specify to modify files in place creating a backup first.
 	--foreground     [not implemented] specify a color value to use for all foreground colors.
 	--background     [not implemented] specify a color value to use for all background colors.
@@ -119,7 +119,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
 
-=item B<--valid-only>
+=item B<--valid-only> or B<--novalid-only>
 
  Do not perform name remappings which are invalid css3
  i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
@@ -250,13 +250,13 @@ my %Var = (
 			"shorten!",
 			"rgb!",
 			"hash!",
+			"valid-only!",
 			"show-const!",
 			"const-type:s",
 			'const:s%',
 			'const-file:s@',
 			'const-list!',
 			'const-pull:s',
-			"valid-only",
 			"inplace|i:s",
 			"foreground|fg:s",
 			"background|bg:s",
@@ -294,7 +294,8 @@ my %Var = (
 		'hslToRgb'    => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xms,
 		'rgbaCanon'   => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
 		'isRgbIsh'    => qr{ \A (rgb|hsl) a? \( }xmsi,
-'hsla'        => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
+		'hslInvalid'  => qr{ \A hsla \( \s* (\w+|\#[0-9a-f]{3,6}) }xmsi,
+		'hsla'        => qr{ \A hsla \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
 	},
 );
 
@@ -981,6 +982,7 @@ sub getBothColorValues
 	return ($color, $rgb);
 }
 
+# convert rgb/hsl format of color to #color form
 sub toHashColor
 {
 	my ($color, $bAlways, $bValid) = @ARG;
@@ -1033,11 +1035,14 @@ sub names
 # get rgb value from percentage or hsl
 # 100%,100%,100% becomes 255,255,255
 # hsla?(h,s%,l%) becomes rgba?(r,g,b)
+# hsla(#color, opacity) becomse rgba(#color, opacity) if option --novalid-only
 sub rgbFromHslOrPercent
 {
-	my ($vals) = @ARG;
+	my ($vals, $bValid) = @ARG;
+	$bValid = $bValid || opt('valid-only');
 	$vals =~ s{ $Var{'regex'}{'hslToRgb'} }{ "rgb$1(" . hsl_to_rgb($2, $3, $4) }xmse;
 	$vals =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(" . replacePercent($2) . ',' . replacePercent($3) . ',' . replacePercent($4) }xmse;
+	$vals =~ s{ $Var{'regex'}{'hslInvalid'} }{rgba($1}xmsi if !$bValid;
 	return formatRgbColor($vals);
 }
 
@@ -1277,13 +1282,14 @@ sub manual
 
 sub tests
 {
-	eval "use Test::More tests => 152";
+	eval "use Test::More tests => 228";
 
 	testCanonicalFromRgbValid();
 	testCanonicalFromRgbAllowInvalid();
-	testRgbFromHslOrPercent();
+	testRgbFromHslOrPercentValid();
+	testRgbFromHslOrPercentAllowInvalid();
 	testToHashColorValid();
-	#testToHashColorAllowInvalid(); # TODO !valid setting
+	testToHashColorAllowInvalid();
 
 	my @EveryColorFormat = (
 		# #hash or name format
@@ -1426,9 +1432,10 @@ sub testCanonicalFromRgbAllowInvalid
 	}
 }
 
-sub testRgbFromHslOrPercent
+sub testRgbFromHslOrPercentValid
 {
-	my @RgbFromHslOrPercentTests = (
+	my $bValid = 1;
+	my @RgbFromHslOrPercentValidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
 		'rgb(255,255,255):rgb(255, 255, 255)',
 		'rgb(100%,100%,100%):rgb(255, 255, 255)',
@@ -1463,13 +1470,61 @@ sub testRgbFromHslOrPercent
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
 
-	foreach my $colorResult (@RgbFromHslOrPercentTests)
+	foreach my $colorResult (@RgbFromHslOrPercentValidTests)
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = rgbFromHslOrPercent($color);
-		is($result, $expect, "rgbFromHslOrPercent $color -> $expect");
+		my $result = rgbFromHslOrPercent($color, $bValid);
+		is($result, $expect, "rgbFromHslOrPercent (valid) $color -> $expect");
+	}
+}
+
+sub testRgbFromHslOrPercentAllowInvalid
+{
+	my $bValid = 1;
+	my @RgbFromHslOrPercentAllowInvalidTests = (
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
+		'rgb(255,255,255):rgb(255, 255, 255)',
+		'rgb(100%,100%,100%):rgb(255, 255, 255)',
+		'rgb( 255 , 255 , 255 ):rgb(255, 255, 255)',
+		'rgb( 100% , 100% , 100% ):rgb(255, 255, 255)',
+		'hsl(0,100%,100%):rgb(255, 255, 255)',
+		'hsl( 0 , 100% , 100% ):rgb(255, 255, 255)',
+		'rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba(100%,100%,100%,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'rgba( 100% , 100% , 100% , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'hsla(0,100%,100%,1.0):rgba(255, 255, 255, 1.0)',
+		'hsla( 0 , 100% , 100% , 1.0 ):rgba(255, 255, 255, 1.0)', 'transparent',
+		'rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba(100%,100%,100%,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'hsla(0,100%,100%,0.0):rgba(255, 255, 255, 0.0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'hsla(white,0.5):rgba(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@RgbFromHslOrPercentAllowInvalidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = rgbFromHslOrPercent($color, !$bValid);
+		is($result, $expect, "rgbFromHslOrPercent (!valid) $color -> $expect");
 	}
 }
 
@@ -1533,27 +1588,27 @@ sub testToHashColorAllowInvalid
 		"rgba(100%,100%,100%,1.0):rgba(#ffffff, 1.0)",
 		"rgba( 255 , 255 , 255 , 1.0 ):rgba(#ffffff, 1.0)",
 		"rgba( 100% , 100% , 100% , 1.0 ):rgba(#ffffff, 1.0)",
-		"hsla(0,100%,100%,1.0):hsla(#ffffff, 1.0)",
-		"hsla( 0 , 100% , 100% , 1.0 ):hsla(#ffffff, 1.0)", "transparent",
+		"hsla(0,100%,100%,1.0):rgba(#ffffff, 1.0)",
+		"hsla( 0 , 100% , 100% , 1.0 ):rgba(#ffffff, 1.0)", "transparent",
 		"rgba(255,255,255,0.0):rgba(#ffffff, 0.0)",
 		"rgba(100%,100%,100%,0.0):rgba(#ffffff, 0.0)",
 		"rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0.0)",
 		"rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0.0)",
-		"hsla(0,100%,100%,0.0):hsla(#ffffff, 0.0)",
-		"hsla( 0 , 100% , 100% , 0.0 ):hsla(#ffffff, 0.0)",
+		"hsla(0,100%,100%,0.0):rgba(#ffffff, 0.0)",
+		"hsla( 0 , 100% , 100% , 0.0 ):rgba(#ffffff, 0.0)",
 		"rgba(255,255,255,0.5):rgba(#ffffff, 0.5)",
 		"rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5)",
 		"rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5)",
 		"rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)",
-		"hsla(0,100%,100%,0.5):hsla(#ffffff, 0.5)",
-		"hsla( 0 , 100% , 100% , 0.5 ):hsla(#ffffff, 0.5)",
+		"hsla(0,100%,100%,0.5):rgba(#ffffff, 0.5)",
+		"hsla( 0 , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)",
 		"rgba(white,0.5):rgba(white, 0.5)", "rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)",
-		"rgba( white , 0.5 ):rgba( white , 0.5 )",
-		"rgba( #fAfBfC , 0.5 ):rgba( #fAfBfC , 0.5 )",
-		"hsla(white,0.5):hsla(white, 0.5)",
-		"hsla( #fAfBfC , 0.5 ):hsla( #fAfBfC , 0.5 )",
-		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color),green(\@color),blue(\@color),0.5)",
-		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 )",
+		"rgba( white , 0.5 ):rgba(white, 0.5)",
+		"rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)",
+		"hsla(white,0.5):rgba(white, 0.5)",
+		"hsla( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)",
+		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
+		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
 	);
 
 	foreach my $colorResult (@ToHashColorAllowInvalidTests)

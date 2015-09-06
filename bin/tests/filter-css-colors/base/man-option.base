@@ -23,7 +23,7 @@ SYNOPSIS
                --const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
                --const-list     list all possible constant names for a given color substitution in a comment.
                --const-pull     pull color values into new named constants and output to file or standard output.
-               --valid-only     do not perform remappings which are invalid CSS.
+               --valid-only     negatable. do not perform remappings which are invalid CSS.
                --inplace        specify to modify files in place creating a backup first.
                --foreground     [not implemented] specify a color value to use for all foreground colors.
                --background     [not implemented] specify a color value to use for all background colors.
@@ -98,7 +98,7 @@ OPTIONS
        --const-pull=-|filename
                 If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
 
-       --valid-only
+       --valid-only or --novalid-only
                 Do not perform name remappings which are invalid css3
                 i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
 
