@@ -133,8 +133,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --remap only without --names or --canonical just acts as grep and replaces colors with defined constants
-TEST=noecho-noreverse-nocolor-remap-nocanon-nonames
+echo TEST $CMD GREPMODE --remap only without --names or --canonical just acts as grep and replaces colors with defined constants
+TEST=grep-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -146,7 +146,78 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --canonical only implies --remap
+echo TEST $CMD ECHOMODE --canonical only implies --remap
+TEST=echo-canon
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --canonical --nonames --nohash"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD ECHOMODE --shorten only implies --remap
+TEST=echo-shorten
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --shorten --nonames --nocanonical --nohash"
+	#echo $PROGRAM $ARGS $SAMPLE
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD ECHOMODE --hash --valid-only only implies --remap
+TEST=echo-hash-valid-only
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --noshorten --nonames --nocanonical --hash --valid-only"
+	#echo $PROGRAM $ARGS $SAMPLE
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD ECHOMODE --hash --novalid-only shows color of rgba/hsla values
+TEST=echo-hash
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --noshorten --nonames --nocanonical --hash --valid-only"
+	#echo $PROGRAM $ARGS $SAMPLE
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+exit 1;
+
+echo TEST $CMD ECHOMODE --echo --names shows original line and changed line
+echo TEST $CMD ECHOMODE --names only implies --remap and --canonical
+TEST=echo-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --names"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD REMAPMODE --canonical only implies --remap
 TEST=noecho-noreverse-nocolor-noremap-canon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -159,7 +230,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --shorten only implies --remap
+echo TEST $CMD REMAPMODE --shorten only implies --remap
 TEST=noecho-noreverse-nocolor-noremap-shorten-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -186,6 +257,20 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD --remap --canonical and --names against previous test base file
+TEST=noecho-noreverse-nocolor-remap-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/noecho-noreverse-nocolor-noremap-nocanon-names.base
+	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --canonical --names"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+
 SKIP="NOT YET IMPLEMENTED"
 
 echo TEST $CMD --rgb only implies --remap and --canonical
@@ -202,32 +287,6 @@ else
 fi
 
 SKIP=0
-
-echo TEST $CMD --remap --canonical and --names against previous test base file
-TEST=noecho-noreverse-nocolor-remap-canon-names
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/noecho-noreverse-nocolor-noremap-nocanon-names.base
-	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --canonical --names"
-	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD --echo --names shows original line and changed line
-TEST=echo-noreverse-nocolor-noremap-nocanon-nonames
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --names"
-	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
 
 echo "TEST $CMD --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
 TEST=validonly-names

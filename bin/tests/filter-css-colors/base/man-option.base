@@ -30,6 +30,7 @@ SYNOPSIS
                --echo           negatable. display original line when performing replacements.
                --version        display program version and exit.
                --debug          incremental. display debugging info.
+               --tests          run the unit tests.
                --help -?        brief help message and exit.
                --man            full help message and exit.
 

@@ -34,6 +34,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--echo           negatable. display original line when performing replacements.
 	--version        display program version and exit.
 	--debug          incremental. display debugging info.
+	--tests          run the unit tests.
 	--help -?        brief help message and exit.
 	--man            full help message and exit.
 
@@ -225,6 +226,7 @@ my %Var = (
 			'const-list' => 0,
 			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
+			tests   => 0,
 			man     => 0,        # show full help page
 		},
 		raFile => [],
@@ -260,6 +262,7 @@ my %Var = (
 			"background|bg:s",
 			"echo!",
 			"debug|d+",      # incremental keep specifying to increase
+			"tests!",        # run the unit tests
 			$STDIO,          # empty string allows - to signify standard in/out as a file
 			"man",           # show manual page only
 		],
@@ -286,10 +289,12 @@ my %Var = (
 		'bytesColor'  => qr{ $HASH ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }xmsi,
 		'transparent' => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
 		'opaque'      => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 1(\.0*)? \s* \) }xmsi,
-		'rgbCanon'    => qr{ rgb\( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \) }xmsi,
-		'rgba'        => qr{ \A rgba\( \s* ( \d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
-		'hsl'         => qr{ hsl \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* \) }xms,
-		'hsla'        => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
+		'rgbCanon'    => qr{ rgb     \( \s* ( \d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?)    \s* \) }xmsi,
+		'rgba'        => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
+		'hslToRgb'    => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xms,
+		'rgbaCanon'   => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
+		'isRgbIsh'    => qr{ \A (rgb|hsl) a? \( }xmsi,
+'hsla'        => qr{ \A hsla\( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
 	},
 );
 
@@ -333,7 +338,7 @@ getOptions();
 sub main
 {
 	my ($raFiles) = @ARG;
-	debug( "Var: " . Dumper( \%Var ), 3 );
+	debug( "Var: " . Dumper( \%Var ), 5 );
 	debug( "main() rhOpt: " . Dumper( opt() ) .
 		"\nraFiles: " . Dumper($raFiles) .
 		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
@@ -414,9 +419,9 @@ sub readColorNameData
 			$Var{'rhColorNamesMap'}{$rgb} = $name;
 		}
 	}
-	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 3);
+	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 5);
 	my $colors = join('|', @{$Var{'raColorNames'}});
-	debug("colors regex: $colors\n", 2);
+	debug("colors regex: $colors\n", 5);
 	$Var{'regex'}{'names'} = qr{ (?<![-\w]) ($colors) (?![-\w]) }xmsi;
 	$Var{'regex'}{'line'} = qr{
 		( $HASH [0-9a-f]{3,6} \b | (rgb|hsl) a? \( [^\)]+ \) | (?<![-\w]) ($colors) (?![-\w]) )
@@ -787,6 +792,7 @@ sub remap
 	my ($line) = @ARG;
 	if (opt('remap'))
 	{
+		debug("remap($line)", 3);
 		$line =~ s{$Var{'regex'}{'line'}}{ substituteConstants($1, $line) }ge;
 	}
 	return $line;
@@ -884,7 +890,8 @@ sub uniqueColor
 sub formatRgbColor
 {
 	my ($color) = @ARG;
-	return commas(trim($color));
+	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgbIsh'};
+	return $color;
 }
 
 sub commas
@@ -976,11 +983,14 @@ sub getBothColorValues
 
 sub toHashColor
 {
-	my ($color, $bAlways) = @ARG;
+	my ($color, $bAlways, $bValid) = @ARG;
 	if ($bAlways || opt('hash'))
 	{
-		my $rgb = lc(rgbFromHslOrPercent($color));
-		$color = canonicalFromRgb($rgb);
+		my $rgb = rgbFromHslOrPercent($color, $bValid);
+		if ($rgb ne $color)
+		{
+			$color = canonicalFromRgb($rgb, $bValid);
+		}
 	}
 	return $color;
 }
@@ -1022,28 +1032,46 @@ sub names
 
 # get rgb value from percentage or hsl
 # 100%,100%,100% becomes 255,255,255
-# hsl(h,s%,l%) becomes rgb(r,g,b)
+# hsla?(h,s%,l%) becomes rgba?(r,g,b)
 sub rgbFromHslOrPercent
 {
 	my ($vals) = @ARG;
-	$vals =~ s{ $Var{'regex'}{'hsl'} }{ "rgb(" . hsl_to_rgb($1, $2, $3) . ")"}xmse;
-	$vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
+	$vals =~ s{ $Var{'regex'}{'hslToRgb'} }{ "rgb$1(" . hsl_to_rgb($2, $3, $4) }xmse;
+	$vals =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(" . replacePercent($2) . ',' . replacePercent($3) . ',' . replacePercent($4) }xmse;
 	return formatRgbColor($vals);
 }
 
-# get #color from rgb()
+# get #color from rgb() or rgba() (not hsl/hsla)
 sub canonicalFromRgb
 {
-	my ($vals) = @ARG;
-	$vals =~ s{ (\d+) % }{ int(0.5 + (255 * $1 / 100)) }xmsge;
-	$vals =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' . toHex($1) . toHex($2) . toHex($3) }xmse;
-	return $vals;
+	my ($rgb, $bValid) = @ARG;
+	$bValid = $bValid || opt('valid-only');
+	$rgb =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' . toHex($1) . toHex($2) . toHex($3) }xmse;
+	if (!$bValid)
+	{
+		$rgb =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(#" . toHex($2) . toHex($3) . toHex($4) }xmse;
+		$rgb = formatRgbColor($rgb);
+	}
+	return $rgb;
 }
 
 sub toHex
 {
 	my ($val) = @ARG;
-	return sprintf("%02x", $val);
+	return sprintf("%02x", replacePercent($val));
+}
+
+sub replacePercent
+{
+	my ($val) = @ARG;
+	$val =~ s{ (\d+) % }{ percentTo255($1) }xmse;
+	return $val;
+}
+
+sub percentTo255
+{
+	my ($val) = @ARG;
+	return int(0.5 + (255 * $val / 100));
 }
 
 # convert a hsl triplet to an rgb triplet
@@ -1110,7 +1138,7 @@ sub checkOptions
 
 	# Force some flags when others turned on
 	setOpt('canonical', 1) if (opt('names') || opt('rgb'));
-	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten'));
+	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten') || opt('hash'));
 
 	if (opt('rgb'))
 	{
@@ -1185,6 +1213,7 @@ sub getOptions
 	$Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}->getoptions( opt(), @{ $Var{rhGetopt}{raOpts} } );
 	if ( $Var{rhGetopt}{result} )
 	{
+		tests() if opt('tests');
 		manual() if opt('man');
 		setArg( 'raFile', \@ARGV );
 
@@ -1242,6 +1271,324 @@ sub manual
 		-exitval => 0,
 		-verbose => 2,
 	);
+}
+
+# Unit test plan here
+
+sub tests
+{
+	eval "use Test::More tests => 152";
+
+	testCanonicalFromRgbValid();
+	testCanonicalFromRgbAllowInvalid();
+	testRgbFromHslOrPercent();
+	testToHashColorValid();
+	#testToHashColorAllowInvalid(); # TODO !valid setting
+
+	my @EveryColorFormat = (
+		# #hash or name format
+		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red",
+
+		# rgb/hsl
+		"rgb(255,255,255)", "rgb(100%,100%,100%)",
+		"rgb( 255 , 255 , 255 )", "rgb( 100% , 100% , 100% )",
+
+		"hsl(0,100%,100%)", "hsl( 0 , 100% , 100% )",
+
+		# full opacity
+		"rgba(255,255,255,1.0)", "rgba(100%,100%,100%,1.0)",
+		"rgba( 255 , 255 , 255 , 1.0 )", "rgba( 100% , 100% , 100% , 1.0 )",
+		"hsla(0,100%,100%,1.0)", "hsla( 0 , 100% , 100% , 1.0 )",
+
+		# full transparency
+		"transparent",
+		"rgba(255,255,255,0.0)", "rgba(100%,100%,100%,0.0)",
+		"rgba( 255 , 255 , 255 , 0.0 )", "rgba( 100% , 100% , 100% , 0.0 )",
+		"hsla(0,100%,100%,0.0)", "hsla( 0 , 100% , 100% , 0.0 )",
+
+		# partial transparency
+
+		"rgba(255,255,255,0.5)", "rgba(100%,100%,100%,0.5)",
+		"rgba( 255 , 255 , 255 , 0.5 )", "rgba( 100% , 100% , 100% , 0.5 )",
+		"hsla(0,100%,100%,0.5)", "hsla( 0 , 100% , 100% , 0.5 )",
+
+		# invalid CSS
+		"rgba(white,0.5)", "rgba(#fAfBfC,0.5)",
+		"rgba( white , 0.5 )", "rgba( #fAfBfC , 0.5 )",
+		"hsla(white,0.5)", "hsla( #fAfBfC , 0.5 )",
+
+		# Valid Less
+		"rgba(red(\@color),green(\@color),blue(\@color),0.5)",
+		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 )",
+	);
+
+	my $bAlways = 1;
+	my $bValid = 1;
+
+	exit 0;
+	my @Result = ();
+	foreach my $color (@EveryColorFormat)
+	{
+		my $result = rgbFromHslOrPercent($color);
+		my $expect = "fail";
+
+		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
+
+		is($result, $expect, "rgbFromHslOrPercent $color -> $expect");
+	}
+	wrap("\@RgbFromHslOrPercentTests", \@Result);
+}
+
+sub testCanonicalFromRgbValid
+{
+	my $bValid = 1;
+	my @CanonicalFromRgbValidTests = (
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
+		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
+		'rgb( 100% , 100% , 100% ):#ffffff',
+		'hsl(0,100%,100%)',
+		'hsl( 0 , 100% , 100% )', 'rgba(255,255,255,1.0)',
+		'rgba(100%,100%,100%,1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 )',
+		'rgba( 100% , 100% , 100% , 1.0 )',
+		'hsla(0,100%,100%,1.0)',
+		'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
+		'rgba(255,255,255,0.0)', 'rgba(100%,100%,100%,0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 )',
+		'rgba( 100% , 100% , 100% , 0.0 )',
+		'hsla(0,100%,100%,0.0)',
+		'hsla( 0 , 100% , 100% , 0.0 )',
+		'rgba(255,255,255,0.5)', 'rgba(100%,100%,100%,0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 )',
+		'rgba( 100% , 100% , 100% , 0.5 )',
+		'hsla(0,100%,100%,0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 )',
+		'rgba(white,0.5)', 'rgba(#fAfBfC,0.5)', 'rgba( white , 0.5 )',
+		'rgba( #fAfBfC , 0.5 )', 'hsla(white,0.5)', 'hsla( #fAfBfC , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
+	);
+
+	foreach my $colorResult (@CanonicalFromRgbValidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = canonicalFromRgb($color, $bValid);
+		is($result, $expect, "canonicalFromRgb (valid) $color -> $expect");
+	}
+}
+
+sub testCanonicalFromRgbAllowInvalid
+{
+	my $bValid = 1;
+	my @CanonicalFromRgbAllowInvalidTests = (
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
+		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
+		'rgb( 100% , 100% , 100% ):#ffffff',
+		'hsl(0,100%,100%):hsl(0, 100%, 100%)',
+		'hsl( 0 , 100% , 100% ):hsl(0, 100%, 100%)',
+		'rgba(255,255,255,1.0):rgba(#ffffff, 1.0)',
+		'rgba(100%,100%,100%,1.0):rgba(#ffffff, 1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 ):rgba(#ffffff, 1.0)',
+		'rgba( 100% , 100% , 100% , 1.0 ):rgba(#ffffff, 1.0)',
+		'hsla(0,100%,100%,1.0):hsla(0, 100%, 100%, 1.0)',
+		'hsla( 0 , 100% , 100% , 1.0 ):hsla(0, 100%, 100%, 1.0)', 'transparent',
+		'rgba(255,255,255,0.0):rgba(#ffffff, 0.0)',
+		'rgba(100%,100%,100%,0.0):rgba(#ffffff, 0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0.0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0.0)',
+		'hsla(0,100%,100%,0.0):hsla(0, 100%, 100%, 0.0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):hsla(0, 100%, 100%, 0.0)',
+		'rgba(255,255,255,0.5):rgba(#ffffff, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)',
+		'hsla(0,100%,100%,0.5):hsla(0, 100%, 100%, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):hsla(0, 100%, 100%, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'hsla(white,0.5):hsla(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla(#fAfBfC, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@CanonicalFromRgbAllowInvalidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = canonicalFromRgb($color, !$bValid);
+		is($result, $expect, "canonicalFromRgb (!valid) $color -> $expect");
+	}
+}
+
+sub testRgbFromHslOrPercent
+{
+	my @RgbFromHslOrPercentTests = (
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
+		'rgb(255,255,255):rgb(255, 255, 255)',
+		'rgb(100%,100%,100%):rgb(255, 255, 255)',
+		'rgb( 255 , 255 , 255 ):rgb(255, 255, 255)',
+		'rgb( 100% , 100% , 100% ):rgb(255, 255, 255)',
+		'hsl(0,100%,100%):rgb(255, 255, 255)',
+		'hsl( 0 , 100% , 100% ):rgb(255, 255, 255)',
+		'rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba(100%,100%,100%,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'rgba( 100% , 100% , 100% , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'hsla(0,100%,100%,1.0):rgba(255, 255, 255, 1.0)',
+		'hsla( 0 , 100% , 100% , 1.0 ):rgba(255, 255, 255, 1.0)', 'transparent',
+		'rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba(100%,100%,100%,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'hsla(0,100%,100%,0.0):rgba(255, 255, 255, 0.0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'hsla(white,0.5):hsla(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla(#fAfBfC, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@RgbFromHslOrPercentTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = rgbFromHslOrPercent($color);
+		is($result, $expect, "rgbFromHslOrPercent $color -> $expect");
+	}
+}
+
+sub testToHashColorValid
+{
+	my $bAlways = 1;
+	my $bValid = 1;
+	my @ToHashColorValidTests = (
+		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red", "rgb(255,255,255):#ffffff",
+		"rgb(100%,100%,100%):#ffffff", "rgb( 255 , 255 , 255 ):#ffffff",
+		"rgb( 100% , 100% , 100% ):#ffffff", "hsl(0,100%,100%):#ffffff",
+		"hsl( 0 , 100% , 100% ):#ffffff",
+		"rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)",
+		"rgba(100%,100%,100%,1.0):rgba(255, 255, 255, 1.0)",
+		"rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)",
+		"rgba( 100% , 100% , 100% , 1.0 ):rgba(255, 255, 255, 1.0)",
+		"hsla(0,100%,100%,1.0):rgba(255, 255, 255, 1.0)",
+		"hsla( 0 , 100% , 100% , 1.0 ):rgba(255, 255, 255, 1.0)", "transparent",
+		"rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)",
+		"rgba(100%,100%,100%,0.0):rgba(255, 255, 255, 0.0)",
+		"rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0.0)",
+		"rgba( 100% , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0.0)",
+		"hsla(0,100%,100%,0.0):rgba(255, 255, 255, 0.0)",
+		"hsla( 0 , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0.0)",
+		"rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)",
+		"rgba(100%,100%,100%,0.5):rgba(255, 255, 255, 0.5)",
+		"rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)",
+		"rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)",
+		"hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)",
+		"hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)",
+		"rgba(white,0.5):rgba(white, 0.5)", "rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)",
+		"rgba( white , 0.5 ):rgba(white, 0.5)",
+		"rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)",
+		"hsla(white,0.5):hsla(white, 0.5)",
+		"hsla( #fAfBfC , 0.5 ):hsla(#fAfBfC, 0.5)",
+		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
+		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
+	);
+
+	foreach my $colorResult (@ToHashColorValidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = toHashColor($color, $bAlways, $bValid);
+
+		is($result, $expect, "toHashColor (valid) $color -> $expect");
+	}
+}
+
+sub testToHashColorAllowInvalid
+{
+	my $bAlways = 1;
+	my $bValid = 1;
+	my @ToHashColorAllowInvalidTests = (
+		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red", "rgb(255,255,255):#ffffff",
+		"rgb(100%,100%,100%):#ffffff", "rgb( 255 , 255 , 255 ):#ffffff",
+		"rgb( 100% , 100% , 100% ):#ffffff", "hsl(0,100%,100%):#ffffff",
+		"hsl( 0 , 100% , 100% ):#ffffff",
+		"rgba(255,255,255,1.0):rgba(#ffffff, 1.0)",
+		"rgba(100%,100%,100%,1.0):rgba(#ffffff, 1.0)",
+		"rgba( 255 , 255 , 255 , 1.0 ):rgba(#ffffff, 1.0)",
+		"rgba( 100% , 100% , 100% , 1.0 ):rgba(#ffffff, 1.0)",
+		"hsla(0,100%,100%,1.0):hsla(#ffffff, 1.0)",
+		"hsla( 0 , 100% , 100% , 1.0 ):hsla(#ffffff, 1.0)", "transparent",
+		"rgba(255,255,255,0.0):rgba(#ffffff, 0.0)",
+		"rgba(100%,100%,100%,0.0):rgba(#ffffff, 0.0)",
+		"rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0.0)",
+		"rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0.0)",
+		"hsla(0,100%,100%,0.0):hsla(#ffffff, 0.0)",
+		"hsla( 0 , 100% , 100% , 0.0 ):hsla(#ffffff, 0.0)",
+		"rgba(255,255,255,0.5):rgba(#ffffff, 0.5)",
+		"rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5)",
+		"rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5)",
+		"rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)",
+		"hsla(0,100%,100%,0.5):hsla(#ffffff, 0.5)",
+		"hsla( 0 , 100% , 100% , 0.5 ):hsla(#ffffff, 0.5)",
+		"rgba(white,0.5):rgba(white, 0.5)", "rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)",
+		"rgba( white , 0.5 ):rgba( white , 0.5 )",
+		"rgba( #fAfBfC , 0.5 ):rgba( #fAfBfC , 0.5 )",
+		"hsla(white,0.5):hsla(white, 0.5)",
+		"hsla( #fAfBfC , 0.5 ):hsla( #fAfBfC , 0.5 )",
+		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color),green(\@color),blue(\@color),0.5)",
+		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 )",
+	);
+
+	foreach my $colorResult (@ToHashColorAllowInvalidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = toHashColor($color, $bAlways, !$bValid);
+
+		is($result, $expect, "toHashColor (!valid) $color -> $expect");
+	}
+}
+
+
+sub wrap
+{
+	my ($name, $raTests) = @ARG;
+	my $WIDTH = 76;
+	my $JOIN = qq{'', };
+	my $line = "";
+	print STDERR qq{\tmy $name = (\n};
+	foreach my $test (@$raTests)
+	{
+		my $length = length($line);
+		if ($length + length($test) + length($JOIN) > $WIDTH)
+		{
+			print STDERR qq{\t\t$line\n};
+			$line = qq{'$test', };
+		}
+		else
+		{
+			$line .= qq{'$test', };
+		}
+	}
+	print STDERR qq{\t\t$line\n\t);\n};
 }
 
 __DATA__
