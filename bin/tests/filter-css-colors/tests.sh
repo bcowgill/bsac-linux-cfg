@@ -240,9 +240,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-exit 1;
-
-# TODO echo rgb
+# TODO rename to remap- prefix
 
 echo TEST $CMD REMAPMODE --canonical only implies --remap
 TEST=noecho-noreverse-nocolor-noremap-canon-nonames
@@ -271,7 +269,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --names only implies --remap and --canonical
+echo TEST $CMD REMAPMODE --names only implies --remap and --canonical
 TEST=noecho-noreverse-nocolor-noremap-nocanon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -284,7 +282,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --remap --canonical and --names against previous test base file
+echo TEST $CMD REMAPMODE --remap --canonical and --names against previous test base file
 TEST=noecho-noreverse-nocolor-remap-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -297,10 +295,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-
-SKIP="NOT YET IMPLEMENTED"
-
-echo TEST $CMD --rgb only implies --remap and --canonical
+echo TEST $CMD REMAPMODE --rgb only implies --remap and --canonical
 TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -313,9 +308,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-SKIP=0
-
-echo "TEST $CMD --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
+echo "TEST $CMD REMAPMODE --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
 TEST=validonly-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -361,7 +354,9 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD constants with errors
+# TODO foreground/background test once implemented
+
+echo TEST $CMD CONST constants with errors
 TEST=const-errors
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -379,7 +374,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD lessc constants defined by hand canonical names
+echo TEST $CMD CONST lessc constants defined by hand canonical names
 TEST=const-manually-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -394,6 +389,8 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+exit 1;
 
 echo TEST $CMD lessc constants defined by hand canonical rgb
 TEST=const-manually-canon-rgb

@@ -11,16 +11,16 @@ color: white;
 color: transparent;
 color: transparent;
 
-color: rgba(white,0.4);
-color: rgba(white,0.5);
+color: rgba(white, 0.4);
+color: rgba(white, 0.5);
 
 /* preserve or remove spacing */
 color: white;
 color: white;
 color: transparent;
-color: rgba(white  ,  0.5);
-color: rgba(white  ,  0.4  );
-color: rgba(white  ,  0.5);
+color: rgba(white, 0.5);
+color: rgba(white, 0.4);
+color: rgba(white, 0.5);
 
 /* hsl conversion */
 color: white;
@@ -30,13 +30,13 @@ color: transparent;
 
 /* hsl and spacing */
 color: transparent;
-color: rgba(white  ,  0.4);
+color: rgba(white, 0.4);
 
 * { color: red }   /* red */
 * { color: lime } /* lime */
-* { color: hsl(120, 100%, 25%) } /* dark green */
-* { color: hsl(120, 100%, 75%) } /* light green */
-* { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+* { color: #007f00 } /* dark green */
+* { color: #7fff7f } /* light green */
+* { color: #8fef8f }  /* pastel green, and so on */
 
 /* opacity conversion */
 em { color: lime }     /* green */
