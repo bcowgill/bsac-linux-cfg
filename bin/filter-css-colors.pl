@@ -213,7 +213,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 380;
+our $TEST_CASES = 418;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -1030,6 +1030,7 @@ sub names
 	if (opt('names'))
 	{
 		debug("names($color)", 4);
+		debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 1.0)';
 
 		# alpha = 0 is transparent
 		$color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
@@ -1039,13 +1040,16 @@ sub names
 		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
 		debug("names() 2 $color", 4);
 
+		$color = $Var{'rhColorNamesMap'}{trim($color)} || $color;
+		debug("names() 3 $color", 4);
+
 		my $rgb = lc(rgbFromHslOrPercent($color));
-		$color = $Var{'rhColorNamesMap'}{$rgb} || $color;
-		debug("names() 3 $color rgb=$rgb", 4);
+		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
+		debug("names() 3.1 $color rgb=$rgb", 4);
 
 		$rgb =~ s{\A rgb \( (.+) \) \z}{$1}xms;
-		$color = $Var{'rhColorNamesMap'}{$rgb} || $color;
-		debug("names() 3.5 $color", 4);
+		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
+		debug("names() 3.2 $color", 4);
 
 		# handle the special case rgba(#color, opacity)
 		# TODO pull regex out
@@ -1355,9 +1359,9 @@ sub tests
 	testHashColorStandardShorten();
 	testHashColorStandardCanonical();
 	testRgb();
+	testRenameColorNamesCanonicalAllowInvalid();
 	testRenameColorNamesCanonical();
-	# test names() function valid only
-	# test renameColor() function
+
 	# unittestcall
 
 	my @EveryColorFormat = (
@@ -1399,21 +1403,26 @@ sub tests
 
 	exit 0;
 
+	setOpt('canonical', 1);
+	setOpt('hash', 1);
+	setOpt('names', 1);
+	setOpt('remap', 1);
+	setOpt('valid-only', 1);
+
 	my $bAlways = 1;
 	my $bValid = 1;
 
 	my @Result = ();
 	foreach my $color (@EveryColorFormat)
 	{
-		my $result = rgb($color, $bAlways);
+		my $result = renameColor($color);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "rgb $color -> $expect");
+		is($result, $expect, "renameColor (valid,names,canonical) $color -> $expect");
 	}
-	wrap("\@RgbTests", \@Result);
-
+	wrap("\@RenameColorNamesCanonicalValidOnlyTests", \@Result);
 }
 
 sub testCanonicalFromRgbValid
@@ -1816,9 +1825,9 @@ sub testRgb
 	}
 }
 
-sub testRenameColorNamesCanonical
+sub testRenameColorNamesCanonicalAllowInvalid
 {
-	my @RenameColorNamesCanonicalValidOnlyTests = (
+	my @RenameColorNamesCanonicalAllowInvalidTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
 		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
@@ -1859,6 +1868,65 @@ sub testRenameColorNamesCanonical
 
 	readColorNameData();
 
+	foreach my $colorResult (@RenameColorNamesCanonicalAllowInvalidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = renameColor($color);
+
+		is($result, $expect, "renameColor (!valid,names,canonical) $color -> $expect");
+	}
+
+	setOpt('names', 0);
+	setOpt('canonical', 0);
+	setOpt('hash', 0);
+	setOpt('remap', 0);
+}
+
+sub testRenameColorNamesCanonical
+{
+	my @RenameColorNamesCanonicalValidOnlyTests = (
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
+		'rgba(255,255,255,1.0):white',
+		'rgba(100%,100%,100%,1.0):white',
+		'rgba( 255 , 255 , 255 , 1.0 ):white',
+		'rgba( 100% , 100% , 100% , 1.0 ):white',
+		'hsla(0,100%,100%,1.0):white',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
+		'rgba(255,255,255,0.0):transparent',
+		'rgba(100%,100%,100%,0.0):transparent',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
+		'hsla(0,100%,100%,0.0):transparent',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
+		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)', # TODO handle?
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
+		'hsla(white,0.5):hsla(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	#setOpt('debug', 5);
+	setOpt('canonical', 1);
+	setOpt('hash', 1);
+	setOpt('names', 1);
+	setOpt('remap', 1);
+	setOpt('valid-only', 1);
+
+	#readColorNameData();
+
 	foreach my $colorResult (@RenameColorNamesCanonicalValidOnlyTests)
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
@@ -1866,13 +1934,14 @@ sub testRenameColorNamesCanonical
 
 		my $result = renameColor($color);
 
-		is($result, $expect, "renameColor (names,canonical) $color -> $expect");
+		is($result, $expect, "renameColor (valid,names,canonical) $color -> $expect");
 	}
 
 	setOpt('names', 0);
 	setOpt('canonical', 0);
 	setOpt('hash', 0);
 	setOpt('remap', 0);
+	setOpt('valid-only', 0);
 }
 
 # unittestimpl
