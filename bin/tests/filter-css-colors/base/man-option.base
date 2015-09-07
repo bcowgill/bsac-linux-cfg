@@ -17,13 +17,13 @@ SYNOPSIS
                --shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
                --rgb            negatable. convert colors to rgb() form.
                --hash           negatable. convert rgb/hsl colors to #color form.
+               --valid-only     negatable. do not perform remappings which are invalid CSS.
                --show-const     negatable. show the table of defined constants.
                --const-type     specify what type of constants are being used (for less or sass.)
                --const          multiple. define a custom constant value.
                --const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
                --const-list     list all possible constant names for a given color substitution in a comment.
                --const-pull     pull color values into new named constants and output to file or standard output.
-               --valid-only     negatable. do not perform remappings which are invalid CSS.
                --inplace        specify to modify files in place creating a backup first.
                --foreground     [not implemented] specify a color value to use for all foreground colors.
                --background     [not implemented] specify a color value to use for all background colors.
@@ -49,6 +49,7 @@ OPTIONS
        --names or --nonames
                 Show colors as standard names where possible. i.e. #fff becomes white.
                 Implies --canonical as well.
+                Implies --hash as well.
                 Implies --remap as well.
 
        --canonical or --nocanonical

@@ -69,13 +69,13 @@ was: * { color: hsl(120, 100%, 50%) } /* lime */
      * { color: lime } /* lime */
 
 was: * { color: hsl(120, 100%, 25%) } /* dark green */
-     * { color: hsl(120, 100%, 25%) } /* dark green */
+     * { color: #007f00 } /* dark green */
 
 was: * { color: hsl(120, 100%, 75%) } /* light green */
-     * { color: hsl(120, 100%, 75%) } /* light green */
+     * { color: #7fff7f } /* light green */
 
 was: * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
-     * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+     * { color: #8fef8f }  /* pastel green, and so on */
 
 was: em { color: hsl(120, 100%, 50%) }     /* green */
      em { color: lime }     /* green */

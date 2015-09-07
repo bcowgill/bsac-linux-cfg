@@ -146,7 +146,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --canonical only implies --remap
+echo TEST $CMD ECHOMODE show original and changed value, --canonical only implies --remap
 TEST=echo-canon
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -201,21 +201,22 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-exit 1;
-
-echo TEST $CMD ECHOMODE --echo --names shows original line and changed line
 echo TEST $CMD ECHOMODE --names only implies --remap and --canonical
 TEST=echo-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --names"
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --names --novalid-only"
 	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+exit 1;
+# TODO echo names valid only
+# TODO echo rgb
 
 echo TEST $CMD REMAPMODE --canonical only implies --remap
 TEST=noecho-noreverse-nocolor-noremap-canon-nonames

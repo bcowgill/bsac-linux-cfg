@@ -21,13 +21,13 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
 	--rgb            negatable. convert colors to rgb() form.
 	--hash           negatable. convert rgb/hsl colors to #color form.
+	--valid-only     negatable. do not perform remappings which are invalid CSS.
 	--show-const     negatable. show the table of defined constants.
 	--const-type     specify what type of constants are being used (for less or sass.)
 	--const          multiple. define a custom constant value.
 	--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
 	--const-list     list all possible constant names for a given color substitution in a comment.
 	--const-pull     pull color values into new named constants and output to file or standard output.
-	--valid-only     negatable. do not perform remappings which are invalid CSS.
 	--inplace        specify to modify files in place creating a backup first.
 	--foreground     [not implemented] specify a color value to use for all foreground colors.
 	--background     [not implemented] specify a color value to use for all background colors.
@@ -60,6 +60,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  Show colors as standard names where possible. i.e. #fff becomes white.
  Implies --canonical as well.
+ Implies --hash as well.
  Implies --remap as well.
 
 =item B<--canonical> or B<--nocanonical>
@@ -212,6 +213,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
+our $TEST_CASES = 342;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -848,6 +850,13 @@ sub lookupConstant
 	return $color;
 }
 
+# rename a color value based on command line options
+sub renameColor
+{
+	my ($color) = @ARG;
+	return names(rgb(hashColorStandard(toHashColor($color))));
+}
+
 sub defineAutoConstant
 {
 	my ($color, $origColor, $match) = @ARG;
@@ -865,18 +874,14 @@ sub defineAutoConstant
 	return $const;
 }
 
-# rename a color value based on command line options
-sub renameColor
-{
-	my ($color) = @ARG;
-	return names(rgb(hashColorStandard(toHashColor($color))));
-}
-
 # make #ffffff forms of colors the same based on command line options
+# default is long canonical form unless shorten option is given
 sub hashColorStandard
 {
 	my ($color) = @ARG;
-	return canonical(shorten($color));
+	$color = canonical(shorten($color), !opt('shorten'));
+	$color =~ s{ $Var{'regex'}{'hashColor'} }{ '#' . lc($1) }xmsge;
+	return $color;
 }
 
 # make unique version of color based on command line options so that color
@@ -1143,11 +1148,18 @@ sub checkOptions
 
 	# Force some flags when others turned on
 	setOpt('canonical', 1) if (opt('names') || opt('rgb'));
+	setOpt('hash', 1) if (opt('names'));
 	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten') || opt('hash'));
+
+	if (opt('canonical'))
+	{
+		push(@$raErrors, "You cannot specify --shorten when using the --canonical option") if opt('shorten');
+	}
 
 	if (opt('rgb'))
 	{
 		push(@$raErrors, "You cannot specify --names when using the --rgb option") if opt('names');
+		push(@$raErrors, "You cannot specify --hash when using the --rgb option") if opt('hash');
 	}
 
 	if ( scalar(@$raErrors) )
@@ -1282,7 +1294,7 @@ sub manual
 
 sub tests
 {
-	eval "use Test::More tests => 228";
+	eval "use Test::More tests => $TEST_CASES";
 
 	testCanonicalFromRgbValid();
 	testCanonicalFromRgbAllowInvalid();
@@ -1290,6 +1302,12 @@ sub tests
 	testRgbFromHslOrPercentAllowInvalid();
 	testToHashColorValid();
 	testToHashColorAllowInvalid();
+	testHashColorStandardShorten();
+	testHashColorStandardCanonical();
+	# test rgb() function
+	testRenameColorNamesCanonical();
+	# test names() function valid only
+	# test renameColor() function
 
 	my @EveryColorFormat = (
 		# #hash or name format
@@ -1332,17 +1350,21 @@ sub tests
 	my $bValid = 1;
 
 	exit 0;
+
 	my @Result = ();
+	setOpt('names', 1);
+	setOpt('canonical', 1);
 	foreach my $color (@EveryColorFormat)
 	{
-		my $result = rgbFromHslOrPercent($color);
+		my $result = renameColor($color);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "rgbFromHslOrPercent $color -> $expect");
+		is($result, $expect, "renameColor (names,canonical) $color -> $expect");
 	}
-	wrap("\@RgbFromHslOrPercentTests", \@Result);
+	wrap("\@RenameColorsNamesCanonicalTests", \@Result);
+
 }
 
 sub testCanonicalFromRgbValid
@@ -1622,6 +1644,136 @@ sub testToHashColorAllowInvalid
 	}
 }
 
+sub testHashColorStandardShorten
+{
+	my @HashColorStandardShortenTests = (
+		'#fFf:#fff', '#fFfFfF:#fff', '#fAfBfC:#fafbfc', 'white', 'red', 'rgb(255,255,255)',
+		'rgb(100%,100%,100%)', 'rgb( 255 , 255 , 255 )',
+		'rgb( 100% , 100% , 100% )', 'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
+		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 )', 'rgba( 100% , 100% , 100% , 1.0 )',
+		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
+		'rgba(255,255,255,0.0)', 'rgba(100%,100%,100%,0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 )', 'rgba( 100% , 100% , 100% , 0.0 )',
+		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
+		'rgba(255,255,255,0.5)', 'rgba(100%,100%,100%,0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 )', 'rgba( 100% , 100% , 100% , 0.5 )',
+		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
+		'rgba(white,0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5)', 'rgba( white , 0.5 )',
+		'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 )', 'hsla(white,0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
+	);
+
+	setOpt('canonical', 0);
+	setOpt('shorten', 1);
+
+	foreach my $colorResult (@HashColorStandardShortenTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = hashColorStandard($color);
+
+		is($result, $expect, "hashColorStandard (shorten) $color -> $expect");
+	}
+
+	setOpt('shorten', 0);
+}
+
+sub testHashColorStandardCanonical
+{
+	my @HashColorStandardCanonicalTests = (
+		'#fFf:#ffffff', '#fFfFfF:#ffffff', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255)', 'rgb(100%,100%,100%)', 'rgb( 255 , 255 , 255 )',
+		'rgb( 100% , 100% , 100% )', 'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
+		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 )', 'rgba( 100% , 100% , 100% , 1.0 )',
+		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
+		'rgba(255,255,255,0.0)', 'rgba(100%,100%,100%,0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 )', 'rgba( 100% , 100% , 100% , 0.0 )',
+		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
+		'rgba(255,255,255,0.5)', 'rgba(100%,100%,100%,0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 )', 'rgba( 100% , 100% , 100% , 0.5 )',
+		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
+		'rgba(white,0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5)',
+		'rgba( white , 0.5 )', 'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 )',
+		'hsla(white,0.5)', 'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
+	);
+
+	setOpt('shorten', 0);
+	setOpt('canonical', 1);
+
+	foreach my $colorResult (@HashColorStandardCanonicalTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = hashColorStandard($color);
+
+		is($result, $expect, "hashColorStandard (canonical) $color -> $expect");
+	}
+
+	setOpt('canonical', 0);
+}
+
+sub testRenameColorNamesCanonical
+{
+	my @RenameColorNamesCanonicalTests = (
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
+		'rgba(255,255,255,1.0):white',
+		'rgba(100%,100%,100%,1.0):white',
+		'rgba( 255 , 255 , 255 , 1.0 ):white',
+		'rgba( 100% , 100% , 100% , 1.0 ):white',
+		'hsla(0,100%,100%,1.0):white',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
+		'rgba(255,255,255,0.0):transparent',
+		'rgba(100%,100%,100%,0.0):transparent',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
+		'hsla(0,100%,100%,0.0):transparent',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
+		'rgba(255,255,255,0.5):rgba(white, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(white, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 )',
+		'hsla(white,0.5):rgba(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
+	);
+
+	setOpt('debug', 5);
+	setOpt('canonical', 1);
+	setOpt('names', 1);
+
+	readColorNameData();
+
+	foreach my $colorResult (@RenameColorNamesCanonicalTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = renameColor($color);
+
+		is($result, $expect, "renameColor (names,canonical) $color -> $expect");
+	}
+
+	setOpt('names', 0);
+	setOpt('canonical', 0);
+}
 
 sub wrap
 {
