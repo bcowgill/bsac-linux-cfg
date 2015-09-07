@@ -24,10 +24,10 @@ was: color: rgba(100%,100%,100%,0);
      color: transparent;
 
 was: color: rgba(255,255,255,0.4);
-     color: rgba(white,0.4);
+     color: rgba(white, 0.4);
 
 was: color: rgba(100%,100%,100%,0.5);
-     color: rgba(white,0.5);
+     color: rgba(white, 0.5);
 
 was: color: rgb(  255  ,  255  ,  255  );
      color: white;
@@ -39,13 +39,13 @@ was: color: rgba(  255  ,  255  ,  255  ,  0  );
      color: transparent;
 
 was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
-     color: rgba(white  ,  0.5);
+     color: rgba(white, 0.5);
 
 was: color: rgba(  255  ,  255  ,  255  ,  0.4  );
-     color: rgba(white  ,  0.4  );
+     color: rgba(white, 0.4);
 
 was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
-     color: rgba(white  ,  0.5);
+     color: rgba(white, 0.5);
 
 was: color: hsl(360,100%,100%);
      color: white;
@@ -60,7 +60,7 @@ was: color: hsla(  360  ,  100%  ,  100%  ,  0);
      color: transparent;
 
 was: color: hsla(  360  ,  100%  ,  100%  ,  0.4);
-     color: rgba(white  ,  0.4);
+     color: rgba(white, 0.4);
 
 was: * { color: hsl(0, 100%, 50%) }   /* red */
      * { color: red }   /* red */

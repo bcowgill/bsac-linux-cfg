@@ -1043,8 +1043,25 @@ sub names
 		$color = $Var{'rhColorNamesMap'}{$rgb} || $color;
 		debug("names() 3 $color rgb=$rgb", 4);
 
-		$color = $Var{'rhColorNamesMap'}{"rgb($rgb)"} || $color;
+		$rgb =~ s{\A rgb \( (.+) \) \z}{$1}xms;
+		$color = $Var{'rhColorNamesMap'}{$rgb} || $color;
 		debug("names() 3.5 $color", 4);
+
+		# handle the special case rgba(#color, opacity)
+		# TODO pull regex out
+		if ($rgb =~ s{\A ( rgba \( ) (.+) ( , \s* [0-9\.]+ \) ) \z}{$2}xms)
+		{
+			my ($prefix, $postfix) = ($1, $3);
+			debug("names() 3.6 $prefix $rgb $postfix", 4);
+
+			if ($Var{'rhColorNamesMap'}{$rgb})
+			{
+				debug("names() 3.7 $rgb", 4);
+				$color = "$prefix$Var{'rhColorNamesMap'}{$rgb}$postfix";
+			}
+		}
+
+		debug("names() 3.8 $color", 4);
 
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
@@ -1825,16 +1842,16 @@ sub testRenameColorNamesCanonical
 		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
 		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
 		'rgba(white,0.5):rgba(white, 0.5)',
-		'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5)',
+		'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)',
 		'rgba( white , 0.5 ):rgba(white, 0.5)',
-		'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 )',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
 		'hsla(white,0.5):rgba(white, 0.5)',
-		'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 )',
-		'rgba(red(@color),green(@color),blue(@color),0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
+		'hsla( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
 
-	setOpt('debug', 5);
+	#setOpt('debug', 5);
 	setOpt('canonical', 1);
 	setOpt('hash', 1);
 	setOpt('names', 1);
