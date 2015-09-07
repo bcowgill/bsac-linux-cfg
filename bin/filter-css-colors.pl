@@ -1029,27 +1029,44 @@ sub names
 	my ($color) = @ARG;
 	if (opt('names'))
 	{
+		debug("names($color)", 4);
+
 		# alpha = 0 is transparent
 		$color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
+		debug("names() 1 $color", 4);
+
 		# alpha = 1 is opaque convert to hsl or rgb
 		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
+		debug("names() 2 $color", 4);
 
-		$color = $Var{'rhColorNamesMap'}{lc(rgbFromHslOrPercent($color))} || $color;
+		my $rgb = lc(rgbFromHslOrPercent($color));
+		$color = $Var{'rhColorNamesMap'}{$rgb} || $color;
+		debug("names() 3 $color rgb=$rgb", 4);
+
+		$color = $Var{'rhColorNamesMap'}{"rgb($rgb)"} || $color;
+		debug("names() 3.5 $color", 4);
+
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
+			debug("names() 4 $color", 4);
 			if (exists $Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)})
 			{
+				debug("names() 5 $color", 4);
 				$color = "rgba($Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)}$2)";
 			}
 		}
+		debug("names() 6 $color", 4);
 		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
 		{
+			debug("names() 7 $color", 4);
 			if (exists $Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)})
 			{
+				debug("names() 8 $color", 4);
 				$color = "rgba($Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)}$4)";
 			}
 		}
 	}
+	debug("names() 9 $color", 4);
 	return $color;
 }
 
@@ -1735,9 +1752,56 @@ sub testHashColorStandardCanonical
 	setOpt('canonical', 0);
 }
 
+sub testRgb
+{
+
+	my $bAlways = 1;
+	my @RgbTests = (
+		'#fFf:rgb(255, 255, 255)', '#fFfFfF:rgb(255, 255, 255)',
+		'#fAfBfC:rgb(250, 251, 252)', 'white', 'red',
+		'rgb(255,255,255):rgb(255, 255, 255)',
+		'rgb(100%,100%,100%):rgb(100%, 100%, 100%)',
+		'rgb( 255 , 255 , 255 ):rgb(255, 255, 255)',
+		'rgb( 100% , 100% , 100% ):rgb(100%, 100%, 100%)',
+		'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
+		'rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba(100%,100%,100%,1.0):rgba(100%, 100%, 100%, 1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'rgba( 100% , 100% , 100% , 1.0 ):rgba(100%, 100%, 100%, 1.0)',
+		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
+		'rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba(100%,100%,100%,0.0):rgba(100%, 100%, 100%, 0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(100%, 100%, 100%, 0.0)',
+		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
+		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(100%, 100%, 100%, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(100%, 100%, 100%, 0.5)',
+		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
+		'rgba(white,0.5):rgba(white, 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(rgb(250, 251, 252), 0.5)', # TODO fix!
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(rgb(250, 251, 252), 0.5)',
+		'hsla(white,0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla( rgb(250, 251, 252) , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@RgbTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = rgb($color, $bAlways);
+		is($result, $expect, "rgb $color -> $expect");
+	}
+}
+
 sub testRenameColorNamesCanonical
 {
-	my @RenameColorNamesCanonicalTests = (
+	my @RenameColorNamesCanonicalValidOnlyTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
 		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
@@ -1772,11 +1836,13 @@ sub testRenameColorNamesCanonical
 
 	setOpt('debug', 5);
 	setOpt('canonical', 1);
+	setOpt('hash', 1);
 	setOpt('names', 1);
+	setOpt('remap', 1);
 
 	readColorNameData();
 
-	foreach my $colorResult (@RenameColorNamesCanonicalTests)
+	foreach my $colorResult (@RenameColorNamesCanonicalValidOnlyTests)
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
@@ -1788,53 +1854,8 @@ sub testRenameColorNamesCanonical
 
 	setOpt('names', 0);
 	setOpt('canonical', 0);
-}
-
-sub testRgb
-{
-
-	my $bAlways = 1;
-	my @RgbTests = (
-		'#fFf:rgb(255, 255, 255)', '#fFfFfF:rgb(255, 255, 255)',
-		'#fAfBfC:rgb(250, 251, 252)', 'white', 'red',
-		'rgb(255,255,255):rgb(255, 255, 255)',
-		'rgb(100%,100%,100%):rgb(100%, 100%, 100%)',
-		'rgb( 255 , 255 , 255 ):rgb(255, 255, 255)',
-		'rgb( 100% , 100% , 100% ):rgb(100%, 100%, 100%)',
-		'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
-		'rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)',
-		'rgba(100%,100%,100%,1.0):rgba(100%, 100%, 100%, 1.0)',
-		'rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)',
-		'rgba( 100% , 100% , 100% , 1.0 ):rgba(100%, 100%, 100%, 1.0)',
-		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
-		'rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)',
-		'rgba(100%,100%,100%,0.0):rgba(100%, 100%, 100%, 0.0)',
-		'rgba( 255 , 255 , 255 , 0.0 )::rgba(255, 255, 255, 0.0)',
-		'rgba( 100% , 100% , 100% , 0.0 ):rgba(100%, 100%, 100%, 0.0)',
-		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
-		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
-		'rgba(100%,100%,100%,0.5):rgba(100%, 100%, 100%, 0.5)',
-		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
-		'rgba( 100% , 100% , 100% , 0.5 ):rgba(100%, 100%, 100%, 0.5)',
-		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
-		'rgba(white,0.5):rgba(white, 0.5)',
-		'rgba(#fAfBfC,0.5):rgba(rgb(250, 251, 252), 0.5)', # TODO fix!
-		'rgba( white , 0.5 ):rgba(white, 0.5)',
-		'rgba( #fAfBfC , 0.5 ):rgba(rgb(250, 251, 252), 0.5)',
-		'hsla(white,0.5)',
-		'hsla( #fAfBfC , 0.5 ):hsla( rgb(250, 251, 252) , 0.5 )',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
-	);
-
-	foreach my $colorResult (@RgbTests)
-	{
-		my ($color, $expect) = split(/:/, $colorResult);
-		$expect = $expect || $color;
-
-		my $result = rgb($color, $bAlways);
-		is($result, $expect, "rgb $color -> $expect");
-	}
+	setOpt('hash', 0);
+	setOpt('remap', 0);
 }
 
 # unittestimpl
