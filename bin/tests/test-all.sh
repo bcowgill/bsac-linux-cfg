@@ -11,6 +11,11 @@ testSuite template-perl-inplace "perl template for scanning and editing files in
 testSuite df-k "format df -k command output more legibly" $PROVE
 testSuite spaces "show spaces nulls and end of lines" $PROVE
 testSuite ls-tabs "report on tab indentation in file" $PROVE
+
+testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
+$PROVE ./unit-tests.sh
+popd > /dev/null
+
 testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE
 testSuite pretty-elements "format HTML elements nicely" $PROVE
 testSuite ls-tt-tags "list template toolkit tags in templates" $PROVE

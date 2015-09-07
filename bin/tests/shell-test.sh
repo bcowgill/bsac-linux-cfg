@@ -68,15 +68,23 @@ function stop {
    exit 1
 }
 
+function testSuiteBegin
+{
+   local dir suite
+   dir="$1"
+   suite="$2"
+   echo ======================================================================
+   echo TEST SUITE in "./$dir/" : $suite
+   pushd "$dir" > /dev/null
+}
+
 function testSuite
 {
    local dir suite prove
    dir="$1"
    suite="$2"
    prove="$3"
-   echo ======================================================================
-   echo TEST SUITE in "./$dir/" : $suite
-   pushd "$dir" > /dev/null
+   testSuiteBegin "$dir" "$suite"
    [ -d in ] || mkdir in
    [ -d out ] || mkdir out
    [ -d base ] || mkdir base
