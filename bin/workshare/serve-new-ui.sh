@@ -11,7 +11,7 @@ JSHINT="$PROJECTS new-ui"
 killall grunt || echo carry on
 
 pushd $TOP > /dev/null
-if [ ${FULL_REBUILD:-0} ] ; then
+if [ ${FULL_REBUILD:-0} == 1 ] ; then
 	for dir in $JSHINT
 	do
 		pushd $dir > /dev/null
