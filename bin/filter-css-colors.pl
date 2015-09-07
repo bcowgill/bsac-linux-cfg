@@ -213,7 +213,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 342;
+our $TEST_CASES = 380;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -295,6 +295,7 @@ my %Var = (
 		'rgba'        => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
 		'hslToRgb'    => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xms,
 		'rgbaCanon'   => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
+		'isRgb'       => qr{ \A rgb a? \( }xmsi,
 		'isRgbIsh'    => qr{ \A (rgb|hsl) a? \( }xmsi,
 		'hslInvalid'  => qr{ \A hsla \( \s* (\w+|\#[0-9a-f]{3,6}) }xmsi,
 		'hsla'        => qr{ \A hsla \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
@@ -411,7 +412,7 @@ sub readColorNameData
 			my ($name, $color, $rgb) = ($1, $2, $3);
 
 			$color = lc($color);
-			$rgb = formatRgbColor($rgb);
+			$rgb = formatRgbIshColor($rgb);
 			push(@{$Var{'raColorNames'}}, $name);
 			$Var{'rhColorNamesMap'}{$color} = $name;
 			$color = shorten($color, 'force');
@@ -889,11 +890,19 @@ sub hashColorStandard
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return names(formatRgbColor(rgb(hashColorStandard($color))));
+	return names(formatRgbIshColor(rgb(hashColorStandard($color))));
 }
 
 # fix comma spacing in rgb colors
 sub formatRgbColor
+{
+	my ($color) = @ARG;
+	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgb'};
+	return $color;
+}
+
+# fix comma spacing in rgb/hsl colors
+sub formatRgbIshColor
 {
 	my ($color) = @ARG;
 	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgbIsh'};
@@ -951,7 +960,7 @@ sub shorten
 	return $color;
 }
 
-# convert color value to rgb(R,G,B) format
+# convert #color value to rgb(R,G,B) format
 sub rgb
 {
 	my ($color, $bAlways) = @ARG;
@@ -962,6 +971,13 @@ sub rgb
 		}{
 			"rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")"
 		}xmsgie;
+		$color =~ s{
+			$Var{'regex'}{'shortColor'}
+		}{
+			my ($red, $green, $blue) = (substr($1, 0, 1), substr($1, 1, 1), substr($1, 2, 1));
+			"rgb(" . hex($red . $red) . ", " . hex($green . $green) . ", " . hex($blue . $blue) . ")"
+		}xmsgie;
+		$color = formatRgbColor($color);
 	}
 	return $color;
 }
@@ -1048,7 +1064,7 @@ sub rgbFromHslOrPercent
 	$vals =~ s{ $Var{'regex'}{'hslToRgb'} }{ "rgb$1(" . hsl_to_rgb($2, $3, $4) }xmse;
 	$vals =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(" . replacePercent($2) . ',' . replacePercent($3) . ',' . replacePercent($4) }xmse;
 	$vals =~ s{ $Var{'regex'}{'hslInvalid'} }{rgba($1}xmsi if !$bValid;
-	return formatRgbColor($vals);
+	return formatRgbIshColor($vals);
 }
 
 # get #color from rgb() or rgba() (not hsl/hsla)
@@ -1060,7 +1076,7 @@ sub canonicalFromRgb
 	if (!$bValid)
 	{
 		$rgb =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(#" . toHex($2) . toHex($3) . toHex($4) }xmse;
-		$rgb = formatRgbColor($rgb);
+		$rgb = formatRgbIshColor($rgb);
 	}
 	return $rgb;
 }
@@ -1304,10 +1320,11 @@ sub tests
 	testToHashColorAllowInvalid();
 	testHashColorStandardShorten();
 	testHashColorStandardCanonical();
-	# test rgb() function
+	testRgb();
 	testRenameColorNamesCanonical();
 	# test names() function valid only
 	# test renameColor() function
+	# unittestcall
 
 	my @EveryColorFormat = (
 		# #hash or name format
@@ -1346,24 +1363,22 @@ sub tests
 		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 )",
 	);
 
+	exit 0;
+
 	my $bAlways = 1;
 	my $bValid = 1;
 
-	exit 0;
-
 	my @Result = ();
-	setOpt('names', 1);
-	setOpt('canonical', 1);
 	foreach my $color (@EveryColorFormat)
 	{
-		my $result = renameColor($color);
+		my $result = rgb($color, $bAlways);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "renameColor (names,canonical) $color -> $expect");
+		is($result, $expect, "rgb $color -> $expect");
 	}
-	wrap("\@RenameColorsNamesCanonicalTests", \@Result);
+	wrap("\@RgbTests", \@Result);
 
 }
 
@@ -1774,6 +1789,55 @@ sub testRenameColorNamesCanonical
 	setOpt('names', 0);
 	setOpt('canonical', 0);
 }
+
+sub testRgb
+{
+
+	my $bAlways = 1;
+	my @RgbTests = (
+		'#fFf:rgb(255, 255, 255)', '#fFfFfF:rgb(255, 255, 255)',
+		'#fAfBfC:rgb(250, 251, 252)', 'white', 'red',
+		'rgb(255,255,255):rgb(255, 255, 255)',
+		'rgb(100%,100%,100%):rgb(100%, 100%, 100%)',
+		'rgb( 255 , 255 , 255 ):rgb(255, 255, 255)',
+		'rgb( 100% , 100% , 100% ):rgb(100%, 100%, 100%)',
+		'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
+		'rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba(100%,100%,100%,1.0):rgba(100%, 100%, 100%, 1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'rgba( 100% , 100% , 100% , 1.0 ):rgba(100%, 100%, 100%, 1.0)',
+		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
+		'rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba(100%,100%,100%,0.0):rgba(100%, 100%, 100%, 0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 )::rgba(255, 255, 255, 0.0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(100%, 100%, 100%, 0.0)',
+		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
+		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(100%, 100%, 100%, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(100%, 100%, 100%, 0.5)',
+		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
+		'rgba(white,0.5):rgba(white, 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(rgb(250, 251, 252), 0.5)', # TODO fix!
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(rgb(250, 251, 252), 0.5)',
+		'hsla(white,0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla( rgb(250, 251, 252) , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@RgbTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = rgb($color, $bAlways);
+		is($result, $expect, "rgb $color -> $expect");
+	}
+}
+
+# unittestimpl
 
 sub wrap
 {
