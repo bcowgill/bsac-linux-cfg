@@ -201,7 +201,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --names only implies --remap and --canonical
+echo TEST $CMD ECHOMODE --names only implies --remap, --canonical, --hash
 TEST=echo-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -214,8 +214,34 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD ECHOMODE --names and --valid-only
+TEST=echo-names-valid
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --names --valid-only"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD ECHOMODE --rgb color mode
+TEST=echo-rgb
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --noreverse --nocolor-only --noremap --nocanonical --nonames --novalid-only --rgb"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 exit 1;
-# TODO echo names valid only
+
 # TODO echo rgb
 
 echo TEST $CMD REMAPMODE --canonical only implies --remap

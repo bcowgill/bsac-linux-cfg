@@ -1,0 +1,90 @@
+
+was: color: white;
+     color: white;
+
+was: color: #fFfFfF;
+     color: rgb(255, 255, 255);
+
+was: color: #FFF;
+     color: rgb(255, 255, 255);
+
+was: color: transparent;
+     color: transparent;
+
+was: color: rgb(255,255,255);
+     color: rgb(255, 255, 255);
+
+was: color: rgb(100%,100%,100%);
+     color: rgb(100%, 100%, 100%);
+
+was: color: rgba(255,255,255,0);
+     color: rgba(255, 255, 255, 0);
+
+was: color: rgba(100%,100%,100%,0);
+     color: rgba(100%, 100%, 100%, 0);
+
+was: color: rgba(255,255,255,0.4);
+     color: rgba(255, 255, 255, 0.4);
+
+was: color: rgba(100%,100%,100%,0.5);
+     color: rgba(100%, 100%, 100%, 0.5);
+
+was: color: rgb(  255  ,  255  ,  255  );
+     color: rgb(255, 255, 255);
+
+was: color: rgb(  100%  ,  100%  ,  100%  );
+     color: rgb(100%, 100%, 100%);
+
+was: color: rgba(  255  ,  255  ,  255  ,  0  );
+     color: rgba(255, 255, 255, 0);
+
+was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+     color: rgba(100%, 100%, 100%, 0.5);
+
+was: color: rgba(  255  ,  255  ,  255  ,  0.4  );
+     color: rgba(255, 255, 255, 0.4);
+
+was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+     color: rgba(100%, 100%, 100%, 0.5);
+
+was: color: hsl(360,100%,100%);
+     color: hsl(360,100%,100%);
+
+was: color: hsl(  360  ,  100%  ,  100%  );
+     color: hsl(  360  ,  100%  ,  100%  );
+
+was: color: hsla(360,100%,100%,0);
+     color: hsla(360,100%,100%,0);
+
+was: color: hsla(  360  ,  100%  ,  100%  ,  0);
+     color: hsla(  360  ,  100%  ,  100%  ,  0);
+
+was: color: hsla(  360  ,  100%  ,  100%  ,  0.4);
+     color: hsla(  360  ,  100%  ,  100%  ,  0.4);
+
+was: * { color: hsl(0, 100%, 50%) }   /* red */
+     * { color: hsl(0, 100%, 50%) }   /* red */
+
+was: * { color: hsl(120, 100%, 50%) } /* lime */
+     * { color: hsl(120, 100%, 50%) } /* lime */
+
+was: * { color: hsl(120, 100%, 25%) } /* dark green */
+     * { color: hsl(120, 100%, 25%) } /* dark green */
+
+was: * { color: hsl(120, 100%, 75%) } /* light green */
+     * { color: hsl(120, 100%, 75%) } /* light green */
+
+was: * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+     * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+
+was: em { color: hsl(120, 100%, 50%) }     /* green */
+     em { color: hsl(120, 100%, 50%) }     /* green */
+
+was: em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
+     em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
+
+was: @darker-grey: #f4f5f6;
+     @darker-grey: rgb(244, 245, 246);
+
+was: border-bottom: 4px solid transparent;
+     border-bottom: 4px solid transparent;
