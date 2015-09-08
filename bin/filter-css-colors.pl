@@ -690,6 +690,7 @@ sub showConstantsTable
 				# if color is rgba? or hsla? suppress print rgb if not rgb mode
 				$print = 0 if !opt('rgb') && $color =~ m{\A rgb \(}xms;
 			}
+			$color = renameColorValid($color);
 			print "$const: $color;\n" if $print;
 		}
 		print "\n";
@@ -860,6 +861,15 @@ sub renameColor
 {
 	my ($color) = @ARG;
 	return names(rgb(hashColorStandard(toHashColor($color))));
+}
+
+# rename a color value based on command line options but ensuring valid CSS
+sub renameColorValid
+{
+	my ($color) = @ARG;
+	my $bValid = 1;
+	my $bAlways = 1;
+	return names(rgb(hashColorStandard(toHashColor($color, !$bAlways, $bValid))));
 }
 
 sub defineAutoConstant

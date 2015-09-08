@@ -321,7 +321,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --inplace=.bak --names test in place modification with backup file
+echo TEST $CMD INPLACEMODE --inplace=.bak --names test in place modification with backup file
 TEST=inplace
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -383,7 +383,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
 		--const-type=less $MANUAL_CONST"
-	echo $PROGRAM $ARGS from /dev/null
+	#echo $PROGRAM $ARGS from /dev/null
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -391,9 +391,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-exit 1;
-
-echo TEST $CMD lessc constants defined by hand canonical rgb
+echo TEST $CMD CONST lessc constants defined by hand canonical rgb
 TEST=const-manually-canon-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -409,7 +407,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD constants defined in a file
+echo TEST $CMD CONST constants defined in a file
 TEST=const-file-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -418,6 +416,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
 	--const-type=less --const-file=$VARS"
+	#echo $PROGRAM $ARGS from /dev/null
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -425,7 +424,9 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD sass constants defined by hand canonical names
+# TODO implement sass constants
+
+echo TEST $CMD SASS constants defined by hand canonical names
 TEST=const-sass-manually-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -445,7 +446,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD sass constants defined in a file
+echo TEST $CMD SASS constants defined in a file
 TEST=const-sass-file-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -463,7 +464,23 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD remap colours with constants defined in a file
+echo TEST $CMD CONST ECHOMODE remap colours with constants defined in a file
+TEST=const-file-remap
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo \
+	--const-type=less --const-file=$VARS"
+	$PROGRAM $ARGS < "$SAMPLE_REMAP" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file
 TEST=const-file-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -479,6 +496,8 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+exit 1;
 
 echo TEST $CMD remap colours with constants defined in a file list options
 TEST=const-file-remap-list

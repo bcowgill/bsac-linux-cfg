@@ -5,6 +5,6 @@ WARN: Error in file in/vars-sample.txt at line [$sass-link-color: $brand-primary
 
 
 // Color constant definitions:
-$css-gray-darker: #222222;
+$gray-base: black;
+$sass-gray-base: black;
 
-$css-gray-dark: #333333;

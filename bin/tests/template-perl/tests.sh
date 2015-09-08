@@ -15,7 +15,7 @@ MANDATORY="--length=42 --hex=0x3c7e --file=filename --name=name --map key=value"
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 9
+PLAN 12
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
