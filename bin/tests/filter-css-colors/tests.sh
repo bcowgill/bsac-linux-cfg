@@ -465,20 +465,23 @@ else
 fi
 
 echo TEST $CMD CONST ECHOMODE remap colours with constants defined in a file
-TEST=const-file-remap
+TEST=echo-const-file-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	EXPECT=1
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --echo \
+	ARGS="$DEBUG --echo --remap \
 	--const-type=less --const-file=$VARS"
+	echo $PROGRAM $ARGS from $SAMPLE_REMAP
 	$PROGRAM $ARGS < "$SAMPLE_REMAP" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+exit 1;
 
 echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file
 TEST=const-file-remap
@@ -497,7 +500,6 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-exit 1;
 
 echo TEST $CMD remap colours with constants defined in a file list options
 TEST=const-file-remap-list
