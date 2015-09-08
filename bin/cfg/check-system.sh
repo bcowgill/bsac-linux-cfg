@@ -22,7 +22,10 @@ EMAIL=brent.cowgill@workshare.com
 UBUNTU=vivid
 COMPANY=workshare
 ULIMITFILES=8096
+
 MOUNT_DATA=""
+BIG_DATA=""
+
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 THUNDER=""
 #THUNDER=ryu9c8b3.default
@@ -76,9 +79,8 @@ CHARLES="charles"
 CHARLES_PKG=charles-proxy
 
 VIRTUALBOX="VirtualBox"
-VIRTUALBOX_CMDS="dkms"
-VIRTUALBOX_CMDS="dkms VirtualBox"
-VIRTUALBOX_PKG="dkms virtualbox-4.3"
+VIRTUALBOX_CMDS="dkms $VIRTUALBOX"
+VIRTUALBOX_PKG="dkms $VIRTUALBOX:virtualbox-4.3"
 VIRTUALBOX_REL="raring"
 
 # http://sourcegear.com/diffmerge/downloads.php
@@ -173,8 +175,8 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	GOOGLE_CHROME_PKG=""
 	CHARLES=""
 	CHARLES_PKG=""
-	VIRTUALBOX_CMDS=""
-	VIRTUALBOX_PKG=""
+	BIG_DATA="/data"
+	VIRTUALBOX_REL=$(lsb_release -sc)
 	SKYPE_PKG=""
 	SKYPE=""
 	SVN_PKG=""
@@ -239,9 +241,9 @@ ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
 INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN"
-COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $VIRTUALBOX_CMDS $PIDGIN"
+COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $PIDGIN"
 #runit
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $VIRTUALBOX_PKG $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG"
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
@@ -512,29 +514,37 @@ if [ "$HOSTNAME" != "raspberrypi" ]; then
 fi
 
 if [ ! -z $MOUNT_DATA ]; then
-	if [ -d /data/UNMOUNTED ]; then
-		OK "/data/UNMOUNTED exists will try mounting it to check dirs"
-		sudo mount /data
-		if [ -d /data/UNMOUNTED ]; then
+	if [ -z $BIG_DATA ]; then
+		NOT_OK "Must specify BIG_DATA if MOUNT_DATA is specified"
+	fi
+	if [ -d "$BIG_DATA/UNMOUNTED" ]; then
+		OK "$BIG_DATA/UNMOUNTED exists will try mounting it to check dirs"
+		sudo mount "$BIG_DATA"
+		if [ -d "$BIG_DATA/UNMOUNTED" ]; then
 			NOT_OK "unable to mount /data"
-#   mkdir -p /data/UNMOUNTED
+#   mkdir -p "$BIG_DATA/UNMOUNTED"
 #   blkid /dev/sdb1
-#   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" /data
+#   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" "$BIG_DATA"
 #   /etc/fstab entry added
 #   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
-#   mkdir -p /data/$USER
-#   chown -R $USER:domusers /data/$USER
+#   mkdir -p "$BIG_DATA/$USER"
+#   chown -R $USER:domusers "$BIG_DATA/$USER"
 			exit 1
 		fi
 	fi
-	dir_exists /data/$USER "personal area on data dir missing"
-	#sudo mkdir -p /data/$USER
-	#sudo chown $USER:$USER /data/$USER
-	make_dir_exist /data/$USER/backup "backup dir on /data"
-	make_dir_exist /data/$USER/VirtualBox "VirtualBox dir on /data"
 else
 	OK "will not configure mounting /data partition unless MOUNT_DATA is non-zero"
 fi # MOUNT_DATA
+
+if [ ! -z $BIG_DATA ]; then
+	if [ ! -d "$BIG_DATA/$USER" ]; then
+		make_root_dir_exist "$BIG_DATA/$USER" "create Big data area for IE vm's"
+		take_ownership_of "$BIG_DATA/$USER" "own Big data area for IE vm's"
+	fi
+	dir_exists "$BIG_DATA/$USER" "personal area on data dir missing"
+	make_dir_exist "$BIG_DATA/$USER/backup" "backup dir on /data"
+	make_dir_exist "$BIG_DATA/$USER/VirtualBox" "VirtualBox dir on /data"
+fi
 
 # provides lsb_release command as well.
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
@@ -576,12 +586,18 @@ if [ ! -z $I3WM ]; then
 	cmd_exists $I3WM
 fi # I3WM
 
-if [ ! -z $VIRTUALBOX_PKG ]; then
-	apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox missing trusty must use raring for now"
+if [ ! -z "$VIRTUALBOX_PKG" ]; then
+	# http://www.howopensource.com/2013/04/install-virtualbox-ubuntu-ppa/
+	apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox $VIRTUALBOX_REL"
 	apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox wrong"
-	apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
-	apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+	if [ "$(lsb_release -sc)" != "$VIRTUALBOX_REL" ]; then
+		apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+		apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+	fi
+
 	apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
+
+	installs_from "$VIRTUALBOX_PKG" "additional packages for virtualbox"
 
 	cmd_exists dkms "need dkms command for VirtualBox"
 	cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)

@@ -169,6 +169,14 @@ function make_dir_exist {
    dir_exists "$dir" "$message"
 }
 
+function make_root_dir_exist {
+   local dir message
+   dir="$1"
+   message="$2"
+   dir_exists "$dir" > /dev/null || sudo mkdir -p "$dir"
+   dir_exists "$dir" "$message"
+}
+
 function make_root_file_exist {
    local file contents message temp_file
    file="$1"
