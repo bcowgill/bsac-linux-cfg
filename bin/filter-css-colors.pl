@@ -213,7 +213,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 418;
+our $TEST_CASES = 494;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -412,7 +412,7 @@ sub readColorNameData
 			my ($name, $color, $rgb) = ($1, $2, $3);
 
 			$color = lc($color);
-			$rgb = formatRgbIshColor($rgb);
+			$rgb = formatRgbColor($rgb);
 			push(@{$Var{'raColorNames'}}, $name);
 			$Var{'rhColorNamesMap'}{$color} = $name;
 			$color = shorten($color, 'force');
@@ -601,13 +601,17 @@ sub registerConstant
 	{
 		my $rgb;
 		($value, $rgb) = getBothColorValues($value);
-		$Var{'rhConstantsMap'}{$const} = $value;
-		debug("registerConstant($const) 2 c=$value", 3);
-		push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
-		if ($value ne $rgb)
+		push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
+		if (trimEq($value, $rgb))
 		{
-			debug("registerConstant($const) 3 r=$rgb", 3);
-			push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
+			debug("registerConstant($const) 2 r=$rgb", 3);
+			$Var{'rhConstantsMap'}{$const} = $rgb;
+		}
+		else
+		{
+			debug("registerConstant($const) 3 c=$value r=$rgb", 3);
+			$Var{'rhConstantsMap'}{$const} = $value;
+			push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
 		}
 		return 1;
 	}
@@ -989,15 +993,15 @@ sub getBothColorValues
 	my $rgb;
 
 	debug("getBothColorValues(c=$color)", 2);
-	if ($color =~ m{ \A (hsl|rgb)\( }xms)
+	if ($color =~ m{ \A (hsl|rgb)?\( }xms)
 	{
-		$rgb = lc(rgbFromHslOrPercent($color));
+		$rgb = lc(formatRgbIshColor(rgbFromHslOrPercent($color)));
 		$color = canonicalFromRgb($rgb);
 	}
 	else
 	{
 		$color = canonical($color, 'force');
-		$rgb = rgb($color, 'force');
+		$rgb = formatRgbIshColor(rgb($color, 'force'));
 	}
 	debug("getBothColorValues() return (c=$color, r=$rgb)", 3);
 	return ($color, $rgb);
@@ -1182,6 +1186,13 @@ sub trim
 	return $str;
 }
 
+# compare ignoring spaces
+sub trimEq
+{
+	my ($a, $b) = @ARG;
+	return trim($a) eq trim($b);
+}
+
 # Must manually check mandatory values present
 sub checkOptions
 {
@@ -1350,6 +1361,8 @@ sub tests
 {
 	eval "use Test::More tests => $TEST_CASES";
 
+	readColorNameData();
+
 	testCanonicalFromRgbValid();
 	testCanonicalFromRgbAllowInvalid();
 	testRgbFromHslOrPercentValid();
@@ -1361,6 +1374,7 @@ sub tests
 	testRgb();
 	testRenameColorNamesCanonicalAllowInvalid();
 	testRenameColorNamesCanonical();
+	testGetBothColorValues();
 
 	# unittestcall
 
@@ -1403,11 +1417,11 @@ sub tests
 
 	exit 0;
 
-	setOpt('canonical', 1);
-	setOpt('hash', 1);
-	setOpt('names', 1);
-	setOpt('remap', 1);
-	setOpt('valid-only', 1);
+#	setOpt('canonical', 1);
+#	setOpt('hash', 1);
+#	setOpt('names', 1);
+#	setOpt('remap', 1);
+#	setOpt('valid-only', 1);
 
 	my $bAlways = 1;
 	my $bValid = 1;
@@ -1415,14 +1429,16 @@ sub tests
 	my @Result = ();
 	foreach my $color (@EveryColorFormat)
 	{
-		my $result = renameColor($color);
+		my @result = getBothColorValues($color);
+		my $result = join(':', @result);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "renameColor (valid,names,canonical) $color -> $expect");
+		is($result, $expect, "getBothColorValues $color -> $expect");
 	}
-	wrap("\@RenameColorNamesCanonicalValidOnlyTests", \@Result);
+	wrap("\@GetBothColorValuesTests", \@Result);
+
 }
 
 sub testCanonicalFromRgbValid
@@ -1866,8 +1882,6 @@ sub testRenameColorNamesCanonicalAllowInvalid
 	setOpt('names', 1);
 	setOpt('remap', 1);
 
-	readColorNameData();
-
 	foreach my $colorResult (@RenameColorNamesCanonicalAllowInvalidTests)
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
@@ -1925,8 +1939,6 @@ sub testRenameColorNamesCanonical
 	setOpt('remap', 1);
 	setOpt('valid-only', 1);
 
-	#readColorNameData();
-
 	foreach my $colorResult (@RenameColorNamesCanonicalValidOnlyTests)
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
@@ -1942,6 +1954,57 @@ sub testRenameColorNamesCanonical
 	setOpt('hash', 0);
 	setOpt('remap', 0);
 	setOpt('valid-only', 0);
+}
+
+sub testGetBothColorValues
+{
+	my @GetBothColorValuesTests = (
+		'#fFf:#ffffff:rgb(255, 255, 255)', '#fFfFfF:#ffffff:rgb(255, 255, 255)',
+		'#fAfBfC:#fafbfc:rgb(250, 251, 252)', 'white:white:white', 'red:red:red',
+		'rgb(255,255,255):#ffffff:rgb(255, 255, 255)',
+		'rgb(100%,100%,100%):#ffffff:rgb(255, 255, 255)',
+		'rgb( 255 , 255 , 255 ):#ffffff:rgb(255, 255, 255)',
+		'rgb( 100% , 100% , 100% ):#ffffff:rgb(255, 255, 255)',
+		'hsl(0,100%,100%):#ffffff:rgb(255, 255, 255)',
+		'hsl( 0 , 100% , 100% ):#ffffff:rgb(255, 255, 255)',
+		'rgba(255,255,255,1.0):rgba(255,255,255,1.0):rgba(255, 255, 255, 1.0)',
+		'rgba(100%,100%,100%,1.0):rgba(100%,100%,100%,1.0):rgba(100%, 100%, 100%, 1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 ):rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1.0)',
+		'rgba( 100% , 100% , 100% , 1.0 ):rgba( 100% , 100% , 100% , 1.0 ):rgba(100%, 100%, 100%, 1.0)',
+		'hsla(0,100%,100%,1.0):hsla(0,100%,100%,1.0):hsla(0, 100%, 100%, 1.0)',
+		'hsla( 0 , 100% , 100% , 1.0 ):hsla( 0 , 100% , 100% , 1.0 ):hsla(0, 100%, 100%, 1.0)',
+		'transparent:transparent:transparent',
+		'rgba(255,255,255,0.0):rgba(255,255,255,0.0):rgba(255, 255, 255, 0.0)',
+		'rgba(100%,100%,100%,0.0):rgba(100%,100%,100%,0.0):rgba(100%, 100%, 100%, 0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0.0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba( 100% , 100% , 100% , 0.0 ):rgba(100%, 100%, 100%, 0.0)',
+		'hsla(0,100%,100%,0.0):hsla(0,100%,100%,0.0):hsla(0, 100%, 100%, 0.0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):hsla( 0 , 100% , 100% , 0.0 ):hsla(0, 100%, 100%, 0.0)',
+		'rgba(255,255,255,0.5):rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(100%,100%,100%,0.5):rgba(100%, 100%, 100%, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba( 100% , 100% , 100% , 0.5 ):rgba(100%, 100%, 100%, 0.5)',
+		'hsla(0,100%,100%,0.5):hsla(0,100%,100%,0.5):hsla(0, 100%, 100%, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):hsla( 0 , 100% , 100% , 0.5 ):hsla(0, 100%, 100%, 0.5)',
+		'rgba(white,0.5):rgba(white,0.5):rgba(white, 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5):rgba(rgb(250, 251, 252), 0.5)',
+		'rgba( white , 0.5 ):rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 ):rgba(rgb(250, 251, 252), 0.5)',
+		'hsla(white,0.5):hsla(white,0.5):hsla(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 ):hsla(rgb(250, 251, 252), 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@GetBothColorValuesTests)
+	{
+		my ($color, $expectColor, $expectRgb) = split(/:/, $colorResult);
+
+		my ($gotColor, $gotRgb) = getBothColorValues($color);
+
+		is($gotColor, $expectColor, "getBothColorValues color $color -> $expectColor");
+		is($gotRgb, $expectRgb, "getBothColorValues rgb  $color -> $expectRgb");
+	}
 }
 
 # unittestimpl

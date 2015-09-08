@@ -19,7 +19,7 @@ SKIP=0
 MANUAL_CONST="--const=bg=#345 --const=fg=black \
 	--const=border=@fg --const=shade=grey \
 	--const=rg1=rgba(1,2,3,0.5) --const=rg2=rgb(12,13,14) \
-	--const=hs1=hsla(32,45%,23%) --const=hs2=hsl(34,23%,67%)"
+	--const=hs1=hsla(32,45%,23%,0.3) --const=hs2=hsl(34,23%,67%)"
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
@@ -383,6 +383,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
 		--const-type=less $MANUAL_CONST"
+	echo $PROGRAM $ARGS from /dev/null
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
