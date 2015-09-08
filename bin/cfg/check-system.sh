@@ -80,7 +80,7 @@ CHARLES_PKG=charles-proxy
 
 VIRTUALBOX="VirtualBox"
 VIRTUALBOX_CMDS="dkms $VIRTUALBOX"
-VIRTUALBOX_PKG="dkms $VIRTUALBOX:virtualbox-4.3"
+VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX:virtualbox-4.3"
 VIRTUALBOX_REL="raring"
 
 # http://sourcegear.com/diffmerge/downloads.php
@@ -544,6 +544,7 @@ if [ ! -z $BIG_DATA ]; then
 	dir_exists "$BIG_DATA/$USER" "personal area on data dir missing"
 	make_dir_exist "$BIG_DATA/$USER/backup" "backup dir on /data"
 	make_dir_exist "$BIG_DATA/$USER/VirtualBox" "VirtualBox dir on /data"
+	dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
 fi
 
 # provides lsb_release command as well.
