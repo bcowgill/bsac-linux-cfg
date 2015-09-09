@@ -30,18 +30,18 @@ color: transparent;
 
 /* hsl and spacing */
 color: transparent;
-color: @autoConstant3;
+color: @autoConstant1;
 
-* { color: @autoConstant4 }   /* @autoConstant4 */
-* { color: @autoConstant5 } /* @autoConstant5 */
-* { color: @autoConstant6 } /* dark green */
-* { color: @autoConstant7 } /* light green */
-* { color: @autoConstant8 }  /* pastel green, and so on */
+* { color: @autoConstant3 }   /* @autoConstant3 */
+* { color: @autoConstant4 } /* @autoConstant4 */
+* { color: @autoConstant5 } /* dark green */
+* { color: @autoConstant6 } /* light green */
+* { color: @autoConstant7 }  /* pastel green, and so on */
 
 /* opacity conversion */
-em { color: @autoConstant5 }     /* green */
-em { color: @autoConstant5 } /* the same, with explicit opacity of 1 */
+em { color: @autoConstant4 }     /* green */
+em { color: @autoConstant4 } /* the same, with explicit opacity of 1 */
 
 /* some special cases */
-@darker-grey: @autoConstant9;
+@darker-grey: @autoConstant8;
 border-bottom: 4px solid transparent;

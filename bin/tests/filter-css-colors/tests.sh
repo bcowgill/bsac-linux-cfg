@@ -146,6 +146,114 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD CONST constants with errors
+TEST=const-errors
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=255
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --const-type=less --const=bg=#345 --const=@fg=#000 --const=border=@fg \
+	--const=@bg=duplicate --const=loop=@loop1 --const=@loop1=loop \
+	--const=err0= --const=err=@£42 --const=err2=@~42 --canonical --rgb"
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+	stripLineReferences "$OUT"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD CONST lessc constants defined by hand canonical names
+TEST=const-manually-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+		--const-type=less $MANUAL_CONST"
+	#echo $PROGRAM $ARGS from /dev/null
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD CONST lessc constants defined by hand canonical rgb
+TEST=const-manually-canon-rgb
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --rgb \
+	--const-type=less  $MANUAL_CONST"
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD CONST constants defined in a file
+TEST=const-file-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=less --const-file=$VARS"
+	#echo $PROGRAM $ARGS from /dev/null
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+# TODO implement sass constants
+
+echo TEST $CMD SASS constants defined by hand canonical names
+TEST=const-sass-manually-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=255
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=sass --const=bg=#345 --const=fg=black --const=border=\$fg \
+	--const=bg=duplicate"
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+#	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	stripLineReferences "$OUT"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD SASS constants defined in a file
+TEST=const-sass-file-canon-names
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=255
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=sass --const-file=$VARS"
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	stripLineReferences "$OUT"
+#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFileHeadersEqual 10 "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 echo TEST $CMD ECHOMODE show original and changed value, --canonical only implies --remap
 TEST=echo-canon
 if [ 0 == "$SKIP" ]; then
@@ -239,6 +347,24 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+echo TEST $CMD CONST ECHOMODE remap colours with constants defined in a file
+TEST=echo-const-file-remap
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --echo --remap \
+	--const-type=less --const-file=$VARS"
+	echo $PROGRAM $ARGS from $SAMPLE_REMAP
+	$PROGRAM $ARGS < "$SAMPLE_REMAP" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 
 # TODO rename to remap- prefix
 
@@ -356,133 +482,6 @@ fi
 
 # TODO foreground/background test once implemented
 
-echo TEST $CMD CONST constants with errors
-TEST=const-errors
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=255
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --show-const --const-type=less --const=bg=#345 --const=@fg=#000 --const=border=@fg \
-	--const=@bg=duplicate --const=loop=@loop1 --const=@loop1=loop \
-	--const=err0= --const=err=@£42 --const=err2=@~42 --canonical --rgb"
-	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-	stripLineReferences "$OUT"
-	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD CONST lessc constants defined by hand canonical names
-TEST=const-manually-canon-names
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --show-const --canonical --names \
-		--const-type=less $MANUAL_CONST"
-	#echo $PROGRAM $ARGS from /dev/null
-	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
-	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD CONST lessc constants defined by hand canonical rgb
-TEST=const-manually-canon-rgb
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --show-const --canonical --rgb \
-	--const-type=less  $MANUAL_CONST"
-	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
-	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD CONST constants defined in a file
-TEST=const-file-canon-names
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --show-const --canonical --names \
-	--const-type=less --const-file=$VARS"
-	#echo $PROGRAM $ARGS from /dev/null
-	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
-	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-# TODO implement sass constants
-
-echo TEST $CMD SASS constants defined by hand canonical names
-TEST=const-sass-manually-canon-names
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=255
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --show-const --canonical --names \
-	--const-type=sass --const=bg=#345 --const=fg=black --const=border=\$fg \
-	--const=bg=duplicate"
-	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-#	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-#	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	stripLineReferences "$OUT"
-	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD SASS constants defined in a file
-TEST=const-sass-file-canon-names
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=255
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --show-const --canonical --names \
-	--const-type=sass --const-file=$VARS"
-	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
-	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	stripLineReferences "$OUT"
-#	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	assertFileHeadersEqual 10 "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD CONST ECHOMODE remap colours with constants defined in a file
-TEST=echo-const-file-remap
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --echo --remap \
-	--const-type=less --const-file=$VARS"
-	echo $PROGRAM $ARGS from $SAMPLE_REMAP
-	$PROGRAM $ARGS < "$SAMPLE_REMAP" > "$OUT" 2>&1 || ERR=$?
-	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-exit 1;
-
 echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file
 TEST=const-file-remap
 if [ 0 == "$SKIP" ]; then
@@ -500,8 +499,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-
-echo TEST $CMD remap colours with constants defined in a file list options
+echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file list options
 TEST=const-file-remap-list
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -518,7 +516,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD remap colours and pull new constants
+echo TEST $CMD CONST REMAPMODE remap colours and pull new constants
 TEST=const-file-pull
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -539,7 +537,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD remap colours and pull new constants no rename
+echo TEST $CMD CONST REMAPMODE remap colours and pull new constants no rename
 TEST=const-file-pull-canonical
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -559,6 +557,8 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+exit 1;
 
 echo TEST $CMD parameters passed to rules
 TEST=const-rules-have-parameters

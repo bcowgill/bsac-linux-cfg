@@ -48,7 +48,7 @@ OPTIONS
 
     --names or --nonames
              Show colors as standard names where possible. i.e. #fff becomes white.
-             Implies --canonical as well.
+             Implies --canonical unless you have specified --shorten.
              Implies --hash as well.
              Implies --remap as well.
 
@@ -66,7 +66,8 @@ OPTIONS
 
     --rgb or --norgb
              Show colors in rgb() form i.e. #fff becomes rgb(255, 255, 255).
-             Implies --canonical as well. Cannot use --names or --hash with --rgb.
+             Implies --canonical unless you have specified --shorten.
+             Cannot use --names or --hash with --rgb.
 
     --show-const or --noshow-const
              Show a table of the defined constants.

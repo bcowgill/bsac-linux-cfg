@@ -1,10 +1,9 @@
 @autoConstant0: white;
-@autoConstant1: rgba(255, 255, 255, 0.4);
-@autoConstant2: rgba(100%, 100%, 100%, 0.5);
-@autoConstant3: hsla(360, 100%, 100%, 0.4);
-@autoConstant4: red;
-@autoConstant5: lime;
-@autoConstant6: hsl(120, 100%, 25%);
-@autoConstant7: hsl(120, 100%, 75%);
-@autoConstant8: hsl(120, 75%, 75%);
-@autoConstant9: #f4f5f6;
+@autoConstant1: rgba(255, 255, 255, 0.4); // rgba(white, 0.4)
+@autoConstant2: rgba(255, 255, 255, 0.5); // rgba(white, 0.5)
+@autoConstant3: red;
+@autoConstant4: lime;
+@autoConstant5: #007f00; // rgb(0, 127, 0)
+@autoConstant6: #7fff7f; // rgb(127, 255, 127)
+@autoConstant7: #8fef8f; // rgb(143, 239, 143)
+@autoConstant8: #f4f5f6; // rgb(244, 245, 246)

@@ -11,7 +11,7 @@
 
 // gray-darker
 .button {
-  color: #222;
+  color: @css-gray-darker;
 }
 
 // link-hover-color

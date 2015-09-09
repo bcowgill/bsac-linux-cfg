@@ -59,7 +59,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 =item B<--names> or B<--nonames>
 
  Show colors as standard names where possible. i.e. #fff becomes white.
- Implies --canonical as well.
+ Implies --canonical unless you have specified --shorten.
  Implies --hash as well.
  Implies --remap as well.
 
@@ -81,7 +81,8 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 =item B<--rgb>  or B<--norgb>
 
  Show colors in rgb() form i.e. #fff becomes rgb(255, 255, 255).
- Implies --canonical as well. Cannot use --names or --hash with --rgb.
+ Implies --canonical unless you have specified --shorten.
+ Cannot use --names or --hash with --rgb.
 
 =item B<--show-const>  or B<--noshow-const>
 
@@ -1226,7 +1227,7 @@ sub checkOptions
 	}
 
 	# Force some flags when others turned on
-	setOpt('canonical', 1) if (opt('names') || opt('rgb'));
+	setOpt('canonical', 1) if (!opt('shorten') && (opt('names') || opt('rgb')));
 	setOpt('hash', 1) if (opt('names'));
 	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten') || opt('hash'));
 
