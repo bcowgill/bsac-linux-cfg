@@ -541,10 +541,17 @@ if [ ! -z $BIG_DATA ]; then
 		make_root_dir_exist "$BIG_DATA/$USER" "create Big data area for IE vm's"
 		take_ownership_of "$BIG_DATA/$USER" "own Big data area for IE vm's"
 	fi
+
+	# Virtualbox configuration
+	# /home/bcowgill/.config/VirtualBox/
+	# default where it stores VM images
+	# /home/bcowgill/VirtualBox VMs/
+
 	dir_exists "$BIG_DATA/$USER" "personal area on data dir missing"
 	make_dir_exist "$BIG_DATA/$USER/backup" "backup dir on /data"
 	make_dir_exist "$BIG_DATA/$USER/VirtualBox" "VirtualBox dir on /data"
 	dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
+	dir_linked_to "$HOME/VirtualBox VMs" "$BIG_DATA/$USER/VirtualBox" "link for VirtualBox VMs"
 fi
 
 # provides lsb_release command as well.

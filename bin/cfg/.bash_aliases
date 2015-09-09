@@ -104,6 +104,9 @@ alias pkgless='pkgless.sh'
 alias pkgfiles='pkgfiles.sh'
 alias pkgls='dpkg -L'
 
+# some virtualbox aliases
+alias ls-vbox='ls -al ~/VirtualBox\ VMs/ ~/.ievms/ ~/.config/VirtualBox/'
+
 # some bower aliases
 alias bower-links=bower-links.sh
 alias bower-all-links='bower-links.sh ~'
