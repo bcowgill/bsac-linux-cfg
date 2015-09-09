@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # sourced from https://raw.githubusercontent.com/xdissent/ievms/master/ievms.sh
+# verbose trace of commands to find out why it fails
+set -x
 
 # Caution is a virtue.
 set -o nounset

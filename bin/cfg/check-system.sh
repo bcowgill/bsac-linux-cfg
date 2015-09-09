@@ -80,7 +80,7 @@ CHARLES_PKG=charles-proxy
 
 VIRTUALBOX="VirtualBox"
 VIRTUALBOX_CMDS="dkms $VIRTUALBOX"
-VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX:virtualbox-4.3"
+VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX:virtualbox-5.0"
 VIRTUALBOX_REL="raring"
 
 # http://sourcegear.com/diffmerge/downloads.php
@@ -588,6 +588,8 @@ if [ ! -z $I3WM ]; then
 fi # I3WM
 
 if [ ! -z "$VIRTUALBOX_PKG" ]; then
+	# http://ubuntuhandbook.org/index.php/2015/07/install-virtualbox-5-0-ubuntu-15-04-14-04-12-04/
+	# https://www.virtualbox.org/wiki/Linux_Downloads
 	# http://www.howopensource.com/2013/04/install-virtualbox-ubuntu-ppa/
 	apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox $VIRTUALBOX_REL"
 	apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox wrong"
