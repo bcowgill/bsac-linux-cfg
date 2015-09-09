@@ -357,7 +357,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --echo --remap \
 	--const-type=less --const-file=$VARS"
-	echo $PROGRAM $ARGS from $SAMPLE_REMAP
+	#echo $PROGRAM $ARGS from $SAMPLE_REMAP
 	$PROGRAM $ARGS < "$SAMPLE_REMAP" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -537,6 +537,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+exit 1;
+
 echo TEST $CMD CONST REMAPMODE remap colours and pull new constants no rename
 TEST=const-file-pull-canonical
 if [ 0 == "$SKIP" ]; then
@@ -557,8 +559,6 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
-
-exit 1;
 
 echo TEST $CMD parameters passed to rules
 TEST=const-rules-have-parameters

@@ -384,14 +384,16 @@ sub summary
 
 sub showAutoContants
 {
+	debug("showAutoConstants()", 1);
 	my $out = opt('const-pull');
 	if ($out)
 	{
+		debug("showAutoConstants() $out", 1);
 		my $fh = *STDOUT;
 		open($fh, '>>', $out) unless ($out eq '-');
-		debug("summary: raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
-		debug("summary: rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
-		debug("summary: rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
+		debug("showAutoConstants() raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
+		debug("showAutoConstants() rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
+		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
 		foreach my $color (@{$Var{'raAutoConstants'}})
 		{
 			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
