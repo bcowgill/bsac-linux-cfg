@@ -388,9 +388,17 @@ sub showAutoContants
 	my $out = opt('const-pull');
 	if ($out)
 	{
-		debug("showAutoConstants() $out", 1);
-		my $fh = *STDOUT;
-		open($fh, '>>', $out) unless ($out eq '-');
+		my $fh;
+		if ($out eq '-')
+		{
+			debug("showAutoConstants() stdout", 2);
+			$fh = *STDOUT;
+		}
+		else
+		{
+			debug("showAutoConstants() $out", 2);
+			open($fh, '>>', $out);
+		}
 		debug("showAutoConstants() raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
 		debug("showAutoConstants() rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
 		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
