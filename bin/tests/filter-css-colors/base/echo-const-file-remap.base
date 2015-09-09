@@ -1,0 +1,42 @@
+
+was: color: #000;
+     color: @gray-base;
+
+was: color: #428bca;
+     color: @brand-primary;
+
+was: background: #5cb85c;
+     background: @brand-success;
+
+was: color: #222;
+     color: @css-gray-darker;
+
+was: color: #2a6496;
+     color: #2a6496;
+
+was: color: rgba(0,0,0,.2);
+     color: @popover-border-color;
+
+was: color: #000;
+     color: @gray-base;
+
+was: color: #428bca;
+     color: @brand-primary;
+
+was: background: #5cb85c;
+     background: @brand-success;
+
+was: color: rgba(0,0,0,.2);
+     color: @popover-border-color;
+
+was: color: #222222;
+     color: @css-gray-darker;
+
+was: color: #333333;
+     color: @css-gray-dark;
+
+was: color: #555555;
+     color: @css-gray;
+
+was: color: #777777;
+     color: @css-gray-light;

@@ -815,7 +815,11 @@ sub substituteConstants
 	debug("substituteConstants($color, $line)", 3);
 	$color = lookupConstant(renameColor($color));
 	debug("substituteConstants() lookup $color", 3);
-	if (opt('const-pull') && !isConst($color))
+	if (isConst($color))
+	{
+		debug("substituteConstants() constant $color", 3);
+	}
+	elsif (opt('const-pull'))
 	{
 		$color = defineAutoConstant($color, $origColor, $line);
 		debug("substituteConstants() define $color", 3);
