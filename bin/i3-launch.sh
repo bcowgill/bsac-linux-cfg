@@ -13,7 +13,7 @@ app=3
 email=4
 build=5
 chat=6
-help=7
+vbox=7
 files=8
 
 # https://github.com/lzap/doti3/blob/master/autostart
@@ -99,7 +99,8 @@ sleep 1
 xscreensaver &
 dropbox.sh &
 sleep 1
-i3-msg "workspace $help; exec xscreensaver-demo" # placeholder to lock screen
+#i3-msg "workspace $vbox; exec xscreensaver-demo"
+i3-msg "workspace $vbox; exec virtualbox" # placeholder to lock screen
 sleep 1
 # $email
 i3-msg "workspace $email; exec i3-sensible-terminal"

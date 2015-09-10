@@ -432,7 +432,7 @@ sub findFunctionReferences
 		{
 			my $line = $raLines->[$idx] . "\n";
 			debug("findFunctionReferences() $line", 4);
-			$line =~ s{($regex)}{
+			$line =~ s{\b ($regex) \b}{
 				registerCaller($1, $idx + 1);
 			}xmsge;
 		}

@@ -1,3 +1,3 @@
 #!/bin/bash
-pushd ~/projects/dealroom-ui
+pushd ~/projects/files-ui
 git gui&
