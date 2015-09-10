@@ -286,18 +286,20 @@ my %Var = (
 		'constDef'    => qr{ ( [\@\$] ([-\w]+) \s* : \s* ([^;]+) \s* ; ) }xms,
 		'names'       => '', # populated in setup()
 		'line'        => '', # populated in setup()
+		'isHashColor' => qr{\A $HASH }xms,
 		'hashColor'   => qr{ $HASH ([0-9a-f]{3,6}) \b }xmsi,
 		'shortColor'  => qr{ $HASH ([0-9a-f]{3}) \b }xmsi,
 		'canShortenColor' => qr{ $HASH ([0-9a-f])\1 ([0-9a-f])\2 ([0-9a-f])\3 \b }xmsi,
 		'bytesColor'  => qr{ $HASH ([0-9a-f]{2}) ([0-9a-f]{2}) ([0-9a-f]{2}) \b }xmsi,
+		'isRgb'       => qr{ \A rgb \( }xmsi,
+		'isRgbRgba'   => qr{ \A rgb a? \( }xmsi,
+		'isRgbIsh'    => qr{ \A (rgb|hsl) a? \( }xmsi,
 		'transparent' => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
 		'opaque'      => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 1(\.0*)? \s* \) }xmsi,
 		'rgbCanon'    => qr{ rgb     \( \s* ( \d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?)    \s* \) }xmsi,
 		'rgba'        => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xms,
 		'hslToRgb'    => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xms,
 		'rgbaCanon'   => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
-		'isRgb'       => qr{ \A rgb a? \( }xmsi,
-		'isRgbIsh'    => qr{ \A (rgb|hsl) a? \( }xmsi,
 		'hslInvalid'  => qr{ \A hsla \( \s* (\w+|\#[0-9a-f]{3,6}) }xmsi,
 		'hsla'        => qr{ \A hsla \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xms,
 	},
@@ -576,7 +578,7 @@ sub checkConstName
 sub registerConstantFromFile
 {
 	my ($const, $value, $match) = @ARG;
-	$match =~ s{\s\s+}{ }xmsg;
+	$match = trimToOne($match);
 	$Var{'constantContext'} = "in file $Var{fileName} at line [$match]";
 	eval
 	{
@@ -691,15 +693,15 @@ sub showConstantsTable
 		foreach my $const (sort(@{$Var{'rhColorConstantsMap'}{$color}}))
 		{
 			my $print = 1;
-			if ($color !~ m{\A (rgb|hsl)}xms)
+			if ($color !~ $Var{'regex'}{'isRgbIsh'})
 			{
 				# if color is name or #color suppress print #color if rgb mode
-				$print = 0 if opt('rgb') && $color =~ m{\A \#}xms;
+				$print = 0 if opt('rgb') && $color =~ $Var{'regex'}{'isHashColor'};
 			}
 			else
 			{
 				# if color is rgba? or hsla? suppress print rgb if not rgb mode
-				$print = 0 if !opt('rgb') && $color =~ m{\A rgb \(}xms;
+				$print = 0 if !opt('rgb') && $color =~ $Var{'regex'}{'isRgb'};
 			}
 			$color = renameColorValid($color);
 			print "$const: $color;\n" if $print;
@@ -875,7 +877,13 @@ sub lookupConstant
 sub userRenameColor
 {
 	my ($color) = @ARG;
-	return userNames(userRgbFromHashColorFromHashColor(hashColorStandard(toHashColor($color))));
+	return userNames(
+		userRgbFromHashColor(
+			userHashColorStandard(
+				userToHashColor($color)
+			)
+		)
+	);
 }
 
 # convert color value to color name if names option set
@@ -950,7 +958,7 @@ sub userNames
 }
 
 # convert #color value to rgb(R,G,B) format based on command line options
-sub userRgbFromHashColorFromHashColor
+sub userRgbFromHashColor
 {
 	my ($color, $bAlways) = @ARG;
 	if (opt('rgb') || $bAlways)
@@ -981,6 +989,31 @@ sub rgbFromHashColor
 	return $color;
 }
 
+# make #ffffff forms of colors the same based on command line options
+# default is long canonical form unless shorten option is given
+sub userHashColorStandard
+{
+	my ($color) = @ARG;
+	$color = canonical(shorten($color), !opt('shorten'));
+	$color =~ s{ $Var{'regex'}{'hashColor'} }{ '#' . lc($1) }xmsge;
+	return $color;
+}
+
+# convert rgb/hsl format of color to #color form
+sub userToHashColor
+{
+	my ($color, $bAlways, $bValid) = @ARG;
+	if ($bAlways || opt('hash'))
+	{
+		my $rgb = rgbFromHslOrPercent($color, $bValid);
+		if ($rgb ne $color)
+		{
+			$color = userCanonicalFromRgb($rgb, $bValid);
+		}
+	}
+	return $color;
+}
+
 # get the nicest name for a color possible. i.e. white
 # or rgba(white, 0.3) for opacity
 # or ~white for something close to white
@@ -996,7 +1029,7 @@ sub renameColorValid
 	my ($color) = @ARG;
 	my $bValid = 1;
 	my $bAlways = 1;
-	return userNames(userRgbFromHashColorFromHashColor(hashColorStandard(toHashColor($color, !$bAlways, $bValid))));
+	return userNames(userRgbFromHashColor(userHashColorStandard(userToHashColor($color, !$bAlways, $bValid))));
 }
 
 sub defineAutoConstant
@@ -1016,29 +1049,19 @@ sub defineAutoConstant
 	return $const;
 }
 
-# make #ffffff forms of colors the same based on command line options
-# default is long canonical form unless shorten option is given
-sub hashColorStandard
-{
-	my ($color) = @ARG;
-	$color = canonical(shorten($color), !opt('shorten'));
-	$color =~ s{ $Var{'regex'}{'hashColor'} }{ '#' . lc($1) }xmsge;
-	return $color;
-}
-
 # make unique version of color based on command line options so that color
 # comparisons will work
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return userNames(formatRgbIshColor(userRgbFromHashColorFromHashColor(hashColorStandard($color))));
+	return userNames(formatRgbIshColor(userRgbFromHashColor(userHashColorStandard($color))));
 }
 
 # fix comma spacing in rgb colors
 sub formatRgbColor
 {
 	my ($color) = @ARG;
-	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgb'};
+	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgbRgba'};
 	return $color;
 }
 
@@ -1120,21 +1143,6 @@ sub getBothColorValues
 	}
 	debug("getBothColorValues() return (c=$color, r=$rgb)", 3);
 	return ($color, $rgb);
-}
-
-# convert rgb/hsl format of color to #color form
-sub toHashColor
-{
-	my ($color, $bAlways, $bValid) = @ARG;
-	if ($bAlways || opt('hash'))
-	{
-		my $rgb = rgbFromHslOrPercent($color, $bValid);
-		if ($rgb ne $color)
-		{
-			$color = userCanonicalFromRgb($rgb, $bValid);
-		}
-	}
-	return $color;
 }
 
 # MUSTDO implement foreground/background
@@ -1228,11 +1236,27 @@ sub hue_to_rgb
 	return $m1;
 }
 
-# strip away spaces
+# strip away all spaces
 sub trim
 {
 	my ($str) = @ARG;
 	$str =~ s{\s+}{}xmsg;
+	return $str;
+}
+
+# strip away multiple spaces leaving one
+sub trimToOne
+{
+	my ($str) = @ARG;
+	$str =~ s{\s\s*}{ }xmsg;
+	return $str;
+}
+
+# strip away all leading space in string
+sub trimLeading
+{
+	my ($str) = @ARG;
+	$str =~ s{\A \s*}{}xms;
 	return $str;
 }
 
@@ -1716,9 +1740,9 @@ sub testToHashColorValid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = toHashColor($color, $bAlways, $bValid);
+		my $result = userToHashColor($color, $bAlways, $bValid);
 
-		is($result, $expect, "toHashColor (valid) $color -> $expect");
+		is($result, $expect, "userToHashColor (valid) $color -> $expect");
 	}
 }
 
@@ -1763,9 +1787,9 @@ sub testToHashColorAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = toHashColor($color, $bAlways, !$bValid);
+		my $result = userToHashColor($color, $bAlways, !$bValid);
 
-		is($result, $expect, "toHashColor (!valid) $color -> $expect");
+		is($result, $expect, "userToHashColor (!valid) $color -> $expect");
 	}
 }
 
@@ -1799,9 +1823,9 @@ sub testHashColorStandardShorten
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = hashColorStandard($color);
+		my $result = userHashColorStandard($color);
 
-		is($result, $expect, "hashColorStandard (shorten) $color -> $expect");
+		is($result, $expect, "userHashColorStandard (shorten) $color -> $expect");
 	}
 
 	setOpt('shorten', 0);
@@ -1837,9 +1861,9 @@ sub testHashColorStandardCanonical
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = hashColorStandard($color);
+		my $result = userHashColorStandard($color);
 
-		is($result, $expect, "hashColorStandard (canonical) $color -> $expect");
+		is($result, $expect, "userHashColorStandard (canonical) $color -> $expect");
 	}
 
 	setOpt('canonical', 0);
