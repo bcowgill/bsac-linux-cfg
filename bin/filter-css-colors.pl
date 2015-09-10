@@ -405,7 +405,7 @@ sub showAutoContants
 		foreach my $color (@{$Var{'raAutoConstants'}})
 		{
 			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
-			my $rgb = rgb($color, 'force');
+			my $rgb = rgbFromHashColor($color, 'force');
 			print $fh "$const: $color; // $rgb\n";
 		}
 		close($fh) unless ($out eq '-');
@@ -824,7 +824,7 @@ sub substituteConstants
 
 	my $origColor = $color;
 	debug("substituteConstants($color, $line)", 3);
-	$color = lookupConstant(renameColor($color));
+	$color = lookupConstant(userRenameColor($color));
 	debug("substituteConstants() lookup $color", 3);
 	if (isConst($color))
 	{
@@ -837,7 +837,7 @@ sub substituteConstants
 	}
 	else
 	{
-		$color = renameColor($origColor);
+		$color = userRenameColor($origColor);
 		debug("substituteConstants() nodefine $origColor $color", 3);
 	}
 
@@ -872,10 +872,122 @@ sub lookupConstant
 }
 
 # rename a color value based on command line options
-sub renameColor
+sub userRenameColor
 {
 	my ($color) = @ARG;
-	return names(rgb(hashColorStandard(toHashColor($color))));
+	return userNames(userRgbFromHashColorFromHashColor(hashColorStandard(toHashColor($color))));
+}
+
+# convert color value to color name if names option set
+# color could be #rrggbb or r,g,b triplet or r%,g%,b%
+# or rgb(...) rgba(...) hsl(...) hsla(...)
+# returns name of the color or the original color value
+sub userNames
+{
+	my ($color) = @ARG;
+	if (opt('names'))
+	{
+		debug("userNames($color)", 4);
+		debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 1.0)';
+
+		# alpha = 0 is transparent
+		$color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
+		debug("userNames() 1 $color", 4);
+
+		# alpha = 1 is opaque convert to hsl or rgb
+		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
+		debug("userNames() 2 $color", 4);
+
+		$color = $Var{'rhColorNamesMap'}{trim($color)} || $color;
+		debug("userNames() 3 $color", 4);
+
+		my $rgb = lc(rgbFromHslOrPercent($color));
+		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
+		debug("userNames() 3.1 $color rgb=$rgb", 4);
+
+		$rgb =~ s{\A rgb \( (.+) \) \z}{$1}xms;
+		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
+		debug("userNames() 3.2 $color", 4);
+
+		# handle the special case rgba(#color, opacity)
+		# TODO pull regex out
+		if ($rgb =~ s{\A ( rgba \( ) (.+) ( , \s* [0-9\.]+ \) ) \z}{$2}xms)
+		{
+			my ($prefix, $postfix) = ($1, $3);
+			debug("userNames() 3.6 $prefix $rgb $postfix", 4);
+
+			if ($Var{'rhColorNamesMap'}{$rgb})
+			{
+				debug("userNames() 3.7 $rgb", 4);
+				$color = "$prefix$Var{'rhColorNamesMap'}{$rgb}$postfix";
+			}
+		}
+
+		debug("userNames() 3.8 $color", 4);
+
+		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
+		{
+			debug("userNames() 4 $color", 4);
+			if (exists $Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)})
+			{
+				debug("userNames() 5 $color", 4);
+				$color = "rgba($Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)}$2)";
+			}
+		}
+		debug("userNames() 6 $color", 4);
+		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
+		{
+			debug("userNames() 7 $color", 4);
+			if (exists $Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)})
+			{
+				debug("userNames() 8 $color", 4);
+				$color = "rgba($Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)}$4)";
+			}
+		}
+	}
+	debug("userNames() 9 $color", 4);
+	return $color;
+}
+
+# convert #color value to rgb(R,G,B) format based on command line options
+sub userRgbFromHashColorFromHashColor
+{
+	my ($color, $bAlways) = @ARG;
+	if (opt('rgb') || $bAlways)
+	{
+		$color = rgbFromHashColor($color);
+	}
+	return $color;
+}
+
+# convert #color value to rgb(R,G,B) format
+sub rgbFromHashColor
+{
+	my ($color) = @ARG;
+
+	$color =~ s{
+		$Var{'regex'}{'bytesColor'}
+	}{
+		"rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")"
+	}xmsgie;
+	$color =~ s{
+		$Var{'regex'}{'shortColor'}
+	}{
+		my ($red, $green, $blue) = (substr($1, 0, 1), substr($1, 1, 1), substr($1, 2, 1));
+		"rgb(" . hex($red . $red) . ", " . hex($green . $green) . ", " . hex($blue . $blue) . ")"
+	}xmsgie;
+	$color = formatRgbColor($color);
+
+	return $color;
+}
+
+# get the nicest name for a color possible. i.e. white
+# or rgba(white, 0.3) for opacity
+# or ~white for something close to white
+sub niceNameColor
+{
+	my ($color) = @ARG;
+	return $color;
 }
 
 # rename a color value based on command line options but ensuring valid CSS
@@ -884,7 +996,7 @@ sub renameColorValid
 	my ($color) = @ARG;
 	my $bValid = 1;
 	my $bAlways = 1;
-	return names(rgb(hashColorStandard(toHashColor($color, !$bAlways, $bValid))));
+	return userNames(userRgbFromHashColorFromHashColor(hashColorStandard(toHashColor($color, !$bAlways, $bValid))));
 }
 
 sub defineAutoConstant
@@ -919,7 +1031,7 @@ sub hashColorStandard
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return names(formatRgbIshColor(rgb(hashColorStandard($color))));
+	return userNames(formatRgbIshColor(userRgbFromHashColorFromHashColor(hashColorStandard($color))));
 }
 
 # fix comma spacing in rgb colors
@@ -989,28 +1101,6 @@ sub shorten
 	return $color;
 }
 
-# convert #color value to rgb(R,G,B) format
-sub rgb
-{
-	my ($color, $bAlways) = @ARG;
-	if (opt('rgb') || $bAlways)
-	{
-		$color =~ s{
-			$Var{'regex'}{'bytesColor'}
-		}{
-			"rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")"
-		}xmsgie;
-		$color =~ s{
-			$Var{'regex'}{'shortColor'}
-		}{
-			my ($red, $green, $blue) = (substr($1, 0, 1), substr($1, 1, 1), substr($1, 2, 1));
-			"rgb(" . hex($red . $red) . ", " . hex($green . $green) . ", " . hex($blue . $blue) . ")"
-		}xmsgie;
-		$color = formatRgbColor($color);
-	}
-	return $color;
-}
-
 # get both rgb and #color version of color
 sub getBothColorValues
 {
@@ -1021,12 +1111,12 @@ sub getBothColorValues
 	if ($color =~ m{ \A (hsl|rgb)?\( }xms)
 	{
 		$rgb = lc(formatRgbIshColor(rgbFromHslOrPercent($color)));
-		$color = canonicalFromRgb($rgb);
+		$color = userCanonicalFromRgb($rgb);
 	}
 	else
 	{
 		$color = canonical($color, 'force');
-		$rgb = formatRgbIshColor(rgb($color, 'force'));
+		$rgb = formatRgbIshColor(rgbFromHashColor($color, 'force'));
 	}
 	debug("getBothColorValues() return (c=$color, r=$rgb)", 3);
 	return ($color, $rgb);
@@ -1041,84 +1131,13 @@ sub toHashColor
 		my $rgb = rgbFromHslOrPercent($color, $bValid);
 		if ($rgb ne $color)
 		{
-			$color = canonicalFromRgb($rgb, $bValid);
+			$color = userCanonicalFromRgb($rgb, $bValid);
 		}
 	}
 	return $color;
 }
 
 # MUSTDO implement foreground/background
-
-# convert color value to color name if names option set
-# color could be #rrggbb or r,g,b triplet or r%,g%,b%
-# or rgb(...) rgba(...) hsl(...) hsla(...)
-# returns name of the color or the original color value
-sub names
-{
-	my ($color) = @ARG;
-	if (opt('names'))
-	{
-		debug("names($color)", 4);
-		debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 1.0)';
-
-		# alpha = 0 is transparent
-		$color =~ s{ $Var{'regex'}{'transparent'} }{transparent}xmsg;
-		debug("names() 1 $color", 4);
-
-		# alpha = 1 is opaque convert to hsl or rgb
-		$color =~ s{ $Var{'regex'}{'opaque'} }{$1$2)}xmsg;
-		debug("names() 2 $color", 4);
-
-		$color = $Var{'rhColorNamesMap'}{trim($color)} || $color;
-		debug("names() 3 $color", 4);
-
-		my $rgb = lc(rgbFromHslOrPercent($color));
-		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
-		debug("names() 3.1 $color rgb=$rgb", 4);
-
-		$rgb =~ s{\A rgb \( (.+) \) \z}{$1}xms;
-		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
-		debug("names() 3.2 $color", 4);
-
-		# handle the special case rgba(#color, opacity)
-		# TODO pull regex out
-		if ($rgb =~ s{\A ( rgba \( ) (.+) ( , \s* [0-9\.]+ \) ) \z}{$2}xms)
-		{
-			my ($prefix, $postfix) = ($1, $3);
-			debug("names() 3.6 $prefix $rgb $postfix", 4);
-
-			if ($Var{'rhColorNamesMap'}{$rgb})
-			{
-				debug("names() 3.7 $rgb", 4);
-				$color = "$prefix$Var{'rhColorNamesMap'}{$rgb}$postfix";
-			}
-		}
-
-		debug("names() 3.8 $color", 4);
-
-		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
-		{
-			debug("names() 4 $color", 4);
-			if (exists $Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)})
-			{
-				debug("names() 5 $color", 4);
-				$color = "rgba($Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)}$2)";
-			}
-		}
-		debug("names() 6 $color", 4);
-		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
-		{
-			debug("names() 7 $color", 4);
-			if (exists $Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)})
-			{
-				debug("names() 8 $color", 4);
-				$color = "rgba($Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)}$4)";
-			}
-		}
-	}
-	debug("names() 9 $color", 4);
-	return $color;
-}
 
 # get rgb value from percentage or hsl
 # 100%,100%,100% becomes 255,255,255
@@ -1135,10 +1154,16 @@ sub rgbFromHslOrPercent
 }
 
 # get #color from rgb() or rgba() (not hsl/hsla)
-sub canonicalFromRgb
+sub userCanonicalFromRgb
 {
 	my ($rgb, $bValid) = @ARG;
 	$bValid = $bValid || opt('valid-only');
+	return canonicalFromRgb($rgb, $bValid);
+}
+
+sub canonicalFromRgb
+{
+	my ($rgb, $bValid) = @ARG;
 	$rgb =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' . toHex($1) . toHex($2) . toHex($3) }xmse;
 	if (!$bValid)
 	{
@@ -1400,6 +1425,7 @@ sub tests
 	testRenameColorNamesCanonicalAllowInvalid();
 	testRenameColorNamesCanonical();
 	testGetBothColorValues();
+	testNiceNameColor();
 
 	# unittestcall
 
@@ -1442,9 +1468,9 @@ sub tests
 
 	exit 0;
 
-#	setOpt('canonical', 1);
-#	setOpt('hash', 1);
-#	setOpt('names', 1);
+	setOpt('canonical', 1);
+	setOpt('hash', 1);
+	setOpt('names', 1);
 #	setOpt('remap', 1);
 #	setOpt('valid-only', 1);
 
@@ -1454,15 +1480,15 @@ sub tests
 	my @Result = ();
 	foreach my $color (@EveryColorFormat)
 	{
-		my @result = getBothColorValues($color);
+		my @result = userRenameColor($color);
 		my $result = join(':', @result);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "getBothColorValues $color -> $expect");
+		is($result, $expect, "niceNameColor $color -> $expect");
 	}
-	wrap("\@GetBothColorValuesTests", \@Result);
+	wrap("\@NiceNameColorTests", \@Result);
 
 }
 
@@ -1501,8 +1527,8 @@ sub testCanonicalFromRgbValid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = canonicalFromRgb($color, $bValid);
-		is($result, $expect, "canonicalFromRgb (valid) $color -> $expect");
+		my $result = userCanonicalFromRgb($color, $bValid);
+		is($result, $expect, "userCanonicalFromRgb (valid) $color -> $expect");
 	}
 }
 
@@ -1548,8 +1574,8 @@ sub testCanonicalFromRgbAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = canonicalFromRgb($color, !$bValid);
-		is($result, $expect, "canonicalFromRgb (!valid) $color -> $expect");
+		my $result = userCanonicalFromRgb($color, !$bValid);
+		is($result, $expect, "userCanonicalFromRgb (!valid) $color -> $expect");
 	}
 }
 
@@ -1861,7 +1887,7 @@ sub testRgb
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = rgb($color, $bAlways);
+		my $result = rgbFromHashColor($color);
 		is($result, $expect, "rgb $color -> $expect");
 	}
 }
@@ -1912,9 +1938,9 @@ sub testRenameColorNamesCanonicalAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = renameColor($color);
+		my $result = userRenameColor($color);
 
-		is($result, $expect, "renameColor (!valid,names,canonical) $color -> $expect");
+		is($result, $expect, "userRenameColor (!valid,names,canonical) $color -> $expect");
 	}
 
 	setOpt('names', 0);
@@ -1969,9 +1995,9 @@ sub testRenameColorNamesCanonical
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = renameColor($color);
+		my $result = userRenameColor($color);
 
-		is($result, $expect, "renameColor (valid,names,canonical) $color -> $expect");
+		is($result, $expect, "userRenameColor (valid,names,canonical) $color -> $expect");
 	}
 
 	setOpt('names', 0);
@@ -2029,6 +2055,49 @@ sub testGetBothColorValues
 
 		is($gotColor, $expectColor, "getBothColorValues color $color -> $expectColor");
 		is($gotRgb, $expectRgb, "getBothColorValues rgb  $color -> $expectRgb");
+	}
+}
+
+sub testNiceNameColor
+{
+	my @NiceNameColorTests = (
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
+		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white',
+		'rgba( 255 , 255 , 255 , 1.0 ):white',
+		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
+		'rgba(255,255,255,0.0):transparent',
+		'rgba(100%,100%,100%,0.0):transparent',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
+		'hsla(0,100%,100%,0.0):transparent',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
+		'rgba(255,255,255,0.5):rgba(white, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(white, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
+		'hsla(white,0.5):rgba(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	foreach my $colorResult (@NiceNameColorTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = niceNameColor($color);
+
+		is($result, $expect, "niceNameColor $color -> $expect");
 	}
 }
 
