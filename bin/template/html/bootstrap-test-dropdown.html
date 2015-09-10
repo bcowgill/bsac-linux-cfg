@@ -1,0 +1,125 @@
+<!-- http://getbootstrap.com/getting-started/
+   suggested boilerplate minimum for a bootstrap project
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- use the meta below to make page more like a mobile native app with no zooming. 
+		not recommended for all sites (http://getbootstrap.com/css/) -->
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>Bootstrap 101 Template</title>
+
+	<!-- Bootstrap -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+	<style>
+		.border { border: 1px solid red; }
+
+
+		.dropdown-menu-right-xs-or-less,
+		.dropdown-menu-right-sm-or-less,
+		.dropdown-menu-right-md-or-less {
+			left: 0;
+			right: auto;
+		}
+		@media screen and (max-width: 767px) { /*@screen-xs-max*/
+			.border { border: 2px solid orange; }
+			.dropdown-menu-right-xs-or-less {
+				left: auto; /* was !important*/
+				right: 0;
+			}
+		}
+		@media screen and (max-width: 991px) { /*@screen-sm-max*/
+			.border { border: 2px solid blue; }
+			.dropdown-menu-right-sm-or-less {
+				left: auto;
+				right: 0;
+			}
+		}
+
+		@media screen and (max-width: 1199px) { /*@screen-md-max*/
+			.border { border: 2px solid green; }
+			.dropdown-menu-right-md-or-less {
+				left: auto;
+				right: 0;
+			}
+		}
+	</style>
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	</head>
+	<body>
+		<h1>Bootstrap Test</h1>
+
+		<!-- container to hold the bootstrap grid - responsive fixed width container -->
+		<div class="container">
+			<div class="border visible-xs-block">.visible-xs-block</div>
+			<div class="border visible-sm-block">.visible-sm-block</div>
+			<div class="border visible-md-block">.visible-md-block</div>
+			<div class="border visible-sm-block visible-md-block">.visible-sm-block .visible-md-block</div>
+			<div class="border visible-lg-block">.visible-lg-block</div>
+
+			<div class="btn-toolbar" role="toolbar">
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Dropdown Left
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li><a href="#">Separated link</a></li>
+					</ul>
+				</div>
+
+				<button class="btn btn-default" type="button">
+					Gap Button
+				</button>
+				<button class="btn btn-default" type="button">
+					Gap Button
+				</button>
+				<button class="btn btn-default" type="button">
+					Gap Button
+				</button>
+				<button class="btn btn-default" type="button">
+					Gap Button
+				</button>
+
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						Dropdown Maybe Right
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right-md-or-less" aria-labelledby="dropdownMenu2">
+						<li><a href="#">Action</a></li>
+						<li><a href="#">Another action</a></li>
+						<li><a href="#">Something else here</a></li>
+						<li><a href="#">Separated link</a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	</body>
+</html>
+
