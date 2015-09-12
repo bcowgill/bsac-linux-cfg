@@ -1,60 +1,58 @@
-@autoConstant0: #ffffff;
-@autoConstant1: #e6e7e8;
-@autoConstant2: #b2e6fa;
-@autoConstant3: #80d6f7;
-@autoConstant4: #62cdf5;
-@autoConstant5: #bae9fb;
-@autoConstant6: #afb1b2;
-@autoConstant7: #d8dada;
-@autoConstant8: #000000;
-@autoConstant9: #923990;
-@autoConstant10: #912288;
-@autoConstant11: #2b3d51;
-@autoConstant12: #1f2124;
-@autoConstant13: #808b97;
-@autoConstant14: #dc9c99;
-@autoConstant15: #26292f;
-@autoConstant16: #00adef;
-@autoConstant17: #0074da;
-@autoConstant18: #b2d5f4;
-@autoConstant19: #66ace9;
-@autoConstant20: #0463b6;
-@autoConstant21: #3794e6;
-@autoConstant22: #e5f1fb;
-@autoConstant23: #99c7f0;
-@autoConstant24: #93c4ef;
-@autoConstant25: #0059cd;
-@autoConstant26: #0249a8;
-@autoConstant27: #2a3c50;
-@autoConstant28: #001c45;
-@autoConstant29: #b12620;
-@autoConstant30: #e0a8a6;
-@autoConstant31: #c86762;
-@autoConstant32: #981711;
-@autoConstant33: #be3f39;
-@autoConstant34: #d07d79;
-@autoConstant35: #fff6f6;
-@autoConstant36: #dea19e;
-@autoConstant37: #790c09;
-@autoConstant38: #6a0302;
-@autoConstant39: #3f0000;
-@autoConstant40: #088e43;
-@autoConstant41: #9cd2b4;
-@autoConstant42: #6abb8e;
-@autoConstant43: #057637;
-@autoConstant44: #259e5b;
-@autoConstant45: #52b07b;
-@autoConstant46: #f6fcf8;
-@autoConstant47: #84c6a1;
-@autoConstant48: #7fc49d;
-@autoConstant49: #025621;
-@autoConstant50: #004f12;
-@autoConstant51: #002504;
-@autoConstant52: #d5d6d6;
-@autoConstant53: #c4c6c7;
-@autoConstant54: #d7d8d8;
-@autoConstant55: #9ea0a2;
-
-@autoConstant56: rgba(255, 255, 255, 0.9);
-@autoConstant57: rgb(154, 157, 159);
-@autoConstant58: rgba(154, 157, 159, 0.5);
+@autoConstant0: #e6e7e8; // rgb(230, 231, 232)
+@autoConstant1: #b2e6fa; // rgb(178, 230, 250)
+@autoConstant2: #80d6f7; // rgb(128, 214, 247)
+@autoConstant3: #62cdf5; // rgb(98, 205, 245)
+@autoConstant4: #bae9fb; // rgb(186, 233, 251)
+@autoConstant5: #ffffff; // white
+@autoConstant6: #afb1b2; // rgb(175, 177, 178)
+@autoConstant7: #d8dada; // rgb(216, 218, 218)
+@autoConstant8: #000000; // black
+@autoConstant9: #923990; // rgb(146, 57, 144)
+@autoConstant10: #912288; // rgb(145, 34, 136)
+@autoConstant11: #2b3d51; // rgb(43, 61, 81)
+@autoConstant12: #1f2124; // rgb(31, 33, 36)
+@autoConstant13: #808b97; // rgb(128, 139, 151)
+@autoConstant14: #dc9c99; // rgb(220, 156, 153)
+@autoConstant15: #26292f; // rgb(38, 41, 47)
+@autoConstant16: #00adef; // rgb(0, 173, 239)
+@autoConstant17: #0074da; // rgb(0, 116, 218)
+@autoConstant18: #b2d5f4; // rgb(178, 213, 244)
+@autoConstant19: #66ace9; // rgb(102, 172, 233)
+@autoConstant20: #0463b6; // rgb(4, 99, 182)
+@autoConstant21: #3794e6; // rgb(55, 148, 230)
+@autoConstant22: #e5f1fb; // rgb(229, 241, 251)
+@autoConstant23: #99c7f0; // rgb(153, 199, 240)
+@autoConstant24: #93c4ef; // rgb(147, 196, 239)
+@autoConstant25: #0059cd; // rgb(0, 89, 205)
+@autoConstant26: #0249a8; // rgb(2, 73, 168)
+@autoConstant27: #2a3c50; // rgb(42, 60, 80)
+@autoConstant28: #001c45; // rgb(0, 28, 69)
+@autoConstant29: #b12620; // rgb(177, 38, 32)
+@autoConstant30: #e0a8a6; // rgb(224, 168, 166)
+@autoConstant31: #c86762; // rgb(200, 103, 98)
+@autoConstant32: #981711; // rgb(152, 23, 17)
+@autoConstant33: #be3f39; // rgb(190, 63, 57)
+@autoConstant34: #d07d79; // rgb(208, 125, 121)
+@autoConstant35: #fff6f6; // rgb(255, 246, 246)
+@autoConstant36: #dea19e; // rgb(222, 161, 158)
+@autoConstant37: #790c09; // rgb(121, 12, 9)
+@autoConstant38: #6a0302; // rgb(106, 3, 2)
+@autoConstant39: #3f0000; // rgb(63, 0, 0)
+@autoConstant40: #088e43; // rgb(8, 142, 67)
+@autoConstant41: #9cd2b4; // rgb(156, 210, 180)
+@autoConstant42: #6abb8e; // rgb(106, 187, 142)
+@autoConstant43: #057637; // rgb(5, 118, 55)
+@autoConstant44: #259e5b; // rgb(37, 158, 91)
+@autoConstant45: #52b07b; // rgb(82, 176, 123)
+@autoConstant46: #f6fcf8; // rgb(246, 252, 248)
+@autoConstant47: #84c6a1; // rgb(132, 198, 161)
+@autoConstant48: #7fc49d; // rgb(127, 196, 157)
+@autoConstant49: #025621; // rgb(2, 86, 33)
+@autoConstant50: #004f12; // rgb(0, 79, 18)
+@autoConstant51: #002504; // rgb(0, 37, 4)
+@autoConstant52: #d5d6d6; // rgb(213, 214, 214)
+@autoConstant53: #c4c6c7; // rgb(196, 198, 199)
+@autoConstant54: #d7d8d8; // rgb(215, 216, 216)
+@autoConstant55: #9ea0a2; // rgb(158, 160, 162)
+@autoConstant56: rgba(255, 255, 255, 0.9); // rgba(white, 0.9)
+@autoConstant57: rgba(154, 157, 159, 0.5); // rgba(#color, 0.5)

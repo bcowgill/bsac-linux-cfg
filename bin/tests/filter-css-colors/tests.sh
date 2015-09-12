@@ -482,23 +482,6 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD --foreground --background not allowed with --color-only
-TEST=color-only-forground-background
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --color-only --foreground=yellow --background=black"
-	$PROGRAM $ARGS > "$OUT" 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
-	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-# TODO foreground/background test once implemented
-
 echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file
 TEST=const-file-remap
 if [ 0 == "$SKIP" ]; then
@@ -544,7 +527,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE_NEW_CONST=base/$TEST.pulled.base
 	ARGS="$DEBUG --remap --shorten --names --valid \
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
-	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
+	#echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"
 	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
@@ -553,8 +536,6 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
-
-exit 1;
 
 echo TEST $CMD CONST REMAPMODE remap colours and pull new constants no rename
 TEST=const-file-pull-canonical
@@ -577,6 +558,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+SKIP=1
+
 echo TEST $CMD parameters passed to rules
 TEST=const-rules-have-parameters
 if [ 0 == "$SKIP" ]; then
@@ -589,7 +572,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --valid --canonical \
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST\
 	--const-file=in/variables.less"
-	echo cp "$SAMPLE_RULE_PARAMS" "$OUT" \; $PROGRAM $ARGS "$OUT"
+	#echo cp "$SAMPLE_RULE_PARAMS" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE_RULE_PARAMS" "$OUT"
 	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
@@ -598,5 +581,22 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+echo TEST $CMD --foreground --background not allowed with --color-only
+TEST=color-only-forground-background
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --color-only --foreground=yellow --background=black"
+	$PROGRAM $ARGS > "$OUT" 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+	assertFileHeadersEqual $LINES "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+# TODO foreground/background test once implemented
 
 cleanUpAfterTests
