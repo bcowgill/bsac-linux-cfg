@@ -197,7 +197,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST constants defined in a file
+echo TEST $CMD CONST constants defined in a file allow invalid CSS
 TEST=const-file-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -205,6 +205,23 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --names \
+	--const-type=less --const-file=$VARS"
+	#echo $PROGRAM $ARGS from /dev/null
+	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD CONST constants defined in a file
+TEST=const-file-canon-names-valid
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --show-const --canonical --names --valid-only\
 	--const-type=less --const-file=$VARS"
 	#echo $PROGRAM $ARGS from /dev/null
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?

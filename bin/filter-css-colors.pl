@@ -392,6 +392,7 @@ sub showAutoContants
 {
 	debug("showAutoConstants()", 1);
 	my $out = opt('const-pull');
+	my $bValidOnly = 1;
 	if ($out)
 	{
 		my $fh;
@@ -410,8 +411,11 @@ sub showAutoContants
 		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
 		foreach my $color (@{$Var{'raAutoConstants'}})
 		{
+			debug("showAutoConstants() color $color", 3);
 			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
-			my $comment = niceNameColor($color);
+			debug("showAutoConstants() const $const", 3);
+			my $comment = niceNameColor($color, !$bValidOnly);
+			debug("showAutoConstants() comment $comment", 3);
 			$comment = ($comment eq $color) ? '' : " // $comment";
 			print $fh "$const: $color;$comment\n";
 		}
@@ -882,7 +886,7 @@ sub lookupConstant
 sub userRenameColor
 {
 	my ($color) = @ARG;
-	return userNames(
+	return userColorNames(
 		userRgbFromHashColor(
 			userHashColorStandard(
 				userToHashColor($color)
@@ -897,15 +901,16 @@ sub userRenameColor
 sub niceNameColor
 {
 	my ($color) = @ARG;
-	my $bAlways = 1;
+	debug("\nniceNameColor($color)", 1);
+	my $bValidOnly = 1;
 	return rgbFromHashColor(
-		userNames(
+		colorNames(
 			hashColorStandard(
 				toHashColor(
 					opaqueOrTransparent($color)
 				)
 			),
-			$bAlways
+			!$bValidOnly
 		)
 	);
 }
@@ -914,64 +919,76 @@ sub niceNameColor
 # color could be #rrggbb or r,g,b triplet or r%,g%,b%
 # or rgb(...) rgba(...) hsl(...) hsla(...)
 # returns name of the color or the original color value
-sub userNames
+sub userColorNames
 {
-	my ($color, $bAlways) = @ARG;
-	if ($bAlways || opt('names'))
+	my ($color) = @ARG;
+	if (opt('names'))
 	{
-		debug("userNames($color)", 4);
-		debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 1.0)';
+		$color = colorNames($color, opt('valid-only'));
+	}
+	return $color;
+}
 
-		$color = opaqueOrTransparent($color);
-		debug("userNames() 1 $color", 4);
+sub colorNames
+{
+	my ($color, $bValid) = @ARG;
+	debug("colorNames($color, @{[$bValid || 0]})", 2);
+#	debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 0.4)';
 
-		$color = $Var{'rhColorNamesMap'}{trim($color)} || $color;
-		debug("userNames() 3 $color", 4);
+	$color = opaqueOrTransparent($color);
+	debug("colorNames() 1 $color", 4);
 
-		my $rgb = lc(rgbFromHslOrPercent($color));
-		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
-		debug("userNames() 3.1 $color rgb=$rgb", 4);
+	$color = $Var{'rhColorNamesMap'}{trim($color)} || $color;
+	debug("colorNames() 2 color names map $color", 4);
 
-		$rgb =~ s{$Var{'regex'}{'rgbAnything'}}{$1}xms;
-		$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
-		debug("userNames() 3.2 $color", 4);
+	my $rgb = lc(rgbFromHslOrPercent($color));
+	$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
+	debug("colorNames() 3 $color rgb=$rgb", 4);
 
-		# handle the special case rgba(#color, opacity)
-		if ($rgb =~ s{ $Var{'regex'}{'rgbUnwrap'} }{$2}xms)
+	$rgb =~ s{$Var{'regex'}{'rgbAnything'}}{$1}xms;
+	$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
+	debug("colorNames() 4 rgb anything $color", 4);
+
+	# handle the special case rgba(#color, opacity)
+	if ($rgb =~ s{ $Var{'regex'}{'rgbUnwrap'} }{$2}xms)
+	{
+		my ($prefix, $postfix) = ($1, $3);
+		debug("colorNames() 5 $prefix $rgb $postfix", 4);
+
+		if ($Var{'rhColorNamesMap'}{$rgb})
 		{
-			my ($prefix, $postfix) = ($1, $3);
-			debug("userNames() 3.6 $prefix $rgb $postfix", 4);
+			debug("colorNames() 6 $rgb", 4);
+			$color = "$prefix$Var{'rhColorNamesMap'}{$rgb}$postfix";
+		}
+	}
 
-			if ($Var{'rhColorNamesMap'}{$rgb})
+	if (!$bValid)
+	{
+		debug("colorNames() 7 allow invalid", 4);
+		if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
+		{
+			my $match = $1;
+			$rgb = trim(rgbFromHslOrPercent($match));
+			debug("colorNames() 8 $color match=$1 rgb=$rgb", 4);
+			if (exists $Var{'rhColorNamesMap'}{$rgb})
 			{
-				debug("userNames() 3.7 $rgb", 4);
-				$color = "$prefix$Var{'rhColorNamesMap'}{$rgb}$postfix";
+				$color = "rgba($Var{'rhColorNamesMap'}{$rgb}$2)";
+				debug("colorNames() 9 $color", 4);
 			}
 		}
-
-		debug("userNames() 3.8 $color", 4);
-
-		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'rgba'} }xms)
+		debug("colorNames() 10 $color", 4);
+		if ($color =~ m{ $Var{'regex'}{'hsla'} }xms)
 		{
-			debug("userNames() 4 $color", 4);
-			if (exists $Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)})
+			$rgb = hsl_to_rgb($1, $2, $3);
+			debug("colorNames() 11 hsla $1 $2 $3", 4);
+			if (exists $Var{'rhColorNamesMap'}{$rgb})
 			{
-				debug("userNames() 5 $color", 4);
-				$color = "rgba($Var{'rhColorNamesMap'}{rgbFromHslOrPercent($1)}$2)";
-			}
-		}
-		debug("userNames() 6 $color", 4);
-		if (!opt('valid-only') && $color =~ m{ $Var{'regex'}{'hsla'} }xms)
-		{
-			debug("userNames() 7 $color", 4);
-			if (exists $Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)})
-			{
-				debug("userNames() 8 $color", 4);
-				$color = "rgba($Var{'rhColorNamesMap'}{hsl_to_rgb($1, $2, $3)}$4)";
+				$color = "rgba($Var{'rhColorNamesMap'}{$rgb}$4)";
+				debug("colorNames() 12 $color", 4);
 			}
 		}
 	}
-	debug("userNames() 9 $color", 4);
+	debug("colorNames() 13 $color", 4);
 	return $color;
 }
 
@@ -1047,6 +1064,7 @@ sub userHashColorStandard
 sub hashColorStandard
 {
 	my ($color) = @ARG;
+	debug("hashColorStandard($color)", 3);
 	$color = canonical($color);
 	$color =~ s{ $Var{'regex'}{'hashColor'} }{ '#' . lc($1) }xmsge;
 	return $color;
@@ -1084,7 +1102,13 @@ sub renameColorValid
 	my ($color) = @ARG;
 	my $bValid = 1;
 	my $bAlways = 1;
-	return userNames(userRgbFromHashColor(userHashColorStandard(userToHashColor($color, !$bAlways, $bValid))));
+	return userColorNames(
+		userRgbFromHashColor(
+			userHashColorStandard(
+				userToHashColor($color, !$bAlways, $bValid)
+			)
+		)
+	);
 }
 
 sub defineAutoConstant
@@ -1109,7 +1133,13 @@ sub defineAutoConstant
 sub uniqueColor
 {
 	my ($color) = @ARG;
-	return userNames(formatRgbIshColor(userRgbFromHashColor(userHashColorStandard($color))));
+	return userColorNames(
+		formatRgbIshColor(
+			userRgbFromHashColor(
+				userHashColorStandard($color)
+			)
+		)
+	);
 }
 
 # fix comma spacing in rgb colors
