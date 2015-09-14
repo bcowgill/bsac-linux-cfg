@@ -332,6 +332,7 @@ sub analyseEntireFile
 	my @Lines = split("\n", $Var{entireFile});
 	findFunctionDefinitions(\@Lines);
 	findFunctionReferences(\@Lines);
+	jshintFile();
 	summaryOfFile();
 }
 
@@ -443,6 +444,18 @@ sub findFunctionReferences
 	}
 }
 
+sub jshintFile
+{
+	if (system("grunt jshint:single --check-file $Var{fileName} > /dev/null"))
+	{
+		warning("error invoking grunt jshint:single on $Var{fileName}");
+	}
+	else
+	{
+		print "MUSTDO jshint OK\n";
+	}
+}
+
 sub doLine
 {
 	my ( $line, $print ) = @ARG;
@@ -522,7 +535,7 @@ sub trackFirstPrivateFunction
 	my ($rhFunction) = @ARG;
 	unless ($Var{firstPrivateFunction}) {
 		$Var{firstPrivateFunction} = $rhFunction->{function}
-		 	if $rhFunction->{access} eq 'private';
+			if $rhFunction->{access} eq 'private';
 	}
 }
 
