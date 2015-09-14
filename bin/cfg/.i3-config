@@ -45,8 +45,11 @@ set $app 3
 set $email 4
 set $build 5
 set $chat 6
+set $vbox 7
 set $help 7
 set $files 8
+
+set $nochat $shell
 
 set $exec exec --no-startup-id
 set $i3msg exec --no-startup-id i3-msg
@@ -326,8 +329,8 @@ bindsym $mod+g exec i3-input -f '$popup_font' -F '[con_mark="%s"] focus' -l 15 -
 # BSAC next set of key bindings inspired/copied from
 # http://i3wm.org/docs/user-contributed/lzap-config.html
 # screen locker (first move to "safe" workspace without any chat app)
-bindsym Control+$alt+Shift+l exec i3-msg workspace 1 && i3lock -c $lockcolor -d
-bindsym Control+$alt+l exec i3-msg workspace 1 && xscreensaver-command -lock
+bindsym Control+$alt+Shift+l exec i3-msg workspace $nochat && i3lock -c $lockcolor -d
+bindsym Control+$alt+l exec i3-msg workspace $nochat && xscreensaver-command -lock
 
 # next/previous workspace
 bindsym $alt+Tab focus right
