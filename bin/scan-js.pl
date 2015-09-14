@@ -109,6 +109,10 @@ scan-js.pl [options] [@options-file ...] [file ...]
  keep track of number of params per function
  use jshint to measure complexity of functions
  closeness of definitions of function to first caller
+ star rating of file based on maxcomplexity, maxparams, clean, test plan
+ check if test plan exists for file
+ jshint command fails, show how to set up grunt
+
 
 Law of demeter violation checker
  perl -ne '$o = q{\w+ \s* \. \s*}; $m = q{\w+ \s* \s* (\([^\)]*\))? \s*}; print if ( m{ $o $m \. $m }xms );' demeter.js
