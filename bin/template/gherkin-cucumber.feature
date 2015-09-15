@@ -1,5 +1,10 @@
 # Sample of cucumber syntax from
-# https://cucumber.io/docs/reference#gherkin
+# Structure of language explained here:
+#   https://cucumber.io/docs/reference#gherkin
+#   https://github.com/cucumber/cucumber/wiki/Gherkin
+#   https://github.com/cucumber/cucumber/wiki/Feature-Introduction
+#   https://github.com/cucumber/cucumber/wiki/Given-When-Then
+
 # should be one Feature per .feature file
 Feature: Refund item
 
