@@ -2,7 +2,12 @@
 #!/bin/bash
 # grab the project files needed to set up a new JS/node project with tests, jsdoc etc
 
-FROM=/cygdrive/d/d/s/github/perljs
+FROM=/cygdrive/d/d/s/github
+if [ ! -d $FROM ] ; then
+	FROM=~/workspace/play
+fi
+FROM=$FROM/perljs
+
 TO=${1:-newpj}
 echo TO=$TO
 
