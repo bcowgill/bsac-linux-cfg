@@ -214,7 +214,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 532;
+our $TEST_CASES = 570;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -346,23 +346,6 @@ sub setArg
 
 getOptions();
 
-sub main
-{
-	my ($raFiles) = @ARG;
-	debug( "Var: " . Dumper( \%Var ), 5 );
-	debug( "main() rhOpt: " . Dumper( opt() ) .
-		"\nraFiles: " . Dumper($raFiles) .
-		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
-
-	if ( opt($STDIO) )
-	{
-		processEntireStdio();
-	}
-
-	processFiles($raFiles) if scalar(@$raFiles);
-	summary();
-}
-
 sub setup
 {
 	debug("setup()");
@@ -383,45 +366,30 @@ sub setup
 	showConstantsTable() if opt('show-const');
 }
 
+sub main
+{
+	my ($raFiles) = @ARG;
+	debug( "Var: " . Dumper( \%Var ), 5 );
+	debug( "main() rhOpt: " . Dumper( opt() ) .
+		"\nraFiles: " . Dumper($raFiles) .
+		"\nuse_stdio: @{[opt($STDIO)]}\n", 2 );
+
+	if ( opt($STDIO) )
+	{
+		processEntireStdio();
+	}
+
+	processFiles($raFiles) if scalar(@$raFiles);
+	summary();
+}
+
 sub summary
 {
 	showAutoContants();
 }
 
-sub showAutoContants
-{
-	debug("showAutoConstants()", 1);
-	my $out = opt('const-pull');
-	my $bValidOnly = 1;
-	if ($out)
-	{
-		my $fh;
-		if ($out eq '-')
-		{
-			debug("showAutoConstants() stdout", 2);
-			$fh = *STDOUT;
-		}
-		else
-		{
-			debug("showAutoConstants() $out", 2);
-			open($fh, '>>', $out);
-		}
-		debug("showAutoConstants() raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
-		debug("showAutoConstants() rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
-		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
-		foreach my $color (@{$Var{'raAutoConstants'}})
-		{
-			debug("showAutoConstants() color $color", 3);
-			my $const = $Var{'rhColorConstantsMap'}{uniqueColor($color)}[0];
-			debug("showAutoConstants() const $const", 3);
-			my $comment = niceNameColor($color, !$bValidOnly);
-			debug("showAutoConstants() comment $comment", 3);
-			$comment = ($comment eq $color) ? '' : " // $comment";
-			print $fh "$const: $color;$comment\n";
-		}
-		close($fh) unless ($out eq '-');
-	}
-}
+####################################
+# methods used by setup
 
 sub readColorNameData
 {
@@ -521,125 +489,6 @@ sub processConstantFile
 	}xmsge;
 }
 
-sub isUsingLess
-{
-	return opt('const-type') =~ m{\A [l\@]}xmsi;
-}
-
-sub isUsingSass
-{
-	return opt('const-type') =~ m{\A [s\$]}xmsi;
-}
-
-sub isConst
-{
-	my ($const) = @ARG;
-	my $prefix = q{\\} . opt('const-type');
-	my $regex = qr{\A $prefix}xms;
-	debug("isConst($const) $regex " . $const =~ $regex, 4);
-	return $const =~ $regex;
-}
-
-sub isConstOrColor
-{
-	my ($const) = @ARG;
-	debug("isConstOrColor($const)", 4);
-	return isConst($const) || isColor($const);
-}
-
-sub isColor
-{
-	my ($value) = @ARG;
-	my $regex = qr{
-		\A $Var{'regex'}{'line'} \z
-	}xms;
-
-	debug("isColor($value) $regex " . $value =~ $regex, 4);
-	return $value =~ $regex;
-}
-
-sub isColorOkToConvertToConstant
-{
-	my ($value, $origValue, $match) = @ARG;
-	my $quoted = quotemeta($origValue);
-	my $regexContext = qr{
-		: \s* $quoted \s* [;\}]
-	}xms;
-	my $regex = qr{
-		\A (
-			$Var{'regex'}{'hashColor'}
-		) \z
-	}xms;
-
-	debug("isColorOkToConvertToConstant() quoted $quoted", 4);
-	debug("isColorOkToConvertToConstant($match) $regexContext " . $match =~ $regexContext, 4);
-	debug("isColorOkToConvertToConstant($value) $regex " . $value =~ $regex, 4);
-	return ($value ne 'transparent') && ( $match =~ $regexContext || $value =~ $regex );
-}
-
-sub checkConstName
-{
-	my ($const) = @ARG;
-	my $prefix = q{\\} . opt('const-type');
-	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO constant name/expression not supported [$const]";
-}
-
-sub registerConstantFromFile
-{
-	my ($const, $value, $match) = @ARG;
-	$match = trimToOne($match);
-	$Var{'constantContext'} = "in file $Var{fileName} at line [$match]";
-	eval
-	{
-		registerConstant($const, $value);
-	};
-	if ($EVAL_ERROR)
-	{
-		warning("Error $Var{constantContext}: $EVAL_ERROR\n");
-		$EVAL_ERROR = undef;
-	}
-}
-
-sub registerConstant
-{
-	my ($const, $value) = @ARG;
-
-	debug("registerConstant($const, $value)", 3);
-	$Var{'rhConstantsMap'}{$const} && die "MUSTDO error constant $const: $value already has a defined value: $Var{'rhConstantsMap'}{$const}";
-	if (isConst($value))
-	{
-		checkConstName($value);
-		if (isDefinedConst($value))
-		{
-			$value = getConstValue($value)
-		}
-		else
-		{
-			$Var{'rhUndefinedConstantsMap'}{$const} = $value;
-			$const = undef;
-		}
-	}
-	if ($const)
-	{
-		my $rgb;
-		($value, $rgb) = getBothColorValues($value);
-		push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
-		if (trimEq($value, $rgb))
-		{
-			debug("registerConstant($const) 2 r=$rgb", 3);
-			$Var{'rhConstantsMap'}{$const} = $rgb;
-		}
-		else
-		{
-			debug("registerConstant($const) 3 c=$value r=$rgb", 3);
-			$Var{'rhConstantsMap'}{$const} = $value;
-			push( @{ $Var{'rhColorConstantsMap'}{$value} }, $const );
-		}
-		return 1;
-	}
-	return 0;
-}
-
 sub resolveConstants
 {
 	my @consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
@@ -660,34 +509,6 @@ sub resolveConstants
 		@consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
 	}
 	warning("MUSTDO unable to resolve some constant values") unless $limit;
-}
-
-sub isDefinedConst
-{
-	my ($const) = @ARG;
-
-	if (opt('const-rigid'))
-	{
-		return exists($Var{'rhConstantsMap'}{$const});
-	}
-	else
-	{
-		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
-	}
-}
-
-sub getConstValue
-{
-	my ($const) = @ARG;
-
-	if (opt('const-rigid'))
-	{
-		return $Var{'rhConstantsMap'}{$const};
-	}
-	else
-	{
-		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
-	}
 }
 
 sub showConstantsTable
@@ -712,26 +533,15 @@ sub showConstantsTable
 				# if color is rgba? or hsla? suppress print rgb if not rgb mode
 				$print = 0 if !opt('rgb') && $color =~ $Var{'regex'}{'isRgb'};
 			}
-			$color = renameColorValid($color);
+			$color = userRenameColorValid($color);
 			print "$const: $color;\n" if $print;
 		}
 		print "\n";
 	}
 }
 
-sub editFileInPlace
-{
-	my ( $fileName, $suffix ) = @ARG;
-	$Var{fileName} = $fileName;
-	my $fileNameBackup = "$fileName$suffix";
-	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
-
-	unless ($fileName eq $fileNameBackup)
-	{
-		cp( $fileName, $fileNameBackup );
-	}
-	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
-}
+####################################
+# methods used by main
 
 sub processEntireStdio
 {
@@ -759,6 +569,20 @@ sub processFiles
 	}
 }
 
+sub editFileInPlace
+{
+	my ( $fileName, $suffix ) = @ARG;
+	$Var{fileName} = $fileName;
+	my $fileNameBackup = "$fileName$suffix";
+	debug("editFileInPlace($fileName) backup to $fileNameBackup\n");
+
+	unless ($fileName eq $fileNameBackup)
+	{
+		cp( $fileName, $fileNameBackup );
+	}
+	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
+}
+
 sub processEntireFile
 {
 	my ($fileName) = @ARG;
@@ -769,6 +593,226 @@ sub processEntireFile
 	doReplacement( $raContent );
 	print join("", @$raContent);
 }
+
+####################################
+# methods used by summary
+
+sub showAutoContants
+{
+	debug("showAutoConstants()", 1);
+	my $out = opt('const-pull');
+	my $bValidOnly = 1;
+	if ($out)
+	{
+		my $fh;
+		if ($out eq '-')
+		{
+			debug("showAutoConstants() stdout", 2);
+			$fh = *STDOUT;
+		}
+		else
+		{
+			debug("showAutoConstants() $out", 2);
+			open($fh, '>>', $out);
+		}
+		debug("showAutoConstants() raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
+		debug("showAutoConstants() rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
+		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
+		foreach my $color (@{$Var{'raAutoConstants'}})
+		{
+			debug("showAutoConstants() color $color", 3);
+			my $const = lookupColorConstantsMap($color)->[0];
+			debug("showAutoConstants() const $const", 3);
+			my $comment = niceNameColor($color, !$bValidOnly);
+			debug("showAutoConstants() comment $comment", 3);
+			$comment = ($comment eq $color) ? '' : " // $comment";
+			print $fh "$const: $color;$comment\n";
+		}
+		close($fh) unless ($out eq '-');
+	}
+}
+
+####################################
+# methods initially used by setup
+
+# fix comma spacing in rgb colors
+sub formatRgbColor
+{
+	my ($color) = @ARG;
+	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgbRgba'};
+	return $color;
+}
+
+# convert #rrggbb color to #rgb based on command line options
+sub userShorten
+{
+	my ($color, $bShorten) = @ARG;
+	if (opt('shorten') || $bShorten)
+	{
+		$color = shorten($color);
+	}
+	return $color;
+}
+
+# convert #rrggbb color to #rgb so output can be compared against uniqueness
+# and lower case the characters
+sub shorten
+{
+	my ($color) = @ARG;
+
+	$color =~ s{
+		$Var{'regex'}{'canShortenColor'}
+	}{
+		lc("#$1$2$3")
+	}xmsgie;
+
+	$color =~ s{
+		$Var{'regex'}{'shortColor'}
+	}{
+		lc("#$1")
+	}xmsgie;
+
+	return $color;
+}
+
+sub isUsingLess
+{
+	return opt('const-type') =~ m{\A [l\@]}xmsi;
+}
+
+sub isUsingSass
+{
+	return opt('const-type') =~ m{\A [s\$]}xmsi;
+}
+
+sub isConstOrColor
+{
+	my ($const) = @ARG;
+	debug("isConstOrColor($const)", 4);
+	return isConst($const) || isColor($const);
+}
+
+sub isConst
+{
+	my ($const) = @ARG;
+	my $prefix = q{\\} . opt('const-type');
+	my $regex = qr{\A $prefix}xms;
+	debug("isConst($const) $regex " . $const =~ $regex, 4);
+	return $const =~ $regex;
+}
+
+sub isColor
+{
+	my ($value) = @ARG;
+	my $regex = qr{
+		\A $Var{'regex'}{'line'} \z
+	}xms;
+
+	debug("isColor($value) $regex " . $value =~ $regex, 4);
+	return $value =~ $regex;
+}
+
+sub checkConstName
+{
+	my ($const) = @ARG;
+	my $prefix = q{\\} . opt('const-type');
+	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO constant name/expression not supported [$const]";
+}
+
+sub registerConstantFromFile
+{
+	my ($const, $value, $match) = @ARG;
+	$match = trimToOne($match);
+	$Var{'constantContext'} = "in file $Var{fileName} at line [$match]";
+	eval
+	{
+		registerConstant($const, $value);
+	};
+	if ($EVAL_ERROR)
+	{
+		warning("Error $Var{constantContext}: $EVAL_ERROR\n");
+		$EVAL_ERROR = undef;
+	}
+}
+
+#xyzzy
+
+sub registerConstant
+{
+	my ($const, $value) = @ARG;
+
+	debug("registerConstant($const, $value)", 3);
+	$Var{'rhConstantsMap'}{$const} && die "MUSTDO error constant $const: $value already has a defined value: $Var{'rhConstantsMap'}{$const}";
+	if (isConst($value))
+	{
+		checkConstName($value);
+		if (isDefinedConst($value))
+		{
+			$value = getConstValue($value)
+		}
+		else
+		{
+			$Var{'rhUndefinedConstantsMap'}{$const} = $value;
+			$const = undef;
+		}
+	}
+	if ($const)
+	{
+		addColorConstantsMap($const, $value);
+		return 1;
+	}
+	return 0;
+}
+
+sub addColorConstantsMap
+{
+	my ($const, $color) = @ARG;
+
+	debug("addColorConstantsMap($const, $color)", 2);
+	my $rgb;
+	($color, $rgb) = getBothColorValues($color);
+	push( @{ $Var{'rhColorConstantsMap'}{$rgb} }, $const );
+	if (trimEq($color, $rgb))
+	{
+		debug("addColorConstantsMap($const) 2 r=$rgb", 3);
+		$Var{'rhConstantsMap'}{$const} = $rgb;
+	}
+	else
+	{
+		debug("registerConstant($const) 3 c=$color r=$rgb", 3);
+		$Var{'rhConstantsMap'}{$const} = $color;
+		push( @{ $Var{'rhColorConstantsMap'}{$color} }, $const );
+	}
+}
+
+sub lookupColorConstantsMap
+{
+	my ($color) = @ARG;
+
+	debug("lookupColorConstantsMap($color)", 2);
+	#$color = commas(userUniqueColor($color)); TODO do not need this?
+	my $rgb;
+	($color, $rgb) = getBothColorValues($color);
+	return $Var{'rhColorConstantsMap'}{$color} ||  $Var{'rhColorConstantsMap'}{$rgb};
+}
+
+# rename a color value based on command line options but ensuring valid CSS
+sub userRenameColorValid
+{
+	my ($color) = @ARG;
+	my $bValidOnly = 1;
+	my $bAlways = 1;
+	return userColorNames(
+		userRgbFromHashColor(
+			userHashColorStandard(
+				userToHashColor($color, !$bAlways, $bValidOnly)
+			)
+		)
+	);
+}
+
+####################################
+# methods used by methods in main
 
 sub doReplacement
 {
@@ -813,6 +857,138 @@ sub doReplaceLine
 	}
 	debug("lines: " . Dumper(\@Lines));
 	return join("", @Lines);
+}
+
+####################################
+# methods used by methods in summary
+
+# make unique version of color based on command line options so that color
+# comparisons will work
+sub userUniqueColor
+{
+	my ($color) = @ARG;
+	return userRenameColorValid($color);# TODO
+
+
+	my $bValidOnly = 1;
+	return userColorNames(
+		formatRgbIshColor(
+			userRgbFromHashColor(
+				userHashColorStandard($color)
+			)
+		),
+		$bValidOnly
+	);
+}
+
+# get the nicest name for a color possible. i.e. white
+# or rgba(white, 0.3) for opacity
+# or ~white for something close to white
+sub niceNameColor
+{
+	my ($color) = @ARG;
+	debug("\nniceNameColor($color)", 1);
+	my $bValidOnly = 1;
+	return rgbFromHashColor(
+		colorNames(
+			hashColorStandard(
+				toHashColor(
+					opaqueOrTransparent($color)
+				)
+			),
+			!$bValidOnly
+		)
+	);
+}
+
+####################################
+
+# put a single space after commas
+sub commas
+{
+	my ($string) = @ARG;
+	$string =~ s{,([^\s])}{, $1}xmsg;
+	return $string;
+}
+
+# strip away all spaces
+sub trim
+{
+	my ($str) = @ARG;
+	$str =~ s{\s+}{}xmsg;
+	return $str;
+}
+
+# strip away multiple spaces leaving one
+sub trimToOne
+{
+	my ($str) = @ARG;
+	$str =~ s{\s\s*}{ }xmsg;
+	return $str;
+}
+
+# strip away all leading space in string
+sub trimLeading
+{
+	my ($str) = @ARG;
+	$str =~ s{\A \s*}{}xms;
+	return $str;
+}
+
+# compare ignoring spaces
+sub trimEq
+{
+	my ($a, $b) = @ARG;
+	return trim($a) eq trim($b);
+}
+
+####################################
+
+sub isColorOkToConvertToConstant
+{
+	my ($value, $origValue, $match) = @ARG;
+	my $quoted = quotemeta($origValue);
+	my $regexContext = qr{
+		: \s* $quoted \s* [;\}]
+	}xms;
+	my $regex = qr{
+		\A (
+			$Var{'regex'}{'hashColor'}
+		) \z
+	}xms;
+
+	debug("isColorOkToConvertToConstant() quoted $quoted", 4);
+	debug("isColorOkToConvertToConstant($match) $regexContext " . $match =~ $regexContext, 4);
+	debug("isColorOkToConvertToConstant($value) $regex " . $value =~ $regex, 4);
+	return ($value ne 'transparent') && ( $match =~ $regexContext || $value =~ $regex );
+}
+
+sub isDefinedConst
+{
+	my ($const) = @ARG;
+
+	if (opt('const-rigid'))
+	{
+		return exists($Var{'rhConstantsMap'}{$const});
+	}
+	else
+	{
+		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
+	}
+}
+
+sub getConstValue
+{
+	my ($const) = @ARG;
+
+	if (opt('const-rigid'))
+	{
+		return $Var{'rhConstantsMap'}{$const};
+	}
+	else
+	{
+		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
+	}
 }
 
 # remap color values in place, where possible
@@ -862,10 +1038,8 @@ sub substituteConstants
 sub lookupConstant
 {
 	my ($color) = @ARG;
-	my ($origColor, $rgb) = ($color);
-	debug("lookupConstant($origColor)", 2);
-	($color, $rgb) = getBothColorValues(uniqueColor($color));
-	my $raConstants = $Var{'rhColorConstantsMap'}{$color} || $Var{'rhColorConstantsMap'}{$rgb};
+	debug("lookupConstant($color)", 2);
+	my $raConstants = lookupColorConstantsMap($color);
 	if ($raConstants)
 	{
 		$color = $raConstants->[0];
@@ -873,11 +1047,6 @@ sub lookupConstant
 		{
 			$color .= qq{ /* @{[join(', ', @$raConstants)]}*/};
 		}
-	}
-	elsif ($color ne $origColor)
-	{
-		debug("lookupConstant() delta $color, $origColor", 3);
-		$color = $origColor;
 	}
 	return $color;
 }
@@ -891,26 +1060,6 @@ sub userRenameColor
 			userHashColorStandard(
 				userToHashColor($color)
 			)
-		)
-	);
-}
-
-# get the nicest name for a color possible. i.e. white
-# or rgba(white, 0.3) for opacity
-# or ~white for something close to white
-sub niceNameColor
-{
-	my ($color) = @ARG;
-	debug("\nniceNameColor($color)", 1);
-	my $bValidOnly = 1;
-	return rgbFromHashColor(
-		colorNames(
-			hashColorStandard(
-				toHashColor(
-					opaqueOrTransparent($color)
-				)
-			),
-			!$bValidOnly
 		)
 	);
 }
@@ -931,8 +1080,8 @@ sub userColorNames
 
 sub colorNames
 {
-	my ($color, $bValid) = @ARG;
-	debug("colorNames($color, @{[$bValid || 0]})", 2);
+	my ($color, $bValidOnly) = @ARG;
+	debug("colorNames($color, @{[$bValidOnly || 0]})", 2);
 #	debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 0.4)';
 
 	$color = opaqueOrTransparent($color);
@@ -962,7 +1111,7 @@ sub colorNames
 		}
 	}
 
-	if (!$bValid)
+	if (!$bValidOnly)
 	{
 		debug("colorNames() 7 allow invalid", 4);
 		if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
@@ -1073,13 +1222,13 @@ sub hashColorStandard
 # convert rgb/hsl format of color to #color form based on command line options
 sub userToHashColor
 {
-	my ($color, $bAlways, $bValid) = @ARG;
+	my ($color, $bAlways, $bValidOnly) = @ARG;
 	if ($bAlways || opt('hash'))
 	{
-		my $rgb = rgbFromHslOrPercent($color, $bValid);
+		my $rgb = rgbFromHslOrPercent($color, $bValidOnly);
 		if ($rgb ne $color)
 		{
-			$color = userCanonicalFromRgb($rgb, $bValid);
+			$color = userCanonicalFromRgb($rgb, $bValidOnly);
 		}
 	}
 	return $color;
@@ -1087,28 +1236,13 @@ sub userToHashColor
 
 sub toHashColor
 {
-	my ($color, $bValid) = @ARG;
-	my $rgb = rgbFromHslOrPercent($color, $bValid);
+	my ($color, $bValidOnly) = @ARG;
+	my $rgb = rgbFromHslOrPercent($color, $bValidOnly);
 	if ($rgb ne $color)
 	{
-		$color = canonicalFromRgb($rgb, $bValid);
+		$color = canonicalFromRgb($rgb, $bValidOnly);
 	}
 	return $color;
-}
-
-# rename a color value based on command line options but ensuring valid CSS
-sub renameColorValid
-{
-	my ($color) = @ARG;
-	my $bValid = 1;
-	my $bAlways = 1;
-	return userColorNames(
-		userRgbFromHashColor(
-			userHashColorStandard(
-				userToHashColor($color, !$bAlways, $bValid)
-			)
-		)
-	);
 }
 
 sub defineAutoConstant
@@ -1120,34 +1254,12 @@ sub defineAutoConstant
 	if (isColorOkToConvertToConstant($color, $origColor, $match))
 	{
 		$const = opt('const-type') . "autoConstant" . scalar(@{$Var{'raAutoConstants'}});
-		$color = uniqueColor($color);
+		$color = userUniqueColor($color);
 		push(@{$Var{'raAutoConstants'}}, $color);
 		registerConstantFromFile($const, $color, $match);
 	}
 	debug("defineAutoConstant() return $const");
 	return $const;
-}
-
-# make unique version of color based on command line options so that color
-# comparisons will work
-sub uniqueColor
-{
-	my ($color) = @ARG;
-	return userColorNames(
-		formatRgbIshColor(
-			userRgbFromHashColor(
-				userHashColorStandard($color)
-			)
-		)
-	);
-}
-
-# fix comma spacing in rgb colors
-sub formatRgbColor
-{
-	my ($color) = @ARG;
-	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgbRgba'};
-	return $color;
 }
 
 # fix comma spacing in rgb/hsl colors
@@ -1156,13 +1268,6 @@ sub formatRgbIshColor
 	my ($color) = @ARG;
 	$color = commas(trim($color)) if $color =~ $Var{'regex'}{'isRgbIsh'};
 	return $color;
-}
-
-sub commas
-{
-	my ($string) = @ARG;
-	$string =~ s{,([^\s])}{, $1}xmsg;
-	return $string;
 }
 
 # convert #rgb color to #rrggbb based on user settings
@@ -1199,38 +1304,6 @@ sub canonical
 	return $color;
 }
 
-# convert #rrggbb color to #rgb based on command line options
-sub userShorten
-{
-	my ($color, $bShorten) = @ARG;
-	if (opt('shorten') || $bShorten)
-	{
-		$color = shorten($color);
-	}
-	return $color;
-}
-
-# convert #rrggbb color to #rgb so output can be compared against uniqueness
-# and lower case the characters
-sub shorten
-{
-	my ($color) = @ARG;
-
-	$color =~ s{
-		$Var{'regex'}{'canShortenColor'}
-	}{
-		lc("#$1$2$3")
-	}xmsgie;
-
-	$color =~ s{
-		$Var{'regex'}{'shortColor'}
-	}{
-		lc("#$1")
-	}xmsgie;
-
-	return $color;
-}
-
 # get both rgb and #color version of color
 sub getBothColorValues
 {
@@ -1260,28 +1333,28 @@ sub getBothColorValues
 # hsla(#color, opacity) becomse rgba(#color, opacity) if option --novalid-only
 sub rgbFromHslOrPercent
 {
-	my ($vals, $bValid) = @ARG;
-	$bValid = $bValid || opt('valid-only');
+	my ($vals, $bValidOnly) = @ARG;
+	$bValidOnly = $bValidOnly || opt('valid-only');
 	$vals =~ s{ $Var{'regex'}{'hslToRgb'} }{ "rgb$1(" . hsl_to_rgb($2, $3, $4) }xmse;
 	$vals =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(" . replacePercent($2) . ',' . replacePercent($3) . ',' . replacePercent($4) }xmse;
-	$vals =~ s{ $Var{'regex'}{'hslInvalid'} }{rgba($1}xmsi if !$bValid;
+	$vals =~ s{ $Var{'regex'}{'hslInvalid'} }{rgba($1}xmsi if !$bValidOnly;
 	return formatRgbIshColor($vals);
 }
 
 # get #color from rgb() or rgba() (not hsl/hsla)
 sub userCanonicalFromRgb
 {
-	my ($rgb, $bValid) = @ARG;
-	$bValid = $bValid || opt('valid-only');
-	$rgb = canonicalFromRgb($rgb, $bValid);
+	my ($rgb, $bValidOnly) = @ARG;
+	$bValidOnly = $bValidOnly || opt('valid-only');
+	$rgb = canonicalFromRgb($rgb, $bValidOnly);
 	return $rgb;
 }
 
 sub canonicalFromRgb
 {
-	my ($rgb, $bValid) = @ARG;
+	my ($rgb, $bValidOnly) = @ARG;
 	$rgb =~ s{ $Var{'regex'}{'rgbCanon'} }{ '#' . toHex($1) . toHex($2) . toHex($3) }xmse;
-	if (!$bValid)
+	if (!$bValidOnly)
 	{
 		$rgb =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(#" . toHex($2) . toHex($3) . toHex($4) }xmse;
 		$rgb = formatRgbIshColor($rgb);
@@ -1342,37 +1415,6 @@ sub hue_to_rgb
 	return $m2 if ($h * 2 < 1);
 	return $m1 + ($m2 - $m1) * (2/3 - $h) * 6 if ($h * 3 < 2);
 	return $m1;
-}
-
-# strip away all spaces
-sub trim
-{
-	my ($str) = @ARG;
-	$str =~ s{\s+}{}xmsg;
-	return $str;
-}
-
-# strip away multiple spaces leaving one
-sub trimToOne
-{
-	my ($str) = @ARG;
-	$str =~ s{\s\s*}{ }xmsg;
-	return $str;
-}
-
-# strip away all leading space in string
-sub trimLeading
-{
-	my ($str) = @ARG;
-	$str =~ s{\A \s*}{}xms;
-	return $str;
-}
-
-# compare ignoring spaces
-sub trimEq
-{
-	my ($a, $b) = @ARG;
-	return trim($a) eq trim($b);
 }
 
 # Must manually check mandatory values present
@@ -1558,6 +1600,7 @@ sub tests
 	testRenameColorNamesCanonical();
 	testGetBothColorValues();
 	testNiceNameColor();
+	testRenameColorValid();
 
 	# unittestcall
 
@@ -1607,26 +1650,26 @@ sub tests
 #	setOpt('valid-only', 1);
 
 	my $bAlways = 1;
-	my $bValid = 1;
+	my $bValidOnly = 1;
 
 	my @Result = ();
 	foreach my $color (@EveryColorFormat)
 	{
-		my @result = userRenameColor($color);
+		my @result = userUniqueColor($color);
 		my $result = join(':', @result);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "niceNameColor $color -> $expect");
+		is($result, $expect, "userUniqueColor $color -> $expect");
 	}
-	wrap("\@NiceNameColorTests", \@Result);
+	wrap("\@UserUniqueColorTests", \@Result);
 
 }
 
 sub testCanonicalFromRgbValid
 {
-	my $bValid = 1;
+	my $bValidOnly = 1;
 	my @CanonicalFromRgbValidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
 		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
@@ -1659,14 +1702,14 @@ sub testCanonicalFromRgbValid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = userCanonicalFromRgb($color, $bValid);
+		my $result = userCanonicalFromRgb($color, $bValidOnly);
 		is($result, $expect, "userCanonicalFromRgb (valid) $color -> $expect");
 	}
 }
 
 sub testCanonicalFromRgbAllowInvalid
 {
-	my $bValid = 1;
+	my $bValidOnly = 1;
 	my @CanonicalFromRgbAllowInvalidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
 		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
@@ -1706,14 +1749,14 @@ sub testCanonicalFromRgbAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = userCanonicalFromRgb($color, !$bValid);
+		my $result = userCanonicalFromRgb($color, !$bValidOnly);
 		is($result, $expect, "userCanonicalFromRgb (!valid) $color -> $expect");
 	}
 }
 
 sub testRgbFromHslOrPercentValid
 {
-	my $bValid = 1;
+	my $bValidOnly = 1;
 	my @RgbFromHslOrPercentValidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
 		'rgb(255,255,255):rgb(255, 255, 255)',
@@ -1754,14 +1797,14 @@ sub testRgbFromHslOrPercentValid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = rgbFromHslOrPercent($color, $bValid);
+		my $result = rgbFromHslOrPercent($color, $bValidOnly);
 		is($result, $expect, "rgbFromHslOrPercent (valid) $color -> $expect");
 	}
 }
 
 sub testRgbFromHslOrPercentAllowInvalid
 {
-	my $bValid = 1;
+	my $bValidOnly = 1;
 	my @RgbFromHslOrPercentAllowInvalidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
 		'rgb(255,255,255):rgb(255, 255, 255)',
@@ -1802,7 +1845,7 @@ sub testRgbFromHslOrPercentAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = rgbFromHslOrPercent($color, !$bValid);
+		my $result = rgbFromHslOrPercent($color, !$bValidOnly);
 		is($result, $expect, "rgbFromHslOrPercent (!valid) $color -> $expect");
 	}
 }
@@ -1810,7 +1853,7 @@ sub testRgbFromHslOrPercentAllowInvalid
 sub testUserToHashColorValid
 {
 	my $bAlways = 1;
-	my $bValid = 1;
+	my $bValidOnly = 1;
 	my @ToHashColorValidTests = (
 		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red", "rgb(255,255,255):#ffffff",
 		"rgb(100%,100%,100%):#ffffff", "rgb( 255 , 255 , 255 ):#ffffff",
@@ -1848,7 +1891,7 @@ sub testUserToHashColorValid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = userToHashColor($color, $bAlways, $bValid);
+		my $result = userToHashColor($color, $bAlways, $bValidOnly);
 
 		is($result, $expect, "userToHashColor (valid) $color -> $expect");
 	}
@@ -1857,7 +1900,7 @@ sub testUserToHashColorValid
 sub testUserToHashColorAllowInvalid
 {
 	my $bAlways = 1;
-	my $bValid = 1;
+	my $bValidOnly = 1;
 	my @UserToHashColorAllowInvalidTests = (
 		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red", "rgb(255,255,255):#ffffff",
 		"rgb(100%,100%,100%):#ffffff", "rgb( 255 , 255 , 255 ):#ffffff",
@@ -1895,7 +1938,7 @@ sub testUserToHashColorAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-		my $result = userToHashColor($color, $bAlways, !$bValid);
+		my $result = userToHashColor($color, $bAlways, !$bValidOnly);
 
 		is($result, $expect, "userToHashColor (!valid) $color -> $expect");
 	}
@@ -2233,6 +2276,57 @@ sub testNiceNameColor
 
 		is($result, $expect, "niceNameColor $color -> $expect");
 	}
+}
+
+sub testRenameColorValid
+{
+	my @UserRenameColorValidTests = (
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
+		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white',
+		'rgba( 255 , 255 , 255 , 1.0 ):white',
+		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
+		'rgba(255,255,255,0.0):transparent',
+		'rgba(100%,100%,100%,0.0):transparent',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
+		'hsla(0,100%,100%,0.0):transparent',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
+		'rgba(255,255,255,0.5):rgba(white, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(100%, 100%, 100%, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(100%, 100%, 100%, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
+		'hsla(white,0.5):hsla(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	setOpt('canonical', 1);
+	setOpt('hash', 1);
+	setOpt('names', 1);
+
+	foreach my $colorResult (@UserRenameColorValidTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = userRenameColorValid($color);
+
+		is($result, $expect, "userRenameColorValid $color -> $expect");
+	}
+
+	setOpt('canonical', 0);
+	setOpt('hash', 0);
+	setOpt('names', 0);
 }
 
 # unittestimpl
