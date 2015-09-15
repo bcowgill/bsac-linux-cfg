@@ -92,6 +92,18 @@ scan-js.pl [options] [@options-file ...] [file ...]
  assumes the code is pretty clean, not minified, etc. It will not look
  for obfuscated function definitions for example.
 
+=head1 GRUNT SETUP
+
+In order to allow this script to use jshint to check how clean your code is you need a build target in your Gruntfile.js which enables jshint checking of a single file.
+
+	jshint: {
+		single: {
+			// grunt jshint:single --check-file filename
+			src: [grunt.option('check-file') || 'package.json']
+		},
+		...
+	}
+
 =head1 EXAMPLES
 
  scan-js.pl template/unminified/jquery-2.1.1.js
