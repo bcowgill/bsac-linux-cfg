@@ -7,6 +7,11 @@ FORTUNES=`ls *.fortune`
 
 for file in $FORTUNES
 do
+	if grep CRLF $file > /dev/null; then
+		echo OK file has unix newlines
+	else
+		dos2unix $file
+	fi
 	strfile -r $file
 	echo "test fortune file locally"
 	fortune `pwd`/$file
