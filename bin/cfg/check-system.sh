@@ -1238,7 +1238,8 @@ if [ ! -z $SUBLIME_PKG ]; then
 	file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
 	file_has_text $FILE "Packages/Color Scheme - Default/Cobalt.tmTheme"
 	file_has_text $FILE "ProFontWindows"
-	file_contains_text $FILE "font_size.: 16"
+#	file_contains_text $FILE "font_size.: 16"
+	file_contains_text $FILE "font_size.: 23"
 
 	DIR="$SUBLIME_CFG/Packages/Theme - Default"
 	FILE="$DIR/Default.sublime-theme"
