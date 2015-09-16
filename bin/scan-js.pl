@@ -462,13 +462,20 @@ sub findFunctionReferences
 
 sub jshintFile
 {
-	if (system("grunt jshint:single --check-file $Var{fileName} > /dev/null"))
+	if (system("grunt jshint:single --check-file $Var{fileName} > jshint.out"))
 	{
-		warning("error invoking grunt jshint:single on $Var{fileName}");
+		#warning("error invoking grunt jshint:single on $Var{fileName}");
+#		my $rContent = read_file( "jshint.out", scalar_ref => 1 );
+#		$$rContent =~ s{\\A \\s* \\^}{}xms'
+		my $jshintWarnings = `perl -ne 'print if s{\\A \\s* \\^}{}xms' jshint.out`;
+		foreach my $warn (split(/\n/, $jshintWarnings))
+		{
+			warning("jshint $warn");
+		}
 	}
 	else
 	{
-		print "MUSTDO jshint OK\n";
+		print "jshint OK\n";
 	}
 }
 
@@ -491,7 +498,9 @@ sub findFunctions
 	#	something: function (
 	#	function something(
 
-	$line =~ s{(\w+) \s* [=:] \s* function \s* \(}{
+	# method = function Named (
+	# method = function (
+	$line =~ s{(\w+) \s* = \s* \b function \b \w* \s* \(}{
 		registerFunction({
 			function => $1,
 			access => getFunctionType($1),
@@ -499,7 +508,22 @@ sub findFunctions
 		});
 		""
 	}xmsge;
-	$line =~ s{function \s+ (\w+) \s* \(}{
+
+	# method : function Named (
+	# method : function (
+	# 'method' : function Named (
+	# "method" : function (
+	$line =~ s{(\w+) ['"]? \s* : \s* \b function \b \s* \w* \s* \(}{
+		registerFunction({
+			function => $1,
+			access => getFunctionType($1),
+			line => $lines_seen,
+		});
+		""
+	}xmsge;
+
+	# function Named (
+	$line =~ s{function \b \s* (\w+) \s* \(}{
 		debug("findFunctions match [$1]", 4);
 		debug("findFunctions lines_seen [$lines_seen]", 4);
 		registerFunction({
@@ -509,6 +533,8 @@ sub findFunctions
 		});
 		""
 	}xmsge;
+
+	# function (  anonymous not handled
 }
 
 sub getFunctionType
