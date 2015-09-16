@@ -951,6 +951,7 @@ if [ ! -z $DROPBOX_URL ]; then
 	# TODO workshare customise file and copy?
 	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+	dir_linked_to Pictures/WorkSafe $HOME/Dropbox/WorkSafe "link pictures dir to WorkSafe screen saver images"
 fi # DROPBOX_URL
 
 # Thunderbird
