@@ -112,6 +112,8 @@ In order to allow this script to use jshint to check how clean your code is you 
 
  scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
 
+ FILES=`git diff --name-status $FROM $TO | perl -pne 's{\A [AM] \s+}{}xms'`; for file in $FILES; do scan-js.pl $file; done
+
 =head1 TODO
 
  order output with public then private
