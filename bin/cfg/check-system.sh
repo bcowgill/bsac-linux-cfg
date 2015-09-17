@@ -196,6 +196,7 @@ fi
 if /bin/false ; then
 # some notes done how to set up then robot framework browser test system
 # for workshare.
+# https://github.com/workshare/qa
 	ROBOT_TEST="pip:python-pip"
 	commands pip, pybot needed
 	sudo pip install robotframework==2.8.7
