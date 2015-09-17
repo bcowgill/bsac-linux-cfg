@@ -81,7 +81,7 @@ fi
 # constant definitions
 # pull constants
 
-echo TEST $CMD GREPMODE no options set
+echo TEST $CMD GREPMODE1 no options set
 TEST=grep-no-options
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -94,7 +94,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD GREPMODE all options turned off acts as a grep for CSS color declarations
+echo TEST $CMD GREPMODE2 all options turned off acts as a grep for CSS color declarations
 TEST=grep-noecho-noreverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -107,7 +107,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD GREPMODE From file and --reverse only acts as a grep -v for CSS color declarations
+echo TEST $CMD GREPMODE3 From file and --reverse only acts as a grep -v for CSS color declarations
 TEST=grep-noecho-reverse-nocolor-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -120,7 +120,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD GREPMODE --color-only greps and shows only the CSS color values
+echo TEST $CMD GREPMODE4 --color-only greps and shows only the CSS color values
 TEST=grep-noecho-noreverse-color-noremap-nocanon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -133,7 +133,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD GREPMODE --remap only without --names or --canonical just acts as grep and replaces colors with defined constants
+echo TEST $CMD GREPMODE5 --remap only without --names or --canonical just acts as grep and replaces colors with defined constants
 TEST=grep-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -146,7 +146,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST constants with errors
+echo TEST $CMD CONST1 constants with errors
 TEST=const-errors
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -164,7 +164,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST lessc constants defined by hand canonical names
+echo TEST $CMD CONST2 lessc constants defined by hand canonical names
 TEST=const-manually-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -181,7 +181,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST lessc constants defined by hand canonical rgb
+echo TEST $CMD CONST3 lessc constants defined by hand canonical rgb
 TEST=const-manually-canon-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -197,7 +197,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST constants defined in a file allow invalid CSS
+echo TEST $CMD CONST4 constants defined in a file allow invalid CSS
 TEST=const-file-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -214,7 +214,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST constants defined in a file
+echo TEST $CMD CONST5 constants defined in a file
 TEST=const-file-canon-names-valid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -271,7 +271,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE show original and changed value, --canonical only implies --remap
+echo TEST $CMD ECHOMODE1 show original and changed value, --canonical only implies --remap
 TEST=echo-canon
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -284,7 +284,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --shorten only implies --remap
+echo TEST $CMD ECHOMODE2 --shorten only implies --remap
 TEST=echo-shorten
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -298,7 +298,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --hash --valid-only only implies --remap
+echo TEST $CMD ECHOMODE3 --hash --valid-only only implies --remap
 TEST=echo-hash-valid-only
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -312,7 +312,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --hash --novalid-only shows color of rgba/hsla values
+echo TEST $CMD ECHOMODE4 --hash --novalid-only shows color of rgba/hsla values
 TEST=echo-hash
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -326,7 +326,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --names only implies --remap, --canonical, --hash
+echo TEST $CMD ECHOMODE5 --names only implies --remap, --canonical, --hash
 TEST=echo-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -339,7 +339,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --names and --valid-only
+echo TEST $CMD ECHOMODE6 --names and --valid-only
 TEST=echo-names-valid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -352,7 +352,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD ECHOMODE --rgb color mode
+echo TEST $CMD ECHOMODE7 --rgb color mode
 TEST=echo-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -365,7 +365,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST ECHOMODE remap colours with constants defined in a file
+echo TEST $CMD CONST ECHOMODE1 remap colours with constants defined in a file
 TEST=echo-const-file-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -382,9 +382,29 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD CONST ECHOMODE2 remap colours and pull new constants no rename
+TEST=echo-const-file-pull-canonical
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	OUT_NEW_CONST=out/$TEST.pulled.out
+	BASE=base/$TEST.base
+	BASE_NEW_CONST=base/$TEST.pulled.base
+	ARGS="$DEBUG --echo --valid-only --canonical \
+	--const-type=less --const-pull=$OUT_NEW_CONST"
+	echo $PROGRAM $ARGS "$OUT"
+	$PROGRAM $ARGS <"$SAMPLE" > "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 # TODO rename to remap- prefix
 
-echo TEST $CMD REMAPMODE --canonical only implies --remap
+echo TEST $CMD REMAPMODE1 --canonical only implies --remap
 TEST=remap-noreverse-nocolor-noremap-canon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -397,7 +417,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD REMAPMODE --shorten only implies --remap
+echo TEST $CMD REMAPMODE2 --shorten only implies --remap
 TEST=remap-noreverse-nocolor-noremap-shorten-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -411,7 +431,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD REMAPMODE --names only implies --remap and --canonical
+echo TEST $CMD REMAPMODE3 --names only implies --remap and --canonical
 TEST=remap-noreverse-nocolor-noremap-nocanon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -424,7 +444,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD REMAPMODE --remap --canonical and --names against previous test base file
+echo TEST $CMD REMAPMODE4 --remap --canonical and --names against previous test base file
 TEST=remap-noreverse-nocolor-remap-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -437,7 +457,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD REMAPMODE --rgb only implies --remap and --canonical
+echo TEST $CMD REMAPMODE5 --rgb only implies --remap and --canonical
 TEST=remap-noreverse-nocolor-noremap-nocanon-nonames-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -450,7 +470,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo "TEST $CMD REMAPMODE --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
+echo "TEST $CMD REMAPMODE6 --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
 TEST=remap-validonly-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -481,7 +501,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file
+echo TEST $CMD CONST REMAPMODE1 remap colours with constants defined in a file
 TEST=const-file-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -498,7 +518,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST REMAPMODE remap colours with constants defined in a file list options
+echo TEST $CMD CONST REMAPMODE2 remap colours with constants defined in a file list options
 TEST=const-file-remap-list
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -515,7 +535,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST REMAPMODE remap colours and pull new constants
+echo TEST $CMD CONST REMAPMODE3 remap colours and pull new constants
 TEST=const-file-pull
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -536,7 +556,9 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST REMAPMODE remap colours and pull new constants no rename
+SKIP=1
+
+echo TEST $CMD CONST REMAPMODE4 remap colours and pull new constants no rename
 TEST=const-file-pull-canonical
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -557,7 +579,6 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-SKIP=1
 
 echo TEST $CMD parameters passed to rules
 TEST=const-rules-have-parameters
