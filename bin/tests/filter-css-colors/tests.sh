@@ -382,7 +382,6 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-
 # TODO rename to remap- prefix
 
 echo TEST $CMD REMAPMODE --canonical only implies --remap
@@ -525,7 +524,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT_NEW_CONST=out/$TEST.pulled.out
 	BASE=base/$TEST.base
 	BASE_NEW_CONST=base/$TEST.pulled.base
-	ARGS="$DEBUG --remap --shorten --names --valid \
+	ARGS="$DEBUG --remap --shorten --names --valid-only \
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
 	#echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"
@@ -546,7 +545,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT_NEW_CONST=out/$TEST.pulled.out
 	BASE=base/$TEST.base
 	BASE_NEW_CONST=base/$TEST.pulled.base
-	ARGS="$DEBUG --valid --canonical \
+	ARGS="$DEBUG --valid-only --canonical \
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST"
 	echo cp "$SAMPLE" "$OUT" \; $PROGRAM $ARGS "$OUT"
 	cp "$SAMPLE" "$OUT"
@@ -569,7 +568,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT_NEW_CONST=out/$TEST.pulled.out
 	BASE=base/$TEST.base
 	BASE_NEW_CONST=base/$TEST.pulled.base
-	ARGS="$DEBUG --valid --canonical \
+	ARGS="$DEBUG --valid-only --canonical \
 	--inplace=.bak --const-type=less --const-pull=$OUT_NEW_CONST\
 	--const-file=in/variables.less"
 	#echo cp "$SAMPLE_RULE_PARAMS" "$OUT" \; $PROGRAM $ARGS "$OUT"
