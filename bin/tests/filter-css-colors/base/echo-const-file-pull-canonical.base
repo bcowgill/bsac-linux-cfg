@@ -1,0 +1,90 @@
+
+was: color: white;
+     color: @autoConstant0;
+
+was: color: #fFfFfF;
+     color: @autoConstant1;
+
+was: color: #FFF;
+     color: @autoConstant1;
+
+was: color: transparent;
+     color: transparent;
+
+was: color: rgb(255,255,255);
+     color: @autoConstant1;
+
+was: color: rgb(100%,100%,100%);
+     color: @autoConstant1;
+
+was: color: rgba(255,255,255,0);
+     color: @autoConstant2;
+
+was: color: rgba(100%,100%,100%,0);
+     color: @autoConstant2;
+
+was: color: rgba(255,255,255,0.4);
+     color: @autoConstant3;
+
+was: color: rgba(100%,100%,100%,0.5);
+     color: @autoConstant4;
+
+was: color: rgb(  255  ,  255  ,  255  );
+     color: @autoConstant1;
+
+was: color: rgb(  100%  ,  100%  ,  100%  );
+     color: @autoConstant1;
+
+was: color: rgba(  255  ,  255  ,  255  ,  0  );
+     color: @autoConstant2;
+
+was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+     color: @autoConstant4;
+
+was: color: rgba(  255  ,  255  ,  255  ,  0.4  );
+     color: @autoConstant3;
+
+was: color: rgba(  100%  ,  100%  ,  100%  ,  0.5);
+     color: @autoConstant4;
+
+was: color: hsl(360,100%,100%);
+     color: @autoConstant1;
+
+was: color: hsl(  360  ,  100%  ,  100%  );
+     color: @autoConstant1;
+
+was: color: hsla(360,100%,100%,0);
+     color: @autoConstant2;
+
+was: color: hsla(  360  ,  100%  ,  100%  ,  0);
+     color: @autoConstant2;
+
+was: color: hsla(  360  ,  100%  ,  100%  ,  0.4);
+     color: @autoConstant3;
+
+was: * { color: hsl(0, 100%, 50%) }   /* red */
+     * { color: @autoConstant5 }   /* red */
+
+was: * { color: hsl(120, 100%, 50%) } /* lime */
+     * { color: @autoConstant6 } /* lime */
+
+was: * { color: hsl(120, 100%, 25%) } /* dark green */
+     * { color: @autoConstant7 } /* dark green */
+
+was: * { color: hsl(120, 100%, 75%) } /* light green */
+     * { color: @autoConstant8 } /* light green */
+
+was: * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+     * { color: @autoConstant9 }  /* pastel green, and so on */
+
+was: em { color: hsl(120, 100%, 50%) }     /* green */
+     em { color: @autoConstant6 }     /* green */
+
+was: em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
+     em { color: @autoConstant10 } /* the same, with explicit opacity of 1 */
+
+was: @darker-grey: #f4f5f6;
+     @darker-grey: @autoConstant11;
+
+was: border-bottom: 4px solid transparent;
+     border-bottom: 4px solid transparent;
