@@ -101,7 +101,8 @@ dropbox.sh &
 sleep 1
 #i3-msg "workspace $vbox; exec xscreensaver-demo"
 i3-msg "workspace $vbox; exec virtualbox" # placeholder to lock screen
-sleep 1
+i3-msg "workspace $vbox; exec calibre"
+sleep 2
 # $email
 i3-msg "workspace $email; exec i3-sensible-terminal"
 sleep 1
