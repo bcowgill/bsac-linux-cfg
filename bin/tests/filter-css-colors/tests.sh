@@ -386,7 +386,7 @@ fi
 # TODO rename to remap- prefix
 
 echo TEST $CMD REMAPMODE --canonical only implies --remap
-TEST=noecho-noreverse-nocolor-noremap-canon-nonames
+TEST=remap-noreverse-nocolor-noremap-canon-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -399,7 +399,7 @@ else
 fi
 
 echo TEST $CMD REMAPMODE --shorten only implies --remap
-TEST=noecho-noreverse-nocolor-noremap-shorten-nonames
+TEST=remap-noreverse-nocolor-noremap-shorten-nonames
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -413,7 +413,7 @@ else
 fi
 
 echo TEST $CMD REMAPMODE --names only implies --remap and --canonical
-TEST=noecho-noreverse-nocolor-noremap-nocanon-names
+TEST=remap-noreverse-nocolor-noremap-nocanon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -426,11 +426,11 @@ else
 fi
 
 echo TEST $CMD REMAPMODE --remap --canonical and --names against previous test base file
-TEST=noecho-noreverse-nocolor-remap-canon-names
+TEST=remap-noreverse-nocolor-remap-canon-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
-	BASE=base/noecho-noreverse-nocolor-noremap-nocanon-names.base
+	BASE=base/remap-noreverse-nocolor-noremap-nocanon-names.base
 	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --canonical --names"
 	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -439,7 +439,7 @@ else
 fi
 
 echo TEST $CMD REMAPMODE --rgb only implies --remap and --canonical
-TEST=noecho-noreverse-nocolor-noremap-nocanon-nonames-rgb
+TEST=remap-noreverse-nocolor-noremap-nocanon-nonames-rgb
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -452,7 +452,7 @@ else
 fi
 
 echo "TEST $CMD REMAPMODE --valid-only --names will not convert rgba(0,0,0,0.3) to rgba(black,0.3)"
-TEST=validonly-names
+TEST=remap-validonly-names
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
