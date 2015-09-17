@@ -193,6 +193,20 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	SASS_COMMANDS=""
 fi
 
+if /bin/false ; then
+# some notes done how to set up then robot framework browser test system
+# for workshare.
+	ROBOT_TEST="pip:python-pip"
+	commands pip, pybot needed
+	sudo pip install robotframework==2.8.7
+	sudo pip install robotframework-selenium2library==1.6.0
+	sudo pip install ntplib
+	sudo easy_install -U pip
+	sudo pip install requests
+	sudo pip install robotframework-debuglibrary
+	sudo pip install robotframework-imaplibrary
+fi
+
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
 
