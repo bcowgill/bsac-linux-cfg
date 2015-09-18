@@ -176,8 +176,6 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	USE_SUBLIME=""
 	USE_KDE=""
 	GOOGLE_CHROME_PKG=""
-	CHARLES=""
-	CHARLES_PKG=""
 	BIG_DATA="/data"
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	SKYPE_PKG=""

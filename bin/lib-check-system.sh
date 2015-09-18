@@ -1519,6 +1519,38 @@ function file_must_not_have_text {
    return 0
 }
 
+# exact check for text in file which uses # for comment lines
+function commented_file_has_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file" "$message"
+   if egrep -v '^#' "$file" | grep "$text" > /dev/null; then
+      OK "file has text: \"$file\" \"$text\""
+   else
+      NOT_OK "file missing text: \"$file\" \"$text\" [$message]" && echo grep \""$text"\" \""$file"\"
+      return 1
+   fi
+   return 0
+}
+
+function commented_file_must_not_have_text {
+   local file text message
+   file="$1"
+   text="$2"
+   message="$3"
+   file_exists "$file" "$message"
+   if egrep -v '^#' "$file" | grep "$text" > /dev/null; then
+      NOT_OK "file should not have text: "$file" "$text" [$message]"
+      return 1
+   else
+      OK "file does not have text: \"$file\" \"$text\""
+      echo grep \""$text"\" \""$file"\"
+   fi
+   return 0
+}
+
 function ini_file_has_text {
    local dir file text message
    dir=`dirname "$1"`
@@ -1574,14 +1606,14 @@ function apt_has_source {
    local source message
    source="$1"
    message="$2"
-   file_has_text /etc/apt/sources.list "$source" "$message" || (sudo add-apt-repository "$source" && touch go.sudo)
+   commented_file_has_text /etc/apt/sources.list "$source" "$message" || (sudo add-apt-repository "$source" && touch go.sudo)
 }
 
 function apt_must_not_have_source {
    local source message
    source="$1"
    message="$2"
-   file_must_not_have_text /etc/apt/sources.list "$source" "$message"
+   commented_file_must_not_have_text /etc/apt/sources.list "$source" "$message"
 }
 
 function apt_has_key {
