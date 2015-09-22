@@ -121,9 +121,9 @@ sleep 1
 # A/B should be terminals with build/watch running
 # C should be browser
 i3-msg workspace $build
-xbuild-deal.sh &
+xbuild-files.sh &
 sleep 1
-i3-msg mark deal
+i3-msg mark watch
 
 i3-msg "layout default; split v"
 xbuild-newui.sh &
