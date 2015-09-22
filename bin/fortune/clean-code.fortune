@@ -5,6 +5,54 @@ Names: Use Intention-Revealing Names
 The name of a variable, function, or class, should answer all the big questions. It should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent.
 Clean Code, Robert C. Martin, p18
 %
+Names: Avoid Disinformation
+Clean Code, Robert C. Martin, p19
+%
+Names: Make Meaningful Distinctions
+Clean Code, Robert C. Martin, p20
+%
+Names: Use Pronounceable Names
+Clean Code, Robert C. Martin, p21
+%
+Names: Avoid Mental Mapping
+Clean Code, Robert C. Martin, p25
+%
+Names: Don't Be Cute
+Clean Code, Robert C. Martin, p26
+%
+Names: Pick One Word Per Concept
+Clean Code, Robert C. Martin, p26
+%
+Names: Don't Pun
+Clean Code, Robert C. Martin, p26
+%
+Names: Use Solution Domain Names
+Clean Code, Robert C. Martin, p27
+%
+Names: Use Problem Domain Names
+Clean Code, Robert C. Martin, p27
+%
+Names: Add Meaningful Context
+Clean Code, Robert C. Martin, p27
+%
+Names: Don't Add Gratuitous Context
+Clean Code, Robert C. Martin, p29
+%
+The XII Commandments of Names:
+i: Use Intention-Revealing Names
+ii: Avoid Disinformation
+iii: Make Meaningful Distinctions
+iv: Use Pronounceable Names
+v: Avoid Mental Mapping
+vi: Don't Be Cute
+vii: Pick One Word Per Concept
+viii: Don't Pun
+ix: Use Solution Domain Names
+x: Use Problem Domain Names
+xi: Add Meaningful Context
+xii: Don't Add Gratuitous Context
+Clean Code, Robert C. Martin, p18-29
+%
 Classes:
 The first rule of classes is that they should be small.
 The second rule of classes is that they should be smaller than that.
