@@ -1,5 +1,44 @@
+Demanding Professionalism in Software Development:
+
+We will not ship shit!
+Always be ready to ship.
+Have Stable Productivity.
+Build Inexpensive Adaptability.
+Continuously Improve the code. (The Boy Scout rule)
+Have Fearless Competence. (TDD)
+Extreme Quality
+QA  Will Find Nothing.
+(QA Should Wonder Why they Are There.)
+We cover for each other.
+Honest Estimates. "I Don't know" or a range of values constantly updated.
+We will say "No" when we have to.
+We will say "Yes" when we believe it.
+We never "Try."
+Automate Everything!
+Continuous Aggressive Learning (on your own time)
+Mentoring
+
+Robert C. Martin, youtube
+%
 Leave the code cleaner than you found it. If we all checked-in our code a little cleaner than when we checked it out, the code simply could not rot.
 Clean Code, Robert C. Martin, p14
+%
+The XII Commandments of Names:
+
+i: Use Intention-Revealing Names
+ii: Avoid Disinformation
+iii: Make Meaningful Distinctions
+iv: Use Pronounceable Names
+v: Avoid Mental Mapping
+vi: Don't Be Cute
+vii: Pick One Word Per Concept
+viii: Don't Pun
+ix: Use Solution Domain Names
+x: Use Problem Domain Names
+xi: Add Meaningful Context
+xii: Don't Add Gratuitous Context
+
+Clean Code, Robert C. Martin, p18-29
 %
 Names: Use Intention-Revealing Names
 The name of a variable, function, or class, should answer all the big questions. It should tell you why it exists, what it does, and how it is used. If a name requires a comment, then the name does not reveal its intent.
@@ -37,21 +76,6 @@ Clean Code, Robert C. Martin, p27
 %
 Names: Don't Add Gratuitous Context
 Clean Code, Robert C. Martin, p29
-%
-The XII Commandments of Names:
-i: Use Intention-Revealing Names
-ii: Avoid Disinformation
-iii: Make Meaningful Distinctions
-iv: Use Pronounceable Names
-v: Avoid Mental Mapping
-vi: Don't Be Cute
-vii: Pick One Word Per Concept
-viii: Don't Pun
-ix: Use Solution Domain Names
-x: Use Problem Domain Names
-xi: Add Meaningful Context
-xii: Don't Add Gratuitous Context
-Clean Code, Robert C. Martin, p18-29
 %
 Classes:
 The first rule of classes is that they should be small.
