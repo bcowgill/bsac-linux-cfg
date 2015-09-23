@@ -7,10 +7,20 @@ var BaseClass = require('Base'),
 
 var MyClass = BaseClass.extend({
     initialize: function () {
-        // keep track of what class we are and our parents to ease debugging
-        this._inherits = _.union(this._inherits || [], ['MyClass', 'BaseClass', 'MixinClass']);
-        Super.initialize.apply(this);
+        // track inheritance for easy debugging
+        this._inherits = _.union(this._inherits || [],
+            ['MyClass', 'BaseClass', 'MixinClass']);
+
+        Super.initialize.apply(this, arguments);
+
+        // pick some of the options from those passed in to store in this
+        _.extend(this, _.pick(options, [
+            "prop1"
+        ]));
+
     }
 
 });
 _.extend(MyClass.prototype, require('MixinClass'));
+
+
