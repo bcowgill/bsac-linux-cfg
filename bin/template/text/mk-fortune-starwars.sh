@@ -15,7 +15,7 @@ do
 	echo '%' >> $FORTUNE
 done
 
-for crawl in `ls starwars/*.txt`
+for crawl in `cat starwars.lst`
 do
 	cat $crawl >> $FORTUNE
 	echo '%' >> $FORTUNE
