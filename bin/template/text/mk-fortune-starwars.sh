@@ -17,7 +17,7 @@ done
 
 for crawl in `cat starwars.lst`
 do
-	cat $crawl >> $FORTUNE
+	cat starwars-crawl/$crawl >> $FORTUNE
 	echo '%' >> $FORTUNE
 done
 
