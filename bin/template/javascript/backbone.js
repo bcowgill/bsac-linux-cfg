@@ -23,4 +23,15 @@ var MyClass = BaseClass.extend({
 });
 _.extend(MyClass.prototype, require('MixinClass'));
 
+var mockFactory = require('mockFactory');
+
+beforeEach(function() {
+    mockFactory.createApplication();
+    this.requests = mockFactory.installFakeAjax();
+});
+
+afterEach(function() {
+    mockFactory.uninstallFakeAjax();
+    mockFactory.deleteApplication();
+});
 

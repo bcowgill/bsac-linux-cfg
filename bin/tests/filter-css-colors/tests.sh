@@ -557,7 +557,6 @@ else
 fi
 
 SKIP=1
-
 echo TEST $CMD CONST REMAPMODE4 remap colours and pull new constants no rename
 TEST=const-file-pull-canonical
 if [ 0 == "$SKIP" ]; then
