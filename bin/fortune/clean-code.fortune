@@ -6,7 +6,7 @@ Have Stable Productivity.
 Build Inexpensive Adaptability.
 Continuously Improve the code. (The Boy Scout rule)
 Have Fearless Competence. (TDD)
-Extreme Quality
+Extreme Quality.
 QA  Will Find Nothing.
 (QA Should Wonder Why they Are There.)
 We cover for each other.
@@ -15,28 +15,30 @@ We will say "No" when we have to.
 We will say "Yes" when we believe it.
 We never "Try."
 Automate Everything!
-Continuous Aggressive Learning (on your own time)
-Mentoring
+Continuous Aggressive Learning. (on your own time)
+Mentoring.
 
 Robert C. Martin, youtube
 %
 Leave the code cleaner than you found it. If we all checked-in our code a little cleaner than when we checked it out, the code simply could not rot.
 Clean Code, Robert C. Martin, p14
 %
-The XII Commandments of Names:
+The XIV Commandments of Names:
 
-i: Use Intention-Revealing Names
-ii: Avoid Disinformation
-iii: Make Meaningful Distinctions
-iv: Use Pronounceable Names
-v: Avoid Mental Mapping
-vi: Don't Be Cute
-vii: Pick One Word Per Concept
-viii: Don't Pun
-ix: Use Solution Domain Names
-x: Use Problem Domain Names
-xi: Add Meaningful Context
-xii: Don't Add Gratuitous Context
+i Use Intention-Revealing Names
+ii Avoid Disinformation
+iii Make Meaningful Distinctions
+iv Use Pronounceable Names
+v Use Searchable Names
+vi Avoid Encodings
+vii Avoid Mental Mapping
+viii Don't Be Cute
+ix Pick One Word Per Concept
+x Don't Pun
+xi Use Solution Domain Names
+xii Use Problem Domain Names
+xiii Add Meaningful Context
+xiv Don't Add Gratuitous Context
 
 Clean Code, Robert C. Martin, p18-29
 %
@@ -48,34 +50,91 @@ Names: Avoid Disinformation
 Clean Code, Robert C. Martin, p19
 %
 Names: Make Meaningful Distinctions
+Don't add meaningless words or numbers to names just to satisfy the compiler.
 Clean Code, Robert C. Martin, p20
 %
 Names: Use Pronounceable Names
 Clean Code, Robert C. Martin, p21
 %
+Names: Use Searchable Names
+Single letter names can only be used as local variables inside short methods. The length of a name should correspond to the size of its scope.
+Clean Code, Robert C. Martin, p22
+%
+Names: Avoid Encodings
+Hungarian notation or member variable prefixes are no longer needed. Prefer to encode implmentation class names instead of interface class names. i.e. ShapeFactoryImp
+Clean Code, Robert C. Martin, p25
+%
 Names: Avoid Mental Mapping
+Classes and objects should have noun or noun phrase names. Avoid words like Manager, Processor, Data or Info. A class name should not be a verb.
+Methods should have verb or verb phrase names. Accessors, mutators, and predicates should be named for their value and prefixed with get, set, is, has, can.
 Clean Code, Robert C. Martin, p25
 %
 Names: Don't Be Cute
+Choose clarity over entertainment value. Say what you mean. Mean what you say.
 Clean Code, Robert C. Martin, p26
 %
 Names: Pick One Word Per Concept
+A consistent lexicon is a great boon to the programmers who must use your code.
 Clean Code, Robert C. Martin, p26
 %
 Names: Don't Pun
+Avoid using the same word for two purposes.
 Clean Code, Robert C. Martin, p26
 %
 Names: Use Solution Domain Names
+
 Clean Code, Robert C. Martin, p27
 %
 Names: Use Problem Domain Names
 Clean Code, Robert C. Martin, p27
 %
 Names: Add Meaningful Context
+Add prefixes or suffixes to names as a last resort when necessary to give proper context to a name.
 Clean Code, Robert C. Martin, p27
 %
 Names: Don't Add Gratuitous Context
+Shorter names are generally better than longer ones, so long as they are clear. Add no more context to a name than is necessary.
 Clean Code, Robert C. Martin, p29
+%
+Functions should do one thing. They should do it well. They should do it only.
+%
+Functions should be:
+
+Small!
+Have no room for nested structures.
+Do One Thing.
+Have No Sections.
+One Level of Abstraction Per Function.
+Read From Top to Bottom Stepping Down to More Abstraction.
+
+Clean Code, Robert C. Martin, p31-49
+%
+Functions:
+The first rule of functions is that they should be small.
+The second rule of functions is that they should be smaller than that.
+
+Clean Code, Robert C. Martin, p34
+%
+Functions should be so small they don't have room for nested structures. They should have one or two indention levels at most.
+Clean Code, Robert C. Martin, p35
+%
+Functions that do one thing cannot be reasonably divided into sections.
+Clean Code, Robert C. Martin, p36
+%
+A function is doing more than "one thing" if you can extract another function from it with a name that is not merely a restatement of its implementation.
+
+Clean Code, Robert C. Martin, p36
+%
+Switch Statements:
+
+Should appear only once.
+Should be used to create polymorpic objects.
+Should be hidden behind an inheritance relationship so that the rest of the system can't see them.
+
+Clean Code, Robert C. Martin, p38
+%
+Switch statements should be buried in the basement of an Abstract Factory and never seen.
+Clean Code, Robert C. Martin, p38
 %
 Classes:
 The first rule of classes is that they should be small.
