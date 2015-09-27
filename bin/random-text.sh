@@ -71,7 +71,7 @@ do
 	if [ $MODE == text ]; then
 		pick fortune
 		which fortune   > /dev/null && choose "fortune -l"
-		which cat       > /dev/null && choose "cat `find $HOME/bin/template/text/starwars/ -type f | choose.pl`"
+#		which cat       > /dev/null && choose "cat `find $HOME/bin/fortune/starwars/ -type f | choose.pl`"
 		which cat       > /dev/null && chooseN "cat `find $HOME/bin/template/unicode/ -type f | choose.pl`"
 		which man       > /dev/null && chooseN "man `ls -1 /usr/local/sbin/ /usr/local/bin/ /usr/sbin/ /sbin/ /bin/ /usr/games/ /usr/local/games | choose.pl`"
 		which man       > /dev/null && chooseN "man -k `choose.pl < /usr/share/dict/words`"
