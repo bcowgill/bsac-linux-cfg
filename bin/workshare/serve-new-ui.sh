@@ -4,7 +4,7 @@ set -e
 TOP=~/projects
 FULL_REBUILD=0
 ENV="--cirrus-env=dev3"
-ENV=""
+#ENV=""
 PROJECTS="core-ui files-ui groups-ui dealroom-ui"
 JSHINT="$PROJECTS new-ui"
 
