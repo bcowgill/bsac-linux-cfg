@@ -18,7 +18,7 @@ if [ "$WORD" == "" ] ; then
 	echo "So we make two vars one for vowelless guesses (C) and one for vowel including guesses (L)."
 
 	echo The inverse problem, get highest scoring words
-	echo "perl -ne '\$TILES = q{evrtdhaiyw}; \$AT = 7; \$LETTERX=2; \$WORDX=2; sub score { my (\$w, \$v) = @_; \$v *= 1*\$WORDX if length(\$w) >= \$AT; \$v += (\$LETTERX-1)*\$V{substr(\$w, \$AT-1, 1)} if length(\$w) >= \$AT; return \$v; }; %V = qw( a 1 e 1 i 1 o 1 u 2   b 4 c 4 d 2 f 4 g 3 h 3 j 10 k 5 l 2 m 4 n 2 p 4 q 10 r 1 s 1 t 1 v 5 w 4 x 8 y 3 z 10 ); chomp; next if length(\$_) > 8; next if length(\$_) < 4; %C = (); if (\$_ =~ m{\A [\$TILES]+ \z}xms) { \$v = 0; \$w = \$_; s{(.)}{ ++\$C{\$1}; \$v += \$V{\$1}; qq{\$1=\$V{\$1} };}xmsge; \$score = score(\$w, \$v); print qq{\$score \$v \$w \$_ / @{[map { qq{\${_}x\$C{\$_}} } grep { \$C{\$_} > 1} keys(%C)]}\n}; } ' english/british-english.txt | sort -n | grep -v x[2-9]"
+	echo "make-work.sh tiles Nxwordorletter @M"
 else
 	TEMP_FILE=`mktemp /tmp/lookup-english-XXXXXXXXX`
 	echo G="$G"
