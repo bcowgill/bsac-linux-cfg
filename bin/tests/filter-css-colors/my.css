@@ -1,0 +1,87 @@
+.gray-darker-defined {
+  color: #222222;
+}
+.gray_darker_defined {
+  color: #212121;
+}
+.gray-dark-defined {
+  color: #333333;
+}
+.gray-defined {
+  color: #555555;
+}
+.gray-light-defined {
+  color: #777777;
+}
+.gray-lighter-defined {
+  color: #eeeeee;
+}
+.link-hover-color-defined {
+  color: #2a6496;
+}
+.btn-primary-border-defined {
+  color: #357ebd;
+}
+.btn-success-border-defined {
+  color: #4cae4c;
+}
+.btn-info-border-defined {
+  color: #46b8da;
+}
+.btn-warning-border-defined {
+  color: #eea236;
+}
+.btn-danger-border-defined {
+  color: #d43f3a;
+}
+.dropdown-link-hover-color-defined {
+  color: #262626;
+}
+.navbar-default-border-defined {
+  color: #e7e7e7;
+}
+.navbar-default-link-active-bg-defined {
+  color: #e7e7e7;
+}
+.navbar-default-brand-hover-color-defined {
+  color: #5e5e5e;
+}
+.navbar-inverse-color-defined {
+  color: #9d9d9d;
+}
+.navbar-inverse-border-defined {
+  color: #080808;
+}
+.navbar-inverse-link-color-defined {
+  color: #9d9d9d;
+}
+.navbar-inverse-link-active-bg-defined {
+  color: #080808;
+}
+.state-success-border-defined {
+  color: #d6e9c6;
+}
+.state-info-border-defined {
+  color: #bce8f1;
+}
+.state-warning-border-defined {
+  color: #faebcc;
+}
+.state-danger-border-defined {
+  color: #ebccd1;
+}
+.popover-title-bg-defined {
+  color: #f7f7f7;
+}
+.popover-arrow-outer-color-defined {
+  color: rgba(0, 0, 0, 0.25);
+}
+.popover-arrow-outer-fallback-color-defined {
+  color: #999999;
+}
+.list-group-active-text-color-defined {
+  color: #e1edf7;
+}
+.well-border-defined {
+  color: #e3e3e3;
+}
