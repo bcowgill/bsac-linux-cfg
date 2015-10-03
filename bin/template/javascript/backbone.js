@@ -8,8 +8,8 @@ var BaseClass = require('Base'),
 var MyClass = BaseClass.extend({
     initialize: function () {
         // track inheritance for easy debugging
-        this._inherits = _.union(this#._inherits || [],
-            ['MyClass', 'BaseClass', 'MixinClass']);
+        /*dbg:*/ this._inherits = _.union(this._inherits || [],
+        /*dbg:*/    ['MyClass', 'BaseClass', 'MixinClass']);
 
         Super.initialize.apply(this, arguments);
 
