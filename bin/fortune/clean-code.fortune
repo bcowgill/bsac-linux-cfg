@@ -82,7 +82,6 @@ Avoid using the same word for two purposes.
 Clean Code, Robert C. Martin, p26
 %
 Names: Use Solution Domain Names
-
 Clean Code, Robert C. Martin, p27
 %
 Names: Use Problem Domain Names
@@ -105,7 +104,7 @@ Have no room for nested structures.
 Do One Thing.
 Have No Sections.
 One Level of Abstraction Per Function.
-Read From Top to Bottom Stepping Down to More Abstraction.
+Read From Top to Bottom: The Stepdown Rule
 
 Clean Code, Robert C. Martin, p31-49
 %
@@ -125,6 +124,10 @@ A function is doing more than "one thing" if you can extract another function fr
 
 Clean Code, Robert C. Martin, p36
 %
+The code should read like a top-down narrative. We want every function to be folloewd by those at the next level of abstraction so that we can read the program, descending one level of abstraction at a time as we read down the list of functions. I call this The Stepdown Rule.
+
+Clean Code, Robert C. Martin, p37
+%
 Switch Statements:
 
 Should appear only once.
@@ -135,6 +138,19 @@ Clean Code, Robert C. Martin, p38
 %
 Switch statements should be buried in the basement of an Abstract Factory and never seen.
 Clean Code, Robert C. Martin, p38
+%
+Good Comments:
+
+Legal Comments.
+Informative Comments.
+Explanation of Intent.
+Clarification.
+Warning of Consequences.
+TODO Comments.
+Amplification.
+Javadocs in Public APIs.
+
+Clean Code, Robert C. Martin, p55
 %
 Classes:
 The first rule of classes is that they should be small.
@@ -156,4 +172,8 @@ Clean Code, Robert C. Martin, p138,140
 Classes: Cohesion Should be High
 Classes should have a small number of instance variables. Each of the methods of a class should manipulate one or more of those variables. In general the more variables a method manipulates the more cohesive that method is to its class. A class in which each variable is used by each method is maximally cohesive.
 Clean Code, Robert C. Martin, p140
+%
+Don't comment bad code -- rewrite it.
+
+Brian W. Kernighan and P.J. Plaugher
 %
