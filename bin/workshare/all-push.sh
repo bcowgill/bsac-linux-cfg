@@ -7,7 +7,7 @@ do
 	echo " "
 	echo $dir ======================================================
 	pushd $dir > /dev/null
-		git pull $*
+		git push $*
 	popd > /dev/null
 done
 
