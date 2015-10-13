@@ -9,9 +9,7 @@ if [ "$WORD" == "" ] ; then
 	echo "# L= non-guessed letters"
 	echo "# C= non-guessed consonants only"
 	echo "# export WORD= guess regex"
-	echo 'V=aeiou; export G=bdenr; L="[^$G]"; C="[^$V$G]"; export  LC_ALL='C'; export WORD=be${L}${L}e${C}'
-
-	echo guess-word.sh
+	echo 'V=aeiou; export G=bdenr; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=be${L}${L}e${C} ;  guess-word.sh'
 
 	echo Lookup an english word for hangman type games and show letter distribution of potential guesses.
 	echo For hanging with friends, no vowels possible after last one given in the puzzle.
