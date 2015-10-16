@@ -177,3 +177,29 @@ Don't comment bad code -- rewrite it.
 
 Brian W. Kernighan and P.J. Plaugher
 %
+Class Design Principles (S.O.L.I.D.)
+
+SRP: The Single Responsibility Principle
+OCP: The Open/Closed Principle
+LSP: The Liskov Substitution Principle
+ISP: The Interface Segregation Principle
+DIP: The Dependency Inversion Principle
+%
+The Single Responsibility Principle
+
+A class should have one, and only one, reason to change.
+This does not mean a single function, does not mean what it does.
+How many execute level officers have an interest in the class?
+%
+The Open / Closed Principle
+
+Modules should be open for extension, but closed for modification.
+
+Bertrand Meyer, 1980
+%
+The Liskov Substitution Principle (Barbara Liskov, 1988)
+
+Derived classes musts be usable through the base class interface, without the need for the user to know the difference.
+
+Whenever you violate the substitution principle you will eventually add an if statement to check the type of the object to prevent you from crashing the system.
+%
