@@ -10,6 +10,7 @@ var MyClass = BaseClass.extend({
         // track inheritance for easy debugging
         /*dbg:*/ this._inherits = _.union(this._inherits || [],
         /*dbg:*/    ['MyClass', 'BaseClass', 'MixinClass']);
+        /*dbg:*/ console.log('MUSTDO initialize ' + this._inherits[0]);
 
         Super.initialize.apply(this, arguments);
 
