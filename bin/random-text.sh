@@ -1,6 +1,9 @@
 #!/bin/bash
 # choose a random fortune generating program
 
+fortune 80% clean-code starwars
+exit
+
 END=
 LINES=15
 RATIO_TEXT=0.8

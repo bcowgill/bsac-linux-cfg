@@ -124,7 +124,7 @@ A function is doing more than "one thing" if you can extract another function fr
 
 Clean Code, Robert C. Martin, p36
 %
-The code should read like a top-down narrative. We want every function to be folloewd by those at the next level of abstraction so that we can read the program, descending one level of abstraction at a time as we read down the list of functions. I call this The Stepdown Rule.
+The code should read like a top-down narrative. We want every function to be followed by those at the next level of abstraction so that we can read the program, descending one level of abstraction at a time as we read down the list of functions. I call this The Stepdown Rule.
 
 Clean Code, Robert C. Martin, p37
 %
