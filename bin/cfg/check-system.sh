@@ -167,7 +167,6 @@ PERL_PKG="cpanm:cpanminus"
 
 TODO=audacity
 
-
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
 	COMPANY=workshare
@@ -602,6 +601,11 @@ sudo /etc/init.d/networking restart
 # create /etc/network/interfaces.d/bridge-vpn
 FILE=/etc/network/interfaces.d/bridge-vpn
 #file_has_text "$FILE" "iface br0 inet static"
+
+
+#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
+#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
+#See my screenshots for Workshare specific config. "
 
 if [ ! -z $I3WM ]; then
 	FILE="/etc/apt/sources.list.d/i3window-manager.list"
