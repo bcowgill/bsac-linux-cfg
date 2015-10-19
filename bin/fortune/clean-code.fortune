@@ -199,7 +199,7 @@ Bertrand Meyer, 1980
 %
 The Liskov Substitution Principle (Barbara Liskov, 1988)
 
-Derived classes musts be usable through the base class interface, without the need for the user to know the difference.
+Derived classes must be usable through the base class interface, without the need for the user to know the difference.
 
 Whenever you violate the substitution principle you will eventually add an if statement to check the type of the object to prevent you from crashing the system.
 %
