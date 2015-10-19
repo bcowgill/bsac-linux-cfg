@@ -5,6 +5,7 @@
 
 # bugs: V=aeiou; export G=abdehrs; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=${L}${L}e${C} ;  guess-word.sh
 # V=aeiou; export G=i; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=${L}${L}i${C}
+# V=aeiou; export G=e; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=${L}${L}${L}e${C}
 
 if [ "$WORD" == "" ] ; then
 	echo usage:
