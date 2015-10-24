@@ -87,6 +87,7 @@ echo generate $DIR word lists
 for file in $FILES
 do
 	egrep -v "[[:punct:][:digit:]]" $file | anglicise.pl \
+	| egrep '^[a-zA-z]*$' \
 	| perl -ne 'chomp; print "$_\n" if length($_) >= 4 && length($_) <= 8' \
 	| sort | uniq > $DIR/$file
 done

@@ -11,8 +11,8 @@ my $ECHO = ""; # or inline, line
 # NOTE this is an incomplete list, was only the characters
 # present in the sample english word files I had downloaded
 my %R = (
-	a => [qw( á â ä å )],
-	A => [qw( Á Â Å )],
+	a => [qw( á â ä å â )],
+	A => [qw( Á Â Å Â )],
 	e => [qw( è é ê )],
 	E => [qw( Ë )],
 	i => [qw( í )],

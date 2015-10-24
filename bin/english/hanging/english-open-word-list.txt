@@ -1450,7 +1450,6 @@ alcorza
 alcorzas
 alcove
 alcoves
-alc·zar
 aldea
 aldehyde
 alder
@@ -7142,7 +7141,6 @@ bodges
 bodgie
 bodgies
 bodging
-bodhr·n
 bodice
 bodices
 bodied
@@ -8502,7 +8500,6 @@ bruxism
 bryology
 bryonies
 bryony
-br˚le
 buat
 buats
 buaze
@@ -15206,9 +15203,6 @@ croze
 crozes
 crozier
 croziers
-cro˚te
-cro˚tes
-cro˚ton
 crubeen
 crubeens
 cruces
@@ -26517,8 +26511,6 @@ fyrd
 fyrds
 fytte
 fyttes
-fˆhn
-fˆhns
 gabbard
 gabbards
 gabbart
@@ -29398,7 +29390,6 @@ guar
 guarani
 guaranis
 guaranty
-guaran·
 guard
 guardage
 guardant
@@ -29800,7 +29791,6 @@ gyve
 gyved
 gyves
 gyving
-gˆthite
 haaf
 haafs
 haar
@@ -30623,7 +30613,6 @@ haziness
 hazing
 hazings
 hazy
-ha¸yne
 head
 headache
 headachy
@@ -35227,8 +35216,6 @@ juves
 jymold
 jynx
 jynxes
-j‰ger
-j‰gers
 kaama
 kaamas
 kabab
@@ -36473,8 +36460,6 @@ kythed
 kythes
 kything
 kyus
-k¸mmel
-k¸mmels
 laager
 laagered
 laagers
@@ -49541,8 +49526,6 @@ pietist
 pietists
 piets
 piety
-piet‡
-piet‡s
 piezo
 piffero
 pifferos
@@ -50056,7 +50039,6 @@ pizzazz
 pizzeria
 pizzle
 pizzles
-pi˘
 placable
 placably
 placard
@@ -57722,7 +57704,6 @@ rype
 rypeck
 rypecks
 ryper
-rˆntgen
 sabaton
 sabatons
 sabayon
@@ -75975,7 +75956,6 @@ voidness
 voids
 voile
 voiles
-voil‡
 voiture
 voivode
 voivodes
@@ -76155,7 +76135,6 @@ vulvate
 vulvitis
 vying
 vyingly
-vˆluspa
 wabbit
 wabble
 wabbled

@@ -5,7 +5,14 @@
 WORDS=`which lookup-english.sh`
 WORDS=`dirname $WORDS`
 WORDS="$WORDS/english/hanging"
-WORDLISTS="$WORDS/english-words.txt $WORDS/english-open-word-list.txt $WORDS/american-english.txt $WORDS/british-english.txt $WORDS/custom-words.txt"
+WORDLISTS="
+   $WORDS/english-words.txt
+   $WORDS/english-open-word-list.txt
+   $WORDS/american-english.txt
+   $WORDS/british-english.txt
+   $WORDS/custom-words.txt
+"
+
 [ -d $WORDS ] || mkdir -p $WORDS
 
 if [ ! -f $WORDS/english-words.txt ]; then
@@ -37,5 +44,7 @@ if [ -z $1 ]; then
    exit 1
 fi
 echo regex: "\A $1 \b"
+echo lookup: $1
+echo WORDLISTS: $WORDLISTS
 LOOKUP=$1 perl -ne '$squote="\x27"; tr[A-Z][a-z]; next if m{[\-$squote\(]}xms; print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
 

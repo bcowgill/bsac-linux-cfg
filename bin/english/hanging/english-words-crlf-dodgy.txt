@@ -2555,7 +2555,6 @@ aztecan
 azure
 azygous
 azymia
-bte
 baal
 baas
 baba
@@ -7418,7 +7417,6 @@ coziness
 cozy
 cpayment
 cpoetry
-crme
 crab
 crabbe
 crabbed
@@ -11100,9 +11098,6 @@ eyewater
 eyot
 eyre
 eyry
-fte
-fted
-faon
 faber
 fabian
 fabiana
@@ -13551,7 +13546,6 @@ gowk
 gown
 gowned
 gownsman
-grce
 grab
 grabble
 grace
@@ -19124,7 +19118,6 @@ meniscus
 menomini
 menopon
 mens
-mens
 mensal
 mensch
 menses
@@ -23897,7 +23890,6 @@ prig
 priggish
 priggism
 prim
-prim
 prima
 primacy
 primary
@@ -24103,14 +24095,12 @@ protea
 protean
 protease
 protect
-proteg
 protege
 protegee
 protein
 proteles
 protest
 proteus
-protg
 protist
 protista
 protium
@@ -24939,7 +24929,6 @@ razor
 razure
 razz
 razzia
-rchauff
 reabsorb
 reach
 reaching
@@ -30010,8 +29999,6 @@ systole
 syzygium
 syzygy
 szechwan
-ttonner
-ttons
 tabard
 tabasco
 tabble
@@ -30650,7 +30637,6 @@ textural
 texture
 textured
 textures
-thtre
 thai
 thailand
 thais
@@ -30672,7 +30658,6 @@ thatcher
 thats
 thaw
 thawed
-thetre
 thea
 theaceae
 thearchy
