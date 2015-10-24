@@ -3,9 +3,6 @@
 # google's list of most common english words
 # git clone https://github.com/first20hours/google-10000-english.git
 
-# bugs: V=aeiou; export G=abdehrs; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=${L}${L}e${C} ;  guess-word.sh
-# V=aeiou; export G=i; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=${L}${L}i${C}
-
 if [ "$WORD" == "" ] ; then
 	echo usage:
 	echo "# export G= guessed letters"
