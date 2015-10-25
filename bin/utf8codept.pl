@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# utf82hex.pl
+# utf8codept.pl
 # output utf8 characters as {U+XXXX} code points
 
 use strict;
