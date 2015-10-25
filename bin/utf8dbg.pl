@@ -45,7 +45,7 @@ sub debug
 	my @chars = split('', $string);
 	foreach my $char (@chars)
 	{
-		print("[$char]: bytes[@{[toBytes($char)]}] @{[toCodePoint($char)]}\n");
+		print("[$char]: bytes[@{[toBytes($char)]}] @{[toCodePoint($char)]} @{[toName($char)]}\n");
 		Dump($char);
 	}
 }
@@ -61,4 +61,10 @@ sub toCodePoint
 sub toBytes
 {
 	return join(" ", unpack("U0(H2)*", $ARG[0]));
+}
+
+sub toName
+{
+	my $val = unpack("W", $ARG[0]);
+	return "\\N{" . charnames::viacode($val) . "}";
 }

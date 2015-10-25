@@ -8,7 +8,7 @@ use warnings;
 use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
-use charnames qw(:full);
+use charnames qw(:full); # :loose if you perl version supports it
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
@@ -61,8 +61,9 @@ sub toUTF8 {
 	elsif ($string =~ m{ \A \\N \{ ([^\}]+) \} \z }xmsi)
 	{
 		my $name = uc($1);
-		$name =~ s{[_-]}{ }xmsg;
-		$ret = charnames::string_vianame($name);
+		my $loose_name = $name;
+		$loose_name =~ s{[_-]}{ }xmsg;
+		$ret = charnames::string_vianame($name) || charnames::string_vianame($loose_name);
 	}
 	return $ret;
 }
