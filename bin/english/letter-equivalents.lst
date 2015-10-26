@@ -1,0 +1,65 @@
+aáâäå
+AÁÂÅ
+eèéê
+EË
+ií
+IÌÍ
+oóôö
+OÒÓÔ
+uûü
+UÙÛ
+cç
+nñ
+
+
+perl -pne '
+use feature "unicode_strings";
+chomp;
+$o = $_;
+s{[áâäåAÁÂÅ]}{a}xmsg;
+s{[èéêEË]}{e}xmsg;
+s{[íIÌÍ]}{i}xmsg;
+s{[óôöOÒÓÔ]}{o}xmsg;
+s{[ûüUÙÛ]}{u}xmsg;
+s{{ç}}{c}xmsg;
+s{{ñ}}{n}xmsg;
+tr{A-Z}{a-z};
+$_ = "$_\t$o\n"' alpha-non-az/*.txt | less
+
+
+
+Anglicise the word lists:
+perl -pne '
+use feature "unicode_strings";
+chomp;
+$o = $_;
+%R = (
+	a => [qw( á â ä å )],
+	A => [qw( Á Â Å )],
+	e => [qw( è é ê )],
+	E => [qw( Ë )],
+	i => [qw( í )],
+	I => [qw( Ì Í )],
+	o => [qw( ó ô ö )],
+	O => [qw( Ò Ó Ô )],
+	u => [qw( û ü )],
+	U => [qw( Ù Û )],
+	c => [qw( ç )],
+	n => [qw( ñ )],
+);
+foreach my $letter (keys(%R)) {
+	foreach my $find (@{$R{$letter}}) {
+		s{$find}{$letter}xmsg;
+	}
+}
+#tr{A-Z}{a-z};
+$_ = "$_\t$o\n"' alpha-non-az/*.txt | less
+
+
+perl -e '
+use feature "unicode_strings";
+use charnames ();
+my $unicode
+   = pack("U", charnames::vianame("HEBREW LETTER ALEF"));
+print "$unicode\n";
+'

@@ -9,6 +9,17 @@ set -e
 # turn on trace of currently running command if you need it
 #set -x
 
+# TODO get unicode bitmap/fonts
+# http://unifoundry.com/unifont.html
+# wget http://unifoundry.com/pub/unifont-8.0.01/unifont-8.0.01.bmp
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_csur-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
+
+
+
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
 else
@@ -851,7 +862,7 @@ fi
 
 npm config set registry https://registry.npmjs.org/
 #install_npm_commands_from "$INSTALL_NPM_FROM"
-install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM" 
+install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM"
 is_npm_global_package_installed grunt "need grunt installed to go further."
 make_dir_exist $HOME/.grunt-init "grunt template dir"
 # need to upload ssh public key to github before getting grunt templates
