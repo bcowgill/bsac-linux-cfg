@@ -3,8 +3,6 @@
 # google's list of most common english words
 # git clone https://github.com/first20hours/google-10000-english.git
 
-# V=aeiou; export G=e; L="[^$G]"; C="[^$V$G]"; export  LC_ALL="C"; export WORD=${L}${L}${L}e${C}
-
 if [ "$WORD" == "" ] ; then
 	echo usage:
 	echo "# export G= guessed letters"
