@@ -63,7 +63,10 @@ sub toUTF8 {
 		my $name = uc($1);
 		my $loose_name = $name;
 		$loose_name =~ s{[_-]}{ }xmsg;
-		$ret = charnames::string_vianame($name) || charnames::string_vianame($loose_name);
+		$ret = charnames::string_vianame($name)
+			|| charnames::string_vianame($loose_name)
+			|| die "Unknown character \\N{$name}";
+
 	}
 	return $ret;
 }
