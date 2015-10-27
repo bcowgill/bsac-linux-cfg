@@ -31,27 +31,34 @@ USAGE
 
 if (scalar(@ARGV)) {
 	print map {
-		toUTF8($ARG);
+		replace($ARG);
 	} @ARGV;
 }
 else
 {
 	while (my $line = <>)
 	{
-		$line =~ s{
-			\{ (U \+ [0-9a-f]+) \}
-		}{ toUTF8($1); }xmsgei;
-		$line =~ s{
-			\b (U \+ [0-9a-f]+) \b
-		}{ toUTF8($1); }xmsgei;
-		$line =~ s{
-			( \\N \{ ([^\}]+) \} )
-		}{ toUTF8($1); }xmsgei;
-		print $line;
+		print replace($line);
 	}
 }
 
-sub toUTF8 {
+sub replace
+{
+	my ($line) = @ARG;
+	$line =~ s{
+		\{ (U \+ [0-9a-f]+) \}
+	}{ toUTF8($1); }xmsgei;
+	$line =~ s{
+		\b (U \+ [0-9a-f]+) \b
+	}{ toUTF8($1); }xmsgei;
+	$line =~ s{
+		( \\N \{ ([^\}]+) \} )
+	}{ toUTF8($1); }xmsgei;
+	return $line;
+}
+
+sub toUTF8
+{
 	my ($string) = @ARG;
 	my $ret = $string;
 	if ($string =~ m{ \A U \+ [0-9a-f]+ \z }xmsi)
