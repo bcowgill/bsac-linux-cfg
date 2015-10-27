@@ -57,43 +57,6 @@ fi
 
 popd
 
-pushd ~/projects/new-ui
-
-if egrep 'port:\s*3001' Gruntfile.js > /dev/null ; then
-	echo OK Gruntfile.js configured for local dealroom back end server
-else
-	echo NOT OK MAYBE Gruntfile.js is not configured for local dealroom back end server, will try to configure it.
-
-	# Modify this config in the Gruntfile to enable local dealroom server
-	# /* uncomment to use a local server for dealroom
-	# {
-	#     context: '/dealroom',
-	#     host: 'localhost',
-	#     port: 3000
-	# },
-	# */
-	perl -i.bak -e '
-		local $/ = undef;
-		$file = <>;
-		$file =~ s{
-			(/\* \s+ uncomment [^\n]+ dealroom \s*?)
-			(\n \s* \{ [^\}]+ port: \s* )
-			3000
-			([^\}]+ \} \s* , \s* )
-			\*/
-		}{$1 */${2}3001$3/* MUSTDO NOT COMMIT THE ABOVE LOCAL PORT CHANGE */}xmsg;
-		print $file;
-	' Gruntfile.js
-fi
-
-if egrep 'port:\s*3001' Gruntfile.js > /dev/null ; then
-	echo OK Gruntfile.js configured for local dealroom back end server
-else
-	echo NOT OK Gruntfile.js is not configured for local dealroom back end server.
-	exit 1
-fi
-popd
-
 pushd ~/projects/dealroom
 
 if [ `egrep ':9000' config/application.yml | wc -l` == 4 ] ; then
@@ -163,7 +126,7 @@ pushd ~/projects/cirrus
 	rvm use ruby-1.9.3-p392
 	bundle install 2>&1 | tee --append $LOGC $QUIET
 	bundle exec rake frontend_assets:clean 2>&1 | tee --append $LOGC $QUIET
-	bundle exec rake frontend_assets:download 2>&1 | tee --append $logc $quiet
+	bundle exec rake frontend_assets:download 2>&1 | tee --append $LOGC $QUIET
 
 	( bundle exec rails server 2>&1 | tee --append $LOGC $QUIET ) &
 popd
