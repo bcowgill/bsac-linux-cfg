@@ -1,1 +1,1 @@
-nautilus&
+browse.sh $*
