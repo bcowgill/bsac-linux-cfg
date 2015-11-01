@@ -1,5 +1,5 @@
 #!/bin/bash
-# perform a stash command on all branches
+# stash changes on all branches
 
 pushd ~/projects
 DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"
@@ -9,7 +9,7 @@ do
 	echo " "
 	echo $dir ======================================================
 	pushd $dir > /dev/null
-		git stash $*
+		git stash save $*
 	popd > /dev/null
 done
 
