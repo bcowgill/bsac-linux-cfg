@@ -172,8 +172,10 @@ EBOOK_READER="calibre"
 
 INI_DIR=check-iniline
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode jhead"
 # runit
+# jhead for jpeg EXIF header editing
+
 PERL_PKG="cpanm:cpanminus"
 
 TODO=audacity
