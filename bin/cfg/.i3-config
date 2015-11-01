@@ -30,7 +30,7 @@ set $font_name ProFontWindows
 # use xrandr --current command to get monitor screen names
 # should match OUTPUT_MAIN/OUTPUT_AUX from detect-monitors.sh
 set $main eDP1
-set $aux DP1
+set $aux eDP1
 
 # lemonchiffon = FFFACD
 set $lockcolor FFFACD
@@ -117,6 +117,8 @@ for_window [class="^Meld$"] fullscreen
 #for_window [class="^Diffmerge$"] fullscreen
 
 # Force some windows to float
+for_window [class="^Pavumeter$"] floating enable
+for_window [class="^Pavucontrol$"] floating enable
 for_window [class="^Git-gui--askpass$"] floating enable
 for_window [class="^Diffmerge$" title="SourceGear DiffMerge - Registration Information"] floating enable
 for_window [class="^Diffmerge$" title="Files Changed on Disk"] floating enable
@@ -343,6 +345,12 @@ bindsym $mod+b border toggle
 # scratchpad
 bindsym $mod+m move scratchpad
 bindsym $mod+o scratchpad show
+
+#--- Pulse Audio controls------------------------------------
+bindsym XF86AudioRaiseVolume exec sound-up.sh
+bindsym XF86AudioLowerVolume exec sound-down.sh
+bindsym XF86AudioMute exec sound-toggle.sh
+
 #
 # TEMPORARY BSAC start a browser or manual page browser with hot key
 bindsym $mod+p exec chromium-browser --incognito
