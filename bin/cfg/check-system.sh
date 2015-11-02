@@ -173,8 +173,9 @@ EBOOK_READER="calibre"
 INI_DIR=check-iniline
 
 PULSEAUDIO="pavucontrol pavumeter speaker-test"
+KEYBOARD="showkey evtest"
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode jhead $PULSEAUDIO"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode jhead $PULSEAUDIO $KEYBOARD"
 # runit
 # jhead for jpeg EXIF header editing
 
