@@ -203,3 +203,12 @@ Derived classes must be usable through the base class interface, without the nee
 
 Whenever you violate the substitution principle you will eventually add an if statement to check the type of the object to prevent you from crashing the system.
 %
+Simple code:
+
+Passes all the tests.
+Expresses every idea that we need to express.
+Says everything OnceAndOnlyOnce.
+Has no superfluous parts.
+
+http://c2.com/cgi/wiki?XpSimplicityRules
+%
