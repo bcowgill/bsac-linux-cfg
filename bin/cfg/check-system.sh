@@ -89,6 +89,7 @@ GOOGLE_CHROME_PKG=google-chrome-stable_current_amd64.deb
 CHARLES="charles"
 CHARLES_PKG=charles-proxy
 
+# http://download.virtualbox.org/virtualbox/5.0.8/virtualbox-5.0_5.0.8-103449~Ubuntu~trusty_amd64.deb
 VIRTUALBOX="VirtualBox"
 VIRTUALBOX_CMDS="dkms $VIRTUALBOX"
 VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX:virtualbox-5.0"
