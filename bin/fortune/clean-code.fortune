@@ -146,7 +146,7 @@ Informative Comments.
 Explanation of Intent.
 Clarification.
 Warning of Consequences.
-TODO Comments.
+TODO Comments. (w/date)
 Amplification.
 Javadocs in Public APIs.
 
@@ -172,6 +172,107 @@ Clean Code, Robert C. Martin, p138,140
 Classes: Cohesion Should be High
 Classes should have a small number of instance variables. Each of the methods of a class should manipulate one or more of those variables. In general the more variables a method manipulates the more cohesive that method is to its class. A class in which each variable is used by each method is maximally cohesive.
 Clean Code, Robert C. Martin, p140
+%
+Smelly Comments:
+
+C1: Inappropriate Information
+C2: Obsolete Comment
+C3: Redundant Comment
+C4: Poorly Written Comment
+C5: Commented-Out Code
+
+Clean Code, Robert C. Martin, p286
+%
+Smelly Environments:
+
+E1: Build Requires More Than One Step
+E2: Tests Require More Than One Step
+
+Clean Code, Robert C. Martin, p287
+%
+Smelly Functions:
+
+F1: Too Many Arguments
+F2: Output Arguments
+F3: Flag Arguments
+F4: Dead Functions
+
+Clean Code, Robert C. Martin, p288
+%
+General Smelliness:
+
+G1: Multiple Languages in One Source File
+G2: Obvious Behavior Is Unimplemented
+G3: Incorrect Behavior at the Boundaries
+G4: Overridden Safeties
+G5: Duplication
+G6: Code at Wrong Level of Abstraction
+G7: Base Classes Depending on Their Derivatives
+G8: Too Much Information
+G9: Dead Code
+G10: Vertical Separation
+G11: Inconsistency
+G12: Clutter
+G13: Artifical Coupling
+G14: Feature Envy
+G15: Selector Arguments
+G16: Obscured Intent
+G17: Misplaced Responsibility
+G18: Inappropriate Static
+G19: Use Explanatory Variables
+G20: Function Names Should Say What They Do
+G21: Understand the Algorithm
+G22: Make Logical Dependencies Physical
+G23: Prefer Polymorphism to If/Else or Switch/Case
+G24: Follow Standard Convention
+G25: Replace Magic Numbers with Named Constants
+G26: Be Precise
+G27: Structure over Convention
+G28: Encapsulate Conditionals
+G29: Avoid Negative Conditionals
+G30: Functions Should Do One Thing
+G31: Hidden Temporal Couplings
+G32: Don't Be Arbitrary
+G33: Encapsulate Boundary Conditions
+G34: Functions Should Descend Only One Level of Abstraction
+G35: Keep Configurable Data at High Levels
+G36: Avoid Transitive Navigation
+
+Clean Code, Robert C. Martin, p288-307
+%
+Smelly Java:
+
+J1: Avoid Long Import Lists by Using Wildcards
+J2: Don't Inherit Constants
+J3: Constants versus Enums
+
+Clean Code, Robert C. Martin, p307
+%
+Smelly Names:
+
+N1: Choose Descriptive Names
+N2: Choose Names at the Appropriate Level of Abstraction
+N3: Use Standard Nomenclature Where Possible
+N4: Unambiguous Names
+N5: Use Long Names for Long Scopes
+N6: Avoid Encodings
+N7: Names Should Describe Side Effects
+
+Clean Code, Robert C. Martin, p309
+%
+Smelly Tests:
+
+T1: Insufficient Tests
+T2: Use a Coverage Tool!
+T3: Don't Skip Trivial Tests
+T4: An Ignored Test Is a Question about an Ambiguity
+T5: Test Boundary Conditions
+T6: Exhaustively Test Near Bugs
+T7: Patterns of Failure Are Revealing
+T8: Test Coverage Patterns Can Be Revealing
+T9: Tests Should Be Fast
+
+Clean Code, Robert C. Martin, p313
 %
 Don't comment bad code -- rewrite it.
 
