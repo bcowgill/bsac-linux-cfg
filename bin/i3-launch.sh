@@ -16,6 +16,7 @@ chat=6
 vbox=7
 files=8
 
+
 # https://github.com/lzap/doti3/blob/master/autostart
 # Wait for program coming up
 wait_for_program () {
@@ -93,22 +94,23 @@ LC_ALL=C nm-applet &
 #dunst &
 
 # $files
-i3-msg "workspace $file; exec mygterm.sh $HOME/projects/dealroom-ui mc $HOME/projects/dealroom-ui $HOME"
-sleep 1
-# $help
+i3-msg "workspace $files; exec browse.sh"
+i3-msg "workspace $files; exec ebook.sh"
+i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
+sleep 2
+# $help=$files
 xscreensaver &
 dropbox.sh &
-sleep 1
+sleep 2
 #i3-msg "workspace $vbox; exec xscreensaver-demo"
 i3-msg "workspace $vbox; exec virtualbox" # placeholder to lock screen
-i3-msg "workspace $vbox; exec calibre"
 sleep 2
 # $email
 i3-msg "workspace $email; exec i3-sensible-terminal"
 sleep 1
 # $app
 i3-msg "workspace $app; exec chromium-browser"
-sleep 1
+sleep 2
 
 # $build
 # Layout then build and tomato timer workspace:
@@ -122,7 +124,7 @@ sleep 1
 # C should be browser
 i3-msg workspace $build
 xbuild-files.sh &
-sleep 1
+sleep 2
 i3-msg mark watch
 
 i3-msg "layout default; split v"
@@ -137,7 +139,7 @@ i3-msg mark tomato
 
 # $edit
 i3-msg "workspace $edit; exec wstorm"
-sleep 17
+sleep 20
 
 # $shell
 i3-msg "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
