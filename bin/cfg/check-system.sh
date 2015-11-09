@@ -117,9 +117,9 @@ VPN="openvpn brctl:bridge-utils"
 
 USE_WEBSTORM=1
 WEBSTORM=wstorm
-WEBSTORM_ARCHIVE=WebStorm-10.0.4
-WEBSTORM_DIR=WebStorm-141.1550
-WEBSTORM_URL=https://www.jetbrains.com/webstorm/download/
+WEBSTORM_ARCHIVE=WebStorm-11.0.0
+WEBSTORM_DIR=WebStorm-143.381.46
+WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
 WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
 
