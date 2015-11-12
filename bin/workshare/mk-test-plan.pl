@@ -66,84 +66,84 @@ sub make_test_plan
 	}
 }
 
-foreach my $javascript (@ARGS)
+foreach my $javascript (@ARGV)
 {
 	make_test_plan($javascript);
 }
 
 __DATA__
 define(function (require) {
-	'use strict';
+    'use strict';
 
-	var OBJECT = require('PATH'),
-		mockFactory = require('mockFactory'),
-		fixtures = require('fixtures'),
-		_ = require('underscore'),
-		bShow = true,
-		testHelper;
+    var OBJECT = require('PATH'),
+        mockFactory = require('mockFactory'),
+        fixtures = require('fixtures'),
+        _ = require('underscore'),
+        bShow = true,
+        testHelper;
 
-	describe('OBJECT', function () {
+    describe('OBJECT', function () {
 
-		before(function () {
-			_.extend(this, testHelper);
-		});
+        before(function () {
+            _.extend(this, testHelper);
+        });
 
-		beforeEach(function () {
-			this.setUp();
-		});
+        beforeEach(function () {
+            this.setUp();
+        });
 
-		afterEach(function () {
-			this.tearDown();
-		});
+        afterEach(function () {
+            this.tearDown();
+        });
 
-		describe('initialize', function () {
+        describe('initialize', function () {
 
-			it.skip('should test something when initialized', function () {
-				// Arrange
-				// Act
-				// Assert
-			});
+            it.skip('should test something when initialized', function () {
+                // Arrange
+                // Act
+                // Assert
+            });
 
-		});
+        });
 
-		describe.skip('Render', function () {
+        describe.skip('Render', function () {
 
-			it('should display something', function () {
-				// Arrange
-				// Act
-				// Assert
-			});
+            it('should display something', function () {
+                // Arrange
+                // Act
+                // Assert
+            });
 
-		});
+        });
 
-		describe.skip('Events', function () {
+        describe.skip('Events', function () {
 
-			it('should do something when events happen', function () {
-				// Arrange
-				// Act
-				// Assert
-			});
+            it('should do something when events happen', function () {
+                // Arrange
+                // Act
+                // Assert
+            });
 
-		});
+        });
 
-	});
+    });
 
-	testHelper = {
+    testHelper = {
 
-		setUp: function () {
-			mockFactory.createApplication();
-			this.requests = mockFactory.installFakeAjax();
+        setUp: function () {
+            mockFactory.createApplication();
+            this.requests = mockFactory.installFakeAjax();
 
-			this.view = new OBJECT();
+            this.view = new OBJECT();
 
-			fixtures.render(this.view, bShow);
-		},
+            fixtures.render(this.view, bShow);
+        },
 
-		tearDown: function () {
-			mockFactory.uninstallFakeAjax();
-			mockFactory.deleteApplication();
-			fixtures.reset();
-		}
-	};
+        tearDown: function () {
+            mockFactory.uninstallFakeAjax();
+            mockFactory.deleteApplication();
+            fixtures.reset();
+        }
+    };
 
 });
