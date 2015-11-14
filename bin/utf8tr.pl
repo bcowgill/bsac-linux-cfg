@@ -17,8 +17,10 @@ binmode(STDERR, ":utf8"); # -CE
 
 sub usage
 {
+    my ($exit) = @ARG;
+
     print <<"USAGE";
-$0 [--help] [--space] [--show-styles] [--all-styles] [--alphabet] style ...
+$0 [--help] [--space] [--show-styles] [--all-styles] [--alphabet] [--random-style] [--words] [--sentences] style ...
 
 Show text using alphabetic unicode characters
 
@@ -26,6 +28,9 @@ Show text using alphabetic unicode characters
 --alphabet display the alphabet instead of standard input
 --show-styles list all supported font styles and exit immediately
 --all-styles display output in all font styles and exit immediately
+--random-style choose a random font style to use
+--words choose new random style for every word
+--sentences choose new random style for every sentence
 --help shows this help text
 
 eg.
@@ -40,7 +45,7 @@ $0 --alphabet --all-styles
 echo Hi | $0 --space --all-styles
 USAGE
 
-    exit 0;
+    exit($exit || 0);
 }
 
 local $INPUT_RECORD_SEPARATOR = undef;
@@ -120,7 +125,8 @@ sub main
 {
     my $content;
     my %Opts = (
-        spaced => 0
+        spaced => 0,
+        random => 0
     );
     my $printed = 0;
 
@@ -164,7 +170,7 @@ sub getTranslations
             $rhStyles->{$key}{translate} = $regex;
 
             # convert tr[][] to s{}{} for spacing out wide chars
-            $regex =~ s{\A tr\{ (.+?) \} .+ \z }{s{([$1])}{\$1 }g}xms;
+            $regex =~ s{\A tr\{ (.+?) \} .+ \z }{s{([ $1])}{\$1 }g}xms;
             $regex =~ s{\{\}\z}{s}xms;
             $rhStyles->{$key}{regex} = $regex;
         }
@@ -185,7 +191,12 @@ sub processArg
     {
         usage();
     }
-    if ($arg =~ m{\A --?spa}xms) # --space
+    elsif ($arg =~ m{\A --?se}xms) # --sentences
+    {
+        $rhOpts->{random} = 'sentence';
+        $next = 1;
+    }
+    elsif ($arg =~ m{\A --?sp}xms) # --space
     {
         $rhOpts->{spaced} = 1;
         $next = 1;
@@ -195,6 +206,16 @@ sub processArg
         $content = "";
         print join("\n", @AllStyles, "");
         exit 0;
+    }
+    elsif ($arg =~ m{\A --?r}xms) # --random-style
+    {
+        $rhDefaultStyle = choose(@AllStyles);
+        $next = 1;
+    }
+    elsif ($arg =~ m{\A --?w}xms) # --words
+    {
+        $rhOpts->{random} = 'word';
+        $next = 1;
     }
     elsif ($arg =~ m{\A --?alp}xms) # --alphabet
     {
@@ -211,7 +232,18 @@ sub processArg
         }
         exit 0;
     }
+    elsif ($arg =~ m{\A -}xms)
+    {
+        usage(1);
+    }
     return ($next, $content);
+}
+
+sub choose
+{
+    my (@choices) = @ARG;
+    my $choice = int(rand() * scalar(@choices));
+    return $choices[$choice];
 }
 
 sub output
@@ -226,10 +258,12 @@ sub output
         $style = getMatchingStyle(\@StylePath, \%Alphabet),
     }
 
-    print translate(
-        $content,
-        $style,
-        $rhOpts->{spaced});
+    my $raContent = [$content];
+    if ($rhOpts->{random})
+    {
+        $raContent = splitContent($content, $rhOpts->{random});
+    }
+    transform($raContent, $style, $rhOpts);
 
     return $content;
 }
@@ -271,16 +305,6 @@ sub getStylePath
     return @StylePath;
 }
 
-sub translate
-{
-    my ($string, $rhStyle, $optSpaced) = @ARG;
-
-    local $ARG = $string;
-    eval $rhStyle->{regex} if $optSpaced;
-    eval $rhStyle->{translate};
-    return $ARG;
-}
-
 sub getMatchingStyle
 {
     my ($raStyle, $rhStyles) = @ARG;
@@ -315,6 +339,54 @@ sub getMatchingStyle
     }
     #print join('.', @path) . ": " . Dumper($rhStyles);
     return $rhStyles;
+}
+
+sub splitContent
+{
+    my ($content, $boundary) = @ARG;
+    my @Content = ($content);
+
+    if ($boundary =~ m{word}i)
+    {
+        my $q = "'";
+        @Content = split(m{(\s+)}xms, $content);
+    }
+    else
+    {
+        @Content = split(m{(\.\s+|\n\s*\n)}xms, $content);
+    }
+    #print Dumper(\@Content);
+    return \@Content;
+}
+
+sub transform
+{
+    my ($raContent, $style, $rhOpts) = @ARG;
+
+    foreach my $content (@$raContent)
+    {
+        print translate(
+            $content,
+            $style,
+            $rhOpts->{spaced});
+
+        if ($rhOpts->{random})
+        {
+            $style = choose(@AllStyles);
+            my @StylePath = getStylePath($style);
+            $style = getMatchingStyle(\@StylePath, \%Alphabet),
+        }
+    }
+}
+
+sub translate
+{
+    my ($string, $rhStyle, $optSpaced) = @ARG;
+
+    local $ARG = $string;
+    eval $rhStyle->{regex} if $optSpaced;
+    eval $rhStyle->{translate};
+    return $ARG;
 }
 
 # product tr/// matching string for a style
