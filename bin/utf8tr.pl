@@ -20,7 +20,7 @@ sub usage
     my ($exit) = @ARG;
 
     print <<"USAGE";
-$0 [--help] [--space] [--show-styles] [--all-styles] [--alphabet] [--random-style] [--words] [--sentences] style ...
+$0 [--help] [--space] [--alphabet] [--show-styles] [--all-styles] [--flip-case] [--random-style] [--words] [--sentences] style ...
 
 Show text using alphabetic unicode characters
 
@@ -28,6 +28,7 @@ Show text using alphabetic unicode characters
 --alphabet display the alphabet instead of standard input
 --show-styles list all supported font styles and exit immediately
 --all-styles display output in all font styles and exit immediately
+--flip-case flip upper/lower case
 --random-style choose a random font style to use
 --words choose new random style for every word
 --sentences choose new random style for every sentence
@@ -42,6 +43,7 @@ $0 --show-styles
 $0 --alphabet --space
 $0 --alphabet gothic
 $0 --alphabet --all-styles
+$0 --alphabet --flip-case --all-styles
 echo Hi | $0 --space --all-styles
 USAGE
 
@@ -97,6 +99,11 @@ my %Alphabet = (
             'A' => '1D538',
             '0' => '1D7D8',
         },
+        'full' => {
+            'a' => 'FF41',
+            'A' => 'FF21',
+            '0' => 'FF10',
+        },
     },
     'script' => {
         'normal' => {
@@ -124,6 +131,59 @@ my %Alphabet = (
              'A' => '24B6',
              '0' => '24EA',
              '1' => '2460',
+        },
+        'inverse' => {
+             'a' => '1F150',
+             'A' => '1F150',
+             '0' => '24FF',
+             '1' => '2776',
+        },
+    },
+    'square' => {
+        'normal' => {
+             'a' => '1F130',
+             'A' => '1F130',
+        },
+        'dotted' => {
+             'a' => '1F1E6',
+             'A' => '1F1E6',
+        },
+        'inverse' => {
+             'a' => '1F170',
+             'A' => '1F170',
+        },
+    },
+    'parenthesis' => {
+        'normal' => {
+             'a' => '249C',
+             'A' => '1F110',
+             '0' => '30', # normal 0
+             '1' => '2474',
+        },
+    },
+    'tag' => {
+        'normal' => {
+             'a' => 'E0061',
+             'A' => 'E0041',
+             '0' => 'E0030',
+        },
+    },
+    'case' => {
+        'normal' => {
+             'a' => '61',
+             'A' => '41',
+        },
+        'flip' => {
+             'a' => '41',
+             'A' => '61',
+        },
+        'lower' => {
+             'a' => '61',
+             'A' => '61',
+        },
+        'upper' => {
+             'a' => '41',
+             'A' => '41',
         },
     },
 );
@@ -171,7 +231,7 @@ sub getTranslations
     foreach my $key (keys(%$rhStyles))
     {
         next if length($key) == 1 || !ref($rhStyles->{$key});
-        if ($rhStyles->{$key}{a})
+        if ($rhStyles->{$key}{a} || $rhStyles->{$key}{A})
         {
             push(@AllStyles, join(".", join(".", @$raPath), $key));
             my $regex = makeTranslation($rhStyles->{$key});
@@ -198,6 +258,11 @@ sub processArg
     if ($arg =~ m{\A --?h}xms) # --help
     {
         usage();
+    }
+    elsif ($arg =~ m{\A --?f}xms) # --flip-case
+    {
+        $rhOpts->{flip} = 1;
+        $next = 1;
     }
     elsif ($arg =~ m{\A --?se}xms) # --sentences
     {
@@ -258,7 +323,7 @@ sub output
 {
     my ($content, $style, $rhOpts) = @ARG;
 
-    $content = getContent($content);
+    $content = getContent($content) || "";
 
     if (!ref($style))
     {
@@ -335,7 +400,8 @@ sub getMatchingStyle
     }
     if (!exists $rhStyles->{translate})
     {
-        if (exists $rhStyles->{normal} && exists $rhStyles->{normal}{translate})
+        if (exists $rhStyles->{normal}
+            && exists $rhStyles->{normal}{translate})
         {
             push(@path, 'normal');
             $rhStyles = $rhStyles->{normal};
@@ -376,7 +442,7 @@ sub transform
         print translate(
             $content,
             $style,
-            $rhOpts->{spaced});
+            $rhOpts);
 
         if ($rhOpts->{random})
         {
@@ -389,10 +455,11 @@ sub transform
 
 sub translate
 {
-    my ($string, $rhStyle, $optSpaced) = @ARG;
+    my ($string, $rhStyle, $rhOpts) = @ARG;
 
     local $ARG = $string;
-    eval $rhStyle->{regex} if $optSpaced;
+    $ARG =~ tr[a-zA-Z][A-Za-z] if $rhOpts->{flip};
+    eval $rhStyle->{regex} if $rhOpts->{spaced};
     eval $rhStyle->{translate};
     return $ARG;
 }
@@ -418,7 +485,7 @@ sub makeTranslation
     }
 
     my $tr = qq{tr{$from}{$to}};
-    print "tr $tr\n";
+    #print "tr $tr\n";
     return $tr;
 }
 
