@@ -118,6 +118,14 @@ my %Alphabet = (
              'A' => '1D56C',
          },
     },
+    'circled' => {
+        'normal' => {
+             'a' => '24D0',
+             'A' => '24B6',
+             '0' => '24EA',
+             '1' => '2460',
+        },
+    },
 );
 my $rhDefaultStyle = $Alphabet{sans}{stroke};
 
@@ -399,9 +407,19 @@ sub makeTranslation
 
     ($from, $to) = getRange($from, $to, 'a', $rhStyle->{a}, 25);
     ($from, $to) = getRange($from, $to, 'A', $rhStyle->{A}, 25);
-    ($from, $to) = getRange($from, $to, '0', $rhStyle->{0}, 9);
+    if (exists($rhStyle->{1}))
+    {
+        ($from, $to) = getRange($from, $to, '0', $rhStyle->{0}, 1);
+        ($from, $to) = getRange($from, $to, '1', $rhStyle->{1}, 8);
+    }
+    else
+    {
+        ($from, $to) = getRange($from, $to, '0', $rhStyle->{0}, 9);
+    }
 
-    return qq{tr{$from}{$to}};
+    my $tr = qq{tr{$from}{$to}};
+    print "tr $tr\n";
+    return $tr;
 }
 
 # get tr[a-z][A-Z] ranges given start chars and count
@@ -412,8 +430,13 @@ sub getRange
     if ($utf)
     {
         $utf = toUTF8($utf);
-        $from .= "$char-" . addChar($char, $num);
-        $to   .= "$utf-"  . addChar($utf,  $num);
+        $from .= $char;
+        $to   .= $utf;
+        if ($num > 1)
+        {
+            $from .= "-" . addChar($char, $num);
+            $to   .= "-" . addChar($utf,  $num);
+        }
     }
     return ($from, $to);
 }

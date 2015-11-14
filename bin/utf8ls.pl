@@ -8,20 +8,23 @@ use warnings;
 use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
-use charnames qw(:full); # :loose if you perl version supports it
+use charnames qw(:loose); # :loose if you perl version supports it
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
+
+my $MAX_CODEPOINT = hex('10FFFF');
 
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
 Usage:
-$0 [-N] U+XXXX {U+XXXX} \\\\N{UNICODE_CHARACTER_NAME}
+$0 [-N] [-all] U+XXXX {U+XXXX} "\\\\N{UNICODE_CHARACTER_NAME}" '\\N{UNICODE_CHARACTER_NAME}'
 
 Output a table of utf8 characters starting at a given code point.
 
--N specify how many characters to show. default is 26
+-N   specify how many characters to show. default is 26
+-all show all remaining characters from the starting code point
 
 example:
 
@@ -44,7 +47,7 @@ sub output
 	my ($line) = @ARG;
 
 	# -N updates count value
-	$line =~ s{\A \s* --?(\d+) \s* \z}{$count = $1}xmse;
+	$line =~ s{\A \s* --?(\d+|all) \s* \z}{$count = ($1 eq 'all') ? $MAX_CODEPOINT : $1}xmse;
 
 	$line =~ s{
 		\A \s*
@@ -75,11 +78,10 @@ sub toUTF8
 	{
 		my $name = uc($1);
 		my $loose_name = $name;
-		$loose_name =~ s{[_-]}{ }xmsg;
+		$loose_name =~ s{[_\s-]}{_}xmsg;
 		$ret = charnames::string_vianame($name)
 			|| charnames::string_vianame($loose_name)
 			|| die "Unknown character \\N{$name}";
-
 	}
 	printTable($ret);
 }
@@ -87,11 +89,13 @@ sub toUTF8
 sub printTable
 {
 	my ($char) = @ARG;
-	my $name = "";
+
 	for (my $remain = $count; $remain; --$remain, $char = nextChar($char))
 	{
 		my $hex = charToCodePt($char);
-		print qq{$char\t$hex\t$name\n};
+		my $name = charnames::viacode(ord($char)) || "";
+		print qq{$char\t$hex\t$name\n} if $name;
+		last if ord($char) == $MAX_CODEPOINT;
 	}
 }
 
