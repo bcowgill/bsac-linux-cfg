@@ -1,0 +1,18 @@
+normal
+𝚊	U+1D68A	𝙰	U+1D670	𝟶	U+1D7F6	serif
+𝖺	U+1D5BA	𝖠	U+1D5A0	𝟢	U+1D7E2	sans
+italic
+𝑎	U+1D44E	𝐴	U+1D434	serif
+𝒂	U+1D482	𝑨	U+1D468	serif bold
+𝘢	U+1D622	𝘈	U+1D608	sans
+𝙖	U+1D656	𝘼	U+1D63C	sans bold
+bold
+𝐚	U+1D41A	𝐀	U+1D400	𝟎	U+1D7CE	serif
+𝗮	U+1D5EE	𝗔	U+1D5D4	𝟬	U+1D7EC	sans
+𝕒	U+1D552	𝔸	U+1D538	𝟘	U+1D7D8	sans stroke
+script
+𝓪	U+1D4EA	𝓐	U+1D4D0	
+𝒶	U+1D4B6	𝒜	U+1D49C	cursive
+gothic
+𝔞	U+1D51E	𝔄	U+1D504	
+𝖆	U+1D586	𝕬	U+1D56C	bold
