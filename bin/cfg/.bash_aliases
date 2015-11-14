@@ -53,6 +53,7 @@ alias egrep='\egrep --exclude-dir=.git'
 alias xterm='\xterm -fa "ProFontWindows" -fs 11'
 
 alias screenls='ls /var/run/screen/S-$USER'
+alias pstree='\pstree -a -h -p -u'
 
 # some aliases for git rebasing
 alias gmt='git mergetool'
