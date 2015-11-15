@@ -9,6 +9,7 @@ use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
 use charnames qw(:loose); # :loose if you perl version supports it
+use Unicode::UCD qw( charinfo general_categories );
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
@@ -94,7 +95,12 @@ sub printTable
 	{
 		my $hex = charToCodePt($char);
 		my $name = charnames::viacode(ord($char)) || "";
-		print qq{$char\t$hex\t$name\n} if $name;
+
+		if ($name)
+		{
+		    $name = toCategory($char) . "\t" . $name;
+    		print qq{$char\t$hex\t$name\n};
+		}
 		last if ord($char) == $MAX_CODEPOINT;
 	}
 }
@@ -109,4 +115,27 @@ sub charToCodePt
 {
     my ($char) = @ARG;
 	return sprintf("U+%X", ord($char));
+}
+
+sub toCategory
+{
+    my ($char) = @ARG;
+
+    my $fullCategory = "[category unknown]";
+
+    eval
+    {
+        # To translate this category into something more human friendly:
+
+        #use Unicode::UCD qw( charinfo general_categories );
+        my $rhCategories = general_categories();
+        my $category = charinfo(charToCodePt($char))->{category};  # "Lu"
+        $fullCategory = "[$category]";
+        $fullCategory = "[$rhCategories->{ $category }]"; # "UppercaseLetter"
+    };
+    if ($EVAL_ERROR)
+    {
+        print "ERROR: $EVAL_ERROR";
+    }
+    return $fullCategory;
 }
