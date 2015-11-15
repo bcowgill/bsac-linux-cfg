@@ -8,7 +8,7 @@ use warnings;
 use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
-use charnames qw(:full); # :loose if you perl version supports it
+use charnames qw(:loose); # :loose if you perl version supports it
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
@@ -17,7 +17,7 @@ if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
 Usage:
-$0 U+XXXX {U+XXXX} \\\\N{UNICODE_CHARACTER_NAME}
+$0 U+XXXX {U+XXXX} \\\\x{XXXX} '\\N{UNICODE CHARACTER NAME}' "\\N{UNICODE_CHARACTER_NAME}"
 
 Output unicode utf8 characters given a mixture of text and code points or character names.
 If no arguments given it will read from STDIN. Otherwise it will parse the arguments and output utf8 from them.
@@ -49,6 +49,9 @@ sub replace
 		\{ (U \+ [0-9a-f]+) \}
 	}{ toUTF8($1); }xmsgei;
 	$line =~ s{
+		\\x \{ ([0-9a-f]+) \}
+	}{ toUTF8("U+$1"); }xmsgei;
+	$line =~ s{
 		\b (U \+ [0-9a-f]+) \b
 	}{ toUTF8($1); }xmsgei;
 	$line =~ s{
@@ -69,7 +72,7 @@ sub toUTF8
 	{
 		my $name = uc($1);
 		my $loose_name = $name;
-		$loose_name =~ s{[_-]}{ }xmsg;
+		$loose_name =~ s{[\s_-]}{_}xmsg;
 		$ret = charnames::string_vianame($name)
 			|| charnames::string_vianame($loose_name)
 			|| die "Unknown character \\N{$name}";
