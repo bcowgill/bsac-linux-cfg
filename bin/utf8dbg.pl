@@ -2,6 +2,9 @@
 # utf8dbg.pl
 # debug some utf8 character as perl sees it.
 
+# TODO continued imlementing recipes from the perl unicode cookbook
+# http://www.perl.com/pub/2012/05/perlunicook-match-unicode-properties-in-regex.html
+
 use utf8;	  # so literals and identifiers can be in UTF-8
 #use v5.12;	 # or later to get "unicode_strings" feature
 use v5.16;	 # later version so we can use case folding fc() function directly
@@ -165,9 +168,9 @@ sub checkLineBreaks
 
 sub checkCharClasses
 {
-    my ($char) = @ARG;
-    # use v5.14;
-    # use re "/a";
+	my ($char) = @ARG;
+	# use v5.14;
+	# use re "/a";
 #use v5.14;  # needed for regex /a option
 #use re "/a"; # to allow /a option on regex to match only ASCII \d \w chars
 # http://www.perl.com/pub/2012/05/perlunicook-disable-unicode-awareness-in-builtin-character-classes.html
@@ -243,25 +246,25 @@ sub toBytes
 
 sub toCategory
 {
-    my ($char) = @ARG;
+	my ($char) = @ARG;
 
-    my $fullCategory = "[category unknown]";
+	my $fullCategory = "[category unknown]";
 
-    eval
-    {
-        # To translate this category into something more human friendly:
+	eval
+	{
+		# To translate this category into something more human friendly:
 
-        #use Unicode::UCD qw( charinfo general_categories );
-        my $rhCategories = general_categories();
-        my $category = charinfo(toCodePoint($char))->{category};  # "Lu"
-        $fullCategory = "[$category]";
-        $fullCategory = "[$rhCategories->{ $category }]"; # "UppercaseLetter"
-    };
-    if ($EVAL_ERROR)
-    {
-        print "ERROR: $EVAL_ERROR";
-    }
-    return $fullCategory;
+		#use Unicode::UCD qw( charinfo general_categories );
+		my $rhCategories = general_categories();
+		my $category = charinfo(toCodePoint($char))->{category};  # "Lu"
+		$fullCategory = "[$category]";
+		$fullCategory = "[$rhCategories->{ $category }]"; # "UppercaseLetter"
+	};
+	if ($EVAL_ERROR)
+	{
+		print "ERROR: $EVAL_ERROR";
+	}
+	return $fullCategory;
 }
 
 sub toName
