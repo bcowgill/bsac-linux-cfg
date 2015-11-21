@@ -140,6 +140,9 @@ alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginf
 alias charles-up='source `which proxy-to-charles.sh`'
 alias charles-down='source `which proxy-off.sh`'
 
+alias utf8cut1='perl -CIO -pne "\$_ = substr(\$_, 0, 1)"'
+alias utf8cut1nl='perl -CIO -pne "\$_ = substr(\$_, 0, 1) . qq{\n}"'
+
 # First perltidy run on a file preserve any existing closing side comments
 # perltidy -b file.pl    to tidy file in place
 # perltidy -g file.pl    shows nesting of braces, brackets, etc
