@@ -1,0 +1,3 @@
+upower --show-info /org/freedesktop/UPower/devices/battery_BAT1 \
+    | egrep 'percentage' \
+    | perl -pne 'chomp; s{\s*(percentage:\s*)}{}xms; $_ .= "🔋 "'
