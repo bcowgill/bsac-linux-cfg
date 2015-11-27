@@ -57,8 +57,10 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
+    PS1_SHORT='${debian_chroot:+($debian_chroot)}:\[\033[01;34m\]\W\[\033[00m\]\$ '
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
+    PS1_SHORT='${debian_chroot:+($debian_chroot)}\w\$ '
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 # BSAC disable here as we mess with PS1 later
@@ -67,6 +69,7 @@ fi
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
+    PS1_SHORT="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \W\a\]$PS1_SHORT"
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -144,14 +147,17 @@ export GIT_PS1_SHOWUPSTREAM="auto verbose"
 #BSAC duplicated from up above and added GIT branch info to prompt
 if [ "$color_prompt" = yes ]; then
     # BSAC show git branch on command prompt
+    PS1_SHORT='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\W\[\033[00m$(__git_ps1 " (%s)")\]\$ '
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m$(__git_ps1 " (%s)")\]\$ '
 else
     # BSAC show git branch on command prompt
+    PS1_SHORT='${debian_chroot:+($debian_chroot)}\W\[$(__git_ps1 " (%s)")\]\$ '
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\[$(__git_ps1 " (%s)")\]\$ '
 fi
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
+    PS1_SHORT="\[\e]0;${debian_chroot:+($debian_chroot)}\W\a\]$PS1_SHORT"
     PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
     ;;
 *)
@@ -179,7 +185,7 @@ fi
 export NVM_DIR="$HOME/.nvm"
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     . "$NVM_DIR/nvm.sh"
-    nvm use v4.2.1
+    nvm use v4.2.1 > /dev/null
 fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
