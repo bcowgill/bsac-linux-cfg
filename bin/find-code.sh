@@ -10,12 +10,16 @@ fi
 
 echo find . '\(' \
 	-name node_modules \
+	-o -name .idea \
+	-o -name coverage \
 	-o -name bower_components \
 	-o -name .git \
 '\)' -prune $ARGS
 
 find . \( \
 	-name node_modules \
+	-o -name .idea \
+	-o -name coverage \
 	-o -name bower_components \
 	-o -name .git \
 \) -prune $ARGS
