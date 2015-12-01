@@ -1,0 +1,56 @@
+Constants of Software Development:
+
+Things are going to change.
+We don’t know exactly what is going to need to change.
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
+Simple design, though, is one that is easy to change. Striving for a simple design — one that is adaptable to changing needs — is the key to a “better design.” Whenever we have a choice to make, look for the choice which would be easier to change.
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
+Four Rules of Simple Design:
+
+Tests Pass
+Expresses Intent
+No Duplication (DRY)
+Small
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
+Expresses Intent
+
+It is easy for the names we give things to stray from what they represent.
+
+One of the most important qualities of a codebase, when it comes time to change, is how quickly you can find the part that should be changed. The first step is identifying the code related to the functionality we are addressing. Paying attention to the names and how our code expresses itself is the key to making our lives easy when we come back to it.
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
+No Duplication (DRY)
+
+Every piece of knowledge should have one and only one representation.
+
+Instead of looking for code duplication, always ask yourself whether or not the duplication you see is an example of core knowledge in the system.
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
+Simple
+
+Do I have any vestigial code that is no longer used?
+Do I have any duplicate abstractions?
+Have I extracted too far?
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
+Test names should express what is actually tested.
+Test names should influence the object's API.
+Eliminate duplication by extracting concepts into objects. (reification)
+Test behaviour instead of state.
+Don't have tests depend on previous tests.
+Don't give the outside world access to your base constructor. Use a factory or builder class to provide objects in a specific, valid state.
+Don't return values from your methods. This makes your methods enact behaviours.
+No property accessors allowed.
+Use inverted composition to replace inheritance.
+
+Understanding the Four Rules of Simple Design, Corey Haines
+%
