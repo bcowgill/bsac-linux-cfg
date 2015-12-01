@@ -19,10 +19,19 @@ if [ $OUTPUT_MAIN == $OUTPUT_AUX ]; then
 	# set up single monitor
 	xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES
 else
-	# set up dual monitors to show in same resolution
-# set both outputs to the same to reset a bad rotation
-#		xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
-#			--output $OUTPUT_AUX --same-as $OUTPUT_MAIN
-	xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
-		--output $OUTPUT_AUX --primary --mode $OUTPUT_RES --left-of $OUTPUT_MAIN
+	if [ $OUTPUT_AUX == $OUTPUT_AUX2 ]; then
+		# set up dual monitors to show in same resolution
+
+	    # set both outputs to the same to reset a bad rotation
+	    #		xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
+	    #			--output $OUTPUT_AUX --same-as $OUTPUT_MAIN
+
+		xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
+			--output $OUTPUT_AUX --primary --mode $OUTPUT_RES --left-of $OUTPUT_MAIN
+	else
+	    # set up three monitors
+		xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
+			--output $OUTPUT_AUX --primary --mode $OUTPUT_RES --left-of $OUTPUT_MAIN \
+			--output $OUTPUT_AUX2 --mode $OUTPUT_RES2 --rotate right --right-of $OUTPUT_MAIN
+	fi
 fi

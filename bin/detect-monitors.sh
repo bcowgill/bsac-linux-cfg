@@ -5,9 +5,12 @@
 # detect-monitors.sh i3-update -- will update then i3-config file with then connected monitors
 
 RES=1920x1080
+RES2=1280x1024
 OUTPUT_MAIN=
 OUTPUT_AUX=
+OUTPUT_AUX2=
 OUTPUT_RES=
+OUTPUT_RES2=
 
 if [ ${1:-quiet} == show ]; then
 	# if show option provided, show all resolutions with computed aspect ratio
@@ -33,10 +36,12 @@ else
 	echo did not detect desired resolution $RES
 	exit 1
 fi
+
 if [ $MONITORS == 1 ]; then
 	# set up single monitor
 	MAIN=$MONITOR_NAMES
 	AUX=$MAIN
+	AUX2=$MAIN
 else
 	if [ $MONITORS == 2 ]; then
 		# set up dual monitors to show in same resolution
@@ -44,20 +49,42 @@ else
 			MAIN=${AUX:-$mon}
 			AUX=$mon
 		done
+		AUX2=AUX
 	else
-		echo $MONITORS monitors found, unexpected
-		echo $MONITOR_NAMES
-		exit 1
+    	if [ $MONITORS == 3 ]; then
+    	    # set up three monitors
+    	    # eDP1 DP1 HDMI1
+            for mon in $MONITOR_NAMES; do
+                if [ -z $MAIN ]; then
+                    MAIN=$mon
+                else
+                    if [ -z $AUX2 ]; then
+                        AUX2=$mon
+                    else
+                        AUX=$mon
+                    fi
+                fi
+            done
+    	else
+            echo $MONITORS monitors found, unexpected
+            echo $MONITOR_NAMES
+            exit 1
+		fi
 	fi
 fi
 
 OUTPUT_MAIN=$MAIN
 OUTPUT_AUX=$AUX
+OUTPUT_AUX2=$AUX2
 OUTPUT_RES=$RES
-export OUTPUT_MAIN OUTPUT_AUX OUTPUT_RES
+# TODO check presence of this resolution
+OUTPUT_RES2=$RES2
+export OUTPUT_MAIN OUTPUT_AUX OUTPUT_AUX2 OUTPUT_RES OUTPUT_RES2
 echo OUTPUT_MAIN=$OUTPUT_MAIN
 echo OUTPUT_AUX=$OUTPUT_AUX
+echo OUTPUT_AUX2=$OUTPUT_AUX2
 echo OUTPUT_RES=$OUTPUT_RES
+echo OUTPUT_RES2=$OUTPUT_RES2
 
 if [ ${1:-normal} == i3-update ]; then
 	i3-config-update.sh

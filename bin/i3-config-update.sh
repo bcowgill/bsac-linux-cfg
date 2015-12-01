@@ -11,8 +11,11 @@ fi
 if [ ${OUTPUT_AUX:-error} == error ]; then
 	exit 1
 fi
+if [ ${OUTPUT_AUX2:-error} == error ]; then
+	exit 1
+fi
 
-echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX
+echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX $OUTPUT_AUX2
 
 # update monitor variables in config file
 #set $main eDP1
@@ -20,5 +23,6 @@ echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX
 perl -i.bak -pne '
 	s{\A \s* (set \s+ \$main \s+) .+? \n \z}{$1$ENV{OUTPUT_MAIN}\n}xms;
 	s{\A \s* (set \s+ \$aux  \s+) .+? \n \z}{$1$ENV{OUTPUT_AUX}\n}xms;
+	s{\A \s* (set \s+ \$aux2 \s+) .+? \n \z}{$1$ENV{OUTPUT_AUX2}\n}xms;
 ' ~/bin/cfg/.i3-config
 egrep 'set\s+\$(main|aux)' ~/bin/cfg/.i3-config
