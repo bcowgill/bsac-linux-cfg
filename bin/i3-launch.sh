@@ -97,7 +97,8 @@ LC_ALL=C nm-applet &
 i3-msg "workspace $files; exec browse.sh"
 i3-msg "workspace $files; exec ebook.sh"
 i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
-sleep 2
+sleep 5
+
 # $help=$files
 xscreensaver &
 dropbox.sh &
@@ -137,10 +138,6 @@ firefox &
 sleep 2
 i3-msg mark tomato
 
-# $edit
-i3-msg "workspace $edit; exec wstorm"
-sleep 20
-
 # $shell
 i3-msg "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
 sleep 1
@@ -158,6 +155,9 @@ sleep 3
 mygterm.sh
 sleep 1
 i3-msg "move scratchpad"
+
+# $edit
+i3-msg "workspace $edit; exec wstorm"
 
 random-desktop.sh
 
