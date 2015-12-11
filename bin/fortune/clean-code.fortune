@@ -139,6 +139,18 @@ Clean Code, Robert C. Martin, p38
 Switch statements should be buried in the basement of an Abstract Factory and never seen.
 Clean Code, Robert C. Martin, p38
 %
+Prefer Exceptions to Returning Error Codes
+
+Returning error codes from command functions is a subtle violation of command query separation.
+It promotes commands being used as expressions in the predicates of if statements.
+
+This does not suffer from verb/adjective confusion but does lead to deeply nested structures.
+When you return an error code, you create the problem that the caller must deal with the error immediately.
+
+On the other hand, if you use exceptions instead of returned error codes, then the error processing code can be separated from the happy path code and can be simplified.
+
+Clean Code, Robert C. Martin, p46
+%
 Good Comments:
 
 Legal Comments.
