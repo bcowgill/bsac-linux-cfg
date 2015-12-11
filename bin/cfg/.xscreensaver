@@ -1,5 +1,5 @@
 # XScreenSaver Preferences File
-# Written by xscreensaver-demo 5.30 for bcowgill on Sat Aug 15 17:50:51 2015.
+# Written by xscreensaver-demo 5.30 for bcowgill on Sat Aug  8 00:28:55 2015.
 # http://www.jwz.org/xscreensaver/
 
 timeout:	0:05:00
@@ -34,13 +34,13 @@ grabVideoFrames:    False
 chooseRandomImages: True
 imageDirectory:	/home/bcowgill/Dropbox/WorkSafe
 
-mode:		random
-selected:	97
+mode:		one
+selected:	87
 
 textMode:	program
 textLiteral:	XScreenSaver
 textFile:	
-textProgram:	/home/bcowgill/bin/random-text.sh
+textProgram:	fortune
 textURL:	http://fridge.ubuntu.com/node/feed
 
 programs:								      \
@@ -133,7 +133,7 @@ programs:								      \
 -				spotlight -root				    \n\
 -				squiral -root				    \n\
 -				wander -root				    \n\
--				webcollage -root			    \n\
+				webcollage -root			    \n\
 				xflame -root				    \n\
 				xmatrix -root				    \n\
   GL: 				gflux -root				    \n\
@@ -149,7 +149,7 @@ programs:								      \
 - GL: 				molecule -root				    \n\
 				rotzoomer -root				    \n\
 -				speedmine -root				    \n\
-  GL: 				starwars -root -no-fade -fps -font 12x24    \n\
+  GL: 				starwars -root				    \n\
 - GL: 				stonerview -root			    \n\
 -				vermiculate -root			    \n\
 -				whirlwindwarp -root			    \n\
