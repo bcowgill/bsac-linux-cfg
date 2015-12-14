@@ -121,7 +121,7 @@ alias bower-unlink='bower uninstall'
 # image tagging aliases
 # add -json for json output
 # add -r recursive
-alias ls-exif='exiftool -T -imagesize -bitdepth -filetype -datetimecreated -filesize -subject -tagslist -keywords -filename'
+alias ls-exif='exiftool -T -imagesize -bitdepth -filetype -datetimecreated -filesize -subject -tagslist -keywords -description -filename'
 # extract exif info to .txt file in same dir as picture
 alias get-exif='exiftool -w .txt'
 
