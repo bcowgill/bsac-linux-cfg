@@ -157,7 +157,7 @@ sleep 1
 i3-msg "move scratchpad"
 
 # $edit
-i3-msg "workspace $edit; exec wstorm"
+i3-msg "workspace $edit; exec wstorm.sh"
 
 random-desktop.sh
 
