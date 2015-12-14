@@ -9,6 +9,6 @@ TRUE=`ibus version | perl -ne 'if (m{IBus \s+ (\d+)\.(\d+)\.(\d+)}xms) { if ($1 
 
 export IBUS_ENABLE_SYNC_MODE=$TRUE
 
-mkdir -p $DIR > /dev/null
-rm $LOG > /dev/null
+mkdir -p $DIR 2> /dev/null
+rm $LOG 2> /dev/null
 wstorm > $LOG 2>&1 &
