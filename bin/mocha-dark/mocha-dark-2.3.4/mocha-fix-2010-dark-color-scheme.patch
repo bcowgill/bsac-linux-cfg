@@ -1,0 +1,212 @@
+From 99f3be1466792e5cd205a4151efe3b8990a74bda Mon Sep 17 00:00:00 2001
+From: "Brent S.A. Cowgill" <brent.cowgill@workshare.com>
+Date: Wed, 16 Dec 2015 15:15:49 +0000
+Subject: [PATCH] issue 2010 mocha-dark colour scheme by Brent S.A. Cowgill
+
+---
+ lib/browser/progress.js  |  9 +++++++++
+ mocha.css                | 49 ++++++++++++++++++++++++++++++++++++++++++++++++
+ support/browser-entry.js | 32 +++++++++++++++++++++++++++++++
+ 3 files changed, 90 insertions(+)
+
+diff --git a/lib/browser/progress.js b/lib/browser/progress.js
+index 3186b6e..8e0235f 100644
+--- a/lib/browser/progress.js
++++ b/lib/browser/progress.js
+@@ -109,6 +109,15 @@ Progress.prototype.draw = function(ctx) {
+     var text = this._text || (percent | 0) + '%';
+     var w = ctx.measureText(text).width;
+ 
++    try {
++      /* global document */
++      if (document.body.className.match(/\bmocha-dark\b/)) {
++        ctx.fillStyle = 'yellow'; // BSAC DARK SCHEME
++      }
++    } finally {
++      // default colour scheme if error
++    }
++
+     ctx.fillText(text, x - w / 2 + 1, y + fontSize / 2 - 1);
+   } catch (err) {
+     // don't fail if we can't render progress
+diff --git a/mocha.css b/mocha.css
+index 3b82ae9..c2633f4 100644
+--- a/mocha.css
++++ b/mocha.css
+@@ -4,6 +4,11 @@ body {
+   margin:0;
+ }
+ 
++body.mocha-dark {
++  background: black; /* BSAC */
++  color: yellow; /* BSAC */
++}
++
+ #mocha {
+   font: 20px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+   margin: 60px 50px;
+@@ -85,6 +90,10 @@ body {
+   color: #00d6b2;
+ }
+ 
++.mocha-dark #mocha .test.pass::before {
++  color: green; /* BSAC */
++}
++
+ #mocha .test.pass .duration {
+   font-size: 9px;
+   margin-left: 5px;
+@@ -100,6 +109,10 @@ body {
+   border-radius: 5px;
+ }
+ 
++.mocha-dark #mocha .test.pass .duration {
++  color: purple; /* BSAC */
++}
++
+ #mocha .test.pass.fast .duration {
+   display: none;
+ }
+@@ -108,19 +121,35 @@ body {
+   color: #0b97c4;
+ }
+ 
++.mocha-dark #mocha .test.pending {
++  color: cyan; /* BSAC */
++}
++
+ #mocha .test.pending::before {
+   content: '◦';
+   color: #0b97c4;
+ }
+ 
++.mocha-dark #mocha .test.pending::before {
++  color: cyan; /* BSAC */
++}
++
+ #mocha .test.fail {
+   color: #c00;
+ }
+ 
++.mocha-dark #mocha .test.fail {
++  color: red; /* BSAC */
++}
++
+ #mocha .test.fail pre {
+   color: black;
+ }
+ 
++.mocha-dark #mocha .test.fail pre {
++  color: red; /* BSAC */
++}
++
+ #mocha .test.fail::before {
+   content: '✖';
+   font-size: 12px;
+@@ -130,12 +159,20 @@ body {
+   color: #c00;
+ }
+ 
++.mocha-dark #mocha .test.fail::before {
++  color: red; /* BSAC */
++}
++
+ #mocha .test pre.error {
+   color: #c00;
+   max-height: 300px;
+   overflow: auto;
+ }
+ 
++.mocha-dark #mocha .test pre.error {
++  color: red; /* BSAC */
++}
++
+ #mocha .test .html-error {
+   overflow: auto;
+   color: black;
+@@ -159,6 +196,10 @@ body {
+   border-radius: 3px;
+ }
+ 
++.mocha-dark #mocha .test .html-error {
++  color: red; /* BSAC */
++}
++
+ #mocha .test .html-error pre.error {
+   border: none;
+   -webkit-border-radius: none;
+@@ -248,6 +289,10 @@ body {
+   letter-spacing: 1px;
+ }
+ 
++.mocha-dark #mocha-error {
++  color: red; /* BSAC */
++}
++
+ #mocha-stats {
+   position: fixed;
+   top: 15px;
+@@ -267,6 +312,10 @@ body {
+   color: black;
+ }
+ 
++.mocha-dark #mocha-stats em {
++  color: yellow; /* BSAC */
++}
++
+ #mocha-stats a {
+   text-decoration: none;
+   color: inherit;
+diff --git a/support/browser-entry.js b/support/browser-entry.js
+index bd2c0aa..b298f30 100644
+--- a/support/browser-entry.js
++++ b/support/browser-entry.js
+@@ -129,6 +129,7 @@ mocha.setup = function(opts){
+ 
+ mocha.run = function(fn){
+   var options = mocha.options;
++  mocha.initColorScheme(options.colorScheme); /* BSAC */
+   mocha.globals('location');
+ 
+   var query = Mocha.utils.parseQuery(global.location.search || '');
+@@ -146,6 +147,37 @@ mocha.run = function(fn){
+   });
+ };
+ 
++/* BSAC */
++mocha.setColorScheme = function (scheme) {
++  var cookieValue, maxAgeInSeconds = (60*60*24*365);
++  try {
++    document.body.className = document.body.className.replace(/\bmocha-[a-z]+\b/g, '');
++    if (scheme) {
++      scheme = scheme.trim();
++      document.body.className += ' ' + scheme;
++      cookieValue = scheme;
++    }
++    else {
++      cookieValue = 'mocha-light';
++    }
++    document.body.className = document.body.className.trim();
++    document.cookie = 'mocha-scheme=' + cookieValue + ';max-age=' + maxAgeInSeconds;
++  } finally {};
++};
++
++/* BSAC */
++mocha.initColorScheme = function (scheme) {
++  try {
++    var mochaScheme = document.cookie.replace(/(?:(?:^|.*;\s*)mocha-scheme\s*\=\s*([^;]*).*$)|^.*$/, "$1").trim();
++    if (mochaScheme) {
++      mocha.setColorScheme(mochaScheme);
++    }
++    else {
++      mocha.setColorScheme(scheme);
++    }
++  } finally {};
++};
++
+ /**
+  * Expose the process shim.
+  * https://github.com/mochajs/mocha/pull/916
+-- 
+2.1.4
+
