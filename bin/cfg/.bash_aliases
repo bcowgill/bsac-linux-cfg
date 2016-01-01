@@ -125,6 +125,9 @@ alias ls-exif='exiftool -T -imagesize -bitdepth -filetype -datetimecreated -file
 # extract exif info to .txt file in same dir as picture
 alias get-exif='exiftool -w .txt'
 
+# unicode aliases
+alias ls-utf8=utf8ls.pl
+
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
