@@ -30,8 +30,8 @@ set $font_name ProFontWindows
 # use xrandr --current command to get monitor screen names
 # should match OUTPUT_MAIN/OUTPUT_AUX from detect-monitors.sh
 set $main eDP1
-set $aux eDP1
-set $aux2 eDP1
+set $aux HDMI1
+set $aux2 DP1
 
 # lemonchiffon = FFFACD
 set $lockcolor FFFACD
