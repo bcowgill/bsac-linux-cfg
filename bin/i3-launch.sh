@@ -5,17 +5,21 @@
 WSBIN=$HOME/bin/workshare
 export PATH=$WSBIN:$PATH
 
-# TODO should use the $shell and other vars from i3-config if possible
-# instead of hard coded here
+# define vars for workspaces (updated by i3-config-update.sh)
+#WORKSPACEDEF
+#  do not edit settings here...
 shell=1
 edit=2
 app=3
-email=4
+email=9
+#email=4
 build=5
 chat=6
 vbox=7
+help=10
+#help=7
 files=8
-
+#/WORKSPACEDEF
 
 # https://github.com/lzap/doti3/blob/master/autostart
 # Wait for program coming up
@@ -93,22 +97,26 @@ LC_ALL=C nm-applet &
 # TODO desktop notifications, configure font
 #dunst &
 
-# $files
-i3-msg "workspace $files; exec browse.sh"
-i3-msg "workspace $files; exec ebook.sh"
-i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
+# $help
+i3-msg "workspace $help; exec ebook.sh"
 sleep 5
 
-# $help=$files
+# $files
+i3-msg "workspace $files; exec browse.sh"
+i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
 xscreensaver &
 dropbox.sh &
+sleep 5
+
+# $vbox
+#i3-msg "workspace $vbox; exec xscreensaver-demo" # placeholder to lock screen
+i3-msg "workspace $vbox; exec virtualbox"
 sleep 2
-#i3-msg "workspace $vbox; exec xscreensaver-demo"
-i3-msg "workspace $vbox; exec virtualbox" # placeholder to lock screen
-sleep 2
+
 # $email
-i3-msg "workspace $email; exec i3-sensible-terminal"
+i3-msg "workspace $email; exec i3-sensible-terminal" # placeholder for google chrome
 sleep 1
+
 # $app
 i3-msg "workspace $app; exec chromium-browser"
 sleep 2
