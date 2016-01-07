@@ -1,5 +1,5 @@
 #!/bin/bash
-# grep all repos for git files
+# git grep all repos for git files
 pushd ~/projects
 DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"
 
