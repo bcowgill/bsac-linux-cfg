@@ -87,18 +87,18 @@ focus_follows_mouse no
 hide_edge_borders vertical
 
 # assign workspaces to monitors
-workspace 1   output $aux
-workspace 2   output $aux
-workspace 3   output $aux
-workspace 4   output $aux
-workspace 9   output $aux2
+workspace 1   output $aux2
+workspace 2   output $aux2
+workspace 3   output $aux2
+workspace 4   output $aux2
+workspace 9   output $aux
 
 workspace 5   output $main
 #workspace 6   output $main
-workspace 6   output $aux2
+workspace 6   output $aux
 workspace 7   output $main
 workspace 8   output $main
-workspace 10  output $aux2
+workspace 10  output $aux
 
 # put clients on specific workspaces. The first matching rule below
 # determines where a window goes.

@@ -31,7 +31,7 @@ else
 	else
 	    # set up three monitors
 		xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
-			--output $OUTPUT_AUX --primary --mode $OUTPUT_RES --left-of $OUTPUT_AUX2 \
-			--output $OUTPUT_AUX2 --mode $OUTPUT_RES2 --rotate right --left-of $OUTPUT_MAIN
+			--output $OUTPUT_AUX --mode $OUTPUT_RES --rotate right --left-of $OUTPUT_AUX2 \
+			--output $OUTPUT_AUX2 --primary --mode $OUTPUT_RES --left-of $OUTPUT_MAIN
 	fi
 fi

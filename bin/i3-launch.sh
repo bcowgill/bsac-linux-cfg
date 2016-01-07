@@ -97,15 +97,16 @@ LC_ALL=C nm-applet &
 # TODO desktop notifications, configure font
 #dunst &
 
+xscreensaver &
+dropbox.sh &
+
 # $help
 i3-msg "workspace $help; exec ebook.sh"
-sleep 5
+sleep 15
 
 # $files
 i3-msg "workspace $files; exec browse.sh"
 i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
-xscreensaver &
-dropbox.sh &
 sleep 5
 
 # $vbox
