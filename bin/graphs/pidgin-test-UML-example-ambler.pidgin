@@ -1,0 +1,68 @@
+# http://pidgin.gruffdavies.com/graphs/111
+# Recreate Ambler's diagram
+# http://www.agiledata.org/images/oo101ClassDiagram.gif
+# http://www.agiledata.org/essays/objectOrientation101.html
+
+# Student "0..1" "lives at" one > Address
+Student has one Address
+Address has optional Student
+
+# Professor "0..1" "lives at" one > Address
+Professor has one Address
+Address has optional Professor
+Address attribute street
+Address attribute city
+Address attribute state
+Address attribute postalCode
+Address attribute country
+Address operation "validate()"
+Address operation "outputAsLabel()"
+
+# Professor "0..1" advisor "mentors"> associate 0..* Professor
+Professor sees many Professor
+Professor sees optional Professor
+
+# Seminar "0..*" "on waiting list" "{ordered,FIFO}" "0..*" > Student
+Seminar has many Student
+Student has many Seminar
+
+# Professor "0..1" instructs "0..*" Seminar
+Seminar has optional Professor
+Professor has many Seminar
+Professor attribute name
+Professor attribute phoneNumber
+Professor attribute emailAddress
+Professor attribute salary
+Professor operation "getInformation()"
+Professor operation "purchaseParkingPass()"
+
+# Seminar "0..*" "offering of" > 1 Course
+Seminar has one Course
+Course has many Seminar
+Course attribute name
+Course attribute courseNumber
+Course attribute fees
+Course operation "getFullName()"
+
+Seminar attribute seminarNumber
+Seminar attribute waitingList
+Seminar operation "addStudent(student)"
+Seminar operation "dropStudent(student)"
+
+# SeminarEnrollment "1..*" "enrolled in" 1 > Seminar
+SeminarEnrollment has one Seminar
+Seminar has many SeminarEnrollment
+SeminarEnrollment attribute marksReceived
+SeminarEnrollment operation "getAverageToDate()"
+SeminarEnrollment operation "getFinalMark()"
+
+# Student 1 "enrolled in" "1..*" > SeminarEnrollment
+Student has many SeminarEnrollment
+Student attribute name
+Student attribute phoneNumber
+Student attribute emailAddress
+Student attribute studentNumber
+Student attribute averageMark
+Student operation "isEligible(name, studentNumber)"
+Student operation "getSeminarsTaken()"
+Student operation "purchaseParkingPass()"

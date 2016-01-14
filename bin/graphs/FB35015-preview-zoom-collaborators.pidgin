@@ -1,0 +1,29 @@
+# http://pidgin.gruffdavies.com/graphs/118
+# FB35015
+
+FilePreviewModel from "files-ui"
+FilePreviewModel is "Backbone.Model"
+
+ControlsView from "files-ui"
+ControlsView is "Marionette.ItemView"
+ControlsView uses filePreviewState
+ControlsView comment "_zoomIn/Out/Fit()"
+
+filePreviewState is FilePreviewModel
+
+FilePreviewController from "files-ui"
+FilePreviewController is "Marionette.Controller"
+FilePreviewController contains filePreviewState
+
+ContentView from "files-ui"
+ContentView is "Marionette.ItemView"
+ContentView uses filePreviewState
+ContentView uses ZoomBehavior
+ContentView comment "listens to zoomtofit:prepare, zoomin:prepare, zoomout:prepare"
+
+ZoomBehavior from "files-ui"
+ZoomBehavior is "Marionette.Behavior"
+ZoomBehavior uses filePreviewState
+ZoomBehavior uses ZoomScrollCalculator
+
+ZoomScrollCalculator from "files-ui"

@@ -1,0 +1,33 @@
+# http://pidgin.gruffdavies.com/graphs/103
+Class from Package
+Package comment "package comment"
+
+# comment here
+SubClass is a Class
+Thing sees a Class
+Decorator extends a Class
+Button updates a Thing
+
+Container has a Dimension
+Container has one Lid
+Container has many Item
+Container has optional MaybeLogger
+
+Marine uses Rifle
+Marine uses a Bayonet
+
+Squad contains one Sergeant
+Squad contains many Marine
+
+Sergeant controls Marine
+
+# feedback
+# inline comments i.e. Dog has many Legs # max 4
+# allow configuration of the graph with meta objects.
+# meta.graph is CaseSensitive
+# meta.controls.head is Arrow
+# meta.controls.color is Red
+# arrow shapes don't match UML is a should be -> if memory serves
+
+A inherits B
+C encloses B

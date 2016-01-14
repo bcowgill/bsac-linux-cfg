@@ -1,0 +1,36 @@
+# http://pidgin.gruffdavies.com/graphs/107
+PositionalCommentCompositeView uses filePreviewState
+
+PositionalCommentController creates PositionalCommentCompositeView
+PositionalCommentController uses filePreviewState
+
+PageDocumentsCollectionView creates PositionalMenuView
+PageDocumentsCollectionView creates PositionalCommentController
+PageDocumentsCollectionView uses filePreviewState
+
+PositionalMenuView uses filePreviewState
+
+FilePreviewController contains filePreviewState
+filePreviewState is FilePreviewModel
+FilePreviewController contains SideBarController
+FilePreviewController contains ContentController
+
+ExternalInterface creates FilePreviewController
+ExternalInterface from "files-ui"
+ExternalInterface comment "createFilePreview()"
+
+FileItemView uses ExternalInterface
+
+SideBarController has optional FileCommentLayout
+SideBarController uses filePreviewState
+
+FileCommentLayout uses SideBarController
+FileCommentLayout uses filePreviewState
+
+FileCommentLayout contains UnreadCommentsView
+
+UnreadCommentsView uses filePreviewState
+
+ContentController uses filePreviewState
+ContentController creates PageDocumentsCollectionView
+ContentController comment "getPageDocumentsCollectionView()"

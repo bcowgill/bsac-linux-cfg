@@ -1,0 +1,25 @@
+# http://pidgin.gruffdavies.com/graphs/108
+Application creates FilesAndFoldersRouter
+FilesAndFoldersRouter creates ContentLayout
+ContentLayout creates FilesView
+ContentLayout comment "from My Files"
+ContentLayout comment "onRender()"
+
+FilesView creates ContentCollection
+ContentCollection creates FolderContentCollection
+FolderContentCollection creates FolderMembershipStatusLoader
+FolderContentCollection comment "fetchMembershipStatus()"
+
+Application creates GroupsController
+GroupsController comment "from Groups"
+GroupsController creates GroupContentView
+GroupContentView creates GroupNavPillView
+GroupNavPillView creates GroupNavigationController
+GroupNavigationController creates FilesView
+GroupNavigationController comment "showFilesView()"
+
+FilesAndFoldersRouter creates FilesAndFolders
+FilesAndFolders creates FilesViewFactory
+FilesAndFolders comment "from Folders"
+FilesViewFactory creates FilesView
+FilesViewFactory comment "getFilesView()"

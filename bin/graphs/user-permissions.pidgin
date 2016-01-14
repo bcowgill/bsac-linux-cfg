@@ -1,0 +1,30 @@
+# http://pidgin.gruffdavies.com/graphs/101
+FilesAndFolders from "new-ui"
+FileOperations from "files-ui"
+UserPermissions from "core-ui"
+FilesView from "files-ui"
+FilesHeaderView from "files-ui"
+ToolbarMenuView from "files-ui"
+FilesCollectionView from "files-ui"
+ItemView from Backbone
+
+FilesView extends a ItemView
+# creates
+FilesView contains UserPermissions
+FilesView contains FilesHeaderView
+FilesView contains FilesCollectionView
+
+FilesCollectionView controls UserPermissions
+
+FilesHeaderView controls UserPermissions
+FilesHeaderView contains ToolbarMenuView
+
+ToolbarMenuView controls UserPermissions
+
+FilesAndFolders contains UserPermissions
+
+# used in a function call?
+FileOperations sees a UserPermissions
+
+#"new-ui" comment "git repo"
+
