@@ -8,7 +8,6 @@ do
 	echo " "
 	echo $dir ======================================================
 	pushd $dir > /dev/null
-		debug-css.sh`
+		debug-css.sh $*
 	popd > /dev/null
 done
-
