@@ -15,6 +15,7 @@ if [ ${OUTPUT_AUX:-error} == error ]; then
 	exit 1
 fi
 
+#set -x
 if [ $OUTPUT_MAIN == $OUTPUT_AUX ]; then
 	# set up single monitor
 	xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES
@@ -31,7 +32,7 @@ else
 	else
 	    # set up three monitors
 		xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES \
-			--output $OUTPUT_AUX --mode $OUTPUT_RES --rotate right --left-of $OUTPUT_AUX2 \
+			--output $OUTPUT_AUX --mode $OUTPUT_RES2 --rotate right --left-of $OUTPUT_AUX2 \
 			--output $OUTPUT_AUX2 --primary --mode $OUTPUT_RES --left-of $OUTPUT_MAIN
 	fi
 fi

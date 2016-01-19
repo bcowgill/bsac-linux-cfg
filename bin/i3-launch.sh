@@ -8,17 +8,15 @@ export PATH=$WSBIN:$PATH
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-shell=1
-edit=2
-app=3
-email=9
-#email=4
-build=5
-chat=6
-vbox=7
-help=10
-#help=7
-files=8
+		shell=1
+		edit=2
+		app=3
+		email=4
+		build=5
+		chat=6
+		vbox=7
+		help=7
+		files=8
 #/WORKSPACEDEF
 
 # https://github.com/lzap/doti3/blob/master/autostart

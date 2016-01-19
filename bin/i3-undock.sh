@@ -11,6 +11,7 @@ fi
 
 if [ $OUTPUT_MAIN != $OUTPUT_AUX ]; then
 	xrandr --output $OUTPUT_AUX --off
+	xrandr --output $OUTPUT_AUX2 --off
 fi
 
 #pacmd set-sink-port 0 analog-output-speaker

@@ -30,8 +30,8 @@ set $font_name ProFontWindows
 # use xrandr --current command to get monitor screen names
 # should match OUTPUT_MAIN/OUTPUT_AUX from detect-monitors.sh
 set $main eDP1
-set $aux HDMI1
-set $aux2 DP1
+set $aux eDP1
+set $aux2 eDP1
 
 # lemonchiffon = FFFACD
 set $lockcolor FFFACD
@@ -42,17 +42,15 @@ set $lockcolor 4c4444
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-set $shell 1
-set $edit 2
-set $app 3
-set $email 9
-#set $email 4
-set $build 5
-set $chat 6
-set $vbox 7
-set $help 10
-#set $help 7
-set $files 8
+		set $shell 1
+		set $edit 2
+		set $app 3
+		set $email 4
+		set $build 5
+		set $chat 6
+		set $vbox 7
+		set $help 7
+		set $files 8
 #/WORKSPACEDEF
 
 set $nochat $shell

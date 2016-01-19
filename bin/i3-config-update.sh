@@ -15,24 +15,46 @@ if [ ${OUTPUT_AUX2:-error} == error ]; then
 	exit 1
 fi
 
-echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX $OUTPUT_AUX2
+if [ ${OUTPUT_AUX:-error} == ${OUTPUT_AUX2:-error} ]; then
+	# 1 or 2 monitors only
+	export I3WORKSPACES='
+		set $shell 1
+		set $edit 2
+		set $app 3
+		set $email 4
+		set $build 5
+		set $chat 6
+		set $vbox 7
+		set $help 7
+		set $files 8
+	'
+
+	export I3MAIN='$build $chat $vbox $files $help'
+	export I3AUX='$shell $edit $app $email $help'
+	export I3AUX2=''
+else
+	# 3 monitors
+	export I3WORKSPACES='
+		set $shell 1
+		set $edit 2
+		set $app 3
+		set $email 9
+		set $build 5
+		set $chat 6
+		set $vbox 7
+		set $help 10
+		set $files 8
+	'
+
+	export I3MAIN='$build $vbox $files'
+	export I3AUX='$email $chat $help'
+	export I3AUX2='$shell $edit $app'
+fi
 
 # update monitor variables in config file
+echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX $OUTPUT_AUX2
 #set $main eDP1
 #set $aux HDMI1 # HOME
-export I3WORKSPACES='
-set $shell 1
-set $edit 2
-set $app 3
-set $email 9
-#set $email 4
-set $build 5
-set $chat 6
-set $vbox 7
-set $help 10
-#set $help 7
-set $files 8
-'
 
 #echo $I3WORKSPACES
 
