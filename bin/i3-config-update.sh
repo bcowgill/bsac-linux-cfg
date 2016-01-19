@@ -60,6 +60,9 @@ echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX $OUTPUT_AUX2
 
 config=~/bin/cfg/.i3-config
 perl -i.bak -pne '
+	$definitions = $ENV{I3WORKSPACES};
+	$definitions =~ s{\n \s* \z}{\n}xmsg;
+
 	s{\A \s* (set \s+ \$main \s+) .+? \n \z}{$1$ENV{OUTPUT_MAIN}\n}xms;
 	s{\A \s* (set \s+ \$aux  \s+) .+? \n \z}{$1$ENV{OUTPUT_AUX}\n}xms;
 	s{\A \s* (set \s+ \$aux2 \s+) .+? \n \z}{$1$ENV{OUTPUT_AUX2}\n}xms;
@@ -67,11 +70,11 @@ perl -i.bak -pne '
 		if (m{\A ( \s* \# WORKSPACEDEF ) \s* \z}xms)
 		{
 			$in_workspace_def = 1;
-			$_ = "$1\n#  do not edit settings here...$ENV{I3WORKSPACES}";
+			$_ = "$1\n#  do not edit settings here...$definitions";
 		}
 	}
 	else {
-		if (m{\A \s* \# / WORKSPACEDEF \s* \z}xms)
+		if (s{\A \s* (\# / WORKSPACEDEF) \s* \z}{$1\n}xms)
 		{
 			$in_workspace_def = 0;
 		}
@@ -91,7 +94,8 @@ perl -i.bak -pne '
 	{
 		$definitions = $ENV{I3WORKSPACES};
 		$definitions =~ s{\bset \s+ \$(\w+) \s+ (.+? \n)}{$1=$2}xmsg;
-		#print STDERR "definitions $definitions";
+		$definitions =~ s{\n \s* \z}{\n}xmsg;
+		print STDERR "definitions [$definitions]";
 	}
 	if (!$in_workspace_def) {
 		if (m{\A ( \s* \# WORKSPACEDEF ) \s* \z}xms)
@@ -101,7 +105,7 @@ perl -i.bak -pne '
 		}
 	}
 	else {
-		if (m{\A \s* \# / WORKSPACEDEF \s* \z}xms)
+		if (s{\A \s* (\# / WORKSPACEDEF) \s* \z}{$1\n}xms)
 		{
 			$in_workspace_def = 0;
 		}
