@@ -55,7 +55,7 @@ set $aux2 eDP1
 		set $build 5
 		set $chat 6
 		set $vbox 7
-		set $help 7
+		set $help 10
 		set $files 8
 
 		# assign workspaces to 1 or 2 monitors

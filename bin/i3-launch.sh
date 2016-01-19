@@ -16,7 +16,7 @@ export PATH=$WSBIN:$PATH
 		build=5
 		chat=6
 		vbox=7
-		help=7
+		help=10
 		files=8
 #/WORKSPACEDEF
 
