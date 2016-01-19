@@ -43,6 +43,13 @@ wait_for_program () {
   done
 }
 
+function i3do {
+  local msg
+  msg="$1"
+  echo i3-msg "$1" 1>&2
+  i3-msg "$1"
+}
+
 ## Merge Xresources
 xrdb -merge ~/.Xresources &
 
@@ -100,25 +107,25 @@ xscreensaver &
 dropbox.sh &
 
 # $help
-i3-msg "workspace $help; exec ebook.sh"
+i3do "workspace $help; exec ebook.sh"
 sleep 15
 
 # $files
-i3-msg "workspace $files; exec browse.sh"
-i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
+i3do "workspace $files; exec browse.sh"
+i3do "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
 sleep 5
 
 # $vbox
-#i3-msg "workspace $vbox; exec xscreensaver-demo" # placeholder to lock screen
-i3-msg "workspace $vbox; exec virtualbox"
+#i3do "workspace $vbox; exec xscreensaver-demo" # placeholder to lock screen
+i3do "workspace $vbox; exec virtualbox"
 sleep 2
 
 # $email
-i3-msg "workspace $email; exec i3-sensible-terminal" # placeholder for google chrome
+i3do "workspace $email; exec i3-sensible-terminal" # placeholder for google chrome
 sleep 1
 
 # $app
-i3-msg "workspace $app; exec chromium-browser"
+i3do "workspace $app; exec chromium-browser"
 sleep 2
 
 # $build
@@ -131,41 +138,41 @@ sleep 2
 # ._____._____.
 # A/B should be terminals with build/watch running
 # C should be browser
-i3-msg workspace $build
+i3do "workspace $build"
 xbuild-files.sh &
 sleep 2
-i3-msg mark watch
+i3do "mark watch"
 
-i3-msg "layout default; split v"
+i3do "layout default; split v"
 xbuild-newui.sh &
 sleep 1
-i3-msg mark newui
+i3do "mark newui"
 
-i3-msg "focus parent; split h"
+i3do "focus parent; split h"
 firefox &
 sleep 2
-i3-msg mark tomato
+i3do "mark tomato"
 
 # $shell
-i3-msg "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
+i3do "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
 sleep 1
-i3-msg mark git
+i3do "mark git"
 
-i3-msg "focus left"
+i3do "focus left"
 sleep 1
-i3-msg mark shell
+i3do "mark shell"
 
 # $chat
-i3-msg "workspace $chat; exec skype"
+i3do "workspace $chat; exec skype"
 sleep 3
 
 # scratchpad setup with a terminal
 mygterm.sh
 sleep 1
-i3-msg "move scratchpad"
+i3do "move scratchpad"
 
 # $edit
-i3-msg "workspace $edit; exec wstorm.sh"
+i3do "workspace $edit; exec wstorm.sh"
 
 random-desktop.sh
 
