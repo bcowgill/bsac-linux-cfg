@@ -23,6 +23,12 @@ fi
 MONITORS=`xrandr | grep ' connected' | wc -l`
 MONITOR_NAMES=`xrandr | grep ' connected' | perl -pne 's{\A (\w+) .+ \z}{$1\n}xms'`
 
+# force values when testing...
+#MONITORS=2
+#MONITOR_NAMES='eDP1 HDMI1'
+#MONITORS=3
+#MONITOR_NAMES='eDP1 DP1 HDMI1'
+
 # eDP1 is laptop main screen
 #eDP1 connected primary 1920x1080+1920+0 (normal left inverted right x axis y axis) 346mm x 194mm
 #DP1 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 477mm x 268mm

@@ -15,9 +15,14 @@ if [ ${OUTPUT_AUX2:-error} == error ]; then
 	exit 1
 fi
 
+# force for testing N monitors...
+#OUTPUT_AUX=TESTAUX
+#OUTPUT_AUX2=TESTAUX
+
 if [ ${OUTPUT_AUX:-error} == ${OUTPUT_AUX2:-error} ]; then
 	# 1 or 2 monitors only
 	export I3WORKSPACES='
+	    # 1 or 2 monitors
 		set $shell 1
 		set $edit 2
 		set $app 3
@@ -28,6 +33,20 @@ if [ ${OUTPUT_AUX:-error} == ${OUTPUT_AUX2:-error} ]; then
 		set $help 7
 		set $files 8
 	'
+	export I3SCREENS='
+		# assign workspaces to 1 or 2 monitors
+		workspace 10  output $main
+		workspace 8   output $main
+		workspace 7   output $main
+		workspace 6   output $main
+		workspace 5   output $main
+
+		workspace 9   output $aux
+		workspace 4   output $aux
+		workspace 3   output $aux
+		workspace 2   output $aux
+		workspace 1   output $aux
+	'
 
 	export I3MAIN='$build $chat $vbox $files $help'
 	export I3AUX='$shell $edit $app $email $help'
@@ -35,6 +54,7 @@ if [ ${OUTPUT_AUX:-error} == ${OUTPUT_AUX2:-error} ]; then
 else
 	# 3 monitors
 	export I3WORKSPACES='
+	    # 3 monitors
 		set $shell 1
 		set $edit 2
 		set $app 3
@@ -44,6 +64,21 @@ else
 		set $vbox 7
 		set $help 10
 		set $files 8
+	'
+
+	export I3SCREENS='
+		# assign workspaces to 3 monitors
+		workspace 10  output $aux
+		workspace 8   output $main
+		workspace 7   output $main
+		workspace 6   output $aux
+		workspace 5   output $main
+
+		workspace 9   output $aux
+		workspace 4   output $aux2
+		workspace 3   output $aux2
+		workspace 2   output $aux2
+		workspace 1   output $aux2
 	'
 
 	export I3MAIN='$build $vbox $files'
@@ -62,6 +97,8 @@ config=~/bin/cfg/.i3-config
 perl -i.bak -pne '
 	$definitions = $ENV{I3WORKSPACES};
 	$definitions =~ s{\n \s* \z}{\n}xmsg;
+	$screens = $ENV{I3SCREENS};
+	$screens =~ s{\n \s* \z}{\n}xmsg;
 
 	s{\A \s* (set \s+ \$main \s+) .+? \n \z}{$1$ENV{OUTPUT_MAIN}\n}xms;
 	s{\A \s* (set \s+ \$aux  \s+) .+? \n \z}{$1$ENV{OUTPUT_AUX}\n}xms;
@@ -70,7 +107,7 @@ perl -i.bak -pne '
 		if (m{\A ( \s* \# WORKSPACEDEF ) \s* \z}xms)
 		{
 			$in_workspace_def = 1;
-			$_ = "$1\n#  do not edit settings here...$definitions";
+			$_ = "$1\n#  do not edit settings here...$definitions$screens";
 		}
 	}
 	else {
@@ -86,7 +123,7 @@ perl -i.bak -pne '
 ' $config
 echo $config updated
 egrep 'set\s+\$(main|aux)' $config
-grep WORKSPACEDEF -B 7 -A 7 $config
+middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
 
 config=~/bin/i3-launch.sh
 perl -i.bak -pne '
@@ -95,7 +132,7 @@ perl -i.bak -pne '
 		$definitions = $ENV{I3WORKSPACES};
 		$definitions =~ s{\bset \s+ \$(\w+) \s+ (.+? \n)}{$1=$2}xmsg;
 		$definitions =~ s{\n \s* \z}{\n}xmsg;
-		print STDERR "definitions [$definitions]";
+		#print STDERR "definitions [$definitions]";
 	}
 	if (!$in_workspace_def) {
 		if (m{\A ( \s* \# WORKSPACEDEF ) \s* \z}xms)
@@ -116,4 +153,32 @@ perl -i.bak -pne '
 	}
 ' $config
 echo $config updated
-grep WORKSPACEDEF -B 7 -A 7 $config
+middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
+
+config=~/bin/i3-dock.sh
+perl -i.bak -pne '
+	$screens = $ENV{I3SCREENS};
+	$screens =~ s{\bworkspace\b}{move_workspace}xmsg;
+	$screens =~ s{\$(main|aux2?)}{qq{\$OUTPUT_} . uc($1)}xmsge;
+	$screens =~ s{\n \s* \z}{\n}xmsg;
+
+	if (!$in_workspace_def) {
+		if (m{\A ( \s* \# WORKSPACEDEF ) \s* \z}xms)
+		{
+			$in_workspace_def = 1;
+			$_ = "$1\n#  do not edit settings here...$screens";
+		}
+	}
+	else {
+		if (s{\A \s* (\# / WORKSPACEDEF) \s* \z}{$1\n}xms)
+		{
+			$in_workspace_def = 0;
+		}
+		else
+		{
+			$_ = "";
+		}
+	}
+' $config
+echo $config updated
+middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
