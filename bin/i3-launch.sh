@@ -8,11 +8,11 @@ export PATH=$WSBIN:$PATH
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-	    # 1 or 2 monitors
+	    # 3 monitors
 		shell=1
 		edit=2
 		app=3
-		email=4
+		email=9
 		build=5
 		chat=6
 		vbox=7
@@ -107,6 +107,7 @@ xscreensaver &
 dropbox.sh &
 
 # $help
+i3do "workspace $help; exec i3-sensible-terminal"
 i3do "workspace $help; exec ebook.sh"
 sleep 15
 

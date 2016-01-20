@@ -1,3 +1,3 @@
 #!/bin/bash
-# launch the installe e-book library/reader
+# launch the installed e-book library/reader
 calibre $* &
