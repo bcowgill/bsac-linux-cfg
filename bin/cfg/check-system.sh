@@ -18,7 +18,8 @@ set -e
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
 
-
+# oggconvert gui - convert sound files to free formats
+# digikam photo metadata/tag/edit software
 
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
@@ -74,7 +75,7 @@ SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xsc
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
-NODE_VER="v0.12.7"
+NODE_VER="v0.12.9"
 NODE_CMD="nodejs"
 NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
@@ -117,8 +118,8 @@ VPN="openvpn brctl:bridge-utils"
 
 USE_WEBSTORM=1
 WEBSTORM=wstorm
-WEBSTORM_ARCHIVE=WebStorm-11.0.0
-WEBSTORM_DIR=WebStorm-143.381.46
+WEBSTORM_ARCHIVE=WebStorm-11.0.3
+WEBSTORM_DIR=WebStorm-143.1559.5
 WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
 WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
@@ -856,7 +857,8 @@ crontab_has_command "wcdscan.sh"
 if $NODE_CMD --version | grep $NODE_VER; then
 	OK "node command version correct"
 else
-	NOT_OK "node command version incorrect. trying to update"
+	GOTVER=`$NODE_CMD --version`
+	NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER"
 	#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
 	sudo apt-get update
 	sudo apt-get install -y python-software-properties python g++ make

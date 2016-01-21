@@ -1,0 +1,28 @@
+# http://pidgin.gruffdavies.com/graphs/109
+UserPermissions from "core-ui"
+UserPermissions has a FolderModel
+UserPermissions has a MemberModel
+
+FileOperations from "files-ui"
+FileOperations uses UserPermissions
+FileOperations comment "_getPermissionsToApply()"
+
+ContextMenuFilesListCollection from "files-ui"
+ContextMenuFilesListCollection is ContextMenuItemCollection
+ContextMenuFilesListCollection extends SpecialFoldersMixin
+ContextMenuFilesListCollection contains LeaveFolderMenuItem
+ContextMenuFilesListCollection contains CopyMenuItem
+
+LeaveFolderMenuItem from "files-ui"
+LeaveFolderMenuItem uses UserPermissions
+
+CopyMenuItem from "files-ui"
+CopyMenuItem uses FileOperations
+CopyMenuItem extends SpecialFoldersMixin
+CopyMenuItem extends "createChild"
+CopyMenuItem uses MenuState
+
+SpecialFoldersMixin from "files-ui"
+
+"createChild" from "files-ui"
+createChild comment "should be CreateChildMixin"

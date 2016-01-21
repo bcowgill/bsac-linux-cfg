@@ -1,0 +1,154 @@
+# http://pidgin.gruffdavies.com/graphs/110
+# UML notation legend page:
+# http://www.uwgb.edu/breznayp/cs372/UML.htm
+# another detailed one http://www.conceptdraw.com/How-To-Guide/picture/Design-elements-UML-class-diagrams.png
+
+# Graph layout is reverse of object order declaration, read
+# this from the bottom back up to here...
+# Might be an idea to add objects to the graph in reverse of parsing order to allow some control over layout.
+
+# Rendering option to use d3 would be cool
+# https://github.com/cpettitt/dagre-d3/wiki
+# http://bl.ocks.org/mbostock/3750558
+# https://github.com/mbostock/d3/wiki/Force-Layout
+
+# Would be good to have an easy way to grab the source with wget for backup
+# http://pidgin.gruffdavies.com/images/110.txt
+
+# UML Dependency when a class uses another one but not as inheritance or composition
+# better keyword depends, requires, uses but arrows wrong.
+#"Class BB" from "Class AA" 
+"Class AA" uses "Class BB"
+"Class BB" comment "Dependency [should be dashed line arrow from AA to BB]"
+
+# UML Navigability I forget what this is about
+
+# UML Qualified Association I forget what this is about
+
+# UML composition/aggregation should have no arrow
+Fish contains many Scale
+Scale comment "ordered role?? [should show multiplicity]"
+Cat contains Tail
+Tail comment "composition"
+Dog uses Collar
+Collar comment "aggregation [should have no arrow to allow multiplicity indication]"
+
+# UML multiplicities wrong connector notation
+# UML ordered role 
+Queue has many Event
+Event comment "Ordered role [should be 0..* {ordered, priority}]"
+# cant do multiplicity on both ends
+Monitor has many Resolution
+Resolution has optional Monitor
+Resolution comment "optional to many [should be single line]"
+# UML M..N not supported
+Truck has "4..18" Wheel
+Wheel comment "numerically specified [should be 4..18]"
+Car has optional Stereo
+Stereo comment "optional (zero or one) [should be 0..1 above line]"
+Bus has many Occupants
+Occupants comment "many (zero or more) [should be * above line]"
+Motorcycle has one Engine
+Engine comment "exactly one [should be 1 above line]"
+Motorcycle comment "Multiplicities [don't match UML notation]"
+
+# UML association single line has no arrows
+# ClassA roleA/roleB ClassB
+"Class A" roleA "Class B"
+"Class B" roleB "Class A"
+"Class A" comment "Association [should be one simple line with ends labeled with roles]"
+
+# UML object instance
+"objectName: aClass Name" is "aClass Name"
+"objectName: aClass Name" comment "Object instance"
+
+# UML Note/comment should have no arrow
+
+# UML constraint/stereotype not supported
+
+# UML generalization
+# UML inheritance arrow should be hollow
+"Subtype 1" is Supertype
+"Subtype 2" is Supertype
+Supertype comment "Generalization [should be hollow arrow]"
+
+# UML class with attributes/methods not rendered as UML
+"Class Name" attribute "attribute:Type = initialValue"
+"Class Name" operation "operation(arg list):return type"
+"Class Name" comment "Class [not drawn as UML single box with three compartments]"# UML notation legend page:
+# http://www.uwgb.edu/breznayp/cs372/UML.htm
+# another detailed one http://www.conceptdraw.com/How-To-Guide/picture/Design-elements-UML-class-diagrams.png
+
+# Graph layout is reverse of object order declaration, read
+# this from the bottom back up to here...
+# Might be an idea to add objects to the graph in reverse of parsing order to allow some control over layout.
+
+# Rendering option to use d3 would be cool
+# https://github.com/cpettitt/dagre-d3/wiki
+# http://bl.ocks.org/mbostock/3750558
+# https://github.com/mbostock/d3/wiki/Force-Layout
+
+# Would be good to have an easy way to grab the source with wget for backup
+# http://pidgin.gruffdavies.com/images/110.txt
+
+# UML Dependency when a class uses another one but not as inheritance or composition
+# better keyword depends, requires, uses but arrows wrong.
+#"Class BB" from "Class AA" 
+"Class AA" uses "Class BB"
+"Class BB" comment "Dependency [should be dashed line arrow from AA to BB]"
+
+# UML Navigability I forget what this is about
+
+# UML Qualified Association I forget what this is about
+
+# UML composition/aggregation should have no arrow
+Fish contains many Scale
+Scale comment "ordered role?? [should show multiplicity]"
+Cat contains Tail
+Tail comment "composition"
+Dog uses Collar
+Collar comment "aggregation [should have no arrow to allow multiplicity indication]"
+
+# UML multiplicities wrong connector notation
+# UML ordered role 
+Queue has many Event
+Event comment "Ordered role [should be 0..* {ordered, priority}]"
+# cant do multiplicity on both ends
+Monitor has many Resolution
+Resolution has optional Monitor
+Resolution comment "optional to many [should be single line]"
+# UML M..N not supported
+Truck has "4..18" Wheel
+Wheel comment "numerically specified [should be 4..18]"
+Car has optional Stereo
+Stereo comment "optional (zero or one) [should be 0..1 above line]"
+Bus has many Occupants
+Occupants comment "many (zero or more) [should be * above line]"
+Motorcycle has one Engine
+Engine comment "exactly one [should be 1 above line]"
+Motorcycle comment "Multiplicities [don't match UML notation]"
+
+# UML association single line has no arrows
+# ClassA roleA/roleB ClassB
+"Class A" roleA "Class B"
+"Class B" roleB "Class A"
+"Class A" comment "Association [should be one simple line with ends labeled with roles]"
+
+# UML object instance
+"objectName: aClass Name" is "aClass Name"
+"objectName: aClass Name" comment "Object instance"
+
+# UML Note/comment should have no arrow
+
+# UML constraint/stereotype not supported
+
+# UML generalization
+# UML inheritance arrow should be hollow
+"Subtype 1" is Supertype
+"Subtype 2" is Supertype
+Supertype comment "Generalization [should be hollow arrow]"
+
+# UML class with attributes/methods not rendered as UML
+"Class Name" attribute "attribute:Type = initialValue"
+"Class Name" operation "operation(arg list):return type"
+"Class Name" comment "Class [not drawn as UML single box with three compartments]"

@@ -11,13 +11,14 @@ fi
 
 if [ $OUTPUT_MAIN != $OUTPUT_AUX ]; then
 	xrandr --output $OUTPUT_AUX --off
+	xrandr --output $OUTPUT_AUX2 --off
 fi
 
 #pacmd set-sink-port 0 analog-output-speaker
 sleep 2
 for WORKSPACE in $(seq 1 10); do
 	ws=$((11 - $WORKSPACE))
-	echo move workspace $ws to output $OUTPUT_AUX
+	echo move workspace $ws to output $OUTPUT_MAIN
 	i3-msg "workspace $ws; move workspace to output $OUTPUT_MAIN" > /dev/null
 done
 export OUTPUT_MAIN=

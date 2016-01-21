@@ -5,17 +5,20 @@
 WSBIN=$HOME/bin/workshare
 export PATH=$WSBIN:$PATH
 
-# TODO should use the $shell and other vars from i3-config if possible
-# instead of hard coded here
-shell=1
-edit=2
-app=3
-email=4
-build=5
-chat=6
-vbox=7
-files=8
-
+# define vars for workspaces (updated by i3-config-update.sh)
+#WORKSPACEDEF
+#  do not edit settings here...
+	    # 1 or 2 monitors
+		shell=1
+		edit=2
+		app=3
+		email=4
+		build=5
+		chat=6
+		vbox=7
+		help=10
+		files=8
+#/WORKSPACEDEF
 
 # https://github.com/lzap/doti3/blob/master/autostart
 # Wait for program coming up
@@ -38,6 +41,13 @@ wait_for_program () {
       fi
     fi
   done
+}
+
+function i3do {
+  local msg
+  msg="$1"
+  echo i3-msg "$1" 1>&2
+  i3-msg "$1"
 }
 
 ## Merge Xresources
@@ -93,23 +103,29 @@ LC_ALL=C nm-applet &
 # TODO desktop notifications, configure font
 #dunst &
 
-# $files
-i3-msg "workspace $files; exec browse.sh"
-i3-msg "workspace $files; exec ebook.sh"
-i3-msg "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
-sleep 2
-# $help=$files
 xscreensaver &
 dropbox.sh &
+
+# $help
+i3do "workspace $help; exec ebook.sh"
+sleep 15
+
+# $files
+i3do "workspace $files; exec browse.sh"
+i3do "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
+sleep 5
+
+# $vbox
+#i3do "workspace $vbox; exec xscreensaver-demo" # placeholder to lock screen
+i3do "workspace $vbox; exec virtualbox"
 sleep 2
-#i3-msg "workspace $vbox; exec xscreensaver-demo"
-i3-msg "workspace $vbox; exec virtualbox" # placeholder to lock screen
-sleep 2
+
 # $email
-i3-msg "workspace $email; exec i3-sensible-terminal"
+i3do "workspace $email; exec i3-sensible-terminal" # placeholder for google chrome
 sleep 1
+
 # $app
-i3-msg "workspace $app; exec chromium-browser"
+i3do "workspace $app; exec chromium-browser"
 sleep 2
 
 # $build
@@ -122,42 +138,41 @@ sleep 2
 # ._____._____.
 # A/B should be terminals with build/watch running
 # C should be browser
-i3-msg workspace $build
+i3do "workspace $build"
 xbuild-files.sh &
 sleep 2
-i3-msg mark watch
+i3do "mark watch"
 
-i3-msg "layout default; split v"
+i3do "layout default; split v"
 xbuild-newui.sh &
 sleep 1
-i3-msg mark newui
+i3do "mark newui"
 
-i3-msg "focus parent; split h"
+i3do "focus parent; split h"
 firefox &
 sleep 2
-i3-msg mark tomato
-
-# $edit
-i3-msg "workspace $edit; exec wstorm"
-sleep 20
+i3do "mark tomato"
 
 # $shell
-i3-msg "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
+i3do "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
 sleep 1
-i3-msg mark git
+i3do "mark git"
 
-i3-msg "focus left"
+i3do "focus left"
 sleep 1
-i3-msg mark shell
+i3do "mark shell"
 
 # $chat
-i3-msg "workspace $chat; exec skype"
+i3do "workspace $chat; exec skype"
 sleep 3
 
 # scratchpad setup with a terminal
 mygterm.sh
 sleep 1
-i3-msg "move scratchpad"
+i3do "move scratchpad"
+
+# $edit
+i3do "workspace $edit; exec wstorm.sh"
 
 random-desktop.sh
 

@@ -23,32 +23,54 @@
 
 # BSAC var settings
 set $bin /home/bcowgill/bin
+
+# Initialise monitor resolutions, mouse/trackpad/touch/keyboard setup
+exec --no-startup-id $bin/i3-start.sh
+
 set $font_size 18
 set $font_name ProFontWindows
 
-# define vars for monitor screens
+set $lemonchiffon FFFACD
+set $lockcolor $lemonchiffon
+set $brick 683232
+set $lockcolor $brick
+set $mygray 4c4444
+set $lockcolor $mygray
+
 # use xrandr --current command to get monitor screen names
-# should match OUTPUT_MAIN/OUTPUT_AUX from detect-monitors.sh
+# define vars for monitor screens (updated by i3-config-update.sh)
+#  do not edit settings here...
 set $main eDP1
-set $aux HDMI1
-set $aux2 DP1
+set $aux  eDP1
+set $aux2 eDP1
 
-# lemonchiffon = FFFACD
-set $lockcolor FFFACD
-# brick = 683232
-set $lockcolor 683232
-set $lockcolor 4c4444
+# define vars for workspaces (updated by i3-config-update.sh)
+#WORKSPACEDEF
+#  do not edit settings here...
+	    # 1 or 2 monitors
+		set $shell 1
+		set $edit 2
+		set $app 3
+		set $email 4
+		set $build 5
+		set $chat 6
+		set $vbox 7
+		set $help 10
+		set $files 8
 
-# define vars for workspaces
-set $shell 1
-set $edit 2
-set $app 3
-set $email 4
-set $build 5
-set $chat 6
-set $vbox 7
-set $help 7
-set $files 8
+		# assign workspaces to 1 or 2 monitors
+		workspace 10  output $main
+		workspace 8   output $main
+		workspace 7   output $main
+		workspace 6   output $main
+		workspace 5   output $main
+
+		workspace 9   output $aux
+		workspace 4   output $aux
+		workspace 3   output $aux
+		workspace 2   output $aux
+		workspace 1   output $aux
+#/WORKSPACEDEF
 
 set $nochat $shell
 
@@ -65,9 +87,6 @@ set $charterUTF -bitstream-bitstream charter-bold-r-normal--0-0-0-0-p-0-iso10646
 #i3-input -l 30 -P 'Test of i3-input ' -f "-bitstream-bitstream charter-bold-r-normal--0-0-0-0-p-0-iso10646-1"
 #i3-input -l 30 -P 'Test of i3-input ' -f "-bitstream-courier 10 pitch-bold-r-normal--0-0-0-0-m-0-iso10646-1"
 
-# Initialise monitor resolutions, mouse/trackpad/touch/keyboard setup
-exec --no-startup-id $bin/i3-start.sh
-
 # default workspaces layout with tabs default/stacking/tabbed
 workspace_layout tabbed
 # allow workspace toggling back and forth
@@ -82,17 +101,18 @@ focus_follows_mouse no
 hide_edge_borders vertical
 
 # assign workspaces to monitors
-workspace 1   output $aux
-workspace 2   output $aux
-workspace 3   output $aux
-workspace 4   output $aux
-workspace 9   output $aux2
+workspace 1   output $aux2
+workspace 2   output $aux2
+workspace 3   output $aux2
+workspace 4   output $aux2
+workspace 9   output $aux
 
 workspace 5   output $main
-workspace 6   output $main
+#workspace 6   output $main
+workspace 6   output $aux
 workspace 7   output $main
 workspace 8   output $main
-workspace 10  output $aux2
+workspace 10  output $aux
 
 # put clients on specific workspaces. The first matching rule below
 # determines where a window goes.

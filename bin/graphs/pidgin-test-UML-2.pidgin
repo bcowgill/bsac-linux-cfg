@@ -1,0 +1,23 @@
+# http://pidgin.gruffdavies.com/graphs/112
+# Test UML class diagram
+# https://cppcodetips.wordpress.com/2013/12/23/uml-class-diagram-explained-with-c-samples/
+# https://cppcodetips.files.wordpress.com/2013/12/classiagram.gif
+
+# Lorry one aggregate one Tachograph
+Lorry has one Tachograph
+
+
+Lorry is Vehicle
+
+Car is Vehicle
+
+# Vehicle "0..1" aggregate "1..*" Wheel
+# reference chart has aggregate diamond on wrong class?
+Vehicle has many Wheel
+Wheel has optional Vehicle
+
+
+# Vehicle "0..*" Chattel "Vehicle Ownership" Owner "1..1" Person
+Vehicle has one Person
+Person has many Vehicle
+

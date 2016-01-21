@@ -118,6 +118,16 @@ alias ls-bower='find . -name bower_components; echo $HOME/.config/configstore; l
 alias bower-ls=ls-bower
 alias bower-unlink='bower uninstall'
 
+# image tagging aliases
+# add -json for json output
+# add -r recursive
+alias ls-exif='exiftool -T -imagesize -bitdepth -filetype -datetimecreated -filesize -subject -tagslist -keywords -description -filename'
+# extract exif info to .txt file in same dir as picture
+alias get-exif='exiftool -w .txt'
+
+# unicode aliases
+alias ls-utf8=utf8ls.pl
+
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
