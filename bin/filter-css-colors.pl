@@ -174,6 +174,9 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 =head1 TODO
 
+support for:
+  border: 2px solid #ffffff;
+
 --foreground=xxxx substitute a color for all foreground colors
 --background=xxxx you get color: #fff /* original color */;
 --undo undo a foreground/background change
