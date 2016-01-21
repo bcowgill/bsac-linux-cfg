@@ -4,7 +4,7 @@ KEY:WEBSTORM:CONFIG Ctrl-Alt-s [File/Settings] incremental search for a setting
 KEY:WEBSTORM:EDIT Ctrl-Shift-j [Edit/Join Lines] Join two lines removing unnecessary space
 KEY:WEBSTORM:EDIT Ctrl-/ Line Comment/Uncomment the current line or selected lines
 KEY:WEBSTORM:EDIT Ctrl-Shift-/ Block Comment/uncomment the current line or selected lines
-KEY:WEBSTORM:EDIT Alt-Shift-Up/Down Move the current selecion or line up/down
+KEY:WEBSTORM:EDIT Alt-Shift-Up/Down Move the current selection or line up/down
 
 KEY:WEBSTORM:NAV F12 move from the editor to the last focused tool window
 KEY:WEBSTORM:NAV Ctrl-Tab popup switcher to choose between tool windows and open files
