@@ -172,7 +172,15 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 
+ Replace hard coded colors with values from a variable definition file
+
+ filter-css-colors.pl --noecho --inplace=.bak --remap --shorten --valid-only --const-file variables.less styles/*.less
+
 =head1 TODO
+
+use cases:
+convert rgba(r,g,b) to rgba(red(),green(),blue(),alpha)
+extract all unique color values and define them as consecutive constant names but leave them as is in the files
 
 support for:
   border: 2px solid #ffffff;
@@ -2505,3 +2513,4 @@ __DATA__
 		whitesmoke  #F5F5F5  245,245,245
 		yellow   #FFFF00  255,255,0
 		yellowgreen #9ACD32  154,205,50
+
