@@ -5,4 +5,4 @@ CARD=1
 LEVEL=${1:-0%}
 SOUND=${2:-$HOME/bin/sounds/laser.wav}
 amixer -c $CARD -- sset Master playback $LEVEL
-aplay $SOUND
+aplay -D sysdefault:CARD=PCH $SOUND
