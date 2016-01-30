@@ -1,6 +1,7 @@
 #!/bin/bash
 # jshint-add-complexity.sh [.jshintrc] [complexity]
 # add/update the maxcomplexity jshint setting
+# defaults to a complexity of 4 if none specified
 
 FILE=${1:-.jshintrc}
 export COMPLEXITY=${2:-4}
