@@ -1,14 +1,7 @@
 #!/bin/bash
-pushd ~/projects
-DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"
+# fetch a branch with a hard reset in all git repositories
+# as defined by PJ and REPOS environment variables
+
 BRANCH=$1
 
-for dir in $DIRS
-do
-	echo " "
-	echo $dir ======================================================
-	pushd $dir > /dev/null
-		git-fetch-pull-request.sh $BRANCH
-	popd > /dev/null
-done
-
+all-repos.sh git-fetch-pull-request.sh $BRANCH

@@ -1,14 +1,10 @@
 #!/bin/bash
-pushd ~/projects
-DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"
+# fetch a branch in all git repositories
+# as defined by PJ and REPOS environment variables
+
 BRANCH=$1
+if [ -z "$BRANCH" ]; then
+	echo NOT OK you need to specify a branch name to checkout
+fi
 
-for dir in $DIRS
-do
-	echo " "
-	echo $dir ======================================================
-	pushd $dir > /dev/null
-		git checkout $BRANCH
-	popd > /dev/null
-done
-
+all-repos.sh git checkout $BRANCH

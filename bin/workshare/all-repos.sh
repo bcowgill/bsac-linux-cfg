@@ -1,5 +1,5 @@
 #!/bin/bash
-# checkout all git repositories
+# perform a command on all repositories
 # as defined by PJ and REPOS environment variables
 
 if [ -z "$PJ" ]; then
@@ -18,6 +18,6 @@ do
 	echo " "
 	echo $dir ======================================================
 	pushd $dir > /dev/null
-		git checkout $*
+		$*
 	popd > /dev/null
 done

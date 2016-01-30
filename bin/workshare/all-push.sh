@@ -1,13 +1,5 @@
 #!/bin/bash
-pushd ~/projects
-DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"
+# git push to remote in all git repositories
+# as defined by PJ and REPOS environment variables
 
-for dir in $DIRS
-do
-	echo " "
-	echo $dir ======================================================
-	pushd $dir > /dev/null
-		git push $*
-	popd > /dev/null
-done
-
+all-repos.sh git push $*

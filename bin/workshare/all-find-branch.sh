@@ -1,15 +1,11 @@
 #!/bin/bash
-pushd ~/projects
-DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"
+# grep for a branch in all git repositories
+# as defined by PJ and REPOS environment variables
+
 BRANCH=$1
+if [ -z "$BRANCH" ]; then
+	echo NOT OK you must specify a part of a branch name to search for
+	exit 1
+fi
 
-for dir in $DIRS
-do
-	echo " "
-	echo $dir ======================================================
-	pushd $dir > /dev/null
-		git branch --list --remote | grep $BRANCH
-
-	popd > /dev/null
-done
-
+all-repos.sh git branch --list --remote | egrep "=======|$BRANCH"
