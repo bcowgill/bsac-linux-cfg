@@ -7,6 +7,9 @@
 #   skip or only on unit test suites/cases
 dir=${1:-.}
 
+BAD_CLASS=1
+MISSING_CLASS=1
+
 pushd $dir > /dev/null;
 FILES=`git-ls-code.sh | egrep --invert-match --ignore-case '\.(less)$'`
 
@@ -27,6 +30,7 @@ egrep --with-filename --line-number \
 $FILES \
 	| grep --perl-regexp --invert-match '\.spec\.js:\d+:(\s*it\(|.+\.to\.)'
 
+if [ ${BAD_CLASS:-0} == 1 ]; then
 # look for @class mismatched with file name
 grep '@class' $FILES | perl -ne '
 unless (m{([^/]+?)((?:\.spec)?\.js: .* \@class \s+ \1 \b)}xms)
@@ -35,12 +39,15 @@ unless (m{([^/]+?)((?:\.spec)?\.js: .* \@class \s+ \1 \b)}xms)
 	print;
 }
 '
+fi
 
+if [ ${MISSING_CLASS:-0} == 1 ]; then
 # look for missing @class in file
 grep --files-without-match '@class' $FILES | \
 	egrep --invert-match --ignore-case '\.spec\.js$' | \
 	egrep --ignore-case '\.js$' | \
 	perl -pne 's{([\n\z])}{: ERROR no \@class keyword in file$1}xmsg'
+fi
 
 popd > /dev/null
 
