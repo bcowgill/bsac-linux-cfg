@@ -7,51 +7,10 @@
 #   skip or only on unit test suites/cases
 dir=${1:-.}
 
-#_notes/dwsync.xml is a dreamweaver sync file
+pushd $dir > /dev/null;
+FILES=`git-ls-code.sh | egrep --invert-match --ignore-case '\.(less)$'`
 
-find $dir \
--name sessions -prune \
--o -name .git -prune \
--o -name .tmp -prune \
--o -name .svn -prune \
--o -name CVS -prune \
--o -name node_modules -prune \
--o -name bower_components -prune \
--o -name dist -prune \
--o -name blib -prune \
--o -name logs -prune \
--o -name out -prune \
--o -name _notes -prune \
--o -name .sass-cache -prune \
--o -name '*.BACKUP.*' -prune \
--o -name '*.BASE.*' -prune \
--o -name '*.LOCAL.*' -prune \
--o -name '*.REMOTE.*' -prune \
--o -name '*.saved.js' -prune \
--o -name '*.min.*' -prune \
--o -name '*.log' -prune \
--o -name '*.orig' -prune \
--o -name '*.bak' -prune \
--o -name '*.ico' -prune \
--o -name '*.jpg' -prune \
--o -name '*.pdf' -prune \
--o -name '*.png' -prune \
--o -name '*.gif' -prune \
--o -name '*.psd' -prune \
--o -name '*.svg' -prune \
--o -name '*.ttf' -prune \
--o -name '*.eot' -prune \
--o -name '*.otf' -prune \
--o -name '*.woff' -prune \
--o -name '*.class' -prune \
--o -name '*.tgz' -prune \
--o -name '*.gz' -prune \
--o -name '*.tar' -prune \
--o -name '*.zip' -prune \
--o -name '*.bz' -prune \
--o -name '*.csv' -prune \
--o -name '*.vars' -prune \
--o \( -type f -exec egrep --with-filename --line-number \
+egrep --with-filename --line-number \
 '\@todo|\\
 \b(MUSTDO|FIXME|BUGFIX|REFACTOR|QN|WARNING|DEPR(ECATED)?|[Hh]ack|HACK)\b|\\
 \b(maxcomplexity|maxstatements|maxlen|latedef|strict|unused)\s*:|\\
@@ -65,11 +24,24 @@ find $dir \
 \(\s*[a-zA-Z_]\w?\s*\)|\\
 \+\+[a-zA-Z_]\w?\b|\\
 \b[a-zA-Z_]\w?\+\+' \
-{} \; \
-\)
+$FILES \
+	| grep --perl-regexp --invert-match '\.spec\.js:\d+:(\s*it\(|.+\.to\.)'
 
 # look for @class mismatched with file name
-pushd $dir > /dev/null; git grep '@class' | perl -ne 'unless (m{([^/]+?)((?:\.spec)?\.js: .* \@class \s+ \1 \b)}xms) { $_ =~ s{\@class (\s+ \w+)}{ERROR \@class$1 mismatches filename}xmsg; print; }'
+grep '@class' $FILES | perl -ne '
+unless (m{([^/]+?)((?:\.spec)?\.js: .* \@class \s+ \1 \b)}xms)
+{
+	$_ =~ s{\@class (\s+ \w+)}{ERROR \@class$1 mismatches filename}xmsg;
+	print;
+}
+'
+
+# look for missing @class in file
+grep --files-without-match '@class' $FILES | \
+	egrep --invert-match --ignore-case '\.spec\.js$' | \
+	egrep --ignore-case '\.js$' | \
+	perl -pne 's{([\n\z])}{: ERROR no \@class keyword in file$1}xmsg'
+
 popd > /dev/null
 
 # TODO xdescribe xit .skip( .only( console.log|error, etc
