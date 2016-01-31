@@ -27,7 +27,7 @@ END
 		my $ratio = $hits{$complexity}{hits} / $functions;
 		$cumulative += $hits{$complexity}{hits};
 		$hits{$complexity}{complexity} = $complexity;
-		$hits{$complexity}{percent} = (int(10000 * $ratio ) / 100) || undef;
+		$hits{$complexity}{percent} = (int(10000 * $ratio ) / 100);
 		$hits{$complexity}{cumulative} = int(10000 * $cumulative / $functions) / 100;
 		push(@values, {
 		    "series" => $ENV{SERIES},
@@ -72,7 +72,7 @@ END
 	$json =~ s[};][}]xmsg;
 	$json =~ s{\$VAR1 \s+ = \s+}{}xmsg;
 	$json =~ s{"([\d.]+)"(,|\n)}{$1$2}xmsg;
-	$json =~ s{undef}{undefined}xmsg;
+	$json =~ s{undef}{null}xmsg;
 
 	print STDERR $json;
 }
