@@ -127,6 +127,7 @@ alias get-exif='exiftool -w .txt'
 
 # unicode aliases
 alias ls-utf8=utf8ls.pl
+alias utf8-sample=unicode-sample.sh
 
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
