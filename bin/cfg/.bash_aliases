@@ -163,6 +163,9 @@ alias perltidy-firsttime='perltidy --closing-side-comment-warning'
 alias perltidy-mine='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc ~/.perltidyrc'
 alias perltidy-work='rm ~/.perltidyrc; ln -s ~/bin/cfg/.perltidyrc-blismedia ~/.perltidyrc'
 
+# Testing aliases
+alias debug-karma='karma-debug.sh'
+
 # General Database aliases
 alias myhist='cat ~/.mysql_history'
 alias myhistory='cat ~/.mysql_history'
