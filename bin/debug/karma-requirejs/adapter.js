@@ -1,5 +1,5 @@
 (function(karma, requirejs, locationPathname) {
-// karma-requirejs VERSION 0.2.2
+
 // monkey patch requirejs, to use append timestamps to sources
 // to take advantage of karma's heavy caching
 // it would work even without this hack, but with reloading all the files all the time
@@ -28,16 +28,16 @@ var createPatchedLoad = function(files, originalLoadFn, locationPathname) {
   var IS_DEBUG = /debug\.html$/.test(locationPathname);
 
   return function(context, moduleName, url) {
-    url = normalizePath(url);
-
+    console.log('karma/adapter#createPatchedLoad0 ' + moduleName + ' @ ' + url, context);
+    url = normalizePath(url); console.log('karma/adapter#createPatchedLoad1 ' + moduleName + ' @ ' + url);
     if (files.hasOwnProperty(url)) {
       if (!IS_DEBUG) {
-        url = url + '?' + files[url];
+        url = url + '?' + files[url]; console.log('karma/adapter#createPatchedLoad2 timestamped ' + moduleName + ' @ ' + url);
       }
     } else {
       if (!/https?:\/\/\S+\.\S+/i.test(url)) {
         console.error('There is no timestamp for ' + url + '!');
-      }
+      } else { console.log('karma/adapter#createPatchedLoad3 http ' + moduleName + ' @ ' + url); }
     }
 
     return originalLoadFn.call(this, context, moduleName, url);

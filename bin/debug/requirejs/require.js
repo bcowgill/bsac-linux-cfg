@@ -168,7 +168,7 @@ var requirejs, require, define;
         e.requireModules = requireModules;
         if (err) {
             e.originalError = err;
-        }
+        } console.error('requirejs#makeError ' + id + ' ' + msg, e);
         return e;
     }
 
@@ -270,7 +270,7 @@ var requirejs, require, define;
                 baseParts = (baseName && baseName.split('/')),
                 map = config.map,
                 starMap = map && map['*'];
-
+            console.log('requirejs#normalize ' + name, arguments);
             //Adjust any relative paths.
             if (name) {
                 name = name.split('/');
@@ -350,7 +350,7 @@ var requirejs, require, define;
             // the package main instead.
             pkgMain = getOwn(config.pkgs, name);
 
-            return pkgMain ? pkgMain : name;
+            var res = pkgMain ? pkgMain : name; console.log('requirejs#normalize ' + name + ' => ' + res); return res;
         }
 
         function removeScript(name) {
@@ -418,7 +418,7 @@ var requirejs, require, define;
                 originalName = name,
                 isDefine = true,
                 normalizedName = '';
-
+            console.log('requirejs#makeModuleMap ' + name, arguments);
             //If no name, then it means it is a require call, generate an
             //internal name.
             if (!name) {
@@ -478,7 +478,7 @@ var requirejs, require, define;
                      '_unnormalized' + (unnormalizedCounter += 1) :
                      '';
 
-            return {
+            var res = {
                 prefix: prefix,
                 name: normalizedName,
                 parentMap: parentModuleMap,
@@ -489,7 +489,7 @@ var requirejs, require, define;
                 id: (prefix ?
                         prefix + '!' + normalizedName :
                         normalizedName) + suffix
-            };
+            };console.log('requirejs#makeModuleMap ' + res.name, res); return res;
         }
 
         function getModule(depMap) {
@@ -633,7 +633,7 @@ var requirejs, require, define;
 
         function checkLoaded() {
             var err, usingPathFallback,
-                waitInterval = config.waitSeconds * 1000,
+                waitInterval = config.waitSeconds * 1000 * 1000,
                 //It is possible to disable the wait interval by using waitSeconds of 0.
                 expired = waitInterval && (context.startTime + waitInterval) < new Date().getTime(),
                 noLoads = [],
@@ -804,7 +804,7 @@ var requirejs, require, define;
                 context.startTime = (new Date()).getTime();
 
                 var map = this.map;
-
+                console.log('requirejs#fetch ' + map.name + ' @ ' +  map.url, this);
                 //If the manager is for a plugin managed resource,
                 //ask the plugin to load it now.
                 if (this.shim) {
@@ -854,7 +854,7 @@ var requirejs, require, define;
                     //define itself again. If already in the process
                     //of doing that, skip this work.
                     this.defining = true;
-
+                    console.log('requirejs.Module#check defining ' + this.map.name, this);
                     if (this.depCount < 1 && !this.defined) {
                         if (isFunction(factory)) {
                             //If there is an error listener, favor passing
@@ -1093,7 +1093,7 @@ var requirejs, require, define;
                 //for dependencies do not trigger inadvertent load
                 //with the depCount still being zero.
                 this.enabling = true;
-
+                console.log('requirejs.Module#enable ' + this.map.name, this);
                 //Enable each dependency
                 each(this.depMaps, bind(this, function (depMap, i) {
                     var id, mod, handler;
@@ -1169,7 +1169,7 @@ var requirejs, require, define;
                 cbs.push(cb);
             },
 
-            emit: function (name, evt) {
+            emit: function (name, evt) {console.log('requirejs.Module#emit(' + name + ') ' + this.map.name, this, evt);
                 each(this.events[name], function (cb) {
                     cb(evt);
                 });
@@ -1234,7 +1234,7 @@ var requirejs, require, define;
 
             //Make sure any remaining defQueue items get properly processed.
             while (defQueue.length) {
-                args = defQueue.shift();
+                args = defQueue.shift();console.log('requirejs#intakeDefines ' + args[0], args);
                 if (args[0] === null) {
                     return onError(makeError('mismatch', 'Mismatched anonymous define() module: ' +
                         args[args.length - 1]));
@@ -1262,7 +1262,7 @@ var requirejs, require, define;
              * Set a configuration for the context.
              * @param {Object} cfg config object to integrate.
              */
-            configure: function (cfg) {
+            configure: function (cfg) { console.log('requirejs#configure(cfg)', cfg);
                 //Make sure the baseUrl ends in a slash.
                 if (cfg.baseUrl) {
                     if (cfg.baseUrl.charAt(cfg.baseUrl.length - 1) !== '/') {
@@ -1354,7 +1354,7 @@ var requirejs, require, define;
                         mod.map = makeModuleMap(id, null, true);
                     }
                 });
-
+                console.log('requirejs#configure config', config, bundlesMap);
                 //If a deps array or a config callback is specified, then call
                 //require with those args. This is useful when require is defined as a
                 //config object before require.js is loaded.
@@ -1655,7 +1655,7 @@ var requirejs, require, define;
 
             //Delegates to req.load. Broken out as a separate function to
             //allow overriding in the optimizer.
-            load: function (id, url) {
+            load: function (id, url) {console.log('requirejs#load ' + id + ' @ ' +  url, this);
                 req.load(context, id, url);
             },
 
@@ -1676,7 +1676,7 @@ var requirejs, require, define;
              * @param {Event} evt the event from the browser for the script
              * that was loaded.
              */
-            onScriptLoad: function (evt) {
+            onScriptLoad: function (evt) { console.log('requirejs#onScriptLoad ' + evt.type, this, evt);
                 //Using currentTarget instead of target for Firefox 2.0's sake. Not
                 //all old browsers will be supported, but this one was easy enough
                 //to support and still makes sense.
@@ -1687,7 +1687,7 @@ var requirejs, require, define;
                     interactiveScript = null;
 
                     //Pull out the name of the module and the context.
-                    var data = getScriptData(evt);
+                    var data = getScriptData(evt); console.log('requirejs#onScriptLoad ' + evt.type + ' ' + data.id, data);
                     context.completeLoad(data.id);
                 }
             },
@@ -1753,7 +1753,7 @@ var requirejs, require, define;
         if (config) {
             context.configure(config);
         }
-
+        console.log('requirejs#require ' + deps[0], arguments);
         return context.require(deps, callback, errback);
     };
 
@@ -1854,7 +1854,7 @@ var requirejs, require, define;
     req.load = function (context, moduleName, url) {
         var config = (context && context.config) || {},
             node;
-        if (isBrowser) {
+        if (isBrowser) { console.log('requirejs#load browser ' + moduleName + ' @ ' + url,  context);
             //In the browser so use a script tag
             node = req.createNode(config, moduleName, url);
 
@@ -1903,7 +1903,7 @@ var requirejs, require, define;
                 node.addEventListener('error', context.onScriptError, false);
             }
             node.src = url;
-
+            console.log('requirejs#load element ' + node.outerHTML, node);
             //For some cache cases in IE 6-8, the script executes before the end
             //of the appendChild execution, so to tie an anonymous define
             //call to the module name (which is stored on the node), hold on
@@ -1918,7 +1918,7 @@ var requirejs, require, define;
 
             return node;
         } else if (isWebWorker) {
-            try {
+            try {  console.log('requirejs#load webworker ' + moduleName + ' @ ' + url,  context);
                 //In a web worker, use importScripts. This is not a very
                 //efficient use of importScripts, importScripts will block until
                 //its script is downloaded and evaluated. However, if web workers
