@@ -5,4 +5,4 @@
 #
 # Then go to the chrome browser and click the Debug button.
 
-karma --log-level debug --browsers Chrome --single-run false start
+karma --log-level debug --browsers Chrome --single-run false start $*
