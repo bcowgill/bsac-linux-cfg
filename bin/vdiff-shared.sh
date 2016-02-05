@@ -12,13 +12,13 @@ function diff_them {
    from="$2"
    to="$3"
    reverse="$4"
-   if diff "$FROM/$FILE" "$TO/$FILE" > /dev/null; then
-      echo no differences for "$FILE" in "$FROM/" or "$TO/" 
+   if diff "$from/$file" "$to/$file" > /dev/null; then
+      echo no differences for "$file" in "$from/" or "$to/" 
    else
       if [ $reverse == 0 ]; then
-          $DIFF "$FROM/$FILE" "$TO/$FILE";
+          $DIFF "$from/$file" "$to/$file";
       else
-          $DIFF "$TO/$FILE" "$FROM/$FILE";
+          $DIFF "$to/$file" "$from/$file";
       fi
    fi
 }
