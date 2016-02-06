@@ -1711,7 +1711,7 @@ var requirejs, require, define;
              */
             onScriptError: function (evt) {
                 var data = getScriptData(evt);
-                if (_debug(1,'ERROR:')){ console.error(__M+'#onScriptError ', evt, data); }
+                if (_debug(1,'ERROR:'+data.id)){ console.error(__M+'#onScriptError ', evt, data); }
                 if (!hasPathFallback(data.id)) {
                     return onError(makeError('scripterror', 'Script error for: ' + data.id, evt, [data.id]));
                 }
