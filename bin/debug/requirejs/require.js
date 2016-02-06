@@ -7,7 +7,7 @@
 //problems with requirejs.exec()/transpiler plugins that may not be strict.
 /*jslint regexp: true, nomen: true, sloppy: true */
 /*global window, navigator, document, importScripts, setTimeout, opera */
-var __DEBUG = 1, __BREAK = 1, __MATCH = /jquery/i, __M = 'requirejs', __LOG = 0; if (__DEBUG) { console.trace(__M+'#_debug level ' + __DEBUG + ' =~ ' + __MATCH.toString()); } function _debug(level, match) { 'use strict'; if (level <= __DEBUG && (!match || __MATCH.test(match))) { ++__LOG; if (__DEBUG >= 10) { console.trace(__M+'?match['+match+']'); } if (__BREAK) { /*jshint -W087*/
+var __DEBUG = 4, __BREAK = 1, __MATCH = /./i, __M = 'requirejs', __LOG = 0; if (__DEBUG) { console.trace(__M+'#_debug level ' + __DEBUG + ' =~ ' + __MATCH.toString()); } function _debug(level, match) { 'use strict'; if (level <= __DEBUG && (!match || __MATCH.test(match))) { ++__LOG; if (__DEBUG >= 10) { console.trace(__M+'?match['+match+']'); } if (__BREAK) { /*jshint -W087*/
     debugger; /*jshint +W087*/ }
     return true; } return false; }
 // debug levels 1 errors 2 config/require 3 emit/enable 4 fetch/load/onScriptLoad 5 normalize 6 makemodulemap 7 DOM nodes 8 check
@@ -1731,7 +1731,7 @@ var requirejs, require, define;
              */
             onScriptError: function (evt) {
                 var data = getScriptData(evt);
-                if (_debug(1,'ERROR:'+data.id)){ console.error(__M+'#onScriptError ', evt, data); }
+                if (_debug(1,'ERROR:'+data.id)){ console.error(__M+'#onScriptError ' + data.id, evt, data); }
                 if (!hasPathFallback(data.id)) {
                     var parents = [];
                     eachProp(registry, function(value, key) {
@@ -1802,7 +1802,7 @@ var requirejs, require, define;
         if (config) {
             context.configure(config);
         }
-        if(_debug(2,deps.join(' '))){ console.log(__M+'#require ' + deps.join(' '), arguments); }
+        var __e = deps || []; if(_debug(2,__e.join(' '))){ console.log(__M+'#require ' + __e.join(' '), arguments); }
         return context.require(deps, callback, errback);
     };
 
