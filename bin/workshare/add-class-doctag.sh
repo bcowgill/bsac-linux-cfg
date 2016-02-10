@@ -37,7 +37,7 @@ BEGIN {
 }
 
 if (!$found && s{
-		\A (\s+) return ( \s+ ([\w\.]+) \.extend\( )
+		\A (\s+) (?:return|var \s+ \w+ \s*=) ( \s+ ([\w\.]+) \.extend\( )
 	}{
 		"$1/**\n$1$indent\@class $class\n$1$indent\@extends $3\n$1*/\n$1var $class =$2"
 	}xmse)
