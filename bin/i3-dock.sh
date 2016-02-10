@@ -29,18 +29,18 @@ function move_workspace {
 
 #WORKSPACEDEF
 #  do not edit settings here...
-		# assign workspaces to 1 or 2 monitors
-		move_workspace 10  output $OUTPUT_MAIN
+		# assign workspaces to 3 monitors
+		move_workspace 10  output $OUTPUT_AUX
 		move_workspace 8   output $OUTPUT_MAIN
 		move_workspace 7   output $OUTPUT_MAIN
-		move_workspace 6   output $OUTPUT_MAIN
+		move_workspace 6   output $OUTPUT_AUX
 		move_workspace 5   output $OUTPUT_MAIN
 
 		move_workspace 9   output $OUTPUT_AUX
-		move_workspace 4   output $OUTPUT_AUX
-		move_workspace 3   output $OUTPUT_AUX
-		move_workspace 2   output $OUTPUT_AUX
-		move_workspace 1   output $OUTPUT_AUX
+		move_workspace 4   output $OUTPUT_AUX2
+		move_workspace 3   output $OUTPUT_AUX2
+		move_workspace 2   output $OUTPUT_AUX2
+		move_workspace 1   output $OUTPUT_AUX2
 #/WORKSPACEDEF
 
 sleep 1

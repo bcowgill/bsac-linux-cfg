@@ -7,9 +7,12 @@
 //problems with requirejs.exec()/transpiler plugins that may not be strict.
 /*jslint regexp: true, nomen: true, sloppy: true */
 /*global window, navigator, document, importScripts, setTimeout, opera */
-var __DEBUG = 4, __BREAK = 1, __MATCH = /./i, __M = 'requirejs', __LOG = 0; if (__DEBUG) { console.trace(__M+'#_debug level ' + __DEBUG + ' =~ ' + __MATCH.toString()); } function _debug(level, match) { 'use strict'; if (level <= __DEBUG && (!match || __MATCH.test(match))) { ++__LOG; if (__DEBUG >= 10) { console.trace(__M+'?match['+match+']'); } if (__BREAK) { /*jshint -W087*/
+var __DEBUG = 4, __BREAK = 0, __MATCH = /(jquery|mouse)/i, __M = 'requirejs',
+    __CALLS = 0, __LOG = 0; if (__DEBUG) { console.trace(__M+'#_debug level ' + __DEBUG + ' =~ ' + __MATCH.toString()); } function __a(thing) { 'use strict'; var arr = thing || []; return arr.join ? arr : [arr]; } __a(); function _debug(level, match) { 'use strict';
+    ++__CALLS;
+    if (level <= __DEBUG && (!match || __MATCH.test(match))) { ++__LOG; if (__DEBUG >= 10) { console.trace(__M+'?match['+match+']'); } if (__BREAK) { /*jshint -W087*/
     debugger; /*jshint +W087*/ }
-    return true; } return false; }
+return true; } return false; }
 // debug levels 1 errors 2 config/require 3 emit/enable 4 fetch/load/onScriptLoad 5 normalize 6 makemodulemap 7 DOM nodes 8 check
 var requirejs, require, define;
 (function (global) {
@@ -171,7 +174,7 @@ var requirejs, require, define;
         if (err) {
             e.originalError = err;
         }
-        var __e = requireModules || []; if (_debug(1,'ERROR:'+__e.join(' '))){ console.error(__M+'#makeError ' + id + ' ' + msg, e); }
+        var __e = __a(requireModules); if (_debug(1,'ERROR:'+__e.join(' '))){ console.error(__M+'#makeError ' + id + ' ' + msg, e); }
         return e;
     }
 
@@ -532,7 +535,7 @@ var requirejs, require, define;
         function onError(err, errback) {
             var ids = err.requireModules,
                 notified = false;
-            var __e = ids || []; if (_debug(1,'ERROR:'+__e.join(' '))){ console.error(__M+'#onError ' + __e.join(' '), arguments); }
+            var __e = __a(ids); if (_debug(1,'ERROR:'+__e.join(' '))){ console.error(__M+'#onError ' + __e.join(' '), arguments); }
             if (errback) {
                 errback(err);
             } else {
@@ -1802,7 +1805,7 @@ var requirejs, require, define;
         if (config) {
             context.configure(config);
         }
-        var __e = deps || []; if(_debug(2,__e.join(' '))){ console.log(__M+'#require ' + __e.join(' '), arguments); }
+        var __e = __a(deps); if(_debug(2,__e.join(' '))){ console.log(__M+'#require ' + __e.join(' '), arguments); }
         return context.require(deps, callback, errback);
     };
 
