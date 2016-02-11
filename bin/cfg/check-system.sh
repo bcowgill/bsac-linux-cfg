@@ -183,6 +183,8 @@ INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes m
 
 PERL_PKG="cpanm:cpanminus"
 
+TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
+
 TODO=audacity
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
@@ -274,7 +276,7 @@ fi # raspberrypi
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER"
+INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
 COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $PIDGIN"
 #runit
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG"
@@ -633,6 +635,8 @@ if [ ! -z $I3WM ]; then
 	cmd_exists $I3WM
 fi # I3WM
 
+
+#http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
 if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	# http://ubuntuhandbook.org/index.php/2015/07/install-virtualbox-5-0-ubuntu-15-04-14-04-12-04/
 	# https://www.virtualbox.org/wiki/Linux_Downloads
