@@ -901,6 +901,8 @@ fi # USE_SUBLIME
 if [ ! -z $WEBSTORM ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
 	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $HOME/Downloads/$WEBSTORM_ARCHIVE dir"
+	dir_linked_to bin/WebStorm $HOME/Downloads/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
+	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
 fi # WEBSTORM
 
 if [ ! -z $VSLICK ]; then
