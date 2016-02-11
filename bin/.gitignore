@@ -12,3 +12,4 @@ cfg/*/id_rsa
 cfg/workshare/check-workshare.sh
 *.fortune.dat
 node_modules
+WebStorm
