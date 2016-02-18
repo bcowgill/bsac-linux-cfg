@@ -179,7 +179,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 =head1 TODO
 
 use cases:
-convert rgba(r,g,b) to rgba(red(),green(),blue(),alpha)
+convert rgba(r,g,b,a) to rgba(red(),green(),blue(),alpha)
 extract all unique color values and define them as consecutive constant names but leave them as is in the files
 
 support for:
@@ -225,7 +225,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 570;
+our $TEST_CASES = 613;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -321,6 +321,7 @@ my %Var = (
 );
 
 # Return the value of a command line option
+# NO TEST CASE
 sub opt
 {
 	my ($opt) = @ARG;
@@ -329,18 +330,21 @@ sub opt
 		$Var{'rhArg'}{'rhOpt'};
 }
 
+# NO TEST CASE
 sub hasOpt
 {
 	my ($opt) = @ARG;
 	return exists( $Var{'rhArg'}{'rhOpt'}{$opt} );
 }
 
+# NO TEST CASE
 sub setOpt
 {
 	my ( $opt, $value ) = @ARG;
 	return $Var{'rhArg'}{'rhOpt'}{$opt} = $value;
 }
 
+# NO TEST CASE
 sub arg
 {
 	my ($arg) = @ARG;
@@ -349,6 +353,7 @@ sub arg
 		$Var{'rhArg'};
 }
 
+# NO TEST CASE
 sub setArg
 {
 	my ( $arg, $value ) = @ARG;
@@ -357,6 +362,7 @@ sub setArg
 
 getOptions();
 
+# NO TEST CASE
 sub setup
 {
 	debug("setup()");
@@ -377,6 +383,7 @@ sub setup
 	showConstantsTable() if opt('show-const');
 }
 
+# NO TEST CASE
 sub main
 {
 	my ($raFiles) = @ARG;
@@ -394,6 +401,7 @@ sub main
 	summary();
 }
 
+# NO TEST CASE
 sub summary
 {
 	showAutoContants();
@@ -402,6 +410,7 @@ sub summary
 ####################################
 # methods used by setup
 
+# NO TEST CASE
 sub readColorNameData
 {
 	debug("readColorNameData()");
@@ -433,6 +442,7 @@ sub readColorNameData
 	}xmsi;
 }
 
+# NO TEST CASE
 sub constructConstantsTable
 {
 	debug("constructConstantsTable()\n");
@@ -464,6 +474,7 @@ sub constructConstantsTable
 	debug("colors" . Dumper($Var{'rhColorConstantsMap'}), 2);
 }
 
+# NO TEST CASE
 sub processConstantFiles
 {
 	debug("processConstantFiles()\n");
@@ -474,6 +485,7 @@ sub processConstantFiles
 	}
 }
 
+# NO TEST CASE
 sub processConstantFile
 {
 	my ($fileName) = @ARG;
@@ -500,6 +512,7 @@ sub processConstantFile
 	}xmsge;
 }
 
+# NO TEST CASE
 sub resolveConstants
 {
 	my @consts = keys(%{$Var{'rhUndefinedConstantsMap'}});
@@ -522,6 +535,7 @@ sub resolveConstants
 	warning("MUSTDO unable to resolve some constant values") unless $limit;
 }
 
+# NO TEST CASE
 sub showConstantsTable
 {
 	debug("showConstantsTable()\n");
@@ -554,6 +568,7 @@ sub showConstantsTable
 ####################################
 # methods used by main
 
+# NO TEST CASE
 sub processEntireStdio
 {
 	debug("processEntireStdio()\n");
@@ -563,6 +578,7 @@ sub processEntireStdio
 	print join("", @$raContent);
 }
 
+# NO TEST CASE
 sub processFiles
 {
 	my ($raFiles) = @ARG;
@@ -580,6 +596,7 @@ sub processFiles
 	}
 }
 
+# NO TEST CASE
 sub editFileInPlace
 {
 	my ( $fileName, $suffix ) = @ARG;
@@ -594,6 +611,7 @@ sub editFileInPlace
 	edit_file_lines { $ARG = doReplaceLine($ARG) } $fileName;
 }
 
+# NO TEST CASE
 sub processEntireFile
 {
 	my ($fileName) = @ARG;
@@ -608,6 +626,7 @@ sub processEntireFile
 ####################################
 # methods used by summary
 
+# NO TEST CASE
 sub showAutoContants
 {
 	debug("showAutoConstants()", 1);
@@ -647,6 +666,7 @@ sub showAutoContants
 # methods initially used by setup
 
 # fix comma spacing in rgb colors
+# NO TEST CASE
 sub formatRgbColor
 {
 	my ($color) = @ARG;
@@ -655,6 +675,7 @@ sub formatRgbColor
 }
 
 # convert #rrggbb color to #rgb based on command line options
+# NO TEST CASE
 sub userShorten
 {
 	my ($color, $bShorten) = @ARG;
@@ -667,6 +688,7 @@ sub userShorten
 
 # convert #rrggbb color to #rgb so output can be compared against uniqueness
 # and lower case the characters
+# NO TEST CASE
 sub shorten
 {
 	my ($color) = @ARG;
@@ -686,16 +708,19 @@ sub shorten
 	return $color;
 }
 
+# NO TEST CASE
 sub isUsingLess
 {
 	return opt('const-type') =~ m{\A [l\@]}xmsi;
 }
 
+# NO TEST CASE
 sub isUsingSass
 {
 	return opt('const-type') =~ m{\A [s\$]}xmsi;
 }
 
+# NO TEST CASE
 sub isConstOrColor
 {
 	my ($const) = @ARG;
@@ -703,6 +728,7 @@ sub isConstOrColor
 	return isConst($const) || isColor($const);
 }
 
+# NO TEST CASE
 sub isConst
 {
 	my ($const) = @ARG;
@@ -712,6 +738,7 @@ sub isConst
 	return $const =~ $regex;
 }
 
+# NO TEST CASE
 sub isColor
 {
 	my ($value) = @ARG;
@@ -723,6 +750,7 @@ sub isColor
 	return $value =~ $regex;
 }
 
+# NO TEST CASE
 sub checkConstName
 {
 	my ($const) = @ARG;
@@ -730,6 +758,7 @@ sub checkConstName
 	$const =~ m{\A $prefix [-\w]+ \z}xms || die "MUSTDO constant name/expression not supported [$const]";
 }
 
+# NO TEST CASE
 sub registerConstantFromFile
 {
 	my ($const, $value, $match) = @ARG;
@@ -748,6 +777,7 @@ sub registerConstantFromFile
 
 #xyzzy
 
+# NO TEST CASE
 sub registerConstant
 {
 	my ($const, $value) = @ARG;
@@ -775,6 +805,7 @@ sub registerConstant
 	return 0;
 }
 
+# NO TEST CASE
 sub addColorConstantsMap
 {
 	my ($const, $color) = @ARG;
@@ -796,6 +827,7 @@ sub addColorConstantsMap
 	}
 }
 
+# NO TEST CASE
 sub lookupColorConstantsMap
 {
 	my ($color) = @ARG;
@@ -808,6 +840,7 @@ sub lookupColorConstantsMap
 }
 
 # rename a color value based on command line options but ensuring valid CSS
+# HAS TEST CASE
 sub userRenameColorValid
 {
 	my ($color) = @ARG;
@@ -825,6 +858,7 @@ sub userRenameColorValid
 ####################################
 # methods used by methods in main
 
+# NO TEST CASE
 sub doReplacement
 {
 	my ( $raContent ) = @ARG;
@@ -835,6 +869,7 @@ sub doReplacement
 	return $raContent;
 }
 
+# NO TEST CASE
 sub doReplaceLine
 {
 	my ($line) = @ARG;
@@ -871,10 +906,11 @@ sub doReplaceLine
 }
 
 ####################################
-# methods used by methods in summary
+# methods used by methods in summary (in showAutoConstants)
 
 # make unique version of color based on command line options so that color
 # comparisons will work
+# HAS TEST CASE
 sub userUniqueColor
 {
 	my ($color) = @ARG;
@@ -895,6 +931,7 @@ sub userUniqueColor
 # get the nicest name for a color possible. i.e. white
 # or rgba(white, 0.3) for opacity
 # or ~white for something close to white
+# HAS TEST CASE
 sub niceNameColor
 {
 	my ($color) = @ARG;
@@ -915,6 +952,7 @@ sub niceNameColor
 ####################################
 
 # put a single space after commas
+# NO TEST CASE
 sub commas
 {
 	my ($string) = @ARG;
@@ -923,6 +961,7 @@ sub commas
 }
 
 # strip away all spaces
+# NO TEST CASE
 sub trim
 {
 	my ($str) = @ARG;
@@ -931,6 +970,7 @@ sub trim
 }
 
 # strip away multiple spaces leaving one
+# NO TEST CASE
 sub trimToOne
 {
 	my ($str) = @ARG;
@@ -939,6 +979,7 @@ sub trimToOne
 }
 
 # strip away all leading space in string
+# NO TEST CASE
 sub trimLeading
 {
 	my ($str) = @ARG;
@@ -947,6 +988,7 @@ sub trimLeading
 }
 
 # compare ignoring spaces
+# NO TEST CASE
 sub trimEq
 {
 	my ($a, $b) = @ARG;
@@ -955,6 +997,7 @@ sub trimEq
 
 ####################################
 
+# NO TEST CASE
 sub isColorOkToConvertToConstant
 {
 	my ($value, $origValue, $match) = @ARG;
@@ -974,6 +1017,7 @@ sub isColorOkToConvertToConstant
 	return ($value ne 'transparent') && ( $match =~ $regexContext || $value =~ $regex );
 }
 
+# NO TEST CASE
 sub isDefinedConst
 {
 	my ($const) = @ARG;
@@ -988,6 +1032,7 @@ sub isDefinedConst
 	}
 }
 
+# NO TEST CASE
 sub getConstValue
 {
 	my ($const) = @ARG;
@@ -1005,6 +1050,7 @@ sub getConstValue
 # remap color values in place, where possible
 # this may not produce valid CSS output.
 # for example rgba(0,0,0,0.5) can become rgba(black,0.5)
+# NO TEST CASE
 sub remap
 {
 	my ($line) = @ARG;
@@ -1016,6 +1062,7 @@ sub remap
 	return $line;
 }
 
+# NO TEST CASE
 sub substituteConstants
 {
 	my ($color, $line) = @ARG;
@@ -1046,6 +1093,7 @@ sub substituteConstants
 # Given a color value see if there is a constant already defined
 # for that color value. Returns the constant name or original
 # color if none.
+# NO TEST CASE
 sub lookupConstant
 {
 	my ($color) = @ARG;
@@ -1063,6 +1111,7 @@ sub lookupConstant
 }
 
 # rename a color value based on command line options
+# HAS TEST CASE
 sub userRenameColor
 {
 	my ($color) = @ARG;
@@ -1079,6 +1128,7 @@ sub userRenameColor
 # color could be #rrggbb or r,g,b triplet or r%,g%,b%
 # or rgb(...) rgba(...) hsl(...) hsla(...)
 # returns name of the color or the original color value
+# NO TEST CASE
 sub userColorNames
 {
 	my ($color) = @ARG;
@@ -1089,6 +1139,7 @@ sub userColorNames
 	return $color;
 }
 
+# NO TEST CASE
 sub colorNames
 {
 	my ($color, $bValidOnly) = @ARG;
@@ -1152,6 +1203,7 @@ sub colorNames
 	return $color;
 }
 
+# NO TEST CASE
 sub opaqueOrTransparent
 {
 	my ($color) = @ARG;;
@@ -1170,6 +1222,7 @@ sub opaqueOrTransparent
 }
 
 # convert #color value to rgb(R,G,B) format based on command line options
+# NO TEST CASE
 sub userRgbFromHashColor
 {
 	my ($color, $bAlways) = @ARG;
@@ -1181,6 +1234,7 @@ sub userRgbFromHashColor
 }
 
 # convert #color value to rgb(R,G,B) format
+# HAS TEST CASE
 sub rgbFromHashColor
 {
 	my ($color) = @ARG;
@@ -1212,6 +1266,7 @@ sub rgbFromHashColor
 
 # make #ffffff forms of colors the same based on command line options
 # default is long canonical form unless shorten option is given
+# HAS TEST CASE
 sub userHashColorStandard
 {
 	my ($color) = @ARG;
@@ -1221,6 +1276,7 @@ sub userHashColorStandard
 }
 
 # make hash colors standard for lowercase #ffffff
+# NO TEST CASE
 sub hashColorStandard
 {
 	my ($color) = @ARG;
@@ -1231,6 +1287,7 @@ sub hashColorStandard
 }
 
 # convert rgb/hsl format of color to #color form based on command line options
+# HAS TEST CASE
 sub userToHashColor
 {
 	my ($color, $bAlways, $bValidOnly) = @ARG;
@@ -1245,6 +1302,7 @@ sub userToHashColor
 	return $color;
 }
 
+# NO TEST CASE
 sub toHashColor
 {
 	my ($color, $bValidOnly) = @ARG;
@@ -1256,6 +1314,7 @@ sub toHashColor
 	return $color;
 }
 
+# NO TEST CASE
 sub defineAutoConstant
 {
 	my ($color, $origColor, $match) = @ARG;
@@ -1274,6 +1333,7 @@ sub defineAutoConstant
 }
 
 # fix comma spacing in rgb/hsl colors
+# NO TEST CASE
 sub formatRgbIshColor
 {
 	my ($color) = @ARG;
@@ -1282,6 +1342,7 @@ sub formatRgbIshColor
 }
 
 # convert #rgb color to #rrggbb based on user settings
+# NO TEST CASE
 sub userCanonical
 {
 	my ($color, $bAlways) = @ARG;
@@ -1294,6 +1355,7 @@ sub userCanonical
 
 # convert #rgb color to #rrggbb so output can be compared against uniqueness
 # and lower case the characters
+# NO TEST CASE
 sub canonical
 {
 	my ($color) = @ARG;
@@ -1316,6 +1378,7 @@ sub canonical
 }
 
 # get both rgb and #color version of color
+# HAS TEST CASE
 sub getBothColorValues
 {
 	my ($color) = @ARG;
@@ -1342,6 +1405,7 @@ sub getBothColorValues
 # 100%,100%,100% becomes 255,255,255
 # hsla?(h,s%,l%) becomes rgba?(r,g,b)
 # hsla(#color, opacity) becomse rgba(#color, opacity) if option --novalid-only
+# HAS TEST CASE
 sub rgbFromHslOrPercent
 {
 	my ($vals, $bValidOnly) = @ARG;
@@ -1353,6 +1417,7 @@ sub rgbFromHslOrPercent
 }
 
 # get #color from rgb() or rgba() (not hsl/hsla)
+# HAS TEST CASE
 sub userCanonicalFromRgb
 {
 	my ($rgb, $bValidOnly) = @ARG;
@@ -1361,6 +1426,7 @@ sub userCanonicalFromRgb
 	return $rgb;
 }
 
+# NO TEST CASE
 sub canonicalFromRgb
 {
 	my ($rgb, $bValidOnly) = @ARG;
@@ -1373,12 +1439,14 @@ sub canonicalFromRgb
 	return $rgb;
 }
 
+# NO TEST CASE
 sub toHex
 {
 	my ($val) = @ARG;
 	return sprintf("%02x", replacePercent($val));
 }
 
+# NO TEST CASE
 sub replacePercent
 {
 	my ($val) = @ARG;
@@ -1386,13 +1454,70 @@ sub replacePercent
 	return $val;
 }
 
+# NO TEST CASE
 sub percentTo255
 {
 	my ($val) = @ARG;
 	return int(0.5 + (255 * $val / 100));
 }
 
+# vector functions for checking how close two colors are
+# HAS INDIRECT TEST CASE
+sub vectorColor {
+	my ($red, $green, $blue) = @ARG;
+	my $raVector = [256 + $red, 256 + $green, 256 + $blue];
+	return $raVector;
+}
+
+# HAS INDIRECT TEST CASE
+sub vectorMagnitude {
+	my ($raVector) = @ARG;
+	my $magnitude = 0;
+	for (my $idx = 0; $idx < scalar(@$raVector); ++$idx)
+	{
+		$magnitude += $raVector->[$idx] * $raVector->[$idx];
+	}
+	return sqrt($magnitude);
+}
+
+# HAS INDIRECT TEST CASE
+sub vectorSubtract {
+	my ($raVector1, $raVector2) = @ARG;
+	my $raDifference = [];
+	for (my $idx = 0; $idx < scalar(@$raVector1); ++$idx)
+	{
+		$raDifference->[$idx] = $raVector1->[$idx] - $raVector2->[$idx];
+	}
+	return $raDifference;
+}
+
+# HAS INDIRECT TEST CASE
+sub vectorCloseness {
+	my ($raVector1, $raVector2) = @ARG;
+	my $magnitude = vectorMagnitude($raVector1);
+	my $raDifference = vectorSubtract($raVector1, $raVector2);
+	return vectorMagnitude($raDifference) / $magnitude;
+}
+
+# HAS INDIRECT TEST CASE
+sub vectorFromRGB {
+	my ($rgb) = @ARG;
+	$rgb =~ s{rgb\(}{}xmsg;
+	$rgb =~ s{\)}{}xmsg;
+	my @Vector = split(',', $rgb);
+	return \@Vector;
+}
+
+# HAS TEST CASE
+sub colorCloseness {
+	my ($color1, $color2) = @ARG;
+	my $raVector1 = vectorFromRGB(rgbFromHashColor($color1));
+	my $raVector2 = vectorFromRGB(rgbFromHashColor($color2));
+	return vectorCloseness($raVector1, $raVector2);
+}
+
 # convert a hsl triplet to an rgb triplet
+# NO TEST CASE
 sub hsl_to_rgb
 {
 	# algorithm from http://www.w3.org/TR/css3-color/#hsl-color
@@ -1416,6 +1541,7 @@ sub hsl_to_rgb
 }
 
 # convert a hue/sat to rgb value (0-1)
+# NO TEST CASE
 sub hue_to_rgb
 {
 	# algorithm from http://www.w3.org/TR/css3-color/#hsl-color
@@ -1429,6 +1555,7 @@ sub hue_to_rgb
 }
 
 # Must manually check mandatory values present
+# NO TEST CASE
 sub checkOptions
 {
 	my ( $raErrors, $raFiles ) = @ARG;
@@ -1468,6 +1595,7 @@ sub checkOptions
 	}
 }
 
+# NO TEST CASE
 sub checkMandatoryOptions
 {
 	my ( $raErrors, $raMandatory ) = @ARG;
@@ -1524,6 +1652,7 @@ sub checkMandatoryOptions
 }
 
 # Perform command line option processing and call main function.
+# NO TEST CASE
 sub getOptions
 {
 	$Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
@@ -1548,6 +1677,7 @@ sub getOptions
 }
 
 # make tabs 3 spaces
+# NO TEST CASE
 sub tab
 {
 	my ($message) = @ARG;
@@ -1556,12 +1686,14 @@ sub tab
 	return $message;
 }
 
+# NO TEST CASE
 sub warning
 {
 	my ($warning) = @ARG;
 	warn( "WARN: " . tab($warning) . "\n" );
 }
 
+# NO TEST CASE
 sub debug
 {
 	my ( $msg, $level ) = @ARG;
@@ -1571,6 +1703,7 @@ sub debug
 	print tab($msg) . "\n" if ( opt('debug') >= $level );
 }
 
+# NO TEST CASE
 sub usage
 {
 	my ($msg) = @ARG;
@@ -1582,6 +1715,7 @@ sub usage
 	pod2usage(%Opts);
 }
 
+# NO TEST CASE
 sub manual
 {
 	pod2usage(
@@ -1591,6 +1725,10 @@ sub manual
 }
 
 # Unit test plan here
+# Show which functions have test cases:
+# grep -A 1 'TEST CASE' filter-css-colors.pl | grep -v -- '--' | perl -ne 'if ($saved) {print "$saved $_"; $saved = undef;} else {chomp; $saved = $_;}' | grep -v filter-css-colors | sort
+# Show how many times functions without a test case are called
+# perl -MData::Dumper -ne 'if (m{# \s* NO \s+ TEST \s+ CASE}xms) { $no_test = 1;} s{((\w+)\()}{$Calls{$2}++; $1}xmsge; if (m{\A \s* sub \s+ (\w+)}xms) { warn "redefined function $1\n" if $Functions{$1};  $Functions{$1} = 0 if $no_test; $no_test = 0; } END {my @Keys = sort { $Calls{$b} <=> $Calls{$a} } keys(%Functions); foreach my $function (@Keys) { print "$function $Calls{$function}\n" if $Calls{$function} > 1}}' filter-css-colors.pl
 
 sub tests
 {
@@ -1612,6 +1750,8 @@ sub tests
 	testGetBothColorValues();
 	testNiceNameColor();
 	testRenameColorValid();
+	testColorCloseness();
+	testUserUniqueColor();
 
 	# unittestcall
 
@@ -1652,7 +1792,7 @@ sub tests
 		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 )",
 	);
 
-	exit 0;
+	exit 0 unless opt('tests') > 1;
 
 	setOpt('canonical', 1);
 	setOpt('hash', 1);
@@ -1675,7 +1815,7 @@ sub tests
 		is($result, $expect, "userUniqueColor $color -> $expect");
 	}
 	wrap("\@UserUniqueColorTests", \@Result);
-
+	exit 0;
 }
 
 sub testCanonicalFromRgbValid
@@ -2340,8 +2480,94 @@ sub testRenameColorValid
 	setOpt('names', 0);
 }
 
+sub testColorCloseness
+{
+	my @ColorClosenessTests = (
+		'#fff:#ff0:57',
+		'#fff:#ffa:19',
+		'#123456:#123456:0',
+		'#143357:#123456:2',
+		'#fff:#000:100'
+	);
+
+	foreach my $closenessResult (@ColorClosenessTests)
+	{
+		my ($color1, $color2, $expect) = split(/:/, $closenessResult);
+
+		my $result = int(100 * colorCloseness($color1, $color2));
+
+		is($result, $expect, "colorCloseness $color1,$color2 -> $expect");
+	}
+}
+
+sub testUserUniqueColor
+{
+	my @UserUniqueColorTests = (
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red', 
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white', 
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white', 
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white', 
+		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white', 
+		'rgba( 255 , 255 , 255 , 1.0 ):white', 
+		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white', 
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent', 
+		'rgba(255,255,255,0.0):transparent', 
+		'rgba(100%,100%,100%,0.0):transparent', 
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent', 
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent', 
+		'hsla(0,100%,100%,0.0):transparent', 
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent', 
+		'rgba(255,255,255,0.5):rgba(white, 0.5)', 
+		'rgba(100%,100%,100%,0.5):rgba(white, 0.5)', 
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)', 
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)', 
+		'hsla(0,100%,100%,0.5):rgba(white, 0.5)', 
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)', 
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)', 
+		'rgba( white , 0.5 ):rgba(white, 0.5)', 
+		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)', 
+		'hsla(white,0.5):hsla(white, 0.5)', 
+		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)', 
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)', 
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)', 
+	);
+
+	setOpt('canonical', 1);
+	setOpt('hash', 1);
+	setOpt('names', 1);
+
+	foreach my $userUniqueColorResult (@UserUniqueColorTests)
+	{
+		my ($color, $expect) = split(/:/, $userUniqueColorResult);
+		$expect = $expect || $color;
+
+		my $result = userUniqueColor($color);
+
+		is($result, $expect, "userUniqueColor $color -> $expect");
+	}
+
+	setOpt('canonical', 0);
+	setOpt('hash', 0);
+	setOpt('names', 0);
+}
+
 # unittestimpl
 
+sub testSomething
+{
+	my @SomethingTests = ();
+
+	foreach my $somethingResult (@SomethingTests)
+	{
+		my ($color, $expect) = split(/:/, $somethingResult);
+
+		my $result = int($color);
+
+		is($result, $expect, "something $color -> $expect");
+	}
+}
+
+# NO TEST CASE
 sub wrap
 {
 	my ($name, $raTests) = @ARG;
@@ -2513,4 +2739,3 @@ __DATA__
 		whitesmoke  #F5F5F5  245,245,245
 		yellow   #FFFF00  255,255,0
 		yellowgreen #9ACD32  154,205,50
-
