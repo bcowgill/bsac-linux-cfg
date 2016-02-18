@@ -138,3 +138,7 @@ EXAMPLES
 
      filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 
+     Replace hard coded colors with values from a variable definition file
+
+     filter-css-colors.pl --noecho --inplace=.bak --remap --shorten --valid-only --const-file variables.less styles/*.less
+

@@ -1,16 +1,32 @@
-// echo original line here in echo mode
+was color: white;
 @autoConstant0: white;
+
+was color: #fFfFfF;
 @autoConstant1: #ffffff; // white
+
+was color: rgba(255,255,255,0);
 @autoConstant2: rgba(255,255,255,0); // transparent
-@autoConstant3: rgba(100%,100%,100%,0); // transparent
-@autoConstant4: rgba(255,255,255,0.4); // rgba(white, 0.4)
-@autoConstant5: rgba(100%,100%,100%,0.5); // rgba(white, 0.5)
-@autoConstant6: hsla(360,100%,100%,0); // transparent
-@autoConstant7: hsla(  360  ,  100%  ,  100%  ,  0.4); // rgba(white, 0.4)
-@autoConstant8: hsl(0, 100%, 50%); // red
-@autoConstant9: hsl(120, 100%, 50%); // lime
-@autoConstant10: hsl(120, 100%, 25%); // rgb(0, 127, 0)
-@autoConstant11: hsl(120, 100%, 75%); // rgb(127, 255, 127)
-@autoConstant12: hsl(120, 75%, 75%); // rgb(143, 239, 143)
-@autoConstant13: hsla(120, 100%, 50%, 1); // lime
-@autoConstant14: #f4f5f6; // rgb(244, 245, 246)
+
+was color: rgba(255,255,255,0.4);
+@autoConstant3: rgba(255,255,255,0.4); // rgba(white, 0.4)
+
+was color: rgba(100%,100%,100%,0.5);
+@autoConstant4: rgba(100%,100%,100%,0.5); // rgba(white, 0.5)
+
+was * { color: hsl(0, 100%, 50%) }   /* red */
+@autoConstant5: hsl(0, 100%, 50%); // red
+
+was * { color: hsl(120, 100%, 50%) } /* lime */
+@autoConstant6: hsl(120, 100%, 50%); // lime
+
+was * { color: hsl(120, 100%, 25%) } /* dark green */
+@autoConstant7: hsl(120, 100%, 25%); // rgb(0, 127, 0)
+
+was * { color: hsl(120, 100%, 75%) } /* light green */
+@autoConstant8: hsl(120, 100%, 75%); // rgb(127, 255, 127)
+
+was * { color: hsl(120, 75%, 75%) }  /* pastel green, and so on */
+@autoConstant9: hsl(120, 75%, 75%); // rgb(143, 239, 143)
+
+was @darker-grey: #f4f5f6;
+@autoConstant10: #f4f5f6; // rgb(244, 245, 246)

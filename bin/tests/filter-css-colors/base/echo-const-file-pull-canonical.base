@@ -81,10 +81,10 @@ was: em { color: hsl(120, 100%, 50%) }     /* green */
      em { color: @autoConstant6 }     /* green */
 
 was: em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
-     em { color: @autoConstant10 } /* the same, with explicit opacity of 1 */
+     em { color: @autoConstant6 } /* the same, with explicit opacity of 1 */
 
 was: @darker-grey: #f4f5f6;
-     @darker-grey: @autoConstant11;
+     @darker-grey: @autoConstant10;
 
 was: border-bottom: 4px solid transparent;
      border-bottom: 4px solid transparent;

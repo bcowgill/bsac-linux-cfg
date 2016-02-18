@@ -365,7 +365,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST ECHOMODE1 remap colours with constants defined in a file
+echo TEST $CMD CONST ECHOMODE8 remap colours with constants defined in a file
 TEST=echo-const-file-remap
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -382,7 +382,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD CONST ECHOMODE2 remap colours and pull new constants no rename
+echo TEST $CMD CONST ECHOMODE9 remap colours and pull new constants no rename
 TEST=echo-const-file-pull-canonical
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -393,11 +393,11 @@ if [ 0 == "$SKIP" ]; then
 	BASE_NEW_CONST=base/$TEST.pulled.base
 	ARGS="$DEBUG --echo --valid-only --canonical \
 	--const-type=less --const-pull=$OUT_NEW_CONST"
-	echo $PROGRAM $ARGS "$OUT"
-	$PROGRAM $ARGS <"$SAMPLE" > "$OUT" 2>&1 || ERR=$?
+	echo $PROGRAM $ARGS from "$SAMPLE" "$OUT"
+	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
-	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$OUT_NEW_CONST" "$BASE_NEW_CONST" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
