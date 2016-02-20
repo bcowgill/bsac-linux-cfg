@@ -823,7 +823,7 @@ sub addColorConstantsMap
 	}
 	else
 	{
-		debug("registerConstant($const) 3 c=$color r=$rgb", 3);
+		debug("addColorConstantsMap($const) 3 c=$color r=$rgb", 3);
 		$Var{'rhConstantsMap'}{$const} = $color;
 		push( @{ $Var{'rhColorConstantsMap'}{$color} }, $const );
 	}
@@ -1461,7 +1461,8 @@ sub userCanonicalFromRgb
 {
 	my ($rgb, $bValidOnly) = @ARG;
 	$bValidOnly = $bValidOnly || opt('valid-only');
-	$rgb = canonicalFromRgb($rgb, $bValidOnly);
+	$rgb = #toHashColor(
+	canonicalFromRgb($rgb, $bValidOnly);#, $bValidOnly);
 	return $rgb;
 }
 
