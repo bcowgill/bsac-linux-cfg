@@ -225,7 +225,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 613;
+our $TEST_CASES = 661;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -315,6 +315,8 @@ my %Var = (
 		'rgba'            => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xmsi,
 		'hslToRgb'        => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xmsi,
 		'rgbaCanon'       => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
+		'rgbaValid'       => qr{ \A rgba \( \s* red\( [^\)]+ \) \s* , \s* green\( [^\)]+ \) \s* , \s* blue\( [^\)]+ \) \s* , \s* ([^,]+) \s* \) }xmsi,
+		'rgbaInvalid'     => qr{ (?:rgb|hsl)a \( \s* ([^,]+) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'hslInvalid'      => qr{ \A hsla \( \s* (\w+| $HASH [0-9a-f]{3,6}) }xmsi,
 		'hsla'            => qr{ \A hsla \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xmsi,
 	},
@@ -846,13 +848,15 @@ sub userRenameColorValid
 	my ($color) = @ARG;
 	my $bValidOnly = 1;
 	my $bAlways = 1;
-	return userColorNames(
-		userRgbFromHashColor(
-			userHashColorStandard(
-				userToHashColor($color, !$bAlways, $bValidOnly)
-			)
-		)
-	);
+	return rgbRedGreenBlueFromRgba(trace('111',
+        userColorNames(trace('QQQ',
+            userRgbFromHashColor(trace('WWW',
+                userHashColorStandard(trace('EEE',
+                    userToHashColor($color, !$bAlways, $bValidOnly)
+                ))
+            ))
+        ))
+    ));
 }
 
 ####################################
@@ -1199,7 +1203,7 @@ sub colorNames
 		debug("colorNames() 10 $color", 4);
 		if ($color =~ m{ $Var{'regex'}{'hsla'} }xms)
 		{
-			$rgb = hsl_to_rgb($1, $2, $3);
+			$rgb = rgbFromHsl($1, $2, $3);
 			debug("colorNames() 11 hsla $1 $2 $3", 4);
 			if (exists $Var{'rhColorNamesMap'}{$rgb})
 			{
@@ -1307,6 +1311,10 @@ sub userToHashColor
 		{
 			$color = userCanonicalFromRgb($rgb, $bValidOnly);
 		}
+		if ($bValidOnly)
+		{
+			$color = rgbRedGreenBlueFromRgba($color);
+		}
 	}
 	return $color;
 }
@@ -1354,6 +1362,22 @@ sub formatRgbIshColor
 
 	}
 	return $color;
+}
+
+# create rgb(red(),green(),blue(),alpha) from a rgba(#color,alpha) string
+# NO TEST CASE
+sub rgbRedGreenBlueFromRgba
+{
+	my ($rgba) = @ARG;
+
+	if ($rgba !~ m{ $Var{'regex'}{'rgbaValid'} }xms)
+	{
+		$rgba =~ s{ $Var{'regex'}{'rgbaInvalid'} }{
+			my $alpha = toOpacity($2);
+			qq{rgba(red($1), green($1), blue($1), $alpha)};
+		}xmse;
+	}
+	return $rgba;
 }
 
 # convert #rgb color to #rrggbb based on user settings
@@ -1425,7 +1449,7 @@ sub rgbFromHslOrPercent
 {
 	my ($vals, $bValidOnly) = @ARG;
 	$bValidOnly = $bValidOnly || opt('valid-only');
-	$vals =~ s{ $Var{'regex'}{'hslToRgb'} }{ "rgb$1(" . hsl_to_rgb($2, $3, $4) }xmse;
+	$vals =~ s{ $Var{'regex'}{'hslToRgb'} }{ "rgb$1(" . rgbFromHsl($2, $3, $4) }xmse;
 	$vals =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(" . replacePercent($2) . ',' . replacePercent($3) . ',' . replacePercent($4) }xmse;
 	$vals =~ s{ $Var{'regex'}{'hslInvalid'} }{rgba($1}xmsi if !$bValidOnly;
 	return formatRgbIshColor($vals);
@@ -1531,7 +1555,7 @@ sub vectorCloseness {
 }
 
 # HAS INDIRECT TEST CASE
-sub vectorFromRGB {
+sub vectorFromRgb {
 	my ($rgb) = @ARG;
 	$rgb =~ s{rgb\(}{}xmsg;
 	$rgb =~ s{\)}{}xmsg;
@@ -1542,14 +1566,14 @@ sub vectorFromRGB {
 # HAS TEST CASE
 sub colorCloseness {
 	my ($color1, $color2) = @ARG;
-	my $raVector1 = vectorFromRGB(rgbFromHashColor($color1));
-	my $raVector2 = vectorFromRGB(rgbFromHashColor($color2));
+	my $raVector1 = vectorFromRgb(rgbFromHashColor($color1));
+	my $raVector2 = vectorFromRgb(rgbFromHashColor($color2));
 	return vectorCloseness($raVector1, $raVector2);
 }
 
 # convert a hsl triplet to an rgb triplet
 # NO TEST CASE
-sub hsl_to_rgb
+sub rgbFromHsl
 {
 	# algorithm from http://www.w3.org/TR/css3-color/#hsl-color
 	my ($hue, $sat, $light) = @ARG;
@@ -1565,15 +1589,15 @@ sub hsl_to_rgb
 
 	$m2 = ($light <= 0.5) ? $light * ($sat + 1) : $light + $sat - $light * $sat;
 	$m1 = $light * 2 - $m2;
-	$r = int(255 * hue_to_rgb($m1, $m2, $hue + 1/3));
-	$g = int(255 * hue_to_rgb($m1, $m2, $hue));
-	$b = int(255 * hue_to_rgb($m1, $m2, $hue - 1/3));
+	$r = int(255 * rgbFromHue($m1, $m2, $hue + 1/3));
+	$g = int(255 * rgbFromHue($m1, $m2, $hue));
+	$b = int(255 * rgbFromHue($m1, $m2, $hue - 1/3));
 	return formatRgbColor("$r,$g,$b");
 }
 
 # convert a hue/sat to rgb value (0-1)
 # NO TEST CASE
-sub hue_to_rgb
+sub rgbFromHue
 {
 	# algorithm from http://www.w3.org/TR/css3-color/#hsl-color
 	my ($m1, $m2, $h) = @ARG;
@@ -1735,6 +1759,14 @@ sub debug
 }
 
 # NO TEST CASE
+sub trace
+{
+	my ($label, $what) = @ARG;
+	#print "$label: $what\n";
+	return $what;
+}
+
+# NO TEST CASE
 sub usage
 {
 	my ($msg) = @ARG;
@@ -1853,6 +1885,7 @@ sub tests
 
 sub testUserCanonicalFromRgbValid
 {
+	my $count = 1;
 	my $bValidOnly = 1;
 	my @UserCanonicalFromRgbValidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
@@ -1894,12 +1927,13 @@ sub testUserCanonicalFromRgbValid
 
         # indirect test of canonicalFromRgb()
 		my $result = userCanonicalFromRgb($color, $bValidOnly);
-		is($result, $expect, "userCanonicalFromRgb (valid) $color -> $expect");
+		is($result, $expect, $count++ .") userCanonicalFromRgb (valid) $color -> $expect");
 	}
 }
 
 sub testUserCanonicalFromRgbAllowInvalid
 {
+	my $count = 1;
 	my $bValidOnly = 1;
 	my @UserCanonicalFromRgbAllowInvalidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
@@ -1951,12 +1985,13 @@ sub testUserCanonicalFromRgbAllowInvalid
 
         # indirect test of canonicalFromRgb()
 		my $result = userCanonicalFromRgb($color, !$bValidOnly);
-		is($result, $expect, "userCanonicalFromRgb (!valid) $color -> $expect");
+		is($result, $expect, $count++ . ") userCanonicalFromRgb (!valid) $color -> $expect");
 	}
 }
 
 sub testRgbFromHslOrPercentValid
 {
+	my $count = 1;
 	my $bValidOnly = 1;
 	my @RgbFromHslOrPercentValidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
@@ -2005,12 +2040,13 @@ sub testRgbFromHslOrPercentValid
 		$expect = $expect || $color;
 
 		my $result = rgbFromHslOrPercent($color, $bValidOnly);
-		is($result, $expect, "rgbFromHslOrPercent (valid) $color -> $expect");
+		is($result, $expect, $count++ . ") rgbFromHslOrPercent (valid) $color -> $expect");
 	}
 }
 
 sub testRgbFromHslOrPercentAllowInvalid
 {
+	my $count = 1;
 	my $bValidOnly = 1;
 	my @RgbFromHslOrPercentAllowInvalidTests = (
 		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
@@ -2053,12 +2089,13 @@ sub testRgbFromHslOrPercentAllowInvalid
 		$expect = $expect || $color;
 
 		my $result = rgbFromHslOrPercent($color, !$bValidOnly);
-		is($result, $expect, "rgbFromHslOrPercent (!valid) $color -> $expect");
+		is($result, $expect, $count++ . ") rgbFromHslOrPercent (!valid) $color -> $expect");
 	}
 }
 
 sub testUserToHashColorValid
 {
+	my $count = 1;
 	my $bAlways = 1;
 	my $bValidOnly = 1;
 	my @ToHashColorValidTests = (
@@ -2090,11 +2127,12 @@ sub testUserToHashColorValid
 		"rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)",
 		"hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)",
 		"hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)",
-		"rgba(white,0.5):rgba(white, 0.5)", "rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)",
-		"rgba( white , 0.5 ):rgba(white, 0.5)",
-		"rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)",
-		"hsla(white,0.5):hsla(white, 0.5)",
-		"hsla( #fAfBfC , 0.5 ):hsla(#fAfBfC, 0.5)",
+		"rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)",
+		"rgba(#fAfBfC,0.5):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)",
+		"rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)",
+		"rgba( #fAfBfC , 0.5 ):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)",
+		"hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)",
+		"hsla( #fAfBfC , 0.5 ):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)",
 		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
 		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
 	);
@@ -2106,12 +2144,13 @@ sub testUserToHashColorValid
 
 		my $result = userToHashColor($color, $bAlways, $bValidOnly);
 
-		is($result, $expect, "userToHashColor (valid) $color -> $expect");
+		is($result, $expect, $count++ . ") userToHashColor (valid) $color -> $expect");
 	}
 }
 
 sub testUserToHashColorAllowInvalid
 {
+	my $count = 1;
 	my $bAlways = 1;
 	my $bValidOnly = 1;
 	my @UserToHashColorAllowInvalidTests = (
@@ -2159,20 +2198,21 @@ sub testUserToHashColorAllowInvalid
 
 		my $result = userToHashColor($color, $bAlways, !$bValidOnly);
 
-		is($result, $expect, "userToHashColor (!valid) $color -> $expect");
+		is($result, $expect, $count++ . ") userToHashColor (!valid) $color -> $expect");
 	}
 }
 
 sub testUserHashColorStandardShorten
 {
+	my $count = 1;
 	my @UserHashColorStandardShortenTests = (
 		'#fFf:#fff', '#fFfFfF:#fff', '#fAfBfC:#fafbfc', 'white', 'red', 'rgb(255,255,255)',
-		'rgb(1%,212,41%):#03d469',
-		'rgb(1%,20%,41%):#033369',
-		'rgba(1%,212,41%,1.0):#03d469',
-		'rgba(1%,20%,41%,1.0):#033369',
-		'rgba(1%,212,41%,0.2):rgba(#03d469, 0.2)',
-		'rgba(1%,20%,41%,0.2):rgba(#033369, 0.2)',
+		'rgb(1%,212,41%):rgb(1%,212,41%)',
+		'rgb(1%,20%,41%):rgb(1%,20%,41%)',
+		'rgba(1%,212,41%,1.0):rgba(1%,212,41%,1.0)',
+		'rgba(1%,20%,41%,1.0):rgba(1%,20%,41%,1.0)',
+		'rgba(1%,212,41%,0.2):rgba(1%,212,41%,0.2)',
+		'rgba(1%,20%,41%,0.2):rgba(1%,20%,41%,0.2)',
 		'rgb(100%,100%,100%)', 'rgb( 255 , 255 , 255 )',
 		'rgb( 100% , 100% , 100% )', 'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
 		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
@@ -2201,7 +2241,7 @@ sub testUserHashColorStandardShorten
 
 		my $result = userHashColorStandard($color);
 
-		is($result, $expect, "userHashColorStandard (shorten) $color -> $expect");
+		is($result, $expect, $count++ . ") userHashColorStandard (shorten) $color -> $expect");
 	}
 
 	setOpt('shorten', 0);
@@ -2209,14 +2249,15 @@ sub testUserHashColorStandardShorten
 
 sub testUserHashColorStandardCanonical
 {
+	my $count = 1;
 	my @UserHashColorStandardCanonicalTests = (
 		'#fFf:#ffffff', '#fFfFfF:#ffffff', '#fAfBfC:#fafbfc', 'white', 'red',
-		'rgb(1%,212,41%):#03d469',
-		'rgb(1%,20%,41%):#033369',
-		'rgba(1%,212,41%,1.0):#03d469',
-		'rgba(1%,20%,41%,1.0):#033369',
-		'rgba(1%,212,41%,0.2):rgba(#03d469, 0.2)',
-		'rgba(1%,20%,41%,0.2):rgba(#033369, 0.2)',
+		'rgb(1%,212,41%):rgb(1%,212,41%)',
+		'rgb(1%,20%,41%):rgb(1%,20%,41%)',
+		'rgba(1%,212,41%,1.0):rgba(1%,212,41%,1.0)',
+		'rgba(1%,20%,41%,1.0):rgba(1%,20%,41%,1.0)',
+		'rgba(1%,212,41%,0.2):rgba(1%,212,41%,0.2)',
+		'rgba(1%,20%,41%,0.2):rgba(1%,20%,41%,0.2)',
 		'rgb(255,255,255)', 'rgb(100%,100%,100%)', 'rgb( 255 , 255 , 255 )',
 		'rgb( 100% , 100% , 100% )', 'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
 		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
@@ -2245,7 +2286,7 @@ sub testUserHashColorStandardCanonical
 
 		my $result = userHashColorStandard($color);
 
-		is($result, $expect, "userHashColorStandard (canonical) $color -> $expect");
+		is($result, $expect, $count++ . ") userHashColorStandard (canonical) $color -> $expect");
 	}
 
 	setOpt('canonical', 0);
@@ -2253,7 +2294,7 @@ sub testUserHashColorStandardCanonical
 
 sub testRgbFromHashColor
 {
-
+	my $count = 1;
 	my $bAlways = 1;
 	my @RgbFromHashColorTests = (
 		'#fFf:rgb(255, 255, 255)', '#fFfFfF:rgb(255, 255, 255)',
@@ -2294,12 +2335,13 @@ sub testRgbFromHashColor
 		$expect = $expect || $color;
 
 		my $result = rgbFromHashColor($color);
-		is($result, $expect, "rgb $color -> $expect");
+		is($result, $expect, $count++ . ") rgb $color -> $expect");
 	}
 }
 
 sub testUserRenameColorNamesCanonicalAllowInvalid
 {
+	my $count = 1;
 	my @UserRenameColorNamesCanonicalAllowInvalidTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
 		'rgb(1%,212,41%):#03d469',
@@ -2352,7 +2394,7 @@ sub testUserRenameColorNamesCanonicalAllowInvalid
 
 		my $result = userRenameColor($color);
 
-		is($result, $expect, "userRenameColor (!valid,names,canonical) $color -> $expect");
+		is($result, $expect, $count++ . ") userRenameColor (!valid,names,canonical) $color -> $expect");
 	}
 
 	setOpt('names', 0);
@@ -2363,6 +2405,7 @@ sub testUserRenameColorNamesCanonicalAllowInvalid
 
 sub testUserRenameColorNamesCanonical
 {
+	my $count = 1;
 	my @UserRenameColorNamesCanonicalValidOnlyTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
@@ -2409,7 +2452,7 @@ sub testUserRenameColorNamesCanonical
 
 		my $result = userRenameColor($color);
 
-		is($result, $expect, "userRenameColor (valid,names,canonical) $color -> $expect");
+		is($result, $expect, $count++ . ") userRenameColor (valid,names,canonical) $color -> $expect");
 	}
 
 	setOpt('names', 0);
@@ -2421,6 +2464,7 @@ sub testUserRenameColorNamesCanonical
 
 sub testGetBothColorValues
 {
+	my $count = 1;
 	my @GetBothColorValuesTests = (
 		'#fFf:#ffffff:rgb(255, 255, 255)', '#fFfFfF:#ffffff:rgb(255, 255, 255)',
 		'#fAfBfC:#fafbfc:rgb(250, 251, 252)', 'white:white:white', 'red:red:red',
@@ -2465,13 +2509,14 @@ sub testGetBothColorValues
 
 		my ($gotColor, $gotRgb) = getBothColorValues($color);
 
-		is($gotColor, $expectColor, "getBothColorValues color $color -> $expectColor");
-		is($gotRgb, $expectRgb, "getBothColorValues rgb  $color -> $expectRgb");
+		is($gotColor, $expectColor, $count . "a) getBothColorValues color $color -> $expectColor");
+		is($gotRgb, $expectRgb, $count++ . "b) getBothColorValues rgb  $color -> $expectRgb");
 	}
 }
 
 sub testNiceNameColor
 {
+	my $count = 1;
 	my @NiceNameColorTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:rgb(250, 251, 252)', 'white', 'red',
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
@@ -2511,12 +2556,13 @@ sub testNiceNameColor
 
 		my $result = niceNameColor($color);
 
-		is($result, $expect, "niceNameColor $color -> $expect");
+		is($result, $expect, $count++ . ") niceNameColor $color -> $expect");
 	}
 }
 
 sub testUserRenameColorValid
 {
+	my $count = 1;
 	my @UserRenameColorValidTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
@@ -2542,8 +2588,8 @@ sub testUserRenameColorValid
 		'rgba(#fAfBfC,0.5):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
 		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
 		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
-		'hsla(white,0.5):hsla(white, 0.5)',
-		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)',
+		'hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
 		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
@@ -2559,7 +2605,7 @@ sub testUserRenameColorValid
 
 		my $result = userRenameColorValid($color);
 
-		is($result, $expect, "userRenameColorValid $color -> $expect");
+		is($result, $expect, $count++ . ") userRenameColorValid $color -> $expect");
 	}
 
 	setOpt('canonical', 0);
@@ -2569,6 +2615,7 @@ sub testUserRenameColorValid
 
 sub testColorCloseness
 {
+	my $count = 1;
 	my @ColorClosenessTests = (
 		'#fff:#ff0:57',
 		'#fff:#ffa:19',
@@ -2583,12 +2630,13 @@ sub testColorCloseness
 
 		my $result = int(100 * colorCloseness($color1, $color2));
 
-		is($result, $expect, "colorCloseness $color1,$color2 -> $expect");
+		is($result, $expect, $count++ . ") colorCloseness $color1,$color2 -> $expect");
 	}
 }
 
 sub testUserUniqueColor
 {
+	my $count = 1;
 	my @UserUniqueColorTests = (
 		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red', 
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white', 
@@ -2604,17 +2652,18 @@ sub testUserUniqueColor
 		'rgba( 100% , 100% , 100% , 0.0 ):transparent', 
 		'hsla(0,100%,100%,0.0):transparent', 
 		'hsla( 0 , 100% , 100% , 0.0 ):transparent', 
-		'rgba(255,255,255,0.5):rgba(white, 0.5)', 
-		'rgba(100%,100%,100%,0.5):rgba(white, 0.5)', 
-		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)', 
-		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)', 
-		'hsla(0,100%,100%,0.5):rgba(white, 0.5)', 
-		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)', 
-		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)', 
-		'rgba( white , 0.5 ):rgba(white, 0.5)', 
-		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)', 
-		'hsla(white,0.5):hsla(white, 0.5)', 
-		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)', 
+		'rgba(255,255,255,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
+		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
+		'hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
 		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)', 
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)', 
 	);
@@ -2630,7 +2679,7 @@ sub testUserUniqueColor
 
 		my $result = userUniqueColor($color);
 
-		is($result, $expect, "userUniqueColor $color -> $expect");
+		is($result, $expect, $count++ . ") userUniqueColor $color -> $expect");
 	}
 
 	setOpt('canonical', 0);
@@ -2642,6 +2691,7 @@ sub testUserUniqueColor
 
 sub testSomething
 {
+	my $count = 1;
 	my @SomethingTests = ();
 
 	foreach my $somethingResult (@SomethingTests)
@@ -2650,7 +2700,7 @@ sub testSomething
 
 		my $result = int($color);
 
-		is($result, $expect, "something $color -> $expect");
+		is($result, $expect, $count++ . ") something $color -> $expect");
 	}
 }
 
