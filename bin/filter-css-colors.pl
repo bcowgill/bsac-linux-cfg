@@ -1424,8 +1424,9 @@ sub getBothColorValues
 	my $rgb;
 
 	debug("getBothColorValues(c=$color)", 2);
-	if ($color =~ $Var{'regex'}{'isRgbHsl'})
+	if ($color =~ $Var{'regex'}{'isRgbIsh'})
 	{
+		debug("getBothColorValues 2 isrgbhsl", 3);
 		$rgb = lc(formatRgbIshColor(rgbFromHslOrPercent($color)));
 		$color = userCanonicalFromRgb($rgb);
 	}
@@ -2465,7 +2466,7 @@ sub testUserRenameColorNamesCanonical
 
 sub testGetBothColorValues
 {
-	my $count = 1;
+	my $count = 0;
 	my @GetBothColorValuesTests = (
 		'#fFf:#ffffff:rgb(255, 255, 255)', '#fFfFfF:#ffffff:rgb(255, 255, 255)',
 		'#fAfBfC:#fafbfc:rgb(250, 251, 252)', 'white:white:white', 'red:red:red',
@@ -2475,43 +2476,52 @@ sub testGetBothColorValues
 		'rgb( 100% , 100% , 100% ):#ffffff:rgb(255, 255, 255)',
 		'hsl(0,100%,100%):#ffffff:rgb(255, 255, 255)',
 		'hsl( 0 , 100% , 100% ):#ffffff:rgb(255, 255, 255)',
-		'rgba(255,255,255,1.0):rgba(255,255,255,1.0):rgba(255, 255, 255, 1)',
-		'rgba(100%,100%,100%,1.0):rgba(100%,100%,100%,1.0):rgba(100%, 100%, 100%, 1)',
-		'rgba( 255 , 255 , 255 , 1.0 ):rgba( 255 , 255 , 255 , 1.0 ):rgba(255, 255, 255, 1)',
-		'rgba( 100% , 100% , 100% , 1.0 ):rgba( 100% , 100% , 100% , 1.0 ):rgba(100%, 100%, 100%, 1)',
-		'hsla(0,100%,100%,1.0):hsla(0,100%,100%,1.0):hsla(0, 100%, 100%, 1)',
-		'hsla( 0 , 100% , 100% , 1.0 ):hsla( 0 , 100% , 100% , 1.0 ):hsla(0, 100%, 100%, 1)',
+		'rgba(255,255,255,1.0):#ffffff:rgba(255, 255, 255, 1)',
+		'rgba(100%,100%,100%,1.0):#ffffff:rgba(255, 255, 255, 1)',
+		'rgba( 255 , 255 , 255 , 1.0 ):#ffffff:rgba(255, 255, 255, 1)',
+		'rgba( 100% , 100% , 100% , 1.0 ):#ffffff:rgba(255, 255, 255, 1)',
+		'hsla(0,100%,100%,1.0):#ffffff:rgba(255, 255, 255, 1)',
+		'hsla( 0 , 100% , 100% , 1.0 ):#ffffff:rgba(255, 255, 255, 1)',
 		'transparent:transparent:transparent',
-		'rgba(255,255,255,0.0):rgba(255,255,255,0.0):rgba(255, 255, 255, 0)',
-		'rgba(100%,100%,100%,0.0):rgba(100%,100%,100%,0.0):rgba(100%, 100%, 100%, 0)',
-		'rgba( 255 , 255 , 255 , 0.0 ):rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0)',
-		'rgba( 100% , 100% , 100% , 0.0 ):rgba( 100% , 100% , 100% , 0.0 ):rgba(100%, 100%, 100%, 0)',
-		'hsla(0,100%,100%,0.0):hsla(0,100%,100%,0.0):hsla(0, 100%, 100%, 0)',
-		'hsla( 0 , 100% , 100% , 0.0 ):hsla( 0 , 100% , 100% , 0.0 ):hsla(0, 100%, 100%, 0)',
-		'rgba(255,255,255,0.5):rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
-		'rgba(100%,100%,100%,0.5):rgba(100%,100%,100%,0.5):rgba(100%, 100%, 100%, 0.5)',
-		'rgba( 255 , 255 , 255 , 0.5 ):rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
-		'rgba( 100% , 100% , 100% , 0.5 ):rgba( 100% , 100% , 100% , 0.5 ):rgba(100%, 100%, 100%, 0.5)',
-		'hsla(0,100%,100%,0.5):hsla(0,100%,100%,0.5):hsla(0, 100%, 100%, 0.5)',
-		'hsla( 0 , 100% , 100% , 0.5 ):hsla( 0 , 100% , 100% , 0.5 ):hsla(0, 100%, 100%, 0.5)',
-		'rgba(white,0.5):rgba(white,0.5):rgba(white, 0.5)',
-		'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5):rgba(250, 251, 252, 0.5)',
-		'rgba( white , 0.5 ):rgba( white , 0.5 ):rgba(white, 0.5)',
-		'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 ):rgba(250, 251, 252, 0.5)',
-		'hsla(white,0.5):hsla(white,0.5):hsla(white, 0.5)',
-		'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 ):hsla(rgb(250, 251, 252), 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba(255,255,255,0.0):rgba(#ffffff, 0):rgba(255, 255, 255, 0)',
+		'rgba(100%,100%,100%,0.0):rgba(#ffffff, 0):rgba(255, 255, 255, 0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0):rgba(255, 255, 255, 0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0):rgba(255, 255, 255, 0)',
+		'hsla(0,100%,100%,0.0):rgba(#ffffff, 0):rgba(255, 255, 255, 0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):rgba(#ffffff, 0):rgba(255, 255, 255, 0)',
+		'rgba(255,255,255,0.5):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
+
+		# if possible
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+
+		# degenerate results from invalid input
+		'rgba(white,0.5):rgba(white, 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
+		'hsla(white,0.5):rgba(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
 	);
+
+	#setOpt('debug', 5);
 
 	foreach my $colorResult (@GetBothColorValuesTests)
 	{
+		++$count;
+		#next unless $count == 32;
 		my ($color, $expectColor, $expectRgb) = split(/:/, $colorResult);
+		$expectRgb = $expectRgb || $expectColor;
 
 		my ($gotColor, $gotRgb) = getBothColorValues($color);
 
 		is($gotColor, $expectColor, $count . "a) getBothColorValues color $color -> $expectColor");
-		is($gotRgb, $expectRgb, $count++ . "b) getBothColorValues rgb  $color -> $expectRgb");
+		is($gotRgb, $expectRgb, $count . "b) getBothColorValues rgb  $color -> $expectRgb");
 	}
 }
 
