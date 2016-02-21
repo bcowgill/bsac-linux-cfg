@@ -367,6 +367,10 @@ bindsym $mod+b border toggle
 bindsym $mod+m move scratchpad
 bindsym $mod+o scratchpad show
 
+#--- Brightness controls------------------------------------
+bindsym XF86MonBrightnessUp exec brighter.sh
+bindsym XF86MonBrightnessDown exec darker.sh
+
 #--- Pulse Audio controls------------------------------------
 bindsym XF86AudioRaiseVolume exec sound-up.sh
 bindsym XF86AudioLowerVolume exec sound-down.sh
