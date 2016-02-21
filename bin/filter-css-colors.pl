@@ -34,6 +34,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--echo           negatable. display original line when performing replacements.
 	--version        display program version and exit.
 	--debug          incremental. display debugging info.
+	--trace          negatable. turn on some debug trace.
 	--tests          run the unit tests.
 	--help -?        brief help message and exit.
 	--man            full help message and exit.
@@ -225,7 +226,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 663;
+our $TEST_CASES = 625;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -240,6 +241,7 @@ my %Var = (
 			'const-list' => 0,
 			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
+			trace   => 0,
 			tests   => 0,
 			man     => 0,        # show full help page
 		},
@@ -276,6 +278,7 @@ my %Var = (
 			"background|bg:s",
 			"echo!",
 			"debug|d+",      # incremental keep specifying to increase
+			"trace!",
 			"tests!",        # run the unit tests
 			$STDIO,          # empty string allows - to signify standard in/out as a file
 			"man",           # show manual page only
@@ -846,13 +849,14 @@ sub lookupColorConstantsMap
 	my ($color) = @ARG;
 
 	debug("lookupColorConstantsMap($color)", 2);
-	#$color = commas(userUniqueColor($color)); TODO do not need this?
 	my $rgb;
 	($color, $rgb) = getBothColorValues($color);
-	return $Var{'rhColorConstantsMap'}{$color} ||  $Var{'rhColorConstantsMap'}{$rgb};
+	return $Var{'rhColorConstantsMap'}{$color} || $Var{'rhColorConstantsMap'}{$rgb};
 }
 
 # rename a color value based on command line options but ensuring valid CSS
+# will make unique version of color based on command line options so that color
+# comparisons will work
 # HAS TEST CASE
 sub userRenameColorValid
 {
@@ -860,10 +864,10 @@ sub userRenameColorValid
 	debug("userRenameColorValid($color)", 2);
 	my $bValidOnly = 1;
 	my $bAlways = 1;
-	return rgbRedGreenBlueFromRgba(trace('111',
-        userColorNames(trace('QQQ',
-            userRgbFromHashColor(trace('WWW',
-                userHashColorStandard(trace('EEE',
+	return rgbRedGreenBlueFromRgba(trace('colornames',
+        userColorNames(trace('rgbfromhashcolor',
+            userRgbFromHashColor(trace('hashcolorstd',
+                userHashColorStandard(trace('tohashcolor',
                     userToHashColor($color, !$bAlways, $bValidOnly)
                 ))
             ))
@@ -923,26 +927,6 @@ sub doReplaceLine
 
 ####################################
 # methods used by methods in summary (in showAutoConstants)
-
-# make unique version of color based on command line options so that color
-# comparisons will work
-# HAS TEST CASE
-sub userUniqueColor
-{
-	my ($color) = @ARG;
-	return userRenameColorValid($color);# TODO
-
-
-	my $bValidOnly = 1;
-	return userColorNames(
-		formatRgbIshColor(
-			userRgbFromHashColor(
-				userHashColorStandard($color)
-			)
-		),
-		$bValidOnly
-	);
-}
 
 # get the nicest name for a color possible. i.e. white
 # or rgba(white, 0.3) for opacity
@@ -1368,7 +1352,7 @@ sub defineAutoConstant
 	if (isColorOkToConvertToConstant($color, $origColor, $match))
 	{
 		$const = opt('const-type') . "autoConstant" . scalar(@{$Var{'raAutoConstants'}});
-		$color = userUniqueColor($color);
+		$color = userRenameColorValid($color);
 		push(@{$Var{'raAutoConstants'}}, $color);
 		registerConstantFromFile($const, $color, $match);
 	}
@@ -1803,7 +1787,7 @@ sub debug
 sub trace
 {
 	my ($label, $what) = @ARG;
-	#print "$label: $what\n";
+	print "$label: $what\n" if opt('trace');
 	return $what;
 }
 
@@ -1857,7 +1841,6 @@ sub tests
 	testUserRenameColorNamesCanonicalAllowInvalid();
 	testUserRenameColorNamesCanonical();
 	testUserRenameColorValid();
-	testUserUniqueColor();
 
 	# unittestcall
 
@@ -1916,7 +1899,7 @@ sub tests
 	my @Result = ();
 	foreach my $color (@EveryColorFormat)
 	{
-		my @result = userUniqueColor($color);
+		my @result = trace($color);
 		my $result = join(':', @result);
 		my $expect = "fail";
 
@@ -2474,13 +2457,15 @@ sub testUserRenameColorNamesCanonical
 		'rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
 		'hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
 		'hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
-		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)', # TODO handle?
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+
+		# degenerate cases from invalid input
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc, 0.5)',
 		'rgba( white , 0.5 ):rgba(white, 0.5)',
 		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
 		'hsla(white,0.5):hsla(white, 0.5)',
 		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
 
 	#setOpt('debug', 5);
@@ -2690,73 +2675,24 @@ sub testColorCloseness
 	}
 }
 
-sub testUserUniqueColor
-{
-	my $count = 1;
-	my @UserUniqueColorTests = (
-		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
-		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
-		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
-		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
-		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white',
-		'rgba( 255 , 255 , 255 , 1.0 ):white',
-		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white',
-		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
-		'rgba(255,255,255,0.0):transparent',
-		'rgba(100%,100%,100%,0.0):transparent',
-		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
-		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
-		'hsla(0,100%,100%,0.0):transparent',
-		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
-		'rgba(255,255,255,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba(100%,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba( 255 , 255 , 255 , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba( 100% , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'hsla(0,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'hsla( 0 , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba(#fAfBfC,0.5):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
-		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
-		'hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'hsla( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
-	);
-
-	setOpt('canonical', 1);
-	setOpt('hash', 1);
-	setOpt('names', 1);
-
-	foreach my $userUniqueColorResult (@UserUniqueColorTests)
-	{
-		my ($color, $expect) = split(/:/, $userUniqueColorResult);
-		$expect = $expect || $color;
-
-		my $result = userUniqueColor($color);
-
-		is($result, $expect, $count++ . ") userUniqueColor $color -> $expect");
-	}
-
-	setOpt('canonical', 0);
-	setOpt('hash', 0);
-	setOpt('names', 0);
-}
-
 # unittestimpl
 
 sub testSomething
 {
-	my $count = 1;
+	my $count = 0;
 	my @SomethingTests = ();
+
+	#setOpt('debug', 5);
 
 	foreach my $somethingResult (@SomethingTests)
 	{
+		++$count;
+		#next unless $count == 32;
 		my ($color, $expect) = split(/:/, $somethingResult);
 
 		my $result = int($color);
 
-		is($result, $expect, $count++ . ") something $color -> $expect");
+		is($result, $expect, $count . ") something $color -> $expect");
 	}
 }
 
