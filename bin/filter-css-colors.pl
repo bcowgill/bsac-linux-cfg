@@ -318,6 +318,7 @@ my %Var = (
 		'rgbaCanon'       => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
 		'rgbaValid'       => qr{ \A rgba \( \s* red\( [^\)]+ \) \s* , \s* green\( [^\)]+ \) \s* , \s* blue\( [^\)]+ \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaInvalid'     => qr{ (?:rgb|hsl)a \( \s* ([^,]+) \s* , \s* ([^,]+) \s* \) }xmsi,
+		'rgbaRedGreenBlue' => qr{ rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( \1 \) \s* , \s* blue\( \1 \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'hslInvalid'      => qr{ \A hsla \( \s* (\w+| $HASH [0-9a-f]{3,6}) }xmsi,
 		'hsla'            => qr{ \A hsla \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xmsi,
 	},
@@ -945,6 +946,7 @@ sub userUniqueColor
 # get the nicest name for a color possible. i.e. white
 # or rgba(white, 0.3) for opacity
 # or ~white for something close to white
+# or transparent red, partially red, tinted red, mostly red for rgba values
 # HAS TEST CASE
 sub niceNameColor
 {
@@ -1390,6 +1392,18 @@ sub rgbRedGreenBlueFromRgba
 	return $rgba;
 }
 
+# create rgb(color,alpha) from rgb(red(color)...)
+# NO TEST CASE
+sub rgbInvalidFromRedGreenBlue
+{
+	my ($rgba) = @ARG;
+	$rgba =~ s{ $Var{'regex'}{'rgbaRedGreenBlue'} }{
+		my $alpha = toOpacity($2);
+		qq{rgba($1, $alpha)};
+	}xmse;
+	return $rgba;
+}
+
 # convert #rgb color to #rrggbb based on user settings
 # NO TEST CASE
 sub userCanonical
@@ -1472,8 +1486,7 @@ sub userCanonicalFromRgb
 {
 	my ($rgb, $bValidOnly) = @ARG;
 	$bValidOnly = $bValidOnly || opt('valid-only');
-	$rgb = #toHashColor(
-	canonicalFromRgb($rgb, $bValidOnly);#, $bValidOnly);
+	$rgb = canonicalFromRgb($rgb, $bValidOnly);
 	return $rgb;
 }
 
@@ -1487,6 +1500,7 @@ sub canonicalFromRgb
 	if (!$bValidOnly)
 	{
 		$rgb =~ s{ $Var{'regex'}{'rgbaCanon'} }{ "rgb$1(#" . toHex($2) . toHex($3) . toHex($4) }xmse;
+		$rgb = rgbInvalidFromRedGreenBlue($rgb);
 		$rgb = formatRgbIshColor($rgb);
 	}
 	return $rgb;
@@ -1834,39 +1848,39 @@ sub tests
 
 	my @EveryColorFormat = (
 		# #hash or name format
-		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red",
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
 
 		# rgb/hsl
-		"rgb(255,255,255)", "rgb(100%,100%,100%)",
-		"rgb( 255 , 255 , 255 )", "rgb( 100% , 100% , 100% )",
+		'rgb(255,255,255)', 'rgb(100%,100%,100%)',
+		'rgb( 255 , 255 , 255 )', 'rgb( 100% , 100% , 100% )',
 
-		"hsl(0,100%,100%)", "hsl( 0 , 100% , 100% )",
+		'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
 
 		# full opacity
-		"rgba(255,255,255,1.0)", "rgba(100%,100%,100%,1.0)",
-		"rgba( 255 , 255 , 255 , 1.0 )", "rgba( 100% , 100% , 100% , 1.0 )",
-		"hsla(0,100%,100%,1.0)", "hsla( 0 , 100% , 100% , 1.0 )",
+		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 )', 'rgba( 100% , 100% , 100% , 1.0 )',
+		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )',
 
 		# full transparency
-		"transparent",
-		"rgba(255,255,255,0.0)", "rgba(100%,100%,100%,0.0)",
-		"rgba( 255 , 255 , 255 , 0.0 )", "rgba( 100% , 100% , 100% , 0.0 )",
-		"hsla(0,100%,100%,0.0)", "hsla( 0 , 100% , 100% , 0.0 )",
+		'transparent',
+		'rgba(255,255,255,0.0)', 'rgba(100%,100%,100%,0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 )', 'rgba( 100% , 100% , 100% , 0.0 )',
+		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
 
 		# partial transparency
 
-		"rgba(255,255,255,0.5)", "rgba(100%,100%,100%,0.5)",
-		"rgba( 255 , 255 , 255 , 0.5 )", "rgba( 100% , 100% , 100% , 0.5 )",
-		"hsla(0,100%,100%,0.5)", "hsla( 0 , 100% , 100% , 0.5 )",
+		'rgba(255,255,255,0.5)', 'rgba(100%,100%,100%,0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 )', 'rgba( 100% , 100% , 100% , 0.5 )',
+		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
 
 		# invalid CSS
-		"rgba(white,0.5)", "rgba(#fAfBfC,0.5)",
-		"rgba( white , 0.5 )", "rgba( #fAfBfC , 0.5 )",
-		"hsla(white,0.5)", "hsla( #fAfBfC , 0.5 )",
+		'rgba(white,0.5)', 'rgba(#fAfBfC,0.5)',
+		'rgba( white , 0.5 )', 'rgba( #fAfBfC , 0.5 )',
+		'hsla(white,0.5)', 'hsla( #fAfBfC , 0.5 )',
 
 		# Valid Less
-		"rgba(red(\@color),green(\@color),blue(\@color),0.5)",
-		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 )",
+		'rgba(red(@color),green(@color),blue(@color),0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
 	);
 
 	exit 0 unless opt('tests') > 1;
@@ -1986,8 +2000,8 @@ sub testUserCanonicalFromRgbAllowInvalid
 		'rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
 		'hsla(white,0.5):rgba(white, 0.5)',
 		'hsla( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
 	);
 
 	foreach my $colorResult (@UserCanonicalFromRgbAllowInvalidTests)
@@ -2111,42 +2125,42 @@ sub testUserToHashColorValid
 	my $bAlways = 1;
 	my $bValidOnly = 1;
 	my @ToHashColorValidTests = (
-		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red", "rgb(255,255,255):#ffffff",
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
 		'rgb(1%,212,41%):#03d469',
 		'rgb(1%,20%,41%):#033369',
 		'rgba(1%,212,41%,1.0):#03d469',
 		'rgba(1%,20%,41%,1.0):#033369',
 		'rgba(1%,212,41%,0.2):rgba(3, 212, 105, 0.2)',
 		'rgba(1%,20%,41%,0.2):rgba(3, 51, 105, 0.2)',
-		"rgb(100%,100%,100%):#ffffff", "rgb( 255 , 255 , 255 ):#ffffff",
-		"rgb( 100% , 100% , 100% ):#ffffff", "hsl(0,100%,100%):#ffffff",
-		"hsl( 0 , 100% , 100% ):#ffffff",
-		"rgba(255,255,255,1.0):#ffffff",
-		"rgba(100%,100%,100%,1.0):#ffffff",
-		"rgba( 255 , 255 , 255 , 1.0 ):#ffffff",
-		"rgba( 100% , 100% , 100% , 1.0 ):#ffffff",
-		"hsla(0,100%,100%,1.0):#ffffff",
-		"hsla( 0 , 100% , 100% , 1.0 ):#ffffff", "transparent",
-		"rgba(255,255,255,0.0):rgba(255, 255, 255, 0)",
-		"rgba(100%,100%,100%,0.0):rgba(255, 255, 255, 0)",
-		"rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0)",
-		"rgba( 100% , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0)",
-		"hsla(0,100%,100%,0.0):rgba(255, 255, 255, 0)",
-		"hsla( 0 , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0)",
-		"rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)",
-		"rgba(100%,100%,100%,0.5):rgba(255, 255, 255, 0.5)",
-		"rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)",
-		"rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)",
-		"hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)",
-		"hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)",
-		"rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)",
-		"rgba(#fAfBfC,0.5):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)",
-		"rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)",
-		"rgba( #fAfBfC , 0.5 ):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)",
-		"hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)",
-		"hsla( #fAfBfC , 0.5 ):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)",
-		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
-		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
+		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
+		'rgb( 100% , 100% , 100% ):#ffffff', 'hsl(0,100%,100%):#ffffff',
+		'hsl( 0 , 100% , 100% ):#ffffff',
+		'rgba(255,255,255,1.0):#ffffff',
+		'rgba(100%,100%,100%,1.0):#ffffff',
+		'rgba( 255 , 255 , 255 , 1.0 ):#ffffff',
+		'rgba( 100% , 100% , 100% , 1.0 ):#ffffff',
+		'hsla(0,100%,100%,1.0):#ffffff',
+		'hsla( 0 , 100% , 100% , 1.0 ):#ffffff', 'transparent',
+		'rgba(255,255,255,0.0):rgba(255, 255, 255, 0)',
+		'rgba(100%,100%,100%,0.0):rgba(255, 255, 255, 0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(255, 255, 255, 0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0)',
+		'hsla(0,100%,100%,0.0):rgba(255, 255, 255, 0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):rgba(255, 255, 255, 0)',
+		'rgba(255,255,255,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(255, 255, 255, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(255, 255, 255, 0.5)',
+		'rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)',
+		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)',
+		'hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(red(#fAfBfC), green(#fAfBfC), blue(#fAfBfC), 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
 
 	foreach my $colorResult (@ToHashColorValidTests)
@@ -2166,41 +2180,41 @@ sub testUserToHashColorAllowInvalid
 	my $bAlways = 1;
 	my $bValidOnly = 1;
 	my @UserToHashColorAllowInvalidTests = (
-		"#fFf", "#fFfFfF", "#fAfBfC", "white", "red", "rgb(255,255,255):#ffffff",
+		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
 		'rgb(1%,212,41%):#03d469',
 		'rgb(1%,20%,41%):#033369',
 		'rgba(1%,212,41%,1.0):#03d469',
 		'rgba(1%,20%,41%,1.0):#033369',
 		'rgba(1%,212,41%,0.2):rgba(#03d469, 0.2)',
 		'rgba(1%,20%,41%,0.2):rgba(#033369, 0.2)',
-		"rgb(100%,100%,100%):#ffffff", "rgb( 255 , 255 , 255 ):#ffffff",
-		"rgb( 100% , 100% , 100% ):#ffffff", "hsl(0,100%,100%):#ffffff",
-		"hsl( 0 , 100% , 100% ):#ffffff",
-		"rgba(255,255,255,1.0):#ffffff",
-		"rgba(100%,100%,100%,1.0):#ffffff",
-		"rgba( 255 , 255 , 255 , 1.0 ):#ffffff",
-		"rgba( 100% , 100% , 100% , 1.0 ):#ffffff",
-		"hsla(0,100%,100%,1.0):#ffffff",
-		"hsla( 0 , 100% , 100% , 1.0 ):#ffffff", "transparent",
-		"rgba(255,255,255,0.0):rgba(#ffffff, 0)",
-		"rgba(100%,100%,100%,0.0):rgba(#ffffff, 0)",
-		"rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0)",
-		"rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0)",
-		"hsla(0,100%,100%,0.0):rgba(#ffffff, 0)",
-		"hsla( 0 , 100% , 100% , 0.0 ):rgba(#ffffff, 0)",
-		"rgba(255,255,255,0.5):rgba(#ffffff, 0.5)",
-		"rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5)",
-		"rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5)",
-		"rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)",
-		"hsla(0,100%,100%,0.5):rgba(#ffffff, 0.5)",
-		"hsla( 0 , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)",
-		"rgba(white,0.5):rgba(white, 0.5)", "rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)",
-		"rgba( white , 0.5 ):rgba(white, 0.5)",
-		"rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)",
-		"hsla(white,0.5):rgba(white, 0.5)",
-		"hsla( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)",
-		"rgba(red(\@color),green(\@color),blue(\@color),0.5):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
-		"rgba( red( \@color ) , green( \@color ) , blue( \@color ) , 0.5 ):rgba(red(\@color), green(\@color), blue(\@color), 0.5)",
+		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
+		'rgb( 100% , 100% , 100% ):#ffffff', 'hsl(0,100%,100%):#ffffff',
+		'hsl( 0 , 100% , 100% ):#ffffff',
+		'rgba(255,255,255,1.0):#ffffff',
+		'rgba(100%,100%,100%,1.0):#ffffff',
+		'rgba( 255 , 255 , 255 , 1.0 ):#ffffff',
+		'rgba( 100% , 100% , 100% , 1.0 ):#ffffff',
+		'hsla(0,100%,100%,1.0):#ffffff',
+		'hsla( 0 , 100% , 100% , 1.0 ):#ffffff', 'transparent',
+		'rgba(255,255,255,0.0):rgba(#ffffff, 0)',
+		'rgba(100%,100%,100%,0.0):rgba(#ffffff, 0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0)',
+		'hsla(0,100%,100%,0.0):rgba(#ffffff, 0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):rgba(#ffffff, 0)',
+		'rgba(255,255,255,0.5):rgba(#ffffff, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(#ffffff, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'hsla(white,0.5):rgba(white, 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
 	);
 
 	foreach my $colorResult (@UserToHashColorAllowInvalidTests)
@@ -2389,8 +2403,8 @@ sub testUserRenameColorNamesCanonicalAllowInvalid
 		'rgba( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
 		'hsla(white,0.5):rgba(white, 0.5)',
 		'hsla( #fAfBfC , 0.5 ):rgba(#fafbfc, 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
 	);
 
 	#setOpt('debug', 5);
@@ -2505,10 +2519,11 @@ sub testGetBothColorValues
 		'rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
 		'hsla(0,100%,100%,0.5):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
 		'hsla( 0 , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5):rgba(255, 255, 255, 0.5)',
-
-		# if possible
 		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+
+		# input we cannot do a thing with
+		'rgba(red(@color1), green(@color), blue(@color), 0.5)',
 
 		# degenerate results from invalid input
 		'rgba(white,0.5):rgba(white, 0.5)',
@@ -2526,6 +2541,7 @@ sub testGetBothColorValues
 		++$count;
 		#next unless $count == 32;
 		my ($color, $expectColor, $expectRgb) = split(/:/, $colorResult);
+		$expectColor = $expectColor || $color;
 		$expectRgb = $expectRgb || $expectColor;
 
 		my ($gotColor, $gotRgb) = getBothColorValues($color);
@@ -2564,8 +2580,8 @@ sub testNiceNameColor
 		'rgba( #fAfBfC , 0.5 ):rgba(250, 251, 252, 0.5)',
 		'hsla(white,0.5):rgba(white, 0.5)',
 		'hsla( #fAfBfC , 0.5 ):rgba(250, 251, 252, 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
 	);
 
 	#setOpt('debug', 4);
