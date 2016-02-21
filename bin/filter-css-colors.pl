@@ -225,7 +225,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 661;
+our $TEST_CASES = 663;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -1467,7 +1467,7 @@ sub getBothColorValues
 	{
 		debug("getBothColorValues 2 isrgbhsl", 3);
 		$rgb = lc(formatRgbIshColor(rgbFromHslOrPercent($color)));
-		$color = userCanonicalFromRgb($rgb);
+		$color = canonicalFromRgb($rgb);
 	}
 	else
 	{
