@@ -10,10 +10,9 @@
 
 @shade: grey;
 
-@hs1: rgba(85, 60, 32, 0.3);
 
 
 
+@rg1: rgba(red(#010203), green(#010203), blue(#010203), 0.5);
 
-@rg1: rgba(1, 2, 3, 0.5);
-
+@hs1: rgba(red(#553c20), green(#553c20), blue(#553c20), 0.3);
