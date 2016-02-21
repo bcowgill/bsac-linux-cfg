@@ -864,10 +864,10 @@ sub userRenameColorValid
 	debug("userRenameColorValid($color)", 2);
 	my $bValidOnly = 1;
 	my $bAlways = 1;
-	return rgbRedGreenBlueFromRgba(trace('colornames',
-        userColorNames(trace('rgbfromhashcolor',
-            userRgbFromHashColor(trace('hashcolorstd',
-                userHashColorStandard(trace('tohashcolor',
+	return rgbRedGreenBlueFromRgba(trace('colorNames',
+        userColorNames(trace('rgbFromHashColor',
+            userRgbFromHashColor(trace('hashColorStd',
+                userHashColorStandard(trace('toHashColor',
                     userToHashColor($color, !$bAlways, $bValidOnly)
                 ))
             ))
