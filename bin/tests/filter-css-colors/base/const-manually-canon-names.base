@@ -1,4 +1,4 @@
-// Color constant definitions:
+// #color constant definitions:
 @rg2: #0c0d0e;
 
 @bg: #334455;
@@ -10,9 +10,7 @@
 
 @shade: grey;
 
-
-
-
 @rg1: rgba(red(#010203), green(#010203), blue(#010203), 0.5);
 
 @hs1: rgba(red(#553c20), green(#553c20), blue(#553c20), 0.3);
+

@@ -1,4 +1,4 @@
-// Color constant definitions:
+// #color constant definitions:
 @gray-base: black;
 @sass-gray-base: black;
 @text-color: black;
@@ -17,15 +17,6 @@
 @sass-brand-success: #5cb85c;
 
 @css-gray-light: #777777;
-
-@sass-gray-base: black;
-@text-color: black;
-
-
-
-
-
-
 
 @popover-border-color: rgba(red(black), green(black), blue(black), 0.2);
 @sass-popover-border-color: rgba(red(black), green(black), blue(black), 0.2);

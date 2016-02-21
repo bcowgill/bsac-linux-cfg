@@ -190,6 +190,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --rgb \
 	--const-type=less  $MANUAL_CONST"
+	#echo $PROGRAM $ARGS from /dev/null
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

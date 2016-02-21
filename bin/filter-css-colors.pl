@@ -306,6 +306,7 @@ my %Var = (
 		'isRgbRgba'       => qr{ \A rgb a? \( }xmsi,
 		'isRgbIsh'        => qr{ \A (rgb|hsl) a? \( }xmsi,
 		'isRgbHsl'        => qr{ \A (rgb|hsl)? \( }xmsi,
+		'isRgbHashAlpha'  => qr{ \A rgba \( [a-z$HASH] }xmsi,
 		'rgbAnything'     => qr{ \A rgb \( (.+) \) \z }xmsi,
 		'rgbUnwrap'       => qr{ \A ( (?:rgb|hsl) a \( ) (.+) ( , \s* [0-9\.]+ \) ) \z }xmsi,
 		'rgbaRgbUnwrap'   => qr{ ( rgba \( ) \s* rgb \( \s* ( \d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%? ) \s* \) \s* ( , \s* [0-9\.]+ \s* \) ) }xms,
@@ -406,7 +407,7 @@ sub main
 # NO TEST CASE
 sub summary
 {
-	showAutoContants();
+	showAutoConstants();
 }
 
 ####################################
@@ -544,26 +545,34 @@ sub showConstantsTable
 	debug("constants: " . Dumper($Var{'rhConstantsMap'}), 2);
 	debug("colors" . Dumper($Var{'rhColorConstantsMap'}), 2);
 
-	print "// Color constant definitions:\n";
+	my $mode = opt('rgb') ? 'RGB color' : '#color';
+	print "// $mode constant definitions:\n";
 	foreach my $color (sort(keys(%{$Var{'rhColorConstantsMap'}})))
 	{
+		my $printed = 0;
 		foreach my $const (sort(@{$Var{'rhColorConstantsMap'}{$color}}))
 		{
 			my $print = 1;
-			if ($color !~ $Var{'regex'}{'isRgbIsh'})
+			if ($color =~ $Var{'regex'}{'isRgbHashAlpha'})
 			{
-				# if color is name or #color suppress print #color if rgb mode
-				$print = 0 if opt('rgb') && $color =~ $Var{'regex'}{'isHashColor'};
+				$print = 0 if opt('rgb');
 			}
-			else
+			elsif ($color =~ $Var{'regex'}{'isRgbIsh'})
 			{
-				# if color is rgba? or hsla? suppress print rgb if not rgb mode
-				$print = 0 if !opt('rgb') && $color =~ $Var{'regex'}{'isRgb'};
+				$print = 0 unless opt('rgb');
 			}
-			$color = userRenameColorValid($color);
-			print "$const: $color;\n" if $print;
+			elsif ($color =~ $Var{'regex'}{'isHashColor'})
+			{
+				$print = 0 if opt('rgb');
+			}
+			if ($print)
+			{
+				$color = userRenameColorValid($color);
+				print "$const: $color;\n"
+			}
+			$printed += $print;
 		}
-		print "\n";
+		print "\n" if $printed;
 	}
 }
 
@@ -629,13 +638,16 @@ sub processEntireFile
 # methods used by summary
 
 # NO TEST CASE
-sub showAutoContants
+sub showAutoConstants
 {
 	debug("showAutoConstants()", 1);
 	my $out = opt('const-pull');
 	my $bValidOnly = 1;
 	if ($out)
 	{
+		debug("showAutoConstants() raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
+		debug("showAutoConstants() rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
+		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
 		my $fh;
 		if ($out eq '-')
 		{
@@ -647,11 +659,9 @@ sub showAutoContants
 			debug("showAutoConstants() $out", 2);
 			open($fh, '>>', $out);
 		}
-		debug("showAutoConstants() raAutoConstants" . Dumper($Var{'raAutoConstants'}), 3);
-		debug("showAutoConstants() rhColorConstantsMap" . Dumper($Var{'rhColorConstantsMap'}), 3);
-		debug("showAutoConstants() rhConstantsMap" . Dumper($Var{'rhConstantsMap'}), 3);
 		foreach my $color (@{$Var{'raAutoConstants'}})
 		{
+			# TODO selectively show #color or rgb based on opt rgb
 			debug("showAutoConstants() color $color", 3);
 			my $const = lookupColorConstantsMap($color)->[0];
 			debug("showAutoConstants() const $const", 3);
@@ -2649,20 +2659,20 @@ sub testUserUniqueColor
 {
 	my $count = 1;
 	my @UserUniqueColorTests = (
-		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red', 
-		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white', 
-		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white', 
-		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white', 
-		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white', 
-		'rgba( 255 , 255 , 255 , 1.0 ):white', 
-		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white', 
-		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent', 
-		'rgba(255,255,255,0.0):transparent', 
-		'rgba(100%,100%,100%,0.0):transparent', 
-		'rgba( 255 , 255 , 255 , 0.0 ):transparent', 
-		'rgba( 100% , 100% , 100% , 0.0 ):transparent', 
-		'hsla(0,100%,100%,0.0):transparent', 
-		'hsla( 0 , 100% , 100% , 0.0 ):transparent', 
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
+		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white',
+		'rgba( 255 , 255 , 255 , 1.0 ):white',
+		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
+		'rgba(255,255,255,0.0):transparent',
+		'rgba(100%,100%,100%,0.0):transparent',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
+		'hsla(0,100%,100%,0.0):transparent',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
 		'rgba(255,255,255,0.5):rgba(red(white), green(white), blue(white), 0.5)',
 		'rgba(100%,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
 		'rgba( 255 , 255 , 255 , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
@@ -2675,8 +2685,8 @@ sub testUserUniqueColor
 		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
 		'hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
 		'hsla( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)', 
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)', 
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
 
 	setOpt('canonical', 1);

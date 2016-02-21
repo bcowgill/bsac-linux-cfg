@@ -1,7 +1,4 @@
-// Color constant definitions:
-
-
-
+// RGB color constant definitions:
 @border: black;
 @fg: black;
 
