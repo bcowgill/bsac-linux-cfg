@@ -316,7 +316,7 @@ my %Var = (
 		'rgba'            => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xmsi,
 		'hslToRgb'        => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xmsi,
 		'rgbaCanon'       => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
-		'rgbaValid'       => qr{ \A rgba \( \s* red\( [^\)]+ \) \s* , \s* green\( [^\)]+ \) \s* , \s* blue\( [^\)]+ \) \s* , \s* ([^,]+) \s* \) }xmsi,
+		'rgbaValid'       => qr{ \A rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( ([^\)]+) \) \s* , \s* blue\( ([^\)]+) \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaInvalid'     => qr{ (?:rgb|hsl)a \( \s* ([^,]+) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaRedGreenBlue' => qr{ rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( \1 \) \s* , \s* blue\( \1 \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'hslInvalid'      => qr{ \A hsla \( \s* (\w+| $HASH [0-9a-f]{3,6}) }xmsi,
@@ -857,6 +857,7 @@ sub lookupColorConstantsMap
 sub userRenameColorValid
 {
 	my ($color) = @ARG;
+	debug("userRenameColorValid($color)", 2);
 	my $bValidOnly = 1;
 	my $bAlways = 1;
 	return rgbRedGreenBlueFromRgba(trace('111',
@@ -1157,6 +1158,7 @@ sub userRenameColor
 sub userColorNames
 {
 	my ($color) = @ARG;
+	debug("userColorNames($color)", 2);
 	if (opt('names'))
 	{
 		$color = colorNames($color, opt('valid-only'));
@@ -1170,6 +1172,19 @@ sub colorNames
 	my ($color, $bValidOnly) = @ARG;
 	debug("colorNames($color, @{[$bValidOnly || 0]})", 2);
 #	debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 0.4)';
+
+	# handle the special case rgba(red(#color)..., opacity)
+	if ($color =~ $Var{'regex'}{'rgbaValid'})
+	{
+		$color =~ s{ $Var{'regex'}{'rgbaValid'} }{
+			'rgba(red(' . colorNames($1)
+			. '), green(' . colorNames($2)
+			. '), blue(' . colorNames($3)
+			. '), ' . toOpacity($4)
+			. ')'
+		}xmse;
+		return $color;
+	}
 
 	$color = opaqueOrTransparent($color);
 	debug("colorNames() 1 $color", 4);
@@ -1853,12 +1868,14 @@ sub tests
 		# rgb/hsl
 		'rgb(255,255,255)', 'rgb(100%,100%,100%)',
 		'rgb( 255 , 255 , 255 )', 'rgb( 100% , 100% , 100% )',
+		'rgb(1%,212,41%)', 'rgb(1%,20%,41%)',
 
 		'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
 
 		# full opacity
 		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
 		'rgba( 255 , 255 , 255 , 1.0 )', 'rgba( 100% , 100% , 100% , 1.0 )',
+		'rgba(1%,212,41%,1.0)', 'rgba(1%,20%,41%,1.0)',
 		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )',
 
 		# full transparency
@@ -1871,6 +1888,7 @@ sub tests
 
 		'rgba(255,255,255,0.5)', 'rgba(100%,100%,100%,0.5)',
 		'rgba( 255 , 255 , 255 , 0.5 )', 'rgba( 100% , 100% , 100% , 0.5 )',
+		'rgba(1%,212,41%,0.2)', 'rgba(1%,20%,41%,0.2)',
 		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
 
 		# invalid CSS
@@ -1879,6 +1897,7 @@ sub tests
 		'hsla(white,0.5)', 'hsla( #fAfBfC , 0.5 )',
 
 		# Valid Less
+		'rgba(red(@color1), green(@color), blue(@color), 0.5)',
 		'rgba(red(@color),green(@color),blue(@color),0.5)',
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
 	);
@@ -1919,7 +1938,7 @@ sub testUserCanonicalFromRgbValid
 		'rgb(1%,20%,41%):#033369',
 		'rgba(1%,212,41%,1.0):#03d469',
 		'rgba(1%,20%,41%,1.0):#033369',
-		'rgba(1%,212,41%,0.2):rgba(3, 212, 105, 0.2)', # or red(),green(),blue()
+		'rgba(1%,212,41%,0.2):rgba(3, 212, 105, 0.2)',
 		'rgba(1%,20%,41%,0.2):rgba(3, 51, 105, 0.2)',
 		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
 		'rgb( 100% , 100% , 100% ):#ffffff',
