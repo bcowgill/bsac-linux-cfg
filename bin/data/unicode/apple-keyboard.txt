@@ -1,0 +1,24 @@
+unicode,code pt,entity hex,entity name,key name
+⌘,U+2318,&#x2318;,,command
+⇧,U+21E7,&#x21e7;,,shift
+⌥,U+2325,&#x2325;,,option
+⌃,U+2303,&#x2303;,,control
+↩,U+21A9,&#x21a9;,&hookleftarrow;,return
+⌤,U+2324,&#x2324;,,enter
+⌫,U+232B,&#x232b;,,delete
+⌦,U+2326,&#x2326;,,forward delete
+⌧,U+2327,&#x2327;,,clear
+⇥,U+21E5,&#x21e5;,&rarrb;,tab
+⇤,U+21E4,&#x21e4;,&larrb;,backtab
+␣,U+2423,&#x2423;,&blank;,space
+⎋,U+238B,&#x238b;,,escape
+⇪,U+21EA,&#x21ea;,,caps lock
+⏏,U+23CF,&#x23cf;,,eject
+⇞,U+21DE,&#x21de;,,page up
+⇟,U+21DF,&#x21df;,,page down
+↖,U+2196,&#x2196;,&UpperLeftArrow;,home
+↘,U+2198,&#x2198;,&LowerRightArrow;,end
+←,U+2190,&#x2190;,&larr;,left
+→,U+2192,&#x2192;,&rarr;,right
+↑,U+2191,&#x2191;,&uarr;,up
+↓,U+2193,&#x2193;,&darr;,down
