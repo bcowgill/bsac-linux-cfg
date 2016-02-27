@@ -25,7 +25,7 @@ do
 	echo " "
 	echo $dir ======================================================
 	pushd $dir > /dev/null
-		git grep -E '(describe|it).(skip|only)' | grep -v 'test-runner-template'
+		git grep -E '(describe|it).(skip|only)' | grep -v 'test-runner-template.js' | grep -v 'test-main.js'
 
 	perl -ne '
 		if (m{notTestPlans \s* = \s*}xms) {
