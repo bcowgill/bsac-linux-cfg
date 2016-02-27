@@ -436,7 +436,6 @@ sub readColorNameData
 			$Var{'rhColorNamesMap'}{$color} = $name;
 
 			$Var{'rhColorNamesMap'}{"rgb($rgb)"} = $name;
-			# TODO also add hsl version of color?
 			$Var{'rhColorNamesMap'}{$rgb} = $name;
 		}
 	}
@@ -1541,16 +1540,80 @@ sub percentTo255
 	return int(0.5 + (255 * $val / 100));
 }
 
+# return the closest named colors to a specific #color value
+# will look in the standard HTML color names as well as any defiend constants
+# HAS TEST CASE
+sub getClosestColors
+{
+	my ($color) = @ARG;
+
+	debug("getClosestColors($color)", 2);
+	my $THRESHOLD = 0.1;
+	my @ClosestColors = ();
+
+	foreach my $namedColor (keys(%{$Var{'rhColorNamesMap'}})) {
+		next unless $namedColor =~ $Var{'regex'}{'bytesColor'};
+		my $name = $Var{'rhColorNamesMap'}{$namedColor};
+		my $closeness = colorCloseness($color, $namedColor);
+		debug("getClosestColors $namedColor $name $closeness", 3);
+		next unless $closeness <= $THRESHOLD;
+		push(@ClosestColors, [$name, $closeness]);
+	}
+
+	# now look through defined variables to see how close we are
+
+	my @Sorted = sort sortByCloseness @ClosestColors;
+	return @Sorted[0 .. min(2, scalar(@Sorted - 1))];
+}
+
+# NO TEST CASE
+sub min
+{
+	my ($min, @vars) = @_;
+	for my $value (@vars) {
+		$min = $value if $value < $min;
+	}
+	return $min;
+}
+
+# NO TEST CASE
+sub max
+{
+	my ($max, @vars) = @_;
+	for my $value (@vars) {
+		$max = $value if $value > $max;
+	}
+	return $max;
+}
+
+# NO TEST CASE
+sub sortByCloseness
+{
+	debug("sortByCloseness(@{[Dumper($a)]}, @{[Dumper($b)]})", 8);
+	return $a->[1] <=> $b->[1];
+}
+
+# HAS TEST CASE
+sub colorCloseness
+{
+	my ($color1, $color2) = @ARG;
+	my $raVector1 = vectorFromRgb(rgbFromHashColor($color1));
+	my $raVector2 = vectorFromRgb(rgbFromHashColor($color2));
+	return vectorCloseness($raVector1, $raVector2);
+}
+
 # vector functions for checking how close two colors are
 # HAS INDIRECT TEST CASE
-sub vectorColor {
+sub vectorColor
+{
 	my ($red, $green, $blue) = @ARG;
 	my $raVector = [256 + $red, 256 + $green, 256 + $blue];
 	return $raVector;
 }
 
 # HAS INDIRECT TEST CASE
-sub vectorMagnitude {
+sub vectorMagnitude
+{
 	my ($raVector) = @ARG;
 	my $magnitude = 0;
 	for (my $idx = 0; $idx < scalar(@$raVector); ++$idx)
@@ -1561,7 +1624,8 @@ sub vectorMagnitude {
 }
 
 # HAS INDIRECT TEST CASE
-sub vectorSubtract {
+sub vectorSubtract
+{
 	my ($raVector1, $raVector2) = @ARG;
 	my $raDifference = [];
 	for (my $idx = 0; $idx < scalar(@$raVector1); ++$idx)
@@ -1572,7 +1636,8 @@ sub vectorSubtract {
 }
 
 # HAS INDIRECT TEST CASE
-sub vectorCloseness {
+sub vectorCloseness
+{
 	my ($raVector1, $raVector2) = @ARG;
 	my $magnitude = vectorMagnitude($raVector1);
 	my $raDifference = vectorSubtract($raVector1, $raVector2);
@@ -1580,20 +1645,13 @@ sub vectorCloseness {
 }
 
 # HAS INDIRECT TEST CASE
-sub vectorFromRgb {
+sub vectorFromRgb
+{
 	my ($rgb) = @ARG;
 	$rgb =~ s{rgb\(}{}xmsg;
 	$rgb =~ s{\)}{}xmsg;
 	my @Vector = split(',', $rgb);
 	return \@Vector;
-}
-
-# HAS TEST CASE
-sub colorCloseness {
-	my ($color1, $color2) = @ARG;
-	my $raVector1 = vectorFromRgb(rgbFromHashColor($color1));
-	my $raVector2 = vectorFromRgb(rgbFromHashColor($color2));
-	return vectorCloseness($raVector1, $raVector2);
 }
 
 # convert a hsl triplet to an rgb triplet
@@ -1841,6 +1899,7 @@ sub tests
 	testUserRenameColorNamesCanonicalAllowInvalid();
 	testUserRenameColorNamesCanonical();
 	testUserRenameColorValid();
+	testGetClosestColors();
 
 	# unittestcall
 
@@ -2566,26 +2625,32 @@ sub testNiceNameColor
 		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white',
 		'rgba( 255 , 255 , 255 , 1.0 ):white',
 		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white',
-		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
-		'rgba(255,255,255,0.0):transparent',
-		'rgba(100%,100%,100%,0.0):transparent',
-		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
-		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
-		'hsla(0,100%,100%,0.0):transparent',
-		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
-		'rgba(255,255,255,0.5):rgba(white, 0.5)',
-		'rgba(100%,100%,100%,0.5):rgba(white, 0.5)',
-		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)',
-		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)',
-		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
-		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
-		'rgba(white,0.5):rgba(white, 0.5)', 'rgba(#fAfBfC,0.5):rgba(250, 251, 252, 0.5)',
-		'rgba( white , 0.5 ):rgba(white, 0.5)',
-		'rgba( #fAfBfC , 0.5 ):rgba(250, 251, 252, 0.5)',
-		'hsla(white,0.5):rgba(white, 0.5)',
-		'hsla( #fAfBfC , 0.5 ):rgba(250, 251, 252, 0.5)',
-		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5)',
-		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent white',
+		'rgba(255,255,255,0.0):transparent white',
+		'rgba(100%,100%,100%,0.0):transparent white',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent white',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent white',
+		'hsla(0,100%,100%,0.0):transparent white',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent white',
+		'rgba(255,255,255,0.24):a touch of white',
+		'rgba(255,255,255,0.25):partially white',
+		'rgba(255,255,255,0.49):partially white',
+		'rgba(255,255,255,0.50):tinted white',
+		'rgba(255,255,255,0.74):tinted white',
+		'rgba(255,255,255,0.75):mostly white',
+		'rgba(255,255,255,0.99):mostly white',
+		'rgba(100%,100%,100%,0.5):tinted white',
+		'rgba( 255 , 255 , 255 , 0.5 ):tinted white',
+		'rgba( 100% , 100% , 100% , 0.5 ):tinted white',
+		'hsla(0,100%,100%,0.5):tinted white',
+		'hsla( 0 , 100% , 100% , 0.5 ):tinted white',
+		'rgba(white,0.5):tinted white', 'rgba(#fAfBfC,0.5):tinted white',
+		'rgba( white , 0.5 ):tinted white',
+		'rgba( #fAfBfC , 0.5 ):tinted rgb(250, 251, 252)',
+		'hsla(white,0.5):tinted white',
+		'hsla( #fAfBfC , 0.5 ):tinted rgb(250, 251, 252)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):tinted @color',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):tinted @color',
 	);
 
 	#setOpt('debug', 4);
@@ -2672,6 +2737,29 @@ sub testColorCloseness
 		my $result = int(100 * colorCloseness($color1, $color2));
 
 		is($result, $expect, $count++ . ") colorCloseness $color1,$color2 -> $expect");
+	}
+}
+
+sub testGetClosestColors
+{
+	my $count = 1;
+	my @GetClosestColorsTests = (
+		'#feffff:white/0.0022,snow/0.0161,ghostwhite/0.0209',
+		'#DfB787:burlywood/0.0044,tan/0.0447',
+		'#B6860c:darkgoldenrod/0.0098',
+		'#123456:@variable/0.01'
+	);
+
+	#setOpt('debug', 4);
+
+	foreach my $closenessResult (@GetClosestColorsTests)
+	{
+		my ($color, $expect) = split(/:/, $closenessResult);
+		$expect = $expect || $color;
+
+		my $result = join(",", map { $ARG->[0] . '/' . (int(10000 * $ARG->[1]) / 10000) } getClosestColors($color));
+
+		is($result, $expect, $count++ . ") getClosestColors $color -> $expect");
 	}
 }
 
