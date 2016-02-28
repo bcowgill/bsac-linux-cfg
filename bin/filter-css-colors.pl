@@ -230,6 +230,7 @@ our $TEST_CASES = 625;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
+our $CLOSE_THRESHOLD = 0.1;
 
 # Big hash of vars and constants for the program
 my %Var = (
@@ -313,7 +314,8 @@ my %Var = (
 		'rgbAnything'     => qr{ \A rgb \( (.+) \) \z }xmsi,
 		'rgbUnwrap'       => qr{ \A ( (?:rgb|hsl) a \( ) (.+) ( , \s* [0-9\.]+ \) ) \z }xmsi,
 		'rgbaRgbUnwrap'   => qr{ ( rgba \( ) \s* rgb \( \s* ( \d+ \%? \s* , \s* \d+ \%? \s* , \s* \d+ \%? ) \s* \) \s* ( , \s* [0-9\.]+ \s* \) ) }xms,
-		'transparent'     => qr{ (rgb|hsl) a \( [^\)]+? , \s* [0\.]+ \s* \) }xmsi,
+		'rgbAlphaUnwrap'  => qr{ \A (rgb|hsl) a \( (.+) , \s* ([0-9\.]+) \s* \) \z }xmsi,
+		'transparent'     => qr{ (rgb|hsl) a \( ([^\)]+?) , \s* [0\.]+ \s* \) }xmsi,
 		'opaque'          => qr{ (rgb|hsl) a ( \( [^\)]+ ) , \s* 0*[1-9]\d*(\.0*)? \s* \) }xmsi,
 		'rgbCanon'        => qr{ rgb     \( \s* ( \d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?)    \s* \) }xmsi,
 		'rgba'            => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xmsi,
@@ -928,7 +930,7 @@ sub doReplaceLine
 # methods used by methods in summary (in showAutoConstants)
 
 # get the nicest name for a color possible. i.e. white
-# or rgba(white, 0.3) for opacity
+# or rgba(white, 0.3) for partial opacity
 # or ~white for something close to white
 # or transparent red, partially red, tinted red, mostly red for rgba values
 # HAS TEST CASE
@@ -937,16 +939,18 @@ sub niceNameColor
 	my ($color) = @ARG;
 	debug("\nniceNameColor($color)", 1);
 	my $bValidOnly = 1;
-	return rgbFromHashColor(
+	my ($adjective, $name);
+	($color, $adjective) = alphaColorName($color);
+	$color = rgbFromHashColor(
 		colorNames(
 			hashColorStandard(
-				toHashColor(
-					opaqueOrTransparent($color)
-				)
+				toHashColor($color)
 			),
 			!$bValidOnly
 		)
 	);
+	$name = $adjective ? "$adjective $color" : $color;
+	return $name;
 }
 
 ####################################
@@ -1156,14 +1160,14 @@ sub colorNames
 	debug("colorNames($color, @{[$bValidOnly || 0]})", 2);
 #	debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 0.4)';
 
-	# handle the special case rgba(red(#color)..., opacity)
+	# handle the special case rgba(red(#color)..., alpha)
 	if ($color =~ $Var{'regex'}{'rgbaValid'})
 	{
 		$color =~ s{ $Var{'regex'}{'rgbaValid'} }{
 			'rgba(red(' . colorNames($1)
 			. '), green(' . colorNames($2)
 			. '), blue(' . colorNames($3)
-			. '), ' . toOpacity($4)
+			. '), ' . toAlpha($4)
 			. ')'
 		}xmse;
 		return $color;
@@ -1183,7 +1187,7 @@ sub colorNames
 	$color = $Var{'rhColorNamesMap'}{trim($rgb)} || $color;
 	debug("colorNames() 4 rgb anything $color", 4);
 
-	# handle the special case rgba(#color, opacity)
+	# handle the special case rgba(#color, alpha)
 	if ($rgb =~ s{ $Var{'regex'}{'rgbUnwrap'} }{$2}xms)
 	{
 		my ($prefix, $postfix) = ($1, $3);
@@ -1242,6 +1246,61 @@ sub opaqueOrTransparent
 	debug("opaqueOrTransparent() 2 $color", 4);
 
 	return $color;
+}
+
+# NO TEST CASE
+sub alphaColorName
+{
+	my ($color) = @ARG;
+
+	debug("alphaColorName($color)", 2);
+
+	my $adjective = '';
+	$color = rgbInvalidFromRedGreenBlue($color);
+	my $isRgbInvalid = $color =~ $Var{'regex'}{'rgbaInvalid'};
+	$color =~ s{
+			$Var{'regex'}{'rgbAlphaUnwrap'}
+		}{
+			$color = trim($2);
+			$adjective = alphaNiceName($3);
+			$isRgbInvalid ? $color : qq{$1($color)}
+		}xmseg;
+	debug("alphaColorName() 1 $adjective $color", 4);
+
+	return ($color, $adjective);
+}
+
+# HAS INDIRECT TEST CASE
+sub alphaNiceName
+{
+	my ($alpha) = @ARG;
+
+	my $name = '';
+	$alpha = 0.0 + $alpha;
+	debug("alphaNiceName($alpha)", 4);
+
+	if ($alpha == 0)
+	{
+		$name = 'transparent';
+	}
+	elsif ($alpha < 0.25)
+	{
+		$name = 'a touch of';
+	}
+	elsif ($alpha < 0.5)
+	{
+		$name = 'partially';
+	}
+	elsif ($alpha < 0.75)
+	{
+		$name = 'tinted';
+	}
+	elsif ($alpha < 1.0)
+	{
+		$name = 'mostly';
+	}
+
+	return $name;
 }
 
 # convert #color value to rgb(R,G,B) format based on command line options
@@ -1360,7 +1419,7 @@ sub defineAutoConstant
 }
 
 # fix comma spacing in rgb/hsl colors
-# fix opacity value to a normal form
+# fix alpha value to a normal form
 # NO TEST CASE
 sub formatRgbIshColor
 {
@@ -1368,7 +1427,7 @@ sub formatRgbIshColor
 	if ($color =~ $Var{'regex'}{'isRgbIsh'})
 	{
 		$color = commas(trim($color));
-		$color =~ s{(,) ([^,]+) (\)) \z}{"$1 " . toOpacity($2) . $3}xmse;
+		$color =~ s{(,) ([^,]+) (\)) \z}{"$1 " . toAlpha($2) . $3}xmse;
 
 	}
 	return $color;
@@ -1383,7 +1442,7 @@ sub rgbRedGreenBlueFromRgba
 	if ($rgba !~ m{ $Var{'regex'}{'rgbaValid'} }xms)
 	{
 		$rgba =~ s{ $Var{'regex'}{'rgbaInvalid'} }{
-			my $alpha = toOpacity($2);
+			my $alpha = toAlpha($2);
 			qq{rgba(red($1), green($1), blue($1), $alpha)};
 		}xmse;
 	}
@@ -1396,7 +1455,7 @@ sub rgbInvalidFromRedGreenBlue
 {
 	my ($rgba) = @ARG;
 	$rgba =~ s{ $Var{'regex'}{'rgbaRedGreenBlue'} }{
-		my $alpha = toOpacity($2);
+		my $alpha = toAlpha($2);
 		qq{rgba($1, $alpha)};
 	}xmse;
 	return $rgba;
@@ -1466,7 +1525,7 @@ sub getBothColorValues
 # get rgb value from percentage or hsl
 # 100%,100%,100% becomes 255,255,255
 # hsla?(h,s%,l%) becomes rgba?(r,g,b)
-# hsla(#color, opacity) becomes rgba(#color, opacity) if option --novalid-only
+# hsla(#color, alpha) becomes rgba(#color, alpha) if option --novalid-only
 # HAS TEST CASE
 sub rgbFromHslOrPercent
 {
@@ -1511,10 +1570,10 @@ sub toHex
 	return sprintf("%02x", replacePercent($val));
 }
 
-# convert an opacity value to canonical form
+# convert an alpha value to canonical form
 # i.e. 0001.23 would be 1.23
 # NO TEST CASE
-sub toOpacity
+sub toAlpha
 {
 	my ($val) = @ARG;
 
@@ -1548,7 +1607,6 @@ sub getClosestColors
 	my ($color) = @ARG;
 
 	debug("getClosestColors($color)", 2);
-	my $THRESHOLD = 0.1;
 	my @ClosestColors = ();
 
 	foreach my $namedColor (keys(%{$Var{'rhColorNamesMap'}})) {
@@ -1556,7 +1614,7 @@ sub getClosestColors
 		my $name = $Var{'rhColorNamesMap'}{$namedColor};
 		my $closeness = colorCloseness($color, $namedColor);
 		debug("getClosestColors $namedColor $name $closeness", 3);
-		next unless $closeness <= $THRESHOLD;
+		next unless $closeness <= $CLOSE_THRESHOLD;
 		push(@ClosestColors, [$name, $closeness]);
 	}
 
@@ -1564,6 +1622,29 @@ sub getClosestColors
 
 	my @Sorted = sort sortByCloseness @ClosestColors;
 	return @Sorted[0 .. min(2, scalar(@Sorted - 1))];
+}
+
+# NO TEST CASE
+sub niceNameClosestColors
+{
+	my ($color) = @ARG;
+
+	my @ClosestColors = getClosestColors($color);
+	if (scalar(@ClosestColors)) {
+		$color = join(",", map { tildeCloseness($ARG->[1]) . $ARG->[0] } @ClosestColors);
+	}
+	return $color;
+}
+
+# NO TEST CASE
+sub tildeCloseness
+{
+	my ($closeness) = @ARG;
+
+	my $tildes = "~";
+	$tildes .= "~" if $closeness < $CLOSE_THRESHOLD / 2;
+	$tildes .= "~" if $closeness < $CLOSE_THRESHOLD / 4;
+	return $tildes;
 }
 
 # NO TEST CASE
@@ -1900,6 +1981,7 @@ sub tests
 	testUserRenameColorNamesCanonical();
 	testUserRenameColorValid();
 	testGetClosestColors();
+	testNiceNameClosestColors();
 
 	# unittestcall
 
@@ -2644,13 +2726,14 @@ sub testNiceNameColor
 		'rgba( 100% , 100% , 100% , 0.5 ):tinted white',
 		'hsla(0,100%,100%,0.5):tinted white',
 		'hsla( 0 , 100% , 100% , 0.5 ):tinted white',
-		'rgba(white,0.5):tinted white', 'rgba(#fAfBfC,0.5):tinted white',
+		'rgba(white,0.5):tinted white', 'rgba(#fAfBfC,0.5):tinted rgb(250, 251, 252)',
 		'rgba( white , 0.5 ):tinted white',
 		'rgba( #fAfBfC , 0.5 ):tinted rgb(250, 251, 252)',
 		'hsla(white,0.5):tinted white',
 		'hsla( #fAfBfC , 0.5 ):tinted rgb(250, 251, 252)',
 		'rgba(red(@color),green(@color),blue(@color),0.5):tinted @color',
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):tinted @color',
+		'rgba(#DfB787,0.74):tinted ~burlywood,tan',
 	);
 
 	#setOpt('debug', 4);
@@ -2760,6 +2843,29 @@ sub testGetClosestColors
 		my $result = join(",", map { $ARG->[0] . '/' . (int(10000 * $ARG->[1]) / 10000) } getClosestColors($color));
 
 		is($result, $expect, $count++ . ") getClosestColors $color -> $expect");
+	}
+}
+
+sub testNiceNameClosestColors
+{
+	my $count = 1;
+	my @GetNiceNameClosestColorsTests = (
+		'#feffff:~~~white,~~~snow,~~~ghostwhite',
+		'#DfB787:~~~burlywood,~~tan',
+		'#B6860c:~~~darkgoldenrod',
+		'#123456:@variable'
+	);
+
+	#setOpt('debug', 4);
+
+	foreach my $closenessResult (@GetNiceNameClosestColorsTests)
+	{
+		my ($color, $expect) = split(/:/, $closenessResult);
+		$expect = $expect || $color;
+
+		my $result = niceNameClosestColors($color);
+
+		is($result, $expect, $count++ . ") niceNameClosestColors $color -> $expect");
 	}
 }
 
