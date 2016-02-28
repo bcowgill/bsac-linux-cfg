@@ -230,7 +230,7 @@ our $TEST_CASES = 625;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
-our $CLOSE_THRESHOLD = 0.1;
+our $CLOSE_THRESHOLD = 0.04;
 
 # Big hash of vars and constants for the program
 my %Var = (
@@ -822,6 +822,15 @@ sub registerConstant
 	return 0;
 }
 
+sub clearConstants
+{
+	debug("clearConstants()" . Dumper($Var{'rhConstantsMap'}), 2);
+	debug("clearConstants()" . Dumper($Var{'rhColorConstantsMap'}), 2);
+
+	$Var{'rhConstantsMap'} = {};
+	$Var{'rhColorConstantsMap'} = {};
+}
+
 # NO TEST CASE
 sub addColorConstantsMap
 {
@@ -872,7 +881,7 @@ sub userRenameColorValid
                     userToHashColor($color, !$bAlways, $bValidOnly)
                 ))
             ))
-        ))
+        ), $bValidOnly)
     ));
 }
 
@@ -1144,11 +1153,11 @@ sub userRenameColor
 # NO TEST CASE
 sub userColorNames
 {
-	my ($color) = @ARG;
+	my ($color, $bValidOnly) = @ARG;
 	debug("userColorNames($color)", 2);
 	if (opt('names'))
 	{
-		$color = colorNames($color, opt('valid-only'));
+		$color = colorNames($color, $bValidOnly || opt('valid-only'));
 	}
 	return $color;
 }
@@ -1203,30 +1212,32 @@ sub colorNames
 	if (!$bValidOnly)
 	{
 		debug("colorNames() 7 allow invalid", 4);
+		$color = niceNameClosestColors($color);
+		debug("colorNames() 8 $color", 4);
 		if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
 			my $match = $1;
 			$rgb = trim(rgbFromHslOrPercent($match));
-			debug("colorNames() 8 $color match=$1 rgb=$rgb", 4);
+			debug("colorNames() 9 $color match=$1 rgb=$rgb", 4);
 			if (exists $Var{'rhColorNamesMap'}{$rgb})
 			{
 				$color = "rgba($Var{'rhColorNamesMap'}{$rgb}$2)";
-				debug("colorNames() 9 $color", 4);
+				debug("colorNames() 10 $color", 4);
 			}
 		}
-		debug("colorNames() 10 $color", 4);
+		debug("colorNames() 11 $color", 4);
 		if ($color =~ m{ $Var{'regex'}{'hsla'} }xms)
 		{
 			$rgb = rgbFromHsl($1, $2, $3);
-			debug("colorNames() 11 hsla $1 $2 $3", 4);
+			debug("colorNames() 12 hsla $1 $2 $3", 4);
 			if (exists $Var{'rhColorNamesMap'}{$rgb})
 			{
 				$color = "rgba($Var{'rhColorNamesMap'}{$rgb}$4)";
-				debug("colorNames() 12 $color", 4);
+				debug("colorNames() 13 $color", 4);
 			}
 		}
 	}
-	debug("colorNames() 13 $color", 4);
+	debug("colorNames() 14 $color", 4);
 	return $color;
 }
 
@@ -1608,6 +1619,7 @@ sub getClosestColors
 
 	debug("getClosestColors($color)", 2);
 	my @ClosestColors = ();
+	return @ClosestColors unless $color =~ m{\A $Var{'regex'}{'bytesColor'} \z}xmsi;
 
 	foreach my $namedColor (keys(%{$Var{'rhColorNamesMap'}})) {
 		next unless $namedColor =~ $Var{'regex'}{'bytesColor'};
@@ -1618,7 +1630,15 @@ sub getClosestColors
 		push(@ClosestColors, [$name, $closeness]);
 	}
 
-	# now look through defined variables to see how close we are
+	foreach my $namedColor (keys(%{$Var{'rhColorConstantsMap'}})) {
+		next unless $namedColor =~ $Var{'regex'}{'bytesColor'};
+		my $name = join(',', @{$Var{'rhColorConstantsMap'}{$namedColor}});
+		$name = "($name)" if scalar(@{$Var{'rhColorConstantsMap'}{$namedColor}}) > 1;
+		my $closeness = colorCloseness($color, $namedColor);
+		debug("getClosestColors $namedColor $name $closeness", 3);
+		next unless $closeness <= $CLOSE_THRESHOLD;
+		push(@ClosestColors, [$name, $closeness]);
+	}
 
 	my @Sorted = sort sortByCloseness @ClosestColors;
 	return @Sorted[0 .. min(2, scalar(@Sorted - 1))];
@@ -1680,6 +1700,7 @@ sub colorCloseness
 	my ($color1, $color2) = @ARG;
 	my $raVector1 = vectorFromRgb(rgbFromHashColor($color1));
 	my $raVector2 = vectorFromRgb(rgbFromHashColor($color2));
+	debug("colorCloseness([@{[join(',', @$raVector1)]}], [@{[join(',', @$raVector2)]}])", 5);
 	return vectorCloseness($raVector1, $raVector2);
 }
 
@@ -1732,7 +1753,7 @@ sub vectorFromRgb
 	$rgb =~ s{rgb\(}{}xmsg;
 	$rgb =~ s{\)}{}xmsg;
 	my @Vector = split(',', $rgb);
-	return \@Vector;
+	return vectorColor(@Vector);
 }
 
 # convert a hsl triplet to an rgb triplet
@@ -1967,8 +1988,10 @@ sub tests
 	testRgbFromHslOrPercentAllowInvalid();
 	testRgbFromHashColor();
 	testGetBothColorValues();
-	testNiceNameColor();
 	testColorCloseness();
+	testGetClosestColors();
+	testNiceNameClosestColors();
+	testNiceNameColor();
 
 	testUserCanonicalFromRgbAllowInvalid();
 	testUserCanonicalFromRgbValid();
@@ -1980,14 +2003,12 @@ sub tests
 	testUserRenameColorNamesCanonicalAllowInvalid();
 	testUserRenameColorNamesCanonical();
 	testUserRenameColorValid();
-	testGetClosestColors();
-	testNiceNameClosestColors();
 
 	# unittestcall
 
 	my @EveryColorFormat = (
 		# #hash or name format
-		'#fFf', '#fFfFfF', '#fAfBfC', 'white', 'red',
+		'#fFf', '#fFfFfF', '#fAfBfC', '#fFcDfB', 'white', 'red',
 
 		# rgb/hsl
 		'rgb(255,255,255)', 'rgb(100%,100%,100%)',
@@ -2512,7 +2533,9 @@ sub testUserRenameColorNamesCanonicalAllowInvalid
 {
 	my $count = 1;
 	my @UserRenameColorNamesCanonicalAllowInvalidTests = (
-		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'#fFf:white', '#fFfFfF:white', '#fFcDfB:#ffcdfb',
+		'#fAfBfC:~~~ghostwhite,~~~snow,~~~mintcream',
+		'white', 'red',
 		'rgb(1%,212,41%):#03d469',
 		'rgb(1%,20%,41%):#033369',
 		'rgba(1%,212,41%,1.0):#03d469',
@@ -2700,7 +2723,9 @@ sub testNiceNameColor
 {
 	my $count = 1;
 	my @NiceNameColorTests = (
-		'#fFf:white', '#fFfFfF:white', '#fAfBfC:rgb(250, 251, 252)', 'white', 'red',
+		'#fFf:white', '#fFfFfF:white',
+		'#00371d:rgb(0, 55, 29)',
+		'#fAfBfC:~~~ghostwhite,~~~snow,~~~mintcream', 'white', 'red',
 		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
 		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
 		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
@@ -2726,17 +2751,18 @@ sub testNiceNameColor
 		'rgba( 100% , 100% , 100% , 0.5 ):tinted white',
 		'hsla(0,100%,100%,0.5):tinted white',
 		'hsla( 0 , 100% , 100% , 0.5 ):tinted white',
-		'rgba(white,0.5):tinted white', 'rgba(#fAfBfC,0.5):tinted rgb(250, 251, 252)',
+		'rgba(white,0.5):tinted white', 'rgba(#fAfBfC,0.5):tinted ~~~ghostwhite,~~~snow,~~~mintcream',
 		'rgba( white , 0.5 ):tinted white',
-		'rgba( #fAfBfC , 0.5 ):tinted rgb(250, 251, 252)',
+		'rgba( #fAfBfC , 0.5 ):tinted ~~~ghostwhite,~~~snow,~~~mintcream',
+		'rgba( #00371d , 0.5 ):tinted rgb(0, 55, 29)',
 		'hsla(white,0.5):tinted white',
-		'hsla( #fAfBfC , 0.5 ):tinted rgb(250, 251, 252)',
+		'hsla( #fAfBfC , 0.5 ):tinted ~~~ghostwhite,~~~snow,~~~mintcream',
 		'rgba(red(@color),green(@color),blue(@color),0.5):tinted @color',
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):tinted @color',
-		'rgba(#DfB787,0.74):tinted ~burlywood,tan',
+		'rgba(#DfB787,0.74):tinted ~~~burlywood,~~tan',
 	);
 
-	#setOpt('debug', 4);
+	setOpt('debug', 4);
 
 	foreach my $colorResult (@NiceNameColorTests)
 	{
@@ -2806,18 +2832,18 @@ sub testColorCloseness
 {
 	my $count = 1;
 	my @ColorClosenessTests = (
-		'#fff:#ff0:57',
-		'#fff:#ffa:19',
+		'#fff:#ff0:2881',
+		'#fff:#ffa:960',
 		'#123456:#123456:0',
-		'#143357:#123456:2',
-		'#fff:#000:100'
+		'#143357:#123456:45',
+		'#fff:#000:4990'
 	);
 
 	foreach my $closenessResult (@ColorClosenessTests)
 	{
 		my ($color1, $color2, $expect) = split(/:/, $closenessResult);
 
-		my $result = int(100 * colorCloseness($color1, $color2));
+		my $result = int(10000 * colorCloseness($color1, $color2));
 
 		is($result, $expect, $count++ . ") colorCloseness $color1,$color2 -> $expect");
 	}
@@ -2827,13 +2853,18 @@ sub testGetClosestColors
 {
 	my $count = 1;
 	my @GetClosestColorsTests = (
-		'#feffff:white/0.0022,snow/0.0161,ghostwhite/0.0209',
-		'#DfB787:burlywood/0.0044,tan/0.0447',
-		'#B6860c:darkgoldenrod/0.0098',
-		'#123456:@variable/0.01'
+		'#feffff:white/0.0011,snow/0.008,ghostwhite/0.0104',
+		'#DfB787:burlywood/0.0018,tan/0.0187',
+		'#B6860c:darkgoldenrod/0.0034',
+		'#123456:@variable/0.0018',
+		'#654321:(@close1,@close2)/0.0017',``
 	);
 
-	#setOpt('debug', 4);
+	#setOpt('debug', 6);
+
+	registerConstant('@variable', '#113456');
+	registerConstant('@close1',   '#654320');
+	registerConstant('@close2',   '#654320');
 
 	foreach my $closenessResult (@GetClosestColorsTests)
 	{
@@ -2844,19 +2875,39 @@ sub testGetClosestColors
 
 		is($result, $expect, $count++ . ") getClosestColors $color -> $expect");
 	}
+
+	clearConstants();
+
+	return;
+	foreach my $red (0 .. 255) {
+		my $RED = 255 - $red;
+		foreach my $green (0 .. 255) {
+			my $GREEN = 255 - $green;
+			foreach my $blue (0 .. 255) {
+				my $BLUE = 255 - $blue;
+				my $color = toHashColor("rgb($RED,$GREEN,$BLUE)");
+				my @ClosestColors = getClosestColors($color);
+				if (0 == scalar(@ClosestColors)) {
+				   print STDERR "far: $color\n" if $color =~ m{\A \# [a-f]+ \z}xmsi;
+				}
+			}
+		}
+	}
 }
 
 sub testNiceNameClosestColors
 {
 	my $count = 1;
 	my @GetNiceNameClosestColorsTests = (
-		'#feffff:~~~white,~~~snow,~~~ghostwhite',
+		'#feffff:~~~white,~~~snow,~~ghostwhite',
 		'#DfB787:~~~burlywood,~~tan',
 		'#B6860c:~~~darkgoldenrod',
-		'#123456:@variable'
+		'#123456:~~~@variable'
 	);
 
 	#setOpt('debug', 4);
+
+	registerConstant('@variable', '#113456');
 
 	foreach my $closenessResult (@GetNiceNameClosestColorsTests)
 	{
@@ -2867,6 +2918,8 @@ sub testNiceNameClosestColors
 
 		is($result, $expect, $count++ . ") niceNameClosestColors $color -> $expect");
 	}
+
+	clearConstants();
 }
 
 # unittestimpl
