@@ -1,6 +1,6 @@
 @autoConstant0: white;
-@autoConstant1: rgba(255, 255, 255, 0.4); // rgba(white, 0.4)
-@autoConstant2: rgba(255, 255, 255, 0.5); // rgba(white, 0.5)
+@autoConstant1: rgba(255, 255, 255, 0.4); // partially white
+@autoConstant2: rgba(255, 255, 255, 0.5); // tinted white
 @autoConstant3: red;
 @autoConstant4: lime;
 @autoConstant5: #007f00; // rgb(0, 127, 0)

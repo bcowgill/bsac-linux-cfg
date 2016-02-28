@@ -22,6 +22,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 	--rgb            negatable. convert colors to rgb() form.
 	--hash           negatable. convert rgb/hsl colors to #color form.
 	--valid-only     negatable. do not perform remappings which are invalid CSS.
+	--valid-pp       negatable. allow remappings which are valid for preprocessors (LESS, SASS).
 	--show-const     negatable. show the table of defined constants.
 	--const-type     specify what type of constants are being used (for less or sass.)
 	--const          multiple. define a custom constant value.
@@ -126,6 +127,14 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
  Do not perform name remappings which are invalid css3
  i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
+ i.e. rgba(1,2,3,0.3) will not become rgba(red(@var),green(@var),blue(@var),0.3)
+
+=item B<--valid-pp> or B<--novalid-pp>
+
+ Allow remappings which are valid for preprocessors like Less and Sass.
+ Implies --novalid-only.
+
+ i.e. rgba(1,2,3,0.3) can become rgba(red(@var),green(@var),blue(@var),0.3)
 
 =item B<--inplace=.suffix>
 
@@ -237,6 +246,7 @@ my %Var = (
 	rhArg => {
 		rhOpt => {
 			'valid-only' => 0,
+			'valid-pp'   => 0,
 			'const-type' => '@', # assumes using less CSS compiler
 			'const-rigid' => 1,  # rigid constant considers - and _ as different in names
 			'const-list' => 0,
@@ -280,7 +290,7 @@ my %Var = (
 			"echo!",
 			"debug|d+",      # incremental keep specifying to increase
 			"trace!",
-			"tests!",        # run the unit tests
+			"tests|d+",      # run the unit tests
 			$STDIO,          # empty string allows - to signify standard in/out as a file
 			"man",           # show manual page only
 		],
@@ -881,7 +891,7 @@ sub userRenameColorValid
                     userToHashColor($color, !$bAlways, $bValidOnly)
                 ))
             ))
-        ), $bValidOnly)
+        ))#, $bValidOnly)
     ));
 }
 
@@ -1170,7 +1180,7 @@ sub colorNames
 #	debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 0.4)';
 
 	# handle the special case rgba(red(#color)..., alpha)
-	if ($color =~ $Var{'regex'}{'rgbaValid'})
+	if ($color =~ $Var{'regex'}{'rgbaValid'} && !$bValidOnly)
 	{
 		$color =~ s{ $Var{'regex'}{'rgbaValid'} }{
 			'rgba(red(' . colorNames($1)
@@ -1212,7 +1222,7 @@ sub colorNames
 	if (!$bValidOnly)
 	{
 		debug("colorNames() 7 allow invalid", 4);
-		$color = niceNameClosestColors($color);
+		#$color = niceNameClosestColors($color);
 		debug("colorNames() 8 $color", 4);
 		if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
@@ -1332,13 +1342,13 @@ sub rgbFromHashColor
 {
 	my ($color) = @ARG;
 
-	debug("rgbFromHashColor($color)", 1);
+	debug("rgbFromHashColor($color)", 5);
 	$color =~ s{
 		$Var{'regex'}{'bytesColor'}
 	}{
 		"rgb(" . hex($1) . ", " . hex($2) . ", " . hex($3) . ")"
 	}xmsgie;
-	debug("rgbFromHashColor 1 $color", 3);
+	debug("rgbFromHashColor 1 $color", 6);
 
 	$color =~ s{
 		$Var{'regex'}{'shortColor'}
@@ -1346,13 +1356,13 @@ sub rgbFromHashColor
 		my ($red, $green, $blue) = (substr($1, 0, 1), substr($1, 1, 1), substr($1, 2, 1));
 		"rgb(" . hex($red . $red) . ", " . hex($green . $green) . ", " . hex($blue . $blue) . ")"
 	}xmsgie;
-	debug("rgbFromHashColor 2 $color", 3);
+	debug("rgbFromHashColor 2 $color", 6);
 
 	$color =~ s{ $Var{'regex'}{'rgbaRgbUnwrap'} }{$1$2$3}xms;
-	debug("rgbFromHashColor 3 $color", 3);
+	debug("rgbFromHashColor 3 $color", 6);
 
 	$color = formatRgbColor($color);
-	debug("rgbFromHashColor 4 $color", 3);
+	debug("rgbFromHashColor 4 $color", 6);
 
 	return $color;
 }
@@ -1625,7 +1635,7 @@ sub getClosestColors
 		next unless $namedColor =~ $Var{'regex'}{'bytesColor'};
 		my $name = $Var{'rhColorNamesMap'}{$namedColor};
 		my $closeness = colorCloseness($color, $namedColor);
-		debug("getClosestColors $namedColor $name $closeness", 3);
+		debug("getClosestColors 1 $namedColor $name $closeness", 5);
 		next unless $closeness <= $CLOSE_THRESHOLD;
 		push(@ClosestColors, [$name, $closeness]);
 	}
@@ -1635,7 +1645,7 @@ sub getClosestColors
 		my $name = join(',', @{$Var{'rhColorConstantsMap'}{$namedColor}});
 		$name = "($name)" if scalar(@{$Var{'rhColorConstantsMap'}{$namedColor}}) > 1;
 		my $closeness = colorCloseness($color, $namedColor);
-		debug("getClosestColors $namedColor $name $closeness", 3);
+		debug("getClosestColors 2 $namedColor $name $closeness", 5);
 		next unless $closeness <= $CLOSE_THRESHOLD;
 		push(@ClosestColors, [$name, $closeness]);
 	}
@@ -1812,11 +1822,16 @@ sub checkOptions
 		push(@$raErrors, "You cannot specify --foreground when using the --color-only option") if hasOpt('foreground');
 		push(@$raErrors, "You cannot specify --background when using the --color-only option") if hasOpt('background');
 	}
+	if (opt('valid-only'))
+	{
+		push(@$raErrors, "You cannot specify --valid-pp when using the --valid-only option") if opt('valid-pp');
+	}
 
 	# Force some flags when others turned on
 	setOpt('canonical', 1) if (!opt('shorten') && (opt('names') || opt('rgb')));
 	setOpt('hash', 1) if (opt('names'));
 	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten') || opt('hash'));
+	setOpt('valid-only', 0) if (opt('valid-pp'));
 
 	if (opt('canonical'))
 	{
@@ -2061,15 +2076,15 @@ sub tests
 	my @Result = ();
 	foreach my $color (@EveryColorFormat)
 	{
-		my @result = trace($color);
+		my @result = colorNames($color, $bValidOnly);
 		my $result = join(':', @result);
 		my $expect = "fail";
 
 		push(@Result, $color eq $result ? qq{$color} : qq{$color:$result});
 
-		is($result, $expect, "userUniqueColor $color -> $expect");
+		is($result, $expect, "colorNames (valid) $color -> $expect");
 	}
-	wrap("\@UserUniqueColorTests", \@Result);
+	wrap("\@ColorNamesValidTests", \@Result);
 	exit 0;
 }
 
@@ -2808,6 +2823,8 @@ sub testUserRenameColorValid
 		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
+
+	setOpt('debug', 4);
 
 	setOpt('canonical', 1);
 	setOpt('hash', 1);
