@@ -19,6 +19,10 @@ var MyClass = BaseClass.extend({
             "prop1"
         ]));
 
+        // listen to all events to see what's going on.
+        this.listenTo(this, 'all', _.bind(function (eventName) {
+            /*dbg:*/ console.log('MUSTDO ' + eventName + ' ' + this._inherits[0], this, arguments);
+        }, this));
     }
 
 });
