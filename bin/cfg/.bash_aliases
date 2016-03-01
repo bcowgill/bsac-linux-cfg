@@ -182,6 +182,7 @@ alias cls=clear
 
 if [ `hostname` == worksharexps-XPS-15-9530 ]; then
    alias gr='grunt --gruntfile Gruntfile.linux.js'
+   alias gpfdi='git push -f origin debug-inheritance'
 fi
 
 if [ `hostname` == slug ]; then
