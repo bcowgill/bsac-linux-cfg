@@ -1,0 +1,24 @@
+# http://pidgin.gruffdavies.com/graphs/120
+# Preview Scroll to Page
+# collaborating classes for preview window change page based on scroll bar
+# FB35017
+
+# collaborating classes for preview window change page based on scroll bar
+ViewportPages from "files-ui"
+ViewportPages operation "getMostSignificantPageInViewport(pages, viewport): Number"
+
+PageDocumentsCollectionView from "files-ui"
+PageDocumentsCollectionView is "Marionette.CollectionView"
+PageDocumentsCollectionView contains ViewportPages
+PageDocumentsCollectionView uses FilePreviewModel
+PageDocumentsCollectionView comment "listens to event scrollToCurrentPage"
+PageDocumentsCollectionView comment "listens to event FilePreviewModel.change:page_number"
+PageDocumentsCollectionView operation "_scrollToCurrentPageFromEvent()"
+
+ContentView from "files-ui"
+ContentView is "Marionette.ItemView"
+ContentView comment "listens to resize.scrollToCurrentPageEvent"
+ContentView comment "triggers scrollToCurrentPage after a time delay"
+
+FilePreviewModel from "files-ui"
+FilePreviewModel is "Backbone.Model"

@@ -1,0 +1,51 @@
+# http://pidgin.gruffdavies.com/graphs/124
+# Grid View to Preview Page Documents
+# mapping of ownership chain from Controls view to PageDocumentsCollectionView
+
+ControlsView extends "Marionette.ItemView"
+ControlsView uses FilePreviewModel
+ControlsView triggers "switchToPageView:before"
+
+FilePreviewModel extends "Backbone.Model"
+FilePreviewModel has optional PositionalCommentController
+
+"switchToPageView:before" is "Backbone.Event"
+
+ToolBarController extends "Marionette.Controller"
+ToolBarController uses FilePreviewModel
+ToolBarController uses FileMembersCollection
+ToolBarController contains ControlsView
+ToolBarController contains PaginationControlsView
+ToolBarController contains DownloadUploadView
+ToolBarController contains SwitchVersionsView
+
+ToolBarView extends "Marionette.Layout"
+ToolBarView uses ToolBarController
+ToolBarView uses FilePreviewModel
+ToolBarView uses SwitchVersionsView
+ToolBarView uses ControlsView
+ToolBarView uses PaginationControlsView
+ToolBarView uses DownloadUploadView
+ToolBarView uses DocumentApprovalController
+ToolBarView contains ToolbarStatusView
+
+FilePreviewController extends "Marionette.Controller"
+FilePreviewController contains FileMembersCollection
+FilePreviewController contains FilePreviewModel
+FilePreviewController contains SideBarController
+FilePreviewController contains ToolBarController
+FilePreviewController contains ContentController
+FilePreviewController has optional PresenceNotificationController
+FilePreviewController contains DocumentApprovalController
+
+PageDocumentsCollectionView extends "Marionette.CollectionView"
+PageDocumentsCollectionView listensTo "switchToPageView:before"
+PageDocumentsCollectionView uses FilePreviewModel
+PageDocumentsCollectionView contains PositionalCommentController
+PageDocumentsCollectionView contains ViewportPages
+PageDocumentsCollectionView contains PageDocumentsCollection
+
+ContentController extends "Marionette.Controller"
+ContentController uses FilePreviewModel
+ContentController creates PageDocumentsCollection
+ContentController creates PageDocumentsCollectionView

@@ -1,0 +1,32 @@
+# http://pidgin.gruffdavies.com/graphs/122
+# User Madness
+# How many User Models do we need?
+
+"core-ui.UserModel" extends "Backbone.Model"
+"core-ui.UserModel" uses "core-ui.AccountModel"
+"core-ui.UserModel" operation "getAccount() core-ui" 
+"getAccount() core-ui" comment "returns JSON if core-ui.AccountModel or account attribute as is"
+
+"new-ui.UserModel" extends "Backbone.Model"
+"new-ui.UserModel" contains "core-ui.AccountModel"
+"new-ui.UserModel" operation "getAccount() new-ui" 
+"getAccount() new-ui" comment "side effect sets account attribute to new core-ui.AccountModel"
+"getAccount() new-ui" comment "returns core-ui.AccountModel"
+
+"core-ui.AccountModel" extends "Backbone.Model"
+
+"new-ui.AccountModel" extends "Backbone.Model"
+
+"SignupController" extends "Marionette.Controller"
+"SignupController" uses "new-ui.AccountModel"
+
+"SubscriptionRouter" extends BaseRouter
+"SubscriptionRouter" creates "core-ui.AccountModel"
+"SubscriptionRouter" uses "SubscriptionView"
+
+"SubscriptionView" uses "core-ui.AccountModel"
+
+Application extends "Marionette.Application"
+"window.app" is Application
+"window.app" contains "core-ui.UserModel"
+
