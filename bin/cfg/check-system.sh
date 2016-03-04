@@ -71,7 +71,7 @@ RUBY_GEMS="sass compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
 # webcollage screensaver pulls from the internet so not safe for work
-SCREENSAVER="kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune"
+SCREENSAVER="workrave kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
