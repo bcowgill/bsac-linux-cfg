@@ -10,7 +10,7 @@ var MyClass = BaseClass.extend({
         // track inheritance for easy debugging
         /*dbg:*/ this._inherits = _.union(this._inherits || [],
         /*dbg:*/    ['MyClass', 'BaseClass', 'MixinClass']);
-        /*dbg:*/ console.log('MUSTDO initialize ' + this._inherits[0]);
+        /*dbg:*/ console.debug('MUSTDO initialize ' + this._inherits[0]);
 
         Super.initialize.apply(this, arguments);
 
@@ -21,7 +21,7 @@ var MyClass = BaseClass.extend({
 
         // listen to all events to see what's going on.
         this.listenTo(this, 'all', _.bind(function (eventName) {
-            /*dbg:*/ console.log('MUSTDO ' + eventName + ' ' + this._inherits[0], this, arguments);
+            /*dbg:*/ console.debug('MUSTDO ' + eventName + ' ' + this._inherits[0], this, arguments);
         }, this));
     }
 
