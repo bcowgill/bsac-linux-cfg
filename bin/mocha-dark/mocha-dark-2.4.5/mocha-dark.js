@@ -319,6 +319,13 @@ Progress.prototype.draw = function(ctx) {
     var text = this._text || (percent | 0) + '%';
     var w = ctx.measureText(text).width;
 
+    try {
+      if (document.getElementsByClassName('mocha-dark').length) {
+        ctx.fillStyle = "yellow"; // BSAC DARK SCHEME
+      }
+    }
+    finally {}
+
     ctx.fillText(text, x - w / 2 + 1, y + fontSize / 2 - 1);
   } catch (err) {
     // don't fail if we can't render progress
@@ -12676,6 +12683,7 @@ mocha.setup = function(opts){
 
 mocha.run = function(fn){
   var options = mocha.options;
+  mocha.initColorScheme(options.colorScheme); /* BSAC */
   mocha.globals('location');
 
   var query = Mocha.utils.parseQuery(global.location.search || '');
@@ -12691,6 +12699,39 @@ mocha.run = function(fn){
     }
     if (fn) fn(err);
   });
+};
+
+/* BSAC */
+mocha.setColorScheme = function (scheme) {
+  var cookieValue, maxAgeInSeconds = (60*60*24*365);
+  try {
+    document.body.className = document.body.className.replace(/\bmocha-[a-z]+\b/g, '');
+    if (scheme) {
+      scheme = scheme.trim();
+      document.body.className += ' ' + scheme;
+      cookieValue = scheme;
+    }
+    else {
+      cookieValue = 'mocha-light';
+    }
+    document.body.className = document.body.className.trim();
+    document.cookie = 'mocha-scheme=' + cookieValue + ';max-age=' + maxAgeInSeconds;
+  }
+  finally {};
+};
+
+/* BSAC */
+mocha.initColorScheme = function (scheme) {
+  try {
+    var mochaScheme = document.cookie.replace(/(?:(?:^|.*;\s*)mocha-scheme\s*\=\s*([^;]*).*$)|^.*$/, "$1").trim();
+    if (mochaScheme) {
+      mocha.setColorScheme(mochaScheme);
+    }
+    else {
+      mocha.setColorScheme(scheme);
+    }
+  }
+  finally {};
 };
 
 /**
