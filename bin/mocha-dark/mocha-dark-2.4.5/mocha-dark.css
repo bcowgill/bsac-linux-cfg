@@ -273,11 +273,9 @@ body.mocha-dark {
   color: #888;
 }
 
-/* BSAC */
-/* any changes needed for dark ??? */
 .mocha-dark #mocha .test a.replay {
-  background: #eee;
-  color: #888;
+  background: black; /* BSAC */
+  color: yellow; /* BSAC */
 }
 
 
@@ -322,11 +320,10 @@ body.mocha-dark {
   z-index: 1;
 }
 
-/* BSAC */
-/* any changes needed for dark ??? */
 .mocha-dark #mocha-stats {
-  color: #888;
+  color: yellow; /* BSAC */
 }
+
 
 #mocha-stats .progress {
   float: right;
@@ -338,7 +335,15 @@ body.mocha-dark {
 }
 
 .mocha-dark #mocha-stats em {
-  color: yellow; /* BSAC */
+  color: white; /* BSAC */
+}
+
+.mocha-dark #mocha-stats .passes em {
+    color: green; /* BSAC */
+}
+
+.mocha-dark #mocha-stats .failures em {
+    color: red; /* BSAC */
 }
 
 #mocha-stats a {
@@ -350,10 +355,8 @@ body.mocha-dark {
   border-bottom: 1px solid #eee;
 }
 
-/* BSAC */
-/* any changes needed for dark ??? */
 .mocha-dark #mocha-stats a:hover {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid yellow; /* BSAC */
 }
 
 #mocha-stats li {
