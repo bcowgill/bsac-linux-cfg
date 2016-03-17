@@ -23,6 +23,12 @@ var MyClass = BaseClass.extend({
         this.listenTo(this, 'all', _.bind(function (eventName) {
             /*dbg:*/ console.debug('MUSTDO ' + eventName + ' ' + this._inherits[0], this, arguments);
         }, this));
+
+        // listen to all attribute changes to see what's going on.
+        this.on('change', _.bind(function (model) {
+            void model;
+            /*dbg:*/ console.debug('MUSTDO ' + this._inherits[0], this, arguments);
+        }));
     }
 
 });
