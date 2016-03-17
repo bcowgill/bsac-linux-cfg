@@ -103,7 +103,7 @@ if [ ${GRUNT:-1} == 1 ]; then
 	killall --wait grunt
 fi
 
-for $log in $LOGS;
+for log in $LOGS;
 do
 	[ -f $log ] && rm $log
 	touch $log
