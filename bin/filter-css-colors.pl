@@ -331,7 +331,7 @@ my %Var = (
 		'rgba'            => qr{ \A rgba \( \s* ( \d+ \%?  \s* , \s*  \d+ \%?  \s* , \s*  \d+ \%? ) ( \s* , \s* [^\)]+ ) \) }xmsi,
 		'hslToRgb'        => qr{ hsl(a?) \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% \s* }xmsi,
 		'rgbaCanon'       => qr{ rgb(a?) \( \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* , \s* (\d+ \%?) \s* }xmsi,
-		'rgbaValid'       => qr{ \A rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( ([^\)]+) \) \s* , \s* blue\( ([^\)]+) \) \s* , \s* ([^,]+) \s* \) }xmsi,
+		'rgbaValidLess'   => qr{ \A rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( ([^\)]+) \) \s* , \s* blue\( ([^\)]+) \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaInvalid'     => qr{ (?:rgb|hsl)a \( \s* ([^,]+) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaRedGreenBlue' => qr{ rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( \1 \) \s* , \s* blue\( \1 \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'hslInvalid'      => qr{ \A hsla \( \s* (\w+| $HASH [0-9a-f]{3,6}) }xmsi,
@@ -680,7 +680,7 @@ sub showAutoConstants
 			debug("showAutoConstants() color $color", 3);
 			my $const = lookupColorConstantsMap($color)->[0];
 			debug("showAutoConstants() const $const", 3);
-			my $comment = niceNameColor($color, !$bValidOnly);
+			my $comment = niceNameColor($color);
 			debug("showAutoConstants() comment $comment", 3);
 			$comment = ($comment eq $color) ? '' : " // $comment";
 			print $fh "$const: $color;$comment\n";
@@ -874,7 +874,7 @@ sub lookupColorConstantsMap
 	return $Var{'rhColorConstantsMap'}{$color} || $Var{'rhColorConstantsMap'}{$rgb};
 }
 
-# rename a color value based on command line options but ensuring valid CSS
+# rename a color value based on command line options but ensuring valid CSS (or Less/Sass if --valid-pp)
 # will make unique version of color based on command line options so that color
 # comparisons will work
 # HAS TEST CASE
@@ -882,16 +882,16 @@ sub userRenameColorValid
 {
 	my ($color) = @ARG;
 	debug("userRenameColorValid($color)", 2);
-	my $bValidOnly = 1;
+	my $bValidLess = 1;
 	my $bAlways = 1;
-	return rgbRedGreenBlueFromRgba(trace('colorNames',
+	return userRgbRedGreenBlueFromRgba(trace('colorNames',
         userColorNames(trace('rgbFromHashColor',
             userRgbFromHashColor(trace('hashColorStd',
                 userHashColorStandard(trace('toHashColor',
-                    userToHashColor($color, !$bAlways, $bValidOnly)
+                    userToHashColor($color, !$bAlways, $bValidLess)
                 ))
             ))
-        ))#, $bValidOnly)
+        ))
     ));
 }
 
@@ -949,7 +949,6 @@ sub doReplaceLine
 # methods used by methods in summary (in showAutoConstants)
 
 # get the nicest name for a color possible. i.e. white
-# or rgba(white, 0.3) for partial opacity
 # or ~white for something close to white
 # or transparent red, partially red, tinted red, mostly red for rgba values
 # HAS TEST CASE
@@ -958,6 +957,8 @@ sub niceNameColor
 	my ($color) = @ARG;
 	debug("\nniceNameColor($color)", 1);
 	my $bValidOnly = 1;
+	my $bValidLess = 1;
+	my $bFindCloseNames = 1;
 	my ($adjective, $name);
 	($color, $adjective) = alphaColorName($color);
 	$color = rgbFromHashColor(
@@ -965,7 +966,7 @@ sub niceNameColor
 			hashColorStandard(
 				toHashColor($color)
 			),
-			!$bValidOnly
+			!$bValidOnly, !$bValidLess, $bFindCloseNames
 		)
 	);
 	$name = $adjective ? "$adjective $color" : $color;
@@ -1101,7 +1102,7 @@ sub substituteConstants
 
 	my $origColor = $color;
 	debug("substituteConstants($color, $line)", 3);
-	$color = lookupConstant(userRenameColor($color));
+	$color = lookupConstant(userRenameColorValid($color));
 	debug("substituteConstants() lookup $color", 3);
 	if (isConst($color))
 	{
@@ -1114,7 +1115,7 @@ sub substituteConstants
 	}
 	else
 	{
-		$color = userRenameColor($origColor);
+		$color = userRenameColorValid($origColor);
 		debug("substituteConstants() nodefine $origColor $color", 3);
 	}
 
@@ -1142,6 +1143,7 @@ sub lookupConstant
 	return $color;
 }
 
+# TODO MAY BE UNNECESSARY NOW
 # rename a color value based on command line options
 # HAS TEST CASE
 sub userRenameColor
@@ -1175,14 +1177,14 @@ sub userColorNames
 # NO TEST CASE
 sub colorNames
 {
-	my ($color, $bValidOnly) = @ARG;
-	debug("colorNames($color, @{[$bValidOnly || 0]})", 2);
+	my ($color, $bValidOnly, $bValidLess, $bFindCloseNames) = @ARG;
+	debug("colorNames($color, @{[$bValidOnly || 0]}, @{[$bValidLess || 0]})", 2);
 #	debug("rhColorNamesMap" . Dumper($Var{'rhColorNamesMap'}, 4)) if $color eq 'rgba(255, 255, 255, 0.4)';
 
 	# handle the special case rgba(red(#color)..., alpha)
-	if ($color =~ $Var{'regex'}{'rgbaValid'} && !$bValidOnly)
+	if ($color =~ $Var{'regex'}{'rgbaValidLess'} && $bValidLess && !$bValidOnly)
 	{
-		$color =~ s{ $Var{'regex'}{'rgbaValid'} }{
+		$color =~ s{ $Var{'regex'}{'rgbaValidLess'} }{
 			'rgba(red(' . colorNames($1)
 			. '), green(' . colorNames($2)
 			. '), blue(' . colorNames($3)
@@ -1222,7 +1224,7 @@ sub colorNames
 	if (!$bValidOnly)
 	{
 		debug("colorNames() 7 allow invalid", 4);
-		#$color = niceNameClosestColors($color);
+		$color = niceNameClosestColors($color) if $bFindCloseNames && !$bValidOnly && !$bValidLess;
 		debug("colorNames() 8 $color", 4);
 		if ($color =~ m{ $Var{'regex'}{'rgba'} }xms)
 		{
@@ -1455,12 +1457,26 @@ sub formatRgbIshColor
 }
 
 # create rgb(red(),green(),blue(),alpha) from a rgba(#color,alpha) string
+# only if valid pre-processor output allowed
+# NO TEST CASE
+sub userRgbRedGreenBlueFromRgba
+{
+	my ($rgba, $bValidLess) = @ARG;
+
+	if ($bValidLess || opt('valid-pp'))
+	{
+		$rgba = rgbRedGreenBlueFromRgba($rgba);
+	}
+	return $rgba;
+}
+
+# create rgb(red(),green(),blue(),alpha) from a rgba(#color,alpha) string
 # NO TEST CASE
 sub rgbRedGreenBlueFromRgba
 {
 	my ($rgba) = @ARG;
 
-	if ($rgba !~ m{ $Var{'regex'}{'rgbaValid'} }xms)
+	if ($rgba !~ m{ $Var{'regex'}{'rgbaValidLess'} }xms)
 	{
 		$rgba =~ s{ $Var{'regex'}{'rgbaInvalid'} }{
 			my $alpha = toAlpha($2);
@@ -2018,6 +2034,7 @@ sub tests
 	testUserRenameColorNamesCanonicalAllowInvalid();
 	testUserRenameColorNamesCanonical();
 	testUserRenameColorValid();
+	testUserRenameColorValidLess();
 
 	# unittestcall
 
@@ -2588,6 +2605,8 @@ sub testUserRenameColorNamesCanonicalAllowInvalid
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
 	);
 
+return; # DEPRECATED FUNCTION
+
 	#setOpt('debug', 5);
 	setOpt('canonical', 1);
 	setOpt('hash', 1);
@@ -2646,6 +2665,7 @@ sub testUserRenameColorNamesCanonical
 		'hsla(white,0.5):hsla(white, 0.5)',
 		'hsla( #fAfBfC , 0.5 ):hsla(#fafbfc, 0.5)',
 	);
+return; # DEPRECATED FUNCTION
 
 	#setOpt('debug', 5);
 	setOpt('canonical', 1);
@@ -2808,13 +2828,13 @@ sub testUserRenameColorValid
 		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
 		'hsla(0,100%,100%,0.0):transparent',
 		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
-		'rgba(255,255,255,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba(100%,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba( 255 , 255 , 255 , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba( 100% , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'hsla(0,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
-		'hsla( 0 , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
-		'rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(255,255,255,0.5):rgba(white, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(white, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(white, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)',
 		'rgba(#fAfBfC,0.5):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
 		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
 		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
@@ -2837,12 +2857,69 @@ sub testUserRenameColorValid
 
 		my $result = userRenameColorValid($color);
 
-		is($result, $expect, $count++ . ") userRenameColorValid $color -> $expect");
+		is($result, $expect, $count++ . ") userRenameColorValid (!valid-pp) $color -> $expect");
 	}
 
 	setOpt('canonical', 0);
 	setOpt('hash', 0);
 	setOpt('names', 0);
+}
+
+sub testUserRenameColorValidLess
+{
+	my $count = 1;
+	my @UserRenameColorValidLessTests = (
+		'#fFf:white', '#fFfFfF:white', '#fAfBfC:#fafbfc', 'white', 'red',
+		'rgb(255,255,255):white', 'rgb(100%,100%,100%):white',
+		'rgb( 255 , 255 , 255 ):white', 'rgb( 100% , 100% , 100% ):white',
+		'hsl(0,100%,100%):white', 'hsl( 0 , 100% , 100% ):white',
+		'rgba(255,255,255,1.0):white', 'rgba(100%,100%,100%,1.0):white',
+		'rgba( 255 , 255 , 255 , 1.0 ):white',
+		'rgba( 100% , 100% , 100% , 1.0 ):white', 'hsla(0,100%,100%,1.0):white',
+		'hsla( 0 , 100% , 100% , 1.0 ):white', 'transparent',
+		'rgba(255,255,255,0.0):transparent',
+		'rgba(100%,100%,100%,0.0):transparent',
+		'rgba( 255 , 255 , 255 , 0.0 ):transparent',
+		'rgba( 100% , 100% , 100% , 0.0 ):transparent',
+		'hsla(0,100%,100%,0.0):transparent',
+		'hsla( 0 , 100% , 100% , 0.0 ):transparent',
+		'rgba(255,255,255,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba(#fAfBfC,0.5):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
+		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
+		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
+		'hsla(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
+		'hsla( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(red(@color), green(@color), blue(@color), 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
+	);
+
+	#setOpt('debug', 4);
+
+	setOpt('canonical', 1);
+	setOpt('hash', 1);
+	setOpt('names', 1);
+	setOpt('valid-pp', 1);
+
+	foreach my $colorResult (@UserRenameColorValidLessTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = userRenameColorValid($color);
+
+		is($result, $expect, $count++ . ") userRenameColorValid (valid-pp) $color -> $expect");
+	}
+
+	setOpt('canonical', 0);
+	setOpt('hash', 0);
+	setOpt('names', 0);
+	setOpt('valid-pp', 0);
 }
 
 sub testColorCloseness
