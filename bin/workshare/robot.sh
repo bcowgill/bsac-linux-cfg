@@ -19,7 +19,7 @@ fi
 
 pushd ~/workspace/projects/qa/FeatureTest/suites/regression
 	export PYTHONPATH=$HOME/projects/qa/FeatureTest/libraries
-	export PATH=$PATH:$PYTHONPATH
+	export PATH=$PATH:$PYTHONPATH:/usr/lib/chromium-browser
 #	echo $PYTHONPATH
 #	echo $PATH
 
