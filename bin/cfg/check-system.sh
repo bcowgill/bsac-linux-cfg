@@ -216,6 +216,7 @@ if /bin/false ; then
 # https://github.com/workshare/qa
 	ROBOT_TEST="pip:python-pip"
 	commands pip, pybot needed
+	sudo apt-get install chromium-chromedriver
 	sudo pip install robotframework==2.8.7
 	sudo pip install robotframework-selenium2library==1.6.0
 	sudo pip install ntplib
