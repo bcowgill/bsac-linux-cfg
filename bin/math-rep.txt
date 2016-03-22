@@ -1,0 +1,61 @@
+𝚿       U+1D6BF [UppercaseLetter]       MATHEMATICAL BOLD CAPITAL PSI
+𝚽       U+1D6BD [UppercaseLetter]       MATHEMATICAL BOLD CAPITAL PHI
+𝚿       U+1D6BF [UppercaseLetter]       MATHEMATICAL BOLD CAPITAL PSI
+𝛁       U+1D6C1 [MathSymbol]            MATHEMATICAL BOLD NABLA
+𝚫       U+1D6AB [UppercaseLetter]       MATHEMATICAL BOLD CAPITAL DELTA
+𝚺       U+1D6BA [UppercaseLetter]       MATHEMATICAL BOLD CAPITAL SIGMA
+𝚯       U+1D6AF [UppercaseLetter]       MATHEMATICAL BOLD CAPITAL THETA
+𝛄       U+1D6C4 [LowercaseLetter]       MATHEMATICAL BOLD SMALL GAMMA
+𝛆       U+1D6C6 [LowercaseLetter]       MATHEMATICAL BOLD SMALL EPSILON
+𝛌       U+1D6CC [LowercaseLetter]       MATHEMATICAL BOLD SMALL LAMDA
+𝛍       U+1D6CD [LowercaseLetter]       MATHEMATICAL BOLD SMALL MU
+𝛑       U+1D6D1 [LowercaseLetter]       MATHEMATICAL BOLD SMALL PI
+𝛒       U+1D6D2 [LowercaseLetter]       MATHEMATICAL BOLD SMALL RHO
+𝛛       U+1D6DB [MathSymbol]            MATHEMATICAL BOLD PARTIAL DIFFERENTIAL
+𝛜       U+1D6DC [LowercaseLetter]       MATHEMATICAL BOLD EPSILON SYMBOL
+𝛟       U+1D6DF [LowercaseLetter]       MATHEMATICAL BOLD PHI SYMBOL
+ᶿ       U+1DBF  [ModifierLetter]        MODIFIER LETTER SMALL THETA
+∫       U+222B  [MathSymbol]            INTEGRAL
+⨯       U+2A2F  [MathSymbol]            VECTOR OR CROSS PRODUCT
+⋅       U+22C5  [MathSymbol]            DOT OPERATOR
+±       U+B1    [MathSymbol]            PLUS-MINUS SIGN
+∑       U+2211  [MathSymbol]            N-ARY SUMMATION
+√       U+221A  [MathSymbol]            SQUARE ROOT
+∛       U+221B  [MathSymbol]            CUBE ROOT
+∜       U+221C  [MathSymbol]            FOURTH ROOT
+≡       U+2261  [MathSymbol]            IDENTICAL TO
+≅       U+2245  [MathSymbol]            APPROXIMATELY EQUAL TO
+≤       U+2264  [MathSymbol]            LESS-THAN OR EQUAL TO
+≥       U+2265  [MathSymbol]            GREATER-THAN OR EQUAL TO
+⁺       U+207A  [MathSymbol]            SUPERSCRIPT PLUS SIGN
+²       U+B2    [OtherNumber]           SUPERSCRIPT TWO
+³       U+B3    [OtherNumber]           SUPERSCRIPT THREE
+¹       U+B9    [OtherNumber]           SUPERSCRIPT ONE
+⁰       U+2070  [OtherNumber]           SUPERSCRIPT ZERO
+ⁱ       U+2071  [ModifierLetter]        SUPERSCRIPT LATIN SMALL LETTER I
+⁴       U+2074  [OtherNumber]           SUPERSCRIPT FOUR
+⁵       U+2075  [OtherNumber]           SUPERSCRIPT FIVE
+⁶       U+2076  [OtherNumber]           SUPERSCRIPT SIX
+⁷       U+2077  [OtherNumber]           SUPERSCRIPT SEVEN
+⁸       U+2078  [OtherNumber]           SUPERSCRIPT EIGHT
+⁹       U+2079  [OtherNumber]           SUPERSCRIPT NINE
+ⁿ       U+207F  [ModifierLetter]        SUPERSCRIPT LATIN SMALL LETTER N
+₀       U+2080  [OtherNumber]           SUBSCRIPT ZERO
+₁       U+2081  [OtherNumber]           SUBSCRIPT ONE
+₂       U+2082  [OtherNumber]           SUBSCRIPT TWO
+₃       U+2083  [OtherNumber]           SUBSCRIPT THREE
+₄       U+2084  [OtherNumber]           SUBSCRIPT FOUR
+₅       U+2085  [OtherNumber]           SUBSCRIPT FIVE
+₆       U+2086  [OtherNumber]           SUBSCRIPT SIX
+₇       U+2087  [OtherNumber]           SUBSCRIPT SEVEN
+₈       U+2088  [OtherNumber]           SUBSCRIPT EIGHT
+₉       U+2089  [OtherNumber]           SUBSCRIPT NINE
+ᵢ       U+1D62  [ModifierLetter]        LATIN SUBSCRIPT SMALL LETTER I
+ᵣ       U+1D63  [ModifierLetter]        LATIN SUBSCRIPT SMALL LETTER R
+ᵤ       U+1D64  [ModifierLetter]        LATIN SUBSCRIPT SMALL LETTER U
+ᵥ       U+1D65  [ModifierLetter]        LATIN SUBSCRIPT SMALL LETTER V
+ᵦ       U+1D66  [ModifierLetter]        GREEK SUBSCRIPT SMALL LETTER BETA
+ᵧ       U+1D67  [ModifierLetter]        GREEK SUBSCRIPT SMALL LETTER GAMMA
+ᵨ       U+1D68  [ModifierLetter]        GREEK SUBSCRIPT SMALL LETTER RHO
+ᵩ       U+1D69  [ModifierLetter]        GREEK SUBSCRIPT SMALL LETTER PHI
+ᵪ       U+1D6A  [ModifierLetter]        GREEK SUBSCRIPT SMALL LETTER CHI
