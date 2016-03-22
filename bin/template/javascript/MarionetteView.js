@@ -100,7 +100,7 @@ define(function(require) {
         },
 
         onDestroy: function (argsFromDestroy) {
-        },
+        }
     });
 
     return XyzzyView;
