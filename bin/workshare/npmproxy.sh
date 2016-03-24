@@ -39,6 +39,6 @@ npm config set strict-ssl false
 forever $BIN/npm-proxy-cache \
 	--expired --ttl $KEEP \
 	--friendly-names \
-	--verbose \
 	--host npm-proxy --port=$PORT
+#	--verbose \
 
