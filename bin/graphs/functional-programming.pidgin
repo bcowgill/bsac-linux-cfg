@@ -1,0 +1,29 @@
+# http://pidgin.gruffdavies.com/graphs/127
+# Functional Programming
+# essential properties of functional programming types
+# based on the book Mostly Adequate guide to functional programming
+# https://www.gitbook.com/book/drboolean/mostly-adequate-guide/details
+
+identity is Function
+identity comment "identity(x) returns x"
+
+Functor is Object
+Functor operation "map()"
+"map()" comment "Functor F => (a -> b) -> F a -> F b"
+Functor comment "identity law: F.map(identity) === identity"
+Functor comment "composition law: compose(map(f), map(g)) === map(compose(f, g))"
+
+PointedFunctor is Functor
+PointedFunctor operation "of()"
+"of()" comment "puts a value into a default minimal context for the Functor"
+"of()" comment "PointedFunctor F => a -> F a"
+
+Monad is PointedFunctor
+Monad operation "join()"
+"join()" comment "flattens two layers of Monad composition" 
+"join()" comment "Monad M => M(M a) -> M a"
+Monad comment "identity law: compose(join, of) === compose(join, map(of)) === identity"
+Monad comment "composition law: compose(join, map(join)) === compose(join, join)"
+
+"chain()" is Function
+"chain()" comment "Monad M => (a -> M b) -> M a -> M b"

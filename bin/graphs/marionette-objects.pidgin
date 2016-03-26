@@ -1,0 +1,94 @@
+# http://pidgin.gruffdavies.com/graphs/125
+# Marionette Object Graph
+# Object graph for marionette library
+
+"Marionette.Object" extends "Backbone.Events"
+"Marionette.Object" property options
+"Marionette.Object" operation "extend()"
+"Marionette.Object" operation "initialize()"
+"Marionette.Object" operation "mergeOptions()"
+"Marionette.Object" operation "getOption()"
+"Marionette.Object" operation "triggerMethod()"
+"Marionette.Object" operation "bindEntityEvents()"
+"Marionette.Object" operation "unbindEntityEvents()"
+"Marionette.Object" operation "destroy()"
+
+"destroy()" triggers "before:destroy"
+"destroy()" triggers "destroy"
+
+"Marionette.Region" extends "Marionette.Object"
+"Marionette.Region" property el
+"Marionette.Region" property "$el"
+"Marionette.Region" property triggerBeforeAttach
+"Marionette.Region" property triggerAttach
+"Marionette.Region" operation "getEl()"
+"Marionette.Region" operation "attachHtml()"
+"Marionette.Region" operation "show()"
+"Marionette.Region" operation "hasView()"
+"Marionette.Region" operation "attachView()"
+"Marionette.Region" operation "empty()"
+"Marionette.Region" operation "reset()"
+
+"empty()" triggers "before:empty"
+"empty()" triggers "empty"
+"empty()" triggers "before:destroy"
+"empty()" triggers "destroy"
+
+"show()" triggers "before:swapOut"
+"show()" triggers "before:swap"
+"show()" triggers "before:show"
+"show()" triggers "swapOut"
+"show()" triggers "swap"
+"show()" triggers "show"
+
+"Marionette.Controller" extends "Backbone.Events"
+"Marionette.RegionManager" extends "Marionette.Controller"
+"Marionette.TemplateCache" extends Object
+
+"Marionette.Renderer" extends Object
+"Marionette.Renderer" operation "render()"
+
+"Marionette.View" extends "Backbone.View"
+"Marionette.View" property isDestroyed 
+"Marionette.View" property supportsRenderLifecycle 
+"Marionette.View" property supportsDestroyLifecycle 
+"Marionette.View" operation "getTemplate()" 
+"Marionette.View" operation "serializeModel()" 
+"Marionette.View" operation "mixinTemplateHelpers()" 
+"Marionette.View" operation "normalizeUIKeys()" 
+"Marionette.View" operation "normalizeUIValues()" 
+"Marionette.View" operation "configureTriggers()" 
+"Marionette.View" operation "delegateEvents()" 
+"Marionette.View" operation "undelegateEvents()" 
+"Marionette.View" operation "destroy()" 
+"Marionette.View" operation "bindUIElements()" 
+"Marionette.View" operation "unbindUIElements()" 
+"Marionette.View" operation "setElement()" 
+"Marionette.View" operation "triggerMethod()" 
+"Marionette.View" operation "normalizeMethods()"
+"Marionette.View" operation "mergeOptions()"
+"Marionette.View" operation "getOption()"
+"Marionette.View" operation "bindEntityEvents()"
+"Marionette.View" operation "unbindEntityEvents()"
+
+"Marionette.ItemView" extends "Marionette.View"
+"Marionette.ItemView" operation "serializeData()" 
+"Marionette.ItemView" operation "serializeCollection()" 
+"Marionette.ItemView" operation "attachElContent()" 
+
+"Marionette.CollectionView" extends "Marionette.View"
+"Marionette.CollectionView" property childViewEventPrefix
+"Marionette.CollectionView" property sort
+"Marionette.CollectionView" operation "initRenderBuffer()" 
+"Marionette.CollectionView" operation "startBuffering()" 
+"Marionette.CollectionView" operation "endBuffering()" 
+"Marionette.CollectionView" operation "reorder()" 
+
+#"Marionette.CollectionView" property 
+#"Marionette.CollectionView" operation "()" 
+
+"Marionette.ItemView" extends "Marionette.View"
+
+"Marionette.CompositeView" extends "Marionette.View"
+
+"Marionette.LayoutView" extends "Marionette.View"
