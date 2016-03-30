@@ -1,0 +1,268 @@
+// Facebook Flow Static Type Analysis Quick Reference
+
+Turn on flow checking in a given file:
+// @flow
+// @flow weak
+
+Suppress flow error on next line
+// $FlowFixMe explain why..
+// $FlowIssue to note a bug/issue with flow itself
+
+Built In Types
+http://flowtype.org/docs/builtins.html
+
+void
+null
+boolean
+number
+string
+Boolean
+Number
+String
+
+mixed -- a supertype of all types. you must refine the type before using it with type checks.
+any -- a supertype and subtype of all types -- use sparingly, ignores type checking
+
+Javascript Core Library types
+https://github.com/facebook/flow/blob/master/lib/core.js
+Object, Symbol, Function, Math, Array, RegExp, Date, Error, etc
+
+Browser DOM types
+https://github.com/facebook/flow/blob/master/lib/dom.js
+Event, EventHandler, DOMError, Node, NodeList, Document, etc
+
+Browser Object Model types
+https://github.com/facebook/flow/blob/master/lib/bom.js
+Screen, Navigator, MimeType, Plugin, History, Location, etc
+
+CSS Object Model types
+https://github.com/facebook/flow/blob/master/lib/cssom.js
+StyleSheet, CSSRule, CSSStyleDeclaration, TransitionEvent, etc
+
+Node Standard Library types
+https://github.com/facebook/flow/blob/master/lib/node.js
+Buffer, Process, ReadStream, Server, Socket, etc
+
+Annotating variables, functions, etc.
+
+var num : number;
+var num /* : number */;  // with comments so no transpiler is needed
+
+// with a flow comment block for blocks of flow code which is not valid javascript
+/*::
+type Person = { name: string, age: number};
+*/
+or
+/*flow-include
+type Person = { name: string, age: number};
+*/
+
+function this (num : number) : string { ... }
+function this (num /* : number */) /* : string */ { ... }
+
+// a union of allowed types
+var nothing : null|void;
+
+// an array of a given type
+var amounts : number[];
+var amounts : Array<number>;
+var numOrstring : Array<[number|string]>
+
+// optional arrays or array elements are written differently!
+var optional_array_of_num: ?number[] = null;
+var array_of_optional_num: Array<?number> = [null, 0];
+
+// a tuple is an array with different types in specific positions
+var testCase : [boolean, number, number] = [true, 42, 12];
+
+// an object's properties can be typed or defined as a type
+let object : {foo: string, bar: number} = {foo: "foo", bar: 0};
+
+type Person = {
+    name: string,
+    age: number
+};
+
+// express the 'shape' of an object based on property states
+type Result = Done | Error
+type Done = { status: 'done' }
+type Error = { status: 'error', errorCode: number }
+
+// using an object like a lookup map or dictionary (if not using a Map)
+let coolRating: {[id:string]: number} = {};
+
+// a function with additional properties
+// Function/Objects with additional properties
+function makeCallableFn(): { (callable: number): string; priority: number } {
+    function callable(number) {
+        return number.toFixed(2);
+    }
+    callable.priority = 123;
+    return callable;
+}
+
+// anonymous arrow notation functions with annotations
+[1, 2, 3].map(num => '0' + num)
+[1, 2, 3].map((num: number): string => '0' + num)
+
+// define a type describing a callback function signature or a generic function type
+type TimesTwo = (value: number) => number;
+type Identity = <T>(identity: T) => T;
+
+// asynchronous functions
+async function getFriendNames(
+  friendIDs: Promise<number[]>,
+  getFriendName: (id: number) => Promise<string>,
+): Promise<string[]> {
+  var ids = await friendIDs;
+  var names = await Promise.all(ids.map(getFriendName));
+  return names;
+}
+
+// generator functions
+function *infinity(): Generator<number,void,void> {
+  var n = 0;
+  while (true) {
+    yield n++;
+  }
+}
+
+// variadic functions with multiple remaining (rest) parameters
+function sum(...xs: number[]): number {
+  return xs.reduce((a,b) => a + b);
+}
+
+// anonymous arrow functions (lambda)
+const flip = <A,B>([a,b]: [A,B]): [B,A] => [b,a];
+
+Defining a type name.
+
+type JSON = | string | number | boolean | null | JSONObject | JSONArray;
+type JSONObject = { [key:string]: JSON };
+type JSONArray = Array<JSON>;
+
+// an optional parameter to a function
+function optional_param(foo?: string) {
+  (foo: string|void);
+}
+
+// an object with an optional property
+type optional_prop = { foo?: string }
+
+// a function with a default parameter value
+function default_param(foo: string = "default foo") {
+  (foo: string);
+}
+
+// a function with a maybe type
+function maybe_fun(foo: ?string) {
+  (foo: string|void|null);
+}
+
+Literal values for enum.
+
+type Suit = | "Diamonds" | "Clubs" | "Hearts" | "Spades";
+
+
+Interface Declarations for Third Party Libraries
+interfaces/underscore.js:
+
+declare class Underscore {
+  findWhere<T>(list: Array<T>, properties: {}): T;
+}
+
+declare var _: Underscore;
+
+// Importing and Exporting type definitions in libraries
+// in foo.js
+export type Foo = string;
+// in somethingelse.js
+import type { Foo } from "./foo";
+var foo: Foo = "Hello";
+
+Classes
+Defining a class also defines a type, which can be used to annotate instances of that class.
+
+class MyClass {
+/*::
+  foo: string;
+*/
+  constructor(foo: string) {
+    this.foo = foo;
+  }
+  bar(): string {
+    return this.foo;
+  }
+}
+
+var myInstance: MyClass = new MyClass("foo");
+(myInstance.foo: string);
+(myInstance.bar(): string);
+
+Mixin/Interfaces for when classes don't inherit directly via extend.
+
+interface Fooable {
+  foo(): string;
+}
+
+class AFoo {
+  foo() { return "foo from A" };
+}
+
+class BFoo {
+  foo() { return "foo from B" };
+}
+
+// Class as a type not an instance
+The Class<T> type
+Remember that the name of the class as a type annotation represents instances
+of that class. Given a type T representing instances of a class C, the type
+Class<T> is the type of the class C.
+
+var myClass : Class<MyClass> = MyClass;
+var myInstance2 = new myClass("foo");
+
+// Generic/Template types for objects, functions and classes
+type GenericObject<T> = { foo: T };
+var numberObject: GenericObject<number> = { foo: 0 };
+var stringObject: GenericObject<string> = { foo: "foo" };
+
+class GenericClass<T> {
+/*::
+    x: T;
+*/
+    constructor(x: T) {
+        this.x = x;
+    }
+}
+
+var numberInstance : GenericClass<number> = new GenericClass('0');  // wrong
+var stringInstance : GenericClass<string> = new GenericClass(34);   // wrong
+
+function findMax<T>(arr: T[], compare: (a: T, b: T) => number) {
+    var sorted = arr.sort(compare);
+    return sorted[sorted.length - 1];
+}
+
+findMax(
+    ['a', 'b'],
+    (less, more) => more - less  // wrong
+)
+
+// Destructuring
+Destructured bindings#
+JavaScript's destructuring syntax can be used to introduce many bindings at
+once. Currently, type annotations must be applied to the entire pattern, not
+the individual bindings.
+
+var {a, b: {c}}: {a: string, b: {c: number}} = {a: "", b: {c: 0}};
+
+// Typecasts () can annotate any expression you like
+(1 + 1 : number);
+
+var obj = {
+  name: (null: ?string)
+};
+
+([1, "a", true]: Array<mixed>).map(x => x);
+obj.name = 42;
