@@ -10,6 +10,80 @@ emacs24-common-non-dfsg - GNU Emacs common non-DFSG items, including the core do
 emacs24-el - GNU Emacs LISP (.el) files
 
 
+
+Packages of interest to try out:
+js2-mode - Emacs mode for editing Javascript programs
+magit - Emacs interface for Git
+emacs-goodies-el - Miscellaneous add-ons for Emacs
+evernote-mode - Emacs major mode for editing Evernote directly
+icicles - emacs library that enhances minibuffer/input completion
+sepia - Simple Emacs-Perl InterAction
+vile - VI Like Emacs - vi work-alike
+vile-common - VI Like Emacs - support files for vile/xvile
+vile-filters - VI Like Emacs - highlighting filters for vile/xvile
+dash-el - Modern list manipulation library for Emacs
+s-el - String manipulation library for Emacs
+anything-el - open anything / QuickSilver-like candidate-selection framework
+silversearcher-ag-el - Emacs frontend to ag
+sass-elisp - Emacs Lisp mode for the Sass markup language
+org-mode-doc - keep notes, maintain ToDo lists, and do project planning in emacs
+gnuplot-mode - Gnuplot mode for Emacs
+riece - IRC client for Emacs
+ispell - International Ispell (an interactive spelling corrector)
+auto-complete-el - intelligent auto-completion extension for GNU Emacs
+auto-install-el - Auto install elisp file
+bhl - Emacs mode for converting annotated text to HTML and LaTeX
+bitmap-mule - bitmap handler for GNU Emacs
+c-sig - signature tool for GNU Emacs
+crypt++el - Emacs-Lisp Code for handling compressed and encrypted files
+debian-el - Emacs helpers specific to Debian users
+develock-el - additional font-lock keywords for the developers on Emacs
+dictem - Dict client for emacs
+dictionary-el - dictionary client for Emacs
+doxymacs - elisp package for making doxygen usage easier under Emacs
+e2wm - simple window manager for emacs
+ecb - code browser for Emacs supporting several languages
+edb - database program for GNU Emacs
+edict-el - Emacs interface to Edict
+el-get - install and manage elisp code for Emacs
+elscreen - Screen for Emacsen
+elserv - HTTP server that runs on Emacsen
+emacs-calfw - calendar framework for Emacs
+emacs-jabber - Jabber client for Emacsen
+emacs-window-layout - window layout manager for emacs
+emacspeak - speech output interface to Emacs
+emms - Emacs MultiMedia System
+expand-region-el - Increase selected region in Emacs by semantic units
+git-el - fast, scalable, distributed revision control system (emacs support)
+global - Source code search and browse tools
+gnuserv - Allows you to attach to an already running Emacs
+goby - WYSIWYG presentation tool for Emacs
+howm - Note-taking tool on Emacs
+initz - Handles the switching of various initialization files of emacsen
+liece - IRC (Internet Relay Chat) client for Emacs
+lookup-el - emacsen interface to electronic dictionaries
+maxima-emacs - Computer algebra system -- emacs interface
+mpg123-el - front-end to mpg321/ogg321 media players for Emacs
+oneliner-el - extensions of Emacs standard shell-mode
+org-mode - keep notes, maintain ToDo lists, and do project planning in emacs
+planner-el - personal information manager for Emacs
+psgml - Emacs major mode for editing SGML documents
+texmacs - WYSIWYG mathematical text editor using TeX fonts
+tweak - Efficient text-mode hex editor
+twittering-mode - Twitter client for Emacs
+uim-el - Universal Input Method - Emacs front end
+windows-el - window manager for GNU Emacs
+wysihtml-el - Almost real-time previewing system for HTML and DocBook
+yaml-mode - emacs mode for YAML files
+yasnippet - A template system for Emacs
+yasr - General-purpose console screen reader
+
+
+
+
+
+
+
 dictionaries-common - spelling dictionaries - common utilities
 emacs24-nox - GNU Emacs editor (without GUI support)
 mksh - MirBSD Korn Shell
@@ -21,7 +95,6 @@ devhelp - GNOME developers help program
 devhelp-common - Common files for devhelp and its library
 docbook2x - Converts DocBook/XML documents into man pages and TeXinfo
 emacs - GNU Emacs editor (metapackage)
-emacs-goodies-el - Miscellaneous add-ons for Emacs
 emacs24-dbg - Debugging symbols for emacs24
 emacs24-lucid-dbg - Debugging symbols for emacs24-lucid
 emacs24-nox-dbg - Debugging symbols for emacs24-nox
@@ -30,21 +103,18 @@ erlang-tools - Erlang/OTP various tools
 exuberant-ctags - build tag file indexes of source code definitions
 fetchmail - SSL enabled POP3, APOP, IMAP mail gatherer/forwarder
 gettext-el - Emacs po-mode for editing gettext .po files
-ispell - International Ispell (an interactive spelling corrector)
 ledit - line editor for interactive programs
 libanthy-dev - input method for Japanese - development files
 libanthy0 - input method for Japanese - runtime library
 libledit-ocaml-dev - OCaml line editor library
 pylint - Python code static checker and UML diagram generator
 tmux - terminal multiplexer
-org-mode-doc - keep notes, maintain ToDo lists, and do project planning in emacs
 sdic - Emacs interface for Japanese dictionaries
 wnn7egg - Wnn-nana-tamago -- EGG Input Method with Wnn7 for Emacsen
 x-pgp-sig-el - X-PGP-Sig mail and news header utility for Emacs
 bbdb3 - Reboot of the BBDB Insidious Big Brother Database for Emacs
 cl-iterate - Jonathan Amsterdam's Common Lisp iterator/gatherer/accumulator facility
 clang-format-3.6 - Tool to format C/C++/Obj-C code
-dash-el - Modern list manipulation library for Emacs
 dmtcp - Checkpoint/Restart functionality for Linux processes
 dmtcp-dbg - Debug package for dmtcp
 egg - Tamago Ver. 4 -- EGG Input Method Architecture for Emacsen
@@ -53,7 +123,6 @@ emacs23-common-non-dfsg - GNU Emacs shared, architecture independent, non-DFSG i
 emacs24-lucid - GNU Emacs editor (with Lucid GUI support)
 ghc-mod - Happy Haskell programming
 ghc-mod-el - Happy Haskell programming with Emacs
-gnuplot-mode - Gnuplot mode for Emacs
 gocode-auto-complete-el - gocode integration for Emacs
 irony-mode - C/C++ minor mode powered by libclang
 ledger-el - command-line double-entry accounting program (emacs interface)
@@ -74,11 +143,8 @@ ocp-indent - OCaml indentation tool for emacs and vim - runtime
 pandoc-data - general markup converter - data files
 pylint3 - Python 3 code static checker and UML diagram generator
 python-ropemode - ropemode, a helper for using rope refactoring library in IDE
-riece - IRC client for Emacs
 ruby-github-markup - GitHub Markup rendering
 ruby-org - Emacs org-mode parser for Ruby
-s-el - String manipulation library for Emacs
-silversearcher-ag-el - Emacs frontend to ag
 sisu - documents - structuring, publishing in multiple formats and search
 smartdoc-elisp - emacs mode for smartdoc
 texmacs-common - WYSIWYG mathematical text editor using TeX fonts
@@ -91,14 +157,8 @@ agda-stdlib-doc - standard library for Agda — documentation
 alot - Text mode MUA using notmuch mail
 alot-doc - Text mode MUA using notmuch mail - documentation
 anthy-el - input method for Japanese - elisp frontend
-anything-el - open anything / QuickSilver-like candidate-selection framework
 apel - portable library for emacsen
 aplus-fsf-el - XEmacs lisp for A+ development
-auto-complete-el - intelligent auto-completion extension for GNU Emacs
-auto-install-el - Auto install elisp file
-bhl - Emacs mode for converting annotated text to HTML and LaTeX
-bitmap-mule - bitmap handler for GNU Emacs
-c-sig - signature tool for GNU Emacs
 chktex - Finds typographic errors in LaTeX
 cl-swank - Superior LISP Interaction Mode for Emacs (Lisp-side server)
 clang-format-3.4 - Tool to format C/C++/Obj-C code
@@ -108,70 +168,44 @@ colordiff - tool to colorize 'diff' output
 commit-patch - utility to commit fine grained patches to source code control repositories
 common-lisp-controller - Common Lisp source and compiler manager
 coq - proof assistant for higher-order logic (toplevel and compiler)
-crypt++el - Emacs-Lisp Code for handling compressed and encrypted files
 cvc3-el - Emacs mode for CVC3
 cxref-emacs - Generates LaTeX and HTML documentation for C programs
 darcsum - pcl-cvs like interface for managing darcs patches
 ddskk - efficient Japanese input system for emacsen
-debian-el - Emacs helpers specific to Debian users
-develock-el - additional font-lock keywords for the developers on Emacs
 devscripts-el - Emacs wrappers for the commands in devscripts
 diakonos - Customizable, usable console-based text editor
-dictem - Dict client for emacs
-dictionary-el - dictionary client for Emacs
-doxymacs - elisp package for making doxygen usage easier under Emacs
 dpkg-dev-el - Emacs helpers specific to Debian development
-e2wm - simple window manager for emacs
 e3 - A very small editor
 eblook - electronic dictionary search command using EB Library
 ecasound-el - multitrack-capable audio recorder and effect processor (emacs)
-ecb - code browser for Emacs supporting several languages
-edb - database program for GNU Emacs
-edict-el - Emacs interface to Edict
 eflite - Festival-Lite based emacspeak speech server
-el-get - install and manage elisp code for Emacs
 eldav - interface to the WebDAV servers for Emacs.
-elscreen - Screen for Emacsen
-elserv - HTTP server that runs on Emacsen
-emacs-calfw - calendar framework for Emacs
 emacs-calfw-howm - calendar framework for Emacs (howm add-on)
 emacs-chess - a client and library for playing Chess from Emacs
 emacs-intl-fonts - Fonts to allow multi-lingual PostScript printing from Emacs
-emacs-jabber - Jabber client for Emacsen
 emacs-mozc - Mozc for Emacs
 emacs-mozc-bin - Helper module for emacs-mozc
-emacs-window-layout - window layout manager for emacs
-emacspeak - speech output interface to Emacs
 emacspeak-espeak-server - espeak syntesis server for emacspeak
 emacspeak-ss - Emacspeak speech servers for several synthesizers
-emms - Emacs MultiMedia System
 erc - an IRC client for Emacs
 erlang - Concurrent, real-time, distributed functional language
 erlang-mode - Erlang major editing mode for Emacs
 ess - Emacs mode for statistical programming and data analysis
 etktab - ASCII guitar tab editor
-evernote-mode - Emacs major mode for editing Evernote directly
 eweouz - Emacs interface to Evolution Data Server
-expand-region-el - Increase selected region in Emacs by semantic units
 flim - library about internet message for emacsen
 geiser - enhanced Scheme interaction mode for Emacs
-git-el - fast, scalable, distributed revision control system (emacs support)
-global - Source code search and browse tools
 gmult - figure out which letters are which numbers
 gnat-gps - integrated development environment for C and Ada
 gnats - problem report management system - central database
 gnats-user - problem report management system - client tools
 gnu-smalltalk-el - GNU Smalltalk Emacs front-end
 gnus - A versatile news and mail reader for Emacsen
-gnuserv - Allows you to attach to an already running Emacs
-goby - WYSIWYG presentation tool for Emacs
 golang-mode - Go programming language - mode for GNU Emacs
 gramadoir - Irish language grammar checker (integration scripts)
 gri-el - Emacs major-mode for gri, a language for scientific graphics
 haml-elisp - Emacs Lisp mode for the Haml markup language
 haskell-mode - major mode for editing Haskell in Emacs
-howm - Note-taking tool on Emacs
-icicles - emacs library that enhances minibuffer/input completion
 id-utils - Fast, high-capacity, identifier database tool
 idl-font-lock-el - OMG IDL font-locking for Emacs
 idn - Command line and Emacs interface to GNU Libidn
@@ -179,13 +213,11 @@ ilisp - Emacs interface to LISP implementations
 ilisp-doc - Documentation for ILISP package
 info2man - Convert GNU info files to POD or man pages
 inform-mode - Emacs mode for editing Inform files
-initz - Handles the switching of various initialization files of emacsen
 inotify-hookable - blocking command-line interface to inotify
 jed - editor for programmers (textmode version)
 jedit - Plugin-based editor for programmers
 joe - user friendly full screen text editor
 jove - Jonathan's Own Version of Emacs - a compact, powerful editor
-js2-mode - Emacs mode for editing Javascript programs
 jupp - user friendly full screen text editor
 kdesdk-scripts - scripts and data files for development
 kxterm - CERNLIB data analysis suite - KUIP terminal emulator
@@ -204,18 +236,14 @@ librep-dev - development libraries and headers for librep
 librep9 - embeded lisp command interpreter library
 librobert-hooke-clojure - Function wrapper library for Clojure
 libtext-findindent-perl - module to heuristically determine indentation style
-liece - IRC (Internet Relay Chat) client for Emacs
 liece-dcc - DCC program for liece
 liquidsoap-mode - Emacs mode for editing Liquidsoap code
 lisaac-mode - Emacs mode for editing Lisaac programs
-lookup-el - emacsen interface to electronic dictionaries
 lsdb - The Lovely Sister Database (email rolodex) for Emacs
 lua-mode - Emacs mode for editing Lua programs
 lyskom-elisp-client - emacs client for LysKOM
-magit - Emacs interface for Git
 mailcrypt - Emacs interface to GPG and PGP
 malaga-mode - System for automatic language analysis - emacs mode
-maxima-emacs - Computer algebra system -- emacs interface
 mew - mail reader supporting PGP/MIME for Emacs
 mew-beta - mail reader supporting PGP/MIME for Emacs (development version)
 mg - microscopic GNU Emacs-style editor
@@ -229,7 +257,6 @@ migemo-el - Japanese incremental search with Romaji on Emacsen
 minlog - Proof assistant based on first order natural deduction calculus
 mit-scheme-doc - MIT/GNU Scheme documentation
 mmm-mode - Multiple Major Mode for Emacs
-mpg123-el - front-end to mpg321/ogg321 media players for Emacs
 mpqc-support - Massively Parallel Quantum Chemistry Program (support tools)
 mu-cite - message citation utility for emacsen
 mu4e - e-mail client for Emacs based on mu (maildir-utils)
@@ -247,19 +274,15 @@ nomarch - Unpacks .ARC and .ARK MS-DOS archives
 notmuch-emacs - thread-based email index, search and tagging (emacs interface)
 ocaml-core - OCaml core tools (metapackage)
 ocaml-mode - major mode for editing Objective Caml in Emacs
-oneliner-el - extensions of Emacs standard shell-mode
-org-mode - keep notes, maintain ToDo lists, and do project planning in emacs
 otags - tags file generator for OCaml
 pandoc - general markup converter
 paredit-el - Emacs minor mode for structurally editing Lisp code
 passepartout - XML-based Desktop Publishing Application
 php-elisp - Emacs support for php files
-planner-el - personal information manager for Emacs
 post-el - emacs major mode for editing mail
 prolog-el - Emacs major mode for editing Prolog code
 proofgeneral - generic frontend for proof assistants
 proofgeneral-doc - generic frontend for proof assistants - documentation
-psgml - Emacs major mode for editing SGML documents
 puppet-el - syntax highlighting for puppet manifests in emacs
 pymacs - interface between Emacs Lisp and Python
 pyrex-mode - emacs-lisp pyrex-mode for pyrex
@@ -278,14 +301,12 @@ remembrance-agent - Emacs mode to help find relevant texts
 rep - lisp command interpreter
 rep-doc - documentation for the lisp command interpreter
 rnc-mode - Emacs editing mode for RELAX NG Compact syntax
-sass-elisp - Emacs Lisp mode for the Sass markup language
 sawfish - window manager for X11
 scala-mode-el - Emacs major mode for editing scala source code
 search-ccsb - BibTeX search tool
 search-citeseer - BibTeX search tool
 select-xface - utility for selecting X-Face on emacsen
 semi - library to provide MIME feature for emacsen
-sepia - Simple Emacs-Perl InterAction
 slime - Superior LISP Interaction Mode for Emacs
 sml-mode - Emacs major mode for editing Standard ML programs
 speechd-el - Emacs speech client using Speech Dispatcher
@@ -299,35 +320,26 @@ t-code - Japanese direct input method environment for emacsen
 t-code-common - Japanese direct input method environment - common files
 tads2-mode - Emacs mode for editing TADS code
 tdiary-mode - tDiary editing mode for Emacsen
-texmacs - WYSIWYG mathematical text editor using TeX fonts
 tiarra-conf-el - edit mode for tiarra.conf
 timidity-el - Emacs front end to Timidity++
 tkcon - Enhanced interactive console for developing in Tcl
 tpp - text presentation program
 tuareg-mode - emacs-mode for ocaml programs
-tweak - Efficient text-mode hex editor
-twittering-mode - Twitter client for Emacs
 txt2regex - A Regular Expression "wizard", all written with bash2 builtins
 tzc - Trivial Zephyr Client
-uim-el - Universal Input Method - Emacs front end
 uim-latin - Universal Input Method - Latin script input support
 uzbl - Lightweight Webkit browser following the UNIX philosophy
 vala-mode-el - Emacs editor major mode for vala source code
 verbiste-el - French and Italian conjugator - emacs extension
-vile - VI Like Emacs - vi work-alike
-vile-common - VI Like Emacs - support files for vile/xvile
-vile-filters - VI Like Emacs - highlighting filters for vile/xvile
 vm - mail user agent for Emacs
 vm-bonus-el - vm-bogofilter add-on for VM
 w3m-el - simple Emacs interface of w3m
 w3m-el-snapshot - simple Emacs interface of w3m (development version)
 whizzytex - a WYSIWYG emacs environment for LaTeX
-windows-el - window manager for GNU Emacs
 wl - mail/news reader supporting IMAP for emacsen
 wl-beta - mail/news reader supporting IMAP for emacsen (development version)
 wordwarvi - retro-styled side-scrolling shoot'em up arcade game
 wordwarvi-sound - retro-styled side-scrolling shoot'em up arcade game [Sound Files]
-wysihtml-el - Almost real-time previewing system for HTML and DocBook
 x-face-el - utility for displaying X-Face on emacsen
 xcite - exciting cite utility for Emacsen
 xcscope-el - Interactively examine a C program source in emacs
@@ -353,12 +365,29 @@ xfonts-thai-poonlap - Poonlap Veerathanabutr's bitmap fonts for X
 xjed - editor for programmers (x11 version)
 xstow - Extended replacement of GNU Stow
 xvile - VI Like Emacs - vi work-alike (X11)
-yaml-mode - emacs mode for YAML files
-yasnippet - A template system for Emacs
-yasr - General-purpose console screen reader
 yatex - Yet Another TeX mode for Emacs
 yc-el - Yet another Canna client for Emacsen
 yorick - interpreted language and scientific graphics
 zile - very small Emacs-subset editor
 mit-scheme - MIT/GNU Scheme development environment
 mit-scheme-dbg - MIT/GNU Scheme debugging files
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
