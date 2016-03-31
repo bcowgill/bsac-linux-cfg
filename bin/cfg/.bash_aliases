@@ -17,6 +17,8 @@ alias vii3='$EDITOR ~/bin/cfg/.i3-config ~/bin/i3-launch.sh ~/bin/i3-start.sh'
 alias prompter='source `which toggle-prompt.sh`'
 alias promptshort='source `which toggle-prompt-short.sh`'
 
+alias em='NO_AT_BRIDGE=1 emacs'
+
 #  like mkdir -p for files you want to touch
 alias touch-p='touch_p'
 
