@@ -93,3 +93,14 @@ KEY:WEBSTORM:HELP Ctrl-Shift-a [Help/Find Action] incremental search for command
 
 HEREIAM
 last tips Ctrl-Shift-a, Ctrl-Shift-i, Alt-Home, Alt-9, Alt-Enter, Ctrl-Tab, Alt Alt-Hold tool window bars
+
+Best things about Webstorm and Vslick to try and reproduce in emacs:
+Ctrl-Shift-N open any file by partial matching
+Ctrl-/ Ctrl-Shift-/ Comment out a line/block
+Alt-Shift Up/Dn to move line/selection up/down
+Ctrl-d Duplicate line/selection
+Column selection and fill
+Markdown rendering in editor
+Paste previous clipboards
+Jump to parenthesis
+Ctrl-Mousewheel to scroll horizontally
