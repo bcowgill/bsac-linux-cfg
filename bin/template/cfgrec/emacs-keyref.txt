@@ -1,0 +1,92 @@
+emacs editor command quick reference
+
+KEY:EMACS:CMD Ctrl-x Ctrl-c Exit emacs
+KEY:EMACS:CMD Ctrl-g Quit a partially typed command or interrupt and executing command
+KEY:EMACS:CMD Ctrl-u numbers Command repeat prefix i.e Ctrl-u 5 Ctrl-f = forward 5 characters
+KEY:EMACS:CMD Alt-numbers Command repeat prefix i.e Alt-5 Ctrl-f = forward 5 characters
+
+KEY:EMACS:MOVE Ctrl-v = PageDn
+KEY:EMACS:MOVE Alt-v = PageUp
+KEY:EMACS:MOVE Esc v = PageUp
+KEY:EMACS:MOVE Ctrl-l = Center/Top/Bottom Move text so text near cursor is at center of screen, press again to move it to top/bottom of screen
+KEY:EMACS:MOVE Ctrl-u 0 Ctrl-l Move view so current line is at top of window
+KEY:EMACS:MOVE Alt-0 Ctrl-l Move view so current line is at top of window
+KEY:EMACS:MOVE Ctrl-p = Up = previous line
+KEY:EMACS:MOVE Ctrl-n = Down = next line
+KEY:EMACS:MOVE Ctrl-f = Right = forward one column
+KEY:EMACS:MOVE Ctrl-b = Left = backward one column
+KEY:EMACS:MOVE Alt-f Forward one word
+KEY:EMACS:MOVE Alt-b Backward one word
+KEY:EMACS:MOVE Ctrl-a = Home column of line
+KEY:EMACS:MOVE Ctrl-e = End of line
+KEY:EMACS:MOVE Alt-a = Beginning of sentence
+KEY:EMACS:MOVE Alt-e = End of sentence
+KEY:EMACS:MOVE Alt-Shift-< = Top of document (sets bookmark)
+KEY:EMACS:MOVE Alt-Shift-> = Bottom of document (sets bookmark)
+
+KEY:EMACS:CONFIG
+
+KEY:EMACS:EDIT Ctrl-d = Delete character at cursor point
+KEY:EMACS:EDIT Alt-BackSpace Kill word before cursor point
+KEY:EMACS:EDIT Alt-d Kill the word after the cursor point
+KEY:EMACS:EDIT Ctrl-k Kill from cursor point to end of line
+KEY:EMACS:EDIT Alt-k Kill to the end of current sentence (full stop and two spaces)
+
+KEY:EMACS:NAV Ctrl-x r m Set a named bookmark at current cursor point
+
+KEY:EMACS:VIEW Ctrl-x 1 Single window view, close all other windows
+
+
+KEY:EMACS:MARK
+KEY:EMACS:FIND Ctrl-s Search incrementally
+KEY:EMACS:FIND
+KEY:EMACS:PASTE
+KEY:EMACS:CODE
+KEY:EMACS:DOC
+KEY:EMACS:BUILD
+KEY:EMACS:DEBUGGER
+KEY:EMACS:CHANGES
+KEY:EMACS:TABS
+
+KEY:EMACS:HELP Ctrl-h k key-combo Help on key binding
+
+
+Welcome to GNU Emacs, one component of the GNU/Linux operating system.
+
+Emacs Tutorial	Learn basic keystroke commands
+Emacs Guided Tour	Overview of Emacs features at gnu.org
+View Emacs Manual	View the Emacs manual using Info
+Absence of Warranty	GNU Emacs comes with ABSOLUTELY NO WARRANTY
+Copying Conditions	Conditions for redistributing and changing Emacs
+Ordering Manuals	Purchasing printed copies of manuals
+
+To start...     Open a File     Open Home Directory     Customize Startup
+To quit a partially entered command, type Control-g.
+
+This is GNU Emacs 24.4.1 (x86_64-pc-linux-gnu, GTK+ Version 3.14.9)
+ of 2015-03-21 on kissel, modified by Debian
+Copyright (C) 2014 Free Software Foundation, Inc.
+
+REFERENCES:
+Emacs Movies http://emacsmovies.org/blog/2012/01/21/welcome_to_emacsmovies.org/
+Emacs Rocks  http://emacsrocks.com/e01.html
+Emacs v Webstorm for JS https://spin.atomicobject.com/2016/01/26/webstorm-nodejs-development/
+Emacs Javascript https://www.google.co.uk/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8&client=ubuntu#q=emacs%20javascript
+Vim to Emacs http://juanjoalvarez.net/es/detail/2014/sep/19/vim-emacsevil-chaotic-migration-guide/
+
+HEREIAM:
+C-u 8 C-f in tutorial
+
+TODO:
+require init-evil
+check-system to install packages and symlink .emacs, .emacs.d to cfgrec
+use caps instead of control ?
+vim movement bindings ?
+distraction free mode?
+backspace stops at left column
+delete stops at end of line
+enter inserts new line instead of splitting it
+home toggle to start of line or start of text on the line
+
+
+
