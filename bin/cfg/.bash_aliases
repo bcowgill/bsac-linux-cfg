@@ -8,6 +8,7 @@ alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
 alias upath='PATH=`echo $PATH | upath.sh`'
 
 # edit config files and re-source them
+alias se='source ./env.sh'
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
