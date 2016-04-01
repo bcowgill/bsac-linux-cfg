@@ -2,8 +2,13 @@ emacs editor command quick reference
 
 KEY:EMACS:CMD Ctrl-x Ctrl-c Exit emacs
 KEY:EMACS:CMD Ctrl-g Quit a partially typed command or interrupt and executing command
-KEY:EMACS:CMD Ctrl-u numbers Command repeat prefix i.e Ctrl-u 5 Ctrl-f = forward 5 characters
+KEY:EMACS:CMD Ctrl-u numbers Command repeat prefix i.e Ctrl-u 5 Ctrl-f = forward 5 characters -5 also allowed
 KEY:EMACS:CMD Alt-numbers Command repeat prefix i.e Alt-5 Ctrl-f = forward 5 characters
+KEY:EMACS:CMD Ctrl-x Ctrl-s Save file
+KEY:EMACS:CMD Ctrl-x s Ask to save each modified buffer
+KEY:EMACS:CMD Ctrl-z Suspend emacs session to give access to the shell (in a terminal)
+KEY:EMACS:CMD Alt-x command-name Execute and emacs command by name with tab completion
+KEY:EMACS:CMD Alt-x recover-file Recover a file from the auto-save after a crash
 
 KEY:EMACS:MOVE Ctrl-v = PageDn
 KEY:EMACS:MOVE Alt-v = PageUp
@@ -31,15 +36,24 @@ KEY:EMACS:EDIT Alt-BackSpace Kill word before cursor point
 KEY:EMACS:EDIT Alt-d Kill the word after the cursor point
 KEY:EMACS:EDIT Ctrl-k Kill from cursor point to end of line
 KEY:EMACS:EDIT Alt-k Kill to the end of current sentence (full stop and two spaces)
+KEY:EMACS:EDIT Ctrl-/ Undo last edit
+KEY:EMACS:EDIT Ctrl-Shift-_ Undo last edit
+KEY:EMACS:EDIT Ctrl-x u Undo last edit
+KEY:EMACS:EDIT Ctrl-y Yank (paste) killed text back into the document
+KEY:EMACS:EDIT Alt-y (after a Ctrl-y) Yank (paste) previously killed text from the history. use Ctrl-u N to specify Nth previous yank
 
 KEY:EMACS:NAV Ctrl-x r m Set a named bookmark at current cursor point
 
 KEY:EMACS:VIEW Ctrl-x 1 Single window view, close all other windows
 
+KEY:EMACS:MARK Ctrl-Space Set mark point to begin selecting text
+KEY:EMACS:MARK Ctrl-w Kill (cut) the text from the mark point to current cursor point
 
-KEY:EMACS:MARK
 KEY:EMACS:FIND Ctrl-s Search incrementally
-KEY:EMACS:FIND
+KEY:EMACS:FIND Ctrl-x Ctrl-f Find a file to edit with Tab completion or sets name for a new file
+KEY:EMACS:FIND Ctrl-x Ctrl-b List all open buffers to select one to switch to
+KEY:EMACS:FIND Ctrl-x b Find another open buffer to edit by typing its name
+
 KEY:EMACS:PASTE
 KEY:EMACS:CODE
 KEY:EMACS:DOC
@@ -73,9 +87,9 @@ Emacs Rocks  http://emacsrocks.com/e01.html
 Emacs v Webstorm for JS https://spin.atomicobject.com/2016/01/26/webstorm-nodejs-development/
 Emacs Javascript https://www.google.co.uk/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8&client=ubuntu#q=emacs%20javascript
 Vim to Emacs http://juanjoalvarez.net/es/detail/2014/sep/19/vim-emacsevil-chaotic-migration-guide/
+Emacs dotfiles https://github.com/juanjux/emacs-dotfiles/blob/master/init.el
 
 HEREIAM:
-C-u 8 C-f in tutorial
 
 TODO:
 require init-evil

@@ -104,3 +104,5 @@ Markdown rendering in editor
 Paste previous clipboards
 Jump to parenthesis
 Ctrl-Mousewheel to scroll horizontally
+Redo command?
+Auto save on loss of focus or after a specific time period
