@@ -5,14 +5,16 @@
 WSBIN=$HOME/bin/workshare
 export PATH=$WSBIN:$PATH
 
+source detect-monitors.sh
+
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-	    # 3 monitors
+	    # 1 or 2 monitors
 		shell=1
 		edit=2
 		app=3
-		email=9
+		email=4
 		build=5
 		chat=6
 		vbox=7
@@ -116,17 +118,19 @@ i3do "workspace $files; exec browse.sh"
 i3do "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
 sleep 5
 
+if ${OUTPUT_MONITORS:-2} != 1; then
 # $vbox
 #i3do "workspace $vbox; exec xscreensaver-demo" # placeholder to lock screen
 i3do "workspace $vbox; exec virtualbox"
 sleep 2
+fi
 
 # $email
 i3do "workspace $email; exec i3-sensible-terminal" # placeholder for google chrome
 sleep 1
 
 # $app
-i3do "workspace $app; exec chromium-browser"
+i3do "workspace $app; exec chromium-browser chrome-extension://edacconmaakjimmfgnblocblbcdcpbko/main.html"
 sleep 2
 
 # $build
@@ -173,6 +177,7 @@ sleep 1
 i3do "move scratchpad"
 
 # $edit
+i3do "workspace $edit; exec emacs.sh"
 i3do "workspace $edit; exec wstorm.sh"
 
 random-desktop.sh
