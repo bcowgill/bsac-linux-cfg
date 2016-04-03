@@ -22,6 +22,7 @@ KEY:EMACS:CMD Ctrl-g Quit a partially typed command or interrupt and executing c
 KEY:EMACS:CMD Esc Esc Esc Get out of recursive editing level (all purpose get out command)
 KEY:EMACS:CMD Ctrl-u numbers Command repeat prefix i.e Ctrl-u 5 Ctrl-f = forward 5 characters -5 also allowed
 KEY:EMACS:CMD Alt-numbers Command repeat prefix i.e Alt-5 Ctrl-f = forward 5 characters
+KEY:EMACS:CMD Ctrl-x k Kill (close) the current buffer
 KEY:EMACS:CMD Ctrl-x Ctrl-s Save file
 KEY:EMACS:CMD Ctrl-x s ! Save all buffers
 KEY:EMACS:CMD Ctrl-x s Ask to save each modified buffer
@@ -61,6 +62,12 @@ KEY:EMACS:EDIT Alt-k Kill to the end of current sentence (full stop and two spac
 KEY:EMACS:EDIT Ctrl-/ Undo last edit
 KEY:EMACS:EDIT Ctrl-Shift-_ Undo last edit
 KEY:EMACS:EDIT Ctrl-x u Undo last edit
+KEY:EMACS:EDIT Ctrl-g Ctrl-/ After undo/redo, change direction and redo/undo
+KEY:EMACS:EDIT Ctrl-x Tab Indentation sub-mode Left/Right Shift-Left/Right to indent by char/tab
+KEY:EMACS:EDIT Ctrl-a Enter Open a blank line above the current one
+KEY:EMACS:EDIT Ctrl-e Enter Open a blank line after the current one
+KEY:EMACS:EDIT Ctrl-x Ctrl-o Delete all blank lines around the cursor point except one
+KEY:EMACS:EDIT Alt-Space Delete all blank spaces around the cursor point except one
 
 KEY:EMACS:NAV Ctrl-x r m Set a named bookmark at current cursor point
 KEY:EMACS:NAV Ctrl-x r b Jump to a named bookmark
@@ -74,14 +81,19 @@ KEY:EMACS:VIEW Alt-x make-frame Create a new graphical instance (frame) of emacs
 KEY:EMACS:VIEW Alt-x delete-frame Close the current graphical instance (frame) of emaca
 
 KEY:EMACS:MARK Ctrl-Space Set mark point to begin selecting text
-KEY:EMACS:MARK Ctrl-w Kill (cut) the text from the mark point to current cursor point
+KEY:EMACS:MARK Ctrl-x Ctrl-x Switch mark point with cursor point
 KEY:EMACS:MARK Ctrl-x h Select all
+KEY:EMACS:MARK Ctrl-x Space Set mark point to being selecting text by rectangle
+KEY:EMACS:MARK Ctrl-w Kill (cut) the text from the mark point to current cursor point
+KEY:EMACS:MARK Ctrl-Shift-Backspace Kill the entire line
 
 KEY:EMACS:FIND Ctrl-s Search incrementally forward
 KEY:EMACS:FIND Ctrl-r Search incrementally in reverse direction
+KEY:EMACS:FIND Alt-Shift-% Search and replace
+KEY:EMACS:FIND Ctrl-Alt-Shift-% Regular expression search and replace
 KEY:EMACS:FIND Ctrl-x Ctrl-f Find a file to edit with Tab completion or sets name for a new file
-KEY:EMACS:FIND Ctrl-x Ctrl-b List all open buffers to select one to switch to
 KEY:EMACS:FIND Ctrl-x b Find another open buffer to edit by typing its name
+KEY:EMACS:FIND Ctrl-x Ctrl-b List all open buffers to select one to switch to
 
 KEY:EMACS:PASTE Ctrl-y Yank (paste) killed text back into the document
 KEY:EMACS:PASTE Alt-y (after a Ctrl-y) Yank (paste) previously killed text from the history. use Ctrl-u N to specify Nth previous yank
