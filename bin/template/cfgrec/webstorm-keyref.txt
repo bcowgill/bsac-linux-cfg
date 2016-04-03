@@ -99,6 +99,7 @@ Ctrl-Shift-N open any file by partial matching
 Ctrl-/ Ctrl-Shift-/ Comment out a line/block
 Alt-Shift Up/Dn to move line/selection up/down
 Ctrl-d Duplicate line/selection
+Ctrl-Click to jump to definition of function
 Column selection and fill
 Markdown rendering in editor
 Paste previous clipboards

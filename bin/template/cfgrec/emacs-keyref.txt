@@ -1,21 +1,43 @@
 emacs editor command quick reference
 
+    Navigation Compass for emacs
+
+     sent home word col
+doc  ence              A-S-<
+page                    A-v
+line                    C-p
+       A-a C-a A-b C-b  C-l  C-f A-f C-e A-e
+                        C-n
+                        C-v
+                       A-S->
+
+Select Ctrl-Space
+Cut    Ctrl-w
+Copy   Alt-w
+Paste  Ctrl-y Alt-y
+Duplicate line Ctrl-a Ctrl-k Ctrl-y
+
 KEY:EMACS:CMD Ctrl-x Ctrl-c Exit emacs
 KEY:EMACS:CMD Ctrl-g Quit a partially typed command or interrupt and executing command
+KEY:EMACS:CMD Esc Esc Esc Get out of recursive editing level (all purpose get out command)
 KEY:EMACS:CMD Ctrl-u numbers Command repeat prefix i.e Ctrl-u 5 Ctrl-f = forward 5 characters -5 also allowed
 KEY:EMACS:CMD Alt-numbers Command repeat prefix i.e Alt-5 Ctrl-f = forward 5 characters
 KEY:EMACS:CMD Ctrl-x Ctrl-s Save file
+KEY:EMACS:CMD Ctrl-x s ! Save all buffers
 KEY:EMACS:CMD Ctrl-x s Ask to save each modified buffer
 KEY:EMACS:CMD Ctrl-z Suspend emacs session to give access to the shell (in a terminal)
 KEY:EMACS:CMD Alt-x command-name Execute and emacs command by name with tab completion
 KEY:EMACS:CMD Alt-x recover-file Recover a file from the auto-save after a crash
 
+KEY:EMACS:WRAP Alt-x auto-fill-mode Minor mode to wrap text when line too long
+KEY:EMACS:WRAP Ctrl-u number Ctrl-x f Sets the auto-fill margin for word wrapping
+KEY:EMACS:WRAP Alt-q Reflow current paragraph to the auto-fill margins
+
 KEY:EMACS:MOVE Ctrl-v = PageDn
 KEY:EMACS:MOVE Alt-v = PageUp
 KEY:EMACS:MOVE Esc v = PageUp
 KEY:EMACS:MOVE Ctrl-l = Center/Top/Bottom Move text so text near cursor is at center of screen, press again to move it to top/bottom of screen
-KEY:EMACS:MOVE Ctrl-u 0 Ctrl-l Move view so current line is at top of window
-KEY:EMACS:MOVE Alt-0 Ctrl-l Move view so current line is at top of window
+KEY:EMACS:MOVE Ctrl-l Ctrl-l Move view so current line is at top of window
 KEY:EMACS:MOVE Ctrl-p = Up = previous line
 KEY:EMACS:MOVE Ctrl-n = Down = next line
 KEY:EMACS:MOVE Ctrl-f = Right = forward one column
@@ -39,22 +61,31 @@ KEY:EMACS:EDIT Alt-k Kill to the end of current sentence (full stop and two spac
 KEY:EMACS:EDIT Ctrl-/ Undo last edit
 KEY:EMACS:EDIT Ctrl-Shift-_ Undo last edit
 KEY:EMACS:EDIT Ctrl-x u Undo last edit
-KEY:EMACS:EDIT Ctrl-y Yank (paste) killed text back into the document
-KEY:EMACS:EDIT Alt-y (after a Ctrl-y) Yank (paste) previously killed text from the history. use Ctrl-u N to specify Nth previous yank
 
 KEY:EMACS:NAV Ctrl-x r m Set a named bookmark at current cursor point
+KEY:EMACS:NAV Ctrl-x r b Jump to a named bookmark
 
 KEY:EMACS:VIEW Ctrl-x 1 Single window view, close all other windows
+KEY:EMACS:VIEW Ctrl-x 2 Split window in two horizontally
+KEY:EMACS:VIEW Ctrl-x o Move the cursor to the other window
+KEY:EMACS:VIEW Ctrl-x 4 Ctrl-f Split window and open another file in it
+KEY:EMACS:VIEW Ctrl-Alt-v Scroll the other window down a page
+KEY:EMACS:VIEW Alt-x make-frame Create a new graphical instance (frame) of emacs
+KEY:EMACS:VIEW Alt-x delete-frame Close the current graphical instance (frame) of emaca
 
 KEY:EMACS:MARK Ctrl-Space Set mark point to begin selecting text
 KEY:EMACS:MARK Ctrl-w Kill (cut) the text from the mark point to current cursor point
+KEY:EMACS:MARK Ctrl-x h Select all
 
-KEY:EMACS:FIND Ctrl-s Search incrementally
+KEY:EMACS:FIND Ctrl-s Search incrementally forward
+KEY:EMACS:FIND Ctrl-r Search incrementally in reverse direction
 KEY:EMACS:FIND Ctrl-x Ctrl-f Find a file to edit with Tab completion or sets name for a new file
 KEY:EMACS:FIND Ctrl-x Ctrl-b List all open buffers to select one to switch to
 KEY:EMACS:FIND Ctrl-x b Find another open buffer to edit by typing its name
 
-KEY:EMACS:PASTE
+KEY:EMACS:PASTE Ctrl-y Yank (paste) killed text back into the document
+KEY:EMACS:PASTE Alt-y (after a Ctrl-y) Yank (paste) previously killed text from the history. use Ctrl-u N to specify Nth previous yank
+
 KEY:EMACS:CODE
 KEY:EMACS:DOC
 KEY:EMACS:BUILD
@@ -62,8 +93,16 @@ KEY:EMACS:DEBUGGER
 KEY:EMACS:CHANGES
 KEY:EMACS:TABS
 
+KEY:EMACS:HELP Ctrl-h ? Show what help is available
+KEY:EMACS:HELP Ctrl-h a string Apropos help on all functions which match the string
+KEY:EMACS:HELP Ctrl-h i Show the system info instruction manual within Emacs
+KEY:EMACS:HELP Ctrl-h r Show the Emacs info manual
+KEY:EMACS:HELP Ctrl-h c key-combo Show the name of the function run by a key binding
+KEY:EMACS:HELP Ctrl-h b Show all key bindings
 KEY:EMACS:HELP Ctrl-h k key-combo Help on key binding
-
+KEY:EMACS:HELP Ctrl-h f function-name Help on named emacs function
+KEY:EMACS:HELP Ctrl-h v variable-name Help on named emacs variable
+KEY:EMACS:HELP Ctrl-h m Help on current editing mode
 
 Welcome to GNU Emacs, one component of the GNU/Linux operating system.
 
@@ -101,6 +140,11 @@ backspace stops at left column
 delete stops at end of line
 enter inserts new line instead of splitting it
 home toggle to start of line or start of text on the line
+highlight current line like from vslick
 
-
-
+set default margins to 76
+Alt-x ediff
+Alt-x dired
+(global-auto-revert-mode 1)
+auto-save-mode
+toggle-save-place-globally

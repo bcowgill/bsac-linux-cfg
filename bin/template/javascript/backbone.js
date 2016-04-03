@@ -28,7 +28,7 @@ var MyClass = BaseClass.extend({
         this.on('change', _.bind(function (model) {
             void model;
             /*dbg:*/ console.debug('MUSTDO ' + this._inherits[0], this, arguments);
-        }));
+        }, this));
     }
 
 });
