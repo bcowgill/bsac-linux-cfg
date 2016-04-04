@@ -29,6 +29,13 @@ KEY:EMACS:CMD Ctrl-x s Ask to save each modified buffer
 KEY:EMACS:CMD Ctrl-z Suspend emacs session to give access to the shell (in a terminal)
 KEY:EMACS:CMD Alt-x command-name Execute and emacs command by name with tab completion
 KEY:EMACS:CMD Alt-x recover-file Recover a file from the auto-save after a crash
+KEY:EMACS:CMD Alt-x man Manual page for system command viewed within emacs in new window
+KEY:EMACS:CMD Alt-x shell System shell within emacs in new window
+KEY:EMACS:CMD Alt-x shell-command Run single shell command and capture to a new buffer
+KEY:EMACS:CMD Alt-Shift-! Run single shell command and capture to a new buffer
+KEY:EMACS:CMD Ctrl-u Alt-x shell-command Run single shell command and insert output into current buffer
+KEY:EMACS:CMD Alt-x calculator Calculator single line window
+KEY:EMACS:CMD Alt-x calendar Show Calendar/diary
 
 KEY:EMACS:WRAP Alt-x auto-fill-mode Minor mode to wrap text when line too long
 KEY:EMACS:WRAP Ctrl-u number Ctrl-x f Sets the auto-fill margin for word wrapping
@@ -51,6 +58,8 @@ KEY:EMACS:MOVE Alt-a = Beginning of sentence
 KEY:EMACS:MOVE Alt-e = End of sentence
 KEY:EMACS:MOVE Alt-Shift-< = Top of document (sets bookmark)
 KEY:EMACS:MOVE Alt-Shift-> = Bottom of document (sets bookmark)
+KEY:EMACS:MOVE Ctrl-x Ctrl-s Move to last marked position (swap point and mark)
+KEY:EMACS:MOVE Ctrl-u Ctrl-Space Move to previously marked place in mark ring
 
 KEY:EMACS:CONFIG
 
@@ -68,6 +77,7 @@ KEY:EMACS:EDIT Ctrl-a Enter Open a blank line above the current one
 KEY:EMACS:EDIT Ctrl-e Enter Open a blank line after the current one
 KEY:EMACS:EDIT Ctrl-x Ctrl-o Delete all blank lines around the cursor point except one
 KEY:EMACS:EDIT Alt-Space Delete all blank spaces around the cursor point except one
+KEY:EMACS:EDIT Ctrl-x i Insert another file into current buffer
 
 KEY:EMACS:NAV Ctrl-x r m Set a named bookmark at current cursor point
 KEY:EMACS:NAV Ctrl-x r b Jump to a named bookmark
@@ -78,22 +88,38 @@ KEY:EMACS:VIEW Ctrl-x o Move the cursor to the other window
 KEY:EMACS:VIEW Ctrl-x 4 Ctrl-f Split window and open another file in it
 KEY:EMACS:VIEW Ctrl-Alt-v Scroll the other window down a page
 KEY:EMACS:VIEW Alt-x make-frame Create a new graphical instance (frame) of emacs
-KEY:EMACS:VIEW Alt-x delete-frame Close the current graphical instance (frame) of emaca
+KEY:EMACS:VIEW Alt-x delete-frame Close the current graphical instance (frame) of emacs
+KEY:EMACS:VIEW Ctrl-x n n Narrow buffer to current region - hides rest of buffer and restricts edit/search/replace to the region selected
+KEY:EMACS:VIEW Ctrl-x n w Wident buffer to original - allow edit of entire buffer again
 
 KEY:EMACS:MARK Ctrl-Space Set mark point to begin selecting text
 KEY:EMACS:MARK Ctrl-x Ctrl-x Switch mark point with cursor point
+KEY:EMACS:MARK Alt-h Select current paragraph (forward and backward)
 KEY:EMACS:MARK Ctrl-x h Select all
 KEY:EMACS:MARK Ctrl-x Space Set mark point to being selecting text by rectangle
 KEY:EMACS:MARK Ctrl-w Kill (cut) the text from the mark point to current cursor point
 KEY:EMACS:MARK Ctrl-Shift-Backspace Kill the entire line
 
+KEY:EMACS:FIND Alt-g g number Go to line number specified
+KEY:EMACS:FIND Ctrl-a Ctrl-u number Ctrl-f Go to column number on current line
 KEY:EMACS:FIND Ctrl-s Search incrementally forward
 KEY:EMACS:FIND Ctrl-r Search incrementally in reverse direction
+KEY:EMACS:FIND Ctrl-s Ctrl-s Search for most recently searched item
+KEY:EMACS:FIND Ctrl-s Alt-p Previous item in search history
+KEY:EMACS:FIND Ctrl-s Alt-n Next item in search history
+KEY:EMACS:FIND Ctrl-Alt-s Regular Expression Search incrementally forward
+KEY:EMACS:FIND Ctrl-Alt-r Regular Expression Search incrementally in reverse direction
+KEY:EMACS:FIND Alt-x re-builder Regular Expression builder to test your regex
+KEY:EMACS:FIND Alt-x occur Regular Expression occurrences shows all matches in another interactive buffer
 KEY:EMACS:FIND Alt-Shift-% Search and replace
 KEY:EMACS:FIND Ctrl-Alt-Shift-% Regular expression search and replace
 KEY:EMACS:FIND Ctrl-x Ctrl-f Find a file to edit with Tab completion or sets name for a new file
 KEY:EMACS:FIND Ctrl-x b Find another open buffer to edit by typing its name
 KEY:EMACS:FIND Ctrl-x Ctrl-b List all open buffers to select one to switch to
+KEY:EMACS:FIND Alt-x rgrep Recursive egrep for match
+KEY:EMACS:FIND Alt-x vc-git-grep Git grep for a match
+KEY:EMACS:FIND Alt-x grep egrep for match
+KEY:EMACS:FIND Alt-x lgrep egrep any directory for match
 
 KEY:EMACS:PASTE Ctrl-y Yank (paste) killed text back into the document
 KEY:EMACS:PASTE Alt-y (after a Ctrl-y) Yank (paste) previously killed text from the history. use Ctrl-u N to specify Nth previous yank
@@ -105,7 +131,13 @@ KEY:EMACS:DEBUGGER
 KEY:EMACS:CHANGES
 KEY:EMACS:TABS
 
+KEY:EMACS:MACRO F3 Start recording a macro
+KEY:EMACS:MACRO F4 Stop recording the macro
+KEY:EMACS:MACRO F4 Play last macro once
+KEY:EMACS:MACRO Alt-0 F4 Play last macro continuously until failure (ie at end of buffer)
+
 KEY:EMACS:HELP Ctrl-h ? Show what help is available
+KEY:EMACS:HELP Ctrl-h Ctrl-f Emacs FAQ
 KEY:EMACS:HELP Ctrl-h a string Apropos help on all functions which match the string
 KEY:EMACS:HELP Ctrl-h i Show the system info instruction manual within Emacs
 KEY:EMACS:HELP Ctrl-h r Show the Emacs info manual
@@ -139,6 +171,8 @@ Emacs v Webstorm for JS https://spin.atomicobject.com/2016/01/26/webstorm-nodejs
 Emacs Javascript https://www.google.co.uk/webhp?sourceid=chrome-instant&ion=1&espv=2&es_th=1&ie=UTF-8&client=ubuntu#q=emacs%20javascript
 Vim to Emacs http://juanjoalvarez.net/es/detail/2014/sep/19/vim-emacsevil-chaotic-migration-guide/
 Emacs dotfiles https://github.com/juanjux/emacs-dotfiles/blob/master/init.el
+Emacs Reference Sheet https://www.emacswiki.org/emacs/Reference_Sheet_by_Aaron_Hawley
+Ergomacs Mode https://ergoemacs.github.io/gradual-adoption.html
 
 HEREIAM:
 
