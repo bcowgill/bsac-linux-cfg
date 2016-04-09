@@ -1,0 +1,67 @@
+#!/usr/bin/env perl
+# TODO short description
+
+use strict;
+use warnings;
+
+use English qw(-no_match_vars);
+use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Indent   = 1;
+$Data::Dumper::Terse    = 1;
+
+use File::Slurp qw(:std :edit);
+use autodie qw(open);
+
+our $VERSION = 0.1;
+our $DEBUG = 1;
+
+warning("oops");
+debug("debug");
+
+while (my $line = <DATA>) {
+	print "$line";
+}
+
+usage("problem");
+
+# make tabs 3 spaces
+sub tab
+{
+	my ($message) = @ARG;
+	my $THREE_SPACES = ' ' x 3;
+	$message =~ s{\t}{$THREE_SPACES}xmsg;
+	return $message;
+}
+
+sub warning
+{
+	my ($warning) = @ARG;
+	warn( "WARN: " . tab($warning) . "\n" );
+}
+
+sub debug
+{
+	my ( $msg, $level ) = @ARG;
+	$level ||= 1;
+
+##	print "debug @{[substr($msg,0,10)]} debug: $DEBUG level: $level\n";
+	print tab($msg) . "\n" if ( $DEBUG >= $level );
+}
+
+sub usage
+{
+	my ($msg) = @ARG;
+	print "$msg\n\n" if $msg;
+	print <<"USAGE";
+usage: $0
+
+TODO short usage
+USAGE
+	exit($msg ? 1: 0);
+}
+
+__END__
+__DATA__
+I am the data.
+
