@@ -1,0 +1,150 @@
+Notes from Emacs Lisp Info tutorial
+
+	'(this is a "quoted" list)
+	(quote hello)
+	nil === ()
+
+	a-variable ;; symbol for a variable
+	(set 'a-variable 42) ;; bind the variable symbol to a value
+	(setq a-variable 43)
+	(setq trees '(pine fir oak maple)
+		herbivores '(gazelle antelope zebra))
+
+	a-function ;; symbol for a function
+	(a-function) ;; invoke a function
+	(defun FUNCTION-NAME (ARGUMENTS…)
+		"OPTIONAL-DOCUMENTATION…"               ; Ctrl-h f
+		(interactive ARGUMENT-PASSING-INFO)     ; optional
+		BODY…)
+	(defun                ;; begin a function definition
+		multiply-by-seven ;; symbol to bind the function definition to
+		(number)          ;; arguments passed to function
+		"Multiply NUMBER by seven." ;; help/documentation for function
+		;; omitted optional key binding
+		(* 7 number)      ;; instructions to perform for function
+	)
+	(multiply-by-seven 7)
+
+	(+ 2 2) ;; symbolic function as operator
+	(+ 2 fill-column)
+
+	(setq counter 0)                ; Let’s call this the initializer.
+	(setq counter (+ counter 1))    ; This is the incrementer.
+
+	(let ((zebra 'stripes)   ; let list defines local variables
+		(tiger 'fierce))
+		; body of instructions for the let
+		(message "One kind of animal has %s and another is %s."
+			zebra tiger))
+	zebra ; no longer defined
+
+	(if (> 5 4)                             ; if-part
+		(message "5 is greater than 4!"))   ; then-part
+	(if (equal 5 5)                         ; if-part
+		(message "5 is equal to 5!"))       ; then-part
+	(if 0
+		(message "0 is not nil so it is TRUE!"))
+	(if ""
+		(message "'' is not nil so it is TRUE!"))
+
+	(defun is-something (thing)
+		"is-something checks if thing is something meaningful like a non empty string, non-zero or non-nil"
+		(if thing
+			(if (equal "" thing)
+				nil
+			  (if (equal 0 thing)
+			  	  nil
+				thing))
+			nil)
+	)
+	(is-something ())
+	(is-something nil)
+	(is-something 0)
+	(is-something "")
+	(is-something 4)
+	(is-something '(this))
+	(is-something '(""))
+	(is-something (> 5 4))
+
+
+	(if (> 4 5)                                   ; if-part
+			(message "4 falsely greater than 5!") ; then-part
+		(message "4 is not greater than 5!"))     ; else-part
+
+	(defun then (list)
+		(concat
+			"The function 'then' is syntactic sugar for an if list.\n\n"
+			"It allows you to write:\n\n"
+			"\t(if LOGICAL-TEST\n"
+			"\t\t(then ACTION-WHEN-TRUE)\n"
+			"\t\t(else ACTION-WHEN-NIL))"
+		)
+		list)
+	(defun else (list)
+		(concat
+			"The function 'else' is syntactic sugar for an if else list.\n\n"
+			"It allows you to write:\n\n"
+			"\t(if LOGICAL-TEST\n"
+			"\t\t(then ACTION-WHEN-TRUE)\n"
+			"\t\t(else ACTION-WHEN-NIL))"
+		)
+		list)
+	(if (> 5 7)
+		(then 42)
+		(else 45))
+
+Editor variables/functions (evaluate with Ctrl-x Ctrl-e)
+	(message "This message appears in the echo area!")
+	(concat "abc" "def")
+	(substring "The quick brown fox jumped." 16 19)
+	(number-to-string (+ 2 fill-column))
+
+	fill-column
+	(buffer-name)
+	(buffer-file-name)
+	(current-buffer)
+	(other-buffer)
+	(switch-to-buffer (other-buffer))
+	(switch-to-buffer (other-buffer (current-buffer) t))
+	(buffer-size)
+	(point)
+	(point-min)
+	(point-max)
+	(mark)
+	(- (point) (point-min))
+	(mark-whole-buffer)
+
+	(save-excursion
+		(switch-to-buffer (other-buffer)) ;; WHAT? actually changes buffer
+		(exchange-point-and-mark)
+	)
+
+	(let (
+		(output "")
+		(one '(1 2 3))
+		(wone '(1 2 3))
+		clone
+		)
+		(setq clone one)
+		(if (equal one wone) ; test equality of value
+			(setq output "one equal wone")
+			(setq output "one not equal wone")
+			)
+		(if (equal one clone)
+			(setq output (concat output ", one equal clone"))
+			(setq output (concat output ", one not equal clone"))
+			)
+		(if (eq one wone) ; test if one object IS another
+			(setq output (concat output ", one eq wone"))
+			(setq output (concat output ", one not eq wone"))
+			)
+		(if (eq one clone)
+			(setq output (concat output ", one eq clone"))
+			(setq output (concat output ", one not eq clone"))
+			)
+		(if (eq one one)
+			(setq output (concat output ", one eq one"))
+			(setq output (concat output ", one not eq one"))
+			)
+		(message output)
+	)

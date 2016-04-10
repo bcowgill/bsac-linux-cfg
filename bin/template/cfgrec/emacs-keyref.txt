@@ -36,6 +36,7 @@ KEY:EMACS:CMD Alt-Shift-! Run single shell command and capture to a new buffer
 KEY:EMACS:CMD Ctrl-u Alt-x shell-command Run single shell command and insert output into current buffer
 KEY:EMACS:CMD Alt-x calculator Calculator single line window
 KEY:EMACS:CMD Alt-x calendar Show Calendar/diary
+KEY:EMACS:CMD Ctrl-x Ctrl-e Evaluate Lisp symbolic expression before the cursor point
 
 KEY:EMACS:WRAP Alt-x auto-fill-mode Minor mode to wrap text when line too long
 KEY:EMACS:WRAP Ctrl-u number Ctrl-x f Sets the auto-fill margin for word wrapping
@@ -73,6 +74,7 @@ KEY:EMACS:EDIT Ctrl-Shift-_ Undo last edit
 KEY:EMACS:EDIT Ctrl-x u Undo last edit
 KEY:EMACS:EDIT Ctrl-g Ctrl-/ After undo/redo, change direction and redo/undo
 KEY:EMACS:EDIT Ctrl-x Tab Indentation sub-mode Left/Right Shift-Left/Right to indent by char/tab
+KEY:EMACS:EDIT Ctrl-Alt-\ Indent the marked region
 KEY:EMACS:EDIT Ctrl-a Enter Open a blank line above the current one
 KEY:EMACS:EDIT Ctrl-e Enter Open a blank line after the current one
 KEY:EMACS:EDIT Ctrl-x Ctrl-o Delete all blank lines around the cursor point except one
@@ -148,6 +150,33 @@ KEY:EMACS:HELP Ctrl-h f function-name Help on named emacs function
 KEY:EMACS:HELP Ctrl-h v variable-name Help on named emacs variable
 KEY:EMACS:HELP Ctrl-h m Help on current editing mode
 
+Ergoemacs mode
+lvl1
+Alt-i was tab-to-tab-stop now is previous-line
+Alt-j was indent-new-comment-line now is left-char
+Alt-k was kill-sentence now is next-line
+Alt-l was downcase-word now is right-char
+Alt-Space was just-one-space now is set-mark-command
+
+lvl2
+Alt-e was forward-sentence now is backward-kill-word
+Alt-r was move-to-window-line-top-bottom now is forward-kill-word
+Alt-d was kill-word now is delete-backward-char
+Alt-f was forward-word now is delete-forward-char
+Alt-u was upcase-word now is backward-word
+Alt-o was ?? <mouse-5> now is forward-word
+
+    Navigation Compass for ergoemacs
+
+     sent home word col
+doc  ence                   
+page                       
+line                    A-i
+               A-u  A-j      A-l A-o        
+                        A-k
+                           
+                            
+
 Welcome to GNU Emacs, one component of the GNU/Linux operating system.
 
 Emacs Tutorial	Learn basic keystroke commands
@@ -163,6 +192,13 @@ To quit a partially entered command, type Control-g.
 This is GNU Emacs 24.4.1 (x86_64-pc-linux-gnu, GTK+ Version 3.14.9)
  of 2015-03-21 on kissel, modified by Debian
 Copyright (C) 2014 Free Software Foundation, Inc.
+
+PACKAGES:
+windresize
+rainbow-mode
+num3-mode
+minimap-mode
+ergoemacs-mode
 
 REFERENCES:
 Emacs Movies http://emacsmovies.org/blog/2012/01/21/welcome_to_emacsmovies.org/
@@ -187,6 +223,9 @@ delete stops at end of line
 enter inserts new line instead of splitting it
 home toggle to start of line or start of text on the line
 highlight current line like from vslick
+turn on rainbow mode for all less,js,html files automatically
+configure num3-mode colors and turn on for all files
+configure linum-mode for all files
 
 set default margins to 76
 Alt-x ediff
