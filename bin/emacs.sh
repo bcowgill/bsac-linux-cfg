@@ -3,11 +3,16 @@
 pushd $HOME/projects
 emacs --chdir $HOME/projects --title=emacs-projects \
 	-f shell \
-	$HOME/.emacs \
-	$HOME/bin/emacs.sh \
-	$HOME/bin/template/javascript/backbone.js \
-	$HOME/workspace/notes.txt \
 	$* \
-	-f delete-other-windows \
 	&
+#emacs --chdir $HOME/projects --title=emacs-projects \
+#	-f shell \
+#	$HOME/.emacs \
+#	$HOME/bin/emacs.sh \
+#	$HOME/bin/template/javascript/backbone.js \
+#	$HOME/bin/template/cfgrec/emacs-keyref.txt \
+#	$HOME/workspace/notes.txt \
+#	$* \
+#	-f delete-other-windows \
+#	&
 popd
