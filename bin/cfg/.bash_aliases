@@ -189,6 +189,7 @@ if [ `hostname` == worksharexps-XPS-15-9530 ]; then
    alias gpfdi='git push -f origin debug-inheritance'
    alias gpf20='git push -f origin case#33230-code-coverage'
    alias gcdi='git checkout debug-inheritance'
+   alias gcstory='git checkout case#29521-grid-view-comments'
    alias gc20='git checkout case#33230-code-coverage'
 fi
 
