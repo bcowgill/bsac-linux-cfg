@@ -61,7 +61,7 @@ my $rhSub = {
 	'-neg-arg2' => k('Ctrl-Alt--'),
 	'quoted-insert' => p('Ctrl-q', 'char'),
 
-	# Compass rose
+	# Movement Compass rose
 	'backward-page' => k('Ctrl-x', '['),
 	'backward-paragraph' => k('Alt-{'),
 	'backward-sentence' => k('Alt-b'),
@@ -182,6 +182,32 @@ my $rhSub = {
 	'-replace-custom' => k('Ctrl-r'),
 	'-replace-custom-exit' => k('Ctrl-Alt-c'),
 
+	# Multiple Windows
+	'delete-other-windows' => k('Ctrl-x', 1),
+	'delete-other-frames' => k('Ctrl-x', 5, 1),
+	'split-window-below' => k('Ctrl-x', 2),
+	'make-frame-command' => k('Ctrl-x', 5, 2),
+	'delete-window' => k('Ctrl-x', 0),
+	'delete-frame' => k('Ctrl-x', 5, 0),
+	'split-window-right' => k('Ctrl-x', 3),
+	'scroll-other-window' => k('Ctrl-Alt-v'),
+	'other-window' => k('Ctrl-x', 'o'),
+	'other-frame' => k('Ctrl-x', 5, 'o'),
+	'switch-to-buffer-other-window' => k('Ctrl-x', 4, 'b'),
+	'switch-to-buffer-other-frame' => k('Ctrl-x', 5, 'b'),
+	'display-buffer' => k('Ctrl-x', 4, 'Ctrl-o'),
+	'display-buffer-other-frame' => k('Ctrl-x', 5, 'Ctrl-o'),
+	'find-file-other-window' => k('Ctrl-x', 4, 'f'),
+	'find-file-other-frame' => k('Ctrl-x', 5, 'f'),
+	'find-file-read-only-other-window' => k('Ctrl-x', 4, 'r'),
+	'find-file-read-only-other-frame' => k('Ctrl-x', 5, 'r'),
+	'dired-other-window' => k('Ctrl-x', 4, 'd'),
+	'dired-other-frame' => k('Ctrl-x', 5, 'd'),
+	'find-tag-other-window' => k('Ctrl-x', 4, '.'),
+	'find-tag-other-frame' => k('Ctrl-x', 5, '.'),
+	'enlarge-window' => k('Ctrl-x', '^'),
+	'shrink-window-horizontally' => k('Ctrl-x', '{'),
+	'enlarge-window-horizontally' => k('Ctrl-x', '}'),
 };
 
 while (my $line = <DATA>) {
@@ -454,6 +480,28 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%-replace-help%|get help while replacing|
 </table>
 
+<h2>Window and Frame Manipulation</h2>
+
+<table class="define">
+|window|frame|description|
+|%delete-other-windows%|%delete-other-frames%|delete all other windows/frames|
+|%split-window-below%|%make-frame-command%|split window, above and below|
+|%delete-window%|%delete-frame%|delete this window|
+|%split-window-right%||split window side by side|
+|%scroll-other-window%||scroll other window down|
+|%other-window%|%other-frame%|switch cursor to another window|
+|%switch-to-buffer-other-window%|%switch-to-buffer-other-frame%|select buffer in other window|
+|%display-buffer%|%display-buffer-other-frame%|display buffer in other window|
+|%find-file-other-window%|%find-file-other-frame%|find file in other window|
+|%find-file-read-only-other-window%|%find-file-read-only-other-frame%|find file read-only in other window|
+|%dired-other-window%|%dired-other-frame%|run Dired in other window|
+|%find-tag-other-window%|%find-tag-other-frame%|find tag in other window|
+|%enlarge-window%||grow window taller|
+|%shrink-window-horizontally%||shrink window narrower|
+|%enlarge-window-horizontally%||grow window wider|
+</table>
+
+
 <hr />
 <h2></h2>
 
@@ -468,3 +516,6 @@ th||sentence|home|word|character||character|word|end|sentence|
 
 </body>
 </html>
+<!--
+
+-->
