@@ -1,3 +1,4 @@
 #!/bin/bash
-pushd ~/projects/files-ui
+#cd ~/projects/files-ui
+cd ~/projects/docuzilla
 git gui&

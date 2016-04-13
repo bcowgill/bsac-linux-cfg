@@ -144,14 +144,14 @@ sleep 2
 # A/B should be terminals with build/watch running
 # C should be browser
 i3do "workspace $build"
-xbuild-files.sh &
+xbuild-xilla.sh &
 sleep 2
 i3do "mark watch"
 
 i3do "layout default; split v"
-xbuild-newui.sh &
+xbuild-xilla2.sh &
 sleep 1
-i3do "mark newui"
+i3do "mark zilla"
 
 i3do "focus parent; split h"
 firefox &
