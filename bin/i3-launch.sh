@@ -10,11 +10,11 @@ source detect-monitors.sh
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-	    # 3 monitors
+	    # 1 or 2 monitors
 		shell=1
 		edit=2
 		app=3
-		email=9
+		email=4
 		build=5
 		chat=6
 		vbox=7
