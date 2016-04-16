@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Ergoemacs Key Binding Reference</title>
+	<title>Emacs Key Binding Reference</title>
 
 <style>
 th,td {
@@ -50,11 +50,12 @@ kbd {
 <body>
 <div class="box">
 
-<h1>Ergoemacs Key Binding Reference</h1>
+<h1>Emacs Key Binding Reference</h1>
 
 <h2>Leaving Emacs</h2>
 
 <table class="define">
+<tr><td><kbd>Ctrl-z</kbd></td><td>suspend Emacs (or iconify it under X)</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-c</kbd></td><td>exit Emacs ask to save</td></tr>
 </table>
 
@@ -62,20 +63,19 @@ kbd {
 
 <table class="define">
 <tr><td><kbd>Ctrl-g</kbd></td><td>abort a partially typed or executing command</td></tr>
-<tr><td><kbd>Alt-a</kbd> <code>recover-session</code></td><td>recover files lost by a system crash</td></tr>
-<tr><td><kbd>Ctrl-z</kbd> or <kbd>Alt-z</kbd> </td><td>undo an unwanted change</td></tr>
-<tr><td><kbd>Ctrl-Shift-z</kbd> or <kbd>Alt-Shift-z</kbd></td><td>redo previous undo</td></tr>
-<tr><td><kbd>Ctrl-r</kbd></td><td>revert a buffer to what is in the disk file</td></tr>
-<tr><td><kbd>Alt-a</kbd> <code>redraw-display</code></td><td>redraw screen</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>recover-session</code></td><td>recover files lost by a system crash</td></tr>
+<tr><td><kbd>Ctrl-/</kbd> or <kbd>Ctrl-x</kbd> <kbd>u</kbd> or <kbd>Ctrl-_</kbd></td><td>undo an unwanted change</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>revert-buffer</code></td><td>revert a buffer to what is in the disk file</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>redraw-display</code></td><td>redraw screen</td></tr>
 </table>
 
 <h2>Modifier Keys</h2>
 
 <table class="define">
-<tr><td><kbd>Alt-a</kbd> <i>function-name</i></td><td>Executes a named command function</td></tr>
+<tr><td><kbd>Alt-x</kbd> <i>function-name</i></td><td>Executes a named command function</td></tr>
 <tr><td><kbd>Ctrl-u</kbd> <i>number/-number</i></td><td>Specify a +/- numeric argument for the next command</td></tr>
-<tr><td><kbd>Ctrl-Alt-<i>N</i></kbd></td><td>Specify a numeric argument for the next command</td></tr>
-<tr><td><kbd>Ctrl-Alt--</kbd>  </td><td>Begin a negative argument for the next command</td></tr>
+<tr><td><kbd>Alt-<i>N</i></kbd></td><td>Specify a numeric argument for the next command</td></tr>
+<tr><td><kbd>Alt--</kbd> or <kbd>Ctrl--</kbd> or <kbd>Ctrl-Alt--</kbd></td><td>Begin a negative argument for the next command</td></tr>
 <tr><td><kbd>Ctrl-q</kbd> <i>char</i></td><td>Insert the next character literally</td></tr>
 </table>
 
@@ -83,66 +83,143 @@ kbd {
 
 <table class="compass">
 <tr><th></th><th>sentence</th><th>home</th><th>word</th><th>column</th><th></th><th>column</th><th>word</th><th>end</th><th>sentence</th></tr>
-<th class="right">document</th><td></td><td></td><td></td><td></td><td><kbd>Alt-n</kbd></td><td></td><td></td><td></td><td></td></tr>
-	<th class="right">page</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-i</kbd></td><td></td><td></td><td></td><td></td></tr>
-	<th class="right">paragraph</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-u</kbd></td><td></td><td></td><td></td><td></td></tr>
-	<th class="right">line</th><td></td><td></td><td></td><td></td><td><kbd>Alt-i</kbd></td><td></td><td></td><td></td><td></td></tr>
-		<th class="right"></th><td></td><td><kbd>Alt-h</kbd></td><td><kbd>Alt-u</kbd></td><td><kbd>Alt-j</kbd></td><td><kbd>Alt-p</kbd></td><td><kbd>Alt-l</kbd></td><td><kbd>Alt-o</kbd></td><td><kbd>Alt-Shift-h</kbd></td><td></td></tr>
-	<th class="right">line</th><td></td><td></td><td></td><td></td><td><kbd>Alt-k</kbd></td><td></td><td></td><td></td><td></td></tr>
-	<th class="right">paragraph</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-o</kbd></td><td></td><td></td><td></td><td></td></tr>
-	<th class="right">page</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-k</kbd></td><td></td><td></td><td></td><td></td></tr>
-<th class="right">document</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-n</kbd></td><td></td><td></td><td></td><td></td></tr>
+<th class="right">document</th><td></td><td></td><td></td><td></td><td><kbd>Alt-<</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">page</th><td></td><td></td><td></td><td></td><td><kbd>Ctrl-x</kbd> <kbd>[</kbd></td><td></td><td></td><td></td><td></td></tr>
+  <th class="right">screen</th><td></td><td></td><td></td><td></td><td><kbd>Alt-v</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">paragraph</th><td></td><td></td><td></td><td></td><td><kbd>Alt-{</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">line</th><td></td><td></td><td></td><td></td><td><kbd>Ctrl-p</kbd></td><td></td><td></td><td></td><td></td></tr>
+		<th class="right"></th><td><kbd>Alt-b</kbd></td><td><kbd>Ctrl-a</kbd></td><td><kbd>Alt-b</kbd></td><td><kbd>Ctrl-b</kbd></td><td><kbd>Ctrl-l</kbd></td><td><kbd>Ctrl-f</kbd></td><td><kbd>Alt-f</kbd></td><td><kbd>Ctrl-e</kbd></td><td><kbd>Alt-e</kbd></td></tr>
+	<th class="right">line</th><td></td><td></td><td></td><td></td><td><kbd>Ctrl-n</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">paragraph</th><td></td><td></td><td></td><td></td><td><kbd>Alt-}</kbd></td><td></td><td></td><td></td><td></td></tr>
+  <th class="right">screen</th><td></td><td></td><td></td><td></td><td><kbd>Ctrl-v</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">page</th><td></td><td></td><td></td><td></td><td><kbd>Ctrl-x</kbd> <kbd>]</kbd></td><td></td><td></td><td></td><td></td></tr>
+<th class="right">document</th><td></td><td></td><td></td><td></td><td><kbd>Alt-></kbd></td><td></td><td></td><td></td><td></td></tr>
 <tr><th></th><th>sentence</th><th>home</th><th>word</th><th>column</th><th></th><th>column</th><th>word</th><th>end</th><th>sentence</th></tr>
 </table>
 
 <h2>Other Motion</h2>
 
 <table class="define">
-<tr><td><kbd>Alt-p</kbd></td><td>scroll current line to center, top or bottom in succession</td></tr>
+<tr><td><kbd>Ctrl-l</kbd></td><td>scroll current line to center, top or bottom in succession</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd><</kbd></td><td>scroll view to left</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>></kbd></td><td>scroll view to right</td></tr>
+<tr><td><kbd>Ctrl-Alt-b</kbd></td><td>backwards one symbolic expression (sexp)</td></tr>
+<tr><td><kbd>Ctrl-Alt-f</kbd></td><td>forwards one symbolic expression (sexp)</td></tr>
+<tr><td><kbd>Alt-g</kbd> <kbd>g</kbd></td><td>go to line number</td></tr>
+<tr><td><kbd>Alt-g</kbd> <kbd>c</kbd></td><td>go to character offset from start of document</td></tr>
+<tr><td><kbd>Alt-m</kbd></td><td>go to start of line skipping initial indentation</td></tr>
 </table>
 
 <h2>Mark, Killing (Cut) and Deleting by direction.</h2>
 
 <table class="compass">
 <tr><th></th><th>sentence</th><th>home</th><th>word</th><th>character</th><th></th><th>character</th><th>word</th><th>end</th><th>sentence</th></tr>
+	<th class="right">mark</th><td></td><td></td><td><kbd>Alt--</kbd> <kbd>Alt-@</kbd></td><td></td><td></td><td></td><td><kbd>Alt-@</kbd></td><td></td><td></td></tr>
+		<th class="right">kill</th><td><kbd>Ctrl-x</kbd> <kbd>Backspace</kbd></td><td><kbd>Alt-0</kbd> <kbd>Ctrl-k</kbd></td><td><kbd>Ctrl-Backspace</kbd> or <kbd>Alt-Backspace</kbd></td><td><kbd>Backspace</kbd></td><td><kbd>Ctrl-w</kbd></td><td><kbd>Delete</kbd></td><td><kbd>Alt-d</kbd></td><td><kbd>Ctrl-k</kbd></td><td><kbd>Alt-k</kbd></td></tr>
 <tr><th></th><th>sentence</th><th>home</th><th>word</th><th>character</th><th></th><th>character</th><th>word</th><th>end</th><th>sentence</th></tr>
 </table>
 
 <h2>Marking (Selecting)</h2>
 
 <table class="define">
+<tr><td><kbd>Ctrl-Space</kbd> or <kbd>Ctrl-@</kbd></td><td>set mark here (begin selecting)</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-x</kbd></td><td>exchange mark and point</td></tr>
+<tr><td><kbd>Alt-@</kbd></td><td>set mark N words away (with argument prefix combo)</td></tr>
+<tr><td><kbd>Ctrl-Alt-@</kbd></td><td>mark forward within curent symbolic expression</td></tr>
+<tr><td><kbd>Ctrl-Alt-h</kbd></td><td>mark current function</td></tr>
+<tr><td><kbd>Alt-h</kbd></td><td>mark current paragraph</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-p</kbd></td><td>mark current page</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>h</kbd></td><td>mark entire buffer</td></tr>
 </table>
 
 <h2>Copy, Cut, Paste</h2>
 
 <table class="define">
+<tr><td><kbd>Ctrl-w</kbd></td><td>kill (cut) marked region to kill ring</td></tr>
+<tr><td><kbd>Alt-w</kbd></td><td>copy marked region to kill ring</td></tr>
+<tr><td><kbd>Ctrl-y</kbd></td><td>yank (paste) back from kill ring</td></tr>
+<tr><td><kbd>Alt-y</kbd></td><td>yank (paste) previous entry from kill ring</td></tr>
+<tr><td><kbd>Alt-z</kbd> <i>char</i></td><td>kill through next occurrence of char</td></tr>
+<tr><td><kbd>Alt--</kbd> <kbd>Ctrl-Alt-k</kbd></td><td>kill backwards one symbolic expression (sexp)</td></tr>
+<tr><td><kbd>Ctrl-Alt-k</kbd></td><td>kill forwards one symbolic expression (sexp)</td></tr>
 </table>
 
 <h2>Files and Buffers</h2>
 
 <table class="define">
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-f</kbd></td><td>visit a file into a buffer (existing or virtual new)</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-s</kbd></td><td>save the buffer to its disk file (create if virtual)</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-w</kbd></td><td>save buffer as another name</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>s</kbd></td><td>save all files asking to save each</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>i</kbd></td><td>insert contents of another file into this buffer</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-v</kbd></td><td>replace this buffer with the file you really want</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-q</kbd></td><td>toggle read-only status of buffer</td></tr>
 </table>
 
 <h2>Getting Help</h2>
 
 <table class="define">
+<tr><td><kbd>Ctrl-h</kbd> or <kbd>F1</kbd></td><td>help prefix key</td></tr>
+<tr><td><kbd>Ctrl-h</kbd> <kbd>t</kbd></td><td>help tutorial</td></tr>
+<tr><td><kbd>Ctrl-Alt-v</kbd></td><td>scroll the help (other) window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>1</kbd></td><td>remove help (and all other) window</td></tr>
+<tr><td><kbd>Ctrl-h</kbd> <kbd>a</kbd></td><td>apropos help matching a string</td></tr>
+<tr><td><kbd>Ctrl-h</kbd> <kbd>c</kbd></td><td>name of function bound to a key</td></tr>
+<tr><td><kbd>Ctrl-h</kbd> <kbd>k</kbd></td><td>help on the function bound to a key</td></tr>
+<tr><td><kbd>Ctrl-h</kbd> <kbd>f</kbd></td><td>help on a named function</td></tr>
+<tr><td><kbd>Ctrl-h</kbd> <kbd>m</kbd></td><td>help on current editing mode</td></tr>
 </table>
 
 <h2>Incremental Search</h2>
 
 <table class="define">
+<tr><td><kbd>Ctrl-s</kbd></td><td>search forward</td></tr>
+<tr><td><kbd>Ctrl-r</kbd></td><td>search backward</td></tr>
+<tr><td><kbd>Ctrl-Alt-s</kbd></td><td>regular expression search forward</td></tr>
+<tr><td><kbd>Ctrl-Alt-r</kbd></td><td>regular expression search backward</td></tr>
+<tr><td><kbd>Alt-p</kbd></td><td>select previous search string from history</td></tr>
+<tr><td><kbd>Alt-n</kbd></td><td>select next search string from history</td></tr>
+<tr><td><kbd>Enter</kbd></td><td>exit incremental search</td></tr>
+<tr><td><kbd>Backspace</kbd></td><td>undo effect of last character</td></tr>
 <tr><td><kbd>Ctrl-g</kbd></td><td>abort current search</td></tr>
 </table>
 
 <h2>Search and Replace</h2>
 
 <table class="define">
+<tr><td><kbd>Alt-%</kbd></td><td>begin literal search and replace</td></tr>
+<tr><td><kbd>Ctrl-Alt-%</kbd></td><td>begin regex search and replace</td></tr>
+<tr><td><kbd>Ctrl-q</kbd> <kbd>Ctrl-j</kbd></td><td>search or replace a literal newline</td></tr>
+<tr><td><kbd>Space</kbd> or <kbd>y</kbd></td><td>replace and find next</td></tr>
+<tr><td><kbd>,</kbd></td><td>replace and stay here</td></tr>
+<tr><td><kbd>Ctrl-r</kbd></td><td>enter an edit mode to custom replace this match</td></tr>
+<tr><td><kbd>Ctrl-Alt-c</kbd></td><td>finish custom replace and carry on with replacement</td></tr>
+<tr><td><kbd>Backspace</kbd> or <kbd>n</kbd></td><td>skip to next without replacing</td></tr>
+<tr><td><kbd>!</kbd></td><td>replace all remaining matches</td></tr>
+<tr><td><kbd>^</kbd></td><td>back up to the previous match</td></tr>
+<tr><td><kbd>Enter</kbd></td><td>exit search and replace</td></tr>
+<tr><td><kbd>Ctrl-h</kbd></td><td>get help while replacing</td></tr>
 </table>
 
 <h2>Window and Frame Manipulation</h2>
 
 <table class="define">
 <tr><td>window</td><td>frame</td><td>description</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>1</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>1</kbd></td><td>delete all other windows/frames</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>2</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>2</kbd></td><td>split window, above and below</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>0</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>0</kbd></td><td>delete this window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>3</kbd></td><td></td><td>split window side by side</td></tr>
+<tr><td><kbd>Ctrl-Alt-v</kbd></td><td></td><td>scroll other window down</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>o</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>o</kbd></td><td>switch cursor to another window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>b</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>b</kbd></td><td>select buffer in other window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>Ctrl-o</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>Ctrl-o</kbd></td><td>display buffer in other window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>f</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>f</kbd></td><td>find file in other window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>r</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>r</kbd></td><td>find file read-only in other window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>d</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>d</kbd></td><td>run Dired in other window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>.</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>.</kbd></td><td>find tag in other window</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>^</kbd></td><td></td><td>grow window taller</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>{</kbd></td><td></td><td>shrink window narrower</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>}</kbd></td><td></td><td>grow window wider</td></tr>
 </table>
 
 

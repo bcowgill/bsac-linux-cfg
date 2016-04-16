@@ -95,6 +95,7 @@ Notes from Emacs Lisp Info tutorial
 
 Editor variables/functions (evaluate with Ctrl-x Ctrl-e)
 	(message "This message appears in the echo area!")
+	(message "%s string parameters are allowed%c%d" "some" 32 42)
 	(concat "abc" "def")
 	(substring "The quick brown fox jumped." 16 19)
 	(number-to-string (+ 2 fill-column))
@@ -113,6 +114,18 @@ Editor variables/functions (evaluate with Ctrl-x Ctrl-e)
 	(mark)
 	(- (point) (point-min))
 	(mark-whole-buffer)
+	(find-tag)
+	(beginning-of-buffer)
+	(mark-whole-buffer)
+	append-to-buffer
+	(describe-function 'find-tag)
+	(describe-variable 'fill-column)
+	(push-mark)
+	insert-buffer-substring
+	set-buffer
+	get-buffer-create
+	get-buffer
+	copy-to-buffer
 
 	(save-excursion
 		(switch-to-buffer (other-buffer)) ;; WHAT? actually changes buffer
@@ -147,4 +160,65 @@ Editor variables/functions (evaluate with Ctrl-x Ctrl-e)
 			(setq output (concat output ", one not eq one"))
 			)
 		(message output)
+	)
+
+	(string< "This" "this")
+	(string-lessp "this" "This")
+	(string= "this" "this")
+	(string-equal "this" "that")
+
+	(defun string> (S1 S2)
+		(concat
+			"Return t if first arg string is greater than second in lexicographic order.\n"
+			"Case is significant.\n"
+			"Symbols are also allowed; their print names are used instead."
+		)
+		(string-lessp S2 S1)
+	)
+
+	(defun string>= (S1 S2)
+		(concat
+			"Return t if first arg string is greater than or equal to second in lexicographic order.\n"
+			"Case is significant.\n"
+			"Symbols are also allowed; their print names are used instead."
+		)
+		(if (string= S1 S2)
+			t
+			(string-lessp S2 S1)
+		)
+	)
+
+	(defun string<= (S1 S2)
+		(concat
+			"Return t if first arg string is less than or equal to second in lexicographic order.\n"
+			"Case is significant.\n"
+			"Symbols are also allowed; their print names are used instead."
+		)
+		(if (string= S1 S2)
+			t
+			(string-lessp S1 S2)
+		)
+	)
+
+	(string> "This" "this")
+	(string> "This" "This")
+	(string> "this" "This")
+	(string>= "This" "this")
+	(string>= "This" "This")
+	(string>= "this" "This")
+	(string<= "This" "this")
+	(string<= "This" "This")
+	(string<= "this" "This")
+
+etags `find /usr/share/emacs/24.4 -name *.el -o -name *.el.gz`
+sudo cp TAGS /usr/share/emacs/24.4
+
+	; go to center point of buffer
+	; need a trunc/round/floor function to simplify
+	(let* ((size (- (point-max) (point-min)))
+		(center (/ size 2)))
+		(push-mark)
+		(if (% size 2)
+			(goto-char center)
+			(goto-char (+ 0.5 center)))
 	)

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Ergoemacs Key Binding Reference</title>
+
+<style>
+th,td {
+	padding: 4px;
+}
+.right {
+	text-align: right;
+}
+.left {
+	text-align: left;
+}
+th,td,.mid {
+	text-align: center;
+}
+table.compass td {
+	border: 1px solid #ccc;
+	empty-cells: hide;
+}
+table.define th,table.define td {
+	text-align: left;
+}
+div.box kbd {
+	opacity: 1;
+	padding-bottom: 1px;
+	color: #777;
+	background-color: #fbfbfb;
+	border-color: #d5d5d5;
+	box-shadow: 0 1px 0 0 #c8c8c8;
+}
+kbd {
+	white-space: nowrap;
+	font-family: inherit;
+	font-weight: normal;
+	font-style: normal;
+	padding: 1px 4px;
+	background-color: white;
+	border: solid 1px #d9d9d9;
+	border-radius: 3px;
+	color: #777;
+	box-shadow: 0 1px 0 0 #ccc;
+}
+</style>
+
+</head>
+<body>
+<div class="box">
+
+<h1>Ergoemacs Key Binding Reference</h1>
+
+<h2>Leaving Emacs</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-c</kbd></td><td>exit Emacs ask to save</td></tr>
+</table>
+
+<h2>Error Recovery</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-g</kbd></td><td>abort a partially typed or executing command</td></tr>
+<tr><td><kbd>Alt-a</kbd> <code>recover-session</code></td><td>recover files lost by a system crash</td></tr>
+<tr><td><kbd>Ctrl-z</kbd> or <kbd>Alt-z</kbd> </td><td>undo an unwanted change</td></tr>
+<tr><td><kbd>Ctrl-Shift-z</kbd> or <kbd>Alt-Shift-z</kbd></td><td>redo previous undo</td></tr>
+<tr><td><kbd>Ctrl-r</kbd></td><td>revert a buffer to what is in the disk file</td></tr>
+<tr><td><kbd>Alt-a</kbd> <code>redraw-display</code></td><td>redraw screen</td></tr>
+</table>
+
+<h2>Modifier Keys</h2>
+
+<table class="define">
+<tr><td><kbd>Alt-a</kbd> <i>function-name</i></td><td>Executes a named command function</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <i>number/-number</i></td><td>Specify a +/- numeric argument for the next command</td></tr>
+<tr><td><kbd>Ctrl-Alt-<i>N</i></kbd></td><td>Specify a numeric argument for the next command</td></tr>
+<tr><td><kbd>Ctrl-Alt--</kbd>  </td><td>Begin a negative argument for the next command</td></tr>
+<tr><td><kbd>Ctrl-q</kbd> <i>char</i></td><td>Insert the next character literally</td></tr>
+</table>
+
+<h2>Compass rose for moving around the buffer.</h2>
+
+<table class="compass">
+<tr><th></th><th>sentence</th><th>home</th><th>word</th><th>column</th><th></th><th>column</th><th>word</th><th>end</th><th>sentence</th></tr>
+<th class="right">document</th><td></td><td></td><td></td><td></td><td><kbd>Alt-n</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">page</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-i</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">paragraph</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-u</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">line</th><td></td><td></td><td></td><td></td><td><kbd>Alt-i</kbd></td><td></td><td></td><td></td><td></td></tr>
+		<th class="right"></th><td></td><td><kbd>Alt-h</kbd></td><td><kbd>Alt-u</kbd></td><td><kbd>Alt-j</kbd></td><td><kbd>Alt-p</kbd></td><td><kbd>Alt-l</kbd></td><td><kbd>Alt-o</kbd></td><td><kbd>Alt-Shift-h</kbd></td><td></td></tr>
+	<th class="right">line</th><td></td><td></td><td></td><td></td><td><kbd>Alt-k</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">paragraph</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-o</kbd></td><td></td><td></td><td></td><td></td></tr>
+	<th class="right">page</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-k</kbd></td><td></td><td></td><td></td><td></td></tr>
+<th class="right">document</th><td></td><td></td><td></td><td></td><td><kbd>Alt-Shift-n</kbd></td><td></td><td></td><td></td><td></td></tr>
+<tr><th></th><th>sentence</th><th>home</th><th>word</th><th>column</th><th></th><th>column</th><th>word</th><th>end</th><th>sentence</th></tr>
+</table>
+
+<h2>Other Motion</h2>
+
+<table class="define">
+<tr><td><kbd>Alt-p</kbd></td><td>scroll current line to center, top or bottom in succession</td></tr>
+<tr><td><kbd>Shift-Alt-j</kbd></td><td>backwards to first open bracket</td></tr>
+<tr><td><kbd>Shift-Alt-l</kbd></td><td>forwards to next close bracket</td></tr>
+<tr><td><kbd>Ctrl-Alt-b</kbd></td><td>backwards one symbolic expression (sexp)</td></tr>
+<tr><td><kbd>Ctrl-Alt-f</kbd></td><td>forwards one symbolic expression (sexp)</td></tr>
+<tr><td><kbd>Ctrl-l</kbd></td><td>go to line number</td></tr>
+<tr><td><kbd>Alt-m</kbd></td><td>go to start of line skipping initial indentation</td></tr>
+</table>
+
+<h2>Mark, Killing (Cut) and Deleting by direction.</h2>
+
+<table class="compass">
+<tr><th></th><th>sentence</th><th>home</th><th>word</th><th>character</th><th></th><th>character</th><th>word</th><th>end</th><th>sentence</th></tr>
+<tr><th></th><th>sentence</th><th>home</th><th>word</th><th>character</th><th></th><th>character</th><th>word</th><th>end</th><th>sentence</th></tr>
+</table>
+
+<h2>Marking (Selecting)</h2>
+
+<table class="define">
+</table>
+
+<h2>Copy, Cut, Paste</h2>
+
+<table class="define">
+</table>
+
+<h2>Files and Buffers</h2>
+
+<table class="define">
+</table>
+
+<h2>Getting Help</h2>
+
+<table class="define">
+</table>
+
+<h2>Incremental Search</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-g</kbd></td><td>abort current search</td></tr>
+</table>
+
+<h2>Search and Replace</h2>
+
+<table class="define">
+</table>
+
+<h2>Window and Frame Manipulation</h2>
+
+<table class="define">
+<tr><td>window</td><td>frame</td><td>description</td></tr>
+</table>
+
+
+<hr />
+<h2></h2>
+
+<table class="define">
+</table>
+
+'-'                                 => k('Ctrl-'),
+
+</div>
+
+
+</body>
+</html>
+<!--
+
+-->
