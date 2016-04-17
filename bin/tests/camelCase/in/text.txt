@@ -1,0 +1,1 @@
+this is text-that should_be camel-cased appropriately evenIfIt IsAlreadyCamelCased or CONST_CASE.
