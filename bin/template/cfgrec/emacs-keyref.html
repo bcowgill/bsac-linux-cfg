@@ -65,6 +65,7 @@ kbd {
 <tr><td><kbd>Ctrl-g</kbd></td><td>abort a partially typed or executing command</td></tr>
 <tr><td><kbd>Alt-x</kbd> <code>recover-session</code></td><td>recover files lost by a system crash</td></tr>
 <tr><td><kbd>Ctrl-/</kbd> or <kbd>Ctrl-x</kbd> <kbd>u</kbd> or <kbd>Ctrl-_</kbd></td><td>undo an unwanted change</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-/</kbd> or <kbd>Ctrl-u</kbd> <kbd>Ctrl-_</kbd></td><td>redo previous undo</td></tr>
 <tr><td><kbd>Alt-x</kbd> <code>revert-buffer</code></td><td>revert a buffer to what is in the disk file</td></tr>
 <tr><td><kbd>Alt-x</kbd> <code>redraw-display</code></td><td>redraw screen</td></tr>
 </table>
@@ -267,6 +268,45 @@ kbd {
 <tr><td><kbd>Alt-s</kbd></td><td>regexp search forward through history</td></tr>
 <tr><td><kbd>Ctrl-g</kbd></td><td>abort command</td></tr>
 <tr><td><kbd>F10</kbd></td><td>open the menu bar for the current frame</td></tr>
+</table>
+
+<h2>Buffers</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-x</kbd> <kbd>b</kbd></td><td>select another buffer</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-b</kbd></td><td>list all buffers</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>k</kbd></td><td>kill a buffer</td></tr>
+</table>
+
+<h2>Transposing</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-t</kbd></td><td>transpose character at point with character before point</td></tr>
+<tr><td><kbd>Alt-t</kbd></td><td>transpose word at point with previous (if point at start of word) or next word</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-t</kbd></td><td>transpose current line with previous line</td></tr>
+<tr><td><kbd>Ctrl-Alt-t</kbd></td><td>transpose current symbolic expression with previous one. start with point at the opening character of the expression to transpose</td></tr>
+</table>
+
+<h2>Spelling Check</h2>
+
+<table class="define">
+<tr><td><kbd>Alt-$</kbd></td><td>check spelling of current word</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>ispell-region</code></td><td>check spelling of all words in region</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>ispell-buffer</code></td><td>check spelling of entire buffer</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>flyspell-mode</code></td><td>toggle on-the-fly spell checking</td></tr>
+</table>
+
+<h2>Tags</h2>
+
+<table class="define">
+<tr><td><kbd>Alt-.</kbd></td><td>find the definition of a tag</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Alt-.</kbd></td><td>find next match for last tag or regexp</td></tr>
+<tr><td><kbd>Alt--</kbd> <kbd>Alt-.</kbd></td><td>back to previous match of tag</td></tr>
+<tr><td><kbd>Alt-</kbd></td><td>go back to mark before tag search began</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>visit-tags-table</code></td><td>specify a new tags file</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>tags-search</code></td><td>regexp search on all files in tags table</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>tags-query-replace</code></td><td>run query-replace on all the files</td></tr>
+<tr><td><kbd>Alt-,</kbd></td><td>continue last tags search or query-replace</td></tr>
 </table>
 
 <hr />
