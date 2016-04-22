@@ -3,7 +3,7 @@
 
 use strict;
 use warnings;
-use English qw(-no_match_vars); 
+use English qw(-no_match_vars);
 
 my $input;
 local $INPUT_RECORD_SEPARATOR = undef;
@@ -11,19 +11,19 @@ $input = <STDIN>;
 $input =~ s{\n\s*}{\\n}xmsg;
 if ($input =~ m{"}xms)
 {
-   if ($input =~ m{'}xms)
-   {
-      $input =~ s{'}{\\'}xmsg;
-      print qq{'$input'\n};
-   }
-   else
-   {
-      print qq{'$input'\n};
-   }
+	if ($input =~ m{'}xms)
+	{
+		$input =~ s{'}{\\'}xmsg;
+		print qq{'$input'\n};
+	}
+	else
+	{
+		print qq{'$input'\n};
+	}
 }
 else
 {
-   print qq{"$input"\n};
+	print qq{"$input"\n};
 }
 
 __END__
@@ -58,16 +58,16 @@ example with only double quotes in the html
 		<g id="svg-icon-cross-side"><polygon points="25,43.3 -43.3,-25 -25,-43.3 43.3,25" />
 		<polygon points="-43.3,25 25,-43.3 43.3,-25 -25,43.3" /></g>
 		<g id="icon-checked" transform="translate(-50,-50)"><path
-			fill="aquamarine" fill-opacity="1" fill-rule="nonzero" 
-			stroke="black" stroke-opacity="1" stroke-width="2" stroke-dasharray="none" stroke-dashoffset="" stroke-linejoin="round" stroke-linecap="butt" 
-			opacity="1" 
+			fill="aquamarine" fill-opacity="1" fill-rule="nonzero"
+			stroke="black" stroke-opacity="1" stroke-width="2" stroke-dasharray="none" stroke-dashoffset="" stroke-linejoin="round" stroke-linecap="butt"
+			opacity="1"
 			marker-start="" marker-mid="" marker-end=""
 			d="M 1.5 63 L 39 98.5 L 98.5 18.5 L 78 1.5 L 39 76.5 L 18 43 Z"></path></g>
-		<g id="icon-crossed" transform="translate(-50,-50)"><path 
-			fill="red" fill-opacity="1" fill-rule="nonzero"  
-			stroke="black" stroke-opacity="1" stroke-width="2" stroke-dasharray="none" stroke-dashoffset="" stroke-linejoin="round" stroke-linecap="butt" 
-			opacity="1" 
-			marker-start="" marker-mid="" marker-end="" 
+		<g id="icon-crossed" transform="translate(-50,-50)"><path
+			fill="red" fill-opacity="1" fill-rule="nonzero"
+			stroke="black" stroke-opacity="1" stroke-width="2" stroke-dasharray="none" stroke-dashoffset="" stroke-linejoin="round" stroke-linecap="butt"
+			opacity="1"
+			marker-start="" marker-mid="" marker-end=""
 			d="M 1.5 27 L 29 1.5 L 44 40.5 L 72 1.5 L 98.5 16.5 L 54.5 50 L 98.5 74 L 71 98.5 L 47 58 L 23 98.5 L 1.5 78 L 35.5 54 Z"></path></g>
 	</defs>
 </svg>

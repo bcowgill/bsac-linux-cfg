@@ -12,12 +12,12 @@ Brent S.A. Cowgill
 
 pretty-elements.pl [options] [@options-file ...] [file ...]
 
- Options:
-   --edit           edit the files in place
-   --warn-files     turn on display of filename for every warning
-   --version        display program version
-   --help -?        brief help message
-   --man            full help message
+	Options:
+		--edit           edit the files in place
+		--warn-files     turn on display of filename for every warning
+		--version        display program version
+		--help -?        brief help message
+		--man            full help message
 
 =head1 OPTIONS
 
@@ -25,54 +25,54 @@ pretty-elements.pl [options] [@options-file ...] [file ...]
 
 =item B<--edit> or B<--noedit>
 
- Causes HTML elements to be edited in place in the input files.
+	Causes HTML elements to be edited in place in the input files.
 
 =item B<--warn-files> or B<--nowarn-files>
 
- Causes the file name to be shown for all warning messages.
- Normally it only prints the file name for the first warning in a
- given file.
+	Causes the file name to be shown for all warning messages.
+	Normally it only prints the file name for the first warning in a
+	given file.
 
 =item B<--version>
 
- Prints the program version and exit.
+	Prints the program version and exit.
 
 =item B<--help> or B<-?>
 
- Print a brief help message and exit.
+	Print a brief help message and exit.
 
 =item B<--man>
 
- Print the full help message and exit.
+	Print the full help message and exit.
 
 =back
 
 =head1 DESCRIPTION
 
- This program will read the given input file(s) and format some
- of the HTML elements with one attribute per line. Also puts some
- attributes into specific order for consistency i.e. id class name.
+	This program will read the given input file(s) and format some
+	of the HTML elements with one attribute per line. Also puts some
+	attributes into specific order for consistency i.e. id class name.
 
- It does a check on id/name attributes and gives warnings about
- duplicate id's and mismatches in id/name for form input fields.
+	It does a check on id/name attributes and gives warnings about
+	duplicate id's and mismatches in id/name for form input fields.
 
- It has some support for Template::Toolkit and tries to work around
- attributes which are included within [% IF %] blocks.
+	It has some support for Template::Toolkit and tries to work around
+	attributes which are included within [% IF %] blocks.
 
 =head1 EXAMPLES
 
- pretty-elements.pl views/*.tt
+	pretty-elements.pl views/*.tt
 
- ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt
- ./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt 2>&1 | less
+	./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt
+	./pretty-elements.pl tests/pretty-elements/sample-html-elements.txt 2>&1 | less
 
- find some types of tags which might have lots of attributes
+	find some types of tags which might have lots of attributes
 
- perl -ne 'sub BEGIN { $/ = undef; } s{([\ \t]*<(input|textarea|select|option|button|div|iframe|form|dl|a) \s+ [^>]+ >)}{print qq{$1\n}}xmsge; ' views/*.tt | less
+	perl -ne 'sub BEGIN { $/ = undef; } s{([\ \t]*<(input|textarea|select|option|button|div|iframe|form|dl|a) \s+ [^>]+ >)}{print qq{$1\n}}xmsge; ' views/*.tt | less
 
- find anything and print by length of the tag
+	find anything and print by length of the tag
 
- perl -ne 'sub BEGIN { $/ = undef; } s{(<[a-zA-Z] [^>]* >)}{my $tag = $1; my $otag = $1; $tag =~ s{(\s)\s*}{\ }xmsg; print qq{@{[length($otag)]} $tag\n}}xmsge; ' views/*.tt | sort -n -r | less
+	perl -ne 'sub BEGIN { $/ = undef; } s{(<[a-zA-Z] [^>]* >)}{my $tag = $1; my $otag = $1; $tag =~ s{(\s)\s*}{\ }xmsg; print qq{@{[length($otag)]} $tag\n}}xmsge; ' views/*.tt | sort -n -r | less
 
 =cut
 
@@ -425,7 +425,7 @@ sub handle_id_name
 		elsif (exists($rhAttribs->{'name'}))
 		{
 			# No need to set the ID for hidden fields
-			register_id($all, $rhAttribs->{'name'}, $rhAttribs) 
+			register_id($all, $rhAttribs->{'name'}, $rhAttribs)
 				unless exists($rhAttribs->{'type'}) && $rhAttribs->{'type'} eq '"hidden"';
 		}
 		if (exists($rhAttribs->{'type'}) && $rhAttribs->{'type'} eq '"radio"')

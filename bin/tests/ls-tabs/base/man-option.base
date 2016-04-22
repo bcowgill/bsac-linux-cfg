@@ -7,30 +7,33 @@ AUTHOR
 SYNOPSIS
     ls-tabs.pl [options] [@options-file ...] [file ...]
 
-     Options:
-       --spaces=N       optional. number of spaced per tab stop. default 4
-       --version        display program version
-       --help -?        brief help message
-       --man            full help message
+            Options:
+                    --spaces=N       optional. number of spaced per tab stop. default 4
+                    --version        display program version
+                    --help -?        brief help message
+                    --man            full help message
 
 OPTIONS
     --spaces
-             optional. Set the number of spaces to use per tab stop.
-             default 4
+                    optional. Set the number of spaces to use per tab stop.
+                    default 4
 
     --version
-             Prints the program version and exit.
+                    Prints the program version and exit.
 
     --help or -?
-             Print a brief help message and exit.
+                    Print a brief help message and exit.
 
     --man
-             Print the full help message and exit.
+                    Print the full help message and exit.
 
 DESCRIPTION
-     This program will read the given input file(s) and show you lines
-     which have inconsistent tabs and spaces.
+            This program will read the given input file(s) and show you lines
+            which have inconsistent tabs and spaces.
 
 EXAMPLES
-     ls-tabs.pl --spaces=3 hello.c
+            ls-tabs.pl --spaces=3 hello.c
+
+            list which files have some spacing problems
+            for file in *.pl *.sh; do ls-tabs.pl $file > /dev/null || echo $file; done > mismatched.lst
 

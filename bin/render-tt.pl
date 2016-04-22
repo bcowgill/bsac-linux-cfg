@@ -20,23 +20,23 @@ https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/render-tt.pl
 
 render-tt.pl [options] [@options-file ...] [file ...]
 
- Options:
-   --page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
-   --page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
-   --var=key=val               multiple. define a simple VARIABLE for the template
-   --const=key=val             multiple. define a CONSTANT for the template
-   --constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
-   --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
-   --absolute                  turn on the ABSOLUTE option for Template::Toolkit
-   --include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
-   --relative                  turn on the RELATIVE option for Template::Toolkit
-   --anycase                   turn on the ANYCASE option for Template::Toolkit
-   --interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
-   --pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
-   --post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
-   --version                   display program version
-   --help -?                   brief help message
-   --man                       full help message
+	Options:
+		--page-vars=file            set the page VARIABLEs by reading in a perl hash object from file.
+		--page-consts=file          set the page CONSTANTs by reading in a perl hash object from file.
+		--var=key=val               multiple. define a simple VARIABLE for the template
+		--const=key=val             multiple. define a CONSTANT for the template
+		--constants-namespace=name  set the CONSTANTS_NAMESPACE for the template
+		--include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
+		--absolute                  turn on the ABSOLUTE option for Template::Toolkit
+		--include-path              add a directory to the INCLUDE_PATH for Template::Toolkit
+		--relative                  turn on the RELATIVE option for Template::Toolkit
+		--anycase                   turn on the ANYCASE option for Template::Toolkit
+		--interpolate               turn on the INTERPOLATE option for Template::Toolkit (default)
+		--pre-chomp                 set the PRE_CHOMP option for Template::Toolkit (0 to 3 allowed)
+		--post-chomp                set the POST_CHOMP option for Template::Toolkit (0 to 3 allowed)
+		--version                   display program version
+		--help -?                   brief help message
+		--man                       full help message
 
 =head1 OPTIONS
 
@@ -44,86 +44,86 @@ render-tt.pl [options] [@options-file ...] [file ...]
 
 =item B<--page-vars=file.vars> or B<--variables=file.vars> or B<--pre-define=file.vars>
 
- Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
+	Specifies a file to read in to set all the template page VARIABLEs in one go. These can be overridden by individual --var settings later. The file read in should be the output of Data::Dumper.
 
 =item B<--page-consts=file.vars> or B<--constants=file.vars>
 
- Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
+	Specifies a file to read in to set all the template page CONSTANTs in one go. These can be overridden by individual --constant settings later. The file read in should be the output of Data::Dumper.
 
 =item B<--var="key=value">
 
- Defines a simple page VARIABLE for use when doing template substitutions.
- You can specify this multiple times to define many VARIABLEs.
- Key can be this.that to define a hash object called this with a key of that.
+	Defines a simple page VARIABLE for use when doing template substitutions.
+	You can specify this multiple times to define many VARIABLEs.
+	Key can be this.that to define a hash object called this with a key of that.
 
 =item B<--const="key=value">
 
- Defines a simple page CONSTANT for use when doing template substitutions.
- You can specify this multiple times to define many CONSTANTs.
- Key can be this.that to define a hash object called this with a key of that.
+	Defines a simple page CONSTANT for use when doing template substitutions.
+	You can specify this multiple times to define many CONSTANTs.
+	Key can be this.that to define a hash object called this with a key of that.
 
 =item B<--constants-namespace="name">
 
- Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
+	Sets the Template::Toolkit CONSTANTS_NAMESPACE. Default is 'constants'.
 
 =item B<--include-path>
 
- Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
+	Add a directory to the Template::Toolkit INCLUDE_PATH option so that processing of templates will look for any included templates there.
 
 =item B<--absolute> or B<--noabsolute>
 
- Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
+	Turns on the Template::Toolkit ABSOLUTE option so that processing of absolute path names is allowed.
 
 =item B<--relative> or B<--norelative>
 
- Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
+	Turns on the Template::Toolkit RELATIVE option so that processing of relative path names is allowed.
 
 =item B<--anycase> or B<--noanycase>
 
- Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
+	Turns on the Template::Toolkit ANYCASE option so that directive names are not case sensitive.
 
 =item B<--interpolate> or B<--nointerpolate>
 
- Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
+	Turns on the Template::Toolkit INTERPOLATE option so that direct substitution of $vars can happen. On by default.
 
 =item B<--pre-chomp=N>
 
- Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
- See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
- [%+ +%] disable chomp
- [%- -%] CHOMP_ONE = whitespace and one newline
- [%= =%] CHOMP_COLLAPSE = all whitespace and newlines
- [%~ ~%] CHOMP_GREEDY = all whitespace to a single space
+	Sets the Template::Toolkit PRE_CHOMP option to control how newlines and whitespace are chomped before a template marker.
+	See L<http://tt2.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP> for details.
+	[%+ +%] disable chomp
+	[%- -%] CHOMP_ONE = whitespace and one newline
+	[%= =%] CHOMP_COLLAPSE = all whitespace and newlines
+	[%~ ~%] CHOMP_GREEDY = all whitespace to a single space
 
- Examples:
+	Examples:
 
- <span class="[% active -%] content">  removes spaces if active is empty otherwise lets space remain
+	<span class="[% active -%] content">  removes spaces if active is empty otherwise lets space remain
 
 =item B<--post-chomp=N>
 
- Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
+	Sets the Template::Toolkit POST_CHOMP option to control how newlines and whitespace are chomped after a template marker.
 
 =item B<--version>
 
- Prints the program version and exit.
+	Prints the program version and exit.
 
 =item B<--help> or B<-?>
 
- Print a brief help message and exit.
+	Print a brief help message and exit.
 
 =item B<--man>
 
- Print the full help message and exit.
+	Print the full help message and exit.
 
 =back
 
 =head1 DESCRIPTION
 
- B<render-tt.pl> will perform perl Template::Toolkit transformation of a template file using specific variables as inputs. It is useful for unit testing all possible outputs of a template page.
+	B<render-tt.pl> will perform perl Template::Toolkit transformation of a template file using specific variables as inputs. It is useful for unit testing all possible outputs of a template page.
 
 =head1 EXAMPLES
 
- render-tt.pl --var="this=that" < in/template.tt > out/template.html
+	render-tt.pl --var="this=that" < in/template.tt > out/template.html
 
 =cut
 

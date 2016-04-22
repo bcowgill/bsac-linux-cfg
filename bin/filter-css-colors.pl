@@ -12,33 +12,33 @@ Brent S.A. Cowgill
 
 filter-css-colors.pl [options] [@options-file ...] [file ...]
 
- Options:
-	--color-only     negatable. only show the color values, not the entire line.
-	--reverse        negatable. show all lines not matching a CSS color declaration.
-	--remap          negatable. remap all colors to names or constants in place where possible.
-	--names          negatable. convert colors to standard names where possible.
-	--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
-	--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
-	--rgb            negatable. convert colors to rgb() form.
-	--hash           negatable. convert rgb/hsl colors to #color form.
-	--valid-only     negatable. do not perform remappings which are invalid CSS.
-	--valid-pp       negatable. allow remappings which are valid for preprocessors (LESS, SASS).
-	--show-const     negatable. show the table of defined constants.
-	--const-type     specify what type of constants are being used (for less or sass.)
-	--const          multiple. define a custom constant value.
-	--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
-	--const-list     list all possible constant names for a given color substitution in a comment.
-	--const-pull     pull color values into new named constants and output to file or standard output.
-	--inplace        specify to modify files in place creating a backup first.
-	--foreground     [not implemented] specify a color value to use for all foreground colors.
-	--background     [not implemented] specify a color value to use for all background colors.
-	--echo           negatable. display original line when performing replacements.
-	--version        display program version and exit.
-	--debug          incremental. display debugging info.
-	--trace          negatable. turn on some debug trace.
-	--tests          run the unit tests.
-	--help -?        brief help message and exit.
-	--man            full help message and exit.
+	Options:
+		--color-only     negatable. only show the color values, not the entire line.
+		--reverse        negatable. show all lines not matching a CSS color declaration.
+		--remap          negatable. remap all colors to names or constants in place where possible.
+		--names          negatable. convert colors to standard names where possible.
+		--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
+		--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
+		--rgb            negatable. convert colors to rgb() form.
+		--hash           negatable. convert rgb/hsl colors to #color form.
+		--valid-only     negatable. do not perform remappings which are invalid CSS.
+		--valid-pp       negatable. allow remappings which are valid for preprocessors (LESS, SASS).
+		--show-const     negatable. show the table of defined constants.
+		--const-type     specify what type of constants are being used (for less or sass.)
+		--const          multiple. define a custom constant value.
+		--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
+		--const-list     list all possible constant names for a given color substitution in a comment.
+		--const-pull     pull color values into new named constants and output to file or standard output.
+		--inplace        specify to modify files in place creating a backup first.
+		--foreground     [not implemented] specify a color value to use for all foreground colors.
+		--background     [not implemented] specify a color value to use for all background colors.
+		--echo           negatable. display original line when performing replacements.
+		--version        display program version and exit.
+		--debug          incremental. display debugging info.
+		--trace          negatable. turn on some debug trace.
+		--tests          run the unit tests.
+		--help -?        brief help message and exit.
+		--man            full help message and exit.
 
 =head1 OPTIONS
 
@@ -46,145 +46,145 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 =item B<--color-only> or B<--nocolor-only>
 
- Only display the CSS color values used. Useful to identify all unique colors used.
+	Only display the CSS color values used. Useful to identify all unique colors used.
 
 =item B<--reverse> or B<--noreverse>
 
- Only display lines that do not contain CSS color declarations.
+	Only display lines that do not contain CSS color declarations.
 
 =item B<--remap> or B<--noremap>
 
- Remap colors to constants, canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
+	Remap colors to constants, canonical values and/or names in place where possible. May not produce valid CSS as for example rgba(0,0,0,0.5) becomes rgba(black,0.5)
 
- You should specify --names or --canonical as well to have any effect.
+	You should specify --names or --canonical as well to have any effect.
 
 =item B<--names> or B<--nonames>
 
- Show colors as standard names where possible. i.e. #fff becomes white.
- Implies --canonical unless you have specified --shorten.
- Implies --hash as well.
- Implies --remap as well.
+	Show colors as standard names where possible. i.e. #fff becomes white.
+	Implies --canonical unless you have specified --shorten.
+	Implies --hash as well.
+	Implies --remap as well.
 
 =item B<--canonical> or B<--nocanonical>
 
- Show colors in canonical form i.e. #fff becomes '#ffffff'.
- Implies --remap as well.
+	Show colors in canonical form i.e. #fff becomes '#ffffff'.
+	Implies --remap as well.
 
 =item B<--shorten> or B<--noshorten>
 
- Show colors in short form i.e. #ffffff becomes '#fff'.
- Implies --remap as well.
+	Show colors in short form i.e. #ffffff becomes '#fff'.
+	Implies --remap as well.
 
 =item B<--hash>  or B<--nohash>
 
- Show rgb/hsl colors as #color i.e. rgb(255, 255, 255) becomes #fff or #ffffff.
- Cannot use --rgb with --hash.
+	Show rgb/hsl colors as #color i.e. rgb(255, 255, 255) becomes #fff or #ffffff.
+	Cannot use --rgb with --hash.
 
 =item B<--rgb>  or B<--norgb>
 
- Show colors in rgb() form i.e. #fff becomes rgb(255, 255, 255).
- Implies --canonical unless you have specified --shorten.
- Cannot use --names or --hash with --rgb.
+	Show colors in rgb() form i.e. #fff becomes rgb(255, 255, 255).
+	Implies --canonical unless you have specified --shorten.
+	Cannot use --names or --hash with --rgb.
 
 =item B<--show-const>  or B<--noshow-const>
 
- Show a table of the defined constants.
+	Show a table of the defined constants.
 
 =item B<--const-type=s>
 
- Define what type of constants are being used. Default is Less (@)
- You can specify less, sass or a character to use as a prefix.
+	Define what type of constants are being used. Default is Less (@)
+	You can specify less, sass or a character to use as a prefix.
 
- --const-type=less    @button-background:  #fff; // different from $button_background
- --const-type=sass    $button-background:  #fff; // equivalent to $button_background
+	--const-type=less    @button-background:  #fff; // different from $button_background
+	--const-type=sass    $button-background:  #fff; // equivalent to $button_background
 
 =item B<--const=name=value>
 
- Define a constant color value. You can omit the prefix character when defining a value.
+	Define a constant color value. You can omit the prefix character when defining a value.
 
- --const=button-background=#fff // default Less would be @button-background
- --const=$button-background=#fff
+	--const=button-background=#fff // default Less would be @button-background
+	--const=$button-background=#fff
 
 =item B<--const-file=less-sass-css-filename>
 
- Specify files to parse for color constant definitions. You must specify --const-type if you are parsing CSS files for constants. The format of a color constant definition is:
+	Specify files to parse for color constant definitions. You must specify --const-type if you are parsing CSS files for constants. The format of a color constant definition is:
 
- less:  @name-of-constant: #color;
- sass:  $name-of-constant: #color; // equivalent to $name_of_constant
- css:   .name-of-constant { color: #color; }
+	less:  @name-of-constant: #color;
+	sass:  $name-of-constant: #color; // equivalent to $name_of_constant
+	css:   .name-of-constant { color: #color; }
 
 =item B<--const-list> or B<--noconst-list>
 
- When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
+	When a color value matches to many defined constants, the list of possibles is shown in a comment after the color substitution.
 
- i.e. color: @background /* @background, @panel-background */;
+	i.e. color: @background /* @background, @panel-background */;
 
 =item B<--const-pull=-|filename>
 
- If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
+	If there is no constant defined for a color value it will define one for you automatically. Specify Less or Sass defined constants using --const-type. You must specify --remap for this to have effect. After scanning all files these newly defined constants will be appended to the named file or standard output (-)
 
 =item B<--valid-only> or B<--novalid-only>
 
- Do not perform name remappings which are invalid css3
- i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
- i.e. rgba(1,2,3,0.3) will not become rgba(red(@var),green(@var),blue(@var),0.3)
+	Do not perform name remappings which are invalid css3
+	i.e. rgba(0,0,0,0.3) will not become rgba(black,0.3)
+	i.e. rgba(1,2,3,0.3) will not become rgba(red(@var),green(@var),blue(@var),0.3)
 
 =item B<--valid-pp> or B<--novalid-pp>
 
- Allow remappings which are valid for preprocessors like Less and Sass.
- Implies --novalid-only.
+	Allow remappings which are valid for preprocessors like Less and Sass.
+	Implies --novalid-only.
 
- i.e. rgba(1,2,3,0.3) can become rgba(red(@var),green(@var),blue(@var),0.3)
+	i.e. rgba(1,2,3,0.3) can become rgba(red(@var),green(@var),blue(@var),0.3)
 
 =item B<--inplace=.suffix>
 
- Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
+	Modify files in place and create a backup file first. This acts like perl's -i.suffix option. It's probably a good idea to use --valid-only and not --echo when doing this.
 
 =item B<--foreground=color> or B<--fg=color>
 
- Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
+	Specify a color value to use to replace all foreground colors with. Cannot work with --color-only.
 
 =item B<--background=color> or B<--bg=color>
 
- Specify a color value to use to replace all background colors with. Cannot work with --color-only.
+	Specify a color value to use to replace all background colors with. Cannot work with --color-only.
 
 =item B<--echo> or B<--noecho>
 
- When in a --remap mode, display the original line as well.
+	When in a --remap mode, display the original line as well.
 
 =item B<--version>
 
- Prints the program version and exit.
+	Prints the program version and exit.
 
 =item B<--help> or B<-?>
 
- Print a brief help message and exit.
+	Print a brief help message and exit.
 
 =item B<--man>
 
- Print the full help message and exit.
+	Print the full help message and exit.
 
 =back
 
 =head1 DESCRIPTION
 
- Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
+	Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
 
- B<This program> will read the given input file(s) and do something useful with the contents thereof.
+	B<This program> will read the given input file(s) and do something useful with the contents thereof.
 
 =head1 SEE ALSO
 
- CSS Color specs L<http://www.w3.org/TR/css3-color/>
+	CSS Color specs L<http://www.w3.org/TR/css3-color/>
 
 =head1 EXAMPLES
 
- Find all unique colors used in all CSS files somewhere
+	Find all unique colors used in all CSS files somewhere
 
- filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
+	filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 
- Replace hard coded colors with values from a variable definition file
+	Replace hard coded colors with values from a variable definition file
 
- filter-css-colors.pl --noecho --inplace=.bak --remap --shorten --valid-only --const-file variables.less styles/*.less
+	filter-css-colors.pl --noecho --inplace=.bak --remap --shorten --valid-only --const-file variables.less styles/*.less
 
 =head1 TODO
 
@@ -193,7 +193,7 @@ convert rgba(r,g,b,a) to rgba(red(),green(),blue(),alpha)
 extract all unique color values and define them as consecutive constant names but leave them as is in the files
 
 support for:
-  border: 2px solid #ffffff;
+	border: 2px solid #ffffff;
 
 --foreground=xxxx substitute a color for all foreground colors
 --background=xxxx you get color: #fff /* original color */;
@@ -201,11 +201,11 @@ support for:
 
 --closest mark hard coded colors with the closest named color
 --constants  automatically define color constants from hard coded values
-    fg_1 bg_ etc
+	fg_1 bg_ etc
 --use-var=name  when multiple vars are possible for a color, use the named one
 
 parse .less color constants
- perl -MData::Dumper -ne 'if (m{\A \s* ( \@ [\-\w]+ ) \s* : \s* ( \#[0-9a-f]+ ) \s* ;}xms) { push(@{$var{$2}}, $1) }; END { print Dumper(\%var)} '  `find /home/bcowgill/projects/files-ui/lib/bower_components/ -name variables.less`
+	perl -MData::Dumper -ne 'if (m{\A \s* ( \@ [\-\w]+ ) \s* : \s* ( \#[0-9a-f]+ ) \s* ;}xms) { push(@{$var{$2}}, $1) }; END { print Dumper(\%var)} '  `find /home/bcowgill/projects/files-ui/lib/bower_components/ -name variables.less`
 
 for computed colors write a CSS rule to show what the computed value is
 cat $VARS | perl -pne 'if (m{\@ ([\-\w]+) \s* : .* (fadein|darken|lighten)}xms) { $_ = qq{\n$_.$1-defined { color: \@$1; }\n} };' | less
@@ -885,14 +885,14 @@ sub userRenameColorValid
 	my $bValidLess = 1;
 	my $bAlways = 1;
 	return userRgbRedGreenBlueFromRgba(trace('colorNames',
-        userColorNames(trace('rgbFromHashColor',
-            userRgbFromHashColor(trace('hashColorStd',
-                userHashColorStandard(trace('toHashColor',
-                    userToHashColor($color, !$bAlways, $bValidLess)
-                ))
-            ))
-        ))
-    ));
+		userColorNames(trace('rgbFromHashColor',
+			userRgbFromHashColor(trace('hashColorStd',
+				userHashColorStandard(trace('toHashColor',
+					userToHashColor($color, !$bAlways, $bValidLess)
+				))
+			))
+		))
+	));
 }
 
 ####################################
@@ -1919,7 +1919,7 @@ sub checkMandatoryOptions
 			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
-  return $raErrors;
+	return $raErrors;
 }
 
 # Perform command line option processing and call main function.
@@ -2147,7 +2147,7 @@ sub testUserCanonicalFromRgbValid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-        # indirect test of canonicalFromRgb()
+		# indirect test of canonicalFromRgb()
 		my $result = userCanonicalFromRgb($color, $bValidOnly);
 		is($result, $expect, $count++ .") userCanonicalFromRgb (valid) $color -> $expect");
 	}
@@ -2205,7 +2205,7 @@ sub testUserCanonicalFromRgbAllowInvalid
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
 
-        # indirect test of canonicalFromRgb()
+		# indirect test of canonicalFromRgb()
 		my $result = userCanonicalFromRgb($color, !$bValidOnly);
 		is($result, $expect, $count++ . ") userCanonicalFromRgb (!valid) $color -> $expect");
 	}
@@ -2982,7 +2982,7 @@ sub testGetClosestColors
 				my $color = toHashColor("rgb($RED,$GREEN,$BLUE)");
 				my @ClosestColors = getClosestColors($color);
 				if (0 == scalar(@ClosestColors)) {
-				   print STDERR "far: $color\n" if $color =~ m{\A \# [a-f]+ \z}xmsi;
+					print STDERR "far: $color\n" if $color =~ m{\A \# [a-f]+ \z}xmsi;
 				}
 			}
 		}

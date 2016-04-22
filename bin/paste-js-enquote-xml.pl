@@ -4,7 +4,7 @@
 
 use strict;
 use warnings;
-use English qw(-no_match_vars); 
+use English qw(-no_match_vars);
 
 my $input;
 local $INPUT_RECORD_SEPARATOR = undef;

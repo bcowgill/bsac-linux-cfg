@@ -50,6 +50,9 @@ ls-tabs.pl [options] [@options-file ...] [file ...]
 
 	ls-tabs.pl --spaces=3 hello.c
 
+	list which files have some spacing problems
+	for file in *.pl *.sh; do ls-tabs.pl $file > /dev/null || echo $file; done > mismatched.lst
+
 =cut
 
 use strict;

@@ -2,23 +2,23 @@ Unknown option: unknown-option
 Usage:
     ls-tabs.pl [options] [@options-file ...] [file ...]
 
-     Options:
-       --spaces=N       optional. number of spaced per tab stop. default 4
-       --version        display program version
-       --help -?        brief help message
-       --man            full help message
+            Options:
+                    --spaces=N       optional. number of spaced per tab stop. default 4
+                    --version        display program version
+                    --help -?        brief help message
+                    --man            full help message
 
 Options:
     --spaces
-             optional. Set the number of spaces to use per tab stop.
-             default 4
+                    optional. Set the number of spaces to use per tab stop.
+                    default 4
 
     --version
-             Prints the program version and exit.
+                    Prints the program version and exit.
 
     --help or -?
-             Print a brief help message and exit.
+                    Print a brief help message and exit.
 
     --man
-             Print the full help message and exit.
+                    Print the full help message and exit.
 
