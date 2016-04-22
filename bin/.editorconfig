@@ -24,6 +24,6 @@ indent_style = tab
 # Indentation override for all
 [*.{sh,pl,json,json5}]
 indent_style = tab
-tab_width = 4
+tab_width = 3
 trim_trailing_whitespace = true
 
