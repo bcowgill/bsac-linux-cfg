@@ -2,4 +2,4 @@ Unknown option: unknown-option
 Usage:
     filter-css-colors.pl [options] [@options-file ...] [file ...]
 
-     Options:
+            Options:
