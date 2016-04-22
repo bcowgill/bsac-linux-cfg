@@ -7,15 +7,15 @@ use English;
 my $section = "//";
 while (my $line = <>)
 {
-   $line =~ s{\A \s*}{}xms;
-   if ($line =~ m{\A \s* \[ \s* ( [^\]]+ ) \s* \] \s* \z}xms)
-   {
-      $section = $1;
-   }
-   else
-   {
-      print "/$section/$line";
-   }
+	$line =~ s{\A \s*}{}xms;
+	if ($line =~ m{\A \s* \[ \s* ( [^\]]+ ) \s* \] \s* \z}xms)
+	{
+		$section = $1;
+	}
+	else
+	{
+		print "/$section/$line";
+	}
 }
 
 __END__

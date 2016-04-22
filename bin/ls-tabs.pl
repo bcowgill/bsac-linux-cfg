@@ -12,11 +12,11 @@ Brent S.A. Cowgill
 
 ls-tabs.pl [options] [@options-file ...] [file ...]
 
- Options:
-   --spaces=N       optional. number of spaced per tab stop. default 4
-   --version        display program version
-   --help -?        brief help message
-   --man            full help message
+	Options:
+		--spaces=N       optional. number of spaced per tab stop. default 4
+		--version        display program version
+		--help -?        brief help message
+		--man            full help message
 
 =head1 OPTIONS
 
@@ -24,31 +24,31 @@ ls-tabs.pl [options] [@options-file ...] [file ...]
 
 =item B<--spaces>
 
- optional. Set the number of spaces to use per tab stop.
- default 4
+	optional. Set the number of spaces to use per tab stop.
+	default 4
 
 =item B<--version>
 
- Prints the program version and exit.
+	Prints the program version and exit.
 
 =item B<--help> or B<-?>
 
- Print a brief help message and exit.
+	Print a brief help message and exit.
 
 =item B<--man>
 
- Print the full help message and exit.
+	Print the full help message and exit.
 
 =back
 
 =head1 DESCRIPTION
 
- This program will read the given input file(s) and show you lines
- which have inconsistent tabs and spaces.
+	This program will read the given input file(s) and show you lines
+	which have inconsistent tabs and spaces.
 
 =head1 EXAMPLES
 
- ls-tabs.pl --spaces=3 hello.c
+	ls-tabs.pl --spaces=3 hello.c
 
 =cut
 
@@ -246,7 +246,7 @@ sub mark_spacing
 	debug("TAB_STOP: [$TAB_STOP]", 2);
 	$prefix =~ s{ \ {$TAB_STOP} }{ '|' . ('.' x ($TAB_STOP - 2)) . '|' }xmsge;
 	$prefix =~ tr[ \t][.T];
-	$Var{'uneven_spacing'}++ if ($prefix =~ m{\.}xms);
+	$Var{'uneven_spacing'}++ if ($prefix =~ m{\.\z}xms);
 	debug("prefix: $prefix", 2);
 	return $prefix;
 }

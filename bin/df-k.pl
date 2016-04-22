@@ -11,17 +11,17 @@ my $line;
 my @Widths;
 my @Rows;
 my %Align = (
-   'Filesystem' => 'l',
-   'Mounted on' => 'l',
+	'Filesystem' => 'l',
+	'Mounted on' => 'l',
 );
 
 my @Order = (
-   5,  # Mounted on
-   4,  # Use%
-   3,  # Available
-   2,  # Used
-   1,  # 1K-blocks
-   0,  # Filesystem
+	5,  # Mounted on
+	4,  # Use%
+	3,  # Available
+	2,  # Used
+	1,  # 1K-blocks
+	0,  # Filesystem
 );
 
 my $order_by = 4; # Use %
@@ -32,33 +32,33 @@ my @RowOrder = ();
 
 while (my $line = <>)
 {
-   chomp($line);
-   $line =~ s{Mounted \s on}{Mounted-on}xmsg;
-   my @Row = split(/\s+/, $line);
+	chomp($line);
+	$line =~ s{Mounted \s on}{Mounted-on}xmsg;
+	my @Row = split(/\s+/, $line);
 
-   push(@RowOrder, $row++);
+	push(@RowOrder, $row++);
 
-   my $idx = 0;
-   foreach my $col (@Row)
-   {
-      $col =~ s{Mounted-on}{Mounted on}xmsg;
-      $Row[$idx] = commas($col);
-      my $length = length($col);
-      $Widths[$idx] = 0 unless $Widths[$idx];
-      $Widths[$idx] = $length unless $Widths[$idx] > $length;
-      ++$idx;
-   }
-   push (@Rows, [@Row]);
+	my $idx = 0;
+	foreach my $col (@Row)
+	{
+		$col =~ s{Mounted-on}{Mounted on}xmsg;
+		$Row[$idx] = commas($col);
+		my $length = length($col);
+		$Widths[$idx] = 0 unless $Widths[$idx];
+		$Widths[$idx] = $length unless $Widths[$idx] > $length;
+		++$idx;
+	}
+	push (@Rows, [@Row]);
 }
 
 shift(@RowOrder);
 
-my @SortedRows = sort { 
-   my $A = number($Rows[$a][$order_by]); 
-   my $B = number($Rows[$b][$order_by]); 
-   my $AA = number($Rows[$a][$sub_order_by]); 
-   my $BB = number($Rows[$b][$sub_order_by]); 
-   return $B <=> $A || $AA <=> $BB; 
+my @SortedRows = sort {
+	my $A = number($Rows[$a][$order_by]);
+	my $B = number($Rows[$b][$order_by]);
+	my $AA = number($Rows[$a][$sub_order_by]);
+	my $BB = number($Rows[$b][$sub_order_by]);
+	return $B <=> $A || $AA <=> $BB;
 } @RowOrder;
 
 #print Dumper(\@SortedRows);
@@ -68,60 +68,60 @@ my @SortedRows = sort {
 output_row($Rows[0]);
 foreach my $idx (@SortedRows)
 {
-   output_row($Rows[$idx]);
+	output_row($Rows[$idx]);
 }
 
 sub number
 {
-   my ($number) = @ARG;
-   $number =~ tr{,}{} ;
-   $number =~ m{\A (\d+)}xms;
-   $number = $1 || 0;
-   return $number;
+	my ($number) = @ARG;
+	$number =~ tr{,}{} ;
+	$number =~ m{\A (\d+)}xms;
+	$number = $1 || 0;
+	return $number;
 }
 
 sub commas
 {
-   my ($number) = @ARG;
-   if ($number =~ m{\A \d+ \z}xms)
-   {
-      $number =~ s{(?<=\d)(?=(\d\d\d)+(?!\d))}{,}g;
-   }
-   return $number;
+	my ($number) = @ARG;
+	if ($number =~ m{\A \d+ \z}xms)
+	{
+		$number =~ s{(?<=\d)(?=(\d\d\d)+(?!\d))}{,}g;
+	}
+	return $number;
 }
 
 sub output_row
 {
-   my ($raRow) = @ARG;
-   for (my $idx = 0; $idx < scalar(@$raRow); ++$idx)
-   {
-      my $output_idx = $Order[$idx];
-      my $column = $Rows[0][$output_idx];
-      my $align = $Align{$column} || 'r';
-      print align($raRow->[$output_idx], 1 + $Widths[$output_idx], $align) . ' ';
-   }
-   print "\n";
+	my ($raRow) = @ARG;
+	for (my $idx = 0; $idx < scalar(@$raRow); ++$idx)
+	{
+		my $output_idx = $Order[$idx];
+		my $column = $Rows[0][$output_idx];
+		my $align = $Align{$column} || 'r';
+		print align($raRow->[$output_idx], 1 + $Widths[$output_idx], $align) . ' ';
+	}
+	print "\n";
 }
 
 sub align
 {
-   my ($message, $width, $alignment) = @ARG;
-   $message = ($alignment && $alignment eq 'r') ? align_right($message, $width) : align_left($message, $width); 
-   return $message;
+	my ($message, $width, $alignment) = @ARG;
+	$message = ($alignment && $alignment eq 'r') ? align_right($message, $width) : align_left($message, $width);
+	return $message;
 }
 
 sub align_left
 {
-   my ($message, $width) = @ARG;
-   $message .= (' ' x ($width - length($message)));
-   return $message;
+	my ($message, $width) = @ARG;
+	$message .= (' ' x ($width - length($message)));
+	return $message;
 }
 
 sub align_right
 {
-   my ($message, $width) = @ARG;
-   $message = (' ' x ($width - length($message))) . $message;
-   return $message;
+	my ($message, $width) = @ARG;
+	$message = (' ' x ($width - length($message))) . $message;
+	return $message;
 }
 
 __END__

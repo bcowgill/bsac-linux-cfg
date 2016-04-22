@@ -20,57 +20,57 @@ https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/ls-tt-tags.pl
 
 ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
- Options:
-   --common         convert processing markers to common format.
-   --inline-block   display multiline processing blocks in a single line of output.
-   --echo-filename  display filename being processed.
-   --version        display program version.
-   --help -?        brief help message.
-   --man            full help message.
+	Options:
+		--common         convert processing markers to common format.
+		--inline-block   display multiline processing blocks in a single line of output.
+		--echo-filename  display filename being processed.
+		--version        display program version.
+		--help -?        brief help message.
+		--man            full help message.
 
 =head1 OPTIONS
 
 =over 8
 
 =item B<--common> or B<--nocommon>
- negatable. Convert processing markers to common format. This removes the pre/post whitespace stripping markers.
- See Template::Toolkit docs for more information http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP
+	negatable. Convert processing markers to common format. This removes the pre/post whitespace stripping markers.
+	See Template::Toolkit docs for more information http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOMP_POST_CHOMP
 
- i.e. [%- END ~%] becomes [% END %]
+	i.e. [%- END ~%] becomes [% END %]
 
 =item B<--inline-block> or B<--noinline-block>
 
- negatable. Displays multiline processing blocks in a single line of output.
+	negatable. Displays multiline processing blocks in a single line of output.
 
 =item B<--echo-filename> or B<--noecho-filename>
 
- negatable. Prints name of file being processed.
+	negatable. Prints name of file being processed.
 
 =item B<--version>
 
- Prints the program version and exit.
+	Prints the program version and exit.
 
 =item B<--help> or B<-?>
 
- Print a brief help message and exit.
+	Print a brief help message and exit.
 
 =item B<--man>
 
- Print the full help message and exit.
+	Print the full help message and exit.
 
 =back
 
 =head1 DESCRIPTION
 
- B<This program> will read the given input file(s) and display Template::Toolkit processing instructions found within it.
+	B<This program> will read the given input file(s) and display Template::Toolkit processing instructions found within it.
 
 =head1 EXAMPLES
 
- find all unique template toolkit blocks
- find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
+	find all unique template toolkit blocks
+	find . -name '*.tt' -exec ls-tt-tags.pl --common --inline-block {} \; | sort | uniq
 
- find template files and show markup with filename.
- find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;
+	find template files and show markup with filename.
+	find . -name '*.tt' -exec ls-tt-tags.pl --echo-filename {} \;
 
 =cut
 
