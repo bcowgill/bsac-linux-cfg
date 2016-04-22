@@ -22,7 +22,7 @@ fi
 if [ ${OUTPUT_AUX:-error} == ${OUTPUT_AUX2:-error} ]; then
 	# 1 or 2 monitors only
 	export I3WORKSPACES='
-	    # 1 or 2 monitors
+		# 1 or 2 monitors
 		set $shell 1
 		set $edit 2
 		set $app 3
@@ -50,7 +50,7 @@ if [ ${OUTPUT_AUX:-error} == ${OUTPUT_AUX2:-error} ]; then
 else
 	# 3 monitors
 	export I3WORKSPACES='
-	    # 3 monitors
+		# 3 monitors
 		set $shell 1
 		set $edit 2
 		set $app 3

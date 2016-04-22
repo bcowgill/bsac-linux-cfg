@@ -10,7 +10,7 @@ source detect-monitors.sh
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-	    # 1 or 2 monitors
+			# 1 or 2 monitors
 		shell=1
 		edit=2
 		app=3
@@ -25,31 +25,31 @@ source detect-monitors.sh
 # https://github.com/lzap/doti3/blob/master/autostart
 # Wait for program coming up
 wait_for_program () {
-  local n pid
-  pid=$!
-  n=0
-  while true
-  do
-    # PID of last background command
-    if xdotool search --onlyvisible --pid $pid 2>/dev/null; then
-      break
-    else
-      if [ $n -eq 90 ]; then
-        notify-send -u critical "Error during start"
-        break
-      else
-        n=$(($n + 1))
-        sleep 0.5
-      fi
-    fi
-  done
+	local n pid
+	pid=$!
+	n=0
+	while true
+	do
+		# PID of last background command
+		if xdotool search --onlyvisible --pid $pid 2>/dev/null; then
+			break
+		else
+			if [ $n -eq 90 ]; then
+				notify-send -u critical "Error during start"
+				break
+			else
+				n=$(($n + 1))
+				sleep 0.5
+			fi
+		fi
+	done
 }
 
 function i3do {
-  local msg
-  msg="$1"
-  echo i3-msg "$1" 1>&2
-  i3-msg "$1"
+	local msg
+	msg="$1"
+	echo i3-msg "$1" 1>&2
+	i3-msg "$1"
 }
 
 ## Merge Xresources

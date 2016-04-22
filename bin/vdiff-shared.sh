@@ -3,24 +3,24 @@
 
 REVERSE=0
 if [ "$1" != "" ]; then
-   REVERSE=1
+	REVERSE=1
 fi
 
 function diff_them {
-   local file from to reverse
-   file="$1"
-   from="$2"
-   to="$3"
-   reverse="$4"
-   if diff "$from/$file" "$to/$file" > /dev/null; then
-      echo no differences for "$file" in "$from/" or "$to/"
-   else
-      if [ $reverse == 0 ]; then
-         $DIFF "$from/$file" "$to/$file";
-      else
-         $DIFF "$to/$file" "$from/$file";
-      fi
-   fi
+	local file from to reverse
+	file="$1"
+	from="$2"
+	to="$3"
+	reverse="$4"
+	if diff "$from/$file" "$to/$file" > /dev/null; then
+		echo no differences for "$file" in "$from/" or "$to/"
+	else
+		if [ $reverse == 0 ]; then
+			$DIFF "$from/$file" "$to/$file";
+		else
+			$DIFF "$to/$file" "$from/$file";
+		fi
+	fi
 }
 
 WHICH=review-infinity-plus-dashboard
@@ -46,8 +46,8 @@ FILE=render-tt.pl
 diff_them $FILE $FROM $TO $REVERSE
 
 if /bin/false; then
-   FROM=$HOME/
-   TO=$HOME/
-   FILE=
-   diff_them $FILE $FROM $TO $REVERSE
+	FROM=$HOME/
+	TO=$HOME/
+	FILE=
+	diff_them $FILE $FROM $TO $REVERSE
 fi

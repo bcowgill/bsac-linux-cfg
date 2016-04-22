@@ -6,8 +6,8 @@ export MAX=$3
 file=$4
 
 if [ -z "$file" ]; then
-    echo Usage: $0 module seriesIndex maxComplexity complexityLogFile
-    exit 1
+	echo Usage: $0 module seriesIndex maxComplexity complexityLogFile
+	exit 1
 fi
 
 perl -MData::Dumper -ne '
@@ -30,12 +30,12 @@ END
 		$hits{$complexity}{percent} = (int(10000 * $ratio ) / 100);
 		$hits{$complexity}{cumulative} = int(10000 * $cumulative / $functions) / 100;
 		push(@values, {
-		    "series" => $ENV{SERIES},
-		    "x" => $complexity,
-		    "y" => $hits{$complexity}{percent},
+			"series" => $ENV{SERIES},
+			"x" => $complexity,
+			"y" => $hits{$complexity}{percent},
 		});
 	}
-	
+
 	$average = int(10 * $total_complexity / $functions) / 10;
 	print "Functions: $functions\nAverage Complexity: $average\n";
 	print "complexity\tfunctions\tpercentage\tcumulative %\n";
@@ -45,7 +45,7 @@ END
 	{
 		print "$complexity\t@{[$hits{$complexity}{hits}]}\t$hits{$complexity}{percent} %\t$hits{$complexity}{cumulative} %\n" if $hits{$complexity}{percent};
 	}
-	
+
 	# Dump output as JSON
 	my $rhJSON = {
 		key => "$ENV{MODULE}",

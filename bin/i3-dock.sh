@@ -20,9 +20,9 @@ sleep 3
 i3-msg "workspace 5"
 
 function move_workspace {
-   local WORKSPACE OUTPUT
-   WORKSPACE="$1"
-   OUTPUT="$3"
+	local WORKSPACE OUTPUT
+	WORKSPACE="$1"
+	OUTPUT="$3"
 	echo move workspace $WORKSPACE to output $OUTPUT
 	i3-msg "workspace $WORKSPACE; move workspace to output $OUTPUT" > /dev/null
 }

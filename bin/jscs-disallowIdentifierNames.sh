@@ -13,9 +13,9 @@ BEGIN {
 chomp;
 $rhAllow->{$_} = 1;
 sub trim {
-    my ($result) = @_;
-    $result =~ s{\s* \n}{\n}xmsg;
-    return $result;
+	my ($result) = @_;
+	$result =~ s{\s* \n}{\n}xmsg;
+	return $result;
 }
 END {
 	my $columns = 10;
