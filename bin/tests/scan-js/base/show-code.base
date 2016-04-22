@@ -1,7 +1,4 @@
 MESSY: public() @ 32 public function defined after first private function _private()
-MESSY: something() @ 9 defined before first call at 15
-MESSY: another() @ 13 defined before first call at 21
-MESSY: method() @ 19 defined before first call at 26
 
 <STDIN>
 // :::::: :::::::
@@ -38,6 +35,10 @@ function _private () {
 function public () {
 }
 
+sh: 1: Syntax error: redirection unexpected
+MESSY: something() @ 9 defined before first call at 15
+MESSY: another() @ 13 defined before first call at 21
+MESSY: method() @ 19 defined before first call at 26
 code: 382 comments: 82 strings: 90
 78% code
 4 MESS warnings.

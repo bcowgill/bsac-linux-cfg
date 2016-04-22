@@ -2,13 +2,13 @@
 Usage:
     ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
-     Options:
-       --common         convert processing markers to common format.
-       --inline-block   display multiline processing blocks in a single line of output.
-       --echo-filename  display filename being processed.
-       --version        display program version.
-       --help -?        brief help message.
-       --man            full help message.
+            Options:
+                    --common         convert processing markers to common format.
+                    --inline-block   display multiline processing blocks in a single line of output.
+                    --echo-filename  display filename being processed.
+                    --version        display program version.
+                    --help -?        brief help message.
+                    --man            full help message.
 
 Options:
     --common or --nocommon negatable. Convert processing markers to common
@@ -16,20 +16,20 @@ Options:
     Template::Toolkit docs for more information
     http://www.template-toolkit.org/docs/manual/Config.html#section_PRE_CHOM
     P_POST_CHOMP
-             i.e. [%- END ~%] becomes [% END %]
+                    i.e. [%- END ~%] becomes [% END %]
 
     --inline-block or --noinline-block
-             negatable. Displays multiline processing blocks in a single line of output.
+                    negatable. Displays multiline processing blocks in a single line of output.
 
     --echo-filename or --noecho-filename
-             negatable. Prints name of file being processed.
+                    negatable. Prints name of file being processed.
 
     --version
-             Prints the program version and exit.
+                    Prints the program version and exit.
 
     --help or -?
-             Print a brief help message and exit.
+                    Print a brief help message and exit.
 
     --man
-             Print the full help message and exit.
+                    Print the full help message and exit.
 

@@ -1,7 +1,4 @@
 MESSY: public() @ 32 public function defined after first private function _private()
-MESSY: something() @ 9 defined before first call at 10
-MESSY: another() @ 13 defined before first call at 14
-MESSY: method() @ 19 defined before first call at 26
 
 in/test.js
 // inline comment
@@ -38,6 +35,9 @@ function _private () {
 function public () {
 }
 
+MESSY: something() @ 9 defined before first call at 10
+MESSY: another() @ 13 defined before first call at 14
+MESSY: method() @ 19 defined before first call at 26
 code: 382 comments: 82 strings: 90
 78% code
 4 MESS warnings.

@@ -1,45 +1,46 @@
-in/scanme.js:NN:/** @todo marker in jsdoc */
-in/scanme.js:NN:// MUSTDO:BSAC marker
-in/scanme.js:NN:// FIXME marker
-in/scanme.js:NN:// WARNING marker
-in/scanme.js:NN:// REFACTOR marker
-in/scanme.js:NN:// QN question marker
-in/scanme.js:NN:// DEPR marker about deprecation
-in/scanme.js:NN:// DEPRECATED marker in full
-in/scanme.js:NN:// anything mentioning a hack
-in/scanme.js:NN:// or a Hack
-in/scanme.js:NN:// or a HACK
-in/scanme.js:NN:/*jshint maxcomplexity: false */
-in/scanme.js:NN:/*jshint maxstatements: false */
-in/scanme.js:NN:/*jshint maxlen: false */
-in/scanme.js:NN:/*jshint latedef: false */
-in/scanme.js:NN:/*jshint strict: false */
-in/scanme.js:NN:/*jshint unused: false */
-in/scanme.js:NN:/*jshint eqeqeq: false */
-in/scanme.js:NN:debugger;
-in/scanme.js:NN:window.console.log('caught a console log');
-in/scanme.js:NN:console.info('caught a console info message');
-in/scanme.js:NN:console.warn('caught a console warn message');
-in/scanme.js:NN:console.error('caught a console error message');
-in/scanme.js:NN:console.dir('caught a console dir message');
-in/scanme.js:NN:console.time('caught a console time message');
-in/scanme.js:NN:console.timeEnd('caught a console timeEnd message');
-in/scanme.js:NN:console.trace('caught a console trace message');
-in/scanme.js:NN:console.assert('caught a console assert message');
-in/scanme.js:NN:alert('caught an alert message');
-in/scanme.js:NN:describe.skip('unit tests', function () {
-in/scanme.js:NN:	it.skip('should capitalise the string', function () {
-in/scanme.js:NN:	it.only('should capitalise the string', function () {
-in/scanme.js:NN:	xit('should capitalise the string', function () {
-in/scanme.js:NN:xdescribe('unit tests', function () {
-in/scanme.js:NN:var handler = function (ev) {}
-in/scanme.js:NN:var handler = function ( ev ) {}
-in/scanme.js:NN:catch (e) {}
-in/scanme.js:NN:catch ( e ) {}
-in/scanme.js:NN:var ii;
-in/scanme.js:NN:var j = 12;
-in/scanme.js:NN:var k = 12, i, j;
-in/scanme.js:NN:	++i;
-in/scanme.js:NN:	 jk++;
-in/scanme.js:NN:var this, i, j = 12;
-scanme.js:/** ERROR @class ScanMe mismatches filename */
+scanme.js:NN:/** @todo marker in jsdoc */
+scanme.js:NN:// MUSTDO:BSAC marker
+scanme.js:NN:// FIXME marker
+scanme.js:NN:// WARNING marker
+scanme.js:NN:// REFACTOR marker
+scanme.js:NN:// QN question marker
+scanme.js:NN:// DEPR marker about deprecation
+scanme.js:NN:// DEPRECATED marker in full
+scanme.js:NN:// anything mentioning a hack
+scanme.js:NN:// or a Hack
+scanme.js:NN:// or a HACK
+scanme.js:NN:/*jshint maxcomplexity: false */
+scanme.js:NN:/*jshint maxstatements: false */
+scanme.js:NN:/*jshint maxlen: false */
+scanme.js:NN:/*jshint latedef: false */
+scanme.js:NN:/*jshint strict: false */
+scanme.js:NN:/*jshint unused: false */
+scanme.js:NN:/*jshint eqeqeq: false */
+scanme.js:NN:debugger;
+scanme.js:NN:window.console.log('caught a console log');
+scanme.js:NN:console.info('caught a console info message');
+scanme.js:NN:console.warn('caught a console warn message');
+scanme.js:NN:console.error('caught a console error message');
+scanme.js:NN:console.dir('caught a console dir message');
+scanme.js:NN:console.time('caught a console time message');
+scanme.js:NN:console.timeEnd('caught a console timeEnd message');
+scanme.js:NN:console.trace('caught a console trace message');
+scanme.js:NN:console.assert('caught a console assert message');
+scanme.js:NN:alert('caught an alert message');
+scanme.js:NN:describe.skip('unit tests', function () {
+scanme.js:NN:	it.skip('should capitalise the string', function () {
+scanme.js:NN:	it.only('should capitalise the string', function () {
+scanme.js:NN:	xit('should capitalise the string', function () {
+scanme.js:NN:xdescribe('unit tests', function () {
+scanme.js:NN:var handler = function (ev) {}
+scanme.js:NN:var handler = function ( ev ) {}
+scanme.js:NN:catch (e) {}
+scanme.js:NN:catch ( e ) {}
+scanme.js:NN:var ii;
+scanme.js:NN:var j = 12;
+scanme.js:NN:var k = 12, i, j;
+scanme.js:NN:	++i;
+scanme.js:NN:	 jk++;
+scanme.js:NN:var this, i, j = 12;
+/** ERROR @class scanme mismatches filename */
+/** ERROR @class ScanMe mismatches filename */

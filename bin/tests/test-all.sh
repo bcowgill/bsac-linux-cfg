@@ -12,17 +12,18 @@ testSuite df-k "format df -k command output more legibly" $PROVE
 testSuite spaces "show spaces nulls and end of lines" $PROVE
 testSuite ls-tabs "report on tab indentation in file" $PROVE
 
-testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
-$PROVE ./unit-tests.sh
-popd > /dev/null
-
-testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE
 testSuite pretty-elements "format HTML elements nicely" $PROVE
 testSuite ls-tt-tags "list template toolkit tags in templates" $PROVE
 testSuite render-tt "render a perl Template::Toolkit page with specific variables set" $PROVE
 testSuite perltidy-me "evaluate perltidy formatting options" $PROVE
 testSuite scan-code "scan code for static issues" $PROVE
 testSuite scan-js "scan javascript for clean code" $PROVE
+
+testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
+$PROVE ./unit-tests.sh
+popd > /dev/null
+
+testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE
 
 PLAN 2
 OK "all test suites completed"
