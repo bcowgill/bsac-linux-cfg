@@ -9,12 +9,12 @@ my $text = <>;
 $text =~ s{\s+}{ }xmsg;
 if (length($text) >= 78 - length("===  =========="))
 {
-   print(join("\n", (("=" x 78) , $text , "")));
+	print(join("\n", (("=" x 78) , $text , "")));
 }
 else
 {
-   my $text = "=== $text ";
-   print($text . ("=" x (78 - length($text))) . "\n");
+	my $text = "=== $text ";
+	print($text . ("=" x (78 - length($text))) . "\n");
 }
 
 __END__
@@ -22,4 +22,4 @@ Sample output:
 === this is a test  ==========================================================
 
 ==============================================================================
-this is too long for one line so it gets a separate banner line 
+this is too long for one line so it gets a separate banner line

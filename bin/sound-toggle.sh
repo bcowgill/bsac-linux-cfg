@@ -6,13 +6,13 @@ LEVEL=`get-sound-level.sh`
 SAVE=$HOME/.sound-toggle
 
 if [ $LEVEL == 0% ]; then
-   LEVEL=
-   if [ -f $SAVE ]; then
-      LEVEL=`cat $SAVE`
-   fi
+	LEVEL=
+	if [ -f $SAVE ]; then
+		LEVEL=`cat $SAVE`
+	fi
 else
-   echo $LEVEL > $SAVE
-   LEVEL=0%
+	echo $LEVEL > $SAVE
+	LEVEL=0%
 fi
 
 LEVEL=${LEVEL:-70%}

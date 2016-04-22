@@ -124,7 +124,7 @@ function main
 		capture_file "/etc/$ITEM"
 	done
 
- 	sudo cat /etc/wpa_supplicant/wpa_supplicant.conf | perl -pne 's{psk="[^"]*"}{psk="password"}xmsg' > $_TMP_SET
+	sudo cat /etc/wpa_supplicant/wpa_supplicant.conf | perl -pne 's{psk="[^"]*"}{psk="password"}xmsg' > $_TMP_SET
 	FILE="$DIR/etc-wpa_supplicant-wpa_supplicant.conf.log"
 	echo " "
 	echo "### WiFi configuration password filtered" | tee "$FILE"
