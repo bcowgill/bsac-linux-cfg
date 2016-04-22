@@ -77,7 +77,7 @@ our $STDIO   = "";
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			spaces => 4,  # default number of spaces per tab stop
+			spaces  => 4,    # default number of spaces per tab stop
 			$STDIO  => 0,    # indicates standard in/out as - on command line
 			debug   => 0,
 			man     => 0,    # show full help page
@@ -103,9 +103,9 @@ my %Var = (
 		raMandatory => [],    # additional mandatory parameters not defined by = above.
 		roParser    => Getopt::Long::Parser->new,
 	},
-	fileName   => '<STDIN>',    # name of file
-	prefix_tabs => 0,
-	prefix_spaces => 0,
+	fileName       => '<STDIN>',    # name of file
+	prefix_tabs    => 0,
+	prefix_spaces  => 0,
 	uneven_spacing => 0,
 	code => 0,
 	lines_seen => 0,

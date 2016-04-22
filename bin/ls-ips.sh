@@ -1,1 +1,1 @@
- ifconfig | egrep 'inet|Link'
+ifconfig | egrep 'inet|Link'

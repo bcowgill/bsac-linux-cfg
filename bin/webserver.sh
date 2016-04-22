@@ -9,16 +9,16 @@ HTTP_MOD=SimpleHTTPServer
 #HTTP_MOD=http.server
 
 if [ -z "$PORT" ]; then
-   if [ -z "$npm_package_config_port" ]; then
-      PORT=9999
-   else
-      echo package.json config.port setting=$npm_package_config_port
-      PORT=$npm_package_config_port
-   fi
+	if [ -z "$npm_package_config_port" ]; then
+		PORT=9999
+	else
+		echo package.json config.port setting=$npm_package_config_port
+		PORT=$npm_package_config_port
+	fi
 fi
 
 if [ "x$DOCROOT" == "x" ]; then
-   DOCROOT=.
+	DOCROOT=.
 fi
 
 [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
