@@ -2,8 +2,8 @@
 # fix up spacing in a file
 
 # TODO make these flags accessible on command line
-INDENT_TAB=1
-INDENT=4
+INDENT_TAB=${INDENT_TAB:-1}
+INDENT=${INDENT:-4}
 INPLACE=-i.bak
 #INPLACE=""
 
