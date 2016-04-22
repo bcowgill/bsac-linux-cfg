@@ -4,9 +4,11 @@
 perl -ne '
 BEGIN {
 	$rhAllow->{id} = 1;
+	$rhAllow->{idx} = 1;
 	$rhAllow->{app} = 1;
 	$rhAllow->{env} = 1;
 	$rhAllow->{dir} = 1;
+	$rhAllow->{xhr} = 1;
 }
 chomp;
 $rhAllow->{$_} = 1;
