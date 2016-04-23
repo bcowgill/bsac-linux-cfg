@@ -4,10 +4,10 @@
 suite=${1:-23489_Groups_Permissions_FE.txt}
 
 if pip list | grep selenium2library | grep 1.7.3 ; then
-    echo OK got the right selenium
+	echo OK got the right selenium
 else
-    echo NOT OK got the wrong selenium
-    sudo pip install robotframework-selenium2library==1.7.3
+	echo NOT OK got the wrong selenium
+	sudo pip install robotframework-selenium2library==1.7.3
 fi
 
 # specify a variable override for browser, and select test #4 to run

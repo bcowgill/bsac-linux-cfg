@@ -15,10 +15,10 @@
 if [ -z $1 ]; then
 	FILES=`(git grep -L '@class' lib/scripts/ ; git grep -L '@class' app/scripts/) 2> /dev/null | egrep '\.js$'`
 	if [ -z "$FILES" ]; then
-	    echo usage: $0 filename
-	    echo " "
-	    echo Will add @class jsdoc tag to a javascript file.
-	    echo Will scan lib/scripts and app/scripts for files if none specified
+		echo usage: $0 filename
+		echo " "
+		echo Will add @class jsdoc tag to a javascript file.
+		echo Will scan lib/scripts and app/scripts for files if none specified
 	fi
 	for file in $FILES
 	do
