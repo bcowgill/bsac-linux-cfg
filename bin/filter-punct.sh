@@ -5,7 +5,7 @@ use warnings;
 use English -no_match_vars;
 
 while (my $line = <>) {
-   $line =~ s{[<>'"`]+}{ }xmsg;
-   $line =~ s{\s\s+}{ }xmsg;
-   print "$line\n";
+	$line =~ s{[<>'"`]+}{ }xmsg;
+	$line =~ s{\s\s+}{ }xmsg;
+	print "$line\n";
 }

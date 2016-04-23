@@ -98,8 +98,8 @@ sub printTable
 
 		if ($name)
 		{
-		    $name = toCategory($char) . "\t" . $name;
-    		print qq{$char\t$hex\t$name\n};
+			$name = toCategory($char) . "\t" . $name;
+			print qq{$char\t$hex\t$name\n};
 		}
 		last if ord($char) == $MAX_CODEPOINT;
 	}
@@ -113,29 +113,29 @@ sub nextChar
 
 sub charToCodePt
 {
-    my ($char) = @ARG;
+	my ($char) = @ARG;
 	return sprintf("U+%X", ord($char));
 }
 
 sub toCategory
 {
-    my ($char) = @ARG;
+	my ($char) = @ARG;
 
-    my $fullCategory = "[category unknown]";
+	my $fullCategory = "[category unknown]";
 
-    eval
-    {
-        # To translate this category into something more human friendly:
+	eval
+	{
+		# To translate this category into something more human friendly:
 
-        #use Unicode::UCD qw( charinfo general_categories );
-        my $rhCategories = general_categories();
-        my $category = charinfo(charToCodePt($char))->{category};  # "Lu"
-        $fullCategory = "[$category]";
-        $fullCategory = "[$rhCategories->{ $category }]"; # "UppercaseLetter"
-    };
-    if ($EVAL_ERROR)
-    {
-        print "ERROR: $EVAL_ERROR";
-    }
-    return $fullCategory;
+		#use Unicode::UCD qw( charinfo general_categories );
+		my $rhCategories = general_categories();
+		my $category = charinfo(charToCodePt($char))->{category};  # "Lu"
+		$fullCategory = "[$category]";
+		$fullCategory = "[$rhCategories->{ $category }]"; # "UppercaseLetter"
+	};
+	if ($EVAL_ERROR)
+	{
+		print "ERROR: $EVAL_ERROR";
+	}
+	return $fullCategory;
 }

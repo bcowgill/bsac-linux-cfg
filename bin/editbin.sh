@@ -8,7 +8,7 @@ emacs --chdir $HOME/bin --title=emacs-projects \
 	editbin.sh \
 	$EMACS_FILES \
 	template/cfgrec/notes.txt \
-    ./ \
+	./ \
 	$* \
 	-f delete-other-windows \
 	&

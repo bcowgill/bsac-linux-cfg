@@ -13,18 +13,18 @@ Brent S.A. Cowgill
 
 scan-js.pl [options] [@options-file ...] [file ...]
 
- Options:
-   --show-code      negatable. show the code after comment and string extraction
-   --verbose        negatable. show more info about functions. default false
-   --mess           negatable. show more info about functions. default true
-   --summary        negatable. show summary of each file. default true
-   --comment-char   use character to replace text in comment extraction
-   --string-char    use character to replace text in string extraction
-   --lint-length    allowed length of jshint control comments to ignore
-   --version        display program version
-   --help -?        brief help message
-   --man            full help message
-   --debug          incremental. increase the amount of debugging information shown
+	Options:
+	--show-code      negatable. show the code after comment and string extraction
+	--verbose        negatable. show more info about functions. default false
+	--mess           negatable. show more info about functions. default true
+	--summary        negatable. show summary of each file. default true
+	--comment-char   use character to replace text in comment extraction
+	--string-char    use character to replace text in string extraction
+	--lint-length    allowed length of jshint control comments to ignore
+	--version        display program version
+	--help -?        brief help message
+	--man            full help message
+	--debug          incremental. increase the amount of debugging information shown
 
 =head1 OPTIONS
 
@@ -32,65 +32,65 @@ scan-js.pl [options] [@options-file ...] [file ...]
 
 =item B<--show-code> or B<--noshow-code>
 
- negatable. default false. Print out the source code after comments and
- strings have been extracted.  This allow you to diagnose code which might be
- excessively tricky.
+	negatable. default false. Print out the source code after comments and
+	strings have been extracted.  This allow you to diagnose code which might be
+	excessively tricky.
 
 =item B<--verbose> or B<--noverbose>
 
- negatable. default false. Print out additional information instead of just
- mess warnings.
+	negatable. default false. Print out additional information instead of just
+	mess warnings.
 
 =item B<--mess> or B<--nomess>
 
- negatable. default true. Print out warnings about possible messy code.
+	negatable. default true. Print out warnings about possible messy code.
 
 =item B<--summary> or B<--nosummary>
 
- negatable. default true. Print out summary of each file.
+	negatable. default true. Print out summary of each file.
 
 =item B<--comment-char=s>
 
- optional. Defaults to '-'. Set the character to use to replace the text
- found in comments. Used with --show-code. If set to the empty string
- --comment-char='' then comments will not be stripped from the code.
+	optional. Defaults to '-'. Set the character to use to replace the text
+	found in comments. Used with --show-code. If set to the empty string
+	--comment-char='' then comments will not be stripped from the code.
 
 =item B<--string-char=s>
 
- optional. Defaults to '_'. Set the character to use to replace the text
- found in strings. Used with --show-code. If set to the empty string
- --string-char='' then strings will not be stripped from the code.
- This is useful if functions are referred to by name in some strings.
+	optional. Defaults to '_'. Set the character to use to replace the text
+	found in strings. Used with --show-code. If set to the empty string
+	--string-char='' then strings will not be stripped from the code.
+	This is useful if functions are referred to by name in some strings.
 
 =item B<--lint-length=n>
 
- optional. Defaults to 30. The maximum length of a jshint or jslint comment
- for it to not count against the amount of comments in the file. If there
- is only one such comment in the file it is also ignored.
+	optional. Defaults to 30. The maximum length of a jshint or jslint comment
+	for it to not count against the amount of comments in the file. If there
+	is only one such comment in the file it is also ignored.
 
 =item B<--version>
 
- Prints the program version and exit.
+	Prints the program version and exit.
 
 =item B<--help> or B<-?>
 
- Print a brief help message and exit.
+	Print a brief help message and exit.
 
 =item B<--man>
 
- Print the full help message and exit.
+	Print the full help message and exit.
 
 =back
 
 =head1 DESCRIPTION
 
- B<This program> will read the given Javascript file(s) and examine
- whether the functions are ordered from high level to low level as
- suggested by Robert C. Martin's book Clean Code.
+	B<This program> will read the given Javascript file(s) and examine
+	whether the functions are ordered from high level to low level as
+	suggested by Robert C. Martin's book Clean Code.
 
- This program is not a general purpose Javascript analysis tool. It
- assumes the code is pretty clean, not minified, etc. It will not look
- for obfuscated function definitions for example.
+	This program is not a general purpose Javascript analysis tool. It
+	assumes the code is pretty clean, not minified, etc. It will not look
+	for obfuscated function definitions for example.
 
 =head1 GRUNT SETUP
 
@@ -106,32 +106,31 @@ In order to allow this script to use jshint to check how clean your code is you 
 
 =head1 EXAMPLES
 
- scan-js.pl template/unminified/jquery-2.1.1.js
+	scan-js.pl template/unminified/jquery-2.1.1.js
 
- scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
+	scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
 
- scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
+	scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
 
- FILES=`git diff --name-status $FROM $TO | perl -pne 's{\A [AM] \s+}{}xms'`; for file in $FILES; do scan-js.pl $file; done
+	FILES=`git diff --name-status $FROM $TO | perl -pne 's{\A [AM] \s+}{}xms'`; for file in $FILES; do scan-js.pl $file; done
 
 =head1 TODO
 
- order output with public then private
- order output alphabetically
- order output in line order
- hide function listing unless warning
- keep track of number of params per function
- use jshint to measure complexity of functions
- closeness of definitions of function to first caller
- star rating of file based on maxcomplexity, maxparams, clean, test plan
- check if test plan exists for file
- jshint command fails, show how to set up grunt
+	order output with public then private
+	order output alphabetically
+	order output in line order
+	hide function listing unless warning
+	keep track of number of params per function
+	use jshint to measure complexity of functions
+	closeness of definitions of function to first caller
+	star rating of file based on maxcomplexity, maxparams, clean, test plan
+	check if test plan exists for file
+	jshint command fails, show how to set up grunt
 
 
 Law of demeter violation checker
- perl -ne '$o = q{\w+ \s* \. \s*}; $m = q{\w+ \s* \s* (\([^\)]*\))? \s*}; print if ( m{ $o $m \. $m }xms );' demeter.js
-what about array access this.something[fe].method();
-
+	perl -ne '$o = q{\w+ \s* \. \s*}; $m = q{\w+ \s* \s* (\([^\)]*\))? \s*}; print if ( m{ $o $m \. $m }xms );' demeter.js
+	hat about array access this.something[fe].method();
 
 =cut
 
@@ -489,7 +488,7 @@ sub doLine
 	findFunctions($line);
 
 	$print = 0;
-  return ( $line, $print );
+	return ( $line, $print );
 }
 
 sub findFunctions
@@ -659,7 +658,7 @@ sub checkMandatoryOptions
 			push( @$raErrors, "--$optName $type is a mandatory parameter." ) if $error;
 		}
 	}
-  return $raErrors;
+	return $raErrors;
 }
 
 # Perform command line option processing and call main function.
