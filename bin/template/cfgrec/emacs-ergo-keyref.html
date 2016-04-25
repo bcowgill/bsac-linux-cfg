@@ -73,10 +73,10 @@ kbd {
 
 <table class="define">
 <tr><td><kbd>Alt-a</kbd> <i>function-name</i></td><td>Executes a named command function</td></tr>
-<tr><td><kbd>Ctrl-u</kbd> <i>number/-number</i></td><td>Specify a +/- numeric argument for the next command</td></tr>
+<tr><td><kbd>Ctrl-u</kbd>  <i>number/-number</i></td><td>Specify a +/- numeric argument for the next command</td></tr>
 <tr><td><kbd>Ctrl-Alt-<i>N</i></kbd></td><td>Specify a numeric argument for the next command</td></tr>
 <tr><td><kbd>Ctrl-Alt--</kbd>  </td><td>Begin a negative argument for the next command</td></tr>
-<tr><td><kbd>Ctrl-q</kbd> <i>char</i></td><td>Insert the next character literally</td></tr>
+<tr><td><kbd>Ctrl-q</kbd>  <i>char</i></td><td>Insert the next character literally</td></tr>
 </table>
 
 <h2>Compass rose for moving around the buffer.</h2>
@@ -192,8 +192,31 @@ kbd {
 <table class="define">
 </table>
 
-<hr />
+<h2>Rectangles</h2>
 
+<table class="define">
+</table>
+
+<h2>Abbrevs</h2>
+
+Abbrevs allow you to define short text which expands to a larger tract of boilerplate text. You can only use words for abbreviation triggers, not punctuation. When defining abbreviations use the number prefix parameter to specify how many words to include or a zero to specify the marked region.
+
+<table class="define">
+<tr><td><kbd>Space</kbd> </td><td>After an initial completion will insert the next word from the original context</td></tr>
+<tr><td></td><td>Begin an abbrev expansion from current point position. i.e. re  cnst <kbd>Space</kbd> would become 'reconstruct' if cnst was an abbreviation for 'construct'</td></tr>
+</table>
+
+<p>Example define abbreviations:</p>
+
+<p><code>this is full text</code> <kbd>Ctrl-u</kbd> <kbd>4</kbd>  <code>this</code></p>
+<p>will cause 'this' to expand to four words 'this is full text' when in the current file mode.</p>
+
+<p>will cause 'this' to expand to 'this is full text' when in the current file mode.</p>
+
+
+<hr />
+<a id="end" />
+HEREIAM
 <h2></h2>
 
 <table class="define">
@@ -205,5 +228,16 @@ kbd {
 </body>
 </html>
 <!--
+
+***********************************************
+***********************************************
+***********************************************
+***********************************************
+***********************************************
+***********************************************
+***********************************************
+***********************************************
+***********************************************
+***********************************************
 
 -->
