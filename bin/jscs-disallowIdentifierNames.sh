@@ -9,6 +9,10 @@ BEGIN {
 	$rhAllow->{env} = 1;
 	$rhAllow->{dir} = 1;
 	$rhAllow->{xhr} = 1;
+	$rhAllow->{min} = 1;
+	$rhAllow->{max} = 1;
+	$rhAllow->{abs} = 1;
+}	$rhAllow->{url} = 1;
 }
 chomp;
 $rhAllow->{$_} = 1;
@@ -35,4 +39,3 @@ END {
 	print "    disallowIdentifierNames: [ " . trim(join(", ", @out)) . " ],\n";
 }
 '
-
