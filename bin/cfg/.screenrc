@@ -4,6 +4,16 @@
 # screen 1  # shell
 # screen -fn -t telnet-foobar -L 2 telnet foobar
 
+# window flags:
+# * current window
+# - marks previous window
+# $ marks a login window
+# ! marks a window that has received a bell
+# @ marks a monitored window which has had activity
+# L marks a logged window
+# & marks a window with other users occupying them
+# Z marks a window in zombie state
+
 # idea for standard windows:
 # shell, manual, midnight, top, tests, logs
 
