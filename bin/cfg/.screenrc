@@ -17,6 +17,13 @@
 # make wheel on mouse behave properly
 termcapinfo xterm|xterms|xs|rxvt ti@:te@
 
+# An alternative hardstatus to display a bar at the bottom listing the
+# windownames and highlighting the current windowname in blue. (This is only
+# enabled if there is no hardstatus setting for your terminal)
+#
+# BSAC shows menu of screen windows in the window title bar
+hardstatus lastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+
 # make bottom bar show more information
 # %?..%? display only if non empty
 # %F%{.R.} red background only if window has focus
