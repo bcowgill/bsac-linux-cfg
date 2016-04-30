@@ -144,12 +144,12 @@ sleep 2
 # A/B should be terminals with build/watch running
 # C should be browser
 i3do "workspace $build"
-xbuild-xilla.sh &
+xbuild-xilla2.sh &
 sleep 2
 i3do "mark watch"
 
 i3do "layout default; split v"
-xbuild-xilla2.sh &
+xbuild-xilla.sh &
 sleep 1
 i3do "mark zilla"
 
@@ -171,8 +171,8 @@ i3do "mark shell"
 i3do "workspace $chat; exec skype"
 sleep 3
 
-# scratchpad setup with a terminal
-mygterm.sh
+# scratchpad setup with a screen session
+mygterm.sh ~ float.sh
 sleep 1
 i3do "move scratchpad"
 

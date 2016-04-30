@@ -1,3 +1,3 @@
 #!/bin/bash
-npm run storybook
+./scripts/dev-top.sh
 

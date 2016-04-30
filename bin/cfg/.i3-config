@@ -126,7 +126,8 @@ workspace 10  output $aux
 assign [class="^Git-gui$"] $shell
 assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
-assign [class="^Chromium-browser$" title="^Outlook Web App"] $email
+assign [class="^Chromium-browser" title="^Outlook Web App"] $email
+assign [class="^Chromium-browser" title="^Karma - Chromium"] $app
 
 # Force other windows not to float
 #for_window [class="^Skype$"] floating disable

@@ -1,3 +1,2 @@
 #!/bin/bash
-npm start
-
+./scripts/dev-bottom.sh
