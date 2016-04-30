@@ -14,6 +14,19 @@
 #screen -t test-plans 4
 #screen -t log-files 5
 
+# make wheel on mouse behave properly
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+# make bottom bar show more information
+# %?..%? display only if non empty
+# %F%{.R.} red background only if window has focus
+# f-lags of window, h-ardstatus of window
+# H-ost name, c-urrent time, -w all window numbers/names up to current window
+# {=} {-} surrounds region to put into inverse text
+# n-umber of window, t-itle of window, +w all window numbers/names after current window
+# l-oad on system, S-ession name
+caption always "%?%F%{.R.}%?%h %{=}%c %{-} %-Lw%{=}%n%f:%t%{-}%+Lw | %l %S %H"
+
 # Move  the  input focus to the next region. This is done in a cyclic way
 # so that the top region is selected after the bottom one. If no
 # subcommand is given it defaults to `down'. `up' cycles in the opposite
