@@ -171,7 +171,7 @@ i3do "mark shell"
 i3do "workspace $chat; exec skype"
 sleep 3
 
-# scratchpad setup with a screen session
+# scratchpad setup with a logged screen session
 mygterm.sh ~ float.sh
 sleep 1
 i3do "move scratchpad"
