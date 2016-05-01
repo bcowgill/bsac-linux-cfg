@@ -30,7 +30,7 @@ sub k {
 	$combo =~ s{Shift-}{S-}xmsg;
 	$combo =~ s{Meta-}{M-}xmsg;
 	$combo =~ s{Alt-}{A-}xmsg;
-	$combo =~ s{Menu-}{m-}xmsg; // lower case m for menu
+	$combo =~ s{Menu-}{m-}xmsg; # lower case m for menu
 	}
 	return $combo;
 }
@@ -84,6 +84,8 @@ my $rhSubEmacs = {
 	'-undo-tree-redo1'                 => k('Ctrl-u', 'Ctrl-_'),
 	'revert-buffer'                    => \&fn,
 	'redraw-display'                   => \&fn,
+	'widen'                            => k('Ctrl-x', 'n', 'w'),
+   'narrow-to-region'                 => k('Ctrl-x', 'n', 'n'),
 
 	# Movement Compass rose
 	'backward-page'                    => k('Ctrl-x', '['),
@@ -114,6 +116,10 @@ my $rhSubEmacs = {
 	'back-to-indentation'              => k('Alt-m'),
 	'backwards-sexp'                   => k('Ctrl-Alt-b'),
 	'forwards-sexp'                    => k('Ctrl-Alt-f'),
+	'ace-jump-mode'                    => k('Ctrl-c') . p('Space', 'first letter of word'),
+	'ace-jump-line-mode'               => k('Ctrl-u', 'Ctrl-u', 'Ctrl-c', 'Space'),
+	'-ace-jump-mode2'                  => k('Ctrl-u', 'Ctrl-c') . p('Space', 'letter to go to'),
+	'ace-jump-mode-pop-mark'           => k('Ctrl-c', q{C-Space}),
 
 	# Mark / Select
 	'set-mark-command'                 => k('Ctrl-Space'),
@@ -291,9 +297,9 @@ my $rhSubEmacs = {
 	'shell'                               => \&fn,
 
 	# Rectangles
-	'copy-rectangle-to-register'          => k('Ctrl-x', 'r') . p('r', 'number'),
-	'-delete-rectangle-to-register'       => k('Ctrl-u', 'Ctrl-x', 'r') . p('r', 'number'),
-	'insert-register'                     => k('Ctrl-x', 'r') . p('g', 'number'),
+	'copy-rectangle-to-register'          => k('Ctrl-x', 'r') . p('r', 'character'),
+	'-delete-rectangle-to-register'       => k('Ctrl-u', 'Ctrl-x', 'r') . p('r', 'character'),
+	'insert-register'                     => k('Ctrl-x', 'r') . p('g', 'character'),
 	'kill-rectangle'                      => k('Ctrl-x', 'r', 'k'),
 	'delete-rectangle'                    => k('Ctrl-x', 'r', 'd'),
 	'yank-rectangle'                      => k('Ctrl-x', 'r', 'y'),
@@ -326,13 +332,46 @@ my $rhSubEmacs = {
 	'dabbrev-completion'                  => k('Ctrl-Alt-/'),
 	'-dabbrev-completion16'               => k('Ctrl-u', 'Ctrl-u', 'Ctrl-Alt-/'),
 
+	# International Character Sets
+	'set-language-environment'            => k('Ctrl-x', 'Enter', 'l'),
+	'list-input-methods'                  => \&fn,
+	'toggle-input-method'                 => k('Ctrl-\\'),
+	'universal-coding-system-argument'    => k('Ctrl-x', 'Enter', 'c'),
+	'list-coding-systems'                 => \&fn,
+	'prefer-coding-system'                => \&fn,
+
+	# Register
+	'copy-to-register'                    => k('Ctrl-x', 'r') . p('s', 'character'),
+	'-copy-to-register2'                  => k('Ctrl-x', 'r') . p('x', 'character'),
+	'-delete-to-register'                 => k('Ctrl-u', 'Ctrl-x', 'r') . p('s', 'character'),
+	'-delete-to-register2'                => k('Ctrl-u', 'Ctrl-x', 'r') . p('x', 'character'),
+	'insert-register'                     => k('Ctrl-x', 'r') . p('i', 'character'),
+	'-insert-register2'                   => k('Ctrl-x', 'r') . p('g', 'character'),
+	'-insert-register-move'               => k('Ctrl-u', 'Ctrl-x', 'r') . p('i', 'character'),
+	'-insert-register-move2'              => k('Ctrl-u', 'Ctrl-x', 'r') . p('g', 'character'),
+	'point-to-register'                   => k('Ctrl-x', 'r') . p('Space', 'character'),
+	'-point-to-register2'                 => k('Ctrl-x', 'r') . p('Ctrl-Space', 'character'),
+	'-point-to-register3'                 => k('Ctrl-x', 'r') . p('Ctrl-@', 'character'),
+	'-frame-arrangement-to-register'      => k('Ctrl-u', 'Ctrl-x', 'r') . p('Space', 'character'),
+	'jump-to-register'                    => k('Ctrl-x', 'r') . p('j', 'character'),
+	'-frame-arrangement-from-register'    => k('Ctrl-u', 'Ctrl-x', 'r') . p('j', 'character'),
+
+	# Keyboard Macros
+        'kmacro-start-macro-or-insert-counter' => k('F3'),
+        'kmacro-end-or-call-macro'             => k('F4'),
+	'-last-kmacro-forever'                 => k('Ctrl-u', '0', 'Ctrl-x', ')'),
+	'-last-kmacro-forever2'                => k('Ctrl-u', '0', 'F4'),
+        'kmacro-start-macro'                   => k('Ctrl-x', '('),
+        'kmacro-end-macro'                     => k('Ctrl-x', ')'),
+        'kmacro-end-and-call-macro'            => k('Ctrl-x', 'e'),
+        '-kmacro-append-to-last-macro'         => k('Ctrl-u', 'Ctrl-x', '('),
+        'name-last-kbd-macro'                  => \&fn,
+        'insert-kbd-macro'                     => \&fn,
+
 	# HEREIAM
 	# Miscellaneous
 	# Regular Expressions
-	# International Character Sets
 	# Info
-	# Register
-	# Keyboard Macros
 	# Commads Dealing with Emacs Lisp
 	# Simple Customisation
 	# Writing Commands
@@ -566,6 +605,7 @@ kbd {
 |%undo% or %-undo1% or %-undo2%|undo an unwanted change|
 |%undo-tree-redo% or %-undo-tree-redo1%|redo previous undo|
 |%revert-buffer%|revert a buffer to what is in the disk file|
+|%widen%|widen the scope of the editor to show the entire buffer|
 |%redraw-display%|redraw screen|
 </table>
 
@@ -610,6 +650,10 @@ th||sentence|home|word|column||column|word|end|sentence|
 |%goto-line%|go to line number|
 |%goto-char%|go to character offset from start of document|
 |%back-to-indentation%|go to start of line skipping initial indentation|
+|%ace-jump-mode%|ace jump to start of any word on screen|
+|%-ace-jump-mode2%|ace jump to any character on screen|
+|%ace-jump-line-mode%|ace jump to any line on screen|
+|%ace-jump-mode-pop-mark%|ace jump mode pop mark|
 </table>
 
 <h2>Mark, Killing (Cut) and Deleting by direction.</h2>
@@ -656,6 +700,8 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%insert-file%|insert contents of another file into this buffer|
 |%find-alternate-file%|replace this buffer with the file you really want|
 |%read-only-mode%|toggle read-only status of buffer|
+|%narrow-to-region%|narrow scope of the editor to the selected region, hides the rest of the buffer from view|
+|%widen%|widen the scope of the editor to the entire buffer|
 </table>
 
 <h2>Getting Help</h2>
@@ -825,9 +871,9 @@ th||sentence|home|word|character||character|word|end|sentence|
 
 <table class="define">
 |%rectangle-mark-mode%|toggle to rectangle mark mode|
-|%copy-rectangle-to-register%|copy rectangle to a numbered register|
-|%-delete-rectangle-to-register%|delete rectangle to numbered register|
-|%insert-register%|insert numbered register into the buffer|
+|%copy-rectangle-to-register%|copy rectangle to a register*|
+|%-delete-rectangle-to-register%|delete rectangle to register*|
+|%insert-register%|insert register* into the buffer|
 |%kill-rectangle%|kill rectangle shifting columns left|
 |%delete-rectangle%|delete text in rectangle shifting columns left|
 |%yank-rectangle%|yank rectangle inserting columns to right|
@@ -837,6 +883,8 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%string-insert-rectangle%|prefix each line of rectangle with a string|
 |%rectangle-number-lines%|prefix each line of rectangle with a number (use prefix arg to specify initial number)|
 </table>
+
+<p>* - a register is identified by a number, letter or other character</p>
 
 <h2>Abbrevs</h2>
 
@@ -868,6 +916,43 @@ Abbrevs allow you to define short text which expands to a larger tract of boiler
 <p><code>this</code> %inverse-add-mode-abbrev% <code>this is full text</code></p>
 <p>will cause 'this' to expand to 'this is full text' when in the current file mode.</p>
 
+<h2>International Character Sets</h2>
+
+<table class="define">
+|%set-language-environment%|specify principal language|
+|%list-input-methods%|show all input methods|
+|%toggle-input-method%|enable or disable input methods|
+|%universal-coding-system-argument%|set coding system for next command|
+|%list-coding-systems%|show all coding systems|
+|%prefer-coding-system%|choose preferred coding system|
+</table>
+
+<h2>Registers</h2>
+
+<p>* - a register is identified by a number, letter or other character</p>
+
+<table class="define">
+|%copy-to-register% or %-copy-to-register2%|save region in register|
+|%-delete-to-register% or %-delete-to-register2%|delete region to register|
+|%insert-register% or %-insert-register2%|insert register contents into buffer. keep point before inserted text)|
+|%-insert-register-move% or %-insert-register-move2%|insert register contents into buffer. move point after inserted text)|
+|%point-to-register% or %-point-to-register2% or %-point-to-register3%|save value of point in register|
+|%-frame-arrangement-to-register%|save arrangement of windows in frame to register|
+|%jump-to-register%|jump to point saved in register|
+|%-frame-arrangement-from-register%|restore frame arragement saved in register|
+</table>
+
+<h2>Keyboard Macros</h2>
+
+<table class="define">
+|%kmacro-start-macro% or %kmacro-start-macro-or-insert-counter%|start defining a keyboard macro|
+|%kmacro-end-macro% or %kmacro-end-or-call-macro%|end definition of keyboard macro|
+|%kmacro-end-and-call-macro% or %kmacro-end-or-call-macro%|execute last defined keyboard macro|
+|%-last-kmacro-forever% or %-last-kmacro-forever2%|execute last macro forever (until end of buffer reached)|
+|%-kmacro-append-to-last-macro%|append to last keyboard macro|
+|%name-last-kbd-macro%|name last keyboard macro|
+|%insert-kbd-macro%|insert Lisp definition in buffer|
+</table>
 
 <hr />
 <a id="end" />

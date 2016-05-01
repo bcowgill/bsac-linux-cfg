@@ -67,6 +67,7 @@ kbd {
 <tr><td><kbd>Ctrl-/</kbd> or <kbd>Ctrl-x</kbd> <kbd>u</kbd> or <kbd>Ctrl-_</kbd></td><td>undo an unwanted change</td></tr>
 <tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-/</kbd> or <kbd>Ctrl-u</kbd> <kbd>Ctrl-_</kbd></td><td>redo previous undo</td></tr>
 <tr><td><kbd>Alt-x</kbd> <code>revert-buffer</code></td><td>revert a buffer to what is in the disk file</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>n</kbd> <kbd>w</kbd></td><td>widen the scope of the editor to show the entire buffer</td></tr>
 <tr><td><kbd>Alt-x</kbd> <code>redraw-display</code></td><td>redraw screen</td></tr>
 </table>
 
@@ -109,6 +110,10 @@ kbd {
 <tr><td><kbd>Alt-g</kbd> <kbd>g</kbd></td><td>go to line number</td></tr>
 <tr><td><kbd>Alt-g</kbd> <kbd>c</kbd></td><td>go to character offset from start of document</td></tr>
 <tr><td><kbd>Alt-m</kbd></td><td>go to start of line skipping initial indentation</td></tr>
+<tr><td><kbd>Ctrl-c</kbd><kbd>Space</kbd>  <i>first letter of word</i></td><td>ace jump to start of any word on screen</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-c</kbd><kbd>Space</kbd>  <i>letter to go to</i></td><td>ace jump to any character on screen</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-u</kbd> <kbd>Ctrl-c</kbd> <kbd>Space</kbd></td><td>ace jump to any line on screen</td></tr>
+<tr><td><kbd>Ctrl-c</kbd> <kbd>C-Space</kbd></td><td>ace jump mode pop mark</td></tr>
 </table>
 
 <h2>Mark, Killing (Cut) and Deleting by direction.</h2>
@@ -155,6 +160,8 @@ kbd {
 <tr><td><kbd>Ctrl-x</kbd> <kbd>i</kbd></td><td>insert contents of another file into this buffer</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-v</kbd></td><td>replace this buffer with the file you really want</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-q</kbd></td><td>toggle read-only status of buffer</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>n</kbd> <kbd>n</kbd></td><td>narrow scope of the editor to the selected region, hides the rest of the buffer from view</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>n</kbd> <kbd>w</kbd></td><td>widen the scope of the editor to the entire buffer</td></tr>
 </table>
 
 <h2>Getting Help</h2>
@@ -323,9 +330,9 @@ kbd {
 
 <table class="define">
 <tr><td><kbd>Ctrl-x</kbd> <kbd>Space</kbd></td><td>toggle to rectangle mark mode</td></tr>
-<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>r</kbd>  <i>number</i></td><td>copy rectangle to a numbered register</td></tr>
-<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>r</kbd>  <i>number</i></td><td>delete rectangle to numbered register</td></tr>
-<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>g</kbd>  <i>number</i></td><td>insert numbered register into the buffer</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>r</kbd>  <i>character</i></td><td>copy rectangle to a register*</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>r</kbd>  <i>character</i></td><td>delete rectangle to register*</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>i</kbd>  <i>character</i></td><td>insert register* into the buffer</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd> <kbd>k</kbd></td><td>kill rectangle shifting columns left</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd> <kbd>d</kbd></td><td>delete text in rectangle shifting columns left</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd> <kbd>y</kbd></td><td>yank rectangle inserting columns to right</td></tr>
@@ -335,6 +342,8 @@ kbd {
 <tr><td><kbd>Alt-x</kbd> <code>string-insert-rectangle</code></td><td>prefix each line of rectangle with a string</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd> <kbd>N</kbd></td><td>prefix each line of rectangle with a number (use prefix arg to specify initial number)</td></tr>
 </table>
+
+<p>* - a register is identified by a number, letter or other character</p>
 
 <h2>Abbrevs</h2>
 
@@ -366,6 +375,43 @@ Abbrevs allow you to define short text which expands to a larger tract of boiler
 <p><code>this</code> <kbd>Ctrl-x</kbd> <kbd>a</kbd> <kbd>i</kbd> <kbd>l</kbd> <code>this is full text</code></p>
 <p>will cause 'this' to expand to 'this is full text' when in the current file mode.</p>
 
+<h2>International Character Sets</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Enter</kbd> <kbd>l</kbd></td><td>specify principal language</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>list-input-methods</code></td><td>show all input methods</td></tr>
+<tr><td><kbd>Ctrl-\</kbd></td><td>enable or disable input methods</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>Enter</kbd> <kbd>c</kbd></td><td>set coding system for next command</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>list-coding-systems</code></td><td>show all coding systems</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>prefer-coding-system</code></td><td>choose preferred coding system</td></tr>
+</table>
+
+<h2>Registers</h2>
+
+<p>* - a register is identified by a number, letter or other character</p>
+
+<table class="define">
+<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>s</kbd>  <i>character</i> or <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>x</kbd>  <i>character</i></td><td>save region in register</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>s</kbd>  <i>character</i> or <kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>x</kbd>  <i>character</i></td><td>delete region to register</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>i</kbd>  <i>character</i> or <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>g</kbd>  <i>character</i></td><td>insert register contents into buffer. keep point before inserted text)</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>i</kbd>  <i>character</i> or <kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>g</kbd>  <i>character</i></td><td>insert register contents into buffer. move point after inserted text)</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>Space</kbd>  <i>character</i> or <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>Ctrl-Space</kbd>  <i>character</i> or <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>Ctrl-@</kbd>  <i>character</i></td><td>save value of point in register</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>Space</kbd>  <i>character</i></td><td>save arrangement of windows in frame to register</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>j</kbd>  <i>character</i></td><td>jump to point saved in register</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>r</kbd><kbd>j</kbd>  <i>character</i></td><td>restore frame arragement saved in register</td></tr>
+</table>
+
+<h2>Keyboard Macros</h2>
+
+<table class="define">
+<tr><td><kbd>Ctrl-x</kbd> <kbd>(</kbd> or <kbd>F3</kbd></td><td>start defining a keyboard macro</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>)</kbd> or <kbd>F4</kbd></td><td>end definition of keyboard macro</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>e</kbd> or <kbd>F4</kbd></td><td>execute last defined keyboard macro</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>0</kbd> <kbd>Ctrl-x</kbd> <kbd>)</kbd> or <kbd>Ctrl-u</kbd> <kbd>0</kbd> <kbd>F4</kbd></td><td>execute last macro forever (until end of buffer reached)</td></tr>
+<tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>(</kbd></td><td>append to last keyboard macro</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>name-last-kbd-macro</code></td><td>name last keyboard macro</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>insert-kbd-macro</code></td><td>insert Lisp definition in buffer</td></tr>
+</table>
 
 <hr />
 <a id="end" />

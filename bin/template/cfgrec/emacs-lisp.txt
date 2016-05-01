@@ -6,7 +6,7 @@ Notes from Emacs Lisp Info tutorial
 
 	a-variable ;; symbol for a variable
 	(set 'a-variable 42) ;; bind the variable symbol to a value
-	(setq a-variable 43)
+	(setq a-variable 43) ;; setq allows multiple definitions and omits the ' prefix
 	(setq trees '(pine fir oak maple)
 		herbivores '(gazelle antelope zebra))
 
@@ -126,6 +126,11 @@ Editor variables/functions (evaluate with Ctrl-x Ctrl-e)
 	get-buffer-create
 	get-buffer
 	copy-to-buffer
+	(count-lines start end)
+	(forward-line 4)
+	(er ase-buf fer) ; warning don't evaluate
+	(bufferp buffer) ; check if buffer is a buffer or buffer name
+    (line-number-at-pos)
 
 	(save-excursion
 		(switch-to-buffer (other-buffer)) ;; WHAT? actually changes buffer
@@ -215,6 +220,8 @@ sudo cp TAGS /usr/share/emacs/24.4
 
 	; go to center point of buffer
 	; need a trunc/round/floor function to simplify
+	; (let*) allows variable definitions to refer to previously
+	; defined values while being defined, unlike (let)
 	(let* ((size (- (point-max) (point-min)))
 		(center (/ size 2)))
 		(push-mark)
@@ -222,3 +229,48 @@ sudo cp TAGS /usr/share/emacs/24.4
 			(goto-char center)
 			(goto-char (+ 0.5 center)))
 	)
+
+    (not (bufferp "*Messages*"))
+	(not (bufferp (get-buffer "*Messages*")))
+
+    (if (not (bufferp buffer))              ; if-part
+        (setq buffer (get-buffer buffer)))  ; then-part
+    ; better written as:
+    (or (bufferp buffer)
+		(setq buffer (get-buffer buffer)))
+
+    ; whenever you are saying if .. not, refer rewrite as or
+
+    (and pred1 pred2 ...)
+
+; how big can numbers be?
+(let* ((value 100000000000000000) (saved value))
+  (setq value (* value 10))
+  (> value saved))
+
+
+    (prefix-numeric-value arg) ; use with (interactive "P") to convert to number
+
+    (save-excursion BODY)   ; save current buffer, mark and point and restore after BODY completes
+	(save-current-buffer BODY) ; save/restore current buffer, but not mark or point
+    (save-restriction BODY) ; save current narrowing and restore after BODY completes
+	(let (deactivate-mark) BODY) ; save deactivate mark and restore after BODY (not saved by save-excursion)
+
+    ; if used together do in this order:
+    (save-excursion (save-restriction ...))
+
+    (let (deactivate-mark) (save-excursion (save-restriction ...)))
+
+(count-lines 1 (point))
+(line-number-at-pos)
+
+(defun myfun ()
+	   (save-restriction
+			(widen)
+			(save-excursion
+				(let ((string
+					(buffer-substring-no-properties (point-min) (+ 60 (point-min)))))
+					(message "%s" string)
+				)
+			)))
+(myfun)
