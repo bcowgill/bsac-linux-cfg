@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
-# display an emacs key reference
+# display an emacs key reference or substitute emacs key commands into
+# a user supplied text file
 
 use strict;
 use warnings;
@@ -10,27 +11,44 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
+use autodie qw(open);
+
 our $VERSION = 0.1;
 our $DEBUG = 1;
 
 our $SHORTEN_KEYS = 0;
 our $USE_META = 0;
 our $HIDE_UNKNOWN = 1;
+our $OUT_HTML = 1;
 
 our $rhSub;
+
+sub out {
+	my ($html) = @ARG;
+	unless ($OUT_HTML) {
+		$html =~ s{<i>}{ }xmsg;
+		$html =~ s{</?(kbd|code|i)>}{}xmsg;
+	}
+	return $html;
+}
 
 # key combination/chord
 sub k {
 	my $combo = join(" ", map { "<kbd>$ARG</kbd>" } @ARG);
 	if ($USE_META) {
-	$combo =~ s{Alt-}{Meta-}xmsg;
+		$combo =~ s{Alt-}{Meta-}xmsg;
 	}
+	return short($combo);
+}
+
+sub short {
+	my ($combo) = @ARG;
 	if ($SHORTEN_KEYS) {
-	$combo =~ s{Ctrl-}{C-}xmsg;
-	$combo =~ s{Shift-}{S-}xmsg;
-	$combo =~ s{Meta-}{M-}xmsg;
-	$combo =~ s{Alt-}{A-}xmsg;
-	$combo =~ s{Menu-}{m-}xmsg; # lower case m for menu
+		$combo =~ s{Ctrl-}{C-}xmsg;
+		$combo =~ s{Shift-}{S-}xmsg;
+		$combo =~ s{Meta-}{M-}xmsg;
+		$combo =~ s{Alt-}{A-}xmsg;
+		$combo =~ s{Menu-}{m-}xmsg; # lower case m for menu
 	}
 	return $combo;
 }
@@ -38,13 +56,14 @@ sub k {
 # variable key combination like Alt-N for Alt-0, Alt-1, ...
 sub kk {
 	my ($prefix, $param) = @ARG;
-	return "<kbd>$prefix<i>$param</i></kbd>"
+	return "<kbd>@{[short($prefix)]}<i>$param</i></kbd>"
 }
 
 # execute-extended-command line function
 sub fn {
 	my ($function) = @ARG;
-	return $rhSub->{'execute-extended-command'} . " <code>$function</code>";
+	return short($rhSub->{'execute-extended-command'})
+		. " <code>$function</code>";
 }
 
 # key combination with parameter
@@ -54,6 +73,12 @@ sub p {
 }
 
 #===========================================================================
+sub initKeyMap {
+	my ($mode) = @ARG;
+	return $mode eq 'emacs' ? initEmacsKeyMap() : initErgoKeyMap();
+}
+
+sub initEmacsKeyMap {
 my $rhSubEmacs = {
 	''                                 => '',
 	'[MODE]'                           => 'Emacs',
@@ -65,9 +90,20 @@ my $rhSubEmacs = {
 	'save-buffers-kill-terminal'       => k('Ctrl-x', 'Ctrl-c'),
 
 	# Params / Prefix keys
+	'-character-extend'                => k('Ctrl-x'),
 	'execute-extended-command'         => k('Alt-x'),
+	'-prefix-key'                      => k('Ctrl-u'),
 	'universal-argument'               => p('Ctrl-u', 'number/-number'),
+	'-universal-argument0'             => k('Ctrl-u', '0'),
+	'-universal-argument1'             => k('Ctrl-u', '1'),
+	'-universal-argument2'             => k('Ctrl-u', '2'),
+	'-universal-argument3'             => k('Ctrl-u', '3'),
 	'-universal-argument4'             => k('Ctrl-u', '4'),
+	'-universal-argument5'             => k('Ctrl-u', '5'),
+	'-universal-argument6'             => k('Ctrl-u', '6'),
+	'-universal-argument7'             => k('Ctrl-u', '7'),
+	'-universal-argument8'             => k('Ctrl-u', '8'),
+	'-universal-argument9'             => k('Ctrl-u', '9'),
 	'digit-argument'                   => kk('Alt-', 'N'),
 	'negative-argument'                => k('Alt--'),
 	'-neg-arg1'                        => k('Ctrl--'),
@@ -76,6 +112,7 @@ my $rhSubEmacs = {
 
 	# Error Recovery
 	'keyboard-quit'                    => k('Ctrl-g'),
+	'keyboard-escape-quit'             => k('Esc', 'Esc', 'Esc'),
 	'recover-session'                  => \&fn,
 	'undo'                             => k('Ctrl-/'),
 	'-undo2'                           => k('Ctrl-_'),
@@ -85,12 +122,12 @@ my $rhSubEmacs = {
 	'revert-buffer'                    => \&fn,
 	'redraw-display'                   => \&fn,
 	'widen'                            => k('Ctrl-x', 'n', 'w'),
-   'narrow-to-region'                 => k('Ctrl-x', 'n', 'n'),
+	'narrow-to-region'                 => k('Ctrl-x', 'n', 'n'),
 
 	# Movement Compass rose
 	'backward-page'                    => k('Ctrl-x', '['),
 	'backward-paragraph'               => k('Alt-{'),
-	'backward-sentence'                => k('Alt-b'),
+	'backward-sentence'                => k('Alt-a'),
 	'move-beginning-of-line'           => k('Ctrl-a'),
 	'backward-word'                    => k('Alt-b'),
 	'backward-char'                    => k('Ctrl-b'),
@@ -134,10 +171,12 @@ my $rhSubEmacs = {
 	'mark-whole-buffer'                => k('Ctrl-x', 'h'),
 
 	# Delete / Cut
+	'delete-backward-char'             => k('Backspace'),
 	'backward-delete-char-untabify'    => k('Backspace'),
 	'delete-forward-char'              => k('Delete'),
 	'delete-char'                      => k('Ctrl-d'),
 	'backward-kill-word'               => k('Ctrl-Backspace'),
+	'-backward-kill-word0'             => k('Alt-Delete'),
 	'-backward-kill-word1'             => k('Alt-Backspace'),
 	'kill-word'                        => k('Alt-d'),
 	'kill-line'                        => k('Ctrl-k'), # delete to end of line
@@ -164,14 +203,18 @@ my $rhSubEmacs = {
 	# Help
 	'-help1'                           => k('Ctrl-h'),
 	'-help2'                           => k('F1'),
+	'help-for-help'                    => k('Ctrl-h', '?'),
 	'help-with-tutorial'               => k('Ctrl-h', 't'),
 	'delete-other-windows'             => k('Ctrl-x', '1'),
 	'scroll-other-window'              => k('Ctrl-Alt-v'),
 	'apropos-command'                  => k('Ctrl-h','a'),
 	'describe-key-briefly'             => k('Ctrl-h', 'c'),
 	'describe-key'                     => k('Ctrl-h', 'k'),
+	'describe-variable'                => k('Ctrl-h', 'v'),
 	'describe-function'                => k('Ctrl-h', 'f'),
 	'describe-mode'                    => k('Ctrl-h', 'm'),
+	'info'                             => k('Ctrl-h', 'i'),
+	'info-emacs-manual'                => k('Ctrl-h', 'r'),
 
 	# Incremental Search
 	'isearch-forward'                  => k('Ctrl-s'),
@@ -215,6 +258,7 @@ my $rhSubEmacs = {
 	'display-buffer'                   => k('Ctrl-x', 4, 'Ctrl-o'),
 	'display-buffer-other-frame'       => k('Ctrl-x', 5, 'Ctrl-o'),
 	'find-file-other-window'           => k('Ctrl-x', 4, 'f'),
+	'-find-file-other-window1'         => k('Ctrl-x', 4, 'Ctrl-f'),
 	'find-file-other-frame'            => k('Ctrl-x', 5, 'f'),
 	'find-file-read-only-other-window' => k('Ctrl-x', 4, 'r'),
 	'find-file-read-only-other-frame'  => k('Ctrl-x', 5, 'r'),
@@ -376,10 +420,11 @@ my $rhSubEmacs = {
 	# Simple Customisation
 	# Writing Commands
 };
-
-
+return $rhSubEmacs;
+}
 
 #===========================================================================
+sub initErgoKeyMap {
 my $rhSubErgo = {
 	''                                 => '',
 	'[MODE]'                           => 'Ergoemacs',
@@ -401,6 +446,7 @@ my $rhSubErgo = {
 
 	# Error Recovery
 	'keyboard-quit'                    => k('Ctrl-g'),
+	'keyboard-escape-quit'             => k('Esc', 'Esc', 'Esc'),
 	'recover-session'                  => \&fn,
 	'undo'                             => k('Ctrl-z'),
 	'-undo1'                           => k('Alt-z'),
@@ -444,14 +490,44 @@ my $rhSubErgo = {
 	# HEREIAM
 
 };
-
-#===========================================================================
-$rhSub = $rhSubEmacs;
-if (scalar(@ARGV)) {
-	$rhSub = $rhSubErgo if $ARGV[0] =~ m{\Aergo\z}xmsi;
+return $rhSubErgo;
 }
 
-while (my $line = <DATA>) {
+#===========================================================================
+my $map = 'emacs';
+
+if (scalar(@ARGV)) {
+	if ($ARGV[0] =~ m{\Aergo\z}xmsi) {
+		$map = 'ergo';
+		shift @ARGV;
+	}
+}
+
+if (scalar(@ARGV)) {
+	my $fh;
+
+	$SHORTEN_KEYS = 1;
+	$OUT_HTML = 0;
+	$HIDE_UNKNOWN = 0;
+	$USE_META = 0;
+
+	$rhSub = initKeyMap($map);
+
+	open($fh, '<', $ARGV[0]);
+	while (my $line = <$fh>) {
+		transformLine($line);
+	}
+}
+else {
+	$rhSub = initKeyMap($map);
+	while (my $line = <DATA>) {
+		transformLine($line);
+	}
+}
+
+sub transformLine {
+	my ($line) = @ARG;
+
 	my $hasKey = 0;
 	$line =~ s{
 		\%([^\%]*)\%
@@ -459,10 +535,10 @@ while (my $line = <DATA>) {
 		$hasKey = 1 unless substr($1, 0, 1) eq '[';
 		if ($rhSub->{$1}) {
 			if (ref($rhSub->{$1})) {
-				$rhSub->{$1}->($1);
+				out($rhSub->{$1}->($1));
 			}
 			else {
-				$rhSub->{$1};
+				out($rhSub->{$1});
 			}
 		}
 		else {
@@ -470,7 +546,7 @@ while (my $line = <DATA>) {
 				'undefined'
 			}
 			else {
-				fn($1)
+				out(fn($1))
 			}
 		}
 	}xmsge;
@@ -490,7 +566,7 @@ while (my $line = <DATA>) {
 
 	$line =~ s{-pipe}{-|}xmsg;
 
-	if ($hasKey && $line !~ m{<kbd>}xms) {
+	if ($HIDE_UNKNOWN && $hasKey && $line !~ m{<kbd>}xms) {
 		$line = '';
 	}
 
@@ -601,6 +677,7 @@ kbd {
 
 <table class="define">
 |%keyboard-quit%|abort a partially typed or executing command|
+|%keyboard-escape-quit%|all purpose get out. recursive edit mode, windows, minibuffer...|
 |%recover-session%|recover files lost by a system crash|
 |%undo% or %-undo1% or %-undo2%|undo an unwanted change|
 |%undo-tree-redo% or %-undo-tree-redo1%|redo previous undo|
@@ -709,12 +786,16 @@ th||sentence|home|word|character||character|word|end|sentence|
 <table class="define">
 |%-help1% or %-help2%|help prefix key|
 |%help-with-tutorial%|help tutorial|
+|%help-for-help%|help about help system|
+|%info-emacs-manual%|emacs info manual|
+|%info%|system info manual|
 |%scroll-other-window%|scroll the help (other) window|
 |%delete-other-windows%|remove help (and all other) window|
 |%apropos-command%|apropos help matching a string|
 |%describe-key-briefly%|name of function bound to a key|
 |%describe-key%|help on the function bound to a key|
 |%describe-function%|help on a named function|
+|%describe-variable%|help on a named variable|
 |%describe-mode%|help on current editing mode|
 </table>
 

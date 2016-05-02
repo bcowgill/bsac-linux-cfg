@@ -22,18 +22,7 @@ try using a command.  For instance:
 
 
 
-
-
-
-
-
-
 [Middle of page left blank for didactic purposes.   Text continues below]
-
-
-
-
-
 
 
 
@@ -54,10 +43,10 @@ the text.
 
 The first thing that you need to know is how to move around from place
 to place in the text.  You already know how to move forward one screen,
-with C-v.  To move backwards one screen, type M-v (hold down the META key
+with C-v.  To move backwards one screen, type A-v (hold down the META key
 and type v, or type <ESC>v if you do not have a META, EDIT, or ALT key).
 
->> Try typing M-v and then C-v, a few times.
+>> Try typing A-v and then C-v, a few times.
 
 
 * SUMMARY
@@ -66,7 +55,7 @@ and type v, or type <ESC>v if you do not have a META, EDIT, or ALT key).
 The following commands are useful for viewing screenfuls:
 
 	C-v	Move forward one screenful
-	M-v	Move backward one screenful
+	A-v	Move backward one screenful
 	C-l	Clear screen and redisplay all the text,
 		 moving the text around the cursor
 		 to the center of the screen.
@@ -80,7 +69,7 @@ The following commands are useful for viewing screenfuls:
 
 You can also use the PageUp and PageDn keys to move by screenfuls, if
 your terminal has them, but you can edit more efficiently if you use
-C-v and M-v.
+C-v and A-v.
 
 
 * BASIC CURSOR CONTROL
@@ -137,33 +126,33 @@ without moving it off the screen.
 >> Try to move the cursor off the bottom of the screen with C-n, and
    see what happens.
 
-If moving by characters is too slow, you can move by words.  M-f
-(META-f) moves forward a word and M-b moves back a word.
+If moving by characters is too slow, you can move by words.  A-f
+(META-f) moves forward a word and A-b moves back a word.
 
->> Type a few M-f's and M-b's.
+>> Type a few A-f's and A-b's.
 
-When you are in the middle of a word, M-f moves to the end of the word.
-When you are in whitespace between words, M-f moves to the end of the
-following word.  M-b works likewise in the opposite direction.
+When you are in the middle of a word, A-f moves to the end of the word.
+When you are in whitespace between words, A-f moves to the end of the
+following word.  A-b works likewise in the opposite direction.
 
->> Type M-f and M-b a few times, interspersed with C-f's and C-b's
-   so that you can observe the action of M-f and M-b from various
+>> Type A-f and A-b a few times, interspersed with C-f's and C-b's
+   so that you can observe the action of A-f and A-b from various
    places inside and between words.
 
-Notice the parallel between C-f and C-b on the one hand, and M-f and
-M-b on the other hand.  Very often Meta characters are used for
+Notice the parallel between C-f and C-b on the one hand, and A-f and
+A-b on the other hand.  Very often Meta characters are used for
 operations related to the units defined by language (words, sentences,
 paragraphs), while Control characters operate on basic units that are
 independent of what you are editing (characters, lines, etc).
 
 This parallel applies between lines and sentences: C-a and C-e move to
-the beginning or end of a line, and M-a and M-e move to the beginning
+the beginning or end of a line, and A-a and A-e move to the beginning
 or end of a sentence.
 
 >> Try a couple of C-a's, and then a couple of C-e's.
-   Try a couple of M-a's, and then a couple of M-e's.
+   Try a couple of A-a's, and then a couple of A-e's.
 
-See how repeated C-a's do nothing, but repeated M-a's keep moving one
+See how repeated C-a's do nothing, but repeated A-a's keep moving one
 more sentence.  Although these are not quite analogous, each one seems
 natural.
 
@@ -177,8 +166,8 @@ word and sentence moving commands:
 	C-f	Move forward a character
 	C-b	Move backward a character
 
-	M-f	Move forward a word
-	M-b	Move backward a word
+	A-f	Move forward a word
+	A-b	Move backward a word
 
 	C-n	Move to next line
 	C-p	Move to previous line
@@ -186,43 +175,25 @@ word and sentence moving commands:
 	C-a	Move to beginning of line
 	C-e	Move to end of line
 
-	M-a	Move back to beginning of sentence
-	M-e	Move forward to end of sentence
-
-	C-v	Move forward one screenful
-	M-v	Move backward one screenful
-	C-l	Center current line in screen
-
-	M-S-< Move to top of document
-	M-S-> Move to bottom of document
-
-    Navigation Compass for emacs
-
-     sent home word col
-doc  ence              A-S-<
-page                    A-v
-line                    C-p
-       A-a C-a A-b C-b  C-l  C-f A-f C-e A-e
-                        C-n
-                        C-v
-                       A-S->
+	A-a	Move back to beginning of sentence
+	A-e	Move forward to end of sentence
 
 >> Try all of these commands now a few times for practice.
    These are the most often used commands.
 
-Two other important cursor motion commands are M-< (META Less-than),
-which moves to the beginning of the whole text, and M-> (META
+Two other important cursor motion commands are A-< (META Less-than),
+which moves to the beginning of the whole text, and A-> (META
 Greater-than), which moves to the end of the whole text.
 
 On most terminals, the "<" is above the comma, so you must use the
 shift key to type it.  On these terminals you must use the shift key
-to type M-< also; without the shift key, you would be typing M-comma.
+to type A-< also; without the shift key, you would be typing M-comma.
 
->> Try M-< now, to move to the beginning of the tutorial.
+>> Try A-< now, to move to the beginning of the tutorial.
    Then use C-v repeatedly to move back here.
 
->> Try M-> now, to move to the end of the tutorial.
-   Then use M-v repeatedly to move back here.
+>> Try A-> now, to move to the end of the tutorial.
+   Then use A-v repeatedly to move back here.
 
 You can also move the cursor with the arrow keys, if your terminal has
 arrow keys.  We recommend learning C-b, C-f, C-n and C-p for three
@@ -236,7 +207,7 @@ easily learn to use other advanced cursor motion commands as well.
 Most Emacs commands accept a numeric argument; for most commands, this
 serves as a repeat-count.  The way you give a command a repeat count
 is by typing C-u and then the digits before you type the command.  If
-you have a META (or EDIT or ALT) key, there is another, alternative wgay
+you have a META (or EDIT or ALT) key, there is another, alternative way
 to enter a numeric argument: type the digits while holding down the
 META key.  We recommend learning the C-u method because it works on
 any terminal.  The numeric argument is also called a "prefix argument",
@@ -253,14 +224,14 @@ those you have learned so far) use it as a flag--the presence of a
 prefix argument, regardless of its value, makes the command do
 something different.
 
-C-v and M-v are another kind of exception.  When given an argument,
+C-v and A-v are another kind of exception.  When given an argument,
 they scroll the text up or down by that many lines, rather than by a
 screenful.  For example, C-u 8 C-v scrolls by 8 lines.
 
 >> Try typing C-u 8 C-v now.
 
 This should have scrolled the text up by 8 lines.  If you would like
-to scroll it down again, you can give an argument to M-v.
+to scroll it down again, you can give an argument to A-v.
 
 If you are using a graphical display, such as X or MS-Windows, there
 should be a tall rectangular area called a scroll bar on one side of
@@ -399,29 +370,29 @@ You've now learned the most basic way of typing something in
 Emacs and correcting errors.  You can delete by words or lines
 as well.  Here is a summary of the delete operations:
 
-	<DEL>        Delete the character just before the cursor
+	Backspace    Delete the character just before the cursor
 	C-d   	     Delete the next character after the cursor
 
-	M-<DEL>      Kill the word immediately before the cursor
-	M-d	     Kill the next word after the cursor
+	C-Backspace   Kill the word immediately before the cursor
+	A-d	     Kill the next word after the cursor
 
 	C-k	     Kill from the cursor position to end of line
-	M-k	     Kill to the end of the current sentence
+	A-k	     Kill to the end of the current sentence
 
-Notice that <DEL> and C-d vs M-<DEL> and M-d extend the parallel
-started by C-f and M-f (well, <DEL> is not really a control character,
-but let's not worry about that).  C-k and M-k are like C-e and M-e,
+Notice that Backspace and C-d vs C-Backspace and A-d extend the parallel
+started by C-f and A-f (well, Backspace is not really a control character,
+but let's not worry about that).  C-k and A-k are like C-e and A-e,
 sort of, in that lines are paired with sentences.
 
 You can also kill a segment of text with one uniform method.  Move to
-one end of that part, and type C-<SPC>.  (<SPC> is the Space bar.)
+one end of that part, and type C-Space.  (<SPC> is the Space bar.)
 Next, move the cursor to the other end of the text you intend to kill.
 As you do this, Emacs highlights the text between the cursor and the
-position where you typed C-<SPC>.  Finally, type C-w.  This kills all
+position where you typed C-Space.  Finally, type C-w.  This kills all
 the text between the two positions.
 
 >> Move the cursor to the Y at the start of the previous paragraph.
->> Type C-<SPC>.  Emacs should display a message "Mark set"
+>> Type C-Space.  Emacs should display a message "Mark set"
    at the bottom of the screen.
 >> Move the cursor to the n in "end", on the second line of the
    paragraph.
@@ -436,7 +407,7 @@ as yanking back, or pulling back, some text that was taken away.)
 Generally, the commands that can remove a lot of text kill the text
 (they are set up so that you can yank the text), while the commands
 that remove just one character, or only remove blank lines and spaces,
-do deletion (so you cannot yank that text).  <DEL> and C-d do deletion
+do deletion (so you cannot yank that text).  Backspace and C-d do deletion
 in the simplest case, with no argument.  When given an argument, they
 kill instead.
 
@@ -475,23 +446,23 @@ Now to retrieve that killed text:
 
 What do you do if you have some text you want to yank back, and then
 you kill something else?  C-y would yank the more recent kill.  But
-the previous text is not lost.  You can get back to it using the M-y
+the previous text is not lost.  You can get back to it using the A-y
 command.  After you have done C-y to get the most recent kill, typing
-M-y replaces that yanked text with the previous kill.  Typing M-y
+A-y replaces that yanked text with the previous kill.  Typing A-y
 again and again brings in earlier and earlier kills.  When you have
 reached the text you are looking for, you do not have to do anything to
 keep it.  Just go on with your editing, leaving the yanked text where
 it is.
 
-If you M-y enough times, you come back to the starting point (the most
+If you A-y enough times, you come back to the starting point (the most
 recent kill).
 
 >> Kill a line, move around, kill another line.
    Then do C-y to get back the second killed line.
-   Then do M-y and it will be replaced by the first killed line.
-   Do more M-y's and see what you get.  Keep doing them until
+   Then do A-y and it will be replaced by the first killed line.
+   Do more A-y's and see what you get.  Keep doing them until
    the second kill line comes back, and then a few more.
-   If you like, you can try giving M-y positive and negative
+   If you like, you can try giving A-y positive and negative
    arguments.
 
 
@@ -671,7 +642,7 @@ on all the control and meta characters.  Emacs gets around this with
 the X (eXtend) command.  This comes in two flavors:
 
 	C-x	Character eXtend.  Followed by one character.
-	M-x	Named command eXtend.  Followed by a long name.
+	A-x	Named command eXtend.  Followed by a long name.
 
 These are commands that are generally useful but are used less than the
 commands you have already learned about.  You have already seen a few
@@ -711,8 +682,8 @@ There are many C-x commands.  Here is a list of the ones you have learned:
 Named eXtended commands are commands which are used even less
 frequently, or commands which are used only in certain modes.  An
 example is the command replace-string, which replaces one string with
-another in the buffer.  When you type M-x, Emacs prompts you at the
-bottom of the screen with M-x and you should type the name of the
+another in the buffer.  When you type A-x, Emacs prompts you at the
+bottom of the screen with A-x and you should type the name of the
 command; in this case, "replace-string".  Just type "repl s<TAB>" and
 Emacs will complete the name.  (<TAB> is the Tab key, usually found
 above the CapsLock or Shift key near the left edge of the keyboard.)
@@ -723,7 +694,7 @@ replaced, and the string to replace it with.  You must end each
 argument with <Return>.
 
 >> Move the cursor to the blank line two lines below this one.
-   Then type M-x repl s<Return>changed<Return>altered<Return>.
+   Then type A-x repl s<Return>changed<Return>altered<Return>.
 
    Notice how this line has changed: you've replaced the word
    "changed" with "altered" wherever it occurred, after the
@@ -743,7 +714,7 @@ Emacs deletes its auto save file.
 
 If the computer crashes, you can recover your auto-saved editing by
 finding the file normally (the file you were editing, not the auto
-save file) and then typing M-x recover-file <Return>.  When it asks for
+save file) and then typing A-x recover-file <Return>.  When it asks for
 confirmation, type yes<Return> to go ahead and recover the auto-save
 data.
 
@@ -797,18 +768,18 @@ there are commands for creating comments in a program, and since each
 programming language has a different idea of what a comment should
 look like, each major mode has to insert comments differently.  Each
 major mode is the name of an extended command, which is how you can
-switch to that mode.  For example, M-x fundamental-mode is a command to
+switch to that mode.  For example, A-x fundamental-mode is a command to
 switch to Fundamental mode.
 
 If you are going to be editing human-language text, such as this file, you
 should probably use Text Mode.
 
->> Type M-x text-mode <Return>.
+>> Type A-x text-mode <Return>.
 
 Don't worry, none of the Emacs commands you have learned changes in
-any great way.  But you can observe that M-f and M-b now treat
+any great way.  But you can observe that A-f and A-b now treat
 apostrophes as part of words.  Previously, in Fundamental mode,
-M-f and M-b treated apostrophes as word-separators.
+A-f and A-b treated apostrophes as word-separators.
 
 Major modes usually make subtle changes like that one: most commands
 do "the same job" in each major mode, but they work a little bit
@@ -833,13 +804,13 @@ human-language text, is Auto Fill mode.  When this mode is on, Emacs
 breaks the line in between words automatically whenever you insert
 text and make a line that is too wide.
 
-You can turn Auto Fill mode on by doing M-x auto-fill-mode <Return>.
+You can turn Auto Fill mode on by doing A-x auto-fill-mode <Return>.
 When the mode is on, you can turn it off again by doing
-M-x auto-fill-mode <Return>.  If the mode is off, this command turns
+A-x auto-fill-mode <Return>.  If the mode is off, this command turns
 it on, and if the mode is on, this command turns it off.  We say that
 the command "toggles the mode".
 
->> Type M-x auto-fill-mode <Return> now.  Then insert a line of "asdf "
+>> Type A-x auto-fill-mode <Return> now.  Then insert a line of "asdf "
    over again until you see it divide into two lines.  You must put in
    spaces between them because Auto Fill breaks lines only at spaces.
 
@@ -854,10 +825,10 @@ as a numeric argument.
 
 If you make changes in the middle of a paragraph, Auto Fill mode
 does not re-fill it for you.
-To re-fill the paragraph, type M-q (META-q) with the cursor inside
+To re-fill the paragraph, type A-q (META-q) with the cursor inside
 that paragraph.
 
->> Move the cursor into the previous paragraph and type M-q.
+>> Move the cursor into the previous paragraph and type A-q.
 
 
 * SEARCHING
@@ -884,7 +855,7 @@ you want to search for.  <Return> terminates a search.
    character to notice what happens to the cursor.
    Now you have searched for "cursor", once.
 >> Type C-s again, to search for the next occurrence of "cursor".
->> Now type <DEL> four times and see how the cursor moves.
+>> Now type Backspace four times and see how the cursor moves.
 >> Type <Return> to terminate the search.
 
 Did you see what happened?  Emacs, in an incremental search, tries to
@@ -893,14 +864,14 @@ go to the next occurrence of "cursor" just type C-s again.  If no such
 occurrence exists, Emacs beeps and tells you the search is currently
 "failing".  C-g would also terminate the search.
 
-If you are in the middle of an incremental search and type <DEL>, the
-search "retreats" to an earlier location.  If you type <DEL> just
+If you are in the middle of an incremental search and type Backspace, the
+search "retreats" to an earlier location.  If you type Backspace just
 after you had typed C-s to advance to the next occurrence of a search
-string, the <DEL> moves the cursor back to an earlier occurrence.  If
-there are no earlier occurrences, the <DEL> erases the last character
+string, the Backspace moves the cursor back to an earlier occurrence.  If
+there are no earlier occurrences, the Backspace erases the last character
 in the search string.  For instance, suppose you have typed "c", to
 search for the first occurrence of "c".  Now if you type "u", the
-cursor will move to the first occurrence of "cu".  Now type <DEL>.
+cursor will move to the first occurrence of "cu".  Now type Backspace.
 This erases the "u" from the search string, and the cursor moves back
 to the first occurrence of "c".
 
@@ -930,11 +901,11 @@ Emacs terms.)
    Both windows display this tutorial.  The editing cursor stays in
    the top window.
 
->> Type C-M-v to scroll the bottom window.
+>> Type C-A-v to scroll the bottom window.
    (If you do not have a real META key, type <ESC> C-v.)
 
 >> Type C-x o ("o" for "other") to move the cursor to the bottom window.
->> Use C-v and M-v in the bottom window to scroll it.
+>> Use C-v and A-v in the bottom window to scroll it.
    Keep reading these directions in the top window.
 
 >> Type C-x o again to move the cursor back to the top window.
@@ -946,13 +917,13 @@ cursor which blinks when you are not typing.  The other windows have
 their own cursor positions; if you are running Emacs in a graphical
 display, those cursors are drawn as unblinking hollow boxes.
 
-The command C-M-v is very useful when you are editing text in one
+The command C-A-v is very useful when you are editing text in one
 window and using the other window just for reference.  Without leaving
 the selected window, you can scroll the text in the other window with
-C-M-v.
+C-A-v.
 
-C-M-v is an example of a CONTROL-META character.  If you have a META
-(or Alt) key, you can type C-M-v by holding down both CONTROL and META
+C-A-v is an example of a CONTROL-META character.  If you have a META
+(or Alt) key, you can type C-A-v by holding down both CONTROL and META
 while typing v.  It does not matter whether CONTROL or META "comes
 first," as both of these keys act by modifying the characters you
 type.
@@ -974,7 +945,7 @@ change.  You can find a file in each window independently.
 
 Here is another way to use two windows to display two different things:
 
->> Type C-x 4 C-f followed by the name of one of your files.
+>> Type C-x 4 f followed by the name of one of your files.
    End with <Return>.  See the specified file appear in the bottom
    window.  The cursor goes there, too.
 
@@ -992,13 +963,13 @@ most other applications call a "window".  Multiple graphical frames
 can be shown on the screen at the same time.  On a text terminal, only
 one frame can be shown at a time.
 
->> Type M-x make-frame <Return>.
+>> Type A-x make-frame <Return>.
    See a new frame appear on your screen.
 
 You can do everything you did in the original frame in the new frame.
 There is nothing special about the first frame.
 
->> Type M-x delete-frame <Return>.
+>> Type A-x delete-frame <Return>.
    This removes the selected frame.
 
 You can also remove a frame by using the normal method provided by the
@@ -1015,11 +986,11 @@ level".  This is indicated by square brackets in the mode line,
 surrounding the parentheses around the major mode name.  For
 example, you might see [(Fundamental)] instead of (Fundamental).
 
-To get out of the recursive editing level, type <ESC> <ESC> <ESC>.
+To get out of the recursive editing level, type Esc Esc Esc.
 That is an all-purpose "get out" command.  You can also use it for
 eliminating extra windows, and getting out of the minibuffer.
 
->> Type M-x to get into a minibuffer; then type <ESC> <ESC> <ESC> to
+>> Type A-x to get into a minibuffer; then type Esc Esc Esc to
    get out.
 
 You cannot use C-g to get out of a recursive editing level.  This is
@@ -1045,7 +1016,7 @@ If you have typed C-h and decide you do not want any help, just
 type C-g to cancel it.
 
 (If C-h does not display a message about help at the bottom of the
-screen, try typing the F1 key or M-x help <Return> instead.)
+screen, try typing the F1 key or A-x help <Return> instead.)
 
 The most basic HELP feature is C-h c.  Type C-h, the character c, and
 a command character or sequence; then Emacs displays a very brief
@@ -1096,11 +1067,11 @@ You need to type in the name of the variable when Emacs prompts for it.
 
 >> Type C-h a file <Return>.
 
-This displays in another window a list of all M-x commands with "file"
+This displays in another window a list of all A-x commands with "file"
 in their names.  You will see character-commands listed beside the
 corresponding command names (such as C-x C-f beside find-file).
 
->> Type C-M-v to scroll the help window.  Do this a few times.
+>> Type C-A-v to scroll the help window.  Do this a few times.
 
 >> Type C-x 1 to delete the help window.
 
