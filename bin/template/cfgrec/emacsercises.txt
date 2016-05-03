@@ -27,9 +27,9 @@ START -> ffffffffffn    ffffn  fffn  fffn  fffn  fffn  fffn  fffn  fffn .
                             npnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpn .
                             fpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpn .
                                                                       ^ .
-																	  E .
-																	  N .
-																	  D .
+                                                                      E .
+                                                                      N .
+                                                                      D .
 
 2 ==========================================================================
 
@@ -42,7 +42,7 @@ like HTML, lisp, programming lanugages.
      A-b backward to start of word
      C-e end of the line
      C-a at beginning of the line
-	 A-m move to first non-space on line
+     A-m move to first non-space on line
      A-e end of sentence (just after full stop)
      A-a at start of sentence
      A-} forward to just after the paragaph
@@ -98,3 +98,32 @@ go back by PARAGRAPH.  then back by SENTENCE when you return.
 
 
 . ==========================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			 sfas dfa f
