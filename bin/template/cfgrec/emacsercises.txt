@@ -42,6 +42,7 @@ like HTML, lisp, programming lanugages.
      A-b backward to start of word
      C-e end of the line
      C-a at beginning of the line
+	 A-m move to first non-space on line
      A-e end of sentence (just after full stop)
      A-a at start of sentence
      A-} forward to just after the paragaph
@@ -50,6 +51,8 @@ like HTML, lisp, programming lanugages.
 START -> WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD reverse to start
 
 ENDLINE not end of sentence.  not end of sentence.  not end sentence.  HOME
+
+       ENDLINE not end of sentence.  not end of sentence. back to INDENT
 
 go by SENTENCE.  to next SENTENCE.  jump to SENTENCE.  go to SENTENCE.  go
 to SENTENCE.  to next SENTENCE.  go by SENTENCE.  reverse by SENTENCE.

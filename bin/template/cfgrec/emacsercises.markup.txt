@@ -27,9 +27,9 @@ START -> ffffffffffn    ffffn  fffn  fffn  fffn  fffn  fffn  fffn  fffn .
                             npnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpnpn .
                             fpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpfpn .
                                                                       ^ .
-																	  E .
-																	  N .
-																	  D .
+                                                                      E .
+                                                                      N .
+                                                                      D .
 
 2 ==========================================================================
 
@@ -42,6 +42,7 @@ like HTML, lisp, programming lanugages.
      %backward-word% backward to start of word
      %move-end-of-line% end of the line
      %move-beginning-of-line% at beginning of the line
+     %back-to-indentation% move to first non-space on line
      %forward-sentence% end of sentence (just after full stop)
      %backward-sentence% at start of sentence
      %forward-paragraph% forward to just after the paragaph
@@ -50,6 +51,8 @@ like HTML, lisp, programming lanugages.
 START -> WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD reverse to start
 
 ENDLINE not end of sentence.  not end of sentence.  not end sentence.  HOME
+
+       ENDLINE not end of sentence.  not end of sentence. back to INDENT
 
 go by SENTENCE.  to next SENTENCE.  jump to SENTENCE.  go to SENTENCE.  go
 to SENTENCE.  to next SENTENCE.  go by SENTENCE.  reverse by SENTENCE.
@@ -95,3 +98,32 @@ go back by PARAGRAPH.  then back by SENTENCE when you return.
 
 
 . ==========================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			 sfas dfa f
