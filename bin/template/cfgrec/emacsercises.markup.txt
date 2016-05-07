@@ -9,10 +9,10 @@ Emacsercise number 1 movin' it one character at a time.
 Follow the trail of letters using single character motion commands.
 (don't cheat with the arrow keys.)
 
- p   %previous-line% up to previous line
-b f  %next-line% down to next line
- n   %backward-char% left, backward one char
-     %forward-char% right, forward one char
+ p     %previous-line% up to previous line
+b f    %next-line% down to next line
+ n     %backward-char% left, backward one char
+       %forward-char% right, forward one char
 
 START -> ffffffffffn    ffffn  fffn  fffn  fffn  fffn  fffn  fffn  fffn .
          p         n    p   n  p  n  p  n  p  n  p  n  p  n  p  n  p  n .
@@ -33,20 +33,24 @@ START -> ffffffffffn    ffffn  fffn  fffn  fffn  fffn  fffn  fffn  fffn .
 
 2 ==========================================================================
 
+Emacsercise #2 movin' it with bigger jumps
+
 In the text below move to the uppercased words and then back to the start
 using specific movement commands. Repeat each line several times.
 Experiment with what word, sentence or paragraph means in other file types
 like HTML, lisp, programming lanugages.
 
-     %forward-word% forward to just after end of word
-     %backward-word% backward to start of word
-     %move-end-of-line% end of the line
-     %move-beginning-of-line% at beginning of the line
-     %back-to-indentation% move to first non-space on line
-     %forward-sentence% end of sentence (just after full stop)
-     %backward-sentence% at start of sentence
-     %forward-paragraph% forward to just after the paragaph
-     %backward-paragraph% backward to just before the paragraph
+     %forward-word%    forward to just after end of word
+     %backward-word%    backward to start of word
+     %move-end-of-line%    end of the line
+     %move-beginning-of-line%    at beginning of the line
+     %back-to-indentation%    move to first non-space on line
+     %forward-sentence%    end of sentence (just after full stop)
+     %backward-sentence%    at start of sentence
+     %forward-paragraph%    forward to just after the paragaph
+     %backward-paragraph%    backward to just before the paragraph
+     %forwards-sexp%    forward to just after this/next symbolic expression
+	 %backwards-sexp%    backward to beginning of this/previous symbolic expression
 
 START -> WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD reverse to start
 
@@ -96,34 +100,195 @@ Facts be submitted to a candid world.
 
 go back by PARAGRAPH.  then back by SENTENCE when you return.
 
+go forward and backward by symbolic expression on the following code block
+or open your own source code files and try it there.
+
+(point) (point)
+(point) (point) (point)
+
+if (condition)
+{
+    doit()
+}
+else
+{
+    dothat()
+}
+
+for (x=1; x<5; x++) {
+    goforit()
+}
+
+<div><p>stuff <b>is </b>bold</p></div>
+
+function that (x, y) {
+    try {
+	    do()
+	}
+	catch (error)
+	{
+	    var x = [1, 2, 3, 4];
+	    oops()
+	}
+	finally
+	{
+	    done()
+	}
+}
+
 
+3 ==========================================================================
+
+Emacsercise #3 movin' and shakin' it around
+
+First save this cursor position to register 0 with %-point-to-register0%
+then you can return here with %-jump-to-register0%
+
+	 %-point-to-register0%    save current point to register 0
+	 %-jump-to-register0%    jump back to point in register 0
+     %scroll-up-command%    scroll document up one page (only moves cursor point if necessary )
+	 %scroll-down-command%    scroll document down one page
+	 %recenter-top-bottom%    scroll current line to center, top, bottom in succession
+	 %scroll-right%    scroll the view to the right
+	 %scroll-left%    scroll the view to the left
+     %forward-page%    move to the next page break (^L)
+	 %backward-page%    move to the previous page break (^L)
+	 %beginning-of-buffer%    jump to start of document
+	 %end-of-buffer%    jump to end of document
+	 %goto-line%    jump to any arbitrary line number
+
+Practice scroll view up/down without using the Pg Up / Pg Dn keys
+
+Practice scrolling current line to center, top or bottom of window
+
+Practice scrolling the view to right and left 10, 20, 40 characters
+        10         20       30         40       50         60       70         80       90        100       110
+....i....|....i....|....i....|....i....|....i....|....i....|....i....|....i....|....i....|....i....|....i....|
+
+Practice
+
+going
+
+to
+
+page
+
+break
+
+characters
+
+back
+
+and
+
+forward.
+
+
+Practice jumping to start and end of document use the register jump
+command to return here.
+
+Practice jumping to any line at all (10, 100, 500, 1000), note the
+current line number so you can jump back here later.
+
+
+4 ==========================================================================
+
+Emacsercise #4 marking time.
+
+Take note of the undo or revert buffer command to restore any changes you
+might accidentally make.
+
+	%undo%    undo last change to buffer
+	%revert-buffer%    revert changes made to buffer
+	%keyboard-quit%    keyboard quit to abort mark
+	%set-mark-command%    place mark at current point
+	%mark-word%    mark text to the end of current / next / to the Nth word
+	%-mark-to-start-of-word%    mark text to the start of current / next word
+	%exchange-point-and-mark%    exchange cursor point with mark position
+	%mark-paragraph%    mark the current / next / to the Nth paragraph
+	%mark-page%    mark the current page
+	%mark-sexp%    mark the symbolic expression
+	%mark-function%    mark the current function
+	%mark-whole-buffer%    mark the entire buffer
+
+
+In this text here, practice extending the mark by word forward and backwards
+and aborting the mark afterwards. See what happens when you exchange point
+and mark then extend the mark to the next or previous word. Become fluent
+with extending and de-extending the mark by a word at a time.  You can also
+extend the selection a character at a time in either direction by normal
+cursor movement and exchange point and mark.
+
+Practice marking to start or end of line by starting a mark then moving
+normally to start or end of line. Mark a whole line by moving to
+start of line, start a mark then move to next or previous line
+
+After clearing a mark you can show it again with exchange point and mark.
+
+Scroll page back to previous exercises and practice marking paragraphs,
+functions, symbolic expressions and pages. Use exchange point and mark
+to see the boundaries of the mark when it extends outside the viewport.
+
+
+
+
+5 ==========================================================================
+
+Emacsercise #5 the killing fields.
+
+Take note of the undo or revert buffer command to restore any changes you
+make.
+
+	%undo%    undo last change to buffer
+	%revert-buffer%    revert changes made to buffer
+	%kill-region%    kill marked region
+	%zap-to-char%    kill forward to specific character
+	%backward-kill-word%    kill backward to start of word
+	%kill-word%    kill forward to end of word
+	%kill-line%    kill forward to end of line
+	%kill-sentence%    kill to end of sentence
+	%negative-argument%    change direction of next kill command
+
+Work through the text below marking and killing only the capitalised text.
+
+The unanimous KILL Declaration of KILL the thirteen united States of America,
+
+When in the Course KILL KILL of human events, it becomes necessary for one
+people to dissolve the KILL KILL KILLpolitical bands which have connected
+them with another, and to assume among the powers of the earth, the separate
+and equal station to which the Laws of Nature and of Nature's God entitle
+them, a decent respect to the opinions of mankind requires that they should
+declare the causes which impel them to the separation.
+
+We hold these truths to be self-evident, that all men are created equal,
+that they are endowed by their Creator with certain unalienable Rights, that
+among these are Life, Liberty and the pursuit of Happiness.  --That to
+secure these rights, Governments are instituted among Men, deriving their
+just powers from the consent of the governed, --That whenever any Form of
+Government becomes destructive of these ends, it is the Right of the People
+to alter or to abolish it, and to institute new Government, laying its
+foundation on such principles and organizing its powers in such form, as to
+them shall seem most likely to effect their Safety and Happiness.
+
+Prudence, indeed, will dictate that Governments long established should not
+be changed for light and transient causes; and accordingly all experience
+hath shewn, that mankind are more disposed to suffer, while evils are
+sufferable, than to right themselves by abolishing the forms to which they
+are accustomed.  But when a long train of abuses and usurpations, pursuing
+invariably the same Object evinces a design to reduce them under absolute
+Despotism, it is their right, it is their duty, to throw off such
+Government, and to provide new Guards for their future security.
+
+--Such has been the patient sufferance of these Colonies; and such is now
+the necessity which constrains them to alter their former Systems of
+Government.  The history of the present King of Great Britain is a history
+of repeated injuries and usurpations, all having in direct object the
+establishment of an absolute Tyranny over these States.  To prove this, let
+Facts be submitted to a candid world.
+
+
+
+
+
 . ==========================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			 sfas dfa f
+

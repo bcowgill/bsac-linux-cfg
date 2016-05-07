@@ -9,10 +9,10 @@ Emacsercise number 1 movin' it one character at a time.
 Follow the trail of letters using single character motion commands.
 (don't cheat with the arrow keys.)
 
- p   C-p up to previous line
-b f  C-n down to next line
- n   C-b left, backward one char
-     C-f right, forward one char
+ p     C-p up to previous line
+b f    C-n down to next line
+ n     C-b left, backward one char
+       C-f right, forward one char
 
 START -> ffffffffffn    ffffn  fffn  fffn  fffn  fffn  fffn  fffn  fffn .
          p         n    p   n  p  n  p  n  p  n  p  n  p  n  p  n  p  n .
@@ -33,20 +33,24 @@ START -> ffffffffffn    ffffn  fffn  fffn  fffn  fffn  fffn  fffn  fffn .
 
 2 ==========================================================================
 
+Emacsercise #2 movin' it with bigger jumps
+
 In the text below move to the uppercased words and then back to the start
 using specific movement commands. Repeat each line several times.
 Experiment with what word, sentence or paragraph means in other file types
 like HTML, lisp, programming lanugages.
 
-     A-f forward to just after end of word
-     A-b backward to start of word
-     C-e end of the line
-     C-a at beginning of the line
-     A-m move to first non-space on line
-     A-e end of sentence (just after full stop)
-     A-a at start of sentence
-     A-} forward to just after the paragaph
-     A-{ backward to just before the paragraph
+     A-f    forward to just after end of word
+     A-b    backward to start of word
+     C-e    end of the line
+     C-a    at beginning of the line
+     A-m    move to first non-space on line
+     A-e    end of sentence (just after full stop)
+     A-a    at start of sentence
+     A-}    forward to just after the paragaph
+     A-{    backward to just before the paragraph
+     C-A-f    forward to just after this/next symbolic expression
+	 C-A-b    backward to beginning of this/previous symbolic expression
 
 START -> WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD reverse to start
 
@@ -96,34 +100,195 @@ Facts be submitted to a candid world.
 
 go back by PARAGRAPH.  then back by SENTENCE when you return.
 
+go forward and backward by symbolic expression on the following code block
+or open your own source code files and try it there.
+
+(point) (point)
+(point) (point) (point)
+
+if (condition)
+{
+    doit()
+}
+else
+{
+    dothat()
+}
+
+for (x=1; x<5; x++) {
+    goforit()
+}
+
+<div><p>stuff <b>is </b>bold</p></div>
+
+function that (x, y) {
+    try {
+	    do()
+	}
+	catch (error)
+	{
+	    var x = [1, 2, 3, 4];
+	    oops()
+	}
+	finally
+	{
+	    done()
+	}
+}
+
 
+3 ==========================================================================
+
+Emacsercise #3 movin' and shakin' it around
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	 C-x r Space 0    save current point to register 0
+	 C-x r j 0    jump back to point in register 0
+     C-v    scroll document up one page (only moves cursor point if necessary )
+	 A-v    scroll document down one page
+	 C-l    scroll current line to center, top, bottom in succession
+	 C-x >    scroll the view to the right
+	 C-x <    scroll the view to the left
+     C-x ]    move to the next page break (^L)
+	 C-x [    move to the previous page break (^L)
+	 A-<    jump to start of document
+	 A->    jump to end of document
+	 A-gg   number    jump to any arbitrary line number
+
+Practice scroll view up/down without using the Pg Up / Pg Dn keys
+
+Practice scrolling current line to center, top or bottom of window
+
+Practice scrolling the view to right and left 10, 20, 40 characters
+        10         20       30         40       50         60       70         80       90        100       110
+....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td><td>....i....</td></tr>
+
+Practice
+
+going
+
+to
+
+page
+
+break
+
+characters
+
+back
+
+and
+
+forward.
+
+
+Practice jumping to start and end of document use the register jump
+command to return here.
+
+Practice jumping to any line at all (10, 100, 500, 1000), note the
+current line number so you can jump back here later.
+
+
+4 ==========================================================================
+
+Emacsercise #4 marking time.
+
+Take note of the undo or revert buffer command to restore any changes you
+might accidentally make.
+
+	C-/    undo last change to buffer
+	A-x revert-buffer    revert changes made to buffer
+	C-g    keyboard quit to abort mark
+	C-Space    place mark at current point
+	A-@    mark text to the end of current / next / to the Nth word
+	A-- A-@    mark text to the start of current / next word
+	C-x C-x    exchange cursor point with mark position
+	A-h    mark the current / next / to the Nth paragraph
+	C-x C-p    mark the current page
+	C-A-@    mark the symbolic expression
+	C-A-h    mark the current function
+	C-x h    mark the entire buffer
+
+
+In this text here, practice extending the mark by word forward and backwards
+and aborting the mark afterwards. See what happens when you exchange point
+and mark then extend the mark to the next or previous word. Become fluent
+with extending and de-extending the mark by a word at a time.  You can also
+extend the selection a character at a time in either direction by normal
+cursor movement and exchange point and mark.
+
+Practice marking to start or end of line by starting a mark then moving
+normally to start or end of line. Mark a whole line by moving to
+start of line, start a mark then move to next or previous line
+
+After clearing a mark you can show it again with exchange point and mark.
+
+Scroll page back to previous exercises and practice marking paragraphs,
+functions, symbolic expressions and pages. Use exchange point and mark
+to see the boundaries of the mark when it extends outside the viewport.
+
+
+
+
+5 ==========================================================================
+
+Emacsercise #5 the killing fields.
+
+Take note of the undo or revert buffer command to restore any changes you
+make.
+
+	C-/    undo last change to buffer
+	A-x revert-buffer    revert changes made to buffer
+	C-w    kill marked region
+	A-z   char    kill forward to specific character
+	C-Backspace    kill backward to start of word
+	A-d    kill forward to end of word
+	C-k    kill forward to end of line
+	A-k    kill to end of sentence
+	A--    change direction of next kill command
+
+Work through the text below marking and killing only the capitalised text.
+
+The unanimous KILL Declaration of KILL the thirteen united States of America,
+
+When in the Course KILL KILL of human events, it becomes necessary for one
+people to dissolve the KILL KILL KILLpolitical bands which have connected
+them with another, and to assume among the powers of the earth, the separate
+and equal station to which the Laws of Nature and of Nature's God entitle
+them, a decent respect to the opinions of mankind requires that they should
+declare the causes which impel them to the separation.
+
+We hold these truths to be self-evident, that all men are created equal,
+that they are endowed by their Creator with certain unalienable Rights, that
+among these are Life, Liberty and the pursuit of Happiness.  --That to
+secure these rights, Governments are instituted among Men, deriving their
+just powers from the consent of the governed, --That whenever any Form of
+Government becomes destructive of these ends, it is the Right of the People
+to alter or to abolish it, and to institute new Government, laying its
+foundation on such principles and organizing its powers in such form, as to
+them shall seem most likely to effect their Safety and Happiness.
+
+Prudence, indeed, will dictate that Governments long established should not
+be changed for light and transient causes; and accordingly all experience
+hath shewn, that mankind are more disposed to suffer, while evils are
+sufferable, than to right themselves by abolishing the forms to which they
+are accustomed.  But when a long train of abuses and usurpations, pursuing
+invariably the same Object evinces a design to reduce them under absolute
+Despotism, it is their right, it is their duty, to throw off such
+Government, and to provide new Guards for their future security.
+
+--Such has been the patient sufferance of these Colonies; and such is now
+the necessity which constrains them to alter their former Systems of
+Government.  The history of the present King of Great Britain is a history
+of repeated injuries and usurpations, all having in direct object the
+establishment of an absolute Tyranny over these States.  To prove this, let
+Facts be submitted to a candid world.
+
+
+
+
+
 . ==========================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			 sfas dfa f
+

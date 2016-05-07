@@ -148,8 +148,8 @@ my $rhSubEmacs = {
 	'scroll-right'                     => k('Ctrl-x', '>'),
 
 	# Motion
-	'goto-line'                        => k('Alt-g', 'g'),
-	'goto-char'                        => k('Alt-g', 'c'),
+	'goto-line'                        => k('Alt-g') . p('g', 'number'),
+	'goto-char'                        => k('Alt-g') . p('c', 'number'),
 	'back-to-indentation'              => k('Alt-m'),
 	'backwards-sexp'                   => k('Ctrl-Alt-b'),
 	'forwards-sexp'                    => k('Ctrl-Alt-f'),
@@ -394,10 +394,12 @@ my $rhSubEmacs = {
 	'-insert-register-move'               => k('Ctrl-u', 'Ctrl-x', 'r') . p('i', 'character'),
 	'-insert-register-move2'              => k('Ctrl-u', 'Ctrl-x', 'r') . p('g', 'character'),
 	'point-to-register'                   => k('Ctrl-x', 'r') . p('Space', 'character'),
+	'-point-to-register0'                 => k('Ctrl-x', 'r', 'Space', 0),
 	'-point-to-register2'                 => k('Ctrl-x', 'r') . p('Ctrl-Space', 'character'),
 	'-point-to-register3'                 => k('Ctrl-x', 'r') . p('Ctrl-@', 'character'),
 	'-frame-arrangement-to-register'      => k('Ctrl-u', 'Ctrl-x', 'r') . p('Space', 'character'),
 	'jump-to-register'                    => k('Ctrl-x', 'r') . p('j', 'character'),
+	'-jump-to-register0'                  => k('Ctrl-x', 'r', 'j', 0),
 	'-frame-arrangement-from-register'    => k('Ctrl-u', 'Ctrl-x', 'r') . p('j', 'character'),
 
 	# Keyboard Macros
