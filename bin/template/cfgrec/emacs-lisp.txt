@@ -274,3 +274,62 @@ sudo cp TAGS /usr/share/emacs/24.4
 				)
 			)))
 (myfun)
+
+;; List construction
+(cons 'pine '(fir oak maple)) ;; like unshift()
+(cons 'pine nil) ;; must already have a list to construct from
+(cons 'pine) ;; error
+
+;; List deconstruction
+
+;; car function === return first item from a list, leaving list intact
+(car '(rose violet daisy buttercup))
+(first '(rose violet daisy buttercup))
+(first ())
+
+(nth 2 '(rose violet daisy buttercup))
+(second '(rose violet daisy buttercup))
+(third '(rose violet daisy buttercup))
+(fourth '(rose violet daisy buttercup))
+
+;; cdr function === the rest of the list
+(cdr '(rose violet daisy buttercup))
+(rest '(rose violet daisy buttercup))
+(rest '(rose))
+(rest ())
+
+(nthcdr 2 '(rose violet daisy buttercup))
+
+(length '(buttercup)) ;; get length of list i.e. 1
+(length ) ;; error
+
+;; destructive/mutating list functions
+;; setcar/setcdr
+
+(setq animals '(antelope giraffe lion tiger))
+animals
+(setcar animals 'hippopotamus) ;; changes antelope to hippo... in the list
+
+ (setq domesticated-animals '(horse cow sheep goat))
+  domesticated-animals
+  (setcdr domesticated-animals '(cat dog))
+
+(cons 'kestrel (cons 'owl (cons 'toucan (cons 'parrot nil))))
+(setq birds '(kestrel owl toucan parrot))
+birds
+(cons birds birds)
+(setcar birds 'piranha)
+(setcdr birds '(marlin salmon trout))
+
+Interactive options
+
+"p\ncZap to char: " for (defun ... (arg char) ... )
+- p = processed prefix (C-u N or M-N)
+- c = prompt for character
+
+(aref array index) ; access element of an array
+(char-table-p symbol) ; check if symbol is a character table
+(char-to-string char) ; convert a character to a string
+(search-forward string boundary error number) ; search forward for a string a number of times until it reaches the boundary position. the error parameter tells how to handle an error. nil will print a message and signal an error.
+number repeats the search that many times. if negative it searches backward.
+(progn BODY...) ; evaluates each expression in the the body and return the value of the final one
