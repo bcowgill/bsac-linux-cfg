@@ -13,10 +13,11 @@ if [ -z "$1" ]; then
 	echo You must supply a build command to run.
 	exit 1
 fi
-if [ ! -z "$2" ]; then
-	WATCHDIR="$2"
-fi
 BUILD="$1"
+if [ ! -z "$2" ]; then
+	shift
+	WATCHDIR="$*"
+fi
 echo BUILD=$BUILD
 echo WATCHDIR="$WATCHDIR"
 echo TOUCH=$TOUCH
@@ -35,14 +36,14 @@ while  [ /bin/true ]
 do
 	BUILDIT=0
 	if [ -f $TOUCH ]; then
-		if [ `find "$WATCHDIR" -newer $TOUCH -type f | egrep -v "$IGNORE" | wc -l` == 0 ]; then
+		if [ `find $WATCHDIR -newer $TOUCH -type f | egrep -v "$IGNORE" | wc -l` == 0 ]; then
 			if [ $LOOPS -gt $TIMES ]; then
 				echo `date --rfc-3339=seconds` still nothing new...
 				LOOPS=0
 			fi
 		else
 			echo `date --rfc-3339=seconds` "building ($BUILD) because of something new"
-			find "$WATCHDIR" -newer $TOUCH -type f | egrep -v "$IGNORE" | head
+			find $WATCHDIR -newer $TOUCH -type f | egrep -v "$IGNORE" | head
 			BUILDIT=1
 		fi
 	else
