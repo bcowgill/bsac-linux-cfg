@@ -12,6 +12,7 @@ while (my $line = <>)
 	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{python .+ (SimpleHTTP|http\.server)}xms;
 	$line = "${prefix}CHARLES PROXY $line\n" if $line =~ m{java .+ -jar \s+ /usr/lib/charles-proxy/charles.jar}xms;
 	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ bcowgill/bin/WebStorm}xms;
+	$line = "${prefix}EMACS         $line\n" if $line =~ m{emacs}xms;
 	$line = "${prefix}KARMA         $line\n" if $line =~ m{node(js)? .+ karma \s* start}xms;
 	$line = "${prefix}KARMAWEBSTORM $line\n" if $line =~ m{node(js)? .+ intellij .+ karma}xms;
 	$line = "${prefix}KARMAWSSERVER $line\n" if $line =~ m{node(js)? .+ karma .+ capture}xms;
