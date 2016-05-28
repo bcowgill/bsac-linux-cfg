@@ -4,6 +4,7 @@
 perl -ne '
 BEGIN {
 	$rhAllow->{id} = 1;
+	$rhAllow->{ok} = 1;
 	$rhAllow->{idx} = 1;
 	$rhAllow->{app} = 1;
 	$rhAllow->{env} = 1;
