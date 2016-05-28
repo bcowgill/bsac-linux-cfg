@@ -185,6 +185,8 @@ fi
 alias cls=clear
 
 if [ `hostname` == worksharexps-XPS-15-9530 ]; then
+   alias viscratch='vim $HOME/workspace/000_scratch.txt'
+   alias vinotes='vim $HOME/workspace/notes.txt'
    alias gr='grunt --gruntfile Gruntfile.linux.js'
    alias grsq='git-rebase.sh origin/sysqa'
    alias gpfdi='git push -f origin debug-inheritance'
