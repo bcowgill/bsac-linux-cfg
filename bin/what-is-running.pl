@@ -9,6 +9,7 @@ use English;
 my $prefix = "___";
 while (my $line = <>)
 {
+	$line = "${prefix}DOCUZILLA     $line\n" if $line =~ m{mono .+ Docuzilla}xms;
 	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{python .+ (SimpleHTTP|http\.server)}xms;
 	$line = "${prefix}CHARLES PROXY $line\n" if $line =~ m{java .+ -jar \s+ /usr/lib/charles-proxy/charles.jar}xms;
 	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ bcowgill/bin/WebStorm}xms;
