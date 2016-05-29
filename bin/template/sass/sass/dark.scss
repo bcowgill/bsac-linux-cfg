@@ -1,0 +1,67 @@
+$dark-bg: black;
+$dark-fg: yellow;
+$dark-border-color: yellow;
+$dark-border-alpha: 0.3;
+$dark-border: rgba(red($dark-border-color), green($dark-border-color), blue($dark-border-color), $dark-border-alpha);
+
+$dark-hover-bg: lighten($dark-bg, 10%);
+$dark-hover-border-color: yellow;
+$dark-hover-border-alpha: 0.6;
+$dark-hover-border: rgba(red($dark-hover-border-color), green($dark-hover-border-color), blue($dark-hover-border-color), $dark-hover-border-alpha);
+
+$dark-selected-bg: lighten($dark-bg, 20%);
+$dark-selected-border-color: yellow;
+$dark-selected-border-alpha: 1;
+$dark-selected-border: rgba(red($dark-selected-border-color), green($dark-selected-border-color), blue($dark-selected-border-color), $dark-selected-border-alpha);
+
+body.theme-dark {
+	background-color: $dark-bg;
+	color: $dark-fg;
+}
+
+.theme-dark {
+	.box {
+		border: 1px solid rgba(red($dark-border-color), green($dark-border-color), blue($dark-border-color), $dark-border-alpha)
+	}
+
+	.box:hover, .box.is-hovered {
+		background-color: $dark-hover-bg;
+		border: 1px solid $dark-hover-border;
+	}
+
+	.box.is-selected {
+		background-color: $dark-selected-bg;
+		border: 1px solid $dark-selected-border;
+	}
+
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.l-flex {
+	display: flex;
+	flex-basis: 100%;
+	flex-flow: row wrap;
+}
+
+.l-col {
+	flex: 1 1 0;
+	min-width: min-content;
+	outline: 1px dotted;
+}
+
+.t-fixed-size {
+	margin: 2px;
+	padding: 8px;
+	width: 600px;
+	height: 32px;
+}
+
+strong.s-color {
+	color: red;
+}
+strong.s-underline {
+	text-decoration: underline;
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>(Almost) Everything HTML and dark theme test</title>
+<link href="css/dark.css" rel="stylesheet" type="text/css"></link>
+</head>
+
+<body>
+
+<header><code>&lt;header&gt;</code>
+	<a name="top" /><h1><a href="#almost" title="&DoubleDownArrow; jump to exclusions">(almost)<sup>*</sup></a> Every HTML styling element:</h1>
+	<h6>add class .theme-dark to body to see dark theme</h6>
+</header>
+
+<nav><code>&lt;nav&gt;</code>
+	<a name="nav" /><h3>Navigation</h3>
+		<a target="_html5ref" href="https://developer.mozilla.org/en/docs/Web/HTML/Element">TODO carry on from here. Image and Multimedia</a>
+	<menu>Outline
+		<li><a href="#block-level">Block Level Elements</a></li>
+		<li><a href="#inline-style">Inline Styling Elements</a></li>
+		<li><a href="#tables">Table Elements</a></li>
+		<li><a href="#forms">Form Elements</a></li>
+		<li><a href="#semantic">Semantic Elements</a></li>
+		<li><a href="#footnotes">Footnotes</a></li>
+	</menu>
+	<menu>External
+		<li><a target="_html5ref" href="https://developer.mozilla.org/en/docs/Web/HTML/Element">MDN HTML5 Element Reference</a></li>
+		<li><a target="_html5entity" href="http://w3c.github.io/html/syntax.html#named-character-references">MDN HTML5 Unicode Entities</a></li>
+		<li><a target="_HTml5Input" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">MDN HTML5 Input Reference</a></li>
+	</menu>
+	<code>&lt;hr&gt;</code><hr />
+</nav>
+
+<main><code>&lt;main&gt;</code>
+
+<section id="block-level"><code>&lt;section&gt;</code>
+	<hgroup><code>&lt;hgroup&gt;</code>Block Level Element Examples</hgroup>
+<a name="block-level" /><h3>Block level elements</h3>
+<div><code>&lt;div&gt;</code> a generic block level container</div>
+<div class="l-flex">
+	<div class="l-col">
+		<h1><code>&lt;h1&gt;</code> Header 1</h1>
+		<h2><code>&lt;h2&gt;</code> Header 2</h2>
+		<h3><code>&lt;h3&gt;</code> Header 3</h3>
+		<h4><code>&lt;h4&gt;</code> Header 4</h4>
+		<h5><code>&lt;h5&gt;</code> Header 5</h5>
+		<h6><code>&lt;h6&gt;</code> Header 6</h6>
+	</div>
+	<div class='l-col'>
+		<menu><code>&lt;menu&gt;</code> menu
+			<li><code>&lt;li&gt;</code> list</li>
+			<li><code>&lt;li&gt;</code> of</li>
+			<li><code>&lt;li&gt;</code> items</li>
+		</menu>
+	</div>
+	<div class='l-col'>
+		<ol><code>&lt;ol&gt;</code> ordered
+			<li><code>&lt;li&gt;</code> list</li>
+			<li><code>&lt;li&gt;</code> of</li>
+			<li><code>&lt;li&gt;</code> items</li>
+		</ol>
+	</div>
+	<div class='l-col'>
+		<ul><code>&lt;ul&gt;</code> unordered
+			<li><code>&lt;li&gt;</code> list</li>
+			<li><code>&lt;li&gt;</code> of</li>
+			<li><code>&lt;li&gt;</code> items</li>
+		</ul>
+	</div>
+</div>
+<div class="l-flex">
+	<div class='l-col'>
+		<dl><code>&lt;dl&gt;</code> definition list
+			<dt><code>&lt;dt&gt;</code> term</dt>
+			<dd><code>&lt;dd&gt;</code> definition of term</dd>
+
+			<dt><code>&lt;dt&gt;</code> another term</dt>
+			<dd><code>&lt;dd&gt;</code> another definition of term</dd>
+
+			<dt><code>&lt;dt&gt;</code> <code>&lt;dfn&gt;</code> <dfn>dfn element</dfn></dt>
+			<dd><code>&lt;dd&gt;</code> is defined <a href="#def-dfn">there</a></dd>
+		</dl>
+	</div>
+	<div class='l-col'>
+		<p><code>&lt;p&gt;</code> A few short paragraphs.  A few good men.</p>
+		<code>&lt;pre&gt;</code>
+<pre>
+A preformatted paragraph.
+ \ should line up  *
+  \ with the stars *
+   \ and slashes   *
+    \..............*
+</pre>
+		<p><code>&lt;p&gt;</code> A few, fewer, fewest pargraphs.  A few things in life are free.
+		</p>
+		<blockquote cite="http://developer.mozilla.org"><code>&lt;blockquote&gt;</code> 
+			<p>This is a quotation taken from the Mozilla Developer Center.</p>
+		</blockquote>
+	</div>
+</div>
+</section>
+<hr />
+
+<section id="inline-level">
+<a name="inline-style" /><h3>Inline styling elements</h3>
+<div>
+	<p><code>&lt;b&gt;</code><b>A bold lead sentence in the paragraph, of course.</b>
+	When you need to <code>&lt;span&gt;</code><span style="color: blue" title="this text is feeling blue">style some text as a group</span> the span comes in handy.
+	There are many other ways to make your text look.
+	It can be very <code>&lt;strong&gt;</code> <strong>strong</strong>, if you like.
+	And remember <b>bold</b> is bold but <strong class="s-color">strong</strong> can do many things so long as it makes the text <strong class="s-underline">stronger</strong>.
+	Sometimes you need to <code>&lt;sup&gt;</code> <sup>rise <sup>above <sup>it</sup> all</sup></sup> and other times <sub>you're <code>&lt;sub&gt;</code> <sub>down</sub> in the dumps</sub>.
+	When you just need to <code>&lt;u&gt;</code> <u>draw a line under it all</u> and move on, that is possible.
+	You can <code>&lt;mark&gt;</code> <mark>mark</mark> some text with a <mark>highlight</mark> to indicate search <mark>matches</mark> or other <mark>relevance</mark>.
+	Marking a passage as a direct quote without breaking up the text is <code>&lt;q&gt;</code> <q>as good as it gets.</q>
+	You can indicate that a mistake was made by <code>&lt;s&gt;</code> <s>striking</s> text through.
+	Closely related are the proofreading or differencing elements to show <code>&lt;del&gt;</code><del>deleted</del> removed and <code>&lt;ins&gt;</code> <ins>inserted</ins> text.
+	If you want to <code>&lt;small&gt;</code> <small>speak <small>more <small>softly <small>or <small>try</small> and</small> hide</small> what</small> you</small> are doing it's possible.</p>
+
+	<p>
+	When you need to <code>&lt;a&gt;</code><a href="#top" title="&DoubleUpArrow; back to top">link</a> to something else an anchor helps out. <a class="is-visited" href="http://google.com">Visited</a>, <a class="is-not-visited" href="unkpps://you.never/have/been/here">Unvisited</a> and <a class="is-hovered" href="http://google.com">hovered</a> links can look differently.
+
+	Of course you can abbreviate things, <abbr title="As Far As I Know"><code>&lt;abbr&gt;</code>AFAIK</abbr>, and a tooltip will spell it out for you.
+	<p>The <code>&lt;dfn&gt;</code><dfn id="def-dfn">dfn element</dfn> is used to mark the source of a definition and link a definition item back to it.</p>
+
+	<p>When you absolutely have to have a line break <br /><code>&lt;br&gt;</code> somewhere you can do that too.
+	But other times you simply need to say where a word break is permitted if needed. Supercali<wbr/>fragilisticexpialidocious can be broken but iamunbreakablewillneverbesplitupnomatterhowwidethewindowis.</p>
+
+	<p>Mentioning an artistic work which you can't connect to directly on the web is easy,<code>&lt;cite&gt;</code><cite>Journal of the IEEE, 1979.</cite>
+	You <em>can <em>progressively <em>apply <em>more <em>and more stress emphasis to text by nesting an</em></em></em></em></em> <code>&lt;em&gt;</code>em.
+	The best way to show when to use the <code>&lt;i&gt;</code> and <code>&lt;em&gt;</code> elements are by example.
+	<code>&lt;em&gt;</code> is about voice stress when you read it, but <code>&lt;i&gt;</code> is about titles, names and definitions.
+	The <i title="italics">Queen Mary</i> sailed. Just <em title="emphasis">do</em> it already! The word <i title="italics">the</i> is an article. We <em title="emphasis">had</em> to do something about it.</p>
+
+	<p>Telling someone about commands and programming code inline is also quite simple. <code>&lt;code&gt;</code><code>ls -alrt</code>.
+	You can indicate what the computer would respond back with <code>&lt;samp&gt;</code> <samp>file not found.</samp>
+	As is signifying what should be typed on the keyboard <code>&lt;kbd&gt;</code> <kbd>Ctrl-x Ctrl-s</kbd>.
+	<code>&lt;samp&gt;</code> <samp>Keyboard markup inside samples are a whole 'nother matter. <code>&lt;kbd&gt;</code> <kbd>Esc</kbd></samp>.
+	As are samples when they are within <code>&lt;kbd&gt;</code><kbd>keyboard sequences <code>&lt;samp&gt;</code><samp>sample output</samp></kbd>.
+	And to top it off a <code>&lt;kbd&gt;</code><kbd>keyboard sequence <code>&lt;kbd&gt;</code><kbd>within</kbd> another one</kbd> means something else entirely.
+	Mathematical expressions or programs can have variables indicated. f(<var>x</var>) = a<var>x</var> + b. The variable <var>width</var> will set the button width.
+	</p>
+	<p>Associating some machine readable information is possible for Firefox users. We can tell the machine the ISBN number for <code>&lt;data&gt;</code><data value="9788931001990">To Kill A Mockingbird.</data>
+	Time information can be shown in human format with a machine readable annotation. The concert took place on <code>&lt;time&gt;</code> <time datetime="2001-05-15T19:00">May 15</time>. Lights out are at <time>22:00</time>.
+	</p>
+</div>
+<hr />
+</section>
+
+<section id="boxes">
+<div class="box t-fixed-size">.box Text <span class="is-secondary">secondary text</span> <mark>marked text</mark></div>
+<div class="box is-hovered t-fixed-size">.box.is-hovered Text <span class="is-secondary">secondary text</span> <mark>marked text</mark></div>
+<div class="box is-selected t-fixed-size">.box.is-selected Text <span class="is-secondary">secondary text</span> <mark>marked text</mark></div>
+<hr />
+</section>
+
+<section id="tables">
+	<a name="tables" /><hgroup>Table examples</hgroup>
+	<table>
+		<caption>
+			<strong>Table 1</strong> Example table caption must be first
+			<details><summary>Details of table for screen readers</summary></details>
+		</caption>
+		<thead>
+			<tr>
+				<th title="full on details for column one">one</th><th>two</th><th>three</th><th>four</th>
+				<th>five</th><th>six</th><th>seven</th><th>eight</th>
+				<th>nine</th><th>ten</th><th>eleven</th><th>twelve</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>one</th><th>two</th><th>three</th><th>four</th>
+				<th>five</th><th>six</th><th>seven</th><th>eight</th>
+				<th>nine</th><th>ten</th><th>eleven</th><th>twelve</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<th>first</th><td>12.34</td><td>0.23</td><td>8.34</td>
+				<td>14:12</td><td>12</td><td>partial</td><td>4.32</td>
+				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
+			</tr>
+			<tr>
+				<th>second</th><td>12.34</td><td>0.23</td><td>8.34</td>
+				<td>14:12</td><td>12</td><td>partial</td><td>4.32</td>
+				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
+			</tr>
+			<tr>
+				<th>third</th><td>12.34</td><td>0.23</td><td>8.34</td>
+				<td>14:12</td><td>12</td><td>partial</td><td>4.32</td>
+				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
+			</tr>
+			<tr>
+				<th>fourth</th><td>12.34</td><td>0.23</td><td>8.34</td>
+				<td>14:12</td><td>12</td><td>partial</td><td>4.32</td>
+				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
+			</tr>
+		</tbody>
+	</table>
+<hr />
+</section>
+
+<section id="forms">
+	<a name="forms" /><hgroup>Form examples</hgroup>
+		<code>&lt;form&gt;</code> <form>
+		<div>
+			<label><code>&lt;button&gt;</code>
+				<button name="disabledSubmitBtn" value="pushed" type="submit" disabled>disabled submit</button></label>
+			<button name="submitBtn" value="pushed" type="submit">submit</button>
+			<button name="disabledBtn" value="clicked" disabled>disabled button</button>
+			<button name="enabledBtn" value="clicked">button</button>
+			<button name="disabledResetBtn" value="touched" type="reset" disabled>disabled reset</button>
+			<button name="resetBtn" value="touched" type="reset">reset</button>
+		</div>
+		<div>
+			<label><code>&lt;input type=button&gt;</code>
+				<input type="button" name="disabledInputBtn" value="disabled input" disabled /></label>
+			<input type="button" name="inputBtn" value="input" />
+			<input type="reset" name="disabledResetInputBtn" value="disabled reset" disabled />
+			<input type="reset" name="resetInputBtn" value="reset" />
+			<input type="submit" name="disabledSubmitInputBtn" value="disabled submit" disabled />
+			<input type="submit" name="submitInputBtn" value="submit" />
+		</div>
+		<div>
+			<label><code>&lt;input type=checkbox&gt;</code> disabled
+				<input name="disabledChx" type="checkbox" value="checkMe" disabled/></label>
+			<label>unchecked <input name="uncheckedChx" type="checkbox" value="checkMe" /></label>
+			<label>checked <input name="checkedChx" type="checkbox" value="checkMe" checked /></label>
+			<label>indeterminate <input name="indeterminateChx" type="checkbox" value="checkMe" indeterminate /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=radio&gt;</code> disabled
+				<input name="radio" type="radio" value="radioDisabled" disabled/></label>
+			<label>unchecked <input name="radio" type="radio" value="radioUnchecked" /></label>
+			<label>checked <input name="radio" type="radio" value="radioChecked" checked /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=color&gt;</code> disabled
+				<input name="disabledColor" type="color" value="#123456" disabled/></label>
+			<label>enabled <input name="enabledColor" type="color" value="#fedcba" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=range&gt;</code> disabled
+				<input name="disabledRange" type="range" disabled /></label>
+			<label>enabled 1 <input name="enabledRange" type="range" min="1" max="11" step="0.5" value="10"/> 11</label>
+		</div>
+		<div>
+			<label><code>&lt;input type=number&gt;</code> disabled
+				<input name="disabledNumber" type="number" disabled /></label>
+			<label>enabled <input name="enabledNumber" type="number" placeholder="number" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=datetime-local&gt;</code> disabled
+				<input name="disabledDateTime" type="datetime-local" disabled /></label>
+			<label>enabled <input name="enabledDateTime" type="datetime-local" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=date&gt;</code> disabled
+				<input name="disabledDate" type="date" disabled /></label>
+			<label>enabled <input name="enabledDate" type="date" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=time&gt;</code> disabled
+				<input name="disabledTime" type="time" disabled /></label>
+			<label>enabled <input name="enabledTime" type="time" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=month&gt;</code> disabled
+				<input name="disabledMonth" type="month" disabled /></label>
+			<label>enabled <input name="enabledMonth" type="month" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=week&gt;</code> disabled
+				<input name="disabledWeek" type="week" disabled /></label>
+			<label>enabled <input name="enabledWeek" type="week" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=search&gt;</code> disabled
+				<input name="disabledSearch" type="search" disabled /></label>
+			<label>enabled <input name="enabledSearch" type="search" placeholder="search for" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=text&gt;</code> disabled
+				<input name="disabledText" type="text" disabled /></label>
+			<label>enabled <input name="enabledText" type="text" placeholder="type it" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=password&gt;</code> disabled
+				<input name="disabledPassword" type="password" disabled /></label>
+			<label>enabled <input name="enabledPassword" type="password" placeholder="password"/></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=tel&gt;</code> disabled
+				<input name="disabledTel" type="tel" disabled /></label>
+			<label>enabled <input name="enabledTel" type="tel" maxlength="11" pattern="abcd" placeholder="telephone" /></label>
+			<label>invalid <input class="is-invalid" name="invalidTel" type="tel" maxlength="11" pattern="^[0-9]+$" value="telephone" /></label>
+			<label>valid <input class="is-valid" name="validTel" type="tel" maxlength="11" pattern="^[0-9]+$" value="01111212343" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=email&gt;</code> disabled
+				<input name="disabledEmail" type="email" disabled /></label>
+			<label>enabled <input name="enabledEmail" type="email" placeholder="@" /></label>
+			<label>invalid <input class="is-invalid" name="invalidEmail" type="email" value="invalid"/></label>
+			<label>valid <input class="is-valid" name="validEmail" type="email" value="valid@test.com"/></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=url&gt;</code> disabled
+				<input name="disabledUrl" type="url" disabled /></label>
+			<label>enabled <input name="enabledUrl" type="url" placeholder="http://"/></label>
+			<label>invalid <input class="is-invalid" name="invalidUrl" type="url" value="not like any url i ever saw" /></label>
+			<label>valid <input class="is-valid" name="validUrl" type="url" value="http://go.ru" /></label>
+		</div>
+		<div>
+			<label><code>&lt;input type=file&gt;</code> disabled
+				<input name="disabledFile" type="file" disabled /></label>
+			<label>enabled <input name="enabledFile" type="file" /></label>
+		</div>
+		</form>
+<hr />
+</section>
+
+<section id="semantics">
+	<a name="semantic" /><hgroup>Semantic examples</hgroup>
+
+	<article><code>&lt;article&gt;</code>
+		<h6>an article</h6>
+		an article is a self-contained composition which could be distributed or reused independently. It should have a heading element
+	</article>
+	<aside><code>&lt;aside&gt;</code>
+		an aside, sidebar or inset only tangentially related to the rest of the content
+	</aside>
+	<figure><code>&lt;figure&gt;</code>
+		self-contained content, frequently with a caption, and is typically referenced as a single unit. While it is related to the main flow, its position is independent of the main flow. Usually this is an image, an illustration, a diagram, a code snippet, or a schema that is referenced in the main text, but that can be moved to another page or to an appendix without affecting the main flow.
+		<figcaption><code>&lt;figcaption&gt;</code> a caption for this figure</figcaption>
+	</figure>
+	<hr />
+</section>
+
+</main>
+
+<footer><code>&lt;footer&gt;</code>
+	<a name="footnotes" /><h6>Footnotes</h6>
+		<a name="almost" /><a href="#top" title="&DoubleUpArrow; back to top"><sup>*</sup></a> HTML elements omitted/with no visible effect
+	<ul>
+		<li><code>&lt;html&gt;</code>
+		<li><code>&lt;base&gt;</code>
+		<li><code>&lt;head&gt;</code>
+		<li><code>&lt;link&gt;</code>
+		<li><code>&lt;meta&gt;</code>
+		<li><code>&lt;style&gt;</code>
+		<li><code>&lt;bdi&gt;</code> Bidirectional Text
+		<li><code>&lt;bdo&gt;</code> Bidirectional Text
+		<li><code>&lt;rp&gt;</code> Ruby system of pronunciation markup
+		<li><code>&lt;rt&gt;</code> Ruby system of pronunciation markup
+		<li><code>&lt;rtc&gt;</code> Ruby system of pronunciation markup
+		<li><code>&lt;ruby&gt;</code> Ruby system of pronunciation markup
+		<li><code>&lt;map&gt;</code> Image map
+		<li><code>&lt;area&gt;</code> Image map
+		<li><code>&lt;audio&gt;</code> Media player
+		<li><code>&lt;video&gt;</code> Media player
+		<li><code>&lt;track&gt;</code> Media player
+		<li><code>&lt;source&gt;</code> Media player
+		<li><code>&lt;embed&gt;</code> Embedded objects
+		<li><code>&lt;object&gt;</code> Embedded objects
+		<li><code>&lt;param&gt;</code> Embedded objects
+		<li><code>&lt;canvas&gt;</code>
+		<li><code>&lt;script&gt;</code>
+		<li><code>&lt;noscript&gt;</code>
+		<li><code>&lt;col&gt;</code>Table column grouping
+		<li><code>&lt;colgroup&gt;</code>Table column grouping
+	</ul>
+	<address><code>&lt;address&gt;</code>
+		contact info for this document
+	</address>
+</footer>
+
+</body>
+</html>

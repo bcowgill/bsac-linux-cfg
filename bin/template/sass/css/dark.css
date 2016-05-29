@@ -1,0 +1,41 @@
+body.theme-dark {
+  background-color: black;
+  color: yellow; }
+
+.theme-dark .box {
+  border: 1px solid rgba(255, 255, 0, 0.3); }
+
+.theme-dark .box:hover, .theme-dark .box.is-hovered {
+  background-color: #1a1a1a;
+  border: 1px solid rgba(255, 255, 0, 0.6); }
+
+.theme-dark .box.is-selected {
+  background-color: #333333;
+  border: 1px solid yellow; }
+
+* {
+  box-sizing: border-box; }
+
+.l-flex {
+  display: flex;
+  flex-basis: 100%;
+  flex-flow: row wrap; }
+
+.l-col {
+  flex: 1 1 0;
+  min-width: min-content;
+  outline: 1px dotted; }
+
+.t-fixed-size {
+  margin: 2px;
+  padding: 8px;
+  width: 600px;
+  height: 32px; }
+
+strong.s-color {
+  color: red; }
+
+strong.s-underline {
+  text-decoration: underline; }
+
+/*# sourceMappingURL=dark.css.map */
