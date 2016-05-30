@@ -14,12 +14,79 @@ $dark-selected-border-color: yellow;
 $dark-selected-border-alpha: 1;
 $dark-selected-border: rgba(red($dark-selected-border-color), green($dark-selected-border-color), blue($dark-selected-border-color), $dark-selected-border-alpha);
 
+$dark-button-bg: lighten($dark-bg, 20%);
+$dark-button-fg: $dark-fg;
+$dark-disabled-button-fg: darken($dark-fg, 20%);
+$dark-disabled-input-fg: darken($dark-fg, 20%);
+
+$dark-select-checked-bg: lighten($dark-bg, 20%);
+$dark-select-checked-fg: $dark-fg;
+
+$dark-table-row-bg: lighten($dark-bg, 10%);
+
+/* Sensible default table styling */
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+td {
+	border: 1px solid black;
+	border-width: 1px 0;
+}
+
+td:nth-child(2n) {
+	background-color: #EEE;
+}
+
+tbody > tr > th {
+	text-align: right;
+}
+
+
 body.theme-dark {
 	background-color: $dark-bg;
 	color: $dark-fg;
 }
 
 .theme-dark {
+	input, select, textarea {
+		background-color: $dark-bg;
+		color: $dark-fg;
+	}
+
+	input[disabled], select[disabled], textarea[disabled] {
+		color: $dark-disabled-input-fg;
+	}
+
+	select {
+		background-color: $dark-bg;
+		color: $dark-fg;
+	}
+
+	select > option:checked {
+		background-color: $dark-select-checked-bg;
+		color: $dark-select-checked-fg;
+	}
+
+	button, input[type=button], input[type=submit], input[type=reset] {
+		background-color: $dark-button-bg;
+		color: $dark-fg;
+	}
+
+	button[disabled], input[type=button][disabled], input[type=submit][disabled], input[type=reset][disabled] {
+		color: $dark-disabled-button-fg;
+	}
+
+	td {
+		border: 1px solid $dark-border;
+		border-width: 1px 0;
+	}
+
+	td:nth-child(2n) {
+		background-color: $dark-table-row-bg;
+	}
+
 	.box {
 		border: 1px solid rgba(red($dark-border-color), green($dark-border-color), blue($dark-border-color), $dark-border-alpha)
 	}

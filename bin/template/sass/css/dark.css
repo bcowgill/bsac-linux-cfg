@@ -1,6 +1,50 @@
+/* Sensible default table styling */
+table {
+  width: 100%;
+  border-collapse: collapse; }
+
+td {
+  border: 1px solid black;
+  border-width: 1px 0; }
+
+td:nth-child(2n) {
+  background-color: #EEE; }
+
+tbody > tr > th {
+  text-align: right; }
+
 body.theme-dark {
   background-color: black;
   color: yellow; }
+
+.theme-dark input, .theme-dark select, .theme-dark textarea {
+  background-color: black;
+  color: yellow; }
+
+.theme-dark input[disabled], .theme-dark select[disabled], .theme-dark textarea[disabled] {
+  color: #999900; }
+
+.theme-dark select {
+  background-color: black;
+  color: yellow; }
+
+.theme-dark select > option:checked {
+  background-color: #333333;
+  color: yellow; }
+
+.theme-dark button, .theme-dark input[type=button], .theme-dark input[type=submit], .theme-dark input[type=reset] {
+  background-color: #333333;
+  color: yellow; }
+
+.theme-dark button[disabled], .theme-dark input[type=button][disabled], .theme-dark input[type=submit][disabled], .theme-dark input[type=reset][disabled] {
+  color: #999900; }
+
+.theme-dark td {
+  border: 1px solid rgba(255, 255, 0, 0.3);
+  border-width: 1px 0; }
+
+.theme-dark td:nth-child(2n) {
+  background-color: #1a1a1a; }
 
 .theme-dark .box {
   border: 1px solid rgba(255, 255, 0, 0.3); }

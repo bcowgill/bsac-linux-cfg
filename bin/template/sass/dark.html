@@ -16,7 +16,7 @@
 
 <nav><code>&lt;nav&gt;</code>
 	<a name="nav" /><h3>Navigation</h3>
-		<a target="_html5ref" href="https://developer.mozilla.org/en/docs/Web/HTML/Element">TODO carry on from here. Image and Multimedia</a>
+		<a target="_html5ref" href="https://developer.mozilla.org/en/docs/Web/HTML/Element">TODO carry on from here. Interactive Elements</a>
 	<menu>Outline
 		<li><a href="#block-level">Block Level Elements</a></li>
 		<li><a href="#inline-style">Inline Styling Elements</a></li>
@@ -185,7 +185,7 @@ A preformatted paragraph.
 			</tr>
 			<tr>
 				<th>second</th><td>12.34</td><td>0.23</td><td>8.34</td>
-				<td>14:12</td><td>12</td><td>partial</td><td>4.32</td>
+				<td>14:12</td><td></td><td>partial</td><td>4.32</td>
 				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
 			</tr>
 			<tr>
@@ -194,7 +194,7 @@ A preformatted paragraph.
 				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
 			</tr>
 			<tr>
-				<th>fourth</th><td>12.34</td><td>0.23</td><td>8.34</td>
+				<th>fourth</th><td>12.34</td><td></td><td>8.34</td>
 				<td>14:12</td><td>12</td><td>partial</td><td>4.32</td>
 				<td>1432</td><td>43</td><td>2.32</td><td>note g</td>
 			</tr>
@@ -206,7 +206,8 @@ A preformatted paragraph.
 <section id="forms">
 	<a name="forms" /><hgroup>Form examples</hgroup>
 		<code>&lt;form&gt;</code> <form>
-		<div>
+		<fieldset>
+			<legend><code>&lt;fieldset&gt;&lt;legend&gt;</code>button</legend>
 			<label><code>&lt;button&gt;</code>
 				<button name="disabledSubmitBtn" value="pushed" type="submit" disabled>disabled submit</button></label>
 			<button name="submitBtn" value="pushed" type="submit">submit</button>
@@ -214,8 +215,9 @@ A preformatted paragraph.
 			<button name="enabledBtn" value="clicked">button</button>
 			<button name="disabledResetBtn" value="touched" type="reset" disabled>disabled reset</button>
 			<button name="resetBtn" value="touched" type="reset">reset</button>
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
+			<legend>input</legend>
 			<label><code>&lt;input type=button&gt;</code>
 				<input type="button" name="disabledInputBtn" value="disabled input" disabled /></label>
 			<input type="button" name="inputBtn" value="input" />
@@ -223,35 +225,46 @@ A preformatted paragraph.
 			<input type="reset" name="resetInputBtn" value="reset" />
 			<input type="submit" name="disabledSubmitInputBtn" value="disabled submit" disabled />
 			<input type="submit" name="submitInputBtn" value="submit" />
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
+			<legend>checkbox</legend>
 			<label><code>&lt;input type=checkbox&gt;</code> disabled
 				<input name="disabledChx" type="checkbox" value="checkMe" disabled/></label>
 			<label>unchecked <input name="uncheckedChx" type="checkbox" value="checkMe" /></label>
 			<label>checked <input name="checkedChx" type="checkbox" value="checkMe" checked /></label>
 			<label>indeterminate <input name="indeterminateChx" type="checkbox" value="checkMe" indeterminate /></label>
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
+			<legend>radio</legend>
 			<label><code>&lt;input type=radio&gt;</code> disabled
 				<input name="radio" type="radio" value="radioDisabled" disabled/></label>
 			<label>unchecked <input name="radio" type="radio" value="radioUnchecked" /></label>
 			<label>checked <input name="radio" type="radio" value="radioChecked" checked /></label>
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
+			<legend>color</legend>
 			<label><code>&lt;input type=color&gt;</code> disabled
 				<input name="disabledColor" type="color" value="#123456" disabled/></label>
 			<label>enabled <input name="enabledColor" type="color" value="#fedcba" /></label>
-		</div>
-		<div>
+		</fieldset>
+		<fieldset>
+			<legend>range</legend>
 			<label><code>&lt;input type=range&gt;</code> disabled
 				<input name="disabledRange" type="range" disabled /></label>
 			<label>enabled 1 <input name="enabledRange" type="range" min="1" max="11" step="0.5" value="10"/> 11</label>
-		</div>
-		<div>
-			<label><code>&lt;input type=number&gt;</code> disabled
-				<input name="disabledNumber" type="number" disabled /></label>
-			<label>enabled <input name="enabledNumber" type="number" placeholder="number" /></label>
-		</div>
+		</fieldset>
+		<fieldset>
+			<legend>meter</legend>
+			<label><code>&lt;meter&gt;</code> 0% <meter value="0.5" min="0", max="1" low="0.25" high="0.75" optimum="1">50% charge</meter> 100%</label>
+			<meter value="0.15" min="0", max="1" low="0.25" high="0.75" optimum="1">50% charge</meter>
+			<meter value="0.85" min="0", max="1" low="0.25" high="0.75" optimum="1">50% charge</meter>
+		</fieldset>
+		<fieldset>
+			<legend>progress</legend>
+			<label><code>&lt;progress&gt;</code> <progress value="1256" max="1623">copied 1256 bytes</progress></label>
+			<progress value="16" max="1623">copied 16 bytes</progress>
+		</fieldset>
+		<fieldset><legend>date/time</legend>
 		<div>
 			<label><code>&lt;input type=datetime-local&gt;</code> disabled
 				<input name="disabledDateTime" type="datetime-local" disabled /></label>
@@ -277,6 +290,14 @@ A preformatted paragraph.
 				<input name="disabledWeek" type="week" disabled /></label>
 			<label>enabled <input name="enabledWeek" type="week" /></label>
 		</div>
+		</fieldset>
+		<fieldset>
+			<legend>number</legend>
+			<label><code>&lt;input type=number&gt;</code> disabled
+				<input name="disabledNumber" type="number" disabled /></label>
+			<label>enabled <input name="enabledNumber" type="number" placeholder="number" /></label>
+		</fieldset>
+		<fieldset><legend>text entry</legend>
 		<div>
 			<label><code>&lt;input type=search&gt;</code> disabled
 				<input name="disabledSearch" type="search" disabled /></label>
@@ -313,11 +334,95 @@ A preformatted paragraph.
 			<label>invalid <input class="is-invalid" name="invalidUrl" type="url" value="not like any url i ever saw" /></label>
 			<label>valid <input class="is-valid" name="validUrl" type="url" value="http://go.ru" /></label>
 		</div>
-		<div>
+		</fieldset>
+		<fieldset>
+			<legend>textarea</legend>
+			<label><code>&lt;textarea&gt;</code> disabled
+				<textarea name="disabledTextarea" disabled>can't touch this</textarea></label>
+			<label>readonly
+				<textarea name="readonlyTextarea" readonly>can't towch this</textarea></label>
+			<label>enabled
+				<textarea name="enabledTextarea" placeholder="go for it!
+muliline placeholder"
+					rows="15" cols="25" spellcheck="true" wrap="hard"></textarea></label>
+		</fieldset>
+		<fieldset>
+			<legend>file</legend>
 			<label><code>&lt;input type=file&gt;</code> disabled
 				<input name="disabledFile" type="file" disabled /></label>
 			<label>enabled <input name="enabledFile" type="file" /></label>
-		</div>
+		</fieldset>
+		<fieldset>
+			<legend>select</legend>
+			<label><code>&lt;select&gt;</code> disabled
+				<select name="disabledSelect" disabled>
+					<option><code>&lt;option&gt;</code>one</option>
+				</select> </label>
+			<label>enabled
+				<select name="enabledSelect" required>
+					<option value="" selected></option>
+					<option value="1">menu</option>
+					<option value="2">of</option>
+					<option value="3">options</option>
+				</select></label>
+			<label>multiple
+				<select name="multipleSelect" size="3" multiple required>
+					<optgroup label="Important">
+					<option value="1" selected>menu</option>
+					<option value="2" label="OF">of</option>
+					<option value="3" selected>many</option>
+					<option value="4">options</option>
+					</optgroup>
+					<option value="5" disabled>menu</option>
+					<option value="6">of</option>
+					<option value="7">many</option>
+					<option value="8">options</option>
+					<optgroup label="No touch!" disabled>
+					<option value="9" disabled>menu</option>
+					<option value="A">of</option>
+					<option value="B">many</option>
+					<option value="C">options</option>
+					</optgroup>
+				</select></label>
+		</fieldset>
+		<fieldset>
+			<legend>datalist</legend>
+			<label><code>&lt;input list=...&gt;</code> disabled
+				<input name="disabledDataList" list="validItems" disabled/></label>
+			<label>enabled
+				<input name="enabledDataList" list="validItems" value="manY"/></label>
+			<label>labeled values
+				<input name="labeledDataList" list="labeledItems"/></label>
+			<datalist id="labeledItems">
+				<option label="label" value="VALUE">ignored</option>
+				<option>menu</option>
+				<option>of</option>
+				<option>many</option>
+				<option>options</option>
+			</datalist>
+			<datalist id="validItems">
+				<option selected>menu</option>
+				<option>of</option>
+				<option selected>many</option>
+				<option>options</option>
+				<option disabled>menU</option>
+				<option>oF</option>
+				<option>manY</option>
+				<option>optionS</option>
+				<option disabled>Menu</option>
+				<option>Of</option>
+				<option>Many</option>
+				<option>Optionals</option>
+			</datalist>
+		</fieldset>
+		</form>
+		<form oninput="result.value=parseInt(a.value)+parseInt(b.value)">
+		<fieldset>
+			<legend>output</legend>
+				<input type="range" name="b" value="50" /> +
+				<input type="number" name="a" value="10" /> =
+				<code>&lt;output&gt;</code><output name="result">60</output>
+		</fieldset>
 		</form>
 <hr />
 </section>
