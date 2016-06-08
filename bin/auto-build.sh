@@ -1,11 +1,12 @@
 #!/bin/bash
 # auto rebuild when things change
 TOUCH=last-build.timestamp
+PAUSE=`pwd`/pause-build.timestamp
 WATCHDIR=..
 WAIT=6
 TIMES=50
 LOOPS=0
-IGNORE='\.log|\.swp|\.yml|\.kate-swp|/\.git/|/node_modules/|/public/doc/'
+IGNORE='\.log$|\.swp$|\.bak$|~$|\.\#.*$|\#.+\#$|\.yml$|\.orig$|\.kate-swp$|/\.git/|/node_modules/|/public/doc/'
 DEBUG=1
 
 if [ -z "$1" ]; then
@@ -35,8 +36,10 @@ function debug
 while  [ /bin/true ]
 do
 	BUILDIT=0
+	if [ ! -f "$PAUSE" ]; then
+
 	if [ -f $TOUCH ]; then
-		if [ `find $WATCHDIR -newer $TOUCH -type f | egrep -v "$IGNORE" | wc -l` == 0 ]; then
+		if [ `find $WATCHDIR -newer $TOUCH -type f | egrep -v "$IGNORE" | tee auto-build.log | wc -l` == 0 ]; then
 			if [ $LOOPS -gt $TIMES ]; then
 				echo `date --rfc-3339=seconds` still nothing new...
 				LOOPS=0
@@ -53,8 +56,19 @@ do
 	if [ $BUILDIT == 1 ]; then
 		$BUILD
 		debug "build finished, touch timestamp and sleep..."
+		debug "you can pause the build with the command"
+		debug "touch $PAUSE"
+		cat auto-build.log >> auto-build-all.log
+		rm auto-build.log
 		touch $TOUCH
 		LOOPS=0
+	fi
+
+	else
+		debug "build paused, you can resume it with the command"
+		debug "rm $PAUSE"
+		ls -al $PAUSE
+		cat $PAUSE
 	fi
 	sleep $WAIT
 	LOOPS=$(( $LOOPS + 1 ))
