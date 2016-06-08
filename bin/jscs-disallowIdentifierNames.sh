@@ -13,7 +13,9 @@ BEGIN {
 	$rhAllow->{min} = 1;
 	$rhAllow->{max} = 1;
 	$rhAllow->{abs} = 1;
-}	$rhAllow->{url} = 1;
+	$rhAllow->{url} = 1;
+	$rhAllow->{src} = 1;
+	$rhAllow->{alt} = 1;
 }
 chomp;
 $rhAllow->{$_} = 1;
