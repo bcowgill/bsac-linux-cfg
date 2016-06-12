@@ -2,6 +2,9 @@
 # display an emacs key reference or substitute emacs key commands into
 # a user supplied text file
 
+# convert the cursor motion keys from the emacsercises to ergoemacs letter motion keys
+# perl -e 'local $/ = undef; $_ = <>; sub trr { my $s = shift; $s =~ tr[bfpn][jlik]; return $s; }; s{(\s* [bfpn] \b (\s+[bfpn]\b)?\s*\%)}{trr($1)}xmsge; s{(START \s+ ->.+2 \s+ =====)}{ trr($1) }xmsge; print $_'  emacsercises.markup.txt
+
 use strict;
 use warnings;
 
