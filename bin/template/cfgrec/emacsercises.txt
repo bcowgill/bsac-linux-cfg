@@ -206,10 +206,10 @@ might accidentally make.
 	A-- A-@    mark text to the start of current / next word
 	C-x C-x    exchange cursor point with mark position
 	A-h    mark the current / next / to the Nth paragraph
-	C-x C-p    mark the current page
-	C-A-@    mark the symbolic expression
 	C-A-h    mark the current function
 	C-x h    mark the entire buffer
+	C-x C-p    mark the current page
+	C-A-@    mark the symbolic expression
 
 
 In this text here, practice extending the mark by word forward and backwards
@@ -227,6 +227,7 @@ After clearing a mark you can show it again with exchange point and mark.
 
 Scroll page back to previous exercises and practice marking paragraphs,
 functions, symbolic expressions and pages. Use exchange point and mark
+
 to see the boundaries of the mark when it extends outside the viewport.
 
 
