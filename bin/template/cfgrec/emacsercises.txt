@@ -40,17 +40,17 @@ using specific movement commands. Repeat each line several times.
 Experiment with what word, sentence or paragraph means in other file types
 like HTML, lisp, programming lanugages.
 
-     A-f    forward to just after end of word
-     A-b    backward to start of word
-     C-e    end of the line
-     C-a    at beginning of the line
-     A-m    move to first non-space on line
-     A-e    end of sentence (just after full stop)
-     A-a    at start of sentence
-     A-}    forward to just after the paragaph
-     A-{    backward to just before the paragraph
-     C-A-f    forward to just after this/next symbolic expression
-	 C-A-b    backward to beginning of this/previous symbolic expression
+	A-f    forward to just after end of word
+	A-b    backward to start of word
+	C-e    end of the line
+	C-a    at beginning of the line
+	A-m    move to first non-space on line
+	A-e    end of sentence (just after full stop)
+	A-a    at start of sentence
+	A-}    forward to just after the paragaph
+	A-{    backward to just before the paragraph
+	C-A-f    forward to just after this/next symbolic expression
+	C-A-b    backward to beginning of this/previous symbolic expression
 
 START -> WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD reverse to start
 
@@ -122,7 +122,7 @@ for (x=1; x<5; x++) {
 <div><p>stuff <b>is </b>bold</p></div>
 
 function that (x, y) {
-    try {
+	try {
 	    do()
 	}
 	catch (error)
@@ -146,12 +146,12 @@ then you can return here with C-x r j 0
 
 	 C-x r Space 0    save current point to register 0
 	 C-x r j 0    jump back to point in register 0
-     C-v    scroll document up one page (only moves cursor point if necessary )
+	C-v    scroll document up one page (only moves cursor point if necessary )
 	 A-v    scroll document down one page
 	 C-l    scroll current line to center, top, bottom in succession
 	 C-x >    scroll the view to the right
 	 C-x <    scroll the view to the left
-     C-x ]    move to the next page break (^L)
+	C-x ]    move to the next page break (^L)
 	 C-x [    move to the previous page break (^L)
 	 A-<    jump to start of document
 	 A->    jump to end of document
@@ -227,7 +227,6 @@ After clearing a mark you can show it again with exchange point and mark.
 
 Scroll page back to previous exercises and practice marking paragraphs,
 functions, symbolic expressions and pages. Use exchange point and mark
-
 to see the boundaries of the mark when it extends outside the viewport.
 
 
@@ -250,7 +249,10 @@ make.
 	A-k    kill to end of sentence
 	A--    change direction of next kill command
 
+[TODO delete spaces around cursor, on line, etc. ace jump anywhere]
+
 Work through the text below marking and killing only the capitalised text.
+Try once using the mark commands from the last lesson before deleting. Then revert the buffer and try again with specific kill word, sentence and repeat parameter commands.
 
 The unanimous KILL Declaration of KILL the thirteen united States of America,
 

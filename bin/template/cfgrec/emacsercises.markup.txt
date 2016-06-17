@@ -40,17 +40,17 @@ using specific movement commands. Repeat each line several times.
 Experiment with what word, sentence or paragraph means in other file types
 like HTML, lisp, programming lanugages.
 
-     %forward-word%    forward to just after end of word
-     %backward-word%    backward to start of word
-     %move-end-of-line%    end of the line
-     %move-beginning-of-line%    at beginning of the line
-     %back-to-indentation%    move to first non-space on line
-     %forward-sentence%    end of sentence (just after full stop)
-     %backward-sentence%    at start of sentence
-     %forward-paragraph%    forward to just after the paragaph
-     %backward-paragraph%    backward to just before the paragraph
-     %forwards-sexp%    forward to just after this/next symbolic expression
-	 %backwards-sexp%    backward to beginning of this/previous symbolic expression
+	%forward-word%    forward to just after end of word
+	%backward-word%    backward to start of word
+	%move-end-of-line%    end of the line
+	%move-beginning-of-line%    at beginning of the line
+	%back-to-indentation%    move to first non-space on line
+	%forward-sentence%    end of sentence (just after full stop)
+	%backward-sentence%    at start of sentence
+	%forward-paragraph%    forward to just after the paragaph
+	%backward-paragraph%    backward to just before the paragraph
+	%forwards-sexp%    forward to just after this/next symbolic expression
+	%backwards-sexp%    backward to beginning of this/previous symbolic expression
 
 START -> WORD WORD WORD WORD WORD WORD WORD WORD WORD WORD reverse to start
 
@@ -122,7 +122,7 @@ for (x=1; x<5; x++) {
 <div><p>stuff <b>is </b>bold</p></div>
 
 function that (x, y) {
-    try {
+	try {
 	    do()
 	}
 	catch (error)
@@ -146,12 +146,12 @@ then you can return here with %-jump-to-register0%
 
 	 %-point-to-register0%    save current point to register 0
 	 %-jump-to-register0%    jump back to point in register 0
-     %scroll-up-command%    scroll document up one page (only moves cursor point if necessary )
+	%scroll-up-command%    scroll document up one page (only moves cursor point if necessary )
 	 %scroll-down-command%    scroll document down one page
 	 %recenter-top-bottom%    scroll current line to center, top, bottom in succession
 	 %scroll-right%    scroll the view to the right
 	 %scroll-left%    scroll the view to the left
-     %forward-page%    move to the next page break (^L)
+	%forward-page%    move to the next page break (^L)
 	 %backward-page%    move to the previous page break (^L)
 	 %beginning-of-buffer%    jump to start of document
 	 %end-of-buffer%    jump to end of document
@@ -206,10 +206,10 @@ might accidentally make.
 	%-mark-to-start-of-word%    mark text to the start of current / next word
 	%exchange-point-and-mark%    exchange cursor point with mark position
 	%mark-paragraph%    mark the current / next / to the Nth paragraph
-	%mark-page%    mark the current page
-	%mark-sexp%    mark the symbolic expression
 	%mark-function%    mark the current function
 	%mark-whole-buffer%    mark the entire buffer
+	%mark-page%    mark the current page
+	%mark-sexp%    mark the symbolic expression
 
 
 In this text here, practice extending the mark by word forward and backwards
@@ -249,7 +249,10 @@ make.
 	%kill-sentence%    kill to end of sentence
 	%negative-argument%    change direction of next kill command
 
+[TODO delete spaces around cursor, on line, etc. ace jump anywhere]
+
 Work through the text below marking and killing only the capitalised text.
+Try once using the mark commands from the last lesson before deleting. Then revert the buffer and try again with specific kill word, sentence and repeat parameter commands.
 
 The unanimous KILL Declaration of KILL the thirteen united States of America,
 
