@@ -1,0 +1,103 @@
+Docker container provisioning command quick reference
+
+https://docs.docker.com/linux/
+https://docs.docker.com/engine/reference/builder/
+
+Quick command reference:
+
+docker info   # system wide info
+docker images # lists images
+docker ps     # lists running containers
+docker ps --all # also show paused containers
+docker logs --follow CONTAINER  # tail a log of commands executed in container
+docker inspect CON/IMG
+docker diff CONTAINER # shows file system changes on container
+docker search --stars=10 IMAGE # search Docker Hub for images
+
+docker run # run a command in a new container
+docker rename CONTAINER # give a nice name to a container
+docker stats CONTAINER  # continual display of resource stats on container
+watch docker top CONTAINER # display processes running in a container
+docker pause CONTAINER  # pause all processes within container
+docker cp # copy files between container and local filesystem
+docker exec CONTAINER CMD # run a command in a container
+docker attach CONTAINER   # attach to a running container
+docker export -o file.tar CONTAINER # backup container filesystem to a tar file
+
+docker build -t image-name ./  # build an image named image-name from ./Dockerfile
+docker run image-name
+
+Copy examples, local to container, with tar file extraction
+docker cp localfile container:/path
+tar c *.js | docker cp - container:/path
+docker cp container:/path/file.tar - | tar x | tar x
+
+# -i = --interactive=true keep stdin open even if not attached
+# -t = --tty=true allocate a pseudo-TTY
+docker run -it --name=ubuntutest --hostname=ubuntutest ubuntu bash
+
+#===========================================================================
+# Creating your own images
+
+# .dockerignore
+Dockerfile
+.dockerignore
+
+# Dockerfile
+# https://docs.docker.com/engine/reference/builder/
+# https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#build-cache
+FROM docker/whalesay:latest
+MAINTAINER Brent S.A. Cowgill
+RUN apt-get --yes update && apt-get install --yes fortunes && rm -rf /var/lib/apt/lists/*
+
+CMD (perl -e '$d=`date`; $h=`hostname`; chomp $d; chomp $h; print qq{On $d from $h, the great and powerful DocuZilla says:\n\n}' ; /usr/games/fortune -a) | cowsay -f dragon
+
+# docker build -t docuzilla-say ./
+# docker run --hostname=zilla -it docuzilla-say
+# docker tag cc0994726198 zardozcs/docuzilla-say:latest
+# docker login --username=zardozcs --email=zardoz@infoserve.net
+WARNING: login credentials saved in /home/bcowgill/.docker/config.json
+# docker push zardozcs/docuzilla-say
+# remove local images to test remote pull
+# docker rmi -f zardozcs/docuzilla-say
+# docker rmi -f docuzilla-say
+# docker run --name zillamonster --hostname zillamonster zardozcs/docuzilla-say
+
+#===========================================================================
+# installing
+curl -fsSL https://get.docker.com/ | sh
+....
++ sudo -E sh -c docker version
+Client:
+ Version:      1.9.1
+ API version:  1.21
+ Go version:   go1.4.2
+ Git commit:   a34a1d5
+ Built:        Fri Nov 20 13:16:54 UTC 2015
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      1.9.1
+ API version:  1.21
+ Go version:   go1.4.2
+ Git commit:   a34a1d5
+ Built:        Fri Nov 20 13:16:54 UTC 2015
+ OS/Arch:      linux/amd64
+
+If you would like to use Docker as a non-root user, you should now consider
+adding your user to the "docker" group with something like:
+
+  sudo usermod -aG docker bcowgill
+
+Remember that you will have to log out and back in for this to take effect!
+
+docker daemon: /usr/bin/docker daemon -H fd://
+
+docker run hello-world
+
+
+Share images, automate workflows, and more with a free Docker Hub account:
+ https://hub.docker.com
+
+For more examples and ideas, visit:
+ https://docs.docker.com/userguide/
