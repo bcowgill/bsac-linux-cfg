@@ -3,22 +3,12 @@
 
 perl -ne '
 BEGIN {
-	$rhAllow->{id} = 1;
-	$rhAllow->{ok} = 1;
-	$rhAllow->{idx} = 1;
-	$rhAllow->{app} = 1;
-	$rhAllow->{env} = 1;
-	$rhAllow->{dir} = 1;
-	$rhAllow->{xhr} = 1;
-	$rhAllow->{min} = 1;
-	$rhAllow->{max} = 1;
-	$rhAllow->{abs} = 1;
-	$rhAllow->{url} = 1;
-	$rhAllow->{src} = 1;
-	$rhAllow->{alt} = 1;
+	%Allow = map { ($_, 1) } qw(
+		id ok idx app env dir xhr min max abs url src alt lte
+	)
 }
 chomp;
-$rhAllow->{$_} = 1;
+$Allow{$_} = 1;
 sub trim {
 	my ($result) = @_;
 	$result =~ s{\s* \n}{\n}xmsg;
@@ -34,8 +24,8 @@ END {
 			foreach my $third (@az1) {
 				my $name = $first . $second . $third;
 				my $sep = scalar(@out) % $columns == 0 ? "\n        ": "";
-				push(@out, "$sep$q$name$q") unless $rhAllow->{$name};
-				$rhAllow->{$name} = 1;
+				push(@out, "$sep$q$name$q") unless $Allow{$name};
+				$Allow{$name} = 1;
 			}
 		}
 	}
