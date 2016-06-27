@@ -55,31 +55,6 @@ echo ""
 touch pause-build.timestamp
 echo git mv "$SOURCE" "$TARGET"
 
+echo fix-import.pl "$SOURCE" "$TARGET" $RELATED
 
-# correct imports within the source file itself
-# src/X/File
-# move to src/Y/Z/File
-# import './Something'  # import from X dir
-# becomes import '../../X/Something'
-# import './sub/Something'
-# becomes import '../../X/sub/Something'
-# import '../Y/Z/Something'
-# becomes import './Something'
-# import '../Y/W/Something'
-# becomes import '../W/Something'
-
-# correct imports within all related files which import the moved file
-# src/X/File
-# move to src/Y/Z/File
-# src/X/Something.js: import './File'
-# becomes import '../Y/Z/File'
-# src/Something.js: import './X/File'
-# becomes import './Y/Z/File'
-# src/X/W/Something.js: import '../File'
-# becomes import '../../Y/Z/File
-# src/Y/Something.js: import '../X/File'
-# becomes import './Z/File'
-# src/Y/Z/Something.js: import '../../X/File'
-# becomes import './File'
-# src/Y/Z/W/Something.js: import '../../../X/File'
-# becomes import './W/File'
+fix-import.pl "$SOURCE" "$TARGET" $RELATED

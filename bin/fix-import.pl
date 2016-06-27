@@ -6,12 +6,190 @@ use warnings;
 
 use English qw(-no_match_vars);
 use Carp qw(croak);
+use File::Copy qw(cp);    # copy and preserve source files permissions
+use File::Slurp qw(:std :edit);
+use autodie qw(open cp);
+
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-our $TEST_CASES = 89;
+our $TEST_CASES = 92;
+our $DRY_RUN = 1;
+
+our $REGEX_MODULE = qr{\.(jsx?|css|less|s[ac]ss) \z}xms;
+
+main();
+
+#===========================================================================
+# application functions
+#===========================================================================
+
+sub usage
+{
+	my ($reason) = @ARG;
+
+	print STDERR "$reason\n\n";
+
+	print << "USAGE";
+$0 from-file moved-to-file [external files ...]
+
+This script corrects require or import references in a source file which has already been moved to a new location. It also corrects import references to the moved file when they are mentioned in external files.
+
+It does not support renaming a source file.
+It does not support absolute path names in the from and moved to file names.
+It only affects imports which have a relative path indication.
+
+These would be corrected:
+
+... import .... './path/Object'
+... require ... '../path/Object'
+
+These would not be corrected:
+
+... import .... 'path/Object'
+
+USAGE
+
+	exit($reason ? 1 : 0);
+}
+
+sub main
+{
+	my ($source, $source_path, $source_filename,
+		$target, $target_path, $target_filename,
+		$raExternal) = check_args();
+
+	tests() if ($source =~ m{\A --test}xms);
+
+	fix_internal_imports($target, $source_path, $target_path, $source);
+	foreach my $external (@$raExternal)
+	{
+		fix_external_imports($external, $source_path, $target_path, $source_filename);
+	}
+}
+
+sub check_args
+{
+	my ($source, $target, @External) = @ARGV;
+
+	usage('parameter error: you must provide the old location of the moved file.') unless $source;
+	usage('parameter error: you must provide the new location of the moved file.') unless $target;
+
+	my ($source_path, $source_filename) = get_path_filename($source);
+	my ($target_path, $target_filename) = get_path_filename($target);
+
+	usage('the file name for from-file and moved-to-file must be identical. [$source_filename] [$target_filename]') unless $source_filename eq $target_filename;
+
+	return ($source, $source_path, $source_filename,
+		$target, $target_path, $target_filename,
+		\@External);
+}
+
+sub fix_internal_imports
+{
+	my ($target, $source_path, $target_path, $source) = @ARG;
+
+	print "$target: fixing internal relative imports.\n";
+	if ($DRY_RUN)
+	{
+		my $filename = -e $target ? $target : $source;
+		my @includes = get_imports($filename);
+
+		print Dumper(\@includes);
+	}
+	else
+	{
+		die "not implemented!";
+	}
+}
+
+sub fix_external_imports
+{
+	my ($external, $source_path, $target_path, $source_filename) = @ARG;
+
+	print "$external: fixing external relative imports of $source_filename.\n";
+	if ($DRY_RUN)
+	{
+		my @includes = get_imports($external, $source_filename);
+		print Dumper(\@includes);
+	}
+	else
+	{
+		die "not implemented!";
+	}
+}
+
+# extract all relevant imports from a file
+# i.e. only relative path imports
+# and only the specifically named module if specified
+sub get_imports
+{
+	my ($filename, $module) = @ARG;
+
+	my @includes = ();
+
+	my $filter = module_regex($module);
+
+	my $regex = qr{
+		(?:\A|\n) ([^'"]*?) \b(import|require)\b ([^'"]*?)
+		(['"]) (\. [^'"]*? $filter) \4
+		(.*? (?:\z|\n))}xms;
+
+	my $rContent = read_file( $filename, scalar_ref => 1 );
+
+	$$rContent =~ s{$regex}{
+		my $rhFound = {};
+      $rhFound->{prefix} = $1;
+      $rhFound->{loader} = $2;
+      $rhFound->{infix}  = $3;
+      $rhFound->{quote}  = $4;
+      $rhFound->{import} = $5;
+      $rhFound->{suffix} = $6;
+		push(@includes, $rhFound);
+      ''
+	}xmsge;
+
+	return @includes;
+}
+
+sub module_regex
+{
+	my ($module) = @ARG;
+
+	my $ext;
+	if ($module) {
+		if ($module =~ s{$REGEX_MODULE}{ $ext = $1; ''}xmse)
+		{
+			$module = quotemeta($module) . "(?:\\.$ext)?";
+		}
+		else
+		{
+			$module = quotemeta($module) . '(?:\.(?:jsx?|css|less|s[ac]ss))?';
+		}
+		$module = qr{$module};
+	}
+	else
+	{
+		$module = '';
+	}
+
+	return $module;
+}
+
+sub module_name
+{
+	my ($module) = @ARG;
+
+	$module =~ s{$REGEX_MODULE}{}xms;
+
+	return $module;
+}
+
+#===========================================================================
+# low level path and import related functions
+#===========================================================================
 
 # ensure path begins with ./ and has no /./ inside
 # and ends with / and has no //
@@ -233,6 +411,8 @@ sub fix_external_import_path
 }
 
 #===========================================================================
+# unit test functions
+#===========================================================================
 
 sub test_canonical_path_ex
 {
@@ -357,7 +537,7 @@ sub test_fix_import_path
 
    my $path = fix_import_path($from, $to, $import);
 
-	is($path, $expect, "test_fix_import_path: mv [$from/File] -> [$to/]; import [$import] == [$expect]")
+	is($path, $expect, "fix_import_path: mv [$from/File] -> [$to/]; import [$import] == [$expect]");
 }
 
 sub test_fix_external_import_path
@@ -366,8 +546,36 @@ sub test_fix_external_import_path
 
    my $path = fix_external_import_path($from, $to, $file, $import);
 
-	is($path, $expect, "test_fix_external_import_path: mv [$from/File] -> [$to/]; $file: import [$import] == [$expect]")
+	is($path, $expect, "fix_external_import_path: mv [$from/File] -> [$to/]; $file: import [$import] == [$expect]");
 }
+
+sub test_module_regex
+{
+	my ($expect, $module) = @ARG;
+
+	my $regex = module_regex($module);
+	is($regex, $expect, "module_regex: [$module] == [$expect]");
+}
+
+sub test_module_name
+{
+	my ($expect, $module) = @ARG;
+
+	my $name = module_name($module);
+	is($name, $expect, "module_name: [$module] == [$expect]");
+}
+
+sub test_module_regex_match
+{
+	my ($expect, $module, $import) = @ARG;
+
+	my $regex = module_regex($module);
+	is($import =~ qr{$regex\z} ? 'match' : 'nomatch', $expect, "module_regex match: [$module] [$import] == [$expect]");
+}
+
+#===========================================================================
+# unit test suite
+#===========================================================================
 
 sub tests
 {
@@ -481,7 +689,28 @@ sub tests
 	# Not the same File being imported, just same filename
    test_fix_external_import_path('./File', 'src/W/Something.js', './File', $from, $to);
 
+	test_module_regex('', '');
+	test_module_regex('(?^:ClickMeComponent(?:\.(?:jsx?|css|less|s[ac]ss))?)', 'ClickMeComponent');
+	test_module_regex('(?^:ClickMeComponent(?:\.js)?)', 'ClickMeComponent.js');
+	test_module_name('', '');
+	test_module_name('ClickMeComponent', 'ClickMeComponent');
+	test_module_name('ClickMeComponent', 'ClickMeComponent.js');
+	test_module_name('ClickMeComponent.story', 'ClickMeComponent.story.js');
+	test_module_name('ClickMeComponent.story', 'ClickMeComponent.story');
+
+	test_module_regex_match('match', 'Blah.js', './Blah');
+	test_module_regex_match('nomatch', 'Blah.js', './Blah.css');
+	test_module_regex_match('nomatch', 'Blah.js', './Blah/Module');
+	test_module_regex_match('match', 'Blah', './Blah');
+	test_module_regex_match('match', 'Blah', './Blah.css');
+	test_module_regex_match('match', 'Blah', './Blah.js');
+	test_module_regex_match('match', 'Blah', './Blah.jsx');
+	test_module_regex_match('match', 'Blah', './Blah.less');
+	test_module_regex_match('match', 'Blah', './Blah.sass');
+	test_module_regex_match('match', 'Blah', './Blah.js');
+	test_module_regex_match('match', 'Blah', './Blah.css');
+	test_module_regex_match('nomatch', 'Blah', './Blah.ppp');
+	test_module_regex_match('nomatch', 'Blah', './Nope');
+
 	exit 0;
 }
-
-tests()
