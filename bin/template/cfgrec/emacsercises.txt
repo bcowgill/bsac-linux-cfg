@@ -290,8 +290,22 @@ ESTABLISHMENT OF AN ABSOLUTE TYRANNY OVER THESE STATES.  TO PROVE THIS, LET
 FACTS BE SUBMITTED TO A CANDID WORLD.
 
 
+6 ==========================================================================
 
+Emacsercise #6 hide and seek.
 
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	 C-g	abort current search command
+	 Backspace	undo effect of last character typed
+	 Enter	exit incremental search
+	 C-s	 incremental search forward
+	 C-r  incremental search backward
+	 C-A-s	 incremental regex search forward
+	 C-A-r  incremental regex search backward
+	 A-p	select previous search string from history
+	 A-n	select next search string from history
 
 . ==========================================================================
 

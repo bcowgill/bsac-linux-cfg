@@ -290,7 +290,32 @@ ESTABLISHMENT OF AN ABSOLUTE TYRANNY OVER THESE STATES.  TO PROVE THIS, LET
 FACTS BE SUBMITTED TO A CANDID WORLD.
 
 
+6 ==========================================================================
 
+Emacsercise #6 hide and seek.
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	 %keyboard-quit%	abort current search command
+	 %-backspace-isearch%	undo effect of last character typed
+	 %-exit-isearch%	exit incremental search
+	 %isearch-forward%	 incremental search forward
+	 %isearch-backward%  incremental search backward
+	 %isearch-forward-regexp%	 incremental regex search forward
+	 %isearch-backward-regexp%  incremental regex search backward
+	 %-previous-search-string%	select previous search string from history
+	 %-next-search-string%	select next search string from history
+
+Do a regex search to match these:
+
+function           (   )    { }
+function (x, y)    { }
+function ()    { return 42; }
+function (x: int, y = 32) {}
+
+Search solutions:
+function[ ]*([^)]*)[ ]*{[^}]*}
 
 
 . ==========================================================================
