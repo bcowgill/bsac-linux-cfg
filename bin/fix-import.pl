@@ -11,7 +11,7 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-our $TEST_CASES = 80;
+our $TEST_CASES = 89;
 
 # ensure path begins with ./ and has no /./ inside
 # and ends with / and has no //
@@ -26,8 +26,17 @@ sub canonical_path
 	$path .= '/';
 	$path =~ s{//+}{/}xmsg;
 	$path =~ s{/\./}{/}xmsg;
+
 	# remove X/../ as it is redundant
-	$path =~ s{([^/]+)(/\.\./)}{ ($1 eq '..' || $1 eq '.') ? $1 . $2 : '' }xmsge;
+	my $last;
+	do {
+		$last = $path;
+		$path =~ s{
+			([^/]+)(/\.\./)
+		}{
+			($1 eq '..' || $1 eq '.') ? $1 . $2 : ''
+		}xmsge;
+	} while ($last ne $path);
 
 	return $path;
 }
@@ -156,6 +165,16 @@ sub change_dir_relative_limited
 	return $path;
 }
 
+sub get_path_filename
+{
+	my ($path) = map { canonical_filepath($ARG) } @ARG;
+
+	my $filename;
+	$path =~ s{/ ([^/]+) \z}{$filename = $1; '/'}xmse;
+
+	return ($path, $filename);
+}
+
 # fix a relative import path in a file when it moves to a new directory
 sub fix_import_path
 {
@@ -166,9 +185,7 @@ sub fix_import_path
 	#print STDERR "full $full_import\n";
 
 	# work out relative path to destination dir
-	my $path = get_relative_path($to, $full_import);
-	$path = "./$path" if ($path !~ m{\A \.}xms);
-	$path =~ s{/ \z}{}xms;
+	my $path = short_filepath(get_relative_path($to, $full_import));
 	#print STDERR "relative $path\n";
 
 	return $path;
@@ -177,34 +194,41 @@ sub fix_import_path
 # fix an external import path referring to a file that has been moved to a new directory
 sub fix_external_import_path
 {
-	my ($from, $to, $file, $import) = map { canonical_path($ARG) } @ARG;
+	my ($from, $to, $external_file, $import) = map { canonical_path($ARG) } @ARG;
 
-	$file =~ s{/ \z}{}xms;
-	print STDERR "file $file\n";
-	print STDERR "from $from\n";
-	print STDERR "to $to\n";
+	$external_file = canonical_filepath($external_file);
+	$import = canonical_filepath($import);
+	#print STDERR "external_file $external_file\n";
+	#print STDERR "from $from\n";
+	#print STDERR "to $to\n";
+	#print STDERR "import $import\n";
 
-	my $file_path = $file;
-	$file_path =~ s{/[^/]+ \z}{/}xmsg; # get file path only
-	my $full_import =  canonical_filepath($file_path . $import);
+   my ($import_path, $import_file) = get_path_filename($import);
+	#print STDERR "import [$import_path] [$import_file]\n";
 
-	my $relative = get_relative_path($from, $to);
-	my $reverse  = get_relative_path($to, $from);
-	my $relative_import = get_relative_path($file_path, $to);
+	my $from_file = short_filepath($from . $import_file);
+	#print STDERR "from_file [$from_file]\n";
 
-	print STDERR "file_path $file_path\n";
-	print STDERR "full_import $full_import\n";
-	print STDERR "relative $relative\n";
-	print STDERR "reverse $reverse\n";
-	print STDERR "relative_import $relative_import\n";
+	my ($file_path, $filename) = get_path_filename($external_file);
+	#print STDERR "import from [$file_path] [$filename]\n";
+	my $full_import = canonical_filepath($file_path . $import);
+	#print STDERR "full_import $full_import\n";
 
-	my $path = $full_import;
-	$to = quotemeta($to);
-	$from = quotemeta($from);
-   unless ($path =~ s{$to}{$relative_import}xms)
+   # check that full import path is same as source path
+	# otherwise we are not referring to the same actual file being imported
+	# and should just return the original import path
+	my $path = short_filepath($import);
+	if ($full_import eq $from_file)
 	{
-		$path =~ s{$from}{$relative}xms;
+		my $relative_import = get_relative_path($from, $to);
+		my $relative = get_relative_path($file_path, $to);
+		#print STDERR "relative_import $relative_import\n";
+		#print STDERR "relative $relative\n";
+
+		$path = short_filepath($relative . $import_file);
+		#print STDERR "new import $path\n";
 	}
+
 	return $path;
 }
 
@@ -361,6 +385,8 @@ sub tests
    test_canonical_path('./src/', 'src');
    test_canonical_path('./Y/', 'X/../Y');
    test_canonical_path('./../X/Y/', '../X/Y');
+   test_canonical_path('./X/A/B/C/D/', 'X/Y/Z/../../A/B/C/D');
+   test_canonical_path('./X/Z/A/B/D/', 'X/Y/../Z/A/B/C/../D');
 
    test_canonical_filepath('./File.name', 'File.name');
    test_canonical_filepath('./X/Y/File.name', 'X/./Y/File.name');
@@ -445,11 +471,15 @@ sub tests
 
    test_fix_external_import_path('../Y/Z/File', 'src/X/Something.js', './File', $from, $to);
    test_fix_external_import_path('./Y/Z/File',  'src/Something.js',   './X/File', $from, $to);
+   test_fix_external_import_path('../../Y/Z/File', 'src/X/W/Something.js', '../File', $from, $to);
+   test_fix_external_import_path('./Z/File', 'src/Y/Something.js', '../X/File', $from, $to);
+   test_fix_external_import_path('./File', 'src/Y/Z/Something.js', '../../X/File', $from, $to);
+   test_fix_external_import_path('../File', 'src/Y/Z/W/Something.js', '../../../X/File', $from, $to);
+   test_fix_external_import_path('../Y/Z/File', 'src/W/Something.js', '../X/File', $from, $to);
+   test_fix_external_import_path('../../Y/Z/File', 'src/W/R/Something.js', '../../X/File', $from, $to);
 
-#   test_fix_external_import_path('../../Y/Z/File', 'src/X/W/Something.js', '../File', $from, $to);
-#   test_fix_external_import_path('./Z/File', 'src/Y/Something.js', '../X/File', $from, $to);
-#   test_fix_external_import_path('./File', 'src/Y/Z/Something.js', '../../X/File', $from, $to);
-#   test_fix_external_import_path('./W/File', 'src/Y/Z/W/Something.js', '../../../X/File', $from, $to);
+	# Not the same File being imported, just same filename
+   test_fix_external_import_path('./File', 'src/W/Something.js', './File', $from, $to);
 
 	exit 0;
 }
