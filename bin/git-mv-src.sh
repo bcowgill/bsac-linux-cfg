@@ -3,7 +3,7 @@
 # move a source file somewhere else and adjust all import statements
 # which are affected by it. Only support moving directories, not rename.
 
-DEBUG=1
+DEBUG=0
 
 SOURCE="$1"
 DIR=`echo "$2" | perl -pne 'chomp; s{/ \z}{}xmsg'`
@@ -20,7 +20,7 @@ function usage
 	fi
 	echo "`basename $0` source-file target-dir
 
-Move a git controlled source file to a new location and adjust all require or import statements which are affected.
+Move a git controlled source file to a new location and adjust all require or import statements which are affected. It modifies the moved file and other git controlled files which import the moved file.
 
 "
 	exit 1
@@ -33,29 +33,29 @@ Move a git controlled source file to a new location and adjust all require or im
 [ -d "$DIR" ]      || usage "directory '$DIR' does not exist!"
 [ ! -e "$TARGET" ] || usage "target file '$TARGET' already exists, will not overwrite!"
 
+RELATED=`git grep -lE "(import|require).+\b$BASENAME\b"`
+
 if [ ${DEBUG:-0} == 1 ]; then
 	echo TARGET="$TARGET"
 	echo FILE="$FILE"
 	echo BASENAME="$BASENAME"
+	echo RELATED=$RELATED
+
+	echo ""
+	echo imports to fix up in "$SOURCE"
+	perl -ne '$q=chr(39); print if m{(import|require).+[$q"]\.}' "$SOURCE" | grep -E --color '\..+$'
+
+	echo ""
+	echo imports to fix up in related files which import "$SOURCE"
+	git grep -E "(import|require).+\b$BASENAME\b"
+	echo ""
 fi
 
-RELATED=`git grep -lE "(import|require).+\b$BASENAME\b"`
-echo RELATED=$RELATED
-
-echo ""
-echo imports to fix up in "$SOURCE"
-perl -ne '$q=chr(39); print if m{(import|require).+[$q"]\.}' "$SOURCE" | grep -E --color '\..+$'
-
-echo ""
-echo imports to fix up in related files which import "$SOURCE"
-git grep -E "(import|require).+\b$BASENAME\b"
-
-echo ""
-
 touch pause-build.timestamp
-echo git mv "$SOURCE" "$TARGET"
-cp "$SOURCE" "$TARGET"
+sleep 3
+git mv "$SOURCE" "$TARGET"
+#cp "$SOURCE" "$TARGET"
 
-echo fix-import.pl "$SOURCE" "$TARGET" $RELATED
+#echo fix-import.pl "$SOURCE" "$TARGET" $RELATED
 
 fix-import.pl "$SOURCE" "$TARGET" $RELATED

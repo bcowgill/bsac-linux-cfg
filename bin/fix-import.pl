@@ -222,9 +222,12 @@ sub commit_changes
 {
 	my ($filename, $rOriginal, $rChanged) = @ARG;
 
+	my $backup = "$filename.bak";
 	if ($$rChanged ne $$rOriginal)
 	{
-		print $$rChanged;
+		#print $$rChanged;
+		cp($filename, $backup);
+		write_file($filename, $rChanged);
 	}
 	else
 	{
