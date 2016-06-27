@@ -67,7 +67,7 @@ alias gss='git status'
 alias gfo='git f*ck off'
 alias glog='git log --oneline --graph --decorate --all'
 alias ggraph='git graph --simplify-by-decoration'
-alias gitpp='git pull --rebase && git push && date --rfc-3339=seconds'
+alias gitpp='touch pause-build.timestamp; git pull --rebase && git push && date --rfc-3339=seconds'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
