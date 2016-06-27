@@ -1,6 +1,13 @@
 # bash functions
 # Brent S.A. Cowgill
 
+# show whichever command something is, a program, alias of shell function
+whichever () {
+   local cmd
+   cmd=$1
+   which $cmd || alias | egrep \\b$cmd\\b || set | grep \(\) | egrep \\b$cmd\\b
+}
+
 # rvdiff reverses the files being diffed
 rvdiff () {
    vdiff $2 $1
