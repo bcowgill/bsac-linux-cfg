@@ -54,6 +54,7 @@ echo ""
 
 touch pause-build.timestamp
 echo git mv "$SOURCE" "$TARGET"
+cp "$SOURCE" "$TARGET"
 
 echo fix-import.pl "$SOURCE" "$TARGET" $RELATED
 

@@ -15,8 +15,8 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-our $TEST_CASES = 92;
-our $DRY_RUN = 1;
+our $TEST_CASES = 112;
+our $DRY_RUN = $ENV{DRY_RUN} || 0;
 
 our $REGEX_MODULE = qr{\.(jsx?|css|less|s[ac]ss) \z}xms;
 
@@ -91,17 +91,21 @@ sub fix_internal_imports
 {
 	my ($target, $source_path, $target_path, $source) = @ARG;
 
-	print "$target: fixing internal relative imports.\n";
+	print "\n$target: fixing internal relative imports.\n";
 	if ($DRY_RUN)
 	{
 		my $filename = -e $target ? $target : $source;
 		my @includes = get_imports($filename);
 
-		print Dumper(\@includes);
+		foreach my $rhImport (@includes)
+		{
+			my $import = fix_import_path($source_path, $target_path, $rhImport->{import});
+			show_change($rhImport, $import);
+		}
 	}
 	else
 	{
-		die "not implemented!";
+		process_internal_imports($target, $source_path, $target_path);
 	}
 }
 
@@ -109,16 +113,29 @@ sub fix_external_imports
 {
 	my ($external, $source_path, $target_path, $source_filename) = @ARG;
 
-	print "$external: fixing external relative imports of $source_filename.\n";
+	print "\n$external: fixing external relative imports of $source_filename.\n";
 	if ($DRY_RUN)
 	{
 		my @includes = get_imports($external, $source_filename);
-		print Dumper(\@includes);
+		foreach my $rhImport (@includes)
+		{
+			my $import = fix_external_import_path($source_path, $target_path, $external, $rhImport->{import});
+			show_change($rhImport, $import);
+		}
 	}
 	else
 	{
-		die "not implemented!";
+		process_external_imports($external, $source_path, $target_path, $source_filename);
 	}
+}
+
+sub show_change
+{
+	my ($rhImport, $changed) = @ARG;
+
+	print qq{    $rhImport->{loader} $rhImport->{quote}$rhImport->{import}$rhImport->{quote}\n};
+	print qq{==> $rhImport->{loader} $rhImport->{quote}$changed$rhImport->{quote}\n};
+	#print Dumper($rhImport);
 }
 
 # extract all relevant imports from a file
@@ -130,12 +147,7 @@ sub get_imports
 
 	my @includes = ();
 
-	my $filter = module_regex($module);
-
-	my $regex = qr{
-		(?:\A|\n) ([^'"]*?) \b(import|require)\b ([^'"]*?)
-		(['"]) (\. [^'"]*? $filter) \4
-		(.*? (?:\z|\n))}xms;
+	my $regex = prepare_matcher($module);
 
 	my $rContent = read_file( $filename, scalar_ref => 1 );
 
@@ -152,6 +164,86 @@ sub get_imports
 	}xmsge;
 
 	return @includes;
+}
+
+sub process_internal_imports
+{
+	my ($filename, $source_path, $target_path) = @ARG;
+
+	my $regex = prepare_matcher();
+
+	my $rContent = read_file( $filename, scalar_ref => 1 );
+   my $original = $$rContent;
+
+	$$rContent =~ s{$regex}{
+		my $rhFound = {};
+      $rhFound->{prefix} = $1;
+      $rhFound->{loader} = $2;
+      $rhFound->{infix}  = $3;
+      $rhFound->{quote}  = $4;
+      $rhFound->{import} = $5;
+      $rhFound->{suffix} = $6;
+
+		my $changed = fix_import_path($source_path, $target_path, $rhFound->{import});
+		show_change($rhFound, $changed);
+      qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
+	}xmsge;
+
+	commit_changes($filename, \$original, $rContent);
+}
+
+sub process_external_imports
+{
+	my ($filename, $source_path, $target_path, $module) = @ARG;
+
+	my $regex = prepare_matcher($module);
+
+	my $rContent = read_file( $filename, scalar_ref => 1 );
+   my $original = $$rContent;
+
+	$$rContent =~ s{$regex}{
+		my $rhFound = {};
+      $rhFound->{prefix} = $1;
+      $rhFound->{loader} = $2;
+      $rhFound->{infix}  = $3;
+      $rhFound->{quote}  = $4;
+      $rhFound->{import} = $5;
+      $rhFound->{suffix} = $6;
+
+		my $changed = fix_external_import_path($source_path, $target_path, $filename, $rhFound->{import});
+		show_change($rhFound, $changed);
+      qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
+	}xmsge;
+
+	commit_changes($filename, \$original, $rContent);
+}
+
+sub commit_changes
+{
+	my ($filename, $rOriginal, $rChanged) = @ARG;
+
+	if ($$rChanged ne $$rOriginal)
+	{
+		print $$rChanged;
+	}
+	else
+	{
+		print "    no imports to fix.\n";
+	}
+}
+
+sub prepare_matcher
+{
+	my ($module) = @ARG;
+
+	my $filter = module_regex($module);
+
+	my $regex = qr{
+		((?:\A|\n) [^'"]*?) \b(import|require)\b ([^'"]*?)
+		(['"]) (\. [^'"]*? $filter) \4
+		(.*? (?:\z|\n))}xms;
+
+	return $regex;
 }
 
 sub module_regex
@@ -685,9 +777,11 @@ sub tests
    test_fix_external_import_path('../File', 'src/Y/Z/W/Something.js', '../../../X/File', $from, $to);
    test_fix_external_import_path('../Y/Z/File', 'src/W/Something.js', '../X/File', $from, $to);
    test_fix_external_import_path('../../Y/Z/File', 'src/W/R/Something.js', '../../X/File', $from, $to);
+   test_fix_external_import_path('../../Y/Z/File.js', 'src/W/R/Something.js', '../../X/File.js', $from, $to);
 
 	# Not the same File being imported, just same filename
    test_fix_external_import_path('./File', 'src/W/Something.js', './File', $from, $to);
+   test_fix_external_import_path('./File.js', 'src/W/Something.js', './File.js', $from, $to);
 
 	test_module_regex('', '');
 	test_module_regex('(?^:ClickMeComponent(?:\.(?:jsx?|css|less|s[ac]ss))?)', 'ClickMeComponent');
