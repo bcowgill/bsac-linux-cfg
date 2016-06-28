@@ -30,7 +30,7 @@ sub usage
 {
 	my ($reason) = @ARG;
 
-	print STDERR "$reason\n\n";
+	print STDERR "$reason\n\n" if $reason;
 
 	print << "USAGE";
 $0 from-file moved-to-file [external files ...]
@@ -61,8 +61,6 @@ sub main
 		$target, $target_path, $target_filename,
 		$raExternal) = check_args();
 
-	tests() if ($source =~ m{\A --test}xms);
-
 	fix_internal_imports($target, $source_path, $target_path, $source);
 	foreach my $external (@$raExternal)
 	{
@@ -73,6 +71,9 @@ sub main
 sub check_args
 {
 	my ($source, $target, @External) = @ARGV;
+
+	tests() if (($source || '') =~ m{\A --test}xms);
+	usage() if (($source || '') =~ m{\A --help}xms);
 
 	usage('parameter error: you must provide the old location of the moved file.') unless $source;
 	usage('parameter error: you must provide the new location of the moved file.') unless $target;

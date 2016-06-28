@@ -18,9 +18,22 @@ function usage
 		echo "error: $1
 " >&2
 	fi
-	echo "`basename $0` source-file target-dir
+	echo "`basename $0` source-file target-dir/
 
 Move a git controlled source file to a new location and adjust all require or import statements which are affected. It modifies the moved file and other git controlled files which import the moved file.
+
+It does not support renaming a source file.
+It does not support absolute path names in the from and moved to file names.
+It only affects imports which have a relative path indication.
+
+These would be corrected:
+
+... import .... './path/Object'
+... require ... '../path/Object'
+
+These would not be corrected:
+
+... import .... 'path/Object'
 
 "
 	exit 1
