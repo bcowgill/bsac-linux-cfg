@@ -451,15 +451,24 @@ sub get_path_filename
 # fix a relative import path in a file when it moves to a new directory
 sub fix_import_path
 {
-	my ($from, $to, $import) = map { canonical_path($ARG) } @ARG;
+	my ($from, $to, $import) = @ARG;
+	my $path = $import;
+	eval
+	{
+		($from, $to, $import) = map { canonical_path($ARG) } @ARG;
 
-   # work out full import path from source dir
-	my $full_import = canonical_filepath($from . $import);
-	#print STDERR "full $full_import\n";
+		# work out full import path from source dir
+		my $full_import = canonical_filepath($from . $import);
+		#print STDERR "full $full_import\n";
 
-	# work out relative path to destination dir
-	my $path = short_filepath(get_relative_path($to, $full_import));
-	#print STDERR "relative $path\n";
+		# work out relative path to destination dir
+		$path = short_filepath(get_relative_path($to, $full_import));
+		#print STDERR "relative $path\n";
+	};
+	if ($EVAL_ERROR)
+	{
+		warn("WARN: import $import: $EVAL_ERROR");
+	}
 
 	return $path;
 }
@@ -467,41 +476,49 @@ sub fix_import_path
 # fix an external import path referring to a file that has been moved to a new directory
 sub fix_external_import_path
 {
-	my ($from, $to, $external_file, $import) = map { canonical_path($ARG) } @ARG;
+	my ($from, $to, $external_file, $import) = @ARG;
 
-	$external_file = canonical_filepath($external_file);
-	$import = canonical_filepath($import);
-	#print STDERR "external_file $external_file\n";
-	#print STDERR "from $from\n";
-	#print STDERR "to $to\n";
-	#print STDERR "import $import\n";
-
-   my ($import_path, $import_file) = get_path_filename($import);
-	#print STDERR "import [$import_path] [$import_file]\n";
-
-	my $from_file = short_filepath($from . $import_file);
-	#print STDERR "from_file [$from_file]\n";
-
-	my ($file_path, $filename) = get_path_filename($external_file);
-	#print STDERR "import from [$file_path] [$filename]\n";
-	my $full_import = canonical_filepath($file_path . $import);
-	#print STDERR "full_import $full_import\n";
-
-   # check that full import path is same as source path
-	# otherwise we are not referring to the same actual file being imported
-	# and should just return the original import path
-	my $path = short_filepath($import);
-	if ($full_import eq $from_file)
+	my $path = $import;
+	eval
 	{
-		my $relative_import = get_relative_path($from, $to);
-		my $relative = get_relative_path($file_path, $to);
-		#print STDERR "relative_import $relative_import\n";
-		#print STDERR "relative $relative\n";
+		($from, $to, $external_file, $import) = map { canonical_path($ARG) } @ARG;
+		$path = short_filepath($import);
+		$external_file = canonical_filepath($external_file);
+		$import = canonical_filepath($import);
+		#print STDERR "external_file $external_file\n";
+		#print STDERR "from $from\n";
+		#print STDERR "to $to\n";
+		#print STDERR "import $import\n";
 
-		$path = short_filepath($relative . $import_file);
-		#print STDERR "new import $path\n";
+		my ($import_path, $import_file) = get_path_filename($import);
+		#print STDERR "import [$import_path] [$import_file]\n";
+
+		my $from_file = short_filepath($from . $import_file);
+		#print STDERR "from_file [$from_file]\n";
+
+		my ($file_path, $filename) = get_path_filename($external_file);
+		#print STDERR "import from [$file_path] [$filename]\n";
+		my $full_import = canonical_filepath($file_path . $import);
+		#print STDERR "full_import $full_import\n";
+
+		# check that full import path is same as source path
+		# otherwise we are not referring to the same actual file being imported
+		# and should just return the original import path
+		if ($full_import eq $from_file)
+		{
+			my $relative_import = get_relative_path($from, $to);
+			my $relative = get_relative_path($file_path, $to);
+			#print STDERR "relative_import $relative_import\n";
+			#print STDERR "relative $relative\n";
+
+			$path = short_filepath($relative . $import_file);
+			#print STDERR "new import $path\n";
+		}
+	};
+	if ($EVAL_ERROR)
+	{
+		warn("WARN: import $import: $EVAL_ERROR");
 	}
-
 	return $path;
 }
 
