@@ -30,6 +30,7 @@ These would be corrected:
 
 ... import .... './path/Object'
 ... require ... '../path/Object'
+... requireJson ... '../path/Object'
 
 These would not be corrected:
 
@@ -46,7 +47,7 @@ These would not be corrected:
 [ -d "$DIR" ]      || usage "directory '$DIR' does not exist!"
 [ ! -e "$TARGET" ] || usage "target file '$TARGET' already exists, will not overwrite!"
 
-RELATED=`git grep -lE "(import|require).+\b$BASENAME\b"`
+RELATED=`git grep -lE "(import|require|requireJson).+\b$BASENAME\b"`
 
 if [ ${DEBUG:-0} == 1 ]; then
 	echo TARGET="$TARGET"
@@ -56,11 +57,11 @@ if [ ${DEBUG:-0} == 1 ]; then
 
 	echo ""
 	echo imports to fix up in "$SOURCE"
-	perl -ne '$q=chr(39); print if m{(import|require).+[$q"]\.}' "$SOURCE" | grep -E --color '\..+$'
+	perl -ne '$q=chr(39); print if m{(import|require|requireJson).+[$q"]\.}' "$SOURCE" | grep -E --color '\..+$'
 
 	echo ""
 	echo imports to fix up in related files which import "$SOURCE"
-	git grep -E "(import|require).+\b$BASENAME\b"
+	git grep -E "(import|require|requireJson).+\b$BASENAME\b"
 	echo ""
 fi
 

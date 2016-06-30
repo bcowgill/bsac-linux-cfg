@@ -45,6 +45,7 @@ These would be corrected:
 
 ... import .... './path/Object'
 ... require ... '../path/Object'
+... requireJson ... '../path/Object'
 
 These would not be corrected:
 
@@ -243,7 +244,7 @@ sub prepare_matcher
 	my $filter = module_regex($module);
 
 	my $regex = qr{
-		((?:\A|\n) [^'"]*?) \b(import|require)\b ([^'"]*?)
+		((?:\A|\n) [^'"]*?) \b(import|require|requireJson)\b ([^'"]*?)
 		(['"]) (\. [^'"]*? $filter) \4
 		(.*? (?:\z|\n))}xms;
 
