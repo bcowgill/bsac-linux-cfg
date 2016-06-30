@@ -4,7 +4,7 @@
 perl -ne '
 BEGIN {
 	%Allow = map { ($_, 1) } qw(
-		id ok idx app env dir xhr min max abs url src alt lte
+		id ok idx abs alt app cwd dir env lte max min src url xhr
 	)
 }
 chomp;
