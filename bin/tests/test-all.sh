@@ -5,6 +5,9 @@ PROVE=${1:-}
 
 source ./shell-test.sh
 
+echo "fix-import unit tests"
+$PROVE ./fix-import.t
+
 testSuite filter-man "filter perldoc man page output for test plan comparisons" $PROVE
 testSuite template-perl "perl template for scanning files" $PROVE
 testSuite template-perl-inplace "perl template for scanning and editing files in place" $PROVE
@@ -21,6 +24,7 @@ testSuite scan-js "scan javascript for clean code" $PROVE
 
 testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
 $PROVE ./unit-tests.sh
+
 popd > /dev/null
 
 testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE

@@ -155,14 +155,14 @@ sub get_imports
 
 	$$rContent =~ s{$regex}{
 		my $rhFound = {};
-      $rhFound->{prefix} = $1;
-      $rhFound->{loader} = $2;
-      $rhFound->{infix}  = $3;
-      $rhFound->{quote}  = $4;
-      $rhFound->{import} = $5;
-      $rhFound->{suffix} = $6;
+		$rhFound->{prefix} = $1;
+		$rhFound->{loader} = $2;
+		$rhFound->{infix}  = $3;
+		$rhFound->{quote}  = $4;
+		$rhFound->{import} = $5;
+		$rhFound->{suffix} = $6;
 		push(@includes, $rhFound);
-      ''
+		''
 	}xmsge;
 
 	return @includes;
@@ -175,20 +175,20 @@ sub process_internal_imports
 	my $regex = prepare_matcher();
 
 	my $rContent = read_file( $filename, scalar_ref => 1 );
-   my $original = $$rContent;
+	my $original = $$rContent;
 
 	$$rContent =~ s{$regex}{
 		my $rhFound = {};
-      $rhFound->{prefix} = $1;
-      $rhFound->{loader} = $2;
-      $rhFound->{infix}  = $3;
-      $rhFound->{quote}  = $4;
-      $rhFound->{import} = $5;
-      $rhFound->{suffix} = $6;
+		$rhFound->{prefix} = $1;
+		$rhFound->{loader} = $2;
+		$rhFound->{infix}  = $3;
+		$rhFound->{quote}  = $4;
+		$rhFound->{import} = $5;
+		$rhFound->{suffix} = $6;
 
 		my $changed = fix_import_path($source_path, $target_path, $rhFound->{import});
 		show_change($rhFound, $changed);
-      qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
+		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
 	}xmsge;
 
 	commit_changes($filename, \$original, $rContent);
@@ -201,20 +201,20 @@ sub process_external_imports
 	my $regex = prepare_matcher($module);
 
 	my $rContent = read_file( $filename, scalar_ref => 1 );
-   my $original = $$rContent;
+	my $original = $$rContent;
 
 	$$rContent =~ s{$regex}{
 		my $rhFound = {};
-      $rhFound->{prefix} = $1;
-      $rhFound->{loader} = $2;
-      $rhFound->{infix}  = $3;
-      $rhFound->{quote}  = $4;
-      $rhFound->{import} = $5;
-      $rhFound->{suffix} = $6;
+		$rhFound->{prefix} = $1;
+		$rhFound->{loader} = $2;
+		$rhFound->{infix}  = $3;
+		$rhFound->{quote}  = $4;
+		$rhFound->{import} = $5;
+		$rhFound->{suffix} = $6;
 
 		my $changed = fix_external_import_path($source_path, $target_path, $filename, $rhFound->{import});
 		show_change($rhFound, $changed);
-      qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
+		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
 	}xmsge;
 
 	commit_changes($filename, \$original, $rContent);
@@ -351,7 +351,7 @@ sub get_relative_path
 	my ($from, $to) = map { canonical_path($ARG) } @ARG;
 
 	my $common_prefix = get_common_prefix($from, $to);
-   $from = substr($from, length($common_prefix));
+	$from = substr($from, length($common_prefix));
 	$to = substr($to, length($common_prefix));
 
 	my $delta = $from;
@@ -372,11 +372,11 @@ sub get_common_prefix
 		my $prefix = substr($from, 0, $spot);
 		if ($prefix eq substr($to, 0, $spot)) {
 			$common = $prefix;
-      }
+		}
 		else {
 			last;
-      }
-   }
+		}
+	}
 	$common =~ s{/ [^/]+ \z}{/}xms;
 	return $common;
 }
@@ -649,7 +649,7 @@ sub test_fix_import_path
 {
 	my ($import, $expect, $from, $to) = @ARG;
 
-   my $path = fix_import_path($from, $to, $import);
+	my $path = fix_import_path($from, $to, $import);
 
 	is($path, $expect, "fix_import_path: mv [$from/File] -> [$to/]; import [$import] == [$expect]");
 }
@@ -658,7 +658,7 @@ sub test_fix_external_import_path
 {
 	my ($expect, $file, $import, $from, $to) = @ARG;
 
-   my $path = fix_external_import_path($from, $to, $file, $import);
+	my $path = fix_external_import_path($from, $to, $file, $import);
 
 	is($path, $expect, "fix_external_import_path: mv [$from/File] -> [$to/]; $file: import [$import] == [$expect]");
 }
@@ -701,87 +701,87 @@ sub tests
 
 	test_canonical_path_ex('cannot use absolute or home paths \[/\]', '/');
 	test_canonical_path_ex('cannot use absolute or home paths \[~\]', '~');
-   test_canonical_path('./', '');
-   test_canonical_path('./X/Y/', 'X/./Y');
-   test_canonical_path('./X/Y/', 'X///Y');
-   test_canonical_path('./src/', 'src');
-   test_canonical_path('./Y/', 'X/../Y');
-   test_canonical_path('./../X/Y/', '../X/Y');
-   test_canonical_path('./X/A/B/C/D/', 'X/Y/Z/../../A/B/C/D');
-   test_canonical_path('./X/Z/A/B/D/', 'X/Y/../Z/A/B/C/../D');
+	test_canonical_path('./', '');
+	test_canonical_path('./X/Y/', 'X/./Y');
+	test_canonical_path('./X/Y/', 'X///Y');
+	test_canonical_path('./src/', 'src');
+	test_canonical_path('./Y/', 'X/../Y');
+	test_canonical_path('./../X/Y/', '../X/Y');
+	test_canonical_path('./X/A/B/C/D/', 'X/Y/Z/../../A/B/C/D');
+	test_canonical_path('./X/Z/A/B/D/', 'X/Y/../Z/A/B/C/../D');
 
-   test_canonical_filepath('./File.name', 'File.name');
-   test_canonical_filepath('./X/Y/File.name', 'X/./Y/File.name');
-   test_canonical_filepath('./X/Y/File.name', 'X///Y/File.name');
-   test_canonical_filepath('./src/File.name', 'src/File.name');
-   test_canonical_filepath('./Y/File.name', 'X/../Y/File.name');
-   test_canonical_filepath('./../X/Y/File.name', '../X/Y/File.name');
+	test_canonical_filepath('./File.name', 'File.name');
+	test_canonical_filepath('./X/Y/File.name', 'X/./Y/File.name');
+	test_canonical_filepath('./X/Y/File.name', 'X///Y/File.name');
+	test_canonical_filepath('./src/File.name', 'src/File.name');
+	test_canonical_filepath('./Y/File.name', 'X/../Y/File.name');
+	test_canonical_filepath('./../X/Y/File.name', '../X/Y/File.name');
 
-   test_short_path('./', '');
-   test_short_path('./X/Y/', 'X/./Y');
-   test_short_path('./X/Y/', 'X///Y');
-   test_short_path('./src/', 'src');
-   test_short_path('./Y/', 'X/../Y');
-   test_short_path('../X/Y/', './../X/Y');
+	test_short_path('./', '');
+	test_short_path('./X/Y/', 'X/./Y');
+	test_short_path('./X/Y/', 'X///Y');
+	test_short_path('./src/', 'src');
+	test_short_path('./Y/', 'X/../Y');
+	test_short_path('../X/Y/', './../X/Y');
 
-   test_short_filepath('./File.name', 'File.name');
-   test_short_filepath('./X/Y/File.name', 'X/./Y/File.name');
-   test_short_filepath('./X/Y/File.name', 'X///Y/File.name');
-   test_short_filepath('./src/File.name', 'src/File.name');
-   test_short_filepath('./Y/File.name', 'X/../Y/File.name');
-   test_short_filepath('../X/Y/File.name', '../X/Y/File.name');
+	test_short_filepath('./File.name', 'File.name');
+	test_short_filepath('./X/Y/File.name', 'X/./Y/File.name');
+	test_short_filepath('./X/Y/File.name', 'X///Y/File.name');
+	test_short_filepath('./src/File.name', 'src/File.name');
+	test_short_filepath('./Y/File.name', 'X/../Y/File.name');
+	test_short_filepath('../X/Y/File.name', '../X/Y/File.name');
 
 	test_get_relative_path('./', 'src/', 'src');
 	test_get_relative_path('./Y/Z/', 'src/', './src/Y/Z/');
 	test_get_relative_path('../Y/Z/', 'src/X', './src/Y/Z/');
-   test_get_relative_path('./', 'X/./Y', 'X///Y');
-   test_get_relative_path('./', 'X/./Y/../Z', 'X///Z');
-   test_get_relative_path('../../', $from, '');
-   test_get_relative_path('../Y/Z/', $from, $to);
-   test_get_relative_path('../../somewhere/', 'subdir', '../somewhere');
-   test_get_relative_path('../../somewhere/', './subdir', '../somewhere');
-   test_get_relative_path('../Xxyzzy/', "${from}xx", "${from}xyzzy");
+	test_get_relative_path('./', 'X/./Y', 'X///Y');
+	test_get_relative_path('./', 'X/./Y/../Z', 'X///Z');
+	test_get_relative_path('../../', $from, '');
+	test_get_relative_path('../Y/Z/', $from, $to);
+	test_get_relative_path('../../somewhere/', 'subdir', '../somewhere');
+	test_get_relative_path('../../somewhere/', './subdir', '../somewhere');
+	test_get_relative_path('../Xxyzzy/', "${from}xx", "${from}xyzzy");
 
-   test_get_common_prefix('./', '', '');
-   test_get_common_prefix('./X/Y/', 'X/./Y', 'X///Y');
-   test_get_common_prefix('./X/Z/', 'X/./Y/../Z', 'X///Z');
-   test_get_common_prefix('./', $from, '');
-   test_get_common_prefix('./src/', $from, $to);
-   test_get_common_prefix('./', 'subdir', '../somewhere');
-   test_get_common_prefix('./', './subdir', '../somewhere');
-   test_get_common_prefix('./src/', "${from}xx", "${from}xyzzy");
+	test_get_common_prefix('./', '', '');
+	test_get_common_prefix('./X/Y/', 'X/./Y', 'X///Y');
+	test_get_common_prefix('./X/Z/', 'X/./Y/../Z', 'X///Z');
+	test_get_common_prefix('./', $from, '');
+	test_get_common_prefix('./src/', $from, $to);
+	test_get_common_prefix('./', 'subdir', '../somewhere');
+	test_get_common_prefix('./', './subdir', '../somewhere');
+	test_get_common_prefix('./src/', "${from}xx", "${from}xyzzy");
 
-   test_up_dir('./src/X/', 'src/X/Y');
-   test_up_dir('./', 'src');
-   test_up_dir('./../', '');
-   test_up_dir('./../../', '..');
-   test_up_dir('./../', '../X');
-   test_up_dir('./../../../', '../..');
+	test_up_dir('./src/X/', 'src/X/Y');
+	test_up_dir('./', 'src');
+	test_up_dir('./../', '');
+	test_up_dir('./../../', '..');
+	test_up_dir('./../', '../X');
+	test_up_dir('./../../../', '../..');
 
-   test_up_dir_limited('./src/X/', 'src/X/Y');
-   test_up_dir_limited('./', 'src');
-   test_up_dir_limited_ex('cannot go up past current directory \[\./\]', '');
-   test_up_dir_limited_ex('cannot go up past current directory \[\./\.\./\]', '..');
-   test_up_dir_limited_ex('cannot go up past current directory \[\./\.\./X/\]', '../X');
-   test_up_dir_limited_ex('cannot go up past current directory \[\./\.\./\.\./\]', '../..');
+	test_up_dir_limited('./src/X/', 'src/X/Y');
+	test_up_dir_limited('./', 'src');
+	test_up_dir_limited_ex('cannot go up past current directory \[\./\]', '');
+	test_up_dir_limited_ex('cannot go up past current directory \[\./\.\./\]', '..');
+	test_up_dir_limited_ex('cannot go up past current directory \[\./\.\./X/\]', '../X');
+	test_up_dir_limited_ex('cannot go up past current directory \[\./\.\./\.\./\]', '../..');
 
-   test_into_dir_ex('cannot go down into a parent directory \[\./src/X/Y/\] \[\./\.\./\]', 'src/X/Y', '..');
-   test_into_dir('./src/X/Y/Down/', 'src/X/Y', 'Down');
-   test_into_dir('./src/Down/', 'src', 'Down');
-   test_into_dir('./Down/', '', 'Down');
-   test_into_dir('./../Down/', '..', 'Down');
+	test_into_dir_ex('cannot go down into a parent directory \[\./src/X/Y/\] \[\./\.\./\]', 'src/X/Y', '..');
+	test_into_dir('./src/X/Y/Down/', 'src/X/Y', 'Down');
+	test_into_dir('./src/Down/', 'src', 'Down');
+	test_into_dir('./Down/', '', 'Down');
+	test_into_dir('./../Down/', '..', 'Down');
 
-   test_change_dir_relative('./src/', 'src', '');
-   test_change_dir_relative('./', 'src', '..');
-   test_change_dir_relative('./../', '', '..');
-   test_change_dir_relative('./src/Down/', 'src', 'Down');
-   test_change_dir_relative('./src/Down/deeper/deeper/', 'src', 'Down/deeper/and/../deeper');
+	test_change_dir_relative('./src/', 'src', '');
+	test_change_dir_relative('./', 'src', '..');
+	test_change_dir_relative('./../', '', '..');
+	test_change_dir_relative('./src/Down/', 'src', 'Down');
+	test_change_dir_relative('./src/Down/deeper/deeper/', 'src', 'Down/deeper/and/../deeper');
 
-   test_change_dir_relative_limited('./src/', 'src', '');
-   test_change_dir_relative_limited('./', 'src', '..');
-   test_change_dir_relative_limited_ex('cannot go up past current directory', '', '..');
-   test_change_dir_relative_limited('./src/Down/', 'src', 'Down');
-   test_change_dir_relative_limited('./src/Down/deeper/deeper/', 'src', 'Down/deeper/and/../deeper');
+	test_change_dir_relative_limited('./src/', 'src', '');
+	test_change_dir_relative_limited('./', 'src', '..');
+	test_change_dir_relative_limited_ex('cannot go up past current directory', '', '..');
+	test_change_dir_relative_limited('./src/Down/', 'src', 'Down');
+	test_change_dir_relative_limited('./src/Down/deeper/deeper/', 'src', 'Down/deeper/and/../deeper');
 
 	test_fix_import_path('../Y/Z/Something',   './Something',     $from, $to);
 	test_fix_import_path('../Y/Z/R/Something', './R/Something',   $from, $to);
@@ -791,19 +791,19 @@ sub tests
 	test_fix_import_path('./Something',        '../../X/Something', $from, $to);
 	test_fix_import_path('./sub/Something',    '../../X/sub/Something', $from, $to);
 
-   test_fix_external_import_path('../Y/Z/File', 'src/X/Something.js', './File', $from, $to);
-   test_fix_external_import_path('./Y/Z/File',  'src/Something.js',   './X/File', $from, $to);
-   test_fix_external_import_path('../../Y/Z/File', 'src/X/W/Something.js', '../File', $from, $to);
-   test_fix_external_import_path('./Z/File', 'src/Y/Something.js', '../X/File', $from, $to);
-   test_fix_external_import_path('./File', 'src/Y/Z/Something.js', '../../X/File', $from, $to);
-   test_fix_external_import_path('../File', 'src/Y/Z/W/Something.js', '../../../X/File', $from, $to);
-   test_fix_external_import_path('../Y/Z/File', 'src/W/Something.js', '../X/File', $from, $to);
-   test_fix_external_import_path('../../Y/Z/File', 'src/W/R/Something.js', '../../X/File', $from, $to);
-   test_fix_external_import_path('../../Y/Z/File.js', 'src/W/R/Something.js', '../../X/File.js', $from, $to);
+	test_fix_external_import_path('../Y/Z/File', 'src/X/Something.js', './File', $from, $to);
+	test_fix_external_import_path('./Y/Z/File',  'src/Something.js',   './X/File', $from, $to);
+	test_fix_external_import_path('../../Y/Z/File', 'src/X/W/Something.js', '../File', $from, $to);
+	test_fix_external_import_path('./Z/File', 'src/Y/Something.js', '../X/File', $from, $to);
+	test_fix_external_import_path('./File', 'src/Y/Z/Something.js', '../../X/File', $from, $to);
+	test_fix_external_import_path('../File', 'src/Y/Z/W/Something.js', '../../../X/File', $from, $to);
+	test_fix_external_import_path('../Y/Z/File', 'src/W/Something.js', '../X/File', $from, $to);
+	test_fix_external_import_path('../../Y/Z/File', 'src/W/R/Something.js', '../../X/File', $from, $to);
+	test_fix_external_import_path('../../Y/Z/File.js', 'src/W/R/Something.js', '../../X/File.js', $from, $to);
 
 	# Not the same File being imported, just same filename
-   test_fix_external_import_path('./File', 'src/W/Something.js', './File', $from, $to);
-   test_fix_external_import_path('./File.js', 'src/W/Something.js', './File.js', $from, $to);
+	test_fix_external_import_path('./File', 'src/W/Something.js', './File', $from, $to);
+	test_fix_external_import_path('./File.js', 'src/W/Something.js', './File.js', $from, $to);
 
 	test_module_regex('', '');
 	test_module_regex('(?^:ClickMeComponent(?:\.(?:jsx?|css|less|s[ac]ss))?)', 'ClickMeComponent');
