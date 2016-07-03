@@ -2,57 +2,57 @@ Unknown option: unknown-option
 Usage:
     scan-js.pl [options] [@options-file ...] [file ...]
 
-     Options:
-       --show-code      negatable. show the code after comment and string extraction
-       --verbose        negatable. show more info about functions. default false
-       --mess           negatable. show more info about functions. default true
-       --summary        negatable. show summary of each file. default true
-       --comment-char   use character to replace text in comment extraction
-       --string-char    use character to replace text in string extraction
-       --lint-length    allowed length of jshint control comments to ignore
-       --version        display program version
-       --help -?        brief help message
-       --man            full help message
-       --debug          incremental. increase the amount of debugging information shown
+            Options:
+            --show-code      negatable. show the code after comment and string extraction
+            --verbose        negatable. show more info about functions. default false
+            --mess           negatable. show more info about functions. default true
+            --summary        negatable. show summary of each file. default true
+            --comment-char   use character to replace text in comment extraction
+            --string-char    use character to replace text in string extraction
+            --lint-length    allowed length of jshint control comments to ignore
+            --version        display program version
+            --help -?        brief help message
+            --man            full help message
+            --debug          incremental. increase the amount of debugging information shown
 
 Options:
     --show-code or --noshow-code
-             negatable. default false. Print out the source code after comments and
-             strings have been extracted.  This allow you to diagnose code which might be
-             excessively tricky.
+                    negatable. default false. Print out the source code after comments and
+                    strings have been extracted.  This allow you to diagnose code which might be
+                    excessively tricky.
 
     --verbose or --noverbose
-             negatable. default false. Print out additional information instead of just
-             mess warnings.
+                    negatable. default false. Print out additional information instead of just
+                    mess warnings.
 
     --mess or --nomess
-             negatable. default true. Print out warnings about possible messy code.
+                    negatable. default true. Print out warnings about possible messy code.
 
     --summary or --nosummary
-             negatable. default true. Print out summary of each file.
+                    negatable. default true. Print out summary of each file.
 
     --comment-char=s
-             optional. Defaults to '-'. Set the character to use to replace the text
-             found in comments. Used with --show-code. If set to the empty string
-             --comment-char='' then comments will not be stripped from the code.
+                    optional. Defaults to '-'. Set the character to use to replace the text
+                    found in comments. Used with --show-code. If set to the empty string
+                    --comment-char='' then comments will not be stripped from the code.
 
     --string-char=s
-             optional. Defaults to '_'. Set the character to use to replace the text
-             found in strings. Used with --show-code. If set to the empty string
-             --string-char='' then strings will not be stripped from the code.
-             This is useful if functions are referred to by name in some strings.
+                    optional. Defaults to '_'. Set the character to use to replace the text
+                    found in strings. Used with --show-code. If set to the empty string
+                    --string-char='' then strings will not be stripped from the code.
+                    This is useful if functions are referred to by name in some strings.
 
     --lint-length=n
-             optional. Defaults to 30. The maximum length of a jshint or jslint comment
-             for it to not count against the amount of comments in the file. If there
-             is only one such comment in the file it is also ignored.
+                    optional. Defaults to 30. The maximum length of a jshint or jslint comment
+                    for it to not count against the amount of comments in the file. If there
+                    is only one such comment in the file it is also ignored.
 
     --version
-             Prints the program version and exit.
+                    Prints the program version and exit.
 
     --help or -?
-             Print a brief help message and exit.
+                    Print a brief help message and exit.
 
     --man
-             Print the full help message and exit.
+                    Print the full help message and exit.
 
