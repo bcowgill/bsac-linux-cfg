@@ -139,7 +139,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --nocanonical --nonames"
+	ARGS="$DEBUG --noecho --noreverse --nocolor-only --remap --nocanonical --nonames --const=constant=#f4f5f6"
 	$PROGRAM $ARGS < "$SAMPLE" > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -190,7 +190,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --show-const --canonical --rgb \
 	--const-type=less  $MANUAL_CONST"
-	#echo $PROGRAM $ARGS from /dev/null
+	echo $PROGRAM $ARGS from /dev/null
 	$PROGRAM $ARGS < "$EMPTY" > "$OUT" 2>&1 || ERR=$?
 	assertCommandSuccess $ERR "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

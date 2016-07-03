@@ -168,9 +168,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 =head1 DESCRIPTION
 
-	Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
-
-	B<This program> will read the given input file(s) and do something useful with the contents thereof.
+	B<This program> will read the given input CSS, Sass or Less stylesheet file(s) to extract color constants, unify color definitions or list all unique colors found.  See the EXAMPLES for specific use cases.
 
 =head1 SEE ALSO
 
@@ -178,7 +176,13 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 =head1 EXAMPLES
 
-	Find all unique colors used in all CSS files somewhere
+	List all color definitions in a CSS file
+
+	filter-css-colors.pl something.css
+
+	Change how the colors appear with options --names, --shorten, --rgb, --hash or --canonical. Use --color-only to only show the color instead of the whole line. Use --reverse to see everthing except color definitions.
+
+	Find all unique colors used in all CSS files somewhere.
 
 	filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 
@@ -235,7 +239,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 625;
+our $TEST_CASES = 599;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -1061,7 +1065,8 @@ sub isDefinedConst
 	}
 	else
 	{
-		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
+		return exists($Var{'rhConstantsMap'}{$const});
+		die "MUSTDO not yet implemented for constants of type " . opt('const-type') . "CONST: $const\n" .Dumper($Var{'rhConstantsMap'});
 	}
 }
 
@@ -1076,6 +1081,7 @@ sub getConstValue
 	}
 	else
 	{
+		return $Var{'rhConstantsMap'}{$const};
 		die "MUSTDO not yet implemented for constants of type " . opt('const-type');
 	}
 }
@@ -1735,6 +1741,7 @@ sub colorCloseness
 sub vectorColor
 {
 	my ($red, $green, $blue) = @ARG;
+	$red =~ s{ \A rgba \( }{}xmsg; # hack for now, track down why
 	my $raVector = [256 + $red, 256 + $green, 256 + $blue];
 	return $raVector;
 }
@@ -2797,7 +2804,7 @@ sub testNiceNameColor
 		'rgba(#DfB787,0.74):tinted ~~~burlywood,~~tan',
 	);
 
-	setOpt('debug', 4);
+	#setOpt('debug', 4);
 
 	foreach my $colorResult (@NiceNameColorTests)
 	{
@@ -2834,7 +2841,8 @@ sub testUserRenameColorValid
 		'rgba( 100% , 100% , 100% , 0.5 ):rgba(white, 0.5)',
 		'hsla(0,100%,100%,0.5):rgba(white, 0.5)',
 		'hsla( 0 , 100% , 100% , 0.5 ):rgba(white, 0.5)',
-		'rgba(white,0.5):rgba(white, 0.5)',
+		# invalid input -> different invalid output
+		'rgba(white,0.5):rgba(red(white), green(white), blue(white), 0.5)',
 		'rgba(#fAfBfC,0.5):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
 		'rgba( white , 0.5 ):rgba(red(white), green(white), blue(white), 0.5)',
 		'rgba( #fAfBfC , 0.5 ):rgba(red(#fafbfc), green(#fafbfc), blue(#fafbfc), 0.5)',
@@ -2844,7 +2852,8 @@ sub testUserRenameColorValid
 		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(red(@color), green(@color), blue(@color), 0.5)',
 	);
 
-	setOpt('debug', 4);
+#	setOpt('debug', 4);
+#	setOpt('trace', 1);
 
 	setOpt('canonical', 1);
 	setOpt('hash', 1);
@@ -2860,6 +2869,7 @@ sub testUserRenameColorValid
 		is($result, $expect, $count++ . ") userRenameColorValid (!valid-pp) $color -> $expect");
 	}
 
+	setOpt('trace', 0);
 	setOpt('canonical', 0);
 	setOpt('hash', 0);
 	setOpt('names', 0);

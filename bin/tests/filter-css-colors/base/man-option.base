@@ -135,15 +135,19 @@ OPTIONS
                     Print the full help message and exit.
 
 DESCRIPTION
-            Template for a perl script with the usual bells and whistles. Supports long option parsing and perldoc perl.pl to show pod.
-
-            B<This program> will read the given input file(s) and do something useful with the contents thereof.
+            B<This program> will read the given input CSS, Sass or Less stylesheet file(s) to extract color constants, unify color definitions or list all unique colors found.  See the EXAMPLES for specific use cases.
 
 SEE ALSO
             CSS Color specs L<http://www.w3.org/TR/css3-color/>
 
 EXAMPLES
-            Find all unique colors used in all CSS files somewhere
+            List all color definitions in a CSS file
+
+            filter-css-colors.pl something.css
+
+            Change how the colors appear with options --names, --shorten, --rgb, --hash or --canonical. Use --color-only to only show the color instead of the whole line. Use --reverse to see everthing except color definitions.
+
+            Find all unique colors used in all CSS files somewhere.
 
             filter-css-colors.pl --color-only --names `find /cygdrive/d/d/s/github -name '*.css'` | sort | uniq
 

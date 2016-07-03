@@ -42,6 +42,8 @@ color: hsla(  360  ,  100%  ,  100%  ,  0.4);
 em { color: hsl(120, 100%, 50%) }     /* green */
 em { color: hsla(120, 100%, 50%, 1) } /* the same, with explicit opacity of 1 */
 
+color: #f4f5f6;
+
 /* some special cases */
 @darker-grey: #f4f5f6;
 border-bottom: 4px solid transparent;
