@@ -4,6 +4,7 @@ ps -ef | \
 	egrep "node|grunt|perl|python|java|ruby|keep-it-up|auto-build|baloo_file_extractor" | \
 	grep -v grep | \
 	grep -v what-is-running | \
+	grep -v cross-env | \
 	what-is-running.pl | \
 	sort | \
 	perl -ne "print unless m{\A \s* \z}xms;#hidmehideme" | \
