@@ -156,6 +156,11 @@ alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginf
 alias charles-up='source `which proxy-to-charles.sh`'
 alias charles-down='source `which proxy-off.sh`'
 
+# To simulate an ajax request to a back end
+# ajax -iX GET http://url  to show headers and payload
+# ajax -X GET http://url   to just get payload
+alias ajax="curl -H 'X-Requested-With: XMLHttpRequest'"
+
 alias utf8cut1='perl -CIO -pne "\$_ = substr(\$_, 0, 1)"'
 alias utf8cut1nl='perl -CIO -pne "\$_ = substr(\$_, 0, 1) . qq{\n}"'
 
