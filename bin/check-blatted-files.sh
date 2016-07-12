@@ -3,7 +3,7 @@
 BLATTED=`\
 find . \( -name .tmp -o -name node_modules -o -path ./dist \) \
 -prune -o -size 0 \
-| egrep -v '(/\.tmp|dist|node_modules|\.log$|\.timestamp$)' \
+| egrep -v '(/\.tmp|dist|node_modules|\.log$|\.timestamp$|~$)' \
 `
 if [ ! -z "$BLATTED" ]; then
 	echo WARNING some of your files are zero sized! have they been blatted?
