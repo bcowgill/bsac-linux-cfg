@@ -51,6 +51,8 @@ These would not be corrected:
 
 ... import .... 'path/Object'
 
+import js from '!!raw!./ScopedSelectors.js';
+
 USAGE
 
 	exit($reason ? 1 : 0);
