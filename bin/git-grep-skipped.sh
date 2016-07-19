@@ -1,1 +1,1 @@
-git grep \\.skip
+git grep -E '\.(skip|only)'
