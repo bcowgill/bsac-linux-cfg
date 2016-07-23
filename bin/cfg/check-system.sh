@@ -694,6 +694,8 @@ if [ ! -z $I3WM_PKG ]; then
 	file_has_text "$FILE" "debian.sur5r.net"
 	cmd_exists $I3WM_CMD || (sudo apt-get update; sudo apt-get --allow-unauthenticated install sur5r-keyring; sudo apt-get update; sudo apt-get install $I3WM_CMD)
 	cmd_exists $I3WM_CMD
+else
+	OK "will not configure i3 window manager unless I3WM_PKG is non-zero"
 fi # I3WM_PKG
 
 if [ ! -z $CHARLES_PKG ]; then
