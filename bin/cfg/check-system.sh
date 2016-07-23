@@ -277,7 +277,11 @@ fi # raspberrypi
 set_env
 
 function set_derived_env {
-ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
+if [ -z $COMPANY ]; then
+	ONBOOT=cfg/onboot.sh
+else
+	ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
+fi
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
 INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
@@ -389,9 +393,6 @@ if [ -d $HOME/bin.saved ]; then
 	rmdir $HOME/bin.saved >> /dev/null 2>&1 || NOT_OK "~/bin.saved still exists, please move anything useful to ~/bin"
 fi
 
-echo STOP
-exit 42
-
 dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"
 dir_linked_to tx workspace/tx "transfer area in workspace"
@@ -400,8 +401,13 @@ dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 
 dir_exists  bin/cfg "bin configuration missing"
 file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
-#file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
-file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check script configured"
+
+if [ -z $COMPANY ]; then
+	file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check script configured"
+else
+	file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
+fi
+
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
 if dir_exists tmp "tmp dir in user home" ; then
@@ -415,6 +421,9 @@ make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
 dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
+
+echo STOP
+exit 42
 
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
