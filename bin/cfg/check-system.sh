@@ -64,7 +64,7 @@ fi
 # set_env can only contain $HOME and other generally available values
 function set_env {
 
-# set BAIL_OUT to stop part way through checking
+# set BAIL_OUT to stop after a specific point reached
 BAIL_OUT=
 #BAIL_OUT=font
 #BAIL_OUT=diff
@@ -174,7 +174,7 @@ DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
 # webcollage screensaver pulls from the internet so not safe for work
-SCREENSAVER="workrave kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune"
+SCREENSAVER="workrave kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune cmatrix-xfont"
 # gnome ubuntustudio-screensaver unicode-screensaver
 
 NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
@@ -235,35 +235,49 @@ INI_DIR=check-iniline
 PULSEAUDIO="pavucontrol pavumeter speaker-test"
 KEYBOARD="showkey evtest"
 
-INSTALL="
-	vim screen
-	colordiff
-	dos2unix 
-	lsof
-	fortune
-	unicode
-	mc
-	cmatrix
-	curl wget
-	dlocate
-	deborphan
-	flip
-	fdupes
-	mmv
-	iselect
-	multitail root-tail
-	chromium-browser
-	gettext
-	fbcat
-	htop
-	ncdu
-	jhead
-	ruby
-"
-
+#vim-scripts requires ruby - loads of color schemes and helpful vim scripts
 # runit
 # jhead for jpeg EXIF header editing
-INSTALL_LIST="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick"
+INSTALL_CMDS="
+	dlocate deborphan
+	curl wget
+	vim ctags
+	screen tmux cmatrix
+	colordiff
+	dos2unix flip
+	htop
+	ncdu
+	lsof
+	fdupes
+	mmv
+	fortune
+	unicode
+	gettext
+	iselect
+	mc
+	multitail root-tail
+	fbcat
+	jhead
+	chromium-browser
+"
+
+INSTALL_LIST="
+	wcd.exec:wcd
+	gvim:vim-gtk
+	perldoc:perl-doc
+	perlcritic:libperl-critic-perl
+	calc:apcalc
+	ssh:openssh-client
+	sshd:openssh-server
+	dot:graphviz
+	convert:imagemagick
+"
+
+INSTALL_FILES="
+	/usr/share/doc/fortunes/copyright:fortunes
+	/usr/share/doc-base/vim-referencemanual:vim-doc
+"
+
 COMMANDS_LIST="apt-file wcd.exec gettext git gitk perl ruby dot meld"
 
 
@@ -374,7 +388,7 @@ fi
 [ -z $GITSVN_PKG     ] && GITSVN_CMD=""
 [ -z $DIFFMERGE_PKG  ] && DIFFMERGE_CMD=""
 [ -z $P4MERGE_PKG    ] && P4MERGE_CMD=""
-[ -z $RUBY_PKG       ] && RUBY_CMD=""
+[ -z $RUBY_PKG       ] && RUBY_CMD="" && RUBY_GEMS=""
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
@@ -384,7 +398,7 @@ GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
 COMMANDS="$COMMANDS_LIST $NODE_CMD $RUBY_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE_CMD $SKYPE_CMD $PIDGIN"
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG $RUBY_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
+PACKAGES="$INSTALL_CMDS apt-file wcd bash-completion graphviz $NODE_PKG $RUBY_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
 
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 if [ -f ./cpanminus ]; then
@@ -400,15 +414,16 @@ fi
 PERL_MODULES="$PERL_MODULES `cat $CPAN_LIST | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
 # Packages to install specific files
-INSTALL_FILE_PACKAGES="$DRUID_PACKAGES"
+INSTALL_FILE_PACKAGES="$INSTALL_FILES $DRUID_PACKAGES"
 set -o posix
 set > check-system.env.log
 set +o posix
 }
 set_derived_env
 
-echo CONFIG INSTALL=$INSTALL
+echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
+echo CONFIG INSTALL_FILES=$INSTALL_FILES
 echo CONFIG COMMANDS=$COMMANDS
 echo CONFIG PACKAGES=$PACKAGES
 echo CONFIG PERL_MODULES=$PERL_MODULES
@@ -931,8 +946,9 @@ if [ "x$BAIL_OUT" == "xdiff" ]; then
 	exit 44
 fi
 
-echo BIG INSTALL $INSTALL
+echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM
+echo BIG INSTALL FILES $INSTALL_FILES
 echo BIG PI PKG $PI_PKG
 echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
@@ -940,13 +956,14 @@ echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
 
+installs_from "$INSTALL_CMDS"
+installs_from "$INSTALL_FROM"
+
 if [ "x$BAIL_OUT" == "xinstall" ]; then
 	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
 	exit 44
 fi
 
-installs_from "$INSTALL"
-installs_from "$INSTALL_FROM"
 installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
