@@ -47,11 +47,12 @@ MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
 UBUNTU=trusty
 COMPANY=
-ULIMITFILES=8096
+ULIMITFILES=1024
+#ULIMITFILES=8096
 DOWNLOAD=$HOME/Downloads
 
 MOUNT_DATA=""
-BIG_DATA=""
+BIG_DATA="/data"
 USE_KDE=1
 USE_SUBLIME=1
 USE_WEBSTORM=1
@@ -233,6 +234,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
 	UBUNTU="wheezy"
 	ULIMITFILES=1024
+	BIG_DATA=""
 	COMPANY=raspberrypi
 	I3WM=""
 	CHARLES=""
@@ -337,6 +339,9 @@ echo CONFIG INSTALL_NPM_GLOBAL_FROM+$INSTALL_NPM_GLOBAL_FROM
 #============================================================================
 # begin actual system checking
 
+# provides lsb_release command as well.
+cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
+
 uname -a && lsb_release -a && id
 
 if grep $USER /etc/group | grep sudo; then
@@ -422,9 +427,6 @@ make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
 dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
 
-echo STOP
-exit 42
-
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
 	OK "ulimit for open files is good"
@@ -470,6 +472,48 @@ file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg/.i3-config "i3 window manager configuration"
 
+if [ ! -z $MOUNT_DATA ]; then
+	if [ -z $BIG_DATA ]; then
+		NOT_OK "Must specify BIG_DATA if MOUNT_DATA is specified"
+	fi
+	if [ -d "$BIG_DATA/UNMOUNTED" ]; then
+		OK "$BIG_DATA/UNMOUNTED exists will try mounting it to check dirs"
+		sudo mount "$BIG_DATA"
+		if [ -d "$BIG_DATA/UNMOUNTED" ]; then
+			NOT_OK "unable to mount /data"
+#   mkdir -p "$BIG_DATA/UNMOUNTED"
+#   blkid /dev/sdb1
+#   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" "$BIG_DATA"
+#   /etc/fstab entry added
+#   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
+#   mkdir -p "$BIG_DATA/$USER"
+#   chown -R $USER:domusers "$BIG_DATA/$USER"
+			exit 1
+		fi
+	fi
+else
+	OK "will not configure mounting /data partition unless MOUNT_DATA is non-zero"
+fi # MOUNT_DATA
+
+if [ ! -z $BIG_DATA ]; then
+	if [ ! -d "$BIG_DATA/$USER" ]; then
+		make_root_dir_exist "$BIG_DATA/$USER" "create Big data area for IE vm's"
+		take_ownership_of "$BIG_DATA/$USER" "own Big data area for IE vm's"
+	fi
+
+	# Virtualbox configuration
+	# /home/bcowgill/.config/VirtualBox/
+	# default where it stores VM images
+	# /home/bcowgill/VirtualBox VMs/
+
+	dir_exists "$BIG_DATA/$USER" "personal area on data dir missing"
+	make_dir_exist "$BIG_DATA/$USER/backup" "backup dir on /data"
+	make_dir_exist "$BIG_DATA/$USER/VirtualBox" "VirtualBox dir on /data"
+	dir_linked_to "$HOME/VirtualBox VMs" "$BIG_DATA/$USER/VirtualBox" "link for VirtualBox VMs"
+	dir_exists "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "MAYBE ie vms directory" && \
+		dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
+fi
+
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
 install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
@@ -503,6 +547,9 @@ if ( fc-list | grep SourceCodePro ) ; then
 else
 	NOT_OK "SourceCodePro font is not cached"
 fi
+
+echo STOP
+exit 42
 
 # Get unicode fonts and examples
 # http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
@@ -608,49 +655,6 @@ if [ "$HOSTNAME" != "raspberrypi" ]; then
 	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "home work unpacker configured"
 fi
 
-if [ ! -z $MOUNT_DATA ]; then
-	if [ -z $BIG_DATA ]; then
-		NOT_OK "Must specify BIG_DATA if MOUNT_DATA is specified"
-	fi
-	if [ -d "$BIG_DATA/UNMOUNTED" ]; then
-		OK "$BIG_DATA/UNMOUNTED exists will try mounting it to check dirs"
-		sudo mount "$BIG_DATA"
-		if [ -d "$BIG_DATA/UNMOUNTED" ]; then
-			NOT_OK "unable to mount /data"
-#   mkdir -p "$BIG_DATA/UNMOUNTED"
-#   blkid /dev/sdb1
-#   mount UUID="89373938-6b43-4471-8aef-62cd6fc2f2a3" "$BIG_DATA"
-#   /etc/fstab entry added
-#   UUID=89373938-6b43-4471-8aef-62cd6fc2f2a3 /data           ext4    rw              0       2
-#   mkdir -p "$BIG_DATA/$USER"
-#   chown -R $USER:domusers "$BIG_DATA/$USER"
-			exit 1
-		fi
-	fi
-else
-	OK "will not configure mounting /data partition unless MOUNT_DATA is non-zero"
-fi # MOUNT_DATA
-
-if [ ! -z $BIG_DATA ]; then
-	if [ ! -d "$BIG_DATA/$USER" ]; then
-		make_root_dir_exist "$BIG_DATA/$USER" "create Big data area for IE vm's"
-		take_ownership_of "$BIG_DATA/$USER" "own Big data area for IE vm's"
-	fi
-
-	# Virtualbox configuration
-	# /home/bcowgill/.config/VirtualBox/
-	# default where it stores VM images
-	# /home/bcowgill/VirtualBox VMs/
-
-	dir_exists "$BIG_DATA/$USER" "personal area on data dir missing"
-	make_dir_exist "$BIG_DATA/$USER/backup" "backup dir on /data"
-	make_dir_exist "$BIG_DATA/$USER/VirtualBox" "VirtualBox dir on /data"
-	dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
-	dir_linked_to "$HOME/VirtualBox VMs" "$BIG_DATA/$USER/VirtualBox" "link for VirtualBox VMs"
-fi
-
-# provides lsb_release command as well.
-cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
 if [ ! -z $CHARLES_PKG ]; then
 	# update apt sources list with needed values to install some more complicated programs
