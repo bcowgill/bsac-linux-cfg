@@ -68,7 +68,7 @@ function set_env {
 BAIL_OUT=
 #BAIL_OUT=font
 #BAIL_OUT=diff
-#BAIL_OUT=install
+BAIL_OUT=install
 
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
@@ -151,6 +151,11 @@ P4MERGE_CMD="$DOWNLOAD/p4v-2015.2.1315639/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
+RUBY_PKG="ruby ruby-dev"
+RUBY_CMD=ruby
+#RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
+RUBY_GEMS="sass compass compass-validator foundation"
+
 #HEREIAM PKG
 
 THUNDER=""
@@ -166,8 +171,6 @@ POSTGRES_NPM_PKG="node-dbi"
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
-#RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
-RUBY_GEMS="sass compass compass-validator foundation"
 SASS_COMMANDS="ruby gem sass compass foundation"
 
 # webcollage screensaver pulls from the internet so not safe for work
@@ -232,7 +235,32 @@ INI_DIR=check-iniline
 PULSEAUDIO="pavucontrol pavumeter speaker-test"
 KEYBOARD="showkey evtest"
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode jhead"
+INSTALL="
+	vim screen
+	colordiff
+	dos2unix 
+	lsof
+	fortune
+	unicode
+	mc
+	cmatrix
+	curl wget
+	dlocate
+	deborphan
+	flip
+	fdupes
+	mmv
+	iselect
+	multitail root-tail
+	chromium-browser
+	gettext
+	fbcat
+	htop
+	ncdu
+	jhead
+	ruby
+"
+
 # runit
 # jhead for jpeg EXIF header editing
 INSTALL_LIST="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick"
@@ -254,6 +282,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	VIRTUALBOX_PKG=""
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
+	RUBY_PKG=""
 	# HEREIAM CFG
 fi
 
@@ -345,6 +374,7 @@ fi
 [ -z $GITSVN_PKG     ] && GITSVN_CMD=""
 [ -z $DIFFMERGE_PKG  ] && DIFFMERGE_CMD=""
 [ -z $P4MERGE_PKG    ] && P4MERGE_CMD=""
+[ -z $RUBY_PKG       ] && RUBY_CMD=""
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
@@ -353,8 +383,8 @@ GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
-COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE_CMD $SKYPE_CMD $PIDGIN"
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
+COMMANDS="$COMMANDS_LIST $NODE_CMD $RUBY_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE_CMD $SKYPE_CMD $PIDGIN"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG $RUBY_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
 
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
 if [ -f ./cpanminus ]; then
@@ -903,12 +933,12 @@ fi
 
 echo BIG INSTALL $INSTALL
 echo BIG INSTALL FROM $INSTALL_FROM
+echo BIG PI PKG $PI_PKG
 echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
-echo BIG PI PKG $PI_PKG
 
 if [ "x$BAIL_OUT" == "xinstall" ]; then
 	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
@@ -920,12 +950,10 @@ installs_from "$INSTALL_FROM"
 installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
-if [ ! -z $USE_KDE ]; then
-	[ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
-fi
+[ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
 install_perl_modules "$PERL_MODULES"
-install_ruby_gems "$RUBY_GEMS"
+[ ! -z "$RUBY_PKG" ] && install_ruby_gems "$RUBY_GEMS"
 installs_from "$INSTALL_FILE_PACKAGES"
 
 echo HEREIAM STOP
