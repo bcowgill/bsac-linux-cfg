@@ -773,6 +773,8 @@ else
 		OK "will not configure subversion unless SVN_PKG is non-zero"
 fi # SVN_PKG
 
+has_ssh_keys $COMPANY
+
 echo HEREIAM STOP
 exit 42
 
@@ -786,8 +788,6 @@ FILE=/etc/network/interfaces.d/bridge-vpn
 #[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
 #"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
 #See my screenshots for Workshare specific config. "
-
-has_ssh_keys $COMPANY
 
 if /bin/false ; then
 # TODO some notes on how to set up then robot framework browser test system
