@@ -1,4 +1,4 @@
-#!/bin/bash
+u!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # check-system.sh 2>&1 | tee ~/check.log | grep 'NOT OK'
 
@@ -64,7 +64,11 @@ fi
 # set_env can only contain $HOME and other generally available values
 function set_env {
 
+# set BAIL_OUT to stop part way through checking
 BAIL_OUT=
+#BAIL_OUT=font
+#BAIL_OUT=diff
+#BAIL_OUT=install
 
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
@@ -130,6 +134,23 @@ MVN_VER="3.0.4"
 JAVA_VER=java-7-openjdk-amd64
 JAVA_JVM=/usr/lib/jvm
 
+# open pages to find latest versions of files to download
+# browser http://download.virtualbox.org/virtualbox/
+# browser http://www.sourcegear.com/diffmerge/downloaded.php
+# browser https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10
+
+# http://sourcegear.com/diffmerge/downloads.php
+DIFFMERGE_CMD=diffmerge
+DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
+DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
+
+# Perforce p4merge tool
+# HELIX P4MERGE: VISUAL MERGE TOOL
+P4MERGE_CMD="$DOWNLOAD/p4v-2014.3.1007540/bin/p4merge"
+P4MERGE_CMD="$DOWNLOAD/p4v-2015.2.1315639/bin/p4merge"
+P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
+P4MERGE_PKG=p4v.tgz
+
 #HEREIAM PKG
 
 THUNDER=""
@@ -165,25 +186,6 @@ INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:
 GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
 GOOGLE_CHROME=google-chrome
 GOOGLE_CHROME_PKG=google-chrome-stable_current_amd64.deb
-
-# open pages to find latest versions of files to download
-# browser http://www.sourcegear.com/diffmerge/downloaded.php
-# browser https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10
-# browser http://download.virtualbox.org/virtualbox/
-
-
-# http://sourcegear.com/diffmerge/downloads.php
-DIFFMERGE=diffmerge
-DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
-DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
-
-
-# Perforce p4merge tool
-# HELIX P4MERGE: VISUAL MERGE TOOL
-P4MERGE="$DOWNLOAD/p4v-2014.3.1007540/bin/p4merge"
-P4MERGE="$DOWNLOAD/p4v-2015.2.1315639/bin/p4merge"
-P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
-P4MERGE_PKG=p4v.tgz
 
 SUBLIME=subl
 SUBLIME_CFG=.config/sublime-text-3
@@ -244,12 +246,14 @@ TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 TODO=audacity
 
 if [ "$HOSTNAME" == "akston" ]; then
+	GIT_VER=1.9.1
 	USE_KDE=""
 	I3WM_PKG=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
 	VIRTUALBOX_PKG=""
-	GIT_VER=1.9.1
+	DIFFMERGE_PKG=""
+	P4MERGE_PKG=""
 	# HEREIAM CFG
 fi
 
@@ -297,7 +301,6 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
 	DIFFMERGE_PKG=""
-	DIFFMERGE=""
 	P4MERGE_PKG=""
 	POSTGRES_PKG_FROM=""
 	DRUID_INSTALL_FROM=""
@@ -340,6 +343,8 @@ fi
 [ -z $VIRTUALBOX_PKG ] && VIRTUALBOX_CMDS=""
 [ -z $MVN_PKG        ] && MVN_CMD=""
 [ -z $GITSVN_PKG     ] && GITSVN_CMD=""
+[ -z $DIFFMERGE_PKG  ] && DIFFMERGE_CMD=""
+[ -z $P4MERGE_PKG    ] && P4MERGE_CMD=""
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
@@ -348,7 +353,7 @@ GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
-COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE $SKYPE_CMD $PIDGIN"
+COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE_CMD $SKYPE_CMD $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
 
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
@@ -704,8 +709,8 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 fi # USE_KDE set
 
-if [ ! -z $BAIL_OUT ]; then
-	NOT_OK "BAIL_OUT is set, stopping"
+if [ "x$BAIL_OUT" == "xfont" ]; then
+	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
 	exit 44
 fi
 
@@ -878,6 +883,51 @@ if [ ! -z $USE_JAVA ]; then
 	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 fi
 
+if [ ! -z $DIFFMERGE_PKG ]; then
+	install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
+else
+	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"
+fi
+
+if [ ! -z $P4MERGE_PKG ]; then
+	install_file_from_zip $P4MERGE_CMD $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
+	file_linked_to "$HOME/bin/p4merge" "$P4MERGE_CMD" "Perforce p4merge link"
+else
+	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
+fi
+
+if [ "x$BAIL_OUT" == "xdiff" ]; then
+	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
+	exit 44
+fi
+
+echo BIG INSTALL $INSTALL
+echo BIG INSTALL FROM $INSTALL_FROM
+echo BIG PERL MODULES $PERL_MODULES
+echo BIG RUBY GEMS $RUBY_GEMS
+echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
+echo BIG COMMANDS $COMMANDS
+echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
+echo BIG PI PKG $PI_PKG
+
+if [ "x$BAIL_OUT" == "xinstall" ]; then
+	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
+	exit 44
+fi
+
+installs_from "$INSTALL"
+installs_from "$INSTALL_FROM"
+installs_from "$PI_PKG"
+
+[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
+if [ ! -z $USE_KDE ]; then
+	[ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+fi
+
+install_perl_modules "$PERL_MODULES"
+install_ruby_gems "$RUBY_GEMS"
+installs_from "$INSTALL_FILE_PACKAGES"
+
 echo HEREIAM STOP
 exit 42
 
@@ -908,40 +958,7 @@ if /bin/false ; then
 	sudo pip install robotframework-imaplibrary
 fi
 
-if [ ! -z $DIFFMERGE_PKG ]; then
-	install_command_package_from_url $DIFFMERGE $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
-else
-	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"
-fi
-
-if [ ! -z $P4MERGE_PKG ]; then
-	install_file_from_zip $P4MERGE $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
-	file_linked_to "$HOME/bin/p4merge" "$P4MERGE" "Perforce p4merge link"
-else
-	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
-fi
-
-echo BIG INSTALL $INSTALL
-echo BIG INSTALL FROM $INSTALL_FROM
-echo BIG PERL MODULES $PERL_MODULES
-echo BIG RUBY GEMS $RUBY_GEMS
-echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
-echo BIG COMMANDS $COMMANDS
-echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
-echo BIG PI PKG $PI_PKG
-
-installs_from "$INSTALL"
-installs_from "$INSTALL_FROM"
-installs_from "$PI_PKG"
-
-[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
-if [ ! -z $USE_KDE ]; then
-[ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
-fi
-
-install_perl_modules "$PERL_MODULES"
-install_ruby_gems "$RUBY_GEMS"
-installs_from "$INSTALL_FILE_PACKAGES"
+#HEREIAM INSTALL
 
 # TODO install from url zip ??
 if [ ! -z $DROPBOX_URL ]; then
