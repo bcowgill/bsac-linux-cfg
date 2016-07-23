@@ -62,9 +62,6 @@ else
 fi
 
 # set_env can only contain $HOME and other generally available values
-
-# set_derived_env values will depend on those defined in set_env
-
 function set_env {
 
 AUSER=$USER
@@ -86,14 +83,35 @@ USE_JAVA=""
 USE_SCHEMACRAWLER=""
 USE_MYSQL=""
 USE_POSTGRES=""
+SVN_PKG=""
 MVN_PKG=""
 MVN_CMD=""
-SVN_PKG=""
-SVN_CMD=""
 DRUID_INSTALL_FROM=""
 PI_PKG=""
 
+I3WM_CMD=i3
+I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
+
+CHARLES_PKG=charles-proxy
+CHARLES_CMD="charles"
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
+
+SKYPE_CMD=skype
+SKYPE_PKG="skype skype-bin"
+
+# http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
+VIRTUALBOX_CMD="VirtualBox"
+VIRTUALBOX_CMDS="dkms $VIRTUALBOX_CMD"
+VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX_CMD:virtualbox-5.0"
+VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX_CMD:virtualbox-5.1"
+VIRTUALBOX_REL="raring"
+
+SVN_CMD=svn
+SVN_VER="1.8.5"
+#SVN_PKG="subversion libsvn-java"
+
+#HEREIAM PKG
+
 THUNDER=""
 #THUNDER=ryu9c8b3.default
 
@@ -133,22 +151,22 @@ GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
 GOOGLE_CHROME=google-chrome
 GOOGLE_CHROME_PKG=google-chrome-stable_current_amd64.deb
 
-CHARLES="charles"
-CHARLES_PKG=charles-proxy
+# open pages to find latest versions of files to download
+# browser http://www.sourcegear.com/diffmerge/downloaded.php
+# browser https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10
+# browser http://download.virtualbox.org/virtualbox/
 
-# http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
-VIRTUALBOX="VirtualBox"
-VIRTUALBOX_CMDS="dkms $VIRTUALBOX"
-VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX:virtualbox-5.0"
-VIRTUALBOX_REL="raring"
 
 # http://sourcegear.com/diffmerge/downloads.php
 DIFFMERGE=diffmerge
 DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
+
 # Perforce p4merge tool
+# HELIX P4MERGE: VISUAL MERGE TOOL
 P4MERGE="$DOWNLOAD/p4v-2014.3.1007540/bin/p4merge"
+P4MERGE="$DOWNLOAD/p4v-2015.2.1315639/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
@@ -157,8 +175,6 @@ SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
-I3WM=i3
-I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
 VPN="openvpn brctl:bridge-utils"
 
 WEBSTORM=wstorm
@@ -177,10 +193,6 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-#SVN_CMD=svn
-#SVN_VER="1.8.5"
-#SVN_PKG="subversion libsvn-java"
-
 GITSVN_PKG=""
 #GITSVN=/usr/lib/git-core/git-svn
 #GITSVN_PKG="libsvn-perl git-svn"
@@ -192,9 +204,6 @@ GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:g
 
 GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
-
-SKYPE=skype
-SKYPE_PKG="skype skype-bin"
 
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
@@ -233,6 +242,11 @@ TODO=audacity
 
 if [ "$HOSTNAME" == "akston" ]; then
 	USE_KDE=""
+	I3WM_PKG=""
+	CHARLES_PKG=""
+	SKYPE_PKG=""
+	VIRTUALBOX_PKG=""
+	# HEREIAM CFG
 fi
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
@@ -248,8 +262,6 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	GOOGLE_CHROME_PKG=""
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	SKYPE_PKG=""
-	SKYPE=""
-	SVN_PKG=""
 	# no amd64 pkg for perforce merge
 	POSTGRES_PKG_FROM=""
 	DRUID_INSTALL_FROM=""
@@ -269,19 +281,15 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	ULIMITFILES=1024
 	BIG_DATA=""
 	COMPANY=raspberrypi
-	I3WM=""
-	CHARLES=""
 	CHARLES_PKG=""
+	I3WM_PKG=""
 	EBOOK_READER=""
-	VIRTUALBOX_CMDS=""
 	VIRTUALBOX_PKG=""
 	SKYPE_PKG=""
-	SKYPE=""
 	PIDGIN=""
 	PIDGIN_SKYPE=""
 	PIDGIN_SKYPE_PKG=""
 	PIDGIN_SRC=""
-	SVN_PKG=""
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
 	DIFFMERGE_PKG=""
@@ -311,16 +319,25 @@ fi # raspberrypi
 }
 set_env
 
+# set_derived_env values will depend on those defined in set_env
 function set_derived_env {
+DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 if [ -z $COMPANY ]; then
 	ONBOOT=cfg/onboot.sh
 else
 	ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 fi
-DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
+
+# disable commands for omitted packages
+[ -z $SVN_PKG        ] && SVN_CMD=""
+[ -z $SKYPE_PKG      ] && SKYPE_CMD=""
+[ -z $I3WM_PKG       ] && I3WM_CMD=""
+[ -z $CHARLES_PKG    ] && CHARLES_CMD=""
+[ -z $VIRTUALBOX_PKG ] && VIRTUALBOX_CMDS=""
+# HEREIAM DERIVED
 
 INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
-COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $PIDGIN"
+COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE $SKYPE_CMD $PIDGIN"
 PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
 
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
@@ -343,22 +360,6 @@ set > check-system.env.log
 set +o posix
 }
 set_derived_env
-
-if /bin/false ; then
-# TODO some notes on how to set up then robot framework browser test system
-# for workshare.
-# https://github.com/workshare/qa
-	ROBOT_TEST="pip:python-pip"
-	commands pip, pybot needed
-	sudo apt-get install chromium-chromedriver
-	sudo pip install robotframework==2.8.7
-	sudo pip install robotframework-selenium2library==1.6.0
-	sudo pip install ntplib
-	sudo easy_install -U pip
-	sudo pip install requests
-	sudo pip install robotframework-debuglibrary
-	sudo pip install robotframework-imaplibrary
-fi
 
 echo CONFIG INSTALL=$INSTALL
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
@@ -445,6 +446,9 @@ file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check s
 #else
 #	file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
 #fi
+
+file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
+file_exists workspace/cfgrec.txt "configuration record files"
 
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
@@ -553,6 +557,7 @@ if [ ! -z $BIG_DATA ]; then
 		dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
 fi
 
+# Fonts ================================================================
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
 install_file_from_url_zip $DOWNLOAD/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
@@ -683,12 +688,13 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 fi # USE_KDE set
 
-if [ ! -z $USE_JAVA ]; then
-	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
-fi
-
-echo STOP
-exit 42
+if [ ! -z $I3WM_PKG ]; then
+	FILE="/etc/apt/sources.list.d/i3window-manager.list"
+	make_root_file_exist "$FILE" "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" "adding i3wm source for apt"
+	file_has_text "$FILE" "debian.sur5r.net"
+	cmd_exists $I3WM_CMD || (sudo apt-get update; sudo apt-get --allow-unauthenticated install sur5r-keyring; sudo apt-get update; sudo apt-get install $I3WM_CMD)
+	cmd_exists $I3WM_CMD
+fi # I3WM_PKG
 
 if [ ! -z $CHARLES_PKG ]; then
 	# update apt sources list with needed values to install some more complicated programs
@@ -701,36 +707,11 @@ else
 	OK "will not configure charles proxy unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
-if [ ! -z $SVN_PKG ]; then
-	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
-	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
-fi
-
 if [ ! -z $SKYPE_PKG ]; then
 	apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
 else
 	OK "will not configure skype unless SKYPE_PKG is non-zero"
 fi # SKYPE_PKG
-
-# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
-# for VPN after installing bridge-utils need to restart network
-sudo /etc/init.d/networking restart
-# create /etc/network/interfaces.d/bridge-vpn
-FILE=/etc/network/interfaces.d/bridge-vpn
-#file_has_text "$FILE" "iface br0 inet static"
-
-
-#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
-#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
-#See my screenshots for Workshare specific config. "
-
-if [ ! -z $I3WM ]; then
-	FILE="/etc/apt/sources.list.d/i3window-manager.list"
-	make_root_file_exist "$FILE" "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" "adding i3wm source for apt"
-	file_has_text "$FILE" "debian.sur5r.net"
-	cmd_exists $I3WM || (sudo apt-get update; sudo apt-get --allow-unauthenticated install sur5r-keyring; sudo apt-get update; sudo apt-get install $I3WM)
-	cmd_exists $I3WM
-fi # I3WM
 
 if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	# http://ubuntuhandbook.org/index.php/2015/07/install-virtualbox-5-0-ubuntu-15-04-14-04-12-04/
@@ -744,15 +725,19 @@ if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	fi
 
 	apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
-
 	installs_from "$VIRTUALBOX_PKG" "additional packages for virtualbox"
 
 	cmd_exists dkms "need dkms command for VirtualBox"
-	cmd_exists $VIRTUALBOX || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
-	cmd_exists $VIRTUALBOX
+	cmd_exists $VIRTUALBOX_CMD || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
+	commands_exist $VIRTUALBOX_CMDS
 else
 	OK "will not configure virtualbox unless VIRTUALBOX_PKG is non-zero"
 fi # VIRTUALBOX_PKG
+
+if [ ! -z $SVN_PKG ]; then
+	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
+	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
+fi
 
 if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
 
@@ -760,7 +745,7 @@ if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
 	[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
 fi
 
-[ ! -z $CHARLES_PKG ] && cmd_exists $CHARLES
+[ ! -z $CHARLES_PKG ] && cmd_exists $CHARLES_CMD
 [ ! -z $SKYPE_PKG ] && cmd_exists $SKYPE
 
 if [ ! -z $SVN_PKG ]; then
@@ -786,7 +771,37 @@ else
 		OK "will not configure subversion unless SVN_PKG is non-zero"
 fi # SVN_PKG
 
+echo HEREIAM STOP
+exit 42
+
+# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
+# for VPN after installing bridge-utils need to restart network
+sudo /etc/init.d/networking restart
+# create /etc/network/interfaces.d/bridge-vpn
+FILE=/etc/network/interfaces.d/bridge-vpn
+#file_has_text "$FILE" "iface br0 inet static"
+
+#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
+#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
+#See my screenshots for Workshare specific config. "
+
 has_ssh_keys $COMPANY
+
+if /bin/false ; then
+# TODO some notes on how to set up then robot framework browser test system
+# for workshare.
+# https://github.com/workshare/qa
+	ROBOT_TEST="pip:python-pip"
+	commands pip, pybot needed
+	sudo apt-get install chromium-chromedriver
+	sudo pip install robotframework==2.8.7
+	sudo pip install robotframework-selenium2library==1.6.0
+	sudo pip install ntplib
+	sudo easy_install -U pip
+	sudo pip install requests
+	sudo pip install robotframework-debuglibrary
+	sudo pip install robotframework-imaplibrary
+fi
 
 which git
 if git --version | grep " version " | grep $GIT_VER; then
@@ -845,6 +860,10 @@ else
 	exit 1
 fi # JAVA_HOME
 
+if [ ! -z $USE_JAVA ]; then
+	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
+fi
+
 cmd_exists git
 if [ ! -z $GITSVN_PKG ]; then
 	if [ -x $GITSVN ]; then
@@ -899,8 +918,6 @@ fi
 
 install_perl_modules "$PERL_MODULES"
 install_ruby_gems "$RUBY_GEMS"
-
-
 installs_from "$INSTALL_FILE_PACKAGES"
 
 # TODO install from url zip ??
@@ -911,9 +928,6 @@ if [ ! -z $DROPBOX_URL ]; then
 fi
 
 commands_exist "$COMMANDS"
-
-file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
-file_exists workspace/cfgrec.txt "configuration record files"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
 	OK "git config has been set up"
@@ -1067,6 +1081,14 @@ fi # USE_SCHEMACRAWLER
 
 #============================================================================
 # end of main installing, now configuring
+
+echo HEREIAM STOP
+exit 43
+
+pushd bin/fortune
+	./mk-fortune.sh && cd starwars && ./mk-fortune.sh
+popd
+
 
 # Check mysql configuration options
 FILE=.my.cnf

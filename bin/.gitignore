@@ -17,3 +17,6 @@ WebStorm
 # emacs editor files
 \#*#
 .\#*
+
+# symbolic links to things
+template/unicode
