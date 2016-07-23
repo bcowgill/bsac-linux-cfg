@@ -27,6 +27,29 @@ set -e
 # oggconvert gui - convert sound files to free formats
 # digikam photo metadata/tag/edit software
 
+# EMACS packages
+# sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
+# editorconfig .el files download and put in .emacs.d dir
+# https://github.com/editorconfig/editorconfig-emacs/archive/master.zip
+# mkdir ~/.emacs.d/lisp
+# cp *.el ~/.emacs.d/lisp/
+# add to .emacs file:
+#(add-to-list 'load-path "~/.emacs.d/lisp")
+#(require 'editorconfig)
+#(editorconfig-mode 1)
+
+# ace jump mode
+# https://github.com/winterTTr/ace-jump-mode/
+# https://www.youtube.com/watch?feature=player_embedded&v=UZkpmegySnc#!
+# cd ~/.emacs.d/lisp
+# wget https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el
+# add to .emacs file the config on the readme page.
+# C-c Space and C-c C-' were chosen as bind keys
+
+# generate javascript tags for emacs
+# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
+# save .ctags config for better javascript
+
 set -o posix
 set > check-system.env0.log
 set +o posix
@@ -51,7 +74,7 @@ UBUNTU=trusty
 COMPANY=
 ULIMITFILES=1024
 #ULIMITFILES=8096
-DOWNLOAD=$HOME/Downloads
+DOWNLOAD=$HOME/Downloads/check-system
 
 MOUNT_DATA=""
 BIG_DATA="/data"
@@ -125,7 +148,7 @@ DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
 # Perforce p4merge tool
-P4MERGE="$HOME/Downloads/p4v-2014.3.1007540/bin/p4merge"
+P4MERGE="$DOWNLOAD/p4v-2014.3.1007540/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
@@ -145,13 +168,13 @@ WEBSTORM_DIR=WebStorm-143.2370.0
 WEBSTORM_ARCHIVE=WebStorm-11.0.3
 WEBSTORM_DIR=WebStorm-143.1559.5
 WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
-WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
+WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
 
 VSLICK=vs
 VSLICK_ARCHIVE=se_19000101_linux64
 VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
-VSLICK_EXTRACTED_DIR="$HOME/Downloads/$VSLICK_ARCHIVE"
+VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
 #SVN_CMD=svn
@@ -176,7 +199,7 @@ SKYPE_PKG="skype skype-bin"
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
-FLASH_EXTRACTED_DIR="$HOME/Downloads/$FLASH_ARCHIVE"
+FLASH_EXTRACTED_DIR="$DOWNLOAD/$FLASH_ARCHIVE"
 FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
@@ -208,28 +231,9 @@ TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
 TODO=audacity
 
-# EMACS packages
-# sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
-# editorconfig .el files download and put in .emacs.d dir
-# https://github.com/editorconfig/editorconfig-emacs/archive/master.zip
-# mkdir ~/.emacs.d/lisp
-# cp *.el ~/.emacs.d/lisp/
-# add to .emacs file:
-#(add-to-list 'load-path "~/.emacs.d/lisp")
-#(require 'editorconfig)
-#(editorconfig-mode 1)
-
-# ace jump mode
-# https://github.com/winterTTr/ace-jump-mode/
-# https://www.youtube.com/watch?feature=player_embedded&v=UZkpmegySnc#!
-# cd ~/.emacs.d/lisp
-# wget https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el
-# add to .emacs file the config on the readme page.
-# C-c Space and C-c C-' were chosen as bind keys
-
-# generate javascript tags for emacs
-# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
-# save .ctags config for better javascript
+if [ "$HOSTNAME" == "akston" ]; then
+	USE_KDE=""
+fi
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
@@ -389,7 +393,7 @@ pushd $HOME
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
 make_dir_exist workspace/projects "workspace projects area missing"
-make_dir_exist Downloads "Downloads area missing"
+make_dir_exist $DOWNLOAD "Downloads area missing"
 make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
 get_git
@@ -455,6 +459,12 @@ make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
 make_dir_exist workspace/tx/_snapshots "workspace area for screen shots"
 dir_linked_to Pictures/_snapshots $HOME/workspace/tx/_snapshots "link pictures dir to snapshots"
+
+if [ ! -z "$COMPANY" ]; then
+	if [ "$HOSTNAME" != "raspberrypi" ]; then
+		file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "home work unpacker configured"
+	fi
+fi
 
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
@@ -545,23 +555,23 @@ fi
 
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
-install_file_from_url_zip Downloads/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
-install_file_from_url_zip Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
-install_file_from_url_zip Downloads/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
-echo YOUDO You have to manually install ProFontWindows with your Font Manager from Downloads/MProFont/ProFontWindows.ttf
+install_file_from_url_zip $DOWNLOAD/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
+install_file_from_url_zip $DOWNLOAD/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
+install_file_from_url_zip $DOWNLOAD/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
+echo YOUDO You have to manually install ProFontWindows with your Font Manager from $DOWNLOAD/MProFont/ProFontWindows.ttf
 
 SC_PRO_VERSION=1.017R
 SC_PRO_ARCHIVE=source-code-pro-$SC_PRO_VERSION
-install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
-install_file_from_url_zip Downloads/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
-echo YOUDO You have to manually install SourceCodePro with your Font Manager from Downloads/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf
+install_file_from_url_zip $DOWNLOAD/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
+install_file_from_url_zip $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
+echo YOUDO You have to manually install SourceCodePro with your Font Manager from $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf
 
 FILE=.fonts/ProFontWindows.ttf
 make_dir_exist .fonts "locally installed fonts for X windows"
-file_exists $FILE || cp Downloads/ProFontWinTweaked/ProFontWindows.ttf .fonts
+file_exists $FILE || cp $DOWNLOAD/ProFontWinTweaked/ProFontWindows.ttf .fonts
 file_exists $FILE "ProFontWindows still not installed"
 FILE=.fonts/SourceCodePro-Black.otf
-file_exists $FILE || cp Downloads/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
+file_exists $FILE || cp $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
 file_exists $FILE "SourceCodePro fonts still not installed"
 cmd_exists fc-cache "font cache program needed"
 cmd_exists fc-list "font cache list program needed"
@@ -594,10 +604,10 @@ if [ ${CHECK:-NOTOK} == UTF-8 ]; then
 else
 	NOT_OK "UTF-8 locale is not supported:: $CHECK"
 fi
-install_file_from_url_zip_subdir "Downloads/ucs-fonts/examples/UTF-8-test.txt" "ucs-fonts.tar.gz" ucs-fonts $URL/download/ucs-fonts.tar.gz "Misc Fixed unicode fonts"
-#install_file_from_url_zip_subdir "Downloads/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
-#install_file_from_url "Downloads/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
-dir_linked_to bin/template/unicode "$HOME/Downloads/ucs-fonts/examples" "symlink to sample unicode files"
+install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts/examples/UTF-8-test.txt" "ucs-fonts.tar.gz" ucs-fonts $URL/download/ucs-fonts.tar.gz "Misc Fixed unicode fonts"
+#install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
+#install_file_from_url "$DOWNLOAD/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
+dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sample unicode files"
 
 # MUSTDO finish this
 if /bin/false ; then
@@ -605,7 +615,7 @@ if xlsfonts | grep xyzzy > /dev/null ; then
 	OK "ucs unicode fonts are installed"
 else
 	NOT_OK "MAYBE install ucs unicode fonts"
-	pushd Downloads/ucs-fonts/submission
+	pushd $DOWNLOAD/ucs-fonts/submission
 	make
 	ls *.pcf.gz
 	#sudo mv -b *.pcf.gz /usr/share/fonts/X11/misc
@@ -627,12 +637,12 @@ if cmd_exists kfontinst > /dev/null ; then
 	FILE=.fonts/p/ProFontWindows.ttf
 	# TODO needed for workshare
 	FILE=.fonts/ProFontWindows.ttf
-	file_exists $FILE "ProFontWindows font needs to be installed" || find Downloads/ -name '*.ttf'
-	file_exists $FILE > /dev/null || kfontinst Downloads/ProFontWinTweaked/ProFontWindows.ttf
+	file_exists $FILE "ProFontWindows font needs to be installed" || find $DOWNLOADS/ -name '*.ttf'
+	file_exists $FILE > /dev/null || kfontinst $DOWNLOADS/ProFontWinTweaked/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows still not installed"
 
 	FILE=.fonts/p/ProFontWindows_Bold.ttf
-	file_exists $FILE > /dev/null || kfontinst Downloads/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
+	file_exists $FILE > /dev/null || kfontinst $DOWNLOADS/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
 	file_exists $FILE "ProFontWindows Bold still not installed"
 
 	file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
@@ -677,10 +687,8 @@ if [ ! -z $USE_JAVA ]; then
 	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 fi
 
-if [ "$HOSTNAME" != "raspberrypi" ]; then
-	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "home work unpacker configured"
-fi
-
+echo STOP
+exit 42
 
 if [ ! -z $CHARLES_PKG ]; then
 	# update apt sources list with needed values to install some more complicated programs
@@ -976,8 +984,8 @@ if [ ! -z $SUBLIME_PKG ]; then
 	#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
 	cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
 	install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
-	install_file_from_url Downloads/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
-	#cp Downloads/Package-Control.sublime-package.zip ".config/sublime-text-3/Installed Packages/Package Control.sublime-package"
+	install_file_from_url $DOWNLOADS/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
+	#cp $DOWNLOADS/Package-Control.sublime-package.zip ".config/sublime-text-3/Installed Packages/Package Control.sublime-package"
 	install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 	install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 	## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
@@ -987,14 +995,14 @@ fi # USE_SUBLIME
 
 if [ ! -z $WEBSTORM ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
-	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $HOME/Downloads/$WEBSTORM_ARCHIVE dir"
-	dir_linked_to bin/WebStorm $HOME/Downloads/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
+	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
+	dir_linked_to bin/WebStorm $DOWNLOAD/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
 	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
 fi # WEBSTORM
 
 if [ ! -z $VSLICK ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
-	cmd_exists $VSLICK "you need to manually install visual slick edit with vsinst command from $HOME/Downloads/$VSLICK_ARCHIVE dir"
+	cmd_exists $VSLICK "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
 fi # VSLICK
 
 cmd_exists git "need git to clone repos"
@@ -1036,24 +1044,24 @@ if [ ! -z $USE_SCHEMACRAWLER ]; then
 		POSTGRES_JDBC_URL=http://jdbc.postgresql.org/download/$POSTGRES_JDBC_JAR
 		POSTGRES_JDBC_DIR=/usr/share/java
 		cmd_exists java "must have java installed for JDBC/schemacrawler"
-		install_file_from_url Downloads/$POSTGRES_JDBC_JAR $POSTGRES_JDBC_JAR "$POSTGRES_JDBC_URL" "postgres JDBC jar file for using schemacrawler"
-		file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it"&& sudo cp "Downloads/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
+		install_file_from_url $DOWNLOAD/$POSTGRES_JDBC_JAR $POSTGRES_JDBC_JAR "$POSTGRES_JDBC_URL" "postgres JDBC jar file for using schemacrawler"
+		file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR > /dev/null || (NOT_OK "postgres JDBC jar missing in java dir, will copy it"&& sudo cp "$DOWNLOAD/$POSTGRES_JDBC_JAR" "$POSTGRES_JDBC_DIR" )
 		file_exists $POSTGRES_JDBC_DIR/$POSTGRES_JDBC_JAR
 
 		# schemacrawler with postgres JDBC driver included
 		SCHEMA_VER=10.10.05
 		SCHEMA_POSTGRES_ZIP=schemacrawler-postgresql-$SCHEMA_VER-distrib.zip
 		SCHEMA_POSTGRES_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20PostgreSQL/$SCHEMA_VER/$SCHEMA_POSTGRES_ZIP/download
-		install_file_from_url_zip Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh $SCHEMA_POSTGRES_ZIP "$SCHEMA_POSTGRES_URL" "schemacrawler with postgres JDBC driver"
-		file_is_executable Downloads/schemacrawler-postgresql-$SCHEMA_VER/sc.sh "need executable permission"
+		install_file_from_url_zip $DOWNLOAD/schemacrawler-postgresql-$SCHEMA_VER/sc.sh $SCHEMA_POSTGRES_ZIP "$SCHEMA_POSTGRES_URL" "schemacrawler with postgres JDBC driver"
+		file_is_executable $DOWNLOAD/schemacrawler-postgresql-$SCHEMA_VER/sc.sh "need executable permission"
 	fi # USE_POSTGRES
 
 	if [ ! -z $USE_MYSQL ]; then
 		# schemacrawler with mysql JDBC driver included
 		SCHEMA_MYSQL_ZIP=schemacrawler-mysql-$SCHEMA_VER-distrib.zip
 		SCHEMA_MYSQL_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/$SCHEMA_VER/$SCHEMA_MYSQL_ZIP/download
-		install_file_from_url_zip Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh $SCHEMA_MYSQL_ZIP "$SCHEMA_MYSQL_URL" "schemacrawler with mysql JDBC driver"
-		file_is_executable Downloads/schemacrawler-mysql-$SCHEMA_VER/sc.sh "need executable permission"
+		install_file_from_url_zip $DOWNLOAD/schemacrawler-mysql-$SCHEMA_VER/sc.sh $SCHEMA_MYSQL_ZIP "$SCHEMA_MYSQL_URL" "schemacrawler with mysql JDBC driver"
+		file_is_executable $DOWNLOAD/schemacrawler-mysql-$SCHEMA_VER/sc.sh "need executable permission"
 	fi # USE_MYSQL
 fi # USE_SCHEMACRAWLER
 
@@ -1440,7 +1448,7 @@ fi # pgadmin3 config file
 # Smartgit cannot run on Pi, ARM platform
 #SMARTGIT="http://www.syntevo.com/smartgit/download?file=smartgit/smartgit-generic-6_5_8.tar.gz"
 #SNARTGIT="http://www.syntevo.com/downloads/smartgit/smartgit-generic-6_5_8.tar.gz"
-#install_file_from_url_zip Downloads/smartgit/bin/smartgit.sh smartgit-generic-6_5_8.tar.gz "$SMARTGIT" "Smart Git package must manually download: links $SMARTGIT"
+#install_file_from_url_zip $DOWNLOAD/smartgit/bin/smartgit.sh smartgit-generic-6_5_8.tar.gz "$SMARTGIT" "Smart Git package must manually download: links $SMARTGIT"
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	FILE="/etc/rc.local"

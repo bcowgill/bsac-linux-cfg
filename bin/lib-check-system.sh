@@ -433,6 +433,16 @@ function file_is_executable {
 	return 0
 }
 
+# ensure an env variable is defined
+function var_exists {
+	local name value
+	name=$1
+	value="$2"
+	if [ -z $value ]; then
+		NOT_OK "environment variable $name is not defined"
+	fi
+}
+
 # get git if possible
 function get_git {
 	cmd_exists git || ( echo doing an upgrade to get git; sudo apt-get update && sudo apt-get upgrade && sudo apt-get install git && exit 11)
@@ -516,7 +526,8 @@ function install_file_from_url {
 	package="$2"
 	url="$3"
 	message="$4"
-	file_exists "$file" > /dev/null || (echo Try to install $file from $package at $url; wget --output-document $HOME/Downloads/$package $url)
+	var_exists DOWNLOAD "$DOWNLOAD"
+	file_exists "$file" > /dev/null || (echo Try to install $file from $package at $url; wget --output-document $DOWNLOAD/$package $url)
 	file_exists "$file" "$message"
 }
 
@@ -527,7 +538,8 @@ function install_files_from_url {
 	url="$2"
 	files="$3"
 	message="$4"
-	dir="$HOME/Downloads/$package"
+	dir="$DOWNLOAD/$package"
+	var_exists DOWNLOAD "$DOWNLOAD"
 	make_dir_exist "$dir" "$message"
 	for file in $files
 	do
@@ -542,8 +554,9 @@ function install_file_from_url_zip {
 	package="$2"
 	url="$3"
 	message="$4"
+	var_exists DOWNLOAD "$DOWNLOAD"
 	if [ ! -f "$file" ]; then
-		if [ ! -f "$HOME/Downloads/$package" ]; then
+		if [ ! -f "$DOWNLOAD/$package" ]; then
 			install_file_from_url "$file" "$package" "$url" "$message"
 		fi
 		install_file_from_zip "$file" "$package" "$message"
@@ -559,7 +572,8 @@ function install_file_from_url_zip_subdir {
 	subdir="$3"
 	url="$4"
 	message="$5"
-	install_file_from_url "$file" "$package" "$url" > /dev/null || (push_dir "$HOME/Downloads/" && mkdir -p   "$subdir" && cd "$subdir" && extract_archive "$HOME/Downloads/$package" && pop_dir)
+	var_exists DOWNLOAD "$DOWNLOAD"
+	install_file_from_url "$file" "$package" "$url" > /dev/null || (push_dir "$DOWNLOAD/" && mkdir -p   "$subdir" && cd "$subdir" && extract_archive "$DOWNLOAD/$package" && pop_dir)
 	file_exists "$file" "$message"
 }
 
@@ -569,8 +583,9 @@ function install_file_from_zip {
 	file="$1"
 	package="$2"
 	message="$3"
-	file_exists "$HOME/Downloads/$package" "$message"
-	file_exists "$file" "$message" > /dev/null || (push_dir "$HOME/Downloads/" && extract_archive "$HOME/Downloads/$package" && pop_dir)
+	var_exists DOWNLOAD "$DOWNLOAD"
+	file_exists "$DOWNLOAD/$package" "$message"
+	file_exists "$file" "$message" > /dev/null || (push_dir "$DOWNLOAD/" && extract_archive "$DOWNLOAD/$package" && pop_dir)
 	file_exists "$file" "$message"
 }
 
@@ -823,7 +838,8 @@ function install_command_package {
 	cmd="$1"
 	package="$2"
 	message="$3"
-	cmd_exists "$cmd" > /dev/null || (file_exists "$HOME/Downloads/$package" "$message" && sudo dpkg --install "$HOME/Downloads/$package")
+	var_exists DOWNLOAD "$DOWNLOAD"
+	cmd_exists "$cmd" > /dev/null || (file_exists "$DOWNLOAD/$package" "$message" && sudo dpkg --install "$DOWNLOAD/$package")
 	cmd_exists "$cmd" $message || return 1
 }
 
@@ -833,7 +849,8 @@ function force_install_command_package {
 	cmd="$1"
 	package="$2"
 	message="$3"
-	file_exists "$HOME/Downloads/$package" "$message" && sudo dpkg --install "$HOME/Downloads/$package"
+	var_exists DOWNLOAD "$DOWNLOAD"
+	file_exists "$DOWNLOAD/$package" "$message" && sudo dpkg --install "$DOWNLOAD/$package"
 	cmd_exists "$cmd" $message || return 1
 }
 
@@ -844,7 +861,8 @@ function install_command_package_from_url {
 	package="$2"
 	url="$3"
 	message="$4"
-	file_exists "$HOME/Downloads/$package" "$message" > /dev/null || (echo Try to install $cmd from $package at $url [$message]; wget --output-document "$HOME/Downloads/$package" $url && force_install_command_package $cmd "$package" "$message")
+	var_exists DOWNLOAD "$DOWNLOAD"
+	file_exists "$DOWNLOAD/$package" "$message" > /dev/null || (echo Try to install $cmd from $package at $url [$message]; wget --output-document "$DOWNLOAD/$package" $url && force_install_command_package $cmd "$package" "$message")
 	install_command_package $cmd "$package"
 }
 
