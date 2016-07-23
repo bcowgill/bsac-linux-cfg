@@ -64,6 +64,8 @@ fi
 # set_env can only contain $HOME and other generally available values
 function set_env {
 
+BAIL_OUT=
+
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
@@ -76,16 +78,16 @@ DOWNLOAD=$HOME/Downloads/check-system
 MOUNT_DATA=""
 BIG_DATA="/data"
 USE_KDE=1
+USE_JAVA=""
+SVN_PKG=""
+MVN_PKG=""
+GITSVN_PKG=""
 USE_SUBLIME=1
 USE_WEBSTORM=1
 ECLIPSE=""
-USE_JAVA=""
 USE_SCHEMACRAWLER=""
 USE_MYSQL=""
 USE_POSTGRES=""
-SVN_PKG=""
-MVN_PKG=""
-MVN_CMD=""
 DRUID_INSTALL_FROM=""
 PI_PKG=""
 
@@ -110,16 +112,29 @@ SVN_CMD=svn
 SVN_VER="1.8.5"
 #SVN_PKG="subversion libsvn-java"
 
+GITSVN_CMD=/usr/lib/git-core/git-svn
+#GITSVN_PKG="libsvn-perl git-svn"
+
+GIT_PKG=git
+GIT_VER="2.1.4"
+GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
+# these must be configured in set_derived_env
+#GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
+#GIT_TAR=git-$GIT_VER
+#GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
+
+MVN_CMD="mvn"
+#MVN_PKG="mvn:maven"
+MVN_VER="3.0.4"
+
+JAVA_VER=java-7-openjdk-amd64
+JAVA_JVM=/usr/lib/jvm
+
 #HEREIAM PKG
 
 THUNDER=""
 #THUNDER=ryu9c8b3.default
 
-JAVA_VER=java-7-openjdk-amd64
-
-#MVN_CMD="mvn"
-#MVN_PKG="mvn:maven"
-#MVN_VER="3.0.4"
 
 POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
@@ -193,18 +208,6 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-GITSVN_PKG=""
-#GITSVN=/usr/lib/git-core/git-svn
-#GITSVN_PKG="libsvn-perl git-svn"
-
-GIT_VER="2.1.4"
-GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev build-essential"
-GIT_PKG=git
-GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
-
-GIT_TAR=git-$GIT_VER
-GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
-
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
@@ -246,6 +249,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	CHARLES_PKG=""
 	SKYPE_PKG=""
 	VIRTUALBOX_PKG=""
+	GIT_VER=1.9.1
 	# HEREIAM CFG
 fi
 
@@ -334,7 +338,14 @@ fi
 [ -z $I3WM_PKG       ] && I3WM_CMD=""
 [ -z $CHARLES_PKG    ] && CHARLES_CMD=""
 [ -z $VIRTUALBOX_PKG ] && VIRTUALBOX_CMDS=""
+[ -z $MVN_PKG        ] && MVN_CMD=""
+[ -z $GITSVN_PKG     ] && GITSVN_CMD=""
 # HEREIAM DERIVED
+
+# final package configuration based on what has been turned on
+GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
+GIT_TAR=git-$GIT_VER
+GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
 COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE $SKYPE_CMD $PIDGIN"
@@ -400,6 +411,11 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 get_git
 
 check_linux "$UBUNTU"
+git --version
+java -version
+ls $JAVA_JVM
+perl --version
+python --version
 
 # chicken egg bootstrap:
 if [ ! -e $HOME/bin ]; then
@@ -688,6 +704,11 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 fi # USE_KDE set
 
+if [ ! -z $BAIL_OUT ]; then
+	NOT_OK "BAIL_OUT is set, stopping"
+	exit 44
+fi
+
 if [ ! -z $I3WM_PKG ]; then
 	FILE="/etc/apt/sources.list.d/i3window-manager.list"
 	make_root_file_exist "$FILE" "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" "adding i3wm source for apt"
@@ -760,7 +781,7 @@ if [ ! -z $SVN_PKG ]; then
 	file_has_text "$FILE" wandisco.com
 	if svn --version | grep " version " | grep $SVN_VER; then
 		OK "svn command version correct"
-else
+	else
 		NOT_OK "svn command version incorrect - will try update"
 		# http://askubuntu.com/questions/312568/where-can-i-find-a-subversion-1-8-binary
 		sudo apt-get update
@@ -769,41 +790,11 @@ else
 		NOT_OK "exiting after svn update, try again."
 		exit 1
 	fi
-	else
-		OK "will not configure subversion unless SVN_PKG is non-zero"
+else
+	OK "will not configure subversion unless SVN_PKG is non-zero"
 fi # SVN_PKG
 
 has_ssh_keys $COMPANY
-
-echo HEREIAM STOP
-exit 42
-
-# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
-# for VPN after installing bridge-utils need to restart network
-sudo /etc/init.d/networking restart
-# create /etc/network/interfaces.d/bridge-vpn
-FILE=/etc/network/interfaces.d/bridge-vpn
-#file_has_text "$FILE" "iface br0 inet static"
-
-#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
-#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
-#See my screenshots for Workshare specific config. "
-
-if /bin/false ; then
-# TODO some notes on how to set up then robot framework browser test system
-# for workshare.
-# https://github.com/workshare/qa
-	ROBOT_TEST="pip:python-pip"
-	commands pip, pybot needed
-	sudo apt-get install chromium-chromedriver
-	sudo pip install robotframework==2.8.7
-	sudo pip install robotframework-selenium2library==1.6.0
-	sudo pip install ntplib
-	sudo easy_install -U pip
-	sudo pip install requests
-	sudo pip install robotframework-debuglibrary
-	sudo pip install robotframework-imaplibrary
-fi
 
 which git
 if git --version | grep " version " | grep $GIT_VER; then
@@ -836,6 +827,27 @@ else
 	exit 1
 fi # GIT_VER
 
+if [ ! -z $GITSVN_PKG ]; then
+	cmd_exists git
+	if [ -x $GITSVN_CMD ]; then
+		OK "git svn command installed"
+	else
+		NOT_OK "git svn command missing -- will try to install"
+		sudo apt-get install $GITSVN_PKG
+	fi
+	cmd_exists $GITSVN_CMD
+else
+	OK "will not configure git-svn unless GITSVN_PKG is non-zero"
+fi # GITSVN_PKG
+
+GIT_COMPLETE=/usr/share/bash-completion/completions/git
+if file_exists "$GIT_COMPLETE" > /dev/null ; then
+	# git installs completion file but not in right place any more
+	file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
+else
+	file_exists /etc/bash_completion.d/git "git completeion file in etc"
+fi
+
 if [ ! -z $MVN_PKG ]; then
 	cmd_exists mvn
 	if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
@@ -851,40 +863,49 @@ if [ ! -z $MVN_PKG ]; then
 		NOT_OK "M2_HOME is incorrect $M2_HOME"
 		exit 1
 	fi
-
+else
+	OK "will not configure maven unless MVN_PKG is non-zero"
 fi # MVN_PKG
 
-if [ "x$JAVA_HOME" == "x/usr/lib/jvm/$JAVA_VER" ]; then
-	OK "JAVA_HOME set correctly"
-	file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
-else
-	NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
-	exit 1
-fi # JAVA_HOME
-
 if [ ! -z $USE_JAVA ]; then
+	if [ "x$JAVA_HOME" == "x$JAVA_JVM/$JAVA_VER" ]; then
+		OK "JAVA_HOME set correctly"
+		file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
+	else
+		NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
+		exit 1
+	fi # JAVA_HOME
 	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 fi
 
-cmd_exists git
-if [ ! -z $GITSVN_PKG ]; then
-	if [ -x $GITSVN ]; then
-		OK "git svn command installed"
-	else
-		NOT_OK "git svn command missing -- will try to install"
-		sudo apt-get install $GITSVN_PKG
-	fi
-	cmd_exists $GITSVN
-else
-	OK "will not configure git-svn unless GITSVN_PKG is non-zero"
-fi # GITSVN_PKG
+echo HEREIAM STOP
+exit 42
 
-GIT_COMPLETE=/usr/share/bash-completion/completions/git
-if file_exists "$GIT_COMPLETE" > /dev/null ; then
-	# git installs completion file but not in right place any more
-	file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
-else
-	file_exists /etc/bash_completion.d/git "git completeion file in etc"
+# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
+# for VPN after installing bridge-utils need to restart network
+sudo /etc/init.d/networking restart
+# create /etc/network/interfaces.d/bridge-vpn
+FILE=/etc/network/interfaces.d/bridge-vpn
+#file_has_text "$FILE" "iface br0 inet static"
+
+#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
+#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
+#See my screenshots for Workshare specific config. "
+
+if /bin/false ; then
+# TODO some notes on how to set up then robot framework browser test system
+# for workshare.
+# https://github.com/workshare/qa
+	ROBOT_TEST="pip:python-pip"
+	commands pip, pybot needed
+	sudo apt-get install chromium-chromedriver
+	sudo pip install robotframework==2.8.7
+	sudo pip install robotframework-selenium2library==1.6.0
+	sudo pip install ntplib
+	sudo easy_install -U pip
+	sudo pip install requests
+	sudo pip install robotframework-debuglibrary
+	sudo pip install robotframework-imaplibrary
 fi
 
 if [ ! -z $DIFFMERGE_PKG ]; then
