@@ -2,7 +2,11 @@
 # Check configuration to make sure things are ok and make them ok where possible
 # check-system.sh 2>&1 | tee ~/check.log | grep 'NOT OK'
 
-# search for 'begin' for start of script
+# Search for 'begin' for start of script
+
+# To set up a new computer you can simply download and unzip anywhere
+# wget https://github.com/bcowgill/bsac-linux-cfg/archive/master.zip && unzip master.zip
+# cd bsac-linux-cfg-master/bin && export PATH=$PATH:. && ./cfg/check-system.sh 
 
 # terminate on first error
 set -e
@@ -21,6 +25,10 @@ set -e
 # oggconvert gui - convert sound files to free formats
 # digikam photo metadata/tag/edit software
 
+set -o posix
+set > check-system.env0.log
+set +o posix
+
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
 else
@@ -28,41 +36,53 @@ else
 	exit 1
 fi
 
-AUSER=bcowgill
+# set_env can only contain $HOME and other generally available values
+
+# set_derived_env values will depend on those defined in set_env
+
+function set_env {
+
+AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
-EMAIL=brent.cowgill@workshare.com
-UBUNTU=vivid
-COMPANY=workshare
+EMAIL=zardoz@infoserve.net
+UBUNTU=trusty
+COMPANY=
 ULIMITFILES=8096
+DOWNLOAD=$HOME/Downloads
 
 MOUNT_DATA=""
 BIG_DATA=""
+USE_KDE=1
+USE_SUBLIME=1
+USE_WEBSTORM=1
+ECLIPSE=""
+USE_JAVA=""
+USE_SCHEMACRAWLER=""
+USE_MYSQL=""
+USE_POSTGRES=""
+MVN_PKG=""
+MVN_CMD=""
+SVN_PKG=""
+SVN_CMD=""
+DRUID_INSTALL_FROM=""
+PI_PKG=""
 
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 THUNDER=""
 #THUNDER=ryu9c8b3.default
-DOWNLOAD=$HOME/Downloads
 
-USE_KDE=1
-USE_SCHEMACRAWLER=""
-USE_MYSQL=""
-USE_JAVA=""
 JAVA_VER=java-7-openjdk-amd64
 
-MVN_PKG=""
-MVN_CMD=""
 #MVN_CMD="mvn"
 #MVN_PKG="mvn:maven"
 #MVN_VER="3.0.4"
 
-USE_POSTGRES=""
 POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
 
 # BlisMedia Druid reporting requirements
 #DRUID_INSTALL_FROM="apache2"
-DRUID_INSTALL_FROM=""
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
@@ -106,7 +126,6 @@ P4MERGE="$HOME/Downloads/p4v-2014.3.1007540/bin/p4merge"
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
-USE_SUBLIME=1
 SUBLIME=subl
 SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3083_amd64.deb
@@ -116,7 +135,6 @@ I3WM=i3
 I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
 VPN="openvpn brctl:bridge-utils"
 
-USE_WEBSTORM=1
 WEBSTORM=wstorm
 WEBSTORM_ARCHIVE=WebStorm-11.0.3
 WEBSTORM_DIR=WebStorm-143.1559.5
@@ -130,10 +148,6 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$HOME/Downloads/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-ECLIPSE=""
-
-SVN_PKG=""
-SVN_CMD=""
 #SVN_CMD=svn
 #SVN_VER="1.8.5"
 #SVN_PKG="subversion libsvn-java"
@@ -167,8 +181,6 @@ PIDGIN_SKYPE_PKG="$PIDGIN_SKYPE:pidgin-skype"
 PIDGIN_SRC="pidgin-2.10.11"
 PIDGIN_ZIP="$PIDGIN_SRC.tar.bz2"
 
-PI_PKG=""
-
 # epub, mobi book reader
 EBOOK_READER="calibre"
 
@@ -177,9 +189,12 @@ INI_DIR=check-iniline
 PULSEAUDIO="pavucontrol pavumeter speaker-test"
 KEYBOARD="showkey evtest"
 
-INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode jhead $PULSEAUDIO $KEYBOARD"
+INSTALL="vim screen curl wget colordiff dlocate deborphan dos2unix flip fdupes mmv iselect multitail root-tail chromium-browser cmatrix gettext ruby mc lsof fbcat htop ncdu fortune unicode jhead"
 # runit
 # jhead for jpeg EXIF header editing
+INSTALL_LIST="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick"
+COMMANDS_LIST="apt-file wcd.exec gettext git gitk perl ruby dot meld"
+
 
 PERL_PKG="cpanm:cpanminus"
 
@@ -189,13 +204,15 @@ TODO=audacity
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
+	AUSER=bcowgill
+	EMAIL=brent.cowgill@workshare.com
 	COMPANY=workshare
+	UBUNTU=vivid
 	ULIMITFILES=1024
-	# TODO Temporary until KDE set up
+	BIG_DATA="/data"
 	USE_SUBLIME=""
 	USE_KDE=""
 	GOOGLE_CHROME_PKG=""
-	BIG_DATA="/data"
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	SKYPE_PKG=""
 	SKYPE=""
@@ -210,31 +227,13 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	SASS_COMMANDS=""
 fi
 
-if /bin/false ; then
-# some notes done how to set up then robot framework browser test system
-# for workshare.
-# https://github.com/workshare/qa
-	ROBOT_TEST="pip:python-pip"
-	commands pip, pybot needed
-	sudo apt-get install chromium-chromedriver
-	sudo pip install robotframework==2.8.7
-	sudo pip install robotframework-selenium2library==1.6.0
-	sudo pip install ntplib
-	sudo easy_install -U pip
-	sudo pip install requests
-	sudo pip install robotframework-debuglibrary
-	sudo pip install robotframework-imaplibrary
-fi
-
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
 
-	AUSER=$USER
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
 	UBUNTU="wheezy"
 	ULIMITFILES=1024
 	COMPANY=raspberrypi
-	EMAIL=zardoz@infoserve.net
 	I3WM=""
 	CHARLES=""
 	CHARLES_PKG=""
@@ -274,18 +273,53 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
 fi # raspberrypi
 
+}
+set_env
+
+function set_derived_env {
 ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 
-INSTALL_FROM="wcd.exec:wcd gvim:vim-gtk perldoc:perl-doc perlcritic:libperl-critic-perl calc:apcalc ssh:openssh-client sshd:openssh-server dot:graphviz convert:imagemagick $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
-COMMANDS="apt-file wcd.exec gettext git gitk perl ruby dot meld $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $PIDGIN"
-#runit
-PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG"
+INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
+COMMANDS="$COMMANDS_LIST $NODE_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM $CHARLES $DIFFMERGE $SKYPE $PIDGIN"
+PACKAGES="$INSTALL apt-file wcd bash-completion graphviz $NODE_PKG ruby-dev $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
+
 PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
-PERL_MODULES="$PERL_MODULES `cat ~/bin/cpanminus | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
+if [ -f ./cpanminus ]; then
+	CPAN_LIST=./cpanminus
+fi
+if [ -f ~/bin/cpanminus ]; then
+	CPAN_LIST=~/bin/cpanminus
+fi 
+if [ -z $CPAN_LIST ]; then
+	echo MAYBE NOT OK cannot find cpanminus
+	CPAN_LIST=/dev/null
+fi
+PERL_MODULES="$PERL_MODULES `cat $CPAN_LIST | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
 
 # Packages to install specific files
 INSTALL_FILE_PACKAGES="$DRUID_PACKAGES"
+set -o posix
+set > check-system.env.log
+set +o posix
+}
+set_derived_env
+
+if /bin/false ; then
+# TODO some notes on how to set up then robot framework browser test system
+# for workshare.
+# https://github.com/workshare/qa
+	ROBOT_TEST="pip:python-pip"
+	commands pip, pybot needed
+	sudo apt-get install chromium-chromedriver
+	sudo pip install robotframework==2.8.7
+	sudo pip install robotframework-selenium2library==1.6.0
+	sudo pip install ntplib
+	sudo easy_install -U pip
+	sudo pip install requests
+	sudo pip install robotframework-debuglibrary
+	sudo pip install robotframework-imaplibrary
+fi
 
 echo CONFIG INSTALL=$INSTALL
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
@@ -294,39 +328,16 @@ echo CONFIG PACKAGES=$PACKAGES
 echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
-echo CONFIG COMMANDS=$COMMANDS
 echo CONFIG INSTALL_NPM_GLOBAL_FROM+$INSTALL_NPM_GLOBAL_FROM
 
 #============================================================================
 # begin actual system checking
 
-# chicken egg bootstrap:
-if [ 0 == 1 ]; then
-	pushd ~
-	echo initial bootstrap will vary
-	exit 2
-	mkdir -p workspace/play
-	mv ~/bin ~/bin.saved
-        git clone https://github.com/bcowgill/bsac-linux-cfg.git
-	mv ~/bsac-linux-cfg ~/workspace/play
-	ln -s workspace/play/bsac-linux-cfg/bin
-	popd
-	git config --global user.email "brent.cowgill@workshare.com"
-	git config --global user.name "Brent S.A. Cowgill"
-	git config --global push.default simple
-
-	export PATH=$PATH:$HOME/bin
-
-	exit 2
-fi
-
-pushd $HOME
-
-id
+uname -a && lsb_release -a && id
 
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
-	sudo grep $AUSER /etc/passwd /etc/group /etc/sudoers
+	sudo egrep "\b$AUSER\b" /etc/passwd /etc/group /etc/sudoers
 	#/etc/passwd:bcowgill:x:1001:1001:Brent Cowgill,,,:/home/bcowgill:/bin/bash
 	#/etc/group:sudo:x:27:workshare-xps,bcowgill
 	#/etc/group:bcowgill:x:1001:
@@ -335,13 +346,51 @@ else
 	NOT_OK "user $USER does not have sudo privileges"
 fi
 
-check_linux "$UBUNTU"
+pushd $HOME
 
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
 make_dir_exist workspace/projects "workspace projects area missing"
 make_dir_exist Downloads "Downloads area missing"
 make_dir_exist $DROP_BACKUP "Dropbox backup area"
+
+get_git
+
+check_linux "$UBUNTU"
+
+# chicken egg bootstrap:
+if [ ! -e $HOME/bin ]; then
+	NOT_OK "MAYBE there is no $HOME/bin dir yet, we will install ourself."
+	mkdir $HOME/bin
+fi
+
+if [ -e $HOME/bin ]; then
+	if [ ! -e $HOME/bin/cfg/check-system.sh ]; then
+		NOT_OK "MAYBE there is a $HOME/bin dir, we will install ourself there. "
+		mv $HOME/bin $HOME/bin.saved
+		git clone https://github.com/bcowgill/bsac-linux-cfg.git
+		mv bsac-linux-cfg workspace/play
+		ln -s workspace/play/bsac-linux-cfg/bin
+		popd
+		git config --global user.email "$EMAIL"
+		git config --global user.name "$MYNAME"
+		git config --global push.default simple
+		cp cfg/check-system.sh $HOME/bin/cfg/
+		cp lib-check-system.sh $HOME/bin
+		echo You need to ensure you export PATH=$PATH:$HOME/bin
+		echo before you run this command again
+	else
+		OK "we are already installed."
+	fi
+fi
+
+# remove bin.saved dir only if empty
+if [ -d $HOME/bin.saved ]; then
+	rmdir $HOME/bin.saved >> /dev/null 2>&1 || NOT_OK "~/bin.saved still exists, please move anything useful to ~/bin"
+fi
+
+echo STOP
+exit 42
 
 dir_linked_to sandbox workspace "sandbox alias for workspace"
 dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in workspace"

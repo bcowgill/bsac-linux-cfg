@@ -433,6 +433,12 @@ function file_is_executable {
 	return 0
 }
 
+# get git if possible
+function get_git {
+	cmd_exists git || ( echo doing an upgrade to get git; sudo apt-get update && sudo apt-get upgrade && sudo apt-get install git && exit 11)
+
+}
+
 # install a command or file from a package
 function install_from {
 	local file package which
@@ -680,7 +686,7 @@ function check_version {
 	return 0
 }
 
-function cmd_exists {
+function cmd_exists { # command_exists
 	local cmd message which
 	cmd="$1"
 	message="$2"
