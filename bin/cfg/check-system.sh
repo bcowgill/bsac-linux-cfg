@@ -86,13 +86,14 @@ USE_JAVA=""
 SVN_PKG=""
 MVN_PKG=""
 GITSVN_PKG=""
+USE_SCHEMACRAWLER=""
+USE_POSTGRES=""
+USE_MYSQL=""
+USE_PIDGIN=""
+
 USE_SUBLIME=1
 USE_WEBSTORM=1
 ECLIPSE=""
-USE_SCHEMACRAWLER=""
-USE_MYSQL=""
-USE_POSTGRES=""
-DRUID_INSTALL_FROM=""
 PI_PKG=""
 
 I3WM_CMD=i3
@@ -156,20 +157,33 @@ RUBY_CMD=ruby
 #RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
 RUBY_GEMS="sass compass compass-validator foundation"
 
+POSTGRES_PKG="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
+POSTGRES_NODE_PKG="node-pg"
+POSTGRES_NPM_PKG="node-dbi"
+
+# BlisMedia Druid reporting requirements
+DRUID_PKG="apache2"
+DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
+DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
+
+PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
+PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
+PIDGIN_SKYPE_PKG="$PIDGIN_SKYPE:pidgin-skype"
+PIDGIN_SRC="pidgin-2.10.11"
+PIDGIN_ZIP="$PIDGIN_SRC.tar.bz2"
+
+VPN_PKG="openvpn brctl:bridge-utils"
+
+# epub, mobi book reader
+EBOOK_READER="calibre"
+
+PERL_PKG="cpanm:cpanminus"
+
 #HEREIAM PKG
 
 THUNDER=""
 #THUNDER=ryu9c8b3.default
 
-
-POSTGRES_PKG_FROM="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
-POSTGRES_NODE_PKG="node-pg"
-POSTGRES_NPM_PKG="node-dbi"
-
-# BlisMedia Druid reporting requirements
-#DRUID_INSTALL_FROM="apache2"
-DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
-DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
 
 SASS_COMMANDS="ruby gem sass compass foundation"
 
@@ -195,7 +209,6 @@ SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_PKG=sublime-text_build-3083_amd64.deb
 SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 
-VPN="openvpn brctl:bridge-utils"
 
 WEBSTORM=wstorm
 WEBSTORM_ARCHIVE=WebStorm-11.0.4
@@ -221,14 +234,6 @@ FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
-PIDGIN="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
-PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
-PIDGIN_SKYPE_PKG="$PIDGIN_SKYPE:pidgin-skype"
-PIDGIN_SRC="pidgin-2.10.11"
-PIDGIN_ZIP="$PIDGIN_SRC.tar.bz2"
-
-# epub, mobi book reader
-EBOOK_READER="calibre"
 
 INI_DIR=check-iniline
 
@@ -263,12 +268,12 @@ INSTALL_CMDS="
 
 INSTALL_LIST="
 	wcd.exec:wcd
+	ssh:openssh-client
+	sshd:openssh-server
 	gvim:vim-gtk
 	perldoc:perl-doc
 	perlcritic:libperl-critic-perl
 	calc:apcalc
-	ssh:openssh-client
-	sshd:openssh-server
 	dot:graphviz
 	convert:imagemagick
 "
@@ -278,10 +283,17 @@ INSTALL_FILES="
 	/usr/share/doc-base/vim-referencemanual:vim-doc
 "
 
-COMMANDS_LIST="apt-file wcd.exec gettext git gitk perl ruby dot meld"
-
-
-PERL_PKG="cpanm:cpanminus"
+COMMANDS_LIST="
+	apt-file
+	wcd.exec
+	gettext
+	git
+	gitk
+	perl
+	ruby
+	dot
+	meld
+"
 
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
@@ -297,6 +309,9 @@ if [ "$HOSTNAME" == "akston" ]; then
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
 	RUBY_PKG=""
+	VPN_PKG=""
+	EBOOK_READER=""
+	DRUID_PKG=""
 	# HEREIAM CFG
 fi
 
@@ -308,18 +323,16 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	UBUNTU=vivid
 	ULIMITFILES=1024
 	BIG_DATA="/data"
-	USE_SUBLIME=""
 	USE_KDE=""
-	GOOGLE_CHROME_PKG=""
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	SKYPE_PKG=""
-	# no amd64 pkg for perforce merge
-	POSTGRES_PKG_FROM=""
-	DRUID_INSTALL_FROM=""
-	DRUID_PERL_MODULES=""
-	DRUID_PACKAGES=""
-	VSLICK=""
 	RUBY_GEMS=""
+	DRUID_PKG=""
+
+	USE_SUBLIME=""
+	GOOGLE_CHROME_PKG=""
+	# no amd64 pkg for perforce merge
+	VSLICK=""
 	SASS_COMMANDS=""
 	CHARLES_PKG=""
 fi
@@ -330,30 +343,26 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
 	UBUNTU="wheezy"
 	ULIMITFILES=1024
-	BIG_DATA=""
-	COMPANY=raspberrypi
-	CHARLES_PKG=""
-	I3WM_PKG=""
-	EBOOK_READER=""
-	VIRTUALBOX_PKG=""
-	SKYPE_PKG=""
-	PIDGIN=""
-	PIDGIN_SKYPE=""
-	PIDGIN_SKYPE_PKG=""
-	PIDGIN_SRC=""
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
+	BIG_DATA=""
+	COMPANY=raspberrypi
+	I3WM_PKG=""
+	CHARLES_PKG=""
+	SKYPE_PKG=""
+	VIRTUALBOX_PKG=""
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
-	POSTGRES_PKG_FROM=""
-	DRUID_INSTALL_FROM=""
-	DRUID_PERL_MODULES=""
-	DRUID_PACKAGES=""
+	RUBY_GEMS="sass foundation"
+	USE_PIDGIN=""
+	VPN_PKG=""
+	EBOOK_READER=""
+	DRUID_PKG=""
+
 	SCREENSAVER=""
 	NODE_VER="v0.10.28"
 	NODE_PKG=""
 	NODE_CMD="node"
-	RUBY_GEMS="sass foundation"
 	SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	DROPBOX_URL=""
 	USE_SUBLIME=""
@@ -379,28 +388,90 @@ else
 fi
 
 # disable commands for omitted packages
-[ -z $SVN_PKG        ] && SVN_CMD=""
-[ -z $SKYPE_PKG      ] && SKYPE_CMD=""
-[ -z $I3WM_PKG       ] && I3WM_CMD=""
-[ -z $CHARLES_PKG    ] && CHARLES_CMD=""
-[ -z $VIRTUALBOX_PKG ] && VIRTUALBOX_CMDS=""
-[ -z $MVN_PKG        ] && MVN_CMD=""
-[ -z $GITSVN_PKG     ] && GITSVN_CMD=""
-[ -z $DIFFMERGE_PKG  ] && DIFFMERGE_CMD=""
-[ -z $P4MERGE_PKG    ] && P4MERGE_CMD=""
-[ -z $RUBY_PKG       ] && RUBY_CMD="" && RUBY_GEMS=""
+[ -z $SVN_PKG           ] && SVN_CMD=""
+[ -z $SKYPE_PKG         ] && SKYPE_CMD=""
+[ -z $I3WM_PKG          ] && I3WM_CMD=""
+[ -z $CHARLES_PKG       ] && CHARLES_CMD=""
+[ -z $VIRTUALBOX_PKG    ] && VIRTUALBOX_CMDS=""
+[ -z $MVN_PKG           ] && MVN_CMD=""
+[ -z $GITSVN_PKG        ] && GITSVN_CMD=""
+[ -z $DIFFMERGE_PKG     ] && DIFFMERGE_CMD=""
+[ -z $P4MERGE_PKG       ] && P4MERGE_CMD=""
+[ -z $RUBY_PKG          ] && RUBY_CMD="" && RUBY_GEMS=""
+[ -z $USE_POSTGRES      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z $USE_PIDGIN        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
+[ -z $DRUID_PKG         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
+
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
-GIT_PKG_AFTER="/usr/share/doc-base/git-tools:git-doc /usr/lib/git-core/git-gui:git-gui gitk tig $GITSVN_PKG"
 GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
+GIT_PKG_AFTER="
+	/usr/share/doc-base/git-tools:git-doc
+	/usr/lib/git-core/git-gui:git-gui
+	gitk
+	tig
+	$GITSVN_PKG
+"
 
-INSTALL_FROM="$INSTALL_LIST $PERL_PKG $MVN_PKG $POSTGRES_PKG_FROM $DRUID_INSTALL_FROM $PIDGIN $PIDGIN_SKYPE_PKG $I3WM_PKG $VPN $EBOOK_READER $TEMPERATURE_PKG"
-COMMANDS="$COMMANDS_LIST $NODE_CMD $RUBY_CMD $SASS_COMMANDS $SVN_CMD $MVN_CMD $I3WM_CMD $CHARLES_CMD $DIFFMERGE_CMD $SKYPE_CMD $PIDGIN"
-PACKAGES="$INSTALL_CMDS apt-file wcd bash-completion graphviz $NODE_PKG $RUBY_PKG $GIT_PKG_MAKE $GIT_PKG_AFTER $SVN_PKG $GITSVN_PKG $I3WM_PKG $VPN $CHARLES_PKG $SKYPE_PKG $POSTGRES_PKG_FROM $SCREENSAVER $PIDGIN $PIDGIN_SKYPE_PKG $PULSEAUDIO $KEYBOARD"
+INSTALL_FROM="
+	$INSTALL_LIST
+	$TEMPERATURE_PKG
+	$PERL_PKG
+	$I3WM_PKG
+	$MVN_PKG
+	$POSTGRES_PKG
+	$DRUID_PKG
+	$PIDGIN_CMD
+	$PIDGIN_SKYPE_PKG
+	$VPN_PKG
+	$EBOOK_READER
+"
 
-PERL_MODULES="Getopt::ArgvFile $DRUID_PERL_MODULES"
+COMMANDS="
+	$COMMANDS_LIST
+	$NODE_CMD
+	$RUBY_CMD
+	$SASS_COMMANDS
+	$SVN_CMD
+	$MVN_CMD
+	$I3WM_CMD
+	$CHARLES_CMD
+	$DIFFMERGE_CMD
+	$SKYPE_CMD
+	$PIDGIN_CMD
+"
+
+PACKAGES="
+	$INSTALL_CMDS
+	apt-file
+	wcd
+	bash-completion
+	graphviz
+	$NODE_PKG
+	$RUBY_PKG
+	$GIT_PKG_MAKE
+	$GIT_PKG_AFTER
+	$SVN_PKG
+	$GITSVN_PKG
+	$I3WM_PKG
+	$VPN_PKG
+	$CHARLES_PKG
+	$SKYPE_PKG
+	$POSTGRES_PKG
+	$SCREENSAVER
+	$PIDGIN_CMD
+	$PIDGIN_SKYPE_PKG
+	$PULSEAUDIO
+	$KEYBOARD
+"
+
+PERL_MODULES="
+	Getopt::ArgvFile
+	$DRUID_PERL_MODULES
+"
+
 if [ -f ./cpanminus ]; then
 	CPAN_LIST=./cpanminus
 fi
@@ -411,10 +482,18 @@ if [ -z $CPAN_LIST ]; then
 	echo MAYBE NOT OK cannot find cpanminus
 	CPAN_LIST=/dev/null
 fi
-PERL_MODULES="$PERL_MODULES `cat $CPAN_LIST | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`"
+
+PERL_MODULES="
+	$PERL_MODULES
+	`cat $CPAN_LIST | grep -v '#' | perl -pne 's{\.pm}{}xmsg; s{/}{::}xmsg'`
+"
 
 # Packages to install specific files
-INSTALL_FILE_PACKAGES="$INSTALL_FILES $DRUID_PACKAGES"
+INSTALL_FILE_PACKAGES="
+	$INSTALL_FILES
+	$DRUID_PACKAGES
+"
+
 set -o posix
 set > check-system.env.log
 set +o posix
