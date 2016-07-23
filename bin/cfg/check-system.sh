@@ -179,7 +179,11 @@ EBOOK_READER="calibre"
 
 PERL_PKG="cpanm:cpanminus"
 
+TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
+
 #HEREIAM PKG
+
+TODO=audacity
 
 THUNDER=""
 #THUNDER=ryu9c8b3.default
@@ -266,14 +270,27 @@ INSTALL_CMDS="
 	chromium-browser
 "
 
+# SUGGESTED
+# from ssh rssh molly-guard monkeysphere
+# from gvim ri ruby-dev ruby1.9.1-examples ri1.9.1 graphviz ruby1.9.1-dev ruby-switch
+#  cscope ttf-dejavu
+# from perlcritic libscalar-number-perl
+# from graphviz  graphviz-doc
+# from imagemagick   imagemagick-doc autotrace enscript ffmpeg gimp gnuplot grads hp2xx html2ps
+#  libwmf-bin mplayer povray radiance texlive-base-bin transfig ufraw-batch
+#    libfftw3-bin libfftw3-dev
+# from cpanminus libcapture-tiny-perl
+# from lm-sensors fancontrol sensord read-edid i2c-tools
+# from hddtemp ksensors
+
 INSTALL_LIST="
 	wcd.exec:wcd
+	calc:apcalc
 	ssh:openssh-client
 	sshd:openssh-server
 	gvim:vim-gtk
 	perldoc:perl-doc
 	perlcritic:libperl-critic-perl
-	calc:apcalc
 	dot:graphviz
 	convert:imagemagick
 "
@@ -294,10 +311,6 @@ COMMANDS_LIST="
 	dot
 	meld
 "
-
-TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
-
-TODO=audacity
 
 if [ "$HOSTNAME" == "akston" ]; then
 	GIT_VER=1.9.1
@@ -417,8 +430,8 @@ GIT_PKG_AFTER="
 
 INSTALL_FROM="
 	$INSTALL_LIST
-	$TEMPERATURE_PKG
 	$PERL_PKG
+	$TEMPERATURE_PKG
 	$I3WM_PKG
 	$MVN_PKG
 	$POSTGRES_PKG
