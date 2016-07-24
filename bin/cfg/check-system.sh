@@ -68,12 +68,12 @@ function set_env {
 #BAIL_OUT=font
 #BAIL_OUT=diff
 #BAIL_OUT=install
-BAIL_OUT=node
+#BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
-#BAIL_OUT=npm
+BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
 #BAIL_OUT=
@@ -1234,7 +1234,7 @@ installs_from "$INSTALL_FILE_PACKAGES"
 
 BAIL_OUT files
 
-if [ ! -z $NODE_PKG ]; then
+if [ ! -z "$NODE_PKG" ]; then
 	if $NODE_CMD --version | grep $NODE_VER; then
 		OK "node command version correct"
 	else
