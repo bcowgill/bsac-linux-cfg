@@ -526,27 +526,27 @@ set_env
 # set_derived_env values will depend on those defined in set_env
 function set_derived_env {
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
-if [ -z $COMPANY ]; then
+if [ -z "$COMPANY" ]; then
 	ONBOOT=cfg/onboot.sh
 else
 	ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 fi
 
 # disable commands for omitted packages
-[ -z $SVN_PKG           ] && SVN_CMD=""
-[ -z $SKYPE_PKG         ] && SKYPE_CMD=""
-[ -z $I3WM_PKG          ] && I3WM_CMD=""
-[ -z $CHARLES_PKG       ] && CHARLES_CMD=""
-[ -z $VIRTUALBOX_PKG    ] && VIRTUALBOX_CMDS=""
-[ -z $MVN_PKG           ] && MVN_CMD=""
-[ -z $GITSVN_PKG        ] && GITSVN_CMD=""
-[ -z $DIFFMERGE_PKG     ] && DIFFMERGE_CMD=""
-[ -z $P4MERGE_PKG       ] && P4MERGE_CMD=""
-[ -z $RUBY_PKG          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
-[ -z $USE_POSTGRES      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
-[ -z $USE_PIDGIN        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
-[ -z $DRUID_PKG         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
-[ -z $NODE_PKG          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG=""
+[ -z "$SVN_PKG"           ] && SVN_CMD=""
+[ -z "$SKYPE_PKG"         ] && SKYPE_CMD=""
+[ -z "$I3WM_PKG"          ] && I3WM_CMD=""
+[ -z "$CHARLES_PKG"       ] && CHARLES_CMD=""
+[ -z "$VIRTUALBOX_PKG"    ] && VIRTUALBOX_CMDS=""
+[ -z "$MVN_PKG"           ] && MVN_CMD=""
+[ -z "$GITSVN_PKG"        ] && GITSVN_CMD=""
+[ -z "$DIFFMERGE_PKG"     ] && DIFFMERGE_CMD=""
+[ -z "$P4MERGE_PKG"       ] && P4MERGE_CMD=""
+[ -z "$RUBY_PKG"          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
+[ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
+[ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
+[ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG=""
 
 # HEREIAM DERIVED
 
@@ -630,7 +630,7 @@ fi
 if [ -f ~/bin/cpanminus ]; then
 	CPAN_LIST=~/bin/cpanminus
 fi
-if [ -z $CPAN_LIST ]; then
+if [ -z "$CPAN_LIST" ]; then
 	echo MAYBE NOT OK cannot find cpanminus
 	CPAN_LIST=/dev/null
 fi
@@ -741,7 +741,7 @@ dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 dir_exists  bin/cfg "bin configuration missing"
 file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
 
-#if [ -z $COMPANY ]; then
+#if [ -z "$COMPANY" ]; then
 file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check script configured"
 #else
 #	file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
@@ -815,8 +815,8 @@ file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg/.i3-config "i3 window manager configuration"
 
-if [ ! -z $MOUNT_DATA ]; then
-	if [ -z $BIG_DATA ]; then
+if [ ! -z "$MOUNT_DATA" ]; then
+	if [ -z "$BIG_DATA" ]; then
 		NOT_OK "Must specify BIG_DATA if MOUNT_DATA is specified"
 	fi
 	if [ -d "$BIG_DATA/UNMOUNTED" ]; then
@@ -838,7 +838,7 @@ else
 	OK "will not configure mounting /data partition unless MOUNT_DATA is non-zero"
 fi # MOUNT_DATA
 
-if [ ! -z $BIG_DATA ]; then
+if [ ! -z "$BIG_DATA" ]; then
 	if [ ! -d "$BIG_DATA/$USER" ]; then
 		make_root_dir_exist "$BIG_DATA/$USER" "create Big data area for IE vm's"
 		take_ownership_of "$BIG_DATA/$USER" "own Big data area for IE vm's"
@@ -936,7 +936,7 @@ fi
 
 # Find all the .kde config files referenced herein:
 # grep \.kde/ check-system.sh | perl -pne 's{\s* (FILE=|file_has_text \s*)}{}xms; s{\s*".+\z}{\n}xms; s{\s+\#}{}xms;s{\./}{}xms ' | sort | uniq > ~/xxx
-if [ ! -z $USE_KDE ]; then
+if [ ! -z "$USE_KDE" ]; then
 if cmd_exists kfontinst > /dev/null ; then
 	cmd_exists kfontinst
 	FILE=.fonts/p/ProFontWindows.ttf
@@ -990,7 +990,7 @@ fi # USE_KDE set
 
 BAIL_OUT font
 
-if [ ! -z $I3WM_PKG ]; then
+if [ ! -z "$I3WM_PKG" ]; then
 	FILE="/etc/apt/sources.list.d/i3window-manager.list"
 	make_root_file_exist "$FILE" "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" "adding i3wm source for apt"
 	file_has_text "$FILE" "debian.sur5r.net"
@@ -1000,7 +1000,7 @@ else
 	OK "will not configure i3 window manager unless I3WM_PKG is non-zero"
 fi # I3WM_PKG
 
-if [ ! -z $CHARLES_PKG ]; then
+if [ ! -z "$CHARLES_PKG" ]; then
 	# update apt sources list with needed values to install some more complicated programs
 	touch go.sudo; rm go.sudo
 	apt_has_source "deb http://www.charlesproxy.com/packages/apt/ charles-proxy main" "apt config for charles-proxy missing"
@@ -1011,7 +1011,7 @@ else
 	OK "will not configure charles proxy unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
-if [ ! -z $SKYPE_PKG ]; then
+if [ ! -z "$SKYPE_PKG" ]; then
 	apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
 else
 	OK "will not configure skype unless SKYPE_PKG is non-zero"
@@ -1038,7 +1038,7 @@ else
 	OK "will not configure virtualbox unless VIRTUALBOX_PKG is non-zero"
 fi # VIRTUALBOX_PKG
 
-if [ ! -z $SVN_PKG ]; then
+if [ ! -z "$SVN_PKG" ]; then
 	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
 	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
 fi
@@ -1049,10 +1049,10 @@ if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
 	[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
 fi
 
-[ ! -z $CHARLES_PKG ] && cmd_exists $CHARLES_CMD
-[ ! -z $SKYPE_PKG ] && cmd_exists $SKYPE
+[ ! -z "$CHARLES_PKG" ] && cmd_exists $CHARLES_CMD
+[ ! -z "$SKYPE_PKG" ] && cmd_exists $SKYPE
 
-if [ ! -z $SVN_PKG ]; then
+if [ ! -z "$SVN_PKG" ]; then
 	cmd_exists svn
 	file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
 	dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
@@ -1108,7 +1108,7 @@ else
 	exit 1
 fi # GIT_VER
 
-if [ ! -z $GITSVN_PKG ]; then
+if [ ! -z "$GITSVN_PKG" ]; then
 	cmd_exists git
 	if [ -x $GITSVN_CMD ]; then
 		OK "git svn command installed"
@@ -1152,7 +1152,7 @@ else
 	git config --global --add alias.graph "log --oneline --graph --decorate --all"
 fi
 
-if [ ! -z $MVN_PKG ]; then
+if [ ! -z "$MVN_PKG" ]; then
 	cmd_exists mvn
 	if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
 		OK "mvn command version correct"
@@ -1171,7 +1171,7 @@ else
 	OK "will not configure maven unless MVN_PKG is non-zero"
 fi # MVN_PKG
 
-if [ ! -z $USE_JAVA ]; then
+if [ ! -z "$USE_JAVA" ]; then
 	if [ "x$JAVA_HOME" == "x$JAVA_JVM/$JAVA_VER" ]; then
 		OK "JAVA_HOME set correctly"
 		file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
@@ -1182,13 +1182,13 @@ if [ ! -z $USE_JAVA ]; then
 	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 fi
 
-if [ ! -z $DIFFMERGE_PKG ]; then
+if [ ! -z "$DIFFMERGE_PKG" ]; then
 	install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
 else
 	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"
 fi
 
-if [ ! -z $P4MERGE_PKG ]; then
+if [ ! -z "$P4MERGE_PKG" ]; then
 	install_file_from_zip $P4MERGE_CMD $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
 	file_linked_to "$HOME/bin/p4merge" "$P4MERGE_CMD" "Perforce p4merge link"
 else
@@ -1218,7 +1218,7 @@ BAIL_OUT install
 
 BAIL_OUT node
 
-[ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER_PKG" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER_PKG"
+[ ! -z "$USE_KDE" ] && [ ! -z "$SCREENSAVER_PKG" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER_PKG"
 
 BAIL_OUT screensaver
 
@@ -1266,7 +1266,7 @@ fi
 
 BAIL_OUT npm
 
-if [ ! -z $DROPBOX_URL ]; then
+if [ ! -z "$DROPBOX_URL" ]; then
 	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
@@ -1329,8 +1329,8 @@ crontab_has_command "backup-work.sh"
 crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
 
-if [ ! -z $USE_SUBLIME ]; then
-if [ ! -z $SUBLIME_PKG ]; then
+if [ ! -z "$USE_SUBLIME" ]; then
+if [ ! -z "$SUBLIME_PKG" ]; then
 	cmd_exists git "need git installed before configure sublime"
 	cmd_exists grunt "need grunt installed before configure sublime for it"
 
@@ -1347,14 +1347,14 @@ if [ ! -z $SUBLIME_PKG ]; then
 fi # SUBLIME_PKG
 fi # USE_SUBLIME
 
-if [ ! -z $WEBSTORM ]; then
+if [ ! -z "$WEBSTORM" ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
 	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
 	dir_linked_to bin/WebStorm $DOWNLOAD/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
 	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
 fi # WEBSTORM
 
-if [ ! -z $VSLICK ]; then
+if [ ! -z "$VSLICK" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
 	cmd_exists $VSLICK "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
 fi # VSLICK
@@ -1370,7 +1370,7 @@ install_git_repo "workspace/play" knockout-test https://github.com/bcowgill/knoc
 install_git_repo "workspace/play" foundation-test https://github.com/bcowgill/foundation-test.git "my foundation test area"
 install_git_repo "workspace/play" jsclass-test https://github.com/bcowgill/jsclass-test.git "my javascript class test area"
 
-if [ ! -z $GOOGLE_CHROME_PKG ]; then
+if [ ! -z "$GOOGLE_CHROME_PKG" ]; then
 	# flash player in google chrome
 	# http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
 
@@ -1380,7 +1380,7 @@ if [ ! -z $GOOGLE_CHROME_PKG ]; then
 
 	install_command_package $GOOGLE_CHROME "$GOOGLE_CHROME_PKG" "Google Chrome for Linux from manual download $GOOGLE_CHROME_URL"
 
-	if [ ! -z $FLASH_URL ]; then
+	if [ ! -z "$FLASH_URL" ]; then
 		install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
 		dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
 		file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
@@ -1390,8 +1390,8 @@ if [ ! -z $GOOGLE_CHROME_PKG ]; then
 	fi # FLASH_URL
 fi # GOOGLE_CHROME_PKG
 
-if [ ! -z $USE_SCHEMACRAWLER ]; then
-	if [ ! -z $USE_POSTGRES ]; then
+if [ ! -z "$USE_SCHEMACRAWLER" ]; then
+	if [ ! -z "$USE_POSTGRES" ]; then
 		# postgres JDBC driver for creating DB schema diagrams using schemacrawler
 		# http://jdbc.postgresql.org/download.html
 		POSTGRES_JDBC_JAR=postgresql-9.3-1102.jdbc41.jar
@@ -1410,7 +1410,7 @@ if [ ! -z $USE_SCHEMACRAWLER ]; then
 		file_is_executable $DOWNLOAD/schemacrawler-postgresql-$SCHEMA_VER/sc.sh "need executable permission"
 	fi # USE_POSTGRES
 
-	if [ ! -z $USE_MYSQL ]; then
+	if [ ! -z "$USE_MYSQL" ]; then
 		# schemacrawler with mysql JDBC driver included
 		SCHEMA_MYSQL_ZIP=schemacrawler-mysql-$SCHEMA_VER-distrib.zip
 		SCHEMA_MYSQL_URL=http://sourceforge.net/projects/schemacrawler/files/SchemaCrawler%20-%20MySQL/$SCHEMA_VER/$SCHEMA_MYSQL_ZIP/download
@@ -1445,7 +1445,7 @@ maybe_file_has_text $FILE "ProFontWindows 18"
 maybe_file_has_text $FILE "bgcolor=#000000000000"
 maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
-if [ ! -z $DROPBOX_URL ]; then
+if [ ! -z "$DROPBOX_URL" ]; then
 	# Dropbox configuration
 	# TODO workshare re-enable
 	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
@@ -1456,7 +1456,7 @@ if [ ! -z $DROPBOX_URL ]; then
 fi # DROPBOX_URL
 
 # Thunderbird
-if [ ! -z $THUNDER ]; then
+if [ ! -z "$THUNDER" ]; then
 	FILE=".thunderbird/$THUNDER/prefs.js"
 	file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
 	file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
@@ -1485,7 +1485,7 @@ fi # THUNDER
 
 #============================================================================
 # KDE configuration files here
-if [ ! -z $USE_KDE ]; then
+if [ ! -z "$USE_KDE" ]; then
 if [ -d .kde ]; then
 	DIR=.local/share/applications
 	dir_exists $DIR "KDE applications folder"
@@ -1553,7 +1553,7 @@ if [ -d .kde ]; then
 	# TODO file_has_text $FILE "dropboxd"
 
 	# Default Applications
-	if [ ! -z $THUNDER ]; then
+	if [ ! -z "$THUNDER" ]; then
 		FILE=.kde/share/config/emaildefaults
 		file_contains_text $FILE "EmailClient..e.=thunderbird"
 	fi
@@ -1616,7 +1616,7 @@ fi # USE_KDE
 # End KDE configuration
 #============================================================================
 
-if [ ! -z $CHARLES_PKG ]; then
+if [ ! -z "$CHARLES_PKG" ]; then
 	# Check charles configuration options
 	FILE=.charles.config
 	make_dir_exist tx/mirror/web "charles mirroring area"
@@ -1629,7 +1629,7 @@ if [ ! -z $CHARLES_PKG ]; then
 	file_has_text $FILE "showMemoryUsage>true" "charles memory usage config Edit / Preferences / User Interface"
 	file_has_text $FILE "tx/mirror/web</savePath" "charles mirror config Tools / Mirror"
 
-	if [ ! -z $USE_KDE ]; then
+	if [ ! -z "$USE_KDE" ]; then
 	if [ -d .kde ]; then
 		FILE=.kde/share/config/kioslaverc
 		# when system not proxied through charles
@@ -1733,7 +1733,7 @@ if [ -f "$FILE" ]; then
 	file_contains_text $FILE "show_line_numbers.+true" "Edit / Preferences"
 fi # meld diff/merge config file
 
-if [ ! -z $SUBLIME_PKG ]; then
+if [ ! -z "$SUBLIME_PKG" ]; then
 	# sublime configuration
 	FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
 	file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
