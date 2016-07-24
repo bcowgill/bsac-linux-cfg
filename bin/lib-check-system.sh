@@ -481,7 +481,7 @@ function installs_from {
 	for file_pkg in $list
 	do
 		# split the file:pkg string into vars
-		IFS=: read file package <<< $file_pkg
+		split_colon $file_pkg; file="$SPLIT1"; package="$SPLIT2"
 		install_from $file $package || error="$error $file_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -513,7 +513,7 @@ function install_files_from {
 	for file_pkg in $list
 	do
 		# split the file:pkg string into vars
-		IFS=: read file package <<< $file_pkg
+		split_colon $file_pkg; file="$SPLIT1"; package="$SPLIT2"
 		install_file_from $file $package $options || error="$error $file_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -797,7 +797,7 @@ function install_commands_from {
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
-		IFS=: read cmd package <<< $cmd_pkg
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
 		install_command_from $cmd $package $options || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -835,7 +835,7 @@ function force_install_commands_from {
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
-		IFS=: read cmd package <<< $cmd_pkg
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
 		force_install_command_from $cmd $package "$message" $options || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1010,7 +1010,7 @@ function install_npm_commands_from {
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
-		IFS=: read cmd package <<< $cmd_pkg
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
 		install_npm_command_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1063,7 +1063,7 @@ function always_install_npm_globals_from {
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
-		IFS=: read cmd package <<< $cmd_pkg
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
 		always_install_npm_global_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1095,7 +1095,7 @@ function install_npm_global_commands_from {
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
-		IFS=: read cmd package <<< $cmd_pkg
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
 		install_npm_global_command_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1115,7 +1115,7 @@ function force_install_npm_global_commands_from {
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
-		IFS=: read cmd package <<< $cmd_pkg
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
 		force_install_npm_global_command_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1159,7 +1159,7 @@ function install_grunt_templates_from {
 	for tmp_pkg in $list
 	do
 		# split the template:pkg string into vars
-		IFS=: read template package <<< $tmp_pkg
+		split_colon $tmp_pkg; template="$SPLIT1"; package="$SPLIT2"
 		install_grunt_template_from $template $package || error="$error $tmp_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1486,7 +1486,7 @@ function install_ruby_gems {
 	for gem_ver in $gems
 	do
 		# split the gem:ver string into vars
-		IFS=: read gem version <<< $gem_ver
+		split_colon $gem_ver; gem="$SPLIT1"; version="$SPLIT2"
 		if [ ! -z "$gem" ]; then
 			if [ ! -z "$version" ]; then
 				# version number given
@@ -1868,3 +1868,11 @@ function has_ssh_keys {
 	file_linked_to $HOME/.ssh/id_rsa.pub $cfg/id_rsa.pub "public SSH key"
 	file_linked_to $HOME/.ssh/id_rsa $cfg/id_rsa "private SSH key"
 }
+
+function split_colon {
+	local one_two
+	one_two="$1"
+	# split the file:pkg string into vars
+	IFS=: read SPLIT1 SPLIT2 <<< $one_two
+}
+

@@ -283,8 +283,6 @@ NPM_GLOBAL_PKG="
 	express:express-generator
 "
 
-INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 prettydiff grunt:grunt-cli grunt-init bower yo lessc:less jsdoc mocha karma:karma-cli express:express-generator@4"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # webcollage screensaver pulls from the internet so not safe for work
@@ -595,6 +593,11 @@ NODE_PKG_LIST="
 	$POSTGRES_NODE_PKG
 "
 
+NPM_GLOBAL_PKG_LIST="
+	$NPM_GLOBAL_PKG
+	$POSTGRES_NPM_PKG
+"
+
 INSTALL_FROM="
 	$INSTALL_LIST
 	$PERL_PKG
@@ -689,7 +692,7 @@ echo CONFIG NODE_PKG_LIST=$NODE_PKG_LIST
 echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
-echo CONFIG NPM_GLOBAL_PKG
+echo CONFIG NPM_GLOBAL_PKG_LIST
 
 #============================================================================
 # begin actual system checking
@@ -728,6 +731,7 @@ which python && python --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
+which npm && npm --version
 
 # chicken egg bootstrap:
 if [ ! -e $HOME/bin ]; then
@@ -1234,7 +1238,7 @@ echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
-echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG
+echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
@@ -1282,17 +1286,16 @@ if [ ! -z "$NODE_PKG" ]; then
 	npm config set registry https://registry.npmjs.org/
 	if [ ! -z "$FRESH_NPM" ]; then
 		always_install_npm_global_from npm
-		always_install_npm_globals_from "$NPM_GLOBAL_PKG"
-		install_npm_global_commands_from "$NPM_GLOBAL_PKG"
+		always_install_npm_globals_from "$NPM_GLOBAL_PKG_LIST"
+		install_npm_global_commands_from "$NPM_GLOBAL_PKG_LIST"
 	else
-		install_npm_global_commands_from "$NPM_GLOBAL_PKG"
+		install_npm_global_commands_from "$NPM_GLOBAL_PKG_LIST"
 	fi
 	is_npm_global_package_installed grunt "need grunt installed to go further."
+	make_dir_exist $HOME/.grunt-init "grunt template dir"
 	sudo updatedb &
 	echo HEREIAM STOP NODE2
 	exit 89
-	#install_npm_commands_from "$INSTALL_NPM_FROM"
-	make_dir_exist $HOME/.grunt-init "grunt template dir"
 	# need to upload ssh public key to github before getting grunt templates
 	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 else
