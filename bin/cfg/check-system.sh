@@ -64,17 +64,21 @@ fi
 # set_env can only contain $HOME and other generally available values
 function set_env {
 
+# set to force install apt packages for node
+#FORCE_NODE_PKG=1
+
 # set BAIL_OUT to stop after a specific point reached
 #BAIL_OUT=font
 #BAIL_OUT=diff
-#BAIL_OUT=install
+BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
+#BAIL_OUT=npm
 #BAIL_OUT=dropbox
-BAIL_OUT=commands
+#BAIL_OUT=commands
 #BAIL_OUT=
 
 function BAIL_OUT {
@@ -201,17 +205,16 @@ TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_CMD="nodejs"
+NODE_CMDS="$NODE_CMD npm prettydiff"
 NODE_PKG="
-	nodejs
+	$NODE_CMDS
 	nodejs-legacy
-	npm
 	node-debug
 	node-eyes
 	node-glob
 	node-inherits
 	node-mkdirp
 	node-rimraf
-	prettydiff
 "
 NODE_CUSTOM_PKG="
 	node-abbrev
@@ -293,7 +296,6 @@ SCREENSAVER_PKG="
 # gnome ubuntustudio-screensaver
 
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
-
 
 #HEREIAM PKG
 
@@ -429,7 +431,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	CUSTOM_PKG="
 		gnucash
 	"
-	NODE_PKG=""
+	#NODE_PKG=""
 	# HEREIAM CFG
 fi
 
@@ -516,6 +518,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	"
 	NODE_PKG=""
 	NODE_CMD="node"
+	NODE_CMDS="node npm"
 	SCREENSAVER_PKG=""
 	DROPBOX_URL=""
 
@@ -554,7 +557,7 @@ fi
 [ -z $USE_POSTGRES      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z $USE_PIDGIN        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z $DRUID_PKG         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
-[ -z $NODE_PKG          ] && NODE_CMD="" && NODE_CUSTOM_PKG=""
+[ -z $NODE_PKG          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG=""
 
 # HEREIAM DERIVED
 
@@ -567,6 +570,12 @@ GIT_PKG_AFTER="
 	gitk
 	tig
 	$GITSVN_PKG
+"
+
+NODE_PKG_LIST="
+	$NODE_PKG
+	$NODE_CUSTOM_PKG
+	$POSTGRES_NODE_PKG
 "
 
 INSTALL_FROM="
@@ -585,7 +594,7 @@ INSTALL_FROM="
 
 COMMANDS="
 	$COMMANDS_LIST
-	$NODE_CMD
+	$NODE_CMDS
 	$RUBY_CMD
 	$RUBY_SASS_COMMANDS
 	$SVN_CMD
@@ -603,7 +612,7 @@ PACKAGES="
 	wcd
 	bash-completion
 	graphviz
-	$NODE_PKG
+	$NODE_PKG_LIST
 	$RUBY_PKG
 	$GIT_PKG_MAKE
 	$GIT_PKG_AFTER
@@ -659,6 +668,7 @@ echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG INSTALL_FILES=$INSTALL_FILES
 echo CONFIG COMMANDS=$COMMANDS
 echo CONFIG PACKAGES=$PACKAGES
+echo CONFIG NODE_PKG_LIST=$NODE_PKG_LIST
 echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
@@ -1202,6 +1212,7 @@ echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM
 echo BIG INSTALL FILES $INSTALL_FILES
 echo BIG CUSTOM PKG $CUSTOM_PKG
+echo BIG NODE PKG $NODE_PKG_LIST
 echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
@@ -1214,7 +1225,8 @@ installs_from "$CUSTOM_PKG"
 
 BAIL_OUT install
 
-[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
+[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG_LIST"
+[ ! -z "$FORCE_NODE_PKG" ] && installs_from "$NODE_PKG_LIST"
 
 BAIL_OUT node
 
@@ -1234,6 +1246,38 @@ installs_from "$INSTALL_FILE_PACKAGES"
 
 BAIL_OUT files
 
+if [ ! -z $NODE_PKG ]; then
+	if $NODE_CMD --version | grep $NODE_VER; then
+		OK "node command version correct"
+	else
+		echo HEREIAM STOP NODE
+		exit 88
+		GOTVER=`$NODE_CMD --version`
+		NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER"
+		#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
+		sudo apt-get update
+		sudo apt-get install -y python-software-properties python g++ make
+		sudo add-apt-repository ppa:chris-lea/node.js
+		sudo apt-get update
+		sudo apt-get install nodejs
+		exit 1
+	fi
+
+	echo HEREIAM STOP NODE2
+	exit 89
+	npm config set registry https://registry.npmjs.org/
+	#install_npm_commands_from "$INSTALL_NPM_FROM"
+	install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM"
+	is_npm_global_package_installed grunt "need grunt installed to go further."
+	make_dir_exist $HOME/.grunt-init "grunt template dir"
+	# need to upload ssh public key to github before getting grunt templates
+	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
+else
+	OK "will not configure npm unless NODE_PKG is non-zero"
+fi
+
+BAIL_OUT npm
+
 if [ ! -z $DROPBOX_URL ]; then
 	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
@@ -1243,14 +1287,15 @@ fi
 BAIL_OUT dropbox
 
 commands_exist "$COMMANDS"
-BAIL_OUT commands
+BAIL_OUT commandks
+
+#============================================================================
+# end of standard install, now custom install
+
+# HEREIAM CUSTOM 
 
 echo HEREIAM STOP
 exit 42
-
-#============================================================================
-# end of main installing, now configuring
-
 
 # https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
 # for VPN after installing bridge-utils need to restart network
@@ -1295,28 +1340,6 @@ crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh >
 crontab_has_command "backup-work.sh"
 crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
-
-if $NODE_CMD --version | grep $NODE_VER; then
-	OK "node command version correct"
-else
-	GOTVER=`$NODE_CMD --version`
-	NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER"
-	#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
-	sudo apt-get update
-	sudo apt-get install -y python-software-properties python g++ make
-	sudo add-apt-repository ppa:chris-lea/node.js
-	sudo apt-get update
-	sudo apt-get install nodejs
-	exit 1
-fi
-
-npm config set registry https://registry.npmjs.org/
-#install_npm_commands_from "$INSTALL_NPM_FROM"
-install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM"
-is_npm_global_package_installed grunt "need grunt installed to go further."
-make_dir_exist $HOME/.grunt-init "grunt template dir"
-# need to upload ssh public key to github before getting grunt templates
-install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 
 if [ ! -z $USE_SUBLIME ]; then
 if [ ! -z $SUBLIME_PKG ]; then
@@ -1411,7 +1434,9 @@ fi # USE_SCHEMACRAWLER
 #============================================================================
 # end of main installing, now configuring
 
-echo HEREIAM STOP
+# HEREIAM CONFIG CHECKS
+
+echo HEREIAM STOP SAFETY
 exit 43
 
 pushd bin/fortune
