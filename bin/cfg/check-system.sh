@@ -90,11 +90,11 @@ USE_SCHEMACRAWLER=""
 USE_POSTGRES=""
 USE_MYSQL=""
 USE_PIDGIN=""
+CUSTOM_PKG=""
 
 USE_SUBLIME=1
 USE_WEBSTORM=1
 ECLIPSE=""
-PI_PKG=""
 
 I3WM_CMD=i3
 I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
@@ -325,6 +325,9 @@ if [ "$HOSTNAME" == "akston" ]; then
 	VPN_PKG=""
 	EBOOK_READER=""
 	DRUID_PKG=""
+	CUSTOM_PKG="
+		gnucash
+	"
 	# HEREIAM CFG
 fi
 
@@ -371,6 +374,41 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	VPN_PKG=""
 	EBOOK_READER=""
 	DRUID_PKG=""
+	CUSTOM_PKG="
+		vim
+		locate
+		zip
+		cmatrix
+		chromium
+		gnash
+		/usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash
+		tightvncserver
+		screen
+		gpm
+		fbcat
+		convert:imagemagick
+		elinks
+		lynx
+		links
+		cacaview:caca-utils
+		pip:python-pip
+		mc
+		cmus
+		/usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg
+		mplayer
+		cpanm:cpanminus
+		perldoc:perl-doc
+		perltidy
+		adjtimex
+		audacity
+		gimp
+		meld
+		htop
+		ncdu
+		figlet
+		banner:sysvbanner
+		linuxlogo
+	"
 
 	SCREENSAVER=""
 	NODE_VER="v0.10.28"
@@ -385,7 +423,6 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	WEBSTORM=""
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
-	PI_PKG="vim locate zip cmatrix chromium gnash /usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash tightvncserver screen gpm fbcat convert:imagemagick elinks lynx links cacaview:caca-utils pip:python-pip mc cmus /usr/lib/cmus/ip/ffmpeg.so:cmus-plugin-ffmpeg mplayer cpanm:cpanminus perldoc:perl-doc perltidy adjtimex audacity gimp meld htop ncdu figlet banner:sysvbanner linuxlogo"
 fi # raspberrypi
 
 }
@@ -1041,7 +1078,7 @@ fi
 echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM
 echo BIG INSTALL FILES $INSTALL_FILES
-echo BIG PI PKG $PI_PKG
+echo BIG CUSTOM PKG $CUSTOM_PKG
 echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
@@ -1050,13 +1087,13 @@ echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
 
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
+installs_from "$CUSTOM_PKG"
 
 if [ "x$BAIL_OUT" == "xinstall" ]; then
 	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
 	exit 44
 fi
 
-installs_from "$PI_PKG"
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 [ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
