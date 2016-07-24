@@ -71,6 +71,15 @@ function set_env {
 BAIL_OUT=node
 #BAIL_OUT=
 
+function BAIL_OUT {
+	local stage
+	stage=$1
+	if [ "x$BAIL_OUT" == "x$stage" ]; then
+		NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
+		exit 44
+	fi
+}
+
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
@@ -953,10 +962,7 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 fi # USE_KDE set
 
-if [ "x$BAIL_OUT" == "xfont" ]; then
-	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
-	exit 44
-fi
+BAIL_OUT font
 
 if [ ! -z $I3WM_PKG ]; then
 	FILE="/etc/apt/sources.list.d/i3window-manager.list"
@@ -1140,10 +1146,7 @@ else
 	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
 fi
 
-if [ "x$BAIL_OUT" == "xdiff" ]; then
-	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
-	exit 44
-fi
+BAIL_OUT diff
 
 echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM
@@ -1159,18 +1162,11 @@ installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"
 
-if [ "x$BAIL_OUT" == "xinstall" ]; then
-	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
-	exit 44
-fi
+BAIL_OUT install
 
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
 
-
-if [ "x$BAIL_OUT" == "xnode" ]; then
-	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
-	exit 44
-fi
+BAIL_OUT node
 
 [ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
