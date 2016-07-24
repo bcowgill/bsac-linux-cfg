@@ -65,10 +65,11 @@ fi
 function set_env {
 
 # set BAIL_OUT to stop after a specific point reached
-BAIL_OUT=
 #BAIL_OUT=font
 #BAIL_OUT=diff
-BAIL_OUT=install
+#BAIL_OUT=install
+BAIL_OUT=node
+#BAIL_OUT=
 
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
@@ -181,6 +182,79 @@ PERL_PKG="cpanm:cpanminus"
 
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
+NODE_VER="v0.12.9"
+#NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
+NODE_CMD="nodejs"
+NODE_PKG="
+	nodejs
+	nodejs-legacy
+	npm
+	node-debug
+	node-eyes
+	node-glob
+	node-inherits
+	node-mkdirp
+	node-rimraf
+	prettydiff
+"
+NODE_CUSTOM_PKG="
+	node-abbrev
+	node-async
+	node-async-stacktrace
+	node-base64id
+	node-bignumber
+	node-buffer-crc32
+	node-bytes
+	node-chrono
+	node-cli
+	node-colors
+	node-combined-stream
+	node-commander
+	node-contextify
+	node-daemon
+	node-delayed-stream
+	node-dequeue
+	node-diff
+	node-dirty
+	node-fstream
+	node-fstream-ignore
+	node-get
+	node-graceful-fs
+	node-growl
+	node-ini
+	node-json-stringify-safe
+	node-jsv
+	node-keypress
+	node-lockfile
+	node-minimatch
+	node-mute-stream
+	node-node-uuid
+	node-nopt
+	node-once
+	node-optimist
+	node-osenv
+	node-queue-async
+	node-read
+	node-read-package-json
+	node-readdirp
+	node-request
+	node-require-all
+	node-retry
+	node-security
+	node-semver
+	node-step
+	node-tar
+	node-tinycolor
+	node-traverse
+	node-which
+	node-wordwrap
+	node-zipfile
+"
+
+INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
+INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 prettydiff grunt:grunt-cli grunt-init bower yo lessc:less jsdoc mocha karma:karma-cli express:express-generator@4"
+INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
+
 #HEREIAM PKG
 
 TODO=audacity
@@ -194,14 +268,6 @@ SASS_COMMANDS="ruby gem sass compass foundation"
 # webcollage screensaver pulls from the internet so not safe for work
 SCREENSAVER="workrave kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune cmatrix-xfont"
 # gnome ubuntustudio-screensaver unicode-screensaver
-
-NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
-NODE_VER="v0.12.9"
-NODE_CMD="nodejs"
-NODE_PKG="nodejs npm node-abbrev node-fstream node-graceful-fs node-inherits node-ini node-mkdirp node-nopt node-rimraf node-tar node-which prettydiff"
-INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
-INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 prettydiff grunt:grunt-cli grunt-init bower yo lessc:less jsdoc mocha karma:karma-cli express:express-generator@4"
-INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # Chrome download page
 GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
@@ -270,7 +336,7 @@ INSTALL_CMDS="
 	chromium-browser
 "
 
-# SUGGESTED
+# HEREIAM SUGGESTED
 # from ssh rssh molly-guard monkeysphere
 # from gvim ri ruby-dev ruby1.9.1-examples ri1.9.1 graphviz ruby1.9.1-dev ruby-switch
 #  cscope ttf-dejavu
@@ -328,6 +394,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	CUSTOM_PKG="
 		gnucash
 	"
+	NODE_PKG=""
 	# HEREIAM CFG
 fi
 
@@ -361,6 +428,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	ULIMITFILES=1024
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
+	NODE_VER="v0.10.28"
 	BIG_DATA=""
 	COMPANY=raspberrypi
 	I3WM_PKG=""
@@ -409,11 +477,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		banner:sysvbanner
 		linuxlogo
 	"
-
-	SCREENSAVER=""
-	NODE_VER="v0.10.28"
 	NODE_PKG=""
 	NODE_CMD="node"
+
+	SCREENSAVER=""
 	SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	DROPBOX_URL=""
 	USE_SUBLIME=""
@@ -451,6 +518,7 @@ fi
 [ -z $USE_POSTGRES      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z $USE_PIDGIN        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z $DRUID_PKG         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
+[ -z $NODE_PKG          ] && NODE_CMD="" && NODE_CUSTOM_PKG=""
 
 # HEREIAM DERIVED
 
@@ -595,6 +663,8 @@ java -version
 ls $JAVA_JVM
 perl --version
 python --version
+ruby --version
+node --version
 
 # chicken egg bootstrap:
 if [ ! -e $HOME/bin ]; then
@@ -1094,8 +1164,14 @@ if [ "x$BAIL_OUT" == "xinstall" ]; then
 	exit 44
 fi
 
-
 [ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG"
+
+
+if [ "x$BAIL_OUT" == "xnode" ]; then
+	NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
+	exit 44
+fi
+
 [ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
 
 install_perl_modules "$PERL_MODULES"
