@@ -1,4 +1,4 @@
-u!/bin/bash
+#!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # check-system.sh 2>&1 | tee ~/check.log | grep 'NOT OK'
 
@@ -64,14 +64,11 @@ fi
 # set_env can only contain $HOME and other generally available values
 function set_env {
 
-# set to force install apt packages for node
-#FORCE_NODE_PKG=1
-
 # set BAIL_OUT to stop after a specific point reached
 #BAIL_OUT=font
 #BAIL_OUT=diff
-BAIL_OUT=install
-#BAIL_OUT=node
+#BAIL_OUT=install
+BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
@@ -205,69 +202,57 @@ TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_CMD="nodejs"
-NODE_CMDS="$NODE_CMD npm prettydiff"
+NODE_CMDS="$NODE_CMD npm"
 NODE_PKG="
 	$NODE_CMDS
-	nodejs-legacy
-	node-debug
-	node-eyes
-	node-glob
-	node-inherits
-	node-mkdirp
-	node-rimraf
+	node:nodejs-legacy
+	/usr/lib/nodejs/debug.js:node-debug
+	/usr/lib/nodejs/eyes.js:node-eyes
+	/usr/lib/nodejs/glob.js:node-glob
+	/usr/lib/nodejs/inherits.js:node-inherits
+	/usr/lib/nodejs/mkdirp/index.js:node-mkdirp
+	/usr/lib/nodejs/rimraf/index.js:node-rimraf
 "
 NODE_CUSTOM_PKG="
-	node-abbrev
-	node-async
-	node-async-stacktrace
-	node-base64id
-	node-bignumber
-	node-buffer-crc32
-	node-bytes
-	node-chrono
-	node-cli
-	node-colors
-	node-combined-stream
-	node-commander
-	node-contextify
-	node-daemon
-	node-delayed-stream
-	node-dequeue
-	node-diff
-	node-dirty
-	node-fstream
-	node-fstream-ignore
-	node-get
-	node-graceful-fs
-	node-growl
-	node-ini
-	node-json-stringify-safe
-	node-jsv
-	node-keypress
-	node-lockfile
-	node-minimatch
-	node-mute-stream
-	node-node-uuid
-	node-nopt
-	node-once
-	node-optimist
-	node-osenv
-	node-queue-async
-	node-read
-	node-read-package-json
-	node-readdirp
-	node-request
-	node-require-all
-	node-retry
-	node-security
-	node-semver
-	node-step
-	node-tar
-	node-tinycolor
-	node-traverse
-	node-which
-	node-wordwrap
-	node-zipfile
+	/usr/lib/nodejs/abbrev.js:node-abbrev
+	/usr/lib/nodejs/async.js:node-async
+	/usr/lib/nodejs/base64id.js:node-base64id
+	/usr/lib/nodejs/bignumber.js:node-bignumber
+	/usr/lib/nodejs/bytes/index.js:node-bytes
+	/usr/lib/nodejs/chrono.js:node-chrono
+	/usr/lib/nodejs/cli/index.js:node-cli
+	/usr/lib/nodejs/colors.js:node-colors
+	/usr/lib/nodejs/commander.js:node-commander
+	/usr/lib/nodejs/contextify/index.js:node-contextify
+	/usr/lib/nodejs/daemon/index.js:node-daemon
+	/usr/lib/nodejs/dequeue/index.js:node-dequeue
+	/usr/lib/nodejs/diff.js:node-diff
+	/usr/lib/nodejs/dirty/index.js:node-dirty
+	/usr/lib/nodejs/fstream/index.js:node-fstream
+	/usr/lib/nodejs/get/index.js:node-get
+	/usr/lib/nodejs/growl.js:node-growl
+	/usr/lib/nodejs/ini.js:node-ini
+	/usr/lib/nodejs/JSV/index.js:node-jsv
+	/usr/lib/nodejs/keypress.js:node-keypress
+	/usr/lib/nodejs/lockfile.js:node-lockfile
+	/usr/lib/nodejs/minimatch.js:node-minimatch
+	/usr/lib/nodejs/nopt.js:node-nopt
+	/usr/lib/nodejs/once.js:node-once
+	/usr/lib/nodejs/optimist.js:node-optimist
+	/usr/lib/nodejs/osenv.js:node-osenv
+	/usr/lib/nodejs/read.js:node-read
+	/usr/lib/nodejs/readdirp/index.js:node-readdirp
+	/usr/lib/nodejs/request/index.js:node-request
+	/usr/lib/nodejs/retry/index.js:node-retry
+	/usr/lib/nodejs/security.js:node-security
+	/usr/lib/nodejs/semver/index.js:node-semver
+	/usr/lib/nodejs/step.js:node-step
+	/usr/lib/nodejs/tar/index.js:node-tar
+	/usr/lib/nodejs/tinycolor.js:node-tinycolor
+	/usr/lib/nodejs/traverse.js:node-traverse
+	/usr/lib/nodejs/which.js:node-which
+	/usr/lib/nodejs/wordwrap.js:node-wordwrap
+	/usr/lib/nodejs/zipfile/index.js:node-zipfile
 "
 
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
@@ -386,6 +371,9 @@ INSTALL_CMDS="
 # from hddtemp ksensors
 # from meld libbonobo2-bin desktop-base libgnomevfs2-bin libgnomevfs2-extra gamin fam
 # gnome-mime-data python-gnome2-doc libgtksourceview2.0-dev python-pyorbit-dbg
+# from nodejs etc debian-keyring g++-multilib g++-4.8-multilib gcc-4.8-doc libstdc++6-4.8-dbg
+# libstdc++-4.8-doc node-hawk node-aws-sign node-oauth-sign
+# node-http-signature
 
 INSTALL_LIST="
 	wcd.exec:wcd
@@ -417,6 +405,7 @@ COMMANDS_LIST="
 
 if [ "$HOSTNAME" == "akston" ]; then
 	GIT_VER=1.9.1
+	NODE_VER=v0.10.25
 	USE_KDE=""
 	I3WM_PKG=""
 	CHARLES_PKG=""
@@ -1225,8 +1214,8 @@ installs_from "$CUSTOM_PKG"
 
 BAIL_OUT install
 
-[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG_LIST"
-[ ! -z "$FORCE_NODE_PKG" ] && installs_from "$NODE_PKG_LIST"
+#[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG_LIST"
+[ ! -z "$NODE_PKG" ] && installs_from "$NODE_PKG_LIST"
 
 BAIL_OUT node
 

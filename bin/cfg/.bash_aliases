@@ -7,6 +7,8 @@ alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
 # Unique path, remove duplicate dirs from path
 alias upath='PATH=`echo $PATH | upath.sh`'
 
+alias chksys='check-system.sh 2>&1 | tee ~/check.log | grep "NOT OK"'
+
 # edit config files and re-source them
 alias se='source ./env.sh'
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
