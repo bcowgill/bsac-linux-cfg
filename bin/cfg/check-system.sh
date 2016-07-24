@@ -658,13 +658,13 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 get_git
 
 check_linux "$UBUNTU"
-git --version
-java -version
-ls $JAVA_JVM
-perl --version
-python --version
-ruby --version
-node --version
+which git && git --version
+which java && java -version && ls $JAVA_JVM
+which perl && perl --version
+which python && python --version
+which ruby && ruby --version
+which node && node --version
+which nodejs && nodejs --version
 
 # chicken egg bootstrap:
 if [ ! -e $HOME/bin ]; then
