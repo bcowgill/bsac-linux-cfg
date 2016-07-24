@@ -68,7 +68,8 @@ function set_env {
 #BAIL_OUT=font
 #BAIL_OUT=diff
 #BAIL_OUT=install
-BAIL_OUT=node
+#BAIL_OUT=node
+BAIL_OUT=screensaver
 #BAIL_OUT=
 
 function BAIL_OUT {
@@ -264,6 +265,27 @@ INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
 INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 prettydiff grunt:grunt-cli grunt-init bower yo lessc:less jsdoc mocha karma:karma-cli express:express-generator@4"
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
+# webcollage screensaver pulls from the internet so not safe for work
+SCREENSAVER="
+	workrave
+	kscreensaver
+	ktux
+	kcometen4
+	screensaver-default-images
+	wmmatrix
+	xscreensaver
+	xscreensaver-data-extra
+	xscreensaver-gl-extra
+	xscreensaver-screensaver-bsod
+	unicode-screensaver
+	xscreensaver-screensaver-webcollage
+	xfishtank
+	xdaliclock
+	fortune
+	cmatrix-xfont
+"
+# gnome ubuntustudio-screensaver
+
 #HEREIAM PKG
 
 TODO=audacity
@@ -273,10 +295,6 @@ THUNDER=""
 
 
 SASS_COMMANDS="ruby gem sass compass foundation"
-
-# webcollage screensaver pulls from the internet so not safe for work
-SCREENSAVER="workrave kscreensaver ktux kcometen4 screensaver-default-images wmmatrix xscreensaver xscreensaver-data-extra xscreensaver-gl-extra xscreensaver-screensaver-bsod unicode-screensaver xscreensaver-screensaver-webcollage xfishtank xdaliclock fortune cmatrix-xfont"
-# gnome ubuntustudio-screensaver unicode-screensaver
 
 # Chrome download page
 GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
@@ -1169,6 +1187,8 @@ BAIL_OUT install
 BAIL_OUT node
 
 [ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+
+BAIL_OUT screensaver
 
 install_perl_modules "$PERL_MODULES"
 [ ! -z "$RUBY_PKG" ] && install_ruby_gems "$RUBY_GEMS"
