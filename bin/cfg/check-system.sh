@@ -64,6 +64,9 @@ fi
 # set_env can only contain $HOME and other generally available values
 function set_env {
 
+# set FRESH_NPM to reinstall npm packages so they are updated
+#FRESH_NPM=1
+
 # set BAIL_OUT to stop after a specific point reached
 #BAIL_OUT=font
 #BAIL_OUT=diff
@@ -203,56 +206,81 @@ NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_CMD="nodejs"
 NODE_CMDS="$NODE_CMD npm"
+NODE_LIB=/usr/lib/nodejs
 NODE_PKG="
 	$NODE_CMDS
 	node:nodejs-legacy
-	/usr/lib/nodejs/debug.js:node-debug
-	/usr/lib/nodejs/eyes.js:node-eyes
-	/usr/lib/nodejs/glob.js:node-glob
-	/usr/lib/nodejs/inherits.js:node-inherits
-	/usr/lib/nodejs/mkdirp/index.js:node-mkdirp
-	/usr/lib/nodejs/rimraf/index.js:node-rimraf
+	$NODE_LIB/debug.js:node-debug
+	$NODE_LIB/eyes.js:node-eyes
+	$NODE_LIB/glob.js:node-glob
+	$NODE_LIB/inherits.js:node-inherits
+	$NODE_LIB/mkdirp/index.js:node-mkdirp
+	$NODE_LIB/rimraf/index.js:node-rimraf
 "
 NODE_CUSTOM_PKG="
-	/usr/lib/nodejs/abbrev.js:node-abbrev
-	/usr/lib/nodejs/async.js:node-async
-	/usr/lib/nodejs/base64id.js:node-base64id
-	/usr/lib/nodejs/bignumber.js:node-bignumber
-	/usr/lib/nodejs/bytes/index.js:node-bytes
-	/usr/lib/nodejs/chrono.js:node-chrono
-	/usr/lib/nodejs/cli/index.js:node-cli
-	/usr/lib/nodejs/colors.js:node-colors
-	/usr/lib/nodejs/commander.js:node-commander
-	/usr/lib/nodejs/contextify/index.js:node-contextify
-	/usr/lib/nodejs/daemon/index.js:node-daemon
-	/usr/lib/nodejs/dequeue/index.js:node-dequeue
-	/usr/lib/nodejs/diff.js:node-diff
-	/usr/lib/nodejs/dirty/index.js:node-dirty
-	/usr/lib/nodejs/fstream/index.js:node-fstream
-	/usr/lib/nodejs/get/index.js:node-get
-	/usr/lib/nodejs/growl.js:node-growl
-	/usr/lib/nodejs/ini.js:node-ini
-	/usr/lib/nodejs/JSV/index.js:node-jsv
-	/usr/lib/nodejs/keypress.js:node-keypress
-	/usr/lib/nodejs/lockfile.js:node-lockfile
-	/usr/lib/nodejs/minimatch.js:node-minimatch
-	/usr/lib/nodejs/nopt.js:node-nopt
-	/usr/lib/nodejs/once.js:node-once
-	/usr/lib/nodejs/optimist.js:node-optimist
-	/usr/lib/nodejs/osenv.js:node-osenv
-	/usr/lib/nodejs/read.js:node-read
-	/usr/lib/nodejs/readdirp/index.js:node-readdirp
-	/usr/lib/nodejs/request/index.js:node-request
-	/usr/lib/nodejs/retry/index.js:node-retry
-	/usr/lib/nodejs/security.js:node-security
-	/usr/lib/nodejs/semver/index.js:node-semver
-	/usr/lib/nodejs/step.js:node-step
-	/usr/lib/nodejs/tar/index.js:node-tar
-	/usr/lib/nodejs/tinycolor.js:node-tinycolor
-	/usr/lib/nodejs/traverse.js:node-traverse
-	/usr/lib/nodejs/which.js:node-which
-	/usr/lib/nodejs/wordwrap.js:node-wordwrap
-	/usr/lib/nodejs/zipfile/index.js:node-zipfile
+	$NODE_LIB/abbrev.js:node-abbrev
+	$NODE_LIB/async.js:node-async
+	$NODE_LIB/base64id.js:node-base64id
+	$NODE_LIB/bignumber.js:node-bignumber
+	$NODE_LIB/bytes/index.js:node-bytes
+	$NODE_LIB/chrono.js:node-chrono
+	$NODE_LIB/cli/index.js:node-cli
+	$NODE_LIB/colors.js:node-colors
+	$NODE_LIB/commander.js:node-commander
+	$NODE_LIB/contextify/index.js:node-contextify
+	$NODE_LIB/daemon/index.js:node-daemon
+	$NODE_LIB/dequeue/index.js:node-dequeue
+	$NODE_LIB/diff.js:node-diff
+	$NODE_LIB/dirty/index.js:node-dirty
+	$NODE_LIB/fstream/index.js:node-fstream
+	$NODE_LIB/get/index.js:node-get
+	$NODE_LIB/growl.js:node-growl
+	$NODE_LIB/ini.js:node-ini
+	$NODE_LIB/JSV/index.js:node-jsv
+	$NODE_LIB/keypress.js:node-keypress
+	$NODE_LIB/lockfile.js:node-lockfile
+	$NODE_LIB/minimatch.js:node-minimatch
+	$NODE_LIB/nopt.js:node-nopt
+	$NODE_LIB/once.js:node-once
+	$NODE_LIB/optimist.js:node-optimist
+	$NODE_LIB/osenv.js:node-osenv
+	$NODE_LIB/read.js:node-read
+	$NODE_LIB/readdirp/index.js:node-readdirp
+	$NODE_LIB/request/index.js:node-request
+	$NODE_LIB/retry/index.js:node-retry
+	$NODE_LIB/security.js:node-security
+	$NODE_LIB/semver/index.js:node-semver
+	$NODE_LIB/step.js:node-step
+	$NODE_LIB/tar/index.js:node-tar
+	$NODE_LIB/tinycolor.js:node-tinycolor
+	$NODE_LIB/traverse.js:node-traverse
+	$NODE_LIB/which.js:node-which
+	$NODE_LIB/wordwrap.js:node-wordwrap
+	$NODE_LIB/zipfile/index.js:node-zipfile
+"
+
+NPM_LIB=/usr/local/lib/node_modules
+NPM_GLOBAL_PKG="
+	prettydiff
+	uglifyjs:uglify-js
+	jsdoc
+	jshint
+	eslint
+	jscs
+	flow:flow-bin
+	babel:babel-cli
+	node-sass
+	lessc:less
+	mocha
+	phantomjs:phantomjs-prebuilt
+	karma:karma-cli
+	$NPM_LIB/karma-chrome-launcher/index.js:karma-chrome-launcher
+	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
+	bower
+	yo
+	grunt:grunt-cli
+	grunt-init
+	express:express-generator
 "
 
 INSTALL_NPM_FROM="$POSTGRES_NPM_PKG"
@@ -546,7 +574,7 @@ fi
 [ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
-[ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG=""
+[ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 
 # HEREIAM DERIVED
 
@@ -661,7 +689,7 @@ echo CONFIG NODE_PKG_LIST=$NODE_PKG_LIST
 echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
-echo CONFIG INSTALL_NPM_GLOBAL_FROM+$INSTALL_NPM_GLOBAL_FROM
+echo CONFIG NPM_GLOBAL_PKG
 
 #============================================================================
 # begin actual system checking
@@ -1206,7 +1234,7 @@ echo BIG PERL MODULES $PERL_MODULES
 echo BIG RUBY GEMS $RUBY_GEMS
 echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
-echo BIG INSTALL NPM GLOBAL FROM $INSTALL_NPM_GLOBAL_FROM
+echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG
 
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
@@ -1251,12 +1279,19 @@ if [ ! -z "$NODE_PKG" ]; then
 		exit 1
 	fi
 
+	npm config set registry https://registry.npmjs.org/
+	if [ ! -z "$FRESH_NPM" ]; then
+		always_install_npm_global_from npm
+		always_install_npm_globals_from "$NPM_GLOBAL_PKG"
+		install_npm_global_commands_from "$NPM_GLOBAL_PKG"
+	else
+		install_npm_global_commands_from "$NPM_GLOBAL_PKG"
+	fi
+	is_npm_global_package_installed grunt "need grunt installed to go further."
+	sudo updatedb &
 	echo HEREIAM STOP NODE2
 	exit 89
-	npm config set registry https://registry.npmjs.org/
 	#install_npm_commands_from "$INSTALL_NPM_FROM"
-	install_npm_global_commands_from "$INSTALL_NPM_GLOBAL_FROM"
-	is_npm_global_package_installed grunt "need grunt installed to go further."
 	make_dir_exist $HOME/.grunt-init "grunt template dir"
 	# need to upload ssh public key to github before getting grunt templates
 	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"

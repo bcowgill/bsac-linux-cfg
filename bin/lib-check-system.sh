@@ -477,15 +477,18 @@ function installs_from {
 	local list message file_pkg file package error
 	list="$1"
 	message="$2"
-	error=0
+	error=""
 	for file_pkg in $list
 	do
 		# split the file:pkg string into vars
 		IFS=: read file package <<< $file_pkg
-		install_from $file $package || error=1
+		install_from $file $package || error="$error $file_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -506,15 +509,15 @@ function install_files_from {
 	list="$1"
 	message="$2"
 	options="$3"
-	error=0
+	error=""
 	for file_pkg in $list
 	do
 		# split the file:pkg string into vars
 		IFS=: read file package <<< $file_pkg
-		install_file_from $file $package $options || error=1
+		install_file_from $file $package $options || error="$error $file_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_files_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_files_from$error"
 	fi
 	return $error
 }
@@ -721,13 +724,16 @@ function cmd_exists { # command_exists
 function commands_exist {
 	local commands error
 	commands="$1"
-	error=0
+	error=""
 	for cmd in $commands
 	do
-		cmd_exists "$cmd" || error=1
+		cmd_exists "$cmd" || error="$error $cmd"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for commands_exist $commands"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for commands_exist$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -762,16 +768,19 @@ function install_command_from_packages {
 function install_commands {
 	local commands error
 	commands="$1"
-	error=0
+	error=""
 	for cmd in $commands
 	do
 		if [ ! -z "$cmd" ]; then
 			cmd_exists $cmd > /dev/null || (echo want to install command $cmd ; sudo apt-get install "$cmd")
-			cmd_exists $cmd || error=1
+			cmd_exists $cmd || error=""
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_commands $commands"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_commands$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -784,15 +793,18 @@ function install_commands_from {
 	list="$1"
 	message="$2"
 	options="$3"
-	error=0
+	error=""
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
 		IFS=: read cmd package <<< $cmd_pkg
-		install_command_from $cmd $package $options || error=1
+		install_command_from $cmd $package $options || error="$error $cmd_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_commands_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_commands_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -819,15 +831,18 @@ function force_install_commands_from {
 	list="$1"
 	message="$2"
 	options="$3"
-	error=0
+	error=""
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
 		IFS=: read cmd package <<< $cmd_pkg
-		force_install_command_from $cmd $package "$message" $options || error=1
+		force_install_command_from $cmd $package "$message" $options || error="$error $cmd_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for force_install_commands_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for force_install_commands_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -975,7 +990,7 @@ function http_request_show {
 #============================================================================
 # node/npm/grunt related commands and packages
 
-# Install a command with the node package manager
+# Install a command or file with the node package manager
 function install_npm_command_from {
 	local command package
 	command="$1"
@@ -991,29 +1006,73 @@ function install_npm_command_from {
 function install_npm_commands_from {
 	local list cmd_pkg cmd package error
 	list="$1"
-	error=0
+	error=""
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
 		IFS=: read cmd package <<< $cmd_pkg
-		install_npm_command_from $cmd $package || error=1
+		install_npm_command_from $cmd $package || error="$error $cmd_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_npm_commands_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_npm_commands_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
 
 # Install a global command with the node package manager
 function install_npm_global_command_from {
+	local file package which
+	file="$1"
+	package="$2"
+	if [ -z "$package" ]; then
+		package="$file"
+	fi
+	which=`which "$file"`
+	if [ ! -z "$which" ] ; then
+		OK "command $file exists [$which]"
+	else
+		file_exists "$file" > /dev/null || (echo want to install npm global cmd/file $file from npm $package; sudo npm install -g "$package")
+		which=`which "$file"`
+		if [ ! -z "$which" ] ; then
+			OK "command $file exists [$which]"
+		else
+			file_exists "$file" "use locate $package | grep node_modules to find what files are installed by npm package"
+		fi
+	fi
+}
+
+# Always Install a global package with the node package manager
+function always_install_npm_global_from {
 	local command package
 	command="$1"
 	package="$2"
 	if [ -z "$package" ]; then
 		package="$command"
 	fi
-	cmd_exists "$command" > /dev/null || (echo want to install npm global command $command from npm $package; sudo npm install -g "$package")
-	cmd_exists "$command"
+	sudo npm install -g "$package"
+}
+
+# Always Install a bunch of global packages with the node package manager
+function always_install_npm_globals_from {
+	local list cmd_pkg cmd package error
+	list="$1"
+	error=""
+	for cmd_pkg in $list
+	do
+		# split the cmd:pkg string into vars
+		IFS=: read cmd package <<< $cmd_pkg
+		always_install_npm_global_from $cmd $package || error="$error $cmd_pkg"
+	done
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for always_install_npm_globals_from$error"
+		error=1
+	else
+		error=0
+	fi
+	return $error
 }
 
 # Force Install a global command with the node package manager
@@ -1032,15 +1091,18 @@ function force_install_npm_global_command_from {
 function install_npm_global_commands_from {
 	local list cmd_pkg cmd package error
 	list="$1"
-	error=0
+	error=""
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
 		IFS=: read cmd package <<< $cmd_pkg
-		install_npm_global_command_from $cmd $package || error=1
+		install_npm_global_command_from $cmd $package || error="$error $cmd_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_npm_global_commands_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_npm_global_commands_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1049,15 +1111,18 @@ function install_npm_global_commands_from {
 function force_install_npm_global_commands_from {
 	local list cmd_pkg cmd package error
 	list="$1"
-	error=0
+	error=""
 	for cmd_pkg in $list
 	do
 		# split the cmd:pkg string into vars
 		IFS=: read cmd package <<< $cmd_pkg
-		force_install_npm_global_command_from $cmd $package || error=1
+		force_install_npm_global_command_from $cmd $package || error="$error $cmd_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for force_install_npm_global_commands_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for force_install_npm_global_commands_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1090,15 +1155,18 @@ function install_grunt_template_from {
 function install_grunt_templates_from {
 	local list tmp_pkg template package error
 	list="$1"
-	error=0
+	error=""
 	for tmp_pkg in $list
 	do
 		# split the template:pkg string into vars
 		IFS=: read template package <<< $tmp_pkg
-		install_grunt_template_from $template $package || error=1
+		install_grunt_template_from $template $package || error="$error $tmp_pkg"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_grunt_templates_from $list"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_grunt_templates_from$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1139,13 +1207,16 @@ function perl_module_version_exists {
 function perl_modules_exist {
 	local modules error
 	modules="$1"
-	error=0
+	error=""
 	for mod in $modules
 	do
-		perl_module_exists "$mod" "sudo cpanp install $mod" || error=1
+		perl_module_exists "$mod" "sudo cpanp install $mod" || error="$error $mod"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for perl_modules_exist $modules"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for perl_modules_exist$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1154,18 +1225,21 @@ function perl_modules_exist {
 function install_perl_modules {
 	local modules error
 	modules="$1"
-	error=0
+	error=""
 
 	for mod in $modules
 	do
 		if [ ! -z "$mod" ]; then
 ##         perl_module_exists $mod > /dev/null || (echo want to install perl module $mod ; sudo cpanp install "$mod")
 			perl_module_exists $mod > /dev/null || (echo want to install perl module $mod ; sudo cpanm "$mod")
-			perl_module_exists $mod || error=1
+			perl_module_exists $mod || error="$error $mod"
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_perl_modules $modules"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_perl_modules$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1174,18 +1248,21 @@ function install_perl_modules {
 function force_install_perl_modules {
 	local modules error
 	modules="$1"
-	error=0
+	error=""
 	for mod in $modules
 	do
 		if [ ! -z "$mod" ]; then
 			echo forced to install perl module $mod
 ##         sudo cpanp install "$mod"
 			sudo cpanm "$mod"
-			perl_module_exists $mod || error=1
+			perl_module_exists $mod || error="$error $mod"
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for force_install_perl_modules $modules"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for force_install_perl_modules$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1256,15 +1333,18 @@ function install_perl_project_dependencies {
 function install_all_perl_project_dependencies {
 	local dirs error
 	dirs="$1"
-	error=0
+	error=""
 	for dir in $dirs
 	do
 		if [ ! -z "$dir" ]; then
-			install_perl_project_dependencies "$dir" || error=1
+			install_perl_project_dependencies "$dir" || error="$error $dir"
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_all_perl_project_dependencies $dirs"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_all_perl_project_dependencies$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1324,15 +1404,18 @@ function build_perl_project_no_tests {
 function build_perl_projects {
 	local dirs error
 	dirs="$1"
-	error=0
+	error=""
 	for dir in $dirs
 	do
 		if [ ! -z "$dir" ]; then
-			build_perl_project "$dir" || error=1
+			build_perl_project "$dir" || error="$error $dir"
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for build_perl_projects $dirs"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for build_perl_projects$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1341,15 +1424,18 @@ function build_perl_projects {
 function build_perl_projects_no_tests {
 	local dirs error
 	dirs="$1"
-	error=0
+	error=""
 	for dir in $dirs
 	do
 		if [ ! -z "$dir" ]; then
-			build_perl_project_no_tests "$dir" || error=1
+			build_perl_project_no_tests "$dir" || error="$error $dir"
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for build_perl_projects_no_tests $dirs"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for build_perl_projects_no_tests$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1375,13 +1461,16 @@ function ruby_gem_exists {
 function ruby_gems_exist {
 	local gems error gem
 	gems="$1"
-	error=0
+	error=""
 	for gem in $gems
 	do
-		ruby_gem_exists "$gem" "sudo gem install $gem" || error=1
+		ruby_gem_exists "$gem" "sudo gem install $gem" || error="$error"
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for ruby_gems_exist $gems"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for ruby_gems_exist$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
@@ -1392,7 +1481,7 @@ function ruby_gems_exist {
 function install_ruby_gems {
 	local gems error gem_ver gem version
 	gems="$1"
-	error=0
+	error=""
 
 	for gem_ver in $gems
 	do
@@ -1405,11 +1494,14 @@ function install_ruby_gems {
 			fi
 			# maybe do a version check also
 			ruby_gem_exists $gem > /dev/null || (echo want to install ruby gem $gem_ver ; sudo gem install "$gem" $version)
-			ruby_gem_exists $gem || error=1
+			ruby_gem_exists $gem || error="$error $gem_ver"
 		fi
 	done
-	if [ $error == 1 ]; then
-		NOT_OK "errors for install_ruby_gems $gems"
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_ruby_gems$error"
+		error=1
+	else
+		error=0
 	fi
 	return $error
 }
