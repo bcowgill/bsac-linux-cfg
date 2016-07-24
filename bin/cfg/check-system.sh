@@ -73,7 +73,8 @@ function set_env {
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
-BAIL_OUT=dropbox
+#BAIL_OUT=dropbox
+BAIL_OUT=commands
 #BAIL_OUT=
 
 function BAIL_OUT {
@@ -171,6 +172,7 @@ RUBY_PKG="ruby ruby-dev"
 RUBY_CMD=ruby
 #RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
 RUBY_GEMS="sass compass compass-validator foundation"
+RUBY_SASS_COMMANDS="ruby gem sass compass foundation"
 
 POSTGRES_PKG="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
@@ -292,6 +294,7 @@ SCREENSAVER_PKG="
 
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
+
 #HEREIAM PKG
 
 TODO=audacity
@@ -299,8 +302,6 @@ TODO=audacity
 THUNDER=""
 #THUNDER=ryu9c8b3.default
 
-
-SASS_COMMANDS="ruby gem sass compass foundation"
 
 # Chrome download page
 GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
@@ -351,6 +352,7 @@ INSTALL_CMDS="
 	vim ctags
 	screen tmux cmatrix
 	colordiff
+	meld
 	dos2unix flip
 	htop
 	ncdu
@@ -380,6 +382,8 @@ INSTALL_CMDS="
 # from cpanminus libcapture-tiny-perl
 # from lm-sensors fancontrol sensord read-edid i2c-tools
 # from hddtemp ksensors
+# from meld libbonobo2-bin desktop-base libgnomevfs2-bin libgnomevfs2-extra gamin fam
+# gnome-mime-data python-gnome2-doc libgtksourceview2.0-dev python-pyorbit-dbg
 
 INSTALL_LIST="
 	wcd.exec:wcd
@@ -405,7 +409,6 @@ COMMANDS_LIST="
 	git
 	gitk
 	perl
-	ruby
 	dot
 	meld
 "
@@ -442,6 +445,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	SKYPE_PKG=""
 	RUBY_GEMS=""
+	RUBY_SASS_COMMANDS=""
 	DRUID_PKG=""
 
 	USE_SUBLIME=""
@@ -470,6 +474,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
 	RUBY_GEMS="sass foundation"
+	RUBY_SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	USE_PIDGIN=""
 	VPN_PKG=""
 	EBOOK_READER=""
@@ -511,10 +516,9 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	"
 	NODE_PKG=""
 	NODE_CMD="node"
-
 	SCREENSAVER_PKG=""
-	SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	DROPBOX_URL=""
+
 	USE_SUBLIME=""
 	SUBLIME=""
 	SUBLIME_PKG=""
@@ -546,7 +550,7 @@ fi
 [ -z $GITSVN_PKG        ] && GITSVN_CMD=""
 [ -z $DIFFMERGE_PKG     ] && DIFFMERGE_CMD=""
 [ -z $P4MERGE_PKG       ] && P4MERGE_CMD=""
-[ -z $RUBY_PKG          ] && RUBY_CMD="" && RUBY_GEMS=""
+[ -z $RUBY_PKG          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
 [ -z $USE_POSTGRES      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z $USE_PIDGIN        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z $DRUID_PKG         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
@@ -583,7 +587,7 @@ COMMANDS="
 	$COMMANDS_LIST
 	$NODE_CMD
 	$RUBY_CMD
-	$SASS_COMMANDS
+	$RUBY_SASS_COMMANDS
 	$SVN_CMD
 	$MVN_CMD
 	$I3WM_CMD
@@ -1216,6 +1220,8 @@ fi
 BAIL_OUT dropbox
 
 commands_exist "$COMMANDS"
+BAIL_OUT commands
+
 echo HEREIAM STOP
 exit 42
 
