@@ -69,7 +69,9 @@ function set_env {
 #BAIL_OUT=diff
 #BAIL_OUT=install
 #BAIL_OUT=node
-BAIL_OUT=screensaver
+#BAIL_OUT=screensaver
+BAIL_OUT=perl
+#BAIL_OUT=ruby
 #BAIL_OUT=
 
 function BAIL_OUT {
@@ -266,7 +268,7 @@ INSTALL_NPM_GLOBAL_FROM="uglifyjs:uglify-js@1 prettydiff grunt:grunt-cli grunt-i
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # webcollage screensaver pulls from the internet so not safe for work
-SCREENSAVER="
+SCREENSAVER_PKG="
 	workrave
 	kscreensaver
 	ktux
@@ -507,7 +509,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	NODE_PKG=""
 	NODE_CMD="node"
 
-	SCREENSAVER=""
+	SCREENSAVER_PKG=""
 	SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	DROPBOX_URL=""
 	USE_SUBLIME=""
@@ -605,7 +607,7 @@ PACKAGES="
 	$CHARLES_PKG
 	$SKYPE_PKG
 	$POSTGRES_PKG
-	$SCREENSAVER
+	$SCREENSAVER_PKG
 	$PIDGIN_CMD
 	$PIDGIN_SKYPE_PKG
 	$PULSEAUDIO
@@ -1186,12 +1188,18 @@ BAIL_OUT install
 
 BAIL_OUT node
 
-[ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER"
+[ ! -z $USE_KDE ] && [ ! -z "$SCREENSAVER_PKG" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER_PKG"
 
 BAIL_OUT screensaver
 
 install_perl_modules "$PERL_MODULES"
+
+BAIL_OUT perl
+
 [ ! -z "$RUBY_PKG" ] && install_ruby_gems "$RUBY_GEMS"
+
+BAIL_OUT ruby
+
 installs_from "$INSTALL_FILE_PACKAGES"
 
 echo HEREIAM STOP
