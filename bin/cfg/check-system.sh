@@ -6,7 +6,8 @@
 
 # To set up a new computer you can simply download and unzip anywhere
 # wget https://github.com/bcowgill/bsac-linux-cfg/archive/master.zip && unzip master.zip
-# cd bsac-linux-cfg-master/bin && export PATH=$PATH:. && ./cfg/check-system.sh
+# cd bsac-linux-cfg-master/bin && PATH=$PATH:. ./cfg/check-system.sh
+# start a new shell after first run so aliases and functions will be available
 
 # terminate on first error
 set -e
@@ -54,16 +55,6 @@ set -o posix
 set > check-system.env0.log
 set +o posix
 
-if which lib-check-system.sh; then
-	source `which lib-check-system.sh`
-else
-	echo "NOT OK cannot find lib-check-system.sh"
-	exit 1
-fi
-
-# set_env can only contain $HOME and other generally available values
-function set_env {
-
 # set FRESH_NPM to reinstall npm packages so they are updated
 #FRESH_NPM=1
 
@@ -81,6 +72,13 @@ BAIL_OUT=npm
 #BAIL_OUT=commands
 #BAIL_OUT=
 
+if which lib-check-system.sh; then
+	source `which lib-check-system.sh`
+else
+	echo "NOT OK cannot find lib-check-system.sh"
+	exit 1
+fi
+
 function BAIL_OUT {
 	local stage
 	stage=$1
@@ -89,6 +87,9 @@ function BAIL_OUT {
 		exit 44
 	fi
 }
+
+# set_env can only contain $HOME and other generally available values
+function set_env {
 
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
@@ -372,6 +373,7 @@ INSTALL_CMDS="
 	lsof
 	fdupes
 	mmv
+	pv
 	fortune
 	unicode
 	gettext
@@ -400,6 +402,16 @@ INSTALL_CMDS="
 # from nodejs etc debian-keyring g++-multilib g++-4.8-multilib gcc-4.8-doc libstdc++6-4.8-dbg
 # libstdc++-4.8-doc node-hawk node-aws-sign node-oauth-sign
 # node-http-signature
+# from skype nas:i386 glibc-doc:i386 locales:i386 rng-tools:i386 gnutls-bin:i386
+# krb5-doc:i386 krb5-user:i386 libvisual-0.4-plugins:i386
+# gstreamer-codec-install:i386 gnome-codec-install:i386
+# gstreamer1.0-tools:i386 gstreamer1.0-plugins-base:i386 jackd2:i386
+# pulseaudio:i386 libqt4-declarative-folderlistmodel:i386
+# libqt4-declarative-gestures:i386 libqt4-declarative-particles:i386
+# libqt4-declarative-shaders:i386 qt4-qmlviewer:i386 libqt4-dev:i386
+# libicu48:i386 libthai0:i386 qt4-qtconfig:i386
+# Recommended packages:
+# xml-core:i386
 
 INSTALL_LIST="
 	wcd.exec:wcd
@@ -433,11 +445,11 @@ if [ "$HOSTNAME" == "akston" ]; then
 	GIT_VER=1.9.1
 	NODE_VER=v0.10.25
 	USE_KDE=""
-	I3WM_PKG=""
+	#I3WM_PKG=""
 	CHARLES_PKG=""
 	#SKYPE_PKG=""
 	VIRTUALBOX_PKG=""
-	DIFFMERGE_PKG=""
+	#DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
 	RUBY_PKG=""
 	VPN_PKG=""
@@ -897,6 +909,8 @@ install_file_from_url_zip $DOWNLOAD/ProFont-Windows-Bold/ProFont-Bold-01/ProFont
 install_file_from_url_zip $DOWNLOAD/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
 echo YOUDO You have to manually install ProFontWindows with your Font Manager from $DOWNLOAD/MProFont/ProFontWindows.ttf
 
+# alternative install: npm install git://github.com/adobe-fonts/source-code-pro.git#release
+# https://github.com/adobe-fonts/source-code-pro/
 SC_PRO_VERSION=1.017R
 SC_PRO_ARCHIVE=source-code-pro-$SC_PRO_VERSION
 install_file_from_url_zip $DOWNLOAD/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
@@ -1082,7 +1096,7 @@ if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
 fi
 
 [ ! -z "$CHARLES_PKG" ] && cmd_exists $CHARLES_CMD
-[ ! -z "$SKYPE_PKG" ] && cmd_exists $SKYPE
+[ ! -z "$SKYPE_PKG" ] && cmd_exists $SKYPE_CMD
 
 if [ ! -z "$SVN_PKG" ]; then
 	cmd_exists svn
@@ -1320,6 +1334,18 @@ BAIL_OUT commandks
 sudo updatedb &
 echo HEREIAM STOP
 exit 42
+
+# TODO get unicode bitmap/fonts
+# http://unifoundry.com/unifont.html
+# wget http://unifoundry.com/pub/unifont-8.0.01/unifont-8.0.01.bmp
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_csur-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
+
+# oggconvert gui - convert sound files to free formats
+# digikam photo metadata/tag/edit software
 
 # https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
 # for VPN after installing bridge-utils need to restart network
