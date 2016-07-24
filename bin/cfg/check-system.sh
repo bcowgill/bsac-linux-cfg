@@ -70,8 +70,10 @@ function set_env {
 #BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
-BAIL_OUT=perl
+#BAIL_OUT=perl
 #BAIL_OUT=ruby
+#BAIL_OUT=files
+BAIL_OUT=dropbox
 #BAIL_OUT=
 
 function BAIL_OUT {
@@ -288,6 +290,8 @@ SCREENSAVER_PKG="
 "
 # gnome ubuntustudio-screensaver
 
+DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
+
 #HEREIAM PKG
 
 TODO=audacity
@@ -325,7 +329,6 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
 FLASH_EXTRACTED_DIR="$DOWNLOAD/$FLASH_ARCHIVE"
@@ -1202,6 +1205,17 @@ BAIL_OUT ruby
 
 installs_from "$INSTALL_FILE_PACKAGES"
 
+BAIL_OUT files
+
+if [ ! -z $DROPBOX_URL ]; then
+	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
+	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
+	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
+fi
+
+BAIL_OUT dropbox
+
+commands_exist "$COMMANDS"
 echo HEREIAM STOP
 exit 42
 
@@ -1233,15 +1247,6 @@ if /bin/false ; then
 fi
 
 #HEREIAM INSTALL
-
-# TODO install from url zip ??
-if [ ! -z $DROPBOX_URL ]; then
-	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
-	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
-	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
-fi
-
-commands_exist "$COMMANDS"
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
 	OK "git config has been set up"
