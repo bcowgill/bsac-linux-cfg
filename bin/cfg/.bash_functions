@@ -1,11 +1,13 @@
 # bash functions
 # Brent S.A. Cowgill
 
-# show whichever command something is, a program, alias of shell function
+# show whichever command something is, a program, alias or shell function
 whichever () {
    local cmd
    cmd=$1
-   which $cmd || alias | egrep \\b$cmd\\b || set | grep \(\) | egrep \\b$cmd\\b
+   which $cmd
+   alias | egrep 'alias $cmd='
+   command -v $cmd
 }
 
 # rvdiff reverses the files being diffed

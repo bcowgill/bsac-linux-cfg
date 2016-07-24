@@ -1214,7 +1214,6 @@ installs_from "$CUSTOM_PKG"
 
 BAIL_OUT install
 
-#[ ! -z "$NODE_PKG" ] && install_command_from_packages "$NODE_CMD" "$NODE_PKG_LIST"
 [ ! -z "$NODE_PKG" ] && installs_from "$NODE_PKG_LIST"
 
 BAIL_OUT node
