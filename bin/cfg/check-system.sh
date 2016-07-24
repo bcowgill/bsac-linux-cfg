@@ -435,7 +435,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	USE_KDE=""
 	I3WM_PKG=""
 	CHARLES_PKG=""
-	SKYPE_PKG=""
+	#SKYPE_PKG=""
 	VIRTUALBOX_PKG=""
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
@@ -1293,9 +1293,6 @@ if [ ! -z "$NODE_PKG" ]; then
 	fi
 	is_npm_global_package_installed grunt "need grunt installed to go further."
 	make_dir_exist $HOME/.grunt-init "grunt template dir"
-	sudo updatedb &
-	echo HEREIAM STOP NODE2
-	exit 89
 	# need to upload ssh public key to github before getting grunt templates
 	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 else
@@ -1320,6 +1317,7 @@ BAIL_OUT commandks
 
 # HEREIAM CUSTOM 
 
+sudo updatedb &
 echo HEREIAM STOP
 exit 42
 
