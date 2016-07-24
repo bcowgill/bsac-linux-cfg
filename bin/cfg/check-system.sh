@@ -1130,6 +1130,29 @@ else
 	file_exists /etc/bash_completion.d/git "git completeion file in etc"
 fi
 
+if [ x`git config --global --get user.email` == x$EMAIL ]; then
+	OK "git config has been set up"
+else
+	NOT_OK "git config not set. trying to do so"
+	git config --global user.name "$MYNAME"
+	git config --global user.email $EMAIL
+fi
+
+if git config --global --list | grep rerere; then
+	OK "git config rerere has been set up"
+else
+	NOT_OK "git config rerere not set. trying to do so"
+	git config --global rerere.enabled true
+	git config --global rerere.autoupdate true
+fi
+
+if git config --global --list | grep alias.graph; then
+	OK "git config alias.graph has been set up"
+else
+	NOT_OK "git config alias.graph not set. trying to do so"
+	git config --global --add alias.graph "log --oneline --graph --decorate --all"
+fi
+
 if [ ! -z $MVN_PKG ]; then
 	cmd_exists mvn
 	if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
@@ -1225,6 +1248,10 @@ BAIL_OUT commands
 echo HEREIAM STOP
 exit 42
 
+#============================================================================
+# end of main installing, now configuring
+
+
 # https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
 # for VPN after installing bridge-utils need to restart network
 sudo /etc/init.d/networking restart
@@ -1253,29 +1280,6 @@ if /bin/false ; then
 fi
 
 #HEREIAM INSTALL
-
-if [ x`git config --global --get user.email` == x$EMAIL ]; then
-	OK "git config has been set up"
-else
-	NOT_OK "git config not set. trying to do so"
-	git config --global user.name "$MYNAME"
-	git config --global user.email $EMAIL
-fi
-
-if git config --global --list | grep rerere; then
-	OK "git config rerere has been set up"
-else
-	NOT_OK "git config rerere not set. trying to do so"
-	git config --global rerere.enabled true
-	git config --global rerere.autoupdate true
-fi
-
-if git config --global --list | grep alias.graph; then
-	OK "git config alias.graph has been set up"
-else
-	NOT_OK "git config alias.graph not set. trying to do so"
-	git config --global --add alias.graph "log --oneline --graph --decorate --all"
-fi
 
 echo CRON table setup
 file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
