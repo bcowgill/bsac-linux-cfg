@@ -14,6 +14,18 @@ set -e
 # turn on trace of currently running command if you need it
 #set -x
 
+# chrome URLs open in case session buddy fails
+#http://askubuntu.com/questions/800601/where-is-system-disk-info-stored/801162#801162
+#https://www.google.com/intl/en_uk/chrome/browser/welcome.html
+#http://www.ubuntu.com/support
+#http://cooktopcove.com/2016/03/15/smoked-bacon-weave-wrapped-stuffed-sausage-roll-yes-its-possible/?src=wim_50230&t=syn
+#http://download.virtualbox.org/virtualbox/5.1.2/i
+#http://stackoverflow.com/questions/25978427/installing-nvm-on-ubuntu-14-04
+#https://github.com/creationix/nvm
+#https://www.npmjs.com/package/karma
+#https://github.com/nodejs/LTS#lts_schedule
+#https://github.com/adobe-fonts/source-code-pro/
+
 # TODO pipe viewer - progress bar for pipes apt-get install pv
 
 # TODO get unicode bitmap/fonts
