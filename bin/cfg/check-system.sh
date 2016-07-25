@@ -412,6 +412,7 @@ INSTALL_CMDS="
 # libicu48:i386 libthai0:i386 qt4-qtconfig:i386
 # Recommended packages:
 # xml-core:i386
+# from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
 
 INSTALL_LIST="
 	wcd.exec:wcd
