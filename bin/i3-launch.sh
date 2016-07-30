@@ -189,3 +189,5 @@ xrefresh &
 
 ## Start Workrave
 #workrave &
+
+i3-dump-log > $HOME/.i3-dump.log

@@ -9,7 +9,7 @@
 # mechanism to find the preferred editor
 
 # Hopefully one of these is installed (no flamewars about preference please!):
-for editor in $VISUAL wstorm subl kate gvim emacs gedit kedit $EDITOR vim vi nano pico qe mg jed mc-edit; do
+for editor in $VISUAL wstorm subl kate gvim emacs gedit kedit leafpad $EDITOR vim vi nano pico qe mg jed mc-edit; do
     if command -v $editor > /dev/null 2>&1; then
         exec $editor "$@"
     fi
