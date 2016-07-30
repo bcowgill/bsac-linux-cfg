@@ -1497,6 +1497,7 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
 # git config gui Font
 FILE=".gitconfig"
+git config --global gui.fontdiff "-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0"
 ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
 
 # gitk configuration
@@ -1515,7 +1516,8 @@ if [ -f "$FILE" ]; then
 fi # gitk config file
 
 # Meld diff colors
-FILE=.gconf/apps/meld/%gconf.xml""
+FILE=".gconf/apps/meld/%gconf.xml"
+file_linked_to "$FILE" "bin/cfg/%gconf.xml" "meld diff config linked"
 if [ -f "$FILE" ]; then
 	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
 	file_has_text $FILE "custom_font" "Edit / Preferences"

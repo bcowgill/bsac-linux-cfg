@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="regexes" mtime="1469912764" type="string">
+		<stringvalue>CVS keywords	0	\$\w+(:[^\n$]+)?\$
+C++ comment	0	//.*
+C comment	0	/\*.*?\*/
+All whitespace	0	[ \t\r\f\v]*
+Leading whitespace	1	^[ \t\r\f\v]*
+Script comment	0	#.*</stringvalue>
+	</entry>
+	<entry name="ignore_blank_lines" mtime="1469912750" type="bool" value="true"/>
+	<entry name="filters" mtime="1469912710" type="string">
+		<stringvalue>Backups	1	#*# .#* ~* *~ *.{orig,bak,swp}
+OS-specific metadata	1	.DS_Store ._* .Spotlight-V100 .Trashes Thumbs.db Desktop.ini
+Version Control	1	.bzr CVS _darcs .fslckout _FOSSIL_ .fos .git .hg _MTN .svn .svn .svn
+Binaries	1	*.{pyc,a,obj,o,so,la,lib,dll,exe}
+Media	0	*.{jpg,gif,png,bmp,wav,mp3,ogg,flac,avi,mpg,xcf,xpm}</stringvalue>
+	</entry>
+	<entry name="vc_commit_margin" mtime="1469912696" type="int" value="76"/>
+	<entry name="use_syntax_highlighting" mtime="1469912647" type="bool" value="true"/>
+	<entry name="show_whitespace" mtime="1469912641" type="bool" value="true"/>
+	<entry name="show_line_numbers" mtime="1469912630" type="bool" value="true"/>
+	<entry name="highlight_current_line" mtime="1469912620" type="bool" value="true"/>
+	<entry name="custom_font" mtime="1469912868" type="string">
+		<stringvalue>ProFontWindows 48</stringvalue>
+	</entry>
+	<entry name="use_custom_font" mtime="1469912545" type="bool" value="true"/>
+	<entry name="window_size_y" mtime="1469912868" type="int" value="1050"/>
+	<entry name="window_size_x" mtime="1469478312" type="int" value="1920"/>
+</gconf>
