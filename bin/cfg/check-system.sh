@@ -727,7 +727,7 @@ set +o posix
 set_derived_env
 
 function pre_checks {
-	if [ -e "$VPN_CONFIG" ];
+	if [ -e "$VPN_CONFIG" ]; then
 		OK vpn config file already exists $VPN_CONFIG
 		HAD_VPN_CONFIG=1
 	fi
