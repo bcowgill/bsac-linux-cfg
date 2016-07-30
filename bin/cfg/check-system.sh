@@ -478,7 +478,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#SKYPE_PKG=""
 	VIRTUALBOX_PKG=""
 	#DIFFMERGE_PKG=""
-	P4MERGE_PKG=""
+	#P4MERGE_PKG=""
 	RUBY_PKG=""
 	VPN_PKG=""
 	EBOOK_READER=""
@@ -488,10 +488,10 @@ if [ "$HOSTNAME" == "akston" ]; then
 	"
 	#NODE_PKG=""
 
-	SUBLIME_PKG=""
+	#SUBLIME_PKG=""
 	SUBLIME_CFG=""
-	WEBSTORM_ARCHIVE=""
-	VSLICK_ARCHIVE=""
+	#WEBSTORM_ARCHIVE=""
+	#VSLICK_ARCHIVE=""
 
 	# HEREIAM CFG
 fi
@@ -732,6 +732,7 @@ function pre_checks {
 		HAD_VPN_CONFIG=1
 	fi
 }
+pre_checks
 
 echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
@@ -1359,12 +1360,18 @@ if [ ! -z "$DROPBOX_URL" ]; then
 	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
+	if ps -ef | grep -v grep | grep dropbox-dist > /dev/null; then
+		OK "dropbox daemon is running"
+	else
+		NOT_OK "dropbox daemon is not running, will try to start it"
+		dropbox.sh
+	fi
 fi
 
 BAIL_OUT dropbox
 
 commands_exist "$COMMANDS"
-BAIL_OUT commandks
+BAIL_OUT commands
 
 #============================================================================
 # end of standard install, now custom install
