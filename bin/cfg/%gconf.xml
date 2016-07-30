@@ -21,10 +21,10 @@ Media	0	*.{jpg,gif,png,bmp,wav,mp3,ogg,flac,avi,mpg,xcf,xpm}</stringvalue>
 	<entry name="show_whitespace" mtime="1469912641" type="bool" value="true"/>
 	<entry name="show_line_numbers" mtime="1469912630" type="bool" value="true"/>
 	<entry name="highlight_current_line" mtime="1469912620" type="bool" value="true"/>
-	<entry name="custom_font" mtime="1469912868" type="string">
-		<stringvalue>ProFontWindows 48</stringvalue>
+	<entry name="custom_font" mtime="1469913301" type="string">
+		<stringvalue>ProFontWindows 18</stringvalue>
 	</entry>
 	<entry name="use_custom_font" mtime="1469912545" type="bool" value="true"/>
-	<entry name="window_size_y" mtime="1469912868" type="int" value="1050"/>
+	<entry name="window_size_y" mtime="1469913346" type="int" value="1050"/>
 	<entry name="window_size_x" mtime="1469478312" type="int" value="1920"/>
 </gconf>
