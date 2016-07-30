@@ -19,49 +19,13 @@ set -e
 #https://www.google.com/intl/en_uk/chrome/browser/welcome.html
 #http://www.ubuntu.com/support
 #http://cooktopcove.com/2016/03/15/smoked-bacon-weave-wrapped-stuffed-sausage-roll-yes-its-possible/?src=wim_50230&t=syn
-#http://download.virtualbox.org/virtualbox/5.1.2/i
+#http://download.virtualbox.org/virtualbox/5.1.2/
 #http://stackoverflow.com/questions/25978427/installing-nvm-on-ubuntu-14-04
 #https://github.com/creationix/nvm
 #https://www.npmjs.com/package/karma
 #https://github.com/nodejs/LTS#lts_schedule
 #https://github.com/adobe-fonts/source-code-pro/
 
-# TODO pipe viewer - progress bar for pipes apt-get install pv
-
-# TODO get unicode bitmap/fonts
-# http://unifoundry.com/unifont.html
-# wget http://unifoundry.com/pub/unifont-8.0.01/unifont-8.0.01.bmp
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_csur-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
-
-# oggconvert gui - convert sound files to free formats
-# digikam photo metadata/tag/edit software
-
-# EMACS packages
-# sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
-# editorconfig .el files download and put in .emacs.d dir
-# https://github.com/editorconfig/editorconfig-emacs/archive/master.zip
-# mkdir ~/.emacs.d/lisp
-# cp *.el ~/.emacs.d/lisp/
-# add to .emacs file:
-#(add-to-list 'load-path "~/.emacs.d/lisp")
-#(require 'editorconfig)
-#(editorconfig-mode 1)
-
-# ace jump mode
-# https://github.com/winterTTr/ace-jump-mode/
-# https://www.youtube.com/watch?feature=player_embedded&v=UZkpmegySnc#!
-# cd ~/.emacs.d/lisp
-# wget https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el
-# add to .emacs file the config on the readme page.
-# C-c Space and C-c C-' were chosen as bind keys
-
-# generate javascript tags for emacs
-# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
-# save .ctags config for better javascript
 
 set -o posix
 set > check-system.env0.log
@@ -79,9 +43,10 @@ set +o posix
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
-BAIL_OUT=npm
+#BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
+BAIL_OUT=crontab
 #BAIL_OUT=
 
 if which lib-check-system.sh; then
@@ -111,6 +76,7 @@ COMPANY=
 ULIMITFILES=1024
 #ULIMITFILES=8096
 DOWNLOAD=$HOME/Downloads/check-system
+INI_DIR=check-iniline
 
 MOUNT_DATA=""
 BIG_DATA="/data"
@@ -125,8 +91,6 @@ USE_MYSQL=""
 USE_PIDGIN=""
 CUSTOM_PKG=""
 
-USE_SUBLIME=1
-USE_WEBSTORM=1
 ECLIPSE=""
 
 I3WM_CMD=i3
@@ -168,11 +132,6 @@ MVN_VER="3.0.4"
 JAVA_VER=java-7-openjdk-amd64
 JAVA_JVM=/usr/lib/jvm
 
-# open pages to find latest versions of files to download
-# browser http://download.virtualbox.org/virtualbox/
-# browser http://www.sourcegear.com/diffmerge/downloaded.php
-# browser https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10
-
 # http://sourcegear.com/diffmerge/downloads.php
 DIFFMERGE_CMD=diffmerge
 DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
@@ -207,6 +166,7 @@ PIDGIN_SRC="pidgin-2.10.11"
 PIDGIN_ZIP="$PIDGIN_SRC.tar.bz2"
 
 VPN_PKG="openvpn brctl:bridge-utils"
+VPN_CONFIG=/etc/network/interfaces.d/bridge-vpn
 
 # epub, mobi book reader
 EBOOK_READER="calibre"
@@ -321,7 +281,63 @@ SCREENSAVER_PKG="
 
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
+# https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
+SUBLIME_PKG=sublime-text_build-3114_amd64.deb
+SUBLIME_CFG=.config/sublime-text-3
+SUBLIME_CMD=subl
+SUBLIME_URL=http://download.sublimetext.com
+SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
+
+#me@akston:~/bin (dell-7510 *% u+2)$ tar tvzf ~/Downloads/WebStorm-2016.2.tar.gz  | head
+#-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
+WEBSTORM_CMD=wstorm
+WEBSTORM_ARCHIVE=WebStorm-2016.2
+WEBSTORM_DIR=WebStorm-162.1121.31
+WEBSTORM_URL=http://download.jetbrains.com/webstorm
+WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
+WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
+WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
+
+VSLICK_CMD=vs
+VSLICK_ARCHIVE=se_20000300_linux64
+VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
+VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
+VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
+
+GITHUB_URL=https://github.com/bcowgill
+MY_REPOS="
+	react-boilerplate
+	functionaljs
+	mock-browser
+	ramda
+	babelon
+	exceptionaljs
+	simple-design
+	node-play
+	grunt-test
+	knockout-test
+	jshint-test
+	jsclass-test
+	foundation-test
+	open-layers
+	brick-xtag
+	d3-family-tree
+	FT-Hackday-2012
+	QUnitChainer
+	BigScreen
+	Qucumber
+"
+
 #HEREIAM PKG
+
+# open pages to find latest versions of files to download
+# browser.sh https://www.slickedit.com/trial/slickedit
+# browser.sh http://www.jetbrains.com/webstorm/download/#section=linux-version
+# browser.sh "https://www.sublimetext.com/3"
+# browser.sh "http://download.virtualbox.org/virtualbox/"
+# browser.sh "http://www.sourcegear.com/diffmerge/downloaded.php"
+# browser.sh "https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10"
+
 
 TODO=audacity
 
@@ -364,7 +380,6 @@ FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_A
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
 
-INI_DIR=check-iniline
 
 PULSEAUDIO="pavucontrol pavumeter speaker-test"
 KEYBOARD="showkey evtest"
@@ -472,6 +487,12 @@ if [ "$HOSTNAME" == "akston" ]; then
 		gnucash
 	"
 	#NODE_PKG=""
+
+	SUBLIME_PKG=""
+	SUBLIME_CFG=""
+	WEBSTORM_ARCHIVE=""
+	VSLICK_ARCHIVE=""
+
 	# HEREIAM CFG
 fi
 
@@ -490,12 +511,9 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	RUBY_SASS_COMMANDS=""
 	DRUID_PKG=""
 
-	USE_SUBLIME=""
 	GOOGLE_CHROME_PKG=""
 	# no amd64 pkg for perforce merge
-	VSLICK=""
-	SASS_COMMANDS=""
-	CHARLES_PKG=""
+	VSLICK_ARCHIVE=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
@@ -561,12 +579,12 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	NODE_CMDS="node npm"
 	SCREENSAVER_PKG=""
 	DROPBOX_URL=""
-
-	USE_SUBLIME=""
-	SUBLIME=""
 	SUBLIME_PKG=""
-	VSLICK=""
-	WEBSTORM=""
+	SUBLIME_CFG=""
+	WEBSTORM_ARCHIVE=""
+	VSLICK_ARCHIVE=""
+	MY_REPOS=""
+
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
 fi # raspberrypi
@@ -708,6 +726,13 @@ set +o posix
 }
 set_derived_env
 
+function pre_checks {
+	if [ -e "$VPN_CONFIG" ];
+		OK vpn config file already exists $VPN_CONFIG
+		HAD_VPN_CONFIG=1
+	fi
+}
+
 echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG INSTALL_FILES=$INSTALL_FILES
@@ -807,14 +832,16 @@ file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check s
 file_exists workspace/cfgrec.txt "configuration record files will copy from templates" || cp bin/template/cfgrec/* workspace/
 file_exists workspace/cfgrec.txt "configuration record files"
 
-rm -rf $INI_DIR
-make_dir_exist /tmp/$USER "user's own temporary directory"
-if dir_exists tmp "tmp dir in user home" ; then
-	/bin/true
-else
-	dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
+if [ ! -z "$INI_DIR" ]; then
+	rm -rf $INI_DIR
+	make_dir_exist /tmp/$USER "user's own temporary directory"
+	if dir_exists tmp "tmp dir in user home" ; then
+		/bin/true
+	else
+		dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
+	fi
+	make_dir_exist $INI_DIR "output area for checking INI file settings"
 fi
-make_dir_exist $INI_DIR "output area for checking INI file settings"
 
 make_dir_exist workspace/backup/cfg "workspace home configuration files missing"
 make_dir_exist workspace/tx/mirror "workspace mirror area for charles"
@@ -1342,128 +1369,57 @@ BAIL_OUT commandks
 #============================================================================
 # end of standard install, now custom install
 
-# HEREIAM CUSTOM 
-
-sudo updatedb &
-echo HEREIAM STOP
-exit 42
-
-# TODO get unicode bitmap/fonts
-# http://unifoundry.com/unifont.html
-# wget http://unifoundry.com/pub/unifont-8.0.01/unifont-8.0.01.bmp
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_csur-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
-# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
-
-# oggconvert gui - convert sound files to free formats
-# digikam photo metadata/tag/edit software
-
-# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
-# for VPN after installing bridge-utils need to restart network
-sudo /etc/init.d/networking restart
-# create /etc/network/interfaces.d/bridge-vpn
-FILE=/etc/network/interfaces.d/bridge-vpn
-#file_has_text "$FILE" "iface br0 inet static"
-
-#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
-#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
-#See my screenshots for Workshare specific config. "
-
-if /bin/false ; then
-# TODO some notes on how to set up then robot framework browser test system
-# for workshare.
-# https://github.com/workshare/qa
-	ROBOT_TEST="pip:python-pip"
-	commands pip, pybot needed
-	sudo apt-get install chromium-chromedriver
-	sudo pip install robotframework==2.8.7
-	sudo pip install robotframework-selenium2library==1.6.0
-	sudo pip install ntplib
-	sudo easy_install -U pip
-	sudo pip install requests
-	sudo pip install robotframework-debuglibrary
-	sudo pip install robotframework-imaplibrary
-fi
-
-#HEREIAM INSTALL
-
 echo CRON table setup
-file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
-file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/$COMPANY/backup-work-manual-$COMPANY.sh "manual backup script"
-file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "unpacker script for work at home"
-cmd_exists backup-work.sh "backup script missing"/
-cmd_exists get-from-home.sh "unpacker script for work at home"
-
-file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
-crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
-crontab_has_command "backup-work.sh"
 crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
 
-if [ ! -z "$USE_SUBLIME" ]; then
+if [ ! -z "$COMPANY" ]; then
+	file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
+	file_linked_to bin/backup-work-manual.sh $HOME/bin/cfg/$COMPANY/backup-work-manual-$COMPANY.sh "manual backup script"
+	file_linked_to bin/get-from-home.sh $HOME/bin/cfg/$COMPANY/get-from-home-$COMPANY.sh "unpacker script for work at home"
+	cmd_exists backup-work.sh "backup script missing"/
+	cmd_exists get-from-home.sh "unpacker script for work at home"
+
+	file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
+	crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
+	crontab_has_command "backup-work.sh"
+fi
+
+BAIL_OUT commandks
+
+file_present prettydiff.js "html beautifier file"
+
 if [ ! -z "$SUBLIME_PKG" ]; then
-	cmd_exists git "need git installed before configure sublime"
-	cmd_exists grunt "need grunt installed before configure sublime for it"
+	install_command_package_from_url $SUBLIME_CMD $SUBLIME_PKG $SUBLIME_URL "sublime editor"
+	if [ ! -z "$SUBLIME_CFG" ]; then
+		cmd_exists git "need git installed before configure sublime"
+		cmd_exists grunt "need grunt installed before configure sublime for it"
 
-	# package nodejs-legacy provides node -> nodejs symlink
-	#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
-	cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
-	install_command_package_from_url $SUBLIME $SUBLIME_PKG $SUBLIME_URL "sublime editor"
-	install_file_from_url $DOWNLOADS/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
-	#cp $DOWNLOADS/Package-Control.sublime-package.zip ".config/sublime-text-3/Installed Packages/Package Control.sublime-package"
-	install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
-	install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
-	## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
-	commands_exist "$SUBLIME"
+		# package nodejs-legacy provides node -> nodejs symlink
+		#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
+		cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
+		install_file_from_url $DOWNLOADS/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
+		#cp $DOWNLOADS/Package-Control.sublime-package.zip "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package"
+		install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
+		install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
+		## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
+	fi
+	commands_exist "$SUBLIME_CMD"
 fi # SUBLIME_PKG
-fi # USE_SUBLIME
 
-if [ ! -z "$WEBSTORM" ]; then
+if [ ! -z "$WEBSTORM_ARCHIVE" ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
-	cmd_exists $WEBSTORM "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
+	cmd_exists $WEBSTORM_CMD "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
 	dir_linked_to bin/WebStorm $DOWNLOAD/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
 	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
-fi # WEBSTORM
+fi # WEBSTORM_ARCHIVE
 
-if [ ! -z "$VSLICK" ]; then
+if [ ! -z "$VSLICK_ARCHIVE" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
-	cmd_exists $VSLICK "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
-fi # VSLICK
-
-cmd_exists git "need git to clone repos"
-make_dir_exist workspace/play "github repo play area"
-install_git_repo "workspace/play" jshint-test https://github.com/bcowgill/jshint-test.git "my jshint build system"
-install_git_repo "workspace/play" grunt-test https://github.com/bcowgill/grunt-test.git "my grunt build system"
-install_git_repo "workspace/play" bsac-linux-cfg https://github.com/bcowgill/bsac-linux-cfg.git "my linux config scripts"
-# probably want to comment some of these out when setting up at work
-install_git_repo "workspace/play" perljs https://github.com/bcowgill/perljs.git "my perl node module"
-install_git_repo "workspace/play" knockout-test https://github.com/bcowgill/knockout-test.git "my knockout test area"
-install_git_repo "workspace/play" foundation-test https://github.com/bcowgill/foundation-test.git "my foundation test area"
-install_git_repo "workspace/play" jsclass-test https://github.com/bcowgill/jsclass-test.git "my javascript class test area"
-
-if [ ! -z "$GOOGLE_CHROME_PKG" ]; then
-	# flash player in google chrome
-	# http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
-
-	# Linux Google Chrome v Chromium
-	# https://code.google.com/p/chromium/wiki/ChromiumBrowserVsGoogleChrome
-	# configs ~/.config/chromium or ~/.config/google-chrome for the different versions
-
-	install_command_package $GOOGLE_CHROME "$GOOGLE_CHROME_PKG" "Google Chrome for Linux from manual download $GOOGLE_CHROME_URL"
-
-	if [ ! -z "$FLASH_URL" ]; then
-		install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
-		dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
-		file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
-		file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
-		file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" && sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
-		file_exists "/usr/bin/flash-player-properties"
-	fi # FLASH_URL
-fi # GOOGLE_CHROME_PKG
+	cmd_exists $VSLICK_CMD "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
+fi # VSLICK_ARCHIVE
 
 if [ ! -z "$USE_SCHEMACRAWLER" ]; then
 	if [ ! -z "$USE_POSTGRES" ]; then
@@ -1494,18 +1450,30 @@ if [ ! -z "$USE_SCHEMACRAWLER" ]; then
 	fi # USE_MYSQL
 fi # USE_SCHEMACRAWLER
 
+cmd_exists git "need git to clone repos"
+make_dir_exist workspace/play "github repo play area"
+for repo in $MY_REPOS; do
+	install_git_repo "workspace/play" $repo $GITHUB_URL/$repo.git "my github repo $repo"
+done
+
+# HEREIAM CUSTOM INSTALL
+
 #============================================================================
 # end of main installing, now configuring
 
-# HEREIAM CONFIG CHECKS
-
-echo HEREIAM STOP SAFETY
-exit 43
-
 pushd bin/fortune
-	./mk-fortune.sh && cd starwars && ./mk-fortune.sh
+	./mk-fortune.sh && cd starwars && ./mk-fortune-starwars.sh
 popd
 
+if [ ! -z "$DROPBOX_URL" ]; then
+	# Dropbox configuration
+	# TODO workshare re-enable
+	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
+	# TODO workshare customise file and copy?
+	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
+	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+	dir_linked_to Pictures/WorkSafe $HOME/Dropbox/WorkSafe "link pictures dir to WorkSafe screen saver images"
+fi # DROPBOX_URL
 
 # Check mysql configuration options
 FILE=.my.cnf
@@ -1520,45 +1488,38 @@ maybe_file_has_text $FILE "ProFontWindows 18"
 maybe_file_has_text $FILE "bgcolor=#000000000000"
 maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
-if [ ! -z "$DROPBOX_URL" ]; then
-	# Dropbox configuration
-	# TODO workshare re-enable
-	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
-	# TODO workshare customise file and copy?
-	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
-	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
-	dir_linked_to Pictures/WorkSafe $HOME/Dropbox/WorkSafe "link pictures dir to WorkSafe screen saver images"
-fi # DROPBOX_URL
+# git config gui Font
+FILE=".gitconfig"
+ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
 
-# Thunderbird
-if [ ! -z "$THUNDER" ]; then
-	FILE=".thunderbird/$THUNDER/prefs.js"
-	file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
-	file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
-	file_has_text $FILE "ProFontWindows"
-	file_contains_text $FILE "browser.anchor_color., .#66FFFF"
-	#file_contains_text $FILE "browser.anchor_color., .#99FFFF"
-	file_contains_text $FILE "browser.display.background_color., .#000000"
-	#file_contains_text $FILE "browser.display.background_color., .#666666"
-	file_contains_text $FILE "browser.display.foreground_color., .#FFFF33"
-	#file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
-	#file_contains_text $FILE "browser.display.use_document_colors., false"
-	file_contains_text $FILE "browser.visited_color., .#FF99FF"
-	#file_contains_text $FILE "browser.visited_color., .#FFCCCC"
-	file_contains_text $FILE "mail.citation_color., .#CCCCCC"
-	#file_contains_text $FILE "mail.citation_color., .#FFCC66"
-	file_contains_text $FILE "mailnews.tags..label1.color., .#FF0000"
-	file_contains_text $FILE "mailnews.tags..label2.color., .#FF9900"
-	file_contains_text $FILE "mailnews.tags..label3.color., .#009900"
-	file_contains_text $FILE "mailnews.tags..label4.color., .#3333FF"
-	file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
-	#file_contains_text $FILE "msgcompose.background.color., .#333333"
-	#file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
-else
-	OK "thunderbird will not be configured unless THUNDER is non-zero"
-fi # THUNDER
+# gitk configuration
+FILE=.config/git/gitk
+if [ -f "$FILE" ]; then
+	# There are other colors in the config file which are not in the UI
+	file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
+	file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
+	file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
+	file_has_text "$FILE" "set uicolor #000000" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set markbgcolor #002c39" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
+fi # gitk config file
 
-#============================================================================
+# Meld diff colors
+FILE=.gconf/apps/meld/%gconf.xml""
+if [ -f "$FILE" ]; then
+	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
+	file_has_text $FILE "custom_font" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
+	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>leafpad" "Edit / Preferences"
+	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"
+	file_contains_text $FILE "show_whitespace.+true" "Edit / Preferences"
+	file_contains_text $FILE "show_line_numbers.+true" "Edit / Preferences"
+fi # meld diff/merge config file
+
 # KDE configuration files here
 if [ ! -z "$USE_KDE" ]; then
 if [ -d .kde ]; then
@@ -1719,28 +1680,6 @@ else
 	OK "charles will not be configured unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
-# Eclipse configuration (shortcut and font)
-if [ ! -z "$ECLIPSE" ]; then
-	DIR=.local/share/applications
-	file_exists eclipse/eclipse "Eclipse program"
-	file_exists eclipse/Eclipse.desktop "Eclipse launcher"
-	file_exists $DIR/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop $DIR/Eclipse.desktop
-
-	TEXT="ProFontWindows"
-	DIR=workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings
-	file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
-	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
-	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
-else
-	OK "eclipse will not be configured unless ECLIPSE is non-zero"
-fi # ECLIPSE
-
-file_present prettydiff.js "html beautifier file"
-
-# git gui Font
-FILE=".gitconfig"
-ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
-
 # Sourcegear Diffmerge colors
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
@@ -1795,20 +1734,7 @@ if [ -f "$FILE" ]; then
 	file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
 fi # perforce merge config file
 
-# Meld diff colors
-FILE=.gconf/apps/meld/%gconf.xml""
-if [ -f "$FILE" ]; then
-	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
-	file_has_text $FILE "custom_font" "Edit / Preferences"
-	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
-	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
-	file_has_text $FILE "<stringvalue>leafpad" "Edit / Preferences"
-	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"
-	file_contains_text $FILE "show_whitespace.+true" "Edit / Preferences"
-	file_contains_text $FILE "show_line_numbers.+true" "Edit / Preferences"
-fi # meld diff/merge config file
-
-if [ ! -z "$SUBLIME_PKG" ]; then
+if [ ! -z "$SUBLIME_CFG" ]; then
 	# sublime configuration
 	FILE=$SUBLIME_CFG/Packages/User/Preferences.sublime-settings
 	file_linked_to $FILE $HOME/bin/cfg/Preferences.sublime-settings
@@ -1822,32 +1748,7 @@ if [ ! -z "$SUBLIME_PKG" ]; then
 	## TODO dir_exists "$DIR" "sublime theme override dir"
 	## TODO file_linked_to "$FILE" $HOME/bin/cfg/Default.sublime-theme
 	## TODO file_linked_to "$DIR/bsac_dark_tool_tip_background.png" $HOME/bin/cfg/bsac_dark_tool_tip_background.png
-fi # SUBLIME_PKG
-
-# gitk configuration
-FILE=.config/git/gitk
-if [ -f "$FILE" ]; then
-	# There are other colors in the config file which are not in the UI
-	file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
-	file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
-	file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
-	file_has_text "$FILE" "set uicolor #000000" "Edit / Preferences / Colors"
-	file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
-	file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"
-	file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences / Colors"
-	file_has_text "$FILE" "set markbgcolor #002c39" "Edit / Preferences / Colors"
-	file_has_text "$FILE" "set selectbgcolor #20144c" "Edit / Preferences / Colors"
-fi # gitk config file
-
-# libreoffice color changes
-# difficult because of so much punctutation
-#FILE=.config/libreoffice/4/user/registrymodifications.xcu
-#filter-punct.pl $FILE > $FILE.nopunct
-#file_has_text "$FILE.nopunct" #"LibreOffice']/CalcNotesBackground"><prop oor:name="Color" #oor:op="fuse"><value>1842204" "Tools / Options / Appearance"
-#file_has_text "$FILE" "" "Tools / Options / Appearance"
-#file_has_text "$FILE" "" "Tools / Options / Appearance"
-#file_has_text "$FILE" "" "Tools / Options / Appearance"
-#file_has_text "$FILE" "" "Tools / Options / Appearance"
+fi # SUBLIME_CFG
 
 # Postgres pgadmin3 setup
 FILE=.pgadmin3
@@ -1884,18 +1785,6 @@ if [ -f "$FILE" ]; then
 	ini_file_has_text "$FILE" "/History/MaxQueries=1000" "$WHAT"
 fi # pgadmin3 config file
 
-# Smartgit cannot run on Pi, ARM platform
-#SMARTGIT="http://www.syntevo.com/smartgit/download?file=smartgit/smartgit-generic-6_5_8.tar.gz"
-#SNARTGIT="http://www.syntevo.com/downloads/smartgit/smartgit-generic-6_5_8.tar.gz"
-#install_file_from_url_zip $DOWNLOAD/smartgit/bin/smartgit.sh smartgit-generic-6_5_8.tar.gz "$SMARTGIT" "Smart Git package must manually download: links $SMARTGIT"
-
-if [ "$HOSTNAME" == "raspberrypi" ]; then
-	FILE="/etc/rc.local"
-	config_has_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
-
-
-fi # raspberrypi
-
 if [ ! -z "$PIDGIN_SKYPE_PKG" ]; then
 	if dpkg -l libpurple0 | grep 2.10.9 ; then
 		NOT_OK "need version 2.10.11+ of libpurple for pidgin skype" || echo " "
@@ -1905,12 +1794,183 @@ if [ ! -z "$PIDGIN_SKYPE_PKG" ]; then
 	fi
 fi
 
+if [ "$HOSTNAME" == "raspberrypi" ]; then
+	FILE="/etc/rc.local"
+	config_has_text "/etc/rc.local" "ifup wlan0" "make sure wlan0 comes up on boot"
+
+
+fi # raspberrypi
+
+#============================================================================
+
+# HEREIAM CONFIG CHECKS
+
+function DISABLED {
+# TODO pipe viewer - progress bar for pipes apt-get install pv
+
+# TODO get unicode bitmap/fonts
+# http://unifoundry.com/unifont.html
+# wget http://unifoundry.com/pub/unifont-8.0.01/unifont-8.0.01.bmp
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_csur-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
+# wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
+
+# oggconvert gui - convert sound files to free formats
+# digikam photo metadata/tag/edit software
+
+# EMACS packages
+# sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
+# editorconfig .el files download and put in .emacs.d dir
+# https://github.com/editorconfig/editorconfig-emacs/archive/master.zip
+# mkdir ~/.emacs.d/lisp
+# cp *.el ~/.emacs.d/lisp/
+# add to .emacs file:
+#(add-to-list 'load-path "~/.emacs.d/lisp")
+#(require 'editorconfig)
+#(editorconfig-mode 1)
+
+# ace jump mode
+# https://github.com/winterTTr/ace-jump-mode/
+# https://www.youtube.com/watch?feature=player_embedded&v=UZkpmegySnc#!
+# cd ~/.emacs.d/lisp
+# wget https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el
+# add to .emacs file the config on the readme page.
+# C-c Space and C-c C-' were chosen as bind keys
+
+# generate javascript tags for emacs
+# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
+# save .ctags config for better javascript
+
+# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
+# for VPN after installing bridge-utils need to restart network
+#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
+#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
+#See my screenshots for Workshare specific config. "
+if [ ! -z "$VPN_PKG" ]; then
+	FILE="$VPN_CONFIG"
+	file_exists "$FILE" "vpn bridge configuration" || copy_file_to_root "$HOME/bin/cfg/$COMPANY/bridge-vpn" "$FILE" "install vpn config for iface br0 inet static"
+	file_has_text "$FILE" "iface br0 inet static"
+
+	if [ -z "$HAD_VPN_CONFIG" ]; then
+		OK "restart network after vpn bridge configuration"
+		sudo /etc/init.d/networking restart
+	fi
+fi
+
+if /bin/false ; then
+# TODO some notes on how to set up then robot framework browser test system
+# for workshare.
+# https://github.com/workshare/qa
+	ROBOT_TEST="pip:python-pip"
+	commands pip, pybot needed
+	sudo apt-get install chromium-chromedriver
+	sudo pip install robotframework==2.8.7
+	sudo pip install robotframework-selenium2library==1.6.0
+	sudo pip install ntplib
+	sudo easy_install -U pip
+	sudo pip install requests
+	sudo pip install robotframework-debuglibrary
+	sudo pip install robotframework-imaplibrary
+fi
+
+#HEREIAM INSTALL
+
+if [ ! -z "$GOOGLE_CHROME_PKG" ]; then
+	# flash player in google chrome
+	# http://helpx.adobe.com/flash-player/kb/enable-flash-player-google-chrome.html
+
+	# Linux Google Chrome v Chromium
+	# https://code.google.com/p/chromium/wiki/ChromiumBrowserVsGoogleChrome
+	# configs ~/.config/chromium or ~/.config/google-chrome for the different versions
+
+	install_command_package $GOOGLE_CHROME "$GOOGLE_CHROME_PKG" "Google Chrome for Linux from manual download $GOOGLE_CHROME_URL"
+
+	if [ ! -z "$FLASH_URL" ]; then
+		install_file_from_url_zip_subdir "$FLASH_EXTRACTED" "$FLASH_ARCHIVE.tar.gz" "$FLASH_ARCHIVE" "$FLASH_URL" "download flash player for google chrome"
+		dir_exists "$CHROME_PLUGIN" "google chrome browser plugins directory"
+		file_exists "$CHROME_PLUGIN/libflashplayer.so" "will install flash player to google chrome plugins dir" || sudo cp "$FLASH_EXTRACTED" "$CHROME_PLUGIN"
+		file_exists "$CHROME_PLUGIN/libflashplayer.so" "flash player to google chrome plugins"
+		file_exists "/usr/bin/flash-player-properties" > /dev/null || (NOT_OK "flash player settings missing, will copy them" && sudo cp -r "$FLASH_EXTRACTED_DIR/usr/" /)
+		file_exists "/usr/bin/flash-player-properties"
+	fi # FLASH_URL
+fi # GOOGLE_CHROME_PKG
+
+# Thunderbird
+if [ ! -z "$THUNDER" ]; then
+	FILE=".thunderbird/$THUNDER/prefs.js"
+	file_has_text $FILE "imap.hslive.net" "thunderbird outlook configuration http://wiki/wiki/Hosted_Exchange#IMAP"
+	file_has_text $FILE "default/News/newsrc-news" "thunderbird newsgroup configuration http://wiki/wiki/Hosted_Exchange#News_Groups http://wiki/wiki/New_Engineering_Starters_Handbook#Newsgroups"
+	file_has_text $FILE "ProFontWindows"
+	file_contains_text $FILE "browser.anchor_color., .#66FFFF"
+	#file_contains_text $FILE "browser.anchor_color., .#99FFFF"
+	file_contains_text $FILE "browser.display.background_color., .#000000"
+	#file_contains_text $FILE "browser.display.background_color., .#666666"
+	file_contains_text $FILE "browser.display.foreground_color., .#FFFF33"
+	#file_contains_text $FILE "browser.display.foreground_color., .#FFFF66"
+	#file_contains_text $FILE "browser.display.use_document_colors., false"
+	file_contains_text $FILE "browser.visited_color., .#FF99FF"
+	#file_contains_text $FILE "browser.visited_color., .#FFCCCC"
+	file_contains_text $FILE "mail.citation_color., .#CCCCCC"
+	#file_contains_text $FILE "mail.citation_color., .#FFCC66"
+	file_contains_text $FILE "mailnews.tags..label1.color., .#FF0000"
+	file_contains_text $FILE "mailnews.tags..label2.color., .#FF9900"
+	file_contains_text $FILE "mailnews.tags..label3.color., .#009900"
+	file_contains_text $FILE "mailnews.tags..label4.color., .#3333FF"
+	file_contains_text $FILE "mailnews.tags..label5.color., .#993399"
+	#file_contains_text $FILE "msgcompose.background.color., .#333333"
+	#file_contains_text $FILE "msgcompose.text_color., .#FFFF33"
+else
+	OK "thunderbird will not be configured unless THUNDER is non-zero"
+fi # THUNDER
+
+# Eclipse configuration (shortcut and font)
+if [ ! -z "$ECLIPSE" ]; then
+	DIR=.local/share/applications
+	file_exists eclipse/eclipse "Eclipse program"
+	file_exists eclipse/Eclipse.desktop "Eclipse launcher"
+	file_exists $DIR/Eclipse.desktop "Eclipse KDE menu item" || cp eclipse/Eclipse.desktop $DIR/Eclipse.desktop
+
+	TEXT="ProFontWindows"
+	DIR=workspace/.metadata/.plugins/org.eclipse.core.runtime/.settings
+	file_has_text $DIR/org.eclipse.ui.workbench.prefs "$TEXT"
+	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
+	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
+else
+	OK "eclipse will not be configured unless ECLIPSE is non-zero"
+fi # ECLIPSE
+
+# libreoffice color changes
+# difficult because of so much punctutation
+#FILE=.config/libreoffice/4/user/registrymodifications.xcu
+#filter-punct.pl $FILE > $FILE.nopunct
+#file_has_text "$FILE.nopunct" #"LibreOffice']/CalcNotesBackground"><prop oor:name="Color" #oor:op="fuse"><value>1842204" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+#file_has_text "$FILE" "" "Tools / Options / Appearance"
+
+# GitKraken https://www.gitkraken.com/download/linux-deb
+
+# Smartgit cannot run on Pi, ARM platform
+#SMARTGIT="http://www.syntevo.com/smartgit/download?file=smartgit/smartgit-generic-6_5_8.tar.gz"
+#SMARTGIT="http://www.syntevo.com/downloads/smartgit/smartgit-generic-6_5_8.tar.gz"
+#install_file_from_url_zip $DOWNLOAD/smartgit/bin/smartgit.sh smartgit-generic-6_5_8.tar.gz "$SMARTGIT" "Smart Git package must manually download: links $SMARTGIT"
+
+echo TODO gvim font setting config
+
+#============================================================================
+} # DISABLED
+
+sudo updatedb &
+
 popd
 
 echo COMMANDS="$COMMANDS"
 echo PACKAGES="$PACKAGES"
 
-echo TODO gvim font setting config
 
 OK "all checks complete"
 ENDS
+

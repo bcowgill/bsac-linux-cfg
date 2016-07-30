@@ -181,10 +181,21 @@ function make_root_file_exist {
 	local file contents message temp_file
 	file="$1"
 	contents="$2"
+	message="$3"
 
 	temp_file=`mktemp --tmpdir=/tmp/$USER`
 	file_exists "$file" > /dev/null || (echo "$contents" >> $temp_file; chmod go+r $temp_file; sudo cp $temp_file "$file")
 	rm $temp_file
+	file_exists "$file" "$message"
+}
+
+function copy_file_to_root {
+	local file source message
+	file="$1"
+	source="$2"
+	message="$3"
+
+	file_exists "$file" > /dev/null || (sudo cp "$source" "$file"; chmod go+r "$file")
 	file_exists "$file" "$message"
 }
 
