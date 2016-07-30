@@ -13,14 +13,14 @@ do
 		dos2unix $file
 	fi
 	strfile -r $file
-	echo "test fortune file locally"
-	fortune `pwd`/$file
+	#echo "test fortune file locally"
+	#fortune `pwd`/$file
 	BASE=`basename $file .fortune`
 	echo "install $file in global dir"
 	sudo cp $file $LIB/$BASE
 	sudo cp $file.dat $LIB/$BASE.dat
-	echo "test fortune in global dir"
-	fortune $BASE
+	#echo "test fortune in global dir"
+	#fortune $BASE
 done
 
 exit 0

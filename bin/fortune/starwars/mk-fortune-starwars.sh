@@ -23,16 +23,16 @@ done
 
 strfile -r $FORTUNE
 
-echo "test fortune file locally"
-fortune `pwd`/starwars.fortune
+#echo "test fortune file locally"
+#fortune `pwd`/starwars.fortune
 
 echo "install $FORTUNE in global dir"
 
 sudo cp starwars.fortune $LIB/starwars
 sudo cp starwars.fortune.dat $LIB/starwars.dat
 
-echo "test fortune in global dir"
-fortune starwars
+#echo "test fortune in global dir"
+#fortune starwars
 
 exit 0
 Makefile example
