@@ -719,7 +719,7 @@ function cmd_exists { # command_exists
 	local cmd message which
 	cmd="$1"
 	message="$2"
-	which=`which "$cmd"`
+	which=`which "$cmd"` || echo ""
 	if [ ! -z "$which" ] ; then
 		OK "command $cmd exists [$which]"
 	else
