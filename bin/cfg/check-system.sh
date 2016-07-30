@@ -1517,13 +1517,13 @@ fi # gitk config file
 
 # Meld diff colors
 FILE=".gconf/apps/meld/%gconf.xml"
-file_linked_to "$FILE" "bin/cfg/%gconf.xml" "meld diff config linked"
+file_linked_to "$FILE" "$HOME/bin/cfg/%gconf.xml" "meld diff config linked"
 if [ -f "$FILE" ]; then
 	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
 	file_has_text $FILE "custom_font" "Edit / Preferences"
 	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
 	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
-	file_has_text $FILE "<stringvalue>leafpad" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>i3-sensible-gui-editor" "Edit / Preferences"
 	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"
 	file_contains_text $FILE "show_whitespace.+true" "Edit / Preferences"
 	file_contains_text $FILE "show_line_numbers.+true" "Edit / Preferences"

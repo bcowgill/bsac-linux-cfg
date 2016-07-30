@@ -1,5 +1,11 @@
 <?xml version="1.0"?>
 <gconf>
+	<entry name="edit_command_custom" mtime="1469914123" type="string">
+		<stringvalue>i3-sensible-gui-editor</stringvalue>
+	</entry>
+	<entry name="edit_command_type" mtime="1469913932" type="string">
+		<stringvalue>custom</stringvalue>
+	</entry>
 	<entry name="regexes" mtime="1469912764" type="string">
 		<stringvalue>CVS keywords	0	\$\w+(:[^\n$]+)?\$
 C++ comment	0	//.*
@@ -25,6 +31,6 @@ Media	0	*.{jpg,gif,png,bmp,wav,mp3,ogg,flac,avi,mpg,xcf,xpm}</stringvalue>
 		<stringvalue>ProFontWindows 18</stringvalue>
 	</entry>
 	<entry name="use_custom_font" mtime="1469912545" type="bool" value="true"/>
-	<entry name="window_size_y" mtime="1469913346" type="int" value="1050"/>
+	<entry name="window_size_y" mtime="1469914205" type="int" value="1050"/>
 	<entry name="window_size_x" mtime="1469478312" type="int" value="1920"/>
 </gconf>
