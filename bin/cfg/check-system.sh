@@ -1734,6 +1734,7 @@ fi # diffmerge config file
 
 # Perforce p4merge colors
 FILE=".p4merge/ApplicationSettings.xml"
+file_linked_to "$FILE" "$HOME/bin/cfg/.p4merge-ApplicationSettings.xml" "Perforce Merge config linked"
 if [ -f "$FILE" ]; then
 	file_has_text $FILE "<family>ProFontWindows" "Edit / Preferences"
 	file_has_text $FILE "<pointSize>14" "Edit / Preferences"
