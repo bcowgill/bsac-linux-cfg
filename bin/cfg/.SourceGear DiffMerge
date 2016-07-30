@@ -25,7 +25,7 @@ w=1600
 h=930
 maximized=1
 [Revision]
-Check=1435757053
+Check=1469914635
 [License]
 Check=1436040541
 [Folder]
@@ -63,7 +63,7 @@ Right=/home/bcowgill/Downloads/_avatars
 1=/home/bcowgill/two.txt
 2=/home/bcowgill/one.txt
 [File]
-Font=16:76:ProFontWindows
+Font=18:76:ProFontWindows
 [File/Color]
 [File/Color/AllEqual]
 fg=16776960

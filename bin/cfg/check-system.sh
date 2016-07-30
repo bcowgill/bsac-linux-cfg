@@ -1692,6 +1692,7 @@ fi # CHARLES_PKG
 # Sourcegear Diffmerge colors
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
+file_linked_to "$FILE" "$HOME/bin/cfg/$FILE" "SourceGear DiffMerge config linked"
 if [ -f "$FILE" ]; then
 	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
 	#ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
