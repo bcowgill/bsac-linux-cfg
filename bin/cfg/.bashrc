@@ -119,7 +119,7 @@ fi
 COMPANY=
 if [ $HOSTNAME == worksharexps-XPS-15-9530 ]; then
 	COMPANY=workshare
-	export PATH="/opt/slickedit/bin:$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+	export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 	export PJ=$HOME/projects
 	export REPOS="core-ui files-ui groups-ui dealroom-ui new-ui"
 fi
@@ -128,6 +128,10 @@ export PATH=$HOME/bin:$PATH
 export EDITOR=/usr/bin/vim
 export WCDSCAN=$HOME
 export TZ=Europe/London
+
+if [ -e /opt/slickedit/bin ]; then
+	export PATH=/opt/slickedit/bin:$PATH
+fi
 
 if [ ! -z $COMPANY ]; then
 	PATH=$HOME/bin/$COMPANY:$PATH
