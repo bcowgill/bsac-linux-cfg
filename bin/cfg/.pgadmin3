@@ -25,7 +25,7 @@ CustomColour12=#FFFFFF
 CustomColour13=#FFFFFF
 CustomColour14=#FFFFFF
 CustomColour15=#FFFFFF
-LogFile=/home/brent/pgadmin.log
+LogFile=/home/me/pgadmin.log
 LogLevel=3
 AskSaveConfirmation=true
 ConfirmDelete=true
@@ -50,8 +50,8 @@ IdleProcessColour=rgb(95, 164, 217)
 ActiveProcessColour=rgb(95, 217, 95)
 SlowProcessColour=rgb(217, 167, 95)
 BlockedProcessColour=rgb(217, 110, 95)
-FavouritesFile=/home/brent/.pgadminfavourites
-MacrosFile=/home/brent/.pgadminmacros
+FavouritesFile=/home/me/.pgadminfavourites
+MacrosFile=/home/me/.pgadminmacros
 LanguageId=0
 KeywordsInUppercase=true
 [frmHint]
@@ -194,7 +194,7 @@ ColSeparator=,
 [History]
 MaxQueries=1000
 MaxQuerySize=1024
-File=/home/brent/.pgadmin_histoqueries
+File=/home/me/.pgadmin_histoqueries
 [Export]
 WriteBOM=true
 Unicode=true
@@ -202,7 +202,7 @@ RowSeparator=CR/LF
 ColSeparator=,
 Quote=Strings
 QuoteChar="\""
-LastFile=/home/brent/Documents/project-42/data/cambridge_publisher_1day.csv
+LastFile=/home/me/Documents/project-42/data/cambridge_publisher_1day.csv
 [ctlSQLBox]
 MarginBackgroundColour=rgb(31, 5, 65)
 ColourCaret=yellow

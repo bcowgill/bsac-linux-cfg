@@ -10,7 +10,7 @@ Encoding=UTF-8
 Highlighting=HTML
 Indentation Mode=normal
 Mode=HTML
-URL=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+URL=file:///home/me/Downloads/FASTLANE/ENG-3167.html
 
 [Document 1]
 Bookmarks=
@@ -18,7 +18,7 @@ Encoding=UTF-8
 Highlighting=Bash
 Indentation Mode=normal
 Mode=Bash
-URL=file:///home/brent/workspace/play/open-layers/scripts/build.sh
+URL=file:///home/me/workspace/play/open-layers/scripts/build.sh
 
 [Document 2]
 Bookmarks=
@@ -26,7 +26,7 @@ Encoding=UTF-8
 Highlighting=JavaScript
 Indentation Mode=cstyle
 Mode=JavaScript
-URL=file:///home/brent/workspace/play/open-layers/lib/vis.js
+URL=file:///home/me/workspace/play/open-layers/lib/vis.js
 
 [Document 3]
 Bookmarks=
@@ -34,7 +34,7 @@ Encoding=UTF-8
 Highlighting=CSS
 Indentation Mode=cstyle
 Mode=CSS
-URL=file:///home/brent/workspace/play/open-layers/css/style.css
+URL=file:///home/me/workspace/play/open-layers/css/style.css
 
 [General]
 Days Meta Infos=30
@@ -228,67 +228,67 @@ Children=MainWindow0-ViewSpace 0,MainWindow0-ViewSpace 1
 Sizes=287,1398
 
 [MainWindow0-ViewSpace 0]
-Active View=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+Active View=file:///home/me/Downloads/FASTLANE/ENG-3167.html
 Count=1
-View 0=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
-View 1=file:///home/brent/workspace/play/open-layers/lib/vis.js
-View 2=file:///home/brent/workspace/play/open-layers/html/style.html
-View 3=file:///home/brent/workspace/play/open-layers/css/style.css
+View 0=file:///home/me/Downloads/FASTLANE/ENG-3167.html
+View 1=file:///home/me/workspace/play/open-layers/lib/vis.js
+View 2=file:///home/me/workspace/play/open-layers/html/style.html
+View 3=file:///home/me/workspace/play/open-layers/css/style.css
 
-[MainWindow0-ViewSpace 0 file:///home/brent/Downloads/160x600_autoplay/js/mb_html5_160x600_ap.js]
+[MainWindow0-ViewSpace 0 file:///home/me/Downloads/160x600_autoplay/js/mb_html5_160x600_ap.js]
 CursorColumn=2
 CursorLine=144
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 0 file:///home/brent/Downloads/160x600_autoplay/mb_html5_160x600_ap.html]
+[MainWindow0-ViewSpace 0 file:///home/me/Downloads/160x600_autoplay/mb_html5_160x600_ap.html]
 CursorColumn=7
 CursorLine=32
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 0 file:///home/brent/Downloads/FASTLANE/ENG-3167.html]
+[MainWindow0-ViewSpace 0 file:///home/me/Downloads/FASTLANE/ENG-3167.html]
 CursorColumn=0
 CursorLine=2
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/css/style.css]
+[MainWindow0-ViewSpace 0 file:///home/me/workspace/play/open-layers/css/style.css]
 CursorColumn=6
 CursorLine=68
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/html/style.html]
+[MainWindow0-ViewSpace 0 file:///home/me/workspace/play/open-layers/html/style.html]
 CursorColumn=68
 CursorLine=3
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/lib/vis.js]
+[MainWindow0-ViewSpace 0 file:///home/me/workspace/play/open-layers/lib/vis.js]
 CursorColumn=15
 CursorLine=3
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 0 file:///home/brent/workspace/play/open-layers/scripts/build.sh]
+[MainWindow0-ViewSpace 0 file:///home/me/workspace/play/open-layers/scripts/build.sh]
 CursorColumn=32
 CursorLine=23
 JumpList=
 ViMarks=
 
 [MainWindow0-ViewSpace 1]
-Active View=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+Active View=file:///home/me/Downloads/FASTLANE/ENG-3167.html
 Count=1
-View 0=file:///home/brent/Downloads/FASTLANE/ENG-3167.html
+View 0=file:///home/me/Downloads/FASTLANE/ENG-3167.html
 
-[MainWindow0-ViewSpace 1 file:///home/brent/Downloads/FASTLANE/ENG-3167.html]
+[MainWindow0-ViewSpace 1 file:///home/me/Downloads/FASTLANE/ENG-3167.html]
 CursorColumn=0
 CursorLine=2
 JumpList=
 ViMarks=
 
-[MainWindow0-ViewSpace 1 file:///home/brent/workspace/play/open-layers/html/style.html]
+[MainWindow0-ViewSpace 1 file:///home/me/workspace/play/open-layers/html/style.html]
 CursorColumn=7
 CursorLine=38
 JumpList=

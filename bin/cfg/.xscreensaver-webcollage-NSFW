@@ -32,7 +32,7 @@ dpmsOff:	4:00:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: True
-imageDirectory:	/home/bcowgill/Dropbox/WorkSafe
+imageDirectory:	/home/me/Dropbox/WorkSafe
 
 mode:		one
 selected:	87

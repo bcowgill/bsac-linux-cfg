@@ -596,8 +596,10 @@ set_env
 function set_derived_env {
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 if [ -z "$COMPANY" ]; then
+   COMP=""
 	ONBOOT=cfg/onboot.sh
 else
+   COMP="/$COMPANY"
 	ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 fi
 
@@ -766,6 +768,12 @@ fi
 
 pushd $HOME
 
+if [ "$HOME" == "/home/me" ]; then
+	dir_exists "$HOME" "home dir ok"
+else
+   dir_link_exists "/home/me" "$HOME" "need to alias home dir as /home/me"
+fi
+
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
 make_dir_exist workspace/projects "workspace projects area missing"
@@ -895,10 +903,10 @@ file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
-file_linked_to .xscreensaver bin/cfg/$COMPANY/.xscreensaver "xscreensaver configuration"
+file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
-file_linked_to .config/i3/config $HOME/bin/cfg/$COMPANY/.i3-config "i3 window manager configuration"
+file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
@@ -1692,7 +1700,7 @@ fi # CHARLES_PKG
 # Sourcegear Diffmerge colors
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
-file_linked_to "$FILE" "$HOME/bin/cfg/$COMPANY/$FILE" "SourceGear DiffMerge config linked"
+file_linked_to "$FILE" "$HOME/bin/cfg$COMP/$FILE" "SourceGear DiffMerge config linked"
 if [ -f "$FILE" ]; then
 	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
 	#ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
@@ -1861,7 +1869,7 @@ function DISABLED {
 #See my screenshots for Workshare specific config. "
 if [ ! -z "$VPN_PKG" ]; then
 	FILE="$VPN_CONFIG"
-	file_exists "$FILE" "vpn bridge configuration" || copy_file_to_root "$HOME/bin/cfg/$COMPANY/bridge-vpn" "$FILE" "install vpn config for iface br0 inet static"
+	file_exists "$FILE" "vpn bridge configuration" || copy_file_to_root "$HOME/bin/cfg$COMP/bridge-vpn" "$FILE" "install vpn config for iface br0 inet static"
 	file_has_text "$FILE" "iface br0 inet static"
 
 	if [ -z "$HAD_VPN_CONFIG" ]; then

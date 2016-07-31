@@ -32,7 +32,7 @@ dpmsOff:	4:00:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: True
-imageDirectory:	/home/bcowgill/Dropbox/WorkSafe/humorous/dr-evil-blueprints
+imageDirectory:	/home/me/Dropbox/WorkSafe/humorous/dr-evil-blueprints
 
 mode:		random
 selected:	97
@@ -40,7 +40,7 @@ selected:	97
 textMode:	program
 textLiteral:	XScreenSaver
 textFile:	
-textProgram:	/home/bcowgill/bin/random-text.sh
+textProgram:	/home/me/bin/random-text.sh
 textURL:	http://fridge.ubuntu.com/node/feed
 
 programs:								      \

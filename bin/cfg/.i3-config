@@ -22,7 +22,7 @@
 # Errors rising from this configuration are in ~/.xsession-errors
 
 # BSAC var settings
-set $bin /home/bcowgill/bin
+set $bin /home/me/bin
 
 # Initialise monitor resolutions, mouse/trackpad/touch/keyboard setup
 exec --no-startup-id $bin/i3-start.sh
