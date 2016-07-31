@@ -6,12 +6,14 @@
 
 # To set up a new computer you can simply download and unzip anywhere
 # wget https://github.com/bcowgill/bsac-linux-cfg/archive/master.zip && unzip master.zip
-# cd bsac-linux-cfg-master/bin && export PATH=$PATH:. && ./cfg/check-system.sh 
+# cd bsac-linux-cfg-master/bin && export PATH=$PATH:. && ./cfg/check-system.sh
 
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
 #set -x
+
+# TODO pipe viewer - progress bar for pipes apt-get install pv
 
 # TODO get unicode bitmap/fonts
 # http://unifoundry.com/unifont.html
@@ -137,8 +139,8 @@ I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
 VPN="openvpn brctl:bridge-utils"
 
 WEBSTORM=wstorm
-WEBSTORM_ARCHIVE=WebStorm-11.0.3
-WEBSTORM_DIR=WebStorm-143.1559.5
+WEBSTORM_ARCHIVE=WebStorm-11.0.4
+WEBSTORM_DIR=WebStorm-143.2370.0
 WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
 WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
@@ -202,6 +204,29 @@ PERL_PKG="cpanm:cpanminus"
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
 TODO=audacity
+
+# EMACS packages
+# sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
+# editorconfig .el files download and put in .emacs.d dir
+# https://github.com/editorconfig/editorconfig-emacs/archive/master.zip
+# mkdir ~/.emacs.d/lisp
+# cp *.el ~/.emacs.d/lisp/
+# add to .emacs file:
+#(add-to-list 'load-path "~/.emacs.d/lisp")
+#(require 'editorconfig)
+#(editorconfig-mode 1)
+
+# ace jump mode
+# https://github.com/winterTTr/ace-jump-mode/
+# https://www.youtube.com/watch?feature=player_embedded&v=UZkpmegySnc#!
+# cd ~/.emacs.d/lisp
+# wget https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el
+# add to .emacs file the config on the readme page.
+# C-c Space and C-c C-' were chosen as bind keys
+
+# generate javascript tags for emacs
+# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
+# save .ctags config for better javascript
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
@@ -296,7 +321,7 @@ if [ -f ./cpanminus ]; then
 fi
 if [ -f ~/bin/cpanminus ]; then
 	CPAN_LIST=~/bin/cpanminus
-fi 
+fi
 if [ -z $CPAN_LIST ]; then
 	echo MAYBE NOT OK cannot find cpanminus
 	CPAN_LIST=/dev/null
@@ -1441,4 +1466,3 @@ echo TODO gvim font setting config
 
 OK "all checks complete"
 ENDS
-
