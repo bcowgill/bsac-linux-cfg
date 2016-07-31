@@ -45,7 +45,7 @@ set +o posix
 #BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
-BAIL_OUT=crontab
+#BAIL_OUT=crontab
 #BAIL_OUT=
 
 if which lib-check-system.sh; then
@@ -1410,7 +1410,7 @@ if [ ! -z "$COMPANY" ]; then
 	crontab_has_command "backup-work.sh"
 fi
 
-BAIL_OUT commandks
+BAIL_OUT crontab
 
 file_present prettydiff.js "html beautifier file"
 
