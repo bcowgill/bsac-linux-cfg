@@ -52,6 +52,8 @@ archdetect-deb
 aspell
 aspell-en
 at-spi2-core
+audacity
+audacity-data
 autoconf
 automake
 autotools-dev
@@ -201,11 +203,13 @@ enchant
 eog
 espeak-data:amd64
 ethtool
+evemu-tools
 evince
 evince-common
 evolution-data-server
 evolution-data-server-common
 evolution-data-server-online-accounts
+evtest
 example-content
 exuberant-ctags
 fakeroot
@@ -593,6 +597,9 @@ libavahi-core7:amd64
 libavahi-glib1:amd64
 libavahi-gobject0:amd64
 libavc1394-0:amd64
+libavcodec54:amd64
+libavformat54:amd64
+libavutil52:amd64
 libbamf3-2:amd64
 libbind9-90
 libb-keywords-perl
@@ -765,6 +772,7 @@ libestr0
 libev4
 libevdev2
 libevdocument3-4
+libevemu1:amd64
 libevent-2.0-5:amd64
 libev-perl
 libevview3-3
@@ -796,6 +804,7 @@ libfile-sharedir-projectdistdir-perl
 libfile-slurp-perl
 libfile-which-perl
 libfinance-quote-perl
+libflac++6:amd64
 libflac8:amd64
 libflac8:i386
 libfolks25:amd64
@@ -912,6 +921,7 @@ libgs9-common
 libgsettings-qt1:amd64
 libgsf-1-114
 libgsf-1-common
+libgsm1:amd64
 libgssapi3-heimdal:amd64
 libgssapi-krb5-2:amd64
 libgssapi-krb5-2:i386
@@ -930,6 +940,7 @@ libgtk2-perl
 libgtk-3-0:amd64
 libgtk-3-bin
 libgtk-3-common
+libgtkmm-2.4-1c2a:amd64
 libgtkmm-3.0-1:amd64
 libgtksourceview2.0-0
 libgtksourceview2.0-common
@@ -1074,6 +1085,7 @@ liblzma5:amd64
 liblzma5:i386
 liblzo2-2:amd64
 libm17n-0
+libmad0:amd64
 libmagic1:amd64
 libmagickcore5:amd64
 libmagickcore5-extra:amd64
@@ -1095,6 +1107,7 @@ libmodule-metadata-perl
 libmodule-pluggable-perl
 libmodule-runtime-perl
 libmount1:amd64
+libmp3lame0:amd64
 libmpc3:amd64
 libmpdec2:amd64
 libmpfr4:amd64
@@ -1153,7 +1166,9 @@ libogg0:i386
 liboil0.3:amd64
 libopencc1:amd64
 libopenexr6:amd64
+libopenjpeg2:amd64
 libopenobex1
+libopus0
 liborbit-2-0:amd64
 liborbit2:amd64
 liborc-0.4-0:amd64
@@ -1225,6 +1240,7 @@ libpoppler44:amd64
 libpoppler-glib8:amd64
 libpopt0:amd64
 libportaudio2:amd64
+libportsmf0:amd64
 libppi-perl
 libppix-regexp-perl
 libppix-utilities-perl
@@ -1359,6 +1375,8 @@ libsasl2-2:amd64
 libsasl2-modules:amd64
 libsasl2-modules-db:amd64
 libsbc1:amd64
+libsbsms10:amd64
+libschroedinger-1.0-0:amd64
 libsecret-1-0:amd64
 libsecret-common
 libselinux1:amd64
@@ -1385,8 +1403,10 @@ libsnmp30:amd64
 libsnmp-base
 libsocket6-perl
 libsonic0:amd64
+libsoundtouch0:amd64
 libsoup2.4-1:amd64
 libsoup-gnome2.4-1:amd64
+libsoxr0:amd64
 libspectre1:amd64
 libspeechd2:amd64
 libspeex1:amd64
@@ -1450,6 +1470,7 @@ libtk8.6:amd64
 libtotem0
 libtotem-plparser18
 libtsan0:amd64
+libtwolame0
 libtxc-dxtn-s2tc0:amd64
 libtxc-dxtn-s2tc0:i386
 libudev1:amd64
@@ -1488,6 +1509,8 @@ libv4l-0:amd64
 libv4lconvert0:amd64
 libv8-3.14.5
 libv8-3.14-dev
+libva1:amd64
+libvamp-hostsdk3:amd64
 libvisio-0.0-0
 libvisual-0.4-0:amd64
 libvisual-0.4-plugins:amd64
@@ -1530,11 +1553,14 @@ libwrap0:amd64
 libwrap0:i386
 libwww-perl
 libwww-robotrules-perl
+libwxbase2.8-0:amd64
+libwxgtk2.8-0:amd64
 libx11-6:amd64
 libx11-6:i386
 libx11-data
 libx11-xcb1:amd64
 libx11-xcb1:i386
+libx264-142:amd64
 libx86-1:amd64
 libxapian22
 libxatracker2-lts-vivid:amd64
@@ -1611,6 +1637,7 @@ libxtables10
 libxtst6:amd64
 libxv1:amd64
 libxv1:i386
+libxvidcore4:amd64
 libxvmc1:amd64
 libxxf86dga1:amd64
 libxxf86vm1:amd64
@@ -1841,6 +1868,8 @@ parted
 passwd
 patch
 patchutils
+pavucontrol
+pavumeter
 pciutils
 pcmciautils
 perl

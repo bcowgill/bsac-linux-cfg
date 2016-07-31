@@ -313,6 +313,9 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
+PULSEAUDIO_PKG="pavucontrol pavumeter speaker-test"
+KEYBOARD_PKG="showkey evtest"
+
 GITHUB_URL=https://github.com/bcowgill
 MY_REPOS="
 	react-boilerplate
@@ -347,8 +350,6 @@ MY_REPOS="
 # browser.sh "http://www.sourcegear.com/diffmerge/downloaded.php"
 # browser.sh "https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10"
 
-TODO=audacity
-
 THUNDER=""
 #THUNDER=ryu9c8b3.default
 
@@ -382,9 +383,6 @@ FLASH_EXTRACTED_DIR="$DOWNLOAD/$FLASH_ARCHIVE"
 FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
-
-PULSEAUDIO="pavucontrol pavumeter speaker-test"
-KEYBOARD="showkey evtest"
 
 #vim-scripts requires ruby - loads of color schemes and helpful vim scripts
 # runit
@@ -487,6 +485,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	DRUID_PKG=""
 	CUSTOM_PKG="
 		gnucash
+		audacity
 	"
 	#NODE_PKG=""
 
@@ -649,6 +648,7 @@ INSTALL_FROM="
 	$INSTALL_LIST
 	$PERL_PKG
 	$TEMPERATURE_PKG
+	$KEYBOARD_PKG
 	$I3WM_PKG
 	$EMACS_PKG
 	$MVN_PKG
@@ -658,6 +658,7 @@ INSTALL_FROM="
 	$PIDGIN_SKYPE_PKG
 	$VPN_PKG
 	$EBOOK_READER
+	$PULSEAUDIO_PKG
 "
 
 COMMANDS="
@@ -694,8 +695,8 @@ PACKAGES="
 	$SCREENSAVER_PKG
 	$PIDGIN_CMD
 	$PIDGIN_SKYPE_PKG
-	$PULSEAUDIO
-	$KEYBOARD
+	$PULSEAUDIO_PKG
+	$KEYBOARD_PKG
 "
 
 PERL_MODULES="
