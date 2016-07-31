@@ -191,7 +191,9 @@ fi
 export NVM_DIR="$HOME/.nvm"
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     . "$NVM_DIR/nvm.sh"
+    [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
     # nvm ls
+    # nvm ls-remote
     if [ -e "$HOME/.nvmrc" ]; then
         nvm use > /dev/null
     else
