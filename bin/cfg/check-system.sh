@@ -26,7 +26,6 @@ set -e
 #https://github.com/nodejs/LTS#lts_schedule
 #https://github.com/adobe-fonts/source-code-pro/
 
-
 set -o posix
 set > check-system.env0.log
 set +o posix
@@ -281,6 +280,13 @@ SCREENSAVER_PKG="
 
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
+EMACS_PKG="
+	emacs24
+	editorconfig
+	exuberant-ctags
+	libparse-exuberantctags-perl
+"
+
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
 SUBLIME_PKG=sublime-text_build-3114_amd64.deb
 SUBLIME_CFG=.config/sublime-text-3
@@ -338,12 +344,10 @@ MY_REPOS="
 # browser.sh "http://www.sourcegear.com/diffmerge/downloaded.php"
 # browser.sh "https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10"
 
-
 TODO=audacity
 
 THUNDER=""
 #THUNDER=ryu9c8b3.default
-
 
 # Chrome download page
 GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
@@ -359,9 +363,6 @@ SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
 WEBSTORM=wstorm
 WEBSTORM_ARCHIVE=WebStorm-11.0.4
 WEBSTORM_DIR=WebStorm-143.2370.0
-# legacy ver just for testing check-system
-WEBSTORM_ARCHIVE=WebStorm-11.0.3
-WEBSTORM_DIR=WebStorm-143.1559.5
 WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
 WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
@@ -378,8 +379,6 @@ FLASH_EXTRACTED_DIR="$DOWNLOAD/$FLASH_ARCHIVE"
 FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
-
-
 
 PULSEAUDIO="pavucontrol pavumeter speaker-test"
 KEYBOARD="showkey evtest"
@@ -648,6 +647,7 @@ INSTALL_FROM="
 	$PERL_PKG
 	$TEMPERATURE_PKG
 	$I3WM_PKG
+	$EMACS_PKG
 	$MVN_PKG
 	$POSTGRES_PKG
 	$DRUID_PKG
@@ -1982,6 +1982,7 @@ echo TODO gvim font setting config
 #============================================================================
 } # DISABLED
 
+pkg-list.sh > bin/cfg$COMP/pkg-list.txt
 sudo updatedb &
 
 popd
