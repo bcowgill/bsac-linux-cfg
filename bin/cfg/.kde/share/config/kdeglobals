@@ -96,7 +96,7 @@ ForegroundVisited=192,128,255
 
 [DirSelect Dialog]
 DirSelectDialog Size=803,580
-History Items[$e]=file://$HOME/Downloads/improvement-kata,file://$HOME/Dropbox/WorkSafe/_tx/kanban/sample-boards,file://$HOME/Dropbox/WorkSafe/_tx/kanban/one-day-in-kanban,file://$HOME/Dropbox/WorkSafe/_tx/kanban/kick-start,file://$HOME/Dropbox/WorkSafe/_tx/kanban/for-support,file://$HOME/Dropbox/WorkSafe/_tx/kanban/a-board,file://$HOME/Dropbox/WorkSafe/_tx/kanban/images,file://$HOME/Dropbox/WorkSafe
+History Items[$e]=file://$HOME/Downloads/improvement-kata,file://$HOME/Pictures/WorkSafe/_tx/kanban/sample-boards,file://$HOME/Pictures/WorkSafe/_tx/kanban/one-day-in-kanban,file://$HOME/Pictures/WorkSafe/_tx/kanban/kick-start,file://$HOME/Pictures/WorkSafe/_tx/kanban/for-support,file://$HOME/Pictures/WorkSafe/_tx/kanban/a-board,file://$HOME/Pictures/WorkSafe/_tx/kanban/images,file://$HOME/Pictures/WorkSafe
 
 [General]
 BrowserApplication=chromium-browser.desktop

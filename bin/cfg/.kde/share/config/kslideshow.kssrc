@@ -1,6 +1,6 @@
 [Settings]
 Delay=20
-Directory[$e]=$HOME/Dropbox/WorkSafe
+Directory[$e]=$HOME/Pictures/WorkSafe
 PrintName=true
 PrintPath=false
 RandomPosition=false

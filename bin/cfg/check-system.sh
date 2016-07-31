@@ -258,11 +258,13 @@ NPM_GLOBAL_PKG="
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # webcollage screensaver pulls from the internet so not safe for work
-SCREENSAVER_PKG="
-	workrave
+KSCREENSAVER_PKG="
 	kscreensaver
 	ktux
 	kcometen4
+"
+SCREENSAVER_PKG="
+	workrave
 	screensaver-default-images
 	wmmatrix
 	xscreensaver
@@ -907,10 +909,10 @@ file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and 
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
-file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
-file_linked_to bin/i3-launch.sh $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
-file_linked_to bin/i3-dock.sh $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
-dir_linked_to .gconf $HOME/bin/cfg$COMP/.gconf "gnome configuration files linked"
+file_linked_to .config/i3/config bin/cfg$COMP/.i3-config "i3 window manager configuration"
+file_linked_to bin/i3-launch.sh bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
+file_linked_to bin/i3-dock.sh bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
+dir_linked_to .gconf bin/cfg$COMP/.gconf/ "gnome configuration files linked"
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
@@ -1317,7 +1319,8 @@ BAIL_OUT install
 
 BAIL_OUT node
 
-[ ! -z "$USE_KDE" ] && [ ! -z "$SCREENSAVER_PKG" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER_PKG"
+[ ! -z "$USE_KDE" ] && [ ! -z "$KSCREENSAVER_PKG" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER_PKG"
+[ ! -z "$SCREENSAVER_PKG" ] && install_command_from_packages xscreensaver "$SCREENSAVER_PKG"
 
 BAIL_OUT screensaver
 
@@ -1491,7 +1494,11 @@ if [ ! -z "$DROPBOX_URL" ]; then
 	# TODO workshare customise file and copy?
 	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
 	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
-	dir_linked_to Pictures/WorkSafe $HOME/Dropbox/WorkSafe "link pictures dir to WorkSafe screen saver images"
+	if [ -e $HOME/Dropbox/Photos/Wallpaper/WorkSafe ]; then
+		dir_linked_to Pictures/WorkSafe $HOME/Dropbox/Photos/Wallpaper/WorkSafe "link pictures dir to WorkSafe screen saver images"
+	else
+		dir_linked_to Pictures/WorkSafe $HOME/Dropbox/WorkSafe "link pictures dir to WorkSafe screen saver images"
+	fi
 fi # DROPBOX_URL
 
 # Check mysql configuration options
@@ -1529,12 +1536,10 @@ fi # gitk config file
 
 # Meld diff colors
 FILE=".gconf/apps/meld/%gconf.xml"
-file_linked_to "$FILE" "$HOME/bin/cfg/%gconf.xml" "meld diff config linked"
 if [ -f "$FILE" ]; then
 	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
 	file_has_text $FILE "custom_font" "Edit / Preferences"
 	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
-	file_has_text $FILE "<stringvalue>ProFontWindows18pt" "Edit / Profiles "
 	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
 	file_has_text $FILE "<stringvalue>i3-sensible-gui-editor" "Edit / Preferences"
 	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"

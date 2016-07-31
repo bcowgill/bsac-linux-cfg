@@ -54,7 +54,7 @@ CustomColors=::::::::::::::::
 [Dialog/Choose]
 [Dialog/Choose/Folder]
 [Dialog/Choose/Folder/Seed]
-Left=/home/me/Dropbox/WorkSafe/_tx
+Left=/home/me/Pictures/WorkSafe/_tx
 Right=/home/me/Downloads/_avatars
 [Dialog/Choose/File]
 [Dialog/Choose/File/Merge]

@@ -103,6 +103,7 @@ chromium-browser-l10n
 chromium-codecs-ffmpeg-extra
 cifs-utils
 cmatrix
+cmatrix-xfont
 colord
 colordiff
 command-not-found
@@ -836,6 +837,7 @@ libgdata-common
 libgdbm3:amd64
 libgdk-pixbuf2.0-0:amd64
 libgdk-pixbuf2.0-common
+libgdome2-0
 libgee-0.8-2:amd64
 libgee2:amd64
 libgeis1:amd64
@@ -854,6 +856,7 @@ libglade2-0:amd64
 libglamor0:amd64
 libglapi-mesa-lts-vivid:amd64
 libglapi-mesa-lts-vivid:i386
+libgle3
 libgles1-mesa-lts-vivid:amd64
 libgles2-mesa-lts-vivid:amd64
 libglew1.10:amd64
@@ -1172,6 +1175,7 @@ libpam-modules:amd64
 libpam-modules-bin
 libpam-runtime
 libpam-systemd:amd64
+libpanel-applet-4-0
 libpango-1.0-0:amd64
 libpango1.0-0:amd64
 libpangocairo-1.0-0:amd64
@@ -2055,6 +2059,7 @@ samba-libs:amd64
 sane-utils
 sbsigntool
 screen
+screensaver-default-images
 seahorse
 secureboot-db
 sed
@@ -2177,6 +2182,7 @@ ufw
 unattended-upgrades
 unicode
 unicode-data
+unicode-screensaver
 unity
 unity-asset-pool
 unity-control-center
@@ -2266,8 +2272,11 @@ wifi-intel3165-firmware
 wifi-intel8260-firmware
 wireless-regdb
 wireless-tools
+wmmatrix
 wodim
 workaround-add-kernel-parameter-i915-edp-vswing
+workrave
+workrave-data
 wpasupplicant
 x11-apps
 x11-common
@@ -2280,11 +2289,13 @@ xauth
 xautomation
 xbitmaps
 xcursor-themes
+xdaliclock
 xdg-user-dirs
 xdg-user-dirs-gtk
 xdg-utils
 xdiagnose
 xdotool
+xfishtank
 xfonts-base
 xfonts-encodings
 xfonts-mathml
@@ -2297,6 +2308,13 @@ xml-core
 xorg
 xorg-docs-core
 xorriso
+xscreensaver
+xscreensaver-data
+xscreensaver-data-extra
+xscreensaver-gl
+xscreensaver-gl-extra
+xscreensaver-screensaver-bsod
+xscreensaver-screensaver-webcollage
 xserver-common
 xserver-xorg-core-lts-vivid
 xserver-xorg-input-all-lts-vivid

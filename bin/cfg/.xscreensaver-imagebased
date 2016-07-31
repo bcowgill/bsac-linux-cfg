@@ -32,7 +32,7 @@ dpmsOff:	4:00:00
 grabDesktopImages:  False
 grabVideoFrames:    False
 chooseRandomImages: True
-imageDirectory:	/home/me/Dropbox/WorkSafe/humorous/dr-evil-blueprints
+imageDirectory:	/home/me/Pictures/WorkSafe/humorous/dr-evil-blueprints
 
 mode:		random
 selected:	97
