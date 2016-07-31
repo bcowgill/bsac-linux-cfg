@@ -191,8 +191,12 @@ fi
 export NVM_DIR="$HOME/.nvm"
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     . "$NVM_DIR/nvm.sh"
-	# nvm ls
-    nvm use v5.10.1 > /dev/null
+    # nvm ls
+    if [ -e "$HOME/.nvmrc" ]; then
+        nvm use > /dev/null
+    else
+        nvm use v5.10.1 > /dev/null
+    fi
 fi
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

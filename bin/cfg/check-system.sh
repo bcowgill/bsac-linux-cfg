@@ -174,6 +174,14 @@ PERL_PKG="cpanm:cpanminus"
 
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
+NVM_VER="v0.31.4"
+NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
+NVM_DIR="$HOME/.nvm"
+NVM_VER_DIR="$NVM_DIR/versions/node"
+NVM_CMD="$NVM_DIR/nvm.sh"
+NVM_LTS_VER="v4.4.7"
+NVM_LATEST_VER="v6.3.1"
+
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_CMD="nodejs"
@@ -349,6 +357,7 @@ MY_REPOS="
 # browser.sh "http://download.virtualbox.org/virtualbox/"
 # browser.sh "http://www.sourcegear.com/diffmerge/downloaded.php"
 # browser.sh "https://www.perforce.com/downloads/register/helix?return_url=http://www.perforce.com/downloads/perforce/r15.2/bin.linux26x86_64/p4v.tgz&platform_family=LINUX&platform=Linux%20%28x64%29&version=2015.2/1315639&product_selected=Perforce&edition_selected=helix&product_name=Helix%20P4Merge:%20:%20Visual%20Merge%20Tool&prod_num=10"
+# browser.sh "https://github.com/creationix/nvm"
 
 THUNDER=""
 #THUNDER=ryu9c8b3.default
@@ -1366,6 +1375,20 @@ if [ ! -z "$NODE_PKG" ]; then
 	make_dir_exist $HOME/.grunt-init "grunt template dir"
 	# need to upload ssh public key to github before getting grunt templates
 	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
+
+	if [ ! -z "$NVM_URL" ]; then
+		NVM_INST="$DOWNLOAD/nvm/install.sh"
+		make_dir_exist "$DOWNLOAD/nvm" "install script for nvm"
+		install_file_from_url "$NVM_INST" nvm/install.sh "$NVM_URL"
+		file_exists "$NVM_CMD" "nvm environment startup installed" || (chmod +x $NVM_INST && bash -c "$NVM_INST" && echo "Start a new terminal to activate nvm")
+		command -v nvm || (NOT_OK "nvm function not installed will try" \
+			&& export NVM_DIR && source "$NVM_CMD" && nvm ls \
+			&& nvm ls-remote)
+		dir_exists "$NVM_VER_DIR/$NVM_LTS_VER" "node long term stable version installed" || nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
+		dir_exists "$NVM_VER_DIR/$NVM_LATEST_VER" "node latest version installed" || nvm install $NVM_LATEST_VER --reinstall-packages-from=system
+		file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && nvm use)
+	fi
+
 else
 	OK "will not configure npm unless NODE_PKG is non-zero"
 fi
