@@ -23,4 +23,6 @@ for WORKSPACE in $(seq 1 10); do
 done
 export OUTPUT_MAIN=
 i3-config-update.sh
-touch-on.sh
+if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
+	touch-on.sh
+fi
