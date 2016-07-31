@@ -1,6 +1,10 @@
 #!/bin/bash
 # update the i3-config and i3-launch file for current main and aux monitors
 
+CONFIG="$HOME/bin/cfg/$COMPANY/.i3-config"
+LAUNCH="$HOME/bin/cfg/$COMPANY/i3-launch.sh"
+DOCK="$HOME/bin/cfg/$COMPANY/i3-dock.sh"
+
 if [ ${OUTPUT_MAIN:-error} == error ]; then
 	source `which detect-monitors.sh`
 fi
@@ -85,7 +89,7 @@ echo updating i3 config file $OUTPUT_MAIN $OUTPUT_AUX $OUTPUT_AUX2
 
 #echo $I3WORKSPACES
 
-config=~/bin/cfg/.i3-config
+config=$CONFIG
 perl -i.bak -pne '
 	$definitions = $ENV{I3WORKSPACES};
 	$definitions =~ s{\n \s* \z}{\n}xmsg;
@@ -117,7 +121,7 @@ echo $config updated
 egrep 'set\s+\$(main|aux)' $config
 middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
 
-config=~/bin/i3-launch.sh
+config=$LAUNCH
 perl -i.bak -pne '
 	BEGIN
 	{
@@ -147,7 +151,7 @@ perl -i.bak -pne '
 echo $config updated
 middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
 
-config=~/bin/i3-dock.sh
+config=$DOCK
 perl -i.bak -pne '
 	$screens = $ENV{I3SCREENS};
 	$screens =~ s{\bworkspace\b}{move_workspace}xmsg;
@@ -174,3 +178,4 @@ perl -i.bak -pne '
 ' $config
 echo $config updated
 middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
+

@@ -185,8 +185,15 @@ e2fslibs:amd64
 e2fsprogs
 ecryptfs-utils
 ed
+editorconfig
 efibootmgr
 eject
+emacs24
+emacs24-bin-common
+emacs24-common
+emacs24-common-non-dfsg
+emacs24-el
+emacsen-common
 empathy
 empathy-common
 enchant
@@ -1063,6 +1070,7 @@ liblwres90
 liblzma5:amd64
 liblzma5:i386
 liblzo2-2:amd64
+libm17n-0
 libmagic1:amd64
 libmagickcore5:amd64
 libmagickcore5-extra:amd64
@@ -1149,6 +1157,7 @@ liborc-0.4-0:amd64
 liborc-0.4-0:i386
 liborcus-0.6-0
 libosp5
+libotf0:amd64
 liboxideqtcore0:amd64
 liboxideqt-qmlplugin:amd64
 liboxideqtquick0:amd64
@@ -1177,6 +1186,7 @@ libparams-classify-perl
 libparams-util-perl
 libparse-cpan-meta-perl
 libparse-debianchangelog-perl
+libparse-exuberantctags-perl
 libparted0debian1:amd64
 libpath-class-perl
 libpath-finddev-perl
@@ -1651,6 +1661,8 @@ lshw
 lsof
 ltrace
 lupin-casper
+m17n-contrib
+m17n-db
 m4
 make
 makedev

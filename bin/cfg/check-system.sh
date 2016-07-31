@@ -282,10 +282,10 @@ DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 EMACS_PKG="
 	emacs:emacs24
-	emacs24-el
 	editorconfig
 	ctags:exuberant-ctags
-	libparse-exuberantctags-perl
+	/usr/share/emacs/24.3/lisp/linum.el.gz:emacs24-el
+	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
 "
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
@@ -908,6 +908,9 @@ file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configurat
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
+file_linked_to bin/i3-launch.sh $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
+file_linked_to bin/i3-dock.sh $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
+dir_linked_to .gconf $HOME/bin/cfg$COMP/.gconf "gnome configuration files linked"
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
@@ -1531,6 +1534,7 @@ if [ -f "$FILE" ]; then
 	file_contains_text $FILE "use_custom_font.+true" "Edit / Preferences"
 	file_has_text $FILE "custom_font" "Edit / Preferences"
 	file_has_text $FILE "<stringvalue>ProFontWindows 18" "Edit / Preferences"
+	file_has_text $FILE "<stringvalue>ProFontWindows18pt" "Edit / Profiles "
 	file_has_text $FILE "edit_command_custom" "Edit / Preferences"
 	file_has_text $FILE "<stringvalue>i3-sensible-gui-editor" "Edit / Preferences"
 	file_contains_text $FILE "use_syntax_highlighting.+true" "Edit / Preferences"

@@ -21,3 +21,5 @@ WebStorm
 
 # symbolic links to things
 template/unicode
+i3-dock.sh
+i3-launch.sh

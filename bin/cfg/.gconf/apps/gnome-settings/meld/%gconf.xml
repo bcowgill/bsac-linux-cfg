@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="history-fileentry" mtime="1469914596" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>/home/me/workspace/play/bsac-linux-cfg/bin/cfg/check-system.sh</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/me/workspace/play/bsac-linux-cfg/bin/cfg/%gconf.xml</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/me/workspace/play/bsac-linux-cfg/bin/lib-check-system.sh</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/me/workspace/play/bsac-linux-cfg/bin/i3-sensible-gui-editor</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/me/workspace/play/bsac-linux-cfg/bin/i3-launch.sh</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/me/workspace/play/bsac-linux-cfg/bin/check-system.env0.log</stringvalue>
+		</li>
+	</entry>
+</gconf>
