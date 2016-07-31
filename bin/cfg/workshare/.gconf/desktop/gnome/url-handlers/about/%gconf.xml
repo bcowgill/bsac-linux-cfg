@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="command" mtime="1436037668" type="string">
+		<stringvalue>/usr/bin/chromium-browser %s</stringvalue>
+	</entry>
+</gconf>
