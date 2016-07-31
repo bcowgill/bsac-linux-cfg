@@ -281,9 +281,10 @@ SCREENSAVER_PKG="
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 EMACS_PKG="
-	emacs24
+	emacs:emacs24
+	emacs24-el
 	editorconfig
-	exuberant-ctags
+	ctags:exuberant-ctags
 	libparse-exuberantctags-perl
 "
 
