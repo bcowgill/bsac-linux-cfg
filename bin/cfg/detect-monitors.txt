@@ -1,0 +1,14 @@
+Screen 0: minimum 1920 x 1080, current 1920 x 1080, maximum 1920 x 1080
+default connected primary 1920x1080+0+0 0mm x 0mm
+   1920x1080  1.77777    77.0* 
+resolution 1920x1080 ok
+default crtc 0: 1920x1080 77.0 +0+0 "default"
+OUTPUT_MONITORS=1
+OUTPUT_MAIN=default
+OUTPUT_AUX=default
+OUTPUT_AUX2=default
+OUTPUT_RES_MAIN=1920x1080
+OUTPUT_RES_AUX=1920x1080
+OUTPUT_RES_AUX2=1920x1080
+
+
