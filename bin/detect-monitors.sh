@@ -13,15 +13,19 @@ OUTPUT_RES_MAIN=
 OUTPUT_RES_AUX=
 OUTPUT_RES_AUX2=
 
+XROUT=$(mktemp)
+XRERR=$(mktemp)
+xrandr >> $XROUT 2> $XRERR
+
 if [ ${1:-quiet} == show ]; then
 	# if show option provided, show all resolutions with computed aspect ratio
-	xrandr | perl -pne 's{\s{2}(\d+)x(\d+)\s{2}}{qq{  $1x$2  @{[substr($1/$2,0,7)]}}}xmsge'
+	perl -pne 's{\s{2}(\d+)x(\d+)\s{2}}{qq{  $1x$2  @{[substr($1/$2,0,7)]}}}xmsge' < $XROUT
 else
-	xrandr | grep ' connected'
+	grep ' connected' < $XROUT
 fi
 
-MONITORS=`xrandr | grep ' connected' | wc -l`
-MONITOR_NAMES=`xrandr | grep ' connected' | perl -pne 's{\A (\w+) .+ \z}{$1\n}xms'`
+MONITORS=`grep ' connected' < $XROUT | wc -l`
+MONITOR_NAMES=`grep ' connected' < $XROUT | perl -pne 's{\A (\w+) .+ \z}{$1\n}xms'`
 
 # force values when testing...
 #MONITORS=2
@@ -37,10 +41,11 @@ MONITOR_NAMES=`xrandr | grep ' connected' | perl -pne 's{\A (\w+) .+ \z}{$1\n}xm
 #VGA1 disconnected (normal left inverted right x axis y axis)
 #VIRTUAL1 disconnected (normal left inverted right x axis y axis)
 
-if xrandr | egrep '   ' | grep $RES > /dev/null ; then
+if egrep '   ' < $XROUT | grep $RES > /dev/null ; then
 	echo resolution $RES ok
 else
 	echo did not detect desired resolution $RES
+	rm $XROUT $XRERR
 	exit 1
 fi
 
@@ -50,7 +55,7 @@ if [ $MONITORS == 1 ]; then
 	AUX=$MAIN
 	AUX2=$MAIN
 	RES2=$RES
-	echo $MAIN `xrandr --dryrun --output $MAIN --mode $RES 2>&1`
+	echo $MAIN `xrandr --dryrun --output $MAIN --mode $RES 2> $XRERR`
 else
 	if [ $MONITORS == 2 ]; then
 		RES2=$RES
@@ -60,8 +65,8 @@ else
 			AUX=$mon
 		done
 		AUX2=$AUX
-		echo $MAIN `xrandr --dryrun --output $MAIN --mode $RES 2>&1`
-		echo $AUX `xrandr --dryrun --output $AUX --mode $RES2 2>&1`
+		echo $MAIN `xrandr --dryrun --output $MAIN --mode $RES 2> $XRERR`
+		echo $AUX `xrandr --dryrun --output $AUX --mode $RES2 2> $XRERR`
 	else
 		if [ $MONITORS == 3 ]; then
 			# set up three monitors
@@ -77,22 +82,24 @@ else
 					fi
 				fi
 			done
-			echo $MAIN `xrandr --dryrun --output $MAIN --mode $RES 2>&1`
-			echo $AUX  `xrandr --dryrun --output $AUX --mode $RES2 2>&1`
-			echo $AUX2 `xrandr --dryrun --output $AUX2 --mode $RES 2>&1`
+			echo $MAIN `xrandr --dryrun --output $MAIN --mode $RES 2> $XRERR`
+			echo $AUX  `xrandr --dryrun --output $AUX --mode $RES2 2> $XRERR`
+			echo $AUX2 `xrandr --dryrun --output $AUX2 --mode $RES 2> $XRERR`
 		else
 			echo $MONITORS monitors found, unexpected
 			echo $MONITOR_NAMES
+			rm $XROUT $XRERR
 			exit 1
 		fi
 	fi
 fi
 
 if [ $RES != $RES2 ]; then
-	if xrandr | egrep '   ' | grep $RES2 > /dev/null ; then
+	if egrep '   ' < $XROUT | grep $RES2 > /dev/null ; then
 		echo resolution $RES2 ok
 	else
 		echo did not detect desired resolution $RES2
+		rm $XROUT $XRERR
 		exit 1
 	fi
 fi
