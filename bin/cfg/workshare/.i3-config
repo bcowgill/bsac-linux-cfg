@@ -22,7 +22,7 @@
 # Errors rising from this configuration are in ~/.xsession-errors
 
 # BSAC var settings
-set $bin /home/bcowgill/bin
+set $bin /home/me/bin
 
 # Initialise monitor resolutions, mouse/trackpad/touch/keyboard setup
 exec --no-startup-id $bin/i3-start.sh
@@ -40,9 +40,9 @@ set $lockcolor $mygray
 # use xrandr --current command to get monitor screen names
 # define vars for monitor screens (updated by i3-config-update.sh)
 #  do not edit settings here...
-set $main eDP1
-set $aux  eDP1
-set $aux2 eDP1
+set $main default
+set $aux  default
+set $aux2 default
 
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
