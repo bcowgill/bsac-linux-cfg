@@ -27,7 +27,7 @@ set -e
 #https://github.com/adobe-fonts/source-code-pro/
 
 set -o posix
-set > check-system.env0.log
+set > $HOME/bin/check-system.env0.log
 set +o posix
 
 # set FRESH_NPM to reinstall npm packages so they are updated
@@ -726,7 +726,7 @@ INSTALL_FILE_PACKAGES="
 "
 
 set -o posix
-set > check-system.env.log
+set > $HOME/bin/check-system.env.log
 set +o posix
 }
 set_derived_env
