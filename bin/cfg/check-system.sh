@@ -895,10 +895,10 @@ file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
-file_linked_to .xscreensaver bin/cfg/.xscreensaver "xscreensaver configuration"
+file_linked_to .xscreensaver bin/cfg/$COMPANY/.xscreensaver "xscreensaver configuration"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 make_dir_exist .config/i3 "i3 configuration file dir"
-file_linked_to .config/i3/config $HOME/bin/cfg/.i3-config "i3 window manager configuration"
+file_linked_to .config/i3/config $HOME/bin/cfg/$COMPANY/.i3-config "i3 window manager configuration"
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
@@ -1692,7 +1692,7 @@ fi # CHARLES_PKG
 # Sourcegear Diffmerge colors
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
-file_linked_to "$FILE" "$HOME/bin/cfg/$FILE" "SourceGear DiffMerge config linked"
+file_linked_to "$FILE" "$HOME/bin/cfg/$COMPANY/$FILE" "SourceGear DiffMerge config linked"
 if [ -f "$FILE" ]; then
 	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
 	#ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
