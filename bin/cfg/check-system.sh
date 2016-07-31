@@ -1386,9 +1386,9 @@ if [ ! -z "$NODE_PKG" ]; then
 			&& nvm ls-remote)
 		dir_exists "$NVM_VER_DIR/$NVM_LTS_VER" "node long term stable version installed" || nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
 		dir_exists "$NVM_VER_DIR/$NVM_LATEST_VER" "node latest version installed" || nvm install $NVM_LATEST_VER --reinstall-packages-from=system
-		file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && nvm use)
+		file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && echo "YOUDO manually issue command nvm use $NVM_LATEST_VER")
+		echo node version: `node --version`
 	fi
-
 else
 	OK "will not configure npm unless NODE_PKG is non-zero"
 fi
