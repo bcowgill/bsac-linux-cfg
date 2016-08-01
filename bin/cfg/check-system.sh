@@ -449,6 +449,8 @@ INSTALL_CMDS="
 # Recommended packages:
 # xml-core:i386
 # from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
+# from calibre fonts-stix fonts-mathjax-extras libjs-mathjax-doc python-apsw-doc
+#  python-markdown-doc ttf-bitstream-vera python-paste python-webob-doc
 
 INSTALL_LIST="
 	wcd.exec:wcd
@@ -490,7 +492,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#P4MERGE_PKG=""
 	RUBY_PKG=""
 	VPN_PKG=""
-	EBOOK_READER=""
+	#EBOOK_READER=""
 	DRUID_PKG=""
 	CUSTOM_PKG="
 		gnucash

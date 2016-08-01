@@ -91,6 +91,8 @@ busybox-static
 bzip2
 ca-certificates
 ca-certificates-java
+calibre
+calibre-bin
 camera-app
 canonical-oem-keyring
 canonical-poke
@@ -239,6 +241,7 @@ fonts-khmeros-core
 fonts-lao
 fonts-liberation
 fonts-lklug-sinhala
+fonts-mathjax
 fonts-nanum
 fonts-opensymbol
 fonts-sil-abyssinica
@@ -652,6 +655,7 @@ libcgmanager0:i386
 libcgraph6
 libcheese7:amd64
 libcheese-gtk23:amd64
+libchm1
 libck-connector0:amd64
 libclass-accessor-perl
 libclass-data-inheritable-perl
@@ -1033,6 +1037,7 @@ libjpeg-turbo-progs
 libjs-colors
 libjs-jquery
 libjs-jquery-ui
+libjs-mathjax
 libjs-node-uuid
 libjson0:amd64
 libjson-c2:amd64
@@ -1040,6 +1045,8 @@ libjson-c2:i386
 libjson-glib-1.0-0:amd64
 libjson-glib-1.0-common
 libjson-xs-perl
+libjs-sphinxdoc
+libjs-underscore
 libjte1
 libk5crypto3:amd64
 libk5crypto3:i386
@@ -1232,6 +1239,7 @@ libpng12-0:amd64
 libpng12-0:i386
 libpocketsphinx1
 libpod-latex-perl
+libpodofo0.9.0
 libpod-spell-perl
 libpolkit-agent-1-0:amd64
 libpolkit-backend-1-0:amd64
@@ -1459,6 +1467,7 @@ libthai0:amd64
 libthai-data
 libtheora0:amd64
 libthumbnailer0:amd64
+libtidy-0.99-0
 libtiff5:amd64
 libtiff5:i386
 libtimedate-perl
@@ -1969,16 +1978,22 @@ python3-update-manager
 python3-urllib3
 python3-xdg
 python3-xkit
+python-apsw
 python-apt
 python-apt-common
 python-aptdaemon
 python-aptdaemon.gtk3widgets
+python-beautifulsoup
 python-cairo
 python-chardet
+python-cherrypy3
 python-commandnotfound
 python-crypto
+python-cssselect
+python-cssutils
 python-cups
 python-cupshelpers
+python-dateutil
 python-dbus
 python-dbus-dev
 python-debian
@@ -1986,6 +2001,8 @@ python-debtagshw
 python-defer
 python-dirspec
 python-distutils-extra
+python-dnspython
+python-feedparser
 python-gconf
 python-gdbm
 python-gi
@@ -2004,7 +2021,10 @@ python-ldb
 python-libxml2
 python-lockfile
 python-lxml
+python-markdown
+python-mechanize
 python-minimal
+python-netifaces
 python-notify
 python-ntdb
 python-oauthlib
@@ -2016,13 +2036,17 @@ python-pil
 python-piston-mini-client
 python-pkg-resources
 python-pycurl
+python-pygments
 python-pyorbit
+python-pyparsing
 python-qt4
 python-qt4-dbus
 python-renderpm
 python-reportlab
 python-reportlab-accel
+python-repoze.lru
 python-requests
+python-routes
 python-samba
 python-serial
 python-sip
@@ -2036,6 +2060,8 @@ python-twisted-core
 python-twisted-web
 python-ubuntu-sso-client
 python-urllib3
+python-utidylib
+python-webob
 python-xapian
 python-xdg
 python-zeitgeist
