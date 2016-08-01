@@ -918,11 +918,11 @@ file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
-make_dir_exist .config/i3 "i3 configuration file dir"
-file_linked_to .config/i3/config bin/cfg$COMP/.i3-config "i3 window manager configuration"
-file_linked_to bin/i3-launch.sh bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
-file_linked_to bin/i3-dock.sh bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
 dir_linked_to .gconf bin/cfg$COMP/.gconf/ "gnome configuration files linked"
+make_dir_exist .config/i3 "i3 configuration file dir"
+file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
+file_linked_to bin/i3-launch.sh  $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
+file_linked_to bin/i3-dock.sh    $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
