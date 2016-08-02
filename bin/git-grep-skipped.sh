@@ -1,1 +1,1 @@
-git grep -E '\.(skip|only)' | grep '.spec.js' | grep -v // | egrep --color 'skip|only'
+git grep -E '^\s*(describe|it)\.(skip|only)' -- '*.spec.js' | egrep --color 'skip|only'
