@@ -2,22 +2,31 @@
 # scan the javascript tests for disabled tests
 
 MAX_SKIP=10
+color=--color
+
 
 # any ocurrence of .only() is a failure
 ERROR=0
 
-git grep -E '^\s*(describe|it)\.skip' -- '*.spec.js' | egrep --color 'skip|only'
+# anything inheriting from LoggedComponent prevents build
+if git grep LoggedComponent | egrep 'import .+ from' | grep -v LoggedComponent.story.js | grep $color LoggedComponent; then
+	echo ERROR: inherit from BaseComponent for production builds.
+	ERROR=3
+fi
+
+git grep -E '^\s*(describe|it)\.skip' -- '*.spec.js' | egrep $color 'skip|only'
 
 # any ocurrence of top level describe.skip() is a failure
-if git grep -E '^describe\.skip' -- '*.spec.js' | egrep --color 'skip|only' > /dev/null ; then
+if git grep -E '^describe\.skip' -- '*.spec.js' | egrep $color 'skip|only' > /dev/null ; then
 	echo ERROR: entire test plan skipped
-	git grep -E '^describe\.skip' -- '*.spec.js' | egrep --color 'skip|only'
+	git grep -E '^describe\.skip' -- '*.spec.js' | egrep $color 'skip|only'
 	ERROR=2
 fi
 
-if git grep -E '^\s*(describe|it)\.only' -- '*.spec.js' | egrep --color 'skip|only' > /dev/null ; then
+# any ocurrence of .only() is a failure
+if git grep -E '^\s*(describe|it)\.only' -- '*.spec.js' | egrep $color 'skip|only' > /dev/null ; then
 	echo ERROR: tests being skipped because of only
-	git grep -E '^\s*(describe|it)\.only' -- '*.spec.js' | egrep --color 'skip|only'
+	git grep -E '^\s*(describe|it)\.only' -- '*.spec.js' | egrep $color 'skip|only'
 	ERROR=1
 fi
 
@@ -28,7 +37,7 @@ if [ $SKIPS -gt $MAX_SKIP ]; then
 	ERROR=$SKIPS
 	echo ERROR: $SKIPS skipped tests or test suites found
 else
-	echo $SKIPS skips found
+	echo $SKIPS skips found, no big deal
 fi
 
 exit $ERROR
