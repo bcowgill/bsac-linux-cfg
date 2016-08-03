@@ -170,7 +170,7 @@ VPN_CONFIG=/etc/network/interfaces.d/bridge-vpn
 # epub, mobi book reader
 EBOOK_READER="calibre"
 
-PERL_PKG="cpanm:cpanminus"
+PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
 
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 

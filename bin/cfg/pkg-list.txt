@@ -1883,6 +1883,7 @@ pciutils
 pcmciautils
 perl
 perl-base
+perl-doc
 perl-modules
 perltidy
 pkg-config
