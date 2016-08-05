@@ -451,6 +451,19 @@ INSTALL_CMDS="
 # from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
 # from calibre fonts-stix fonts-mathjax-extras libjs-mathjax-doc python-apsw-doc
 #  python-markdown-doc ttf-bitstream-vera python-paste python-webob-doc
+# from digikam Suggested packages:
+# digikam-doc systemsettings libqt4-sql-mysql docbook docbook-dsssl
+# docbook-defguide dbtoepub docbook-xsl-doc-html docbook-xsl-doc-pdf
+# docbook-xsl-doc-text docbook-xsl-doc docbook-xsl-saxon fop libsaxon-java
+# libxalan2-java libxslthl-java xalan python-wxgtk2.8
+# libterm-readline-gnu-perl libterm-readline-perl-perl djvulibre-bin finger
+# gallery gimp kmail vorbis-tools gpsd gsl-ref-psdoc gsl-doc-pdf gsl-doc-info
+# gsl-ref-html hspell libqca2-plugin-cyrus-sasl libqca2-plugin-gnupg
+# libqca2-plugin-ossl qtmobility-l10n libquazip-doc phonon-backend-vlc
+# gstreamer1.0-plugins-ugly phonon4qt5-backend-gstreamer perlsgml w3-recs
+# opensp
+# Recommended packages:
+# minidnla
 
 INSTALL_LIST="
 	wcd.exec:wcd
@@ -497,6 +510,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 	CUSTOM_PKG="
 		gnucash
 		audacity
+                oggconvert
+                digikam
 	"
 	#NODE_PKG=""
 
@@ -1872,8 +1887,6 @@ function DISABLED {
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
 
-# oggconvert gui - convert sound files to free formats
-# digikam photo metadata/tag/edit software
 
 # EMACS packages
 # sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
