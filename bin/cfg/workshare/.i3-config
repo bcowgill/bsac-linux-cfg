@@ -100,19 +100,20 @@ focus_follows_mouse no
 # hide the vertical borders at edge of screen
 hide_edge_borders vertical
 
+# DELETE THESE
 # assign workspaces to monitors
-workspace 1   output $aux2
-workspace 2   output $aux2
-workspace 3   output $aux2
-workspace 4   output $aux2
-workspace 9   output $aux
+#workspace 1   output $aux2
+#workspace 2   output $aux2
+#workspace 3   output $aux2
+#workspace 4   output $aux2
+#workspace 9   output $aux
 
-workspace 5   output $main
+#workspace 5   output $main
 #workspace 6   output $main
-workspace 6   output $aux
-workspace 7   output $main
-workspace 8   output $main
-workspace 10  output $aux
+#workspace 6   output $aux
+#workspace 7   output $main
+#workspace 8   output $main
+#workspace 10  output $aux
 
 # put clients on specific workspaces. The first matching rule below
 # determines where a window goes.
@@ -353,8 +354,8 @@ bindsym $mod+g exec i3-input -f '$popup_font' -F '[con_mark="%s"] focus' -l 15 -
 # BSAC next set of key bindings inspired/copied from
 # http://i3wm.org/docs/user-contributed/lzap-config.html
 # screen locker (first move to "safe" workspace without any chat app)
-bindsym Control+$alt+Shift+l exec i3-msg workspace $nochat && i3lock -c $lockcolor -d
-bindsym Control+$alt+l exec i3-msg workspace $nochat && xscreensaver-command -lock
+bindsym Control+$alt+Shift+l exec i3-msg workspace $nochat && i3-lock.sh i3
+bindsym Control+$alt+l exec i3-msg workspace $nochat && i3-lock.sh
 
 # next/previous workspace
 bindsym $alt+Tab focus right
