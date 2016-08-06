@@ -113,6 +113,7 @@ VIRTUALBOX_CMDS="dkms $VIRTUALBOX_CMD"
 VIRTUALBOX_VER=5.1
 VIRTUALBOX_PKG="unar gksu dkms"
 VIRTUALBOX_REL="raring"
+#VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
 
 SVN_CMD=svn
 SVN_VER="1.8.5"
@@ -146,6 +147,7 @@ DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 P4MERGE_VER=p4v-2015.2.1315639
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
+#P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
 
 RUBY_PKG="ruby ruby-dev"
 RUBY_CMD=ruby
@@ -309,6 +311,7 @@ SUBLIME_PKG=sublime-text_build-3114_amd64.deb
 SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_CMD=subl
 SUBLIME_URL=http://download.sublimetext.com
+#SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
 #me@akston:~/bin (dell-7510 *% u+2)$ tar tvzf ~/Downloads/WebStorm-2016.2.tar.gz  | head
 #-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
@@ -317,6 +320,9 @@ WEBSTORM_ARCHIVE=WebStorm-2016.2
 WEBSTORM_CONFIG=WebStorm2016.2
 WEBSTORM_DIR=WebStorm-162.1121.31
 WEBSTORM_URL=http://download.jetbrains.com/webstorm
+#WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
+#WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
+#WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
 
 VSLICK_CMD=vs
 VSLICK_ARCHIVE=se_20000300_linux64
@@ -369,26 +375,6 @@ THUNDER=""
 GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
 GOOGLE_CHROME=google-chrome
 GOOGLE_CHROME_PKG=google-chrome-stable_current_amd64.deb
-
-SUBLIME=subl
-SUBLIME_CFG=.config/sublime-text-3
-SUBLIME_PKG=sublime-text_build-3083_amd64.deb
-SUBLIME_URL=http://c758482.r82.cf2.rackcdn.com/$SUBLIME_PKG
-
-
-WEBSTORM=wstorm
-WEBSTORM_ARCHIVE=WebStorm-11.0.4
-WEBSTORM_DIR=WebStorm-143.2370.0
-WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
-WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
-WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
-
-VSLICK=vs
-VSLICK_ARCHIVE=se_19000101_linux64
-VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&product=se&pname=SlickEdit%20for%20Linux"
-VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
-VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
-
 
 FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
 FLASH_EXTRACTED_DIR="$DOWNLOAD/$FLASH_ARCHIVE"
