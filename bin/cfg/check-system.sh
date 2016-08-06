@@ -141,6 +141,9 @@ VPN="openvpn brctl:bridge-utils"
 WEBSTORM=wstorm
 WEBSTORM_ARCHIVE=WebStorm-11.0.4
 WEBSTORM_DIR=WebStorm-143.2370.0
+# legacy ver just for testing check-system
+WEBSTORM_ARCHIVE=WebStorm-11.0.3
+WEBSTORM_DIR=WebStorm-143.1559.5
 WEBSTORM_URL=http://download.jetbrains.com/webstorm/$WEBSTORM_ARCHIVE.tar.gz
 WEBSTORM_EXTRACTED_DIR="$HOME/Downloads/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
@@ -251,6 +254,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	VSLICK=""
 	RUBY_GEMS=""
 	SASS_COMMANDS=""
+	CHARLES_PKG=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
@@ -432,11 +436,11 @@ dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
 dir_exists  bin/cfg "bin configuration missing"
 file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
 
-if [ -z $COMPANY ]; then
-	file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check script configured"
-else
-	file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
-fi
+#if [ -z $COMPANY ]; then
+file_linked_to bin/check-system.sh $HOME/bin/cfg/check-system.sh "system check script configured"
+#else
+#	file_linked_to bin/check-system.sh $HOME/bin/cfg/$COMPANY/check-$COMPANY.sh "system check script configured"
+#fi
 
 rm -rf $INI_DIR
 make_dir_exist /tmp/$USER "user's own temporary directory"
@@ -572,9 +576,6 @@ if ( fc-list | grep SourceCodePro ) ; then
 else
 	NOT_OK "SourceCodePro font is not cached"
 fi
-
-echo STOP
-exit 42
 
 # Get unicode fonts and examples
 # http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
