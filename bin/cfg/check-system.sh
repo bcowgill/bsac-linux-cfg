@@ -98,7 +98,7 @@ CUSTOM_PKG=""
 ECLIPSE=""
 
 I3WM_CMD=i3
-I3WM_PKG="i3 xdotool xmousepos:xautomation feh"
+I3WM_PKG="i3 xbacklight xdotool xmousepos:xautomation feh"
 
 CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
@@ -284,6 +284,7 @@ SCREENSAVER_PKG="
 	screensaver-default-images
 	wmmatrix
 	xscreensaver
+	xbacklight
 	xscreensaver-data-extra
 	xscreensaver-gl-extra
 	xscreensaver-screensaver-bsod

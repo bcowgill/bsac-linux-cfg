@@ -24,7 +24,6 @@ if [ ${OUTPUT_RES_AUX2:-error} == error ]; then
 	exit 13
 fi
 
-set -x
 if [ $OUTPUT_MAIN == $OUTPUT_AUX ]; then
 	# set up single monitor
 	xrandr --output $OUTPUT_MAIN --mode $OUTPUT_RES_MAIN
