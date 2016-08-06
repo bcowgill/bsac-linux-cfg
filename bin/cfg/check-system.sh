@@ -170,6 +170,7 @@ PIDGIN_ZIP="$PIDGIN_SRC.tar.bz2"
 
 VPN_PKG="openvpn brctl:bridge-utils"
 VPN_CONFIG=/etc/network/interfaces.d/bridge-vpn
+VPN_CONN=/etc/NetworkManager/system-connections/WorkshareVPN
 
 # epub, mobi book reader
 EBOOK_READER="calibre"
@@ -1555,6 +1556,23 @@ done
 
 BAIL_OUT repos
 
+if [ ! -z "$VPN_PKG" ]; then
+   # https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
+   # for VPN after installing bridge-utils need to restart network
+   #[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
+   #"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
+   #See my screenshots for Workshare specific config. "
+
+	FILE="$VPN_CONFIG"
+	file_exists "$FILE" "vpn bridge configuration" || copy_file_to_root "$HOME/bin/cfg$COMP/bridge-vpn" "$FILE" "install vpn config for iface br0 inet static"
+	file_has_text "$FILE" "iface br0 inet static"
+
+	if [ -z "$HAD_VPN_CONFIG" ]; then
+		OK "restart network after vpn bridge configuration"
+		sudo /etc/init.d/networking restart
+	fi
+fi
+
 # HEREIAM CUSTOM INSTALL
 
 #============================================================================
@@ -1946,22 +1964,6 @@ function DISABLED {
 # generate javascript tags for emacs
 # ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
 # save .ctags config for better javascript
-
-# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
-# for VPN after installing bridge-utils need to restart network
-#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
-#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
-#See my screenshots for Workshare specific config. "
-if [ ! -z "$VPN_PKG" ]; then
-	FILE="$VPN_CONFIG"
-	file_exists "$FILE" "vpn bridge configuration" || copy_file_to_root "$HOME/bin/cfg$COMP/bridge-vpn" "$FILE" "install vpn config for iface br0 inet static"
-	file_has_text "$FILE" "iface br0 inet static"
-
-	if [ -z "$HAD_VPN_CONFIG" ]; then
-		OK "restart network after vpn bridge configuration"
-		sudo /etc/init.d/networking restart
-	fi
-fi
 
 if /bin/false ; then
 # TODO some notes on how to set up then robot framework browser test system
