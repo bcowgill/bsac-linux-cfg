@@ -1,6 +1,6 @@
 #!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
-# check-system.sh 2>&1 | tee ~/check.log | grep 'NOT OK'
+# check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK'
 
 # Search for 'begin' for start of script
 
@@ -525,22 +525,15 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
    NODE_VER="v6.3.1"
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
-	# MUSTDO update to latest -- just delete these here
-#   P4MERGE_VER=p4v-2014.3.1007540
-#   WEBSTORM_ARCHIVE=WebStorm-11.0.3
-#   WEBSTORM_DIR=WebStorm-143.1559.5
-#   SUBLIME_PKG=sublime-text_build-3083_amd64.deb
-#   VIRTUALBOX_VER=5.0
-   # delete above for latest versions
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	USE_KDE=""
+	CHARLES_PKG=""
 	SKYPE_PKG=""
 	RUBY_GEMS=""
 	RUBY_SASS_COMMANDS=""
 	DRUID_PKG=""
 
 	GOOGLE_CHROME_PKG=""
-	# no amd64 pkg for perforce merge
 	VSLICK_ARCHIVE=""
    SUBLIME_CFG=""
 fi
