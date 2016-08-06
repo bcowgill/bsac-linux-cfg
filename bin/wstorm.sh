@@ -11,4 +11,9 @@ export IBUS_ENABLE_SYNC_MODE=$TRUE
 
 mkdir -p $DIR 2> /dev/null
 rm $LOG 2> /dev/null
-wstorm > $LOG 2>&1 &
+echo IBUS_ENABLE_SYNC_MODE=$TRUE > $LOG
+ls -al /usr/local/bin/wstorm >> $LOG
+ls -al $HOME/bin/WebStorm >> $LOG
+ls -al $HOME/.WebStorm* >> $LOG
+ls -al $HOME/Downloads/check-system | grep WebStorm >> $LOG
+wstorm >> $LOG 2>&1 &

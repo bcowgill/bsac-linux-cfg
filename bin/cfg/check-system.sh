@@ -34,8 +34,9 @@ set +o posix
 #FRESH_NPM=1
 
 # set BAIL_OUT to stop after a specific point reached
+#BAIL_OUT=versions
 #BAIL_OUT=font
-#BAIL_OUT=diff
+BAIL_OUT=diff
 #BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
@@ -47,6 +48,10 @@ set +o posix
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
 #BAIL_OUT=
+
+if [ ! -z $1 ]; then
+	BAIL_OUT="$1"
+fi
 
 if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
@@ -105,8 +110,8 @@ SKYPE_PKG="skype skype-bin"
 # http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
 VIRTUALBOX_CMD="VirtualBox"
 VIRTUALBOX_CMDS="dkms $VIRTUALBOX_CMD"
-VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX_CMD:virtualbox-5.0"
-VIRTUALBOX_PKG="unar gksu dkms $VIRTUALBOX_CMD:virtualbox-5.1"
+VIRTUALBOX_VER=5.1
+VIRTUALBOX_PKG="unar gksu dkms"
 VIRTUALBOX_REL="raring"
 
 SVN_CMD=svn
@@ -138,8 +143,7 @@ DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
 # Perforce p4merge tool
 # HELIX P4MERGE: VISUAL MERGE TOOL
-P4MERGE_CMD="$DOWNLOAD/p4v-2014.3.1007540/bin/p4merge"
-P4MERGE_CMD="$DOWNLOAD/p4v-2015.2.1315639/bin/p4merge"
+P4MERGE_VER=p4v-2015.2.1315639
 P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 
@@ -190,7 +194,7 @@ NODE_LIB=/usr/lib/nodejs
 NODE_PKG="
 	$NODE_CMDS
 	node:nodejs-legacy
-	$NODE_LIB/debug.js:node-debug
+	/usr/share/doc/node-debug/copyright:node-debug
 	$NODE_LIB/eyes.js:node-eyes
 	$NODE_LIB/glob.js:node-glob
 	$NODE_LIB/inherits.js:node-inherits
@@ -205,8 +209,8 @@ NODE_CUSTOM_PKG="
 	$NODE_LIB/bytes/index.js:node-bytes
 	$NODE_LIB/chrono.js:node-chrono
 	$NODE_LIB/cli/index.js:node-cli
-	$NODE_LIB/colors.js:node-colors
-	$NODE_LIB/commander.js:node-commander
+	/usr/share/doc/node-colors/copyright:node-colors
+	/usr/share/doc/node-commander/copyright:node-commander
 	$NODE_LIB/contextify/index.js:node-contextify
 	$NODE_LIB/daemon/index.js:node-daemon
 	$NODE_LIB/dequeue/index.js:node-dequeue
@@ -236,8 +240,9 @@ NODE_CUSTOM_PKG="
 	$NODE_LIB/traverse.js:node-traverse
 	$NODE_LIB/which.js:node-which
 	$NODE_LIB/wordwrap.js:node-wordwrap
-	$NODE_LIB/zipfile/index.js:node-zipfile
+	/usr/share/doc/node-zipfile/copyright:node-zipfile
 "
+
 
 NPM_LIB=/usr/local/lib/node_modules
 NPM_GLOBAL_PKG="
@@ -294,7 +299,7 @@ EMACS_PKG="
 	emacs:emacs24
 	editorconfig
 	ctags:exuberant-ctags
-	/usr/share/emacs/24.3/lisp/linum.el.gz:emacs24-el
+	/usr/share/emacs/24.4/lisp/linum.el.gz:emacs24-el
 	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
 "
 
@@ -303,7 +308,6 @@ SUBLIME_PKG=sublime-text_build-3114_amd64.deb
 SUBLIME_CFG=.config/sublime-text-3
 SUBLIME_CMD=subl
 SUBLIME_URL=http://download.sublimetext.com
-SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
 #me@akston:~/bin (dell-7510 *% u+2)$ tar tvzf ~/Downloads/WebStorm-2016.2.tar.gz  | head
 #-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
@@ -311,9 +315,6 @@ WEBSTORM_CMD=wstorm
 WEBSTORM_ARCHIVE=WebStorm-2016.2
 WEBSTORM_DIR=WebStorm-162.1121.31
 WEBSTORM_URL=http://download.jetbrains.com/webstorm
-WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
-WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
-WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
 
 VSLICK_CMD=vs
 VSLICK_ARCHIVE=se_20000300_linux64
@@ -510,8 +511,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 	CUSTOM_PKG="
 		gnucash
 		audacity
-                oggconvert
-                digikam
+      oggconvert
+      digikam
 	"
 	#NODE_PKG=""
 
@@ -531,8 +532,19 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	UBUNTU=vivid
 	ULIMITFILES=1024
 	BIG_DATA="/data"
-	USE_KDE=""
+   JAVA_VER=java-8-openjdk-amd64
+   NODE_VER="v6.3.1"
+	NODE_CMD=node
+	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
+	# MUSTDO update to latest -- just delete these here
+#   P4MERGE_VER=p4v-2014.3.1007540
+#   WEBSTORM_ARCHIVE=WebStorm-11.0.3
+#   WEBSTORM_DIR=WebStorm-143.1559.5
+#   SUBLIME_PKG=sublime-text_build-3083_amd64.deb
+#   VIRTUALBOX_VER=5.0
+   # delete above for latest versions
 	VIRTUALBOX_REL=$(lsb_release -sc)
+	USE_KDE=""
 	SKYPE_PKG=""
 	RUBY_GEMS=""
 	RUBY_SASS_COMMANDS=""
@@ -541,6 +553,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	GOOGLE_CHROME_PKG=""
 	# no amd64 pkg for perforce merge
 	VSLICK_ARCHIVE=""
+   SUBLIME_CFG=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
@@ -658,6 +671,16 @@ GIT_PKG_AFTER="
 	tig
 	$GITSVN_PKG
 "
+
+P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
+
+WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
+WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
+WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
+
+SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
+
+VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
 
 NODE_PKG_LIST="
 	$NODE_PKG
@@ -821,6 +844,8 @@ which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
 which npm && npm --version
+
+BAIL_OUT versions
 
 # chicken egg bootstrap:
 if [ ! -e $HOME/bin ]; then
@@ -1070,12 +1095,12 @@ if cmd_exists kfontinst > /dev/null ; then
 	FILE=.fonts/p/ProFontWindows.ttf
 	# TODO needed for workshare
 	FILE=.fonts/ProFontWindows.ttf
-	file_exists $FILE "ProFontWindows font needs to be installed" || find $DOWNLOADS/ -name '*.ttf'
-	file_exists $FILE > /dev/null || kfontinst $DOWNLOADS/ProFontWinTweaked/ProFontWindows.ttf
+	file_exists $FILE "ProFontWindows font needs to be installed" || find $DOWNLOAD/ -name '*.ttf'
+	file_exists $FILE > /dev/null || kfontinst $DOWNLOAD/ProFontWinTweaked/ProFontWindows.ttf
 	file_exists $FILE "ProFontWindows still not installed"
 
 	FILE=.fonts/p/ProFontWindows_Bold.ttf
-	file_exists $FILE > /dev/null || kfontinst $DOWNLOADS/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
+	file_exists $FILE > /dev/null || kfontinst $DOWNLOAD/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf
 	file_exists $FILE "ProFontWindows Bold still not installed"
 
 	file_has_text .kde/share/apps/konsole/Shell.profile "Font=ProFontWindows,14" "need to set font for konsole Settings / Edit Current Profile / Appearance / Set Font"
@@ -1317,7 +1342,7 @@ else
 fi
 
 if [ ! -z "$P4MERGE_PKG" ]; then
-	install_file_from_zip $P4MERGE_CMD $P4MERGE_PKG "Perforce p4merge manual download from $P4MERGE_URL"
+	install_file_from_zip $P4MERGE_CMD $P4MERGE_PKG "Perforce HELIX P4MERGE: VISUAL MERGE TOOL manual download from $P4MERGE_URL"
 	file_linked_to "$HOME/bin/p4merge" "$P4MERGE_CMD" "Perforce p4merge link"
 else
 	OK "will not configure perforce merge unless P4MERGE_PKG is non-zero"
@@ -1367,10 +1392,10 @@ if [ ! -z "$NODE_PKG" ]; then
 	if $NODE_CMD --version | grep $NODE_VER; then
 		OK "node command version correct"
 	else
-		echo HEREIAM STOP NODE
-		exit 88
 		GOTVER=`$NODE_CMD --version`
 		NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER"
+		echo HEREIAM STOP NODE
+		exit 88
 		#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
 		sudo apt-get update
 		sudo apt-get install -y python-software-properties python g++ make
@@ -1381,6 +1406,7 @@ if [ ! -z "$NODE_PKG" ]; then
 	fi
 
 	npm config set registry https://registry.npmjs.org/
+	echo $NPM_GLOBAL_PKG_LIST > npm-pkg.txt
 	if [ ! -z "$FRESH_NPM" ]; then
 		always_install_npm_global_from npm
 		always_install_npm_globals_from "$NPM_GLOBAL_PKG_LIST"
@@ -1389,10 +1415,6 @@ if [ ! -z "$NODE_PKG" ]; then
 		install_npm_global_commands_from "$NPM_GLOBAL_PKG_LIST"
 	fi
 	is_npm_global_package_installed grunt "need grunt installed to go further."
-	make_dir_exist $HOME/.grunt-init "grunt template dir"
-	# need to upload ssh public key to github before getting grunt templates
-	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
-
 	if [ ! -z "$NVM_URL" ]; then
 		NVM_INST="$DOWNLOAD/nvm/install.sh"
 		make_dir_exist "$DOWNLOAD/nvm" "install script for nvm"
@@ -1408,6 +1430,10 @@ if [ ! -z "$NODE_PKG" ]; then
 	fi
 else
 	OK "will not configure npm unless NODE_PKG is non-zero"
+
+	make_dir_exist $HOME/.grunt-init "grunt template dir"
+	# need to upload ssh public key to github before getting grunt templates
+	install_grunt_templates_from "$INSTALL_GRUNT_TEMPLATES"
 fi
 
 BAIL_OUT npm
@@ -1463,8 +1489,8 @@ if [ ! -z "$SUBLIME_PKG" ]; then
 		# package nodejs-legacy provides node -> nodejs symlink
 		#file_linked_to /usr/bin/node /usr/bin/nodejs "grunt needs node command at present, not updated to nodejs yet"
 		cmd_exists node "grunt needs node command at present, not updated to nodejs yet"
-		install_file_from_url $DOWNLOADS/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
-		#cp $DOWNLOADS/Package-Control.sublime-package.zip "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package"
+		install_file_from_url $DOWNLOAD/Package-Control.sublime-package.zip Package-Control.sublime-package.zip "http://sublime.wbond.net/Package%20Control.sublime-package" "sublime package control bundle"
+		#cp $DOWNLOAD/Package-Control.sublime-package.zip "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package"
 		install_file_manually "$SUBLIME_CFG/Installed Packages/Package Control.sublime-package" "sublime package control from instructions" "https://sublime.wbond.net/installation"
 		install_git_repo "$SUBLIME_CFG/Packages" sublime-grunt-build git://github.com/jonschlinkert/sublime-grunt-build.git "sublime text grunt build package - check for Tools/Build System/Grunt after -- May have to correct syntax in print('BuildGruntOnSave: on_post_save')"
 		## TODO - maybe not sublime build may be working ... install_file_manually "$SUBLIME_CFG/Packages/Grunt/SublimeGrunt.sublime-settings" "sublime grunt build system" "https://www.npmjs.org/package/sublime-grunt-build"
@@ -1483,6 +1509,8 @@ if [ ! -z "$VSLICK_ARCHIVE" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
 	cmd_exists $VSLICK_CMD "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
 fi # VSLICK_ARCHIVE
+
+BAIL_OUT editors
 
 if [ ! -z "$USE_SCHEMACRAWLER" ]; then
 	if [ ! -z "$USE_POSTGRES" ]; then
@@ -1513,11 +1541,15 @@ if [ ! -z "$USE_SCHEMACRAWLER" ]; then
 	fi # USE_MYSQL
 fi # USE_SCHEMACRAWLER
 
+BAIL_OUT custom
+
 cmd_exists git "need git to clone repos"
 make_dir_exist workspace/play "github repo play area"
 for repo in $MY_REPOS; do
 	install_git_repo "workspace/play" $repo $GITHUB_URL/$repo.git "my github repo $repo"
 done
+
+BAIL_OUT repos
 
 # HEREIAM CUSTOM INSTALL
 
@@ -2042,4 +2074,3 @@ echo PACKAGES="$PACKAGES"
 
 OK "all checks complete"
 ENDS
-
