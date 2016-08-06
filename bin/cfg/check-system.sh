@@ -36,7 +36,7 @@ set +o posix
 # set BAIL_OUT to stop after a specific point reached
 #BAIL_OUT=versions
 #BAIL_OUT=font
-BAIL_OUT=diff
+#BAIL_OUT=diff
 #BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
@@ -313,6 +313,7 @@ SUBLIME_URL=http://download.sublimetext.com
 #-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
 WEBSTORM_CMD=wstorm
 WEBSTORM_ARCHIVE=WebStorm-2016.2
+WEBSTORM_CONFIG=WebStorm2016.2
 WEBSTORM_DIR=WebStorm-162.1121.31
 WEBSTORM_URL=http://download.jetbrains.com/webstorm
 
@@ -1502,7 +1503,10 @@ if [ ! -z "$WEBSTORM_ARCHIVE" ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
 	cmd_exists $WEBSTORM_CMD "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
 	dir_linked_to bin/WebStorm $DOWNLOAD/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
+   # RUN_PATH = u'/home/bcowgill/bin/WebStorm/bin/webstorm.sh'
+   # CONFIG_PATH = u'/home/bcowgill/.WebStorm2016.2/config'
 	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
+	file_has_text "/usr/local/bin/wstorm" "$HOME/.$WEBSTORM_CONFIG/config" "webstorm refers to config dir"
 fi # WEBSTORM_ARCHIVE
 
 if [ ! -z "$VSLICK_ARCHIVE" ]; then
