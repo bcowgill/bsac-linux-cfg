@@ -298,13 +298,14 @@ SCREENSAVER_PKG="
 
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
+EMACS_VER=24.4
 EMACS_PKG="
 	emacs:emacs24
 	editorconfig
 	ctags:exuberant-ctags
-	/usr/share/emacs/24.4/lisp/linum.el.gz:emacs24-el
 	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
 "
+#EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:emacs24-el"
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
 SUBLIME_PKG=sublime-text_build-3114_amd64.deb
@@ -499,8 +500,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 	CUSTOM_PKG="
 		gnucash
 		audacity
-      oggconvert
-      digikam
+		oggconvert
+		digikam
 	"
 	#NODE_PKG=""
 
@@ -508,6 +509,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	SUBLIME_CFG=""
 	#WEBSTORM_ARCHIVE=""
 	#VSLICK_ARCHIVE=""
+	EMACS_VER=24.3
 
 	# HEREIAM CFG
 fi
@@ -662,7 +664,13 @@ WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
-VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
+if [ ! -z "$VIRTUALBOX_PKG" ]; then
+	VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
+fi
+
+if [ ! -z "$EMACS_PKG" ]; then
+	EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:emacs24-el"
+fi
 
 NODE_PKG_LIST="
 	$NODE_PKG
