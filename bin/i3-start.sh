@@ -7,3 +7,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	touch-off.sh
 fi
 
+if [ "$HOSTNAME" == "akston" ]; then
+	swapcaps.sh
+	keyboard-medium.sh
+fi

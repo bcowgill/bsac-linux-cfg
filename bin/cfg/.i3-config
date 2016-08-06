@@ -23,6 +23,10 @@
 
 # BSAC var settings
 set $bin /home/me/bin
+
+# Initialise monitor resolutions, mouse/trackpad/touch/keyboard setup
+exec --no-startup-id $bin/i3-start.sh
+
 set $font_size 18
 set $font_name ProFontWindows
 
@@ -366,3 +370,6 @@ bindsym XF86AudioMute exec sound-toggle.sh
 bindsym $mod+p exec chromium-browser --incognito
 #bindsym $mod+o exec xman
 
+# Use external script to launch all windows with apps where I want them, requires sleeps
+# this script does not use the $shell and other vars defined above though so possible problems
+exec --no-startup-id $bin/i3-launch.sh

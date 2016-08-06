@@ -58,7 +58,7 @@ xrdb -merge ~/.Xresources &
 ## Desktop background or picture
 #xsetroot -solid '#101010' &
 xsetroot -mod 16 16 -bg '#000000' -fg '#ff0000'
-#feh --bg-scale "$HOME/Dropbox/WorkSafe/velda-dhc-photo-shoot-3.jpg" &
+#feh --bg-scale "$HOME/Pictures/WorkSafe/velda-dhc-photo-shoot-3.jpg" &
 
 ## Set startup volume (use pactl info to determine sink name)
 #pactl set-sink-volume alsa_output.pci-0000_00_1b.0.analog-stereo '60%' &
