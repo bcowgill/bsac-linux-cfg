@@ -503,6 +503,10 @@ if [ "$HOSTNAME" == "akston" ]; then
 		audacity
 		oggconvert
 		digikam
+		samba
+		smbfs
+		firefox
+		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
 	"
 	#NODE_PKG=""
 
