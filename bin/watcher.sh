@@ -1,5 +1,5 @@
 #!/bin/bash
 # show battery, temperature and network information
+df -h /home && echo " "
 power.sh
-echo " "
 ls-ips.sh
