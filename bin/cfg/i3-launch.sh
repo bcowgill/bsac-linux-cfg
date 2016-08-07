@@ -103,7 +103,7 @@ dropbox.sh &
 
 # $files
 i3do "workspace $files; exec browse.sh"
-i3do "workspace $files; exec mygterm.sh $HOME/bin mc $HOME/bin $HOME"
+i3do "workspace $files; exec mygterm.sh $HOME/bin mc $HOME/bin /data/me"
 sleep 5
 
 
