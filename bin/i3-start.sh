@@ -8,6 +8,6 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 fi
 
 if [ "$HOSTNAME" == "akston" ]; then
-	swapcaps.sh
 	keyboard-medium.sh
 fi
+swapcaps.sh
