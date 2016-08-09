@@ -9,6 +9,8 @@ alias upath='PATH=`echo $PATH | upath.sh`'
 
 alias chksys='check-system.sh 2>&1 | tee ~/check.log | grep "NOT OK"'
 
+alias sc=sound-control.sh
+
 # edit config files and re-source them
 alias se='source ./env.sh'
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
