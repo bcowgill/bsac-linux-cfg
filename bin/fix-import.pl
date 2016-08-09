@@ -17,8 +17,10 @@ $Data::Dumper::Terse    = 1;
 
 our $TEST_CASES = 112;
 our $DRY_RUN = $ENV{DRY_RUN} || 0;
+our $BORK = 0;
 
 our $REGEX_MODULE = qr{\.(jsx?|css|less|s[ac]ss) \z}xms;
+our $REGEX_JS = qr{\.(js) \z}xms;
 
 main();
 
@@ -62,12 +64,12 @@ sub main
 {
 	my ($source, $source_path, $source_filename,
 		$target, $target_path, $target_filename,
-		$raExternal) = check_args();
+		$new_import_name, $raExternal) = check_args();
 
 	fix_internal_imports($target, $source_path, $target_path, $source);
 	foreach my $external (@$raExternal)
 	{
-		fix_external_imports($external, $source_path, $target_path, $source_filename);
+		fix_external_imports($external, $source_path, $target_path, $source_filename, $new_import_name);
 	}
 }
 
@@ -83,12 +85,24 @@ sub check_args
 
 	my ($source_path, $source_filename) = get_path_filename($source);
 	my ($target_path, $target_filename) = get_path_filename($target);
+	my $new_import_name = $target_filename;
 
-	usage('the file name for from-file and moved-to-file must be identical. [$source_filename] [$target_filename]') unless $source_filename eq $target_filename;
+	# special handling for the index.js linker file
+	if ($target_filename eq 'index.js')
+	{
+		my ($discard_path, $container_dir) = get_path_filename($target_path);
+		$new_import_name = "$container_dir.js"
+	}
+	else
+	{
+		usage("the file name for from-file and moved-to-file must be identical. [$source_filename] [$target_filename]") unless $source_filename eq $target_filename;
+	}
+
+	$new_import_name =~ s{$REGEX_JS}{}xms;
 
 	return ($source, $source_path, $source_filename,
 		$target, $target_path, $target_filename,
-		\@External);
+		$new_import_name, \@External);
 }
 
 sub fix_internal_imports
@@ -115,7 +129,7 @@ sub fix_internal_imports
 
 sub fix_external_imports
 {
-	my ($external, $source_path, $target_path, $source_filename) = @ARG;
+	my ($external, $source_path, $target_path, $source_filename, $new_import_name) = @ARG;
 
 	print "\n$external: fixing external relative imports of $source_filename.\n";
 	if ($DRY_RUN)
@@ -123,13 +137,13 @@ sub fix_external_imports
 		my @includes = get_imports($external, $source_filename);
 		foreach my $rhImport (@includes)
 		{
-			my $import = fix_external_import_path($source_path, $target_path, $external, $rhImport->{import});
+			my $import = fix_external_import_path($source_path, $target_path, $external, $rhImport->{import}, $new_import_name);
 			show_change($rhImport, $import);
 		}
 	}
 	else
 	{
-		process_external_imports($external, $source_path, $target_path, $source_filename);
+		process_external_imports($external, $source_path, $target_path, $source_filename, $new_import_name);
 	}
 }
 
@@ -198,7 +212,7 @@ sub process_internal_imports
 
 sub process_external_imports
 {
-	my ($filename, $source_path, $target_path, $module) = @ARG;
+	my ($filename, $source_path, $target_path, $module, $new_import_name) = @ARG;
 
 	my $regex = prepare_matcher($module);
 
@@ -214,7 +228,7 @@ sub process_external_imports
 		$rhFound->{import} = $5;
 		$rhFound->{suffix} = $6;
 
-		my $changed = fix_external_import_path($source_path, $target_path, $filename, $rhFound->{import});
+		my $changed = fix_external_import_path($source_path, $target_path, $filename, $rhFound->{import}, $new_import_name);
 		show_change($rhFound, $changed);
 		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
 	}xmsge;
@@ -480,7 +494,7 @@ sub fix_import_path
 # fix an external import path referring to a file that has been moved to a new directory
 sub fix_external_import_path
 {
-	my ($from, $to, $external_file, $import) = @ARG;
+	my ($from, $to, $external_file, $import, $import_name) = @ARG;
 
 	my $path = $import;
 	eval
@@ -489,21 +503,22 @@ sub fix_external_import_path
 		$path = short_filepath($import);
 		$external_file = canonical_filepath($external_file);
 		$import = canonical_filepath($import);
-		#print STDERR "external_file $external_file\n";
-		#print STDERR "from $from\n";
-		#print STDERR "to $to\n";
-		#print STDERR "import $import\n";
+		print STDERR "external_file $external_file\n" if $BORK;
+		print STDERR "from $from\n" if $BORK;
+		print STDERR "to $to\n" if $BORK;
+		print STDERR "import $import\n" if $BORK;
+		print STDERR "import_name $import_name\n" if $BORK;
 
 		my ($import_path, $import_file) = get_path_filename($import);
-		#print STDERR "import [$import_path] [$import_file]\n";
+		print STDERR "import [$import_path] [$import_file]\n" if $BORK;
 
 		my $from_file = short_filepath($from . $import_file);
-		#print STDERR "from_file [$from_file]\n";
+		print STDERR "from_file [$from_file]\n" if $BORK;
 
 		my ($file_path, $filename) = get_path_filename($external_file);
-		#print STDERR "import from [$file_path] [$filename]\n";
+		print STDERR "import from [$file_path] [$filename]\n" if $BORK;
 		my $full_import = canonical_filepath($file_path . $import);
-		#print STDERR "full_import $full_import\n";
+		print STDERR "full_import $full_import\n" if $BORK;
 
 		# check that full import path is same as source path
 		# otherwise we are not referring to the same actual file being imported
@@ -512,17 +527,26 @@ sub fix_external_import_path
 		{
 			my $relative_import = get_relative_path($from, $to);
 			my $relative = get_relative_path($file_path, $to);
-			#print STDERR "relative_import $relative_import\n";
-			#print STDERR "relative $relative\n";
+			print STDERR "relative_import $relative_import\n" if $BORK;
+			print STDERR "relative $relative\n" if $BORK;
 
 			$path = short_filepath($relative . $import_file);
-			#print STDERR "new import $path\n";
+			if ($import_file ne $import_name)
+			{
+				# if Import.js renamed to ImportNew/index.js
+				print STDERR "fixup for $import_name/$import_file\n" if $BORK;
+				#$path =~ s{$import_name/$import_file\z}{$import_name}xms;
+			}
+
+			print STDERR "new import $path\n" if $BORK;
 		}
 	};
 	if ($EVAL_ERROR)
 	{
 		warn("WARN: import $import: $EVAL_ERROR");
 	}
+
+	#print STDERR "fixed: $path\n\n";
 	return $path;
 }
 
@@ -658,11 +682,23 @@ sub test_fix_import_path
 
 sub test_fix_external_import_path
 {
-	my ($expect, $file, $import, $from, $to) = @ARG;
+	my ($expect, $file, $import, $from, $to, $new_import_name) = @ARG;
 
-	my $path = fix_external_import_path($from, $to, $file, $import);
+	my $show_to;
+	if ($new_import_name)
+	{
+		$to .= "/$new_import_name";
+		$show_to = "$to/$new_import_name.js + index.js";
+	}
+	else
+	{
+		my ($discard, $filename) = get_path_filename($from);
+		$new_import_name = $filename;
+		$show_to = "$to/";
+   }
+	my $path = fix_external_import_path($from, $to, $file, $import, $new_import_name);
 
-	is($path, $expect, "fix_external_import_path: mv [$from/File] -> [$to/]; $file: import [$import] == [$expect]");
+	is($path, $expect, "fix_external_import_path: mv [$from/File] -> [$show_to]; $file: import as [$new_import_name] [$import] == [$expect]");
 }
 
 sub test_module_regex
@@ -700,6 +736,7 @@ sub tests
 
 	my $from = 'src/X';#/File';
 	my $to   = 'src/Y/Z';
+	my $rename = 'Rename';
 
 	test_canonical_path_ex('cannot use absolute or home paths \[/\]', '/');
 	test_canonical_path_ex('cannot use absolute or home paths \[~\]', '~');
@@ -807,6 +844,10 @@ sub tests
 	test_fix_external_import_path('./File', 'src/W/Something.js', './File', $from, $to);
 	test_fix_external_import_path('./File.js', 'src/W/Something.js', './File.js', $from, $to);
 
+	# Renaming the file with index.js
+	$BORK = 1;
+	test_fix_external_import_path('../Y/Z/File', 'src/X/Something.js', './File', $from, $to, $rename);
+
 	test_module_regex('', '');
 	test_module_regex('(?^:ClickMeComponent(?:\.(?:jsx?|css|less|s[ac]ss))?)', 'ClickMeComponent');
 	test_module_regex('(?^:ClickMeComponent(?:\.js)?)', 'ClickMeComponent.js');
@@ -816,6 +857,7 @@ sub tests
 	test_module_name('ClickMeComponent.story', 'ClickMeComponent.story.js');
 	test_module_name('ClickMeComponent.story', 'ClickMeComponent.story');
 
+	test_module_regex_match('match', 'Blah.jsx', './Blah');
 	test_module_regex_match('match', 'Blah.js', './Blah');
 	test_module_regex_match('nomatch', 'Blah.js', './Blah.css');
 	test_module_regex_match('nomatch', 'Blah.js', './Blah/Module');
