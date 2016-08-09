@@ -28,6 +28,7 @@ $PROVE ./unit-tests.sh
 popd > /dev/null
 
 testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE
+testSuite git-mv-src "move a source file and repair import statements" $PROVE
 
 PLAN 2
 OK "all test suites completed"

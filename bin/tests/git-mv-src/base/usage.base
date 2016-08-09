@@ -1,0 +1,21 @@
+error: you must specify a target directory
+
+git-mv-src.sh source-file target-dir/ [target-file]
+
+Move a git controlled source file to a new location and adjust all require or import statements which are affected. It modifies the moved file and other git controlled files which import the moved file.
+
+It does not support renaming a source file.
+It does not support absolute path names in the from and moved to file names.
+It only affects imports which have a relative path indication.
+
+These would be corrected:
+
+... import .... './path/Object'
+... require ... '../path/Object'
+... requireJson ... '../path/Object'
+
+These would not be corrected:
+
+... import .... 'path/Object'
+
+

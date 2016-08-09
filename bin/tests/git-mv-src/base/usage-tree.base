@@ -1,0 +1,5 @@
+src/Z/External.js:
+import File from '../X/Y/File';
+src/X/Y/File.js:
+import Here from './Here';
+import There from ../../Z/Thing';
