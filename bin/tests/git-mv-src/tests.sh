@@ -60,8 +60,88 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD simple move
-TEST=simple-move
+echo TEST $CMD move down
+TEST=move-down
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
+	ARGS="$DEBUG $SAMPLE src/X/Y/W"
+	setup
+	pushd in > /dev/null
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	show $OUT2
+	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD move up
+TEST=move-up
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
+	ARGS="$DEBUG $SAMPLE src/X"
+	setup
+	pushd in > /dev/null
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	show $OUT2
+	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD move over
+TEST=move-over
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
+	ARGS="$DEBUG $SAMPLE src/X/W"
+	setup
+	pushd in > /dev/null
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	show $OUT2
+	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD move up over down
+TEST=move-up-over-down
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
+	ARGS="$DEBUG $SAMPLE src/X/W/A"
+	setup
+	pushd in > /dev/null
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	show $OUT2
+	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD move up up over
+TEST=up-up-over
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out

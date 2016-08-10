@@ -1,0 +1,8 @@
+
+src/Z/File.js: fixing internal relative imports.
+    import './Here'
+==> import '../X/Y/Here'
+
+src/Z/External.js: fixing external relative imports of File.js.
+    import '../X/Y/File'
+==> import './File'
