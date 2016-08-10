@@ -531,6 +531,8 @@ sub fix_external_import_path
 			#print STDERR "relative $relative\n" if $BORK;
 
 			$path = short_filepath($relative . $import_file);
+			print STDERR "fixup: $import_file $import_name $path\n";
+			$path =~ s{$import_file/$import_file\z}{$import_file}xms;
 			if ($import_file ne $import_name)
 			{
 				# if Import.js renamed to ImportNew/index.js

@@ -173,7 +173,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$SAMPLE src/Z/File/index.js"
+	ARGS="$SAMPLE src/Z/File index.js"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
