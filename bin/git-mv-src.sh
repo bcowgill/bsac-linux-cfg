@@ -4,7 +4,7 @@
 # which are affected by it. Only support moving directories, not rename.
 # But support creating an index linker file.
 
-DEBUG=0
+DEBUG=1
 MODE=${MODE:-git} # git, mv or cp
 
 SOURCE="$1"

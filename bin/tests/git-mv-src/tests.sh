@@ -76,6 +76,9 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
+# manually run test with debug
+# pushd in; tar xf source.tgz; MODE=mv git-mv-src.sh src/X/Y/File.js src/X/Y/W
+
 
 echo TEST $CMD move up
 TEST=move-up
