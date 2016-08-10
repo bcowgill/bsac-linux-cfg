@@ -4,7 +4,7 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../git-mv-src.sh
+PROGRAM=../../../git-mv-src.sh
 CMD=`basename $PROGRAM`
 SAMPLE=src/X/Y/File.js
 DEBUG=--debug
@@ -34,24 +34,28 @@ function show {
 }
 
 function setup {
+	pushd in > /dev/null
 	rm -rf src
 	tar xzf source.tgz
+	popd > /dev/null
 }
 
 echo TEST $CMD usage
 TEST=usage
 if [ 0 == "$SKIP" ]; then
 	ERR=0
-	OUT=out/$TEST.out
-	OUT2=out/$TEST-tree.out
-	BASE=base/$TEST.base
-	BASE2=base/$TEST-tree.base
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE"
 	setup
+	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	show $OUT2
 	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -60,16 +64,38 @@ echo TEST $CMD simple move
 TEST=simple-move
 if [ 0 == "$SKIP" ]; then
 	ERR=0
-	OUT=out/$TEST.out
-	OUT2=out/$TEST-tree.out
-	BASE=base/$TEST.base
-	BASE2=base/$TEST-tree.base
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/Z"
 	setup
+	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	show $OUT2
 	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD move with index.js
+TEST=index-move
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=../out/$TEST.out
+	OUT2=../out/$TEST-tree.out
+	BASE=../base/$TEST.base
+	BASE2=../base/$TEST-tree.base
+	ARGS="$DEBUG $SAMPLE src/Z/File/index.js"
+	setup
+	pushd in > /dev/null
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	show $OUT2
+	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
 fi
