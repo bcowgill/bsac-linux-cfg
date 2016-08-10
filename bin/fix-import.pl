@@ -176,7 +176,6 @@ sub get_imports
 		$rhFound->{infix}  = $3;
 		$rhFound->{quote}  = $4;
 		$rhFound->{import} = $5;
-		$rhFound->{suffix} = $6;
 		push(@includes, $rhFound);
 		''
 	}xmsge;
@@ -194,17 +193,17 @@ sub process_internal_imports
 	my $original = $$rContent;
 
 	$$rContent =~ s{$regex}{
+                #print STDERR "match [$&]\n";
 		my $rhFound = {};
 		$rhFound->{prefix} = $1;
 		$rhFound->{loader} = $2;
 		$rhFound->{infix}  = $3;
 		$rhFound->{quote}  = $4;
 		$rhFound->{import} = $5;
-		$rhFound->{suffix} = $6;
 
 		my $changed = fix_import_path($source_path, $target_path, $rhFound->{import});
 		show_change($rhFound, $changed);
-		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
+		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}};
 	}xmsge;
 
 	commit_changes($filename, \$original, $rContent);
@@ -226,11 +225,10 @@ sub process_external_imports
 		$rhFound->{infix}  = $3;
 		$rhFound->{quote}  = $4;
 		$rhFound->{import} = $5;
-		$rhFound->{suffix} = $6;
 
 		my $changed = fix_external_import_path($source_path, $target_path, $filename, $rhFound->{import}, $new_import_name);
 		show_change($rhFound, $changed);
-		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}$rhFound->{suffix}};
+		qq{$rhFound->{prefix}$rhFound->{loader}$rhFound->{infix}$rhFound->{quote}$changed$rhFound->{quote}};
 	}xmsge;
 
 	commit_changes($filename, \$original, $rContent);
@@ -262,7 +260,9 @@ sub prepare_matcher
 	my $regex = qr{
 		((?:\A|\n) [^'"]*?) \b(import|require|requireJson)\b ([^'"]*?)
 		(['"]) (\. [^'"]*? $filter) \4
-		(.*? (?:\z|\n))}xms;
+		}xms;
+#(.*? (?:\z|\n))
+	#print STDERR "prepare_matcher $module $regex\n";
 
 	return $regex;
 }
@@ -503,22 +503,22 @@ sub fix_external_import_path
 		$path = short_filepath($import);
 		$external_file = canonical_filepath($external_file);
 		$import = canonical_filepath($import);
-		print STDERR "external_file $external_file\n" if $BORK;
-		print STDERR "from $from\n" if $BORK;
-		print STDERR "to $to\n" if $BORK;
-		print STDERR "import $import\n" if $BORK;
-		print STDERR "import_name $import_name\n" if $BORK;
+		#print STDERR "external_file $external_file\n" if $BORK;
+		#print STDERR "from $from\n" if $BORK;
+		#print STDERR "to $to\n" if $BORK;
+		#print STDERR "import $import\n" if $BORK;
+		#print STDERR "import_name $import_name\n" if $BORK;
 
 		my ($import_path, $import_file) = get_path_filename($import);
-		print STDERR "import [$import_path] [$import_file]\n" if $BORK;
+		#print STDERR "import [$import_path] [$import_file]\n" if $BORK;
 
 		my $from_file = short_filepath($from . $import_file);
-		print STDERR "from_file [$from_file]\n" if $BORK;
+		#print STDERR "from_file [$from_file]\n" if $BORK;
 
 		my ($file_path, $filename) = get_path_filename($external_file);
-		print STDERR "import from [$file_path] [$filename]\n" if $BORK;
+		#print STDERR "import from [$file_path] [$filename]\n" if $BORK;
 		my $full_import = canonical_filepath($file_path . $import);
-		print STDERR "full_import $full_import\n" if $BORK;
+		#print STDERR "full_import $full_import\n" if $BORK;
 
 		# check that full import path is same as source path
 		# otherwise we are not referring to the same actual file being imported
@@ -527,8 +527,8 @@ sub fix_external_import_path
 		{
 			my $relative_import = get_relative_path($from, $to);
 			my $relative = get_relative_path($file_path, $to);
-			print STDERR "relative_import $relative_import\n" if $BORK;
-			print STDERR "relative $relative\n" if $BORK;
+			#print STDERR "relative_import $relative_import\n" if $BORK;
+			#print STDERR "relative $relative\n" if $BORK;
 
 			$path = short_filepath($relative . $import_file);
 			if ($import_file ne $import_name)
@@ -538,7 +538,7 @@ sub fix_external_import_path
 				#$path =~ s{$import_name/$import_file\z}{$import_name}xms;
 			}
 
-			print STDERR "new import $path\n" if $BORK;
+			#print STDERR "new import $path\n" if $BORK;
 		}
 	};
 	if ($EVAL_ERROR)

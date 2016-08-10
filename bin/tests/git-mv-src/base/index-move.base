@@ -10,6 +10,8 @@ src/Z/External.js: fixing external relative imports of File.js.
     import '../X/Y/File'
 ==> import './File/index.js/File'
 src/X/Y/Here.js:
+src/Z/External.js:
+import File from './File';
 src/Z/File/index.js:
 import File from './File';
 export default File;
@@ -17,5 +19,3 @@ src/Z/File/File.js:
 import Here from '../../X/Y/Here';
 import There from '../../Z/There';
 src/Z/There.js:
-src/Z/External.js:
-import File from './File';

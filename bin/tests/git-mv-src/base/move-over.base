@@ -3,6 +3,8 @@ directory 'src/X/W' does not exist, creating it.
 src/X/W/File.js: fixing internal relative imports.
     import './Here'
 ==> import '../Y/Here'
+    import '../../Z/There'
+==> import '../../Z/There'
 
 src/Z/External.js: fixing external relative imports of File.js.
     import '../X/Y/File'
@@ -11,6 +13,6 @@ src/X/W/File.js:
 import Here from '../Y/Here';
 import There from '../../Z/There';
 src/X/Y/Here.js:
-src/Z/There.js:
 src/Z/External.js:
 import File from '../X/W/File';
+src/Z/There.js:

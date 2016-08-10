@@ -1,5 +1,7 @@
 #!/bin/bash
 # Shell script based test plan
+# ./tests.sh | perl -pne 's{vdiff}{in.sh in diffmerge}xms'
+
 # set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e
 
@@ -7,13 +9,14 @@ set -e
 PROGRAM=../../../git-mv-src.sh
 CMD=`basename $PROGRAM`
 SAMPLE=src/X/Y/File.js
-DEBUG=--debug
 DEBUG=
+#export DEBUG=1
+#export DRY_RUN=1
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 6
+PLAN 10
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -25,7 +28,7 @@ function show {
 	local output file
 	output="$1"
 	touch "$output"
-	for file in `find src -name *.js`
+	for file in `find src -name '*.js' | sort`
 	do
 		if [ -d "$file" ]; then
 			echo $file/: >> "$output"
@@ -49,7 +52,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE"
+	ARGS="$SAMPLE"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
@@ -66,7 +69,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE src/X/Y/W"
+	ARGS="$SAMPLE src/X/Y/W"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
@@ -79,14 +82,13 @@ fi
 # manually run test with debug
 # pushd in; tar xf source.tgz; MODE=mv git-mv-src.sh src/X/Y/File.js src/X/Y/W
 
-
 echo TEST $CMD move up
 TEST=move-up
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE src/X"
+	ARGS="$SAMPLE src/X"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
@@ -103,7 +105,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE src/X/W"
+	ARGS="$SAMPLE src/X/W"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
@@ -120,7 +122,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE src/X/W/A"
+	ARGS="$SAMPLE src/X/W/A"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
@@ -137,7 +139,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE src/Z"
+	ARGS="$SAMPLE src/Z"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
@@ -148,13 +150,15 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+SKIP=1
+
 echo TEST $CMD move with index.js
 TEST=index-move
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
 	BASE=../base/$TEST.base
-	ARGS="$DEBUG $SAMPLE src/Z/File/index.js"
+	ARGS="$SAMPLE src/Z/File/index.js"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
@@ -168,4 +172,6 @@ fi
 #stop "simulating a failure so all .html output remains behind for front end behaviour verification"
 
 setup
+rm in/moved.lst
+rm in/pause-build.timestamp
 cleanUpAfterTests
