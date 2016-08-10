@@ -33,7 +33,12 @@ function show {
 	done
 }
 
-echo TEST $CMD basic operation
+function setup {
+	rm -rf src
+	tar xzf source.tgz
+}
+
+echo TEST $CMD usage
 TEST=usage
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -42,7 +47,26 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASE2=base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE"
-	$PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	setup
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	show $OUT2
+	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD simple move
+TEST=simple-move
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	OUT2=out/$TEST-tree.out
+	BASE=base/$TEST.base
+	BASE2=base/$TEST-tree.base
+	ARGS="$DEBUG $SAMPLE src/Z"
+	setup
+	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	show $OUT2
 	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
@@ -52,5 +76,5 @@ fi
 
 #stop "simulating a failure so all .html output remains behind for front end behaviour verification"
 
+setup
 cleanUpAfterTests
-

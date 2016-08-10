@@ -2,9 +2,10 @@
 # git-mv-src.sh source-file target-dir
 # move a source file somewhere else and adjust all import statements
 # which are affected by it. Only support moving directories, not rename.
+# But support creating an index linker file.
 
-DEBUG=1
-CLONE=1
+DEBUG=0
+MODE=${MODE:-git} # git, mv or cp
 
 SOURCE="$1"
 DIR=`echo "$2" | perl -pne 'chomp; s{/ \z}{}xmsg'`
@@ -91,6 +92,13 @@ These would not be corrected:
 [ ! -z "$DIR" ] || usage "you must specify a target directory"
 
 [ -e "$SOURCE" ]   || usage "file '$SOURCE' does not exist!"
+
+if [ $LINK == 1 ]; then
+   [ "$FILE" == "index.js" ] || usage "you can only rename to index.js at present, not [$FILE]"
+fi
+
+[ "$BASENAME" == "$NEWNAME" ] || usage "you cannot rename at present [$BASENAME] must equal [$NEWNAME]"
+
 [ ! -e "$TARGET" ] || usage "target file '$TARGET' already exists, will not overwrite!"
 [ ! -e "$LINKTARGET" ] || usage "target file '$LINKTARGET' already exists, will not overwrite!"
 
@@ -105,6 +113,7 @@ if [ ${DEBUG:-0} == 1 ]; then
 	echo EXT="$EXT"
 	echo BASEFILE="$BASEFILE"
 	echo BASENAME="$BASENAME"
+	echo NEWNAME="$NEWNAME"
 	echo RELATED=$RELATED
 
 	echo ""
@@ -129,10 +138,14 @@ if [ ${DEBUG:-0} == 0 ]; then
 	touch pause-build.timestamp
 	sleep 3
 
-	if [ -z "$CLONE" ]; then
-		git mv "$SOURCE" "$TARGET"
+	if [ "$MODE" == "mv" ]; then
+		mv "$SOURCE" "$TARGET"
 	else
-		cp "$SOURCE" "$TARGET"
+		if [ "$MODE" == "cp" ]; then
+			cp "$SOURCE" "$TARGET"
+		else
+			git mv "$SOURCE" "$TARGET"
+		fi
 	fi
 
 	if [ $LINK == 1 ]; then
