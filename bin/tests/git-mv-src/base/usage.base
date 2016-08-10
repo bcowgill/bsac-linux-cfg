@@ -19,3 +19,10 @@ These would not be corrected:
 ... import .... 'path/Object'
 
 
+src/X/Y/Here.js:
+src/X/Y/File.js:
+import Here from './Here';
+import There from '../../Z/There';
+src/Z/There.js:
+src/Z/External.js:
+import File from '../X/Y/File';

@@ -1,7 +1,0 @@
-src/X/Y/Here.js:
-src/X/File.js:
-import Here from './Y/Here';
-import There from '../Z/There';
-src/Z/There.js:
-src/Z/External.js:
-import File from '../X/File';

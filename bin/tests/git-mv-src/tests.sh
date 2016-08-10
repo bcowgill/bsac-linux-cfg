@@ -24,7 +24,6 @@ ERROR_STOP=0
 function show {
 	local output file
 	output="$1"
-	[ -f "$output" ] && rm "$output"
 	touch "$output"
 	for file in `find src -name *.js`
 	do
@@ -45,16 +44,13 @@ TEST=usage
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
@@ -65,16 +61,13 @@ TEST=move-down
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/X/Y/W"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
@@ -85,16 +78,13 @@ TEST=move-up
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/X"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
@@ -105,16 +95,13 @@ TEST=move-over
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/X/W"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
@@ -125,16 +112,13 @@ TEST=move-up-over-down
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/X/W/A"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
@@ -145,16 +129,13 @@ TEST=up-up-over
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/Z"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
@@ -165,16 +146,13 @@ TEST=index-move
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=../out/$TEST.out
-	OUT2=../out/$TEST-tree.out
 	BASE=../base/$TEST.base
-	BASE2=../base/$TEST-tree.base
 	ARGS="$DEBUG $SAMPLE src/Z/File/index.js"
 	setup
 	pushd in > /dev/null
 	MODE=mv $PROGRAM $ARGS > $OUT 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
+	show $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	show $OUT2
-	assertFilesEqual "$OUT2" "$BASE2" "$TEST"
 	popd > /dev/null
 else
 	echo SKIP $TEST "$SKIP"
