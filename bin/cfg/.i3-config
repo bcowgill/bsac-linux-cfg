@@ -35,7 +35,9 @@ set $lockcolor $lemonchiffon
 set $brick 683232
 set $lockcolor $brick
 set $mygray 4c4444
-set $lockcolor $mygray
+set $darkblue 000033
+set $lockcolor $darkblue
+
 
 # use xrandr --current command to get monitor screen names
 # define vars for monitor screens (updated by i3-config-update.sh)

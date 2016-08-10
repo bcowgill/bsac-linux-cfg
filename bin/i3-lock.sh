@@ -4,9 +4,11 @@
 lemonchiffon=FFFACD
 brick=683232
 mygray=4c4444
+darkblue=000033
 lockcolor=$lemonchiffon
 lockcolor=$brick
 lockcolor=$mygray
+lockcolor=$darkblue
 
 #i3lock -c $lockcolor -d
 #xscreensaver-command -lock
