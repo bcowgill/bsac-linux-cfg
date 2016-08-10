@@ -16,7 +16,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 10
+PLAN 12
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -149,8 +149,6 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
-
-SKIP=1
 
 echo TEST $CMD move with index.js
 TEST=index-move
