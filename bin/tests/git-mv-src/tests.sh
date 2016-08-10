@@ -27,8 +27,12 @@ function show {
 	touch "$output"
 	for file in `find src -name *.js`
 	do
-		echo $file: >> "$output"
-		cat $file >> "$output"
+		if [ -d "$file" ]; then
+			echo $file/: >> "$output"
+		else
+			echo $file: >> "$output"
+			cat "$file" >> "$output"
+		fi
 	done
 }
 
