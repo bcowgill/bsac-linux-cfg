@@ -1,0 +1,18 @@
+directory 'src/Z/File' does not exist, creating it.
+
+src/Z/File/File.js: fixing internal relative imports.
+    import './Here'
+==> import '../../X/Y/Here'
+    import '../../Z/There'
+==> import '../There'
+
+src/Z/External.js: fixing external relative imports of File.js.
+    import '../X/Y/File'
+==> import './File/File'
+src/X/Y/Here.js:
+src/Z/External.js:
+import File from './File/File';
+src/Z/File/File.js:
+import Here from '../../X/Y/Here';
+import There from '../There';
+src/Z/There.js:
