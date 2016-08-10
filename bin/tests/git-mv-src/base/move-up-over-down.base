@@ -1,0 +1,12 @@
+directory 'src/X/W/A' does not exist, creating it.
+
+src/X/W/A/File.js: fixing internal relative imports.
+    import './Here'
+==> import '../../Y/Here'
+
+    import './There'
+==> import '../../../Z/There'
+
+src/Z/External.js: fixing external relative imports of File.js.
+    import '../X/Y/File'
+==> import '../X/W/A/File'
