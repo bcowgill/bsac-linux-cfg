@@ -138,6 +138,12 @@ if [ ${DEBUG:-0} == 0 ]; then
 	touch pause-build.timestamp
 	sleep 3
 
+	if [ $LINK == 1 ]; then
+		echo "$LINKTARGET: import $NEWNAME from './$NEWNAME'"
+		echo "import $NEWNAME from './$NEWNAME'" > "$LINKTARGET"
+		echo "export default $NEWNAME" >> "$LINKTARGET"
+	fi
+
 	if [ "$MODE" == "mv" ]; then
 		mv "$SOURCE" "$TARGET"
 	else
@@ -148,10 +154,6 @@ if [ ${DEBUG:-0} == 0 ]; then
 		fi
 	fi
 
-	if [ $LINK == 1 ]; then
-		echo "import $NEWNAME from './$NEWNAME'" > "$LINKTARGET"
-      echo "export default $NEWNAME" >> "$LINKTARGET"
-	fi
 fi
 
 DRY_RUN=$DEBUG fix-import.pl "$SOURCE" "$LINKTARGET" $RELATED

@@ -17,7 +17,7 @@ $Data::Dumper::Terse    = 1;
 
 our $TEST_CASES = 112;
 our $DRY_RUN = $ENV{DRY_RUN} || 0;
-our $BORK = 0;
+our $TRACE = 0;
 
 our $REGEX_MODULE = qr{\.(jsx?|css|less|s[ac]ss) \z}xms;
 our $REGEX_JS = qr{\.(js) \z}xms;
@@ -37,7 +37,7 @@ sub usage
 	print << "USAGE";
 $0 from-file moved-to-file [external files ...]
 
-This script corrects require or import references in a source file which has already been moved to a new location. It also corrects import references to the moved file when they are mentioned in external files.
+This script corrects require or import references in a source file which has already been moved to a new location. It also corrects import references to the moved file when they are mentioned in external files. It supports a moved-to-file named index.js by assuming it is an import loader for DirName.js where moved-to-file is of the form path/DirName/index.js. In this case it will write the import as import DirName from 'path/DirName', instead of path/DirName/index
 
 It does not support renaming a source file.
 It does not support absolute path names in the from and moved to file names.
@@ -52,8 +52,7 @@ These would be corrected:
 These would not be corrected:
 
 ... import .... 'path/Object'
-
-import js from '!!raw!./ScopedSelectors.js';
+... import js from '!!raw!./ScopedSelectors.js';
 
 USAGE
 
@@ -66,6 +65,10 @@ sub main
 		$target, $target_path, $target_filename,
 		$new_import_name, $raExternal) = check_args();
 
+	if ($TRACE)
+	{
+		print STDERR "$target_path $target => $source_path $source $new_import_name\n";
+	}
 	fix_internal_imports($target, $source_path, $target_path, $source);
 	foreach my $external (@$raExternal)
 	{
@@ -91,14 +94,15 @@ sub check_args
 	if ($target_filename eq 'index.js')
 	{
 		my ($discard_path, $container_dir) = get_path_filename($target_path);
-		$new_import_name = "$container_dir.js"
+		$new_import_name = $target_filename;
+		my ($discard, $final_dir) = get_path_filename($target_path);
+		$target_filename = "$final_dir.js";
+		$target =~ s{index\.js \z}{$target_filename}xms;
 	}
 	else
 	{
 		usage("the file name for from-file and moved-to-file must be identical. [$source_filename] [$target_filename]") unless $source_filename eq $target_filename;
 	}
-
-	$new_import_name =~ s{$REGEX_JS}{}xms;
 
 	return ($source, $source_path, $source_filename,
 		$target, $target_path, $target_filename,
@@ -503,22 +507,22 @@ sub fix_external_import_path
 		$path = short_filepath($import);
 		$external_file = canonical_filepath($external_file);
 		$import = canonical_filepath($import);
-		#print STDERR "external_file $external_file\n" if $BORK;
-		#print STDERR "from $from\n" if $BORK;
-		#print STDERR "to $to\n" if $BORK;
-		#print STDERR "import $import\n" if $BORK;
-		#print STDERR "import_name $import_name\n" if $BORK;
+		print STDERR "external_file $external_file\n" if $TRACE;
+		print STDERR "from $from\n" if $TRACE;
+		print STDERR "to $to\n" if $TRACE;
+		print STDERR "import $import\n" if $TRACE;
+		print STDERR "import_name $import_name\n" if $TRACE;
 
 		my ($import_path, $import_file) = get_path_filename($import);
-		#print STDERR "import [$import_path] [$import_file]\n" if $BORK;
+		print STDERR "import [$import_path] [$import_file]\n" if $TRACE;
 
 		my $from_file = short_filepath($from . $import_file);
-		#print STDERR "from_file [$from_file]\n" if $BORK;
+		print STDERR "from_file [$from_file]\n" if $TRACE;
 
 		my ($file_path, $filename) = get_path_filename($external_file);
-		#print STDERR "import from [$file_path] [$filename]\n" if $BORK;
+		print STDERR "import from [$file_path] [$filename]\n" if $TRACE;
 		my $full_import = canonical_filepath($file_path . $import);
-		#print STDERR "full_import $full_import\n" if $BORK;
+		print STDERR "full_import $full_import\n" if $TRACE;
 
 		# check that full import path is same as source path
 		# otherwise we are not referring to the same actual file being imported
@@ -527,20 +531,17 @@ sub fix_external_import_path
 		{
 			my $relative_import = get_relative_path($from, $to);
 			my $relative = get_relative_path($file_path, $to);
-			#print STDERR "relative_import $relative_import\n" if $BORK;
-			#print STDERR "relative $relative\n" if $BORK;
+			print STDERR "relative_import $relative_import\n" if $TRACE;
+			print STDERR "relative $relative\n" if $TRACE;
 
 			$path = short_filepath($relative . $import_file);
-			print STDERR "fixup: $import_file $import_name $path\n";
-			$path =~ s{$import_file/$import_file\z}{$import_file}xms;
-			if ($import_file ne $import_name)
+			if ($import_name eq 'index.js')
 			{
-				# if Import.js renamed to ImportNew/index.js
-				print STDERR "fixup for $import_name/$import_file\n" if $BORK;
-				#$path =~ s{$import_name/$import_file\z}{$import_name}xms;
+				print STDERR "fixup: $import_file $import_name $path\n" if $TRACE;
+				$path =~ s{$import_file/$import_file\z}{$import_file}xms;
 			}
 
-			#print STDERR "new import $path\n" if $BORK;
+			print STDERR "new import $path\n" if $TRACE;
 		}
 	};
 	if ($EVAL_ERROR)
@@ -548,7 +549,7 @@ sub fix_external_import_path
 		warn("WARN: import $import: $EVAL_ERROR");
 	}
 
-	#print STDERR "fixed: $path\n\n";
+	print STDERR "fixed: $path\n\n" if $TRACE;
 	return $path;
 }
 
@@ -847,7 +848,6 @@ sub tests
 	test_fix_external_import_path('./File.js', 'src/W/Something.js', './File.js', $from, $to);
 
 	# Renaming the file with index.js
-	$BORK = 1;
 	test_fix_external_import_path('../Y/Z/File', 'src/X/Something.js', './File', $from, $to, $rename);
 
 	test_module_regex('', '');
