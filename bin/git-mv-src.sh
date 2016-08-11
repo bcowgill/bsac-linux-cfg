@@ -66,13 +66,20 @@ function usage
 		echo "error: $1
 " >&2
 	fi
-	echo "`basename $0` source-file target-dir/ [target-file]
+	ME=`basename $0`
+	echo "$ME source-file target-dir/ [target-file]
 
 Move a git controlled source file to a new location and adjust all require or import statements which are affected. It modifies the moved file and other git controlled files which import the moved file.
+
+Change the move operation to a copy or move with environment variable MODE=cp or MODE=mv
+
+i.e. MODE=mv $ME source-file target-dir/ [target-file]
 
 It does not support renaming a source file.
 It does not support absolute path names in the from and moved to file names.
 It only affects imports which have a relative path indication.
+
+It supports a target-file named index.js by assuming it is an import loader for DirName.js where target-dir is of the form path/DirName.  In this case it will write the import as import DirName from 'path/DirName', instead of path/DirName/index.
 
 These would be corrected:
 
@@ -83,6 +90,7 @@ These would be corrected:
 These would not be corrected:
 
 ... import .... 'path/Object'
+... import js from '!!raw!./ScopedSelectors.js';
 
 "
 	exit 1

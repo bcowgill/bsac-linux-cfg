@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
-# Correct file import paths when a source file has moved
+# Correct file import paths when a source file has moved.
+# Does not support rename except to File/index.js by creating a linker
+# index.js to File.js
 
 use strict;
 use warnings;
