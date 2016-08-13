@@ -1,6 +1,11 @@
 #!/bin/bash
 # update the i3-config and i3-launch file for current main and aux monitors
 
+COMPANY=
+if [ -f ~/.COMPANY ]; then
+    . ~/.COMPANY
+fi
+
 CONFIG="$HOME/bin/cfg/$COMPANY/.i3-config"
 LAUNCH="$HOME/bin/cfg/$COMPANY/i3-launch.sh"
 DOCK="$HOME/bin/cfg/$COMPANY/i3-dock.sh"
@@ -178,4 +183,3 @@ perl -i.bak -pne '
 ' $config
 echo $config updated
 middle.sh '#WORKSPACEDEF' '#/WORKSPACEDEF' $config
-

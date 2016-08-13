@@ -798,6 +798,9 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 #============================================================================
 # begin actual system checking
 
+echo "export COMPANY=$COMPANY" > .COMPANY
+file_exists .COMPANY "company env variable setup file"
+
 # provides lsb_release command as well.
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
@@ -960,6 +963,13 @@ make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
 file_linked_to bin/i3-launch.sh  $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
 file_linked_to bin/i3-dock.sh    $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
+
+[ -d .config/mc ] && HAS_MC=1
+make_dir_exist .config/mc "midnight commander configuration file dir"
+if [ ${HAS_MC:-)} == 0 ]; then
+	OK "MAYBE copying midnight commander configuration"
+	cp bin/cfg/.config/mc/* .config/mc/ || NOT_OK "unable to copy midnight commander configuration"
+fi
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then

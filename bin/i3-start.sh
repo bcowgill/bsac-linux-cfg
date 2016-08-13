@@ -1,9 +1,14 @@
 #!/bin/bash
 # set up workspace for i3 window manager based on monitors attached
 
+COMPANY=
+if [ -f ~/.COMPANY ]; then
+    . ~/.COMPANY
+fi
+
 source `which setup-monitors.sh`
 
-if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
+if [ "$COMPANY" == "workshare" ]; then
 	touch-off.sh
 fi
 

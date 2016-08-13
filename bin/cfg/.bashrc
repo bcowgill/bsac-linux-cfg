@@ -117,8 +117,11 @@ fi
 # BSAC custom changes from /etc/skel
 
 COMPANY=
-if [ $HOSTNAME == worksharexps-XPS-15-9530 ]; then
-	COMPANY=workshare
+if [ -f ~/.COMPANY ]; then
+    . ~/.COMPANY
+fi
+
+if [ "x$COMANY" == "xworkshare" ]; then
 	export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 	export PJ=$HOME/projects
 	export REPOS="core-ui files-ui groups-ui dealroom-ui new-ui"
