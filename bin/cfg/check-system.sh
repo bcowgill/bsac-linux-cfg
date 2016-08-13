@@ -504,7 +504,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 		oggconvert
 		digikam
 		samba
-		smbfs
+		mount.cifs:cifs-utils
 		firefox
 		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
 	"
@@ -798,8 +798,8 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 #============================================================================
 # begin actual system checking
 
-echo "export COMPANY=$COMPANY" > .COMPANY
-file_exists .COMPANY "company env variable setup file"
+echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
+file_exists $HOME/.COMPANY "company env variable setup file"
 
 # provides lsb_release command as well.
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)

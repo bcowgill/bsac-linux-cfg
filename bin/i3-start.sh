@@ -13,6 +13,7 @@ if [ "$COMPANY" == "workshare" ]; then
 fi
 
 if [ "$HOSTNAME" == "akston" ]; then
+	mouse-left.sh
 	keyboard-medium.sh
 fi
 swapcaps.sh

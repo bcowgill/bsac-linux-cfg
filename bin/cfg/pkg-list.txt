@@ -52,6 +52,7 @@ archdetect-deb
 aspell
 aspell-en
 at-spi2-core
+attr
 audacity
 audacity-data
 autoconf
@@ -249,6 +250,7 @@ fonts-khmeros-core
 fonts-lao
 fonts-liberation
 fonts-lklug-sinhala
+fonts-lyx
 fonts-mathjax
 fonts-nanum
 fonts-opensymbol
@@ -564,6 +566,7 @@ libaccounts-glib0:amd64
 libaccounts-qt5-1
 libaccountsservice0:amd64
 libacl1:amd64
+libaio1:amd64
 libalgorithm-diff-perl
 libalgorithm-diff-xs-perl
 libalgorithm-merge-perl
@@ -2293,9 +2296,12 @@ rsyslog
 rtkit
 ruby
 ruby1.9.1
+samba
 samba-common
 samba-common-bin
+samba-dsdb-modules
 samba-libs:amd64
+samba-vfs-modules
 sane-utils
 sbsigntool
 screen
@@ -2361,6 +2367,7 @@ tcl
 tcl8.6
 tcpd
 tcpdump
+tdb-tools
 telepathy-gabble
 telepathy-haze
 telepathy-idle
