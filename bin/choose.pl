@@ -5,6 +5,17 @@ srand;
 my $MAX = shift || 1;
 my ($line, @Lines);
 
+if ( $MAX eq "--help" )
+{
+	print <<"USAGE";
+usage:
+$0 [number] [file ...]
+
+Choose lines randomly from file or standard input. If the number is given that many consecutive lines will be chosen otherwise only one line is chosen.
+USAGE
+	exit 1;
+}
+
 while (<>)
 {
 	if (rand($.) < 1)
