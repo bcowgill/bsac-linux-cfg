@@ -1,0 +1,58 @@
+Geometry:
+a^2 + b^2 = c^2
+
+x = -b/2a +-sqrt(b^2 - 4ac)/2a
+
+Mathematics:
+pi = 4SIGMA -1^n/(2n+1)
+e^x = SIGMA x^n/n!
+ln(z) = 2SIGMA [1/(2n+1)][(z-1)/(z+1)]^2^n^+^1
+
+Complex Mathematics:
+i^2 == -1
+z = x + iy = re^i^theta
+sqrt-1 = e^(ipi/2)
+
+Mechanics:
+
+F = d(mv)/dt = mdee v/deet + vdee m/deet
+W = intF(r)dotdr
+sum E = Ek + Ep = constant in time
+
+Fg = GmM/r^2
+Fq = -kqQ/r^2
+Fw = approx:
+Fs = approx:
+
+Eb/AMeV ~= a - b/3root(A) - cZ^2/3root(A^4) - d(N - Z)^2/A^2 +- e/4root(A^7)
+
+Fluid Mechanics:
+H = z + P/rhog + v^2/2g
+v^2/2 + psi  + epsilon + P/rho == b
+deephi/deet + v^2/2 + P/rho + gz = 0
+v^2/2 + gz + [gamma/(gamma - 1)](P/rho) = Cs
+
+Electronics:
+V = IR
+P = I^2R
+I(t) = CdV/dt
+V(t) = LdI/dt
+1/Rp = sum 1/R_i
+
+Light:
+deldotE = 4pirho
+deldotB = 0
+delcross E = -dee B/(cdeet)
+delcross B = (4pi J + dee E/deet)/c
+
+Quantum Mechanics:
+sigmaxsigmap >= h/4pi
+rho(a,c) - rho(b,a) - rho(b,c) <= 1
+dee^2u/deet^2 = c^2del^2u
+[del^2 - dee^2/(c^2deet^2)]psi (r,t) = 0
+(ih/2pi)(dee/deet)psi (r,t) = [(-h^2/8pi^2mu)del^2 + V(r,t)]psi (r,t)
+
+Relativity:
+gamma = 1/sqrt(1-v^2/c^2)
+E = sqrt((mc^2)^2+(pc)^2)
+
