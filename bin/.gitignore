@@ -15,6 +15,7 @@ cfg/workshare/check-workshare.sh
 *.fortune.dat
 node_modules
 WebStorm
+sys-snapshot*
 # emacs editor files
 \#*#
 .\#*
