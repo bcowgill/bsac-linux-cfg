@@ -1,0 +1,1 @@
+( head -7 template/html/html5.html | perl -pne 's{Test}{UTF8 Smiley Faces}xmsg'; smiley.sh --all | perl -pne 'chomp; $_ = qq{<p>$_</p>\n};' ; tail -2 template/html/html5.html ) > template/html/faces-utf8.html
