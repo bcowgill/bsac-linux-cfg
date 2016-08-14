@@ -3,6 +3,8 @@
 # asking Y or N for a font you like
 SETFONT=/bin/setfont
 DIR='/usr/share/consolefonts/Uni*32*'
+#DIR='/usr/share/consolefonts/Uni*28*'
+#DIR='/usr/share/consolefonts/Uni*24*'
 
 for font in $DIR
 do
