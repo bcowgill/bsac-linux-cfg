@@ -134,7 +134,9 @@ function full_backup {
 	filter_logs
 
 	rm $ALL_PARTIALS $ALL_PARTIAL_LOGS $ALL_PARTIAL_TIMESTAMPS 2> /dev/null
-	[ -e "$FULL_SAVE" ] && rm "$FULL_SAVE"
+	if [ -e "$FULL_SAVE" ]; then
+	    rm "$FULL_SAVE"
+	fi
 }
 
 function partial_backup {
@@ -240,6 +242,7 @@ function restore {
 }
 
 function do_backup {
+	echo `date` $MODE backup
 	config
 	backup
 	summary
