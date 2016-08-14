@@ -9,7 +9,5 @@ if (!$found) {
 if (!$print && $found) {
 	$print = 1 if m{\A \t}xms;
 }
-print if $print && !m{
-	no \s changes \s added \s to \s commit
-}xms;
+print if $print && m{\A \t}xms;
 '
