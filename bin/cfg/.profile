@@ -13,6 +13,7 @@
 if [ "$TERM" == "linux" ]; then
     # make linux console font larger due to high resolution
     /bin/setfont /usr/share/consolefonts/Uni1-VGA32x16.psf.gz
+    #/bin/setfont /usr/share/consolefonts/Uni2-Terminus28x14.psf.gz
 fi
 
 # if running bash
