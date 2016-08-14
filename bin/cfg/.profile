@@ -9,6 +9,12 @@
 #umask 022
 
 #echo `date` .profile >> ~/startup.log
+
+if [ "$TERM" == "linux" ]; then
+    # make linux console font larger due to high resolution
+    /bin/setfont /usr/share/consolefonts/Uni1-VGA32x16.psf.gz
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
