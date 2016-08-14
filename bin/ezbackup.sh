@@ -270,8 +270,11 @@ export BK_DIR=/data/$WHOSE/backup
 export SOURCE=/home/$WHOSE
 export NUM_PARTIALS=9
 
-# crontab entry:
+# crontab entry examples:
 25 11,16 * * * $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
+
+15 20,23 * * 1-5 $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
+15 8,13,20 * * 6-7  $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 
 # touch-randomly.sh
 # touch some files at random so partial backup test has something to do
