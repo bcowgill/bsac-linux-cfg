@@ -194,6 +194,7 @@ function filter_logs {
 			socket \s ignored
 			| file \s is \s unchanged
 			| Removing \s leading .+ from \s
+			| $SOURCE : \s file \s changed \s as \s we \s read \s it
 			}xms)
 		{
 			print
