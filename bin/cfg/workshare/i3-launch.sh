@@ -10,11 +10,11 @@ source detect-monitors.sh
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-		# 1 or 2 monitors
+		# 3 monitors
 		shell=1
 		edit=2
 		app=3
-		email=4
+		email=9
 		build=5
 		chat=6
 		vbox=7
@@ -115,7 +115,7 @@ sleep 15
 
 # $files
 i3do "workspace $files; exec browse.sh"
-i3do "workspace $files; exec mygterm.sh $HOME/projects/new-ui mc $HOME/projects/new-ui $HOME"
+i3do "workspace $files; exec mygterm.sh $HOME/projects/docuzilla/webui mc $HOME/projects/docuzilla/webui $HOME"
 sleep 5
 
 if ${OUTPUT_MONITORS:-2} != 1; then
