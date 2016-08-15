@@ -159,6 +159,9 @@ if [ ${DEBUG:-0} == 0 ]; then
 			cp "$SOURCE" "$TARGET"
 		else
 			git mv "$SOURCE" "$TARGET"
+			if [ $LINK == 1 ]; then
+				git add "$LINKTARGET"
+			fi
 		fi
 	fi
 
