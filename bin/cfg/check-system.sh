@@ -269,6 +269,7 @@ NPM_GLOBAL_PKG="
 	grunt:grunt-cli
 	grunt-init
 	express:express-generator
+	notify:node-notifier
 "
 
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"

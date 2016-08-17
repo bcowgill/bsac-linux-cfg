@@ -205,18 +205,34 @@ function filter_logs {
 		}' "$ERRLOG" > "$IGNORELOG" 2> "$ERRORSLOG"
 }
 
+function say {
+	local message
+	message="$1"
+	which notify > /dev/null && notify -t "$0" -m "$message"
+}
+
 function summary {
+	local message
 	echo Backup complete: $BACKUP
 	echo From: $SOURCE
 	ls -al "$BACKUP"
-	echo `cat "$FILELOG" | wc -l` files backed up
-	echo `cat "$DIRLOG" | wc -l` directories backed up
-	echo `cat "$ERRORSLOG" | wc -l` errors
-	echo `cat "$IGNORELOG" | wc -l` ignored warnings
-	echo Disk usage on backup drive:
-	df -h $BK_DIR
-	echo Errors logged to $ERRORSLOG
+	message="`cat "$FILELOG" | wc -l` files backed up"
+	say "$message"
+	message="`cat "$DIRLOG" | wc -l` directories backed up"
+	say "$message"
+	message="`cat "$ERRORSLOG" | wc -l` errors"
+	say "$message"
+	message="`cat "$IGNORELOG" | wc -l` ignored warnings"
+	say "$message"
+	message="Disk usage on backup drive: `df -h $BK_DIR`"
+	say "$message"
+	message="Errors logged to $ERRORSLOG"
+	say "$message"
 	head $ERRORSLOG
+	if [ `cat $ERRORSLOG | wc -l` != 0 ]; then
+		echo "`date` $0:" >> $HOME/warnings.log
+		cat $ERRORSLOG >> "$HOME/warnings.log"
+	fi
 }
 
 function restore {
