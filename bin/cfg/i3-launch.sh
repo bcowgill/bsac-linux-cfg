@@ -134,6 +134,7 @@ sleep 1
 
 # $edit
 i3do "workspace $edit; exec emacs.sh"
+i3do "workspace $edit; exec warnme.sh"
 
 random-desktop.sh
 

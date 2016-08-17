@@ -179,6 +179,7 @@ i3do "move scratchpad"
 # $edit
 i3do "workspace $edit; exec emacs.sh"
 i3do "workspace $edit; exec wstorm.sh"
+i3do "workspace $edit; exec warnme.sh"
 
 random-desktop.sh
 
