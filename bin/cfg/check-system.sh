@@ -350,6 +350,7 @@ MY_REPOS="
 	jshint-test
 	jsclass-test
 	foundation-test
+	perljs
 	open-layers
 	brick-xtag
 	d3-family-tree
