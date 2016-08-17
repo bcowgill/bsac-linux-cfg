@@ -31,6 +31,7 @@ while (my $line = <>)
 	$line = "${prefix}AUTOBUILD     $line\n" if $line =~ m{auto-build\.sh}xms;
 	$line = "${prefix}KEEP IT UP    $line\n" if $line =~ m{keep-it-up\.sh}xms;
 	$line = "${prefix}BALOO         $line\n" if $line =~ m{baloo_file_extractor}xms;
+	$line = "${prefix}SCREENSHOT    $line\n" if $line =~ m{screenshot.sh}xms;
 	print $line;
 }
 __END__
