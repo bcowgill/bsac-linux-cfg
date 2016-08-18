@@ -61,7 +61,7 @@ function NOT_OK {
 	message="$1"
 	TEST_CASES=$(( $TEST_CASES + 1 ))
 	TEST_FAILS=$(( $TEST_FAILS + 1 ))
-	echo "$FAIL $TEST_CASES $message"
+	say "$FAIL $TEST_CASES $message"
 	if [ $STOP_ON_FAIL == 1 ]; then
 		return 1
 	fi
@@ -70,8 +70,18 @@ function NOT_OK {
 
 # Show summary of failures and total tests
 function ENDS {
-	echo "$TEST_FAILS test failures (may be hidden)"
-	echo "$TEST_CASES test cases"
+	echo "update db" && sudo updatedb &
+	which notify && notify -t "" -m "$message"
+	say "$TEST_FAILS test failures (may be hidden)"
+	say "$TEST_CASES test cases"
+}
+
+# Say something on the terminal and with OS UI notification system
+function say {
+	local message
+	message="$1"
+	echo "$message"
+	which notify > /dev/null && notify -t "check-system.sh" -m "$message"
 }
 
 #============================================================================
@@ -1886,4 +1896,3 @@ function split_colon {
 	# split the file:pkg string into vars
 	IFS=: read SPLIT1 SPLIT2 <<< $one_two
 }
-

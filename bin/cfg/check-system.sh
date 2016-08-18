@@ -2076,7 +2076,6 @@ echo TODO gvim font setting config
 } # DISABLED
 
 pkg-list.sh > bin/cfg$COMP/pkg-list.txt
-sudo updatedb &
 
 popd
 
