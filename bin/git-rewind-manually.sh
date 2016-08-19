@@ -1,6 +1,7 @@
 #!/bin/bash
-# rewind your git repo until you manually stop
-# use this check when some manual test begins passing or failing
+# rewind your git repo until you manually stop or until ./git-should-stop.sh
+# indicates you should stop.
+# use this check when some manual/scripted test begins passing or failing
 
 ORIGIN="$(git branch | grep \\* | cut -c 3-)"
 BRANCH="x$ORIGIN"
@@ -12,8 +13,13 @@ git log | head -3
 while true; do
 
 echo " "
-echo "Press Ctrl-C if you want to stop here. Or ENTER to back up one commit"
-read WAIT
+
+if [ -x ./git-should-stop.sh ]; then
+	./git-should-stop.sh && git log | head -3 && exit 1
+else
+	echo "Press Ctrl-C if you want to stop here. Or ENTER to back up one commit"
+	read WAIT
+fi
 
 # back  up the revision tree one commit and try again...
 echo Back up one commit and try again.
