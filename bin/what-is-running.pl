@@ -21,6 +21,7 @@ while (my $line = <>)
 	$line = "${prefix}WEBPACK       $line\n" if $line =~ m{node(js)? .+ webpack}xms;
 	$line = "${prefix}FLOWSERVER    $line\n" if $line =~ m{node_modules .+ flow \s+ start}xms;
 	$line = "${prefix}REACTSTORYBK  $line\n" if $line =~ m{node(js)? .+ storybook}xms;
+	$line = "${prefix}NODESERVER    $line\n" if $line =~ m{node(js)? .+server}xms;
 	$line = "${prefix}DASHBOARD     $line\n" if $line =~ m{perl .+ infinity-plus-dashboard/bin/app\.pl}xms;
 	$line = "${prefix}UPDAEMON      $line\n" if $line =~ m{perl .+ blis-location-uploadd.pl}xms;
 	#/home/bcowgill/.rvm/rubies/ruby-2.1.5/bin/ruby bin/rails server -p 3001
