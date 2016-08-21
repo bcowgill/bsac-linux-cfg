@@ -146,6 +146,6 @@ xrefresh &
 ## Start Workrave
 #workrave &
 
-diffmerge /home/me/bin/cfg/workshare/i3-launch.sh /home/me/bin/cfg/i3-launch.sh &
+#diffmerge /home/me/bin/cfg/workshare/i3-launch.sh /home/me/bin/cfg/i3-launch.sh &
 
 i3-dump-log > $HOME/.i3-dump.log
