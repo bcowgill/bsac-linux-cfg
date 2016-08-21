@@ -1,0 +1,173 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Sun Aug 14 16:15:32 2016
+;; Desktop file format version 206
+;; Emacs version 24.4.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (22448 35604 266306 359000) (desktop . "206") "me@akston" nil nil ((((font-backend xft x) (font . "-unknown-ProFontWindows-normal-normal-normal-*-24-*-*-*-m-0-iso10646-1") (font-parameter) (border-width . 0) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars . left) (foreground-color . "wheat") (background-color . "black") (mouse-color . "black") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 12) (right-fringe . 0) (scroll-bar-foreground) (scroll-bar-background) (menu-bar-lines . 1) (tool-bar-lines . 1) (title . "emacs-projects") (wait-for-wm . t) (fullscreen) (tool-bar-position . top) (icon-type . t) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 16) (alpha) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "thistle") (environment) (sticky) (frameset--id . "4C77-1D17-7A02-AB70") (frameset--mini t . t) (modeline . t) (minibuffer . t) (unsplittable) (icon-name) (display . ":0") (explicit-name) (maximized) (visibility . t) (height . 40) (width . 157) (left . 0) (top . 30)) ((min-height . 4) (min-width . 20) (min-height-ignore . 3) (min-width-ignore . 10) (min-height-safe . 1) (min-width-safe . 4) (min-pixel-height . 96) (min-pixel-width . 240) (min-pixel-height-ignore . 72) (min-pixel-width-ignore . 120) (min-pixel-height-safe . 24) (min-pixel-width-safe . 48)) hc (pixel-width . 1920) (pixel-height . 946) (total-width . 160) (total-height . 39) (normal-height . 1.0) (normal-width . 1.0) (combination-limit) (leaf (pixel-width . 960) (pixel-height . 946) (total-width . 80) (total-height . 39) (normal-height . 1.0) (normal-width . 0.5) (buffer "enviroDetect.js" (selected) (hscroll . 0) (fringes 12 0 nil) (margins nil) (scroll-bars 16 2 t nil) (vscroll . 0) (dedicated) (point . 1091) (start . 1))) (leaf (last . t) (pixel-width . 960) (pixel-height . 946) (total-width . 80) (total-height . 39) (normal-height . 1.0) (normal-width . 0.5) (buffer "*shell*" (selected . t) (hscroll . 0) (fringes 12 0 nil) (margins nil) (scroll-bars 16 2 t nil) (vscroll . 0) (dedicated) (point . 47) (start . 1)))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name "/home/me/workspace/play/bsac-linux-cfg/bin/template/cfgrec/TAGS")
+(setq tags-table-list '("/home/me/workspace/play/bsac-linux-cfg/bin/template/cfgrec/TAGS"))
+(setq search-ring '("restore" "config" "bk_dir" "restore" "DO_FULL" "Backup Com" "complet" "complete" "unlock" "die" "set" "ALL_P" "ALL_PAR" "ALL_PARTIALS" "all_partials" "\"" "exit" "COMPANY" "HOSTNAME" "COMPANY" "file" "COMPANY" "i3-config" "midnight" ".config" "Style" "verticalAlign" "jscs" "eslint" "eslintconfig" "marginRight" "stylelint" "git-check" "rimraf" "build:clean" "path.join" "path" "process." "cssLoaders" "className" "width" "displayName" "listItemIconPad" "Style" "lint" "test:watch" "this" "linkPeopleToCon" "fact" "missing" "revisionList" "onAfterAnalyticsLoad" "trackInitial" "relevant" "console" "lookup" "connected" "relevant" "DOC_LIMIT" "DataSEt" "DataSet" "Browser" "ICONS" "Style"))
+(setq regexp-search-ring '("BAIL_OUT custom" "Revision" "function[ 	]*" "}" "function[ ]*([^)]*)[ ]*{[]" "function[ ]+([^)]+)[ ]+{" "function[ ]+()[ ]+{" "function " "	"))
+(setq register-alist (list '(51 . "\n        describe('api integration'\n            , () => {\n                it('should have same keys as actual api data'\n                    , () => {\n                        const realKeys = examineKeys(realApiData).sort()\n                        , factoryKeys = examineKeys(factory.makeFetchedRenditionJson().results).sort()\n                        expect(factoryKeys)\n                            .to.be.deep.equal(realKeys)\n                    })\n            }) // api integration()\n") '(49 . "    , realApiData = requireJson('data/renditions.json')\n") '(48 . ", requireJson, examineKeys") (desktop-list* 71 (let ((mk (make-marker))) (add-hook 'desktop-delay-hook `(lambda nil (set-marker ,mk ,nil (get-buffer ," *temp*")))) mk)) (list 102 '(frame-configuration ("Unprintable entity" ((parent-id . 8389056) (outer-window-id . "52428971") (window-id . "52428975") (top . 30) (left . 0) (buried-buffer-list "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity") (buffer-list "Unprintable entity" "Unprintable entity") (width . 157) (height . 40) (name . "emacs@worksharexps-XPS-15-9530") (explicit-name) (display . ":0") (visibility . t) (icon-name) (unsplittable) (minibuffer . "Unprintable entity") (modeline . t) (frameset--mini t . t) (frameset--id . "4C77-1D17-7A02-AB70") (sticky) (environment) (cursor-color . "thistle") (background-mode . dark) (display-type . color) (horizontal-scroll-bars . t) (window-system . x) (alpha) (scroll-bar-width . 16) (cursor-type . box) (auto-lower) (auto-raise) (icon-type . t) (tool-bar-position . top) (fullscreen) (wait-for-wm . t) (title . "emacs-projects") (buffer-predicate) (tool-bar-lines . 1) (menu-bar-lines . 1) (scroll-bar-background) (scroll-bar-foreground) (right-fringe . 0) (left-fringe . 12) (line-spacing) (screen-gamma) (border-color . "black") (mouse-color . "black") (background-color . "black") (foreground-color . "wheat") (vertical-scroll-bars . left) (bottom-divider-width . 0) (right-divider-width . 0) (internal-border-width . 0) (border-width . 0) (font-parameter) (font . "-unknown-ProFontWindows-normal-normal-normal-*-24-*-*-*-m-0-iso10646-1") (font-backend xft x)) "Unprintable entity")) (let ((mk (make-marker))) (add-hook 'desktop-delay-hook `(lambda nil (set-marker ,mk ,nil (get-buffer ," *temp*")))) mk))))
+(setq file-name-history '("/home/me/bin/template/javascript/enviroDetect.js" "/home/me/bin/ezbackup.sh" "/home/me/.BACKUP" "/home/me/bin/i3-start.sh" "/home/me/bin/i3-config-update.sh" "/home/me/.bashrc" ))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/enviroDetect.js"
+  "enviroDetect.js"
+  'js-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  1091
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/.BACKUP"
+  ".BACKUP"
+  'fundamental-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  129
+  '(87 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/ezbackup.sh"
+  "ezbackup.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  3422
+  '(442 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/.bashrc"
+  ".bashrc"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  3619
+  '(4029 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/i3-start.sh"
+  "i3-start.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  138
+  '(172 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/i3-config-update.sh"
+  "i3-config-update.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  147
+  '(90 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/check-system.sh"
+  "check-system.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  20648
+  '(20553 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/fix-import.pl"
+  "fix-import.pl"
+  'perl-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  1391
+  '(1832 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/git-mv-src.sh"
+  "git-mv-src.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  1210
+  '(2262 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/tests/git-mv-src/tests.sh"
+  "tests.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  377
+  '(46 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/workshare/i3-dock.sh"
+  "i3-dock.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  838
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/lib-check-system.sh"
+  "lib-check-system.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  4423
+  '(327 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/.i3-config"
+  ".i3-config"
+  'fundamental-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/jscs-disallowIdentifierNames.sh"
+  "jscs-disallowIdentifierNames.sh"
+  'sh-mode
+  '(editorconfig-mode global-auto-revert-mode)
+  173
+  '(267 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+

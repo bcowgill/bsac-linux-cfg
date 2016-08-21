@@ -1,0 +1,54 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("(eintr) nth"
+ (front-context-string . "\n7.4 ‘nth’\n=====")
+ (rear-context-string . " car cdr & cons\n")
+ (position . 248675)
+ (filename . "/usr/share/info/emacs-24/eintr")
+ (info-node . "nth")
+ (handler . Info-bookmark-jump))
+("emacsercises.txt"
+ (filename . "~/workspace/play/bsac-linux-cfg/bin/template/cfgrec/emacsercises.txt")
+ (front-context-string . "2 ==============")
+ (rear-context-string . "          D .\n\f\n")
+ (position . 1589))
+("jscs-test.jsx"
+ (filename . "~/workspace/projects/docuzilla/webui/src/templates/jscs/jscs-test.jsx")
+ (front-context-string . "\n\n//============")
+ (rear-context-string . "ArrowFunctions\n\n")
+ (position . 15991))
+("jscs.json5"
+ (filename . "~/workspace/projects/docuzilla/webui/config/jscs.json5")
+ (front-context-string . "// HEREIAM confi")
+ (rear-context-string . "/ etc\n    ],\n	\n	")
+ (position . 2772))
+("card"
+ (filename . "~/workspace/play/bsac-linux-cfg/bin/template/cfgrec/emacs-card.pl")
+ (front-context-string . "              =>")
+ (rear-context-string . "nter-top-bottom'")
+ (position . 4051))
+("markup"
+ (filename . "~/workspace/play/bsac-linux-cfg/bin/template/cfgrec/emacsercises.markup.txt")
+ (front-context-string . ")\n	 %% move to t")
+ (rear-context-string . "t page break (^L")
+ (position . 5484))
+("eintr"
+ (front-context-string . "File: eintr.info")
+ (rear-context-string)
+ (position . 269351)
+ (filename . "/usr/share/info/emacs-24/eintr")
+ (info-node . "Complete kill-region")
+ (handler . Info-bookmark-jump))
+("movement"
+ (filename . "~/bin/template/cfgrec/emacs-tutorial.txt")
+ (front-context-string . "	C-v	Move forwar")
+ (rear-context-string . "nd of sentence\n\n")
+ (position . 6260))
+("hereiam"
+ (filename . "~/workspace/play/bsac-linux-cfg/bin/template/cfgrec/emacs-tutorial.txt")
+ (front-context-string . "* MORE FEATURES\n")
+ (rear-context-string . "ocumentation.\n\n\n")
+ (position . 44935))
+)
