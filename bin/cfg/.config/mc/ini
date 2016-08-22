@@ -84,6 +84,8 @@ skin=nicedark
 
 filepos_max_saved_entries=1024
 
+select_flags=6
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -94,7 +96,7 @@ menubar_visible=1
 free_space=1
 horizontal_split=0
 vertical_equal=1
-left_panel_size=80
+left_panel_size=79
 horizontal_equal=1
 top_panel_size=1
 
@@ -142,8 +144,18 @@ select_flags=6
 simple_swap=false
 
 [terminal:xterm]
-complete=^j
-backtab=\\e^j
+# complete=Alt-Space
+# backtab=Alt- ???
+# f1=Alt-F1
+# f20=Alt-F10
+# numpad asterisk=Alt-*
+complete=\\e 
+backtab=\\e[Z
+
+f1=\\eO1\;3P
+f20=\\e[21\;3~
+kpasterisk=\\eOj
+backspace=
 
 [Panelize]
 Find *.orig after patching=find . -name \\*.orig -print
