@@ -307,5 +307,16 @@ then you can return here with C-x r j 0
 	 A-p	select previous search string from history
 	 A-n	select next search string from history
 
+Do a regex search to match these:
+
+function           (   )    { }
+function (x, y)    { }
+function ()    { return 42; }
+function (x: int, y = 32) {}
+
+Search solutions:
+function[ ]*([^)]*)[ ]*{[^}]*}
+
+
 . ==========================================================================
 
