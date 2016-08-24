@@ -846,8 +846,8 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%split-window-right%||split window side by side|
 |%scroll-other-window%||scroll other window down|
 |%other-window%|%other-frame%|switch cursor to another window|
-|%switch-to-buffer-other-window%|%switch-to-buffer-other-frame%|select buffer in other window|
-|%display-buffer%|%display-buffer-other-frame%|display buffer in other window|
+|%switch-to-buffer-other-window%|%switch-to-buffer-other-frame%|select buffer in other window and move cursor there|
+|%display-buffer%|%display-buffer-other-frame%|display buffer in other window but keep cursor in this one|
 |%find-file-other-window%|%find-file-other-frame%|find file in other window|
 |%find-file-read-only-other-window%|%find-file-read-only-other-frame%|find file read-only in other window|
 |%dired-other-window%|%dired-other-frame%|run Dired in other window|

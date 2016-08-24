@@ -37,9 +37,81 @@ Viewport scrolling and centering:
 %
 emacs tip of the day:
 
-Jump to start or end of document:
+Jump to specific place in the document:
 
 	A-<    jump to start of document
 	A->    jump to end of document
 	A-gg   number    jump to any arbitrary line number
 %
+emacs tip of the day:
+
+Ace jump mode to go anywhere quickly:
+
+	C-cSpace   first letter of word    ace jump to start of any word on screen
+	C-u C-cSpace   letter to go to    ace jump to any character on screen
+	C-u C-u C-c Space    ace jump to any line on screen
+	C-c C-Space    ace jump mode pop mark
+%
+emacs tip of the day:
+
+Read-only mode.
+
+	C-x C-q    toggle read-only status of buffer
+%
+emacs tip of the day:
+
+Narrowing the editor scope to limit visibility and search/replace operations.
+
+	C-x n n    narrow scope of the editor to the selected region, hides the rest of the buffer from view
+	C-x n w    widen the scope of the editor to the entire buffer
+%
+emacs tip of the day:
+
+Closing windows.
+
+	C-x 0    C-x 5 0    delete this window or frame
+	C-x 1    C-x 5 1    delete all other windows or frames
+%
+emacs tip of the day:
+
+Splitting windows.
+
+	C-x 2    C-x 5 2    split window or frame, above and below
+	C-x 3    split window side by side
+%
+emacs tip of the day:
+
+Using the other window.
+
+	C-x o    C-x 5 o    switch cursor to another window or frame
+	C-A-v    scroll other window down
+	C-A-- C-A-v    scroll other window up
+%
+emacs tip of the day:
+
+Showing buffer in other window.
+
+	C-x 4 b    C-x 5 b    select buffer in other window or frame and put the cursor there
+	C-x 4 C-o    C-x 5 C-o    display buffer in other window or frame but keep cursor here
+%
+emacs tip of the day:
+
+Opening files in other window.
+
+	C-x 4 f    C-x 5 f    find file in other window or frame
+	C-x 4 r    C-x 5 r    find file read-only in other window or frame
+%
+emacs tip of the day:
+
+Doing things in the other window.
+
+	C-x 4 d    C-x 5 d    run Dired in other window or frame
+	C-x 4 .    C-x 5 .    find tag in other window or frame
+%
+emacs tip of the day:
+
+Change your window sizes.
+
+	C-x ^    grow window taller
+	C-x {    shrink window narrower
+	C-x }    grow window wider

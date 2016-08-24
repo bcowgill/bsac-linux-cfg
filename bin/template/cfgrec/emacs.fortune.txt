@@ -37,9 +37,81 @@ Viewport scrolling and centering:
 %
 emacs tip of the day:
 
-Jump to start or end of document:
+Jump to specific place in the document:
 
 	%beginning-of-buffer%    jump to start of document
 	%end-of-buffer%    jump to end of document
 	%goto-line%    jump to any arbitrary line number
 %
+emacs tip of the day:
+
+Ace jump mode to go anywhere quickly:
+
+	%ace-jump-mode%    ace jump to start of any word on screen
+	%-ace-jump-mode2%    ace jump to any character on screen
+	%ace-jump-line-mode%    ace jump to any line on screen
+	%ace-jump-mode-pop-mark%    ace jump mode pop mark
+%
+emacs tip of the day:
+
+Read-only mode.
+
+	%read-only-mode%    toggle read-only status of buffer
+%
+emacs tip of the day:
+
+Narrowing the editor scope to limit visibility and search/replace operations.
+
+	%narrow-to-region%    narrow scope of the editor to the selected region, hides the rest of the buffer from view
+	%widen%    widen the scope of the editor to the entire buffer
+%
+emacs tip of the day:
+
+Closing windows.
+
+	%delete-window%    %delete-frame%    delete this window or frame
+	%delete-other-windows%    %delete-other-frames%    delete all other windows or frames
+%
+emacs tip of the day:
+
+Splitting windows.
+
+	%split-window-below%    %make-frame-command%    split window or frame, above and below
+	%split-window-right%    split window side by side
+%
+emacs tip of the day:
+
+Using the other window.
+
+	%other-window%    %other-frame%    switch cursor to another window or frame
+	%scroll-other-window%    scroll other window down
+	%-neg-arg2% %scroll-other-window%    scroll other window up
+%
+emacs tip of the day:
+
+Showing buffer in other window.
+
+	%switch-to-buffer-other-window%    %switch-to-buffer-other-frame%    select buffer in other window or frame and put the cursor there
+	%display-buffer%    %display-buffer-other-frame%    display buffer in other window or frame but keep cursor here
+%
+emacs tip of the day:
+
+Opening files in other window.
+
+	%find-file-other-window%    %find-file-other-frame%    find file in other window or frame
+	%find-file-read-only-other-window%    %find-file-read-only-other-frame%    find file read-only in other window or frame
+%
+emacs tip of the day:
+
+Doing things in the other window.
+
+	%dired-other-window%    %dired-other-frame%    run Dired in other window or frame
+	%find-tag-other-window%    %find-tag-other-frame%    find tag in other window or frame
+%
+emacs tip of the day:
+
+Change your window sizes.
+
+	%enlarge-window%    grow window taller
+	%shrink-window-horizontally%    shrink window narrower
+	%enlarge-window-horizontally%    grow window wider
