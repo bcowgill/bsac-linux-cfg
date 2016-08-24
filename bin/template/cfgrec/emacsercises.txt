@@ -144,18 +144,18 @@ Emacsercise #3 movin' and shakin' it around
 First save this cursor position to register 0 with C-x r Space 0
 then you can return here with C-x r j 0
 
-	 C-x r Space 0    save current point to register 0
-	 C-x r j 0    jump back to point in register 0
+	C-x r Space 0    save current point to register 0
+	C-x r j 0    jump back to point in register 0
 	C-v    scroll document up one page (only moves cursor point if necessary )
-	 A-v    scroll document down one page
-	 C-l    scroll current line to center, top, bottom in succession
-	 C-x >    scroll the view to the right
-	 C-x <    scroll the view to the left
+	A-v    scroll document down one page
+	C-l    scroll current line to center, top, bottom in succession
+	C-x >    scroll the view to the right
+	C-x <    scroll the view to the left
 	C-x ]    move to the next page break (^L)
-	 C-x [    move to the previous page break (^L)
-	 A-<    jump to start of document
-	 A->    jump to end of document
-	 A-gg   number    jump to any arbitrary line number
+	C-x [    move to the previous page break (^L)
+	A-<    jump to start of document
+	A->    jump to end of document
+	A-gg   number    jump to any arbitrary line number
 
 Practice scroll view up/down without using the Pg Up / Pg Dn keys
 

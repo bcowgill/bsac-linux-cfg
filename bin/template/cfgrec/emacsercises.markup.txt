@@ -144,18 +144,18 @@ Emacsercise #3 movin' and shakin' it around
 First save this cursor position to register 0 with %-point-to-register0%
 then you can return here with %-jump-to-register0%
 
-	 %-point-to-register0%    save current point to register 0
-	 %-jump-to-register0%    jump back to point in register 0
+	%-point-to-register0%    save current point to register 0
+	%-jump-to-register0%    jump back to point in register 0
 	%scroll-up-command%    scroll document up one page (only moves cursor point if necessary )
-	 %scroll-down-command%    scroll document down one page
-	 %recenter-top-bottom%    scroll current line to center, top, bottom in succession
-	 %scroll-right%    scroll the view to the right
-	 %scroll-left%    scroll the view to the left
+	%scroll-down-command%    scroll document down one page
+	%recenter-top-bottom%    scroll current line to center, top, bottom in succession
+	%scroll-right%    scroll the view to the right
+	%scroll-left%    scroll the view to the left
 	%forward-page%    move to the next page break (^L)
-	 %backward-page%    move to the previous page break (^L)
-	 %beginning-of-buffer%    jump to start of document
-	 %end-of-buffer%    jump to end of document
-	 %goto-line%    jump to any arbitrary line number
+	%backward-page%    move to the previous page break (^L)
+	%beginning-of-buffer%    jump to start of document
+	%end-of-buffer%    jump to end of document
+	%goto-line%    jump to any arbitrary line number
 
 Practice scroll view up/down without using the Pg Up / Pg Dn keys
 

@@ -1,0 +1,45 @@
+emacs tip of the day:
+
+Jumping around on the current line:
+
+	C-e    end of the line
+	C-a    at beginning of the line
+	A-m    move to first non-space on line
+%
+emacs tip of the day:
+
+Jumping around by paragraph (delimited by blank lines)
+
+	A-}    forward to just after the paragaph
+	A-{    backward to just before the paragraph
+%
+emacs tip of the day:
+
+Jumping around by symbolic expressions
+
+	C-A-f    forward to just after this/next symbolic expression
+	C-A-b    backward to beginning of this/previous symbolic expr
+%
+emacs tip of the day:
+
+Save and jump to numbered register location:
+
+	C-x r Space 0    save current point to register 0
+	C-x r j 0    jump back to point in register 0
+%
+emacs tip of the day:
+
+Viewport scrolling and centering:
+
+	C-v    scroll document up one page (only moves cursor point if necessary )
+	A-v    scroll document down one page
+	C-l    scroll current line to center, top, bottom in succession
+%
+emacs tip of the day:
+
+Jump to start or end of document:
+
+	A-<    jump to start of document
+	A->    jump to end of document
+	A-gg   number    jump to any arbitrary line number
+%
