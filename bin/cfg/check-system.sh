@@ -603,6 +603,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		ncdu
 		figlet
 		banner:sysvbanner
+		cowsay
 		linuxlogo
 	"
 	NODE_PKG=""
