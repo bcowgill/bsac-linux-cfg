@@ -124,12 +124,14 @@ function backup {
 }
 
 function full_backup {
-	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
-
 	TIMESTAMP="$BK_DIR/full-backup.timestamp"
    BACKUP="$FULL"
-
 	define_logs
+
+	[ -e "$FULL" ] && show_times && check_space
+exit 2
+	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
+
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
 
@@ -167,6 +169,7 @@ function define_logs {
 	FILENAMELOG="$BK_DIR/filenames$num.log"
 	IGNORELOG="$BK_DIR/ignored-errors$num.log"
 	ERRORSLOG="$BK_DIR/errors$num.log"
+	touch $ERRORSLOG
 
 	if [ $DEBUG == 1 ]; then
 		echo NUM=$NUM
@@ -180,6 +183,41 @@ function define_logs {
 		echo FILENAMELOG=$FILENAMELOG
 		echo IGNORELOG=$IGNORELOG
 		echo ERRORSLOG=$ERRORSLOG
+	fi
+}
+
+function show_times {
+	time_diff "$TIMESTAMP" "$FULL" "elapsed for the last full backup"
+}
+
+function time_diff {
+	local start end message
+	start="$1"
+	end="$2"
+	message="$3"
+	perl -e '
+		sub num { return int(100 * shift)/100 }
+		$start = -M "$ARGV[0]";
+		$end = -M "$ARGV[1]";
+		print join(" ", (num(24*($start - $end))), "hours $ARGV[2]\n");
+	' "$start" "$end" "$message"
+
+}
+
+function check_space {
+	local free needed
+	free=`df "$BK_DIR/" | tail -1 | perl -pne 's{(\d+) \s+ \d+ \%}{$used = $1;''}xmsge; $_ = "$used\n"'`
+	needed=`du "$FULL" | perl -pne 's{\A (\d+) .+}{$1\n}xmsg'`
+
+	if perl -e 'exit($ARGV[0] < $ARGV[1] ? 1 : 0)' $needed $free ; then
+		echo there is enough space available for backup
+	else
+		echo NOT OK need $needed but only $free is available.
+		du -h "$FULL"
+		df -h "$BK_DIR/"
+		log_error "Error: not enough space available for full backup, need $needed, free $free. Will do a partial backup instead."
+		partial_backup
+		exit 0
 	fi
 }
 
@@ -230,9 +268,16 @@ function summary {
 	say "$message"
 	head $ERRORSLOG
 	if [ `cat $ERRORSLOG | wc -l` != 0 ]; then
-		echo "`date` $0:" >> $HOME/warnings.log
-		cat $ERRORSLOG >> "$HOME/warnings.log"
+		log_error "Errors from backup"
 	fi
+}
+
+function log_error {
+	local message
+	message="$1"
+	echo "`date` $0:" >> "$HOME/warnings.log"
+	echo "$message" >> "$HOME/warnings.log"
+	cat $ERRORSLOG >> "$HOME/warnings.log"
 }
 
 function restore {
