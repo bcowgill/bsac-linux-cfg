@@ -8,12 +8,10 @@ fi
 
 source `which setup-monitors.sh`
 
-if [ "$COMPANY" == "workshare" ]; then
-	touch-off.sh
-fi
+touch-off.sh
 
 if [ "$HOSTNAME" == "akston" ]; then
-	mouse-left.sh
 	keyboard-medium.sh
 fi
+
 swapcaps.sh
