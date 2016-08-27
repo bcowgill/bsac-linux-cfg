@@ -16,6 +16,7 @@ cfg/workshare/check-workshare.sh
 node_modules
 WebStorm
 sys-snapshot*
+
 # emacs editor files
 \#*#
 .\#*
@@ -25,3 +26,7 @@ template/unicode
 i3-dock.sh
 i3-launch.sh
 Downloads
+
+# ignore editor tag files
+TAGS
+tags
