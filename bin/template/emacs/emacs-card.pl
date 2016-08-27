@@ -328,9 +328,10 @@ my $rhSubEmacs = {
 
 	# Tags
 	'find-tag'                            => k('Alt-.'),
-	'pop-tag-mark'                        => k('Alt-'),
+	'pop-tag-mark'                        => k('Alt-*'),
 	'-find-next-tag'                      => k('Ctrl-u', 'Alt-.'),
 	'-find-prev-tag'                      => k('Alt--', 'Alt-.'),
+	'find-tag-regexp'                     => p('Ctrl-Alt-.', 'pattern'),
 	'visit-tags-table'                    => \&fn,
 	'tags-search'                         => \&fn,
 	'tags-query-replace'                  => \&fn,
@@ -934,6 +935,9 @@ th||sentence|home|word|character||character|word|end|sentence|
 
 <table class="define">
 |%find-tag%|find the definition of a tag|
+|%find-tag-regexp%|find a tag whose name matches pattern|
+|%find-tag-other-window%|find tag in other window|
+|%find-tag-other-window%|find tag in frame window|
 |%-find-next-tag%|find next match for last tag or regexp|
 |%-find-prev-tag%|back to previous match of tag|
 |%pop-tag-mark%|go back to mark before tag search began|
@@ -941,6 +945,7 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%tags-search%|regexp search on all files in tags table|
 |%tags-query-replace%|run query-replace on all the files|
 |%tags-loop-continue%|continue last tags search or query-replace|
+|%end-of-buffer% %tags-loop-continue%|continue last tags search or query-replace from next matching file|
 </table>
 
 <h2>Shells</h2>

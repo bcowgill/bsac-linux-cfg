@@ -18,3 +18,7 @@ var undefined,
 window.x$ = window.xui = xui = function(q, context) {
     return new xui.fn.find(q, context);
 };
+
+function say (message) {
+	alert('what', message)
+}
