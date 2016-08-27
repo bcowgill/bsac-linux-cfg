@@ -272,6 +272,13 @@ NPM_GLOBAL_PKG="
 	notify:node-notifier
 "
 
+# TODO notifications
+# tried installing kubuntu-notification-helper in an effort to get
+# the osd notifications to appear like they are at work.
+# another option is pidgin
+#RE=`apt-cache search notifications | perl -ne 's{\A ([\-\.\w]+) .+ \z}{$1}xmsg; push(@o, $_); sub END {print join("|", @o)}'`
+#git grep -E "\b($RE)\b" cfg/pkg-list.txt cfg/workshare/pkg-list.txt
+
 INSTALL_GRUNT_TEMPLATES="basic:grunt-init-gruntfile node:grunt-init-node jquery:grunt-init-jquery.git"
 
 # webcollage screensaver pulls from the internet so not safe for work

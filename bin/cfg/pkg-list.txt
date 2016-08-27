@@ -546,6 +546,8 @@ kpartx
 kpartx-boot
 krb5-locales
 kubuntu-debug-installer
+kubuntu-driver-manager
+kubuntu-notification-helper
 landscape-client-ui-install
 language-pack-en
 language-pack-en-base
@@ -769,6 +771,7 @@ libdc1394-22:amd64
 libdca0:amd64
 libdconf1:amd64
 libdebconfclient0:amd64
+libdebconf-kde0
 libdebian-installer4:amd64
 libdecoration0
 libdee-1.0-4:amd64
@@ -2130,6 +2133,7 @@ python3-checkbox-support
 python3-commandnotfound
 python3-crypto
 python3-dbus
+python3-dbus.mainloop.qt
 python3-debian
 python3-defer
 python3-distupgrade
@@ -2155,7 +2159,9 @@ python3-progressbar
 python3-pyatspi
 python3-pycurl
 python3-pyparsing
+python3-pyqt4
 python3-requests
+python3-sip
 python3-six
 python3-software-properties
 python3-speechd
