@@ -115,3 +115,40 @@ Change your window sizes.
 	C-x ^    grow window taller
 	C-x {    shrink window narrower
 	C-x }    grow window wider
+%
+emacs tip of the day:
+
+Indenting.
+
+	Tab    indent current line (mode-dependent)
+	C-A-\    indent region (mode-dependent)
+	C-A-q    indent symbolic expression or scope (mode-dependent)
+	C-x Tab    indent region rigidly <i>arg</i> columns
+%
+emacs tip of the day:
+
+Commenting code.
+
+	A-;    smart comment/uncomment region or add comment. Kill comment if prefix argument given
+%
+emacs tip of the day:
+
+Inserting new lines.
+
+	C-o    insert new line after point. no indent
+	C-A-o    split line with appropriate indent
+%
+emacs tip of the day:
+
+Deleting spaces.
+
+	C-x C-o    delete blank lines around point
+	A-^    join line with previous (with <i>arg<i>, next)
+	A-\    delete all whitespace around point
+    A-Space    put exactly one space at or around point
+%
+emacs tip of the day:
+
+	A-q    reflow paragraph or region to the fill-column
+	C-x f    set fill-column interactively or from prefix argument
+	C-x .    set prefix each line starts with based on the text before point
