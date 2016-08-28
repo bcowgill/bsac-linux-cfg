@@ -323,6 +323,7 @@ ATOM_VER=v1.9.9
 ATOM_PKG=atom-amd64.deb
 ATOM_CMD=atom
 ATOM_URL=https://atom-installer.github.com
+ATOM_APM_PKG=activate-power-mode
 #ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
@@ -1511,6 +1512,8 @@ file_present prettydiff.js "html beautifier file"
 
 if [ ! -z "$ATOM_PKG" ]; then
 	install_command_package_from_url $ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor"
+# TODO lib-check-system installer
+	apm install $ATOM_APM_PKG
 else
 	OK "will not configure atom editor unless ATOM_PKG is non-zero"
 fi
