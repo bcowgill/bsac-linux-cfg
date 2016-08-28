@@ -2,6 +2,8 @@
 # easy backup system just give source and destination. will do a full backup
 # and then partial backups of what changed since last backup
 
+#set -x
+
 DEBUG=0
 
 MODE=${1:-partial}
@@ -51,7 +53,7 @@ function die {
 	local code message
 	code=$1
 	message="$2"
-	echo ERROR: $0 $message
+	log_error "$message"
 	[ -z $LOCK_ERROR ] && unlock
 	exit $code
 }
@@ -275,9 +277,11 @@ function summary {
 function log_error {
 	local message
 	message="$1"
-	echo "`date` $0:" >> "$HOME/warnings.log"
+	echo "ERROR `date` $0:" >> "$HOME/warnings.log"
 	echo "$message" >> "$HOME/warnings.log"
-	cat $ERRORSLOG >> "$HOME/warnings.log"
+	if [ ! -z "$ERRORSLOG" ]; then
+		cat $ERRORSLOG >> "$HOME/warnings.log"
+	fi
 }
 
 function restore {
