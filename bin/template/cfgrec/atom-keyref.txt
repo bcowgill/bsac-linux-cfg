@@ -9,6 +9,7 @@ KEY:ATOM:NAV
 KEY:ATOM:VIEW
 KEY:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets
 KEY:ATOM:FIND Ctrl-m Move to matching bracket
+KEY:ATOM:FIND Ctrl-t  Fuzzy Finder - popup to open any file by incremental search
 KEY:ATOM:PASTE
 KEY:ATOM:CODE
 KEY:ATOM:DOC

@@ -51,6 +51,7 @@ apt-xapian-index
 archdetect-deb
 aspell
 aspell-en
+atom-beta
 at-spi2-core
 attr
 audacity

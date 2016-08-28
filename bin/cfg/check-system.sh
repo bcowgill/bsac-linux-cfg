@@ -317,10 +317,12 @@ EMACS_PKG="
 #EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:emacs24-el"
 
 #https://atom.io/download/deb
+#https://atom-installer.github.com/v1.9.9/atom-amd64.deb?s=1471476867&ext=.deb
 ATOM_VER=v1.10.0-beta7
 ATOM_PKG=atom-amd64.deb
 ATOM_CMD=atom-beta
-ATOM_URL=https://github.com/atom/atom/releases/download/
+ATOM_URL=https://atom.io/download/deb
+#ATOM_URL=$ATOM_URL/$ATOM_PKG
 #ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
