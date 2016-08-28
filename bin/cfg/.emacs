@@ -72,6 +72,7 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'editorconfig)
 (editorconfig-mode 1)
+(semantic-mode 1)
 
 ;;
 ;; ace jump mode major function
