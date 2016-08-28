@@ -10,7 +10,11 @@
   editor:
     fontFamily: "profontwindows"
     fontSize: 18
-    invisibles: {}
+    invisibles:
+      cr: "␍"
+      eol: "⏎"
+      space: "␠"
+      tab: "⟾"
     lineHeight: 1.1
     scrollSensitivity: 60
     showIndentGuide: true
