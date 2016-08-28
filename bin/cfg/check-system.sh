@@ -316,6 +316,13 @@ EMACS_PKG="
 "
 #EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:emacs24-el"
 
+#https://atom.io/download/deb
+ATOM_VER=v1.10.0-beta7
+ATOM_PKG=atom-amd64.deb
+ATOM_CMD=atom-beta
+ATOM_URL=https://github.com/atom/atom/releases/download/
+#ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
+
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
 SUBLIME_PKG=sublime-text_build-3114_amd64.deb
 SUBLIME_CFG=.config/sublime-text-3
@@ -657,6 +664,7 @@ fi
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z "$ATOM_PKG"          ] && ATOM_CMD=""
 
 # HEREIAM DERIVED
 
@@ -676,6 +684,8 @@ P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
 WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
 WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
+
+ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
@@ -727,6 +737,7 @@ COMMANDS="
 	$DIFFMERGE_CMD
 	$SKYPE_CMD
 	$PIDGIN_CMD
+	$ATOM_CMD
 "
 
 PACKAGES="
@@ -1495,6 +1506,12 @@ fi
 BAIL_OUT crontab
 
 file_present prettydiff.js "html beautifier file"
+
+if [ ! -z "$ATOM_PKG" ]; then
+	install_command_package_from_url $ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor"
+else
+	OK "will not configure atom editor unless ATOM_PKG is non-zero"
+fi
 
 if [ ! -z "$SUBLIME_PKG" ]; then
 	install_command_package_from_url $SUBLIME_CMD $SUBLIME_PKG $SUBLIME_URL "sublime editor"
