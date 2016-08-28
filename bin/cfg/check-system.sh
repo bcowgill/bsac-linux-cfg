@@ -318,11 +318,11 @@ EMACS_PKG="
 
 #https://atom.io/download/deb
 #https://atom-installer.github.com/v1.9.9/atom-amd64.deb?s=1471476867&ext=.deb
-ATOM_VER=v1.10.0-beta7
+#ATOM_VER=v1.10.0-beta7
+ATOM_VER=v1.9.9
 ATOM_PKG=atom-amd64.deb
-ATOM_CMD=atom-beta
-ATOM_URL=https://atom.io/download/deb
-#ATOM_URL=$ATOM_URL/$ATOM_PKG
+ATOM_CMD=atom
+ATOM_URL=https://atom-installer.github.com
 #ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
