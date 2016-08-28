@@ -336,6 +336,21 @@ my $rhSubEmacs = {
 	'tags-search'                         => \&fn,
 	'tags-query-replace'                  => \&fn,
 	'tags-loop-continue'                  => k('Alt-,'),
+	'complete-symbol'                     => k('Alt-Tab'),
+	'-complete-symbol1'                   => k('Ctrl-Alt-i'),
+	'list-tags'                           => \&fn,
+	'tags-apropos'                        => \&fn,
+	'next-file'                           => \&fn,
+
+	# Semantic Tags
+	'semantic-mode'                       => \&fn,
+	'semantic-complete-jump-local'        => k('Ctrl-c', ',') . p('j', 'local-function'),
+	'semantic-complete-jump'              => k('Ctrl-c', ',') . p('J', 'function'),
+	'semantic-complete-analyze-inline'    => k('Ctrl-c', ',', 'Space'),
+	'semantic-analyze-possible-completions' => k('Ctrl-c', ',', 'l'),
+	'senator-previous-tag'                => k('Ctrl-c', ',', 'p'),
+	'senator-next-tag'                    => k('Ctrl-c', ',', 'n'),
+	'senator-go-to-up-reference'          => k('Ctrl-c', ',', 'u'),
 
 	# Shells
 	'shell-command'                       => k('Alt-!'),
@@ -946,6 +961,24 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%tags-query-replace%|run query-replace on all the files|
 |%tags-loop-continue%|continue last tags search or query-replace|
 |%end-of-buffer% %tags-loop-continue%|continue last tags search or query-replace from next matching file|
+
+|%complete-symbol% or %-complete-symbol1%|complete symbol at point based on tags|
+|%list-tags%|display a list of tags in specified file name|
+|%tags-apropos%|display a list of all tags matching regexp|
+|%next-file%|visit the next file in the current tags table|
+</table>
+
+<h2>Semantic Tags</h2>
+
+<table class="define">
+|%semantic-mode%|Activate semantic mode tagging|
+|%semantic-complete-jump-local%|jump to local function|
+|%semantic-complete-jump%|jump to any function|
+|%semantic-complete-analyze-inline%|display a list of possible completions for symbol at point|
+|%semantic-analyze-possible-completions%|display a list of completions in another window|
+|%senator-previous-tag%|Jump to previous semantic tag|
+|%senator-next-tag%|Jump to next semantic tag|
+|%senator-go-to-up-reference%|Go up one reference from the current semantic tag|
 </table>
 
 <h2>Shells</h2>
