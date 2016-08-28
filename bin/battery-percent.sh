@@ -1,4 +1,6 @@
 #upower --show-info /org/freedesktop/UPower/devices/battery_BAT1 \
-upower --show-info `upower --enumerate` \
-    | egrep 'percentage' \
-    | perl -pne 'chomp; s{\s*(percentage:\s*)}{}xms; $_ .= "🔋 "'
+for power in `upower --enumerate`; do
+	upower --show-info $power | perl -ne 's{\s+}{ }xmsg; print if m{BAT|percent|capacity}xms' \
+		| perl -ne 'chomp; if (s{\A\s*(percentage:\s*)}{}xms) { $_ .= "🔋 "; print }'
+done
+echo " "
