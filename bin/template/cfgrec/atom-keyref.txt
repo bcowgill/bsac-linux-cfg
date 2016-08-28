@@ -1,11 +1,14 @@
 atom editor command quick reference
+
+http://flight-manual.atom.io/getting-started/sections/atom-basics/#platform-linux
+
 KEY:ATOM:CMD Ctrl-Shift-p Open the command palette to execute a command
-KEY:ATOM:CONFIG
+KEY:ATOM:CONFIG Ctrl-, Open the settings tab
 KEY:ATOM:EDIT
 KEY:ATOM:NAV
 KEY:ATOM:VIEW
-KEY:ATOM:MARK
-KEY:ATOM:FIND
+KEY:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets
+KEY:ATOM:FIND Ctrl-m Move to matching bracket
 KEY:ATOM:PASTE
 KEY:ATOM:CODE
 KEY:ATOM:DOC
@@ -15,3 +18,7 @@ KEY:ATOM:CONFIG
 KEY:ATOM:CHANGES
 KEY:ATOM:TABS
 KEY:ATOM:HELP
+KEY:ATOM:FUN Ctrl-Alt-o Toggle activation of power mode
+
+Packages installed:
+activate-power-mode

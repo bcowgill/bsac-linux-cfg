@@ -1,11 +1,25 @@
 "*":
+  "activate-power-mode":
+    excludedFileTypes: {}
   core:
+    autoHideMenuBar: true
     themes: [
       "one-dark-ui"
       "base16-tomorrow-dark-theme"
     ]
-  editor: {}
+  editor:
+    fontFamily: "profontwindows"
+    fontSize: 18
+    invisibles: {}
+    lineHeight: 1.1
+    scrollSensitivity: 60
+    showIndentGuide: true
+    showInvisibles: true
+    softWrapAtPreferredLineLength: true
+    tabLength: 4
   "exception-reporting":
     userId: "f18ff672-b4b3-1b70-8e2c-431a297a4897"
+  "one-dark-ui":
+    fontSize: 16
   welcome:
     showOnStartup: false
