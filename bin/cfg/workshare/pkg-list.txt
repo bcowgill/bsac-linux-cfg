@@ -55,6 +55,7 @@ argyll-ref
 ark
 aspell
 aspell-en
+atom
 at-spi2-core
 aufs-tools
 autoconf
@@ -131,6 +132,7 @@ consolekit
 console-setup
 console-setup-linux
 coreutils
+cowsay
 cpanminus
 cpio
 cpp

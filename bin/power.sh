@@ -1,5 +1,6 @@
 #!/bin/bash
 # show battery and temperature information
-battery.sh
+echo Battery: `battery-percent.sh`
+#battery.sh
 echo " "
 sensors
