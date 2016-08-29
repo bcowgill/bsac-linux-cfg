@@ -4,9 +4,14 @@
 
 #set -x
 
-DEBUG=1
+DEBUG=0
 CFG=$HOME/.BACKUP
 CMD=`basename $0`
+
+if [ "$1" == '--debug' ]; then
+	DEBUG=1
+	shift
+fi
 
 MODE=${1:-partial}
 
@@ -96,8 +101,8 @@ function config {
 
 		[ -z "$BK_DIR" ] && usage "you must provide a source and destination on command line or in $CFG"
 		[ -z "$SOURCE" ] && usage "you must provide a source and destination on command line or in $CFG"
-		[ -z "$BK_DISK" ] && BK_DISK="$BK_DIR"
 	fi
+	[ -z "$BK_DISK" ] && BK_DISK="$BK_DIR"
 
 	[ -d $BK_DIR ] || mkdir -p "$BK_DIR"
 	[ -d $SOURCE ] || usage "$SOURCE: SOURCE directory does not exist."
@@ -179,7 +184,6 @@ function full_backup {
 	define_logs
 
 	[ -e "$FULL" ] && show_times && check_space
-die 5 "full backup abort"
 	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
 
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
@@ -204,7 +208,6 @@ function partial_backup {
 	TIMESTAMP="$BK_DIR/partial.$NUM.timestamp"
 
 	define_logs .$NUM
-die 6 "partial backup abort"
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" --newer "$NEWER" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
 }

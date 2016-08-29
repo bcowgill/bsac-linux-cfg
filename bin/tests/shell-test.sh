@@ -102,7 +102,7 @@ function cleanUpAfterTests
 {
    # clean up output directory if no failures
    if [ ${TEST_FAILURES:-0} == 0 ]; then
-      rm out/* && rmdir out
+      rm -rf out/* && rmdir out
       OK "All tests complete `pwd`/out cleaned up"
    fi
 }
@@ -164,7 +164,7 @@ function assertFilesEqual
       NOT_OK "files differ - $test"
       echo " "
       echo vdiff "$actual" "$expected"
-      echo " " 
+      echo " "
       TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
       return $ERROR_STOP
    fi
@@ -220,4 +220,3 @@ function error()
    exit "${code}"
 }
 trap 'error ${LINENO}' ERR
-
