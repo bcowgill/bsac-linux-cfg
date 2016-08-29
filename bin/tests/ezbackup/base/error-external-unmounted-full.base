@@ -1,0 +1,5 @@
+Ddd Mmm DD HH:MM:SS Zzz YYYY full backup
+WARNING: full backup disk ./out/error-external-unmounted-full/external is not mounted, will do a partial backup.
+ERROR: partial backup cannot proceed, there is no record of a full backup.
+==========
+say.log

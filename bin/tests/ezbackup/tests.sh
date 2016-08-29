@@ -13,7 +13,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 4
+PLAN 35
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -63,7 +63,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	BK_DIR=out/$TEST
+	BK_DIR=./out/$TEST
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE/doesnotexist $BK_DIR"
 	setup_warning
@@ -97,7 +97,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	BK_DIR=out/$TEST
+	BK_DIR=./out/$TEST
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="--debug partial $SAMPLE $BK_DIR"
 	setup_warning
@@ -115,7 +115,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	BK_DIR=out/$TEST
+	BK_DIR=./out/$TEST
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
 	setup_warning
@@ -139,14 +139,14 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD external disk missing
+echo TEST $CMD external disk missing partial cannot proceed
 TEST=error-external-unmounted
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	BK_DIR=out/$TEST/ezbackup
-	BK_DISK=out/$TEST/external
+	BK_DIR=./out/$TEST/ezbackup
+	BK_DISK=./out/$TEST/external
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE $BK_DIR $BK_DISK"
 	setup_warning
@@ -159,6 +159,69 @@ if [ 0 == "$SKIP" ]; then
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
 	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD external disk unmounted cannot do full backup
+TEST=error-external-unmounted-full
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=./out/$TEST/ezbackup
+	BK_DISK=./out/$TEST/external
+	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
+	ARGS="$DEBUG full $SAMPLE $BK_DIR $BK_DISK"
+	setup_warning
+	$PROGRAM $ARGS > "$OUT" || assertCommandFails $? 2 "$PROGRAM $ARGS"
+	restore_warning
+	echo "==========" >> "$OUT"
+	ls -1 $BK_DIR >> "$OUT"
+	clean_output "$OUT"
+	clean_output "$BK_DIR/say.log"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
+	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD external disk unmounted with old full backup does a partial backup
+TEST=error-external-unmounted-is-old
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=./out/$TEST/ezbackup
+	BK_DISK=./out/$TEST/external
+	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
+	ARGS="$DEBUG full $SAMPLE $BK_DIR $BK_DISK"
+	mkdir -p $BK_DIR
+	touch "$BK_DIR/full-backup.timestamp"
+	for backup in 1 2 3 4 5; do
+		touch "$BK_DIR/ezbackup.$backup.tgz"
+	done
+	touch "$BK_DIR/partial.5.timestamp"
+	sleep 1;
+	touch "$SAMPLE/2.txt"
+	setup_warning
+	$PROGRAM $ARGS > "$OUT" || assertCommandFails $? 2 "$PROGRAM $ARGS"
+	restore_warning
+	echo "==========" >> "$OUT"
+	ls -1 $BK_DIR >> "$OUT"
+	clean_output "$OUT"
+	clean_output "$BK_DIR/say.log"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
+	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
+	assertFilesEqual "$BK_DIR/backup.6.log" "base/$TEST/backup.base" "$TEST backup"
+	assertFilesEqual "$BK_DIR/stderr.6.log" "base/$TEST/stderr.base" "$TEST stderr"
+	assertFilesEqual "$BK_DIR/errors.6.log" "base/$TEST/errors.base" "$TEST errors"
+	assertFilesEqual "$BK_DIR/ignored-errors.6.log" "base/$TEST/ignored-errors.base" "$TEST ignored"
+	assertFilesEqual "$BK_DIR/files.6.log" "base/$TEST/files.base" "$TEST files"
+	assertFilesEqual "$BK_DIR/filenames.6.log" "base/$TEST/filenames.base" "$TEST filenames"
+	assertFilesEqual "$BK_DIR/directories.6.log" "base/$TEST/directories.base" "$TEST directories"
 else
 	echo SKIP $TEST "$SKIP"
 fi

@@ -1,0 +1,8 @@
+WARNING: full backup is getting old, you should mount the backup disk..
+1 files backed up
+1 directories backed up
+0 errors
+1 ignored warnings
+Disk usage on backup drive: Filesystem      Size  Used Avail Use% Mounted on
+/device  NnnG  NnnG  NnnG  Nn% /
+Errors logged to ./out/error-external-unmounted-is-old/ezbackup/errors.6.log

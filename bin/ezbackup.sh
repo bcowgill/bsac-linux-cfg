@@ -44,6 +44,8 @@ function usage {
 	echo If restoring you can specify a wildcard to get an entire directory.  It will restore to ./restore directory.  Specify the full relative path of the file to restore, not an absolute path.
 	echo " "
 	echo "If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present."
+	echo " "
+	echo For partial backups to work you must specify an absolute or relative path for BK_DIR i.e. /path/to or ./path/to specifying using path/to will not work.
 	exit $code
 }
 
@@ -209,6 +211,7 @@ function partial_backup {
 	TIMESTAMP="$BK_DIR/partial.$NUM.timestamp"
 
 	define_logs .$NUM
+	echo newer than: `ls -al $NEWER`
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" --newer "$NEWER" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
 }

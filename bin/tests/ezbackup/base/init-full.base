@@ -1,7 +1,7 @@
 Ddd Mmm DD HH:MM:SS Zzz YYYY partial backup
-Backup complete: out/init-full/ezbackup.tgz
+Backup complete: ./out/init-full/ezbackup.tgz
 From: in/source
--rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM out/init-full/ezbackup.tgz
+-rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/init-full/ezbackup.tgz
 ==========
 backup.log
 directories.log

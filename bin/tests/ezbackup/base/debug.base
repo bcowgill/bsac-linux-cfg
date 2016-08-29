@@ -1,26 +1,26 @@
 Ddd Mmm DD HH:MM:SS Zzz YYYY partial backup
 SOURCE=in/source
-BK_DIR=out/debug
-BK_DISK=out/debug
+BK_DIR=./out/debug
+BK_DISK=./out/debug
 DO_FULL=1
-FULL=out/debug/ezbackup.tgz
-FULL_SAVE=out/debug/saved.full.tgz
-FULL_TIMESTAMP=out/debug/full-backup.timestamp
-LAST_PARTIAL=out/debug/ezbackup.5.tgz
-ALL_PARTIALS=out/debug/ezbackup.*.tgz
-ALL_PARTIAL_LOGS=out/debug/*.*.log
-ALL_PARTIAL_TIMESTAMPS=out/debug/partial.*.timestamp
+FULL=./out/debug/ezbackup.tgz
+FULL_SAVE=./out/debug/saved.full.tgz
+FULL_TIMESTAMP=./out/debug/full-backup.timestamp
+LAST_PARTIAL=./out/debug/ezbackup.5.tgz
+ALL_PARTIALS=./out/debug/ezbackup.*.tgz
+ALL_PARTIAL_LOGS=./out/debug/*.*.log
+ALL_PARTIAL_TIMESTAMPS=./out/debug/partial.*.timestamp
 NUM=
-TIMESTAMP=out/debug/full-backup.timestamp
+TIMESTAMP=./out/debug/full-backup.timestamp
 NEWER=
-BACKUP=out/debug/ezbackup.tgz
-LOG=out/debug/backup.log
-ERRLOG=out/debug/stderr.log
-FILELOG=out/debug/files.log
-DIRLOG=out/debug/directories.log
-FILENAMELOG=out/debug/filenames.log
-IGNORELOG=out/debug/ignored-errors.log
-ERRORSLOG=out/debug/errors.log
-Backup complete: out/debug/ezbackup.tgz
+BACKUP=./out/debug/ezbackup.tgz
+LOG=./out/debug/backup.log
+ERRLOG=./out/debug/stderr.log
+FILELOG=./out/debug/files.log
+DIRLOG=./out/debug/directories.log
+FILENAMELOG=./out/debug/filenames.log
+IGNORELOG=./out/debug/ignored-errors.log
+ERRORSLOG=./out/debug/errors.log
+Backup complete: ./out/debug/ezbackup.tgz
 From: in/source
--rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM out/debug/ezbackup.tgz
+-rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/debug/ezbackup.tgz

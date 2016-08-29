@@ -1,0 +1,25 @@
+Ddd Mmm DD HH:MM:SS Zzz YYYY full backup
+WARNING: full backup disk ./out/error-external-unmounted-is-old/external is not mounted, will do a partial backup.
+WARNING: full backup is getting old, you should mount the backup disk..
+newer than: -rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/error-external-unmounted-is-old/ezbackup/partial.5.timestamp
+Backup complete: ./out/error-external-unmounted-is-old/ezbackup/ezbackup.6.tgz
+From: in/source
+-rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/error-external-unmounted-is-old/ezbackup/ezbackup.6.tgz
+==========
+backup.6.log
+directories.6.log
+errors.6.log
+ezbackup.1.tgz
+ezbackup.2.tgz
+ezbackup.3.tgz
+ezbackup.4.tgz
+ezbackup.5.tgz
+ezbackup.6.tgz
+filenames.6.log
+files.6.log
+full-backup.timestamp
+ignored-errors.6.log
+partial.5.timestamp
+partial.6.timestamp
+say.log
+stderr.6.log
