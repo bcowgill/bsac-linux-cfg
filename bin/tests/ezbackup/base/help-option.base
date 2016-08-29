@@ -1,0 +1,10 @@
+usage:
+ezbackup.sh [restore|full|partial] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]
+ 
+Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in. Alternatively create a /home/me/.BACKUP file which exports SOURCE, BK_DIR and BK_DISK environment variables.
+ 
+If the full option is provided a full backup is forced.
+ 
+If restoring you can specify a wildcard to get an entire directory. It will restore to ./restore directory. Specify the full relative path of the file to restore, not an absolute path.
+ 
+If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present.

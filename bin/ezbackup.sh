@@ -1,42 +1,52 @@
 #!/bin/bash
-# easy backup system just give source and destination. will do a full backup
-# and then partial backups of what changed since last backup
+# Easy backup system just give source and destination. Will do a full backup
+# and then partial backups of what changed since last backup.
 
 #set -x
 
-DEBUG=0
+DEBUG=1
+CFG=$HOME/.BACKUP
+CMD=`basename $0`
 
 MODE=${1:-partial}
 
 SOURCE="$2"
 BK_DIR="$3"
+BK_DISK="$4"
+
 if [ "$MODE" == "restore" ]; then
 	FIND="$2"
 	SOURCE="$3"
 	BK_DIR="$4"
+	BK_DISK="$5"
 fi
 if [ "$MODE" == "full" ]; then
 	DO_FULL=1
 fi
 
-CFG=$HOME/.BACKUP
-
 function usage {
-	local message
+	local message code
 	message="$1"
-	echo $message
-	echo " "
+	code=0
+	[ ! -z "$message" ] && (code=1; echo $message; echo " ")
 	echo usage:
-	echo "$0 [restore|full|partial] [restore-pattern] [source-dir] [backup-dir]"
+	echo "$CMD [restore|full|partial] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
 	echo " "
-	echo Easy backup system provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports BK_DIR and SOURCE environment variables.
+	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, BK_DIR and BK_DISK environment variables.
 	echo " "
-	echo If full option is provided a full backup is forced.
+	echo If the full option is provided a full backup is forced.
 	echo " "
 	echo If restoring you can specify a wildcard to get an entire directory.  It will restore to ./restore directory.  Specify the full relative path of the file to restore, not an absolute path.
-	exit 1
+	echo " "
+	echo "If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present."
+	exit $code
 }
 
+if [ "$MODE" == "--help" ]; then
+	usage
+fi
+
+# lock the backup directory to prevent a second backup starting
 function lock {
 	LOCK_ERROR=1
 	mkdir $BK_DIR/locked || die 1 "unable to lock in $BK_DIR"
@@ -45,10 +55,13 @@ function lock {
 	trap 'error ${LINENO}' ERR
 }
 
+# unlock the backup directory so that another backup can happen
 function unlock {
 	rmdir $BK_DIR/locked > /dev/null
 }
 
+# terminate the program with a value and message. will unlock the directory
+# unless $LOCK_ERROR is set
 function die {
 	local code message
 	code=$1
@@ -65,7 +78,7 @@ function error()
    local parent_lineno="$1"
    local message="$2"
    local code="${3:-1}"
-   echo "$0: terminated by error while in `pwd`"
+   echo "$CMD: terminated by error while in `pwd`"
    if [[ -n "$message" ]] ; then
       echo "on or near line ${parent_lineno}: ${message}; exiting with status ${code}"
    else
@@ -75,12 +88,15 @@ function error()
    exit "${code}"
 }
 
+# read the program configuration from config file so command
+# arguments can be omitted. also locks the directory if a backup will begin.
 function config {
 	if [ -z "$BK_DIR" ]; then
 		[ -e "$CFG" ] && source $CFG
 
 		[ -z "$BK_DIR" ] && usage "you must provide a source and destination on command line or in $CFG"
 		[ -z "$SOURCE" ] && usage "you must provide a source and destination on command line or in $CFG"
+		[ -z "$BK_DISK" ] && BK_DISK="$BK_DIR"
 	fi
 
 	[ -d $BK_DIR ] || mkdir -p "$BK_DIR"
@@ -90,26 +106,58 @@ function config {
 	if [ $DEBUG == 1 ]; then
 		echo SOURCE=$SOURCE
 		echo BK_DIR=$BK_DIR
+		echo BK_DISK=$BK_DISK
 	fi
 
 	NUM_PARTIALS=${NUM_PARTIALS:-5}
-	FULL=$BK_DIR/ezbackup.tgz
-	FULL_SAVE=$BK_DIR/saved.full.tgz
+	FULL=$BK_DISK/ezbackup.tgz
+	FULL_SAVE=$BK_DISK/saved.full.tgz
+	FULL_TIMESTAMP="$BK_DIR/full-backup.timestamp"
 	LAST_PARTIAL=$BK_DIR/ezbackup.$NUM_PARTIALS.tgz
 	ALL_PARTIALS=$BK_DIR/ezbackup.*.tgz
 	ALL_PARTIAL_LOGS=$BK_DIR/*.*.log
 	ALL_PARTIAL_TIMESTAMPS=$BK_DIR/partial.*.timestamp
 
 	lock
-	if [ -z "$DO_FULL" ]; then
-		[ -e "$LAST_PARTIAL" ] && DO_FULL=1
-		[ ! -e "$FULL" ] && DO_FULL=1
+
+	if [ "$BK_DIR" != "$BK_DISK" ]; then
+		# if full backups are located on external disk...
+		if [ ! -z "$DO_FULL" ]; then
+			# and we are asked to do a full backup...
+			if [ ! -d "$BK_DISK" ]; then
+				# if full backup disk is not mounted, fallback to partial backup
+				echo "WARNING: full backup disk $BK_DISK is not mounted, will do a partial backup."
+			fi
+			DO_FULL=
+		fi
+		if [ -z "$DO_FULL" ]; then
+			# and we are doing a partial backup, we must have had a full backup
+			if [ ! -e "$FULL_TIMESTAMP" ]; then
+				die 2 "partial backup cannot proceed, there is no record of a full backup."
+			fi
+			if [ -e "$LAST_PARTIAL" ]; then
+				# and we have done enough partial backups, check if we can do full
+				if [ ! -d "$BK_DISK" ]; then
+					# if full backup disk is not mounted, show a warning, but do partial
+					log_error "WARNING: full backup is getting old, you should mount the backup disk.."
+				fi
+			fi
+		fi
+	else
+		# else simple case all backups local
+		if [ -z "$DO_FULL" ]; then
+			# if doing a partial backup, change to full after the configured
+			# number of partials or if we never have done a full backup
+			[ -e "$LAST_PARTIAL" ] && DO_FULL=1
+			[ ! -e "$FULL" ] && DO_FULL=1
+		fi
 	fi
 
 	if [ $DEBUG == 1 ]; then
 		echo DO_FULL=$DO_FULL
 		echo FULL=$FULL
 		echo FULL_SAVE=$FULL_SAVE
+		echo FULL_TIMESTAMP=$FULL_TIMESTAMP
 		echo LAST_PARTIAL=$LAST_PARTIAL
 		echo ALL_PARTIALS=$ALL_PARTIALS
 		echo ALL_PARTIAL_LOGS=$ALL_PARTIAL_LOGS
@@ -126,12 +174,12 @@ function backup {
 }
 
 function full_backup {
-	TIMESTAMP="$BK_DIR/full-backup.timestamp"
-   BACKUP="$FULL"
+	TIMESTAMP="$FULL_TIMESTAMP"
+	BACKUP="$FULL"
 	define_logs
 
 	[ -e "$FULL" ] && show_times && check_space
-exit 2
+die 5 "full backup abort"
 	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
 
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
@@ -156,6 +204,7 @@ function partial_backup {
 	TIMESTAMP="$BK_DIR/partial.$NUM.timestamp"
 
 	define_logs .$NUM
+die 6 "partial backup abort"
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" --newer "$NEWER" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
 }
@@ -248,7 +297,7 @@ function filter_logs {
 function say {
 	local message
 	message="$1"
-	which notify > /dev/null && notify -t "$0" -m "$message"
+	which notify > /dev/null && notify -t "$CMD" -m "$message"
 }
 
 function summary {
@@ -277,7 +326,7 @@ function summary {
 function log_error {
 	local message
 	message="$1"
-	echo "ERROR `date` $0:" >> "$HOME/warnings.log"
+	echo "ERROR `date` $CMD:" >> "$HOME/warnings.log"
 	echo "$message" >> "$HOME/warnings.log"
 	if [ ! -z "$ERRORSLOG" ]; then
 		cat $ERRORSLOG >> "$HOME/warnings.log"
@@ -287,7 +336,7 @@ function log_error {
 function restore {
 	# check existence of full backup
 
-	[ -e "$FULL" ] || die 2 "there is no full backup to restore from: $FULL"
+	[ -e "$FULL" ] || die 3 "there is no full backup to restore from: $FULL"
 
 	echo restore $FIND
 	RESTORE=./restore
