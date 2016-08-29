@@ -398,19 +398,34 @@ fi
 
 exit 0
 
-~/.BACKUP contents:
-# configure backup variables
-WHOSE=bcowgill
-
-export BK_DIR=/data/$WHOSE/backup
-export SOURCE=/home/$WHOSE
-export NUM_PARTIALS=9
+#==============================
 
 # crontab entry examples:
 25 11,16 * * * $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 
 15 20,23 * * 1-5 $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 15 8,13,20 * * 6-7  $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
+
+#==============================
+
+~/.BACKUP contents:
+# configuration for ezbackup.sh
+
+WHOSE=me
+
+# Directory to keep backup copies of
+export SOURCE=/home/$WHOSE
+
+# Backup directory for partial backups (and primary if BK_DISK)
+export BK_DIR=/data/$WHOSE/backup/ezbackup
+
+# Backup directory for full backups (usualy an external disk)
+export BK_DISK=/media/me/ELEMENTS-2TB/backup_brent_dell7510/ezbackup
+
+# Number of partial backups to keep if full backup is not on external disk
+export NUM_PARTIALS=9
+
+#==============================
 
 # touch-randomly.sh
 # touch some files at random so partial backup test has something to do
