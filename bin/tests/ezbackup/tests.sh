@@ -27,6 +27,7 @@ function clean_output {
 	perl -i -pne '
 		s{\w+ \s+ \w+ \s+ \d+ \s+ \d+:\d+:\d+ \s+ \w+ \s+ \d+}{Ddd Mmm DD HH:MM:SS Zzz YYYY}xmsg;
 		s{\w+ \s+ \w+ \s+ \d+ \s+ \w+ \s+ \d+ \s+ \d+:\d+}{USER USER Nnn Mmm DD HH:MM}xmsg;
+		s{\A / .+? \d+(\% \s+ / \s*) \z}{/device  NnnG  NnnG  NnnG  Nn$1}xmsg;
 		' "$file"
 }
 
@@ -43,7 +44,54 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD initial full backup
+echo TEST $CMD source must exist
+TEST=error-source
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=out/$TEST
+	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
+	ARGS="$DEBUG partial $SAMPLE/doesnotexist $BK_DIR"
+	$PROGRAM $ARGS | head -4 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	clean_output "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD unable to create backup dir
+TEST=error-destination
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=/doesnotexistpermissiondenied
+	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
+	$PROGRAM $ARGS | head -2 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	clean_output "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD debug option
+TEST=debug
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=out/$TEST
+	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
+	ARGS="--debug partial $SAMPLE $BK_DIR"
+	$PROGRAM $ARGS > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	clean_output "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD forces initial full backup
 TEST=init-full
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -56,7 +104,9 @@ if [ 0 == "$SKIP" ]; then
 	echo "==========" >> "$OUT"
 	ls -1 $BK_DIR >> "$OUT"
 	clean_output "$OUT"
+	clean_output "$BK_DIR/say.log"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
 	assertFilesEqual "$BK_DIR/backup.log" "base/$TEST/backup.base" "$TEST backup"
 	assertFilesEqual "$BK_DIR/stderr.log" "base/$TEST/stderr.base" "$TEST stderr"
 	assertFilesEqual "$BK_DIR/errors.log" "base/$TEST/errors.base" "$TEST errors"
@@ -64,6 +114,27 @@ if [ 0 == "$SKIP" ]; then
 	assertFilesEqual "$BK_DIR/files.log" "base/$TEST/files.base" "$TEST files"
 	assertFilesEqual "$BK_DIR/filenames.log" "base/$TEST/filenames.base" "$TEST filenames"
 	assertFilesEqual "$BK_DIR/directories.log" "base/$TEST/directories.base" "$TEST directories"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD external disk missing
+TEST=error-external-unmounted
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=out/$TEST/ezbackup
+	BK_DISK=out/$TEST/external
+	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
+	ARGS="$DEBUG partial $SAMPLE $BK_DIR $BK_DISK"
+	$PROGRAM $ARGS > "$OUT" || assertCommandFails $? 2 "$PROGRAM $ARGS"
+	echo "==========" >> "$OUT"
+	ls -1 $BK_DIR >> "$OUT"
+	clean_output "$OUT"
+	clean_output "$BK_DIR/say.log"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
 else
 	echo SKIP $TEST "$SKIP"
 fi

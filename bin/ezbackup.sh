@@ -70,7 +70,7 @@ function unlock {
 function die {
 	local code message
 	code=$1
-	message="$2"
+	message="ERROR: $2"
 	log_error "$message"
 	[ -z $LOCK_ERROR ] && unlock
 	exit $code
@@ -99,8 +99,8 @@ function config {
 	if [ -z "$BK_DIR" ]; then
 		[ -e "$CFG" ] && source $CFG
 
-		[ -z "$BK_DIR" ] && usage "you must provide a source and destination on command line or in $CFG"
-		[ -z "$SOURCE" ] && usage "you must provide a source and destination on command line or in $CFG"
+		[ -z "$BK_DIR" ] && usage "you must provide a backup destination on command line or in $CFG"
+		[ -z "$SOURCE" ] && usage "you must provide a source directory on command line or in $CFG"
 	fi
 	[ -z "$BK_DISK" ] && BK_DISK="$BK_DIR"
 
@@ -122,6 +122,7 @@ function config {
 	ALL_PARTIALS=$BK_DIR/ezbackup.*.tgz
 	ALL_PARTIAL_LOGS=$BK_DIR/*.*.log
 	ALL_PARTIAL_TIMESTAMPS=$BK_DIR/partial.*.timestamp
+	SAYLOG="$BK_DIR/say.log"
 
 	lock
 
@@ -269,7 +270,7 @@ function check_space {
 		echo NOT OK need $needed but only $free is available.
 		du -h "$FULL"
 		df -h "$BK_DIR/"
-		log_error "Error: not enough space available for full backup, need $needed, free $free. Will do a partial backup instead."
+		log_error "ERROR: not enough space available for full backup, need $needed, free $free. Will do a partial backup instead."
 		partial_backup
 		exit 0
 	fi
@@ -301,6 +302,9 @@ function say {
 	local message
 	message="$1"
 	which notify > /dev/null && notify -t "$CMD" -m "$message"
+	if [ ! -z "$SAYLOG" ]; then
+		echo "$message" >> $SAYLOG
+	fi
 }
 
 function summary {
@@ -329,6 +333,8 @@ function summary {
 function log_error {
 	local message
 	message="$1"
+	echo "$message"
+	say "$message"
 	echo "ERROR `date` $CMD:" >> "$HOME/warnings.log"
 	echo "$message" >> "$HOME/warnings.log"
 	if [ ! -z "$ERRORSLOG" ]; then

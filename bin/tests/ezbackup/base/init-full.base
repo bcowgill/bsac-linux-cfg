@@ -11,4 +11,5 @@ filenames.log
 files.log
 full-backup.timestamp
 ignored-errors.log
+say.log
 stderr.log
