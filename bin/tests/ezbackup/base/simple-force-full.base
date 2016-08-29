@@ -1,0 +1,16 @@
+Ddd Mmm DD HH:MM:SS Zzz YYYY partial backup
+Backup complete: ./out/simple-force-full/ezbackup.tgz
+From: in/source
+-rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/simple-force-full/ezbackup.tgz
+==========
+backup.log
+directories.log
+errors.log
+ezbackup.tgz
+filenames.log
+files.log
+full-backup.timestamp
+ignored-errors.log
+say.log
+stderr.log
+warnings.log

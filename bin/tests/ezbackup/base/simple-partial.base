@@ -1,0 +1,19 @@
+Ddd Mmm DD HH:MM:SS Zzz YYYY partial backup
+newer than: -rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/simple-partial/full-backup.timestamp
+Backup complete: ./out/simple-partial/ezbackup.1.tgz
+From: in/source
+-rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/simple-partial/ezbackup.1.tgz
+==========
+backup.1.log
+directories.1.log
+errors.1.log
+ezbackup.1.tgz
+ezbackup.tgz
+filenames.1.log
+files.1.log
+full-backup.timestamp
+ignored-errors.1.log
+partial.1.timestamp
+say.log
+stderr.1.log
+warnings.log
