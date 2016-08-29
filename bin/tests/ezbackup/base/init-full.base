@@ -13,3 +13,4 @@ full-backup.timestamp
 ignored-errors.log
 say.log
 stderr.log
+warnings.log

@@ -1,2 +1,4 @@
 Ddd Mmm DD HH:MM:SS Zzz YYYY partial backup
+mkdir: cannot create directory ‘/doesnotexistpermissiondenied’: Permission denied
 /doesnotexistpermissiondenied: BK_DIR could not be created.
+ 

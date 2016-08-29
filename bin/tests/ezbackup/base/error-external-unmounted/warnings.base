@@ -1,0 +1,2 @@
+ERROR Ddd Mmm DD HH:MM:SS Zzz YYYY ezbackup.sh:
+ERROR: partial backup cannot proceed, there is no record of a full backup.

@@ -31,6 +31,19 @@ function clean_output {
 		' "$file"
 }
 
+function setup_warning {
+	touch $HOME/warnings.log
+	if [ `cat $HOME/warnings.log | wc -l` != 0 ]; then
+		NOT_OK "$HOME/warnings.log already contains warnings!"
+	fi
+	cp $HOME/warnings.log out/warnings.log
+}
+
+function restore_warning {
+	cp $HOME/warnings.log out/$TEST/warnings.log 2> /dev/null && clean_output "out/$TEST/warnings.log"
+	cp out/warnings.log $HOME/warnings.log
+}
+
 echo TEST $CMD --help option
 TEST=help-option
 if [ 0 == "$SKIP" ]; then
@@ -53,7 +66,9 @@ if [ 0 == "$SKIP" ]; then
 	BK_DIR=out/$TEST
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE/doesnotexist $BK_DIR"
+	setup_warning
 	$PROGRAM $ARGS | head -4 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	restore_warning
 	clean_output "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -68,7 +83,8 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BK_DIR=/doesnotexistpermissiondenied
 	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
-	$PROGRAM $ARGS | head -2 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	setup_warning
+	$PROGRAM $ARGS 2>&1 | head -4 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	clean_output "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -84,7 +100,9 @@ if [ 0 == "$SKIP" ]; then
 	BK_DIR=out/$TEST
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="--debug partial $SAMPLE $BK_DIR"
+	setup_warning
 	$PROGRAM $ARGS > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	restore_warning
 	clean_output "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -100,13 +118,16 @@ if [ 0 == "$SKIP" ]; then
 	BK_DIR=out/$TEST
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
+	setup_warning
 	$PROGRAM $ARGS > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	restore_warning
 	echo "==========" >> "$OUT"
 	ls -1 $BK_DIR >> "$OUT"
 	clean_output "$OUT"
 	clean_output "$BK_DIR/say.log"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
+	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
 	assertFilesEqual "$BK_DIR/backup.log" "base/$TEST/backup.base" "$TEST backup"
 	assertFilesEqual "$BK_DIR/stderr.log" "base/$TEST/stderr.base" "$TEST stderr"
 	assertFilesEqual "$BK_DIR/errors.log" "base/$TEST/errors.base" "$TEST errors"
@@ -128,13 +149,16 @@ if [ 0 == "$SKIP" ]; then
 	BK_DISK=out/$TEST/external
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE $BK_DIR $BK_DISK"
+	setup_warning
 	$PROGRAM $ARGS > "$OUT" || assertCommandFails $? 2 "$PROGRAM $ARGS"
+	restore_warning
 	echo "==========" >> "$OUT"
 	ls -1 $BK_DIR >> "$OUT"
 	clean_output "$OUT"
 	clean_output "$BK_DIR/say.log"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
+	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
 else
 	echo SKIP $TEST "$SKIP"
 fi
