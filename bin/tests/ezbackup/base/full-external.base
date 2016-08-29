@@ -1,0 +1,14 @@
+Ddd Mmm DD HH:MM:SS Zzz YYYY full backup
+Backup complete: ./out/full-external/external/ezbackup.tgz
+From: in/source
+-rw-rw-r-- 1 USER USER Nnn Mmm DD HH:MM ./out/full-external/external/ezbackup.tgz
+==========
+backup.log
+directories.log
+errors.log
+filenames.log
+files.log
+full-backup.timestamp
+ignored-errors.log
+say.log
+stderr.log

@@ -13,7 +13,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 35
+PLAN 66
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -24,10 +24,13 @@ ERROR_STOP=0
 function clean_output {
 	local file
 	file="$1"
-	perl -i -pne '
+
+	perl -MCwd -i -pne '
+      $cwd = $cwd || cwd();
 		s{\w+ \s+ \w+ \s+ \d+ \s+ \d+:\d+:\d+ \s+ \w+ \s+ \d+}{Ddd Mmm DD HH:MM:SS Zzz YYYY}xmsg;
 		s{\w+ \s+ \w+ \s+ \d+ \s+ \w+ \s+ \d+ \s+ \d+:\d+}{USER USER Nnn Mmm DD HH:MM}xmsg;
 		s{\A / .+? \d+(\% \s+ / \s*) \z}{/device  NnnG  NnnG  NnnG  Nn$1}xmsg;
+		s{$cwd}{HOME/TESTS/}xmsg;
 		' "$file"
 }
 
@@ -291,6 +294,41 @@ if [ 0 == "$SKIP" ]; then
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
 	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
+	assertFilesEqual "$BK_DIR/backup.log" "base/$TEST/backup.base" "$TEST backup"
+	assertFilesEqual "$BK_DIR/stderr.log" "base/$TEST/stderr.base" "$TEST stderr"
+	assertFilesEqual "$BK_DIR/errors.log" "base/$TEST/errors.base" "$TEST errors"
+	assertFilesEqual "$BK_DIR/ignored-errors.log" "base/$TEST/ignored-errors.base" "$TEST ignored"
+	assertFilesEqual "$BK_DIR/files.log" "base/$TEST/files.base" "$TEST files"
+	assertFilesEqual "$BK_DIR/filenames.log" "base/$TEST/filenames.base" "$TEST filenames"
+	assertFilesEqual "$BK_DIR/directories.log" "base/$TEST/directories.base" "$TEST directories"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD full external backup
+TEST=full-external
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	BK_DIR=./out/$TEST/ezbackup
+	BK_DISK=./out/$TEST/external
+	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
+	[ -d "$BK_DISK" ] && rm -rf "$BK_DISK"
+	mkdir -p "$BK_DISK"
+	ARGS="$DEBUG full $SAMPLE $BK_DIR $BK_DISK"
+	setup_warning
+	$PROGRAM $ARGS > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	restore_warning
+	echo "==========" >> "$OUT"
+	ls -1 $BK_DIR >> "$OUT"
+	clean_output "$OUT"
+	clean_output "$BK_DIR/say.log"
+	clean_output "$BK_DISK/summary.log"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$BK_DIR/say.log" "base/$TEST/say.base" "$TEST say"
+	assertFilesEqual "out/$TEST/warnings.log" "base/$TEST/warnings.base" "$TEST home warning"
+	assertFilesEqual "$BK_DISK/summary.log" "base/$TEST/summary.base" "$TEST external summary"
 	assertFilesEqual "$BK_DIR/backup.log" "base/$TEST/backup.base" "$TEST backup"
 	assertFilesEqual "$BK_DIR/stderr.log" "base/$TEST/stderr.base" "$TEST stderr"
 	assertFilesEqual "$BK_DIR/errors.log" "base/$TEST/errors.base" "$TEST errors"

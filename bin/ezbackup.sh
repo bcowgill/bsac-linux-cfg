@@ -135,8 +135,8 @@ function config {
 			if [ ! -d "$BK_DISK" ]; then
 				# if full backup disk is not mounted, fallback to partial backup
 				echo "WARNING: full backup disk $BK_DISK is not mounted, will do a partial backup."
+				DO_FULL=
 			fi
-			DO_FULL=
 		fi
 		if [ -z "$DO_FULL" ]; then
 			# and we are doing a partial backup, we must have had a full backup
@@ -191,6 +191,12 @@ function full_backup {
 
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
+
+	if [ "$BK_DIR" != "$BK_DISK" ]; then
+		echo "$CMD @ `pwd`" > "$BK_DISK/summary.log"
+		echo "full backup from $USER@$HOSTNAME:$SOURCE/" >> "$BK_DISK/summary.log"
+		echo "partial backups will be stored at $HOSTNAME:$BK_DIR/" >> "$BK_DISK/summary.log"
+	fi
 
 	rm $ALL_PARTIALS $ALL_PARTIAL_LOGS $ALL_PARTIAL_TIMESTAMPS 2> /dev/null
 	if [ -e "$FULL_SAVE" ]; then
