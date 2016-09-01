@@ -168,7 +168,8 @@ sleep 1
 i3do "mark shell"
 
 # $chat
-i3do "workspace $chat; exec skype"
+#i3do "workspace $chat; exec skype"
+i3do "workspace $chat; exec slack"
 sleep 3
 
 # scratchpad setup with a logged screen session

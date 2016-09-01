@@ -116,6 +116,7 @@ hide_edge_borders vertical
 assign [class="^Git-gui$"] $shell
 assign [class="^jetbrains-webstorm$"] $edit
 assign [class="^Skype$"] $chat
+assign [class="^Slack$"] $chat
 assign [class="^Chromium-browser" title="^Outlook Web App"] $email
 assign [class="^Chromium-browser" title="^Karma - Chromium"] $app
 

@@ -642,6 +642,7 @@ libao4:amd64
 libao-common
 libapparmor1:amd64
 libapparmor-perl
+libappindicator1
 libappindicator3-1
 libapr1:amd64
 libaprutil1:amd64
@@ -1202,6 +1203,7 @@ libimlib2
 libimobiledevice4:amd64
 libincidenceeditorsng4
 libindicator3-7
+libindicator7
 libinput7:amd64
 libio-html-perl
 libio-pty-perl
@@ -2998,6 +3000,8 @@ signon-ui-service
 signon-ui-x11
 simple-scan
 skype
+slack
+slack-desktop
 smbclient
 sni-qt:amd64
 socat

@@ -107,6 +107,11 @@ CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 SKYPE_CMD=skype
 SKYPE_PKG="skype skype-bin"
 
+SLACK_PKG="slack-desktop-2.1.2-amd64.deb"
+SLACK_DEPS="/usr/share/doc/libindicator7/copyright:libindicator7 /usr/share/doc/libappindicator1/copyright:libappindicator1"
+SLACK_URL="https://downloads.slack-edge.com/linux_releases"
+SLACK_CMD="slack"
+
 # http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
 VIRTUALBOX_CMD="VirtualBox"
 VIRTUALBOX_CMDS="dkms $VIRTUALBOX_CMD"
@@ -510,6 +515,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#I3WM_PKG=""
 	CHARLES_PKG=""
 	#SKYPE_PKG=""
+	SLACK_PKG=""
 	VIRTUALBOX_PKG=""
 	#DIFFMERGE_PKG=""
 	#P4MERGE_PKG=""
@@ -578,6 +584,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	I3WM_PKG=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
+	SLACK_PKG=""
 	VIRTUALBOX_PKG=""
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
@@ -655,6 +662,7 @@ fi
 # disable commands for omitted packages
 [ -z "$SVN_PKG"           ] && SVN_CMD=""
 [ -z "$SKYPE_PKG"         ] && SKYPE_CMD=""
+[ -z "$SLACK_PKG"         ] && SLACK_CMD="" && SLACK_DEPS=""
 [ -z "$I3WM_PKG"          ] && I3WM_CMD=""
 [ -z "$CHARLES_PKG"       ] && CHARLES_CMD=""
 [ -z "$VIRTUALBOX_PKG"    ] && VIRTUALBOX_CMDS=""
@@ -692,6 +700,8 @@ ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
+SLACK_URL="$SLACK_URL/$SLACK_PKG"
+
 if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
 fi
@@ -726,6 +736,7 @@ INSTALL_FROM="
 	$VPN_PKG
 	$EBOOK_READER
 	$PULSEAUDIO_PKG
+	$SLACK_DEPS
 "
 
 COMMANDS="
@@ -741,6 +752,7 @@ COMMANDS="
 	$SKYPE_CMD
 	$PIDGIN_CMD
 	$ATOM_CMD
+	$SLACK_CMD
 "
 
 PACKAGES="
@@ -1481,6 +1493,12 @@ if [ ! -z "$DROPBOX_URL" ]; then
 fi
 
 BAIL_OUT dropbox
+
+if [ ! -z "$SLACK_PKG" ]; then
+	install_command_package_from_url $SLACK_CMD $SLACK_PKG $SLACK_URL "slack messaging system"
+else
+	OK "will not configure slack messenger unless SLACK_PKG is non-zero"
+fi
 
 commands_exist "$COMMANDS"
 BAIL_OUT commands
