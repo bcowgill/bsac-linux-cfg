@@ -120,6 +120,7 @@ function config {
 	FULL=$BK_DISK/ezbackup.tgz
 	FULL_SAVE=$BK_DISK/saved.full.tgz
 	FULL_TIMESTAMP="$BK_DIR/full-backup.timestamp"
+	FULL_END_TIMESTAMP="$BK_DIR/full-backup-end.timestamp"
 	LAST_PARTIAL=$BK_DIR/ezbackup.$NUM_PARTIALS.tgz
 	ALL_PARTIALS=$BK_DIR/ezbackup.*.tgz
 	ALL_PARTIAL_LOGS=$BK_DIR/*.*.log
@@ -147,7 +148,9 @@ function config {
 				# and we have done enough partial backups, check if we can do full
 				if [ ! -d "$BK_DISK" ]; then
 					# if full backup disk is not mounted, show a warning, but do partial
+					LS=`ls -alot $BK_DIR/*.timestamp`
 					log_error "WARNING: full backup is getting old, you should mount the backup disk.."
+					log_append "$LS"
 				fi
 			fi
 		fi
@@ -190,6 +193,7 @@ function full_backup {
 	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
 
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
+	touch "$FULL_END_TIMESTAMP"
 	filter_logs
 
 	if [ "$BK_DIR" != "$BK_DISK" ]; then
@@ -342,13 +346,19 @@ function summary {
 function log_error {
 	local message
 	message="$1"
-	echo "$message"
 	say "$message"
 	echo "ERROR `date` $CMD:" >> "$HOME/warnings.log"
-	echo "$message" >> "$HOME/warnings.log"
+	log_append "$message"
 	if [ ! -z "$ERRORSLOG" ]; then
 		cat $ERRORSLOG >> "$HOME/warnings.log"
 	fi
+}
+
+function log_append {
+	local message
+	message="$1"
+	echo "$message"
+	echo "$message" >> "$HOME/warnings.log"
 }
 
 function restore {
