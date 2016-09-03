@@ -98,7 +98,7 @@ CUSTOM_PKG=""
 ECLIPSE=""
 
 I3WM_CMD=i3
-I3WM_PKG="i3 xbacklight xdotool xmousepos:xautomation feh"
+I3WM_PKG="i3 xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
 
 CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
