@@ -37,12 +37,12 @@ ar qs "$file" $*
 
 file="$out.cpio"
 echo $file
-tmplist=.list
-rm $tmplist
+tmplist=`mktemp`
 for add in $*; do
 	echo "$add" >> $tmplist
-	cpio --create --file="$file" < $tmplist
 done
+cpio --create --file="$file" < $tmplist
+rm $tmplist
 
 ls -aloS ${out}.*
 
