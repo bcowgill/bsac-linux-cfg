@@ -35,4 +35,14 @@ file="$out.ar"
 echo $file
 ar qs "$file" $*
 
+file="$out.cpio"
+echo $file
+tmplist=.list
+rm $tmplist
+for add in $*; do
+	echo "$add" >> $tmplist
+	cpio --create --file="$file" < $tmplist
+done
+
 ls -aloS ${out}.*
+
