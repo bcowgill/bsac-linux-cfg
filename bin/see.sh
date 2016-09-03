@@ -5,7 +5,7 @@ function see_archive {
 	local file
 	file="$1"
 
-	# less supports archive types: ar, tar, tgz, zip, deb
+	# less supports archive types: tar, tgz, zip, deb
 	if file "$file" | grep 'bzip2 compressed data'; then
 		( echo "$file" contents: ; tar tvf "$file" ) | less
 		return 0
@@ -19,7 +19,7 @@ function see_archive {
 		return 0
 	fi
 	if file "$file" | grep 'current ar archive'; then
-		less "$file"
+		( echo "$file" contents: ; ar t "$file" ) | less
 		return 0
 	fi
 	if file "$file" | grep 'tar archive'; then
