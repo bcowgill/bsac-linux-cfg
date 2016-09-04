@@ -182,6 +182,10 @@ VPN_CONN=/etc/NetworkManager/system-connections/WorkshareVPN
 # epub, mobi book reader
 EBOOK_READER="calibre"
 
+# simple paint program
+PINTA_PKG="pinta"
+PINTA_CMD="pinta"
+
 PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
 
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
@@ -533,6 +537,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 		mount.cifs:cifs-utils
 		firefox
 		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
+		cmus
+		shutter
 	"
 	#NODE_PKG=""
 
@@ -677,6 +683,7 @@ fi
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$ATOM_PKG"          ] && ATOM_CMD=""
+[ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 
 # HEREIAM DERIVED
 
@@ -754,6 +761,7 @@ COMMANDS="
 	$PIDGIN_CMD
 	$ATOM_CMD
 	$SLACK_CMD
+	$PINTA_CMD
 "
 
 PACKAGES="
@@ -1430,6 +1438,12 @@ BAIL_OUT ruby
 installs_from "$INSTALL_FILE_PACKAGES"
 
 BAIL_OUT files
+
+if [ ! -z "$PINTA_PKG" ]; then
+	sudo add-apt-repository ppa:pinta-maintainers/pinta-stable
+	sudo apt-get update
+	sudo apt-get install "$PINTA_PKG"
+fi
 
 if [ ! -z "$NODE_PKG" ]; then
 	if $NODE_CMD --version | grep $NODE_VER; then
