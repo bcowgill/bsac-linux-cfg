@@ -4,5 +4,6 @@ if [ -e /media/me/ELEMENTS-2TB ]; then
 	df -h /media/me/ELEMENTS-2TB
 fi
 if ps -ef | egrep \\bcvzf\\b; then
-	ls -al /data/me/backup/ezbackup/*.tgz
+	[ -d /data/me/backup/ezbackup ] && ls -al /data/me/backup/ezbackup/*.tgz
+	[ -d /data/bcowgill/backup ] && ls -al /data/bcowgill/backup/*.tgz
 fi

@@ -2,7 +2,7 @@
 # Easy backup system just give source and destination. Will do a full backup
 # and then partial backups of what changed since last backup.
 
-#set -x
+set -x
 
 DEBUG=0
 CFG=$HOME/.BACKUP
@@ -273,7 +273,7 @@ function check_space {
 	free=`df "$BK_DIR/" | tail -1 | perl -pne 's{(\d+) \s+ \d+ \%}{$used = $1;''}xmsge; $_ = "$used\n"'`
 	needed=`du "$FULL" | perl -pne 's{\A (\d+) .+}{$1\n}xmsg'`
 
-	if perl -e 'exit($ARGV[0] < $ARGV[1] ? 1 : 0)' $needed $free ; then
+	if perl -e 'exit($ARGV[0] < $ARGV[1] ? 0 : 1)' $needed $free ; then
 		echo there is enough space available for backup
 	else
 		echo NOT OK need $needed but only $free is available.
