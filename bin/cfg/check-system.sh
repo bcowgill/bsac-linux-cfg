@@ -262,6 +262,7 @@ NPM_GLOBAL_PKG="
 	jscs
 	flow:flow-bin
 	babel:babel-cli
+	node-debug
 	node-sass
 	lessc:less
 	mocha
