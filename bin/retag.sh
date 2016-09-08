@@ -37,6 +37,8 @@ function retag_dir {
 		if [ `find . -newer TAGS -type f | wc -l` != 0 ]; then
 			say "retagging $dir"
 			retag.sh
+		else
+			echo "nothing newer than the TAGS file"
 		fi
 	fi
 }
