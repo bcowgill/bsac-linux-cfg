@@ -41,7 +41,13 @@ function retag_dir {
 	fi
 }
 
-if [ "${1:-single}" == "all" ]; then
+MODE=${1:-single}
+if [ "$MODE" == "list" ]; then
+	# find all tag files
+	locate --wholename --regex '\bTAGS$' | grep $HOME | sort
+	exit 0
+fi
+if [ "$MODE" == "all" ]; then
 	# find all tag files and update tags if any newer files are present
 	for tagfile in `locate --wholename --regex '\bTAGS$' | grep $HOME | sort -r`; do
 		dir=`dirname "$tagfile"`
