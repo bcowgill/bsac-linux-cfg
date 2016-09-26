@@ -2,7 +2,7 @@
 # Easy backup system just give source and destination. Will do a full backup
 # and then partial backups of what changed since last backup.
 
-set -x
+#set -x
 
 DEBUG=0
 CFG=$HOME/.BACKUP
@@ -41,7 +41,9 @@ function usage {
 	echo " "
 	echo If the full option is provided a full backup is forced.
 	echo " "
-	echo If restoring you can specify a wildcard to get an entire directory.  It will restore to ./restore directory.  Specify the full relative path of the file to restore, not an absolute path.
+	echo If restoring you can specify a tar pattern wildcard to get an entire directory.  It will restore to ./restore directory.  Specify the full relative path of the file to restore, not an absolute path.
+	echo " "
+	echo i.e. $CMD restore home/user/path/to/restore if SOURCE=/home/user
 	echo " "
 	echo "If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present."
 	echo " "
@@ -368,7 +370,7 @@ function restore {
 
 	echo restore $FIND
 	RESTORE=./restore
-	ARCHIVES=`find $BK_DIR -maxdepth 1 -newer "$FULL" -type f | grep ezbackup | grep \.tgz`
+	ARCHIVES=`find $BK_DIR -maxdepth 1 -newer "$FULL" -type f | grep ezbackup | grep \.tgz | perl -ne '$_ =~ m{ezbackup\.(\d+)\.}xms; $num = $1; push(@files, {name => $_, number => $num}); END { @sorted = sort { $a->{number} <=> $b->{number} } @files; print join("", map {$_->{name}} @sorted)}'`
 	ARCHIVES="$FULL $ARCHIVES"
 
 	if [ $DEBUG == 1 ]; then
