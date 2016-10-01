@@ -35,12 +35,14 @@ function usage {
 	code=0
 	[ ! -z "$message" ] && (code=1; echo $message; echo " ")
 	echo usage:
-	echo "$CMD [--debug] [--help] [status|full|partial|restore] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
+	echo "$CMD [--debug] [--help] [check|status|full|partial|restore] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
 	echo " "
 	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, BK_DIR and BK_DISK environment variables.
 	echo " "
 	echo --debug option must be first and turns on display of debugging information.
 	echo --help option shows this help information.
+	echo " "
+	echo The check command shows minimal status info if no backup is in progress or full status if one is in progress.
 	echo " "
    echo The status command shows the configured backup paths as well as lock state and free, used space.
 	echo " "
@@ -124,19 +126,6 @@ function pre_config {
 	[ -d $SOURCE ] || usage "$SOURCE: SOURCE directory does not exist."
 	[ -d $BK_DIR ] || usage "$BK_DIR: BK_DIR could not be created."
 
-	if [ $DEBUG == 1 ]; then
-		echo CFG=$CFG
-		echo SOURCE=$SOURCE
-		echo BK_DIR=$BK_DIR
-		echo BK_DISK=$BK_DISK
-	fi
-}
-
-# read the program configuration from config file so command
-# arguments can be omitted. also locks the directory if a backup will begin.
-function config {
-	pre_config
-
 	NUM_PARTIALS=${NUM_PARTIALS:-5}
 	FULL=$BK_DISK/ezbackup.tgz
 	FULL_SAVE=$BK_DISK/saved.full.tgz
@@ -147,6 +136,20 @@ function config {
 	ALL_PARTIAL_LOGS=$BK_DIR/*.*.log
 	ALL_PARTIAL_TIMESTAMPS=$BK_DIR/partial.*.timestamp
 	SAYLOG="$BK_DIR/say.log"
+
+	if [ $DEBUG == 1 ]; then
+		echo CFG=$CFG
+		echo SOURCE=$SOURCE
+		echo BK_DIR=$BK_DIR
+		echo BK_DISK=$BK_DISK
+		echo FULL=$FULL
+	fi
+}
+
+# read the program configuration from config file so command
+# arguments can be omitted. also locks the directory if a backup will begin.
+function config {
+	pre_config
 
 	lock
 
@@ -187,7 +190,6 @@ function config {
 
 	if [ $DEBUG == 1 ]; then
 		echo DO_FULL=$DO_FULL
-		echo FULL=$FULL
 		echo FULL_SAVE=$FULL_SAVE
 		echo FULL_TIMESTAMP=$FULL_TIMESTAMP
 		echo LAST_PARTIAL=$LAST_PARTIAL
@@ -242,7 +244,7 @@ function partial_backup {
 	TIMESTAMP="$BK_DIR/partial.$NUM.timestamp"
 
 	define_logs .$NUM
-	echo newer than: `ls -al $NEWER`
+	echo newer than: `ls -alh $NEWER`
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" --newer "$NEWER" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
 }
@@ -345,7 +347,7 @@ function summary {
 	local message
 	echo Backup complete: $BACKUP
 	echo From: $SOURCE
-	ls -al "$BACKUP"
+	ls -alh "$BACKUP"
 	message="`cat "$FILELOG" | wc -l` files backed up"
 	say "$message"
 	message="`cat "$DIRLOG" | wc -l` directories backed up"
@@ -354,7 +356,9 @@ function summary {
 	say "$message"
 	message="`cat "$IGNORELOG" | wc -l` ignored warnings"
 	say "$message"
-	message="Disk usage on backup drive: `df -h $BK_DIR`"
+	message="Local Free space on backup drive $BK_DIR"
+	say "$message"
+	message=`df -h $BK_DIR`
 	say "$message"
 	message="Errors logged to $ERRORSLOG"
 	say "$message"
@@ -411,18 +415,20 @@ function do_status {
 	echo `du -sh "$SOURCE"` used space in backup source
 	echo Local Free space on "$BK_DIR"
 	df -h "$BK_DIR"
-	if [ "$BK_DISK" != "$BK_DIR" ]; then
-		if [ -d "$BK_DISK" ]; then
-			echo External Free space on "$BK_DISK"
-			df -h "$BK_DISK"
-			ls -al $FULL
+	if [ "STATUS" == "full" ]; then
+		if [ "$BK_DISK" != "$BK_DIR" ]; then
+			if [ -d "$BK_DISK" ]; then
+				echo External Free space on "$BK_DISK"
+				df -h "$BK_DISK"
+				ls -alh $FULL
+			else
+				echo External backup disk not mounted: "$BK_DISK"
+			fi
 		else
-			echo External backup disk not mounted: "$BK_DISK"
+			ls -alh $FULL
 		fi
-	else
-		ls -al $FULL
+		ls -alh $BK_DIR/*.tgz -ot | head -1
 	fi
-	ls -al $BK_DIR/*.tgz -ot | head -1
 }
 
 function do_backup {
@@ -445,9 +451,15 @@ if [ "$MODE" == "restore" ]; then
 	do_restore
 else
 	if [ "$MODE" == "status" ]; then
+		STATUS=full
 		do_status
 	else
-		do_backup
+		if [ "$MODE" == "check" ]; then
+			STATUS=check
+			do_status
+		else
+			do_backup
+		fi
 	fi
 fi
 

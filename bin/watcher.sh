@@ -2,7 +2,7 @@
 
 # monitor some operation you are doing
 op.sh
+echo " "
 # show battery, temperature and network information
-df -h /home && echo " "
 power.sh
 ls-ips.sh

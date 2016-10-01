@@ -1,2 +1,2 @@
 # some operation you want to monitor with watcher.sh
-ezbackup.sh status
+ezbackup.sh check
