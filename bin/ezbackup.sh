@@ -288,7 +288,7 @@ function time_diff {
 	message="$3"
 	perl -e '
 		sub num { return int(100 * shift)/100 }
-		$start = -M "$ARGV[0]";
+		$start = -M "$ARGV[0];
 		$end = -M "$ARGV[1]";
 		print join(" ", (num(24*($start - $end))), "hours $ARGV[2]\n");
 	' "$start" "$end" "$message"
@@ -413,9 +413,9 @@ function do_status {
 	pre_config
 	is_locked
 	echo `du -sh "$SOURCE"` used space in backup source
-	echo Local Free space on "$BK_DIR"
-	df -h "$BK_DIR"
-	if [ "STATUS" == "full" ]; then
+	if [ "$STATUS" == "full" ]; then
+		echo Local Free space on "$BK_DIR"
+		df -h "$BK_DIR"
 		if [ "$BK_DISK" != "$BK_DIR" ]; then
 			if [ -d "$BK_DISK" ]; then
 				echo External Free space on "$BK_DISK"
@@ -428,6 +428,9 @@ function do_status {
 			ls -alh $FULL
 		fi
 		ls -alh $BK_DIR/*.tgz -ot | head -1
+	else
+		df -h "$BK_DIR" | head -1
+		echo `df -h "$BK_DIR" | tail -1` for $BK_DIR
 	fi
 }
 
