@@ -35,9 +35,14 @@ function usage {
 	code=0
 	[ ! -z "$message" ] && (code=1; echo $message; echo " ")
 	echo usage:
-	echo "$CMD [restore|full|partial] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
+	echo "$CMD [--debug] [--help] [status|full|partial|restore] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
 	echo " "
 	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, BK_DIR and BK_DISK environment variables.
+	echo " "
+	echo --debug option must be first and turns on display of debugging information.
+	echo --help option shows this help information.
+	echo " "
+   echo The status command shows the configured backup paths as well as lock state and free, used space.
 	echo " "
 	echo If the full option is provided a full backup is forced.
 	echo " "
@@ -55,10 +60,18 @@ if [ "$MODE" == "--help" ]; then
 	usage
 fi
 
+function is_locked {
+	if [ -d $BK_DIR/locked ]; then
+		echo "$CMD is locked: $BK_DIR/locked backup may be in progress."
+	else
+		echo "$CMD no backup in progress, is not locked: $BK_DIR/locked"
+	fi
+}
+
 # lock the backup directory to prevent a second backup starting
 function lock {
 	LOCK_ERROR=1
-	mkdir $BK_DIR/locked || die 1 "unable to lock in $BK_DIR"
+	mkdir $BK_DIR/locked || die 1 "unable to lock in $BK_DIR/locked"
 	LOCK_ERROR=
 	# on error during script, unlock
 	trap 'error ${LINENO}' ERR
@@ -97,9 +110,8 @@ function error()
    exit "${code}"
 }
 
-# read the program configuration from config file so command
-# arguments can be omitted. also locks the directory if a backup will begin.
-function config {
+# very basic config before config
+function pre_config {
 	if [ -z "$BK_DIR" ]; then
 		[ -e "$CFG" ] && source $CFG
 
@@ -113,10 +125,17 @@ function config {
 	[ -d $BK_DIR ] || usage "$BK_DIR: BK_DIR could not be created."
 
 	if [ $DEBUG == 1 ]; then
+		echo CFG=$CFG
 		echo SOURCE=$SOURCE
 		echo BK_DIR=$BK_DIR
 		echo BK_DISK=$BK_DISK
 	fi
+}
+
+# read the program configuration from config file so command
+# arguments can be omitted. also locks the directory if a backup will begin.
+function config {
+	pre_config
 
 	NUM_PARTIALS=${NUM_PARTIALS:-5}
 	FULL=$BK_DISK/ezbackup.tgz
@@ -386,6 +405,26 @@ function restore {
 	done
 }
 
+function do_status {
+	pre_config
+	is_locked
+	echo `du -sh "$SOURCE"` used space in backup source
+	echo Local Free space on "$BK_DIR"
+	df -h "$BK_DIR"
+	if [ "$BK_DISK" != "$BK_DIR" ]; then
+		if [ -d "$BK_DISK" ]; then
+			echo External Free space on "$BK_DISK"
+			df -h "$BK_DISK"
+			ls -al $FULL
+		else
+			echo External backup disk not mounted: "$BK_DISK"
+		fi
+	else
+		ls -al $FULL
+	fi
+	ls -al $BK_DIR/*.tgz -ot | head -1
+}
+
 function do_backup {
 	echo `date` $MODE backup
 	config
@@ -405,7 +444,11 @@ if [ "$MODE" == "restore" ]; then
 
 	do_restore
 else
-	do_backup
+	if [ "$MODE" == "status" ]; then
+		do_status
+	else
+		do_backup
+	fi
 fi
 
 exit 0
