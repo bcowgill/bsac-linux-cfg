@@ -8,7 +8,8 @@ for file in $*; do
 		our $banner = "// DEACTIVATED @{[`date --rfc-3339=seconds`]}\n"
 	}
 	s{\A}{// }xmsg;
-   s{// (//jscs:(en|dis)able maximumLineLength)}{$1}xmsg;
+	s{\A//\s\n}{//\n}xmsg;
+	s{// (//jscs:(en|dis)able maximumLineLength)}{$1}xmsg;
 	$_ = $banner . $_;
 	$banner = ""
 ' $file
