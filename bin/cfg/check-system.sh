@@ -418,6 +418,7 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 # jhead for jpeg EXIF header editing
 INSTALL_CMDS="
 	dlocate deborphan
+	tcsh
 	curl wget
 	vim ctags
 	screen tmux cmatrix
