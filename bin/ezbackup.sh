@@ -415,7 +415,7 @@ function do_status {
 	echo `du -sh "$SOURCE"` used space in backup source
 	echo Local Free space on "$BK_DIR"
 	df -h "$BK_DIR"
-	if [ "STATUS" == "full" ]; then
+	if [ "$STATUS" == "full" ]; then
 		if [ "$BK_DISK" != "$BK_DIR" ]; then
 			if [ -d "$BK_DISK" ]; then
 				echo External Free space on "$BK_DISK"
@@ -427,7 +427,7 @@ function do_status {
 		else
 			ls -alh $FULL
 		fi
-		ls -alh $BK_DIR/*.tgz -ot | head -1
+		ls -alh $BK_DIR/*.tgz -ot | grep -v ezbackup.tgz | head -1
 	fi
 }
 
