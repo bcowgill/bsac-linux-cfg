@@ -7,6 +7,8 @@ if [ -z $branch ]; then
 	echo Specify a branch name or something to rebase from
 	echo remember git merge --abort to give up!
 else
+	touch pause-build.timestamp
+	sleep 3
 	#git rebase -Xignore-all-space "$branch" || git mergetool
 	git rebase -Xignore-all-space --interactive "$branch" || git mergetool
 fi
