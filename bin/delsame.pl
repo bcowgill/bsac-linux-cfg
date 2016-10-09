@@ -7,10 +7,47 @@ use English qw(-no_match_vars);
 use Fatal qw(opendir unlink);
 use File::Spec;
 use Data::Dumper;
+use warnings;
+
+sub usage {
+	my ($message) = @ARG;
+	print("$message\n\n") if $message;
+
+	print <<"USAGE";
+$0 [--debug] keep-path [delete-path]
+
+keep-path    the path to compare against for identical files.
+delete-path  the path to scan for files to delete. defaults to the current directory.
+--debug      turns on debugging information
+
+Compares files in the delete-path and keep-path and deletes any from delete-path which are identical to the ones in the keep-path.
+
+For an alternative way of deleting the same files see fdups and delsame system commands.
+
+EXAMPLES:
+
+recursively delete from current directory tree files that match another directory tree.
+find . -type d | perl -ne 'chomp; print qq{delsame.pl "\$HOME/d/Dropbox/$_" "$_"\n}'
+
+delete the empty directories after cleanup
+find . -depth -type d -exec rmdir {} \;
+USAGE
+exit ($message ? 1 : 0);
+}
 
 my $DEBUG = 0;
 
-my ($delete, $keep) = @ARGV;
+usage("You must specify a delete-path.") unless scalar(@ARGV);
+
+if ('--debug' eq $ARGV[0]) {
+	$DEBUG = 1;
+	shift;
+}
+
+usage("You must specify a delete-path.") unless scalar(@ARGV);
+
+my ($keep, $delete) = @ARGV;
+$delete = $delete || '.';
 
 my $TALK = 0;
 my $SHOW_ONLY = 0;
@@ -21,7 +58,6 @@ if ($DEBUG)
 {
 	$TALK = $SHOW_ONLY = $LS = $DUMP = $DEBUG;
 }
-
 
 my $dh;
 
