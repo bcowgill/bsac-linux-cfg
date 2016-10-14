@@ -343,6 +343,14 @@ SUBLIME_CMD=subl
 SUBLIME_URL=http://download.sublimetext.com
 #SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
+#WebStorm 2016.2.3
+#Build #WS-162.1812.21, built on September 4, 2016
+#Licensed to Workshare LTD / Brent Cowgill
+#You have perpetual fallback license for this version
+#Subscription is active until January 27, 2018
+#JRE: 1.8.0_112-release-b343 amd64
+#JVM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
+
 #me@akston:~/bin (dell-7510 *% u+2)$ tar tvzf ~/Downloads/WebStorm-2016.2.tar.gz  | head
 #-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
 WEBSTORM_CMD=wstorm
