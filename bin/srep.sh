@@ -32,8 +32,37 @@ sub debug {
 	return $pre . $lines;
 }
 
+# spit out the file changes with final cleanups
+sub spit {
+	my ($file) = @ARG;
+
+	# remove all commented out changes
+#	$file =~ s{ [ \t]* //(del|dbg): [^\n]+ (\n|\z)}{}xmsg;
+
+	# log empty exceptions
+	$file =~ s{
+		( catch \s* \( \s* (\w+) \s* \) \s*
+		\{ \s* ) (\s* \} )
+	}{$1 BaseClass.console.error(displayName, $2) $3}xmsg;
+
+	# remove too many blank lines
+	$file =~ s{\n\n+}{\n\n}xmsg;
+
+	print $file;
+}
+
 while (my $file = <>) {
 	my @imports = ();
+
+	# identify which file we are to disable rules in some cases
+	$file =~ m{class \s+ (\w+) \s+ extends \s+ BaseClass}xms;
+	my $class = $1 || "";
+
+	# make no changes to certain files
+	if ($class eq "EmptyComponent") {
+		spit($file);
+		next;
+	}
 
 #print STDERR "[[$file]]";
 
@@ -82,18 +111,6 @@ while (my $file = <>) {
 	  $file =~ s{(\n\nlet \s+ our)}{"\n" . join("\n", @imports) . $1}xmse;
 	}
 
-	# remove all commented out changes
-	$file =~ s{ [ \t]* //(del|dbg): [^\n]+ (\n|\z)}{}xmsg;
-
-	# log empty exceptions
-	$file =~ s{
-		( catch \s* \( \s* (\w+) \s* \) \s*
-		\{ \s* ) (\s* \} )
-	}{$1 BaseClass.console.error(displayName, $2) $3}xmsg;
-
-	# remove too many blank lines
-	$file =~ s{\n\n+}{\n\n}xmsg;
-
-	print $file;
+	spit($file);
 }
 ' $*
