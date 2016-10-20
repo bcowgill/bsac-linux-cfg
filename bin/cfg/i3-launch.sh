@@ -100,12 +100,14 @@ LC_ALL=C nm-applet &
 xscreensaver &
 dropbox.sh &
 
+if [ -e ~/i3-quick-start ]; then
+	rm ~/i3-quick-start
+else
 
 # $files
 i3do "workspace $files; exec browse.sh"
 i3do "workspace $files; exec mygterm.sh $HOME/bin mc $HOME/bin /data/me"
 sleep 5
-
 
 # $app
 i3do "workspace $app; exec chromium-browser chrome-extension://edacconmaakjimmfgnblocblbcdcpbko/main.html"
@@ -135,6 +137,8 @@ sleep 1
 # $edit
 i3do "workspace $edit; exec emacs.sh"
 i3do "workspace $edit; exec warnme.sh"
+
+fi # !i3-quick-start
 
 random-desktop.sh
 

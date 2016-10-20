@@ -108,6 +108,10 @@ LC_ALL=C nm-applet &
 xscreensaver &
 dropbox.sh &
 
+if [ -e ~/i3-quick-start ]; then
+	rm ~/i3-quick-start
+else
+
 # $help
 i3do "workspace $help; exec i3-sensible-terminal"
 i3do "workspace $help; exec ebook.sh"
@@ -181,6 +185,8 @@ i3do "move scratchpad"
 i3do "workspace $edit; exec emacs.sh"
 i3do "workspace $edit; exec wstorm.sh"
 i3do "workspace $edit; exec warnme.sh"
+
+fi # !i3-quick-start
 
 random-desktop.sh
 
