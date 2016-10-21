@@ -15,6 +15,7 @@ perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
 my $sq = chr(39);
 my $dq = chr(34);
+my $DEL = 1;
 
 # insert //dbg: before any console log messages inherited from BaseComponent
 sub debug {
@@ -37,7 +38,7 @@ sub spit {
 	my ($file) = @ARG;
 
 	# remove all commented out changes
-#	$file =~ s{ [ \t]* //(del|dbg): [^\n]+ (\n|\z)}{}xmsg;
+	$file =~ s{ [ \t]* //(del|dbg): [^\n]+ (\n|\z)}{}xmsg if $DEL;
 
 	# log empty exceptions
 	$file =~ s{
