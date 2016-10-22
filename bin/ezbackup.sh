@@ -291,7 +291,7 @@ function time_diff {
 	message="$3"
 	perl -e '
 		sub num { return int(100 * shift)/100 }
-		$start = -M "$ARGV[0];
+		$start = -M "$ARGV[0]";
 		$end = -M "$ARGV[1]";
 		print join(" ", (num(24*($start - $end))), "hours $ARGV[2]\n");
 	' "$start" "$end" "$message"
@@ -304,14 +304,16 @@ function check_space {
 	needed=`du "$FULL" | perl -pne 's{\A (\d+) .+}{$1\n}xmsg'`
 
 	if perl -e 'exit($ARGV[0] < $ARGV[1] ? 0 : 1)' $needed $free ; then
-		echo there is enough space available for backup
+		echo there is enough space available for a full backup
 	else
-		echo NOT OK need $needed but only $free is available.
-		du -h "$FULL"
-		df -h "$BK_DIR/"
-		log_error "ERROR: not enough space available for full backup, need $needed, free $free. Will do a partial backup instead."
-		partial_backup
-		exit 0
+		echo NOT OK need $needed for full backup but only $free is available.
+		if [ ! -z "$DO_FULL" ]; then
+			du -h "$FULL"
+			df -h "$BK_DIR/"
+			log_error "ERROR: not enough space available for full backup, need $needed, free $free. Will do a partial backup instead."
+			partial_backup
+			exit 0
+		fi
 	fi
 }
 
@@ -415,6 +417,10 @@ function restore {
 function do_status {
 	pre_config
 	is_locked
+	if [ "$STATUS" == "full" ]; then
+		TIMESTAMP="$FULL_TIMESTAMP"
+		[ -e "$FULL" ] && show_times && check_space
+	fi
 	echo `du -sh "$SOURCE"` used space in backup source
 	echo Local Free space on "$BK_DIR"
 	df -h "$BK_DIR"
