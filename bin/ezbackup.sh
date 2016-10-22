@@ -421,6 +421,7 @@ function do_status {
 		TIMESTAMP="$FULL_TIMESTAMP"
 		[ -e "$FULL" ] && show_times && check_space
 	else
+		[ -e "$FULL_SAVE" ] && which cowsay > /dev/null && cowsay "Full backup in progress"
 		[ -e "$FULL_SAVE" ] && ls -alh "$FULL_SAVE"
 	fi
 	echo `du -sh "$SOURCE"` used space in backup source
