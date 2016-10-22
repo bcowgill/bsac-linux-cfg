@@ -420,6 +420,8 @@ function do_status {
 	if [ "$STATUS" == "full" ]; then
 		TIMESTAMP="$FULL_TIMESTAMP"
 		[ -e "$FULL" ] && show_times && check_space
+	else
+		[ -e "$FULL_SAVE" ] && ls -alh "$FULL_SAVE"
 	fi
 	echo `du -sh "$SOURCE"` used space in backup source
 	echo Local Free space on "$BK_DIR"
@@ -429,17 +431,19 @@ function do_status {
 			if [ -d "$BK_DISK" ]; then
 				echo External Free space on "$BK_DISK"
 				df -h "$BK_DISK"
+				[ -e "$FULL_SAVE" ] && ls -alh "$FULL_SAVE"
 				ls -alh $FULL
 			else
 				echo External backup disk not mounted: "$BK_DISK"
 			fi
 		else
+			[ -e "$FULL_SAVE" ] && ls -alh "$FULL_SAVE"
 			ls -alh $FULL
 		fi
 		ls -alh $BK_DIR/*.tgz -ot | grep -v ezbackup.tgz | head -1
 	else
 		df -h "$BK_DIR" | head -1
-		echo `df -h "$BK_DIR" | tail -1` for $BK_DIR
+		echo `df -h "$BK_DIR" | tail -1` "for $BK_DIR"
 	fi
 }
 
