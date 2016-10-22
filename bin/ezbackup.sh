@@ -131,6 +131,8 @@ function pre_config {
 	FULL_SAVE=$BK_DISK/saved.full.tgz
 	FULL_TIMESTAMP="$BK_DIR/full-backup.timestamp"
 	FULL_END_TIMESTAMP="$BK_DIR/full-backup-end.timestamp"
+	FULL_TIMESTAMP2="$BK_DISK/full-backup.timestamp"
+	FULL_END_TIMESTAMP2="$BK_DISK/full-backup-end.timestamp"
 	LAST_PARTIAL=$BK_DIR/ezbackup.$NUM_PARTIALS.tgz
 	ALL_PARTIALS=$BK_DIR/ezbackup.*.tgz
 	ALL_PARTIAL_LOGS=$BK_DIR/*.*.log
@@ -209,14 +211,15 @@ function backup {
 
 function full_backup {
 	TIMESTAMP="$FULL_TIMESTAMP"
+	TIMESTAMP2="$FULL_TIMESTAMP2"
 	BACKUP="$FULL"
 	define_logs
 
 	[ -e "$FULL" ] && show_times && check_space
 	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
 
-	touch "$TIMESTAMP" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
-	touch "$FULL_END_TIMESTAMP"
+	touch "$TIMESTAMP" && touch "$TIMESTAMP2" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
+	touch "$FULL_END_TIMESTAMP" && touch "$FULL_END_TIMESTAMP2"
 	filter_logs
 
 	if [ "$BK_DIR" != "$BK_DISK" ]; then
