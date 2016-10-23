@@ -548,6 +548,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
 		cmus
 		shutter
+		cowsay
+		gimp
 	"
 	#NODE_PKG=""
 
