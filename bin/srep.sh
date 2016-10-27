@@ -71,8 +71,8 @@ while (my $file = <>) {
 	$file =~ s{
 		([\ \t]*) (this\._inherits\.unshift\(displayName\))
 	}{
-		# "$1if (!this._inherits) { this._inherits = [] }\n$1$2"
-		"$1//del: $2"
+		"$1if (!this._inherits) { this._inherits = [] }\n$1$2"
+		# "$1//del: $2"
 	}xmsge;
 	$file =~ s{// \s* (cannot \s+ use \s+ super)}{//del: $1}xmsg;
 	$file =~ s{(super\.component)}{//del: $1}xmsg;
@@ -86,6 +86,13 @@ while (my $file = <>) {
 #print STDERR "BASE [$match] [$ok]\n";
 		$ok
 	}xmsge;
+
+   # unit test inheritance fixup
+   $file =~ s{
+		(\.to\.be\.deep\.equal\(\[component), \s (\s*) $sq BaseComponent $sq (\]\))
+   }{
+		"$1$2$3"
+   }xmsge;
 
 	# convert exception log
 	$file =~ s{
