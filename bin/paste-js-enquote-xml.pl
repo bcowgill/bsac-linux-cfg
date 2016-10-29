@@ -16,24 +16,23 @@ print qq{$input};
 
 __END__
 (function () {
-  var el = document.getElementById('<?>');
-  el.style.height='1024px';
-  el.style.width='100%';
+	var el = document.getElementById('<?>');
+	el.style.height='1024px';
+	el.style.width='100%';
 
-  if (Ontology && Ontology.CCA && Ontology.CCA.loadAssets)
-  {
-    var obj = Ontology.CCA;
-    obj.loadAssets(function () {
+	if (Ontology && Ontology.CCA && Ontology.CCA.loadAssets)
+	{
+		var obj = Ontology.CCA;
+		obj.loadAssets(function () {
 
 Becomes
 
 (function () {
-  var el = document.getElementById('&lt;?&gt;');
-  el.style.height='1024px';
-  el.style.width='100%';
+	var el = document.getElementById('&lt;?&gt;');
+	el.style.height='1024px';
+	el.style.width='100%';
 
-  if (Ontology &amp;&amp; Ontology.CCA &amp;&amp; Ontology.CCA.loadAssets)
-  {
-    var obj = Ontology.CCA;
-    obj.loadAssets(function () {
-
+	if (Ontology &amp;&amp; Ontology.CCA &amp;&amp; Ontology.CCA.loadAssets)
+	{
+		var obj = Ontology.CCA;
+		obj.loadAssets(function () {

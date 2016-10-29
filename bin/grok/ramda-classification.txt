@@ -1,0 +1,57 @@
+Ramda Functional Library
+HEREIAM Function > comparator  http://ramdajs.com/docs/#expand
+
+Number -> Number
+dec
+inc
+negate
+
+Number -> Number -> Number
+add
+divide
+mathMod
+modulo
+multiply
+subtract
+
+
+[Number] -> Number
+mean
+median
+product
+sum
+
+Type -> Function
+always  (const, constant or K combinator)
+
+Function -> Function
+addIndex  (list iteration)
+binary (restricts to only two arguments)
+comparator (converts a function of two paramters returning boolean if a < b into a function of two parameters returning -1,0 or 1)
+construct (curries an object's fixed arity constructor function)
+curry
+
+Number -> Function -> Function
+constructN (curries an object's variadic constructor function)
+
+Function -> Type -> Function
+bind
+
+[Function] -> Function
+compose
+composeK (kleisli chain composition)
+composeP (compose promise returning functions)
+
+Function -> [Type] -> Type
+apply (applies function to list of values, create fixed arity function from variadic function)
+call (useful as a converging function)
+
+Function -> [Function] -> Function
+converge
+
+[Function] -> [Type] -> [Type]
+ap (applicative, applies functions to list of values)
+
+
+
+__ ??
