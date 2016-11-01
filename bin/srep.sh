@@ -120,15 +120,17 @@ while (my $file = <>) {
 	}xmsge;
 
 	$file =~ s{
+		\n ([\ \t]*) (\@autobind) \n
+	}{\n}xmsg;
+	$file =~ s{
 		\n ([\ \t]*) (_handle\w+ \s* \()
 	}{
-		$importAutoBind = 1;
 		"\n$1\@autobind\n$1$2"
 	}xmsge;
 
 	$file =~ s{ (this\._handle\w+) \.bind \(this\) }{$1}xmsg;
-	$file =~ s{ [\ \t]*// \s+ must \s+ bind \s+ your \s+ event \s+ handlers .+? \n}{}xmsg;
-	$file =~ s{ [\ \t]*// \s+ REFACTOR \s+ base \s+ class \s+ method \s+ to \s+ bind \s+ every \s+ _handle .+? \n}{}xmsg;
+	$file =~ s{ \s* // \s+ must \s+ bind \s+ your \s+ event \s+ handlers .+? \n}{\n}xmsg;
+	$file =~ s{ \s* // \s+ REFACTOR \s+ base \s+ class \s+ method \s+ to \s+ bind \s+ every \s+ _handle .+? \n}{\n}xmsg;
 
 	if ($importAutoBind) {
 		push(@imports, "import { autobind } from ${sq}core-decorators$sq")
