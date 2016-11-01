@@ -87,12 +87,12 @@ while (my $file = <>) {
 		$ok
 	}xmsge;
 
-   # unit test inheritance fixup
-   $file =~ s{
+	# unit test inheritance fixup
+	$file =~ s{
 		(\.to\.be\.deep\.equal\(\[component), \s (\s*) $sq BaseComponent $sq (\]\))
-   }{
+	}{
 		"$1$2$3"
-   }xmsge;
+	}xmsge;
 
 	# convert exception log
 	$file =~ s{
@@ -106,6 +106,29 @@ while (my $file = <>) {
 	}{
 		debug($1)
 	}xmsge;
+
+	# add @autobind to any _handle functions
+	my $importAutoBind = 0;
+	$file =~ s{
+		\n [\ \t]* (this\._handle\w+) \s* = \s* \1 \.bind \(this\);? [\ \t]*
+	}{
+		$importAutoBind = 1;
+      ""
+	}xmsge;
+
+	$file =~ s{
+		\n ([\ \t]*) (_handle\w+ \s* \()
+	}{
+		$importAutoBind = 1;
+		"\n$1\@autobind\n$1$2"
+	}xmsge;
+
+	$file =~ s{ (this\._handle\w+) \.bind \(this\) }{$1}xmsg;
+	$file =~ s{ [\ \t]*// \s+ must \s+ bind \s+ your \s+ event \s+ handlers .+? \n}{}xmsg;
+
+	if ($importAutoBind) {
+		push(@imports, "import { autobind } from ${sq}core-decorators$sq")
+	}
 
 	if ($file =~ s{
 			if \s* \( \s* event \s* \) \s*
