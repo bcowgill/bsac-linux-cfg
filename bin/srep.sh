@@ -116,7 +116,7 @@ while (my $file = <>) {
 		\n [\ \t]* (this\._handle\w+) \s* = \s* \1 \.bind \(this\);? [\ \t]*
 	}{
 		$importAutoBind = 1;
-      ""
+		""
 	}xmsge;
 
 	$file =~ s{
