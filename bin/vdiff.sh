@@ -1,0 +1,1 @@
+diffmerge --nosplash $*
