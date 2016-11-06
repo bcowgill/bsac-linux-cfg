@@ -432,6 +432,8 @@ my $rhSubEmacs = {
 	'-kmacro-append-to-last-macro'         => k('Ctrl-u', 'Ctrl-x', '('),
 	'name-last-kbd-macro'                  => \&fn,
 	'insert-kbd-macro'                     => \&fn,
+	'kmacro-bind-to-key'                   => k('Ctrl-x', 'Ctrl-k', 'b'),
+	'-kmacro-execute'                      => k('Ctrl-x') . p('Ctrl-k', 'character'),
 
 	# Regular Expression Builder
 	're-builder'                           => \&fn,
@@ -1084,7 +1086,9 @@ Abbrevs allow you to define short text which expands to a larger tract of boiler
 |%-last-kmacro-forever% or %-last-kmacro-forever2%|execute last macro forever (until end of buffer reached)|
 |%-kmacro-append-to-last-macro%|append to last keyboard macro|
 |%name-last-kbd-macro%|name last keyboard macro|
-|%insert-kbd-macro%|insert Lisp definition in buffer|
+|%insert-kbd-macro%|insert Lisp definition into buffer (usually in .emacs file to save your macros)|
+|%kmacro-bind-to-key%|bind the last macro to a user key 0-9 or a-z|
+|%-kmacro-execute%|execute a specific user macro previously assigned to key 0-9 or a-z|
 </table>
 
 <h2>Regexp Builder</h2>
