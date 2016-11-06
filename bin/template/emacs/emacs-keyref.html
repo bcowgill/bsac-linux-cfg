@@ -223,6 +223,8 @@ kbd {
 <tr><td><kbd>Ctrl-x</kbd> <kbd>0</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>0</kbd></td><td>delete this window</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>3</kbd></td><td></td><td>split window side by side</td></tr>
 <tr><td><kbd>Ctrl-Alt-v</kbd></td><td></td><td>scroll other window down</td></tr>
+<tr><td><kbd>Alt-Home</kbd></td><td></td><td>scroll other window to top of buffer</td></tr>
+<tr><td><kbd>Alt-End</kbd></td><td></td><td>scroll other window to bottom of buffer</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>o</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>o</kbd></td><td>switch cursor to another window</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>b</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>b</kbd></td><td>select buffer in other window and move cursor there</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>4</kbd> <kbd>Ctrl-o</kbd></td><td><kbd>Ctrl-x</kbd> <kbd>5</kbd> <kbd>Ctrl-o</kbd></td><td>display buffer in other window but keep cursor in this one</td></tr>
@@ -233,6 +235,7 @@ kbd {
 <tr><td><kbd>Ctrl-x</kbd> <kbd>^</kbd></td><td></td><td>grow window taller</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>{</kbd></td><td></td><td>shrink window narrower</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>}</kbd></td><td></td><td>grow window wider</td></tr>
+<tr><td><kbd>Ctrl-x</kbd> <kbd>+</kbd></td><td></td><td>balance the sizes of windows</td></tr>
 </table>
 
 <h2>Formatting</h2>
@@ -437,7 +440,7 @@ Abbrevs allow you to define short text which expands to a larger tract of boiler
 <tr><td><kbd>Ctrl-u</kbd> <kbd>0</kbd> <kbd>Ctrl-x</kbd> <kbd>)</kbd> or <kbd>Ctrl-u</kbd> <kbd>0</kbd> <kbd>F4</kbd></td><td>execute last macro forever (until end of buffer reached)</td></tr>
 <tr><td><kbd>Ctrl-u</kbd> <kbd>Ctrl-x</kbd> <kbd>(</kbd></td><td>append to last keyboard macro</td></tr>
 <tr><td><kbd>Alt-x</kbd> <code>name-last-kbd-macro</code></td><td>name last keyboard macro</td></tr>
-<tr><td><kbd>Alt-x</kbd> <code>insert-kbd-macro</code></td><td>insert Lisp definition in buffer</td></tr>
+<tr><td><kbd>Alt-x</kbd> <code>insert-kbd-macro</code></td><td>insert Lisp definition into buffer (usually in .emacs file to save your macros)</td></tr>
 <tr><td><kbd>Ctrl-x</kbd> <kbd>Ctrl-k</kbd> <kbd>b</kbd></td><td>bind the last macro to a user key 0-9 or a-z</td></tr>
 <tr><td><kbd>Ctrl-x</kbd><kbd>Ctrl-k</kbd>  <i>character</i></td><td>execute a specific user macro previously assigned to key 0-9 or a-z</td></tr>
 </table>

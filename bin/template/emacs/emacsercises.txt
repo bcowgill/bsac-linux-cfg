@@ -290,6 +290,8 @@ ESTABLISHMENT OF AN ABSOLUTE TYRANNY OVER THESE STATES.  TO PROVE THIS, LET
 FACTS BE SUBMITTED TO A CANDID WORLD.
 
 
+
+
 6 ==========================================================================
 
 Emacsercise #6 hide and seek.
@@ -325,7 +327,7 @@ Search solutions:
 function\s-*([^)]*)\s-*{[^}]*}
 
 
-. ==========================================================================
+7 ==========================================================================
 
 
 Emacsercise #7 regexp builder.
@@ -348,6 +350,46 @@ use \( \) groupings to see how numbered match groups get colored.
 Sample regex:
 \([use]+\) +\(regexp\) +builder.+
 
-. ==========================================================================
+
+8 ==========================================================================
 
 
+Emacsercise #8 A window onto the world.
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	C-x 0	delete current window
+	C-x 1	delete all other windows
+	C-x 2	split windows opening one below
+	C-x 3	split windows opening one to the right
+	C-x o	move to the other window
+	C-x }	widen the window
+	C-x {	make window narrower
+	C-x ^	make the window taller
+	C-x +	balance the size of all windows
+	A-v	scroll previous screen of buffer into view
+	C-v	scroll next screen of buffer into view
+	C-A-v	scroll next screen of other window info view
+	A-Home	scroll other window to top of buffer
+	A-End	scroll other window to bottom of buffer
+
+ 1. close all windows but one
+ 2. split window into two side by side panels
+ 3. make window wider or narrower by a specific number of columns
+ 4. jump to other window
+ 5. split that window into two above below panels
+ 6. make window taller by a specific number of rows
+ 7. jump to the other new window
+ 8. split that window into two side by side panels
+ 9. close the window
+10. scroll current window up and down
+11. scroll the other window to top of buffer
+12. scroll the other window down a few times
+13. scroll the other window to bottom of buffer
+14. balance the size of all windows
+
+
+
+. ==========================================================================
+

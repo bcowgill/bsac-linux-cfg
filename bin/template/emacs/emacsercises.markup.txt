@@ -290,6 +290,8 @@ ESTABLISHMENT OF AN ABSOLUTE TYRANNY OVER THESE STATES.  TO PROVE THIS, LET
 FACTS BE SUBMITTED TO A CANDID WORLD.
 
 
+
+
 6 ==========================================================================
 
 Emacsercise #6 hide and seek.
@@ -325,7 +327,7 @@ Search solutions:
 function\s-*([^)]*)\s-*{[^}]*}
 
 
-. ==========================================================================
+7 ==========================================================================
 
 
 Emacsercise #7 regexp builder.
@@ -348,6 +350,46 @@ use \( \) groupings to see how numbered match groups get colored.
 Sample regex:
 \([use]+\) +\(regexp\) +builder.+
 
-. ==========================================================================
+
+8 ==========================================================================
 
 
+Emacsercise #8 A window onto the world.
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	%delete-window%	delete current window
+	%delete-other-windows%	delete all other windows
+	%split-window-below%	split windows opening one below
+	%split-window-right%	split windows opening one to the right
+	%other-window%	move to the other window
+	%enlarge-window-horizontally%	widen the window
+	%shrink-window-horizontally%	make window narrower
+	%enlarge-window%	make the window taller
+	%balance-windows%	balance the size of all windows
+	%scroll-down-command%	scroll previous screen of buffer into view
+	%scroll-up-command%	scroll next screen of buffer into view
+	%scroll-other-window%	scroll next screen of other window info view
+	%beginning-of-buffer-other-window%	scroll other window to top of buffer
+	%end-of-buffer-other-window%	scroll other window to bottom of buffer
+
+ 1. close all windows but one
+ 2. split window into two side by side panels
+ 3. make window wider or narrower by a specific number of columns
+ 4. jump to other window
+ 5. split that window into two above below panels
+ 6. make window taller by a specific number of rows
+ 7. jump to the other new window
+ 8. split that window into two side by side panels
+ 9. close the window
+10. scroll current window up and down
+11. scroll the other window to top of buffer
+12. scroll the other window down a few times
+13. scroll the other window to bottom of buffer
+14. balance the size of all windows
+
+
+
+. ==========================================================================
+

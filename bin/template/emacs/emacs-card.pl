@@ -272,6 +272,9 @@ my $rhSubEmacs = {
 	'enlarge-window'                   => k('Ctrl-x', '^'),
 	'shrink-window-horizontally'       => k('Ctrl-x', '{'),
 	'enlarge-window-horizontally'      => k('Ctrl-x', '}'),
+	'balance-windows'                  => k('Ctrl-x', '+'),
+	'beginning-of-buffer-other-window' => k('Alt-Home'),
+	'end-of-buffer-other-window'       => k('Alt-End'),
 
 	# Formatting
 	'indent-for-tab-command'           => k('Tab'),
@@ -435,6 +438,8 @@ my $rhSubEmacs = {
 	'kmacro-bind-to-key'                   => k('Ctrl-x', 'Ctrl-k', 'b'),
 	'-kmacro-execute'                      => k('Ctrl-x') . p('Ctrl-k', 'character'),
 
+	# Regular Expressions
+
 	# Regular Expression Builder
 	're-builder'                           => \&fn,
 	'reb-change-syntax'                    => k('Ctrl-c', 'Tab'),
@@ -445,8 +450,6 @@ my $rhSubEmacs = {
 	'reb-copy'                             => k('Ctrl-c', 'Ctrl-w'),
 
 	# HEREIAM
-	# Miscellaneous
-	# Regular Expressions
 	# Info
 	# Commads Dealing with Emacs Lisp
 	# Simple Customisation
@@ -872,6 +875,8 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%delete-window%|%delete-frame%|delete this window|
 |%split-window-right%||split window side by side|
 |%scroll-other-window%||scroll other window down|
+|%beginning-of-buffer-other-window%||scroll other window to top of buffer|
+|%end-of-buffer-other-window%||scroll other window to bottom of buffer|
 |%other-window%|%other-frame%|switch cursor to another window|
 |%switch-to-buffer-other-window%|%switch-to-buffer-other-frame%|select buffer in other window and move cursor there|
 |%display-buffer%|%display-buffer-other-frame%|display buffer in other window but keep cursor in this one|
@@ -882,6 +887,7 @@ th||sentence|home|word|character||character|word|end|sentence|
 |%enlarge-window%||grow window taller|
 |%shrink-window-horizontally%||shrink window narrower|
 |%enlarge-window-horizontally%||grow window wider|
+|%balance-windows%||balance the sizes of windows|
 </table>
 
 <h2>Formatting</h2>
