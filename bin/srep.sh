@@ -16,6 +16,7 @@ local $INPUT_RECORD_SEPARATOR = undef;
 my $sq = chr(39);
 my $dq = chr(34);
 my $DEL = 1;
+my $SKIP = 0;
 
 # insert //dbg: before any console log messages inherited from BaseComponent
 sub debug {
@@ -67,51 +68,81 @@ while (my $file = <>) {
 
 #print STDERR "[[$file]]";
 
-	$file =~ s{([\ \t]) _safeRender \s* \(}{$1render \(}xmsg;
-	$file =~ s{
-		([\ \t]*) (this\._inherits\.unshift\(displayName\))
-	}{
-		"$1if (!this._inherits) { this._inherits = [] }\n$1$2"
-		# "$1//del: $2"
-	}xmsge;
-	$file =~ s{// \s* (cannot \s+ use \s+ super)}{//del: $1}xmsg;
-	$file =~ s{(super\.component)}{//del: $1}xmsg;
+	if (!$SKIP) {
+		$file =~ s{([\ \t]) _safeRender \s* \(}{$1render \(}xmsg;
+		$file =~ s{
+			([\ \t]*) (this\._inherits\.unshift\(displayName\))
+		}{
+			"$1if (!this._inherits) { this._inherits = [] }\n$1$2"
+			# "$1//del: $2"
+		}xmsge;
+		$file =~ s{// \s* (cannot \s+ use \s+ super)}{//del: $1}xmsg;
+		$file =~ s{(super\.component)}{//del: $1}xmsg;
 
-	$file =~ s{
-		(import \s+ BaseComponent \s+ from \s+ $sq [^$sq]+? $sq)
-	}{
-		my $match = $1;
-		my $ok = ($match =~ m{from \s+ $sq\./BaseComponent}xms
-			? $match : "const BaseComponent = React.Component");
+		$file =~ s{
+			(import \s+ BaseComponent \s+ from \s+ $sq [^$sq]+? $sq)
+		}{
+			my $match = $1;
+			my $ok = ($match =~ m{from \s+ $sq\./BaseComponent}xms
+				? $match : "const BaseComponent = React.Component");
 #print STDERR "BASE [$match] [$ok]\n";
-		$ok
-	}xmsge;
+			$ok
+		}xmsge;
 
-   # unit test inheritance fixup
-   $file =~ s{
-		(\.to\.be\.deep\.equal\(\[component), \s (\s*) $sq BaseComponent $sq (\]\))
-   }{
-		"$1$2$3"
-   }xmsge;
+		# unit test inheritance fixup
+		$file =~ s{
+			(\.to\.be\.deep\.equal\(\[component), \s (\s*) $sq BaseComponent $sq (\]\))
+		}{
+			"$1$2$3"
+		}xmsge;
 
-	# convert exception log
+		# convert exception log
+		$file =~ s{
+			( catch \s* \( \s* \w+ \s* \) \s*
+			\{ \s* ) BaseClass\.console
+		}{$1console}xmsg;
+
+		# suppress base class logging
+		$file =~ s{
+			( (\A|\n) [\ \t]* (BaseClass|super)\.console\.\w+ \( .+? (\}|, \s* exception)\) )
+		}{
+			debug($1)
+		}xmsge;
+	}
+
+	# add @autobind to any _handle functions
+	my $importAutoBind = 0;
 	$file =~ s{
-		( catch \s* \( \s* \w+ \s* \) \s*
-		\{ \s* ) BaseClass\.console
-	}{$1console}xmsg;
-
-	# suppress base class logging
-	$file =~ s{
-		( (\A|\n) [\ \t]* (BaseClass|super)\.console\.\w+ \( .+? (\}|, \s* exception)\) )
+		\n [\ \t]* (this\._handle\w+) \s* = \s* \1 \.bind \(this\);? [\ \t]*
 	}{
-		debug($1)
+		$importAutoBind = 1;
+		""
 	}xmsge;
 
-	if ($file =~ s{
-			if \s* \( \s* event \s* \) \s*
-			\{ \s* event\.stopPropagation\(\) \s* ;? \s* \}
-		}{stopPropagation(event)}xmsg) {
-		push(@imports, "import { stopPropagation } from $sq../utils/events$sq")
+	$file =~ s{
+		\n ([\ \t]*) (\@autobind) \n
+	}{\n}xmsg;
+	$file =~ s{
+		\n ([\ \t]*) (_handle\w+ \s* \()
+	}{
+		"\n$1\@autobind\n$1$2"
+	}xmsge;
+
+	$file =~ s{ (this\._handle\w+) \.bind \(this\) }{$1}xmsg;
+	$file =~ s{ \s* // \s+ must \s+ bind \s+ your \s+ event \s+ handlers .+? \n}{\n}xmsg;
+	$file =~ s{ \s* // \s+ REFACTOR \s+ base \s+ class \s+ method \s+ to \s+ bind \s+ every \s+ _handle .+? \n}{\n}xmsg;
+
+	if ($importAutoBind) {
+		push(@imports, "import { autobind } from ${sq}core-decorators$sq")
+	}
+
+	if (!$SKIP) {
+		if ($file =~ s{
+				if \s* \( \s* event \s* \) \s*
+				\{ \s* event\.stopPropagation\(\) \s* ;? \s* \}
+			}{stopPropagation(event)}xmsg) {
+			push(@imports, "import { stopPropagation } from $sq../utils/events$sq")
+		}
 	}
 
 	# inject any additional imports needed
