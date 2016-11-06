@@ -107,3 +107,17 @@
 ;;(define-key viper-vi-global-user-map (kbd "SPC") 'ace-jump-mode)
 ;;If you use evil
 ;;(define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
+
+(require 're-builder)
+(setq reb-re-syntax 'string)
+
+;;Keyboard macro definitions
+;; Webstorm alt up/down to move a single line up/down
+(fset 'bsac-move-line-down-macro
+   [down ?\C-x ?\C-t up])
+(fset 'bsac-move-line-up-macro
+   [?\C-x ?\C-t up up])
+(global-set-key [(meta up)] 'bsac-move-line-up-macro)
+(global-set-key [(meta down)] 'bsac-move-line-down-macro)
+(fset 'bsac-open-line-macro
+   [end return tab])
