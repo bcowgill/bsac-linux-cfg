@@ -422,16 +422,25 @@ my $rhSubEmacs = {
 	'-frame-arrangement-from-register'    => k('Ctrl-u', 'Ctrl-x', 'r') . p('j', 'character'),
 
 	# Keyboard Macros
-        'kmacro-start-macro-or-insert-counter' => k('F3'),
-        'kmacro-end-or-call-macro'             => k('F4'),
+	'kmacro-start-macro-or-insert-counter' => k('F3'),
+	'kmacro-end-or-call-macro'             => k('F4'),
 	'-last-kmacro-forever'                 => k('Ctrl-u', '0', 'Ctrl-x', ')'),
 	'-last-kmacro-forever2'                => k('Ctrl-u', '0', 'F4'),
-        'kmacro-start-macro'                   => k('Ctrl-x', '('),
-        'kmacro-end-macro'                     => k('Ctrl-x', ')'),
-        'kmacro-end-and-call-macro'            => k('Ctrl-x', 'e'),
-        '-kmacro-append-to-last-macro'         => k('Ctrl-u', 'Ctrl-x', '('),
-        'name-last-kbd-macro'                  => \&fn,
-        'insert-kbd-macro'                     => \&fn,
+	'kmacro-start-macro'                   => k('Ctrl-x', '('),
+	'kmacro-end-macro'                     => k('Ctrl-x', ')'),
+	'kmacro-end-and-call-macro'            => k('Ctrl-x', 'e'),
+	'-kmacro-append-to-last-macro'         => k('Ctrl-u', 'Ctrl-x', '('),
+	'name-last-kbd-macro'                  => \&fn,
+	'insert-kbd-macro'                     => \&fn,
+
+	# Regular Expression Builder
+	're-builder'                           => \&fn,
+	'reb-change-syntax'                    => k('Ctrl-c', 'Tab'),
+	'reb-enter-subexp-mode'                => k('Ctrl-c', 'Ctrl-e'),
+	'reb-toggle-case'                      => k('Ctrl-c', 'Ctrl-c'),
+	'reb-next-match'                       => k('Ctrl-c', 'Ctrl-s'),
+	'reb-prev-match'                       => k('Ctrl-c', 'Ctrl-r'),
+	'reb-copy'                             => k('Ctrl-c', 'Ctrl-w'),
 
 	# HEREIAM
 	# Miscellaneous
@@ -1063,7 +1072,7 @@ Abbrevs allow you to define short text which expands to a larger tract of boiler
 |%point-to-register% or %-point-to-register2% or %-point-to-register3%|save value of point in register|
 |%-frame-arrangement-to-register%|save arrangement of windows in frame to register|
 |%jump-to-register%|jump to point saved in register|
-|%-frame-arrangement-from-register%|restore frame arragement saved in register|
+|%-frame-arrangement-from-register%|restore frame arrangement saved in register|
 </table>
 
 <h2>Keyboard Macros</h2>
@@ -1077,6 +1086,19 @@ Abbrevs allow you to define short text which expands to a larger tract of boiler
 |%name-last-kbd-macro%|name last keyboard macro|
 |%insert-kbd-macro%|insert Lisp definition in buffer|
 </table>
+
+<h2>Regexp Builder</h2>
+
+<table class="define">
+|%re-builder%|split a small window to interactively edit a regular expression and highlight matches|
+|%reb-change-syntax%|select syntax mode (read, string, sregex, list-re, rx)|
+|%reb-enter-subexp-mode%|enter sub-expression mode to highlight numbered match groups|
+|%reb-toggle-case%|toggle case sensitive/insensitve matching|
+|%reb-next-match%|go forward to next regexp match|
+|%reb-prev-match%|go backward to previous regexp match|
+|%reb-copy%|Convert regexp to an elisp expression and copy to kill ring|
+</table>
+
 
 <hr />
 <a id="end" />

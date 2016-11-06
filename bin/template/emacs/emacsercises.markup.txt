@@ -300,7 +300,7 @@ then you can return here with C-x r j 0
 	 %keyboard-quit%	abort current search command
 	 %-backspace-isearch%	undo effect of last character typed
 	 %-exit-isearch%	exit incremental search
-	 %isearch-forward%	 incremental search forward
+	 %isearch-forward%	 incremental search forward (automatically matches many spaces)
 	 %isearch-backward%  incremental search backward
 	 %isearch-forward-regexp%	 incremental regex search forward
 	 %isearch-backward-regexp%  incremental regex search backward
@@ -308,15 +308,46 @@ then you can return here with C-x r j 0
 	 %-next-search-string%	select next search string from history
 
 Do a regex search to match these:
+if or else but not diff or kelsey   \b\(if\|else\)\b
+"a quoted 'string' and the ending quote"   \(['"`]\).*\1
+( whitespace )   (\s-*)
+$var $ident $this $that   \$\w+
+xx at start or end of line xx   ^xx xx$
 
-function           (   )    { }
+function     	      (   )    { }
 function (x, y)    { }
 function ()    { return 42; }
 function (x: int, y = 32) {}
+function   
+  ( ) {  }
 
 Search solutions:
-function[ ]*([^)]*)[ ]*{[^}]*}
+function\s-*([^)]*)\s-*{[^}]*}
 
 
 . ==========================================================================
 
+
+Emacsercise #7 regexp builder.
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	 %re-builder%	interactive regex builder with highlighting
+     %reb-change-syntax%	select syntax mode (read, string, sregex, lisp-re, rx) string is probably best
+     %reb-enter-subexp-mode%	enter sub-expression mode to hightlight numbered match groups
+     %reb-toggle-case%	toggle case sensitive mode
+     %reb-next-match%	go forward to next match
+     %reb-prev-match%	go backward ot previous match
+     %reb-copy%	copy and covert regexp to an elisp expression
+
+use regexp builder to construct a regexp and see what it matches immediately.
+
+use \( \) groupings to see how numbered match groups get colored.
+
+Sample regex:
+\([use]+\) +\(regexp\) +builder.+
+
+. ==========================================================================
+
+

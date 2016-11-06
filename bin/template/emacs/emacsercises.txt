@@ -300,7 +300,7 @@ then you can return here with C-x r j 0
 	 C-g	abort current search command
 	 Backspace	undo effect of last character typed
 	 Enter	exit incremental search
-	 C-s	 incremental search forward
+	 C-s	 incremental search forward (automatically matches many spaces)
 	 C-r  incremental search backward
 	 C-A-s	 incremental regex search forward
 	 C-A-r  incremental regex search backward
@@ -308,15 +308,46 @@ then you can return here with C-x r j 0
 	 A-n	select next search string from history
 
 Do a regex search to match these:
+if or else but not diff or kelsey   \b\(if\</td><td>else\)\b
+"a quoted 'string' and the ending quote"   \(['"`]\).*\1
+( whitespace )   (\s-*)
+$var $ident $this $that   \$\w+
+xx at start or end of line xx   ^xx xx$
 
-function           (   )    { }
+function     	      (   )    { }
 function (x, y)    { }
 function ()    { return 42; }
 function (x: int, y = 32) {}
+function   
+  ( ) {  }
 
 Search solutions:
-function[ ]*([^)]*)[ ]*{[^}]*}
+function\s-*([^)]*)\s-*{[^}]*}
 
 
 . ==========================================================================
 
+
+Emacsercise #7 regexp builder.
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	 A-x re-builder	interactive regex builder with highlighting
+     C-c Tab	select syntax mode (read, string, sregex, lisp-re, rx) string is probably best
+     C-c C-e	enter sub-expression mode to hightlight numbered match groups
+     C-c C-c	toggle case sensitive mode
+     C-c C-s	go forward to next match
+     C-c C-r	go backward ot previous match
+     C-c C-w	copy and covert regexp to an elisp expression
+
+use regexp builder to construct a regexp and see what it matches immediately.
+
+use \( \) groupings to see how numbered match groups get colored.
+
+Sample regex:
+\([use]+\) +\(regexp\) +builder.+
+
+. ==========================================================================
+
+
