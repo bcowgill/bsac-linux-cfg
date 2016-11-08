@@ -149,8 +149,8 @@ then you can return here with C-x r j 0
 	C-v    scroll document up one page (only moves cursor point if necessary )
 	A-v    scroll document down one page
 	C-l    scroll current line to center, top, bottom in succession
-	C-x >    scroll the view to the right
-	C-x <    scroll the view to the left
+	C-x >    scroll the document left in the viewport
+	C-x <    scroll the document right in the viewport
 	C-x ]    move to the next page break (^L)
 	C-x [    move to the previous page break (^L)
 	A-<    jump to start of document
