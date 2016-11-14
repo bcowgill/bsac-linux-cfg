@@ -3,8 +3,8 @@
 
 # clean up BaseComponent inheritance
 
-# srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/'`
-# git stash save crap | grep 'No local changes' || git stash drop; srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/'`; rm pause-build.timestamp
+# ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/'`
+# git stash save crap | grep 'No local changes' || git stash drop; ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/'`; rm pause-build.timestamp
 
 WRITE='-i.bak'
 #WRITE=
@@ -67,6 +67,11 @@ while (my $file = <>) {
 	}
 
 #print STDERR "[[$file]]";
+
+   my $foundAutoBindImport = 0;
+   if ($file =~ m{import .+ autobind .+ from .+ core-decorators}xmsg) {
+		$foundAutoBindImport = 1;
+   }
 
 	if (!$SKIP) {
 		$file =~ s{([\ \t]) _safeRender \s* \(}{$1render \(}xmsg;
@@ -132,7 +137,7 @@ while (my $file = <>) {
 	$file =~ s{ \s* // \s+ must \s+ bind \s+ your \s+ event \s+ handlers .+? \n}{\n}xmsg;
 	$file =~ s{ \s* // \s+ REFACTOR \s+ base \s+ class \s+ method \s+ to \s+ bind \s+ every \s+ _handle .+? \n}{\n}xmsg;
 
-	if ($importAutoBind) {
+	if ($importAutoBind && !$foundAutoBindImport) {
 		push(@imports, "import { autobind } from ${sq}core-decorators$sq")
 	}
 

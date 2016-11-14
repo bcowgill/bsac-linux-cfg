@@ -395,4 +395,7 @@ then you can return here with C-x r j 0
 
 
 regex search replace 'ident': => ident:  '\(\w+\)':  => \1:
+regex search replace '    }' => '    },' ^\(    }\)  => \1,
 
+'\([^']+\)' \+ mixinDisplayName \+ '\([^']+\)'
+=>  `\1${mixinDisplayName}\2`
