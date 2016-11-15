@@ -431,3 +431,4 @@ Alt-0 to Alt-9 use the Nth completion in the list
 Ctrl-s, Ctrl-r, Ctrl-o search through completions
 F1 or Ctrl-h show documentation for highlighted completion
 Ctrl-w view source for highlighted completion
+TAB/Shift-TAB insert common or cycle through completions

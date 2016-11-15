@@ -126,6 +126,28 @@
 ;; install the company package first
 ;; http://company-mode.github.io/
 (add-hook 'after-init-hook 'global-company-mode)
+;; TAB/Shift-TAB to cycle through completions
+(defun company-complete-common-or-cycle ()
+  "Insert the common part of all candidates, or select the next one."
+  (interactive)
+  (when (company-manual-begin)
+    (let ((tick (buffer-chars-modified-tick)))
+      (call-interactively 'company-complete-common)
+      (when (eq tick (buffer-chars-modified-tick))
+        (let ((company-selection-wrap-around t))
+          (call-interactively 'company-select-next))))))
+(defun company-complete-common-or-previous-cycle ()
+  "Insert the common part of all candidates, or select the next one."
+  (interactive)
+  (when (company-manual-begin)
+    (let ((tick (buffer-chars-modified-tick)))
+      (call-interactively 'company-complete-common)
+      (when (eq tick (buffer-chars-modified-tick))
+        (let ((company-selection-wrap-around t))
+          (call-interactively 'company-select-previous))))))
+(define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+(define-key company-active-map (kbd "<backtab>") 'company-complete-common-or-previous-cycle)
+
 
 ;;Shell mode completion,
 (require 'readline-complete)
