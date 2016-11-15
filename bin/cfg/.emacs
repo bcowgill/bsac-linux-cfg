@@ -121,3 +121,5 @@
 (global-set-key [(meta down)] 'bsac-move-line-down-macro)
 (fset 'bsac-open-line-macro
    [end return tab])
+
+(require 'readline-complete)

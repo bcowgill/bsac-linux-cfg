@@ -20,3 +20,5 @@ get https://raw.githubusercontent.com/editorconfig/editorconfig-emacs/master/edi
 # http://foldr.org/~michaelw/emacs/
 get http://www.foldr.org/~michaelw/emacs/mwe-log-commands.el
 
+# readline completion for emacs shell
+get https://github.com/monsanto/readline-complete.el/raw/master/readline-complete.el

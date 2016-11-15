@@ -391,6 +391,28 @@ then you can return here with C-x r j 0
 
 
 
+9 ==========================================================================
+
+
+Emacsercise #9 Making it so.
+
+First save this cursor position to register 0 with C-x r Space 0
+then you can return here with C-x r j 0
+
+	%upcase-word%	convert word at point to upper case
+	%downcase-word%	convert word at point to lower case
+	%capitalize-word%	capitalize word at point
+	%upcase-region%	convert selected region to upper case
+	%downcase-region%	convert selected region to lower case
+
+convert these words to upper case one at a time.
+and convert them back to lower case.
+and capitalize the words one at a time.
+mark all this text and convert it to upper case and back to lower again.
+
+HOW? convert_case -> convertCase -> ConvertCase -> convert-case and vice versa
+HOW? this.x = value -> x: value -> x = value
+
 . ==========================================================================
 
 

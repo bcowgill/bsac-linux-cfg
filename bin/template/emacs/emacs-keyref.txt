@@ -199,6 +199,7 @@ rainbow-mode
 num3-mode
 minimap-mode
 ergoemacs-mode
+company
 
 REFERENCES:
 Emacs Movies http://emacsmovies.org/blog/2012/01/21/welcome_to_emacsmovies.org/
