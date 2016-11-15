@@ -135,6 +135,7 @@
       (when (eq tick (buffer-chars-modified-tick))
         (let ((company-selection-wrap-around t))
           (call-interactively 'company-select-previous))))))
+;; ??? generates error on startup, disable key bindings for now
 ;; (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
 ;; (define-key company-active-map (kbd "<backtab>") 'company-complete-common-or-previous-cycle)
 ;; (define-key company-active-map (kbd "C-n") 'company-complete-common-or-cycle)
