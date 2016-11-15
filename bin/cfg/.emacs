@@ -108,6 +108,7 @@
 ;;If you use evil
 ;;(define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 
+;; regular expression builder tool
 (require 're-builder)
 (setq reb-re-syntax 'string)
 
@@ -122,4 +123,10 @@
 (fset 'bsac-open-line-macro
    [end return tab])
 
+;; install the company package first
+;; http://company-mode.github.io/
+(add-hook 'after-init-hook 'global-company-mode)
+
+;;Shell mode completion,
 (require 'readline-complete)
+

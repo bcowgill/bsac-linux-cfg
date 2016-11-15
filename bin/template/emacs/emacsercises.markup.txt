@@ -421,3 +421,13 @@ regex search replace '    }' => '    },' ^\(    }\)  => \1,
 
 '\([^']+\)' \+ mixinDisplayName \+ '\([^']+\)'
 =>  `\1${mixinDisplayName}\2`
+
+completion with company package
+Alt-x company-mode   or global-company-mode
+Alt-x company-complete   begin completion from point
+Alt-n, Alt-p  next,prev item in completion list
+Enter,Tab complete, complete common part
+Alt-0 to Alt-9 use the Nth completion in the list
+Ctrl-s, Ctrl-r, Ctrl-o search through completions
+F1 or Ctrl-h show documentation for highlighted completion
+Ctrl-w view source for highlighted completion
