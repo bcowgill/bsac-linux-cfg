@@ -3,10 +3,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
+ '(ansi-color-faces-vector [default default default italic underline success warning error])
+ '(ansi-color-names-vector ["#212526" "#ff4b4b" "#b4fa70" "#fce94f" "#729fcf" "#e090d7" "#8cc4ff" "#eeeeec"])
  '(bookmark-save-flag 0)
  '(column-number-mode t)
  '(custom-enabled-themes (quote (wheatgrass)))
@@ -43,6 +41,7 @@
  '(regexp-search-ring-max 64)
  '(replace-lax-whitespace t)
  '(require-final-newline t)
+ '(safe-local-variable-values (quote ((emacs-lisp-docstring-fill-column . 75))))
  '(save-completions-retention-time 1344)
  '(save-interprogram-paste-before-kill t)
  '(save-place t nil (saveplace))
@@ -127,15 +126,6 @@
 ;; http://company-mode.github.io/
 (add-hook 'after-init-hook 'global-company-mode)
 ;; TAB/Shift-TAB to cycle through completions
-(defun company-complete-common-or-cycle ()
-  "Insert the common part of all candidates, or select the next one."
-  (interactive)
-  (when (company-manual-begin)
-    (let ((tick (buffer-chars-modified-tick)))
-      (call-interactively 'company-complete-common)
-      (when (eq tick (buffer-chars-modified-tick))
-        (let ((company-selection-wrap-around t))
-          (call-interactively 'company-select-next))))))
 (defun company-complete-common-or-previous-cycle ()
   "Insert the common part of all candidates, or select the next one."
   (interactive)
@@ -145,10 +135,10 @@
       (when (eq tick (buffer-chars-modified-tick))
         (let ((company-selection-wrap-around t))
           (call-interactively 'company-select-previous))))))
-(define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
-(define-key company-active-map (kbd "<backtab>") 'company-complete-common-or-previous-cycle)
-
+;; (define-key company-active-map (kbd "TAB") 'company-complete-common-or-cycle)
+;; (define-key company-active-map (kbd "<backtab>") 'company-complete-common-or-previous-cycle)
+;; (define-key company-active-map (kbd "C-n") 'company-complete-common-or-cycle)
+;; (define-key company-active-map (kbd "C-p") 'company-complete-common-or-previous-cycle)
 
 ;;Shell mode completion,
 (require 'readline-complete)
-
