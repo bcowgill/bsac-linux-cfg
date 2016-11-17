@@ -59,11 +59,17 @@ sub ensureImports {
 	my ($rFile, $package, @symbols) = @ARG;
 	my $import;
 	if ($$rFile !~ s{
-			(import \s* \{ [^\}]+?) (\s*\} \s* from \s* $sq$package$sq)
+			(import \s* \{ \s*) ([^\}]+?) (\s* \} \s* from \s* $sq$package$sq)
 		}{
-			qq{$1, @{[join(", ", sort(@symbols))]}$2}
+			my ($pre, $post) = ($1, $3);
+			my @imports = @symbols;
+			push(@imports, split(/\s*,\s*/, $2));
+			my $temp = qq{$1, @{[join(", ", sort(@imports))]}$3};
+			$temp =~ s{ (\b\w+), \s* \1 }{$1}xmsg;
+			$temp =~ s[ (\{ \s*) , \s* ][$1]xmsg;
+			$temp
 		}xmse) {
-		$import = qq{import { @{[join(", ", sort(@symbols))]} } from $sq$sq};
+		$import = qq{import { @{[join(", ", sort(@symbols))]} } from $sq$package$sq};
 	}
 	return $import;
 }
