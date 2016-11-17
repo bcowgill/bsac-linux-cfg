@@ -48,7 +48,7 @@ sub debug {
 	elsif ($lines =~ m{_handleChange}xms) {
 		$lines = "$prefix${DBG}const logged = this.onChange && this.onChange.apply(this, arguments)";
 	}
-	elsif ($lines =~ m{_handle(Row)?Click}xms) {
+	elsif ($lines =~ m{_handle(Row)?Click\b}xms) {
 		$lines = "$prefix${DBG}const logged = this.onClick && this.onClick.apply(this, arguments)";
 	}
 	elsif ($lines =~ m{
