@@ -73,6 +73,9 @@ sub debug {
 sub spit {
 	my ($file) = @ARG;
 
+	# unify //dbg: /*dbg:*/
+	$file =~ s{(//\s*dbg:|/\*\s*dbg:\s*\*/)}{$DBG}xmsg;
+
 	# remove all commented out changes
 	$file =~ s{ [ \t]* //del: [^\n]+ (\n|\z)}{}xmsg if $DEL_DEL;
 	$file =~ s{ [ \t]* //dbg: [^\n]+ (\n|\z)}{}xmsg if $DEL_DBG;
