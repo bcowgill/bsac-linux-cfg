@@ -175,7 +175,11 @@ while (my $file = <>) {
 			"$1$2$3"
 		}xmsge;
 
-		# convert exception log
+		# convert exception log to actual console error
+		# MUSTDO convert to
+		# catch (exception) {
+		#     this.__error(_getDocumentList, exception, { props: this.props })
+		# }
 		$file =~ s{
 			( catch \s* \( \s* \w+ \s* \) \s*
 			\{ \s* ) (?:BaseClass|BaseComponent)\.console
@@ -198,14 +202,17 @@ while (my $file = <>) {
 		""
 	}xmsge;
 
-	$file =~ s{
-		\n ([\ \t]*) (\@autobind) \n
-	}{\n}xmsg;
+	# $file =~ s{
+	# 	\n ([\ \t]*) (\@autobind) \n
+	# }{\n}xmsg;
 	$file =~ s{
 		\n ([\ \t]*) (_handle\w+ \s* \()
 	}{
 		"\n$1\@autobind\n$1$2"
 	}xmsge;
+	$file =~ s{
+		(\@autobind) \s* \1
+	}{$1}xmsg;
 
 	$file =~ s{ (this\._handle\w+) \.bind \(this\) }{$1}xmsg;
 	$file =~ s{ \s* // \s+ must \s+ bind \s+ your \s+ event \s+ handlers .+? \n}{\n}xmsg;
