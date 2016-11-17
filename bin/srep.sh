@@ -15,7 +15,8 @@ perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
 my $sq = chr(39);
 my $dq = chr(34);
-my $DEL = 1;
+my $DEL_DBG = 0;
+my $DEL_DEL = 1;
 my $SKIP = 0;
 
 # insert //dbg: before any console log messages inherited from BaseComponent
@@ -39,7 +40,8 @@ sub spit {
 	my ($file) = @ARG;
 
 	# remove all commented out changes
-	$file =~ s{ [ \t]* //(del|dbg): [^\n]+ (\n|\z)}{}xmsg if $DEL;
+	$file =~ s{ [ \t]* //del: [^\n]+ (\n|\z)}{}xmsg if $DEL_DEL;
+	$file =~ s{ [ \t]* //dbg: [^\n]+ (\n|\z)}{}xmsg if $DEL_DBG;
 
 	# log empty exceptions
 	$file =~ s{
@@ -51,6 +53,19 @@ sub spit {
 	$file =~ s{\n\n+}{\n\n}xmsg;
 
 	print $file;
+}
+
+sub ensureImports {
+	my ($rFile, $package, @symbols) = @ARG;
+	my $import;
+	if ($$rFile !~ s{
+			(import \s* \{ [^\}]+?) (\s*\} \s* from \s* $sq$package$sq)
+		}{
+			qq{$1, @{[join(", ", sort(@symbols))]}$2}
+		}xmse) {
+		$import = qq{import { @{[join(", ", sort(@symbols))]} } from $sq$sq};
+	}
+	return $import;
 }
 
 while (my $file = <>) {
@@ -68,31 +83,44 @@ while (my $file = <>) {
 
 #print STDERR "[[$file]]";
 
-   my $foundAutoBindImport = 0;
-   if ($file =~ m{import .+ autobind .+ from .+ core-decorators}xmsg) {
+	my $foundAutoBindImport = 0;
+	my $foundMixinImport = 0;
+	if ($file =~ m{import .+ autobind .+ from .+ core-decorators}xmsg) {
 		$foundAutoBindImport = 1;
-   }
+	}
+	if ($file =~ m{import .+ mixin .+ from .+ core-decorators}xmsg) {
+		$foundMixinImport = 1;
+	}
 
 	if (!$SKIP) {
-		$file =~ s{([\ \t]) _safeRender \s* \(}{$1render \(}xmsg;
+		if ($file !~ m{BaseComponent\.mixin}xms) {
+			$file =~ s{
+				(class \s+ \w+ \s+ extends \s+ BaseClass)
+			}{
+				"\@mixin(BaseComponent.mixin(displayName, [$sq-$sq]))\n$1"
+			}xmsge;
+		}
+
+#		$file =~ s{([\ \t]) _safeRender \s* \(}{$1render \(}xmsg;
 		$file =~ s{
 			([\ \t]*) (this\._inherits\.unshift\(displayName\))
 		}{
-			"$1if (!this._inherits) { this._inherits = [] }\n$1$2"
-			# "$1//del: $2"
+			# "$1if (!this._inherits) { this._inherits = [] }\n$1$2"
+			"$1//del: $2"
 		}xmsge;
 		$file =~ s{// \s* (cannot \s+ use \s+ super)}{//del: $1}xmsg;
 		$file =~ s{(super\.component)}{//del: $1}xmsg;
 
-		$file =~ s{
-			(import \s+ BaseComponent \s+ from \s+ $sq [^$sq]+? $sq)
-		}{
-			my $match = $1;
-			my $ok = ($match =~ m{from \s+ $sq\./BaseComponent}xms
-				? $match : "const BaseComponent = React.Component");
-#print STDERR "BASE [$match] [$ok]\n";
-			$ok
-		}xmsge;
+		$file =~ s{BaseClass \s* = \s* BaseComponent}{BaseClass = React.Component}xmsg;
+# 		$file =~ s{
+# 			(import \s+ BaseComponent \s+ from \s+ $sq [^$sq]+? $sq)
+# 		}{
+# 			my $match = $1;
+# 			my $ok = ($match =~ m{from \s+ $sq\./BaseComponent}xms
+# 				? $match : "const BaseComponent = React.Component");
+# #print STDERR "BASE [$match] [$ok]\n";
+# 			$ok
+# 		}xmsge;
 
 		# unit test inheritance fixup
 		$file =~ s{
@@ -138,7 +166,10 @@ while (my $file = <>) {
 	$file =~ s{ \s* // \s+ REFACTOR \s+ base \s+ class \s+ method \s+ to \s+ bind \s+ every \s+ _handle .+? \n}{\n}xmsg;
 
 	if ($importAutoBind && !$foundAutoBindImport) {
-		push(@imports, "import { autobind } from ${sq}core-decorators$sq")
+		push(@imports, ensureImports(\$file, "core-decorators", qw(autobind, mixin)));
+	}
+	elsif (!$foundMixinImport) {
+		push(@imports, ensureImports(\$file, "core-decorators", qw(mixin)));
 	}
 
 	if (!$SKIP) {
