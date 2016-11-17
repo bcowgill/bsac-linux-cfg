@@ -150,6 +150,9 @@ while (my $file = <>) {
 		}
 	}
 
+	# fix displayName + '...'
+	$file =~ s{displayName \s* \+ \s* $sq([^$sq]+)$sq}{`\${displayName}$1`}xmsg;
+
 	# inject any additional imports needed
 	if (scalar(@imports)) {
 	  $file =~ s{(\n\nlet \s+ our)}{"\n" . join("\n", @imports) . $1}xmse;
