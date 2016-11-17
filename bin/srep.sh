@@ -15,8 +15,10 @@ perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
 my $sq = chr(39);
 my $dq = chr(34);
+my $obr = "{";
 my $DEL_DBG = 0;
 my $DEL_DEL = 1;
+my $DBG = "/*dbg:*/ "; # "//dbg: "
 my $SKIP = 0;
 
 # insert //dbg: before any console log messages inherited from BaseComponent
@@ -27,11 +29,24 @@ sub debug {
 		$pre = $1;
 	}
 	if ($lines =~ m{\A([\ \t]*)}xms) {
-		$prefix = quotemeta($1);
+		$prefix = $1;
 	}
+	if ($lines =~ m{constructor}) {
+		$lines = "$prefix${DBG}this.__debug(${sq}constructor$sq, { props })";
+	}
+	elsif ($lines =~ m{propTypes}) {
+		$lines = "$prefix${DBG}BaseComponent.__debug(displayName, ${sq}get propTypes$sq, { class: our, types })";
+	}
+	elsif ($lines =~ m{defaultProps}) {
+		$lines = "$prefix${DBG}BaseComponent.__debug(displayName, ${sq}get defaultProps$sq, { class: our, props })";
+	}
+	else {
+		$prefix = quotemeta($prefix);
 #print STDERR "debug1 [$pre] [$prefix] [$lines]\n";
-	$lines =~ s{((\A|\n)$prefix)}{$1//dbg: }xmsg;
+		$lines =~ s{((\A|\n)$prefix)}{$1$DBG}xmsg;
 #print STDERR "debug2 [$pre] [$lines]\n";
+		$lines =~ s{(super|BaseClass)}{BaseComponent}xmsg;
+	}
 	return $pre . $lines;
 }
 
@@ -47,7 +62,7 @@ sub spit {
 	$file =~ s{
 		( catch \s* \( \s* (\w+) \s* \) \s*
 		\{ \s* ) (\s* \} )
-	}{$1 BaseClass.console.error(displayName, $2) $3}xmsg;
+	}{$1 BaseComponent.console.error(displayName, $2) $3}xmsg;
 
 	# remove too many blank lines
 	$file =~ s{\n\n+}{\n\n}xmsg;
@@ -86,6 +101,10 @@ while (my $file = <>) {
 		spit($file);
 		next;
 	}
+	# make some changes to a specific files
+	if ($class eq "AlertBanner") {
+		$file =~ s{\.\./BaseComponent}{../LoggedComponent}xmsg;
+	}
 
 #print STDERR "[[$file]]";
 
@@ -117,6 +136,14 @@ while (my $file = <>) {
 		$file =~ s{// \s* (cannot \s+ use \s+ super)}{//del: $1}xmsg;
 		$file =~ s{(super\.component)}{//del: $1}xmsg;
 
+		$file =~ s{
+			([\ \t]*) (component\w+) \s* \( ([^\)]*) \) \s* \{ [\ \t]* \n (\s*)
+		}{
+			my $result = "$1$2 ($3) $obr\n$4${DBG}this.__debug($sq$2$sq, { $3 })\n$4";
+			$result =~ s{, \s* \{ \s* \} }{}xmsg;
+			$result
+		}xmsge;
+
 		$file =~ s{BaseClass \s* = \s* BaseComponent}{BaseClass = React.Component}xmsg;
 # 		$file =~ s{
 # 			(import \s+ BaseComponent \s+ from \s+ $sq [^$sq]+? $sq)
@@ -138,7 +165,7 @@ while (my $file = <>) {
 		# convert exception log
 		$file =~ s{
 			( catch \s* \( \s* \w+ \s* \) \s*
-			\{ \s* ) BaseClass\.console
+			\{ \s* ) (?:BaseClass|BaseComponent)\.console
 		}{$1console}xmsg;
 
 		# suppress base class logging
