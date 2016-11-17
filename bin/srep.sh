@@ -3,8 +3,8 @@
 
 # clean up BaseComponent inheritance
 
-# ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/'`
-# git stash save crap | grep 'No local changes' || git stash drop; ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/'`; rm pause-build.timestamp
+# ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/|\.factory\.js'`
+# git stash save crap | grep 'No local changes' || git stash drop; ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/|\.factory\.js'`; rm pause-build.timestamp
 
 WRITE='-i.bak'
 #WRITE=
@@ -13,7 +13,7 @@ touch pause-build.timestamp
 
 perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
-my $LOG_CLASS = "ApplyCancel";
+my $LOG_CLASS = $ENV{CMP} || "DocumentComponent";
 my $DEL_DBG = 0;
 my $DEL_DEL = 1;
 my $DBG = "/*dbg:*/ "; # "//dbg: "
@@ -41,6 +41,9 @@ sub debug {
 	}
 	elsif ($lines =~ m{defaultProps}xms) {
 		$lines = "$prefix${DBG}BaseComponent.__debug(displayName, ${sq}get defaultProps$sq, { class: our, props })";
+	}
+	elsif ($lines =~ m{_handleMouse(\w+)}xms) {
+		$lines = "$prefix${DBG}const logged = this.onMouse$1 && this.onMouse$1.apply(this, arguments)";
 	}
 	elsif ($lines =~ m{
 			\.(\w+)\(\) .+?
