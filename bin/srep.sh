@@ -13,13 +13,15 @@ touch pause-build.timestamp
 
 perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
-my $sq = chr(39);
-my $dq = chr(34);
-my $obr = "{";
+my $LOG_CLASS = "ApplyCancel";
 my $DEL_DBG = 0;
 my $DEL_DEL = 1;
 my $DBG = "/*dbg:*/ "; # "//dbg: "
 my $SKIP = 0;
+
+my $sq = chr(39);
+my $dq = chr(34);
+my $obr = "{";
 
 # insert //dbg: before any console log messages inherited from BaseComponent
 sub debug {
@@ -31,14 +33,22 @@ sub debug {
 	if ($lines =~ m{\A([\ \t]*)}xms) {
 		$prefix = $1;
 	}
-	if ($lines =~ m{constructor}) {
+	if ($lines =~ m{constructor}xms) {
 		$lines = "$prefix${DBG}this.__debug(${sq}constructor$sq, { props })";
 	}
-	elsif ($lines =~ m{propTypes}) {
+	elsif ($lines =~ m{propTypes}xms) {
 		$lines = "$prefix${DBG}BaseComponent.__debug(displayName, ${sq}get propTypes$sq, { class: our, types })";
 	}
-	elsif ($lines =~ m{defaultProps}) {
+	elsif ($lines =~ m{defaultProps}xms) {
 		$lines = "$prefix${DBG}BaseComponent.__debug(displayName, ${sq}get defaultProps$sq, { class: our, props })";
+	}
+	elsif ($lines =~ m{
+			\.(\w+)\(\) .+?
+			class: \s* our \s* ,
+			\s* instance: \s* this \s* ,
+			\s* arguments: \s* arguments \s* \}
+		}xms) {
+			$lines = "$prefix${DBG}this.__debug(${sq}$1$sq, { arguments })";
 	}
 	else {
 		$prefix = quotemeta($prefix);
@@ -102,7 +112,7 @@ while (my $file = <>) {
 		next;
 	}
 	# make some changes to a specific files
-	if ($class eq "AlertBanner") {
+	if ($class eq $LOG_CLASS) {
 		$file =~ s{\.\./BaseComponent}{../LoggedComponent}xmsg;
 	}
 
