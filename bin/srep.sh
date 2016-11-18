@@ -45,8 +45,8 @@ sub debug {
 	elsif ($lines =~ m{_handleMouse(\w+)}xms) {
 		$lines = "$prefix${DBG}const logged = this.onMouse$1 && this.onMouse$1.apply(this, arguments)";
 	}
-	elsif ($lines =~ m{_handleChange}xms) {
-		$lines = "$prefix${DBG}const logged = this.onChange && this.onChange.apply(this, arguments)";
+	elsif ($lines =~ m{_handle(Change|Focus|Blur)}xms) {
+		$lines = "$prefix${DBG}const logged = this.on$1 && this.on$1.apply(this, arguments)";
 	}
 	elsif ($lines =~ m{_handle(Row)?Click\b}xms) {
 		$lines = "$prefix${DBG}const logged = this.onClick && this.onClick.apply(this, arguments)";
