@@ -45,7 +45,7 @@ sub debug {
 	elsif ($lines =~ m{_handleMouse(\w+)}xms) {
 		$lines = "$prefix${DBG}const logged = this.onMouse$1 && this.onMouse$1.apply(this, arguments)";
 	}
-	elsif ($lines =~ m{_handle(Change|Focus|Blur)}xms) {
+	elsif ($lines =~ m{_handle(?:Checkbox)(Change|Focus|Blur)}xms) {
 		$lines = "$prefix${DBG}const logged = this.on$1 && this.on$1.apply(this, arguments)";
 	}
 	elsif ($lines =~ m{_handle(Row)?Click\b}xms) {
@@ -199,6 +199,13 @@ while (my $file = <>) {
 			( (\A|\n) [\ \t]* (BaseClass|super)\.console\.\w+ \( .+? (\}|, \s* exception)\) )
 		}{
 			debug($1)
+		}xmsge;
+
+		# convert constructor exception log
+		$file =~ s{
+			console\.error .+? displayName .+? constructor .+? exception .+? exception \s* \)
+		}{
+			"this.__error(displayName, ${sq}constructor$sq, exception, { props })"
 		}xmsge;
 	}
 
