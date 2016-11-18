@@ -243,8 +243,9 @@ while (my $file = <>) {
 		}
 	}
 
-	# fix displayName + '...'
+	# fix displayName + '...'  and `...` + var
 	$file =~ s{displayName \s* \+ \s* $sq([^$sq]+)$sq}{`\${displayName}$1`}xmsg;
+	$file =~ s[` \s* \+ \s* (\w+)][\${$1}`]xmsg;
 
 	# inject any additional imports needed
 	if (scalar(@imports)) {
