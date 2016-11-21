@@ -74,7 +74,7 @@ sub spit {
 	my ($file) = @ARG;
 
 	# unify //dbg: /*dbg:*/
-	$file =~ s{(//\s*dbg:|/\*\s*dbg:\s*\*/)}{$DBG}xmsg;
+	$file =~ s{(//\s*dbg:|/\*\s*dbg:\s*\*/)\s*}{$DBG}xmsg;
 
 	# remove all commented out changes
 	$file =~ s{ [ \t]* //del: [^\n]+ (\n|\z)}{}xmsg if $DEL_DEL;
@@ -158,10 +158,16 @@ while (my $file = <>) {
 		$file =~ s{// \s* (cannot \s+ use \s+ super)}{//del: $1}xmsg;
 		$file =~ s{(super\.component)}{//del: $1}xmsg;
 
+		# perl negative lookahead failed (?!/\*dbg:)
 		$file =~ s{
-			([\ \t]*) (component\w+) \s* \( ([^\)]*) \) \s* \{ [\ \t]* \n (\s*)
+			([\ \t]*) ((?:c|shouldC)omponent\w+) \s*
+			\( ([^\)]*) \) \s* \{
+			[\ \t]* \n (\s+) (\S{6})
 		}{
 			my $result = "$1$2 ($3) $obr\n$4${DBG}this.__debug($sq$2$sq, { $3 })\n$4";
+			if ($5 eq "/*dbg:") {
+				$result = "$1$2 ($3) $obr\n$4$5";
+			}
 			$result =~ s{, \s* \{ \s* \} }{}xmsg;
 			$result
 		}xmsge;
@@ -183,6 +189,19 @@ while (my $file = <>) {
 		}{
 			"$1$2$3"
 		}xmsge;
+
+		# _safeRender fix for onEventLoggers
+		if ($file !~ m{_safeRender .+ onEventLoggers}xms && $class ne "ScanningComponent") {
+			$file =~ s{
+				(_safeRender \s* \( \s* \) \s* \{ [\ \t]* \n
+					(?:\s*let\s+.+?)?
+				)
+				([\ \t]*) const \s+
+				(.+? return \s* \(? \s* < \w+)
+			}{
+				"$1$2const onEventLoggers = this.getEventLoggers()\n$2    , $3 {...onEventLoggers}"
+			}xmsge;
+		}
 
 		# convert exception log to actual console error
 		# MUSTDO convert to
