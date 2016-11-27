@@ -37,6 +37,7 @@ set +o posix
 #BAIL_OUT=versions
 #BAIL_OUT=font
 #BAIL_OUT=diff
+#BAIL_OUT=elixir
 #BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
@@ -255,7 +256,6 @@ NODE_CUSTOM_PKG="
 	/usr/share/doc/node-zipfile/copyright:node-zipfile
 "
 
-
 NPM_LIB=/usr/local/lib/node_modules
 NPM_GLOBAL_PKG="
 	prettydiff
@@ -281,6 +281,12 @@ NPM_GLOBAL_PKG="
 	express:express-generator
 	notify:node-notifier
 "
+
+ERLANG_PKG=erlang-solutions_1.0_all.deb
+ERLANG_URL=https://packages.erlang-solutions.com/$ERLANG_PKG
+ELIXIR_PKG="erl:esl-erlang elixir"
+ELIXIR_CMD="elixir"
+ELIXIR_CMDS="elixir elixirc iex mix erl erlc"
 
 # TODO notifications
 # tried installing kubuntu-notification-helper in an effort to get
@@ -555,7 +561,10 @@ if [ "$HOSTNAME" == "akston" ]; then
 
 	#SUBLIME_PKG=""
 	SUBLIME_CFG=""
-	#WEBSTORM_ARCHIVE=""
+	WEBSTORM_ARCHIVE=WebStorm-2016.3.1
+	WEBSTORM_CONFIG=WebStorm2016.3.1
+	WEBSTORM_DIR=WebStorm-163.7743.51
+
 	#VSLICK_ARCHIVE=""
 	EMACS_VER=24.3
 
@@ -695,6 +704,7 @@ fi
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$ATOM_PKG"          ] && ATOM_CMD=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
+[ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD=""
 
 # HEREIAM DERIVED
 
@@ -756,6 +766,7 @@ INSTALL_FROM="
 	$EBOOK_READER
 	$PULSEAUDIO_PKG
 	$SLACK_DEPS
+	$ELIXIR_PKG
 "
 
 COMMANDS="
@@ -773,6 +784,7 @@ COMMANDS="
 	$ATOM_CMD
 	$SLACK_CMD
 	$PINTA_CMD
+	$ELIXIR_CMDS
 "
 
 PACKAGES="
@@ -797,6 +809,7 @@ PACKAGES="
 	$PIDGIN_SKYPE_PKG
 	$PULSEAUDIO_PKG
 	$KEYBOARD_PKG
+	$ELIXIR_PKG
 "
 
 PERL_MODULES="
@@ -1410,6 +1423,16 @@ else
 fi
 
 BAIL_OUT diff
+
+# erlang/elixir
+# http://elixir-lang.org/install.html#unix-and-unix-like
+if [ ! -z "$ELIXIR_PKG" ]; then
+	if [ ! -f "$DOWNLOAD/$ERLANG_PKG" ]; then
+		install_file_from_url "$DOWNLOAD/$ERLANG_PKG" $ERLANG_PKG $ERLANG_URL "erlang for elixir" && (sudo dpkg -i $DOWNLOAD/$ERLANG_PKG && sudo apt-get update)
+	fi
+fi
+
+BAIL_OUT elixir
 
 echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM

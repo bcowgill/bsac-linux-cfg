@@ -129,6 +129,7 @@ config-fglrx-select-igpu
 consolekit
 console-setup
 coreutils
+cowsay
 cpanminus
 cpio
 cpp
@@ -205,6 +206,7 @@ ed
 editorconfig
 efibootmgr
 eject
+elixir
 emacs24
 emacs24-bin-common
 emacs24-common
@@ -217,6 +219,9 @@ enblend
 enchant
 enfuse
 eog
+erlang-mode
+erlang-solutions
+esl-erlang
 espeak-data:amd64
 ethtool
 evemu-tools
@@ -317,6 +322,8 @@ gettext-base
 ghostscript
 ghostscript-x
 giblib1:amd64
+gimp
+gimp-data
 gir1.2-accounts-1.0
 gir1.2-appindicator3-0.1
 gir1.2-atk-1.0
@@ -579,6 +586,7 @@ libalgorithm-diff-perl
 libalgorithm-diff-xs-perl
 libalgorithm-merge-perl
 libaliased-perl
+libamd2.3.1:amd64
 libandroid-properties1
 libanyevent-i3-perl
 libanyevent-perl
@@ -648,6 +656,7 @@ libavc1394-0:amd64
 libavcodec54:amd64
 libavformat54:amd64
 libavutil52:amd64
+libbabl-0.1-0:amd64
 libbaloocore4
 libbaloofiles4
 libbalooxapian4
@@ -655,6 +664,7 @@ libbamf3-2:amd64
 libbind9-90
 libbit-vector-perl
 libb-keywords-perl
+libblas3
 libblkid1:amd64
 libbluetooth3:amd64
 libbonobo2-0:amd64
@@ -683,6 +693,7 @@ libcairo2:amd64
 libcairo-gobject2:amd64
 libcairomm-1.0-1:amd64
 libcairo-perl
+libcamd2.3.1:amd64
 libcamel-1.2-45
 libcanberra0:amd64
 libcanberra-gtk0:amd64
@@ -697,6 +708,7 @@ libc-ares2:amd64
 libc-ares-dev:amd64
 libcarp-clan-perl
 libc-bin
+libccolamd2.8.0:amd64
 libcdaudio1
 libcddb2
 libc-dev-bin
@@ -712,6 +724,7 @@ libcgraph6
 libcheese7:amd64
 libcheese-gtk23:amd64
 libchm1
+libcholmod2.1.2:amd64
 libck-connector0:amd64
 libclass-accessor-perl
 libclass-data-inheritable-perl
@@ -930,13 +943,16 @@ libgdome2-0
 libgd-perl
 libgee-0.8-2:amd64
 libgee2:amd64
+libgegl-0.2-0:amd64
 libgeis1:amd64
 libgeoclue0:amd64
 libgeoip1:amd64
 libgettextpo0:amd64
 libgettextpo-dev:amd64
 libgexiv2-2:amd64
+libgfortran3:amd64
 libgif4:amd64
+libgimp2.0
 libgirepository-1.0-1
 libgl1-mesa-dri-lts-vivid:amd64
 libgl1-mesa-dri-lts-vivid:i386
@@ -1206,6 +1222,7 @@ libkubuntu0
 libkxmlrpcclient4
 liblangtag1
 liblangtag-common
+liblapack3
 liblcms2-2:amd64
 libldap-2.4-2:amd64
 libldb1:amd64
@@ -1255,6 +1272,7 @@ libminiupnpc8
 libmission-control-plugins0
 libmm-glib0:amd64
 libmms0:amd64
+libmng2:amd64
 libmnl0:amd64
 libmodplug1
 libmodule-cpanfile-perl
@@ -1601,6 +1619,8 @@ libsasl2-modules-db:amd64
 libsbc1:amd64
 libsbsms10:amd64
 libschroedinger-1.0-0:amd64
+libsctp1:amd64
+libsdl1.2debian:amd64
 libsecret-1-0:amd64
 libsecret-common
 libselinux1:amd64
@@ -1716,6 +1736,7 @@ libudev1:amd64
 libudev1:i386
 libudisks2-0:amd64
 libufe-xidgetter0
+libumfpack5.6.2:amd64
 libunicode-utf8-perl
 libunique-1.0-0
 libunistring0:amd64
@@ -1939,6 +1960,7 @@ linux-signed-image-3.19.0-30-generic
 linux-signed-image-3.19.0-65-generic
 linux-signed-image-generic-lts-vivid
 linux-sound-base
+lksctp-tools
 lm-sensors
 localechooser-data
 locales
@@ -2459,6 +2481,7 @@ tcl
 tcl8.6
 tcpd
 tcpdump
+tcsh
 tdb-tools
 telepathy-gabble
 telepathy-haze
