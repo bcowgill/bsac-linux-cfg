@@ -1,0 +1,42 @@
+Elixir programming language quick reference
+
+http://elixir-lang.org/crash-course.html
+https://github.com/elixir-lang/elixir
+http://elixir-lang.org/install.html#unix-and-unix-like
+https://github.com/christopheradams/elixir_style_guide
+https://github.com/h4cc/awesome-elixir#code-analysis
+http://elixir-lang.org/getting-started/modules.html#default-arguments
+http://erlang.org/doc/man/erlang.html#is_atom-1
+
+http://exercism.io/how-it-works/newbie
+
+https://docs.google.com/presentation/d/1TpuG9HAgTMrFl9gChJAYX-Dthlbb-JFAxmbGYIIRW2I/edit#slide=id.g193eb1851c_0_13
+https://my.workshare.com/#folders/t-oNju9B6srZnrTe
+
+#iex:break   - in iex terminates an unterminated 'quote' of any type
+
+Inspecting Date/Time values
+​iex(35)>​ t1 = Time.new(12, 34, 56)
+​{:ok, ~T[12:34:56]}
+​​iex(36)>​ t2 = ​~​T[12:34:56.78]
+inspect t2, ​structs:​ false
+
+Formatting output as binary
+​​iex>​ bin = <<3 :: size(2), 5 :: size(4), 1 :: size(2)>>
+​<<213>>
+​​iex>​ ​:io​.format(​"​​~-8.2b~n"​, ​:binary​.bin_to_list(bin))
+
+Reading file with formatted error message
+do_open = fn file_name -> {File.open(file_name), file_name} end
+
+handle_open = fn
+  {{:ok, file}, file_name} -> {:ok, IO.read(file, :line)}
+  {{exception, error}, file_name}  -> {exception, "Error: <#{file_name}> #{:file.format_error(error)}"}
+end
+
+slurp_it = fn file_name -> handle_open.(do_open.(file_name)) end
+slurp_it.("/etc/passwd")
+"Read data: root:x:0:0:root:/root:/bin/bash\n"
+
+slurp_it.("/etc/passwdx")
+"Error: </etc/passwdx> no such file or directory"
