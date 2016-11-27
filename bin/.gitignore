@@ -17,6 +17,9 @@ node_modules
 WebStorm
 sys-snapshot*
 
+# erlang/elixir
+*.beam
+
 # emacs editor files
 \#*#
 .\#*
