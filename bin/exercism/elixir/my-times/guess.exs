@@ -4,12 +4,19 @@ do
   @moduledoc """
   Plays the guess my secret number game.
 
+  Guess.play will play a game all by itself.
+
   Guess.within will play the game given the actual number and the range of values.
 
   Guess.secret_number will create a number guessing function which responds with :low, :high or :true based on the guess value related to the secret number.
 
   Guess.my_number will play the game using a given number guessing function.
   """
+
+  def play
+  do
+    my_number(secret_number())
+  end
 
   # Done like a function that knows it all...
   def within(actual, range \\ 1..1000)
@@ -29,6 +36,7 @@ do
       || within(guess, guess..guess)
   end
 
+  # Do it like a game where we don't know the actual value...
   # Make the function which guards the (random) secret number
   def secret_number(secret \\ :rand.uniform(1000))
   do
