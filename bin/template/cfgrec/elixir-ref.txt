@@ -10,21 +10,22 @@ http://erlang.org/doc/man/erlang.html#is_atom-1
 
 http://exercism.io/how-it-works/newbie
 
+https://forums.pragprog.com/forums/322
 https://docs.google.com/presentation/d/1TpuG9HAgTMrFl9gChJAYX-Dthlbb-JFAxmbGYIIRW2I/edit#slide=id.g193eb1851c_0_13
 https://my.workshare.com/#folders/t-oNju9B6srZnrTe
 
 #iex:break   - in iex terminates an unterminated 'quote' of any type
 
 Inspecting Date/Time values
-​iex(35)>​ t1 = Time.new(12, 34, 56)
-​{:ok, ~T[12:34:56]}
-​​iex(36)>​ t2 = ​~​T[12:34:56.78]
-inspect t2, ​structs:​ false
+iex(35)> t1 = Time.new(12, 34, 56)
+{:ok, ~T[12:34:56]}
+iex(36)> t2 = ~T[12:34:56.78]
+inspect t2, structs: false
 
 Formatting output as binary
-​​iex>​ bin = <<3 :: size(2), 5 :: size(4), 1 :: size(2)>>
-​<<213>>
-​​iex>​ ​:io​.format(​"​​~-8.2b~n"​, ​:binary​.bin_to_list(bin))
+iex> bin = <<3 :: size(2), 5 :: size(4), 1 :: size(2)>>
+<<213>>
+iex> :io.format("~-8.2b~n", :binary.bin_to_list(bin))
 
 Reading file with formatted error message
 do_open = fn file_name -> {File.open(file_name), file_name} end
