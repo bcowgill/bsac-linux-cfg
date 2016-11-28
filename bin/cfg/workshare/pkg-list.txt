@@ -212,6 +212,7 @@ ed
 editorconfig
 efibootmgr
 eject
+elixir
 emacs24
 emacs24-bin-common
 emacs24-common
@@ -224,6 +225,9 @@ enblend
 enchant
 enfuse
 eog
+erlang-mode
+erlang-solutions
+esl-erlang
 espeak-data:amd64
 ethtool
 evemu-tools
