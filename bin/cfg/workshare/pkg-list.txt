@@ -3044,6 +3044,7 @@ tcl
 tcl8.6
 tcpd
 tcpdump
+tcsh
 telepathy-gabble
 telepathy-idle
 telepathy-indicator

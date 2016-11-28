@@ -360,9 +360,9 @@ SUBLIME_URL=http://download.sublimetext.com
 #me@akston:~/bin (dell-7510 *% u+2)$ tar tvzf ~/Downloads/WebStorm-2016.2.tar.gz  | head
 #-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
 WEBSTORM_CMD=wstorm
-WEBSTORM_ARCHIVE=WebStorm-2016.4
-WEBSTORM_CONFIG=WebStorm2016.4
-WEBSTORM_DIR=WebStorm-162.2228.20
+WEBSTORM_ARCHIVE=WebStorm-2016.2
+WEBSTORM_CONFIG=WebStorm2016.2
+WEBSTORM_DIR=WebStorm-162.1121.31
 WEBSTORM_URL=http://download.jetbrains.com/webstorm
 #WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 #WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
@@ -595,6 +595,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	GOOGLE_CHROME_PKG=""
 	VSLICK_ARCHIVE=""
    SUBLIME_CFG=""
+	PINTA_PKG=""
 fi
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
