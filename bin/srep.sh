@@ -13,7 +13,7 @@ touch pause-build.timestamp
 
 perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
-my $LOG_CLASS = $ENV{CMP} || "DocumentComponent";
+my $LOG_CLASS = $ENV{CMP} || "DocxumentComponent";
 my $DEL_DBG = 0;
 my $DEL_DEL = 1;
 my $DBG = "/*dbg:*/ "; # "//dbg: "
@@ -119,7 +119,7 @@ while (my $file = <>) {
 	my $class = $1 || "";
 
 	# make no changes to certain files
-	if ($class eq "EmptyComponent") {
+	if ($class eq "EmptyComponentz") {
 		spit($file);
 		next;
 	}
@@ -130,8 +130,8 @@ while (my $file = <>) {
 
 #print STDERR "[[$file]]";
 
-	my $foundAutoBindImport = 0;
-	my $foundMixinImport = 0;
+	my $foundAutoBindImport = 1;
+	my $foundMixinImport = 1;
 	if ($file =~ m{import .+ autobind .+ from .+ core-decorators}xmsg) {
 		$foundAutoBindImport = 1;
 	}
@@ -162,9 +162,9 @@ while (my $file = <>) {
 		$file =~ s{
 			([\ \t]*) ((?:c|shouldC)omponent\w+) \s*
 			\( ([^\)]*) \) \s* \{
-			[\ \t]* \n (\s+) (\S{6})
+			[\ \t]* \n (\s+) (\S{2}....)
 		}{
-			my $result = "$1$2 ($3) $obr\n$4${DBG}this.__debug($sq$2$sq, { $3 })\n$4";
+			my $result = "$1$2 ($3) $obr\n$4${DBG}this.__debug($sq$2$sq, { $3 })\n$4$5";
 			if ($5 eq "/*dbg:") {
 				$result = "$1$2 ($3) $obr\n$4$5";
 			}
@@ -224,7 +224,7 @@ while (my $file = <>) {
 		$file =~ s{
 			console\.error .+? displayName .+? constructor .+? exception .+? exception \s* \)
 		}{
-			"this.__error(displayName, ${sq}constructor$sq, exception, { props })"
+			"this.__error(${sq}constructor$sq, exception, { props })"
 		}xmsge;
 	}
 
