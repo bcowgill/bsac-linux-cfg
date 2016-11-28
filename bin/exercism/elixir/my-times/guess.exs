@@ -1,6 +1,7 @@
 #!/usr/bin/env elixir
 defmodule Guess
 do
+  # Done like a function that knows it all...
   def within(actual, range \\ 1..1000)
 
   def within(actual, actual..actual)
@@ -16,5 +17,43 @@ do
     ((guess > actual) && within(actual, min..(guess-1)))
       || ((guess < actual) && within(actual, (guess+1)..max))
       || within(guess, guess..guess)
+  end
+
+  # Make the function which guards the secret number
+  def secret_number(secret \\ :rand.uniform(1000))
+  do
+    fn ^secret -> :true
+      guess -> (((guess > secret) && :high) || :low)
+    end
+  end
+
+  # Guess the number like a game using the secret number function
+  def my_number(is_it_this, range \\ 1..1000)
+
+  def my_number(is_it_this, min..max) when min <= max
+  do
+    make_guess(is_it_this, div(min + max, 2), min..max)
+  end
+
+  def make_guess(is_it_this, guess, min..max)
+  do
+    next_guess(is_it_this.(guess), is_it_this, guess, min..max)
+  end
+
+  def next_guess(:true, _, guess, _)
+  do
+    IO.puts("Is it #{guess}? yes!\n#{guess}")
+  end
+
+  def next_guess(:low, is_it_this, guess, _..max)
+  do
+    IO.puts("Is it #{guess}? too low.")
+    my_number(is_it_this, (guess + 1) .. max)
+  end
+
+  def next_guess(:high, is_it_this, guess, min.._)
+  do
+    IO.puts("Is it #{guess}? too high.")
+    my_number(is_it_this, min .. (guess - 1))
   end
 end
