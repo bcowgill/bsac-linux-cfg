@@ -19,11 +19,12 @@ do
       || within(guess, guess..guess)
   end
 
-  # Make the function which guards the secret number
+  # Make the function which guards the (random) secret number
   def secret_number(secret \\ :rand.uniform(1000))
   do
     fn ^secret -> :true
-      guess -> (((guess > secret) && :high) || :low)
+      guess when (guess > secret) -> :high
+      guess when (guess < secret) -> :low
     end
   end
 
@@ -35,6 +36,7 @@ do
     make_guess(is_it_this, div(min + max, 2), min..max)
   end
 
+  # private functions here on down...
   def make_guess(is_it_this, guess, min..max)
   do
     next_guess(is_it_this.(guess), is_it_this, guess, min..max)
