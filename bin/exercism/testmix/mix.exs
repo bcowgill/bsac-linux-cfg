@@ -29,6 +29,8 @@ defmodule Testmix.Mixfile do
   defp deps do
   [  {:calendar, "~> 0.16.1"},  ]
     # Calendar library https://github.com/lau/calendar
-    [  {:calendar, "~> 0.16.1"},  ]
+    [  {:calendar, "~> 0.16.1"},
+       {:json, "~> 1.0"},
+    ]
   end
 end
