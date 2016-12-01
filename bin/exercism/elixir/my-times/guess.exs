@@ -30,7 +30,8 @@ do
     :true
   end
 
-  def within(actual, min..max) when min <= actual and actual <= max
+  def within(actual, min..max) when
+    (min > 0) and (min <= actual) and (actual <= max)
   do
     guess = div(min + max, 2)
     IO.puts("Is it #{guess}? [#{min},#{max}]")
@@ -49,7 +50,7 @@ do
   end
 
   def secret_number(secret, min..max) when
-    (min <= secret) and (secret <= max)
+    (min > 0) and (min <= secret) and (secret <= max)
   do
     fn ^secret -> :true
       guess when (guess > secret) -> :high
@@ -66,7 +67,8 @@ do
   # Guess the number like a game using the secret number function
   def my_number(is_it_this, range \\ @range)
 
-  def my_number(is_it_this, min..max) when min <= max
+  def my_number(is_it_this, min..max) when
+    (min > 0) and (min <= max)
   do
     make_guess(is_it_this, div(min + max, 2), min..max)
   end
