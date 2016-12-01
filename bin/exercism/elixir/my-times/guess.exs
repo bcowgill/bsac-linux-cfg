@@ -13,13 +13,16 @@ do
   Guess.my_number will play the game using a given number guessing function.
   """
 
-  def play(range \\ 1..1000)
+  @max 1000
+  @range 1..@max
+
+  def play(range \\ @range)
   do
-    my_number(secret_number(range))
+    my_number(secret_number(0, range), range)
   end
 
   # Done like a function that knows it all...
-  def within(actual, range \\ 1..1000)
+  def within(actual, range \\ @range)
 
   def within(actual, actual..actual)
   do
@@ -38,7 +41,15 @@ do
 
   # Do it like a game where we don't know the actual value...
   # Make the function which guards the (random) secret number
-  def secret_number(secret \\ random())
+  def secret_number(secret \\ 0, range \\ @range)
+
+  def secret_number(0, range)
+  do
+    secret_number(random(range), range)
+  end
+
+  def secret_number(secret, min..max) when
+    (min <= secret) and (secret <= max)
   do
     fn ^secret -> :true
       guess when (guess > secret) -> :high
@@ -46,14 +57,14 @@ do
     end
   end
 
-  defp random(min \\ 1, max \\ 1000)
+  defp random(min..max)
   do
-    range = 1 + max - min
-    :rand.uniform(range) + min
+    range = max - min + 1
+    :rand.uniform(range) + min - 1
   end
 
   # Guess the number like a game using the secret number function
-  def my_number(is_it_this, range \\ 1..1000)
+  def my_number(is_it_this, range \\ @range)
 
   def my_number(is_it_this, min..max) when min <= max
   do
