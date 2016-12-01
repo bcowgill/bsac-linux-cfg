@@ -1,5 +1,5 @@
 # Word Count
-
+exercise to sublist, book to end part I
 Write a program that given a phrase can count the occurrences of each word in that phrase.
 
 For example for the input `"olly olly in come free"`
