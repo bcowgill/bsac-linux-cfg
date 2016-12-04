@@ -126,6 +126,12 @@ value in list = scans the list for a value
 Tuple.to_list(tuple) = returns linked list of a tuple
 to_string('hello') = "hello" = converts list of characters to a string
 
+List.keyfind(list, 23, 1) = finds a value in a list of tuples by looking at the value within a spefic index of each tuple
+  [{:a, 1}, {:b, 12}, {:c, 23, 24}]  -- would return the :c tuple
+List.to_integer('1101', 2) = converts binary charlist string to integer
+List.to_integer('766', 8) = converts octal charlist string to integer
+List.to_integer('3c7e', 16) = converts hex charlist string to integer
+
 Keyword list
 list of 2 elemnent tuples with an atom as the first element of the tuple
 [{:atom, value}]
@@ -133,7 +139,7 @@ list of 2 elemnent tuples with an atom as the first element of the tuple
 [{:verbose, true}, {:width, 45}] = list of tuples is ideal for command line argument processing
 [verbose: true, width: 45] = alternative way to write keyword lists
 [a: 12, b: 23, a: 45] = allows duplicate keyword values
-keywords[:verbose] = looks up first tuple in the list with matching key and returns the value or nil if key is not in list
+keywords[:verbose] = looks up first tuple in the list with matching key and returns the vfalue or nil if key is not in list
 Keyword.get_values(keywords, :a) = returns list of all values for keyword
 
 Maps
