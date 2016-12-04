@@ -152,7 +152,30 @@ map = %{ verbose: true, width: 45 }
 map[:key] = access value for key or get nil if not present
 map.key = access value for key or get Match error if not present cannot use if key is not an atom
 %{map | :key => newvalue } = return a new map with a key's value updated, or an Error if the key is not in the map
+Map.has_key?(map, :key) = check for existence of key
+Map.equal?(map, updated) = check if map contents identical
+Map.keys(map) = retrieve a list of all the keys of the map
+Map.values(map) = retrieve a list of all the values of the map
+Map.drop(map, [:key1, :key2]) = return the map with specified keys removed
+Map.put(map, :key, value) = return the map with new or replaced key/value
+Map.pop(map, :key) = returns a tuple of the value (or nil) for the key and the map excluding the key/value specified
 Map.to_list(map) = keywords = converts a map to a list of tuples with key, value. This would only be a keyword list if all keys in the map are atoms
+
+Struct
+a typed map with a fixed set of fields and default values for them.
+keys must all be atoms
+
+defmodule Subscriber do
+  defstruct name: "", paid: false, over_18: true
+
+  def can_watch_adult(%Subscriber{ over_18: is_adult }), do: is_adult
+end
+
+s1 = %Subscriber{ name: "Dave" }
+s1.name   = access the name
+%Subscriber{ name: whom } = s1  = deconstruct name of subscriber into whom
+s1_updated = %Subscriber{ s1 | paid: true }
+Subscriber.can_watch_adult(s1)
 
 Deep structures
 keyword list of maps
@@ -164,6 +187,41 @@ kwm[:john].age
 kwm[:john][:age]
 put_in kwm[:john].age, 28
 update_in kwm[:mary].languages, fn langs -> ["Javascript" | langs] end
+get_in kwm[:john].age  # compile time macro
+get_in kwm, [:john, :age] # run time key list
+get_in kwm, func  # uses function to find which values to operate on
+   Access is a module which provides useful functions for this purpose
+get_and_update_in kwm[:john].age, ...
+
+Access.all()       # all items in list
+Access.at(index)   # nth item in list
+Access.elem(index) # nth item in tuple
+Access.key(atom)   # keyed item in map, nil if missing
+Access.key!(atom)  # keyed item in map, raise error if missing
+
+get_in kwm, [Access.all(), :name] # ["John", "Mary"]
+get_in kwm, [Access.at(1), :name] # "Mary"
+get_and_update_in kwm, [Access.at(1), :name], &({&1,"Mrs. "<>&1})
+
+Access.pop(map, :key) # returns value at key and map excluding key/value
+Access.pop(keywordlist, :key) # returns first value at key and list excluding all values for that key
+
+Sets (MapSet)
+
+set1 = 1..5 |> Enum.into(MapSet.new)
+set2 = 3..8 |> Enum.into(MapSet.new)
+MapSet.member? set1, 3  # true
+MapSet.subset? set1, set2
+MapSet.disjoint? set1, set2
+MapSet.union set1, set2
+MapSet.difference set1, set2
+MapSet.intersection set1, set2
+
+Picking your dictionary data structure
+if need to pattern match against the contents use a Map (ie match a dictionary with a key of :name)
+else if need more than one entry with same key use the Keyword module
+else if the order of the keys must be guaranteed use the Keyword module
+else use a Map
 
 Pattern Matching
 x = 1  # bind x to value 1
@@ -180,6 +238,7 @@ _unused = specify an unused parameter but give it a name
 <<a :: size(4), b :: size(4), c :: binary>> = deconstruct first 4 bits into a, next 4 bits into b, remaining bytes into c
 "he" <> rest = "hello" = deconstruct "llo" into rest
 %{:key => a} = %{:key => 42, 3 => :b} = deconstruct value from a map
+%{:key => _, :another => _} = map = match the map if it has both keys
 
 Operators http://elixir-lang.org/docs/master/elixir/operators.html
 not b = strict boolean not
@@ -265,6 +324,10 @@ end
 
 actually, if is a function call with a keyword list, the above is identical to
 if(true, [do: IO.puts("gets here"), else: IO.puts("doesn't get here")])
+
+For
+
+for item <- list, item >= 3, do: item
 
 Modules
 HEREIAM http://elixir-lang.org/getting-started/modules.html
