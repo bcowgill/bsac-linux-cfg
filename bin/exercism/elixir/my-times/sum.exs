@@ -15,24 +15,4 @@ do
     end
   end
 
-  def caesar([], _n), do: []
-  def caesar(list, n) do
-    [ rot(hd(list), n) ] ++ caesar(tl(list), n)
-  end
-
-  def rot(char, n) when
-    ('a' <= char) and (char <= 'z') do
-    shift(char, 'a', n)
-  end
-
-  def rot(char, n) when
-    ('A' <= char) and (char <= 'Z') do
-    shift(char, 'a', n)
-  end
-
-  def rot(char, _n), do: char
-
-  defp shift(char, a, n) do
-    char + rem(a + n, 26)
-  end
 end
