@@ -107,6 +107,7 @@ List.to_tuple(list) = converts linked list to fixed sized tuple
 Lists (Linked)
 [] = empty list
 [2, 3, :ok, "stuff"]  = defines a list
+~w(quote words into a list) = defines a list of strings by space separated words
 hd(list) = returns head of list
 tl(list) = returns tail of list
 length(list) = number of items in the list (slow)
