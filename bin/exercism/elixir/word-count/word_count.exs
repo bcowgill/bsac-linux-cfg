@@ -5,12 +5,13 @@ defmodule Words do
   Words are compared case-insensitively.
   """
 
+  # www.pcre.org/original/doc/html/pcresyntax.html#SEC5
   @spaces ~r{\s+}u
-  @nonwords ~r/[^0-9\p{L}\-]+/ui
+  @non_words ~r/[^0-9\p{L}\-]+/ui
 
   @spec count(String.t) :: map
   def count(sentence) do
-    cleansed = String.replace(String.downcase(sentence), @nonwords, " ")
+    cleansed = String.replace(String.downcase(sentence), @non_words, " ")
 	list = String.split(cleansed, @spaces, trim: true)
     [first | tail] = list
 	count(tail, first)
