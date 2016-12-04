@@ -1,12 +1,13 @@
 Elixir programming language quick reference
 
-http://elixir-lang.org/crash-course.html
-https://github.com/elixir-lang/elixir
-http://elixir-lang.org/install.html#unix-and-unix-like
-https://github.com/christopheradams/elixir_style_guide
-https://github.com/h4cc/awesome-elixir#code-analysis
+http://exercism.io/dashboard
 http://elixir-lang.org/getting-started/modules.html#default-arguments
+http://elixir-lang.org/crash-course.html
 http://erlang.org/doc/man/erlang.html#is_atom-1
+https://github.com/elixir-lang/elixir
+https://github.com/h4cc/awesome-elixir#code-analysis
+https://github.com/christopheradams/elixir_style_guide
+http://elixir-lang.org/install.html#unix-and-unix-like
 
 http://exercism.io/how-it-works/newbie
 
@@ -46,3 +47,279 @@ slurp_it.("/etc/passwd")
 slurp_it.("/etc/passwdx")
 "Error: </etc/passwdx> no such file or directory"
 
+Primaries
+
+nil :nil = null/undefined value
+true, false :true :false = boolean
+:ok = atom /symbol
+0 1 1_000_000 0x3c 0o766 0b01001101 = integers of any size
+0.42 12.45e23 = 64 bit double precision floats
+
+String/Binary
+"" "string" "( ◑‿◑)ɔ┏�--�┑٩(^◡^ )" = utf8 character string = binary
+"hello #{name}" = interpolate expression into string
+<<99,97,116>> = "cat" = literal binary bytes
+byte_size(s) = number of bytes in string
+String.length(s) = number of characters in string
+to_string(["snowman", 0x2603, " yinyang" 0x262f]) = make string from list of strings and unicode code points
+to_charlist("hello") = 'hello' = string converted to list of characters(codepoints)
+String.codepoints("hello") = ["h","e","l","o"] = string converted to list of codepoints as strings
+"join " <> "strings" = string concatenation
+?c = literal unicode code point value for character c
+String.valid?(binary) = true if binary bytes form valid utf8 string
+<<256 :: size(16)>> = stores number in two bytes, 16 bits
+  == <<1, 0>>
+<<256 :: utf8>> = stores number as utf8 code point
+  == <<196, 128>>
+to_string(:atom) = "atom"  but :nil -> ""
+to_string will also convert integers and floats
+
+
+string vs char list
+"hełło"<><<0>>  -- string of characters as bytes
+<<104, 101, 197, 130, 197, 130, 111, 0>>
+'hełło'++[0] -- list of characters as codepoints
+[104, 101, 322, 322, 111]
+
+
+Bitstring when binary value chopped into smaller than 8 bits
+bit = <<1 :: size(1)>> = 1 bit set in 1 bit wide field
+is_binary(bit) = false
+is_bitstring(bit) = true
+bit_size(bit) = 1
+is_binary(<<1 :: size(16)>>) = true for any multiple of 8 bits
+
+Type detection
+is_boolean(t)
+is_atom, is_binary, is_bitstring, is_boolean, is_float, is_function,
+is_function(t,arity), is_integer, is_list, is_map, is_nil, is_number,
+is_pid, is_port, is_reference, is_tuple
+
+Port, Reference, PID ...
+
+Tuples
+{:ok, 42, "string"} = finite sized array
+elem(tuple, 1) == 42 for tuple above = fast access by index into tuple
+tuple_size(tuple) = number of items in the tuple, fast operation
+put_elem(tuple, 1, 99) = get new tuple with value at index replaced
+List.to_tuple(list) = converts linked list to fixed sized tuple
+
+Lists (Linked)
+[] = empty list
+[2, 3, :ok, "stuff"]  = defines a list
+hd(list) = returns head of list
+tl(list) = returns tail of list
+length(list) = number of items in the list (slow)
+[ head | tail ] = list  = deconstructs head and tail from list
+[ a0, a1, a2 ] = list  = deconstructs values from list
+'hello' = ["h", "e", "l", "l", "o"] = list of characters, not a string
+[ a0, a1 | tail ] = list   # pops first two items off list
+[ ch1, ch2, ch3 ] = 'cat'  # single quote = list of chars
+[ head = [a0, a2] | tail ] # pops two items bound to names as head
+value in list = scans the list for a value
+[list1] ++ [list2] = list concatenation
+[list1] -- [list2] = list removal, tries to remove each item in list2 from the first place found in list1
+   [1, true, 2, false, 3, true] -- [true, false]
+    returns [1, 2, 3, true]
+   [1, true, 2, false, 3, true] -- [false, true, false]
+    returns [1, 2, 3, true]
+Tuple.to_list(tuple) = returns linked list of a tuple
+to_string('hello') = "hello" = converts list of characters to a string
+
+Keyword list
+list of 2 elemnent tuples with an atom as the first element of the tuple
+[{:atom, value}]
+
+[{:verbose, true}, {:width, 45}] = list of tuples is ideal for command line argument processing
+[verbose: true, width: 45] = alternative way to write keyword lists
+[a: 12, b: 23, a: 45] = allows duplicate keyword values
+keywords[:verbose] = looks up first tuple in the list with matching key and returns the value or nil if key is not in list
+Keyword.get_values(keywords, :a) = returns list of all values for keyword
+
+Maps
+
+like a keyword list but only one value per key and more rapid access than keyword list and keys can be anything, not just an atom
+
+map = %{ :key => "value" }
+if all keys are atoms you can use keyword list syntax
+map = %{ verbose: true, width: 45 }
+map[:key] = access value for key or get nil if not present
+map.key = access value for key or get Match error if not present cannot use if key is not an atom
+%{map | :key => newvalue } = return a new map with a key's value updated, or an Error if the key is not in the map
+Map.to_list(map) = keywords = converts a map to a list of tuples with key, value. This would only be a keyword list if all keys in the map are atoms
+
+Deep structures
+keyword list of maps
+kwm = [
+  john: %{name: "John", age: 27, languages: ["Erlang", "Ruby", "Elixir"]},
+  mary: %{name: "Mary", age: 29, languages: ["Elixir", "F#", "Clojure"]}
+]
+kwm[:john].age
+kwm[:john][:age]
+put_in kwm[:john].age, 28
+update_in kwm[:mary].languages, fn langs -> ["Javascript" | langs] end
+
+Pattern Matching
+x = 1  # bind x to value 1
+1 = x  # ok, x is bound to 1 so it matches 1
+x = 2  # re-bind x to value 2
+^x = pin operator, will not bind x to a new value
+^x = 3  # Match error, x is already bound to 2 so 2 does not match 3
+[^x] = [3]  # Match error x is pinned to 2 so won't be re-bound to 3
+_ = matches anything and cannot be read from (use for unused parameters)
+_unused = specify an unused parameter but give it a name
+
+{a, b} = {2, 56} = deconstruction of tuple; a bound to 2, b bound to 56
+<<a, b>> = <<3,4>> = deconstruction from binary bytes
+<<a :: size(4), b :: size(4), c :: binary>> = deconstruct first 4 bits into a, next 4 bits into b, remaining bytes into c
+"he" <> rest = "hello" = deconstruct "llo" into rest
+%{:key => a} = %{:key => 42, 3 => :b} = deconstruct value from a map
+
+Operators http://elixir-lang.org/docs/master/elixir/operators.html
+not b = strict boolean not
+b or a = strict boolean or
+b and a = strict boolean and
+! b = non-strict boolean not
+b || a = non-strict boolean or
+b && a = non-strict boolean and
+non-strict means nil and false are false, all other values are true
+ , which is annoying as 0, empty string, empty list etc are true!
+n + m = integer/float addition
+n - m = integer/float subtraction
+n * m = integer/float multiplication
+n / m = division returning a float
+l ++ l = list concatenation
+l -- l = list subtraction
+s <> s = string/binary concatenation
+
+a == b = non-strict equality (1 == 1.0 is true)
+a != b = non-strict inequality
+n < m = less than, but note 1 < :atom is true
+n > m = greater than
+n <= m = less than or equal
+n >= m = greater than or equal
+a === b = strict equality (1 === 1.0 is false)
+a !== b = strict inequality
+
+data of different types is 'ordered' as far as < > are concerned:
+number < atom < reference < function < port < pid < tuple < map < list < bitstring
+
+Functions
+
+Anonymous Functions
+add = fn arg1, arg2 -> arg1 + arg2 end = anonymous function defined
+add.(2, 4)  = call an anonymous function
+&(&1 + &2) = capture syntax for defining a function using arg1 and arg2
+
+Blocks
+
+construct
+do
+  ... statements
+end
+
+construct, do: statement
+
+construct, do: ( statement, statement ... )
+
+if ..., do: statement, else: statement
+
+
+Case
+
+case {1, 2, 3} do
+  {4, 5, 6} -> :no_match
+  {1, x, 3} when x < 0 -> "would match if negative"
+  {1, x, 3} -> "matches with x = 2"
+  _ -> :match_anything
+end
+
+when is a guard clause allowed in case, cond, functions, there are a limited set of operations you can perform in a guard clause.
+http://elixir-lang.org/getting-started/case-cond-and-if.html
+
+Cond
+
+cond do
+  2 + 2 == 5 -> :impossible
+  1 + 1 == 2 -> :will_match
+  true -> "fallback match, use :else or :otherwise as an alternative to true"
+end
+
+If/unless
+
+if true do
+  IO.puts("gets here")
+else
+  IO.puts("doesn't get here")
+end
+
+unless true do
+  IO.puts("doesn't get here")
+end
+
+actually, if is a function call with a keyword list, the above is identical to
+if(true, [do: IO.puts("gets here"), else: IO.puts("doesn't get here")])
+
+Modules
+HEREIAM http://elixir-lang.org/getting-started/modules.html
+
+Errors
+raise("error message") = raises a run time error
+
+div(n, m) = integer division
+rem(n, m) = integer remainder
+   rem(n, -m) === rem(n, m)
+   note n === div(n, m) * m + rem(n, m) === X
+    n,m   div rem mod  X  div|-m rem|-m mod|-m X|-m
+   -3,2   -1  -1   1  -3    1     -1     -1     -3
+   -2,2   -1   0   0  -2    1      0      0     -2
+   -1,2    0  -1   1  -1    0     -1     -1     -1
+    0,2    0   0   0   0    0      0      0      0
+    1,2    0   1   1   1    0      1     -1      1
+    2,2    1   0   0   2   -1      0      0      2
+    3,2    1   1   1   3   -1      1     -1      3
+
+trunc(f) = drops the fractional value
+round(f) = rounds to nearest integer value
+
+mathematical modulus
+https://en.wikipedia.org/wiki/Modulo_operation
+defmodule Math do
+  def ceil(f),  do: round(0.5 + f)
+  def floor(f), do: round(f - 0.5)
+
+  def mod(n, m) when m >= 0, do:  rem(abs(n), m)
+  def mod(n, m) when m <  0, do: -rem(abs(n), m)
+end
+
+defmodule S do
+  # convert string to binary, shows each byte value of string
+  def to_binary(s), do: s <> <<0>>
+end
+
+defmodule B do
+  # truthy function false for various empty/zero values perlish
+  # todo? tuple, map, list, string, binaryetc of nothing but falsy items
+  def truthy(:nil), do: false
+  def truthy(0), do: false
+  def truthy(""), do: false
+  def truthy("0"), do: false
+  def truthy(<<0>>), do: false
+  def truthy([]), do: false
+  def truthy({}), do: false
+  def truthy(%{}), do: false
+  def truthy(f) when
+    is_float(f) do
+    (0 != f) && f
+  end
+  def truthy(str) when
+    is_binary(str) do
+    cond do
+      Regex.run(~r{\S}u, str) -> str
+      :otherwise -> false
+    end
+  end
+  def truthy(whatever), do: whatever
+
+  def truthish(whatever), do: !!truthy(whatever)
+end
