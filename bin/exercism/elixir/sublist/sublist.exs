@@ -3,56 +3,51 @@ defmodule Sublist do
   Returns whether the first list is a sublist or a superlist of the second list
   and if not whether it is equal or unequal to the second list.
   """
-  def compare([ a | [] ], [ b | [] ]) do
-    cond do
-      (a === b) -> :equal
-      :otherwise -> :unequal
-    end
-  end
+  def compare([], []), do: :equal
+  def compare([], _),  do: :sublist
+  def compare(_, []),  do: :superlist
 
   def compare(a, b) when
     is_list(a) and is_list(b) do
+    trace("cmp1", a, b)
     cond do
       (a === b) -> :equal
-      sublist(a, b) -> :sublist
-      superlist(a, b) -> :superlist
+      scan_forward(a, b) -> :sublist
+      scan_forward(b, a) -> :superlist
       :otherwise -> :unequal
     end
   end
 
-  def sublist([], _), do: true
-  def sublist(_, []), do: false
+  defp scan_forward(a, []), do: trace("sfA", false)
 
-  def sublist([ a | a_tail ], [ a | b_tail ]) do
-    sublist(a_tail, b_tail) or scan(a, b_tail)
+  defp scan_forward(a = [ first | a_tail ], b = [ first | b_tail ] ) do
+    trace("sf0", a, b)
+    sublist(a_tail, b_tail) or scan_forward(a, b_tail)
   end
 
-  def sublist(a, [ _b | b_tail ]) do
-    sublist(a, b_tail)
+  defp scan_forward(a, b =[ _b_first | b_tail ]) do
+    trace("sf1", a, b)
+    scan_forward(a, b_tail)
   end
 
-  def scan(_a, []), do: false
+  defp sublist([], _), do: trace("sblA", true)
+  defp sublist(_, []), do: trace("sblB", false)
 
-  def scan(a = [ a_first | _ ], b = [ a_first | b_tail ]) do
-    sublist(a, b) or scan(a, b_tail)
+  defp sublist(a = [ a_first | a_tail ], b = [ a_first | b_tail ]) do
+    trace("sbl0", a, b)
+    sublist(a_tail, b_tail)
   end
 
-  def scan(a, [ _b | b_tail ]) do
-    false # scan(a, b_tail)
+  defp sublist(a, b), do: trace("sblC", false)
+
+  defp trace(msg, value) do
+    #IO.puts("\n" <> msg)
+    #IO.inspect(value)
+    value
   end
 
-  def superlist(_, []), do: true
-
-  def superlist([ a_first | a_tail], [a_first | b_tail ]) do
-    superlist(a_tail, b_tail)
+  defp trace(msg, a, b) do
+    #IO.puts("\n" <> msg)
+    #IO.inspect(%{ a: a, b: b })
   end
-
-  def superlist([ _a | [] ], [ _b | _b_tail ]), do: false
-  def superlist([ _a | [] ], [ _b | [] ]), do: false
-
-  def superlist([ _a_first | a_tail], b) do
-    superlist(a_tail, b)
-  end
-
-
 end
