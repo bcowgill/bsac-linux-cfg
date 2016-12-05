@@ -15,9 +15,9 @@ defmodule NucleotideCount do
   @spec count([char], char) :: non_neg_integer
   def count(strand, nucleotide) do
     Enum.reduce(strand, 0,
-	  fn (^nucleotide, sum) -> sum + 1    # trace(1, nucleotide, sum + 1)
-	     (_, sum) -> sum                  # trace(2, letter, sum)
-	  end)
+      fn (^nucleotide, sum) -> sum + 1   # trace(1, nucleotide, sum + 1)
+        (_, sum) -> sum                  # trace(2, letter, sum)
+      end)
   end
 
   @doc """
@@ -31,17 +31,17 @@ defmodule NucleotideCount do
   @spec histogram([char]) :: map
   def histogram(strand) do
     %{
-	  ?A => count(strand, ?A),
-	  ?T => count(strand, ?T),
-	  ?C => count(strand, ?C),
-	  ?G => count(strand, ?G),
-	}
+      ?A => count(strand, ?A),
+      ?T => count(strand, ?T),
+      ?C => count(strand, ?C),
+      ?G => count(strand, ?G),
+    }
   end
 
   defp trace(branch, msg, value)
   do
-     IO.puts("#{branch} #{msg} #{value}")
-	 value
+    IO.puts("#{branch} #{msg} #{value}")
+    value
   end
 
 end
