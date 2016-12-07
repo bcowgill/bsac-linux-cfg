@@ -13,3 +13,7 @@ do
 	mix xref $cmd
 	echo
 done
+
+#mix xref callers $module
+#mix xref graph --source $file
+#mix xref graph --sink $file
