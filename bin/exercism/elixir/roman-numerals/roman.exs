@@ -18,29 +18,29 @@ defmodule Roman do
     roman(number)
   end
 
-  defp roman(number, alphabet \\ @roman)
+  defp roman(number, sigils \\ @roman)
 
   defp roman(0, _), do: ""
 
-  defp roman(number, alphabet) when number >= 10 do
+  defp roman(number, sigils) when number >= 10 do
      ones = rem(number, 10)
      tens = div(number, 10)
-     roman(tens, tl(tl(alphabet))) <> roman(ones, alphabet)
+     roman(tens, tl(tl(sigils))) <> roman(ones, sigils)
   end
 
-  defp roman(number, [ i | _alphabet ]) when 3 >= number do
+  defp roman(number, [ i | _sigils ]) when 3 >= number do
     repeat(i, number)
   end
 
-  defp roman(number, [ i, v | _alphabet ]) when 4 === number do
+  defp roman(number, [ i, v | _sigils ]) when 4 === number do
     i <> v
   end
 
-  defp roman(number, [ i, v | _alphabet ]) when 8 >= number do
+  defp roman(number, [ i, v | _sigils ]) when 8 >= number do
     v <> repeat(i, number - 5)
   end
 
-  defp roman(number, [ i, _v, x | _alphabet ]) when 9 == number do
+  defp roman(number, [ i, _v, x | _sigils ]) when 9 == number do
     i <> x
   end
 
