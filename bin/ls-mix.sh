@@ -41,3 +41,5 @@ done
 echo mix test --trace  ====================================================
 mix test --trace
 # mix test --stale --listen-on-stdin useful
+
+# mix run -e 'Issues.CLI.run(["-h"])'
