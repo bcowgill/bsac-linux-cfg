@@ -37,3 +37,7 @@ for file in $FILES
 do
 	mix xref graph --sink $file
 done
+
+echo mix test --trace  ====================================================
+mix test --trace
+# mix test --stale --listen-on-stdin useful
