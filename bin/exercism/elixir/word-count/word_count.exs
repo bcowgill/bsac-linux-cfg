@@ -11,8 +11,11 @@ defmodule Words do
 
   @spec count(String.t) :: map
   def count(sentence) do
-    cleansed = String.replace(String.downcase(sentence), @non_words, " ")
-	list = String.split(cleansed, @spaces, trim: true)
+    list = sentence
+      |> String.downcase
+      |> String.replace(@non_words, " ")
+      |> String.split(@spaces, trim: true)
+
     [first | tail] = list
 	count(tail, first)
   end
