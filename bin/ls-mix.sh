@@ -14,6 +14,26 @@ do
 	echo
 done
 
-#mix xref callers $module
-#mix xref graph --source $file
-#mix xref graph --sink $file
+MODULES=`git grep defmodule lib/ | perl -pne 's{.+ defmodule \s+ (.+) \s+ do \s*}{$1\n}xmsg'`
+FILES=`find lib/ -name '*.ex' -o -name '*.exs'`
+
+echo MODULES=$MODULES
+echo FILES=$FILES
+
+echo mix xref callers =====================================================
+for mod in $MODULES
+do
+	mix xref callers $mod
+done
+
+echo mix xref graph --source  =============================================
+for file in $FILES
+do
+	mix xref graph --source $file
+done
+
+echo mix xref graph --sink  ===============================================
+for file in $FILES
+do
+	mix xref graph --sink $file
+done
