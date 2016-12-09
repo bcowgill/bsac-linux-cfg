@@ -26,5 +26,5 @@ defmodule RunLengthEncoder do
     to_string(decoded)
   end
 
-  defp do_decode(repeats, letter), do: String.pad_leading("", repeats, letter)
+  defp do_decode(repeats, letter), do: String.duplicate(letter, repeats)
 end
