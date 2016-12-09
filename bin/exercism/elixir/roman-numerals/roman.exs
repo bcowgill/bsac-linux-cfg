@@ -1,9 +1,11 @@
 defmodule Roman do
   @doc """
-  Convert the number to a roman number.
+  Convert a number to a roman numeral representation.
   """
   #         1 5 10 50 100 500 1000
   @roman ~w(I V  X  L  C   D    M)
+
+  import String, only: [duplicate: 2]
 
   @spec numerals(pos_integer) :: String.t
   def numerals(0), do: raise("Romans didn't know about zero!")
@@ -29,7 +31,7 @@ defmodule Roman do
   end
 
   defp roman(number, [ i | _sigils ]) when 3 >= number do
-    repeat(i, number)
+    duplicate(i, number)
   end
 
   defp roman(number, [ i, v | _sigils ]) when 4 === number do
@@ -37,7 +39,7 @@ defmodule Roman do
   end
 
   defp roman(number, [ i, v | _sigils ]) when 8 >= number do
-    v <> repeat(i, number - 5)
+    v <> duplicate(i, number - 5)
   end
 
   defp roman(number, [ i, _v, x | _sigils ]) when 9 == number do
@@ -45,8 +47,6 @@ defmodule Roman do
   end
 
   def sigils(), do: @roman
-
-  defp repeat(c, n), do: String.duplicate(c, n)
 
 end
 
