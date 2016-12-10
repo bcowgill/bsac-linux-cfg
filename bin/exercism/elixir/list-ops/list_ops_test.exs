@@ -13,7 +13,7 @@ defmodule ListOpsTest do
 
   defp odd?(n), do: rem(n, 2) == 1
 
-  # @tag :pending
+  @tag :done
   test "count of empty list" do
     assert L.count([]) == 0
   end
@@ -31,6 +31,16 @@ defmodule ListOpsTest do
   @tag :done
   test "reverse of empty list" do
     assert L.reverse([]) == []
+  end
+
+  @tag :done
+  test "reverse of single element list" do
+    assert L.reverse([3]) == [3]
+  end
+
+  @tag :done
+  test "reverse of two element list" do
+    assert L.reverse([1,3]) == [3,1]
   end
 
   @tag :done
@@ -75,38 +85,38 @@ defmodule ListOpsTest do
       Enum.map(1..500_000, &(&1*2-1))
   end
 
-  @tag :pending
+  @tag :done
   test "reduce of empty list" do
     assert L.reduce([], 0, &(&1+&2)) == 0
   end
 
-  @tag :pending
+  @tag :done
   test "reduce of normal list" do
     assert L.reduce([1,2,3,4], -3, &(&1+&2)) == 7
   end
 
-  @tag :pending
+  @tag :done
   test "reduce of huge list" do
     assert L.reduce(Enum.to_list(1..1_000_000), 0, &(&1+&2)) ==
       Enum.reduce(1..1_000_000, 0, &(&1+&2))
   end
 
-  @tag :pending
+  @tag :done
   test "reduce with non-commutative function" do
     assert L.reduce([1,2,3,4], 10, fn x, acc -> acc - x end) == 0
   end
 
-  @tag :pending
+  @tag :done
   test "append of empty lists" do
     assert L.append([], []) == []
   end
 
-  @tag :pending
+  @tag :done
   test "append of empty and non-empty list" do
     assert L.append([], [1,2,3,4]) == [1,2,3,4]
   end
 
-  @tag :pending
+  @tag :done
   test "append of non-empty and empty list" do
     assert L.append([1,2,3,4], []) == [1,2,3,4]
   end

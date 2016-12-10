@@ -19,16 +19,11 @@ defmodule ListOps do
     [tail, head]
   end
   def reverse([head | tail]) do
-    flatten([ reverse(tail) | head ])
+    flatten([ reverse(tail), head ])
   end
-  def reverse(item), do: [item]
 
-  defp flatten([]), do: []
-  defp flatten([head, []]), do: flatten(head)
-  defp flatten([head | tail]) do
-    [flatten(head) | flatten(tail)]
-  end
-  defp flatten(item), do: item
+  # TODO implement
+  defp flatten(list), do: List.flatten(list)
 
   @spec map(list, (any -> any)) :: list
   def map(list, func) do
@@ -56,11 +51,14 @@ defmodule ListOps do
 
   @type acc :: any
   @spec reduce(list, acc, ((any, acc) -> acc)) :: acc
-  def reduce(l, acc, f) do
-
+  def reduce([], acc, f), do: acc
+  def reduce([ head | tail ], acc, f) do
+    reduce(tail, f.(head, acc), f)
   end
 
   @spec append(list, list) :: list
+  def append([], b), do: b
+  def append(a, []), do: a
   def append(a, b) do
 
   end
