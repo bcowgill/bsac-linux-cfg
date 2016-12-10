@@ -121,25 +121,25 @@ defmodule ListOpsTest do
     assert L.append([1,2,3,4], []) == [1,2,3,4]
   end
 
-  @tag :done
-  test "append of single item to empty lists" do
-    assert L.append([], :a) == [:a]
-  end
+  # @tag :appendany
+  # test "append of single item to empty lists" do
+  #   assert L.append([], :a) == [:a]
+  # end
 
-  @tag :done
-  test "append of single item to non-empty list" do
-    assert L.append([1,2,3], :a) == [1,2,3,:a]
-  end
+  # @tag :appendany
+  # test "append of single item to non-empty list" do
+  #   assert L.append([1,2,3], :a) == [1,2,3,:a]
+  # end
 
-  @tag :done
-  test "append of single item to single item" do
-    assert L.append(:b, :a) == [:b, :a]
-  end
+  # @tag :appendany
+  # test "append of single item to single item" do
+  #   assert L.append(:b, :a) == [:b, :a]
+  # end
 
-  @tag :done
-  test "append of list to single item" do
-    assert L.append(:a, [1,2]) == [:a,1,2]
-  end
+  # @tag :appendany
+  # test "append of list to single item" do
+  #   assert L.append(:a, [1,2]) == [:a,1,2]
+  # end
 
   @tag :done
   test "append of non-empty lists" do
