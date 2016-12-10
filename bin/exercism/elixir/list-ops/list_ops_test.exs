@@ -48,7 +48,7 @@ defmodule ListOpsTest do
     assert L.reverse([1,3,5,7]) == [7,5,3,1]
   end
 
-  @tag :pending
+  @tag :done
   test "reverse of huge list" do
     assert L.reverse(Enum.to_list(1..1_000_000)) == Enum.to_list(1_000_000..1)
   end
@@ -121,23 +121,43 @@ defmodule ListOpsTest do
     assert L.append([1,2,3,4], []) == [1,2,3,4]
   end
 
-  @tag :pending
+  @tag :done
+  test "append of single item to empty lists" do
+    assert L.append([], :a) == [:a]
+  end
+
+  @tag :done
+  test "append of single item to non-empty list" do
+    assert L.append([1,2,3], :a) == [1,2,3,:a]
+  end
+
+  @tag :done
+  test "append of single item to single item" do
+    assert L.append(:b, :a) == [:b, :a]
+  end
+
+  @tag :done
+  test "append of list to single item" do
+    assert L.append(:a, [1,2]) == [:a,1,2]
+  end
+
+  @tag :done
   test "append of non-empty lists" do
     assert L.append([1,2,3], [4,5]) == [1,2,3,4,5]
   end
 
-  @tag :pending
+  @tag :done
   test "append of huge lists" do
     assert L.append(Enum.to_list(1..1_000_000), Enum.to_list(1_000_001..2_000_000)) ==
       Enum.to_list(1..2_000_000)
   end
 
-  @tag :pending
+  @tag :done
   test "concat of empty list of lists" do
     assert L.concat([]) == []
   end
 
-  @tag :pending
+  @tag :done
   test "concat of normal list of lists" do
     assert L.concat([[1,2],[3],[],[4,5,6]]) == [1,2,3,4,5,6]
   end
@@ -148,7 +168,7 @@ defmodule ListOpsTest do
       Enum.to_list(1..1_000_000)
   end
 
-  @tag :pending
+  @tag :done
   test "concat of small list of huge lists" do
     assert L.concat(Enum.map(0..9, &Enum.to_list((&1*100_000+1)..((&1+1)*100_000)))) ==
       Enum.to_list(1..1_000_000)

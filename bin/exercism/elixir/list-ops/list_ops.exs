@@ -14,12 +14,12 @@ defmodule ListOps do
 
   @spec reverse(list) :: list
   def reverse([]), do: []
-  def reverse([head , []]), do: [head]
-  def reverse([head , tail]) do
-    [tail, head]
-  end
-  def reverse([head | tail]) do
-    flatten([ reverse(tail), head ])
+  # def reverse([head , []]), do: [head]
+  # def reverse([head , tail]) do
+  #   [tail, head]
+  # end
+  def reverse(list) do
+    reduce(list, [], fn (item, reversed) -> append(item, reversed) end)
   end
 
   # TODO implement
@@ -57,14 +57,14 @@ defmodule ListOps do
   end
 
   @spec append(list, list) :: list
-  def append([], b), do: b
-  def append(a, []), do: a
-  def append(a, b) do
+  # MUSTDO implement without ++
+  def append(a, b), do: listify(a) ++ listify(b)
 
-  end
+  defp listify(a) when is_list(a), do: a
+  defp listify(a), do: [a]
 
   @spec concat([[any]]) :: [any]
-  def concat(ll) do
-
+  def concat(list_of_lists) do
+    reduce(list_of_lists, [], fn (list,joined) -> append(joined, list) end)
   end
 end
