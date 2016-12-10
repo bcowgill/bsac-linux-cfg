@@ -13,10 +13,14 @@ defmodule ListOps do
   end
 
   @spec reverse(list) :: list
-  def reverse(list) when
-    is_list(list) do
-    reduce(list, [], fn (item, reversed) -> append_any(item, reversed) end)
+  def reverse(list) when is_list(list) do
+    do_reverse(list)
   end
+
+  defp do_reverse(list, into \\ [])
+  defp do_reverse([], []), do: []
+  defp do_reverse([], into), do: into
+  defp do_reverse([head | tail], into), do: do_reverse(tail, [head | into])
 
   @spec map(list, (any -> any)) :: list
   def map(list, func) when
