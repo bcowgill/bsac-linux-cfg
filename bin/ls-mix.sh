@@ -38,6 +38,9 @@ do
 	mix xref graph --sink $file
 done
 
+echo @type definitions ====================================================
+ls-types.sh
+
 echo mix test --trace  ====================================================
 mix test --trace
 # mix test --stale --listen-on-stdin useful
