@@ -4,7 +4,7 @@ if !System.get_env("EXERCISM_TEST_EXAMPLES") do
 end
 
 ExUnit.start
-ExUnit.configure exclude: :pending, trace: true
+ExUnit.configure exclude: :pending, exclude: :private, trace: true
 
 defmodule ListOpsTest do
   alias ListOps, as: L
@@ -121,25 +121,25 @@ defmodule ListOpsTest do
     assert L.append([1,2,3,4], []) == [1,2,3,4]
   end
 
-  # @tag :private
-  # test "append of single item to empty lists" do
-  #   assert L.append([], :a) == [:a]
-  # end
+  @tag :private
+  test "private append of single item to empty lists" do
+    assert L.append([], :a) == [:a]
+  end
 
-  # @tag :private
-  # test "append of single item to non-empty list" do
-  #   assert L.append([1,2,3], :a) == [1,2,3,:a]
-  # end
+  @tag :private
+  test "private append of single item to non-empty list" do
+    assert L.append([1,2,3], :a) == [1,2,3,:a]
+  end
 
-  # @tag :private
-  # test "append of single item to single item" do
-  #   assert L.append(:b, :a) == [:b, :a]
-  # end
+  @tag :private
+  test "private append of single item to single item" do
+    assert L.append(:b, :a) == [:b, :a]
+  end
 
-  # @tag :private
-  # test "append of list to single item" do
-  #   assert L.append(:a, [1,2]) == [:a,1,2]
-  # end
+  @tag :private
+  test "private append of list to single item" do
+    assert L.append(:a, [1,2]) == [:a,1,2]
+  end
 
   @tag :done
   test "append of non-empty lists" do
@@ -174,23 +174,23 @@ defmodule ListOpsTest do
       Enum.to_list(1..1_000_000)
   end
 
-  # @tag :private
-  # test "prepend_reversed of empty lists" do
-  #   assert L.prepend_reversed([], []) == []
-  # end
+  @tag :private
+  test "private prepend_reversed of empty lists" do
+    assert L.prepend_reversed([], []) == []
+  end
 
-  # @tag :private
-  # test "prepend_reversed of empty onto a list" do
-  #   assert L.prepend_reversed([3, 2, 1], []) == [3, 2, 1]
-  # end
+  @tag :private
+  test "private prepend_reversed of empty onto a list" do
+    assert L.prepend_reversed([3, 2, 1], []) == [3, 2, 1]
+  end
 
-  # @tag :private
-  # test "prepend_reversed of list onto empty" do
-  #   assert L.prepend_reversed([], [1, 2, 3]) == [3, 2, 1]
-  # end
+  @tag :private
+  test "private prepend_reversed of list onto empty" do
+    assert L.prepend_reversed([], [1, 2, 3]) == [3, 2, 1]
+  end
 
-  # @tag :private
-  # test "prepend_reversed of list into list" do
-  #   assert L.prepend_reversed([3, 2, 1], [4, 5, 6]) == [6, 5, 4, 3, 2, 1]
-  # end
+  @tag :private
+  test "private prepend_reversed of list into list" do
+    assert L.prepend_reversed([3, 2, 1], [4, 5, 6]) == [6, 5, 4, 3, 2, 1]
+  end
 end
