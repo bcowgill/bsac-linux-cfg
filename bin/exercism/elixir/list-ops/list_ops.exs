@@ -63,7 +63,8 @@ defmodule ListOps do
     append_any(some, more)
   end
 
-  #@spec append_any(a | [a], b | [b]) :: [a, b]
+  @type maybe_list :: any | [any]
+  @spec append_any(maybe_list, maybe_list) :: list
   defp append_any(some, more) do
     some
     |> listify
@@ -72,7 +73,9 @@ defmodule ListOps do
     |> reverse
   end
 
-  #@spec prepend_reversed([b, a], [c, d]) :: [d, c, b, a]
+  # prepend_reversed([b, a], [c, d]) :: [d, c, b, a]
+  @type reversed_list :: list
+  @spec prepend_reversed(reversed_list, list) :: reversed_list
   defp prepend_reversed(list, prepend) when
     is_list(list) and is_list(prepend) do
     do_prepend_reversed(list, prepend)
@@ -83,7 +86,7 @@ defmodule ListOps do
     do_prepend_reversed([ head | list ], tail)
   end
 
-  #@spec listify?(a | [a]) :: [a]
+  @spec listify(maybe_list) :: list
   defp listify(thing) when
     is_list(thing) do
     thing
