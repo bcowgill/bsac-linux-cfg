@@ -25,9 +25,19 @@ defmodule ListOps do
   @spec map(list, (any -> any)) :: list
   def map(list, func) when
     is_list(list) and is_function(func) do
+
     for datum <- list do
       func.(datum)
     end
+    # if for <- forbidden, we can do:
+    # do_map(func, list)
+  end
+
+  # if list comprehension also forbidden, we can still map
+  defp do_map(func, list, into \\ [])
+  defp do_map(_func, [], into), do: reverse(into)
+  defp do_map(func, [head | tail], into) do
+    do_map(func, tail, [func.(head) | into])
   end
 
   @spec filter(list, (any -> as_boolean(term))) :: list
