@@ -63,9 +63,27 @@ defmodule ListOps do
     append_any(some, more)
   end
 
-  # MUSTDO implement without ++
-  defp append_any(some, more), do: listify(some) ++ listify(more)
+  #@spec append_any(a | [a], b | [b]) :: [a, b]
+  defp append_any(some, more) do
+    some
+    |> listify
+    |> reverse
+    |> prepend_reversed(listify(more))
+    |> reverse
+  end
 
+  #@spec prepend_reversed([b, a], [c, d]) :: [d, c, b, a]
+  defp prepend_reversed(list, prepend) when
+    is_list(list) and is_list(prepend) do
+    do_prepend_reversed(list, prepend)
+  end
+
+  defp do_prepend_reversed(list, []), do: list
+  defp do_prepend_reversed(list, [ head | tail ]) do
+    do_prepend_reversed([ head | list ], tail)
+  end
+
+  #@spec listify?(a | [a]) :: [a]
   defp listify(thing) when
     is_list(thing) do
     thing
@@ -76,7 +94,8 @@ defmodule ListOps do
   @spec concat([[any]]) :: [any]
   def concat(list_of_lists) when
     is_list(list_of_lists) do
-    # MUSTDO need a faster implementation...
-    reduce(list_of_lists, [], fn (list, joined) -> append_any(joined, list) end)
+    list_of_lists
+    |> reduce([], &prepend_reversed(&2,&1))
+    |> reverse
   end
 end

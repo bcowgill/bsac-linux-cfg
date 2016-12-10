@@ -121,22 +121,22 @@ defmodule ListOpsTest do
     assert L.append([1,2,3,4], []) == [1,2,3,4]
   end
 
-  # @tag :appendany
+  # @tag :private
   # test "append of single item to empty lists" do
   #   assert L.append([], :a) == [:a]
   # end
 
-  # @tag :appendany
+  # @tag :private
   # test "append of single item to non-empty list" do
   #   assert L.append([1,2,3], :a) == [1,2,3,:a]
   # end
 
-  # @tag :appendany
+  # @tag :private
   # test "append of single item to single item" do
   #   assert L.append(:b, :a) == [:b, :a]
   # end
 
-  # @tag :appendany
+  # @tag :private
   # test "append of list to single item" do
   #   assert L.append(:a, [1,2]) == [:a,1,2]
   # end
@@ -162,7 +162,7 @@ defmodule ListOpsTest do
     assert L.concat([[1,2],[3],[],[4,5,6]]) == [1,2,3,4,5,6]
   end
 
-  @tag :pending
+  @tag :done
   test "concat of huge list of small lists" do
     assert L.concat(Enum.map(1..1_000_000, &[&1])) ==
       Enum.to_list(1..1_000_000)
@@ -173,4 +173,24 @@ defmodule ListOpsTest do
     assert L.concat(Enum.map(0..9, &Enum.to_list((&1*100_000+1)..((&1+1)*100_000)))) ==
       Enum.to_list(1..1_000_000)
   end
+
+  # @tag :private
+  # test "prepend_reversed of empty lists" do
+  #   assert L.prepend_reversed([], []) == []
+  # end
+
+  # @tag :private
+  # test "prepend_reversed of empty onto a list" do
+  #   assert L.prepend_reversed([3, 2, 1], []) == [3, 2, 1]
+  # end
+
+  # @tag :private
+  # test "prepend_reversed of list onto empty" do
+  #   assert L.prepend_reversed([], [1, 2, 3]) == [3, 2, 1]
+  # end
+
+  # @tag :private
+  # test "prepend_reversed of list into list" do
+  #   assert L.prepend_reversed([3, 2, 1], [4, 5, 6]) == [6, 5, 4, 3, 2, 1]
+  # end
 end
