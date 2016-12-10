@@ -18,9 +18,8 @@ defmodule ListOps do
   end
 
   defp do_reverse(list, into \\ [])
-  defp do_reverse([], []), do: []
-  defp do_reverse([], into), do: into
   defp do_reverse([head | tail], into), do: do_reverse(tail, [head | into])
+  defp do_reverse([], into), do: into
 
   @spec map(list, (any -> any)) :: list
   def map(list, func) when
@@ -49,7 +48,6 @@ defmodule ListOps do
   end
 
   defp do_filter([], _func), do: []
-
   defp do_filter(list, func) do
     head = hd(list)
     if func.(head) do
@@ -66,6 +64,7 @@ defmodule ListOps do
     is_function(func) do
     reduce(tail, func.(head, acc), func)
   end
+
 
   @spec append(list, list) :: list
   def append(some, more) when
