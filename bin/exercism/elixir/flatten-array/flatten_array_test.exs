@@ -9,6 +9,8 @@ ExUnit.configure exclude: :pending, trace: true
 defmodule FlattenArrayTest do
   use ExUnit.Case
 
+  @big 10_000
+
   test "returns original list if there is nothing to flatten" do
     assert FlattenArray.flatten([1, 2, 3]) ==  [1, 2, 3]
   end
@@ -36,5 +38,33 @@ defmodule FlattenArrayTest do
   @tag :done
   test "returns an empty list if all values in nested list are nil" do
     assert FlattenArray.flatten([nil, [nil], [nil, [nil]]]) ==  []
+  end
+
+  @tag :done
+  test "returns flat from a huge deep list of type 1" do
+    biggie = Enum.to_list(1..@big)
+    deep = FlattenArray.make_deep1(biggie)
+    assert FlattenArray.flatten(deep) == Enum.reverse(biggie)
+  end
+
+  @tag :done
+  test "returns flat from a huge deep list of type 2" do
+    biggie = Enum.to_list(1..@big)
+    deep = FlattenArray.make_deep2(biggie)
+    assert FlattenArray.flatten(deep) == Enum.reverse(biggie)
+  end
+
+  @tag :done
+  test "returns flat from a huge deep list of type 3" do
+    biggie = Enum.to_list(1..@big)
+    deep = FlattenArray.make_deep3(biggie)
+    assert FlattenArray.flatten(deep) == biggie ++ Enum.reverse(biggie)
+  end
+
+  @tag :done
+  test "returns flat from a huge deep list of type 4" do
+    biggie = Enum.to_list(1..@big)
+    deep = FlattenArray.make_deep4(biggie)
+    assert FlattenArray.flatten(deep) == biggie
   end
 end

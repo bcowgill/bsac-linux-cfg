@@ -20,21 +20,40 @@ defmodule FlattenArray do
     do_flatten([], list)
   end
 
-  defp do_flatten(into, []), do: Enum.reverse(into)
-  defp do_flatten(into, [ head | tail ]) when
-    is_list(head)
-  do
+  defp do_flatten(into, nil), do: into
+  defp do_flatten(into, []), do: into
+  defp do_flatten(into, [head | tail]) do
     into
     |> do_flatten(head)
-    |> Enum.reverse
     |> do_flatten(tail)
   end
+  defp do_flatten(into, item), do: into ++ List.wrap(item)
 
-  defp do_flatten(into, [ nil | tail ]) do
-    do_flatten(into, tail)
+
+
+
+
+  @doc """
+  construct some deep arrays of various configurations for testing
+  """
+  def make_deep1([]), do: nil
+  def make_deep1([head | tail]) do
+    [make_deep1(tail) | head]
   end
 
-  defp do_flatten(into, [ head | tail ]) do
-    do_flatten([ head | into ], tail)
+  def make_deep2([]), do: nil
+  def make_deep2([head | tail]) do
+    [make_deep2(tail), head]
   end
+
+  def make_deep3([]), do: nil
+  def make_deep3([head | tail]) do
+    [[head | make_deep3(tail)] | head]
+  end
+
+  def make_deep4([]), do: nil
+  def make_deep4([head | tail]) do
+    [head , [make_deep4(tail)]]
+  end
+
 end
