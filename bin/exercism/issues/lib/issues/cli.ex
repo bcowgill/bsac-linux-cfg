@@ -1,12 +1,15 @@
 defmodule Issues.CLI do
 
   @default_count 4
+  @fields ~W(id created_at title)
 
   @moduledoc """
   Handle the command line parsing and the dispatch to
   the various functions that end up generating a
   table of the last _n_ issues in a github project
   """
+
+  import Issues.TableFormatter, only: [ print_table_for_columns: 2 ]
 
   def run(argv) do
     argv
@@ -53,6 +56,7 @@ defmodule Issues.CLI do
     |> decode_response
     |> sort_into_ascending_order
     |> Enum.take(count)
+    |> print_table_for_columns(@fields)
   end
 
   def decode_response({:ok, body}), do: body
@@ -74,4 +78,5 @@ defmodule Issues.CLI do
   defp sort_key(issue) do
     Map.get(issue, "created_at")
   end
+
 end
