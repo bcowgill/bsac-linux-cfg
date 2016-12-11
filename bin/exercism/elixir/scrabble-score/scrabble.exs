@@ -38,7 +38,8 @@ defmodule Scrabble do
   @spec compute_score(String.t, Map.t) :: non_neg_integer
   def compute_score(letters, values) do
       letters
-      |> Enum.reduce(0, fn letter, score -> score + score_this(values, letter) end)
+      |> Enum.reduce(0, fn (letter, score) ->
+        score + score_this(values, letter) end)
   end
 
   @doc """
@@ -57,7 +58,8 @@ defmodule Scrabble do
     put_value(map, String.to_integer(value), tail)
   end
 
-  # convert list of value, letters into a Map of letter => value
+  # convert list of value, letters into
+  # a Map of letter => value
   defp put_value(map, value, [letter | tail]) do
     if (Regex.match?(@number, letter)) do
       map
