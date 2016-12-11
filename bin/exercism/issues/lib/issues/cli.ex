@@ -87,7 +87,15 @@ defmodule Issues.CLI do
   end
 
   @doc """
-  Sorts the github issues by created date/time.
+  Sorts the github issues by created date/time strings.
+
+  ## Examples
+
+  ```
+  iex> Issues.CLI.sort_into_ascending_order([%{"created_at" => "b"}, %{"created_at" => "a"}])
+  [%{"created_at" => "a"}, %{"created_at" => "b"}]
+
+  ```
   """
   def sort_into_ascending_order(list_of_issues) do
     Enum.sort(list_of_issues, &sort_by_created_at/2)

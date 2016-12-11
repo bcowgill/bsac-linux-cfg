@@ -4,6 +4,15 @@
 defmodule MyModule do
   @moduledoc """
   An example module with an explanation of its purpose.
+
+  (Examples below will be verified by ExUnit from `docTest MyModule` instruction)
+
+  ## Examples
+
+  ```
+  iex> elem({ :ok, "body" }, 1)
+  "body"
+  ```
   """
 
   @behaviour MyBehaviour

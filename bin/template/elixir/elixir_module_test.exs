@@ -6,6 +6,7 @@ ExUnit.configure exclude: :pending, trace: true
 
 defmodule ElixirModuleTest do
   use ExUnit.Case
+  docTest ElixirModule
 
   # @tag: pending
   test "should answer using default parameters" do

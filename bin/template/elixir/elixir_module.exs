@@ -1,6 +1,13 @@
 defmodule ElixirModule do
   @moduledoc """
   A template elixir module with accompanying unit test file.
+
+  ## Examples
+
+  ```
+  iex> ElixirModule.execute("John")
+  "Hello, John!"
+  ```
   """
 
   @doc """
