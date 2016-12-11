@@ -5,5 +5,5 @@ mix deps.get \
 && mix escript.build \
 && mix docs
 
-# mix run -e "Issues.CLI.default()"
-# mix profile.fprof -e "Issues.CLI.default()"
+# mix run -e "Issues.default()"
+# mix profile.fprof -e "Issues.default()"
