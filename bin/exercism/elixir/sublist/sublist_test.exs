@@ -105,6 +105,26 @@ defmodule SublistTest do
   end
 
   @tag :done
+  test "sublist late in huge list" do
+    assert Sublist.compare(Enum.to_list(1..10_000_000), Enum.to_list(1..10_000_001)) == :sublist
+  end
+
+  @tag :done
+  test "superlist late in huge list" do
+    assert Sublist.compare(Enum.to_list(1..10_000_001), Enum.to_list(1..10_000_000)) == :superlist
+  end
+
+  @tag :done
+  test "equal in huge list" do
+    assert Sublist.compare(Enum.to_list(1..10_000_000), Enum.to_list(1..10_000_000)) == :equal
+  end
+
+  @tag :done
+  test "not equal in huge list" do
+    assert Sublist.compare(Enum.to_list(2..10_000_003), Enum.to_list(1..10_000_002)) == :unequal
+  end
+
+  @tag :done
   test "strict equality needed" do
     assert Sublist.compare([1], [1.0, 2]) == :unequal
   end
