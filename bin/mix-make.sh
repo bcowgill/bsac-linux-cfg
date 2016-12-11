@@ -6,6 +6,10 @@ if [ "${1:-nothing}" == "launch" ] ; then
 	LAUNCH=1
 fi
 
+if [ "${1:-nothing}" == "listen" ] ; then
+	LISTEN=1
+fi
+
 mix deps.get \
 && mix test --cover \
 && mix escript.build \
@@ -20,4 +24,9 @@ echo View coverage results at cover/
 
 if [ ! -z $LAUNCH ]; then
 	$BROWSER doc/index.html cover/
+fi
+
+if [ ! -z $LISTEN ]; then
+	# generate docs, coverage every time code changes and you press enter
+	MIX_ENV=dev mix do docs, test --cover --listen-on-stdin --stale
 fi
