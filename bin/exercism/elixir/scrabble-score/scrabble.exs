@@ -55,21 +55,21 @@ defmodule Scrabble do
   """
   @spec get_values(Map.t, [String.t]) :: Map.t
   def get_values(map, [ value | tail ]) do
-    put_value(map, String.to_integer(value), tail)
+    put_letter_values(map, String.to_integer(value), tail)
   end
 
   # convert list of value, letters into
   # a Map of letter => value
-  defp put_value(map, value, [letter | tail]) do
+  defp put_letter_values(map, value, [letter | tail]) do
     if (Regex.match?(@number, letter)) do
       map
-      |> put_value(String.to_integer(letter), tail)
+      |> put_letter_values(String.to_integer(letter), tail)
     else
       map
       |> Map.put(letter, value)
       |> Map.put(String.downcase(letter), value)
-      |> put_value(value, tail)
+      |> put_letter_values(value, tail)
     end
   end
-  defp put_value(map, _, []), do: map
+  defp put_letter_values(map, _, []), do: map
 end
