@@ -1,16 +1,27 @@
 defmodule Issues.CLI do
-
-  @default_count 4
-  @fields ~W(id created_at title)
-
   @moduledoc """
   Handle the command line parsing and the dispatch to
   the various functions that end up generating a
-  table of the last _n_ issues in a github project
+  table of the last _n_ issues in a github project.
   """
 
   import Issues.TableFormatter, only: [ print_table_for_columns: 2 ]
 
+  @typedoc "The command line parameters"
+  @type argv :: [String.t]
+
+  @default_count 4
+  @fields ~W(id created_at title)
+
+  @doc """
+  A default operation for this module for testing or performance profiling.
+  """
+  def default(), do: main(['elixir-lang', 'elixir'])
+
+  @doc """
+  Main program which parses the command line arguments and starts the main processing task.
+  """
+  @spec main(argv) :: nil
   def main(argv) do
     argv
       |> parse_args
@@ -44,6 +55,9 @@ defmodule Issues.CLI do
     end
   end
 
+  @doc """
+  Displays help to the user or fetches issues from github and displays them.
+  """
   def process(:help) do
     IO.puts """
     usage:  issues <user> <project> [ count | #{@default_count} ]
@@ -59,6 +73,11 @@ defmodule Issues.CLI do
     |> print_table_for_columns(@fields)
   end
 
+  @doc """
+  Handles the http response from github showing an error or returning the body.
+
+  The http response is a Tuple containing { :ok, body } or { :error, error }
+  """
   def decode_response({:ok, body}), do: body
 
   def decode_response({:error, error}) do
@@ -67,6 +86,9 @@ defmodule Issues.CLI do
     System.halt(2)
   end
 
+  @doc """
+  Sorts the github issues by created date/time.
+  """
   def sort_into_ascending_order(list_of_issues) do
     Enum.sort(list_of_issues, &sort_by_created_at/2)
   end
