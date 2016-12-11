@@ -48,9 +48,11 @@ defmodule Issues.CLI do
     System.halt(0)
   end
 
-  def process({user, project, _count}) do
+  def process({user, project, count}) do
     Issues.GithubIssues.fetch(user, project)
     |> decode_response
+    |> sort_into_ascending_order
+    |> Enum.take(count)
   end
 
   def decode_response({:ok, body}), do: body
@@ -61,4 +63,15 @@ defmodule Issues.CLI do
     System.halt(2)
   end
 
+  def sort_into_ascending_order(list_of_issues) do
+    Enum.sort(list_of_issues, &sort_by_created_at/2)
+  end
+
+  defp sort_by_created_at(less, more) do
+    sort_key(less) <= sort_key(more)
+  end
+
+  defp sort_key(issue) do
+    Map.get(issue, "created_at")
+  end
 end
