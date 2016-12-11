@@ -1,5 +1,11 @@
 #!/bin/bash
 # run all mix tasks to make project up to date.
+
+BROWSER=browser.sh
+if [ "${1:-nothing}" == "launch" ] ; then
+	LAUNCH=1
+fi
+
 mix deps.get \
 && mix test --cover \
 && mix escript.build \
@@ -11,3 +17,7 @@ echo View coverage results at cover/
 
 # mix run -e "Issues.default()"
 # mix profile.fprof -e "Issues.default()"
+
+if [ ! -z $LAUNCH ]; then
+	$BROWSER doc/index.html cover/
+fi
