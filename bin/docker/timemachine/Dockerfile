@@ -1,0 +1,12 @@
+FROM node:latest
+
+MAINTAINER Brent S.A. Cowgill
+LABEL Description="This image runs ubuntu with timezone set to America/Vancouver" Version="1.0"
+
+RUN git clone https://github.com/schickling/timemachine.git
+RUN cd timemachine/; npm install
+RUN perl -e 'print qq{2\n149\n}' | dpkg-reconfigure tzdata
+
+COPY go.js timemachine/
+
+CMD cd timemachine/; /bin/date; ./go.js; node
