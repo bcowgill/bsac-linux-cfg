@@ -190,6 +190,7 @@ dnsutils
 doc-base
 docbook-xml
 docbook-xsl
+docker
 dos2unix
 dosfstools
 dpkg

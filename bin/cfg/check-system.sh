@@ -34,6 +34,7 @@ set +o posix
 #FRESH_NPM=1
 
 # set BAIL_OUT to stop after a specific point reached
+# search for "BAIL_OUT name" to see where that point is.
 #BAIL_OUT=versions
 #BAIL_OUT=font
 #BAIL_OUT=diff
@@ -48,6 +49,10 @@ set +o posix
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
+#BAIL_OUT=editors
+#BAIL_OUT=custom
+#BAIL_OUT=repos
+BAIL_OUT=docker
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -77,6 +82,7 @@ AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
 UBUNTU=trusty
+LSB_RELEASE=`lsb_release -sc`
 COMPANY=
 ULIMITFILES=1024
 #ULIMITFILES=8096
@@ -402,6 +408,13 @@ MY_REPOS="
 	Qucumber
 "
 
+DOCKER_PKG=docker-engine
+DOCKER_PRE="apt-transport-https ca-certificates linux-image-extra-$(uname -r) linux-image-extra-virtual"
+DOCKER_CMD=docker
+DOCKER_KEY=58118E89F3A912897C070ADBF76221572C52609D
+DOCKER_KEYCHK=2C52609D
+DOCKER_KEYSVR=hkp://ha.pool.sks-keyservers.net:80
+
 #HEREIAM PKG
 
 # open pages to find latest versions of files to download
@@ -671,6 +684,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
+   DOCKER_PKG=""
 fi # raspberrypi
 
 }
@@ -706,6 +720,7 @@ fi
 [ -z "$ATOM_PKG"          ] && ATOM_CMD=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD=""
+[ -z "$DOCKER_PKG"        ] && DOCKER_CMD="" && DOCKER_PRE=""
 
 # HEREIAM DERIVED
 
@@ -811,6 +826,7 @@ PACKAGES="
 	$PULSEAUDIO_PKG
 	$KEYBOARD_PKG
 	$ELIXIR_PKG
+   $DOCKER_PRE
 "
 
 PERL_MODULES="
@@ -1219,9 +1235,7 @@ fi # USE_KDE set
 BAIL_OUT font
 
 if [ ! -z "$I3WM_PKG" ]; then
-	FILE="/etc/apt/sources.list.d/i3window-manager.list"
-	make_root_file_exist "$FILE" "deb http://debian.sur5r.net/i3/ $(lsb_release -c -s) universe" "adding i3wm source for apt"
-	file_has_text "$FILE" "debian.sur5r.net"
+   apt_has_source_listd "i3window-manager" "deb http://debian.sur5r.net/i3/ $LSB_RELEASE universe" "adding i3wm source for apt"
 	cmd_exists $I3WM_CMD || (sudo apt-get update; sudo apt-get --allow-unauthenticated install sur5r-keyring; sudo apt-get update; sudo apt-get install $I3WM_CMD)
 	cmd_exists $I3WM_CMD
 else
@@ -1240,7 +1254,7 @@ else
 fi # CHARLES_PKG
 
 if [ ! -z "$SKYPE_PKG" ]; then
-	apt_has_source "deb http://archive.canonical.com/ $(lsb_release -sc) partner" "apt config for skype missing"
+	apt_has_source "deb http://archive.canonical.com/ $LSB_RELEASE partner" "apt config for skype missing"
 else
 	OK "will not configure skype unless SKYPE_PKG is non-zero"
 fi # SKYPE_PKG
@@ -1251,9 +1265,9 @@ if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	# http://www.howopensource.com/2013/04/install-virtualbox-ubuntu-ppa/
 	apt_has_source "deb http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox $VIRTUALBOX_REL"
 	apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $VIRTUALBOX_REL contrib" "apt config for virtualbox wrong"
-	if [ "$(lsb_release -sc)" != "$VIRTUALBOX_REL" ]; then
-		apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
-		apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib" "apt config trusty must use raring for now"
+	if [ "$LSB_RELEASE" != "$VIRTUALBOX_REL" ]; then
+		apt_must_not_have_source "deb http://download.virtualbox.org/virtualbox/debian $LSB_RELEASE contrib" "apt config trusty must use raring for now"
+		apt_must_not_have_source "deb-src http://download.virtualbox.org/virtualbox/debian $LSB_RELEASE contrib" "apt config trusty must use raring for now"
 	fi
 
 	apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
@@ -1267,8 +1281,8 @@ else
 fi # VIRTUALBOX_PKG
 
 if [ ! -z "$SVN_PKG" ]; then
-	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
-	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $(lsb_release -sc) main" "apt config for svn update missing"
+	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $LSB_RELEASE main" "apt config for svn update missing"
+	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $LSB_RELEASE main" "apt config for svn update missing"
 fi
 
 if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
@@ -1285,9 +1299,7 @@ if [ ! -z "$SVN_PKG" ]; then
 	file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
 	dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
 	apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
-	FILE="/etc/apt/sources.list.d/WANdisco.list"
-	make_root_file_exist "$FILE" "deb http://opensource.wandisco.com/ubuntu $(lsb_release -sc) svn18" "adding WANdisco source for apt"
-	file_has_text "$FILE" wandisco.com
+   apt_has_source_listd WANdisco "deb http://opensource.wandisco.com/ubuntu $LSB_RELEASE svn18" "adding WANdisco source for apt"
 	if svn --version | grep " version " | grep $SVN_VER; then
 		OK "svn command version correct"
 	else
@@ -1660,6 +1672,15 @@ done
 
 BAIL_OUT repos
 
+if [ ! -z "$DOCKER_PKG" ]; then
+	cmd_exists $DOCKER_CMD || (sudo apt-get update && sudo apt-get install $DOCKER_PRE)
+	apt_has_key_adv $DOCKER_KEYCHK $DOCKER_KEY $DOCKER_KEYSVR "key fingerprint for Docker Engine"
+   apt_has_source_listd docker "deb https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
+   cmd_exists $DOCKER_CMD || (sudo apt-get update && apt-cache policy $DOCKER_PKG | grep apt.dockerproject.org/repo && install_command_from $DOCKER_CMD $DOCKER_PKG)
+fi
+
+BAIL_OUT docker
+
 if [ ! -z "$VPN_PKG" ]; then
    # https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
    # for VPN after installing bridge-utils need to restart network
@@ -1676,6 +1697,8 @@ if [ ! -z "$VPN_PKG" ]; then
 		sudo /etc/init.d/networking restart
 	fi
 fi
+
+BAIL_OUT vpn
 
 # HEREIAM CUSTOM INSTALL
 

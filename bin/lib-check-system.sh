@@ -1746,6 +1746,16 @@ function apt_has_source {
 	commented_file_has_text /etc/apt/sources.list "$source" "$message" || (sudo add-apt-repository "$source" && touch go.sudo)
 }
 
+function apt_has_source_listd {
+	local name source message file
+   name="$1"
+	source="$2"
+	message="$3"
+   file="/etc/apt/sources.list.d/$name.list"
+   make_root_file_exist "$file" "$source" "$message"
+	file_has_text "$file" "$source"
+}
+
 function apt_must_not_have_source {
 	local source message
 	source="$1"
@@ -1767,6 +1777,27 @@ function apt_has_key {
 			OK "apt-key installed $key"
 		else
 			NOT_OK "apt-key could not install $key"
+			return 1
+		fi
+	fi
+	return 0
+}
+
+function apt_has_key_adv {
+	local keycheck key url message
+	keycheck="$1"
+	key="$2"
+	url="$3"
+	message="$4"
+	if sudo apt-key list | grep "$keycheck"; then
+		OK "apt-key has $key"
+	else
+		NOT_OK "apt-key adv missing $key trying to install [$message]" || echo " "
+		sudo apt-key adv --keyserver "$url" --recv-keys $key
+		if sudo apt-key list | grep "$keycheck"; then
+			OK "apt-key installed $key"
+		else
+			NOT_OK "apt-key could not install $key [$message]"
 			return 1
 		fi
 	fi
