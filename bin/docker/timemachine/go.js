@@ -61,16 +61,26 @@ test("should stay the same for instantiation with millisecond param", () => {
 test("should now be set to December 25, 1991 12:12:59 via localtime dateString", {
 		dateString: 'December 25, 1991 12:12:59'
 	}, () => {
-		const now = new Date();
-		assert.equal(now.toString(), "Wed, 25 Dec 1991 12:12:59 GMT");
+		const now = new Date()
+			, offset = now.getTimezoneOffset() * 60 * 1000
+			, timestamp = now.valueOf() - offset
+			, when = new Date(timestamp)
+		assert.equal(when.toUTCString(), "Wed, 25 Dec 1991 12:12:59 GMT");
 })
 
-test("should check time zone offset", () =>{
+test("should now be set to December 25, 1991 12:12:59 via localtime dateString", {
+		dateString: 'December 25, 1991 12:12:59'
+	}, () => {
+		const now = new Date()
+		assert.equal(now.toUTCString(), "Wed, 25 Dec 1991 12:12:59 GMT");
+})
+
+/*test("should check time zone offset", () =>{
 	const now = new Date()
 		, offset = now.getTimezoneOffset()
 		assert.equal(offset, 0);
 })
-
+*/
 
 
 
