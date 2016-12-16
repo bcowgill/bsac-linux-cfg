@@ -65,4 +65,15 @@ test("should now be set to December 25, 1991 12:12:59 via localtime dateString",
 		assert.equal(now.toString(), "Wed, 25 Dec 1991 12:12:59 GMT");
 })
 
+test("should check time zone offset", () =>{
+	const now = new Date()
+		, offset = now.getTimezoneOffset()
+		assert.equal(offset, 0);
+})
+
+
+
+
+
+
 console.log(`${tests} tests, ${passed} passed, ${failed} failed`)
