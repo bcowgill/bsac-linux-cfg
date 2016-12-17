@@ -49,6 +49,8 @@ Dockerfile
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#build-cache
 FROM docker/whalesay:latest
 MAINTAINER Brent S.A. Cowgill
+
+ENV TZ=Europe/London  # sets env var in Dockerfile and vm
 RUN apt-get --yes update && apt-get install --yes fortunes && rm -rf /var/lib/apt/lists/*
 
 CMD (perl -e '$d=`date`; $h=`hostname`; chomp $d; chomp $h; print qq{On $d from $h, the great and powerful DocuZilla says:\n\n}' ; /usr/games/fortune -a) | cowsay -f dragon

@@ -1,10 +1,15 @@
 ZONE=europe-london
-sudo docker build -t timezone-$ZONE . \
-&& sudo docker run timezone-$ZONE \
-&& sudo docker run -it timezone-$ZONE bash
+NAME=timezone-$ZONE
+HUBNAME=zardozcs/$NAME
 
-# pushing the final build to docker hub
-sudo docker images | grep timezone-$ZONE
-# sudo docker tag [IMAGE ID] zardozcs/timezone-$ZONE
-# sudo docker login
-# sudo docker push [IMAGE ID]
+sudo docker build -t $NAME . \
+&& sudo docker run $NAME \
+&& sudo docker run -it $NAME bash
+
+# pushing the final build to docker hub if an image hash given
+sudo docker images | grep $NAME
+if [ ! -z $1 ]; then
+	sudo docker tag $1 $HUBNAME
+	sudo docker login
+	sudo docker push $HUBNAME
+fi
