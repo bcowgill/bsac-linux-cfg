@@ -6,7 +6,9 @@ LABEL Version="1.0" \
 
 # https://docs.docker.com/engine/reference/builder/
 
+USER root
 ENV PACKAGES=vim
+WORKDIR /vmtest
 
 RUN apt-get --yes update \
 	&& apt-get install --yes $PACKAGES \
@@ -23,6 +25,10 @@ EXPOSE 80
 # this non-shell form of ENTRYPOINT/CMD will allow signals from docker to pass through to the container
 # i.e. docker stop container_name will work
 ENTRYPOINT [ "ls" ]
-CMD [ "-1" ]
+CMD [ "-1", "/" ]
+
+# this shell version ENTRYPOINT using exec will perform shell processing and pass signals to the top command so docker stop will work
+#ENTRYPOINT exec top -b
+#CMD [ "-c" ]
 
 #CMD [ "head", "readme.txt", "docs.docker.html" ]
