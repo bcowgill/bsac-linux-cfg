@@ -49,11 +49,21 @@ Dockerfile
 # https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#build-cache
 FROM docker/whalesay:latest
 MAINTAINER Brent S.A. Cowgill
+LABEL version="1.0" \
+   description="Description can be \
+multiline"  # use docker inspect to see image label
 
-ENV TZ=Europe/London  # sets env var in Dockerfile and vm
+ENV TZ="Europe/London" MODE="DOCKER"  # sets env vars in Dockerfile and available inside running vm
 RUN apt-get --yes update && apt-get install --yes fortunes && rm -rf /var/lib/apt/lists/*
 
+ENTRYPOINT 
+CMD ["executable", "param1", "param2"]  # preferred json array form of setting the command to run when VM starts non-interactively, runs command without a shell
 CMD (perl -e '$d=`date`; $h=`hostname`; chomp $d; chomp $h; print qq{On $d from $h, the great and powerful DocuZilla says:\n\n}' ; /usr/games/fortune -a) | cowsay -f dragon
+
+EXPOSE port port ... # informs docker about ports that the container listens to at run time
+
+ADD http://mysite.com/doc.html docs/  # add contents of URL to container image under docs/ path
+COPY *.txt docs/  # copy local .txt files to container image under docs/ path
 
 # docker build -t docuzilla-say ./
 # docker run --hostname=zilla -it docuzilla-say

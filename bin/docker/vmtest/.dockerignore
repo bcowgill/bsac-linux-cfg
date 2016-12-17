@@ -1,0 +1,21 @@
+# .dockerignore
+
+Dockerfile
+.dockerignore
+make.sh
+
+node_modules
+
+# temporary and backup files
+*~
+*.bak
+*.swp
+*.kate-swp
+
+# emacs editor files
+\#*#
+.\#*
+
+# ignore editor tag files
+TAGS
+tags
