@@ -9,8 +9,8 @@ if [ ! -z $1 ]; then
 	sudo docker push $HUBNAME
 else
 	sudo docker build -t $NAME . \
-	&& sudo docker run $NAME \
-	&& sudo docker run -it $NAME bash
+	&& sudo docker run --rm $NAME \
+	&& sudo docker run -it --rm $NAME bash
 
 	sudo docker images | grep $NAME
 fi
