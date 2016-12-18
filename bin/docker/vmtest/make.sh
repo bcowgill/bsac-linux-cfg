@@ -1,4 +1,5 @@
 NAME=vmtest
+VOLUME="--volume `pwd`/mountintovm:/mount/vmtest:ro"
 VOLUME="--volume `pwd`/mountintovm:/mount/vmtest"
 #VOLUME=
 

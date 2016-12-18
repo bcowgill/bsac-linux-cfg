@@ -42,6 +42,7 @@ RUN echo "$greets this text will appear in the vm container at $VOLUME/greeting.
 VOLUME $VOLUME
 # To connect a host system path to the mounted volume:
 # docker run --volume `pwd`/hostdir:/mount/vmtest vmtest
+# docker run --volume `pwd`/hostdir:/mount/vmtest:ro vmtest  # read only
 
 STOPSIGNAL SIGKILL
 HEALTHCHECK --interval=5m --timeout=3s --retries=3 \
