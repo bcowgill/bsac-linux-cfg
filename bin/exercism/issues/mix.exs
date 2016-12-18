@@ -33,8 +33,12 @@ defmodule Issues.Mixfile do
     [
       { :httpoison, "~> 0.9" },
       { :poison, "~> 2.2" },
+      # 2 needed for producing html documentation from your elixir source code...
       { :ex_doc, "~> 0.12" },
       { :earmark, "~> 1.0", override: true },
+      # 2 needed for ExCheck property based function testing...
+      { :triq, github: "triqng/triq", only: :test},
+      { :excheck,  "~> 0.4.0", only: :test },
     ]
   end
 
