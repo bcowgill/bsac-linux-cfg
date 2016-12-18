@@ -28,7 +28,7 @@ defmodule Tooling.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      # 2 needed for ExUnit doctest plugin
+      # 2 needed for producing html documentation from your elixir source code...
       { :ex_doc, "~> 0.12" },
       { :earmark, "~> 1.0", override: true },
       # 2 needed for ExCheck property based function testing...
