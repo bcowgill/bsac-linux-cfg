@@ -1,10 +1,3 @@
-#!/usr/bin/env elixir
-
-Code.load_file("stats.ex", __DIR__)
-
-ExUnit.start
-ExUnit.configure exclude: :pending, trace: true
-
 defmodule TestStats do
   use ExUnit.Case
 #  doctest Stats
