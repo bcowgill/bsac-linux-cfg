@@ -18,7 +18,7 @@ defmodule MyModule do
   @behaviour MyBehaviour
 
   use GenServer
-  import Something
+  import Something, only: [ method: 2 ]
   import SomethingElse
   alias My.Long.Module.Name
   alias My.Other.Module.Name
