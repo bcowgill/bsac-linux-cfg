@@ -40,6 +40,13 @@ defmodule Issues.TableFormatter do
   Splits the list of issue maps into specific columns.
 
   Returns a list of lists containing the column information.
+
+  ## Example
+
+    iex> list = [Enum.into([{"a", "1"},{"b", "2"},{"c", "3"}], %{}),
+    ...>         Enum.into([{"a", "4"},{"b", "5"},{"c", "6"}], %{})]
+    iex> Issues.TableFormatter.split_into_columns(list, [ "a", "b", "c" ])
+    [ ["1", "4"], ["2", "5"], ["3", "6"] ]
   """
   @spec split_into_columns([Map.t], [String.t]) :: [[String.t]]
   def split_into_columns(rows, headers) do
@@ -50,6 +57,13 @@ defmodule Issues.TableFormatter do
 
   @doc """
   Convert data into a printable string.
+
+  ## Examples
+
+    iex> Issues.TableFormatter.printable("a")
+    "a"
+    iex> Issues.TableFormatter.printable(99)
+    "99"
   """
   @spec printable(any) :: String.t
   def printable(str) when is_binary(str), do: str
@@ -59,6 +73,11 @@ defmodule Issues.TableFormatter do
   Calculate the column width for each column based on the length of the longest entry for the column.
 
   Returns a list of maximum column widths for the table.
+
+  ## Example
+    iex> data = [ [ "cat", "wombat", "elk"], ["mongoose", "ant", "gnu"]]
+    iex> Issues.TableFormatter.widths_of(data)
+    [ 6, 8 ]
   """
   @spec widths_of([[String.t]]) :: [Integer.t]
   def widths_of(columns) do
@@ -71,6 +90,11 @@ defmodule Issues.TableFormatter do
   `column_widths` List of maximum column width for each table column.
 
   Returns a single string to format the table columns in fixed width columns.
+
+  ## Example
+    iex> widths = [5,6,99]
+    iex> Issues.TableFormatter.format_for(widths)
+    "~-5s | ~-6s | ~-99s~n"
   """
   @spec format_for([Integer.t]) :: [String.t]
   def format_for(column_widths) do
@@ -79,6 +103,11 @@ defmodule Issues.TableFormatter do
 
   @doc """
   Produce the separator row between the table header and the body of the table.
+
+  ## Example
+    iex> widths = [5,6,9]
+    iex> Issues.TableFormatter.separator_row(widths)
+    "------+--------+----------"
   """
   @spec separator_row([Integer.t]) :: String.t
   def separator_row(column_widths) do

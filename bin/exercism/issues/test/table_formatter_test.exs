@@ -1,5 +1,6 @@
 defmodule TableFormatterTest do
   use ExUnit.Case          # bring in the test functionality
+  doctest Issues.TableFormatter
   import ExUnit.CaptureIO  # And allow us to capture stuff sent to stdout
 
   alias Issues.TableFormatter, as: TF
@@ -31,7 +32,6 @@ defmodule TableFormatterTest do
   test "correct format string returned" do
     assert TF.format_for([9, 10, 11]) == "~-9s | ~-10s | ~-11s~n"
   end
-
 
   test "Output is correct" do
     result = capture_io fn ->
