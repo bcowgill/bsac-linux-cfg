@@ -355,8 +355,8 @@ SUBLIME_CMD=subl
 SUBLIME_URL=http://download.sublimetext.com
 #SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
-#WebStorm 2016.2.3
-#Build #WS-162.1812.21, built on September 4, 2016
+#WebStorm 2016.3.2
+#Build #WS-163.9166.30
 #Licensed to Workshare LTD / Brent Cowgill
 #You have perpetual fallback license for this version
 #Subscription is active until January 27, 2018
@@ -365,10 +365,11 @@ SUBLIME_URL=http://download.sublimetext.com
 
 #me@akston:~/bin (dell-7510 *% u+2)$ tar tvzf ~/Downloads/WebStorm-2016.2.tar.gz  | head
 #-rw-r--r-- 0/0            6878 2016-07-09 10:44 WebStorm-162.1121.31/bin/idea.properties
+# https://www.jetbrains.com/webstorm/download/#section=linux-version
 WEBSTORM_CMD=wstorm
-WEBSTORM_ARCHIVE=WebStorm-2016.2
-WEBSTORM_CONFIG=WebStorm2016.2
-WEBSTORM_DIR=WebStorm-162.1121.31
+WEBSTORM_ARCHIVE=WebStorm-2016.3.2
+WEBSTORM_CONFIG=WebStorm2016.3
+WEBSTORM_DIR=WebStorm-163.9166.30
 WEBSTORM_URL=http://download.jetbrains.com/webstorm
 #WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 #WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
@@ -594,7 +595,8 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	BIG_DATA="/data"
 	VPN_PKG=""
    JAVA_VER=java-8-openjdk-amd64
-   NODE_VER="v6.3.1"
+	# set FRESH_NPM=1 once if you update NODE_VER
+   NODE_VER="v6.9.2"
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
 	VIRTUALBOX_REL=$(lsb_release -sc)
