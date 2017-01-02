@@ -116,10 +116,10 @@ else
 sub debug
 {
 	my $string = $ARG[0];
-	
+
 	my $vec = toCodeVector($string);
 	my $unbroken = normalizeNewlines($string);
-	
+
 	print("\n[ $string ]: $vec\n");
 	print("[ $unbroken ]: newline normalized\n");
 	print("   is_utf8? ", utf8::is_utf8($string) ? 1: 0, "\n");
@@ -185,6 +185,25 @@ sub checkCharClasses
 
 }
 
+sub checkUnicodeProperties
+{
+	my ($char) = @ARG;
+
+	map { testUnicodeProp($char, $ARG) } qw(Space Letter Number Punct Upper Lower Alpha Latin Greek);
+	testUnicodeProp($char, 'Numeric_Value=1');
+	testUnicodeProp($char, 'Line_Break=Hyphen');
+}
+
+
+# http://www.perl.com/pub/2012/05/perlunicook-match-unicode-properties-in-regex.html
+# http://perldoc.perl.org/perlunicode.html#Unicode-Character-Properties
+sub testUnicodeProp
+{
+	my ($char, $name) = @ARG;
+	print "   is $name " . (($char =~ m{\p{$name}}xmsg) ? 1 : 0) . " \\p{$name}\n";
+	print "   is not $name " . (($char =~ m{\P{$name}}xmsg) ? 1 : 0) . " \\P{$name}\n";
+}
+
 sub checkNormalization
 {
 	my ($string) = @ARG;
@@ -214,6 +233,7 @@ sub debugChar
 	my ($char) = @ARG;
 	print("   [ $char ]: @{[debugCodePoint($char)]} bytes[@{[toBytes($char)]}] @{[toName($char)]} @{[toCategory($char)]}\n");
 	checkCharClasses($char);
+	checkUnicodeProperties($char);
 	checkLineBreaks($char);
 }
 
