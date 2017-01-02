@@ -12,14 +12,28 @@ binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
 
+my $SPACE = 32;
+my $TAB = 9;
+my $LINE_FEED = 10;
+my $CARRIAGE_RETURN = 13;
+
+my $MIN_CODE_PT = 126;
+my $MIN_CODE = toUTFCodePoint($MIN_CODE_PT);
+
+my $MAX_CTRL = toUTFCodePoint($SPACE);
+my $CTRL = "@{[toUTFCodePoint($TAB)]} @{[toUTFCodePoint($LINE_FEED)]} @{[toUTFCodePoint($CARRIAGE_RETURN)]}";
+
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
 Usage:
 $0 [filename]
 
-Read utf8 from STDIN or files and show characters as {U+XXXX} if they
-are U+0100 or higher.
+Read utf8 from STDIN or files and show characters as {U+XXXX} if they are a control character or $MIN_CODE or higher.  A control character is any code point below $MAX_CTRL except tab, line feed, carriage return: $CTRL
+
+EXAMPLES:
+	head -3000 ~/bin/data/unicode/unicode-names.txt | tail -1 | utf8codept.pl
+
 USAGE
 	exit(0);
 }
@@ -47,7 +61,23 @@ sub convert
 
 sub toCodePoint
 {
-	return $ARG > 128                 ## if wide character...
-		? sprintf("{U+%04X}", $ARG)   ## {U+....}
-		: chr($ARG);                  ## return as is
+	return $ARG[0] > $MIN_CODE_PT       ## if wide character...
+		? toUTFCodePoint($ARG[0])        ## {U+....}
+		: encodeControl($ARG[0]);        ## encode only if control character
+}
+
+sub encodeControl
+{
+	return isControl($ARG[0]) ? toUTFCodePoint($ARG[0]) : chr($ARG[0])
+}
+
+# low value codes except tab, line feed and carriage return
+sub isControl
+{
+	return $ARG[0] < $SPACE && $ARG[0] != $TAB && $ARG[0] != $LINE_FEED && $ARG[0] != $CARRIAGE_RETURN;
+}
+
+sub toUTFCodePoint
+{
+	return sprintf("{U+%04X}", $ARG[0]);
 }
