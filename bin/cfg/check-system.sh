@@ -52,7 +52,7 @@ set +o posix
 #BAIL_OUT=editors
 #BAIL_OUT=custom
 #BAIL_OUT=repos
-BAIL_OUT=docker
+#BAIL_OUT=docker
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -1677,7 +1677,7 @@ BAIL_OUT repos
 if [ ! -z "$DOCKER_PKG" ]; then
 	cmd_exists $DOCKER_CMD || (sudo apt-get update && sudo apt-get install $DOCKER_PRE)
 	apt_has_key_adv $DOCKER_KEYCHK $DOCKER_KEY $DOCKER_KEYSVR "key fingerprint for Docker Engine"
-   apt_has_source_listd docker "deb https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
+   apt_has_source_listd docker "https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
    cmd_exists $DOCKER_CMD || (sudo apt-get update && apt-cache policy $DOCKER_PKG | grep apt.dockerproject.org/repo && install_command_from $DOCKER_CMD $DOCKER_PKG)
 fi
 
