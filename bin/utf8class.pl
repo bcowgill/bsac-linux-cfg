@@ -18,8 +18,35 @@ my $OB = '\{';
 my $CB = '\}';
 
 my @Interesting = qw(
-	open_punctuation
+	arrows
+	ascii
+	ascii_hex_digit
+	blank
+	block_elements
+	box_drawing
+	braille
+	cased
+	cased_letter
+	case_ignorable
 	close_punctuation
+	control
+	control_pictures
+	currency_symbol
+	currency_symbols
+	dash
+	dash_punctuation
+	decimal_number
+	diacritic
+	digit
+	dingbats
+	domino
+	domino_tiles
+
+	letter
+	number
+	upper
+	lower
+	open_punctuation
 );
 
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
@@ -30,7 +57,7 @@ $0 [-N] [-all] \\p{Letter}
 
 Output a table of utf8 characters matching the unicode properties specified.
 
--N   specify how many characters to show. default is 26
+-N	specify how many characters to show. default is 26
 -all show all matching characters. (will take a long time)
 
 See this url for perl's supported \\p{...} unicode properties
@@ -142,7 +169,7 @@ sub checkProperties
 	my ($char) = @ARG;
 	my $matched = 1;
 	foreach my $property (@Property) {
-      unless ($char =~ m{$property}) {
+		unless ($char =~ m{$property}) {
 			$matched = 0;
 			last;
 		}
