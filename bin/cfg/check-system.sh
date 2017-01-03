@@ -330,8 +330,9 @@ SCREENSAVER_PKG="
 DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 EMACS_VER=24.4
+EMACS_BASE=emacs24
 EMACS_PKG="
-	emacs:emacs24
+	$EMACS_BASE
 	editorconfig
 	ctags:exuberant-ctags
 	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
@@ -449,6 +450,7 @@ INSTALL_CMDS="
 	tcsh
 	curl wget
 	vim ctags
+	$EMACS_BASE
 	screen tmux cmatrix
 	colordiff
 	meld
@@ -754,7 +756,7 @@ if [ ! -z "$VIRTUALBOX_PKG" ]; then
 fi
 
 if [ ! -z "$EMACS_PKG" ]; then
-	EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:emacs24-el"
+	EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:$EMACS_BASE-el"
 fi
 
 NODE_PKG_LIST="
