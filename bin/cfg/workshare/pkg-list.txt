@@ -254,6 +254,8 @@ flip
 folks-common
 fontconfig
 fontconfig-config
+fontforge
+fontforge-common
 fonts-dejavu-core
 fonts-dejavu-extra
 fonts-droid
@@ -984,6 +986,7 @@ libfontconfig1:amd64
 libfontconfig1:i386
 libfontembed1:amd64
 libfontenc1:amd64
+libfontforge1
 libframe6:amd64
 libfreehand-0.1-1
 libfreerdp-cache1.1:amd64
@@ -1028,6 +1031,7 @@ libgdiplus
 libgdk-pixbuf2.0-0:amd64
 libgdk-pixbuf2.0-common
 libgdome2-0
+libgdraw4
 libgee-0.8-2:amd64
 libgee2:amd64
 libgegl-0.2-0:amd64
@@ -2122,6 +2126,7 @@ libspeexdsp1:amd64
 libspeexdsp1:i386
 libsphinxbase1
 libspice-server1:amd64
+libspiro0:amd64
 libsqlite0
 libsqlite3-0:amd64
 libsqlite3-0:i386
@@ -2211,6 +2216,7 @@ libudisks2-0:amd64
 libufe-xidgetter0
 libumfpack5.6.2:amd64
 libunicode-utf8-perl
+libuninameslist0
 libunistring0:amd64
 libunity9:amd64
 libunity-action-qt1:amd64
@@ -3075,6 +3081,7 @@ totem-plugins
 transmission-common
 transmission-gtk
 ttf-ancient-fonts-symbola
+ttfautohint
 ttf-dejavu-core
 ttf-indic-fonts-core
 ttf-ubuntu-font-family

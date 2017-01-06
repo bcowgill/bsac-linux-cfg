@@ -436,6 +436,11 @@ GOOGLE_CHROME_URL="http://www.google.com/chrome?platform=linux"
 GOOGLE_CHROME=google-chrome
 GOOGLE_CHROME_PKG=google-chrome-stable_current_amd64.deb
 
+# Chrome Dev Tools Dark Theme manual setup
+# https://github.com/mauricecruz/chrome-devtools-zerodarkmatrix-theme
+# Install chrome extension, chrome://flags to enable dev tools experiments and restart
+# Then turn on allow custom UI in dev tools settings and restart again
+
 FLASH_ARCHIVE="flashplayer_11_plugin_debug.i386"
 FLASH_EXTRACTED_DIR="$DOWNLOAD/$FLASH_ARCHIVE"
 FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"

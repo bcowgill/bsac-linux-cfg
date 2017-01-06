@@ -551,7 +551,7 @@ function install_file_from_url {
 	url="$3"
 	message="$4"
 	var_exists DOWNLOAD "$DOWNLOAD"
-	file_exists "$file" > /dev/null || (echo Try to install $file from $package at $url; wget --output-document $DOWNLOAD/$package $url)
+	file_exists "$file" > /dev/null || (echo MAYBE NOT OK Try to install $file from $package at $url; wget --output-document $DOWNLOAD/$package $url)
 	file_exists "$file" "$message"
 }
 
