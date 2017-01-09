@@ -17,11 +17,15 @@ my $some_char = "\N{U+200B}";
 
 while (my $line = <>) {
 	$line = NFD($line);   # decompose + reorder canonically
+	chomp($line);
 
 	#debugUTF8($line);
 	$line =~ s{$some_char}{}xmsg;
 	$line =~ s{\A\ \t}{}xms;
+	$line =~ s{\A(\-|»|\d+:)\ \t}{}xmsg;
+	$line =~ s{\s+\z}{}xms;
 
+	$line .= "\n";
 } continue {
 	print NFC($line);  # recompose (where possible) + reorder canonically
 }
