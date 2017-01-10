@@ -22,7 +22,7 @@ while (my $line = <>) {
 	#debugUTF8($line);
 	$line =~ s{$some_char}{}xmsg;
 	$line =~ s{\A\ \t}{}xms;
-	$line =~ s{\A(\-|»|\d+:)\ \t}{}xmsg;
+	$line =~ s{\A(\-|»|\d+:)\ ?\t}{}xmsg;
 	$line =~ s{\s+\z}{}xms;
 
 	$line .= "\n";
