@@ -16,14 +16,14 @@ local $INPUT_RECORD_SEPARATOR = undef;
 my $LOG_CLASS = $ENV{CMP} || "DocxumentComponent";
 my $DEL_DBG = 0;
 my $DEL_DEL = 1;
-my $DBG = "/*dbg:*/ "; # "//dbg: "
+my $DBG = "/*"."dbg:*/ "; # "//"."dbg: "
 my $SKIP = 0;
 
 my $sq = chr(39);
 my $dq = chr(34);
 my $obr = "{";
 
-# insert //dbg: before any console log messages inherited from BaseComponent
+# insert / / dbg: before any console log messages inherited from BaseComponent
 sub debug {
 	my ($lines) = @ARG;
 	my ($pre, $prefix) = ("", "");
@@ -73,12 +73,12 @@ sub debug {
 sub spit {
 	my ($file) = @ARG;
 
-	# unify //dbg: /*dbg:*/
+	# unify //.dbg: /*.dbg:.*/
 	$file =~ s{(//\s*dbg:|/\*\s*dbg:\s*\*/)\s*}{$DBG}xmsg;
 
 	# remove all commented out changes
 	$file =~ s{ [ \t]* //del: [^\n]+ (\n|\z)}{}xmsg if $DEL_DEL;
-	$file =~ s{ [ \t]* //dbg: [^\n]+ (\n|\z)}{}xmsg if $DEL_DBG;
+	$file =~ s{ [ \t]* //\s*dbg: [^\n]+ (\n|\z)}{}xmsg if $DEL_DBG;
 
 	# log empty exceptions
 	$file =~ s{
