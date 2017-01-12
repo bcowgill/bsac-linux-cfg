@@ -1,4 +1,4 @@
-
+#!/usr/local/bin/elixir -r
 defmodule Link2 do
   import :timer, only: [ sleep: 1 ]
 

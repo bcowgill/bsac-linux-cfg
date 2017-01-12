@@ -1,4 +1,4 @@
-
+#!/usr/local/bin/elixir -r
 defmodule Spawn1 do
   def greet do
     receive do

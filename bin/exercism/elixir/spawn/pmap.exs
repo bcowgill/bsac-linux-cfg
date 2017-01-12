@@ -1,4 +1,4 @@
-
+#!/usr/local/bin/elixir -r
 
 defmodule Parallel do
   def pmap(collection, fun) do

@@ -1,4 +1,4 @@
-
+#!/usr/local/bin/elixir -r
 defmodule Chain do
   def counter(next_pid) do
     receive do
