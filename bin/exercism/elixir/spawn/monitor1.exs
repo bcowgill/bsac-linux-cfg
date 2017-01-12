@@ -12,7 +12,7 @@ defmodule Monitor1 do
     receive do
       msg ->
         IO.puts "MESSAGE RECEIVED: #{inspect msg}"
-    after 1000 ->
+      after 1000 ->
         IO.puts "Nothing happened as far as I am concerned"
     end
   end
