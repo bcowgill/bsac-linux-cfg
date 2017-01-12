@@ -25,6 +25,7 @@ defmodule MySpawn do
     send(pid, {self, token})
 	pid
   end
+
 end
 
 # here's a client
@@ -39,6 +40,8 @@ IO.puts inspect pids
 
 result = pids
   |> Enum.map(fn ({token, pid}) -> MySpawn.sendit(pid, token) end)
+#  |> Enum.map(fn ({token, pid}) -> send(pid, {self, token }); pid end)
+
 #  |> Enum.reverse
   |> Enum.map(fn (pid) -> MySpawn.await(pid) end)
 
