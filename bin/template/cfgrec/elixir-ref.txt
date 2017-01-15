@@ -344,6 +344,34 @@ HEREIAM http://elixir-lang.org/getting-started/modules.html
 Errors
 raise("error message") = raises a run time error
 
+Process
+list/0      - info
+ alive?/1
+ info/1-2
+spawn/2,4   - create
+registered/0 - alias name for pid
+ register/2
+ whereis/1
+ unregister/1
+flag/2-3
+group_leader/0,2
+get_keys/0-1  - dictionary data for process
+ get/0-2
+ put/2
+ delete/1
+send/3
+send_after/3  - delayed send
+ read_timer/1
+ cancel_timer/1
+link/1
+ unlink/1
+monitor/1
+ demonitor/1-2
+sleep/1
+hibernate/3
+exit/2
+
+=====================================
 div(n, m) = integer division
 rem(n, m) = integer remainder
    rem(n, -m) === rem(n, m)

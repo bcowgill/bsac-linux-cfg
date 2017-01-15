@@ -17,7 +17,7 @@ defmodule Scheduler do
         IO.puts "#{module}.#{func} parallel calculator service"
         IO.puts "calculated results:"
         IO.puts inspect result
-        IO.puts "procs\n #   time (s)"
+        IO.puts "\nprocs\n #   time (s)"
       end
       :io.format "~2B     ~.2f~n", [num_processes, time/1000000.0]
     end
