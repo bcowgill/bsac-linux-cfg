@@ -105,6 +105,23 @@ is_pid, is_port, is_reference, is_tuple
 
 Port, Reference, PID ...
 
+Integer
+is_even/1
+is_odd/1
+parse/1-2
+digits/1-2
+ undigits/2
+to_string/1-2
+ to_char_list/1-2
+
+Float
+floor/2
+ ceil/2
+ round/2
+parse/1
+to_string/1-2
+ to_char_list/1-2
+
 Tuples
 {:ok, 42, "string"} = finite sized array
 elem(tuple, 1) == 42 for tuple above = fast access by index into tuple
@@ -112,9 +129,9 @@ tuple_size(tuple) = number of items in the tuple, fast operation
 put_elem(tuple, 1, 99) = get new tuple with value at index replaced
 List.to_tuple(list) = converts linked list to fixed sized tuple
 Tuple.duplicate/2
-Tuple.append/2
-Tuple.delete_at/2
 Tuple.insert_at/3
+ Tuple.append/2
+ Tuple.delete_at/2
 Tuple.to_list/1
 
 Lists (Linked)
