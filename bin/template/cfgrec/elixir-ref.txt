@@ -367,22 +367,22 @@ Errors
 raise("error message") = raises a run time error
 
 Process
-list/0      - info
+list/0          - info
  alive?/1
  info/1-2
-spawn/2,4   - create
-registered/0 - alias name for pid
+spawn/2,4       - create
+registered/0    - alias name for pid
  register/2
  whereis/1
  unregister/1
 flag/2-3
 group_leader/0,2
-get_keys/0-1  - dictionary data for process
+get_keys/0-1    - dictionary data for process
  get/0-2
  put/2
  delete/1
 send/3
-send_after/3  - delayed send
+send_after/3    - delayed send
  read_timer/1
  cancel_timer/1
 link/1
