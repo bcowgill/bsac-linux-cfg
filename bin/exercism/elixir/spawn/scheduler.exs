@@ -16,7 +16,7 @@ defmodule Scheduler do
       if num_processes == max_processes do
         IO.puts "#{module}.#{func} parallel calculator service"
         IO.puts "calculated results:"
-        IO.puts inspect result
+        #IO.puts inspect result
         IO.puts "\nprocs\n #   time (s)"
       end
       :io.format "~2B     ~.2f~n", [num_processes, time/1000000.0]
