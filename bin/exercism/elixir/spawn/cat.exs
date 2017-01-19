@@ -42,7 +42,7 @@ defmodule CatFinder do
   end
 end
 
-dir = "/home/me/bin/english"
+dir = "/home/me/Documents"
 
 to_process = CatFinder.find_files(dir)
 Scheduler.benchmark(10, CatFinder, :cat, to_process)
