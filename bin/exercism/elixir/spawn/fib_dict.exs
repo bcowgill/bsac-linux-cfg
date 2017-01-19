@@ -7,6 +7,8 @@ defmodule FibSolver do
   def fib(scheduler) do
     Process.put(0, 0)
 	Process.put(1, 1)
+	# prime the dictionary with some answers
+	fib_calc(400)
     do_fib(scheduler)
   end
 

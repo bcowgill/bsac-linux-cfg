@@ -7,6 +7,8 @@ defmodule FibSolver do
 
   def fib(scheduler) do
     { :ok, agent } = FibAgent.start_link()
+	# prime the dictionary with some answers
+	fib_calc(400, agent)
 	do_fib(scheduler, agent)
   end
 
