@@ -127,6 +127,9 @@ VIRTUALBOX_PKG="unar gksu dkms"
 VIRTUALBOX_REL="raring"
 #VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
 
+MONO_PKG=mono-complete
+MONO_CMD=mono
+
 SVN_CMD=svn
 SVN_VER="1.8.5"
 #SVN_PKG="subversion libsvn-java"
@@ -558,6 +561,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#SKYPE_PKG=""
 	SLACK_PKG=""
 	VIRTUALBOX_PKG=""
+	MONO_PKG=""
 	#DIFFMERGE_PKG=""
 	#P4MERGE_PKG=""
 	RUBY_PKG=""
@@ -636,6 +640,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	SKYPE_PKG=""
 	SLACK_PKG=""
 	VIRTUALBOX_PKG=""
+	MONO_PKG=""
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
 	RUBY_GEMS="sass foundation"
@@ -1292,6 +1297,15 @@ fi # VIRTUALBOX_PKG
 if [ ! -z "$SVN_PKG" ]; then
 	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $LSB_RELEASE main" "apt config for svn update missing"
 	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $LSB_RELEASE main" "apt config for svn update missing"
+fi
+
+if [ ! -z "$MONO_PKG" ]; then
+	# http://www.mono-project.com/docs/getting-started/install/linux/
+#	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+#	echo "deb http://download.mono-project.com/repo/debian $LSB_RELEASE main" | sudo tee /etc/apt/sources.list.d/mono-xamarin.list
+#	sudo apt-get update
+#	sudo apt-get install $MONO_PKG
+	cmd_exists $MONO_CMD
 fi
 
 if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
