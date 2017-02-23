@@ -14,23 +14,23 @@ defmodule TickerRing do
       { :register, pid } ->
         IO.puts "registering #{inspect pid}"
         generator(clients_queue, [ pid | new_clients_queue ], tick_sent)
-	  { :tick, _ } ->
+      { :tick, _ } ->
         IO.puts "tick from client"
-	    combined_queue = List.flatten(new_clients_queue, clients_queue)
-		generator(combined_queue, [], nil)
+        combined_queue = List.flatten(new_clients_queue, clients_queue)
+        generator(combined_queue, [], nil)
     after
       @interval ->
-        IO.puts "tick #{:os.system_time(:seconds)}"
-		combined_queue = List.flatten(new_clients_queue, clients_queue)
+        combined_queue = List.flatten(new_clients_queue, clients_queue)
+        IO.puts "tick #{:os.system_time(:seconds)} #{inspect combined_queue}"
         cond do
-		  length(combined_queue) == 0 ->
-		    generator(clients_queue, new_clients_queue, nil)
-		  tick_sent ->
-			generator(combined_queue, [], tick_sent)
-		  :otherwise ->
-		    sendTick(combined_queue)
-			generator(combined_queue, [], :true)
-		end
+          length(combined_queue) == 0 ->
+            generator(clients_queue, new_clients_queue, nil)
+          tick_sent ->
+            generator(combined_queue, [], tick_sent)
+          :otherwise ->
+            sendTick(combined_queue)
+            generator(combined_queue, [], :true)
+        end
     end
   end
 
