@@ -1,0 +1,469 @@
+Script started on Fri 24 Feb 2017 08:53:00 GMT
+]0;bcowgill@worksharexps-XPS-15-9530: ~/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn[01;32mbcowgill@worksharexps-XPS-15-9530[00m:[01;34m~/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn[00m (master *+$% u=)$ iex
+Erlang/OTP 18 [erts-7.2] [source-e6dd627] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+
+Interactive Elixir (1.2.3) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> /home/bcowgill/.iex.exs:5: warning: redefining module Erl
+String.
+Chars                   Graphemes               Normalizer              
+Unicode                 at/2                    capitalize/1            
+chunk/2                 codepoints/1            contains?/2             
+downcase/1              duplicate/2             ends_with?/2            
+equivalent?/2           first/1                 graphemes/1             
+jaro_distance/2         last/1                  length/1                
+ljust/3                 lstrip/1                lstrip/2                
+match?/2                next_codepoint/1        next_grapheme/1         
+next_grapheme_size/1    normalize/2             printable?/1            
+replace/4               replace_leading/3       replace_prefix/3        
+replace_suffix/3        replace_trailing/3      reverse/1               
+rjust/3                 rstrip/1                rstrip/2                
+slice/2                 slice/3                 split/1                 
+split/3                 split_at/2              splitter/3              
+starts_with?/2          strip/1                 strip/2                 
+to_atom/1               to_char_list/1          to_existing_atom/1      
+to_float/1              to_integer/1            to_integer/2            
+upcase/1                valid?/1                valid_character?/1      
+
+iex(1)> String.       List.
+Chars                 delete/2              delete_at/2           
+duplicate/2           first/1               flatten/1             
+flatten/2             foldl/3               foldr/3               
+insert_at/3           keydelete/3           keyfind/4             
+keymember?/3          keyreplace/4          keysort/2             
+keystore/4            keytake/3             last/1                
+replace_at/3          to_atom/1             to_existing_atom/1    
+to_float/1            to_integer/1          to_integer/2          
+to_string/1           to_tuple/1            update_at/3           
+wrap/1                zip/1                 
+iex(1)> List.     Enum.
+EmptyError           OutOfBoundsError     all?/2               
+any?/2               at/3                 chunk/2              
+chunk/4              chunk_by/2           concat/1             
+concat/2             count/1              count/2              
+dedup/1              dedup_by/2           drop/2               
+drop_while/2         each/2               empty?/1             
+fetch!/2             fetch/2              filter/2             
+filter_map/3         find/3               find_index/2         
+find_value/3         flat_map/2           flat_map_reduce/3    
+group_by/3           intersperse/2        into/2               
+into/3               join/2               map/2                
+map_join/3           map_reduce/3         max/1                
+max_by/2             member?/2            min/1                
+min_by/2             min_max/1            min_max_by/2         
+partition/2          random/1             reduce/2             
+reduce/3             reduce_while/3       reject/2             
+reverse/1            reverse/2            reverse_slice/3      
+scan/2               scan/3               shuffle/1            
+slice/2              slice/3              sort/1               
+sort/2               sort_by/3            split/2              
+split_while/2        sum/1                take/2               
+take_every/2         take_random/2        take_while/2         
+to_list/1            uniq/1               uniq_by/2            
+unzip/1              with_index/2         zip/2                
+
+iex(1)> Enum.     Map.
+delete/2             drop/2               equal?/2             
+fetch!/2             fetch/2              from_struct/1        
+get/3                get_and_update!/3    get_and_update/3     
+get_lazy/3           has_key?/2           keys/1               
+merge/2              merge/3              new/0                
+new/1                new/2                pop/3                
+pop_lazy/3           put/3                put_new/3            
+put_new_lazy/3       split/2              take/2               
+to_list/1            update!/3            update/4             
+values/1             
+iex(1)> Map.    Process.
+alive?/1          cancel_timer/1    delete/1          demonitor/2       
+exit/2            flag/2            flag/3            get/0             
+get/2             get_keys/0        get_keys/1        group_leader/0    
+group_leader/2    hibernate/3       info/1            info/2            
+link/1            list/0            monitor/1         put/2             
+read_timer/1      register/2        registered/0      send/3            
+send_after/3      spawn/2           spawn/4           unlink/1          
+unregister/1      whereis/1         
+iex(1)> Process.        Node.
+alive?/0        connect/1       disconnect/1    get_cookie/0    
+list/0          list/1          monitor/2       monitor/3       
+ping/1          self/0          set_cookie/2    spawn/2         
+spawn/3         spawn/4         spawn/5         spawn_link/2    
+spawn_link/4    start/3         stop/0          
+iex(1)> Node.     GenServer.
+abcast/3        call/3          cast/2          multi_call/4    
+reply/2         start/3         start_link/3    stop/3          
+whereis/1       
+iex(1)> GenServer.          Bitstring.       wise.
+&&&/2     <<</2     >>>/2     ^^^/2     band/2    bnot/1    bor/2     
+bsl/2     bsr/2     bxor/2    |||/2     ~~~/1     
+iex(1)> Bitwise.        Bitwise.
+&&&/2     <<</2     >>>/2     ^^^/2     band/2    bnot/1    bor/2     
+bsl/2     bsr/2     bxor/2    |||/2     ~~~/1     
+iex(1)> Bitwise.        Num   Integer.
+digits/2          is_even/1         is_odd/1          parse/2           
+to_char_list/1    to_char_list/2    to_string/1       to_string/2       
+undigits/2        
+iex(1)> Integer.        Float.
+ceil/2            floor/2           parse/1           round/2           
+to_char_list/1    to_char_list/2    to_string/1       to_string/2       
+
+iex(1)> Float.      Bool    Tuple.
+append/2       delete_at/2    duplicate/2    insert_at/3    to_list/1      
+
+iex(1)> Tuple.      Keywork d       Keyword.
+delete/2             delete/3             delete_first/2       
+drop/2               equal?/2             fetch!/2             
+fetch/2              get/3                get_and_update!/3    
+get_and_update/3     get_lazy/3           get_values/2         
+has_key?/2           keys/1               keyword?/1           
+merge/2              merge/3              new/0                
+new/1                new/2                pop/3                
+pop_first/3          pop_lazy/3           put/3                
+put_new/3            put_new_lazy/3       split/2              
+take/2               to_list/1            update!/3            
+update/4             values/1             
+iex(1)> Keyword.        Module.
+LocalsTracker           __info__/1              add_doc/6               
+concat/1                concat/2                create/3                
+defines?/2              defines?/3              definitions_in/1        
+definitions_in/2        delete_attribute/2      eval_quoted/4           
+get_attribute/2         make_overridable/2      open?/1                 
+overridable?/2          put_attribute/3         register_attribute/3    
+safe_concat/1           safe_concat/2           split/1                 
+
+iex(1)> Module.       Stru    Access.
+fetch/2             get/3               get_and_update/3    
+
+iex(1)> Access.       MapSet.
+__struct__/0      delete/2          difference/2      disjoint?/2       
+equal?/2          intersection/2    member?/2         new/0             
+new/1             new/2             put/2             size/1            
+subset?/2         to_list/1         union/2           
+iex(1)> MapSet.       Function.         FunctionClauseError.
+__struct__/0    exception/1     message/1       
+iex(1)> FunctionClauseError.                    Error.      h nil
+[31mCould not load module nil, got: nofile[0m
+iex(2)> s nil
+[31mCould not load module nil, got: nofile[0m
+iex(3)> Erl.h :io
+http://erlang.org/doc/man/io.html
+:io.columns/0           http://erlang.org/doc/man/io.html#columns-0
+:io.columns/1           http://erlang.org/doc/man/io.html#columns-1
+:io.format/1            http://erlang.org/doc/man/io.html#format-1
+:io.format/2            http://erlang.org/doc/man/io.html#format-2
+:io.format/3            http://erlang.org/doc/man/io.html#format-3
+:io.fread/2             http://erlang.org/doc/man/io.html#fread-2
+:io.fread/3             http://erlang.org/doc/man/io.html#fread-3
+:io.fwrite/1            http://erlang.org/doc/man/io.html#fwrite-1
+:io.fwrite/2            http://erlang.org/doc/man/io.html#fwrite-2
+:io.fwrite/3            http://erlang.org/doc/man/io.html#fwrite-3
+:io.get_chars/2         http://erlang.org/doc/man/io.html#get_chars-2
+:io.get_chars/3         http://erlang.org/doc/man/io.html#get_chars-3
+:io.get_line/1          http://erlang.org/doc/man/io.html#get_line-1
+:io.get_line/2          http://erlang.org/doc/man/io.html#get_line-2
+:io.get_password/0              http://erlang.org/doc/man/io.html#get_password-0
+:io.get_password/1              http://erlang.org/doc/man/io.html#get_password-1
+:io.getopts/0           http://erlang.org/doc/man/io.html#getopts-0
+:io.getopts/1           http://erlang.org/doc/man/io.html#getopts-1
+:io.module_info/0               http://erlang.org/doc/man/io.html#module_info-0
+:io.module_info/1               http://erlang.org/doc/man/io.html#module_info-1
+:io.nl/0                http://erlang.org/doc/man/io.html#nl-0
+:io.nl/1                http://erlang.org/doc/man/io.html#nl-1
+:io.parse_erl_exprs/1           http://erlang.org/doc/man/io.html#parse_erl_exprs-1
+:io.parse_erl_exprs/2           http://erlang.org/doc/man/io.html#parse_erl_exprs-2
+:io.parse_erl_exprs/3           http://erlang.org/doc/man/io.html#parse_erl_exprs-3
+:io.parse_erl_exprs/4           http://erlang.org/doc/man/io.html#parse_erl_exprs-4
+:io.parse_erl_form/1            http://erlang.org/doc/man/io.html#parse_erl_form-1
+:io.parse_erl_form/2            http://erlang.org/doc/man/io.html#parse_erl_form-2
+:io.parse_erl_form/3            http://erlang.org/doc/man/io.html#parse_erl_form-3
+:io.parse_erl_form/4            http://erlang.org/doc/man/io.html#parse_erl_form-4
+:io.printable_range/0           http://erlang.org/doc/man/io.html#printable_range-0
+:io.put_chars/1         http://erlang.org/doc/man/io.html#put_chars-1
+:io.put_chars/2         http://erlang.org/doc/man/io.html#put_chars-2
+:io.read/1              http://erlang.org/doc/man/io.html#read-1
+:io.read/2              http://erlang.org/doc/man/io.html#read-2
+:io.read/3              http://erlang.org/doc/man/io.html#read-3
+:io.read/4              http://erlang.org/doc/man/io.html#read-4
+:io.request/1           http://erlang.org/doc/man/io.html#request-1
+:io.request/2           http://erlang.org/doc/man/io.html#request-2
+:io.requests/1          http://erlang.org/doc/man/io.html#requests-1
+:io.requests/2          http://erlang.org/doc/man/io.html#requests-2
+:io.rows/0              http://erlang.org/doc/man/io.html#rows-0
+:io.rows/1              http://erlang.org/doc/man/io.html#rows-1
+:io.scan_erl_exprs/1            http://erlang.org/doc/man/io.html#scan_erl_exprs-1
+:io.scan_erl_exprs/2            http://erlang.org/doc/man/io.html#scan_erl_exprs-2
+:io.scan_erl_exprs/3            http://erlang.org/doc/man/io.html#scan_erl_exprs-3
+:io.scan_erl_exprs/4            http://erlang.org/doc/man/io.html#scan_erl_exprs-4
+:io.scan_erl_form/1             http://erlang.org/doc/man/io.html#scan_erl_form-1
+:io.scan_erl_form/2             http://erlang.org/doc/man/io.html#scan_erl_form-2
+:io.scan_erl_form/3             http://erlang.org/doc/man/io.html#scan_erl_form-3
+:io.scan_erl_form/4             http://erlang.org/doc/man/io.html#scan_erl_form-4
+:io.setopts/1           http://erlang.org/doc/man/io.html#setopts-1
+:io.setopts/2           http://erlang.org/doc/man/io.html#setopts-2
+:io.write/1             http://erlang.org/doc/man/io.html#write-1
+:io.write/2             http://erlang.org/doc/man/io.html#write-2
+[33m:ok[0m
+iex(4)> IO.
+ANSI                    Stream                  StreamError             
+binread/2               binstream/2             binwrite/2              
+chardata_to_string/1    getn/2                  getn/3                  
+gets/2                  inspect/2               inspect/3               
+iodata_length/1         iodata_to_binary/1      puts/2                  
+read/2                  stream/2                write/2                 
+
+iex(4)> IO.   : Erl.h :timer
+http://erlang.org/doc/man/timer.html
+:timer.apply_after/4            http://erlang.org/doc/man/timer.html#apply_after-4
+:timer.apply_interval/4         http://erlang.org/doc/man/timer.html#apply_interval-4
+:timer.cancel/1         http://erlang.org/doc/man/timer.html#cancel-1
+:timer.code_change/3            http://erlang.org/doc/man/timer.html#code_change-3
+:timer.exit_after/2             http://erlang.org/doc/man/timer.html#exit_after-2
+:timer.exit_after/3             http://erlang.org/doc/man/timer.html#exit_after-3
+:timer.get_status/0             http://erlang.org/doc/man/timer.html#get_status-0
+:timer.handle_call/3            http://erlang.org/doc/man/timer.html#handle_call-3
+:timer.handle_cast/2            http://erlang.org/doc/man/timer.html#handle_cast-2
+:timer.handle_info/2            http://erlang.org/doc/man/timer.html#handle_info-2
+:timer.hms/3            http://erlang.org/doc/man/timer.html#hms-3
+:timer.hours/1          http://erlang.org/doc/man/timer.html#hours-1
+:timer.init/1           http://erlang.org/doc/man/timer.html#init-1
+:timer.kill_after/1             http://erlang.org/doc/man/timer.html#kill_after-1
+:timer.kill_after/2             http://erlang.org/doc/man/timer.html#kill_after-2
+:timer.minutes/1                http://erlang.org/doc/man/timer.html#minutes-1
+:timer.module_info/0            http://erlang.org/doc/man/timer.html#module_info-0
+:timer.module_info/1            http://erlang.org/doc/man/timer.html#module_info-1
+:timer.now_diff/2               http://erlang.org/doc/man/timer.html#now_diff-2
+:timer.seconds/1                http://erlang.org/doc/man/timer.html#seconds-1
+:timer.send_after/2             http://erlang.org/doc/man/timer.html#send_after-2
+:timer.send_after/3             http://erlang.org/doc/man/timer.html#send_after-3
+:timer.send_interval/2          http://erlang.org/doc/man/timer.html#send_interval-2
+:timer.send_interval/3          http://erlang.org/doc/man/timer.html#send_interval-3
+:timer.sleep/1          http://erlang.org/doc/man/timer.html#sleep-1
+:timer.start/0          http://erlang.org/doc/man/timer.html#start-0
+:timer.start_link/0             http://erlang.org/doc/man/timer.html#start_link-0
+:timer.tc/1             http://erlang.org/doc/man/timer.html#tc-1
+:timer.tc/2             http://erlang.org/doc/man/timer.html#tc-2
+:timer.tc/3             http://erlang.org/doc/man/timer.html#tc-3
+:timer.terminate/2              http://erlang.org/doc/man/timer.html#terminate-2
+[33m:ok[0m
+iex(5)> Erl.h :observer
+http://erlang.org/doc/man/observer.html
+:observer.module_info/0         http://erlang.org/doc/man/observer.html#module_info-0
+:observer.module_info/1         http://erlang.org/doc/man/observer.html#module_info-1
+:observer.start/0               http://erlang.org/doc/man/observer.html#start-0
+:observer.stop/0                http://erlang.org/doc/man/observer.html#stop-0
+[33m:ok[0m
+iex(6)> :observer.start
+[31m
+08:59:04.049 [error] WX Failed loading 'wxe_driver'@'/usr/lib/erlang/lib/wx-1.6/priv' 
+
+[0m[33m{:error,
+ {{:load_driver,
+   'libwx_gtk2u_stc-2.8.so.0: cannot open shared object file: No such file or directory'},
+  [{:wxe_server, :start, 1, [file: 'wxe_server.erl', line: 65]},
+   {:wx, :new, 1, [file: 'wx.erl', line: 115]},
+   {:observer_wx, :init, 1, [file: 'observer_wx.erl', line: 96]},
+   {:wx_object, :init_it, 6, [file: 'wx_object.erl', line: 337]},
+   {:proc_lib, :init_p_do_apply, 3, [file: 'proc_lib.erl', line: 240]}]}}[0m
+iex(7)> i self
+[33mTerm[0m
+[22m  #PID<0.58.0>[0m
+[33mData type[0m
+[22m  PID[0m
+[33mAlive[0m
+[22m  true[0m
+[33mName[0m
+[22m  not registered[0m
+[33mLinks[0m
+[22m  none[0m
+[33mMessage queue length[0m
+[22m  0[0m
+[33mDescription[0m
+[22m  Use Process.info/1 to get more info about this process[0m
+[33mReference modules[0m
+[22m  Process, Node[0m
+iex(8)> h
+[0m
+[7m[33m                                  IEx.Helpers                                   [0m
+[0m
+Welcome to Interactive Elixir. You are currently seeing the documentation for
+the module [36mIEx.Helpers[0m which provides many helpers to make Elixir's shell more
+joyful to work with.
+[0m
+This message was triggered by invoking the helper [36mh()[0m, usually referred to as
+[36mh/0[0m (since it expects 0 arguments).
+[0m
+You can use the [36mh[0m function to invoke the documentation for any Elixir module or
+function:
+[0m
+[36m[1m┃ h Enum
+┃ h Enum.map
+┃ h Enum.reverse/1[0m
+[0m
+You can also use the [36mi[0m function to introspect any value you have in the shell:
+[0m
+[36m[1m┃ i "hello"[0m
+[0m
+There are many other helpers available:
+[0m
+  • [36mb/1[0m           - prints callbacks info and docs for a given module
+  • [36mc/2[0m           - compiles a file at the given path
+  • [36mcd/1[0m          - changes the current directory
+  • [36mclear/0[0m       - clears the screen
+  • [36mflush/0[0m       - flushes all messages sent to the shell
+  • [36mh/0[0m           - prints this help message
+  • [36mh/1[0m           - prints help for the given module, function or macro
+  • [36mi/1[0m           - prints information about the given data type
+  • [36mimport_file/1[0m - evaluates the given file in the shell's context
+  • [36ml/1[0m           - loads the given module's beam code
+  • [36mls/0[0m          - lists the contents of the current directory
+  • [36mls/1[0m          - lists the contents of the specified directory
+  • [36mpid/3[0m         — creates a PID with the 3 integer arguments passed
+  • [36mpwd/0[0m         — prints the current working directory
+  • [36mr/1[0m           — recompiles and reloads the given module's source file
+  • [36mrespawn/0[0m     — respawns the current shell
+  • [36ms/1[0m           — prints spec information
+  • [36mt/1[0m           — prints type information
+  • [36mv/0[0m           — retrieves the last value from the history
+  • [36mv/1[0m           — retrieves the nth value from the history
+[0m
+Help for all of those functions can be consulted directly from the command line
+using the [36mh[0m helper itself. Try:
+[0m
+[36m[1m┃ h(v/0)[0m
+[0m
+To learn more about IEx as a whole, just type [36mh(IEx)[0m.
+[0m
+iex(9)> b String
+[31mNo callbacks for String were found[0m
+iex(10)> c "ticker      retry.ex! "
+[33m[Retry][0m
+iex(11)> r Retry
+retry.ex:1: warning: redefining module Retry
+[33m{:reloaded, Retry, [Retry]}[0m
+iex(12)> s String
+[22m@spec split(t(), pattern() | Regex.t(), Keyword.t()) :: [t()][0m
+[22m@spec rjust(t(), non_neg_integer(), char()) :: t()[0m
+[22m@spec ljust(t(), non_neg_integer(), char()) :: t()[0m
+[22m@spec rstrip(t(), char()) :: t()[0m
+[22m@spec lstrip(t(), char()) :: t()[0m
+[22m@spec strip(t(), char()) :: t()[0m
+[22m@spec printable?(t()) :: boolean()[0m
+[22m@spec valid?(t()) :: boolean()[0m
+[22m@spec valid_character?(t()) :: boolean()[0m
+[22m@spec to_integer(String.t()) :: integer()[0m
+[22m@spec upcase(t()) :: t()[0m
+[22m@spec downcase(t()) :: t()[0m
+[22m@spec capitalize(t()) :: t()[0m
+[22m@spec reverse(t()) :: t()[0m
+[22m@spec next_grapheme(t()) :: {grapheme(), t()} | nil[0m
+[22m@spec next_grapheme_size(t()) :: {pos_integer(), t()} | nil[0m
+[22m@spec equivalent?(t(), t()) :: boolean()[0m
+[22m@spec length(t()) :: non_neg_integer()[0m
+[22m@spec starts_with?(t(), t() | [t()]) :: boolean()[0m
+[22m@spec ends_with?(t(), t() | [t()]) :: boolean()[0m
+[22m@spec match?(t(), Regex.t()) :: boolean()[0m
+[22m@spec contains?(t(), pattern()) :: boolean()[0m
+[22m@spec to_integer(String.t(), 2..36) :: integer()[0m
+[22m@spec normalize(t(), atom()) :: boolean()[0m
+[22m@spec duplicate(t(), non_neg_integer()) :: t()[0m
+[22m@spec slice(t(), Range.t()) :: t()[0m
+[22m@spec jaro_distance(t(), t()) :: float()[0m
+[22m@spec split(t()) :: [t()][0m
+[22m@spec splitter(t(), pattern(), Keyword.t()) :: Enumerable.t()[0m
+[22m@spec next_codepoint(t()) :: {codepoint(), t()} | nil[0m
+[22m@spec chunk(t(), :valid | :printable) :: [t()][0m
+[22m@spec first(t()) :: grapheme() | nil[0m
+[22m@spec last(t()) :: grapheme() | nil[0m
+[22m@spec to_char_list(t()) :: char_list()[0m
+[22m@spec to_float(String.t()) :: float()[0m
+[22m@spec slice(t(), integer(), integer()) :: grapheme()[0m
+[22m@spec split(t(), pattern() | Regex.t()) :: [t()][0m
+[22m@spec split_at(t(), integer()) :: {t(), t()}[0m
+[22m@spec rjust(t(), non_neg_integer()) :: t()[0m
+[22m@spec ljust(t(), non_neg_integer()) :: t()[0m
+[22m@spec at(t(), integer()) :: grapheme() | nil[0m
+[22m@spec to_atom(String.t()) :: atom()[0m
+[22m@spec to_existing_atom(String.t()) :: atom()[0m
+[22m@spec rstrip(t()) :: t()[0m
+[22m@spec strip(t()) :: t()[0m
+[22m@spec replace(t(), pattern() | Regex.t(), t(), Keyword.t()) :: t()[0m
+[22m@spec codepoints(t()) :: [codepoint()][0m
+[22m@spec graphemes(t()) :: [grapheme()][0m
+iex(13)> g h
+[0m
+[7m[33m                                  IEx.Helpers                                   [0m
+[0m
+Welcome to Interactive Elixir. You are currently seeing the documentation for
+the module [36mIEx.Helpers[0m which provides many helpers to make Elixir's shell more
+joyful to work with.
+[0m
+This message was triggered by invoking the helper [36mh()[0m, usually referred to as
+[36mh/0[0m (since it expects 0 arguments).
+[0m
+You can use the [36mh[0m function to invoke the documentation for any Elixir module or
+function:
+[0m
+[36m[1m┃ h Enum
+┃ h Enum.map
+┃ h Enum.reverse/1[0m
+[0m
+You can also use the [36mi[0m function to introspect any value you have in the shell:
+[0m
+[36m[1m┃ i "hello"[0m
+[0m
+There are many other helpers available:
+[0m
+  • [36mb/1[0m           - prints callbacks info and docs for a given module
+  • [36mc/2[0m           - compiles a file at the given path
+  • [36mcd/1[0m          - changes the current directory
+  • [36mclear/0[0m       - clears the screen
+  • [36mflush/0[0m       - flushes all messages sent to the shell
+  • [36mh/0[0m           - prints this help message
+  • [36mh/1[0m           - prints help for the given module, function or macro
+  • [36mi/1[0m           - prints information about the given data type
+  • [36mimport_file/1[0m - evaluates the given file in the shell's context
+  • [36ml/1[0m           - loads the given module's beam code
+  • [36mls/0[0m          - lists the contents of the current directory
+  • [36mls/1[0m          - lists the contents of the specified directory
+  • [36mpid/3[0m         — creates a PID with the 3 integer arguments passed
+  • [36mpwd/0[0m         — prints the current working directory
+  • [36mr/1[0m           — recompiles and reloads the given module's source file
+  • [36mrespawn/0[0m     — respawns the current shell
+  • [36ms/1[0m           — prints spec information
+  • [36mt/1[0m           — prints type information
+  • [36mv/0[0m           — retrieves the last value from the history
+  • [36mv/1[0m           — retrieves the nth value from the history
+[0m
+Help for all of those functions can be consulted directly from the command line
+using the [36mh[0m helper itself. Try:
+[0m
+[36m[1m┃ h(v/0)[0m
+[0m
+To learn more about IEx as a whole, just type [36mh(IEx)[0m.
+[0m
+iex(14)> t String
+[22m@type t() :: binary()[0m
+[22m@type codepoint() :: t()[0m
+[22m@type grapheme() :: t()[0m
+[22m@type pattern() :: t() | [t()] | :binary.cp()[0m
+iex(15)> v
+iex(16)> v 4
+[33m:ok[0m
+iex(17)> h v
+[0m
+[7m[33m                                 def v(n \\ -1)                                 [0m
+[0m
+Retrieves the nth expression's value from the history.
+[0m
+Use negative values to lookup expression values relative to the current one.
+For instance, v(-1) returns the result of the last evaluated expression.
+[0m
+iex(18)> v
+iex(19)> v 42
+[33m42[0m
+iex(20)> v
+[33m42[0m
+iex(21)> v(-5)[C[C[C[C
+[33m:ok[0m
+iex(22)> ]0;bcowgill@worksharexps-XPS-15-9530: ~/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn[01;32mbcowgill@worksharexps-XPS-15-9530[00m:[01;34m~/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn[00m (master *+$% u=)$ exit
+exit
+
+Script done on Fri 24 Feb 2017 09:07:41 GMT

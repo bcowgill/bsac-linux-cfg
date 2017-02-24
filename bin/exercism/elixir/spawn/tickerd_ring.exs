@@ -2,7 +2,8 @@
 # ./tickerd_ring.exs --name tickerd@docuzilla.workshare.com
 Code.load_file("ticker_ring.ex", __DIR__)
 
-domain = "akston.home" # "docuzilla.workshare.com"
+#domain = "akston.home"
+domain = "docuzilla.workshare.com"
 
 IO.inspect Node.self
 IO.puts inspect TickerRing.start
@@ -27,6 +28,12 @@ defmodule NodeConnector do
 end
 
 1 .. 4
-  |> Enum.each fn num -> NodeConnector.connect("tickerc#{num}@#{domain}") end
+  |> Enum.each(fn num -> NodeConnector.connect("tickerc#{num}@#{domain}") end)
 
 :timer.sleep 5 * 60 * 1000
+
+# (hostname;elixir --version) | perl -pne 's{\A}{#}xmsg' >> tickerd_ring.exs
+#worksharexps-XPS-15-9530
+#Erlang/OTP 18 [erts-7.2] [source-e6dd627] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+#
+#Elixir 1.2.3

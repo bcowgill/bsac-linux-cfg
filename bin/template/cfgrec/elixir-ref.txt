@@ -17,7 +17,17 @@ https://my.workshare.com/#folders/t-oNju9B6srZnrTe
 
 https://elixirforum.com/
 
+IEX
+Ctrl-\ - exit iex
+Ctrl-c a - exit iex
+Ctrl-g q - exit iex
+Ctrl-c Ctrl-c - exit iex
 #iex:break   - in iex terminates an unterminated 'quote' of any type
+h String - iex help on String module
+i "this" - iex introspect a value
+s String - iex prints spec info for module etc
+t String - iex prints type info for module etc
+c String - iex prints callbacks info for module etc
 
 Finding Good Libraries
 curated list: https://github.com/h4cc/awesome-elixir
