@@ -1,0 +1,21 @@
+Flexbox quick reference:
+
+(m) - affects/along main axis
+(x) - affects/along cross axis
+(i) - applies to items in container
+
+display: flex
+
+flex-flow: (m)(x) <flex-direction> <flex-wrap>
+flex-direction: (m) row, column, row-reverse, column-reverse
+justify-content: (m) flex-start, flex-end, center, space-between, space-around
+align-items: (x) flex-start, flex-end, center, stretch, baseline
+align-self: (x)(i) flex-start, flex-end, center, stretch, baseline
+order: (i) number
+flex-wrap: (x) nowrap, wrap, wrap-reverse
+align-content: (m)(x) flex-start, flex-end, center, space-between, space-around, stretch
+
+flex: (m)(i) <flex-grow> <flex-shrink> <flex-basis>
+flex-grow: (m)(i) num
+flex-shrink: (m)(i) num
+flex-basis: (m)(i) auto num% content
