@@ -134,6 +134,43 @@ function check_linux {
 }
 
 #============================================================================
+# system related
+
+function user_in_group {
+	local group user message
+	group="$1"
+	user="$2"
+	message="$2"
+	if egrep "^$group:" /etc/group | egrep "\b$user\b"; then
+		OK "$user is a member of group $group"
+	else
+		NOT_OK "$user is not a member of group $group [$message]"
+		return 1
+	fi
+	return 0
+}
+
+function add_user_to_group {
+	local group user message
+	group="$1"
+	user="$2"
+	message="$2"
+	if egrep "^$group:" /etc/group | egrep "\b$user\b"; then
+		OK "$user is a member of group $group"
+	else
+		echo "MAYBE NOT OK $user is not a member of group $group - will try to add"
+		if egrep "^$group:" /etc/group; then
+			OK "group $group exists"
+		else
+			sudo groupadd "$group"
+		fi
+		sudo usermod -aG "$group" "$user"
+		user_in_group "$group" "$user" "$message"
+	fi
+	return 0
+}
+
+#============================================================================
 # files and directories
 
 function dir_exists {

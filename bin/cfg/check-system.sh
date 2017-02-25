@@ -416,6 +416,7 @@ MY_REPOS="
 DOCKER_PKG=docker-engine
 DOCKER_PRE="apt-transport-https ca-certificates linux-image-extra-$(uname -r) linux-image-extra-virtual"
 DOCKER_CMD=docker
+DOCKER_GRP=docker
 DOCKER_KEY=58118E89F3A912897C070ADBF76221572C52609D
 DOCKER_KEYCHK=2C52609D
 DOCKER_KEYSVR=hkp://ha.pool.sks-keyservers.net:80
@@ -1700,6 +1701,7 @@ if [ ! -z "$DOCKER_PKG" ]; then
 	apt_has_key_adv $DOCKER_KEYCHK $DOCKER_KEY $DOCKER_KEYSVR "key fingerprint for Docker Engine"
    apt_has_source_listd docker "https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
    cmd_exists $DOCKER_CMD || (sudo apt-get update && apt-cache policy $DOCKER_PKG | grep apt.dockerproject.org/repo && install_command_from $DOCKER_CMD $DOCKER_PKG)
+   add_user_to_group $DOCKER_GRP $AUSER "allow docker to be started without root permissions"
 fi
 
 BAIL_OUT docker
