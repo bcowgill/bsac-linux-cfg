@@ -33,9 +33,9 @@ while (my $line = <>) {
 	$line =~ s{$ctrlg+}{}xmsg;
 	while ($line =~ s{[^$bs] $bs}{}xmsg) {}
 
+	# iex prompt remove numbers
 	$line =~ s{\A iex \(\d+\)>}{\niex(n)>}xmsg;
 	# iex list of functions
-	$line =~ s{$ctrlg+}{}xmsg;
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n$4\n$5\n}xmsg;
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n$4\n}xmsg;
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n}xmsg;
