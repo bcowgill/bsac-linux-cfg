@@ -37,3 +37,7 @@ end
 #Erlang/OTP 18 [erts-7.2] [source-e6dd627] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
 #
 #Elixir 1.2.3
+#akston
+#Erlang/OTP 19 [erts-8.1] [source-e7be63d] [64-bit] [smp:8:8] [async-threads:10] [hipe] [kernel-poll:false]
+#
+#Elixir 1.3.4
