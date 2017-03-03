@@ -28,6 +28,7 @@ i "this" - iex introspect a value
 s String - iex prints spec info for module etc
 t String - iex prints type info for module etc
 c String - iex prints callbacks info for module etc
+iex -s Mix - to start you mix project
 
 Finding Good Libraries
 curated list: https://github.com/h4cc/awesome-elixir
@@ -417,6 +418,15 @@ ping/1
  connect/1
  disconnect/1
 monitor/2-3
+
+GenServer - monitored servers
+{:ok, pid} = GenServer.start_link(Module, state, [debug: [:trace, :statistics]])
+- start a server with debug trace and statistics.
+:sys.statistics pid, :get  # to see the statistics
+
+:sys - system messages
+:sys.trace pid, true  # turn on debug tracing for pid
+:sys.get_status pid
 
 =====================================
 div(n, m) = integer division
