@@ -424,6 +424,10 @@ GenServer - monitored servers
 - start a server with debug trace and statistics.
 :sys.statistics pid, :get  # to see the statistics
 
+{:ok, pid} = GenServer.start_link(Module, state, [name: :module, debug: [:trace, :statistics]])
+Process.registered # will show :seq listed
+- start a server with a locally unique name as well as pid
+
 :sys - system messages
 :sys.trace pid, true  # turn on debug tracing for pid
 :sys.get_status pid
