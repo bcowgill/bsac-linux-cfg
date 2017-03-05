@@ -12,12 +12,25 @@ defmodule Stack.Server do
     server_pid
   end
 
+  ### immutable queries
+
+  def length(server_pid) do
+    GenServer.call(server_pid, :length)
+  end
+
   def pop(server_pid) do
     GenServer.call(server_pid, :pop)
   end
 
-  def length(server_pid) do
-    GenServer.call(server_pid, :length)
+  ### mutable operations
+
+  def push(server_pid, value) do
+    GenServer.cast(server_pid, { :push, value })
+  end
+
+  def push_list(server_pid, list)
+  when is_list(list) do
+    GenServer.cast(server_pid, { :push_list, list })
   end
 
   ### GenServer interface
@@ -28,5 +41,16 @@ defmodule Stack.Server do
 
   def handle_call(:length, _client_pid, stack) do
     { :reply, Kernel.length(stack), stack }
+  end
+
+  def handle_cast({ :push, value }, stack) do
+    { :noreply, [ value | stack ] }
+  end
+
+  def handle_cast({ :push_list, list }, stack) do
+    { :noreply, List.flatten(
+      List.insert_at(
+        list,
+        Kernel.length(list), stack)) }
   end
 end
