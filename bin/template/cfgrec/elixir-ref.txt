@@ -420,6 +420,7 @@ ping/1
 monitor/2-3
 
 GenServer - monitored servers
+OTP - Open Telecom Platform
 {:ok, pid} = GenServer.start_link(Module, state, [debug: [:trace, :statistics]])
 - start a server with debug trace and statistics.
 :sys.statistics pid, :get  # to see the statistics
