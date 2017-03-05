@@ -14,21 +14,21 @@ defmodule Stack.Server do
 
   ### immutable queries
 
-  def length(server_pid) do
+  def length(server_pid \\ @global_name) do
     GenServer.call(server_pid, :length)
   end
 
-  def pop(server_pid) do
+  def pop(server_pid \\ @global_name) do
     GenServer.call(server_pid, :pop)
   end
 
   ### mutable operations
 
-  def push(server_pid, value) do
+  def push(value, server_pid \\ @global_name) do
     GenServer.cast(server_pid, { :push, value })
   end
 
-  def push_list(server_pid, list)
+  def push_list(list, server_pid \\ @global_name)
   when is_list(list) do
     GenServer.cast(server_pid, { :push_list, list })
   end
@@ -52,5 +52,9 @@ defmodule Stack.Server do
       List.insert_at(
         list,
         Kernel.length(list), stack)) }
+  end
+
+  def terminate(reason, state) do
+    IO.puts "#{__MODULE__} terminating #{inspect reason} #{inspect state}"
   end
 end
