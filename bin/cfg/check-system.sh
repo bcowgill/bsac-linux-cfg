@@ -1,6 +1,7 @@
 #!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK'
+# check-system.sh 2>&1 | egrep -A 45 VERSIONS
 
 # Search for 'begin' for start of script
 
@@ -940,6 +941,7 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
 get_git
 
+echo VERSIONS
 check_linux "$UBUNTU"
 which git && git --version
 which java && java -version && ls $JAVA_JVM
@@ -951,6 +953,7 @@ which nodejs && nodejs --version
 which npm && npm --version
 which erl && erl -eval 'halt().'
 which elixir && elixir -v
+echo END versions
 
 BAIL_OUT versions
 
