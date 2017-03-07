@@ -1567,8 +1567,6 @@ libmono-2.0-1
 libmono-2.0-dev
 libmono-accessibility4.0-cil
 libmonoboehm-2.0-1
-libmonoboehm-2.0-dev
-libmono-c5-1.1-cil
 libmono-cairo4.0-cil
 libmono-cecil-private-cil
 libmono-cil-dev
