@@ -291,9 +291,15 @@ NPM_GLOBAL_PKG="
 	notify:node-notifier
 "
 
-ERLANG_PKG=erlang-solutions_1.0_all.deb
+#https://www.erlang-solutions.com/resources/download.html
+#ERLANG_PKG=erlang-solutions_1.0_all.deb
+ERL_OBSERVER_PKG="/usr/lib/x86_64-linux-gnu/libwx_baseu-2.8.so.0:libwxbase2.8-0 /usr/lib/x86_64-linux-gnu/libwx_gtk2u_core-2.8.so.0:libwxgtk2.8-0"
+ERLANG_PKG=esl-erlang_19.2.3-1-ubuntu-precise_amd64.deb
 ERLANG_URL=https://packages.erlang-solutions.com/$ERLANG_PKG
-ELIXIR_PKG="erl:esl-erlang elixir"
+#ELIXIR_DEB=elixir_1.4.1-1-ubuntu-precise_all.deb
+ELIXIR_DEB=elixir_1.3.4-1-ubuntu-precise_amd64.deb
+ELIXIR_URL=https://packages.erlang-solutions.com/$ELIXIR_DEB
+ELIXIR_PKG="erl:esl-erlang elixir $ERL_OBSERVER_PKG"
 ELIXIR_CMD="elixir"
 ELIXIR_CMDS="elixir elixirc iex mix erl erlc"
 
@@ -943,6 +949,8 @@ which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
 which npm && npm --version
+which erl && erl -eval 'halt().'
+which elixir && elixir -v
 
 BAIL_OUT versions
 
@@ -1465,7 +1473,10 @@ BAIL_OUT diff
 # http://elixir-lang.org/install.html#unix-and-unix-like
 if [ ! -z "$ELIXIR_PKG" ]; then
 	if [ ! -f "$DOWNLOAD/$ERLANG_PKG" ]; then
-		install_file_from_url "$DOWNLOAD/$ERLANG_PKG" $ERLANG_PKG $ERLANG_URL "erlang for elixir" && (sudo dpkg -i $DOWNLOAD/$ERLANG_PKG && sudo apt-get update)
+		install_file_from_url "$DOWNLOAD/$ERLANG_PKG" $ERLANG_PKG $ERLANG_URL "erlang deb for elixir" && (sudo dpkg -i $DOWNLOAD/$ERLANG_PKG && sudo apt-get update)
+	fi
+	if [ ! -f "$DOWNLOAD/$ELIXIR_DEB" ]; then
+		install_file_from_url "$DOWNLOAD/$ELIXIR_DEB" $ELIXIR_DEB $ELIXIR_URL "elixir deb package" && (sudo dpkg -i $DOWNLOAD/$ELIXIR_DEB && sudo apt-get update)
 	fi
 fi
 
