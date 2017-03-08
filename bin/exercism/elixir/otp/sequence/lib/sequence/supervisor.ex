@@ -17,9 +17,12 @@ defmodule Sequence.Supervisor do
        Supervisor.start_child(supervisor_pid,
 	     worker(Sequence.Stash, [initial_number]))
 
-    # and then the subsupervisor for the actual sequence server
+    # and then the stash supervisor for the actual sequence server
     Supervisor.start_child(supervisor_pid,
-	  supervisor(Sequence.SubSupervisor, [stash_pid]))
+	  supervisor(
+	    Sequence.StashSupervisor,
+		[stash_pid, Sequence.Server])
+	)
   end
 
   def init(_) do
