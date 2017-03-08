@@ -4,11 +4,10 @@ defmodule Sequence.Server do
 
   @global_name :bsac_sequence
 
-  def start_link(current_number \\ 0, options \\ [{ :name, @global_name }]) do
-    IO.puts "#{__MODULE__}.start_link #{inspect current_number}"
+  def start_link(stash_pid, options \\ [{ :name, @global_name }]) do
     { :ok, _server_pid } = GenServer.start_link(
       __MODULE__,
-      current_number,
+      stash_pid,
       options)
   end
 
@@ -30,24 +29,25 @@ defmodule Sequence.Server do
 
   ### GenServer interface
 
-  def handle_call(:current_number, _client_pid, current_number) do
-    { :reply, current_number, current_number }
+  def init(stash_pid) do
+    current_number = Sequence.Stash.get_value(stash_pid)
+	{ :ok, { current_number, stash_pid } }
   end
 
-  def handle_call(:next_number, _client_pid, current_number) do
-    { :reply, current_number, current_number + 1 }
+  def handle_call(:current_number, _client_pid, { current_number, stash_pid }) do
+    { :reply, current_number, { current_number, stash_pid } }
   end
 
-  def handle_cast({:increment_number, delta}, current_number) do
-    { :noreply, current_number + delta}
+  def handle_call(:next_number, _client_pid, { current_number, stash_pid }) do
+    { :reply, current_number, { current_number + 1, stash_pid } }
   end
 
-  def format_status(_reason, [ _pdict, state ]) do
-    [data: [{'State', "My current state is '#{inspect state}', and I'm happy"}]]
+  def handle_cast({:increment_number, delta}, { current_number, stash_pid }) do
+    { :noreply, { current_number + delta, stash_pid } }
   end
 
-  def terminate(reason, state) do
-    IO.puts "#{__MODULE__} terminating #{inspect reason} #{inspect state}"
+  def terminate(_reason, { current_number, stash_pid }) do
+    Sequence.Stash.save_value(current_number, stash_pid)
   end
 
 end
