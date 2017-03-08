@@ -3,18 +3,19 @@ defmodule Sequence.Mixfile do
 
   def project do
     [app: :sequence,
-     version: "0.0.1",
-     elixir: "~> 1.2",
+     version: "0.1.0",
+     elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:logger],
+     mod: {Sequence, []}]
   end
 
   # Dependencies can be Hex packages:
