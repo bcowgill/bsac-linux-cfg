@@ -28,7 +28,7 @@ i "this" - iex introspect a value
 s String - iex prints spec info for module etc
 t String - iex prints type info for module etc
 c String - iex prints callbacks info for module etc
-iex -s Mix - to start you mix project
+iex -S mix - to start you mix project
 
 Finding Good Libraries
 curated list: https://github.com/h4cc/awesome-elixir
@@ -428,6 +428,8 @@ OTP - Open Telecom Platform
 {:ok, pid} = GenServer.start_link(Module, state, [name: :module, debug: [:trace, :statistics]])
 Process.registered # will show :seq listed
 - start a server with a locally unique name as well as pid
+
+mix new -sup projectName # create a new project with a supervisor module
 
 :sys - system messages
 :sys.trace pid, true  # turn on debug tracing for pid

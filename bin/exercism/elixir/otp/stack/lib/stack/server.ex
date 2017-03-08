@@ -5,11 +5,10 @@ defmodule Stack.Server do
   @global_name :bsac_stack
 
   def start_link(stack \\ [], options \\ [{ :name, @global_name }]) do
-    { :ok, server_pid } = GenServer.start_link(
+    { :ok, _server_pid } = GenServer.start_link(
       __MODULE__,
       stack,
       options)
-    server_pid
   end
 
   ### immutable queries
