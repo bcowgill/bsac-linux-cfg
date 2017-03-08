@@ -200,9 +200,12 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
     if [ -e "$HOME/.nvmrc" ]; then
         nvm use > /dev/null
     else
-        nvm use v5.10.1 > /dev/null
+        nvm use v6.9.2 > /dev/null
     fi
 fi
+
+export CHROME_BIN=`which chromium-browser`
+export NODE=`which node`
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
