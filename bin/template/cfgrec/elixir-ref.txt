@@ -429,7 +429,7 @@ OTP - Open Telecom Platform
 Process.registered # will show :seq listed
 - start a server with a locally unique name as well as pid
 
-mix new -sup projectName # create a new project with a supervisor module
+mix new --sup projectName # create a new project with a supervisor module
 
 :sys - system messages
 :sys.trace pid, true  # turn on debug tracing for pid
