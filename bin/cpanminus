@@ -7,3 +7,5 @@ Getopt/ArgvFile.pm
 Template.pm
 Test/Most.pm
 Pod/Usage.pm
+File/MimeInfo.pm
+File/Type.pm
