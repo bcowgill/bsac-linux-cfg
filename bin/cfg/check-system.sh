@@ -602,6 +602,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#VSLICK_ARCHIVE=""
 	EMACS_VER=24.3
 
+	ELIXIR_PKG=
 	# HEREIAM CFG
 fi
 
