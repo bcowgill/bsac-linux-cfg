@@ -290,6 +290,7 @@ NPM_GLOBAL_PKG="
 	grunt-init
 	express:express-generator
 	notify:node-notifier
+	ncu:npm-check-updates
 "
 
 #https://www.erlang-solutions.com/resources/download.html
