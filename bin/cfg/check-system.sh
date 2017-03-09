@@ -297,6 +297,7 @@ NPM_GLOBAL_PKG="
 #ERLANG_PKG=erlang-solutions_1.0_all.deb
 ERL_OBSERVER_PKG="/usr/lib/x86_64-linux-gnu/libwx_baseu-2.8.so.0:libwxbase2.8-0 /usr/lib/x86_64-linux-gnu/libwx_gtk2u_core-2.8.so.0:libwxgtk2.8-0"
 ERLANG_PKG=esl-erlang_19.2.3-1-ubuntu-precise_amd64.deb
+ERLANG_CMD="erl"
 ERLANG_URL=https://packages.erlang-solutions.com/$ERLANG_PKG
 #ELIXIR_DEB=elixir_1.4.1-1-ubuntu-precise_all.deb
 ELIXIR_DEB=elixir_1.3.4-1-ubuntu-precise_amd64.deb
@@ -602,7 +603,6 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#VSLICK_ARCHIVE=""
 	EMACS_VER=24.3
 
-	ELIXIR_PKG=
 	# HEREIAM CFG
 fi
 
@@ -1478,10 +1478,10 @@ BAIL_OUT diff
 # http://elixir-lang.org/install.html#unix-and-unix-like
 if [ ! -z "$ELIXIR_PKG" ]; then
 	if [ ! -f "$DOWNLOAD/$ERLANG_PKG" ]; then
-		install_file_from_url "$DOWNLOAD/$ERLANG_PKG" $ERLANG_PKG $ERLANG_URL "erlang deb for elixir" && (sudo dpkg -i $DOWNLOAD/$ERLANG_PKG && sudo apt-get update)
+		cmd_exists $ERLANG_CMD || (install_file_from_url "$DOWNLOAD/$ERLANG_PKG" $ERLANG_PKG $ERLANG_URL "erlang deb for elixir" && (sudo dpkg -i $DOWNLOAD/$ERLANG_PKG && sudo apt-get update))
 	fi
 	if [ ! -f "$DOWNLOAD/$ELIXIR_DEB" ]; then
-		install_file_from_url "$DOWNLOAD/$ELIXIR_DEB" $ELIXIR_DEB $ELIXIR_URL "elixir deb package" && (sudo dpkg -i $DOWNLOAD/$ELIXIR_DEB && sudo apt-get update)
+		cmd_exists $ELIXIR_CMD || (install_file_from_url "$DOWNLOAD/$ELIXIR_DEB" $ELIXIR_DEB $ELIXIR_URL "elixir deb package" && (sudo dpkg -i $DOWNLOAD/$ELIXIR_DEB && sudo apt-get update))
 	fi
 fi
 
