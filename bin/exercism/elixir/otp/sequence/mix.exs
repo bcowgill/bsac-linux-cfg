@@ -1,6 +1,8 @@
 defmodule Sequence.Mixfile do
   use Mix.Project
 
+  @initial_value 58008
+
   def project do
     [app: :sequence,
      version: "0.1.0",
@@ -15,7 +17,10 @@ defmodule Sequence.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [applications: [:logger],
-     mod: {Sequence, []}]
+      mod: { Sequence, [] },
+      env: [ initial_number: @initial_value ]
+      registered: [ Sequence.Server ]
+    ]
   end
 
   # Dependencies can be Hex packages:
