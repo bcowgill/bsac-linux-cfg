@@ -51,6 +51,7 @@ perl.pl [options] [@options-file ...] [file ...]
 
 =cut
 
+{ use 5.006; }
 use strict;
 use warnings;
 
@@ -71,6 +72,12 @@ use autodie qw(open);
 
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
+
+use FindBin;
+use File::Spec;
+print "the directory of my script is: " . $FindBin::Bin . "\n";
+print "the base name of my script is: " . $FindBin::Script . "\n";
+print "the canonical location of my script is: " . File::Spec->catfile($FindBin::Bin, $FindBin::Script) . "\n";
 
 # Big hash of vars and constants for the program
 my %Var = (

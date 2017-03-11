@@ -30,6 +30,10 @@ use strict;
 use warnings;
 use Carp;
 use English -no_match_vars;
+use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
+$Data::Dumper::Indent   = 1;
+$Data::Dumper::Terse    = 1;
 
 our $VERSION = '1.00';
 
@@ -38,6 +42,14 @@ our @ISA = ('Exporter');
 our @EXPORT = qw();
 our @EXPORT_OK = qw();
 our @EXPORT_FAIL = qw();
+
+BEGIN {
+    (my $filename = __PACKAGE__ ) =~ s{::}{/}g; # not OS indep.
+    $filename .= '.pm';
+    our $CLASS_FILENAME = $INC{$filename} || $filename;
+    print "this module lives at $CLASS_FILENAME\n";
+    print Dumper \%INC;
+}
 
 =head1 CONSTANTS
 
