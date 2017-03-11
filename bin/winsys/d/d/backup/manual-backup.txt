@@ -1,0 +1,47 @@
+ It is time to update your manual backup settings.
+The instructions below will guide you through what you need to
+do to backup some critical information which the computer cannot
+do automatically.
+Manual Backup Instructions
+
+Toss your shit:
+   Empty the recycle bin
+   Clean your email. Compact Folders
+   Delete unused downloads.
+   Delete old backup in Kies
+   Use windirstat to see what is taking up the most space.
+Defragment
+
+Save Desktop icons screen shots
+   Press Windows-D to show the desktop
+   Right Click your desktop
+   Select Configure Fences
+   Select Tools from Left Hand Tools
+   Take Snapshot
+   Insert Monthly before the date.
+
+Export Thunderbird Address Books:
+   Start Thunderbird and select
+   Tools/Address Book then highlight the Personal Address Book
+   and click Tools/Export and save it to D:\D\backup\velda\velda-address-book.ldif
+   Then highlight the Collected Addresses
+   and click Tools/Export and save it to D:\D\backup\velda\collected-address-book.ldif
+
+Export Media Monkey Data:
+   Playlists/Accessible Tracks
+      select all.
+         Tools/Scripts/Case Checker
+         Tools/Advanced Tag Management/Synchronize Tags
+         Tools/Auto Tag from Web
+   Tools/Scripts Export all Playlists to D:\D\Music\playlist
+
+Backup items in Registry
+   Start Menu/Search - type in box:  regedit /v
+   Favorites/HKLM-Run
+   File/Export and save to D:\D\backup\velda\HKLM-Run.reg
+
+   Favorites/HKCU-Run
+   File/Export and save to D:\D\backup\velda\HKCU-Run.reg
+
+  
+Updated: 4 June 2012

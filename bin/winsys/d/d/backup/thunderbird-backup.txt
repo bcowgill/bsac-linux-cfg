@@ -1,0 +1,4 @@
+To backup Thunderbird email before trying to compact:
+
+C:\Users\velda\AppData\Roaming\Thunderbird
+C:\Users\velda\AppData\Roaming\Thunderbird\Profiles\xu8pdynm.default\Mail\pop3.virginmedia.com

@@ -1,0 +1,8 @@
+Time For Your Weekly Backup
+
+1. Close all your programs.
+2. Connect and turn on the Iomega 1TB Backup Drive.
+3. Check that WD Anywhere Backup is running and run it if it isn't.
+4. Wait for the backup to finish
+5. Close the WD Anywhere Backup program.
+6. Safely remove the Iomega 1TB Backup Drive.
