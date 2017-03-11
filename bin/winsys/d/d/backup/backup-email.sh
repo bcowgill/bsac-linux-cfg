@@ -11,6 +11,6 @@ echo " "
 echo Thunderbird backup
 echo " "
 pushd "$USERTBIRDDIR\\..\\.."
-tar cvzf $USERBAKDIR/thunderbird-files.tgz Thunderbird/Profiles
+	tar cvzf $USERBAKDIR/thunderbird-files.tgz Thunderbird/Profiles
 popd
 

@@ -1,4 +1,4 @@
- It is time to update your manual backup settings.
+It is time to update your manual backup settings.
 The instructions below will guide you through what you need to
 do to backup some critical information which the computer cannot
 do automatically.
@@ -36,12 +36,14 @@ Export Media Monkey Data:
    Tools/Scripts Export all Playlists to D:\D\Music\playlist
 
 Backup items in Registry
-   Start Menu/Search - type in box:  regedit /v
+   Press Windows-R - type in box:  regedit /v
    Favorites/HKLM-Run
    File/Export and save to D:\D\backup\velda\HKLM-Run.reg
 
    Favorites/HKCU-Run
    File/Export and save to D:\D\backup\velda\HKCU-Run.reg
 
-  
-Updated: 4 June 2012
+TODO Media Monkey/Player/Diffmerge/TextPad registry dumps
+
+Updated: 11 March 2017
+

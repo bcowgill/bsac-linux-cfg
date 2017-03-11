@@ -1,9 +1,11 @@
+echo "windows - create configuration / backup directories"
 
-set DD=E:
-set DSYS=%DD%\d\Sys
+set DDIR=E:
+set DSYS=%DDIR%\d\Sys
+
 echo %DSYS%
 
-%DD%
+%DDIR%
 cd %DSYS%
 
 mkdir _initial-state
@@ -16,6 +18,7 @@ mkdir tools
 mkdir troubles
 
 mkdir ..\backup
+mkdir ..\backup\to-new-computer
 mkdir ..\backup\WD-Anywhere
 mkdir ..\backup\WD-Anywhere\root
 mkdir ..\Download

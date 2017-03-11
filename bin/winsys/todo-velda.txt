@@ -1,0 +1,7 @@
+run the makedirs bat file
+run the all files snapshot 'initial' command to update files
+mklink c:\d to d:\d
+change WD backup to Smartware files
+in regedit create Favourites specified in the manual backup file
+document manual registry dumps
+

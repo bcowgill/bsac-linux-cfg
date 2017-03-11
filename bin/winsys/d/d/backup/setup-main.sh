@@ -28,11 +28,13 @@ USERDOCSETAPPDATA="C:\Documents and Settings\velda\Local Settings\Application Da
 
 USERDOCS=/cygdrive/d/d/Docs
 BACKUP=/cygdrive/d/d/backup
-mkdir -p $BACKUP
+NEWPC=/$BACKUP/to-new-computer
 
 echo BACKUP=$BACKUP
+echo NEWPC=$NEWPC
 echo USERAPPDATA=$USERAPPDATA
 echo USERLOCALAPPDATA=$USERLOCALAPPDATA
 echo USERDOCSETAPPDATA=$USERDOCSETAPPDATA
 echo USERDOCS=$USERDOCS
 echo PATH=$PATH
+

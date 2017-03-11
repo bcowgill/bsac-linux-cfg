@@ -1,9 +1,12 @@
 #!/bin/bash
+# get disk space used on windows maching for config records
 
-export LC_ALL='C'
+CDIR=/cygdrive/c
 OUT=/cygdrive/d/d/Sys/_initial-state
 
-cd /cygdrive/c
+export LC_ALL='C'
+
+cd $CDIR
 df -k > $OUT/disk-df-k-initial.txt
 
 du -sk -- * | sort -n -r | tee $OUT/disk-usage-initial.txt

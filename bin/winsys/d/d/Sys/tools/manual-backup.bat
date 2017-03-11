@@ -1,8 +1,10 @@
 echo Manually backup some files which are important
 
-set BACKUP=D:\d\backup
+set DDIR=E:
 set ADMIN=root
 set UNAME=velda
+set BACKUP=%DDIR%\d\backup
+
 echo %BACKUP%
 
 cd %BACKUP%\WD-Anywhere
