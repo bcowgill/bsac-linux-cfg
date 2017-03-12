@@ -6,4 +6,5 @@ in regedit create Favourites specified in the manual backup file
 document manual registry dumps
 run the prep script for new pc
 try ls-types on a fresh scan from the windows machine
+look for any other windows dirs that should now be backed up for win10
 
