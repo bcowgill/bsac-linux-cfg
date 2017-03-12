@@ -9,9 +9,9 @@ export LC_ALL='C'
 cd $CDIR
 df -k > $OUT/disk-df-k-initial.txt
 
-du -sk -- * | sort -g -r | tee $OUT/disk-usage-initial.txt
+du -sk -- * | sort -n -r | tee $OUT/disk-usage-initial.txt
 
-du -k -- | sort -g -r | tee $OUT/disk-usage-full-initial.txt
+du -k -- | sort -n -r | tee $OUT/disk-usage-full-initial.txt
 
-find . -type f | sort -g | tee $OUT/all-files-c-drive.txt
+find . -type f | sort -d | tee $OUT/all-files-c-drive.txt
 

@@ -43,6 +43,10 @@ sub init {
 	} keys(%FileTypes);
 }
 
+sub get_types {
+	return keys(%FileTypes);
+}
+
 sub check_path {
 	my ($path, $rhCounts) = @ARG;
 	$rhCounts ||= {};
