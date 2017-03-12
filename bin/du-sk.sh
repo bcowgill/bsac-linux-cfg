@@ -1,3 +1,3 @@
 #!/bin/bash
-du -sk * | sort -n -r
+du -sk * | sort -g -r
 

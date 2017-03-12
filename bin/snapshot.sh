@@ -76,11 +76,11 @@ function main
 
 	capture df "--all -k --total --print-type" "Free disk space"
 
-	sudo du -k / 2> "$DIR/du-k-errors.log" | sort -n -r | head -500 > $_TMP_SET
+	sudo du -k / 2> "$DIR/du-k-errors.log" | sort -g -r | head -500 > $_TMP_SET
 	FILE="$DIR/du-k.log"
 	echo " "
 	echo "### Top 500 disk usage"           | tee "$FILE"
-	echo "du -k / | sort -n -r | head -500" | tee --append "$FILE"
+	echo "du -k / | sort -g -r | head -500" | tee --append "$FILE"
 	echo " "                                | tee --append "$FILE"
 	cat $_TMP_SET                           | tee --append "$FILE"
 

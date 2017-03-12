@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # show what type of files are present in direcdtories
 
-# find . -type f | grep -v node_modules | ls-types.pl | sort -n -r
+# find . -type f | grep -v node_modules | ls-types.pl | sort -g -r
 # 32: ./path/ 12 documents, 20 images
 
 { use 5.006; }

@@ -27,7 +27,7 @@ find best scoring words for hanging with friends.
 
 example:
 
-$0 etaoinsrh 2xword \@5 | sort -n | grep -v x[2-9]
+$0 etaoinsrh 2xword \@5 | sort -g | grep -v x[2-9]
 
 indicates a double word score tile at position 5
 USAGE
