@@ -17,6 +17,7 @@ $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
 use BSAC::POF;
+push(@$BSAC::POF::STATE, 'hello');
 
 END {
 	BSAC::POF->save();

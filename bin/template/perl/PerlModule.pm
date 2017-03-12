@@ -46,10 +46,14 @@ our @EXPORT_OK = qw();
 our @EXPORT_FAIL = qw();
 
 BEGIN {
-	my @paths = split('::', __PACKAGE__);
-	my $filename = File::Spec->catfile(@paths) . '.pm';
+	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	our $CLASS_FILENAME = $INC{$filename} || $filename;
-	print __PACKAGE__ . " this module lives at $CLASS_FILENAME\n";
+	if (-e "$CLASS_FILENAME") {
+		print "@{[__PACKAGE__]} this module lives at $CLASS_FILENAME\n";
+	}
+	else {
+		carp "@{[__PACKAGE__]} this module does not live at $CLASS_FILENAME\n";
+	}
 	print Dumper \%INC;
 }
 
