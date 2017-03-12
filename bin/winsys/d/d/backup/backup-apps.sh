@@ -9,13 +9,13 @@ echo " "
 echo Backing up users important application files to "$USERBAKDIR"
 
 echo " "
-echo WD Anywhere Backup
+echo WD Smartware Backup
 echo " "
-pushd "$USERAPPDATA/WD/WD Anywhere Backup/"
-tar cvzf "$USERBAKDIR/WD-Anywhere-files.tgz" --exclude "./logs/*" .
+pushd "$USERLOCALAPPDATA"
+tar cvzf "$USERBAKDIR/WD-Smartware-files.tgz" "Western Digital" Western_Digital_Technolog
 popd
-pushd "$APPDATA/WD/WD Anywhere Backup/"
-tar cvzf "$ROOTBAKDIR/WD-Anywhere-files.tgz" --exclude "./logs/*" .
+pushd "$LOCALAPPDATA"
+tar cvzf "$ROOTBAKDIR/WD-Smartware-files.tgz" "Western Digital" Western_Digital_Technolog
 popd
 
 echo " "
@@ -51,9 +51,9 @@ echo " "
 echo $USERGNUCASH
 cp "$USERGNUCASH" $USERBAKDIR
 
-echo " "
-echo Angry Birds backup
-echo " "
-echo $USERANGRYBIRDS
-cp -r "$USERANGRYBIRDS" "$USERBAKDIR\\AppData\\Roaming"
+#echo " "
+#echo Angry Birds backup
+#echo " "
+#echo $USERANGRYBIRDS
+#cp -r "$USERANGRYBIRDS" "$USERBAKDIR\\AppData\\Roaming"
 

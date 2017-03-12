@@ -43,7 +43,20 @@ Backup items in Registry
    Favorites/HKCU-Run
    File/Export and save to D:\D\backup\velda\HKCU-Run.reg
 
-TODO Media Monkey/Player/Diffmerge/TextPad registry dumps
+   Favorites/HKCU-MediaMonkey
+   File/Export and save to D:\D\backup\velda\media-monkey.reg
 
-Updated: 11 March 2017
+   Favorites/HKCU-MediaPlayer
+   File/Export and save to D:\D\backup\velda\media-player.reg
+
+   Favorites/HKCU-Piriform
+   File/Export and save to D:\D\backup\velda\piriform-tools.reg
+
+   Favorites/HKCU-SourceGear
+   File/Export and save to D:\D\backup\velda\sourcegear-diffmerge.reg
+
+   Favorites/HKCU-Radium Technologies
+   File/Export and save to D:\D\backup\velda\living-cookbook.reg
+
+Updated: 12 March 2017
 

@@ -15,12 +15,15 @@ MKLINK /J d %DD%\d
 
 CD \Users
 MKLINK /J %SIM% %USER%
+CD \
 
 CD \cygwin\home
 MKLINK /J %SIM% %USER%
+CD \
 
 CD \Users\velda\AppData\Roaming\Thunderbird\Profiles
 MKLINK /J %EMLEGACY% %EMPROFILE%
+CD \
+
 CD "\Documents and Settings"
 MKLINK /J %SIM% %USER%
-
