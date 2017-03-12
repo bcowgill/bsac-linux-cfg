@@ -1,5 +1,4 @@
 package PerlModule;
-my $CLASS = "PerlModule";
 
 =head1 NAME
 
@@ -23,6 +22,8 @@ C<PerlModule> is a full on description of the module.
 
 Use podchecker to check pod syntax for your module.
 
+=head1 EXAMPLES
+
 =cut
 
 { use 5.006; }
@@ -30,6 +31,7 @@ use strict;
 use warnings;
 use Carp;
 use English -no_match_vars;
+use File::Spec;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
@@ -44,11 +46,11 @@ our @EXPORT_OK = qw();
 our @EXPORT_FAIL = qw();
 
 BEGIN {
-    (my $filename = __PACKAGE__ ) =~ s{::}{/}g; # not OS indep.
-    $filename .= '.pm';
-    our $CLASS_FILENAME = $INC{$filename} || $filename;
-    print "this module lives at $CLASS_FILENAME\n";
-    print Dumper \%INC;
+	my @paths = split('::', __PACKAGE__);
+	my $filename = File::Spec->catfile(@paths) . '.pm';
+	our $CLASS_FILENAME = $INC{$filename} || $filename;
+	print __PACKAGE__ . " this module lives at $CLASS_FILENAME\n";
+	print Dumper \%INC;
 }
 
 =head1 CONSTANTS
@@ -80,7 +82,7 @@ Creates an C<PerlModule> with the options.
 sub new
 {
 	my $type = shift;
-	my $class = ref($type) || $type || $CLASS;
+	my $class = ref($type) || $type || __PACKAGE__;
 	@ARG >= 1 && @ARG <= 3
 		or croak "usage: $class->new(FILENAME [,MODE [,PERMS]])";
 
@@ -106,9 +108,9 @@ method is a property accessor.
 sub accessor
 {
 	my ($self, $field) = @ARG;
-	my $class = ref($self) || $self || $CLASS;
+	my $class = ref($self) || $self || __PACKAGE__;
 	@ARG == 2
-		or croak "usage: \$obj$CLASS->accessor(FIELD)";
+		or croak "usage: \$obj@{[__PACKAGE__]}->accessor(FIELD)";
 	return $self->{$field};
 }
 
@@ -127,9 +129,9 @@ method is a class mutator.
 sub mutator
 {
 	my ($self, $value) = @ARG;
-	my $class = ref($self) || $self || $CLASS;
+	my $class = ref($self) || $self || __PACKAGE__;
 	@ARG == 2
-		or croak "usage: \$obj$CLASS->mutator(VALUE)";
+		or croak "usage: \$obj@{[__PACKAGE__]}->mutator(VALUE)";
 	$self->{filename} = $value;
 	return $self;
 }

@@ -16,6 +16,11 @@ $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
+use BSAC::POF;
+
+END {
+	BSAC::POF->save();
+}
 
 my $CSV = 1;
 my $rhCounts = {};
