@@ -19,10 +19,6 @@ use BSAC::FileTypes;
 use BSAC::POF;
 push(@$BSAC::POF::STATE, 'hello');
 
-END {
-	BSAC::POF->save();
-}
-
 my $CSV = 1;
 my $rhCounts = {};
 
