@@ -17,4 +17,7 @@ tar cvzf to-velda.tgz \
 	./d/d/Sys/tools \
 	./d/d/backup \
 
+rm ./d/d/Sys/tools/ls-types.*
+rm ./d/d/Sys/tools/perl/BSAC/FileTypes.pm
+
 cp to-velda.tgz ~/Dropbox/Photos/SharedBrent/

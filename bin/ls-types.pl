@@ -17,6 +17,7 @@ $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
 
+my $CSV = 1;
 my $rhCounts = {};
 
 while (my $line = <>) {
@@ -26,15 +27,28 @@ while (my $line = <>) {
 
 #print Dumper $rhCounts;
 
+my @TypeHeaders = BSAC::FileTypes::get_types();
+if ($CSV) {
+	my $headers = join(",", sort(@TypeHeaders));
+	print "Total,$headers,Path\n";
+}
+
 foreach my $path (sort(keys(%$rhCounts))) {
 	my $total = 0;
-   my $rhMatches = $rhCounts->{$path};
-	my $summary = join(', ',
+	my $rhMatches = $rhCounts->{$path};
+	my @matches = $CSV ? @TypeHeaders : keys(%$rhMatches);
+	my $join = $CSV ? ',' : ', ';
+	my $summary = join($join,
 		map {
-			my $count = scalar(@{$rhMatches->{$ARG}});
+			my $count = $rhMatches->{$ARG} ? scalar(@{$rhMatches->{$ARG}}) : 0;
 			$total += $count;
-			qq{$count $ARG}
-		} sort(keys(%$rhMatches)));
+			$CSV ? $count||'' : qq{$count $ARG}
+		} sort(@matches));
 
-	print qq{$total:\t$path $summary\n};
+	if ($CSV) {
+		print qq{$total,$summary,"$path"\n};
+	}
+	else {
+		print qq{$total:\t$path $summary\n};
+	}
 }
