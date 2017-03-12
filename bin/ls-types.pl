@@ -17,9 +17,16 @@ $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
 
-use BSAC::POF;
-push(@$BSAC::POF::STATE, 'hello');
-$BSAC::POF::AUTOSAVE = 1;
+# Object which saves its state automatically but we only
+# save if we changed the state.
+use BSAC::FileTypesFound;
+$BSAC::FileTypesFound::AUTOSAVE = 0;
+
+sub save_ext_info {
+	my ($extension, $description) = @ARGS;
+	$BSAC::FileTypesFound::AUTOSAVE = 1;
+	$BSAC::FileTypesFound::STATE->{lc($extension)}{$description} = 1;
+}
 
 my $CSV = 1;
 my $rhCounts = {};

@@ -1,4 +1,5 @@
 package BSAC::POF;
+# perl -pne 's{BSAC::POF}{BSAC::FileTypesFound}xmsg' POF.pm > FileTypesFound.pm
 use strict;
 use warnings;
 use Carp;
@@ -38,16 +39,12 @@ sub save {
 }
 
 $STATE = [
-  'hello',
-  'hello',
-  'hello',
-  'hello',
-  'hello'
 ];
 
 1;
 __DATA__
 package BSAC::POF;
+# perl -pne 's{BSAC::POF}{BSAC::FileTypesFound}xmsg' POF.pm > FileTypesFound.pm
 use strict;
 use warnings;
 use Carp;
