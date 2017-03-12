@@ -13,7 +13,6 @@ unix2dos \
 
 tar cvzf to-velda.tgz \
 	./todo-velda.txt \
-	./registry \
 	./d/d/Sys/tools \
 	./d/d/backup \
 
