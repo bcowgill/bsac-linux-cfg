@@ -18,7 +18,6 @@ BEGIN {
 	our $DEBUG = 1;
 	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	$BSAC::POF::CLASS_FILENAME = $INC{$filename} || $filename;
-	print "XX $BSAC::POF::DEBUG $BSAC::POF::CLASS_FILENAME \n";
 	if (-e "$BSAC::POF::CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $BSAC::POF::CLASS_FILENAME\n" if $BSAC::POF::DEBUG;
 	}
@@ -68,7 +67,6 @@ BEGIN {
 	our $DEBUG = 1;
 	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	$BSAC::POF::CLASS_FILENAME = $INC{$filename} || $filename;
-	print "XX $BSAC::POF::DEBUG $BSAC::POF::CLASS_FILENAME \n";
 	if (-e "$BSAC::POF::CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $BSAC::POF::CLASS_FILENAME\n" if $BSAC::POF::DEBUG;
 	}
