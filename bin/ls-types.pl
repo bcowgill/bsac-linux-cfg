@@ -18,7 +18,7 @@ use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
 use BSAC::POF;
 push(@$BSAC::POF::STATE, 'hello');
-$BSAC::POF::AUTOSAVE = 0;
+$BSAC::POF::AUTOSAVE = 1;
 
 my $CSV = 1;
 my $rhCounts = {};

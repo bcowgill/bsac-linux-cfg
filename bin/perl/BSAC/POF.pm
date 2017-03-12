@@ -7,19 +7,19 @@ use Data::Dumper;
 use autodie qw(open);
 
 our $STATE;
-our $CLASS_FILENAME;
 our $AUTOSAVE = 1;
-our $DEBUG = 1;
 
 END {
 	BSAC::POF->save() if $BSAC::POF::AUTOSAVE;
 }
 
 BEGIN {
+	our $CLASS_FILENAME;
+	our $DEBUG = 1;
 	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	$BSAC::POF::CLASS_FILENAME = $INC{$filename} || $filename;
-	print "XX $BSAC::POF::CLASS_FILENAME \n";
-	if (-e "$BSAC::POF::DEBUG $BSAC::POF::CLASS_FILENAME") {
+	print "XX $BSAC::POF::DEBUG $BSAC::POF::CLASS_FILENAME \n";
+	if (-e "$BSAC::POF::CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $BSAC::POF::CLASS_FILENAME\n" if $BSAC::POF::DEBUG;
 	}
 	else {
@@ -38,8 +38,10 @@ sub save {
 	close($fh);
 }
 
-
 $STATE = [
+  'hello',
+  'hello',
+  'hello',
   'hello',
   'hello'
 ];
@@ -55,19 +57,19 @@ use Data::Dumper;
 use autodie qw(open);
 
 our $STATE;
-our $CLASS_FILENAME;
 our $AUTOSAVE = 1;
-our $DEBUG = 1;
 
 END {
 	BSAC::POF->save() if $BSAC::POF::AUTOSAVE;
 }
 
 BEGIN {
+	our $CLASS_FILENAME;
+	our $DEBUG = 1;
 	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	$BSAC::POF::CLASS_FILENAME = $INC{$filename} || $filename;
-	print "XX $BSAC::POF::CLASS_FILENAME \n";
-	if (-e "$BSAC::POF::DEBUG $BSAC::POF::CLASS_FILENAME") {
+	print "XX $BSAC::POF::DEBUG $BSAC::POF::CLASS_FILENAME \n";
+	if (-e "$BSAC::POF::CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $BSAC::POF::CLASS_FILENAME\n" if $BSAC::POF::DEBUG;
 	}
 	else {
