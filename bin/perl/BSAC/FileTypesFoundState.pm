@@ -8,8 +8,10 @@ use autodie qw(open);
 
 our $STATE;
 our $AUTOSAVE = 1;
+
 my $data = join('', <DATA>);
 close(DATA);
+carp "@{[__PACKAGE__]} has no DATA, auto-save on exit will not be possible." unless length($data);
 
 END {
 	print "end ". __PACKAGE__ . "\n";
@@ -64,8 +66,10 @@ use autodie qw(open);
 
 our $STATE;
 our $AUTOSAVE = 1;
+
 my $data = join('', <DATA>);
 close(DATA);
+carp "@{[__PACKAGE__]} has no DATA, auto-save on exit will not be possible." unless length($data);
 
 END {
 	print "end ". __PACKAGE__ . "\n";
