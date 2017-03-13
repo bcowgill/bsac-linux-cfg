@@ -109,7 +109,7 @@ sub split_extension
 		$prefix = '.';
 	}
 	my ($name_part, $extension) = split(/\./, $filename, 2);
-	return ($prefix . $name_part, $extension);
+	return ($prefix . $name_part, $extension || '');
 }
 
 #catdir

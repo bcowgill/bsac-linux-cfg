@@ -18,7 +18,7 @@ END {
 
 BEGIN {
 	our $CLASS_FILENAME;
-	our $DEBUG = 1;
+	our $DEBUG = 0;
 	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	$BSAC::FileTypesFoundState::CLASS_FILENAME = $INC{$filename} || $filename;
 	if (-e "$BSAC::FileTypesFoundState::CLASS_FILENAME") {
@@ -74,7 +74,7 @@ END {
 
 BEGIN {
 	our $CLASS_FILENAME;
-	our $DEBUG = 1;
+	our $DEBUG = 0;
 	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
 	$BSAC::FileTypesFoundState::CLASS_FILENAME = $INC{$filename} || $filename;
 	if (-e "$BSAC::FileTypesFoundState::CLASS_FILENAME") {
