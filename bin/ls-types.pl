@@ -16,22 +16,47 @@ $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
+use BSAC::HashArray;
 
 # Object which saves its state automatically but we only
 # save if we changed the state.
 use BSAC::FileTypesFound;
 $BSAC::FileTypesFound::AUTOSAVE = 0;
 
-sub save_ext_info {
-	my ($extension, $description) = @ARGS;
-	$BSAC::FileTypesFound::AUTOSAVE = 1;
-	$BSAC::FileTypesFound::STATE->{lc($extension)}{$description} = 1;
+sub save_ext_info
+{
+	my ($extension, $description) = @ARG;
+	my $state = $BSAC::FileTypesFound::STATE;
+	$extension = lc($extension);
+
+	$state->{description} = {} unless exists($state->{description});
+	$state->{extension} = {} unless exists($state->{extension});
+	my $description_index = BSAC::HashArray::push($state->{description}, $description);
 }
+
+END
+{
+	print "end ls-types\n";
+	my $state = $BSAC::FileTypesFound::STATE;
+	if (BSAC::HashArray::has_changes($state->{description})
+		|| BSAC::HashArray::has_changes($state->{description}))
+	{
+		print "will save changes\n";
+		BSAC::HashArray::clear_changes($state->{description});
+		BSAC::HashArray::clear_changes($state->{extension});
+		$BSAC::FileTypesFound::AUTOSAVE = 1;
+	}
+}
+
+save_ext_info('csv', 'text with comma separated values');
+save_ext_info('TXT', 'ascii text with CR/LF line endings');
+print Dumper $BSAC::FileTypesFound::STATE;
 
 my $CSV = 1;
 my $rhCounts = {};
 
-while (my $line = <>) {
+while (my $line = <>)
+{
 	chomp $line;
 	my @matches = BSAC::FileTypes::check_path($line, $rhCounts);
 }
@@ -39,12 +64,14 @@ while (my $line = <>) {
 #print Dumper $rhCounts;
 
 my @TypeHeaders = BSAC::FileTypes::get_types();
-if ($CSV) {
+if ($CSV)
+{
 	my $headers = join(",", sort(@TypeHeaders));
 	print "Total,$headers,Path\n";
 }
 
-foreach my $path (sort(keys(%$rhCounts))) {
+foreach my $path (sort(keys(%$rhCounts)))
+{
 	my $total = 0;
 	my $rhMatches = $rhCounts->{$path};
 	my @matches = $CSV ? @TypeHeaders : keys(%$rhMatches);
@@ -56,10 +83,12 @@ foreach my $path (sort(keys(%$rhCounts))) {
 			$CSV ? $count||'' : qq{$count $ARG}
 		} sort(@matches));
 
-	if ($CSV) {
+	if ($CSV)
+	{
 		print qq{$total,$summary,"$path"\n};
 	}
-	else {
+	else
+	{
 		print qq{$total:\t$path $summary\n};
 	}
 }
