@@ -1,8 +1,13 @@
-mkdir -p ./d/Sys/tools/perl/BSAC
+BSAC=./d/Sys/tools/perl/BSAC
+mkdir -p $BSAC
 
 cp ../ls-types.sh ./d/Sys/tools
 cp ../ls-types.pl ./d/Sys/tools
-cp ../perl/BSAC/FileTypes.pm ./d/Sys/tools/perl/BSAC
+cp ../perl/BSAC/HashArray.pm $BSAC
+cp ../perl/BSAC/File.pm $BSAC
+cp ../perl/BSAC/FileTypes.pm $BSAC
+cp ../perl/BSAC/FileTypesFound.pm $BSAC
+cp ../perl/BSAC/FileTypesFoundState.pm $BSAC
 
 unix2dos \
 	*.txt \
@@ -17,6 +22,6 @@ tar cvzf to-velda.tgz \
 	./d/backup \
 
 rm ./d/Sys/tools/ls-types.*
-rm ./d/Sys/tools/perl/BSAC/FileTypes.pm
+rm $BSAC/*.pm
 
 cp to-velda.tgz ~/Dropbox/Photos/SharedBrent/
