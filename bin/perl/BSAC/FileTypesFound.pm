@@ -6,7 +6,7 @@ use File::Spec;
 use Data::Dumper;
 use autodie qw(open);
 
-our $STATE;
+our $VAR1;
 our $AUTOSAVE = 1;
 
 END {
@@ -31,13 +31,13 @@ sub save {
 	my $fh;
 	open($fh, '>', $BSAC::FileTypesFound::CLASS_FILENAME);
 	my $data = join('', <DATA>);
-	my $dump = Dumper $BSAC::FileTypesFound::STATE;
+	my $dump = Dumper $BSAC::FileTypesFound::VAR1;
 	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
+	print $fh "$data\n$dump;\n\n1;\n__DATA__\n$data";
 	close($fh);
 }
 
-$STATE = {};
+$VAR1 = {};
 
 1;
 __DATA__
@@ -49,7 +49,7 @@ use File::Spec;
 use Data::Dumper;
 use autodie qw(open);
 
-our $STATE;
+our $VAR1;
 our $AUTOSAVE = 1;
 
 END {
@@ -74,8 +74,8 @@ sub save {
 	my $fh;
 	open($fh, '>', $BSAC::FileTypesFound::CLASS_FILENAME);
 	my $data = join('', <DATA>);
-	my $dump = Dumper $BSAC::FileTypesFound::STATE;
+	my $dump = Dumper $BSAC::FileTypesFound::VAR1;
 	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
+	print $fh "$data\n$dump;\n\n1;\n__DATA__\n$data";
 	close($fh);
 }

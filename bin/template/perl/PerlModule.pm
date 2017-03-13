@@ -52,7 +52,7 @@ BEGIN {
 		print "@{[__PACKAGE__]} this module lives at $CLASS_FILENAME\n";
 	}
 	else {
-		carp "@{[__PACKAGE__]} this module does not live at $CLASS_FILENAME\n";
+		carp "@{[__PACKAGE__]} this module does NOT live at $CLASS_FILENAME\n";
 	}
 	print Dumper \%INC;
 }
