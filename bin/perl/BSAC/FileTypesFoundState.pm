@@ -38,14 +38,14 @@ sub save {
 
 	my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
 	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
+	print $fh "$data\n\$STATE = $dump;\n\n1;\n__END__\n$data";
 	close($fh);
 }
 
 $STATE = {};
 
 1;
-__DATA__
+__END__
 package BSAC::FileTypesFoundState;
 use strict;
 use warnings;
