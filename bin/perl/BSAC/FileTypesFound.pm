@@ -6,10 +6,11 @@ use File::Spec;
 use Data::Dumper;
 use autodie qw(open);
 
-our $VAR1;
+our $STATE;
 our $AUTOSAVE = 1;
 
 END {
+	print "end ". __PACKAGE__ . "\n";
 	BSAC::FileTypesFound->save() if $BSAC::FileTypesFound::AUTOSAVE;
 }
 
@@ -31,14 +32,17 @@ sub save {
 	my $fh;
 	open($fh, '>', $BSAC::FileTypesFound::CLASS_FILENAME);
 	my $data = join('', <DATA>);
-	my $dump = Dumper $BSAC::FileTypesFound::VAR1;
+	local $Data::Dumper::Sortkeys = $BSAC::FileTypesFound::DEBUG;
+	local $Data::Dumper::Indent   = $BSAC::FileTypesFound::DEBUG;
+	local $Data::Dumper::Terse    = 1;
+
+	my $dump = Dumper $BSAC::FileTypesFound::STATE;
 	chomp $dump;
-	$dump =~ s{\A \$VAR1 \s* = \s*}{\$VAR1 = }xmsg;
-	print $fh "$data\n$dump;\n\n1;\n__DATA__\n$data";
+	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
 	close($fh);
 }
 
-$VAR1 = {};
+$STATE = {};
 
 1;
 __DATA__
@@ -50,10 +54,11 @@ use File::Spec;
 use Data::Dumper;
 use autodie qw(open);
 
-our $VAR1;
+our $STATE;
 our $AUTOSAVE = 1;
 
 END {
+	print "end ". __PACKAGE__ . "\n";
 	BSAC::FileTypesFound->save() if $BSAC::FileTypesFound::AUTOSAVE;
 }
 
@@ -75,9 +80,12 @@ sub save {
 	my $fh;
 	open($fh, '>', $BSAC::FileTypesFound::CLASS_FILENAME);
 	my $data = join('', <DATA>);
-	my $dump = Dumper $BSAC::FileTypesFound::VAR1;
+	local $Data::Dumper::Sortkeys = $BSAC::FileTypesFound::DEBUG;
+	local $Data::Dumper::Indent   = $BSAC::FileTypesFound::DEBUG;
+	local $Data::Dumper::Terse    = 1;
+
+	my $dump = Dumper $BSAC::FileTypesFound::STATE;
 	chomp $dump;
-	$dump =~ s{\A \$VAR1 \s* = \s*}{\$VAR1 = }xmsg;
-	print $fh "$data\n$dump;\n\n1;\n__DATA__\n$data";
+	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
 	close($fh);
 }

@@ -182,7 +182,6 @@ sub push
 		or croak "usage: \$obj@{[__PACKAGE__]}::push(OBJ, VALUE)";
 	my $index = BSAC::HashArray::index($self, $value);
 	if (!defined($index)) {
-		print "got here\n";
 		++$self->{changes};
 		push(@{$self->{list}}, $value);
 		$index = scalar(@{$self->{list}}) - 1;
