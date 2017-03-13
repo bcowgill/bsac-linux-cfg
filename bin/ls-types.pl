@@ -16,10 +16,6 @@ $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
-use BSAC::FileTypesFound;
-
-BSAC::FileTypesFound::save_extension_description('csv', 'text with comma separated values');
-BSAC::FileTypesFound::save_extension_description('TXT', 'ascii text with CR/LF line endings');
 
 my $CSV = 1;
 my $rhCounts = {};

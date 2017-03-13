@@ -8,6 +8,8 @@ use Carp;
 use English -no_match_vars;
 use Data::Dumper;
 
+use BSAC::FileTypesFound qw(save_extension_description);
+
 our $VERSION = '1.00';
 
 require Exporter;
@@ -46,6 +48,9 @@ sub init {
 sub get_types {
 	return keys(%FileTypes);
 }
+
+#save_extension_description('csv', 'text with comma separated values');
+#save_extension_description('TXT', 'ascii text with CR/LF line endings');
 
 sub check_path {
 	my ($path, $rhCounts) = @ARG;
