@@ -33,6 +33,7 @@ sub save {
 	my $data = join('', <DATA>);
 	my $dump = Dumper $BSAC::FileTypesFound::VAR1;
 	chomp $dump;
+	$dump =~ s{\A \$VAR1 \s* = \s*}{\$VAR1 = }xmsg;
 	print $fh "$data\n$dump;\n\n1;\n__DATA__\n$data";
 	close($fh);
 }
@@ -76,6 +77,7 @@ sub save {
 	my $data = join('', <DATA>);
 	my $dump = Dumper $BSAC::FileTypesFound::VAR1;
 	chomp $dump;
+	$dump =~ s{\A \$VAR1 \s* = \s*}{\$VAR1 = }xmsg;
 	print $fh "$data\n$dump;\n\n1;\n__DATA__\n$data";
 	close($fh);
 }
