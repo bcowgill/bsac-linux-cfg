@@ -38,7 +38,7 @@ sub save {
 
 	my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
 	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__END__\n$data";
+	print $fh "$data\n\$STATE = $dump;\n\n1;\n_" . "_END__\n$data";
 	close($fh);
 }
 
@@ -86,6 +86,6 @@ sub save {
 
 	my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
 	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__END__\n$data";
+	print $fh "$data\n\$STATE = $dump;\n\n1;\n_" . "_END__\n$data";
 	close($fh);
 }
