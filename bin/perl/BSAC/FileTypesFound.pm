@@ -1,91 +1,45 @@
 package BSAC::FileTypesFound;
 use strict;
 use warnings;
+use English -no_match_vars;
 use Carp;
-use File::Spec;
-use Data::Dumper;
-use autodie qw(open);
+use BSAC::HashArray;
 
-our $STATE;
-our $AUTOSAVE = 1;
+# Object which saves its state automatically but we only
+# save if we changed the state.
+use BSAC::FileTypesFoundState;
+$BSAC::FileTypesFoundState::AUTOSAVE = 0;
 
-END {
-	print "end ". __PACKAGE__ . "\n";
-	BSAC::FileTypesFound->save() if $BSAC::FileTypesFound::AUTOSAVE;
+my $rhState = $BSAC::FileTypesFoundState::STATE;
+$rhState->{description} = {} unless exists($rhState->{description});
+$rhState->{extension} = {} unless exists($rhState->{extension});
+my $rhDescription = $rhState->{description};
+my $rhExtension = $rhState->{extension};
+
+sub save_extension_description
+{
+	my ($extension, $description) = @ARG;
+	scalar(@ARG) == 2
+		or croak "usage: \$obj@{[__PACKAGE__]}::save_extension_info(EXTENSION, DESCRIPTION)";
+
+	$extension = lc($extension);
+
+	my $description_index = BSAC::HashArray::push($rhDescription, $description);
+
+	$rhExtension->{$extension} = {} unless exists($rhExtension->{$extension});
+	my $extension_index = BSAC::HashArray::push($rhExtension->{$extension}, $description_index);
+	$BSAC::FileTypesFoundState::AUTOSAVE = 1 if BSAC::HashArray::has_changes($rhExtension->{$extension});
+	BSAC::HashArray::clear_changes($rhExtension->{$extension});
 }
 
-BEGIN {
-	our $CLASS_FILENAME;
-	our $DEBUG = 1;
-	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
-	$BSAC::FileTypesFound::CLASS_FILENAME = $INC{$filename} || $filename;
-	if (-e "$BSAC::FileTypesFound::CLASS_FILENAME") {
-		print "@{[__PACKAGE__]} this module lives at $BSAC::FileTypesFound::CLASS_FILENAME\n" if $BSAC::FileTypesFound::DEBUG;
+END
+{
+	if ($BSAC::FileTypesFoundState::AUTOSAVE
+		|| BSAC::HashArray::has_changes($rhDescription))
+	{
+		BSAC::HashArray::clear_changes($rhDescription);
+		$BSAC::FileTypesFoundState::AUTOSAVE = 1;
 	}
-	else {
-		carp "@{[__PACKAGE__]} this module does NOT live at $BSAC::FileTypesFound::CLASS_FILENAME\n, auto-save on exit will not be possible.";
-	}
 }
-
-sub save {
-	print "@{[__PACKAGE__]} save state to $BSAC::FileTypesFound::CLASS_FILENAME\n" if $BSAC::FileTypesFound::DEBUG;
-	my $fh;
-	open($fh, '>', $BSAC::FileTypesFound::CLASS_FILENAME);
-	my $data = join('', <DATA>);
-	local $Data::Dumper::Sortkeys = $BSAC::FileTypesFound::DEBUG;
-	local $Data::Dumper::Indent   = $BSAC::FileTypesFound::DEBUG;
-	local $Data::Dumper::Terse    = 1;
-
-	my $dump = Dumper $BSAC::FileTypesFound::STATE;
-	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
-	close($fh);
-}
-
-$STATE = {};
 
 1;
-__DATA__
-package BSAC::FileTypesFound;
-use strict;
-use warnings;
-use Carp;
-use File::Spec;
-use Data::Dumper;
-use autodie qw(open);
-
-our $STATE;
-our $AUTOSAVE = 1;
-
-END {
-	print "end ". __PACKAGE__ . "\n";
-	BSAC::FileTypesFound->save() if $BSAC::FileTypesFound::AUTOSAVE;
-}
-
-BEGIN {
-	our $CLASS_FILENAME;
-	our $DEBUG = 1;
-	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
-	$BSAC::FileTypesFound::CLASS_FILENAME = $INC{$filename} || $filename;
-	if (-e "$BSAC::FileTypesFound::CLASS_FILENAME") {
-		print "@{[__PACKAGE__]} this module lives at $BSAC::FileTypesFound::CLASS_FILENAME\n" if $BSAC::FileTypesFound::DEBUG;
-	}
-	else {
-		carp "@{[__PACKAGE__]} this module does NOT live at $BSAC::FileTypesFound::CLASS_FILENAME\n, auto-save on exit will not be possible.";
-	}
-}
-
-sub save {
-	print "@{[__PACKAGE__]} save state to $BSAC::FileTypesFound::CLASS_FILENAME\n" if $BSAC::FileTypesFound::DEBUG;
-	my $fh;
-	open($fh, '>', $BSAC::FileTypesFound::CLASS_FILENAME);
-	my $data = join('', <DATA>);
-	local $Data::Dumper::Sortkeys = $BSAC::FileTypesFound::DEBUG;
-	local $Data::Dumper::Indent   = $BSAC::FileTypesFound::DEBUG;
-	local $Data::Dumper::Terse    = 1;
-
-	my $dump = Dumper $BSAC::FileTypesFound::STATE;
-	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n__DATA__\n$data";
-	close($fh);
-}

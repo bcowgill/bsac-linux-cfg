@@ -16,41 +16,10 @@ $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 use lib File::Spec->catfile($FindBin::Bin, 'perl');
 use BSAC::FileTypes;
-use BSAC::HashArray;
-
-# Object which saves its state automatically but we only
-# save if we changed the state.
 use BSAC::FileTypesFound;
-$BSAC::FileTypesFound::AUTOSAVE = 0;
 
-sub save_ext_info
-{
-	my ($extension, $description) = @ARG;
-	my $state = $BSAC::FileTypesFound::STATE;
-	$extension = lc($extension);
-
-	$state->{description} = {} unless exists($state->{description});
-	$state->{extension} = {} unless exists($state->{extension});
-	my $description_index = BSAC::HashArray::push($state->{description}, $description);
-}
-
-END
-{
-	print "end ls-types\n";
-	my $state = $BSAC::FileTypesFound::STATE;
-	if (BSAC::HashArray::has_changes($state->{description})
-		|| BSAC::HashArray::has_changes($state->{description}))
-	{
-		print "will save changes\n";
-		BSAC::HashArray::clear_changes($state->{description});
-		BSAC::HashArray::clear_changes($state->{extension});
-		$BSAC::FileTypesFound::AUTOSAVE = 1;
-	}
-}
-
-save_ext_info('csv', 'text with comma separated values');
-save_ext_info('TXT', 'ascii text with CR/LF line endings');
-print Dumper $BSAC::FileTypesFound::STATE;
+BSAC::FileTypesFound::save_extension_description('csv', 'text with comma separated values');
+BSAC::FileTypesFound::save_extension_description('TXT', 'ascii text with CR/LF line endings');
 
 my $CSV = 1;
 my $rhCounts = {};
