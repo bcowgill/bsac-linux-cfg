@@ -8,6 +8,8 @@ use autodie qw(open);
 
 our $STATE;
 our $AUTOSAVE = 1;
+my $data = join('', <DATA>);
+close(DATA);
 
 END {
 	print "end ". __PACKAGE__ . "\n";
@@ -29,23 +31,29 @@ BEGIN {
 
 sub save {
 	print "@{[__PACKAGE__]} save state to $BSAC::FileTypesFoundState::CLASS_FILENAME\n" if $BSAC::FileTypesFoundState::DEBUG;
-	my $fh;
-	open($fh, '>', $BSAC::FileTypesFoundState::CLASS_FILENAME);
-	my $data = join('', <DATA>);
-	local $Data::Dumper::Sortkeys = $BSAC::FileTypesFoundState::DEBUG;
-	local $Data::Dumper::Indent   = $BSAC::FileTypesFoundState::DEBUG;
-	local $Data::Dumper::Terse    = 1;
+	if (length($data))
+	{
+		my $fh;
+		open($fh, '>', $BSAC::FileTypesFoundState::CLASS_FILENAME);
+		local $Data::Dumper::Sortkeys = $BSAC::FileTypesFoundState::DEBUG;
+		local $Data::Dumper::Indent   = $BSAC::FileTypesFoundState::DEBUG;
+		local $Data::Dumper::Terse    = 1;
 
-	my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
-	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n_" . "_END__\n$data";
-	close($fh);
+		my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
+		chomp $dump;
+		print $fh "$data\n\$STATE = $dump;\n\n1;\n_" . "_DATA__\n$data";
+		close($fh);
+	}
+	else
+	{
+		carp "@{[__PACKAGE__]} no DATA, cannot auto-save.";
+	}
 }
 
 $STATE = {};
 
 1;
-__END__
+__DATA__
 package BSAC::FileTypesFoundState;
 use strict;
 use warnings;
@@ -56,6 +64,8 @@ use autodie qw(open);
 
 our $STATE;
 our $AUTOSAVE = 1;
+my $data = join('', <DATA>);
+close(DATA);
 
 END {
 	print "end ". __PACKAGE__ . "\n";
@@ -77,15 +87,21 @@ BEGIN {
 
 sub save {
 	print "@{[__PACKAGE__]} save state to $BSAC::FileTypesFoundState::CLASS_FILENAME\n" if $BSAC::FileTypesFoundState::DEBUG;
-	my $fh;
-	open($fh, '>', $BSAC::FileTypesFoundState::CLASS_FILENAME);
-	my $data = join('', <DATA>);
-	local $Data::Dumper::Sortkeys = $BSAC::FileTypesFoundState::DEBUG;
-	local $Data::Dumper::Indent   = $BSAC::FileTypesFoundState::DEBUG;
-	local $Data::Dumper::Terse    = 1;
+	if (length($data))
+	{
+		my $fh;
+		open($fh, '>', $BSAC::FileTypesFoundState::CLASS_FILENAME);
+		local $Data::Dumper::Sortkeys = $BSAC::FileTypesFoundState::DEBUG;
+		local $Data::Dumper::Indent   = $BSAC::FileTypesFoundState::DEBUG;
+		local $Data::Dumper::Terse    = 1;
 
-	my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
-	chomp $dump;
-	print $fh "$data\n\$STATE = $dump;\n\n1;\n_" . "_END__\n$data";
-	close($fh);
+		my $dump = Dumper $BSAC::FileTypesFoundState::STATE;
+		chomp $dump;
+		print $fh "$data\n\$STATE = $dump;\n\n1;\n_" . "_DATA__\n$data";
+		close($fh);
+	}
+	else
+	{
+		carp "@{[__PACKAGE__]} no DATA, cannot auto-save.";
+	}
 }
