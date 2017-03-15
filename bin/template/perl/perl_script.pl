@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-sample - Using GetOpt::Long and Pod::Usage
+perl_script - Using GetOpt::Long and Pod::Usage
 
 =head1 AUTHOR
 
@@ -12,7 +12,7 @@ Brent S.A. Cowgill
 
 =head1 SYNOPSIS
 
-perl.pl [options] [@options-file ...] [file ...]
+perl_script.pl [options] [@options-file ...] [file ...]
 
  Options:
    --version        display program version
@@ -40,14 +40,14 @@ perl.pl [options] [@options-file ...] [file ...]
 =head1 DESCRIPTION
 
  Template for a perl script with the usual bells and whistles.
- Supports long option parsing and perldoc perl.pl to show pod.
+ Supports long option parsing and perldoc perl_script.pl to show pod.
 
  B<This program> will read the given input file(s) and do something
  useful with the contents thereof. It does not modify the input files.
 
 =head1 EXAMPLES
 
- template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+ template/perl_script.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
 =cut
 
@@ -84,6 +84,7 @@ if ($FindBin::Script == '-e')
 else
 {
 	print "the canonical location of my script is: " . File::Spec->catfile($FindBin::Bin, $FindBin::Script) . "\n";
+}
 
 # Big hash of vars and constants for the program
 my %Var = (
