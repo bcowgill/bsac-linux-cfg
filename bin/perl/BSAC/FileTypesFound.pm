@@ -90,6 +90,8 @@ This function can be exported for convenience.
 
 =cut
 
+my $count = 0;
+
 sub save_extension_description
 {
 	my ($extension, $description) = @ARG;
@@ -98,12 +100,24 @@ sub save_extension_description
 
 	$extension = lc($extension);
 
+	print STDERR "\n\n$count $extension $description\n\n" if $count % 10 == 0;
 	my $description_index = BSAC::HashArray::push($rhDescription, $description);
 
 	$rhExtension->{$extension} = {} unless exists($rhExtension->{$extension});
 	my $extension_index = BSAC::HashArray::push($rhExtension->{$extension}, $description_index);
 	$BSAC::FileTypesFoundState::AUTOSAVE = 1 if BSAC::HashArray::has_changes($rhExtension->{$extension});
 	BSAC::HashArray::clear_changes($rhExtension->{$extension});
+	if (++$count > 100) {
+		print STDERR "\n\nSAVING EXTENSIONS DATA\n\n";
+		# Perform auto save if we have had any state change.
+		if ($BSAC::FileTypesFoundState::AUTOSAVE
+			|| BSAC::HashArray::has_changes($rhDescription))
+		{
+			BSAC::HashArray::clear_changes($rhDescription);
+			$BSAC::FileTypesFoundState::AUTOSAVE = 1;
+		}
+		$count = 0;
+	}
 }
 
 

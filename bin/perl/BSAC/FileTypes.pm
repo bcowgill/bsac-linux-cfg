@@ -84,7 +84,7 @@ sub file_description
 
 	my $description = '';
 	if (-r $path) {
-		$description = `file "$path"`;
+		$description = `file '$path'`;
 		chomp $description;
 		$description =~ s{\A [^:]+ :}{}xms;
 		$description = ' ' . $description if length($description);

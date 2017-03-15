@@ -22,6 +22,7 @@ my $rhCounts = {};
 
 while (my $line = <>)
 {
+	print STDERR $line;
 	chomp $line;
 	my @matches = BSAC::FileTypes::check_path($line, $rhCounts);
 }
