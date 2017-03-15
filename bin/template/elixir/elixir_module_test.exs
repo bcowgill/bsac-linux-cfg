@@ -1,7 +1,7 @@
 #!/usr/bin/env elixir
 # http://elixir-lang.org/docs/stable/ex_unit/ExUnit.html
 
-Code.load_file("elixir_module.exs", __DIR__)
+Code.load_file("elixir_module.ex", __DIR__)
 
 ExUnit.start
 ExUnit.configure exclude: :pending, trace: true

@@ -5,7 +5,7 @@
 # { :triq, github: "triqng/triq", only: :test},
 # { :excheck,  "~> 0.4.0", only: :test },
 
-Code.load_file("elixir_module.exs", __DIR__)
+Code.load_file("elixir_module.ex", __DIR__)
 
 ExUnit.start
 ExUnit.configure exclude: :pending, trace: true
