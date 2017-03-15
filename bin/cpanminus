@@ -9,3 +9,4 @@ Test/Most.pm
 Pod/Usage.pm
 File/MimeInfo.pm
 File/Type.pm
+Module/Filename.pm

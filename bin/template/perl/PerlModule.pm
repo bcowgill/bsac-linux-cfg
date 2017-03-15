@@ -31,7 +31,7 @@ use strict;
 use warnings;
 use Carp;
 use English -no_match_vars;
-use File::Spec;
+use Module::Filename;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
@@ -46,8 +46,12 @@ our @EXPORT_OK = qw();
 our @EXPORT_FAIL = qw();
 
 BEGIN {
-	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
-	our $CLASS_FILENAME = $INC{$filename} || $filename;
+	my $filename = Module::Filename::module_filename(__PACKAGE__);
+	our $CLASS_FILENAME = $INC{$filename||''} || $filename;
+	unless ($CLASS_FILENAME) {
+		$CLASS_FILENAME = Carp::shortmess();
+		$CLASS_FILENAME =~ s{\A \s+ at \s+ (.+) \s+ line \s+ \d+ \. \s* \z}{$1}xms;
+	}
 	if (-e "$CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $CLASS_FILENAME\n";
 	}

@@ -77,7 +77,13 @@ use FindBin;
 use File::Spec;
 print "the directory of my script is: " . $FindBin::Bin . "\n";
 print "the base name of my script is: " . $FindBin::Script . "\n";
-print "the canonical location of my script is: " . File::Spec->catfile($FindBin::Bin, $FindBin::Script) . "\n";
+if ($FindBin::Script == '-e')
+{
+	print "this was invoked as: cd $FindBin::Bin ; perl -e";
+}
+else
+{
+	print "the canonical location of my script is: " . File::Spec->catfile($FindBin::Bin, $FindBin::Script) . "\n";
 
 # Big hash of vars and constants for the program
 my %Var = (

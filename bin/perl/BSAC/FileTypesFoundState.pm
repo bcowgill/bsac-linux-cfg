@@ -2,6 +2,7 @@ package BSAC::FileTypesFoundState;
 use strict;
 use warnings;
 use Carp;
+use Module::Filename;
 use File::Spec;
 use Data::Dumper;
 use autodie qw(open);
@@ -21,8 +22,12 @@ END {
 BEGIN {
 	our $CLASS_FILENAME;
 	our $DEBUG = 0;
-	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
-	$BSAC::FileTypesFoundState::CLASS_FILENAME = $INC{$filename} || $filename;
+	my $filename = Module::Filename::module_filename(__PACKAGE__);
+	$BSAC::POF::CLASS_FILENAME = $INC{$filename||''} || $filename;
+	unless ($BSAC::POF::CLASS_FILENAME) {
+		$BSAC::POF::CLASS_FILENAME = Carp::shortmess();
+		$BSAC::POF::CLASS_FILENAME =~ s{\A \s+ at \s+ (.+) \s+ line \s+ \d+ \. \s* \z}{$1}xms;
+	}
 	if (-e "$BSAC::FileTypesFoundState::CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $BSAC::FileTypesFoundState::CLASS_FILENAME\n" if $BSAC::FileTypesFoundState::DEBUG;
 	}
@@ -60,6 +65,7 @@ package BSAC::FileTypesFoundState;
 use strict;
 use warnings;
 use Carp;
+use Module::Filename;
 use File::Spec;
 use Data::Dumper;
 use autodie qw(open);
@@ -79,8 +85,12 @@ END {
 BEGIN {
 	our $CLASS_FILENAME;
 	our $DEBUG = 0;
-	my $filename = File::Spec->catfile(split('::', __PACKAGE__)) . '.pm';
-	$BSAC::FileTypesFoundState::CLASS_FILENAME = $INC{$filename} || $filename;
+	my $filename = Module::Filename::module_filename(__PACKAGE__);
+	$BSAC::POF::CLASS_FILENAME = $INC{$filename||''} || $filename;
+	unless ($BSAC::POF::CLASS_FILENAME) {
+		$BSAC::POF::CLASS_FILENAME = Carp::shortmess();
+		$BSAC::POF::CLASS_FILENAME =~ s{\A \s+ at \s+ (.+) \s+ line \s+ \d+ \. \s* \z}{$1}xms;
+	}
 	if (-e "$BSAC::FileTypesFoundState::CLASS_FILENAME") {
 		print "@{[__PACKAGE__]} this module lives at $BSAC::FileTypesFoundState::CLASS_FILENAME\n" if $BSAC::FileTypesFoundState::DEBUG;
 	}
