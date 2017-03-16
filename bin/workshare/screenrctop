@@ -1,0 +1,4 @@
+screen top
+screen -t screen 9 man screen
+screen -t mail 8 bash
+

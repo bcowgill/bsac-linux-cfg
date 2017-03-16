@@ -1,0 +1,93 @@
+//                                                           //
+// Global Variables                                          //
+// ========================================================= //
+
+// App Layout Variables
+// =========================================================
+
+// Layout
+// --------------------------------------------------
+@box-size: 16px;
+@app-max-width: 1440px;
+@app-min-height: 800px;
+@app-margin-top: 80px;
+
+// Fixed layout dimensions - Used for browsers that don't support CSS3 calc
+@menuIframe-fixed-width: 1150px;
+@main-view-fixed-width: @menuIframe-fixed-width - @sidebar-width;
+
+// App Header
+// --------------------------------------------------
+@app-header-height: 3 * @box-size + 2px;
+
+// App Sidebar
+// --------------------------------------------------
+@sidebar-width: 7 * @box-size;
+@small-sidebar-width: 80px;
+
+
+// Media Query Breakpoints
+// =========================================================
+
+@large-breakpoint: ~"only screen and (min-width : 1024px)";
+@medium-and-large-breakpoint: ~"only screen and (min-width : 601px)";
+@medium-breakpoint: ~"only screen and (max-width : 1023px) and (min-width : 601px)";
+@small-and-medium-breakpoint: ~"only screen and (max-width : 1023px)";
+@small-breakpoint: ~"only screen and (max-width : 600px)";
+
+
+// Brand colours
+// =========================================================
+
+// Grey
+// --------------------------------------------------
+@ws-colour-dark-grey: #363a3e;
+@ws-colour-dark-grey-90: #4a4e52;
+@ws-colour-dark-grey-80: #5e6265;
+@ws-colour-dark-grey-70: #727578;
+@ws-colour-dark-grey-60: #86898b;
+@ws-colour-dark-grey-50: #9a9d9f;
+@ws-colour-dark-grey-40: #aeb0b2;
+@ws-colour-dark-grey-30: #c2c4c5;
+@ws-colour-dark-grey-20: #d6d7d8;
+@ws-colour-dark-grey-10: #eaebeb;
+@ws-colour-dark-grey-05: #f5f5f5;
+
+// Red
+// --------------------------------------------------
+@ws-colour-alert-red: #dd3636;
+
+// Blue
+// --------------------------------------------------
+@ws-colour-light-blue: #01adef;
+
+@ws-colour-dark-blue: #0075db;
+
+@ws-colour-darkest-blue: #2b3c51;
+@ws-colour-darkest-blue-90: #405062;
+@ws-colour-darkest-blue-80: #556373;
+@ws-colour-darkest-blue-70: #6a7785;
+@ws-colour-darkest-blue-60: #7f8a96;
+@ws-colour-darkest-blue-50: #949ea8;
+@ws-colour-darkest-blue-40: #aab1b9;
+@ws-colour-darkest-blue-30: #bfc4ca;
+@ws-colour-darkest-blue-20: #d4d8dc;
+@ws-colour-darkest-blue-10: #e9ebed;
+@ws-colour-darkest-blue-05: #f4f5f6;
+
+// Green
+// --------------------------------------------------
+@ws-colour-alert-green: #46ba79;
+
+// Purple
+// --------------------------------------------------
+@ws-colour-purple: #912187;
+
+// Orange
+// --------------------------------------------------
+@ws-colour-orange: #f38130;
+@ws-colour-alert-orange: #f9ae31;
+
+// Other
+// --------------------------------------------------
+@white: #fff;
