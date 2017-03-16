@@ -42,34 +42,34 @@ set $lockcolor $mygray
 #  do not edit settings here...
 set $main eDP1
 set $aux  HDMI1
-set $aux2 DP1
+set $aux2 HDMI1
 
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
 #  do not edit settings here...
-		# 3 monitors
+		# 1 or 2 monitors
 		set $shell 1
 		set $edit 2
 		set $app 3
-		set $email 9
+		set $email 4
 		set $build 5
 		set $chat 6
 		set $vbox 7
 		set $help 10
 		set $files 8
 
-		# assign workspaces to 3 monitors
-		workspace 10  output $aux
+		# assign workspaces to 1 or 2 monitors
+		workspace 10  output $main
 		workspace 8   output $main
 		workspace 7   output $main
-		workspace 6   output $aux
+		workspace 6   output $main
 		workspace 5   output $main
 
 		workspace 9   output $aux
-		workspace 4   output $aux2
-		workspace 3   output $aux2
-		workspace 2   output $aux2
-		workspace 1   output $aux2
+		workspace 4   output $aux
+		workspace 3   output $aux
+		workspace 2   output $aux
+		workspace 1   output $aux
 #/WORKSPACEDEF
 
 set $nochat $shell
