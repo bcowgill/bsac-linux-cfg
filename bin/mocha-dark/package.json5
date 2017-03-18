@@ -1,0 +1,42 @@
+{
+  "name": "mocha-dark",
+  "version": "1.0.0",
+  "description": "stylesheets for dark color scheme in mocha browser test runner",
+  "main": "index.js",
+  "scripts": {
+    // npm-json5 run json5; npm test  OR JUST npm-json5 test
+    "json5": "json5 -c package.json5", // generate package.json from package.json5 not necessary
+
+    // default options for mocha cmd
+    "_mocha1": "mocha --growl --ui=bdd --reporter=spec \
+        --check-leaks \
+        --full-trace \
+        --inline-diffs\
+        --sort",
+     "_mocha": "npm-json5 run _mocha1 -- {src,test}/**/*.{test,spec}.js",
+
+    // npm-json5 run test:single
+    // npm-json5 run test -- -- --grep 'Array #indexOf'
+    "test/": "npm-json5 run _mocha",  // convenience if you hit tab
+    "test": "npm-json5 run _mocha",
+
+    // npm-json5 run test1 test/testplan.test.js
+    "test1": "npm-json5 run _mocha1",
+
+    "watch": "npm-json5 run _mocha -- --watch --watch-extensions=js",
+
+    "debug": "set | grep PATH", // just to debug the environment
+  },
+  "keywords": [
+    "mocha",
+    "test",
+    "dark"
+  ],
+  "author": "Brent S.A. Cowgill",
+  "license": "ISC",
+  "devDependencies": {
+    "json5": "^0.5.1",
+    "mocha": "^3.2.0",
+    "npm-json5": "^0.1.4"  // so that package.json doesn't need to be generated
+  }
+}
