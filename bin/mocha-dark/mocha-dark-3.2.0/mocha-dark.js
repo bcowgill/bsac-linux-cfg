@@ -210,13 +210,12 @@ mocha.initColorScheme = function (scheme) {
 
 /* BSAC */
 mocha.uiChangeColorScheme = function (scheme) {
-  var button = scheme == 'mocha-light' ?  '\u25d1' : '\u25d0';
   var otherScheme = scheme == 'mocha-light' ? 'mocha-dark' : 'mocha-light';
   var toolTip = 'toggle color scheme between '
     + scheme + ' and ' + otherScheme
   var html = '<div data-scheme="' + otherScheme
     + '" title="' + toolTip
-    + '" id="mocha-change-scheme">' + button + '</div>';
+    + '" id="mocha-change-scheme" class="mocha-change-scheme"></div>';
 
   if (typeof jQuery == 'function') {
     var div = jQuery('#mocha-change-scheme');
@@ -230,8 +229,7 @@ mocha.uiChangeColorScheme = function (scheme) {
     else {
       div
         .attr('data-scheme', otherScheme)
-        .attr('title', toolTip)
-        .text(button);
+        .attr('title', toolTip);
     }
   }
 }
