@@ -1,14 +1,7 @@
-/*  "version": "2.4.5", */
 @charset "utf-8";
 
 body {
   margin:0;
-}
-
-html.mocha-dark,
-body.mocha-dark {
-  background: black; /* BSAC */
-  color: yellow; /* BSAC */
 }
 
 #mocha {
@@ -92,10 +85,6 @@ body.mocha-dark {
   color: #00d6b2;
 }
 
-.mocha-dark #mocha .test.pass::before {
-  color: green; /* BSAC */
-}
-
 #mocha .test.pass .duration {
   font-size: 9px;
   margin-left: 5px;
@@ -111,10 +100,6 @@ body.mocha-dark {
   border-radius: 5px;
 }
 
-.mocha-dark #mocha .test.pass .duration {
-  color: purple; /* BSAC */
-}
-
 #mocha .test.pass.fast .duration {
   display: none;
 }
@@ -123,33 +108,17 @@ body.mocha-dark {
   color: #0b97c4;
 }
 
-.mocha-dark #mocha .test.pending {
-  color: cyan; /* BSAC */
-}
-
 #mocha .test.pending::before {
   content: '◦';
   color: #0b97c4;
-}
-
-.mocha-dark #mocha .test.pending::before {
-  color: cyan; /* BSAC */
 }
 
 #mocha .test.fail {
   color: #c00;
 }
 
-.mocha-dark #mocha .test.fail {
-  color: red; /* BSAC */
-}
-
 #mocha .test.fail pre {
   color: black;
-}
-
-.mocha-dark #mocha .test.fail pre {
-  color: red; /* BSAC */
 }
 
 #mocha .test.fail::before {
@@ -161,18 +130,10 @@ body.mocha-dark {
   color: #c00;
 }
 
-.mocha-dark #mocha .test.fail::before {
-  color: red; /* BSAC */
-}
-
 #mocha .test pre.error {
   color: #c00;
   max-height: 300px;
   overflow: auto;
-}
-
-.mocha-dark #mocha .test pre.error {
-  color: red; /* BSAC */
 }
 
 #mocha .test .html-error {
@@ -187,27 +148,28 @@ body.mocha-dark {
   padding: 15px;
   border: 1px solid #eee;
   max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
   max-width: calc(100% - 42px); /*(2)*/
   max-height: 300px;
   word-wrap: break-word;
   border-bottom-color: #ddd;
   -webkit-box-shadow: 0 1px 3px #eee;
   -moz-box-shadow: 0 1px 3px #eee;
+  box-shadow: 0 1px 3px #eee;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
 
-.mocha-dark #mocha .test .html-error {
-  color: red; /* BSAC */
-}
-
 #mocha .test .html-error pre.error {
   border: none;
-  -webkit-border-radius: none;
-  -moz-border-radius: none;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: 0;
+  -moz-box-shadow: 0;
+  box-shadow: 0;
   padding: 0;
   margin: 0;
   margin-top: 18px;
@@ -228,23 +190,17 @@ body.mocha-dark {
   padding: 15px;
   border: 1px solid #eee;
   max-width: 85%; /*(1)*/
+  max-width: -webkit-calc(100% - 42px);
+  max-width: -moz-calc(100% - 42px);
   max-width: calc(100% - 42px); /*(2)*/
   word-wrap: break-word;
   border-bottom-color: #ddd;
   -webkit-box-shadow: 0 1px 3px #eee;
   -moz-box-shadow: 0 1px 3px #eee;
+  box-shadow: 0 1px 3px #eee;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-}
-
-/* BSAC */
-/* any changes needed for dark ??? */
-.mocha-dark #mocha .test pre {
-  border: 1px solid #eee;
-  border-bottom-color: #ddd;
-  -webkit-box-shadow: 0 1px 3px #eee;
-  -moz-box-shadow: 0 1px 3px #eee;
 }
 
 #mocha .test h2 {
@@ -264,20 +220,16 @@ body.mocha-dark {
   text-align: center;
   background: #eee;
   font-size: 15px;
+  -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  -webkit-transition: opacity 200ms;
-  -moz-transition: opacity 200ms;
+  -webkit-transition:opacity 200ms;
+  -moz-transition:opacity 200ms;
+  -o-transition:opacity 200ms;
   transition: opacity 200ms;
   opacity: 0.3;
   color: #888;
 }
-
-.mocha-dark #mocha .test a.replay {
-  background: black; /* BSAC */
-  color: yellow; /* BSAC */
-}
-
 
 #mocha .test:hover a.replay {
   opacity: 1;
@@ -306,10 +258,6 @@ body.mocha-dark {
   letter-spacing: 1px;
 }
 
-.mocha-dark #mocha-error {
-  color: red; /* BSAC */
-}
-
 #mocha-stats {
   position: fixed;
   top: 15px;
@@ -320,30 +268,24 @@ body.mocha-dark {
   z-index: 1;
 }
 
-.mocha-dark #mocha-stats {
-  color: yellow; /* BSAC */
-}
-
-
 #mocha-stats .progress {
   float: right;
   padding-top: 0;
+
+  /**
+   * Set safe initial values, so mochas .progress does not inherit these
+   * properties from Bootstrap .progress (which causes .progress height to
+   * equal line height set in Bootstrap).
+   */
+  height: auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: initial;
 }
 
 #mocha-stats em {
   color: black;
-}
-
-.mocha-dark #mocha-stats em {
-  color: white; /* BSAC */
-}
-
-.mocha-dark #mocha-stats .passes em {
-    color: green; /* BSAC */
-}
-
-.mocha-dark #mocha-stats .failures em {
-    color: red; /* BSAC */
 }
 
 #mocha-stats a {
@@ -353,10 +295,6 @@ body.mocha-dark {
 
 #mocha-stats a:hover {
   border-bottom: 1px solid #eee;
-}
-
-.mocha-dark #mocha-stats a:hover {
-  border-bottom: 1px solid yellow; /* BSAC */
 }
 
 #mocha-stats li {
@@ -376,14 +314,6 @@ body.mocha-dark {
 #mocha code .string { color: #5890ad; }
 #mocha code .keyword { color: #8a6343; }
 #mocha code .number { color: #2f6fad; }
-
-/* BSAC */
-/* any changes needed for dark ??? */
-.mocha-dark #mocha code .comment { color: #ddd; }
-.mocha-dark #mocha code .init { color: #2f6fad; }
-.mocha-dark #mocha code .string { color: #5890ad; }
-.mocha-dark #mocha code .keyword { color: #8a6343; }
-.mocha-dark #mocha code .number { color: #2f6fad; }
 
 @media screen and (max-device-width: 480px) {
   #mocha {

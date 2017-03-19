@@ -8,7 +8,8 @@ requirejs.config({
     // never includes a ".js" extension since
     // the paths config could be for a directory.
     paths: {
-        mocha: '../node_modules/mocha/mocha',
+//        mocha: '../node_modules/mocha/mocha',
+        mocha: '../mocha-dark-3.2.0/mocha-dark',
         chai: '../node_modules/chai/chai'
     },
 
