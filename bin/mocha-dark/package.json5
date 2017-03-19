@@ -43,11 +43,12 @@
     "dark"
   ],
   "author": "Brent S.A. Cowgill",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "chai": "^3.5.0",       // test assertion library
     "json5": "^0.5.1",      // to convert package.json5 to package.json
     "mocha": "^3.2.0",      // test runner library
-    "npm-json5": "^0.1.4"   // so that package.json doesn't need to be generated
+    "npm-json5": "^0.1.4",  // so that package.json doesn't need to be generated
+    "requirejs": "^2.3.3"   // so require will work in the browser
   }
 }
