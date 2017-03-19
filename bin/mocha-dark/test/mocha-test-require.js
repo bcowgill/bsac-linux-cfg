@@ -13,11 +13,11 @@ requirejs.config({
         chai: '../node_modules/chai/chai'
     },
 
-	shim: {
-		mocha: {
-			exports: 'mocha'
-		}
-	}
+    shim: {
+        mocha: {
+            exports: 'mocha'
+        }
+    }
 });
 
 // Start the tests after loading testing libraries
@@ -26,16 +26,16 @@ function (require, mocha, chai) {
     // mocha, chai module are all
     // loaded and can be used here now.
 
-	mocha.setup('bdd');
+    mocha.setup({ ui: 'bdd' });
 
-	// require test plans here.
-	require([
-		'./test/a-first-test.test.js'
-//		'./src/object.js',
-//		'./src/object.spec.js'
-	], function () {
-		mocha.checkLeaks();
-		mocha.globals(['jQuery']);
-		mocha.run();
-	});
+    // require test plans here.
+    require([
+        './test/a-first-test.test.js'
+//        './src/object.js',
+//        './src/object.spec.js'
+    ], function () {
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        mocha.run();
+    });
 });

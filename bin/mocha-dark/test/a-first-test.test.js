@@ -1,10 +1,11 @@
 var chai = chai || require('chai');
 var assert = chai.assert;
+
 describe('Array', function() {
   describe('#indexOf()', function() {
-  debugger;
+//  debugger;
     it('should return -1 when the value is not present', function() {
-      assert.equal(-1, [1, 2, 3].indexOf(4));
+      var r = assert.equal(-1, [1, 2, 3].indexOf(4)); // result
     });
     it('should compare strings', function() {
       assert.deepEqual(

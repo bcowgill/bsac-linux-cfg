@@ -1,3 +1,4 @@
+// "version": "3.2.0",
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process,global){
 'use strict';
@@ -144,6 +145,8 @@ mocha.setup = function (opts) {
 
 mocha.run = function (fn) {
   var options = mocha.options;
+  var scheme = mocha.initColorScheme('mocha-light'); /* BSAC */
+  mocha.uiChangeColorScheme(scheme); /* BSAC */
   mocha.globals('location');
 
   var query = Mocha.utils.parseQuery(global.location.search || '');
@@ -168,6 +171,71 @@ mocha.run = function (fn) {
     }
   });
 };
+
+/* BSAC */
+mocha.setColorScheme = function (scheme) {
+  var cookieValue, maxAgeInSeconds = (60*60*24*365);
+
+  try {
+    document.body.className = document.body.className.replace(/\bmocha-[a-z]+\b/g, '');
+    if (scheme) {
+      scheme = scheme.trim();
+      document.body.className += ' ' + scheme;
+      cookieValue = scheme;
+    }
+    else {
+      cookieValue = 'mocha-light';
+    }
+    document.body.className = document.body.className.trim();
+    document.cookie = 'mocha-scheme=' + cookieValue + ';max-age=' + maxAgeInSeconds;
+  }
+  finally {};
+};
+
+/* BSAC */
+mocha.initColorScheme = function (scheme) {
+  try {
+    var mochaScheme = document.cookie.replace(/(?:(?:^|.*;\s*)mocha-scheme\s*\=\s*([^;]*).*$)|^.*$/, "$1").trim();
+    if (mochaScheme) {
+      mocha.setColorScheme(mochaScheme);
+    }
+    else {
+      mochaScheme = scheme;
+      mocha.setColorScheme(scheme);
+    }
+  }
+  finally {};
+  return mochaScheme;
+};
+
+/* BSAC */
+mocha.uiChangeColorScheme = function (scheme) {
+  var button = scheme == 'mocha-light' ?  '\u25d1' : '\u25d0';
+  var otherScheme = scheme == 'mocha-light' ? 'mocha-dark' : 'mocha-light';
+  var toolTip = 'toggle color scheme between '
+    + scheme + ' and ' + otherScheme
+  var html = '<div data-scheme="' + otherScheme
+    + '" title="' + toolTip
+    + '" id="mocha-change-scheme">' + button + '</div>';
+
+  if (typeof jQuery == 'function') {
+    var div = jQuery('#mocha-change-scheme');
+    if (!div.length) {
+      jQuery('body').append(html).click(function (event) {
+        otherScheme = $(event.target).attr('data-scheme');
+        mocha.setColorScheme(otherScheme);
+        mocha.uiChangeColorScheme(otherScheme);
+      });
+    }
+    else {
+      div
+        .attr('data-scheme', otherScheme)
+        .attr('title', toolTip)
+        .text(button);
+    }
+  }
+}
+
 
 /**
  * Expose the process shim.
@@ -508,6 +576,13 @@ Progress.prototype.draw = function (ctx) {
     // text
     var text = this._text || (percent | 0) + '%';
     var w = ctx.measureText(text).width;
+
+    try {
+      if (document.getElementsByClassName('mocha-dark').length) {
+        ctx.fillStyle = "yellow"; // BSAC DARK SCHEME
+      }
+    }
+    finally {}
 
     ctx.fillText(text, x - w / 2 + 1, y + fontSize / 2 - 1);
   } catch (err) {
@@ -9551,11 +9626,11 @@ function objectToString(o) {
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
 module.exports = function (str) {
-	if (typeof str !== 'string') {
-		throw new TypeError('Expected a string');
-	}
+    if (typeof str !== 'string') {
+        throw new TypeError('Expected a string');
+    }
 
-	return str.replace(matchOperatorsRe, '\\$&');
+    return str.replace(matchOperatorsRe, '\\$&');
 };
 
 },{}],48:[function(require,module,exports){

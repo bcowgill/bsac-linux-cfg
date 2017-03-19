@@ -1,7 +1,14 @@
+/*  "version": "3.2.0", */
 @charset "utf-8";
 
 body {
   margin:0;
+}
+
+html.mocha-dark,
+body.mocha-dark {
+  background: black; /* BSAC */
+  color: yellow; /* BSAC */
 }
 
 #mocha {
@@ -85,6 +92,10 @@ body {
   color: #00d6b2;
 }
 
+.mocha-dark #mocha .test.pass::before {
+  color: green; /* BSAC */
+}
+
 #mocha .test.pass .duration {
   font-size: 9px;
   margin-left: 5px;
@@ -100,6 +111,10 @@ body {
   border-radius: 5px;
 }
 
+.mocha-dark #mocha .test.pass .duration {
+  color: purple; /* BSAC */
+}
+
 #mocha .test.pass.fast .duration {
   display: none;
 }
@@ -108,17 +123,33 @@ body {
   color: #0b97c4;
 }
 
+.mocha-dark #mocha .test.pending {
+  color: cyan; /* BSAC */
+}
+
 #mocha .test.pending::before {
   content: '◦';
   color: #0b97c4;
+}
+
+.mocha-dark #mocha .test.pending::before {
+  color: cyan; /* BSAC */
 }
 
 #mocha .test.fail {
   color: #c00;
 }
 
+.mocha-dark #mocha .test.fail {
+  color: red; /* BSAC */
+}
+
 #mocha .test.fail pre {
   color: black;
+}
+
+.mocha-dark #mocha .test.fail pre {
+  color: red; /* BSAC */
 }
 
 #mocha .test.fail::before {
@@ -130,10 +161,18 @@ body {
   color: #c00;
 }
 
+.mocha-dark #mocha .test.fail::before {
+  color: red; /* BSAC */
+}
+
 #mocha .test pre.error {
   color: #c00;
   max-height: 300px;
   overflow: auto;
+}
+
+.mocha-dark #mocha .test pre.error {
+  color: red; /* BSAC */
 }
 
 #mocha .test .html-error {
@@ -160,6 +199,10 @@ body {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+}
+
+.mocha-dark #mocha .test .html-error {
+  color: red; /* BSAC */
 }
 
 #mocha .test .html-error pre.error {
@@ -231,6 +274,12 @@ body {
   color: #888;
 }
 
+.mocha-dark #mocha .test a.replay {
+  background: black; /* BSAC */
+  color: yellow; /* BSAC */
+}
+
+
 #mocha .test:hover a.replay {
   opacity: 1;
 }
@@ -258,6 +307,10 @@ body {
   letter-spacing: 1px;
 }
 
+.mocha-dark #mocha-error {
+  color: red; /* BSAC */
+}
+
 #mocha-stats {
   position: fixed;
   top: 15px;
@@ -267,6 +320,11 @@ body {
   color: #888;
   z-index: 1;
 }
+
+.mocha-dark #mocha-stats {
+  color: yellow; /* BSAC */
+}
+
 
 #mocha-stats .progress {
   float: right;
@@ -288,6 +346,18 @@ body {
   color: black;
 }
 
+.mocha-dark #mocha-stats em {
+  color: white; /* BSAC */
+}
+
+.mocha-dark #mocha-stats .passes em {
+    color: green; /* BSAC */
+}
+
+.mocha-dark #mocha-stats .failures em {
+    color: red; /* BSAC */
+}
+
 #mocha-stats a {
   text-decoration: none;
   color: inherit;
@@ -295,6 +365,10 @@ body {
 
 #mocha-stats a:hover {
   border-bottom: 1px solid #eee;
+}
+
+.mocha-dark #mocha-stats a:hover {
+  border-bottom: 1px solid yellow; /* BSAC */
 }
 
 #mocha-stats li {
@@ -314,6 +388,20 @@ body {
 #mocha code .string { color: #5890ad; }
 #mocha code .keyword { color: #8a6343; }
 #mocha code .number { color: #2f6fad; }
+
+.mocha-dark #mocha code .comment { color: #888; } /* BSAC */
+
+/* BSAC */
+#mocha-change-scheme {
+  margin-left: 64px;
+  width: 16px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+#mocha-change-scheme:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
 
 @media screen and (max-device-width: 480px) {
   #mocha {
