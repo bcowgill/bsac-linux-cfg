@@ -23,9 +23,19 @@
     // npm-json5 run test1 test/testplan.test.js
     "test1": "npm-json5 run _mocha1",
 
-    "watch": "npm-json5 run _mocha -- --watch --watch-extensions=js",
+    // run single test in node debugger. .exit to quit
+    // npm-json5 run test1:repl test/testplan.test.js
+    // https://nodejs.org/api/debugger.html
+    // next, cont, repl, list(N lines), help, quit
+    "test1:repl": "npm-json5 run _mocha1 -- debug",
 
-    "debug": "set | grep PATH", // just to debug the environment
+	 // run single test and show URL to attach chrome dev tools to it.
+    // npm-json5 run test1:debug test/testplan.test.js
+    "test1:debug": "npm-json5 run _mocha1 -- --debug --debug-brk --inspect",
+
+    "watch": "npm-json5 run _mocha -- --watch --watch-extensions=js --reporter=min",
+
+    "env": "set | grep PATH", // just to debug the environment
   },
   "keywords": [
     "mocha",
@@ -35,8 +45,9 @@
   "author": "Brent S.A. Cowgill",
   "license": "ISC",
   "devDependencies": {
-    "json5": "^0.5.1",
-    "mocha": "^3.2.0",
-    "npm-json5": "^0.1.4"  // so that package.json doesn't need to be generated
+    "chai": "^3.5.0",       // test assertion library
+    "json5": "^0.5.1",      // to convert package.json5 to package.json
+    "mocha": "^3.2.0",      // test runner library
+    "npm-json5": "^0.1.4"   // so that package.json doesn't need to be generated
   }
 }

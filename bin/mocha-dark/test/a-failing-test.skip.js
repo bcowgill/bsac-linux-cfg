@@ -1,4 +1,6 @@
-var assert = require('assert');
+var chai = chai || require('chai');
+var assert = chai.assert;
+
 describe('String failure', function() {
   describe('string diff', function() {
     it('should compare the strings exactly', function() {

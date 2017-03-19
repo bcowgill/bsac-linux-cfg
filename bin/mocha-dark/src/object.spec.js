@@ -1,4 +1,6 @@
-var assert = require('assert');
+
+var chai = chai || require('chai');
+var assert = chai.assert;
 
 var testMe = require('./object');
 
