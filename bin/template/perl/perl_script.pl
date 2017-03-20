@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-perl_script - Using GetOpt::Long and Pod::Usage
+perl_script.pl - Using GetOpt::Long and Pod::Usage
 
 =head1 AUTHOR
 
@@ -77,7 +77,7 @@ use FindBin;
 use File::Spec;
 print "the directory of my script is: " . $FindBin::Bin . "\n";
 print "the base name of my script is: " . $FindBin::Script . "\n";
-if ($FindBin::Script == '-e')
+if ($FindBin::Script eq '-e')
 {
 	print "this was invoked as: cd $FindBin::Bin ; perl -e";
 }
