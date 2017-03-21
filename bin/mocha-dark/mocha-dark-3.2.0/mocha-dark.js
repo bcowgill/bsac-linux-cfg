@@ -225,8 +225,13 @@ mocha.uiChangeColorScheme = function (scheme) {
   var otherScheme = scheme == 'mocha-light' ? 'mocha-dark' : 'mocha-light';
   var toolTip = 'toggle color scheme between '
     + scheme + ' and ' + otherScheme
-  var html = '<div title="' + toolTip
-    + '" id="mocha-change-scheme" class="mocha-change-scheme"></div>';
+  var html = [
+    '<div id="mocha-change-scheme"',
+    ' class="mocha-change-scheme">',
+    '  <div class="icon">◑</div>', // or ☯
+    '  <span>' + toolTip + '</span>',
+    '</div>'
+  ].join('');
 
   try {
     var div = jQuery('#mocha-change-scheme');
