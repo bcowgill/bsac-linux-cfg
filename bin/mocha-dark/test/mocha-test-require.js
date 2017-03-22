@@ -9,8 +9,8 @@ requirejs.config({
     // the paths config could be for a directory.
     paths: {
 //        mocha: '../node_modules/mocha/mocha',
-//        mocha: '../mocha-dark-3.2.0/mocha-dark',
-        mocha: '../mocha/mocha',
+        mocha: '../current/mocha-dark',
+//        mocha: '../mocha/mocha',
         chai: '../node_modules/chai/chai'
     },
 

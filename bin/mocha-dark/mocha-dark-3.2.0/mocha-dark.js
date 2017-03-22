@@ -145,8 +145,6 @@ mocha.setup = function (opts) {
 
 mocha.run = function (fn) {
   var options = mocha.options;
-  var scheme = mocha.initColorScheme('mocha-light'); /* BSAC */
-  mocha.uiChangeColorScheme(scheme); /* BSAC */
   mocha.globals('location');
 
   var query = Mocha.utils.parseQuery(global.location.search || '');
@@ -171,84 +169,6 @@ mocha.run = function (fn) {
     }
   });
 };
-
-/* BSAC */
-mocha.initColorScheme = function (scheme) {
-  try {
-    var mochaScheme = document.cookie
-      .replace(/(?:(?:^|.*;\s*)mocha-scheme\s*=\s*([^;]*).*$)|^.*$/, '$1')
-      .trim();
-    if (mochaScheme) {
-      mocha.setColorScheme(mochaScheme);
-    } else {
-      mochaScheme = mocha.getColorScheme(scheme);
-      mocha.setColorScheme(mochaScheme);
-    }
-  } finally {}
-  return mochaScheme;
-};
-
-/* BSAC */
-mocha.setColorScheme = function (scheme, cookieOnly) {
-  var cookieValue;
-  var maxAgeInSeconds = (60 * 60 * 24 * 365);
-
-  try {
-    if (scheme) {
-      scheme = scheme.trim();
-      cookieValue = scheme;
-    } else {
-      cookieValue = 'mocha-light';
-    }
-    if (!cookieOnly) {
-      document.body.className = document.body.className
-        .replace(/\bmocha-[a-z]+\b/g, '');
-      document.body.className += ' ' + cookieValue;
-      document.body.className = document.body.className.trim();
-    }
-    document.cookie = 'mocha-scheme=' + cookieValue +
-      ';max-age=' + maxAgeInSeconds;
-  } finally {}
-};
-
-/* BSAC */
-mocha.getColorScheme = function (scheme) {
-  try {
-    var match = document.body.className.match(/\b(mocha-[a-z]+)\b/);
-    scheme = match ? match[0] : scheme;
-  } finally {}
-  return scheme;
-};
-
-/* BSAC */
-mocha.uiChangeColorScheme = function (scheme) {
-  var otherScheme = scheme == 'mocha-light' ? 'mocha-dark' : 'mocha-light';
-  var toolTip = 'toggle color scheme between '
-    + scheme + ' and ' + otherScheme
-  var html = [
-    '<div id="mocha-change-scheme"',
-    ' class="mocha-change-scheme">',
-    '  <div class="icon">◑</div>', // or ☯
-    '  <span>' + toolTip + '</span>',
-    '</div>'
-  ].join('');
-
-  try {
-    var div = jQuery('#mocha-change-scheme');
-    if (!div.length) {
-      jQuery('body').append(html).click(function (event) {
-        mocha.setColorScheme(otherScheme, 'cookie');
-        location.reload();
-      });
-    }
-    else {
-      div
-        .attr('data-scheme', otherScheme)
-        .attr('title', toolTip);
-    }
-  } finally {}
-}
-
 
 /**
  * Expose the process shim.
@@ -2724,6 +2644,8 @@ function HTML (runner) {
   var ctx;
   var root = document.getElementById('mocha');
 
+  initColorScheme('mocha-light');
+
   if (canvas.getContext) {
     var ratio = window.devicePixelRatio || 1;
     canvas.style.width = canvas.width;
@@ -2866,6 +2788,51 @@ function HTML (runner) {
     text(passes, stats.passes);
     text(failures, stats.failures);
     text(duration, (ms / 1000).toFixed(2));
+  }
+
+  function initColorScheme (scheme) {
+    try {
+      var mochaScheme = document.cookie
+        .replace(/(?:(?:^|.*;\s*)mocha-scheme\s*=\s*([^;]*).*$)|^.*$/, '$1')
+        .trim();
+      if (mochaScheme) {
+        setColorScheme(mochaScheme);
+      } else {
+        mochaScheme = getColorScheme(scheme);
+        setColorScheme(mochaScheme);
+      }
+    } finally {}
+    return mochaScheme;
+  }
+
+  function setColorScheme (scheme, cookieOnly) {
+    var cookieValue;
+    var maxAgeInSeconds = (60 * 60 * 24 * 365);
+
+    try {
+      if (scheme) {
+        scheme = scheme.trim();
+        cookieValue = scheme;
+      } else {
+        cookieValue = 'mocha-light';
+      }
+      if (!cookieOnly) {
+        document.body.className = document.body.className
+          .replace(/\bmocha-[a-z]+\b/g, '');
+        document.body.className += ' ' + cookieValue;
+        document.body.className = document.body.className.trim();
+      }
+      document.cookie = 'mocha-scheme=' + cookieValue +
+        ';max-age=' + maxAgeInSeconds;
+    } finally {}
+  }
+
+  function getColorScheme (scheme) {
+    try {
+      var match = document.body.className.match(/\b(mocha-[a-z]+)\b/);
+      scheme = match ? match[0] : scheme;
+    } finally {}
+    return scheme;
   }
 }
 
