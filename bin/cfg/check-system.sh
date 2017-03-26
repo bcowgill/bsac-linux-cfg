@@ -54,6 +54,8 @@ set +o posix
 #BAIL_OUT=custom
 #BAIL_OUT=repos
 #BAIL_OUT=docker
+#BAIL_OUT=vpn
+#BAIL_OUT=php
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -130,6 +132,9 @@ VIRTUALBOX_REL="raring"
 
 MONO_PKG=mono-complete
 MONO_CMD=mono
+
+PHP_PKG=php5-cli
+PHP_CMD=php
 
 SVN_CMD=svn
 SVN_VER="1.8.5"
@@ -488,6 +493,7 @@ INSTALL_CMDS="
 	fbcat
 	jhead
 	chromium-browser
+	$PHP_CMD:$PHP_PKG
 "
 
 # HEREIAM SUGGESTED
@@ -955,6 +961,8 @@ which nodejs && nodejs --version
 which npm && npm --version
 which erl && erl -eval 'halt().'
 which elixir && elixir -v
+which php && php -v
+which composer && composer -v | head -7
 echo END versions
 
 BAIL_OUT versions
@@ -1740,6 +1748,22 @@ if [ ! -z "$VPN_PKG" ]; then
 fi
 
 BAIL_OUT vpn
+
+if [  ! -z "$PHP_PKG" ]; then
+	# install composer php package manager
+	cmd_exists $PHP_CMD "need php command"
+   if cmd_exists composer; then
+		echo OK PHP composer package manager preset
+	else
+		$PHP_CMD -r "copy('https://getcomposer.org/installer', '$DOWNLOAD/composer-setup.php');"
+		$PHP_CMD -r "if (hash_file('SHA384', '$DOWNLOAD/composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'OK PHP composer installer verified'; } else { echo 'NOT OK PHP composer installer corrupt'; unlink('$DOWNLOAD/composer-setup.php'); } echo PHP_EOL;"
+		$PHP_CMD "$DOWNLOAD/composer-setup.php"
+		sudo mv ~/composer.phar /usr/local/bin/composer
+		cmd_exists composer
+	fi
+fi
+
+BAIL_OUT php
 
 # HEREIAM CUSTOM INSTALL
 

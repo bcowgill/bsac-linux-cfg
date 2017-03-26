@@ -2187,6 +2187,10 @@ phonon:amd64
 phonon-backend-gstreamer1.0
 phonon-backend-gstreamer:amd64
 phonon-backend-gstreamer-common:amd64
+php5-cli
+php5-common
+php5-json
+php5-readline
 pinta
 pkg-config
 plainbox-provider-checkbox
