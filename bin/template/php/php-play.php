@@ -1,5 +1,8 @@
 #!/usr/bin/env php
 <?php
+
+require_once("functions.php");
+
 $greeting = "Let's get to it!";
 echo "Hello, World\n$greeting\n";
 
@@ -49,28 +52,17 @@ var_dump(localeconv());
 echo "json_encode(): " . json_encode(localeconv(), JSON_PRETTY_PRINT) . "\n";
 echo "serialize(): " . serialize(localeconv()) . "\n";
 
-###########################################################################
-function x($char, $repeat = 0) {
-	if ($repeat > 0) {
-		return sprintf("%'{$char}{$repeat}s","");
-	}
-	return '';
-}
-function pad_multiple($string, $multiple, $char = '0') {
-	$length = $len = strlen($string);
-	$modulo = $len % $multiple;
-	if ($modulo) {
-		$length = $multiple - $modulo + $len;
-	}
-	return str_pad($string, $length, '0', STR_PAD_LEFT);
-}
-function to_hex_string($value) {
-	return '0x' . pad_multiple(base_convert($value, 10, 16), 4);
-}
-function to_octal_string($value) {
-	return '0' . pad_multiple(base_convert($value % 8, 10, 8), 3);
-}
-function to_bin_string($value) {
-	return '0b' . pad_multiple(base_convert($value, 10, 2), 4);
-}
+echo "\nnew generic objects: ";
+echo json_encode([
+	new stdClass(),  # cannot init any parameters
+	#new class{},  php7
+	(object)[ 'x' => 42, 'y' => -1 ],
+	(object)NULL,
+	(object)"convert string to object",
+	(object)42,
+
+], JSON_PRETTY_PRINT) . "\n";
+
+$fp = fopen("php.php", "r");
+echo "\nget_resource_type(): " . get_resource_type($fp) . "\n";
 

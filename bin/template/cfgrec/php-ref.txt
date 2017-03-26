@@ -2,6 +2,19 @@ PHP programming language quick reference
 
 http://php.net/manual/en/langref.php
 
+Command Arguments
+php -a REPL shell
+php --ini # show ini files used
+php -i # loads of info about PHP version/env
+php -m # show compiled in modules
+php -s # syntax highlight source with html
+php -w # strip all comments and whitespace from source
+for lint in *.php; do php -l $lint; done
+
+TODO
+php -B -R -F -E -G  # like perl's -pne functionality
+php -S localhost:9876 -t docs/  # runs with webserver
+
 Basic Syntax
 <?php
 php code here...
@@ -186,11 +199,45 @@ array_keys($array)
 array_diff()
 
 Objects
+$genericObject = new stdClass();
+(object)[]; # alternate way to create a new empty object
+(object)NULL;
+new class{}; # php7 anonymous class
+(object)"string"; # yeilds object { scalar => "string" }
+(object)[1, 2, 'a' => 42];   # $object->a is accessible but $object->{0} is not
+
+$coord = (object)[ 'x' => 42, 'y', -4 ];
+
+class foo
+{
+    function do_foo()
+    {
+        echo "Doing foo.";
+    }
+}
+
+$bar = new foo;
+$bar->do_foo();
+
 Callables
+TODO anonymous functions and normal functions
+
 Resources
+a special variable holding a reference to an external resource.
+
+1$fp = fopen("foo", "w");
+echo get_resource_type($fp) . "\n";
 
 Constants
 define('CONST_NAME', value);
+
+Modules
+can insert another file directly at point in script.
+require('path/file.php'); # will die if cannot find file
+include('path/file.php'); # will only warn if cannot find file
+
+require_once('path/file.php'); # will die if cannot find file
+include_once('path/file.php'); # will only warn if cannot find file
 
 ============================================================================
 
