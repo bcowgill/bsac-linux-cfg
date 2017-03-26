@@ -32,6 +32,7 @@ var_dump($variable); // prints variable type and value
 print_r($array); // print an array
 gettype($varuable);  // for debugging returns type name
 is_string($variable) // for coding to detect type
+error_reporting(E_ALL) // show all errors
 
 Types
 is_null(), is_bool, is_int, is_float, is_string, is_array, is_object, is_object, is_callable, is_resource
@@ -116,6 +117,74 @@ urldecode() // url functions http://php.net/manual/en/ref.url.php
 
 
 Arrays
+is an ordered map. keys can be number or string.
+"8" will become 8, but float 5.4 will become 5 as a key, booleans are cast to 0 or 1 as a key. NULL as a key will store under the empty string.
+
+$array = array(
+    key  => value,
+    key2 => value2,
+    key3 => value3,
+    ...
+);
+
+$array = [
+    "foo" => "bar",
+    "bar" => "foo",
+];
+
+omit keys to get a 0,1,2... indexed array
+$array = array("foo", "bar", "hello", "world");
+$array[] = 'leaders'; # $array[4] will = 'leaders'
+the highest integer index is remembered so if you unset($array[4])
+and added another to the array without a key it would go to $array[5]
+
+$array = array(
+         "a",
+         "b",
+    6 => "c",
+         "d",
+);
+will have keys 0, 1, 6, 7
+
+$array[2] or $array{2}
+$array['key'] or $array{'key'}
+$array[$key] = $value
+unset($array[$key])  # remove key/value from array
+unset($array)  # delete the whole array
+
+(array)$scalar ==> [$scalar]
+
+$arr2 = &$arr1  # refer to same array, instead of copy it
+
+array_values($array) # get the ordered values as an array, will reindex the keys from $array if items have been unset
+
+foreach ($array as $value)
+	statement won't modify array values
+
+foreach ($array as $key => $value)
+	statement won't modify key or values of array
+
+foreach ($array as &$value)
+	statement can change array values passed by reference
+unset($value);  # break the reference to the last array value
+
+dereferencing with list()
+$array = [
+    [1, 2],
+    [3, 4],
+];
+
+foreach ($array as list($a, $b)) {
+    // $a contains the first element of the nested array,
+    // and $b contains the second element.
+    echo "A: $a; B: $b\n";
+}
+
+count($array)  # counts number of items in array
+array_key_exists($array, $key)
+array_keys($array)
+array_diff()
+
 Objects
 Callables
 Resources
