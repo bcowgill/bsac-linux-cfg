@@ -1,6 +1,9 @@
 PHP programming language quick reference
 
 http://php.net/manual/en/langref.php
+http://www.php5-tutorial.com/mysql/introduction/
+http://php.net/manual/en/language.types.type-juggling.php
+http://php.net/manual/en/language.oop5.decon.php
 
 Command Arguments
 php -a REPL shell

@@ -42,6 +42,8 @@ class User extends Entity
 		$this->age = $age;
 		$this->thoughts = $thoughts;
 		$this->junk = $junk;
+		# to ensure __destruct called on fatal error
+		register_shutdown_function(array($this, '__destruct'));
 	}
 
 	# The class destructor function
