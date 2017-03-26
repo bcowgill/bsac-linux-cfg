@@ -1,0 +1,150 @@
+PHP programming language quick reference
+
+http://php.net/manual/en/langref.php
+
+Basic Syntax
+<?php
+php code here...
+?>  can be omitted in pure php files (no html)
+
+<?= $greetingToPrint ?>
+
+Mixed HTML/PHP
+<p>This is going to be ignored by PHP and displayed by the browser.</p>
+<?php echo 'While this is going to be parsed.'; ?>
+<p>This will also be ignored by PHP and displayed by the browser.</p>
+
+<?php if ($expression == true): ?>
+  This will show if the expression is true.
+<?php else: ?>
+  Otherwise this will show.
+<?php endif; ?>
+
+Comments
+
+# one line comment
+// one line comment
+/* multi-line comment */
+
+Debugging
+
+var_dump($variable); // prints variable type and value
+print_r($array); // print an array
+gettype($varuable);  // for debugging returns type name
+is_string($variable) // for coding to detect type
+
+Types
+is_null(), is_bool, is_int, is_float, is_string, is_array, is_object, is_object, is_callable, is_resource
+unset($var) // makes it null
+(bool)$var  // casts to boolean
+settype($var, "float")
+
+NULL, null case insensitive
+
+Booleans
+true, TRUE, false, FALSE, etc case insensitive
+FALSE:
+the boolean FALSE itself
+the integer 0 (zero)
+the float 0.0 (zero)
+the empty string, and the string "0"
+an array with zero elements
+the special type NULL (including unset variables)
+SimpleXML objects created from empty tags
+TRUE:
+anything else, including NAN and any resource
+
+Integers
+123 decimal
+0x3c7e hexadecimal
+0755 octal
+0b11011011 binary
+PHP_INT_MIN, PHP_INT_MAX, PHP_INT_SIZE (bytes)
+overflow becomes a float
+no integer division
+intval($string, $base);  // get integer in any base
+
+
+Floating Point Numbers
+0.0
+.1445
+1E-9
+1e5
+(int)$float  == trunc() round toward zero
+round($float, $decimals, $mode)  more rounding control
+ $mode PHP_ROUND_HALF_UP, PHP_ROUND_HALF_DOWN
+       PHP_ROUND_HALF_EVEN, PHP_ROUND_HALF_ODD
+is_nan($value) to check for NAN
+
+Strings
+no unicode support until php7
+longest string allowed 2147483647 (32 bit or < php7)
+'single quoted' only \' and \\ are allowed escapes no variable interpolation
+'single quoted
+multiple lines'
+"double quoted" all normal escapes and variable interpolation
+  \x2a ascii code in hexadecimal
+  \u20ff utf-8 character
+  $var ${var}iable
+  $arr[4] $obj[key]
+  $inst->method
+  {$var  * 3}     {$ opens a php expression}
+  {$obj['key']}
+  {${getName()}}   must double escape for function calls
+<<<HEREDOC
+all text until the heredoc ender acts as double quoted string
+HEREDOC; // may also quote "HEREDOC"
+<<<'NOWDOC'
+all text until the nowdoc ender acts like single quoted string
+NOWDOC;
+
+(string) $obj or strval($obj) to convert something else to string
+$string[4] access 5th character in string
+$string{-3} also supported
+substr($string, $start_or_end, $length_or_omit)
+substr_replace($string, $replace, $start_or_end, $length_or_omit)
+serialize($obj) convert object to string for IO storage
+unserialize($string) convert serialized value back to object
+PHP_EOL constant for end of line character
+
+$join . $strings // concatenation but "{$var1}{$var2}" is fastest
+chop, trim... // string functions http://php.net/manual/en/ref.strings.php
+preg_match(...) // perl regex fns http://php.net/manual/en/ref.pcre.php
+fnmatch($patt, $string, $flags) // shell matching fns http://php.net/manual/en/function.fnmatch.php
+ctype_lower($string) // check that all characters are lowercase http://php.net/manual/en/ref.ctype.php
+urldecode() // url functions http://php.net/manual/en/ref.url.php
+
+
+Arrays
+Objects
+Callables
+Resources
+
+Constants
+define('CONST_NAME', value);
+
+============================================================================
+
+function x($char, $repeat = 0) {
+	if ($repeat > 0) {
+		return sprintf("%'{$char}{$repeat}s",'');
+	}
+	return '';
+}
+function pad_multiple($string, $multiple, $char = '0') {
+	$length = $len = strlen($string);
+	$modulo = $len % $multiple;
+	if ($modulo) {
+		$length = $multiple - $modulo + $len;
+	}
+	return str_pad($string, $length, '0', STR_PAD_LEFT);
+}
+function to_hex_string($value) {
+	return '0x' . pad_multiple(base_convert($value, 10, 16), 4);
+}
+function to_octal_string($value) {
+	return '0' . pad_multiple(base_convert($value % 8, 10, 8), 3);
+}
+function to_bin_string($value) {
+	return '0b' . pad_multiple(base_convert($value, 10, 2), 4);
+}
