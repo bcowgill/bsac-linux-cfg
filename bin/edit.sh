@@ -5,7 +5,7 @@
 LAUNCH="emacsclient --no-wait --alternate-editor=emacs"
 
 if [ -z "$2" ]; then
-	FILE=`echo $1 | perl -pne 's{:[:0-9]* \s* \z}{}xmsg'`
+	FILE=`echo $1 | perl -pne 's{:[:a-z0-9]* \s* \z}{}xmsgi'`
 	#echo edit [$FILE]
 	$LAUNCH "$FILE"
 else
