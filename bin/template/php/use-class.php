@@ -2,6 +2,7 @@
 <?php
 require_once('ClassPolyConstructor.php');
 require_once('ClassArityConstructor.php');
+require_once('ClassSingleton.php');
 require_once('php-class.php');
 
 $user = new User('alice', 16);
@@ -76,12 +77,19 @@ class Thung extends ArityConstructor
 }
 
 $o = new Thung('sheep');
-$o = new Thung('sheep','cat');
-$o = new Thung('sheep','cat','dog');
+$o2 = new Thung('sheep','cat');
+$o3 = new Thung('sheep','cat','dog');
 
 // results:
 // __construct with 1 param called: sheep
 // __construct with 2 params called: sheep,cat
 // __construct with 3 params called: sheep,cat,dog
+
+$s = Singleton::getInstance();
+$t = Singleton::getInstance();
+var_dump($s);
+
+print "singleton compare: " . ($s === $t) . PHP_EOL;
+print "non-singleton compare: " . ($o === $o2) . PHP_EOL;
 
 echo "\nend\n\n";
