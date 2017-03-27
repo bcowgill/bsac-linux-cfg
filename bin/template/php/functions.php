@@ -12,13 +12,13 @@ function pad_multiple($string, $multiple, $char = '0') {
 	if ($modulo) {
 		$length = $multiple - $modulo + $len;
 	}
-	return str_pad($string, $length, '0', STR_PAD_LEFT);
+	return str_pad($string, $length, $char, STR_PAD_LEFT);
 }
 function to_hex_string($value) {
 	return '0x' . pad_multiple(base_convert($value, 10, 16), 4);
 }
 function to_octal_string($value) {
-	return '0' . pad_multiple(base_convert($value % 8, 10, 8), 3);
+	return '0' . pad_multiple(base_convert($value, 10, 8), 3);
 }
 function to_bin_string($value) {
 	return '0b' . pad_multiple(base_convert($value, 10, 2), 4);
