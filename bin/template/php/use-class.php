@@ -5,14 +5,16 @@ require_once('ClassArityConstructor.php');
 require_once('ClassSingleton.php');
 require_once('php-class.php');
 
+const ¶ = PHP_EOL;
+
 $user = new User('alice', 16);
 $admin = new Admin('jaberwocky', 156, 'eating alice', 'scaly');
 
 var_dump($user);
 
-echo $user->Describe() . "\n";
-echo $user->Penny4Thoughts() . "\n";
-echo $user->Xray() . "\n";
+echo $user->Describe() . ¶;
+echo $user->Penny4Thoughts() . ¶;
+echo $user->Xray() . ¶;
 
 # prohibited access to properties
 #$user->thoughts;
@@ -21,16 +23,16 @@ echo $user->Xray() . "\n";
 # prohibited instantiate abstract class
 #new Entity();
 
-echo $admin->Describe() . "\n";
-echo $admin->Penny4Thoughts() . "\n";
-echo $admin->Xray() . "\n";
+echo $admin->Describe() . ¶;
+echo $admin->Penny4Thoughts() . ¶;
+echo $admin->Xray() . ¶;
 
 $admin->access();
 var_dump($admin);
 
-echo $admin->Describe() . "\n";
-echo $admin->Penny4Thoughts() . "\n";
-echo $admin->Xray() . "\n";
+echo $admin->Describe() . ¶;
+echo $admin->Penny4Thoughts() . ¶;
+echo $admin->Xray() . ¶;
 
 # prohibited inherit from a final class or override final method
 #class God extends Admin {}
@@ -62,17 +64,17 @@ class Thung extends ArityConstructor
 {
 	protected function __construct1 ($arg1)
 	{
-		echo('__construct with 1 param called: ' . $arg1 . PHP_EOL);
+		echo('__construct with 1 param called: ' . $arg1 . ¶);
 	}
 
 	protected function __construct2 ($arg1, $arg2)
 	{
-		echo('__construct with 2 params called: ' . $arg1 . ', ' . $arg2 . PHP_EOL);
+		echo('__construct with 2 params called: ' . $arg1 . ', ' . $arg2 . ¶);
 	}
 
 	protected function __construct3 ($arg1, $arg2, $arg3)
 	{
-		echo('__construct with 3 params called: ' . $arg1 . ', ' . $arg2 . ', ' . $arg3 . PHP_EOL);
+		echo('__construct with 3 params called: ' . $arg1 . ', ' . $arg2 . ', ' . $arg3 . ¶);
 	}
 }
 
@@ -89,7 +91,7 @@ $s = Singleton::getInstance();
 $t = Singleton::getInstance();
 var_dump($s);
 
-print "singleton compare: " . ($s === $t) . PHP_EOL;
-print "non-singleton compare: " . ($o === $o2) . PHP_EOL;
+print "singleton compare: " . ($s === $t) . ¶;
+print "non-singleton compare: " . ($o === $o2) . ¶;
 
-echo "\nend\n\n";
+echo ¶ . "end" . ¶ . ¶;
