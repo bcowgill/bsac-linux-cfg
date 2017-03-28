@@ -170,11 +170,11 @@ P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 #P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
 
-RUBY_PKG="ruby ruby-dev"
+RUBY_PKG="ruby ruby-dev rake"
 RUBY_CMD=ruby
 #RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
-RUBY_GEMS="sass compass compass-validator foundation"
-RUBY_SASS_COMMANDS="ruby gem sass compass foundation"
+RUBY_GEMS="rake watchr sass compass compass-validator foundation"
+RUBY_SASS_COMMANDS="ruby gem rake sass compass foundation"
 
 POSTGRES_PKG="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
