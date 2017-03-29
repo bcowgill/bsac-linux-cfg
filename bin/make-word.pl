@@ -12,6 +12,8 @@ my $LETTERX = 1;
 my $WORDX = 1;
 my $DICTIONARY = $0;
 
+my %V = qw( a 1 e 1 i 1 o 1 u 2   b 4 c 4 d 2 f 4 g 3 h 3 j 10 k 5 l 2 m 4 n 2 p 4 q 10 r 1 s 1 t 1 v 5 w 4 x 8 y 3 z 10 );
+
 $DICTIONARY =~ s{/([^/]+)\z}{/english/british-english.txt}xmsg;
 #print $DICTIONARY;
 
@@ -20,14 +22,16 @@ $AT =~ s{\@}{}xmsg;
 
 if (! $TILES)
 {
+	my $scoring = join(" ", map { "$_:$V{$_}" } sort(keys(%V)));
 	print <<"USAGE";
 $0 letters 2xword|2xletter \@3
 
 find best scoring words for hanging with friends.
 
+@{[histogram()]}
 example:
 
-$0 etaoinsrh 2xword \@5 | sort -g | grep -v x[2-9]
+$0 etaoinsrh 2xw \@5 | sort -g | grep -v x[2-9]
 
 indicates a double word score tile at position 5
 USAGE
@@ -44,8 +48,6 @@ else
 	$MULTIPLIER =~ m{(\d+)};
 	$LETTERX = $1;
 }
-
-my %V = qw( a 1 e 1 i 1 o 1 u 2   b 4 c 4 d 2 f 4 g 3 h 3 j 10 k 5 l 2 m 4 n 2 p 4 q 10 r 1 s 1 t 1 v 5 w 4 x 8 y 3 z 10 );
 
 #print "$TILES $WORDX $LETTERX $AT\n";
 
@@ -82,3 +84,20 @@ sub score
 	return $v;
 }
 
+sub histogram
+{
+	my $rhBins = {};
+	foreach my $letter ( grep { $V{$_} > 0 } sort(keys(%V)) )
+	{
+		$rhBins->{$V{$letter}} .= $letter;
+	}
+	return join("\n", map {
+			pad($rhBins->{$_}, 10) . ": " . pad($_, 2) . " " . ('#' x $_)
+		} sort { $b <=> $a } keys(%$rhBins)) . "\n";
+}
+
+sub pad
+{
+	my ($string, $width) = @_;
+	return (' ' x ($width - length($string))) . $string;
+}
