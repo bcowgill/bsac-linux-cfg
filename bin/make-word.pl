@@ -28,7 +28,7 @@ $0 letters 2xword|2xletter \@3
 
 find best scoring words for hanging with friends.
 
-@{[histogram()]}
+@{[letter_histogram(\%V, 10, 3)]}
 example:
 
 $0 etaoinsrh 2xw \@5 | sort -g | grep -v x[2-9]
@@ -84,15 +84,24 @@ sub score
 	return $v;
 }
 
+# display a histogram from a hash of letter => value
+sub letter_histogram
+{
+	my ($rhScores, $label_pad, $value_pad) = @_;
+	my $rhBins = {};
+	foreach my $letter ( grep { $rhScores->{$_} > 0 } sort(keys(%$rhScores)) )
+	{
+		$rhBins->{$rhScores->{$letter}} .= $letter;
+	}
+	histogram($rhBins, $label_pad, $value_pad);
+}
+
+# display a histogram from a hash of label => value
 sub histogram
 {
-	my $rhBins = {};
-	foreach my $letter ( grep { $V{$_} > 0 } sort(keys(%V)) )
-	{
-		$rhBins->{$V{$letter}} .= $letter;
-	}
+	my ($rhBins, $label_pad, $value_pad) = @_;
 	return join("\n", map {
-			pad($rhBins->{$_}, 10) . ": " . pad($_, 2) . " " . ('#' x $_)
+			pad($rhBins->{$_}, $label_pad) . ":" . pad($_, $value_pad) . " " . ('#' x $_)
 		} sort { $b <=> $a } keys(%$rhBins)) . "\n";
 }
 
@@ -101,3 +110,4 @@ sub pad
 	my ($string, $width) = @_;
 	return (' ' x ($width - length($string))) . $string;
 }
+
