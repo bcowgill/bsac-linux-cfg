@@ -105,7 +105,7 @@ USE_MYSQL=""
 USE_PIDGIN=""
 CUSTOM_PKG=""
 
-ECLIPSE=""
+USE_ECLIPSE=""
 
 I3WM_CMD=i3
 I3WM_PKG="i3 xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
@@ -610,6 +610,67 @@ if [ "$HOSTNAME" == "akston" ]; then
 	EMACS_VER=24.3
 
 	# HEREIAM CFG
+fi
+
+if [ "$HOSTNAME" == "clearbooks" ]; then
+	# Change settings for clear books linux workstation
+	AUSER=bcowgill
+	EMAIL=brent.cowgill@.....com
+	COMPANY=clearbooks
+	UBUNTU=vivid
+	ULIMITFILES=1024
+	USE_KDE=""
+	USE_JAVA=""
+	SVN_PKG=""
+	MVN_PKG=""
+	GITSVN_PKG=""
+	USE_SCHEMACRAWLER=""
+	USE_POSTGRES=""
+	USE_MYSQL=""
+	USE_PIDGIN=""
+	#CUSTOM_PKG=""
+	USE_ECLIPSE=""
+	#I3WM_PKG=""
+	CHARLES_PKG=""
+	SKYPE_PKG=""
+	SLACK_PKG=""
+	VIRTUALBOX_PKG=""
+	MONO_PKG=""
+	#PHP_PKG=""
+	#GIT_PKG=""
+	#DIFFMERGE_PKG=""
+	#P4MERGE_PKG=""
+	RUBY_PKG=""
+	#POSTGRES_PKG=""
+	#POSTGRES_NODE_PKG=""
+	#POSTGRES_NPM_PKG=""
+	#DRUID_PKG=""
+	#PIDGIN_SKYPE_PKG=""
+	VPN_PKG=""
+	PINTA_PKG=""
+	#PERL_PKG=""
+	#TEMPERATURE_PKG=""
+	#NODE_PKG=""
+	#NODE_CUSTOM_PKG=""
+	#NPM_GLOBAL_PKG=""
+	ERL_OBSERVER_PKG=""
+	ERLANG_PKG=""
+	ELIXIR_PKG=""
+	#KSCREENSAVER_PKG=""
+	#SCREENSAVER_PKG=""
+	#EMACS_PKG=""
+	ATOM_PKG=""
+	ATOM_APM_PKG=""
+	SUBLIME_PKG=""
+	WEBSTORM_ARCHIVE=""
+	VSLICK_ARCHIVE=""
+	#PULSEAUDIO_PKG=""
+	#KEYBOARD_PKG=""
+	#DOCKER_PKG=""
+	#GOOGLE_CHROME_PKG=""
+	#FLASH_ARCHIVE=""
+	SC_PRO_ARCHIVE=""
+exit 1
 fi
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
@@ -2224,7 +2285,7 @@ else
 fi # THUNDER
 
 # Eclipse configuration (shortcut and font)
-if [ ! -z "$ECLIPSE" ]; then
+if [ ! -z "$USE_ECLIPSE" ]; then
 	DIR=.local/share/applications
 	file_exists eclipse/eclipse "Eclipse program"
 	file_exists eclipse/Eclipse.desktop "Eclipse launcher"
@@ -2236,8 +2297,8 @@ if [ ! -z "$ECLIPSE" ]; then
 	file_has_text $DIR/org.eclipse.jdt.ui.prefs "$TEXT"
 	file_has_text $DIR/org.eclipse.wst.jsdt.ui.prefs "$TEXT"
 else
-	OK "eclipse will not be configured unless ECLIPSE is non-zero"
-fi # ECLIPSE
+	OK "eclipse will not be configured unless USE_ECLIPSE is non-zero"
+fi # USE_ECLIPSE
 
 # libreoffice color changes
 # difficult because of so much punctutation
