@@ -68,10 +68,25 @@ function NOT_OK {
 	return 0
 }
 
+# Show a notification message if possible
+function notify {
+	local title message
+	title="$2"
+	message="$1"
+	which notify > /dev/null && notify -t "$title" -m "$message"
+	if which notify-send > /dev/null ; then
+		if [ -z $title ]; then
+			title="check-system.sh"
+		fi
+		notify-send "$title" "$message"
+	fi
+
+}
+
 # Show summary of failures and total tests
 function ENDS {
 	echo "update db" && sudo updatedb &
-	which notify && notify -t "" -m "$message"
+	notify "$message" ""
 	say "$TEST_FAILS test failures (may be hidden)"
 	say "$TEST_CASES test cases"
 }
@@ -81,7 +96,7 @@ function say {
 	local message
 	message="$1"
 	echo "$message"
-	which notify > /dev/null && notify -t "check-system.sh" -m "$message"
+	notify "$message" "$title"
 }
 
 #============================================================================

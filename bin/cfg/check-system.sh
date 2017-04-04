@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
@@ -51,10 +51,10 @@ set +o posix
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
-BAIL_OUT=editors
+#BAIL_OUT=editors
 #BAIL_OUT=custom
 #BAIL_OUT=repos
-#BAIL_OUT=docker
+BAIL_OUT=docker
 #BAIL_OUT=vpn
 #BAIL_OUT=php
 #BAIL_OUT=
@@ -624,6 +624,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	NVM_VER=""
 	N_VER="v2.1.7"
 	NODE_VER="v4.2.6"
+	MY_REPOS=""
 	USE_KDE=""
 	USE_JAVA=""
 	SVN_PKG=""
