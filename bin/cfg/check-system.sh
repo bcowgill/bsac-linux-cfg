@@ -41,8 +41,8 @@ set +o posix
 #BAIL_OUT=font
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
-BAIL_OUT=install
-#BAIL_OUT=node
+#BAIL_OUT=install
+BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
@@ -208,12 +208,14 @@ PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
 TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
 NVM_VER="v0.31.4"
-NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
+#NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
 NVM_DIR="$HOME/.nvm"
 NVM_VER_DIR="$NVM_DIR/versions/node"
 NVM_CMD="$NVM_DIR/nvm.sh"
 NVM_LTS_VER="v4.4.7"
 NVM_LATEST_VER="v6.3.1"
+
+N_VER="v2.1.7"
 
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
@@ -226,7 +228,7 @@ NODE_PKG="
 	/usr/share/doc/node-debug/copyright:node-debug
 	$NODE_LIB/eyes.js:node-eyes
 	$NODE_LIB/glob.js:node-glob
-	$NODE_LIB/inherits.js:node-inherits
+	$NODE_LIB/inherits/inherits.js:node-inherits
 	$NODE_LIB/mkdirp/index.js:node-mkdirp
 	$NODE_LIB/rimraf/index.js:node-rimraf
 "
@@ -243,7 +245,7 @@ NODE_CUSTOM_PKG="
 	$NODE_LIB/contextify/index.js:node-contextify
 	$NODE_LIB/daemon/index.js:node-daemon
 	$NODE_LIB/dequeue/index.js:node-dequeue
-	$NODE_LIB/diff.js:node-diff
+	$NODE_LIB/diff/diff.js:node-diff
 	$NODE_LIB/dirty/index.js:node-dirty
 	$NODE_LIB/fstream/index.js:node-fstream
 	$NODE_LIB/get/index.js:node-get
@@ -255,7 +257,7 @@ NODE_CUSTOM_PKG="
 	$NODE_LIB/minimatch.js:node-minimatch
 	$NODE_LIB/nopt.js:node-nopt
 	$NODE_LIB/once.js:node-once
-	$NODE_LIB/optimist.js:node-optimist
+	$NODE_LIB/optimist/index.js:node-optimist
 	$NODE_LIB/osenv.js:node-osenv
 	$NODE_LIB/read.js:node-read
 	$NODE_LIB/readdirp/index.js:node-readdirp
@@ -274,6 +276,7 @@ NODE_CUSTOM_PKG="
 
 NPM_LIB=/usr/local/lib/node_modules
 NPM_GLOBAL_PKG="
+	n
 	prettydiff
 	uglifyjs:uglify-js
 	jsdoc
@@ -617,6 +620,8 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	GIT_VER=2.7.4
 	P4MERGE_VER=p4v-2017.1.1491634
 	EMACS_VER=24.5
+	NVM_VER=""
+	N_VER="v2.1.7"
 	USE_KDE=""
 	USE_JAVA=""
 	SVN_PKG=""
@@ -809,6 +814,7 @@ fi
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD=""
 [ -z "$DOCKER_PKG"        ] && DOCKER_CMD="" && DOCKER_PRE=""
+[ -z "$NVM_VER"           ] && NVM_URL=""
 
 # HEREIAM DERIVED
 
@@ -822,6 +828,10 @@ GIT_PKG_AFTER="
 	tig
 	$GITSVN_PKG
 "
+
+if [ ! -z $NVM_VER ]; then
+	NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
+fi
 
 P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
 
