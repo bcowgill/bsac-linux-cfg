@@ -36,7 +36,7 @@ set +o posix
 
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
-#BAIL_OUT=versions
+BAIL_OUT=versions
 #BAIL_OUT=font
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
@@ -614,8 +614,8 @@ fi
 
 if [ "$HOSTNAME" == "clearbooks" ]; then
 	# Change settings for clear books linux workstation
-	AUSER=bcowgill
-	EMAIL=brent.cowgill@.....com
+	AUSER=brent
+	EMAIL=brent@clearbooks.co.uk
 	COMPANY=clearbooks
 	UBUNTU=vivid
 	ULIMITFILES=1024
