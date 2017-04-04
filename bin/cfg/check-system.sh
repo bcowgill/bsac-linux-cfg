@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
@@ -46,8 +46,8 @@ set +o posix
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
-BAIL_OUT=files
-#BAIL_OUT=npm
+#BAIL_OUT=files
+BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
@@ -290,6 +290,7 @@ NPM_GLOBAL_PKG="
 	lessc:less
 	mocha
 	phantomjs:phantomjs-prebuilt
+	/usr/local/lib/node_modules/karma/bin/karma:karma
 	karma:karma-cli
 	$NPM_LIB/karma-chrome-launcher/index.js:karma-chrome-launcher
 	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
@@ -298,7 +299,7 @@ NPM_GLOBAL_PKG="
 	grunt:grunt-cli
 	grunt-init
 	express:express-generator
-	notify:node-notifier
+	/usr/local/lib/node_modules/node-notifier/index.js:node-notifier
 	ncu:npm-check-updates
 "
 
@@ -622,6 +623,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	EMACS_VER=24.5
 	NVM_VER=""
 	N_VER="v2.1.7"
+	NODE_VER="v4.2.6"
 	USE_KDE=""
 	USE_JAVA=""
 	SVN_PKG=""
