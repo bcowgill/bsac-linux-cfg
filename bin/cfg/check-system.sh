@@ -42,11 +42,11 @@ set +o posix
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=install
-BAIL_OUT=node
+#BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
-#BAIL_OUT=files
+BAIL_OUT=files
 #BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
@@ -647,8 +647,8 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	#POSTGRES_PKG=""
 	#POSTGRES_NODE_PKG=""
 	#POSTGRES_NPM_PKG=""
-	#DRUID_PKG=""
-	#PIDGIN_SKYPE_PKG=""
+	DRUID_PKG=""
+	PIDGIN_SKYPE_PKG=""
 	VPN_PKG=""
 	PINTA_PKG=""
 	#PERL_PKG=""
