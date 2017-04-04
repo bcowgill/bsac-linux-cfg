@@ -54,9 +54,9 @@ set +o posix
 #BAIL_OUT=editors
 #BAIL_OUT=custom
 #BAIL_OUT=repos
-BAIL_OUT=docker
+#BAIL_OUT=docker
 #BAIL_OUT=vpn
-#BAIL_OUT=php
+BAIL_OUT=php
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -136,6 +136,7 @@ MONO_CMD=mono
 
 PHP_PKG=php5-cli
 PHP_CMD=php
+PHP_VER=5.0
 
 SVN_CMD=svn
 SVN_VER="1.8.5"
