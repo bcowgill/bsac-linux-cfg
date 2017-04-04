@@ -39,9 +39,9 @@ set +o posix
 #BAIL_OUT=versions
 #BAIL_OUT=init
 #BAIL_OUT=font
-BAIL_OUT=diff
+#BAIL_OUT=diff
 #BAIL_OUT=elixir
-#BAIL_OUT=install
+BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
@@ -349,13 +349,6 @@ DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 
 EMACS_VER=24.4
 EMACS_BASE=emacs24
-EMACS_PKG="
-	$EMACS_BASE
-	editorconfig
-	ctags:exuberant-ctags
-	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
-"
-#EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:emacs24-el"
 
 #https://atom.io/download/deb
 #https://atom-installer.github.com/v1.9.9/atom-amd64.deb?s=1471476867&ext=.deb
@@ -623,6 +616,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	ULIMITFILES=1024
 	GIT_VER=2.7.4
 	P4MERGE_VER=p4v-2017.1.1491634
+	EMACS_VER=24.5
 	USE_KDE=""
 	USE_JAVA=""
 	SVN_PKG=""
@@ -838,6 +832,16 @@ WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
 ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
+
+EMACS_PKG="
+	$EMACS_BASE
+	/usr/share/emacs/$EMACS_VER/lisp/minibuffer.el.gz:${EMACS_BASE}-el
+	${EMACS_BASE}-lucid
+	/usr/share/terminfo/x/xtermm:ncurses-term
+	editorconfig
+	ctags:exuberant-ctags
+	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
+"
 
 SLACK_URL="$SLACK_URL/$SLACK_PKG"
 
