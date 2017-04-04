@@ -37,9 +37,9 @@ set +o posix
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
 #BAIL_OUT=versions
-BAIL_OUT=init
+#BAIL_OUT=init
 #BAIL_OUT=font
-#BAIL_OUT=diff
+BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=install
 #BAIL_OUT=node
@@ -525,6 +525,7 @@ INSTALL_CMDS="
 # Recommended packages:
 # xml-core:i386
 # from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
+#    i3lock suckless-tools i3status dunst libanyevent-i3-perl libjson-xs-perl
 # from calibre fonts-stix fonts-mathjax-extras libjs-mathjax-doc python-apsw-doc
 #  python-markdown-doc ttf-bitstream-vera python-paste python-webob-doc
 # from digikam Suggested packages:
@@ -620,6 +621,8 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	COMPANY=clearbooks
 	UBUNTU=sarah
 	ULIMITFILES=1024
+	GIT_VER=2.7.4
+	P4MERGE_VER=p4v-2017.1.1491634
 	USE_KDE=""
 	USE_JAVA=""
 	SVN_PKG=""
@@ -1431,7 +1434,7 @@ if git --version | grep " version " | grep $GIT_VER; then
 	OK "git command version correct"
 	installs_from "$GIT_PKG_AFTER" "additional git packages"
 else
-	NOT_OK "git command version incorrect - will try update"
+	NOT_OK "git command version incorrect, want $GIT_VER - will try update"
 	# old setup for git 1.9.1
 	# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
 	apt_has_source ppa:pdoes/ppa "repository for git"
@@ -1489,16 +1492,27 @@ fi
 if git config --global --list | grep rerere; then
 	OK "git config rerere has been set up"
 else
-	NOT_OK "git config rerere not set. trying to do so"
+	echo "NOT OK MAYBE git config rerere not set. trying to do so"
 	git config --global rerere.enabled true
 	git config --global rerere.autoupdate true
+	if git config --global --list | grep rerere; then
+		OK "git config rerere has been set up"
+	else
+		NOT_OK "git config rerere not set. failed to do so"
+	fi
 fi
+
 
 if git config --global --list | grep alias.graph; then
 	OK "git config alias.graph has been set up"
 else
-	NOT_OK "git config alias.graph not set. trying to do so"
+	echo "NOT OK MAYBE git config alias.graph not set. trying to do so"
 	git config --global --add alias.graph "log --oneline --graph --decorate --all"
+	if git config --global --list | grep alias.graph; then
+		OK "git config alias.graph has been set up"
+	else
+		NOT_OK "git config alias.graph not set. failed to do so"
+	fi
 fi
 
 if [ ! -z "$MVN_PKG" ]; then
