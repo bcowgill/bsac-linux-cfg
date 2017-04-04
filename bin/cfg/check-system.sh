@@ -36,7 +36,8 @@ set +o posix
 
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
-BAIL_OUT=versions
+#BAIL_OUT=versions
+BAIL_OUT=init
 #BAIL_OUT=font
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
@@ -612,12 +613,12 @@ if [ "$HOSTNAME" == "akston" ]; then
 	# HEREIAM CFG
 fi
 
-if [ "$HOSTNAME" == "clearbooks" ]; then
+if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	# Change settings for clear books linux workstation
 	AUSER=brent
 	EMAIL=brent@clearbooks.co.uk
 	COMPANY=clearbooks
-	UBUNTU=vivid
+	UBUNTU=sarah
 	ULIMITFILES=1024
 	USE_KDE=""
 	USE_JAVA=""
@@ -670,7 +671,6 @@ if [ "$HOSTNAME" == "clearbooks" ]; then
 	#GOOGLE_CHROME_PKG=""
 	#FLASH_ARCHIVE=""
 	SC_PRO_ARCHIVE=""
-exit 1
 fi
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
@@ -1036,7 +1036,8 @@ fi
 
 if [ -e $HOME/bin ]; then
 	if [ ! -e $HOME/bin/cfg/check-system.sh ]; then
-		NOT_OK "MAYBE there is a $HOME/bin dir, we will install ourself there. "
+		# comment out this line only on first machine setup
+		#NOT_OK "MAYBE there is a $HOME/bin dir, we will install ourself there. "
 		mv $HOME/bin $HOME/bin.saved
 		git clone https://github.com/bcowgill/bsac-linux-cfg.git
 		mv bsac-linux-cfg workspace/play
@@ -1254,6 +1255,8 @@ install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts/examples/UTF-8-test.txt" "
 #install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
 #install_file_from_url "$DOWNLOAD/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
 dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sample unicode files"
+
+BAIL_OUT init
 
 # MUSTDO finish this
 if /bin/false ; then
