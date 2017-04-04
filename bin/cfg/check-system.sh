@@ -47,11 +47,11 @@ set +o posix
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
-BAIL_OUT=npm
+#BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
-#BAIL_OUT=editors
+BAIL_OUT=editors
 #BAIL_OUT=custom
 #BAIL_OUT=repos
 #BAIL_OUT=docker
@@ -814,7 +814,7 @@ fi
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$ATOM_PKG"          ] && ATOM_CMD=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
-[ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD=""
+[ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
 [ -z "$DOCKER_PKG"        ] && DOCKER_CMD="" && DOCKER_PRE=""
 [ -z "$NVM_VER"           ] && NVM_URL=""
 
