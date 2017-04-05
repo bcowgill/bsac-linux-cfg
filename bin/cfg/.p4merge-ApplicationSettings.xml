@@ -4,7 +4,7 @@
  <Font varName="ApplicationFont">
   <family>ProFontWindows</family>
   <pointSize>14</pointSize>
-  <weight>Normal</weight>
+  <weight>true</weight>
   <italic>false</italic>
  </Font>
  <String varName="CharSet">utf8</String>
@@ -16,7 +16,7 @@
  <Font varName="Font">
   <family>ProFontWindows</family>
   <pointSize>14</pointSize>
-  <weight>Bold</weight>
+  <weight>true</weight>
   <italic>false</italic>
  </Font>
  <Bool varName="InlineDiffsEnabled">true</Bool>
@@ -29,7 +29,7 @@
  <Int varName="TabWidth">4</Int>
  <PropertyList IsManaged="TRUE" varName="Windows">
   <PropertyList IsManaged="TRUE" varName="CompareDialog">
-   <ByteArray varName="WindowGeometry">AdnQywABAAAAAAO9AAAB5QAABZ8AAALnAAADvwAAAfwAAAWdAAAC4wAAAAAAAA==</ByteArray>
+   <ByteArray varName="WindowGeometry">AdnQywACAAAAAAO8AAABzAAABbUAAALHAAADvQAAAeUAAAW0AAACxgAAAAAAAAAAB4A=</ByteArray>
   </PropertyList>
   <PropertyList IsManaged="TRUE" varName="Diff">
    <Bool varName="DiffCombined">false</Bool>

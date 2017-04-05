@@ -56,7 +56,7 @@ set +o posix
 #BAIL_OUT=repos
 #BAIL_OUT=docker
 #BAIL_OUT=vpn
-BAIL_OUT=php
+#BAIL_OUT=php
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -136,7 +136,6 @@ MONO_CMD=mono
 
 PHP_PKG=php5-cli
 PHP_CMD=php
-PHP_VER=5.0
 
 SVN_CMD=svn
 SVN_VER="1.8.5"
@@ -625,6 +624,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	NVM_VER=""
 	N_VER="v2.1.7"
 	NODE_VER="v4.2.6"
+	PHP_PKG=php7.0-cli
 	MY_REPOS=""
 	USE_KDE=""
 	USE_JAVA=""
@@ -643,7 +643,6 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	SLACK_PKG=""
 	VIRTUALBOX_PKG=""
 	MONO_PKG=""
-	#PHP_PKG=""
 	#GIT_PKG=""
 	#DIFFMERGE_PKG=""
 	#P4MERGE_PKG=""
@@ -703,7 +702,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 
 	GOOGLE_CHROME_PKG=""
 	VSLICK_ARCHIVE=""
-   SUBLIME_CFG=""
+	SUBLIME_CFG=""
 	PINTA_PKG=""
 fi
 
@@ -819,6 +818,7 @@ fi
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
 [ -z "$DOCKER_PKG"        ] && DOCKER_CMD="" && DOCKER_PRE=""
 [ -z "$NVM_VER"           ] && NVM_URL=""
+[ -z "$SUBLIME_PKG"       ] && SUBLIME_CFG=""
 
 # HEREIAM DERIVED
 
@@ -1875,8 +1875,10 @@ if [ ! -z "$DROPBOX_URL" ]; then
 	# TODO workshare re-enable
 	#dir_exists .config/autostart "System Settings / Startup & Shutdown / Autostart"
 	# TODO workshare customise file and copy?
-	file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
-	file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+	if [ -d .config/autostart/ ]; then
+		file_exists workspace/dropbox-dist/dropboxd.desktop "dropbox autostart saved"
+		file_exists .config/autostart/dropboxd.desktop "dropbox autostart" || (cp workspace/dropbox-dist/dropboxd.desktop .config/autostart/dropboxd.desktop)
+	fi
 	if [ -e $HOME/Dropbox/Photos/Wallpaper/WorkSafe ]; then
 		dir_linked_to Pictures/WorkSafe $HOME/Dropbox/Photos/Wallpaper/WorkSafe "link pictures dir to WorkSafe screen saver images"
 	else
