@@ -301,6 +301,7 @@ NPM_GLOBAL_PKG="
 	express:express-generator
 	/usr/local/lib/node_modules/node-notifier/index.js:node-notifier
 	ncu:npm-check-updates
+	typescript
 "
 
 #https://www.erlang-solutions.com/resources/download.html
@@ -1045,6 +1046,7 @@ which erl && erl -eval 'halt().'
 which elixir && elixir -v
 which php && php -v
 which composer && composer -v | head -7
+which tsc && tsc -v
 echo END versions
 
 BAIL_OUT versions
