@@ -1,0 +1,11 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"pretty": true,
+		"outDir": "./dist",
+		"declarationDir": "./dist",
+		"outFile": "./dist/combined-index.js",
+		"traceResolution": true,
+		"diagnostics": true
+	}
+}
