@@ -29,7 +29,7 @@
     // next, cont, repl, list(N lines), help, quit
     "test1:repl": "npm-json5 run _mocha1 -- debug",
 
-	 // run single test and show URL to attach chrome dev tools to it.
+    // run single test and show URL to attach chrome dev tools to it.
     // npm-json5 run test1:debug test/testplan.test.js
     "test1:debug": "npm-json5 run _mocha1 -- --debug --debug-brk --inspect",
 
