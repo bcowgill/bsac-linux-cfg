@@ -6,7 +6,7 @@ interface Food {
 
 // We tell our function to expect an object that fulfills the Food interface. 
 // This way we know that the properties we need will always be available.
-function speak(food: Food): void{
+function speak1(food: Food): void{
   console.log("Our " + food.name + " has " + food.calories + " calories.");
 }
 
@@ -17,4 +17,4 @@ var ice_cream = {
   calories: 200
 }
 
-speak(ice_cream);
+speak1(ice_cream);

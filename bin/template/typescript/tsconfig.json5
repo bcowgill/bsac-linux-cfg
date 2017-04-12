@@ -1,4 +1,4 @@
-// json5 -c tsconfig.json5 && tsc --newline LF --watch
+// rm -rf dist; json5 -c tsconfig*.json5 && tsc --newline LF --watch --project tsconfig-debug.json ; rm *.json
 {
 	"compileOnSave": true,  // for IDE use to recompile on save
 	"compilerOptions": {
@@ -7,7 +7,7 @@
 		// build related options
 		//"rootDir": "./src",
 		"outDir": "./dist",
-		"declarationDir": "./dist/@types", // cannot use with outFile
+		//"declarationDir": "./dist/@types", // cannot use with outFile
 		"outFile": "./dist/index.js",
 		//"mapRoot": "./srcMap",
 		"declaration": true,  // generates .d.ts type declarations files
@@ -19,8 +19,8 @@
 
 		// language support options
 		"target": "ES5", // output javascript for ES5 systems
-		//"module": "system", // system or amd only when outFile used
-		"module": "commonjs", // for use with mocha-typescript
+		"module": "system", // system or amd only when outFile used
+		//"module": "commonjs", // for use with mocha-typescript
 		//"module": "es2015",  // uses es2015 module import syntax
 		"moduleResolution": "node",
 		"experimentalDecorators": true,

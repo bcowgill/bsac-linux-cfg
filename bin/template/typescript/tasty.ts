@@ -15,7 +15,7 @@ function speak(food: string, energy: number): void {
 speak(burger, calories);
 
 // The given type is boolean, the provided value is a string.
-var tasty: boolean = "I haven't tried it yet";
+//ERR var tasty: boolean = "I haven't tried it yet";
 
 // Arguments don't match the function parameters.
-speak("tripple cheesburger", "a ton of");
+//ERR speak("tripple cheesburger", "a ton of");
