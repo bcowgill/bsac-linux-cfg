@@ -1,3 +1,6 @@
+//===============================================================
+// interface
+
 // Here we define our Food interface, its properties, and their types.
 interface Food {
     name: string;
