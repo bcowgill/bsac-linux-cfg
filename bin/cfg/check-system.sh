@@ -305,6 +305,10 @@ NPM_GLOBAL_PKG="
 	alm
 "
 
+# Typescript editor support
+# https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support
+# alm a node/chrome/typescript IDE for typescript
+
 #https://www.erlang-solutions.com/resources/download.html
 #ERLANG_PKG=erlang-solutions_1.0_all.deb
 ERL_OBSERVER_PKG="/usr/lib/x86_64-linux-gnu/libwx_baseu-2.8.so.0:libwxbase2.8-0 /usr/lib/x86_64-linux-gnu/libwx_gtk2u_core-2.8.so.0:libwxgtk2.8-0"
