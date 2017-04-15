@@ -69,7 +69,7 @@ function NOT_OK {
 }
 
 # Show a notification message if possible
-function notify {
+function mynotify {
 	local title message
 	title="$2"
 	message="$1"
@@ -86,7 +86,7 @@ function notify {
 # Show summary of failures and total tests
 function ENDS {
 	echo "update db" && sudo updatedb &
-	notify "$message" ""
+	mynotify "$message" ""
 	say "$TEST_FAILS test failures (may be hidden)"
 	say "$TEST_CASES test cases"
 }
@@ -96,7 +96,7 @@ function say {
 	local message
 	message="$1"
 	echo "$message"
-	notify "$message" "$title"
+	mynotify "$message" "$title"
 }
 
 #============================================================================
@@ -520,6 +520,29 @@ function var_exists {
 function get_git {
 	cmd_exists git || ( echo doing an upgrade to get git; sudo apt-get update && sudo apt-get upgrade && sudo apt-get install git && exit 11)
 
+}
+
+# ensure files are identical
+function files_same {
+	local file source message
+	file="$1"
+	source="$2"
+	message="$3"
+	if diff "$file" "$source" > /dev/null; then
+		OK "no change in file $1 - $message"
+	else
+		NOT_OK "file $1 has changed compared to $2 - $message"
+	fi
+}
+
+# install a file from another location
+function install_file {
+	local file source message
+	file="$1"
+	source="$2"
+	message="$3"
+	file_exists "$file" > /dev/null || (echo want to install $file from $source ; cp "$source" "$file")
+	file_exists "$file" "$message"
 }
 
 # install a command or file from a package

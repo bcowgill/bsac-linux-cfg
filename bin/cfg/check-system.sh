@@ -222,13 +222,14 @@ NODE_VER="v0.12.9"
 NODE_CMD="nodejs"
 NODE_CMDS="$NODE_CMD npm"
 NODE_LIB=/usr/lib/nodejs
+NODE_MOD=/usr/lib/node_modules
 NODE_PKG="
 	$NODE_CMDS
 	node:nodejs-legacy
 	/usr/share/doc/node-debug/copyright:node-debug
 	$NODE_LIB/eyes.js:node-eyes
 	$NODE_LIB/glob.js:node-glob
-	$NODE_LIB/inherits/inherits.js:node-inherits
+	/usr/share/doc/node-inherits/copyright:node-inherits
 	$NODE_LIB/mkdirp/index.js:node-mkdirp
 	$NODE_LIB/rimraf/index.js:node-rimraf
 "
@@ -245,7 +246,7 @@ NODE_CUSTOM_PKG="
 	$NODE_LIB/contextify/index.js:node-contextify
 	$NODE_LIB/daemon/index.js:node-daemon
 	$NODE_LIB/dequeue/index.js:node-dequeue
-	$NODE_LIB/diff/diff.js:node-diff
+	/usr/share/doc/node-diff/copyright:node-diff
 	$NODE_LIB/dirty/index.js:node-dirty
 	$NODE_LIB/fstream/index.js:node-fstream
 	$NODE_LIB/get/index.js:node-get
@@ -257,7 +258,7 @@ NODE_CUSTOM_PKG="
 	$NODE_LIB/minimatch.js:node-minimatch
 	$NODE_LIB/nopt.js:node-nopt
 	$NODE_LIB/once.js:node-once
-	$NODE_LIB/optimist/index.js:node-optimist
+	/usr/share/doc/node-optimist/copyright:node-optimist
 	$NODE_LIB/osenv.js:node-osenv
 	$NODE_LIB/read.js:node-read
 	$NODE_LIB/readdirp/index.js:node-readdirp
@@ -299,9 +300,9 @@ NPM_GLOBAL_PKG="
 	grunt:grunt-cli
 	grunt-init
 	express:express-generator
-	/usr/local/lib/node_modules/node-notifier/index.js:node-notifier
+	$NODE_MOD/node-notifier/README.md:node-notifier
 	ncu:npm-check-updates
-	typescript
+	tsc:typescript
 	alm
 "
 
@@ -1740,6 +1741,11 @@ fi
 BAIL_OUT crontab
 
 file_present prettydiff.js "html beautifier file"
+
+if [ ! -z "$EMACS_PKG" ]; then
+	install_file "$HOME/.emacs" "$HOME/bin/cfg/.emacs" "emacs configuration file exists"
+	files_same "$HOME/.emacs" "$HOME/bin/cfg/.emacs" "emacs configuration changes"
+fi
 
 if [ ! -z "$ATOM_PKG" ]; then
 	install_command_package_from_url $ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor"
