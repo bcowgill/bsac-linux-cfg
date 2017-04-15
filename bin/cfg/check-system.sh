@@ -302,6 +302,7 @@ NPM_GLOBAL_PKG="
 	/usr/local/lib/node_modules/node-notifier/index.js:node-notifier
 	ncu:npm-check-updates
 	typescript
+	alm
 "
 
 #https://www.erlang-solutions.com/resources/download.html
