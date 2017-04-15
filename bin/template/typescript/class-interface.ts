@@ -101,20 +101,21 @@ interface Counter {
 }
 
 function getCounter(): Counter {
-    let counter = <Counter>function (start: number) { };
+    let counter = <Counter>function (start: number) { void start };
     counter.interval = 123;
     counter.reset = function () { };
     return counter;
 }
 
-let c = getCounter();
-c(10);
-c.reset();
-c.interval = 5.0;
+let c3 = getCounter();
+c3(10);
+c3.reset();
+c3.interval = 5.0;
 
 // Class inheritance of private properties
 class Control {
     private state: any;
+    public getState() { return this.state }
 }
 
 interface SelectableControl extends Control {
@@ -137,4 +138,3 @@ class ImageNotControl {
 class LocationNotControl {
     select() { }
 }
-
