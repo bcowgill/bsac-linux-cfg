@@ -451,3 +451,11 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
   \ | wincmd p | diffthis
 endif
+
+"BSAC plug plugin manager configuration
+"https://github.com/junegunn/vim-plug
+":PlugInstall - from within vim to install configured plugins
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/leafgarland/typescript-vim.git'
+call plug#end()
+" one time only PlugInstall

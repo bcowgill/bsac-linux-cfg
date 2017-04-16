@@ -680,7 +680,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	#PULSEAUDIO_PKG=""
 	#KEYBOARD_PKG=""
 	#DOCKER_PKG=""
-	#GOOGLE_CHROME_PKG=""
+	GOOGLE_CHROME_PKG=""
 	#FLASH_ARCHIVE=""
 	SC_PRO_ARCHIVE=""
 fi
@@ -1787,6 +1787,17 @@ if [ ! -z "$VSLICK_ARCHIVE" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
 	cmd_exists $VSLICK_CMD "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
 fi # VSLICK_ARCHIVE
+
+VIM_AUTOLOAD=~/.vim/autoload
+VIM_PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+if file_exists "$VIM_AUTOLOAD/plug.vim"; then
+	OK "vim plug has been installed"
+else
+	make_dir_exist "$VIM_AUTOLOAD" "vim autoload directory exists"
+	curl -fLo $VIM_AUTOLOAD/plug.vim --create-dirs $VIM_PLUG_URL
+	file_exists "$VIM_AUTOLOAD/plug.vim" "vim plug plugin manager"
+fi
 
 BAIL_OUT editors
 
