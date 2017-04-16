@@ -1932,8 +1932,8 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 FILE=".gitconfig"
 git config --global gui.fontdiff "-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0"
 ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
+ini_file_has_text "$FILE" "gui/fontui = -family FreeSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
 ini_file_has_text "$FILE" "gui/tabsize = 4" "git gui tabsize Edit / Options"
-#        fontui = -family \"DejaVu Sans\" -size 14 -weight normal -slant roman -underline 0 -overstrike 0
 
 # gitk configuration
 FILE=.config/git/gitk
