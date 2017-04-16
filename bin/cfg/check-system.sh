@@ -109,7 +109,7 @@ CUSTOM_PKG=""
 USE_ECLIPSE=""
 
 I3WM_CMD=i3
-I3WM_PKG="i3 xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
+I3WM_PKG="i3 i3status i3lock i3blocks notify:ruby-notify xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
 
 CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
@@ -622,7 +622,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 fi
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
-	# Change settings for clear books linux workstation
+	# Change settings for clearbooks linux workstation
 	AUSER=brent
 	EMAIL=brent@clearbooks.co.uk
 	COMPANY=clearbooks

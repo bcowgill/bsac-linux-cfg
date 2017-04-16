@@ -513,6 +513,9 @@ htop
 hunspell-en-us
 hwdata
 i3
+i3blocks
+i3lock
+i3status
 i3-wm
 ia32-libs
 ibus-gtk:i386
@@ -745,6 +748,8 @@ libcomerr2:amd64
 libcomerr2:i386
 libconfig-file-perl
 libconfig-tiny-perl
+libconfuse0:amd64
+libconfuse-common
 libcpan-distnameinfo-perl
 libcpan-meta-check-perl
 libcpan-meta-perl
@@ -2391,6 +2396,7 @@ ruby-net-sftp
 ruby-net-ssh
 ruby-net-telnet
 ruby-nokogiri
+ruby-notify
 ruby-power-assert
 ruby-rb-inotify
 ruby-rest-client
