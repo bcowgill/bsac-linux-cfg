@@ -75,9 +75,9 @@ function mynotify {
 	message="$1"
 	which notify > /dev/null && notify -t "$title" -m "$message"
 	if which notify-send > /dev/null ; then
-		if [ -z $title ]; then
+		if [ -z "$title" ]; then
 			title="check-system.sh"
-			if [ -z $message ]; then
+			if [ -z "$message" ]; then
 				return
 			fi
 		fi
