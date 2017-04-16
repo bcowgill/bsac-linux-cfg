@@ -26,3 +26,6 @@ i3-config-update.sh
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	touch-on.sh
 fi
+if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
+	touch-on.sh
+fi
