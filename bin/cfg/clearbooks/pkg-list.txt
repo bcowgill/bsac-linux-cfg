@@ -1,8 +1,8 @@
 Desired=Unknown/Install/Remove/Purge/Hold
 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
-||/ Name                                         Version                                    Architecture Description
-+++-============================================-==========================================-============-===============================================================================
+||/ Name                                         Version                                      Architecture Description
++++-============================================-============================================-============-===============================================================================
 accountsservice
 acl
 acpid
@@ -102,6 +102,7 @@ composer
 consolekit
 console-setup
 console-setup-linux
+containerd
 coreutils
 cowsay
 cpanminus
@@ -338,6 +339,7 @@ gimp
 gimp-data
 gir1.2-accounts-1.0:amd64
 gir1.2-accountsservice-1.0
+gir1.2-appindicator3-0.1
 gir1.2-atk-1.0
 gir1.2-atspi-2.0
 gir1.2-caribou-1.0
@@ -401,6 +403,7 @@ gir1.2-wnck-3.0:amd64
 gir1.2-xkl-1.0:amd64
 gir1.2-xplayer-1.0
 gir1.2-xplayer-plparser-1.0
+gist
 git
 git-doc
 git-gui
@@ -945,6 +948,7 @@ libgdiplus
 libgdk-pixbuf2.0-0:amd64
 libgdk-pixbuf2.0-0:i386
 libgdk-pixbuf2.0-common
+libgdm1
 libgdome2-0
 libgee-0.8-2:amd64
 libgegl-0.3-0:amd64
@@ -1624,6 +1628,7 @@ libsuitesparseconfig4.4.6:amd64
 libsystemd0:amd64
 libsystemd0:i386
 libtag1v5:amd64
+libtag1v5:i386
 libtag1v5-vanilla:amd64
 libtag1v5-vanilla:i386
 libtaglib2.1-cil
@@ -1877,8 +1882,12 @@ linux-base
 linux-firmware
 linux-headers-4.4.0-21
 linux-headers-4.4.0-21-generic
+linux-headers-4.4.0-72
+linux-headers-4.4.0-72-generic
 linux-image-4.4.0-21-generic
+linux-image-4.4.0-72-generic
 linux-image-extra-4.4.0-21-generic
+linux-image-extra-4.4.0-72-generic
 linux-kernel-generic
 linux-libc-dev:amd64
 linuxmint-keyring
@@ -2223,6 +2232,7 @@ python3-reportlab-accel:amd64
 python3-requests
 python3-roman
 python3-rsa
+python3-s3transfer
 python3-six
 python3-speechd
 python3-uno
@@ -2368,6 +2378,7 @@ ruby-ffi
 rubygems-integration
 ruby-http-cookie
 ruby-i18n
+ruby-json
 ruby-listen
 ruby-log4r
 ruby-mime-types
@@ -2387,6 +2398,7 @@ ruby-test-unit
 ruby-thor
 ruby-unf
 ruby-unf-ext
+runc
 samba-common
 samba-common-bin
 samba-libs:amd64
@@ -2525,6 +2537,7 @@ x11-utils
 x11-xfs-utils
 x11-xkb-utils
 x11-xserver-utils
+xapps-common
 xauth
 xautomation
 xaw3dg:amd64

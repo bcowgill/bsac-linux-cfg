@@ -121,7 +121,12 @@ if [ -f ~/.COMPANY ]; then
     . ~/.COMPANY
 fi
 
-if [ "x$COMANY" == "xworkshare" ]; then
+if [ "x$COMPANY" == "xclearbooks" ]; then
+	export PJ=$HOME/projects
+	export REPOS="clearbooks-micro-api-accounting  clearbooks-micro-api-auth  clearbooks-micro-front"
+fi
+
+if [ "x$COMPANY" == "xworkshare" ]; then
 	export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 	export PJ=$HOME/projects
 	export REPOS="core-ui files-ui groups-ui dealroom-ui new-ui"
@@ -214,3 +219,5 @@ export PATH=`upath.sh`
 #export LC_ALL=en_UK.UTF-8
 #export LANG=en_UK.UTF-8
 #export LANGUAGE=en_UK.UTF-8
+
+
