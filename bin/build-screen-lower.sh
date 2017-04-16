@@ -1,0 +1,1 @@
+watch ls-apps.sh
