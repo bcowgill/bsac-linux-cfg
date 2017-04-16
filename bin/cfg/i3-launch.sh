@@ -113,6 +113,25 @@ sleep 5
 i3do "workspace $app; exec chromium-browser chrome-extension://edacconmaakjimmfgnblocblbcdcpbko/main.html"
 sleep 2
 
+# $build
+# Layout then build workspace:
+#
+# .-----.-----.
+# :     A     :
+# :-----------:
+# :     B     :
+# ._____._____.
+# A/B should be terminals with build/watch running
+i3do "workspace $build"
+xbuild-screen-upper.sh &
+sleep 2
+i3do "mark watch"
+
+i3do "layout default; split v"
+xbuild-screen-lower.sh &
+sleep 1
+i3do "mark build"
+
 
 # $shell
 i3do "workspace $shell; exec git-gui.sh; exec mygterm.sh $HOME/bin"
