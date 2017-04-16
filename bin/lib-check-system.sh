@@ -77,6 +77,9 @@ function mynotify {
 	if which notify-send > /dev/null ; then
 		if [ -z $title ]; then
 			title="check-system.sh"
+			if [ -z $message ]; then
+				return
+			fi
 		fi
 		notify-send --expire-time=15000 "$title" "$message"
 	fi
@@ -227,7 +230,9 @@ function make_dir_exist {
 	local dir message
 	dir="$1"
 	message="$2"
-	dir_exists "$dir" > /dev/null || mkdir -p "$dir"
+	if [ ! -d "$dir" ]; then
+		mkdir -p "$dir"
+	fi
 	dir_exists "$dir" "$message"
 }
 
@@ -1770,7 +1775,10 @@ function ini_file_has_text {
 	text="$2"
 	message="$3"
 	file_exists "$dir/$file" "$message"
-	file_exists "$INI_DIR/$file" "$message" > /dev/null || (ini-inline.pl "$dir/$file" > "$INI_DIR/$file")
+	if [ ! -e "$INI_DIR/$file" ]; then
+		echo "making searchable ini file from $dir/$file"
+		ini-inline.pl "$dir/$file" > "$INI_DIR/$file"
+	fi
 	file_has_text "$INI_DIR/$file" "$text" "$message"
 }
 

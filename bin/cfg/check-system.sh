@@ -223,6 +223,9 @@ NODE_CMD="nodejs"
 NODE_CMDS="$NODE_CMD npm"
 NODE_LIB=/usr/lib/nodejs
 NODE_MOD=/usr/lib/node_modules
+if [ ! -d "$NODE_MOD" ]; then
+	NODE_MOD=/usr/local/lib/node_modules
+fi
 NODE_PKG="
 	$NODE_CMDS
 	node:nodejs-legacy
@@ -1617,6 +1620,8 @@ installs_from "$CUSTOM_PKG"
 
 BAIL_OUT install
 
+dir_exists "$NODE_LIB" "global node command"
+dir_exists "$NODE_LIB" "global node_modules"
 [ ! -z "$NODE_PKG" ] && installs_from "$NODE_PKG_LIST"
 
 BAIL_OUT node
@@ -1927,6 +1932,8 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 FILE=".gitconfig"
 git config --global gui.fontdiff "-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0"
 ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
+ini_file_has_text "$FILE" "gui/tabsize = 4" "git gui tabsize Edit / Options"
+#        fontui = -family \"DejaVu Sans\" -size 14 -weight normal -slant roman -underline 0 -overstrike 0
 
 # gitk configuration
 FILE=.config/git/gitk
@@ -1935,7 +1942,7 @@ if [ -f "$FILE" ]; then
 	file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
 	file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
 	file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
-	file_has_text "$FILE" "set uicolor #000000" "Edit / Preferences / Colors"
+	file_has_text "$FILE" "set uicolor black" "Edit / Preferences / Colors"
 	file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
 	file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"
 	file_has_text "$FILE" "set diffcolors {red #00a000 #00ebff}" "Edit / Preferences / Colors"

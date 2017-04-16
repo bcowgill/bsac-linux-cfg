@@ -16,7 +16,7 @@ set hideremotes 0
 set showlocalchanges 1
 set datetimeformat {%Y-%m-%d %H:%M:%S}
 set limitdiffs 1
-set uicolor #000000
+set uicolor black
 set want_ttk 1
 set bgcolor #001000
 set fgcolor #ff58ff
