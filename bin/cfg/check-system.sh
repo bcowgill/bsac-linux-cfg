@@ -109,7 +109,7 @@ CUSTOM_PKG=""
 USE_ECLIPSE=""
 
 I3WM_CMD=i3
-I3WM_PKG="i3 i3status i3lock i3blocks xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
+I3WM_PKG="i3 i3status i3lock i3blocks dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
 
 CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
