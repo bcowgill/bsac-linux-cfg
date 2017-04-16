@@ -1,0 +1,17 @@
+# screenrc configuration for lower screen session
+
+deflogin on
+
+# some nice configuration before we start...
+#termcapinfo xterm|xterms|xs|rxvt ti@:te@
+hardstatus lastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+caption always "%?%F%{.R.}%?%h %{=}%c %{-} %-Lw%{=}%n%f:%t%{-}%+Lw | %l %S %H"
+bind j focus down
+bind k focus up
+bind t focus top
+bind b focus bottom
+blankerprg txt-screen-saver.sh
+idle 300 blanker
+
+# start some build tools
+screen -t build-lower "watch ls-apps.sh"

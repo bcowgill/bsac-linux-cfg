@@ -125,12 +125,12 @@ sleep 2
 i3do "workspace $build"
 xbuild-screen-upper.sh &
 sleep 2
-i3do "mark watch"
+i3do "mark buildupper"
 
 i3do "layout default; split v"
 xbuild-screen-lower.sh &
 sleep 1
-i3do "mark build"
+i3do "mark buildlower"
 
 
 # $shell
