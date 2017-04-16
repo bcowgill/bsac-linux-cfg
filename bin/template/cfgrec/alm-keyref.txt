@@ -1,0 +1,58 @@
+alm editor command quick reference
+
+https://alm-tools.gitbooks.io/alm/content/features/tabs.html
+
+KEY:ALM:NAV Esc takes you back to the file currently being edited
+KEY:ALM:NAV Ctrl-p Find a file in the project
+KEY:ALM:NAV Ctrl-o Search all the paths in the project for a file
+KEY:ALM:NAV Ctrl-\ Toggle project tree view
+KEY:ALM:NAV Ctrl-; Toggle the error panel
+KEY:ALM:NAV F8 Cycle through project wide errors
+KEY:ALM:NAV Alt-Shift-p Find a project file (tsconfig.json) to open
+KEY:ALM:NAV Ctrl-Enter Jump to any place on screen
+KEY:ALM:NAV Ctrl-u Move back through cursor location history
+KEY:ALM:NAV Ctrl-Shift-u Move forward through cursor location history
+KEY:ALM:NAV Ctrl-b Go to definition of symbol at cursor
+KEY:ALM:NAV Ctrl-Shift-b Show all references to symbol at cursor
+
+KEY:ALM:FIND Ctrl-Shift-h Pop up search for a symbol
+KEY:ALM:FIND Ctrl-h Pop up search for a symbol in current file only
+KEY:ALM:FIND Ctrl-d Select and jump to next match at cursor
+
+KEY:ALM:HELP Ctrl-Shift-p Pop up ALM command search box
+KEY:ALM:HELP h Show key help when in tree view
+KEY:ALM:HELP Ctrl-' Shows doctor information TODO ???
+
+KEY:ALM:TREE a Add a new file
+KEY:ALM:TREE A Add a new folder
+KEY:ALM:TREE d Duplicate a file or folder
+KEY:ALM:TREE m Move a file or folder
+KEY:ALM:TREE r Rename a file or folder
+KEY:ALM:TREE and jump to c Copy path to clipboard
+KEY:ALM:TREE o Open folder in explorer/finder
+KEY:ALM:TREE O Open in command terminal
+KEY:ALM:TREE t Change a .js file to a .ts file
+KEY:ALM:TREE j Change a .ts file to a .js file
+KEY:ALM:TREE Del Delete a file or folder
+KEY:ALM:TREE Backspace Delete a file or folder
+KEY:ALM:TREE Enter Open file or expand folder
+KEY:ALM:TREE Ctrl-Shift-\ Locate the open file in the tree view
+KEY:ALM:TREE Ctrl-0 Focus on the tree view
+
+KEY:ALM:TABS Alt-w Close current tab
+KEY:ALM:TABS Alt-Shift-w Undo close current tab
+KEY:ALM:TABS Alt-j Switch to previous tab
+KEY:ALM:TABS Alt-k Switch to next tab
+KEY:ALM:TABS Ctrl-0..9 Switch to numbered tab
+KEY:ALM:TABS Ctrl-Shift-Enter Tab jump mode to move or jump to tabs
+
+KEY:ALM:EDIT Ctrl-/ Comment/uncomment code
+KEY:ALM:EDIT Ctrl-Shift-v Toggle back through paste history
+KEY:ALM:EDIT F2 Rename variable at cursor, including references
+
+KEY:ALM:BUILD F6 Full build from tsconfig.json
+KEY:ALM:BUILD Ctrl-Shift-m Live view of emitted javascript
+
+KEY:ALM:MISC Ctrl-Alt-o Toggle blaster mode on/off
+KEY:ALM:MISC Shift-F6 Reread tsconfig.json and reparse for errors
+KEY:ALM:MISC AST View Shows parsed syntax tree as you type
