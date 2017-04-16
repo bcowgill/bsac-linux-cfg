@@ -342,10 +342,27 @@ function filter_logs {
 function say {
 	local message
 	message="$1"
-	which notify > /dev/null && notify -t "$CMD" -m "$message"
+	mynotify "$message" "$CMD"
 	if [ ! -z "$SAYLOG" ]; then
 		echo "$message" >> $SAYLOG
 	fi
+}
+
+function mynotify {
+	local title message
+	title="$2"
+	message="$1"
+	which notify > /dev/null && notify -t "$title" -m "$message"
+	if which notify-send > /dev/null ; then
+		if [ -z "$title" ]; then
+			title="check-system.sh"
+			if [ -z "$message" ]; then
+				return
+			fi
+		fi
+		notify-send --expire-time=15000 "$title" "$message"
+	fi
+
 }
 
 function summary {
