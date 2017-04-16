@@ -108,8 +108,10 @@ CUSTOM_PKG=""
 
 USE_ECLIPSE=""
 
+USE_I3=1
 I3WM_CMD=i3
-I3WM_PKG="i3 i3status i3lock i3blocks dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
+I3BLOCKS=i3blocks
+#I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
 
 CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
@@ -582,6 +584,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	NODE_VER=v0.10.25
 	USE_KDE=""
 	#I3WM_PKG=""
+	I3BLOCKS=""
 	CHARLES_PKG=""
 	#SKYPE_PKG=""
 	SLACK_PKG=""
@@ -648,6 +651,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	#CUSTOM_PKG=""
 	USE_ECLIPSE=""
 	#I3WM_PKG=""
+	I3BLOCKS=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
 	SLACK_PKG=""
@@ -727,6 +731,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	NODE_VER="v0.10.28"
 	BIG_DATA=""
 	COMPANY=raspberrypi
+	USE_I3=""
 	I3WM_PKG=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
@@ -811,7 +816,7 @@ fi
 [ -z "$SVN_PKG"           ] && SVN_CMD=""
 [ -z "$SKYPE_PKG"         ] && SKYPE_CMD=""
 [ -z "$SLACK_PKG"         ] && SLACK_CMD="" && SLACK_DEPS=""
-[ -z "$I3WM_PKG"          ] && I3WM_CMD=""
+[ -z "$USE_I3"            ] && I3WM_PKG="" && I3WM_CMD="" && I3BLOCKS=""
 [ -z "$CHARLES_PKG"       ] && CHARLES_CMD=""
 [ -z "$VIRTUALBOX_PKG"    ] && VIRTUALBOX_CMDS=""
 [ -z "$MVN_PKG"           ] && MVN_CMD=""
@@ -856,6 +861,8 @@ WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
 ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
+
+I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
 
 EMACS_PKG="
 	$EMACS_BASE
@@ -1366,7 +1373,7 @@ fi # USE_KDE set
 
 BAIL_OUT font
 
-if [ ! -z "$I3WM_PKG" ]; then
+if [ ! -z "$USE_I3" ]; then
    apt_has_source_listd "i3window-manager" "deb http://debian.sur5r.net/i3/ $LSB_RELEASE universe" "adding i3wm source for apt"
 	cmd_exists $I3WM_CMD || (sudo apt-get update; sudo apt-get --allow-unauthenticated install sur5r-keyring; sudo apt-get update; sudo apt-get install $I3WM_CMD)
 	cmd_exists $I3WM_CMD
