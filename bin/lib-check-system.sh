@@ -78,7 +78,7 @@ function mynotify {
 		if [ -z $title ]; then
 			title="check-system.sh"
 		fi
-		notify-send "$title" "$message"
+		notify-send --expire-time=15000 "$title" "$message"
 	fi
 
 }
