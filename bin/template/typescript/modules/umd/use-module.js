@@ -4,7 +4,7 @@
         if (v !== undefined) module.exports = v;
     }
     else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "./Module", "./Module", "./Module"], factory);
+        define(["require", "exports", "./Module", "./Module", "./Module", "./Module"], factory);
     }
 })(function (require, exports) {
     "use strict";
@@ -23,4 +23,8 @@
     Module_2.fnExport();
     Module_2.fnExport2();
     new Module_2.CExported('name2');
+    // import the default and other exports in one go
+    var Module_3 = require("./Module");
+    new Module_3.default('a name');
+    Module_3.fnExport();
 });

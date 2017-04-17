@@ -16,3 +16,8 @@ import { fnExport as call1, fnExport2 as call2, CExported as CCme } from './Modu
 call1()
 call2()
 new CCme('name2')
+
+// import the default and other exports in one go
+import CCC, { fnExport as fnF } from './Module'
+new CCC('a name')
+fnF()

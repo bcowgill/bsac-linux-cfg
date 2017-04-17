@@ -14,3 +14,7 @@ var Module_2 = require("./Module");
 Module_2.fnExport();
 Module_2.fnExport2();
 new Module_2.CExported('name2');
+// import the default and other exports in one go
+var Module_3 = require("./Module");
+new Module_3.default('a name');
+Module_3.fnExport();
