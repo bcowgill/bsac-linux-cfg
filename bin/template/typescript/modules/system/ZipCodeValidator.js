@@ -5,7 +5,7 @@ System.register([], function (exports_1, context_1) {
     return {
         setters: [],
         execute: function () {
-            exports_1("numberRegexp", numberRegexp = /^[0-9]+$/);
+            numberRegexp = /^[0-9]+$/;
             ZipCodeValidator = (function () {
                 function ZipCodeValidator() {
                 }
@@ -15,7 +15,6 @@ System.register([], function (exports_1, context_1) {
                 return ZipCodeValidator;
             }());
             exports_1("ZipCodeValidator", ZipCodeValidator);
-            exports_1("mainValidator", ZipCodeValidator);
         }
     };
 });

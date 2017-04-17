@@ -1,4 +1,4 @@
-export var numberRegexp = /^[0-9]+$/;
+var numberRegexp = /^[0-9]+$/;
 var ZipCodeValidator = (function () {
     function ZipCodeValidator() {
     }
@@ -8,4 +8,3 @@ var ZipCodeValidator = (function () {
     return ZipCodeValidator;
 }());
 export { ZipCodeValidator };
-export { ZipCodeValidator as mainValidator };

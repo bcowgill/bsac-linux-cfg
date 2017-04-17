@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "removeComments": false,
         "module": "umd",
         "target": "es5",
         "noImplicitAny": false,
