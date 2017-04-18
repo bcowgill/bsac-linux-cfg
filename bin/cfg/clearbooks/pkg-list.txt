@@ -167,6 +167,7 @@ dosfstools
 dpkg
 dpkg-dev
 dpkg-repack
+dunst
 duplicity
 dvd+rw-tools
 e2fslibs:amd64
@@ -1814,6 +1815,7 @@ libxcursor1:amd64
 libxcursor1:i386
 libxdamage1:amd64
 libxdamage1:i386
+libxdg-basedir1
 libxdmcp6:amd64
 libxdmcp6:i386
 libxdo3:amd64
@@ -2396,7 +2398,6 @@ ruby-net-sftp
 ruby-net-ssh
 ruby-net-telnet
 ruby-nokogiri
-ruby-notify
 ruby-power-assert
 ruby-rb-inotify
 ruby-rest-client
@@ -2440,6 +2441,7 @@ ssh-askpass-gnome
 ssl-cert
 strace
 streamer
+suckless-tools
 sudo
 sur5r-keyring
 synaptic
