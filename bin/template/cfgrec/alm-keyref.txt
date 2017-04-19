@@ -53,6 +53,8 @@ KEY:ALM:EDIT F2 Rename variable at cursor, including references
 KEY:ALM:BUILD F6 Full build from tsconfig.json
 KEY:ALM:BUILD Ctrl-Shift-m Live view of emitted javascript
 
+KEY:ALM:CODE Ctrl-Space Keyword completion begin
+
 KEY:ALM:MISC Ctrl-Alt-o Toggle blaster mode on/off
 KEY:ALM:MISC Shift-F6 Reread tsconfig.json and reparse for errors
 KEY:ALM:MISC AST View Shows parsed syntax tree as you type
