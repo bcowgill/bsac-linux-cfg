@@ -19,4 +19,4 @@ screen -t apps watch-apps.sh
 # last screen listed will be currently visible
 
 # make window 0 the focus again
-focus top;
+select 0;
