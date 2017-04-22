@@ -120,6 +120,7 @@ COMPANY=
 if [ -f ~/.COMPANY ]; then
     . ~/.COMPANY
 fi
+export COMPANY
 
 if [ "x$COMPANY" == "xclearbooks" ]; then
 	export PJ=$HOME/projects

@@ -2,9 +2,17 @@
 # Launch windows on workspaces as desired when starting up i3 window manager
 # this does not require window classes to be mapped to workspaces
 
-WSBIN=$HOME/bin/clearbooks
-export PATH=$WSBIN:$PATH
+WSBIN=
+COMPANY=
+if [ -f ~/.COMPANY ]; then
+    . ~/.COMPANY
+    WSBIN=$HOME/bin/$COMPANY
+    PATH=$WSBIN:$PATH
+fi
+export PATH
+export COMPANY
 
+echo i3-launch.sh set COMPANY=$COMPANY PATH=$PATH
 source detect-monitors.sh
 
 # define vars for workspaces (updated by i3-config-update.sh)
@@ -119,7 +127,7 @@ sleep 15
 
 # $files
 i3do "workspace $files; exec browse.sh"
-i3do "workspace $files; exec mygterm.sh $HOME/projects/docuzilla/webui mc $HOME/projects/docuzilla/webui $HOME"
+i3do "workspace $files; exec mygterm.sh $HOME/projects/clearbooks-micro-api-accounting mc $HOME/projects/clearbooks-micro-api-accounting $HOME"
 sleep 5
 
 if ${OUTPUT_MONITORS:-2} != 1; then
@@ -147,6 +155,7 @@ sleep 2
 # ._____._____.
 # A/B should be terminals with build/watch running
 # C should be browser
+#echo XBUILD COMPANY=$COMPANY PATH=$PATH
 i3do "workspace $build"
 xbuild-screen-upper.sh &
 sleep 2

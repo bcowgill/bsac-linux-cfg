@@ -14,5 +14,5 @@ blankerprg txt-screen-saver.sh
 idle 300 blanker
 
 # start some build tools
-#screen -t build-lower watch ls-apps.sh
-screen -t build-auth-lower ./scripts/auto-build.sh ./scripts/test.sh src/
+screen -t apps watch ls-apps.sh
+screen -t auth-api ./scripts/auto-build.sh ./scripts/test.sh src/

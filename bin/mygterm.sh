@@ -15,6 +15,7 @@ fi
 if [ ! -z "$CMD" ]; then
 	CMD="--execute $CMD"
 fi
+#echo mygterm.sh COMPANY=$COMPANY PATH=$PATH CMD=$CMD >> /tmp/BUILD.log
 gnome-terminal \
 	--hide-menubar \
 	--working-directory="$DIR" \

@@ -14,5 +14,5 @@ blankerprg txt-screen-saver.sh
 idle 300 blanker
 
 # start some build tools
-#screen -t build-upper watch watcher.sh
-screen -t build-accounting-upper ./scripts/auto-build.sh ./scripts/test.sh src/
+screen -t watcher watch watcher.sh
+screen -t acct-api ./scripts/auto-build.sh ./scripts/test.sh src/
