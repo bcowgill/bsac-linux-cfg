@@ -6,13 +6,17 @@
 use strict;
 use English;
 
+my $me = $ENV{USER};
 my $prefix = "___";
 while (my $line = <>)
 {
+	$line = "${prefix}CALIBRE       $line\n" if $line =~ m{python .+ calibre}xms;
 	$line = "${prefix}DOCUZILLA     $line\n" if $line =~ m{mono .+ Docuzilla}xms;
 	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{python .+ (SimpleHTTP|http\.server)}xms;
 	$line = "${prefix}CHARLES PROXY $line\n" if $line =~ m{java .+ -jar \s+ /usr/lib/charles-proxy/charles.jar}xms;
-	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ bcowgill/bin/WebStorm}xms;
+	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ $me/bin/WebStorm}xms;
+	$line = "${prefix}INTELLIJ IDE  $line\n" if $line =~ m{java .+ $me/bin/idea}xms;
+	$line = "${prefix}INTELLIJ NODE $line\n" if $line =~ m{node(js)? .+ idea .+ JavaScriptLanguage}xms;
 	$line = "${prefix}EMACS         $line\n" if $line =~ m{emacs}xms;
 	$line = "${prefix}KARMA         $line\n" if $line =~ m{node(js)? .+ karma \s* start}xms;
 	$line = "${prefix}KARMAWEBSTORM $line\n" if $line =~ m{node(js)? .+ intellij .+ karma}xms;
@@ -34,6 +38,19 @@ while (my $line = <>)
 	$line = "${prefix}BALOO         $line\n" if $line =~ m{baloo_file_extractor}xms;
 	$line = "${prefix}SCREENSHOT    $line\n" if $line =~ m{screenshot.sh}xms;
 	print $line;
+	if ($line !~ m{\A$prefix}xms)
+	{
+		#log_process($line);
+	}
 }
+
+sub log_process
+{
+	my ($process) = @ARG;
+	my $fh;
+	open($fh, ">>", "/tmp/$me/what-is-running.log") && print $fh "$process";
+	close($fh);
+}
+
 __END__
 

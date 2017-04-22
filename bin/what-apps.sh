@@ -1,7 +1,7 @@
 #!/bin/bash
 # filter processes for apps of interest
 ps -ef | \
-	egrep "node|grunt|perl|python|java|ruby|keep-it-up|auto-build|baloo_file_extractor" | \
+	egrep "node|grunt|perl|python|java|ruby|elixir|keep-it-up|auto-build|baloo_file_extractor|\bscreen\s+-|\bSCREEN\s+-|emacs|vim|nano" | \
 	grep -v grep | \
 	grep -v what-is-running | \
 	grep -v cross-env | \
