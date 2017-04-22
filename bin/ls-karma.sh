@@ -1,1 +1,1 @@
-ps -ef | grep karma | grep -v grep
+ps -ef --cols 256 | grep karma | grep -v grep

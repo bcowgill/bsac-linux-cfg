@@ -987,7 +987,7 @@ function is_server_running {
 	local cmd message
 	cmd="$1"
 	message="$2"
-	if ps -ef | grep $cmd | grep -v grep ; then
+	if ps -ef --cols 256 | grep $cmd | grep -v grep ; then
 		OK "$cmd is running"
 	else
 		NOT_OK "$cmd is not running [$message]"
@@ -1002,7 +1002,7 @@ function is_server_running_on_port {
 	cmd="$1"
 	port="$2"
 	message="$3"
-	if ps -ef | grep $cmd | grep $port | grep -v grep ; then
+	if ps -ef --cols 256 | grep $cmd | grep $port | grep -v grep ; then
 		OK "$cmd is running on port $port"
 	else
 		NOT_OK "$cmd is not running on port $port [$message]"
@@ -1016,7 +1016,7 @@ function server_should_not_be_running {
 	local cmd message
 	cmd="$1"
 	message="$2"
-	if ps -ef | grep $cmd | grep -v grep ; then
+	if ps -ef --cols 256 | grep $cmd | grep -v grep ; then
 		NOT_OK "$cmd should not be running [$message]"
 		return 1
 	else
@@ -1031,7 +1031,7 @@ function server_should_not_be_running_on_port {
 	cmd="$1"
 	port="$2"
 	message="$3"
-	if ps -ef | grep $cmd | grep $port | grep -v grep ; then
+	if ps -ef --cols 256 | grep $cmd | grep $port | grep -v grep ; then
 		NOT_OK "$cmd should not be running on port $port [$message]"
 		return 1
 	else

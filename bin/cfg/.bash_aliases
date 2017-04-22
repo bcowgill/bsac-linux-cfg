@@ -104,7 +104,7 @@ alias i3diff='pushd ~/bin; git difftool --no-prompt  172c656043e8902d8ff7bf14af6
 alias delsame='fdupes --recurse --noempty --size --delete'
 
 # make sense of ps -ef
-alias pswhat='ps -ef | egrep "^($USER|`id -u`)" | what-is-running.pl'
+alias pswhat='ps -ef --cols 256 | egrep "^($USER|`id -u`)" | what-is-running.pl'
 
 # some package aliases
 # pkgfind search for a package

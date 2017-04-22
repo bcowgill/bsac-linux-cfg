@@ -1710,7 +1710,7 @@ if [ ! -z "$DROPBOX_URL" ]; then
 	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
 	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
-	if ps -ef | grep -v grep | grep dropbox-dist > /dev/null; then
+	if ps -ef --cols 256 | grep -v grep | grep dropbox-dist > /dev/null; then
 		OK "dropbox daemon is running"
 	else
 		NOT_OK "dropbox daemon is not running, will try to start it"
@@ -2084,7 +2084,7 @@ if [ -d .kde ]; then
 
 	# baloo KDE file indexer can choke on big files, set it up better
 	# If you see baloo_file_extractor hogging your CPU do this to find out which files are the problem
-	# ps -ef | grep baloo_file_extractor
+	# ps -ef --cols 256 | grep baloo_file_extractor
 	# to see the ID's being scanned
 	# balooshow ID ID ID
 	FILE=.kde/share/config/baloofilerc

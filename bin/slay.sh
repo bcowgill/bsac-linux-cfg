@@ -4,7 +4,7 @@
 PID=$1
 WAIT=2
 if [ -z "$PID" ]; then
-	ps -ef
+	ps -ef --cols 256
 	echo "PID to kill? "
 	read PID
 fi
