@@ -14,4 +14,4 @@ blankerprg txt-screen-saver.sh
 idle 300 blanker
 
 # start some build tools
-screen -t build-lower "watch ls-apps.sh"
+screen -t build-lower watch ls-apps.sh
