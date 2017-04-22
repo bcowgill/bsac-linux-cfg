@@ -1,0 +1,542 @@
+// package.json5
+// use npm run json5 to generate package.json from this source
+{
+    "private": true,
+    "name": "docuzilla-webui",
+    "version": "0.0.0",
+    "description": "web based front end for Workshare Docuzilla back end",
+////  "main": "index.js",
+
+    // will appear as $npm_package_config_xxx in environment
+    // on windows these need to be %npm_package_config_xxx% so the build
+    // will perform a replacement on them at build time.
+    "config": {
+        "story_port": 9001
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/workshare/docuzilla.git"
+    },
+    "keywords": [
+        "workshare",
+        "docuzilla"
+    ],
+    "engines": {
+        "npm": ">=3"
+    },
+    "author": "Workshare Ltd (Brent S.A. Cowgill)",
+    "license": "UNLICENSED",
+    "bugs": {
+        "url": "https://github.com/workshare/docuzilla/issues"
+    },
+    "homepage": "https://github.com/workshare/docuzilla#readme",
+    "scripts": {
+        // targets for debugging the npm and build environment
+        // npm run args something -- more --and more
+        "args": "echo ",
+        "env": "env",
+        "env:show": "npm run env | grep -i npm_ | sort",
+        // npm run env:test \$npm_package_author_name
+        "env:test": "echo env var: ",
+
+        // targets for cleaning up before build
+        "clean": "npm run clean:build:debug \
+            && npm run clean:build:test \
+            && npm run clean:build \
+            && npm run clean:coverage \
+            ",
+        "clean:build": "rm -rf ./webui/build",
+        "clean:build:test": "rm -rf ./build-test",
+        "clean:build:debug": "rm -rf ./webui/build/build-debug",
+        "clean:coverage": "rm -rf coverage .nyc_output",
+
+        // targets for using human friendly json5 configuration
+        "json5": "json5 -c package.json5",
+        //    config/jscs-jenkins.json5 \
+        //    config/jscs.json5 \
+        //    config/jscs-prod.json5",
+
+        // targets direct from react-boilerplate
+        //"analyze": "node ./internals/scripts/analyze.js",
+        "npmcheckversion": "node ./internals/scripts/npmcheckversion.js",
+        "preinstall": "npm run npmcheckversion",
+        "postinstall": "npm run build:dll",
+        //"presetup": "npm i chalk",
+        //"setup": "node ./internals/scripts/setup.js",
+        //"postsetup": "npm run build:dll",
+// no further need to clean up the boilerplate
+        //    "clean": "shjs ./internals/scripts/clean.js",
+
+        // targets for generation of new code from templates
+        "pregenerate": "rm ./edit.sh || echo never mind",
+        "generate": "plop --plopfile internals/generators/index.js",
+        "postgenerate": "npm run prestorybook && ./edit.sh",
+
+        // targets for javascript code style enforcement
+        // and static css/html checking
+        "preallfix": "npm run prelint",
+        //"npm run lint:html5 && npm run lint:css \
+        "allfix": "npm run lint:css && npm run lint:jsfix",
+        //    && npm run lint:jsfix && npm run jscsfix",
+        "jsfix": "npm run lint:jsfix",
+        "prelint": "npm run version && \
+            npm run lint:jsconfig > dump-eslint-config-full.json5",
+        //"lint": "npm run jscscheck && npm run lint:js && \
+        "lint": "npm run lint:js && \
+            npm run lint:css",//&& npm run lint:html5",
+        "lint:eslint": "eslint \
+            --ignore-path .gitignore \
+            ",
+        "lint:js": "npm run lint:eslint -- . ",
+        "lint:jsfix": "npm run lint:eslint -- --fix . ",
+        "lint:jsconfig": "npm run lint:eslint -- --print-config . ",
+        "lint:css": "stylelint --syntax=scss ./app/**/*.scss ./app/**/*.css",
+        //"lint:html5": "echo OOPS validator.nu is misbehaving right now",// "node config/lint5.js",
+        "lint:staged": "lint-staged",
+
+// MUSTDO remove jscs once migrated to eslint
+        // legacy targets from jscs style/fix. They are moving to eslint
+        // so we should migrate this config to eslint
+        //"jscsauto": "jscs --auto-configure src/ config/ scripts/",
+        //"jscsautocheck": "jscs --verbose --reporter=console \
+        //    --config=.jscsrc \
+        //   src/ config/ scripts/",
+        //"jscs": "jscs --verbose --config=config/jscs.json",
+        //"jscs:console": "npm run jscs -- --reporter=console",
+        //"jscs:fix": "jscs --fix --reporter=inline",
+        //"jscscheck:config": "npm run jscs:console -- src/templates/jscs/",
+        //"jscscheck": "npm run jscs:console -- src/ config/ scripts/",
+        //"jscsfix": "npm run jscs:fix -- --config=config/jscs.json \
+        //    src/ config/ scripts/",
+        //"jscsfix:prod": "npm run jscs:fix -- --config=config/jscs-prod.json \
+        //    src/ config/ scripts/",
+
+        // targets for in browser component isolation testing
+        "prestorybook": "npm run version && \
+            node ./scripts/findStories.js > config/storybook/config.js",
+        "storybook": "start-storybook --config-dir=config/storybook/ \
+          --port=$npm_package_config_story_port",
+
+        // with a local docuzilla server running, grab the /api/* data
+        // for use by the fake server (i.e. from npm start)
+        "grabdata": "./scripts/grabdata.sh",
+        "update-schema": "node ./scripts/graphQL/updateSchema.js",
+
+        // targets for emacs editor tagging
+        "etags": "ctags --totals=yes -e -R --extra=+fq --exclude=.git \
+            --exclude=node_modules -f TAGS",
+
+        // targets for running unit tests sans coverage
+        "pretest": "npm run lint && npm run test:build",
+        // run all pattern matched tests with:
+        // npm run test -- --grep=transformData
+        "test": "mocha build-test",
+        // can specify a single test to run here:
+        // npm run test:single -- app/Analytics/tests/Mixpanel.spec.js
+        "test:single": "npm run test:build:single",
+        "posttest:single": "mocha build-test/main.bundle.js",
+
+        // targets for watching
+        "prepack:watch": "npm run version && npm run clean:build:test",
+        "pack:watch": "webpack --config internals/webpack/webpack.config.test.full.js -w",
+        "test:watch" : "mocha build-test/ --reporter=nyan -w",
+        // can specify a single webpacked test plan to watch here
+        // npm run test:watch:single -- build-test/Mixpanel.spec.js
+        "test:watch:single" : "mocha --reporter=nyan -w",
+
+        // targets for integration with webstorm debugging of tests
+        "pretest:build": "npm run clean:build:test",
+        "pretest:build:single": "npm run clean:build:test",
+
+        "pretest:build": "npm run version",
+        "test:build": "webpack --config ./internals/webpack/webpack.config.test.full.js",
+        "test:build:single": "webpack --config ./internals/webpack/webpack.config.test.single.js",
+
+        // targets for running unit tests with coverage
+        "pretest:coverage": "npm run clean:coverage && npm run lint && npm run test:build",
+        "test:coverage": "cross-env NODE_ENV=test nyc npm run test",
+        "test:coverage:single": "cross-env NODE_ENV=test nyc npm run test:single",
+
+        //TODO, investigate on tests failures
+//        "coveralls": "cat ./coverage/karma/lcov/lcov.info | coveralls", // TODO not working
+
+
+// run a single directory only
+//  --recursive --glob=*.spec.js test/ ",
+
+        // targets for versioning the build
+        "version": "./scripts/makeUIVersion.sh",
+
+        // targets for build assets together
+        "prebuild": "./scripts/git-check-tests.sh \
+            && npm run clean:build \
+            && npm run test",
+        "prebuild:debug": "npm run clean:build:debug",
+        "build": "webpack \
+            --config internals/webpack/webpack.prod.babel.js --color -p\
+            --display-error-details",
+        "build:debug": "webpack \
+            --verbose \
+            --config internals/webpack/webpack.dev.babel.js --color -d",
+        "build:diagnose": "cross-env NODE_ENV=development webpack \
+            --config internals/webpack/webpack.dev.babel.js --color -d \
+            --display-modules --display-chunks --display-origins \
+            --display-cached --display-cached-assets \
+            --display-reasons --display-error-details \
+            --verbose ",
+        "build:dll": "node ./internals/scripts/dependencies.js",
+
+        // targets for jenkins build machine
+        "jenkins": "./scripts/build-jaws.sh",
+        "prebuild:jenkins": "npm run clean && \
+            npm run test -- --reporter=min", //MUSTDO :coverage",
+        "build:jenkins": "cross-env NODE_ENV=production webpack \
+            --config internals/webpack/webpack.prod.babel.js --color -p\
+            --display-error-details",
+        "build:jenkins:debug": "cross-env NODE_ENV=development webpack \
+            --config internals/webpack/webpack.dev.babel.js --color -d",
+
+        // targets for development red green refactor cycle
+        "watch": "npm run test:watch &",
+
+        // targets for running a server
+        "prestart": "npm run version",
+        "start": "cross-env NODE_ENV=development node server",
+        "start:tunnel": "npm run start cross-env NODE_ENV=development ENABLE_TUNNEL=true \
+            node server",
+        "start:production": "npm run build && npm run start:prod",
+        "start:prod": "cross-env NODE_ENV=production node server",
+        //"pagespeed": "node ./internals/scripts/pagespeed.js"
+    },
+    "lint-staged": {
+        "lint:eslint": "*.js",
+        "stylelint": "*.scss"
+    },
+    "pre-commit": "lint:staged",
+    // .bablerc will override these settings so don't create one!
+    "babel": {
+         "env": {
+            "production": {
+                "only": [
+                    "app"
+                ],
+                "plugins": [
+                    "transform-decorators-legacy",
+                    "transform-react-remove-prop-types",
+                    "transform-react-constant-elements",
+                    "transform-react-inline-elements"
+                ]
+            },
+            "test": {
+                "plugins": ["istanbul"]
+            }
+        }
+    },
+    // https://github.com/istanbuljs/nyc#configuring-nyc
+    "nyc": {
+        "lines": 80,
+        "statements": 80,
+        "functions": 80,
+        "branches": 80,
+        "reporter": [
+          "lcov",
+          "html",
+//          "text",
+          "text-summary"
+        ],
+        "include": [ /*nyc-marker*/ ],
+        // can we use the .gitignore to cut down duplication??
+        "exclude": [
+            "node_modules/",
+            ".tmp/",
+            "test/",
+            "config/",
+            "build-test/",
+            "internals/",
+            "scripts/",
+            "**/tests/"
+        ],
+        "extension": [
+          ".jsx",
+          ".js",
+          ".es6"
+        ],
+        "cache": true,
+        "all": false,
+        "sourcemap": false,
+        "check-coverage": true,
+        "report-dir": "./coverage"
+    },
+    // http://eslint.org/docs/rules/
+    // npm run lint:jsconfig to dump actual config rules
+    "eslintConfig": {
+        "root": true,  // do not look above this project for eslint config files
+        "parser": "babel-eslint",
+        "extends": "airbnb",
+        "env": {
+            "browser": true,
+            "node": true,
+            "mocha": true
+        },
+        "rules": { // 0=off 1=warn 2=error
+            // warn about good practice
+            "func-names": "off", //"warn", // MUSTDO make these warnings or errors
+            "prefer-template": "off", //"warn",
+            "one-var": "off", //["error", "always"],
+            "arrow-body-style": ["warn", "always"],
+            "strict": "off", //["error", "safe"],
+            "no-unused-vars": "off",// "error", can configure this React for ex.
+            "no-use-before-define": [
+                "error"
+                , {
+                    "functions": false,
+                    "classes": true
+                }
+            ],
+            "object-shorthand": ["warn", "always", { "avoidQuotes": true }],  //MUSTDO revisit avoidQuotes later
+            "prefer-rest-params": "off", //["error", "always"],
+            "no-param-reassign": "off",//["error", { props: true }],
+            "react/jsx-first-prop-new-line": "off", //["error", "multiline"],
+            "react/jsx-space-before-closing": "off",//["error", "always"],
+            "react/jsx-closing-bracket-location": "off",//["error", "always"],
+            "prefer-const": "off",//["error", "always"],
+            "import/no-mutable-exports": "off", //["error", "always"],
+            "import/no-unresolved": "off", // MUSTDO DELETE!
+            "react/prop-types": "off", // MUSTDO DELETE!
+            "jsx-quotes": ["error", "prefer-single"],
+            "prefer-arrow-callback": "off", /* [
+                "error",
+                {
+                    "allowUnboundThis": false,
+                    "allowNamedFunctions": true
+                }
+            ], */
+            "no-console": "off", //"error",
+
+            // ignore style rules to match jscs config
+            "semi": "off",  // make semicolons optional
+            "comma-style": "off", //["error", "first"],
+            "comma-spacing": ["off", { "after": true }],
+            "comma-dangle": "off", // for comma first style
+            "indent": "off",// ["error", 4],
+            "react/jsx-indent": "off",//["error", 4],
+            "react/jsx-indent-props": "off",//["error", 4],
+            "react/jsx-curly-spacing": "off", //["error", "never"],
+            "react/wrap-multilines": "off", //"error",
+            "react/jsx-boolean-value": ["error", "always"],
+            "react/sort-comp": "off", // TODO interesting, might turn on
+            "spaced-comment" : "off", // TODO could do better here
+            "space-before-function-paren": "off", //["error", "always"],
+            "no-underscore-dangle": "off",
+            "space-in-parens": "off", //["error", "always", { "exceptions": ["TODO....{}"] }],
+            "brace-style": "off", //["error", "stroustrup", { "allowSingleLine": true }],
+            "yoda": "off",
+            "padded-blocks": "off", //["error", { "classes": "always" } ],
+            "block-spacing": "off", //["error", "always"],
+            "object-curly-spacing": "off", //["error", "always"],
+            "one-var-declaration-per-line": "off", //["error", "always"],
+            // jscs allexcept require, urlComments, functionSignature
+            "max-len": "off", /* ["error", {
+                "code": 120,
+                "tabWidth": 4,
+                "ignoreUrls": true
+            }] */
+            "space-before-blocks": "off",
+            "keyword-spacing": "off",
+            "dot-notation": "off",
+            "arrow-spacing": "off",
+            "key-spacing": "off",
+            "no-multi-spaces": "off",
+            "react/prefer-stateless-function": "warn"
+        },
+        "settings": {
+            "import/resolver": {
+                "webpack": {
+                    "config": "./internals/webpack/webpack.lint.babel.js"
+                }
+            }
+        }
+    },
+    // https://stylelint.io/user-guide/example-config/
+    "stylelint": {
+        "extends": "stylelint-config-standard",
+        "rules": {
+            "color-hex-case": "upper",
+            "string-quotes": "single",
+            "font-family-name-quotes": "always-where-recommended",
+            "selector-pseudo-class-no-unknown": [
+                true,
+                {
+                    "ignorePseudoClasses": [
+                        "global"
+                    ]
+                }
+            ],
+            "selector-pseudo-element-colon-notation": "single",
+            "indentation": 2
+        }
+    },
+    "dllPlugin": {
+        "path": "node_modules/react-boilerplate-dlls",
+        "exclude": [
+            "chalk",
+            "compression",
+            "cross-env",
+            "express",
+            "ip",
+            "minimist",
+            "sanitize.css"
+        ],
+        "include": [
+            "core-js",
+            "lodash",
+            "eventsource-polyfill"
+        ]
+    },
+    "dependencies": {
+        "babel-polyfill": "6.7.4", // ES7 generator support
+        "bootstrap-sass": "^3.3.7",
+        "react-bootstrap": "^0.30.3",
+        "chalk": "1.1.3", // node escape codes to output colors on console
+        "@workshare/chimera": "git@github.com:workshare/chimera#6.4.267",
+        "classnames": "^2.2.5",
+        //"fontfaceobserver": "1.7.1", //NOT USED
+        //"history": "2.1.0", // NOT USED maybe
+        "immutable": "3.8.1",
+        "ip": "1.1.2", // node provide access to your ip address
+        "jquery": "^3.1.1",
+        "minimist": "1.2.0", // node command line arg parser
+        "mixpanel-browser": "^2.8.1", // for user action tracking
+        "moment": "^2.14.1", // react-time required this
+        "ramda": "^0.21.0",  // curried/functional programming library
+        "react": "15.1.0",
+        "react-dom": "15.1.0",
+        "react-fade": "^1.1.1",
+        "react-helmet": "^3.1.0", // for <head> manipulation as a react component
+        "react-list": "^0.8.0",
+        "react-redux": "4.4.5",
+        "react-relay": "^0.9.3",
+        "react-relay-network-layer": "^1.3.4",
+        "react-router": "2.3.0",
+        "react-router-redux": "4.0.4",
+        "react-router-scroll": "0.2.0",
+        "react-static-container": "^1.0.1",
+        "react-tools": "0.13.3",
+        "redux": "3.5.2",
+        "redux-immutable": "3.0.6",
+        "redux-saga": "^0.14.1",
+        "reselect": "2.5.1",
+        "signalr": "^2.2.1",
+        "sanitize.css": "4.0.0",
+        "whatwg-fetch": "1.0.0",  // for modern ajax fetch() support in browser
+        "why-did-you-update": "0.0.8" // debugging tool to see why rerender happens
+    },
+    "devDependencies": {
+        "@kadira/storybook": "^1.11.0",  // react component preview tool
+        "babel-cli": "^6.14.0",
+        "babel-core": "^6.21.0",
+        "babel-eslint": "6.0.4",
+        "babel-loader": "^6.2.10",
+        "babel-plugin-istanbul": "^2.0.0",
+        //"babel-plugin-transform-decorators": "^6.13.0", // not supported in babel 6 yet
+        "babel-plugin-transform-decorators-legacy": "^1.3.4",
+        "babel-plugin-transform-react-constant-elements": "6.8.0",
+        "babel-plugin-transform-react-inline-elements": "6.8.0",
+        "babel-plugin-transform-react-remove-prop-types": "0.2.7",
+        "babel-plugin-transform-runtime": "^6.12.0",
+        "babel-preset-es2015": "^6.18.0",
+        "babel-preset-react": "^6.16.0",
+        "babel-preset-stage-0": "^6.16.0",
+        "babel-register": "^6.11.6",
+        "babel-relay-plugin": "^0.9.2",
+        "body-parser": "^1.15.1", // node parse request body for post data for fake data server
+        "chai": "3.5.0",
+        "chai-enzyme": "0.5.0",
+        "cheerio": "0.20.0",
+        "chmod": "^0.2.1",
+        "compression": "1.6.1",  // node middleware compress server responses
+        "core-decorators": "^0.15.0", // @readonly, @autobind, etc
+        //"coveralls": "2.11.9",
+        "cross-env": "1.0.7",
+        "css-loader": "0.23.1",
+        "debug": "^2.2.0",
+        "dottie": "^1.1.1",   // obj.deep.path vivification support
+        "enzyme": "2.2.0",
+        "eslint": "2.10.1",
+        "eslint-config-airbnb": "9.0.1",
+        "eslint-import-resolver-webpack": "0.3.1",
+        "eslint-plugin-import": "1.8.0",
+        "eslint-plugin-jsx-a11y": "1.2.0",
+        "eslint-plugin-react": "5.1.1",
+        "eventsource-polyfill": "0.9.6",
+        "expect": "1.18.0",
+        //"expect-jsx": "2.5.1",
+        "exports-loader": "0.6.3",
+        "express": "^4.14.0", // node app server framework for fake data server
+        "express-http-proxy": "^0.10.0",
+        "extended-exceptions": "^2.1.0",  // for custom run time exceptions
+        "extract-text-webpack-plugin": "^2.0.0-beta.4",
+        "fetch-mock": "^5.9.4",  // for mocking browser fetch in unit tests
+        "file-loader": "0.9.0",
+        "glob": "^7.0.3",
+        "html-loader": "0.4.3",
+        "html-webpack-plugin": "2.16.0",
+        "html5-lint": "^0.2.5",
+        "image-webpack-loader": "1.8.0",
+        "imports-loader": "0.6.5",
+        //"ip": "1.1.2",
+        "inline-style-prefixer": "^2.0.4",
+        "isparta": "4.0.0",
+        "isparta-loader": "2.0.0",
+        //"jscs": "2.11.0", // javascript code style enforcement - moving to eslint
+        "jsdom": "^9.4.2",
+        "json-loader": "0.5.4",
+        "json5": "0.5.0",
+        "lint-staged": "1.0.1",
+        "lodash": "4.13.1",
+        "minimist": "1.2.0", // node command line arguments util
+        "mocha": "2.4.5",
+        "mock-browser": "^0.92.12",//"git+https://github.com/bcowgill/mock-browser.git",
+        // had to make a custom change to mock-browser to enable unit
+        // testing until it it pulled into the main line, we use a custom
+        // fork
+        //"mock-browser": "^0.92.11",
+        "ngrok": "2.2.1", // node open localhost to web for collaboration
+        "node-fetch": "^1.5.2", // for fetch support in node tests
+        "node-sass": "^3.8.0",
+        "null-loader": "0.1.1",
+        "nyc": "^8.1.0",  // command line version of istanbul coverage tool
+        "object.values": "^1.0.3",
+        "offline-plugin": "3.2.0",
+        "plop": "1.5.0",
+        "pluralize": "^3.1.0",
+        "postcss-cssnext": "2.5.2",
+        "postcss-focus": "1.0.0",
+        "postcss-loader": "0.9.1",
+        "postcss-reporter": "1.3.3",
+        "pre-commit": "1.1.3",
+        "psi": "2.0.3",
+        "raw-loader": "^0.5.1",
+        "react-addons-test-utils":"15.1.0",
+        "react-css-modules": "^3.7.10",
+        "react-time": "^4.2.0",
+        "resolve-url-loader": "^1.6.0",
+        //"rimraf": "2.5.2",
+        "sass-loader": "^4.0.0",
+        "shelljs": "0.7.0",
+        "sinon": "2.0.0-pre",  // compatible with webpack/headless testing
+        "sinon-chai": "^2.8.0",
+        "source-map-support": "^0.4.2",
+        "style-loader": "0.13.1",
+        "stylelint": "6.7.1",
+        "stylelint-config-standard": "9.0.0",
+        "timemachine": "^0.2.8",
+        "url-loader": "0.5.7",
+        "webpack": "^2.2.0-rc.3",
+        "webpack-dev-middleware": "^1.9.0",
+        "webpack-hot-middleware": "2.10.0", // hot reload for packed assets
+        "webpack-node-externals": "^1.2.0", // ignore node_modules when packing
+        "xmlhttprequest": "1.8.0", // for XHR support in node
+        "xregexp": "^3.1.1" // for unicode regexes before ES6
+    }
+}
