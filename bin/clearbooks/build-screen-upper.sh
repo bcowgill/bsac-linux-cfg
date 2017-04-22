@@ -3,4 +3,4 @@
 
 #echo clearbooks BUILD UPPER COMPANY=$COMPANY PATH=$PATH >> /tmp/BUILD.log
 # -U utf8 -L logs output -h size of scrollback history buffer
-screen -S build-upper -U -h 8192 -c ~/bin/$COMPANY/screenrc.build.upper
+screen -D -R -S build-upper -U -h 8192 -c ~/bin/$COMPANY/screenrc.build.upper
