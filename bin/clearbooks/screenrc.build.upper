@@ -1,4 +1,4 @@
-# screenrc configuration for lower screen session
+# screenrc configuration for upper screen session
 
 deflogin on
 
@@ -14,4 +14,5 @@ blankerprg txt-screen-saver.sh
 idle 300 blanker
 
 # start some build tools
-screen -t build-lower watch-apps.sh
+#screen -t build-upper watch watcher.sh
+screen -t build-upper ./scripts/auto-build.sh ./scripts/test.sh src/
