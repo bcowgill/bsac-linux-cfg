@@ -15,4 +15,4 @@ idle 300 blanker
 
 # start some build tools
 #screen -t build-upper watch watcher.sh
-screen -t build-upper ./scripts/auto-build.sh ./scripts/test.sh src/
+screen -t build-accounting-upper ./scripts/auto-build.sh ./scripts/test.sh src/

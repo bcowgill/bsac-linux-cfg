@@ -15,4 +15,4 @@ idle 300 blanker
 
 # start some build tools
 #screen -t build-lower watch ls-apps.sh
-screen -t build-lower ./scripts/auto-build.sh ./scripts/test.sh src/
+screen -t build-auth-lower ./scripts/auto-build.sh ./scripts/test.sh src/
