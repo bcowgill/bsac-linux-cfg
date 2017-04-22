@@ -13,6 +13,10 @@ bind b focus bottom
 blankerprg txt-screen-saver.sh
 idle 300 blanker
 
-# start some build tools
-screen -t apps watch ls-apps.sh
+# start some build tools, screen 0 will be the first one listed and title of the window
 screen -t auth-api ./scripts/auto-build.sh ./scripts/test.sh src/
+screen -t apps watch ls-apps.sh
+# last screen listed will be currently visible
+
+# make window 0 the focus again
+focus top;
