@@ -6,6 +6,7 @@
 use strict;
 use English;
 
+my $LOG_UNKNOWN = 0;
 my $me = $ENV{USER};
 my $prefix = "___";
 while (my $line = <>)
@@ -40,7 +41,7 @@ while (my $line = <>)
 	print $line;
 	if ($line !~ m{\A$prefix}xms)
 	{
-		#log_process($line);
+		log_process($line) if $LOG_UNKNOWN;
 	}
 }
 
