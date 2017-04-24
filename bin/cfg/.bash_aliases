@@ -54,6 +54,11 @@ if [ `hostname` == WYATT  ]; then
    alias subl='"$C/Program Files/Sublime Text 2/sublime_text.exe"'
 fi
 
+if [ "x$COMPANY" == "xclearbooks" ]; then
+	alias cdauth='pushd ~/projects/clearbooks-micro-api-auth'
+	alias cdacct='pushd ~/projects/clearbooks-micro-api-accounting'
+fi
+
 # default options for some commands
 alias cdiff='colordiff'
 alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
