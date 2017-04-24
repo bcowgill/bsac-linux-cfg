@@ -18,6 +18,7 @@ while (my $line = <>)
 	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ $me/bin/WebStorm}xms;
 	$line = "${prefix}INTELLIJ IDE  $line\n" if $line =~ m{java .+ $me/bin/idea}xms;
 	$line = "${prefix}INTELLIJ NODE $line\n" if $line =~ m{node(js)? .+ idea .+ JavaScriptLanguage}xms;
+	$line = "${prefix}ALM WORKER    $line\n" if $line =~ m{node(js)? .+ /alm/ .+ workers}xms;
 	$line = "${prefix}EMACS         $line\n" if $line =~ m{emacs}xms;
 	$line = "${prefix}KARMA         $line\n" if $line =~ m{node(js)? .+ karma \s* start}xms;
 	$line = "${prefix}KARMAWEBSTORM $line\n" if $line =~ m{node(js)? .+ intellij .+ karma}xms;
@@ -26,7 +27,7 @@ while (my $line = <>)
 	$line = "${prefix}WEBPACK       $line\n" if $line =~ m{node(js)? .+ webpack}xms;
 	$line = "${prefix}FLOWSERVER    $line\n" if $line =~ m{node_modules .+ flow \s+ start}xms;
 	$line = "${prefix}REACTSTORYBK  $line\n" if $line =~ m{node(js)? .+ storybook}xms;
-	$line = "${prefix}NODESERVER    $line\n" if $line =~ m{node(js)? .+server}xms;
+	$line = "${prefix}NODESERVER    $line\n" if $line !~ m{\A___}xms && $line =~ m{node(js)? .+server}xms;
 	$line = "${prefix}DASHBOARD     $line\n" if $line =~ m{perl .+ infinity-plus-dashboard/bin/app\.pl}xms;
 	$line = "${prefix}UPDAEMON      $line\n" if $line =~ m{perl .+ blis-location-uploadd.pl}xms;
 	#/home/bcowgill/.rvm/rubies/ruby-2.1.5/bin/ruby bin/rails server -p 3001
