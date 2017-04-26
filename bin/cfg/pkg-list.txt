@@ -37,7 +37,6 @@ apport
 apport-gtk
 apport-symptoms
 apt
-apt-clone
 aptdaemon
 aptdaemon-data
 apt-file
@@ -48,7 +47,6 @@ apturl
 apturl-common
 apt-utils
 apt-xapian-index
-archdetect-deb
 aspell
 aspell-en
 atom
@@ -333,10 +331,6 @@ gir1.2-accounts-1.0
 gir1.2-appindicator3-0.1
 gir1.2-atk-1.0
 gir1.2-atspi-2.0
-gir1.2-clutter-1.0
-gir1.2-clutter-gst-2.0
-gir1.2-cogl-1.0
-gir1.2-coglpango-1.0
 gir1.2-dbusmenu-glib-0.4
 gir1.2-dee-1.0
 gir1.2-ebook-1.2
@@ -357,7 +351,6 @@ gir1.2-gtksource-3.0
 gir1.2-gudev-1.0
 gir1.2-ibus-1.0
 gir1.2-javascriptcoregtk-3.0
-gir1.2-json-1.0
 gir1.2-messagingmenu-1.0
 gir1.2-networkmanager-1.0
 gir1.2-notify-0.7
@@ -368,7 +361,6 @@ gir1.2-rb-3.0
 gir1.2-secret-1
 gir1.2-signon-1.0
 gir1.2-soup-2.4
-gir1.2-timezonemap-1.0
 gir1.2-totem-1.0
 gir1.2-totem-plparser-1.0
 gir1.2-udisks-2.0
@@ -376,7 +368,6 @@ gir1.2-unity-5.0:amd64
 gir1.2-vte-2.90
 gir1.2-webkit-3.0
 gir1.2-wnck-3.0
-gir1.2-xkl-1.0
 git
 git-doc
 git-gui
@@ -422,6 +413,7 @@ gnucash-common
 gnucash-docs
 gnupg
 gpgv
+gpm
 graphviz
 grep
 groff-base
@@ -560,7 +552,6 @@ kittyhawk2-meta
 kittyhawk-meta
 klibc-utils
 kmod
-kpartx
 kpartx-boot
 krb5-locales
 kubuntu-debug-installer
@@ -1943,8 +1934,6 @@ light-themes
 lintian
 linux-firmware
 linux-generic-lts-vivid
-linux-headers-3.19.0-23
-linux-headers-3.19.0-23-generic
 linux-headers-3.19.0-30
 linux-headers-3.19.0-30-generic
 linux-headers-3.19.0-65
@@ -2262,7 +2251,6 @@ python3-gdbm:amd64
 python3-gi
 python3-gi-cairo
 python3-httplib2
-python3-icu
 python3-louis
 python3-lxml
 python3-mako
@@ -2270,7 +2258,6 @@ python3-markupsafe
 python3-minimal
 python3-oauthlib
 python3-oneconf
-python3-pam
 python3-piston-mini-client
 python3-pkg-resources
 python3-plainbox
@@ -2401,7 +2388,6 @@ qtdeclarative5-unity-action-plugin:amd64
 qtdeclarative5-usermetrics0.1
 qtdeclarative5-window-plugin:amd64
 rake
-rdate
 readline-common
 realtek-rts-cr-dkms
 remmina
@@ -2642,7 +2628,6 @@ virtuoso-opensource-6.1-bin
 virtuoso-opensource-6.1-common
 wakeonlan
 wamerican
-watershed
 wbritish
 wcd
 webaccounts-extension-common

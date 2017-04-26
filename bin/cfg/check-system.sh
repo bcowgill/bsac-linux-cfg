@@ -561,6 +561,7 @@ INSTALL_LIST="
 	perlcritic:libperl-critic-perl
 	dot:graphviz
 	convert:imagemagick
+	gpm
 "
 
 INSTALL_FILES="
@@ -1155,6 +1156,8 @@ else
 	echo YOUDO You have to logout/login again for ulimit to take effect.
 	exit 1
 fi
+
+file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
 
 # try a different kernel:
 # ls /boot
