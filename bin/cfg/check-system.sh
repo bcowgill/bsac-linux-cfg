@@ -649,7 +649,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	USE_POSTGRES=""
 	USE_MYSQL=""
 	USE_PIDGIN=""
-	CUSTOM_PKG="mysql-workbench"
+	CUSTOM_PKG="mysqldump:mysql-client-5.7 mysql-workbench"
 	USE_ECLIPSE=""
 	#I3WM_PKG=""
 	I3BLOCKS=""
@@ -1157,8 +1157,6 @@ else
 	exit 1
 fi
 
-file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
-
 # https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 if grep -rl inotify /etc/sysctl.conf /etc/sysctl.d; then
 	OK "inotify settings are configured in /etc/sysctl.conf or /etc/sysctl.d"
@@ -1637,6 +1635,8 @@ echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"
+
+file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
 
 BAIL_OUT install
 

@@ -1,8 +1,8 @@
 Desired=Unknown/Install/Remove/Purge/Hold
 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
-||/ Name                              Version               Architecture          Description
-+++-=================================-=====================-=====================-=======================================================================
+||/ Name                                         Version                                      Architecture Description
++++-============================================-============================================-============-===============================================================================
 accountsservice
 acl
 acpid
@@ -379,7 +379,7 @@ gir1.2-gtkclutter-1.0:amd64
 gir1.2-gtksource-3.0:amd64
 gir1.2-gudev-1.0:amd64
 gir1.2-ibus-1.0:amd64
-gir1.2-javascriptcoregtk-3.0:amd6
+gir1.2-javascriptcoregtk-3.0:amd64
 gir1.2-json-1.0:amd64
 gir1.2-keybinder-3.0
 gir1.2-messagingmenu-1.0
@@ -445,6 +445,7 @@ gnupg
 gnupg2
 gnupg-agent
 gpgv
+gpm
 graphviz
 grep
 groff-base
@@ -585,6 +586,8 @@ libaccounts-qt5-1:amd64
 libaccountsservice0:amd64
 libacl1:amd64
 libacl1:i386
+libaec0:amd64
+libaio1:amd64
 libaio1:i386
 libamd2.4.1:amd64
 libao4:amd64
@@ -602,6 +605,8 @@ libapt-pkg-perl
 libarchive13:amd64
 libarchive-tools
 libarchive-zip-perl
+libarmadillo6
+libarpack2
 libart-2.0-2:amd64
 libasan2:amd64
 libasn1-8-heimdal:amd64
@@ -759,6 +764,7 @@ libcroco3:amd64
 libcroco3:i386
 libcrypt-passwdmd5-perl
 libcryptsetup4:amd64
+libctemplate2v5
 libcups2:amd64
 libcups2:i386
 libcupscgi1:amd64
@@ -773,6 +779,8 @@ libcurl3-gnutls:amd64
 libcvc0:amd64
 libcwidget3v5:amd64
 libdaemon0:amd64
+libdap17v5:amd64
+libdapclient6v5:amd64
 libdata-alias-perl
 libdata-optlist-perl
 libdatrie1:amd64
@@ -844,6 +852,7 @@ libenchant1c2a:amd64
 libencode-locale-perl
 libeot0:amd64
 libepoxy0:amd64
+libepsilon1:amd64
 libept1.5.0:amd64
 liberror-perl
 libesd0:i386
@@ -884,7 +893,7 @@ libfile-listing-perl
 libfile-mimeinfo-perl
 libfile-pushd-perl
 libfile-sharedir-perl
-libfile-sharedir-projectdistdir-p
+libfile-sharedir-projectdistdir-perl
 libfile-which-perl
 libflac8:amd64
 libflac8:i386
@@ -910,6 +919,7 @@ libfreerdp-rail1.1:amd64
 libfreerdp-utils1.1:amd64
 libfreetype6:amd64
 libfreetype6:i386
+libfreexl1:amd64
 libfribidi0:amd64
 libfs6:amd64
 libfuse2:amd64
@@ -942,6 +952,7 @@ libgcrypt20:amd64
 libgcrypt20:i386
 libgd3:amd64
 libgd3:i386
+libgdal1i
 libgdata2.1-cil
 libgdata22:amd64
 libgdata-common
@@ -958,6 +969,8 @@ libgegl-0.3-0:amd64
 libgeoclue0:amd64
 libgeocode-glib0:amd64
 libgeoip1:amd64
+libgeos-3.5.0
+libgeos-c1v5
 libgettextpo0:amd64
 libgettextpo0:i386
 libgettextpo-dev:amd64
@@ -1034,11 +1047,11 @@ libgstreamer0.10-0:amd64
 libgstreamer0.10-0:i386
 libgstreamer1.0-0:amd64
 libgstreamer1.0-0:i386
-libgstreamer-plugins-base0.10-0:a
-libgstreamer-plugins-base0.10-0:i
-libgstreamer-plugins-base1.0-0:am
-libgstreamer-plugins-base1.0-0:i3
-libgstreamer-plugins-good1.0-0:am
+libgstreamer-plugins-base0.10-0:amd64
+libgstreamer-plugins-base0.10-0:i386
+libgstreamer-plugins-base1.0-0:amd64
+libgstreamer-plugins-base1.0-0:i386
+libgstreamer-plugins-good1.0-0:amd64
 libgtk2.0-0:amd64
 libgtk2.0-0:i386
 libgtk2.0-bin
@@ -1075,6 +1088,8 @@ libharfbuzz0b:amd64
 libharfbuzz0b:i386
 libharfbuzz-icu0:amd64
 libhcrypto4-heimdal:amd64
+libhdf4-0-alt
+libhdf5-10:amd64
 libheimbase1-heimdal:amd64
 libheimntlm0-heimdal:amd64
 libhogweed4:amd64
@@ -1164,6 +1179,9 @@ libkeybinder-3.0-0:amd64
 libkeyutils1:amd64
 libkeyutils1:i386
 libklibc
+libkmlbase1:amd64
+libkmldom1:amd64
+libkmlengine1:amd64
 libkmod2:amd64
 libkpathsea6:amd64
 libkrb5-26-heimdal:amd64
@@ -1219,6 +1237,7 @@ libmetacity-private3a:amd64
 libmhash2:amd64
 libmikmod3:i386
 libminiupnpc10:amd64
+libminizip1:amd64
 libmirclient9:amd64
 libmircommon5:amd64
 libmirprotobuf3:amd64
@@ -1242,16 +1261,16 @@ libmono-posix4.0-cil
 libmono-security4.0-cil
 libmono-sharpzip4.84-cil
 libmono-system4.0-cil
-libmono-system-configuration4.0-c
+libmono-system-configuration4.0-cil
 libmono-system-core4.0-cil
 libmono-system-data4.0-cil
 libmono-system-drawing4.0-cil
-libmono-system-enterpriseservices
+libmono-system-enterpriseservices4.0-cil
 libmono-system-numerics4.0-cil
-libmono-system-runtime-serializat
+libmono-system-runtime-serialization4.0-cil
 libmono-system-security4.0-cil
-libmono-system-servicemodel-inter
-libmono-system-transactions4.0-ci
+libmono-system-servicemodel-internals0.0-cil
+libmono-system-transactions4.0-cil
 libmono-system-xml4.0-cil
 libmono-system-xml-linq4.0-cil
 libmono-zeroconf1.0-cil
@@ -1271,6 +1290,8 @@ libmuffin0
 libmusicbrainz5-2:amd64
 libmusicbrainz5cc2v5:amd64
 libmwaw-0.3-3:amd64
+libmysqlclient20:amd64
+libmysqlcppconn7v5
 libmythes-1.2-0:amd64
 libnatpmp1:amd64
 libnautilus-extension1a:amd64
@@ -1281,6 +1302,7 @@ libncursesw5:i386
 libndp0:amd64
 libnemo-extension1
 libneon27-gnutls:amd64
+libnetcdf11
 libnet-dbus-perl
 libnet-dns-perl
 libnet-domain-tld-perl
@@ -1323,8 +1345,10 @@ libnss-mdns:amd64
 libnuma1:amd64
 libnux-4.0-common
 liboauth0:amd64
+libodbc1:amd64
 libodbc1:i386
 libodfgen-0.1-1
+libogdi3.2
 libogg0:amd64
 libogg0:i386
 libopenal1:i386
@@ -1332,6 +1356,7 @@ libopenal-data
 libopencore-amrnb0:amd64
 libopencore-amrwb0:amd64
 libopenexr22:amd64
+libopenjp2-7:amd64
 libopenobex2
 libopts25:amd64
 libopus0:amd64
@@ -1389,6 +1414,7 @@ libpciaccess0:i386
 libpcre16-3:amd64
 libpcre3:amd64
 libpcre3:i386
+libpcrecpp0v5:amd64
 libpcsclite1:amd64
 libpeas-1.0-0:amd64
 libpeas-1.0-0-python2loader
@@ -1416,12 +1442,14 @@ libportaudio2:amd64
 libppi-perl
 libppix-regexp-perl
 libppix-utilities-perl
+libpq5:amd64
 libprocps4:amd64
+libproj9
 libprotobuf9v5:amd64
 libprotobuf-lite9v5:amd64
 libprotoc9v5:amd64
 libproxy1-plugin-gsettings:amd64
-libproxy1-plugin-networkmanager:a
+libproxy1-plugin-networkmanager:amd64
 libproxy1v5:amd64
 libproxy1v5:i386
 libpulse0:amd64
@@ -1514,7 +1542,7 @@ libreadline6:i386
 libreadonly-perl
 librecode0:amd64
 libregexp-assemble-perl
-libreoffice-avmedia-backend-gstre
+libreoffice-avmedia-backend-gstreamer
 libreoffice-base
 libreoffice-base-core
 libreoffice-base-drivers
@@ -1602,6 +1630,7 @@ libsoup-gnome2.4-1:i386
 libsox2:amd64
 libsox-fmt-alsa:amd64
 libsox-fmt-base:amd64
+libspatialite7:amd64
 libspectre1:amd64
 libspeechd2:amd64
 libspeex1:amd64
@@ -1627,8 +1656,10 @@ libsub-identify-perl
 libsub-install-perl
 libsub-name-perl
 libsuitesparseconfig4.4.6:amd64
+libsuperlu4:amd64
 libsystemd0:amd64
 libsystemd0:i386
+libsz2:amd64
 libtag1v5:amd64
 libtag1v5:i386
 libtag1v5-vanilla:amd64
@@ -1661,6 +1692,7 @@ libtimezonemap1:amd64
 libtimezonemap-data
 libtinfo5:amd64
 libtinfo5:i386
+libtinyxml2.6.2v5:amd64
 libtk8.6:amd64
 libtotem-plparser18:amd64
 libtotem-plparser-common
@@ -1679,6 +1711,7 @@ libunity-protocol-private0:amd64
 libunity-scopes-json-def-desktop
 libunwind8
 libupower-glib3:amd64
+liburiparser1:amd64
 liburi-perl
 libusb-0.1-4:amd64
 libusb-1.0-0:amd64
@@ -1709,6 +1742,7 @@ libvorbisfile3:amd64
 libvorbisfile3:i386
 libvpx3:amd64
 libvpx3:i386
+libvsqlitepp3v5:amd64
 libvte-2.91-0:amd64
 libvte-2.91-common
 libvte9
@@ -1731,7 +1765,7 @@ libwebkitgtk-3.0-common
 libwebp5:amd64
 libwebp5:i386
 libwebpmux1:amd64
-libwebrtc-audio-processing-0:amd6
+libwebrtc-audio-processing-0:amd64
 libwind0-heimdal:amd64
 libwinpr-crt0.1:amd64
 libwinpr-dsparse0.1:amd64
@@ -1815,6 +1849,7 @@ libxdg-basedir1
 libxdmcp6:amd64
 libxdmcp6:i386
 libxdo3:amd64
+libxerces-c3.1:amd64
 libxext6:amd64
 libxext6:i386
 libxfce4ui-1-0
@@ -1889,8 +1924,8 @@ linux-headers-4.4.0-72
 linux-headers-4.4.0-72-generic
 linux-image-4.4.0-21-generic
 linux-image-4.4.0-72-generic
-linux-image-extra-4.4.0-21-generi
-linux-image-extra-4.4.0-72-generi
+linux-image-extra-4.4.0-21-generic
+linux-image-extra-4.4.0-72-generic
 linux-kernel-generic
 linux-libc-dev:amd64
 linuxmint-keyring
@@ -1980,6 +2015,11 @@ mtr-tiny
 muffin-common
 multiarch-support
 multitail
+mysql-client-5.7
+mysql-client-core-5.7
+mysql-common
+mysql-workbench
+mysql-workbench-data
 nano
 nautilus-data
 ncdu
@@ -2174,6 +2214,7 @@ printer-driver-pxljr
 printer-driver-sag-gdi
 printer-driver-splix
 procps
+proj-data
 protobuf-compiler
 psmisc
 pulseaudio
@@ -2297,6 +2338,7 @@ python-markdown
 python-markupsafe
 python-mechanize
 python-minimal
+python-mysql.connector
 python-nemo
 python-netifaces
 python-notify
@@ -2319,11 +2361,13 @@ python-pyatspi
 python-pyatspi2
 python-pycurl
 python-pyinotify
+python-pyodbc
 python-pyorbit
 python-pyparsing
 python-pyqt5
 python-pyqt5.qtsvg
 python-pyqt5.qtwebkit
+python-pysqlite2
 python-qt4
 python-qt4-dbus
 python-renderpm:amd64
@@ -2432,7 +2476,7 @@ sni-qt:amd64
 sound-theme-freedesktop
 sox
 speech-dispatcher
-speech-dispatcher-audio-plugins:a
+speech-dispatcher-audio-plugins:amd64
 ssh-askpass-gnome
 ssl-cert
 strace
@@ -2581,7 +2625,7 @@ xscreensaver-data-extra
 xscreensaver-gl
 xscreensaver-gl-extra
 xscreensaver-screensaver-bsod
-xscreensaver-screensaver-webcolla
+xscreensaver-screensaver-webcollage
 xserver-common
 xserver-xorg
 xserver-xorg-core
