@@ -77,6 +77,7 @@ alias gfo='git f*ck off'
 alias glog='git log --oneline --graph --decorate --all'
 alias ggraph='git graph --simplify-by-decoration'
 alias gitpp='touch pause-build.timestamp; git pull --rebase && git push && date --rfc-3339=seconds'
+alias pause='touch pause-build.timestamp'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
@@ -110,6 +111,10 @@ alias delsame='fdupes --recurse --noempty --size --delete'
 
 # make sense of ps -ef
 alias pswhat='ps -ef --cols 256 | egrep "^($USER|`id -u`)" | what-is-running.pl'
+
+# info about ports
+alias ls-ports='lsof -Pnl +M -i4'
+alias ls-ports2='netstat -tulpn'
 
 # some package aliases
 # pkgfind search for a package

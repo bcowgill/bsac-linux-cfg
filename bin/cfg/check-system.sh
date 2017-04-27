@@ -649,7 +649,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	USE_POSTGRES=""
 	USE_MYSQL=""
 	USE_PIDGIN=""
-	#CUSTOM_PKG=""
+	CUSTOM_PKG="mysql-workbench"
 	USE_ECLIPSE=""
 	#I3WM_PKG=""
 	I3BLOCKS=""
@@ -1158,6 +1158,16 @@ else
 fi
 
 file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
+
+# https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
+if grep -rl inotify /etc/sysctl.conf /etc/sysctl.d; then
+	OK "inotify settings are configured in /etc/sysctl.conf or /etc/sysctl.d"
+else
+	FILE=/etc/sysctl.d/10-inotify.conf
+	make_root_file_exist "$FILE" "fs.inotify.max_user_watches = 524288" "set inotify file watch settings"
+	file_has_text "$FILE" "fs.inotify.max_user_watches = 524288" "inotify file watch settings for hungry IDEs like IntelliJ"
+	sudo sysctl -p --system
+fi
 
 # try a different kernel:
 # ls /boot

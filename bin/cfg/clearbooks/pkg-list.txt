@@ -1,8 +1,8 @@
 Desired=Unknown/Install/Remove/Purge/Hold
 | Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 |/ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
-||/ Name                                         Version                                      Architecture Description
-+++-============================================-============================================-============-===============================================================================
+||/ Name                              Version               Architecture          Description
++++-=================================-=====================-=====================-=======================================================================
 accountsservice
 acl
 acpid
@@ -379,7 +379,7 @@ gir1.2-gtkclutter-1.0:amd64
 gir1.2-gtksource-3.0:amd64
 gir1.2-gudev-1.0:amd64
 gir1.2-ibus-1.0:amd64
-gir1.2-javascriptcoregtk-3.0:amd64
+gir1.2-javascriptcoregtk-3.0:amd6
 gir1.2-json-1.0:amd64
 gir1.2-keybinder-3.0
 gir1.2-messagingmenu-1.0
@@ -596,9 +596,6 @@ libappindicator1
 libappindicator3-1
 libappstream-glib8:amd64
 libapr1:amd64
-libaprutil1:amd64
-libaprutil1-dbd-sqlite3:amd64
-libaprutil1-ldap:amd64
 libapt-inst2.0:amd64
 libapt-pkg5.0:amd64
 libapt-pkg-perl
@@ -887,7 +884,7 @@ libfile-listing-perl
 libfile-mimeinfo-perl
 libfile-pushd-perl
 libfile-sharedir-perl
-libfile-sharedir-projectdistdir-perl
+libfile-sharedir-projectdistdir-p
 libfile-which-perl
 libflac8:amd64
 libflac8:i386
@@ -1037,11 +1034,11 @@ libgstreamer0.10-0:amd64
 libgstreamer0.10-0:i386
 libgstreamer1.0-0:amd64
 libgstreamer1.0-0:i386
-libgstreamer-plugins-base0.10-0:amd64
-libgstreamer-plugins-base0.10-0:i386
-libgstreamer-plugins-base1.0-0:amd64
-libgstreamer-plugins-base1.0-0:i386
-libgstreamer-plugins-good1.0-0:amd64
+libgstreamer-plugins-base0.10-0:a
+libgstreamer-plugins-base0.10-0:i
+libgstreamer-plugins-base1.0-0:am
+libgstreamer-plugins-base1.0-0:i3
+libgstreamer-plugins-good1.0-0:am
 libgtk2.0-0:amd64
 libgtk2.0-0:i386
 libgtk2.0-bin
@@ -1198,7 +1195,6 @@ liblqr-1-0:amd64
 liblsan0:amd64
 libltdl7:amd64
 libltdl7:i386
-liblua5.1-0:amd64
 liblua5.2-0:amd64
 liblvm2app2.2:amd64
 liblvm2cmd2.02:amd64
@@ -1246,16 +1242,16 @@ libmono-posix4.0-cil
 libmono-security4.0-cil
 libmono-sharpzip4.84-cil
 libmono-system4.0-cil
-libmono-system-configuration4.0-cil
+libmono-system-configuration4.0-c
 libmono-system-core4.0-cil
 libmono-system-data4.0-cil
 libmono-system-drawing4.0-cil
-libmono-system-enterpriseservices4.0-cil
+libmono-system-enterpriseservices
 libmono-system-numerics4.0-cil
-libmono-system-runtime-serialization4.0-cil
+libmono-system-runtime-serializat
 libmono-system-security4.0-cil
-libmono-system-servicemodel-internals0.0-cil
-libmono-system-transactions4.0-cil
+libmono-system-servicemodel-inter
+libmono-system-transactions4.0-ci
 libmono-system-xml4.0-cil
 libmono-system-xml-linq4.0-cil
 libmono-zeroconf1.0-cil
@@ -1425,7 +1421,7 @@ libprotobuf9v5:amd64
 libprotobuf-lite9v5:amd64
 libprotoc9v5:amd64
 libproxy1-plugin-gsettings:amd64
-libproxy1-plugin-networkmanager:amd64
+libproxy1-plugin-networkmanager:a
 libproxy1v5:amd64
 libproxy1v5:i386
 libpulse0:amd64
@@ -1518,7 +1514,7 @@ libreadline6:i386
 libreadonly-perl
 librecode0:amd64
 libregexp-assemble-perl
-libreoffice-avmedia-backend-gstreamer
+libreoffice-avmedia-backend-gstre
 libreoffice-base
 libreoffice-base-core
 libreoffice-base-drivers
@@ -1735,7 +1731,7 @@ libwebkitgtk-3.0-common
 libwebp5:amd64
 libwebp5:i386
 libwebpmux1:amd64
-libwebrtc-audio-processing-0:amd64
+libwebrtc-audio-processing-0:amd6
 libwind0-heimdal:amd64
 libwinpr-crt0.1:amd64
 libwinpr-dsparse0.1:amd64
@@ -1893,8 +1889,8 @@ linux-headers-4.4.0-72
 linux-headers-4.4.0-72-generic
 linux-image-4.4.0-21-generic
 linux-image-4.4.0-72-generic
-linux-image-extra-4.4.0-21-generic
-linux-image-extra-4.4.0-72-generic
+linux-image-extra-4.4.0-21-generi
+linux-image-extra-4.4.0-72-generi
 linux-kernel-generic
 linux-libc-dev:amd64
 linuxmint-keyring
@@ -2436,7 +2432,7 @@ sni-qt:amd64
 sound-theme-freedesktop
 sox
 speech-dispatcher
-speech-dispatcher-audio-plugins:amd64
+speech-dispatcher-audio-plugins:a
 ssh-askpass-gnome
 ssl-cert
 strace
@@ -2585,7 +2581,7 @@ xscreensaver-data-extra
 xscreensaver-gl
 xscreensaver-gl-extra
 xscreensaver-screensaver-bsod
-xscreensaver-screensaver-webcollage
+xscreensaver-screensaver-webcolla
 xserver-common
 xserver-xorg
 xserver-xorg-core
