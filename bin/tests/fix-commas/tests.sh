@@ -12,7 +12,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 6
+PLAN 5
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -20,7 +20,7 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
-echo TEST $CMD open file
+echo TEST $CMD leading commas convert - open file
 TEST=commas-leading
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -28,6 +28,20 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+SAMPLE=in/commas-trailing.txt
+echo TEST $CMD trailing commas leave as is - stdin
+TEST=commas-trailing-remains
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

@@ -1,0 +1,15 @@
+# commas at end of lines
+
+var x,
+	y, // end of line comment
+	z,
+	a,
+	b, /* end of line block comment */
+	c;
+
+var x,
+y,// end of line comment
+z,
+a,
+b,/* end of line block comment */
+c;
