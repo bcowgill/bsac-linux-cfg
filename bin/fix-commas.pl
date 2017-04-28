@@ -27,7 +27,7 @@ sub fix_commas
 sub fix_leading_commas
 {
 	my ($content) = @ARG;
-	print STDERR "fixing leading commas are not yet implemented.";
+	print STDERR "MUSTDO fixing leading commas are not yet implemented.";
 	return $content;
 }
 
@@ -55,6 +55,19 @@ sub fix_trailing_commas
 		chomp($content);
 	}
 	return "$content\n";
+}
+
+sub move_trailing_comma_to_next_line
+{
+	my ($line, $nextt) = @ARG;
+	my $moved;
+	($line, $moved) = strip_trailing_comma($line);
+	if ($moved)
+	{
+		// only if next line is not ) ] }
+		$next = add_leading_comma($next);
+	}
+	return ($line, $next, $moved);
 }
 
 sub move_leading_comma_to_previous_line
@@ -97,6 +110,14 @@ sub has_trailing_punctuation
 	my $has_trailing = ($line =~ m{ [,;] (\s* /\* .*? \*/ \s*) \z}xms
 		|| $line =~ m{ [,;] (\s* // .*?)? \z}xms);
 	return $has_trailing;
+}
+
+sub strip_trailing_comma
+{
+	my ($line) = @ARG;
+	my $moved = ($line =~ s{ , (\s* /\* .*? \*/ \s*) \z}{$1}xms
+		|| $line =~ s{ , (\s* // .*?)? \z}{$1}xms);
+	return ($line, $moved);
 }
 
 if (scalar(@ARGV))
