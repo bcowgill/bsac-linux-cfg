@@ -1,0 +1,39 @@
+var array = [
+	1
+	, 2
+	, 3 // commented
+	, 4
+	, 5 /* commented */
+	, 6
+];
+
+var array2 = [
+	1 /* first comment */
+	, 2
+	, 3
+	, 4
+	, 5
+	, 6 // final comment
+];
+
+function call (
+	param1
+	, param2 /* comment*/
+	, param3 // comment
+) {
+	var v1 = 4
+		, v2 = 5
+		, v3;
+
+	return 45;
+}
+
+function call2 (
+	param1
+	, param2 /* comment*/
+	, param3, // comment
+) {
+	var v1 = 4
+		, v2 = 5
+		, v3;
+}

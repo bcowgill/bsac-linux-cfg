@@ -1,0 +1,17 @@
+usage: ../../fix-commas.pl [--leading] [--help] filename...
+
+Fixes comma placement in files specified.  Default is to move leading commas on a line to the end of the previous line.
+
+--leading causes trailing commas to be placed as leading commas on the next line.
+
+i.e.
+	var thisThing // this thing
+		, thatThing; // that thing
+
+becomes
+
+	var this, // this thing
+		that; // that thing
+
+and vice versa if --leading is specified.
+

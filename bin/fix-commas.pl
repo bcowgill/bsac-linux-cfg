@@ -27,8 +27,23 @@ sub fix_commas
 sub fix_leading_commas
 {
 	my ($content) = @ARG;
-	print STDERR "MUSTDO fixing leading commas are not yet implemented.";
-	return $content;
+	my @lines = split($NL, $content);
+	my $lines = scalar(@lines);
+	if ($lines > 1)
+	{
+		for (my $idx = 0; $idx < $lines - 1; $idx++)
+		{
+			my ($line, $next, $moved) = move_trailing_comma_to_next_line(
+				$lines[$idx],
+				$lines[$idx + 1]
+			);
+			$lines[$idx + 1] = $next;
+			$lines[$idx] = $line;
+		}
+		$content = join("\n", @lines);
+		chomp($content);
+	}
+	return "$content\n";
 }
 
 sub fix_trailing_commas
@@ -59,13 +74,13 @@ sub fix_trailing_commas
 
 sub move_trailing_comma_to_next_line
 {
-	my ($line, $nextt) = @ARG;
+	my ($line, $next) = @ARG;
 	my $moved;
 	($line, $moved) = strip_trailing_comma($line);
 	if ($moved)
 	{
-		// only if next line is not ) ] }
-		$next = add_leading_comma($next);
+		# only if next line is not ) ] }
+		$next = add_leading_comma($next) unless $next =~ m{ \A \s* [\)\]\}] }xms;
 	}
 	return ($line, $next, $moved);
 }
@@ -80,6 +95,13 @@ sub move_leading_comma_to_previous_line
 		$prev = add_trailing_comma($prev);
 	}
 	return ($prev, $line, $moved);
+}
+
+sub add_leading_comma
+{
+	my ($line) = @ARG;
+	$line =~ s{ \A (\s*) }{$1, }xms;
+	return $line;
 }
 
 sub add_trailing_comma
@@ -115,9 +137,39 @@ sub has_trailing_punctuation
 sub strip_trailing_comma
 {
 	my ($line) = @ARG;
-	my $moved = ($line =~ s{ , (\s* /\* .*? \*/ \s*) \z}{$1}xms
-		|| $line =~ s{ , (\s* // .*?)? \z}{$1}xms);
+	my $moved = ($line =~ s{ , (\s* /\* .*? \*/ \s*) \z}{$1||""}xmse
+		|| $line =~ s{ , (\s* // .*?)? \z}{$1||""}xmse);
 	return ($line, $moved);
+}
+
+if (scalar(@ARGV) && $ARGV[0] eq '--help')
+{
+	print <<"USAGE";
+usage: $0 [--leading] [--help] filename...
+
+Fixes comma placement in files specified.  Default is to move leading commas on a line to the end of the previous line.
+
+--leading causes trailing commas to be placed as leading commas on the next line.
+
+i.e.
+	var thisThing // this thing
+		, thatThing; // that thing
+
+becomes
+
+	var this, // this thing
+		that; // that thing
+
+and vice versa if --leading is specified.
+
+USAGE
+	exit 0;
+}
+
+if (scalar(@ARGV) && $ARGV[0] eq '--leading')
+{
+	$LEADING = 1;
+	shift(@ARGV);
 }
 
 if (scalar(@ARGV))
