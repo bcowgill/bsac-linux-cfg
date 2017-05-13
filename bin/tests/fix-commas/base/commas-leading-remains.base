@@ -31,7 +31,7 @@ function call (
 function call2 (
 	param1
 	, param2 /* comment*/
-	, param3, // comment
+	, param3 // comment
 ) {
 	var v1 = 4
 		, v2 = 5

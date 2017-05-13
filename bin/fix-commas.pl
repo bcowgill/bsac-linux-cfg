@@ -76,7 +76,9 @@ sub move_trailing_comma_to_next_line
 {
 	my ($line, $next) = @ARG;
 	my $moved;
+	##print "\n\nl:$line\nn:$next\n\n" if $line =~ m{param3} || $next =~ m{param3};
 	($line, $moved) = strip_trailing_comma($line);
+	##print "\n\nm:$moved\nl:$line\nn:$next\n\n" if $line =~ m{param3} || $next =~ m{param3};
 	if ($moved)
 	{
 		# only if next line is not ) ] }
@@ -137,8 +139,9 @@ sub has_trailing_punctuation
 sub strip_trailing_comma
 {
 	my ($line) = @ARG;
-	my $moved = ($line =~ s{ , (\s* /\* .*? \*/ \s*) \z}{$1||""}xmse
-		|| $line =~ s{ , (\s* // .*?)? \z}{$1||""}xmse);
+  	##print "\n\ns:$line\n\n" if $line =~ m{param3};
+	my $moved = ($line =~ s{ , (\s* /\* .*? \*/ \s*) \z}{$1||""}xmsge
+		|| $line =~ s{ , (\s* // .*?)? \z}{$1||""}xmsge);
 	return ($line, $moved);
 }
 
