@@ -155,6 +155,7 @@
 
 ;; Installed packages
 ;;  auto-complete      1.5.1        installed  Auto Completion for GNU Emacs
+;;  color-identifie... 1.0.0        installed  Color identifiers based on their names
 ;;  company            0.9.3        installed  Modular text completion framework
 ;;  csv-mode           1.6          installed  Major mode for editing comma/char separated values
 ;;  dash               20170207.... installed  A modern list library for Emacs
@@ -206,6 +207,7 @@
 ;;  smart-mode-line... 2.10.1       installed  smart-mode-line theme that mimics the powerline appearance.
 ;;  sqlup-mode         0.7.1        installed  Upcase SQL words for you
 ;;  sws-mode           1.0.0        installed  (S)ignificant (W)hite(S)pace mode
+;;  ten-hundred-mode   1.0.1        installed  use only the ten hundred most usual words
 ;;  tide               20170412.541 installed  Typescript Interactive Development Environment
 ;;  tss                0.6.0        installed  provide a interface for auto-complete.el/flymake.el on typescript-mode.
 ;;  typescript-mode    20170324.... installed  Major mode for editing typescript
@@ -213,6 +215,7 @@
 ;;  yaml-mode          0.0.13       installed  Major mode for editing YAML files
 ;;  yasnippet          0.11.0       installed  Yet another snippet extension for Emacs.
 ;;  yaxception         0.3.3        installed  Provide framework about exception like Java for Elisp
+;;  ztree              1.0.5        installed  Text mode directory tree
 
 ;;Typescript configurations
 (defun setup-tide-mode ()
