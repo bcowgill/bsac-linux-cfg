@@ -562,6 +562,7 @@ INSTALL_LIST="
 	dot:graphviz
 	convert:imagemagick
 	gpm
+	markdown
 "
 
 INSTALL_FILES="

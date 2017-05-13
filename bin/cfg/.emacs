@@ -8,6 +8,7 @@
  '(bookmark-save-flag 0)
  '(column-number-mode t)
  '(custom-enabled-themes (quote (wheatgrass)))
+ '(custom-safe-themes (quote ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(dired-listing-switches "-al")
  '(display-battery-mode t)
  '(display-time-mode t)
@@ -155,24 +156,62 @@
 ;; Installed packages
 ;;  auto-complete      1.5.1        installed  Auto Completion for GNU Emacs
 ;;  company            0.9.3        installed  Modular text completion framework
+;;  csv-mode           1.6          installed  Major mode for editing comma/char separated values
 ;;  dash               20170207.... installed  A modern list library for Emacs
 ;;  dockerfile-mode    1.2          installed  Major mode for editing Docker's Dockerfiles
+;;  editorconfig       0.7.9        installed  EditorConfig Emacs Plugin
+;;  editorconfig-cu... 0.0.1        installed  Decide major-mode from EditorConfig
 ;;  elixir-mode        2.3.1        installed  Major mode for editing Elixir files
 ;;  epl                20150517.433 installed  Emacs Package Library
 ;;  epoch-view         0.0.1        installed  Minor mode to visualize epoch timestamps
+;;  feature-mode       0.4          installed  Major mode for editing Gherkin (i.e. Cucumber) user stories
 ;;  flycheck           20170411.... installed  On-the-fly syntax checking
+;;  gitignore-mode     1.2.4        installed  Major mode for editing .gitignore files
+;;  graphviz-dot-mode  0.4          installed  Mode for the dot-language used by graphviz (att).
+;;  haml-mode          3.1.9        installed  Major mode for editing Haml files
+;;  js2-mode           20170116     installed  Improved JavaScript editing mode
+;;  js2-refactor       0.8.0        installed  A JavaScript refactoring library for emacs.
+;;  js3-mode           1.1.0        installed  An improved JavaScript editing mode
 ;;  json-mode          1.7.0        installed  Major mode for editing JSON files
 ;;  json-reformat      0.0.6        installed  Reformatting tool for JSON
 ;;  json-snatcher      1.0.0        installed  Grabs the path to JSON values in a JSON file
+;;  jsx-mode           0.1.10       installed  major mode for JSX
+;;  less-css-mode      0.21         installed  Major mode for editing LESS CSS files (lesscss.org)
 ;;  let-alist          1.0.5        installed  Easily let-bind values of an assoc-list by their names
 ;;  log4e              0.3.0        installed  provide logging framework for elisp
+;;  log4j-mode         1.3          installed  major mode for viewing log files
+;;  markdown-mode      2.1          installed  Emacs Major mode for Markdown-formatted text files
+;;  markdown-toc       0.1.2        installed  A simple TOC generator for markdown file
+;;  mmm-mode           0.5.4        installed  Allow Multiple Major Modes in a buffer
+;;  multi-web-mode     0.2.1        installed  multiple major mode support for web editing
+;;  multiple-cursors   1.4.0        installed  Multiple cursors for Emacs.
+;;  nhexl-mode         0.2          installed  Minor mode to edit files via hex-dump format
+;;  npm-mode           0.6.0        installed  minor mode for working with npm projects
+;;  num3-mode          1.2          installed  highlight groups of digits in long numbers
+;;  nyan-mode          1.1.2        installed  Nyan Cat shows position in current buffer in mode-line.
 ;;  php-mode           1.18.2       installed  Major mode for editing PHP code
 ;;  pkg-info           20150517.443 installed  Information about packages
 ;;  popup              0.5.3        installed  Visual Popup User Interface
+;;  powerline          2.4          installed  Rewrite of Powerline
+;;  rainbow-mode       0.12         installed  Colorize color names in buffers
+;;  rich-minority      1.0.1        installed  Clean-up and Beautify the list of minor-modes.
+;;  rope-read-mode     0.3.4        installed  Rearrange lines to read text smoothly
+;;  s                  1.11.0       installed  The long lost Emacs string manipulation library.
+;;  sass-mode          3.0.18       installed  Major mode for editing Sass files
+;;  scss-mode          0.5.0        installed  Major mode for editing SCSS files
 ;;  seq                2.20         installed  Sequence manipulation functions
+;;  simple-httpd       1.4.6        installed  pure elisp HTTP server
+;;  skewer-mode        1.6.2        installed  live browser JavaScript, CSS, and HTML interaction
+;;  smart-mode-line    2.10.1       installed  A color coded smart mode-line.
+;;  smart-mode-line... 2.10.1       installed  smart-mode-line theme that mimics the powerline appearance.
+;;  sqlup-mode         0.7.1        installed  Upcase SQL words for you
+;;  sws-mode           1.0.0        installed  (S)ignificant (W)hite(S)pace mode
 ;;  tide               20170412.541 installed  Typescript Interactive Development Environment
 ;;  tss                0.6.0        installed  provide a interface for auto-complete.el/flymake.el on typescript-mode.
 ;;  typescript-mode    20170324.... installed  Major mode for editing typescript
+;;  writegood-mode     2.0.2        installed  Polish up poor writing on the fly
+;;  yaml-mode          0.0.13       installed  Major mode for editing YAML files
+;;  yasnippet          0.11.0       installed  Yet another snippet extension for Emacs.
 ;;  yaxception         0.3.3        installed  Provide framework about exception like Java for Elisp
 
 ;;Typescript configurations
