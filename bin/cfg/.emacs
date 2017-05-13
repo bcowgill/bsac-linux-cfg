@@ -145,5 +145,53 @@
 (require 'readline-complete)
 
 ;;Configure to use melpa emacs package libraries
+;;https://melpa.org/#/getting-started
+;;Alt-x package-list-packages
+;;Ux  - mark packages for upgrade and execute upgrades
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
+
+;; Installed packages
+;;  auto-complete      1.5.1        installed  Auto Completion for GNU Emacs
+;;  company            0.9.3        installed  Modular text completion framework
+;;  dash               20170207.... installed  A modern list library for Emacs
+;;  dockerfile-mode    1.2          installed  Major mode for editing Docker's Dockerfiles
+;;  elixir-mode        2.3.1        installed  Major mode for editing Elixir files
+;;  epl                20150517.433 installed  Emacs Package Library
+;;  epoch-view         0.0.1        installed  Minor mode to visualize epoch timestamps
+;;  flycheck           20170411.... installed  On-the-fly syntax checking
+;;  json-mode          1.7.0        installed  Major mode for editing JSON files
+;;  json-reformat      0.0.6        installed  Reformatting tool for JSON
+;;  json-snatcher      1.0.0        installed  Grabs the path to JSON values in a JSON file
+;;  let-alist          1.0.5        installed  Easily let-bind values of an assoc-list by their names
+;;  log4e              0.3.0        installed  provide logging framework for elisp
+;;  php-mode           1.18.2       installed  Major mode for editing PHP code
+;;  pkg-info           20150517.443 installed  Information about packages
+;;  popup              0.5.3        installed  Visual Popup User Interface
+;;  seq                2.20         installed  Sequence manipulation functions
+;;  tide               20170412.541 installed  Typescript Interactive Development Environment
+;;  tss                0.6.0        installed  provide a interface for auto-complete.el/flymake.el on typescript-mode.
+;;  typescript-mode    20170324.... installed  Major mode for editing typescript
+;;  yaxception         0.3.3        installed  Provide framework about exception like Java for Elisp
+
+;;Typescript configurations
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)

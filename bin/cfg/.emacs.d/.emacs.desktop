@@ -2,7 +2,7 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Sat May 13 20:04:46 2017
+;; Created Sat May 13 20:30:24 2017
 ;; Desktop file format version 206
 ;; Emacs version 24.3.1
 
@@ -10,33 +10,55 @@
 (setq desktop-missing-file-warning nil)
 (setq tags-file-name "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/TAGS")
 (setq tags-table-list '("/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/TAGS"))
-(setq search-ring '("print" "usage" "strip_" "read_file" "print" "in_a_list" "print" "sudo" "file_has_text" "hand	" "gpm" "coverage-in" "coverage-inde" "TODO" "cover_single" "append_csv" "SCRAPE" "-scrape" "MODULE" "_URL" "FILE_URL" "SCRAPE" "append_csv" "COV_DIR" "SCRAPE" "-scrape" "report" "MODULE" "ENV" "TODO" "cover_single" "append_csv" "MODULE" "module_config" "unknown" "assume_module" "UNKNOWN" "run cover" "COV_INDEX" "csv" "Covering Single" "COV_INDEX" "COV_DIR" "html" "cover_single" "append_csv" "csv" "$0" "/a" "/h1" "boolean.ts" "stats" "worst" "fl pad1y" "fl padly" "boolean.ts" "data-value" "npm run" "OV_HTML" "COV_HTML" "cover_single" "Covering Singl" "Coverage " "cover_singl"))
+(setq search-ring '("typescript" "company" "print" "usage" "strip_" "read_file" "print" "in_a_list" "print" "sudo" "file_has_text" "hand	" "gpm" "coverage-in" "coverage-inde" "TODO" "cover_single" "append_csv" "SCRAPE" "-scrape" "MODULE" "_URL" "FILE_URL" "SCRAPE" "append_csv" "COV_DIR" "SCRAPE" "-scrape" "report" "MODULE" "ENV" "TODO" "cover_single" "append_csv" "MODULE" "module_config" "unknown" "assume_module" "UNKNOWN" "run cover" "COV_INDEX" "csv" "Covering Single" "COV_INDEX" "COV_DIR" "html" "cover_single" "append_csv" "csv" "$0" "/a" "/h1" "boolean.ts" "stats" "worst" "fl pad1y" "fl padly" "boolean.ts" "data-value" "npm run" "OV_HTML" "COV_HTML" "cover_single" "Covering Singl"))
 (setq regexp-search-ring '("[ 	\n]+" "\\w" "\".+\"" "xx$" "\\s-*(\\s-*)" "(\\s-*)" "function\\s-*([^)]*)\\s-*{[^}]*}" "\\s " "\\W+" "\\(if\\|else\\)\\b" "\\(['\"`]\\).*\\1" "\\(['\"]\\)[^\\1]*\\1" "\\(if\\|else\\)" "if\\|else" "" "
 " "[:word:]+" "function[:word:]*(" "function[ 	
 ]*(" "function *([^)]*) *{[^}]*}" "BAIL_OUT custom" "Revision" "function[ 	]*" "}
 " "function[ ]*([^)]*)[ ]*{[]" "function[ ]+([^)]+)[ ]+{" "function[ ]+()[ ]+{" "function " "	"))
 (setq register-alist (list '(51 . "\n        describe('api integration'\n            , () => {\n                it('should have same keys as actual api data'\n                    , () => {\n                        const realKeys = examineKeys(realApiData).sort()\n                        , factoryKeys = examineKeys(factory.makeFetchedRenditionJson().results).sort()\n                        expect(factoryKeys)\n                            .to.be.deep.equal(realKeys)\n                    })\n            }) // api integration()\n") '(49 . "    , realApiData = requireJson('data/renditions.json')\n") (desktop-list* 48 (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk)) (desktop-list* 71 (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk)) (list 102 '(frame-configuration ("Unprintable entity" ((parent-id . 8389056) (outer-window-id . "52428971") (window-id . "52428975") (top . 30) (left . 0) (buried-buffer-list "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity") (buffer-list "Unprintable entity" "Unprintable entity") (width . 157) (height . 40) (name . "emacs@worksharexps-XPS-15-9530") (explicit-name) (display . ":0") (visibility . t) (icon-name) (unsplittable) (minibuffer . "Unprintable entity") (modeline . t) (frameset--mini t . t) (frameset--id . "4C77-1D17-7A02-AB70") (sticky) (environment) (cursor-color . "thistle") (background-mode . dark) (display-type . color) (horizontal-scroll-bars . t) (window-system . x) (alpha) (scroll-bar-width . 16) (cursor-type . box) (auto-lower) (auto-raise) (icon-type . t) (tool-bar-position . top) (fullscreen) (wait-for-wm . t) (title . "emacs-projects") (buffer-predicate) (tool-bar-lines . 1) (menu-bar-lines . 1) (scroll-bar-background) (scroll-bar-foreground) (right-fringe . 0) (left-fringe . 12) (line-spacing) (screen-gamma) (border-color . "black") (mouse-color . "black") (background-color . "black") (foreground-color . "wheat") (vertical-scroll-bars . left) (bottom-divider-width . 0) (right-divider-width . 0) (internal-border-width . 0) (border-width . 0) (font-parameter) (font . "-unknown-ProFontWindows-normal-normal-normal-*-24-*-*-*-m-0-iso10646-1") (font-backend xft x)) "Unprintable entity")) (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk))))
-(setq file-name-history '("/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/tests.sh" "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/in/commas-leading.txt" "/home/me/workspace/play/bsac-linux-cfg/bin/fix-commas.pl" "/home/me/workspace/play/js-ts-types/src/object/object.test.ts" "/home/me/workspace/play/js-ts-types/src/object/object.ts" "/home/me/workspace/play/js-ts-types/src/array/array.test.ts" "/home/me/workspace/play/js-ts-types/src/array/array.ts" "/home/me/workspace/play/js-ts-types/src/string/string.test.ts" "/home/me/workspace/play/js-ts-types/src/string/string.ts" "/home/me/workspace/play/js-ts-types/src/number/number.ts" "/home/me/workspace/play/js-ts-types/src/number/number.test.ts" "/home/me/workspace/play/js-ts-types/scripts/coverage-index.html" "/home/me/workspace/play/js-ts-types/scripts/coverone-output.pl" "/home/me/workspace/play/js-ts-types/scripts/coverone-scrape.pl" "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/index.html" "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/boolean.ts.html" "/home/me/workspace/play/js-ts-types/scripts/coverone.sh" "/home/me/workspace/play/js-ts-types/tsconfig-cover.json5" "/home/me/workspace/play/js-ts-types/tslint.json5" "/home/me/workspace/play/js-ts-types/scripts/npmtest.sh" "/home/me/workspace/play/js-ts-types/package.json5" "/home/me/workspace/play/bsac-linux-cfg/bin/template/cfgrec/alm-keyref.txt" "/home/me/workspace/play/js-ts-types/src/string/shorteners.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts" "/home/me/workspace/play/js-ts-types/src/test/throwInvalid.test.ts"))
+(setq file-name-history '("/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts" "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/tests.sh" "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/in/commas-leading.txt" "/home/me/workspace/play/bsac-linux-cfg/bin/fix-commas.pl" "/home/me/workspace/play/js-ts-types/src/object/object.test.ts" "/home/me/workspace/play/js-ts-types/src/object/object.ts" "/home/me/workspace/play/js-ts-types/src/array/array.test.ts" "/home/me/workspace/play/js-ts-types/src/array/array.ts" "/home/me/workspace/play/js-ts-types/src/string/string.test.ts" "/home/me/workspace/play/js-ts-types/src/string/string.ts" "/home/me/workspace/play/js-ts-types/src/number/number.ts" "/home/me/workspace/play/js-ts-types/src/number/number.test.ts" "/home/me/workspace/play/js-ts-types/scripts/coverage-index.html" "/home/me/workspace/play/js-ts-types/scripts/coverone-output.pl" "/home/me/workspace/play/js-ts-types/scripts/coverone-scrape.pl" "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/index.html" "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/boolean.ts.html" "/home/me/workspace/play/js-ts-types/scripts/coverone.sh" "/home/me/workspace/play/js-ts-types/tsconfig-cover.json5" "/home/me/workspace/play/js-ts-types/tslint.json5" "/home/me/workspace/play/js-ts-types/scripts/npmtest.sh" "/home/me/workspace/play/js-ts-types/package.json5" "/home/me/workspace/play/bsac-linux-cfg/bin/template/cfgrec/alm-keyref.txt" "/home/me/workspace/play/js-ts-types/src/string/shorteners.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts"))
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
 (desktop-create-buffer 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/tests.sh"
-  "tests.sh<3>"
-  'sh-mode
+  "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts"
+  "shorten-middle.test.ts"
+  'fundamental-mode
   '(editorconfig-mode company-mode global-auto-revert-mode)
-  330
-  '(328 nil)
+  333
+  '(4462 nil)
   nil
   nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix) (overwrite-mode)))
 
 (desktop-create-buffer 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/fix-commas.pl"
   "fix-commas.pl"
   'perl-mode
   '(editorconfig-mode company-mode global-auto-revert-mode)
-  2816
+  627
   '(2871 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts"
+  "shorten-middle.ts"
+  'fundamental-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  951
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/tests.sh"
+  "tests.sh<3>"
+  'sh-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  245
+  '(328 nil)
   nil
   nil
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
@@ -128,28 +150,6 @@
   nil
   nil
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-create-buffer 206
-  "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts"
-  "shorten-middle.test.ts"
-  'fundamental-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  1926
-  '(4462 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix) (overwrite-mode)))
-
-(desktop-create-buffer 206
-  "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts"
-  "shorten-middle.ts"
-  'fundamental-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  984
-  '(1 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
 
 (desktop-create-buffer 206
   "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts"
@@ -365,8 +365,8 @@
   ".emacs"
   'emacs-lisp-mode
   '(editorconfig-mode company-mode global-auto-revert-mode)
-  5414
-  '(5414 nil)
+  5537
+  '(5537 nil)
   nil
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
