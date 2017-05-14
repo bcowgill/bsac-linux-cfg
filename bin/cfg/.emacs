@@ -230,10 +230,41 @@
   ;; `M-x package-install [ret] company`
   (company-mode +1))
 
+;; Turn on tsserver debug log
+;;(setq tide-tsserver-process-environment '("TSS_LOG=-level verbose -file /tmp/tss.log"))
+
 ;; aligns annotation to the right hand side
 (setq company-tooltip-align-annotations t)
 
 ;; formats the buffer before saving
 (add-hook 'before-save-hook 'tide-format-before-save)
+(setq tide-format-options '(:baseIndentSize 3 :indentStyle 1 :indentSize 3 :tabSize: 3 :convertTabsToSpaces nil :insertSpaceAfterCommaDelimiter t :insertSpaceAfterSemicolonInForStatements t :insertSpaceBeforeAndAfterBinaryOperators t :insertSpaceAfterKeywordsInControlFlowStatements t :insertSpaceAfterFunctionKeywordForAnonymousFunctions t :insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis t :insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets t :insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces nil :placeOpenBraceOnNewLineForFunctions t :placeOpenBraceOnNewLineForControlBlocks t))
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; tide TSX support
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "tsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+;; tide JavaScript support
+(add-hook 'js2-mode-hook #'setup-tide-mode)
+
+;; tide JSX
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-hook 'web-mode-hook
+          (lambda ()
+            (when (string-equal "jsx" (file-name-extension buffer-file-name))
+              (setup-tide-mode))))
+
+;; treat json5 files as json
+(add-to-list 'auto-mode-alist '("\\.json5\\'" . json-mode))
+
+;; completion for html, jade, etc
+(add-to-list 'company-backends 'company-web-html)
+(add-to-list 'company-backends 'company-web-jade)
+(add-to-list 'company-backends 'company-web-slim)
