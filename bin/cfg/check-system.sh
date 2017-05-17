@@ -1771,7 +1771,21 @@ file_present prettydiff.js "html beautifier file"
 if [ ! -z "$EMACS_PKG" ]; then
 	install_file "$HOME/.emacs" "$HOME/bin/cfg/.emacs" "emacs configuration file exists"
 	files_same "$HOME/.emacs" "$HOME/bin/cfg/.emacs" "emacs configuration changes"
+	copy_dir "$HOME/.emacs.d/lisp" "$HOME/bin/cfg/.emacs.d/lisp" "emacs lisp dir with my scripts"
+	copy_dir "$HOME/test/copy" "$HOME/bin/cfg/.emacs.d/lisp" "emacs lisp dir with my scripts"
+	file_exists "$HOME/.emacs.d/lisp/bsac.el" "emacs lisp dir has my startup script"
+	file_has_text "$HOME/.emacs" "~/.emacs.d/lisp" ".emacs loads my lisp dir configs vdiff ~/bin/cfg/.emacs ~/cfg/.emacs"
+	file_exists "$HOME/.emacs.d/elpa/ztree-readme.txt" "emacs melpa packages need to be installed see MANUAL instructions"
+	# to install all the needed emacs packages
+	# cp ~/bin/cfg/emacs.pkg.el ~/.emacs.d/lisp
+	# then start emacs, packages should install...
+	# then rm ~/.emacs.d/list/emacs.pkg.el
 fi
+
+# generate javascript tags for emacs
+# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
+# save .ctags config for better javascript
+# TODO how to use the TAGS file in emacs?
 
 if [ ! -z "$ATOM_PKG" ]; then
 	install_command_package_from_url $ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor"
@@ -2282,30 +2296,6 @@ function DISABLED {
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_csur-8.0.01.ttf
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
-
-
-# EMACS packages
-# sudo apt-get install editorconfig exuberant-ctags libparse-exuberantctags-perl
-# editorconfig .el files download and put in .emacs.d dir
-# https://github.com/editorconfig/editorconfig-emacs/archive/master.zip
-# mkdir ~/.emacs.d/lisp
-# cp *.el ~/.emacs.d/lisp/
-# add to .emacs file:
-#(add-to-list 'load-path "~/.emacs.d/lisp")
-#(require 'editorconfig)
-#(editorconfig-mode 1)
-
-# ace jump mode
-# https://github.com/winterTTr/ace-jump-mode/
-# https://www.youtube.com/watch?feature=player_embedded&v=UZkpmegySnc#!
-# cd ~/.emacs.d/lisp
-# wget https://raw.githubusercontent.com/winterTTr/ace-jump-mode/master/ace-jump-mode.el
-# add to .emacs file the config on the readme page.
-# C-c Space and C-c C-' were chosen as bind keys
-
-# generate javascript tags for emacs
-# ctags -e -R --extra=+fq --exclude=db --exclude=test --exclude=.git --exclude=public -f TAGS
-# save .ctags config for better javascript
 
 if /bin/false ; then
 # TODO some notes on how to set up then robot framework browser test system

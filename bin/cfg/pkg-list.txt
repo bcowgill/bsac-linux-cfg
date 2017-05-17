@@ -1985,6 +1985,7 @@ manpages
 manpages-dev
 marble-data
 marble-plugins
+markdown
 mawk
 mc
 mc-data

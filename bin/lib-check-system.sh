@@ -256,6 +256,19 @@ function make_root_file_exist {
 	file_exists "$file" "$message"
 }
 
+function copy_dir {
+	local dir source message
+	dir="$1"
+	source="$2"
+	message="$3"
+	if [ ! -d "$dir" ]; then
+		mkdir -p "$dir"
+		rmdir "$dir"
+		cp -r "$source" "$dir/"
+	fi
+	dir_exists "$dir" "copy_dir from [$source] $message"
+}
+
 function copy_file_to_root {
 	local file source message
 	file="$1"
