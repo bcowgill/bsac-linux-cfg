@@ -65,7 +65,8 @@ function dbash
 {
 	local id
 	id=$1
-	docker exec -ti $id /bin/bash
+	docker exec -ti $id /bin/bash \
+	|| docker exec -ti $id /bin/sh
 }
 
 # some functions for time/weather
