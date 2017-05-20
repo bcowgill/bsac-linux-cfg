@@ -1,6 +1,7 @@
 #!/bin/bash
 # launch emacs in projects dir
 pushd $HOME/projects
+# add --debug-init for stack trace of .emacs loading
 emacs --chdir $HOME/projects --title=emacs-projects \
 	-f shell \
 	$* \
