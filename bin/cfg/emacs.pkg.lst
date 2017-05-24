@@ -1,5 +1,5 @@
 #emacs package-list-packages to generate this list
-#perl -ne 'print if s{\A \s* ([\w\-]+) .*}{(package-install $q$1)\n}xmsg;' cfg/emacs.pkg.lst > ~/bin/cfg/emacs.pkg.el
+#perl -ne '$q = chr(39); print if s{\A \s* ([\w\-]+) \s+ (\S+).*}{(package-install $q$1-$2)\n}xmsg;' cfg/emacs.pkg.lst > ~/bin/cfg/emacs.pkg.el
   ace-jump-mode      2.0          installed  a quick cursor location minor mode for emacs
   auto-complete      1.5.1        installed  Auto Completion for GNU Emacs
   color-identifiers-mode 1.0.0        installed  Color identifiers based on their names
