@@ -10,10 +10,11 @@ function line
 }
 
 echo all imports before const
-git grep -E "\b(import|const)\b" | file-break.pl | grep -v "src/typings/modules/" | egrep --color '(:|\b(import|const)\b)'
+git grep -E "\b(import|const)\b" | file-break.pl | grep -v "typings/modules/" | egrep --color '(:|\b(import|const)\b)'
 
 line "use import instead of require"
-git grep -E "\b(require)\b" | grep -v "src/typings/modules/" | egrep --color "\b(require)\b" |
+git grep -E "\b(require)\b" | grep -vE "typings/modules/|gulpfile\.js" | grep -vE "\b(config-node|bluebird|blocked|jwt-simple)\b" | egrep --color "\b(require)\b"
+
 
 line "use export default instead of module.exports"
 git grep -E "\bmodule\.exports\b"
