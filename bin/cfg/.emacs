@@ -83,6 +83,10 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/editorconfig-0.7.9")
 (add-to-list 'load-path "~/.emacs.d/elpa/web-mode-14.1")
 (add-to-list 'load-path "~/.emacs.d/elpa/company-0.9.3")
+(add-to-list 'load-path "~/.emacs.d/elpa/auto-complete-1.5.1")
+(add-to-list 'load-path "~/.emacs.d/elpa/popup-0.5.3")
+(add-to-list 'load-path "~/.emacs.d/elpa/tide-20170412.541")
+(add-to-list 'load-path "~/.emacs.d/elpa/epoch-view-0.0.1")
 (add-to-list 'load-path "~/.emacs.d/elpa/nyan-mode-1.1.2")
 (add-to-list 'load-path "~/.emacs.d/elpa/rainbow-mode-0.12")
 (add-to-list 'load-path "~/.emacs.d/elpa/writegood-mode-2.0.2")
@@ -169,7 +173,7 @@
 ;; (define-key company-active-map (kbd "C-p") 'company-complete-common-or-previous-cycle)
 
 ;;Shell mode completion,
-;;BSAC RESTORE(require 'readline-complete)
+;; BSAC remove/restore? (require 'readline-complete)
 
 (add-to-list 'auto-mode-alist '("mix\\.lock\\'" . elixir-mode))
 
@@ -224,3 +228,35 @@
 (add-to-list 'company-backends 'company-web-html)
 (add-to-list 'company-backends 'company-web-jade)
 (add-to-list 'company-backends 'company-web-slim)
+
+(require 'popup)
+(require 'auto-complete);; needs popup
+
+;; color-identifiers enabled globally - gives unique color to each named identifier
+;; https://github.com/ankurdave/color-identifiers-mode
+(add-hook 'after-init-hook 'global-color-identifiers-mode)
+;; make variable colors stand out by turning off other colors
+;;(let ((faces '(font-lock-comment-face font-lock-comment-delimiter-face font-lock-constant-face font-lock-type-face font-lock-function-name-face font-lock-variable-name-face font-lock-keyword-face font-lock-string-face font-lock-builtin-face font-lock-preprocessor-face font-lock-warning-face font-lock-doc-face)))
+;;  (dolist (face faces)
+;;    (set-face-attribute face nil :foreground nil :weight 'normal :slant 'normal)))
+
+;;(set-face-attribute 'font-lock-comment-delimiter-face nil :slant 'italic)
+;;(set-face-attribute 'font-lock-comment-face nil :slant 'italic)
+;;(set-face-attribute 'font-lock-doc-face nil :slant 'italic)
+;;(set-face-attribute 'font-lock-keyword-face nil :weight 'bold)
+;;(set-face-attribute 'font-lock-builtin-face nil :weight 'bold)
+;;(set-face-attribute 'font-lock-preprocessor-face nil :weight 'bold)
+
+(require 'epoch-view)
+(epoch-view-mode 1)
+;; 2147483647  shows date for an epoch number
+
+;; on the fly syntax checking
+;;(flycheck-verify-setup)
+;;(flycheck-manual)
+;;(flycheck-mode 1)
+;; flycheck-first-error flycheck-next-error
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
+(provide '.emacs)
+;;; .emacs ends here

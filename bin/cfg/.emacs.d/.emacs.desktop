@@ -2,7 +2,7 @@
 ;; --------------------------------------------------------------------------
 ;; Desktop File for Emacs
 ;; --------------------------------------------------------------------------
-;; Created Sat May 20 09:27:27 2017
+;; Created Thu May 25 19:57:08 2017
 ;; Desktop file format version 206
 ;; Emacs version 24.3.1
 
@@ -10,16 +10,269 @@
 (setq desktop-missing-file-warning nil)
 (setq tags-file-name "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/TAGS")
 (setq tags-table-list '("/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/TAGS"))
-(setq search-ring '("print" "usage" "strip_" "read_file" "print" "in_a_list" "print" "sudo" "file_has_text" "hand	" "gpm" "coverage-in" "coverage-inde" "TODO" "cover_single" "append_csv" "SCRAPE" "-scrape" "MODULE" "_URL" "FILE_URL" "SCRAPE" "append_csv" "COV_DIR" "SCRAPE" "-scrape" "report" "MODULE" "ENV" "TODO" "cover_single" "append_csv" "MODULE" "module_config" "unknown" "assume_module" "UNKNOWN" "run cover" "COV_INDEX" "csv" "Covering Single" "COV_INDEX" "COV_DIR" "html" "cover_single" "append_csv" "csv" "$0" "/a" "/h1" "boolean.ts" "stats" "worst" "fl pad1y" "fl padly" "boolean.ts" "data-value" "npm run" "OV_HTML" "COV_HTML" "cover_single" "Covering Singl" "Coverage " "cover_singl"))
+(setq search-ring '("epoch-view" "popup" "alist" "epoch-view" "flycheck" "typings" "-mode" "CSV" "installed" "company-php" "company" "company-" "installed" "dash" "setting" "config" "check-syste" "lib" "server" "print" "usage" "strip_" "read_file" "print" "in_a_list" "print" "sudo" "file_has_text" "hand	" "gpm" "coverage-in" "coverage-inde" "TODO" "cover_single" "append_csv" "SCRAPE" "-scrape" "MODULE" "_URL" "FILE_URL" "SCRAPE" "append_csv" "COV_DIR" "SCRAPE" "-scrape" "report" "MODULE" "ENV" "TODO" "cover_single" "append_csv" "MODULE" "module_config" "unknown" "assume_module" "UNKNOWN" "run cover" "COV_INDEX" "csv" "Covering Single" "COV_INDEX" "COV_DIR" "html" "cover_single"))
 (setq regexp-search-ring '("[ 	\n]+" "\\w" "\".+\"" "xx$" "\\s-*(\\s-*)" "(\\s-*)" "function\\s-*([^)]*)\\s-*{[^}]*}" "\\s " "\\W+" "\\(if\\|else\\)\\b" "\\(['\"`]\\).*\\1" "\\(['\"]\\)[^\\1]*\\1" "\\(if\\|else\\)" "if\\|else" "" "
 " "[:word:]+" "function[:word:]*(" "function[ 	
 ]*(" "function *([^)]*) *{[^}]*}" "BAIL_OUT custom" "Revision" "function[ 	]*" "}
 " "function[ ]*([^)]*)[ ]*{[]" "function[ ]+([^)]+)[ ]+{" "function[ ]+()[ ]+{" "function " "	"))
 (setq register-alist (list '(51 . "\n        describe('api integration'\n            , () => {\n                it('should have same keys as actual api data'\n                    , () => {\n                        const realKeys = examineKeys(realApiData).sort()\n                        , factoryKeys = examineKeys(factory.makeFetchedRenditionJson().results).sort()\n                        expect(factoryKeys)\n                            .to.be.deep.equal(realKeys)\n                    })\n            }) // api integration()\n") '(49 . "    , realApiData = requireJson('data/renditions.json')\n") (desktop-list* 48 (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk)) (desktop-list* 71 (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk)) (list 102 '(frame-configuration ("Unprintable entity" ((parent-id . 8389056) (outer-window-id . "52428971") (window-id . "52428975") (top . 30) (left . 0) (buried-buffer-list "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity" "Unprintable entity") (buffer-list "Unprintable entity" "Unprintable entity") (width . 157) (height . 40) (name . "emacs@worksharexps-XPS-15-9530") (explicit-name) (display . ":0") (visibility . t) (icon-name) (unsplittable) (minibuffer . "Unprintable entity") (modeline . t) (frameset--mini t . t) (frameset--id . "4C77-1D17-7A02-AB70") (sticky) (environment) (cursor-color . "thistle") (background-mode . dark) (display-type . color) (horizontal-scroll-bars . t) (window-system . x) (alpha) (scroll-bar-width . 16) (cursor-type . box) (auto-lower) (auto-raise) (icon-type . t) (tool-bar-position . top) (fullscreen) (wait-for-wm . t) (title . "emacs-projects") (buffer-predicate) (tool-bar-lines . 1) (menu-bar-lines . 1) (scroll-bar-background) (scroll-bar-foreground) (right-fringe . 0) (left-fringe . 12) (line-spacing) (screen-gamma) (border-color . "black") (mouse-color . "black") (background-color . "black") (foreground-color . "wheat") (vertical-scroll-bars . left) (bottom-divider-width . 0) (right-divider-width . 0) (internal-border-width . 0) (border-width . 0) (font-parameter) (font . "-unknown-ProFontWindows-normal-normal-normal-*-24-*-*-*-m-0-iso10646-1") (font-backend xft x)) "Unprintable entity")) (let ((mk (make-marker))) (add-hook 'desktop-delay-hook (list 'lambda '() (list 'set-marker mk nil (get-buffer " *temp*")))) mk))))
-(setq file-name-history '("~/projects/" "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/tests.sh" "/home/me/workspace/play/bsac-linux-cfg/bin/tests/fix-commas/in/commas-leading.txt" "/home/me/workspace/play/bsac-linux-cfg/bin/fix-commas.pl" "/home/me/workspace/play/js-ts-types/src/object/object.test.ts" "/home/me/workspace/play/js-ts-types/src/object/object.ts" "/home/me/workspace/play/js-ts-types/src/array/array.test.ts" "/home/me/workspace/play/js-ts-types/src/array/array.ts" "/home/me/workspace/play/js-ts-types/src/string/string.test.ts" "/home/me/workspace/play/js-ts-types/src/string/string.ts" "/home/me/workspace/play/js-ts-types/src/number/number.ts" "/home/me/workspace/play/js-ts-types/src/number/number.test.ts" "/home/me/workspace/play/js-ts-types/scripts/coverage-index.html" "/home/me/workspace/play/js-ts-types/scripts/coverone-output.pl" "/home/me/workspace/play/js-ts-types/scripts/coverone-scrape.pl" "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/index.html" "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/boolean.ts.html" "/home/me/workspace/play/js-ts-types/scripts/coverone.sh" "/home/me/workspace/play/js-ts-types/tsconfig-cover.json5" "/home/me/workspace/play/js-ts-types/tslint.json5" "/home/me/workspace/play/js-ts-types/scripts/npmtest.sh" "/home/me/workspace/play/js-ts-types/package.json5" "/home/me/workspace/play/bsac-linux-cfg/bin/template/cfgrec/alm-keyref.txt" "/home/me/workspace/play/js-ts-types/src/string/shorteners.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts"))
+(setq file-name-history '("/home/me/.emacs" "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/emacs.pkg.el" "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-keyref.txt" "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-keyref." "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-lisp.txt" "/home/me/workspace/play/bsac-linux-cfg/bin/clearbooks/check-code.sh" "/home/me/workspace/play/js-ts-types/package.json5" "/home/me/workspace/play/js-ts-types/tsconfig-cover.json5" "/home/me/workspace/play/js-ts-types/tsconfig-debug.json5" "/home/me/workspace/play/js-ts-types/tsconfig.json5" "/home/me/workspace/play/js-ts-types/tsfmt.json5" "/home/me/workspace/play/js-ts-types/tslint.json5" "/home/me/workspace/play/js-ts-types/src/string/shorten.ts" "/home/me/workspace/play/js-ts-types/src/string/string.test.ts" "/home/me/workspace/play/js-ts-types/src/string/string.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts" "/home/me/workspace/play/js-ts-types/src/string/ishorten.d.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorteners.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts" "/home/me/workspace/play/js-ts-types/src/string/shorten-left.test.ts" "/home/me/workspace/play/js-ts-types/src/interfaces.d.ts" "/home/me/workspace/play/js-ts-types/src/number/number.ts" "/home/me/workspace/play/js-ts-types/src/number/number.test.ts" "/home/me/workspace/play/js-ts-types/src/types.ts" "/home/me/workspace/play/js-ts-types/src/test/throwInvalid.factory.ts" "/home/me/workspace/play/js-ts-types/src/test/throwInvalid.test.ts" "/home/me/workspace/play/js-ts-types/src/throwInvalid.ts" "/home/me/workspace/play/js-ts-types/src/array/array.test.ts"))
 
 ;; Buffer section -- buffers listed in same order as in buffer list:
 (desktop-create-buffer 206
+  "/home/me/.emacs"
+  ".emacs"
+  'emacs-lisp-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode flycheck-mode epoch-view-mode)
+  9592
+  '(3697 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/js-ts-types/src/throwInvalid.ts"
+  "throwInvalid.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  758
+  '(232 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/check-system.sh"
+  "check-system.sh"
+  'sh-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode)
+  1362
+  '(31726 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-keyref.html"
+  "emacs-keyref.html"
+  'html-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
+  4618
+  '(4617 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/emacs.pkg.el"
+  "emacs.pkg.el"
+  'emacs-lisp-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
+  2685
+  '(2959 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/mocha-dark-3.2.0/mocha-dark.js"
+  "mocha-dark.js"
+  'js-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
+  4077
+  '(3827 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-pkg.txt"
+  "emacs-pkg.txt"
+  'text-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  2542
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/bin/template/javascript/types.js"
+  "types.js"
+  'js-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
+  573
+  '(1109 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/js-ts-types/tslint.json5"
+  "tslint.json5"
+  'json-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  696
+  '(1127 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/my-monitor-ex.exs"
+  "my-monitor-ex.exs"
+  'elixir-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
+  501
+  '(570 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-tutorial.txt"
+  "emacs-tutorial.txt"
+  'text-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  28079
+  '(31797 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  nil
+  "*info*"
+  'Info-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  1420992
+  '(1 nil)
+  t
+  '("/usr/share/info/emacs-24/emacs" "Browsing Custom" ((history ("/usr/share/info/emacs-24/emacs" "Customization Groups" 1419293) ("/usr/share/info/emacs-24/emacs" "Easy Customization" 1417069) ("/usr/share/info/emacs-24/emacs" "Regexp Backslash" 343754) ("/usr/share/info/emacs-24/emacs" "Search" 304799) ("/usr/share/info/emacs-24/emacs" "Regexp Example" 344277) ("/usr/share/info/emacs-24/emacs" "Top" 14486) ("/usr/share/info/emacs-24/efaq" "Top" 1696) ("/usr/share/info/emacs-24/semantic" "Highlight Func Mode" 56127) ("/usr/share/info/emacs-24/semantic" "Semantic mode" 11233) ("/usr/share/info/emacs-24/semantic" "Using Semantic" 8060) ("/usr/share/info/emacs-24/semantic" "Top" 2505) ("/usr/share/info/emacs-24/semantic" "Introduction" 4275) ("/usr/share/info/emacs-24/semantic" "Top" 2487) ("/usr/share/info/emacs-24/emacs" "Semantic" 835050) ("/usr/share/info/emacs-24/emacs" "Tags" 1010620) ("/usr/share/info/emacs-24/emacs" "List Tags" 1035048) ("/usr/share/info/emacs-24/emacs" "Tags" 1011051) ("/usr/share/info/emacs-24/emacs" "Tags Search" 1033742) ("/usr/share/info/emacs-24/emacs" "Tags" 1010976) ("/usr/share/info/emacs-24/emacs" "Select Tags Table" 1028029) ("/usr/share/info/emacs-24/emacs" "Tags" 1010850) ("/usr/share/info/emacs-24/emacs" "Etags Regexps" 1024494) ("/usr/share/info/emacs-24/emacs" "Tags" 1010778) ("/usr/share/info/emacs-24/emacs" "Top" 32582) ("dir" "Top" 2081) ("/usr/share/info/emacs-24/emacs" "Top" 4573) ("/usr/share/info/emacs-24/emacs" "Programs" 782823) ("/usr/share/info/emacs-24/emacs" "Hideshow" 829274) ("/usr/share/info/emacs-24/emacs" "Symbol Completion" 830736) ("/usr/share/info/emacs-24/emacs" "Glasses" 832826) ("/usr/share/info/emacs-24/emacs" "Semantic" 832919) ("/usr/share/info/emacs-24/emacs" "Tags" 1010620) ("/usr/share/info/emacs-24/emacs" "Top" 32581) ("dir" "Top" 2081) ("/usr/share/info/emacs-24/ebrowse" "Top" 1016) ("/usr/share/info/emacs-24/emacs" "Tags" 1010483) ("/usr/share/info/emacs-24/emacs" "Find Tag" 1031029) ("/usr/share/info/emacs-24/emacs" "Tags" 1010382) ("/usr/share/info/emacs-24/emacs" "Tag Syntax" 1011191) ("/usr/share/info/emacs-24/emacs" "Create Tags Table" 1020183) ("/usr/share/info/emacs-24/emacs" "Tags" 1010138) ("/usr/share/info/emacs-24/emacs" "Top" 32582))))
+  '((tab-width . 8) (buffer-file-coding-system . iso-latin-1-unix) (case-fold-search . t)))
+
+(desktop-create-buffer 206
+  "/home/me/.emacs.d/elpa/auto-complete-1.5.1/auto-complete.el"
+  "auto-complete.el"
+  'emacs-lisp-mode
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
+  2211
+  '(7386 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-keyref.txt"
+  "emacs-keyref.txt"
+  'text-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  11029
+  '(24 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-create-buffer 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-lisp.txt"
+  "emacs-lisp.txt"
+  'text-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  1644
+  '(9513 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-append-buffer-args 206
+  nil
+  "auto-complete-1.5.1"
+  'dired-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  677
+  '(500 nil)
+  t
+  '("/home/me/.emacs.d/elpa/auto-complete-1.5.1/")
+  nil)
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/src/test/throwInvalid.test.ts"
+  "throwInvalid.test.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  227
+  '(1431 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/clearbooks/check-code.sh"
+  "check-code.sh"
+  'sh-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  319
+  '(574 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/scheduler.exs"
+  "scheduler.exs"
+  'elixir-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  774
+  '(452 nil)
+  nil
+  nil
+  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/bsac-linux-cfg/bin/template/php/functions.php"
+  "functions.php"
+  'php-mode
+  '(abbrev-mode editorconfig-mode company-mode global-auto-revert-mode)
+  651
+  '(158 nil)
+  nil
+  nil
+  '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts"
+  "shorten-left.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  563
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/package.json5"
+  "package.json5<2>"
+  'json-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  3434
+  '(3954 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/src/string/shorten.ts"
+  "shorten.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  1
+  '(1 nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
+
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/elixir/elixir_property_test.exs"
   "elixir_property_test.exs"
   'elixir-mode
@@ -30,18 +283,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
-  "/home/me/workspace/play/js-ts-types/tslint.json5"
-  "tslint.json5"
-  'json-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  1152
-  '(1127 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/tooling/test/stats_property_test.exs"
   "stats_property_test.exs"
   'elixir-mode
@@ -52,7 +294,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/my-monitor.exs"
   "my-monitor.exs"
   'elixir-mode
@@ -63,18 +305,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/my-monitor-ex.exs"
-  "my-monitor-ex.exs"
-  'elixir-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  420
-  '(570 nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/pmap.exs"
   "pmap.exs"
   'elixir-mode
@@ -85,7 +316,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/monitor1.exs"
   "monitor1.exs"
   'elixir-mode
@@ -96,18 +327,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/scheduler.exs"
-  "scheduler.exs"
-  'elixir-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  629
-  '(630 nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/spawn/fib.exs"
   "fib.exs"
   'elixir-mode
@@ -118,7 +338,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/hello-world/hello_world_test.exs"
   "hello_world_test.exs"
   'elixir-mode
@@ -129,7 +349,7 @@
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/PHP-Koans/Chapters/Chapter3.php"
   "Chapter3.php"
   'php-mode
@@ -140,7 +360,7 @@
   nil
   '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/php/php.php"
   "php.php"
   'php-mode
@@ -151,7 +371,7 @@
   nil
   '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/php/ClassPolyConstructor.php"
   "ClassPolyConstructor.php"
   'php-mode
@@ -162,7 +382,7 @@
   nil
   '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
 
-(desktop-create-buffer 206
+(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/php/ClassSingleton.php"
   "ClassSingleton.php"
   'php-mode
@@ -172,17 +392,6 @@
   nil
   nil
   '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . utf-8-unix) (case-fold-search . t)))
-
-(desktop-create-buffer 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/template/php/functions.php"
-  "functions.php"
-  'php-mode
-  '(abbrev-mode editorconfig-mode company-mode global-auto-revert-mode)
-  256
-  '(158 nil)
-  nil
-  nil
-  '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
 
 (desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/php/functions.test.php"
@@ -229,21 +438,10 @@
   '((show-trailing-whitespace . t) (tab-width . 4) (indent-tabs-mode) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
 
 (desktop-append-buffer-args 206
-  "/home/me/workspace/play/js-ts-types/src/test/throwInvalid.test.ts"
-  "throwInvalid.test.ts"
-  'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
-  267
-  '(1425 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-append-buffer-args 206
   "/home/me/workspace/play/js-ts-types/src/test/throwInvalid.factory.ts"
   "throwInvalid.factory.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   286
   '(1 nil)
   nil
@@ -276,7 +474,7 @@
   "/home/me/workspace/play/js-ts-types/src/boolean/boolean.ts"
   "boolean.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   431
   '(1 nil)
   nil
@@ -361,17 +559,6 @@
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
 (desktop-append-buffer-args 206
-  "/home/me/workspace/play/js-ts-types/src/throwInvalid.ts"
-  "throwInvalid.ts"
-  'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
-  1
-  '(1 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/exercism/elixir/otp/stack/lib/stack/server.ex"
   "server.ex"
   'elixir-mode
@@ -386,20 +573,9 @@
   "/home/me/workspace/play/js-ts-types/src/string/shorten.test.ts"
   "shorten.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   2708
   '(328 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
-
-(desktop-append-buffer-args 206
-  "/home/me/workspace/play/js-ts-types/src/string/shorten.ts"
-  "shorten.ts"
-  'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
-  1
-  '(1 nil)
   nil
   nil
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
@@ -419,7 +595,7 @@
   "/home/me/workspace/play/js-ts-types/src/string/shorteners.ts"
   "shorteners.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   382
   '(146 nil)
   nil
@@ -427,34 +603,12 @@
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
 
 (desktop-append-buffer-args 206
-  "/home/me/workspace/play/js-ts-types/package.json5"
-  "package.json5<2>"
-  'json-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  3484
-  '(3954 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-append-buffer-args 206
   "/home/me/workspace/play/js-ts-types/src/string/shorten-left.test.ts"
   "shorten-left.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   5063
   '(1168 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
-
-(desktop-append-buffer-args 206
-  "/home/me/workspace/play/js-ts-types/src/string/shorten-left.ts"
-  "shorten-left.ts"
-  'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
-  563
-  '(1 nil)
   nil
   nil
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
@@ -463,7 +617,7 @@
   "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.ts"
   "shorten-middle.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   984
   '(1 nil)
   nil
@@ -474,7 +628,7 @@
   "/home/me/workspace/play/js-ts-types/src/string/shorten-middle.test.ts"
   "shorten-middle.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   1926
   '(4462 nil)
   nil
@@ -485,7 +639,7 @@
   "/home/me/workspace/play/js-ts-types/src/boolean/boolean.test.ts"
   "boolean.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   333
   '(491 nil)
   nil
@@ -529,7 +683,7 @@
   "/home/me/workspace/play/js-ts-types/src/number/number.test.ts"
   "number.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   640
   '(479 nil)
   nil
@@ -540,7 +694,7 @@
   "/home/me/workspace/play/js-ts-types/src/string/string.test.ts"
   "string.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   620
   '(497 nil)
   nil
@@ -551,7 +705,7 @@
   "/home/me/workspace/play/js-ts-types/src/array/array.test.ts"
   "array.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   684
   '(511 nil)
   nil
@@ -562,7 +716,7 @@
   "/home/me/workspace/play/js-ts-types/src/array/array.ts"
   "array.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   423
   '(42 nil)
   nil
@@ -573,7 +727,7 @@
   "/home/me/workspace/play/js-ts-types/src/object/object.test.ts"
   "object.test.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   684
   '(509 nil)
   nil
@@ -584,7 +738,7 @@
   "/home/me/workspace/play/js-ts-types/src/object/object.ts"
   "object.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   245
   '(45 nil)
   nil
@@ -595,7 +749,7 @@
   "/home/me/workspace/play/js-ts-types/src/string/string.ts"
   "string.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   144
   '(402 nil)
   nil
@@ -606,34 +760,12 @@
   "/home/me/workspace/play/js-ts-types/src/number/number.ts"
   "number.ts"
   'typescript-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode eldoc-mode flycheck-mode tide-mode)
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
   307
   '(361 nil)
   nil
   nil
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-append-buffer-args 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/cfg/check-system.sh"
-  "check-system.sh"
-  'sh-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  31719
-  '(12572 nil)
-  nil
-  nil
-  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-append-buffer-args 206
-  "/home/me/bin/template/javascript/types.js"
-  "types.js"
-  'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  974
-  '(1109 nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
 
 (desktop-append-buffer-args 206
   "/home/me/workspace/play/js-ts-types/scripts/coverone.sh"
@@ -672,7 +804,7 @@
   "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/boolean.ts.html"
   "boolean.ts.html"
   'html-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   476
   '(16 nil)
   nil
@@ -683,7 +815,7 @@
   "/home/me/workspace/play/js-ts-types/coverage/lcov-report/src/boolean/index.html"
   "index.html"
   'html-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   3039
   '(16 nil)
   nil
@@ -735,17 +867,6 @@
   '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
 (desktop-append-buffer-args 206
-  "/home/me/.emacs"
-  ".emacs"
-  'emacs-lisp-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  5414
-  '(5414 nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix) (case-fold-search . t)))
-
-(desktop-append-buffer-args 206
   "/home/me/workspace/play/ruby-koans/ruby2php.pl"
   "ruby2php.pl"
   'perl-mode
@@ -760,7 +881,7 @@
   "/home/me/workspace/play/ruby-koans/neo.rb"
   "neo.rb"
   'ruby-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   14510
   '(14046 nil)
   nil
@@ -771,7 +892,7 @@
   "/home/me/workspace/play/ruby-koans/neo.test.rb"
   "neo.test.rb"
   'ruby-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   2608
   '(2580 nil)
   nil
@@ -782,7 +903,7 @@
   "/home/me/workspace/play/ruby-koans/path_to_enlightenment.rb"
   "path_to_enlightenment.rb"
   'ruby-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   1107
   '(1 nil)
   nil
@@ -793,7 +914,7 @@
   "/home/me/workspace/play/ruby-koans/about_asserts.rb"
   "about_asserts.rb"
   'ruby-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   227
   '(158 nil)
   nil
@@ -815,7 +936,7 @@
   "/home/me/workspace/play/ruby-koans/about_objects.rb"
   "about_objects.rb"
   'ruby-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   449
   '(165 nil)
   nil
@@ -826,7 +947,7 @@
   "/home/me/workspace/play/ruby-koans/about_nil.rb"
   "about_nil.rb"
   'ruby-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   993
   '(154 nil)
   nil
@@ -859,7 +980,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/test/static/my-first-service-worker.js"
   "my-first-service-worker.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   476
   '(476 t)
   nil
@@ -870,7 +991,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/test/browser/first-browser-test.test.js"
   "first-browser-test.test.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   290
   '(328 nil)
   nil
@@ -881,7 +1002,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/service-worker.html"
   "service-worker.html"
   'html-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   564
   '(188 nil)
   nil
@@ -892,7 +1013,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/test/mocha-test-require.js"
   "mocha-test-require.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   430
   '(430 nil)
   nil
@@ -903,7 +1024,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/mocha-test.html"
   "mocha-test.html"
   'html-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   188
   '(215 nil)
   nil
@@ -914,7 +1035,7 @@
   "/home/me/bin/mocha-dark/mocha/lib/reporters/html.js"
   "html.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   6609
   '(7199 nil)
   nil
@@ -925,23 +1046,12 @@
   "/home/me/bin/mocha-dark/mocha/browser-entry.js"
   "browser-entry.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   1117
   '(14 nil)
   nil
   nil
   '((tab-width . 2) (indent-tabs-mode) (buffer-file-coding-system . utf-8-unix)))
-
-(desktop-append-buffer-args 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/mocha-dark/mocha-dark-3.2.0/mocha-dark.js"
-  "mocha-dark.js"
-  'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  3829
-  '(3827 nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
 
 (desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/perl/BSAC/FileTypesFoundState.pm"
@@ -958,7 +1068,7 @@
   "/home/me/workspace/play/timemachine/test/timemachine.js"
   "timemachine.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   2255
   '(37 nil)
   nil
@@ -1046,7 +1156,7 @@
   "/home/me/workspace/play/chrono/when.js"
   "when.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   232
   '(119 nil)
   nil
@@ -1662,7 +1772,7 @@
   "/home/me/.emacs.d/lisp/bsac.el"
   "bsac.el"
   'emacs-lisp-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   823
   '(32 nil)
   nil
@@ -1684,7 +1794,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/enviroDetect.js"
   "enviroDetect.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   911
   '(622 nil)
   nil
@@ -1706,32 +1816,10 @@
   "/usr/share/emacs/24.3/lisp/kmacro.el.gz"
   "kmacro.el.gz"
   'emacs-lisp-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   7270
   '(7270 nil)
   t
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
-
-(desktop-append-buffer-args 206
-  nil
-  "*info*"
-  'Info-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  343754
-  '(1 nil)
-  t
-  '("/usr/share/info/emacs-24/emacs" "Regexp Backslash" ((history ("/usr/share/info/emacs-24/emacs" "Search" 304799) ("/usr/share/info/emacs-24/emacs" "Regexp Example" 344277) ("/usr/share/info/emacs-24/emacs" "Top" 14486) ("/usr/share/info/emacs-24/efaq" "Top" 1696) ("/usr/share/info/emacs-24/semantic" "Highlight Func Mode" 56127) ("/usr/share/info/emacs-24/semantic" "Semantic mode" 11233) ("/usr/share/info/emacs-24/semantic" "Using Semantic" 8060) ("/usr/share/info/emacs-24/semantic" "Top" 2505) ("/usr/share/info/emacs-24/semantic" "Introduction" 4275) ("/usr/share/info/emacs-24/semantic" "Top" 2487) ("/usr/share/info/emacs-24/emacs" "Semantic" 835050) ("/usr/share/info/emacs-24/emacs" "Tags" 1010620) ("/usr/share/info/emacs-24/emacs" "List Tags" 1035048) ("/usr/share/info/emacs-24/emacs" "Tags" 1011051) ("/usr/share/info/emacs-24/emacs" "Tags Search" 1033742) ("/usr/share/info/emacs-24/emacs" "Tags" 1010976) ("/usr/share/info/emacs-24/emacs" "Select Tags Table" 1028029) ("/usr/share/info/emacs-24/emacs" "Tags" 1010850) ("/usr/share/info/emacs-24/emacs" "Etags Regexps" 1024494) ("/usr/share/info/emacs-24/emacs" "Tags" 1010778) ("/usr/share/info/emacs-24/emacs" "Top" 32582) ("dir" "Top" 2081) ("/usr/share/info/emacs-24/emacs" "Top" 4573) ("/usr/share/info/emacs-24/emacs" "Programs" 782823) ("/usr/share/info/emacs-24/emacs" "Hideshow" 829274) ("/usr/share/info/emacs-24/emacs" "Symbol Completion" 830736) ("/usr/share/info/emacs-24/emacs" "Glasses" 832826) ("/usr/share/info/emacs-24/emacs" "Semantic" 832919) ("/usr/share/info/emacs-24/emacs" "Tags" 1010620) ("/usr/share/info/emacs-24/emacs" "Top" 32581) ("dir" "Top" 2081) ("/usr/share/info/emacs-24/ebrowse" "Top" 1016) ("/usr/share/info/emacs-24/emacs" "Tags" 1010483) ("/usr/share/info/emacs-24/emacs" "Find Tag" 1031029) ("/usr/share/info/emacs-24/emacs" "Tags" 1010382) ("/usr/share/info/emacs-24/emacs" "Tag Syntax" 1011191) ("/usr/share/info/emacs-24/emacs" "Create Tags Table" 1020183) ("/usr/share/info/emacs-24/emacs" "Tags" 1010138) ("/usr/share/info/emacs-24/emacs" "Top" 32582))))
-  '((tab-width . 8) (buffer-file-coding-system . iso-latin-1-unix) (case-fold-search . t)))
-
-(desktop-append-buffer-args 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-tutorial.txt"
-  "emacs-tutorial.txt"
-  'text-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  46884
-  '(nil nil)
-  nil
   nil
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
@@ -1816,7 +1904,7 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/syntax-example/javascript-syntax-example.js"
   "javascript-syntax-example.js"
   'js-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   211
   '(36 nil)
   nil
@@ -1868,17 +1956,6 @@
   '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
 (desktop-append-buffer-args 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-pkg.txt"
-  "emacs-pkg.txt"
-  'text-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  1
-  '(nil nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
-
-(desktop-append-buffer-args 206
   "/home/me/workspace/play/bsac-linux-cfg/bin/i3-config-update.sh"
   "i3-config-update.sh"
   'sh-mode
@@ -1926,19 +2003,8 @@
   "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-ergo-keyref.html"
   "emacs-ergo-keyref.html"
   'html-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
+  '(editorconfig-mode company-mode color-identifiers-mode global-auto-revert-mode)
   8194
-  '(nil nil)
-  nil
-  nil
-  '((tab-width . 4) (indent-tabs-mode . t) (buffer-file-coding-system . utf-8-unix)))
-
-(desktop-append-buffer-args 206
-  "/home/me/workspace/play/bsac-linux-cfg/bin/template/emacs/emacs-keyref.html"
-  "emacs-keyref.html"
-  'html-mode
-  '(editorconfig-mode company-mode global-auto-revert-mode)
-  1
   '(nil nil)
   nil
   nil
@@ -1976,4 +2042,70 @@
   t
   '("/home/me/workspace/play/bsac-linux-cfg/bin/template/cfgrec/")
   nil)
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/src/types.ts"
+  "types.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/src/interfaces.d.ts"
+  "interfaces.d.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  220
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/src/string/ishorten.d.ts"
+  "ishorten.d.ts"
+  'typescript-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode flycheck-mode eldoc-mode tide-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/tsfmt.json5"
+  "tsfmt.json5"
+  'json-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  845
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/tsconfig.json5"
+  "tsconfig.json5"
+  'json-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  1064
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
+
+(desktop-append-buffer-args 206
+  "/home/me/workspace/play/js-ts-types/tsconfig-debug.json5"
+  "tsconfig-debug.json5"
+  'json-mode
+  '(editorconfig-mode company-mode global-auto-revert-mode)
+  1
+  '(nil nil)
+  nil
+  nil
+  '((tab-width . 3) (indent-tabs-mode . t) (buffer-file-coding-system . undecided-unix)))
 
