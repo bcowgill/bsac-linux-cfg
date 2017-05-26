@@ -87,6 +87,9 @@
 (require 'editorconfig)
 (editorconfig-mode 1)
 (semantic-mode 1)
+(nyan-mode 1)
+(rainbow-mode 1)
+(writegood-mode 1)
 
 ;;
 ;; ace jump mode major function
@@ -160,7 +163,7 @@
 ;; (define-key company-active-map (kbd "C-p") 'company-complete-common-or-previous-cycle)
 
 ;;Shell mode completion,
-(require 'readline-complete)
+;;BSAC RESTORE(require 'readline-complete)
 
 (add-to-list 'auto-mode-alist '("mix\\.lock\\'" . elixir-mode))
 

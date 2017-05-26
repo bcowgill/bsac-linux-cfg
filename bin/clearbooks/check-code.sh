@@ -32,6 +32,7 @@ tsgrep "\b(require)\b" | grep -vE "\b(config-node|bluebird|blocked|jwt-simple)\b
 line "use export default instead of module.exports"
 tsgrep "\b(module\.exports)\b"
 
+
 line "use const, let instead of let, var where possible"
 tsgrep "\b(var|let)\b"
 
@@ -47,9 +48,3 @@ tsgrep "@(param|return)"
 line ": any can be fixed?"
 tsgrep ":\s*any\b"
 
-exit 1;
-git grep -E "\b(import|const)\b" | file-break.pl | grep -v "typings/modules/" | egrep --color '(:|\b(import|const)\b)'
-
-git grep -E "\b(require)\b" | grep -vE "typings/modules/|gulpfile\.js" | grep -vE "\b(config-node|bluebird|blocked|jwt-simple)\b" | egrep --color "\b(require)\b"
-
-git grep -E "\bmodule\.exports\b"
