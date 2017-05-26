@@ -48,3 +48,6 @@ tsgrep "@(param|return)"
 line ": any can be fixed?"
 tsgrep ":\s*any\b"
 
+line "interfaces outside of .interface.ts files"
+tsgrep "interface " | grep -v '.interface.ts:' | hilite "interface \w+"
+
