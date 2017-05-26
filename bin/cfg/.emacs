@@ -83,8 +83,13 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/editorconfig-0.7.9")
 (add-to-list 'load-path "~/.emacs.d/elpa/web-mode-14.1")
 (add-to-list 'load-path "~/.emacs.d/elpa/company-0.9.3")
+(add-to-list 'load-path "~/.emacs.d/elpa/nyan-mode-1.1.2")
+(add-to-list 'load-path "~/.emacs.d/elpa/rainbow-mode-0.12")
+(add-to-list 'load-path "~/.emacs.d/elpa/writegood-mode-2.0.2")
 
 (require 'editorconfig)
+(require 'nyan-mode)
+(require 'rainbow-mode)
 (editorconfig-mode 1)
 (semantic-mode 1)
 (nyan-mode 1)
