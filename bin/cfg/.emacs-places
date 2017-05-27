@@ -1,6 +1,6 @@
 ;;; -*- coding: utf-8 -*-
 (("/home/me/.BACKUP" . 446)
- ("/home/me/.emacs" . 9901)
+ ("/home/me/.emacs" . 9699)
  ("/home/me/.emacs.d/elpa/ac-php-core-1.7.8/ac-php-core-autoloads.el" . 484)
  ("/home/me/.emacs.d/elpa/archives/gnu/archive-contents" . 31626)
  ("/home/me/.emacs.d/elpa/archives/melpa-stable/archive-contents" . 378428)
@@ -98,7 +98,7 @@
  ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/.bashrc" . 4056)
  ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/.i3-config" . 11237)
  ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/check-system.sh" . 1362)
- ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/emacs.pkg.el" . 2685)
+ ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/emacs.pkg.el" . 847)
  ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/i3-launch.sh" . 3406)
  ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/workshare/i3-dock.sh" . 838)
  ("/home/me/workspace/play/bsac-linux-cfg/bin/cfg/workshare/i3-launch.sh" . 2259)
