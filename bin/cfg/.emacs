@@ -90,6 +90,7 @@
 (require 'editorconfig)
 (require 'nyan-mode)
 (require 'rainbow-mode)
+(require 'writegood-mode)
 (editorconfig-mode 1)
 (semantic-mode 1)
 (nyan-mode 1)
