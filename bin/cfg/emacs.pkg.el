@@ -1,5 +1,12 @@
-;; list of emacs packages to install based on emacs.pkg.lst
-;; slam this into your ~/.emacs.d/lisp directory then start emacs, then remove from the dir
+;;; emacs.pkg.el --- configure melpa and install my favorite packages
+
+;;; Commentary:
+
+;; list of Emacs packages to install based on emacs.pkg.lst
+;; slam this into your ~/.emacs.d/lisp directory then start Emacs, then remove from the dir.
+
+;;; Code:
+
 (package-initialize)
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
@@ -84,6 +91,5 @@
 (package-install 'company-dict);; emacs 24.4
 (package-install 'company-quickhelp);; emacs 24.4
 (package-install 'company-shell);; emacs-24.4
-
-
-
+(provide 'emacs.pkg)
+;;; emacs.pkg ends here

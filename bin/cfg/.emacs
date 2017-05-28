@@ -1,3 +1,9 @@
+;;; .emacs --- configuration file for emacs project
+
+;;; Commentary:
+
+;;; Code:
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -179,6 +185,7 @@
 
 ;;Typescript configurations
 (defun setup-tide-mode ()
+  "Set up tide mode -- typescript IDE."
   (interactive)
   (tide-setup)
   (flycheck-mode +1)
