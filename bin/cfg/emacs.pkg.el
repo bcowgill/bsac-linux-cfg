@@ -22,6 +22,7 @@
 ;;requires     `company-css-property-value-regexp'
 ;;    company-css-property-values
 (package-install 'csv-mode)
+;;https://github.com/magnars/dash.el#functions
 (package-install 'dash)
 (package-install 'dockerfile-mode)
 (package-install 'editorconfig)
@@ -93,3 +94,5 @@
 (package-install 'company-shell);; emacs-24.4
 (provide 'emacs.pkg)
 ;;; emacs.pkg ends here
+
+(package-install 'use-package')

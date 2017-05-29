@@ -86,6 +86,8 @@
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'load-path "~/.emacs.d/elpa/bind-key-2.3")
+(add-to-list 'load-path "~/.emacs.d/elpa/use-package-2.3")
 (add-to-list 'load-path "~/.emacs.d/elpa/editorconfig-0.7.9")
 (add-to-list 'load-path "~/.emacs.d/elpa/web-mode-14.1")
 (add-to-list 'load-path "~/.emacs.d/elpa/company-0.9.3")
@@ -97,6 +99,12 @@
 (add-to-list 'load-path "~/.emacs.d/elpa/rainbow-mode-0.12")
 (add-to-list 'load-path "~/.emacs.d/elpa/writegood-mode-2.0.2")
 
+(package-initialize)
+(require 'use-package)
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 (require 'editorconfig)
 (require 'nyan-mode)
 (require 'rainbow-mode)
@@ -106,6 +114,10 @@
 (nyan-mode 1)
 (rainbow-mode 1)
 (writegood-mode 1)
+
+(require 'epoch-view)
+(epoch-view-mode 1)
+;; 2147483647  shows date for an epoch number
 
 ;;
 ;; ace jump mode major function
@@ -161,7 +173,12 @@
 (require 'company)
 ;; install the company package first
 ;; http://company-mode.github.io/
+;; C-w show definition location for selected suggested completion
+;; C-s search the suggestion list interactively
+;; C-M-s filter the suggestion list interactively
+;; C-h or f1 show documentation for selected suggested completion
 (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'after-init-hook 'company-statistics-mode)
 ;; TAB/Shift-TAB to cycle through completions
 (defun company-complete-common-or-previous-cycle ()
   "Insert the common part of all candidates, or select the next one."
@@ -253,10 +270,6 @@
 ;;(set-face-attribute 'font-lock-keyword-face nil :weight 'bold)
 ;;(set-face-attribute 'font-lock-builtin-face nil :weight 'bold)
 ;;(set-face-attribute 'font-lock-preprocessor-face nil :weight 'bold)
-
-(require 'epoch-view)
-(epoch-view-mode 1)
-;; 2147483647  shows date for an epoch number
 
 ;; on the fly syntax checking
 ;;(flycheck-verify-setup)
