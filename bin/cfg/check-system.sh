@@ -598,6 +598,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 	VPN_PKG=""
 	#EBOOK_READER=""
 	DRUID_PKG=""
+
+	# ttf-ancient-fonts - Symbola used for emacs emoji
 	CUSTOM_PKG="
 		gnucash
 		audacity
@@ -607,13 +609,13 @@ if [ "$HOSTNAME" == "akston" ]; then
 		mount.cifs:cifs-utils
 		firefox
 		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
+		/usr/share/fonts/truetype/ttf-ancient-scripts/Symbola605.ttf:ttf-ancient-fonts
 		cmus
 		shutter
 		cowsay
 		gimp
 	"
 	#NODE_PKG=""
-
 	#SUBLIME_PKG=""
 	SUBLIME_CFG=""
 	WEBSTORM_ARCHIVE=WebStorm-2016.3.1
