@@ -37,7 +37,7 @@ json5 -c tsconfig*.json5
 
 for es in es5 es6
 do
-	for mod in es2015 commonjs system
+	for mod in es2015 commonjs system amd
 	do
 		transpile $mod.$es weird
 	done
