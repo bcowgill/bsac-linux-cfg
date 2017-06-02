@@ -1,0 +1,12 @@
+{
+	// config for system module import syntax and es6 output
+	"extends": "./tsconfig-debug.json",
+	"compilerOptions": {
+		// language support options
+		"rootDir": "./src/",
+		"target": "ES6", // output javascript for ES6 systems
+		"module": "system",  // uses system module import syntax
+	}
+}
+
+

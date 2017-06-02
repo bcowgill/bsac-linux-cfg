@@ -15,6 +15,7 @@ function transpile
 	rm -rf src && mkdir src/
 	tar xvzf typescript.tgz --directory src/ $source.ts
 
+	rm -rf dist/
 	tsc --newline LF --project tsconfig-$modes.json
 
 	(\
@@ -36,7 +37,7 @@ json5 -c tsconfig*.json5
 
 for es in es5 es6
 do
-	for mod in es2015 commonjs
+	for mod in es2015 commonjs system
 	do
 		transpile $mod.$es weird
 	done

@@ -1,4 +1,4 @@
-// weird.d.ts - es6
+// weird.d.ts - es2015.es6
 export declare function FWeird(value: any): void;
 export declare class CWeird {
     name: string;
@@ -14,7 +14,7 @@ export declare class CWeird {
     protected protecteds(): void;
 }
  
-// weird.js - es6
+// weird.js - es2015.es6
 export function FWeird(value) {
     console.log('FWeird was called', value);
 }
@@ -47,7 +47,12 @@ export class CWeird {
 CWeird.klass = 'CWeird';
 const iWeird = new CWeird('bill');
 iWeird.publics();
+// iWeird.description = 'time cannot change me';  // read only, cannot
+// iWeird.protecteds(); // not accessible from instance
+// iWeird.privates(); // not accessible from instance
 console.log(CWeird.klass);
 CWeird.statics();
+// iWeird.statics(); // not an instance method
+// CWeird.klass = 'not allowed'; // read only, cannot
 FWeird(void 0);
 //# sourceMappingURL=weird.js.map
