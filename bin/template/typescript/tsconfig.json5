@@ -18,7 +18,7 @@
 		"noEmitOnError": true,
 
 		// language support options
-		"target": "ES6", // output javascript for ES5 systems
+		"target": "ES6", // output javascript for ES6 systems
 		//"module": "system", // system or amd only when outFile used
 		//"module": "commonjs", // for use with mocha-typescript
 		"module": "es2015",  // uses es2015 module import syntax

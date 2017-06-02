@@ -2,7 +2,7 @@
 	// A debug config for typescript compiler
 	"extends": "./tsconfig.json",
 	"compilerOptions": {
-		"outFile": "./dist/index-debug.js",
+		//"outFile": "./dist/index-debug.js",
 		"removeComments": false,
 		"traceResolution": true,  // enable tracing of name resolution process
 		"diagnostics": true,
