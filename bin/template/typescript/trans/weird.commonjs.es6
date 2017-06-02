@@ -1,0 +1,57 @@
+// weird.d.ts - commonjs.es6
+export declare function FWeird(value: any): void;
+export declare class CWeird {
+    name: string;
+    protected prot: string;
+    private priv;
+    static readonly klass: string;
+    readonly description: string;
+    constructor(name: string, prot?: string, priv?: string);
+    static statics(): void;
+    whatever(): void;
+    publics(): void;
+    private privates();
+    protected protecteds(): void;
+}
+ 
+// weird.js - commonjs.es6
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+function FWeird(value) {
+    console.log('FWeird was called', value);
+}
+exports.FWeird = FWeird;
+class CWeird {
+    constructor(name, prot = 'protected string', priv = 'private string') {
+        this.name = name;
+        this.prot = prot;
+        this.priv = priv;
+        console.log(`CWeird constructor(${name})`);
+        this.description = `I am ${name} and I keep ${this.priv} a secret but share ${this.prot} with friends`;
+    }
+    static statics() {
+        console.log(`${CWeird.klass} statics called`);
+    }
+    whatever() {
+        console.log(`${this.name} whatever called`);
+    }
+    publics() {
+        console.log(`${this.name} publics called`);
+        this.protecteds();
+    }
+    privates() {
+        console.log(`${this.name} privates called`);
+    }
+    protecteds() {
+        console.log(`${this.name} protecteds called`);
+        this.privates();
+    }
+}
+CWeird.klass = 'CWeird';
+exports.CWeird = CWeird;
+const iWeird = new CWeird('bill');
+iWeird.publics();
+console.log(CWeird.klass);
+CWeird.statics();
+FWeird(void 0);
+//# sourceMappingURL=weird.js.map

@@ -1,26 +1,29 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "declaration": true,
-    "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": false,
-    "strictNullChecks": false,
-    "outDir": "dist",
-    "lib": [
-      "dom",
-      "es2017"
-    ]
-  },
-  "compileOnSave": true,
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "."
-  ]
+    "compileOnSave": true,
+    "compilerOptions": {
+        "pretty": true,
+        "outDir": "./dist",
+        "declaration": true,
+        "sourceMap": true,
+        "removeComments": true,
+        "forceConsistentCasingInFileNames": true,
+        "maxNodeModuleJsDepth": 1,
+        "noEmitOnError": true,
+        "target": "ES6",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "preserveConstEnums": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "suppressImplicitAnyIndexErrors": false
+    }
 }
