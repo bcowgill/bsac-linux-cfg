@@ -11,6 +11,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-refresh-contents)
+(package-list-packages)
 ;; commands below cannot actually be evaluated must manually be installed in emacs
 (package-install 'ace-jump-mode)
 (package-install 'auto-complete)
