@@ -14,6 +14,7 @@ else
 	read prompt
 	if [ ${prompt:-n} == y ]; then
 		if git branch --delete --remote "origin/$branch"; then
+			git push origin --delete "$branch"
 			echo success
 		else
 			echo Do you want to force a delete [y/N] ?
@@ -22,6 +23,7 @@ else
 				git branch -D --remote "origin/$branch"
 			fi
 		fi
+		git remote prune origin
 	fi
 
 	echo Delete local branch $branch [y/N] ?
