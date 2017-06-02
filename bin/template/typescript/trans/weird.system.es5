@@ -1,23 +1,21 @@
 // weird.d.ts - system.es5
-declare module "weird" {
-    export function FWeird(value: any): void;
-    export class CWeird {
-        name: string;
-        protected prot: string;
-        private priv;
-        static readonly klass: string;
-        readonly description: string;
-        constructor(name: string, prot?: string, priv?: string);
-        static statics(): void;
-        whatever(): void;
-        publics(): void;
-        private privates();
-        protected protecteds(): void;
-    }
+export declare function FWeird(value: any): void;
+export declare class CWeird {
+    name: string;
+    protected prot: string;
+    private priv;
+    static readonly klass: string;
+    readonly description: string;
+    constructor(name: string, prot?: string, priv?: string);
+    static statics(): void;
+    whatever(): void;
+    publics(): void;
+    private privates();
+    protected protecteds(): void;
 }
  
 // weird.js - system.es5
-System.register("weird", [], function (exports_1, context_1) {
+System.register([], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     function FWeird(value) {
@@ -72,4 +70,4 @@ System.register("weird", [], function (exports_1, context_1) {
         }
     };
 });
-//# sourceMappingURL=index-debug.js.map
+//# sourceMappingURL=weird.js.map

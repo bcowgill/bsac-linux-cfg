@@ -52,8 +52,13 @@ define(["require", "exports"], function (require, exports) {
     exports.CWeird = CWeird;
     const iWeird = new CWeird('bill');
     iWeird.publics();
+    // iWeird.description = 'time cannot change me';  // read only, cannot
+    // iWeird.protecteds(); // not accessible from instance
+    // iWeird.privates(); // not accessible from instance
     console.log(CWeird.klass);
     CWeird.statics();
+    // iWeird.statics(); // not an instance method
+    // CWeird.klass = 'not allowed'; // read only, cannot
     FWeird(void 0);
 });
 //# sourceMappingURL=weird.js.map
