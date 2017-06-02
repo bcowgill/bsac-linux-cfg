@@ -57,6 +57,7 @@ fi
 if [ "x$COMPANY" == "xclearbooks" ]; then
 	alias cdauth='pushd ~/projects/clearbooks-micro-api-auth'
 	alias cdacct='pushd ~/projects/clearbooks-micro-api-accounting'
+	alias grst='git-rebase.sh origin/staging'
 fi
 
 # default options for some commands
