@@ -19,9 +19,11 @@ export TOUCH_SCREEN=13
 
 if [ $HOSTNAME == "akston" ]; then
 	# Mouse/touch configuration for my dell laptop
-	export MOUSE=11
-	export TOUCH_PAD=12
-	export TOUCH_NIPPLE=14
+	get_usb_id "Logitech MX Anywhere"
+	export MOUSE=$RET
+	get_usb_id "ImPS/2 Generic Wheel Mouse"
+	export TOUCH_PAD=$RET
+	export TOUCH_NIPPLE=$RET
 	export TOUCH_SCREEN=
 fi
 
