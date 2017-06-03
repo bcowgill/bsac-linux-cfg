@@ -1,3 +1,6 @@
+// import the default export only, cannot use normal syntax as
+// module has export = in it.
+//import CDefault from './ModuleExportEq'
 (function (factory) {
     if (typeof module === "object" && typeof module.exports === "object") {
         var v = factory(require, exports);
@@ -9,9 +12,7 @@
 })(function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    // import the default export only, cannot use normal syntax as
-    // module has export = in it.
-    //import CDefault from './ModuleExportEq'
+    // cannot use this import method in es2015 module formats (use import * as X ... or import {X} ..., or import X ...)
     var ModuleExports = require("./ModuleExportEq");
     new ModuleExports.CExported('the name');
     // import the exports as named, cannot use this syntax either with export =

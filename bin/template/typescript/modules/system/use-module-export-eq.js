@@ -1,3 +1,6 @@
+// import the default export only, cannot use normal syntax as
+// module has export = in it.
+//import CDefault from './ModuleExportEq'
 System.register(["./ModuleExportEq"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
@@ -8,7 +11,9 @@ System.register(["./ModuleExportEq"], function (exports_1, context_1) {
                 ModuleExports = ModuleExports_1;
             }
         ],
-        execute: function () {
+        execute: function () {// import the default export only, cannot use normal syntax as
+            // module has export = in it.
+            //import CDefault from './ModuleExportEq'
             new ModuleExports.CExported('the name');
             // import the exports as named, cannot use this syntax either with export =
             /*import * as ModuleExports from './ModuleExportEq'

@@ -1,3 +1,6 @@
+// import the default export only, cannot use normal syntax as
+// module has export = in it.
+//import CDefault from './ModuleExportEq'
 define(["require", "exports", "./ModuleExportEq"], function (require, exports, ModuleExports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
