@@ -40,6 +40,7 @@ do
 	for mod in es2015 commonjs system amd umd
 	do
 		transpile $mod.$es weird
+		transpile $mod.$es weird-namespace
 	done
 done
 
