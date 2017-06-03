@@ -8,7 +8,7 @@ function get_usb_id
 	local text
 	text="$1"
 	RET=`xinput --list | grep "$text" | perl -pne 's{\A .+ id=(\d+) .+ \z}{$1}xms;'`
-
+	xinput --list | grep "$text"
 }
 
 # Mouse/touch configuration for workshare laptop
