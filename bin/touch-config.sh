@@ -11,28 +11,24 @@ function get_usb_id
 	xinput --list | grep "$text"
 }
 
-# Mouse/touch configuration for workshare laptop
-export MOUSE=
-export TOUCH_PAD=15
+# Mouse/touch configuration default
+get_usb_id "Logitech MX Anywhere"
+export MOUSE=$RET
+
+get_usb_id Touchpad
+export TOUCH_PAD=$RET
 export TOUCH_NIPPLE=
-export TOUCH_SCREEN=13
+export TOUCH_SCREEN=
 
 if [ $HOSTNAME == "akston" ]; then
 	# Mouse/touch configuration for my dell laptop
-	get_usb_id "Logitech MX Anywhere"
-	export MOUSE=$RET
 	get_usb_id "ImPS/2 Generic Wheel Mouse"
 	export TOUCH_PAD=$RET
 	export TOUCH_NIPPLE=$RET
-	export TOUCH_SCREEN=
 fi
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	# Mouse/touch configuration for clearbooks laptop
-	get_usb_id "Logitech MX Anywhere"
-	export MOUSE=$RET
-	get_usb_id Touchpad
-	export TOUCH_PAD=$RET
 	export TOUCH_NIPPLE=
 	export TOUCH_SCREEN=
 fi
