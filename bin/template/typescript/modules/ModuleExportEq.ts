@@ -12,6 +12,7 @@ class CExported {
 }
 
 // Must include all exports in the single exported object
+// this is not allowed for es2015 modules, use export default instead
 export = {
   fnExport, fnExport2 : rename, CExported
 }

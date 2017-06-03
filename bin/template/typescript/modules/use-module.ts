@@ -22,4 +22,4 @@ import CCC, { fnExport as fnF } from './Module'
 new CCC('a name')
 fnF()
 
-a
+
