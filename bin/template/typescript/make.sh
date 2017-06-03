@@ -47,3 +47,5 @@ done
 tar xzf typescript.tgz
 rm typescript.tgz
 rm -rf src/
+rm *.json
+json5 -c tsconfig.json5
