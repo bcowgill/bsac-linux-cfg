@@ -1,6 +1,10 @@
 //===============================================================
 // module interfaces
 
+// terminology notes:
+// typescript < 1.5   internal module   external module
+// typescript 1.5+    namespace         module
+//
 // commonjs for node
 // amd for requirejs in web applications
 
