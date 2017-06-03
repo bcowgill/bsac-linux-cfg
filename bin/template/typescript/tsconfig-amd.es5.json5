@@ -1,12 +1,10 @@
 {
-	// config for amd module import syntax and es5 output
+	// config for amd (requirejs) module import syntax and es5 output
 	"extends": "./tsconfig-debug.json",
 	"compilerOptions": {
 		// language support options
 		"rootDir": "./src/",
 		"target": "ES5", // output javascript for ES5 systems
-		"module": "amd",  // uses amd module import syntax
+		"module": "amd",  // uses amd module import syntax for requirejs
 	}
 }
-
-
