@@ -1,7 +1,10 @@
 // import the default export only, cannot use normal syntax as
 // module has export = in it.
 //import CDefault from './ModuleExportEq'
+
+// cannot use this import method in es2015 module formats (use import * as X ... or import {X} ..., or import X ...)
 import ModuleExports = require('./ModuleExportEq')
+
 new ModuleExports.CExported ('the name')
 
 // import the exports as named, cannot use this syntax either with export =
@@ -22,3 +25,4 @@ const CCme = ModuleExports.CExported
 call1()
 call2()
 new CCme('name2')
+
