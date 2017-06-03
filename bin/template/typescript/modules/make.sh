@@ -10,7 +10,7 @@ function ignore
 
 	if [ $module == $mode ]; then
 		echo $mode: suppress incompatible example $file
-		mv $file $file.ignore
+		mv $file $file.special
 	fi
 }
 
@@ -22,7 +22,7 @@ function restore
 	file=$3
 
 	if [ $module == $mode ]; then
-		mv $file.ignore $file
+		mv $file.special $file
 	fi
 }
 
@@ -32,15 +32,24 @@ do
 	echo making $T
 	[ -d $T ] || mkdir $T
 	rm *.js 2> /dev/null
+	restore $T $T ModuleExportEq.ts
+	restore $T $T use-module-export-eq.ts
+
 	ignore $T system ModuleExportEq.ts
 	ignore $T system use-module-export-eq.ts
 	ignore $T es2015 ModuleExportEq.ts
 	ignore $T es2015 use-module-export-eq.ts
 
 	tsc --project tsconfig-$T.json 2>&1 | tee $T/build.log
+
 	mv *.js $T
+
 	restore $T system ModuleExportEq.ts
 	restore $T system use-module-export-eq.ts
 	restore $T es2015 ModuleExportEq.ts
 	restore $T es2015 use-module-export-eq.ts
+
+	ignore $T $T ModuleExportEq.ts
+	ignore $T $T use-module-export-eq.ts
 done
+
