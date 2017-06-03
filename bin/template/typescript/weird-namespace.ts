@@ -38,6 +38,7 @@
 		 private privates()
 		 {
 			console.log( `${this.name} privates called` );
+			FWeird( 'from privates' );
 		 }
 		 protected protecteds()
 		 {

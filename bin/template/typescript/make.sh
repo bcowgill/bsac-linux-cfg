@@ -1,9 +1,42 @@
-rm -rf dist;
-#json5 -c tsconfig*.json5 && tsc --newline LF --project tsconfig.json ;
-#json5 -c tsconfig*.json5 && tsc --newline LF --project tsconfig-debug.json ;
-#rm *.json
+#!/bin/bash
+# transpile example module formats to trans/
+# then transpile all the other examples.
 
-function transpile
+function go
+{
+	make_modules
+	transpile_all
+}
+
+function transpile_all
+{
+	rm -rf dist/;
+	json5 -c tsconfig*.json5 && tsc --newline LF --project tsconfig.json ;
+	#json5 -c tsconfig*.json5 && tsc --newline LF --project tsconfig-debug.json ;
+	rm *.json
+	json5 -c tsconfig.json5
+}
+
+function setup
+{
+	# setup for building various modules from source
+	tar czf typescript.tgz *.ts modules/
+	rm -rf *.ts modules/
+	json5 -c tsconfig*.json5
+	[ -d trans ] || mkdir trans
+}
+
+function cleanup
+{
+	# restore source code after
+	tar xzf typescript.tgz
+	rm typescript.tgz
+	rm -rf src/
+	rm *.json
+	json5 -c tsconfig.json5
+}
+
+function transpile_module
 {
 	local modes source out
 	modes=$1
@@ -29,24 +62,18 @@ function transpile
 	echo created trans/$source.$modes
 }
 
-# setup for building various modules from source
-tar czf typescript.tgz *.ts modules/
-rm -rf *.ts modules/
-json5 -c tsconfig*.json5
-[ -d trans ] || mkdir trans
-
-for es in es5 es6
-do
-	for mod in es2015 commonjs system amd umd
+function make_modules
+{
+	setup
+	for es in es5 es6
 	do
-		transpile $mod.$es weird
-		transpile $mod.$es weird-namespace
+		for mod in es2015 commonjs system amd umd
+		do
+			transpile_module $mod.$es weird
+			transpile_module $mod.$es weird-namespace
+		done
 	done
-done
+	cleanup
+}
 
-# restore source code after
-tar xzf typescript.tgz
-rm typescript.tgz
-rm -rf src/
-rm *.json
-json5 -c tsconfig.json5
+go

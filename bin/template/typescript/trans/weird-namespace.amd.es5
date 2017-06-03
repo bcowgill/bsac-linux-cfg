@@ -1,0 +1,73 @@
+// weird-namespace.d.ts - amd.es5
+export declare namespace Weird {
+    function FWeird(value: any): void;
+    class CWeird {
+        name: string;
+        protected prot: string;
+        private priv;
+        static readonly klass: string;
+        readonly description: string;
+        constructor(name: string, prot?: string, priv?: string);
+        static statics(): void;
+        whatever(): void;
+        publics(): void;
+        private privates();
+        protected protecteds(): void;
+    }
+}
+ 
+// weird-namespace.js - amd.es5
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Weird;
+    (function (Weird) {
+        function FWeird(value) {
+            console.log('FWeird was called', value);
+        }
+        Weird.FWeird = FWeird;
+        var CWeird = (function () {
+            function CWeird(name, prot, priv) {
+                if (prot === void 0) { prot = 'protected string'; }
+                if (priv === void 0) { priv = 'private string'; }
+                this.name = name;
+                this.prot = prot;
+                this.priv = priv;
+                console.log("CWeird constructor(" + name + ")");
+                this.description = "I am " + name + " and I keep " + this.priv + " a secret but share " + this.prot + " with friends";
+            }
+            CWeird.statics = function () {
+                console.log(CWeird.klass + " statics called");
+            };
+            CWeird.prototype.whatever = function () {
+                console.log(this.name + " whatever called");
+            };
+            CWeird.prototype.publics = function () {
+                console.log(this.name + " publics called");
+                this.protecteds();
+            };
+            CWeird.prototype.privates = function () {
+                console.log(this.name + " privates called");
+                FWeird('from privates');
+            };
+            CWeird.prototype.protecteds = function () {
+                console.log(this.name + " protecteds called");
+                this.privates();
+            };
+            return CWeird;
+        }());
+        CWeird.klass = 'CWeird';
+        Weird.CWeird = CWeird;
+    })(Weird = exports.Weird || (exports.Weird = {}));
+    var iWeird = new Weird.CWeird('bill');
+    iWeird.publics();
+    // iWeird.description = 'time cannot change me';  // read only, cannot
+    // iWeird.protecteds(); // not accessible from instance
+    // iWeird.privates(); // not accessible from instance
+    console.log(Weird.CWeird.klass);
+    Weird.CWeird.statics();
+    // iWeird.statics(); // not an instance method
+    // Weird.CWeird.klass = 'not allowed'; // read only, cannot
+    Weird.FWeird(void 0);
+});
+//# sourceMappingURL=weird-namespace.js.map
