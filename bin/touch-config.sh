@@ -2,6 +2,7 @@
 
 #xinput --list
 #xinput --list --long 15
+#xinput --test   # show events for device as they happen
 
 function get_usb_id
 {
@@ -14,6 +15,10 @@ function get_usb_id
 # Mouse/touch configuration default
 get_usb_id "Logitech MX Anywhere"
 export MOUSE=$RET
+get_usb_id "Logitech USB Receiver"
+export MOUSE="$MOUSE $RET"
+get_usb_id "Mitsumi Electric Apple Optical USB Mouse"
+export MOUSE="$MOUSE $RET"
 
 get_usb_id Touchpad
 export TOUCH_PAD=$RET
@@ -34,4 +39,5 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 fi
 
 export TOUCH="$TOUCH_PAD $TOUCH_NIPPLE $TOUCH_SCREEN"
-
+echo "xinput mouse device ids: $MOUSE"
+echo "xinput touch device ids: $TOUCH"
