@@ -23,10 +23,19 @@
 	  {
 		 console.log( `${CWeird.klass} statics called` );
 	  }
+	  static staticArrow = () =>
+	  {
+		 console.log( `${CWeird.klass} statics called` );
+	  }
 
 	  whatever() // also an instance method
 	  {
 		 console.log( `${this.name} whatever called` );
+	  }
+	  public arrow = () =>
+	  {
+		 console.log( `${this.name} arrow called` );
+		 this.protecteds()
 	  }
 	  public publics()
 	  {

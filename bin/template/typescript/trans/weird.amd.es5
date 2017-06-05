@@ -8,7 +8,9 @@ export declare class CWeird {
     readonly description: string;
     constructor(name: string, prot?: string, priv?: string);
     static statics(): void;
+    static staticArrow: () => void;
     whatever(): void;
+    arrow: () => void;
     publics(): void;
     private privates();
     protected protecteds(): void;
@@ -26,9 +28,14 @@ define(["require", "exports"], function (require, exports) {
         function CWeird(name, prot, priv) {
             if (prot === void 0) { prot = 'protected string'; }
             if (priv === void 0) { priv = 'private string'; }
+            var _this = this;
             this.name = name;
             this.prot = prot;
             this.priv = priv;
+            this.arrow = function () {
+                console.log(_this.name + " arrow called");
+                _this.protecteds();
+            };
             console.log("CWeird constructor(" + name + ")");
             this.description = "I am " + name + " and I keep " + this.priv + " a secret but share " + this.prot + " with friends";
         }
@@ -52,6 +59,9 @@ define(["require", "exports"], function (require, exports) {
         return CWeird;
     }());
     CWeird.klass = 'CWeird';
+    CWeird.staticArrow = function () {
+        console.log(CWeird.klass + " statics called");
+    };
     exports.CWeird = CWeird;
     var iWeird = new CWeird('bill');
     iWeird.publics();
