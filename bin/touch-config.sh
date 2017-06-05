@@ -15,8 +15,10 @@ function get_usb_id
 }
 
 # Mouse/touch configuration default
+get_usb_id mouse "USB Optical Mouse"
+export MOUSE="$RET"
 get_usb_id mouse "Logitech MX Anywhere"
-export MOUSE=$RET
+export MOUSE="$MOUSE $RET"
 get_usb_id mouse "Logitech USB Receiver"
 export MOUSE="$MOUSE $RET"
 get_usb_id mouse "Mitsumi Electric Apple Optical USB Mouse"
