@@ -1,4 +1,4 @@
-// weird.d.ts - amd.es6
+/* weird.d.ts - amd.es6
 export declare function FWeird(value: any): void;
 export declare class CWeird {
     name: string;
@@ -15,6 +15,7 @@ export declare class CWeird {
     private privates();
     protected protecteds(): void;
 }
+*/
  
 // weird.js - amd.es6
 define(["require", "exports"], function (require, exports) {
@@ -48,6 +49,7 @@ define(["require", "exports"], function (require, exports) {
         }
         privates() {
             console.log(`${this.name} privates called`);
+            FWeird('from privates');
         }
         protecteds() {
             console.log(`${this.name} protecteds called`);

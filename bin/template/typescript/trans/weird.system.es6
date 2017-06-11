@@ -1,4 +1,4 @@
-// weird.d.ts - system.es6
+/* weird.d.ts - system.es6
 export declare function FWeird(value: any): void;
 export declare class CWeird {
     name: string;
@@ -15,6 +15,7 @@ export declare class CWeird {
     private privates();
     protected protecteds(): void;
 }
+*/
  
 // weird.js - system.es6
 System.register([], function (exports_1, context_1) {
@@ -52,6 +53,7 @@ System.register([], function (exports_1, context_1) {
                 }
                 privates() {
                     console.log(`${this.name} privates called`);
+                    FWeird('from privates');
                 }
                 protecteds() {
                     console.log(`${this.name} protecteds called`);

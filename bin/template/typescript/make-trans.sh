@@ -41,8 +41,9 @@ function transpile_module
 	tsc --newline LF --project tsconfig-$modes.json
 
 	(\
-		echo "// $source.d.ts - $modes";\
+		echo "/* $source.d.ts - $modes";\
 		cat dist/$out.d.ts;\
+		echo "*/";\
 		echo " ";\
 		echo "// $source.js - $modes";\
 		cat dist/$out.js\

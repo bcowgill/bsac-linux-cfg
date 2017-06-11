@@ -1,4 +1,4 @@
-// weird-namespace.d.ts - system.es6
+/* weird-namespace.d.ts - system.es6
 export declare namespace Weird {
     function FWeird(value: any): void;
     class CWeird {
@@ -15,6 +15,7 @@ export declare namespace Weird {
         protected protecteds(): void;
     }
 }
+*/
  
 // weird-namespace.js - system.es6
 System.register([], function (exports_1, context_1) {

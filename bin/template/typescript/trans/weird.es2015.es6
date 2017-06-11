@@ -1,4 +1,4 @@
-// weird.d.ts - es2015.es6
+/* weird.d.ts - es2015.es6
 export declare function FWeird(value: any): void;
 export declare class CWeird {
     name: string;
@@ -15,6 +15,7 @@ export declare class CWeird {
     private privates();
     protected protecteds(): void;
 }
+*/
  
 // weird.js - es2015.es6
 export function FWeird(value) {
@@ -44,6 +45,7 @@ export class CWeird {
     }
     privates() {
         console.log(`${this.name} privates called`);
+        FWeird('from privates');
     }
     protecteds() {
         console.log(`${this.name} protecteds called`);

@@ -1,4 +1,4 @@
-// weird-namespace.d.ts - commonjs.es5
+/* weird-namespace.d.ts - commonjs.es5
 export declare namespace Weird {
     function FWeird(value: any): void;
     class CWeird {
@@ -15,6 +15,7 @@ export declare namespace Weird {
         protected protecteds(): void;
     }
 }
+*/
  
 // weird-namespace.js - commonjs.es5
 "use strict";

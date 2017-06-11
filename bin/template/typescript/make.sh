@@ -1,18 +1,18 @@
 #!/bin/bash
-# transpile all the other examples to dist/
-# then, if 'all' specified
+# if 'all' specified
 # transpile example module formats to trans/ and modules/[type]
+
+# then transpile all the other examples to dist/
 
 ALL=${1:-one}
 
 function go
 {
-	transpile_all
-	if [ $ALL == one ]; then
-		exit 0
+	if [ $ALL != one ]; then
+		./make-trans.sh
+		pushd modules && (./make.sh; popd)
 	fi
-	./make-trans.sh
-	pushd modules && (./make.sh; popd)
+	transpile_all
 }
 
 function transpile_all

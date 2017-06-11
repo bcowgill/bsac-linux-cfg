@@ -1,4 +1,4 @@
-// weird-namespace.d.ts - amd.es6
+/* weird-namespace.d.ts - amd.es6
 export declare namespace Weird {
     function FWeird(value: any): void;
     class CWeird {
@@ -15,6 +15,7 @@ export declare namespace Weird {
         protected protecteds(): void;
     }
 }
+*/
  
 // weird-namespace.js - amd.es6
 define(["require", "exports"], function (require, exports) {

@@ -1,4 +1,4 @@
-// weird.d.ts - commonjs.es5
+/* weird.d.ts - commonjs.es5
 export declare function FWeird(value: any): void;
 export declare class CWeird {
     name: string;
@@ -15,6 +15,7 @@ export declare class CWeird {
     private privates();
     protected protecteds(): void;
 }
+*/
  
 // weird.js - commonjs.es5
 "use strict";
@@ -50,6 +51,7 @@ var CWeird = (function () {
     };
     CWeird.prototype.privates = function () {
         console.log(this.name + " privates called");
+        FWeird('from privates');
     };
     CWeird.prototype.protecteds = function () {
         console.log(this.name + " protecteds called");
