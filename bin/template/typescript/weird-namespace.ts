@@ -33,6 +33,7 @@
 		 public publics()
 		 {
 			console.log( `${this.name} publics called` );
+			console.log( `description: ${this.description}` );
 			this.protecteds()
 		 }
 		 private privates()
