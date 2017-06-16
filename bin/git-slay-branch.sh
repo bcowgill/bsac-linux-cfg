@@ -9,7 +9,7 @@ if [ -z $branch ]; then
 	done
 	echo Specify a branch name i.e. origin/ENG-2353
 else
-	branch=`basename "$branch"`
+	#branch=`basename "$branch"`
 	echo Delete remote branch origin/$branch [y/N] ?
 	read prompt
 	if [ ${prompt:-n} == y ]; then
