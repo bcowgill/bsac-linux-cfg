@@ -41,8 +41,8 @@ set $lockcolor $mygray
 # define vars for monitor screens (updated by i3-config-update.sh)
 #  do not edit settings here...
 set $main eDP1
-set $aux  HDMI1
-set $aux2 HDMI1
+set $aux  eDP1
+set $aux2 eDP1
 
 # define vars for workspaces (updated by i3-config-update.sh)
 #WORKSPACEDEF
