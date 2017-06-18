@@ -246,7 +246,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
-our $TEST_CASES = 599;
+our $TEST_CASES = 687;
 our $VERSION = 0.1;       # shown by --version option
 our $STDIO   = "";
 our $HASH    = '\#';
@@ -1530,7 +1530,7 @@ sub userHashColorStandard
 }
 
 # make hash colors standard for lowercase #ffffff
-# NO TEST CASE
+# HAS TEST CASE
 sub hashColorStandard
 {
 	my ($color) = @ARG;
@@ -1560,7 +1560,7 @@ sub userToHashColor
 	return $color;
 }
 
-# NO TEST CASE
+# HAS TEST CASE
 sub toHashColor
 {
 	my ($color, $bValidOnly) = @ARG;
@@ -2217,6 +2217,8 @@ sub tests
 	testGetClosestColors();
 	testNiceNameClosestColors();
 	testNiceNameColor();
+   testToHashColor();
+	testHashColorStandard();
 
 	testUserCanonicalFromRgbAllowInvalid();
 	testUserCanonicalFromRgbValid();
@@ -2661,6 +2663,100 @@ sub testUserHashColorStandardShorten
 	}
 
 	setOpt('shorten', 0);
+}
+
+sub testToHashColor
+{
+	my $count = 1;
+	my @ToHashColorTests = (
+		'#fFf:#fFf', '#fFfFfF:#fFfFfF', '#fAfBfC:#fAfBfC', 'white', 'red', 'rgb(255,255,255):#ffffff',
+		'rgb(1%,212,41%):#03d469',
+		'rgb(1%,20%,41%):#033369',
+		'rgba(1%,212,41%,1.0):#03d469',
+		'rgba(1%,20%,41%,1.0):#033369',
+		'rgba(1%,212,41%,0.2):rgba(#03d469, 0.2)',
+		'rgba(1%,20%,41%,0.2):rgba(#033369, 0.2)',
+		'rgb(100%,100%,100%):#ffffff', 'rgb( 255 , 255 , 255 ):#ffffff',
+		'rgb( 100% , 100% , 100% ):#ffffff', 'hsl(0,100%,100%):#ffffff',
+		'hsl( 0 , 100% , 100% ):#ffffff',
+		'rgba(255,255,255,1.0):#ffffff',
+		'rgba(100%,100%,100%,1.0):#ffffff',
+		'rgba( 255 , 255 , 255 , 1.0 ):#ffffff',
+		'rgba( 100% , 100% , 100% , 1.0 ):#ffffff',
+		'hsla(0,100%,100%,1.0):#ffffff',
+		'hsla( 0 , 100% , 100% , 1.0 ):#ffffff',
+		'transparent',
+		'rgba(255,255,255,0.0):rgba(#ffffff, 0)',
+		'rgba(100%,100%,100%,0.0):rgba(#ffffff, 0)',
+		'rgba( 255 , 255 , 255 , 0.0 ):rgba(#ffffff, 0)',
+		'rgba( 100% , 100% , 100% , 0.0 ):rgba(#ffffff, 0)',
+		'hsla(0,100%,100%,0.0):rgba(#ffffff, 0)',
+		'hsla( 0 , 100% , 100% , 0.0 ):rgba(#ffffff, 0)',
+		'rgba(255,255,255,0.5):rgba(#ffffff, 0.5)',
+		'rgba(100%,100%,100%,0.5):rgba(#ffffff, 0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 ):rgba(#ffffff, 0.5)',
+		'rgba( 100% , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)',
+		'hsla(0,100%,100%,0.5):rgba(#ffffff, 0.5)',
+		'hsla( 0 , 100% , 100% , 0.5 ):rgba(#ffffff, 0.5)',
+		'rgba(white,0.5):rgba(white, 0.5)',# #ffffff should be?
+		'rgba(#fAfBfC,0.5):rgba(#fAfBfC, 0.5)',
+		'rgba( white , 0.5 ):rgba(white, 0.5)', # #ffffff should be?
+		'rgba( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'hsla(white,0.5):rgba(white, 0.5)', # #ffffff should be?
+		'hsla( #fAfBfC , 0.5 ):rgba(#fAfBfC, 0.5)',
+		'rgba(red(@color),green(@color),blue(@color),0.5):rgba(@color, 0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 ):rgba(@color, 0.5)',
+	);
+
+	foreach my $colorResult (@ToHashColorTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = toHashColor($color);
+
+		is($result, $expect, $count++ . ") toHashColor $color -> $expect");
+	}
+}
+
+sub testHashColorStandard
+{
+	my $count = 1;
+	my @HashColorStandardTests = (
+		'#fFf:#ffffff', '#fFfFfF:#ffffff', '#fAfBfC:#fafbfc', 'white', 'red', 'rgb(255,255,255)',
+		'rgb(1%,212,41%):rgb(1%,212,41%)',
+		'rgb(1%,20%,41%):rgb(1%,20%,41%)',
+		'rgba(1%,212,41%,1.0):rgba(1%,212,41%,1.0)',
+		'rgba(1%,20%,41%,1.0):rgba(1%,20%,41%,1.0)',
+		'rgba(1%,212,41%,0.2):rgba(1%,212,41%,0.2)',
+		'rgba(1%,20%,41%,0.2):rgba(1%,20%,41%,0.2)',
+		'rgb(100%,100%,100%)', 'rgb( 255 , 255 , 255 )',
+		'rgb( 100% , 100% , 100% )', 'hsl(0,100%,100%)', 'hsl( 0 , 100% , 100% )',
+		'rgba(255,255,255,1.0)', 'rgba(100%,100%,100%,1.0)',
+		'rgba( 255 , 255 , 255 , 1.0 )', 'rgba( 100% , 100% , 100% , 1.0 )',
+		'hsla(0,100%,100%,1.0)', 'hsla( 0 , 100% , 100% , 1.0 )', 'transparent',
+		'rgba(255,255,255,0.0)', 'rgba(100%,100%,100%,0.0)',
+		'rgba( 255 , 255 , 255 , 0.0 )', 'rgba( 100% , 100% , 100% , 0.0 )',
+		'hsla(0,100%,100%,0.0)', 'hsla( 0 , 100% , 100% , 0.0 )',
+		'rgba(255,255,255,0.5)', 'rgba(100%,100%,100%,0.5)',
+		'rgba( 255 , 255 , 255 , 0.5 )', 'rgba( 100% , 100% , 100% , 0.5 )',
+		'hsla(0,100%,100%,0.5)', 'hsla( 0 , 100% , 100% , 0.5 )',
+		'rgba(white,0.5)', 'rgba(#fAfBfC,0.5):rgba(#fafbfc,0.5)', 'rgba( white , 0.5 )',
+		'rgba( #fAfBfC , 0.5 ):rgba( #fafbfc , 0.5 )', 'hsla(white,0.5)',
+		'hsla( #fAfBfC , 0.5 ):hsla( #fafbfc , 0.5 )',
+		'rgba(red(@color),green(@color),blue(@color),0.5)',
+		'rgba( red( @color ) , green( @color ) , blue( @color ) , 0.5 )',
+	);
+
+	foreach my $colorResult (@HashColorStandardTests)
+	{
+		my ($color, $expect) = split(/:/, $colorResult);
+		$expect = $expect || $color;
+
+		my $result = hashColorStandard($color);
+
+		is($result, $expect, $count++ . ") hashColorStandard $color -> $expect");
+	}
 }
 
 sub testUserHashColorStandardCanonical
