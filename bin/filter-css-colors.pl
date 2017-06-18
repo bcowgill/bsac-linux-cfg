@@ -523,10 +523,10 @@ sub readColorHtmlTemplate
 # NO TEST CASE
 sub outputHtmlColorTable
 {
-	my ($raColors) = @ARG;
+	my ($rhColors) = @ARG;
 	my $row = $Var{'htmlRow'};
 	my $template = $Var{'htmlTemplate'};
-	my @rows = map { substituteTemplate($row, $ARG) } @$raColors;
+	my @rows = map { substituteTemplate($row, $rhColors->{$ARG}) } sort(keys(%$rhColors));
 	my $output = substituteTemplate($template, { row => join('', @rows) });
 	return $output;
 }
@@ -791,7 +791,7 @@ sub showHtmlColorOutput
 			open($fh, '>>', $out);
 		}
 		debug("showHtmlColorOutput() seen " . Dumper($Var{'rhColorsSeen'}), 3);
-		my $raColorInfo = [];
+		my $rhAllColorInfo = {};
 		foreach my $color (keys(%{$Var{'rhColorsSeen'}}))
 		{
 			my ($gotColor, $gotRgb) = map { getColorFromRgba($ARG) } getBothColorValues($color);
@@ -799,23 +799,28 @@ sub showHtmlColorOutput
 			{
 				($gotColor, $gotRgb) = getBothColorValuesFromName($gotColor);
 			}
+			$gotColor = canonical($gotColor);
 			my $name = $Var{'rhColorNamesMap'}{$gotColor} || '';
+			my $const = lookupColorConstantsMap($gotColor);
 			my $rhColorInfo = {
 				original => $color,
 				hex => $gotColor,
 				rgb => $gotRgb,
-				hsl => '',
 				name => $name,
-				const => '',
+				const => $const ? $const->[0] : '',
 				closest => $name ? '' : niceNameClosestColors($gotColor),
 				uses => $Var{'rhColorsSeen'}{$color},
 			};
 			debug("showHtmlColorOutput() color " . Dumper($rhColorInfo), 4);
-			push(@$raColorInfo, $rhColorInfo);
+			if (exists($rhAllColorInfo->{$gotColor}))
+			{
+				$rhColorInfo->{'uses'} += $rhAllColorInfo->{$gotColor}{'uses'};
+			}
+			$rhAllColorInfo->{$gotColor} = $rhColorInfo;
 		}
 
 		# TODO de-dupe and sort
-		print $fh outputHtmlColorTable($raColorInfo);
+		print $fh outputHtmlColorTable($rhAllColorInfo);
 		close($fh) unless ($out eq '-');
 	}
 }
@@ -1002,6 +1007,7 @@ sub lookupColorConstantsMap
 	debug("lookupColorConstantsMap($color)", 2);
 	my $rgb;
 	($color, $rgb) = getBothColorValues($color);
+	debug("lookupColorConstantsMap() map " . Dumper($Var{'rhColorConstantsMap'}), 3);
 	return $Var{'rhColorConstantsMap'}{$color} || $Var{'rhColorConstantsMap'}{$rgb};
 }
 
@@ -3414,6 +3420,10 @@ __DATA__
 			background: #333;
 			width: 50px;
 		}
+		.column-uses {
+			background: #333;
+			width: auto;
+		}
 		.column-name {
 			background: #333;
 			width: auto;
@@ -3427,10 +3437,6 @@ __DATA__
 			width: auto;
 		}
 		.column-rgb {
-			background: #333;
-			width: auto;
-		}
-		.column-hsl {
 			background: #333;
 			width: auto;
 		}
@@ -3467,42 +3473,42 @@ __DATA__
 		<i>Colors used in files scanned</i>
 	</caption>
 	<colgroup span="1" class="column-swatch"></colgroup>
+	<colgroup span="1" class="column-uses"></colgroup>
 	<colgroup span="1" class="column-name"></colgroup>
 	<colgroup span="1" class="column-const"></colgroup>
 	<colgroup span="1" class="column-hex"></colgroup>
 	<colgroup span="1" class="column-rgb"></colgroup>
-	<colgroup span="1" class="column-hsl"></colgroup>
 	<colgroup span="1" class="column-closest"></colgroup>
 	<thead>
 		<tr>
 			<th title="color swatch">color</th>
+			<th title="number of times color was used">uses</th>
 			<th title="name of color">name</th>
 			<th title="defined constant">constant</th>
 			<th title="hex representation of color">hex</th>
 			<th title="red green blue representation of color">rgb</th>
-			<th title="hue saturation luminisity representation of color">hsl</th>
 			<th title="closest named/defined constant">closest color</th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
 			<th title="color swatch">color</th>
+			<th title="number of times color was used">uses</th>
 			<th title="name of color">name</th>
 			<th title="defined constant">constant</th>
 			<th title="hex representation of color">hex</th>
 			<th title="red green blue representation of color">rgb</th>
-			<th title="hue saturation luminisity representation of color">hsl</th>
 			<th title="closest named/defined constant">closest color</th>
 		</tr>
 	</tfoot>
 	<tbody>
 		<tr>
 			<td style="background-color: %hex%;" title="%name% %const% %hex% rgb(%rgb%) hsl(%hsl%)"></td>
+			<td>%uses%</td>
 			<td>%name%</td>
 			<td>%const%</td>
 			<td>%hex%</td>
 			<td>%rgb%</td>
-			<td>%hsl%</td>
 			<td>%closest%</td>
 		</tr>
 	</tbody>
