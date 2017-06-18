@@ -579,6 +579,39 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD CONST REMAPMODE5 remap colours with human readability
+TEST=const-file-remap-human
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --human --inplace=.bak \
+	--const-type=less --const-file=$VARS"
+	cp "$SAMPLE_REMAP" "$OUT"
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD CONST REMAPMODE6 remap colours with short output
+TEST=const-file-remap-short
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --short --inplace=.bak \
+	--const-type=less --const-file=$VARS"
+	cp "$SAMPLE_REMAP" "$OUT"
+	$PROGRAM $ARGS "$OUT" 2>&1 || ERR=$?
+	assertCommandSuccess $ERR "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
 
 echo TEST $CMD parameters passed to rules
 TEST=const-rules-have-parameters

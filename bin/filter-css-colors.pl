@@ -13,29 +13,32 @@ Brent S.A. Cowgill
 filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 	Options:
-		--color-only     negatable. only show the color values, not the entire line.
-		--reverse        negatable. show all lines not matching a CSS color declaration.
-		--remap          negatable. remap all colors to names or constants in place where possible.
-		--names          negatable. convert colors to standard names where possible.
-		--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff
-		--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff
-		--rgb            negatable. convert colors to rgb() form.
-		--hash           negatable. convert rgb/hsl colors to #color form.
-		--valid-only     negatable. do not perform remappings which are invalid CSS.
-		--valid-pp       negatable. allow remappings which are valid for preprocessors (LESS, SASS).
-		--show-const     negatable. show the table of defined constants.
-		--const-type     specify what type of constants are being used (for less or sass.)
-		--const          multiple. define a custom constant value.
-		--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants.
-		--const-list     list all possible constant names for a given color substitution in a comment.
-		--const-pull     pull color values into new named constants and output to file or standard output.
-		--inplace        specify to modify files in place creating a backup first.
-		--foreground     [not implemented] specify a color value to use for all foreground colors.
-		--background     [not implemented] specify a color value to use for all background colors.
-		--echo           negatable. display original line when performing replacements.
+		--human          generate most human readable output. equals --remap --names --hash --const-list
+		--tiny           generate smallest output. equals --remap --shorten --hash
+		--color-only     negatable. only show the color values, not the entire line. [filter]
+		--reverse        negatable. show all lines not matching a CSS color declaration. [filter]
+		--remap          negatable. remap all colors to names or constants in place where possible. [editing]
+		--names          negatable. convert colors to standard names where possible. [editing]
+		--canonical      negatable. convert colors to canonical form i.e. #fff -> #ffffff [editing]
+		--shorten        negatable. convert colors to short form i.e. #ffffff -> #fff [editing]
+		--rgb            negatable. convert colors to rgb() form. [editing]
+		--hash           negatable. convert rgb/hsl colors to #color form. [editing]
+		--valid-only     negatable. do not perform remappings which are invalid CSS. [editing]
+		--valid-pp       negatable. allow remappings which are valid for preprocessors (LESS, SASS). [editing]
+		--show-const     negatable. show the table of defined constants. [output]
+		--const-type     specify what type of constants are being used (for less or sass.) [output]
+		--const          multiple. define a custom constant value. [input]
+		--const-file     multiple. specify a Less, Sass or CSS file to parse for color constants. [input]
+		--const-list     list all possible constant names for a given color substitution in a comment. [output]
+		--const-pull     pull color values into new named constants and output to file or standard output. [output]
+		--inplace        specify to modify files in place creating a backup first. [output]
+		--foreground     [not implemented] specify a color value to use for all foreground colors. [editing]
+		--background     [not implemented] specify a color value to use for all background colors. [editing]
+		--html           [not implemented] output an html file showing every color found as a swatch table [output]
+		--echo           negatable. display original line when performing replacements. [debug]
 		--version        display program version and exit.
-		--debug          incremental. display debugging info.
-		--trace          negatable. turn on some debug trace.
+		--debug          incremental. display debugging info. [debug]
+		--trace          negatable. turn on some debug trace. [debug]
 		--tests          run the unit tests.
 		--help -?        brief help message and exit.
 		--man            full help message and exit.
@@ -148,6 +151,10 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 	Specify a color value to use to replace all background colors with. Cannot work with --color-only.
 
+=item B<--html=-|filename>
+
+	Output some html to show a swatch table of every colour found in the input files.
+
 =item B<--echo> or B<--noecho>
 
 	When in a --remap mode, display the original line as well.
@@ -249,11 +256,13 @@ our $CLOSE_THRESHOLD = 0.04;
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			'valid-only' => 0,
-			'valid-pp'   => 0,
-			'const-type' => '@', # assumes using less CSS compiler
+			'human' => 0,
+			'tiny'  => 0,
+			'valid-only'  => 0,
+			'valid-pp'    => 0,
+			'const-type'  => '@', # assumes using less CSS compiler
 			'const-rigid' => 1,  # rigid constant considers - and _ as different in names
-			'const-list' => 0,
+			'const-list'  => 0,
 			$STDIO  => 0,        # indicates standard in/out as - on command line
 			debug   => 0,
 			trace   => 0,
@@ -273,42 +282,49 @@ my %Var = (
 ##			"debug",           # debug the argument processing
 		],
 		raOpts => [
-			"color-only!",
-			"reverse!",
-			"remap!",
-			"names!",
-			"canonical!",
-			"shorten!",
-			"rgb!",
-			"hash!",
-			"valid-only!",
-			"show-const!",
-			"const-type:s",
+			'human',
+			'tiny',
+			'color-only!',
+			'reverse!',
+			'remap!',
+			'names!',
+			'canonical!',
+			'shorten!',
+			'rgb!',
+			'hash!',
+			'valid-only!',
+			'show-const!',
+			'const-type:s',
 			'const:s%',
 			'const-file:s@',
 			'const-list!',
 			'const-pull:s',
-			"inplace|i:s",
-			"foreground|fg:s",
-			"background|bg:s",
-			"echo!",
-			"debug|d+",      # incremental keep specifying to increase
-			"trace!",
-			"tests|d+",      # run the unit tests
+			'html:s',
+			'inplace|i:s',
+			'foreground|fg:s',
+			'background|bg:s',
+			'echo!',
+			'debug|d+',      # incremental keep specifying to increase
+			'trace!',
+			'tests|d+',      # run the unit tests
 			$STDIO,          # empty string allows - to signify standard in/out as a file
-			"man",           # show manual page only
+			'man',           # show manual page only
 		],
 		raMandatory => [],    # additional mandatory parameters not defined by = above.
 		roParser    => Getopt::Long::Parser->new,
 	},
 	fileName   => '<STDIN>',    # name of file
+	htmlRow => '',
+	htmlTemplate => '',
 	'raColorNames' => ['transparent'],
 	'constantContext'     => '',    # option or line where constant is defined
 	'rhColorNamesMap'     => {},
-	'rhConstantsMap'      => {},      # @const => #color
+	'rhColorNameValuesMap' => {},   # map name to [#color, rgb()]
+	'rhConstantsMap'      => {},     # @const => #color
 	'rhUndefinedConstantsMap' => {}, # @const1 => @const2
 	'raAutoConstants'     => [],
 	'rhColorConstantsMap' => {}, # #color => [@const, ... ]
+	'rhColorsSeen'        => {}, # color => count
 	'regex' => {
 		'data'            => qr{ \A \s* (\w+) \s+ ( $HASH [0-9a-f]{6} ) \s+ ( \d+,\d+,\d+ ) }xmsi,
 		'cssConst'        => qr{ ( \. ([-\w]+) -defined \s* \{ \s* color \s* : \s* ([^;]+) \s* ; \s* \}) }xms,
@@ -338,6 +354,8 @@ my %Var = (
 		'rgbaValidLess'   => qr{ \A rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( ([^\)]+) \) \s* , \s* blue\( ([^\)]+) \) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaInvalid'     => qr{ (?:rgb|hsl)a \( \s* ([^,]+) \s* , \s* ([^,]+) \s* \) }xmsi,
 		'rgbaRedGreenBlue' => qr{ rgba \( \s* red\( ([^\)]+) \) \s* , \s* green\( \1 \) \s* , \s* blue\( \1 \) \s* , \s* ([^,]+) \s* \) }xmsi,
+		'rgbGetColor'     => qr{ rgb \( \s* (.+?) \s* \) }xmsi,
+		'rgbaGetColor'    => qr{ rgba \( \s* (.+?) \s*, \s* ([^,]+) \s* \) }xmsi,
 		'hslInvalid'      => qr{ \A hsla \( \s* (\w+| $HASH [0-9a-f]{3,6}) }xmsi,
 		'hsla'            => qr{ \A hsla \( \s* (\d+) \s* , \s* (\d+) \% \s* , \s* (\d+) \% ( \s* , \s* [^\)]+ ) \) }xmsi,
 	},
@@ -391,7 +409,10 @@ sub setup
 	debug("setup()");
 	$OUTPUT_AUTOFLUSH = 1 if opt('debug');
 
-	readColorNameData();
+	my $rhData = getData();
+	readColorNameData($rhData->{DATA1});
+	readColorHtmlTemplate($rhData->{DATA2});
+
 	eval
 	{
 		constructConstantsTable();
@@ -428,17 +449,38 @@ sub main
 sub summary
 {
 	showAutoConstants();
+	showHtmlColorOutput();
 }
 
 ####################################
 # methods used by setup
 
 # NO TEST CASE
+sub getData
+{
+	my $rhData = {};
+	my $idx = 1;
+	while (my $line = <DATA>)
+	{
+		if ($line =~ m{\A __DATA__ \n \z}xms)
+		{
+			++$idx;
+		}
+		else
+		{
+			push(@{$rhData->{"DATA$idx"}}, $line);
+		}
+	}
+	return $rhData;
+}
+
+# NO TEST CASE
 sub readColorNameData
 {
 	debug("readColorNameData()");
-	# read from __DATA__ below to get names of hex color values
-	while (my $line = <DATA>)
+	my ($raData) = @ARG;
+	# read from first __DATA__ below to get names of hex color values
+	foreach my $line (@$raData)
 	{
 		if ($line =~ m{ $Var{'regex'}{'data'} }xmsi)
 		{
@@ -453,6 +495,7 @@ sub readColorNameData
 
 			$Var{'rhColorNamesMap'}{"rgb($rgb)"} = $name;
 			$Var{'rhColorNamesMap'}{$rgb} = $name;
+			$Var{'rhColorNameValuesMap'}{$name} = [$color, $rgb];
 		}
 	}
 	debug("ColorNameMap " . Dumper($Var{'rhColorNamesMap'}), 5);
@@ -462,6 +505,42 @@ sub readColorNameData
 	$Var{'regex'}{'line'} = qr{
 		( $HASH [0-9a-f]{3,6} \b | (rgb|hsl) a? \( [^\)]+ \) | (?<![-\w]) ($colors) (?![-\w]) )
 	}xmsi;
+}
+
+# NO TEST CASE
+sub readColorHtmlTemplate
+{
+	debug("readColorHtmlTemplate()");
+	my ($raData) = @ARG;
+	# read from second __DATA__ below to get html template
+	my $template = join('', @$raData);
+	$template =~ s{(<tbody>)(.+)(</tbody>)}{$1\%row\%$3}xms;
+	my $row = $2;
+	$Var{'htmlRow'} = $row;
+	$Var{'htmlTemplate'} = $template;
+}
+
+# NO TEST CASE
+sub outputHtmlColorTable
+{
+	my ($raColors) = @ARG;
+	my $row = $Var{'htmlRow'};
+	my $template = $Var{'htmlTemplate'};
+	my @rows = map { substituteTemplate($row, $ARG) } @$raColors;
+	my $output = substituteTemplate($template, { row => join('', @rows) });
+	return $output;
+}
+
+# NO TEST CASE
+sub substituteTemplate
+{
+	my ($template, $rhValues) = @ARG;
+	$template =~ s{
+		\%(\w+)\%
+	}{
+		$rhValues->{$1} || ''
+	}xmsge;
+	return $template;
 }
 
 # NO TEST CASE
@@ -693,6 +772,54 @@ sub showAutoConstants
 	}
 }
 
+# NO TEST CASE
+sub showHtmlColorOutput
+{
+	debug("showHtmlColorOutput()", 1);
+	my $out = opt('html');
+	if ($out)
+	{
+		my $fh;
+		if ($out eq '-')
+		{
+			debug("showHtmlColorOutput() stdout", 2);
+			$fh = *STDOUT;
+		}
+		else
+		{
+			debug("showHtmlColorOutput() $out", 2);
+			open($fh, '>>', $out);
+		}
+		debug("showHtmlColorOutput() seen " . Dumper($Var{'rhColorsSeen'}), 3);
+		my $raColorInfo = [];
+		foreach my $color (keys(%{$Var{'rhColorsSeen'}}))
+		{
+			my ($gotColor, $gotRgb) = map { getColorFromRgba($ARG) } getBothColorValues($color);
+			if ($gotColor =~ m{\A \w+ \z}xms)
+			{
+				($gotColor, $gotRgb) = getBothColorValuesFromName($gotColor);
+			}
+			my $name = $Var{'rhColorNamesMap'}{$gotColor} || '';
+			my $rhColorInfo = {
+				original => $color,
+				hex => $gotColor,
+				rgb => $gotRgb,
+				hsl => '',
+				name => $name,
+				const => '',
+				closest => $name ? '' : niceNameClosestColors($gotColor),
+				uses => $Var{'rhColorsSeen'}{$color},
+			};
+			debug("showHtmlColorOutput() color " . Dumper($rhColorInfo), 4);
+			push(@$raColorInfo, $rhColorInfo);
+		}
+
+		# TODO de-dupe and sort
+		print $fh outputHtmlColorTable($raColorInfo);
+		close($fh) unless ($out eq '-');
+	}
+}
+
 ####################################
 # methods initially used by setup
 
@@ -897,6 +1024,16 @@ sub userRenameColorValid
 			))
 		))
 	));
+}
+
+# NO TEST CASE
+sub trackUserRenameColorValid
+{
+	my ($color) = @ARG;
+
+	debug("trackUserRenameColorValid($color)", 2);
+	$Var{'rhColorsSeen'}->{$color}++;
+	return userRenameColorValid($color);
 }
 
 ####################################
@@ -1108,7 +1245,7 @@ sub substituteConstants
 
 	my $origColor = $color;
 	debug("substituteConstants($color, $line)", 3);
-	$color = lookupConstant(userRenameColorValid($color));
+	$color = lookupConstant(trackUserRenameColorValid($color));
 	debug("substituteConstants() lookup $color", 3);
 	if (isConst($color))
 	{
@@ -1504,6 +1641,20 @@ sub rgbInvalidFromRedGreenBlue
 	return $rgba;
 }
 
+# extract #color or r,g,b values from rgba?(..., alpha)
+# NO TEST CASE
+sub getColorFromRgba
+{
+	my ($rgba) = @ARG;
+	$rgba =~ s{ $Var{'regex'}{'rgbaGetColor'} }{
+		$1
+	}xmse;
+	$rgba =~ s{ $Var{'regex'}{'rgbGetColor'} }{
+		$1
+	}xmse;
+	return $rgba;
+}
+
 # convert #rgb color to #rrggbb based on user settings
 # NO TEST CASE
 sub userCanonical
@@ -1541,6 +1692,7 @@ sub canonical
 }
 
 # get both rgb and #color version of color
+# if color is a name it returns the name for both, instead of converting to #values and rgb(values)
 # HAS TEST CASE
 sub getBothColorValues
 {
@@ -1560,6 +1712,19 @@ sub getBothColorValues
 		$rgb = formatRgbIshColor(rgbFromHashColor($color, 'force'));
 	}
 	debug("getBothColorValues() return (c=$color, r=$rgb)", 3);
+	return ($color, $rgb);
+}
+
+# returns the #color and rgb() value of a named color
+# NO TEST CASE
+sub getBothColorValuesFromName
+{
+	my ($color) = @ARG;
+	my $rgb;
+	if (exists $Var{'rhColorNameValuesMap'}{lc($color)})
+	{
+		($color, $rgb) = @{$Var{'rhColorNameValuesMap'}{lc($color)}};
+	}
 	return ($color, $rgb);
 }
 
@@ -1851,6 +2016,20 @@ sub checkOptions
 	}
 
 	# Force some flags when others turned on
+	if (opt('human'))
+	{
+		push(@$raErrors, "You cannot specify --tiny when using the --human option") if opt('tiny');
+		setOpt('remap', 1);
+		setOpt('names', 1);
+		setOpt('hash', 1);
+		setOpt('const-list', 1);
+	}
+	if (opt('tiny'))
+	{
+		setOpt('remap', 1);
+		setOpt('shorten', 1);
+		setOpt('hash', 1);
+	}
 	setOpt('canonical', 1) if (!opt('shorten') && (opt('names') || opt('rgb')));
 	setOpt('hash', 1) if (opt('names'));
 	setOpt('remap', 1) if (opt('names') || opt('canonical') || opt('shorten') || opt('hash'));
@@ -2020,7 +2199,9 @@ sub tests
 {
 	eval "use Test::More tests => $TEST_CASES";
 
-	readColorNameData();
+	my $rhData = getData();
+	readColorNameData($rhData->{DATA1});
+	readColorHtmlTemplate($rhData->{DATA2});
 
 	testRgbFromHslOrPercentValid();
 	testRgbFromHslOrPercentAllowInvalid();
@@ -2863,7 +3044,6 @@ sub testUserRenameColorValid
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
-
 		my $result = userRenameColorValid($color);
 
 		is($result, $expect, $count++ . ") userRenameColorValid (!valid-pp) $color -> $expect");
@@ -2920,7 +3100,6 @@ sub testUserRenameColorValidLess
 	{
 		my ($color, $expect) = split(/:/, $colorResult);
 		$expect = $expect || $color;
-
 		my $result = userRenameColorValid($color);
 
 		is($result, $expect, $count++ . ") userRenameColorValid (valid-pp) $color -> $expect");
@@ -3219,3 +3398,114 @@ __DATA__
 		whitesmoke  #F5F5F5  245,245,245
 		yellow   #FFFF00  255,255,0
 		yellowgreen #9ACD32  154,205,50
+__DATA__
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Colors used in files scanned</title>
+
+	<style>
+		body {
+			color: yellow;
+			background-color: black;
+		}
+		.column-swatch {
+			background: #333;
+			width: 50px;
+		}
+		.column-name {
+			background: #333;
+			width: auto;
+		}
+		.column-const {
+			background: #333;
+			width: auto;
+		}
+		.column-hex {
+			background: #333;
+			width: auto;
+		}
+		.column-rgb {
+			background: #333;
+			width: auto;
+		}
+		.column-hsl {
+			background: #333;
+			width: auto;
+		}
+		.column-closest {
+			background: #333;
+			width: auto;
+		}
+		.color-reference caption {
+			caption-side: top; /* top bottom inherit [left right nonstandard] */
+			text-align: center; /* left right center justify start end match-parent [start end] "." [start "."] ["." end] inherit */
+		}
+		.color-reference details {
+			caption-side: bottom;
+			text-align: left;
+		}
+		table.color-reference {
+			empty-cells: show; /* show/hide */
+			word-wrap: normal; /* normal/break-word useful to cause long URLs to wrap */
+			text-align: center;
+		}
+		.color-reference th {
+			background-color: #445;
+			padding: 6px 12px 6px;
+		}
+		.color-reference td {
+			padding: 12px;
+		}
+	</style>
+</head>
+
+<body>
+<table class="color-reference">
+	<caption>
+		<i>Colors used in files scanned</i>
+	</caption>
+	<colgroup span="1" class="column-swatch"></colgroup>
+	<colgroup span="1" class="column-name"></colgroup>
+	<colgroup span="1" class="column-const"></colgroup>
+	<colgroup span="1" class="column-hex"></colgroup>
+	<colgroup span="1" class="column-rgb"></colgroup>
+	<colgroup span="1" class="column-hsl"></colgroup>
+	<colgroup span="1" class="column-closest"></colgroup>
+	<thead>
+		<tr>
+			<th title="color swatch">color</th>
+			<th title="name of color">name</th>
+			<th title="defined constant">constant</th>
+			<th title="hex representation of color">hex</th>
+			<th title="red green blue representation of color">rgb</th>
+			<th title="hue saturation luminisity representation of color">hsl</th>
+			<th title="closest named/defined constant">closest color</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th title="color swatch">color</th>
+			<th title="name of color">name</th>
+			<th title="defined constant">constant</th>
+			<th title="hex representation of color">hex</th>
+			<th title="red green blue representation of color">rgb</th>
+			<th title="hue saturation luminisity representation of color">hsl</th>
+			<th title="closest named/defined constant">closest color</th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td style="background-color: %hex%;" title="%name% %const% %hex% rgb(%rgb%) hsl(%hsl%)"></td>
+			<td>%name%</td>
+			<td>%const%</td>
+			<td>%hex%</td>
+			<td>%rgb%</td>
+			<td>%hsl%</td>
+			<td>%closest%</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
