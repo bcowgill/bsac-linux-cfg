@@ -788,7 +788,7 @@ sub showHtmlColorOutput
 		else
 		{
 			debug("showHtmlColorOutput() $out", 2);
-			open($fh, '>>', $out);
+			open($fh, '>', $out);
 		}
 		debug("showHtmlColorOutput() seen " . Dumper($Var{'rhColorsSeen'}), 3);
 		my $rhAllColorInfo = {};
@@ -802,13 +802,18 @@ sub showHtmlColorOutput
 			$gotColor = canonical($gotColor);
 			my $name = $Var{'rhColorNamesMap'}{$gotColor} || '';
 			my $const = lookupColorConstantsMap($gotColor);
+			my $closest = $name ? '' : niceNameClosestColors($gotColor);
+			if ($closest =~ $Var{'regex'}{'isHashColor'})
+			{
+				$closest = '';
+			}
 			my $rhColorInfo = {
 				original => $color,
 				hex => $gotColor,
 				rgb => $gotRgb,
 				name => $name,
 				const => $const ? $const->[0] : '',
-				closest => $name ? '' : niceNameClosestColors($gotColor),
+				closest => $closest,
 				uses => $Var{'rhColorsSeen'}{$color},
 			};
 			debug("showHtmlColorOutput() color " . Dumper($rhColorInfo), 4);
@@ -3599,7 +3604,7 @@ __DATA__
 	</tfoot>
 	<tbody>
 		<tr>
-			<td style="background-color: %hex%;" title="%name% %const% %hex% rgb(%rgb%) hsl(%hsl%)"></td>
+			<td style="background-color: %hex%;" title="%name% %const% %hex% rgb(%rgb%) %closest%"></td>
 			<td>%uses%</td>
 			<td>%name%</td>
 			<td>%const%</td>
@@ -3611,3 +3616,40 @@ __DATA__
 </table>
 </body>
 </html>
+__DATA__
+> cat color-fix.sh
+
+CONST_FILES="
+	--const-file src/styles/shared/_variables-override.scss \
+	--const-file src/styles/shared/_sheets.scss \
+"
+SCSS_FILES=`find src/styles -name *.scss | grep -v _variables-override`
+
+filter-css-colors.pl --human \
+	--const-type=sass \
+	$CONST_FILES \
+	--html swatches.html \
+	--const-pull -  \
+	$SCSS_FILES
+
+filter-css-colors.pl \
+   --debug \
+	--canonical --hash \
+   --novalid-only \
+	--inplace=.bak \
+	--const-type=sass \
+	$CONST_FILES \
+	--const-pull src/styles/shared/_variables-override.scss \
+	$SCSS_FILES
+
+perl -i.bak -pne '
+	s{
+		rgba\(
+			\s* red   \( \s* ([^\)]+) \s* \) \s* ,
+			\s* green \( \s* \1 \s* \) \s* ,
+			\s* blue  \( \s* \1 \s* \) \s* ,
+			\s* ([^\)]+) \s* \)
+	}{
+		"rgba($1, $2)"
+	}xmse;
+' $SCSS_FILES
