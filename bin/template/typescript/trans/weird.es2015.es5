@@ -14,6 +14,7 @@ export declare class CWeird {
     publics(): void;
     private privates();
     protected protecteds(): void;
+    thing: (this: CWeird) => void;
 }
 */
  
@@ -22,7 +23,8 @@ export function FWeird(value) {
     console.log('FWeird was called', value);
 }
 var CWeird = (function () {
-    function CWeird(name, prot, priv) {
+    function CWeird(// becomes CWeird() function default export
+        name, prot, priv) {
         if (prot === void 0) { prot = 'protected string'; }
         if (priv === void 0) { priv = 'private string'; }
         var _this = this;
@@ -32,6 +34,10 @@ var CWeird = (function () {
         this.arrow = function () {
             console.log(_this.name + " arrow called");
             _this.protecteds();
+        };
+        this.thing = function () {
+            console.log("CWeird.thing called " + this);
+            this.publics();
         };
         console.log("CWeird constructor(" + name + ")");
         this.description = "I am " + name + " and I keep " + this.priv + " a secret but share " + this.prot + " with friends";
@@ -44,6 +50,7 @@ var CWeird = (function () {
     };
     CWeird.prototype.publics = function () {
         console.log(this.name + " publics called");
+        console.log("description: " + this.description);
         this.protecteds();
     };
     CWeird.prototype.privates = function () {

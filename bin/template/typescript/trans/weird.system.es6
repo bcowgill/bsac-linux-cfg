@@ -14,6 +14,7 @@ export declare class CWeird {
     publics(): void;
     private privates();
     protected protecteds(): void;
+    thing: (this: CWeird) => void;
 }
 */
  
@@ -30,13 +31,18 @@ System.register([], function (exports_1, context_1) {
         setters: [],
         execute: function () {
             CWeird = class CWeird {
-                constructor(name, prot = 'protected string', priv = 'private string') {
+                constructor(// becomes CWeird() function default export
+                    name, prot = 'protected string', priv = 'private string') {
                     this.name = name;
                     this.prot = prot;
                     this.priv = priv;
                     this.arrow = () => {
                         console.log(`${this.name} arrow called`);
                         this.protecteds();
+                    };
+                    this.thing = function () {
+                        console.log(`CWeird.thing called ${this}`);
+                        this.publics();
                     };
                     console.log(`CWeird constructor(${name})`);
                     this.description = `I am ${name} and I keep ${this.priv} a secret but share ${this.prot} with friends`;
@@ -49,6 +55,7 @@ System.register([], function (exports_1, context_1) {
                 }
                 publics() {
                     console.log(`${this.name} publics called`);
+                    console.log(`description: ${this.description}`);
                     this.protecteds();
                 }
                 privates() {
