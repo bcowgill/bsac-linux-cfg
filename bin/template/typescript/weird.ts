@@ -33,6 +33,7 @@
 	  {
 		 console.log( `${this.name} whatever called` );
 	  }
+
 	  public arrow = () => // becomes instance.arrow() as a direct instance method
 	  {
 		 console.log( `${this.name} arrow called` );
@@ -53,6 +54,12 @@
 	  {
 		 console.log( `${this.name} protecteds called` );
 		 this.privates();
+	  }
+
+	  thing = function ( this: CWeird ) // becomes instance.thing() as a direct instance method
+	  {
+		 console.log( `CWeird.thing called ${this}` );
+		 this.publics();
 	  }
    }
 
