@@ -1,4 +1,4 @@
-   export function FWeird( value: any )
+   export function FWeird( value: any ) // becomes a function exported directly
    {
 	  console.log( 'FWeird was called', value );
    }
@@ -9,7 +9,7 @@
 
 	  public readonly description: string;
 
-	  constructor(
+	  constructor( // becomes CWeird() function default export
 		 public name: string,
 		 protected prot: string = 'protected string',
 		 private priv: string = 'private string'
@@ -19,36 +19,37 @@
 		 this.description = `I am ${name} and I keep ${this.priv} a secret but share ${this.prot} with friends`;
 	  }
 
-	  static statics()
-	  {
-		 console.log( `${CWeird.klass} statics called` );
-	  }
-	  static staticArrow = () =>
+	  static statics() // becomes CWeird.statics() as a static method
 	  {
 		 console.log( `${CWeird.klass} statics called` );
 	  }
 
-	  whatever() // also an instance method
+	  static staticArrow = () => // becomes CWeird.staticArrow() as a static method
+	  {
+		 console.log( `${CWeird.klass} statics called` );
+	  }
+
+	  whatever() // becomes CWeird.prototype.whatever() as an instance method
 	  {
 		 console.log( `${this.name} whatever called` );
 	  }
-	  public arrow = () =>
+	  public arrow = () => // becomes instance.arrow() as a direct instance method
 	  {
 		 console.log( `${this.name} arrow called` );
 		 this.protecteds()
 	  }
-	  public publics()
+	  public publics() // becomes CWeird.prototype.publics() as an instance method
 	  {
 		 console.log( `${this.name} publics called` );
 		 console.log( `description: ${this.description}` );
 		 this.protecteds()
 	  }
-	  private privates()
+	  private privates() // becomes CWeird.prototype.privates() as an instance method
 	  {
 		 console.log( `${this.name} privates called` );
 		 FWeird( 'from privates' );
 	  }
-	  protected protecteds()
+	  protected protecteds() // becomes CWeird.prototype.protecteds() as an instance method
 	  {
 		 console.log( `${this.name} protecteds called` );
 		 this.privates();

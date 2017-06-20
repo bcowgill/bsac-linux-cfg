@@ -16,7 +16,7 @@ export declare class CWeird {
     protected protecteds(): void;
 }
 */
- 
+
 // weird.js - commonjs.es6
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
