@@ -475,6 +475,9 @@ FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
+# Mobile phone mounting tools
+MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
+
 #vim-scripts requires ruby - loads of color schemes and helpful vim scripts
 # runit
 # jhead for jpeg EXIF header editing
@@ -503,6 +506,7 @@ INSTALL_CMDS="
 	fbcat
 	jhead
 	chromium-browser
+	$MTP_PKG
 	$PHP_CMD:$PHP_PKG
 "
 
@@ -1951,6 +1955,20 @@ if [ ! -z "$DROPBOX_URL" ]; then
 		dir_linked_to Pictures/WorkSafe $HOME/Dropbox/WorkSafe "link pictures dir to WorkSafe screen saver images"
 	fi
 fi # DROPBOX_URL
+
+# Mobile phone mounting setup
+# http://www.mysolutions.it/mounting-your-mtp-androids-sd-card-on-ubuntu/
+# Device 0 (VID=04e8 and PID=6860) is a Samsung Galaxy models (MTP).
+if which mtpfs; then
+	if [ ! -d /media/mtp ]; then
+		if [ ! -e ~/.mtpz-date ]; then
+			pushd ~ ; wget https://raw.githubusercontent.com/kbhomes/libmtp-zune/master/src/.mtpz-data; popd
+		fi
+		make_root_dir_exist /media/mtp "set up mount point for MTP devices"
+		sudo chmod 755 /media/mtp
+		sudo mtpfs -o allow_other /media/mtp
+	fi
+fi
 
 # Check mysql configuration options
 FILE=.my.cnf

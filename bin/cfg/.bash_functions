@@ -10,6 +10,14 @@ whichever () {
    command -v $cmd
 }
 
+# cpstat copies files with stats and progress
+cpstat () {
+   local sourceDir targetDir
+   sourceDir="$1"
+   targetDir="$2"
+   tar c "$sourceDir" | pv | tar x -C "$targetDir"
+}
+
 # rvdiff reverses the files being diffed
 rvdiff () {
    vdiff $2 $1

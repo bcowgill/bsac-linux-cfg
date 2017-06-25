@@ -534,6 +534,7 @@ iw
 java-common
 javascript-common
 jhead
+jmtpfs
 kate-data
 katepart
 kbd
@@ -2013,6 +2014,8 @@ mountall
 mousetweaks
 mscompress
 mtools
+mtpfs
+mtp-tools
 mtr-tiny
 multiarch-support
 multitail
@@ -2513,6 +2516,7 @@ totem-plugins
 transmission-common
 transmission-gtk
 tsconf
+ttf-ancient-fonts
 ttf-dejavu-core
 ttf-dejavu-extra
 ttf-indic-fonts-core
