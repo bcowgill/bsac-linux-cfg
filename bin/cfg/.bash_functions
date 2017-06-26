@@ -18,6 +18,13 @@ cpstat () {
    tar c "$sourceDir" | pv | tar x -C "$targetDir"
 }
 
+# find-ez easy find shows just name, size and time
+find-ez () {
+	local sourceDir
+	sourceDir="$1"
+	pushd "$sourceDir" > /dev/null && find . -type f -printf '"%h/%f"\t%s\t%T+\n' | sort && popd > /dev/null
+}
+
 # rvdiff reverses the files being diffed
 rvdiff () {
    vdiff $2 $1
