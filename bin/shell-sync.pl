@@ -113,11 +113,23 @@ sub shell_sync
 	my ($remoteDir, $backupDir, $rhChanges) = @ARG;
 	$remoteDir =~ s{/\z}{}xmsg;
 	$backupDir =~ s{/\z}{}xmsg;
-	print "# synchronize files from $remoteDir/ to $backupDir/\n";
-	print "set -x\n";
-	$counter = scalar(@{$rhChanges->{new}}) + scalar(@{$rhChanges->{update}}) + scalar(@{$rhChanges->{delete}});
-	sync_new($remoteDir, $backupDir, $rhChanges->{new}, $rhChanges->{remote});
+	print qq{# synchronize files from "$remoteDir/" to "$backupDir/"\n};
+	print qq{set -x\n};
+	my $fn = <<'EOFN';
+	update () {
+		local source target
+		source="$1"
+		target="$2"
+		cmp --quiet "$source" "$target" || cp -p "$source" "$target"
+	}
+EOFN
+	$fn =~ s{(\A|\n)\t}{$1}xmsg;
+	print qq{\n$fn};
+	$counter = scalar(@{$rhChanges->{new}}) + scalar(@{$rhChanges->{update}})
+		+ scalar(@{$rhChanges->{delete}}) + scalar(@{$rhChanges->{samesize}});
+
 	sync_changed($remoteDir, $backupDir, $rhChanges->{update}, $rhChanges->{remote});
+	sync_new($remoteDir, $backupDir, $rhChanges->{new}, $rhChanges->{remote});
 	sync_same_size($remoteDir, $backupDir, $rhChanges->{samesize}, $rhChanges->{remote});
 	sync_delete($backupDir, $rhChanges->{delete});
 }
@@ -162,7 +174,7 @@ sub sync_new
 	my $rhNewDir = {};
 	my @newFiles = sort bySize @$raNew;
 	my $number = scalar(@newFiles);
-	print "\n### copy new files: $number\n";
+	print qq{\n### copy new files: $number\n};
 	foreach my $file (@newFiles)
 	{
 		my ($from, $to) = ($file, $file);
@@ -171,9 +183,9 @@ sub sync_new
 		$to   =~ s{\A"}{"$backupDir/}xmsg;
 		my $toDir = $to;
 		$toDir =~ s{/ [^/]+ \z}{"}xmsg;
-		print "\nmkdir -p $toDir > /dev/null\n" unless exists($rhNewDir->{$toDir});
-		print "echo $counter...\ncp $from $to # $size bytes\n";
-		--$counter;
+		print qq{\nmkdir -p "$toDir" > /dev/null\n} unless exists($rhNewDir->{$toDir});
+		count();
+		print qq{cp -p $from $to # $size bytes\n};
 		$rhNewDir->{$toDir} = 1;
 	}
 }
@@ -182,15 +194,15 @@ sub sync_changed
 {
 	my ($remoteDir, $backupDir, $raChanged, $rhRemoteFiles) = @ARG;
 	my $number = scalar(@$raChanged);
-	print "\n\n### update files: $number\n";
+	print qq{\n### update files: $number\n};
 	foreach my $file (sort bySize @$raChanged)
 	{
 		my ($from, $to) = ($file, $file);
 		my $size = $rhRemoteFiles->{$file}{size};
 		$from =~ s{\A"}{"$remoteDir/}xmsg;
 		$to   =~ s{\A"}{"$backupDir/}xmsg;
-		print "echo $counter...\ncp $from $to # $size bytes \n";
-		--$counter;
+		count();
+		print qq{cp -p $from $to # $size bytes \n};
 	}
 }
 
@@ -198,16 +210,15 @@ sub sync_same_size
 {
 	my ($remoteDir, $backupDir, $raChanged, $rhRemoteFiles) = @ARG;
 	my $number = scalar(@$raChanged);
-	print "\n\n### update same size files: $number\n";
+	print qq{\n### update same size files: $number\n};
 	foreach my $file (sort bySize @$raChanged)
 	{
-		next;
 		my ($from, $to) = ($file, $file);
 		my $size = $rhRemoteFiles->{$file}{size};
 		$from =~ s{\A"}{"$remoteDir/}xmsg;
 		$to   =~ s{\A"}{"$backupDir/}xmsg;
-		print "echo $counter...\ncp $from $to # $size bytes \n";
-		--$counter;
+		count();
+		print qq{update $from $to # $size bytes \n};
 	}
 }
 
@@ -215,11 +226,11 @@ sub sync_delete
 {
 	my ($backupDir, $raDelete) = @ARG;
 	my $number = scalar(@$raDelete);
-	print "\n\n### delete files: $number\n";
+	print qq{\n### delete files: $number\n};
 	foreach my $file (sort(@$raDelete))
 	{
 		$file =~ s{\A"}{"$backupDir/}xmsg;
-		print "echo $counter...\nrm $file\n";
+		print qq{echo $counter...\nrm $file\n};
 		--$counter;
 	}
 }
@@ -229,4 +240,10 @@ sub bySize
 	my $rhA = $rhChanges->{remote}{$a};
 	my $rhB = $rhChanges->{remote}{$b};
 	return $rhA->{size} <=> $rhB->{size};
+}
+
+sub count
+{
+	print qq{echo $counter remaining ...\n};
+	--$counter;
 }
