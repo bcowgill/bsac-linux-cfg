@@ -4,15 +4,14 @@
 # useful for MTP mounted mobiles which work unreliably on rsync
 
 # cd d/backup
-# jmtpfs /data/me/mtp
-# find-ez.sh /data/me/mtp/Phone > phone.lst
+# scan-phone.sh
 # A:
-# find-ez.sh samsung-galaxy-note4-edge/phone > phone-backup.lst
-# shell-sync.pl /data/me/mtp/Phone samsung-galaxy-note4-edge/phone phone.lst phone-backup.lst > go.sh
 # ./go.sh
 # when i/o errors happen from MTP device restart
 # fusermount -u /data/me/mtp
 # jmtpfs /data/me/mtp
+# find-ez.sh samsung-galaxy-note4-edge/phone > phone-backup.lst
+# shell-sync.pl /data/me/mtp/Phone samsung-galaxy-note4-edge/phone phone.lst phone-backup.lst > go.sh
 # back to A:
 
 use strict;
@@ -83,7 +82,7 @@ sub analyse_changes
 			}
 			else
 			{
-				push(@$raSameSize, $file);
+				push(@$raSameSize, $rhBackupFiles->{$file});
 			}
 			delete($rhBackupFiles->{$file});
 		}
@@ -146,6 +145,7 @@ sub parse_listing
 		my ($file, $size, $time) = split(/\t/, $line);
 		$file =~ s{"(\.|$dir)/}{"}xmsg;
 		$rhFiles->{$file} = {
+			file => $file,
 			size => $size,
 			time => $time,
 		}
@@ -211,14 +211,17 @@ sub sync_same_size
 	my ($remoteDir, $backupDir, $raChanged, $rhRemoteFiles) = @ARG;
 	my $number = scalar(@$raChanged);
 	print qq{\n### update same size files: $number\n};
-	foreach my $file (sort bySize @$raChanged)
+	foreach my $rhChanged (sort bySizeInfo @$raChanged)
 	{
+		my $file = $rhChanged->{file};
+		my $backupTime = $rhChanged->{time};
 		my ($from, $to) = ($file, $file);
 		my $size = $rhRemoteFiles->{$file}{size};
+		my $remoteTime = $rhRemoteFiles->{$file}{time};
 		$from =~ s{\A"}{"$remoteDir/}xmsg;
 		$to   =~ s{\A"}{"$backupDir/}xmsg;
 		count();
-		print qq{update $from $to # $size bytes \n};
+		print qq{update $from $to # $size bytes $remoteTime $backupTime\n};
 	}
 }
 
@@ -240,6 +243,11 @@ sub bySize
 	my $rhA = $rhChanges->{remote}{$a};
 	my $rhB = $rhChanges->{remote}{$b};
 	return $rhA->{size} <=> $rhB->{size};
+}
+
+sub bySizeInfo
+{
+	return $a->{size} <=> $b->{size};
 }
 
 sub count
