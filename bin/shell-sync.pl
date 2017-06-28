@@ -183,7 +183,7 @@ sub sync_new
 		$to   =~ s{\A"}{"$backupDir/}xmsg;
 		my $toDir = $to;
 		$toDir =~ s{/ [^/]+ \z}{"}xmsg;
-		print qq{\nmkdir -p "$toDir" > /dev/null\n} unless exists($rhNewDir->{$toDir});
+		print qq{\nmkdir -p $toDir > /dev/null\n} unless exists($rhNewDir->{$toDir});
 		count();
 		print qq{cp -p $from $to # $size bytes\n};
 		$rhNewDir->{$toDir} = 1;
