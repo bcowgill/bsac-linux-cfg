@@ -440,10 +440,12 @@ gstreamer0.10-x:amd64
 gstreamer1.0-alsa:amd64
 gstreamer1.0-clutter
 gstreamer1.0-fluendo-mp3:amd64
+gstreamer1.0-libav:amd64
 gstreamer1.0-nice:amd64
 gstreamer1.0-plugins-base:amd64
 gstreamer1.0-plugins-base-apps
 gstreamer1.0-plugins-good:amd64
+gstreamer1.0-plugins-ugly:amd64
 gstreamer1.0-pulseaudio:amd64
 gstreamer1.0-tools
 gstreamer1.0-x:amd64

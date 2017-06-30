@@ -603,12 +603,13 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#EBOOK_READER=""
 	DRUID_PKG=""
 
+	DIGIKAM_PKG="digikam /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so:gstreamer1.0-plugins-ugly /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so:gstreamer1.0-libav"
 	# ttf-ancient-fonts - Symbola used for emacs emoji
 	CUSTOM_PKG="
 		gnucash
 		audacity
 		oggconvert
-		digikam
+		$DIGIKAM_PKG
 		samba
 		mount.cifs:cifs-utils
 		firefox
