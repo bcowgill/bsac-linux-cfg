@@ -27,10 +27,10 @@ For an alternative way of deleting the same files see fdups and delsame system c
 EXAMPLES:
 
 recursively delete from current directory tree files that match another directory tree.
-find . -type d | perl -ne 'chomp; print qq{delsame.pl "\$HOME/d/Dropbox/$_" "$_"\n}'
+find . -type d | perl -ne 'chomp; print qq{delsame.pl "\\\$HOME/d/Dropbox/\$_" "\$_"\\n}'
 
 delete the empty directories after cleanup
-find . -depth -type d -exec rmdir {} \;
+find . -depth -type d -exec rmdir {} \\;
 USAGE
 exit ($message ? 1 : 0);
 }
