@@ -1,10 +1,21 @@
 #!/bin/bash
 # choose a random fortune generating program
 
-MIX="50% clean-code 20% simple-design starwars"
+MIX="
+	50% clean-code
+	20% simple-design
+	15% javascript-good-parts
+	5% emacs
+	starwars
+"
+
 if [ "$COMPANY" == "" ]; then
+	#	clean-code
+	#	emacs
+	#	javascript-good-parts
+	#	simple-design
 	MIX="
-		emacs
+		aristotle
 		greatest-salesman-in-the-world
 		liberty
 		matrix
@@ -139,3 +150,6 @@ do
 		which ping      > /dev/null && choose "ping -c 1 google.com"
 	fi
 done
+
+exit 0
+

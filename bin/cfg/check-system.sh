@@ -1938,7 +1938,7 @@ BAIL_OUT php
 # end of main installing, now configuring
 
 pushd bin/fortune
-	./mk-fortune.sh && cd starwars && ./mk-fortune-starwars.sh
+	./mk-fortune.sh
 popd
 
 if [ ! -z "$DROPBOX_URL" ]; then

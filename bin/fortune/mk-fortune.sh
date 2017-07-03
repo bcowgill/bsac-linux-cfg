@@ -23,6 +23,19 @@ do
 	#fortune $BASE
 done
 
+touch known-fortunes.lst
+ls *.fortune | perl -pne 's{\.fortune}{}xmsg; s{\A}{\t\t}xmsg;' > all-fortunes.lst 
+
+pushd starwars && ./mk-fortune-starwars.sh && popd
+
+cmp known-fortunes.lst all-fortunes.lst || (\
+	cp all-fortunes.lst known-fortunes.lst; \
+	echo "# New fortune files exist, amend the MIX setting at top of script..." >> ~/bin/random-text.sh; \
+	cat all-fortunes.lst >> ~/bin/random-text.sh; \
+	vim ~/bin/random-text.sh \
+)
+rm all-fortunes.lst
+
 exit 0
 Makefile example
 

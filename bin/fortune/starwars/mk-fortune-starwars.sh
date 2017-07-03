@@ -34,6 +34,8 @@ sudo cp starwars.fortune.dat $LIB/starwars.dat
 #echo "test fortune in global dir"
 #fortune starwars
 
+ls *.fortune | perl -pne 's{\.fortune}{}xmsg; s{\A}{\t\t}xmsg;' >> ../all-fortunes.lst
+
 exit 0
 Makefile example
 
