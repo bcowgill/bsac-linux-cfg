@@ -1206,6 +1206,9 @@ file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manage
 file_linked_to bin/i3-launch.sh  $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
 file_linked_to bin/i3-dock.sh    $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
 
+file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
+file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english dictionary"
+
 [ -d .config/mc ] && HAS_MC=1
 make_dir_exist .config/mc "midnight commander configuration file dir"
 if [ ${HAS_MC:-)} == 0 ]; then
