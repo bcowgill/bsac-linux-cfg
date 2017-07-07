@@ -307,8 +307,9 @@ NPM_GLOBAL_PKG="
 	express:express-generator
 	$NODE_MOD/node-notifier/README.md:node-notifier
 	ncu:npm-check-updates
-	tsc:typescript tslint typings
+	tsc:typescript tslint typings tsfmt:typescript-formatter
 	alm
+   yarn
 "
 
 # Typescript editor support
