@@ -309,7 +309,7 @@ NPM_GLOBAL_PKG="
 	ncu:npm-check-updates
 	tsc:typescript tslint typings tsfmt:typescript-formatter
 	alm
-   yarn
+	yarn
 "
 
 # Typescript editor support
