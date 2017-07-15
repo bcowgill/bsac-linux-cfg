@@ -12,6 +12,7 @@ WORDLISTS="
 	$WORDS/british-english.txt
 	$WORDS/custom-words.txt
 "
+GAMELIST=$WORDS/game-only.txt
 
 [ -d $WORDS ] || mkdir -p $WORDS
 
@@ -41,10 +42,20 @@ if [ -z $1 ]; then
 	echo Usage example: match .el..es omitting letters already guessed
 	echo "L='[^delnrst]'; lookup-english.sh \${L}el\${L}\${L}es"
 	echo "V='aeiou'; export G='bdenr'; L=\"[^\$G]\"; C=\"[^\$V\$G]\"; WORD=be\${L}\${L}e\${C}; lookup-english.sh \$WORD"
+	if [ -f $GAMELIST ]; then
+		echo WARNING: $GAMELIST is the only word list that will be looked at.  Delete file if you want to use all english words.
+	else
+		echo If you create a file $GAMELIST it will be the only word list checked.
+	fi
 	exit 1
 fi
+
+if [ ! -f $GAMELIST ]; then
+	GAMELIST="$WORDLISTS"
+fi
+
 echo regex: "\A $1 \b"
 #echo lookup: $1
-#echo WORDLISTS: $WORDLISTS
-LOOKUP=$1 perl -ne '$squote="\x27"; tr[A-Z][a-z]; next if m{[\-$squote\(]}xms; print "$_" if m{\A $ENV{LOOKUP} \b}xms' $WORDLISTS | sort | uniq
+#echo WORDLISTS: $GAMELIST
+LOOKUP=$1 perl -ne '$squote="\x27"; tr[A-Z][a-z]; next if m{[\-$squote\(]}xms; print "$_" if m{\A $ENV{LOOKUP} \b}xms' $GAMELIST | sort | uniq
 
