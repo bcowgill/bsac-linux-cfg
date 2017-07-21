@@ -26,44 +26,48 @@ my $DAYS = 90;
 
 sub details
 {
-    my $words = scalar(@words);
-    my $run = 'xxx' . ('x' x int(6 * rand()));
+	my $words = scalar(@words);
+	my $run = 'xxx' . ('x' x int(6 * rand()));
 #    print "RUN: $run\n";
-    my @run = split(//, $run);
+	my @run = split(//, $run);
 #    print Dumper(\@run);
-    my $details = join(" ", map { ucfirst($words[int(rand() * $words)]) } @run);
-    $details =~ s{\n}{}xmsg;
-    return $details;
+	my $details = join(" ", map { ucfirst($words[int(rand() * $words)]) } @run);
+	$details =~ s{\n}{}xmsg;
+	return $details;
 }
 
 sub pad
 {
-    my ($value, $width) = @_;
-    return ('0' x $width - length($value)) . $value;
+	my ($value, $width) = @_;
+	if (length($value) >= $width)
+	{
+		return $value;
+	}
+	return (('0' x ($width - length($value))) . $value);
 }
 
 for (my $sale = 0; $sale < 500; ++$sale) {
-    my $amount = int(rand() * 100000) / 100;
-    my $details = "S$sale: " . details();
-    $details =~ s{'}{’}xmsg;
+	my $amount = int(rand() * 100000) / 100;
+	my $details = "S$sale: " . details();
+	$details =~ s{'}{’}xmsg;
 
-    my $rightnow = localtime;
-    my $daysago = int($DAYS * rand());
-    my $then = $rightnow - (ONE_DAY * $daysago);
+	my $rightnow = localtime;
+	my $daysago = int($DAYS * rand());
+	my $then = $rightnow - (ONE_DAY * $daysago);
 
-    my $newtime = Time::Piece->new(
-        timelocal(
-                0,
-                0,
-                0,
-                $then->mday,
-                $then->mon - 1,
-                $then->year
-        ));
+	my $newtime = Time::Piece->new(
+		timelocal(
+				0,
+				0,
+				0,
+				$then->mday,
+				$then->mon - 1,
+				$then->year
+		));
 
-    my $date = $newtime->datetime;#year . '-' . pad($then->mon - 1, 2) . '-' . pad($then->mday, 2);
+	my $date = $newtime->datetime;#year . '-' . pad($then->mon - 1, 2) . '-' . pad($then->mday, 2);
 
-    my $command = qq(DATA='salesinvoice={"grossAmount":"$amount","invoiceDate":"$date","details":"$details","vatAmount":0}'; create\n);
-    print $command;
+	my $command = qq(DATA='salesinvoice={"grossAmount":"$amount","invoiceDate":"$date","details":"$details","vatAmount":0}'; create\n);
+	print $command;
 }
 

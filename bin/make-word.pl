@@ -108,6 +108,9 @@ sub histogram
 sub pad
 {
 	my ($string, $width) = @_;
-	return (' ' x ($width - length($string))) . $string;
+	if (length($string) >= $width)
+	{
+		return $string;
+	}
+	return ((' ' x ($width - length($string))) . $string);
 }
-
