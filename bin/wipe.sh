@@ -15,5 +15,6 @@ do
 	else
 		df -k "$WHERE"
 		cat /dev/urandom > "$WHERE/$FILE" || (sync && rm "$WHERE/$FILE")
+	fi
 done
 echo wiped `date`
