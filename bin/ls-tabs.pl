@@ -13,7 +13,7 @@ Brent S.A. Cowgill
 ls-tabs.pl [options] [@options-file ...] [file ...]
 
 	Options:
-		--spaces=N       optional. number of spaced per tab stop. default 4
+		--spaces=N       optional. number of spaces per tab stop. default 4
 		--version        display program version
 		--help -?        brief help message
 		--man            full help message
