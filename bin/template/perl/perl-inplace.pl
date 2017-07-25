@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-sample - Using GetOpt::Long and Pod::Usage
+sample - Using GetOpt::Long and Pod::Usage and File::Slurp to edit files in place.
 
 =head1 AUTHOR
 
