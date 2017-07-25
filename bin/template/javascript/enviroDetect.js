@@ -1,3 +1,4 @@
+// enviroDetect.js
 // Detecting your environment and getting access to the global object
 // http://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/self
@@ -17,13 +18,35 @@ var memoize = function (fn) {
 
 // http://engineering.shapesecurity.com/2015/01/detecting-phantomjs-based-visitors.html
 var isPhantomJS = function () {
+    var isPhantom = false;
     var error;
+    // console.error("isPhantomJS");
     try {
         null[0]();
     } catch (exception) {
+        // console.error("isPhantomJS catch ", exception, exception.stack);
         error = exception;
     }
-    return error.stack.indexOf('phantomjs') > -1;
+    if (error.stack.indexOf('phantomjs') > -1) {
+        isPhantom = 'phantom stack';
+    }
+    else if (window && (window.callPhantom || window._phantom)) {
+        isPhantom = 'phantom globals';
+    }
+    else if (navigator && (!(navigator.plugins instanceof PluginArray) || navigator.plugins.length == 0)) {
+        isPhantom = 'phantom plugins';
+    }
+    else if (!Function.prototype.bind) {
+        isPhantom = 'phantom bind1';
+    }
+    else if (Function.prototype.bind.toString().replace(/bind/g, 'Error') != Error.toString()) {
+        isPhantom = 'phantom bind2';
+    }
+    else if (Function.prototype.toString.toString().replace(/toString/g, 'Error') != Error.toString()) {
+        isPhantom = 'phantom bind3';
+    }
+    // console.log("isPhantomJS ", isPhantom);
+    return !!isPhantom;
 };
 
 var getGlobal = new Function("return this;");

@@ -45,14 +45,36 @@ const isWebWorker = memoize(makeCheck('this === WorkerGlobalScope'))
 
 // http://engineering.shapesecurity.com/2015/01/detecting-phantomjs-based-visitors.html
 const isPhantomJS = memoize(function () {
+    let isPhantom = false
     let error
+    // console.error("isPhantomJS")
     try {
         null[0]()
     }
     catch (exception) {
+        // console.error("isPhantomJS catch ", exception, exception.stack)
         error = exception
     }
-    return error.stack.indexOf('phantomjs') > -1
+    if (error.stack.indexOf('phantomjs') > -1) {
+        isPhantom = 'phantom stack'
+    }
+    else if (window && (window.callPhantom || window._phantom)) {
+        isPhantom = 'phantom globals'
+    }
+    else if (navigator && (!(navigator.plugins instanceof PluginArray) || navigator.plugins.length == 0)) {
+        isPhantom = 'phantom plugins'
+    }
+    else if (!Function.prototype.bind) {
+        isPhantom = 'phantom bind1'
+    }
+    else if (Function.prototype.bind.toString().replace(/bind/g, 'Error') != Error.toString()) {
+        isPhantom = 'phantom bind2'
+    }
+    else if (Function.prototype.toString.toString().replace(/toString/g, 'Error') != Error.toString()) {
+        isPhantom = 'phantom bind3'
+    }
+    // console.log("isPhantomJS ", isPhantom)
+    return !!isPhantom
 })
 
 function _addElement (document, message) {
