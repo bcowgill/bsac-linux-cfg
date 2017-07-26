@@ -14,6 +14,8 @@ number-tests.pl [options] [@options-file ...] [file ...]
 
  Options:
    --tag            fixed test ID tag string
+   --mark-skip      mark all tests as skip.it so simulate it.only
+   --unmark-skip    replace all skip.it with it to undo --mark-skip
    --version        display program version
    --help -?        brief help message
    --man            full help message
@@ -25,6 +27,14 @@ number-tests.pl [options] [@options-file ...] [file ...]
 =item B<--tag>
 
  Specify a fixed tag string to mark the tests instead of basing it on the file name.
+
+=item B<--mark-skip>
+
+ Replace all it() calls with skip.it() to simulate it.only() for jstest driver since it doesn't support it.only().
+
+=item B<--unmark-skip>
+
+ Replace all skip.it() calls with it() to undo a previous --mark-skip application.
 
 =item B<--version>
 
@@ -100,6 +110,8 @@ my %Var = (
 		],
 		raOpts => [
 			"tag|t:s",       # fixed test tag string instead of file name
+			"mark-skip!",    # mark all it tests a skip.it
+			"unmark-skip!",  # mark all skip.it tests as it
 			"debug|d+",      # incremental keep specifying to increase
 			"verbose|v!",    # flag --verbose or --noverbose
 			$STDIO,          # empty string allows - to signify standard in/out as a file
@@ -215,8 +227,12 @@ sub processFiles
 sub doReplacement
 {
 	my ( $rContent ) = @ARG;
-	my $regex = qr{\b (describe|it) (\s* \( \s*) (['"]) (.+?) \3}xms;
-	$$rContent =~ s{$regex}{$1 . $2 . $3 . numberTheTest($4) . $3}xmsge;
+	my $regexRenumber = qr{\b (describe|it) (\s* \( \s*) (['"]) (.+?) \3}xms;
+	my $regexMarkSkip = qr{\b it (\s* \()}xms;
+	my $regexUnMarkSkip = qr{\b skip \s* \. \s* it (\s* \()}xms;
+	$$rContent =~ s{$regexRenumber}{$1 . $2 . $3 . numberTheTest($4) . $3}xmsge;
+	$$rContent =~ s{$regexMarkSkip}{skip.it$1}xmsg if (opt('mark-skip'));
+	$$rContent =~ s{$regexUnMarkSkip}{it$1}xmsg if (opt('unmark-skip'));
 	return $rContent;
 }
 
@@ -263,6 +279,10 @@ sub checkOptions
 	checkMandatoryOptions( $raErrors, $Var{rhGetopt}{raMandatory} );
 
 	# Check additional parameter dependencies and push onto error array
+	if (opt('mark-skip') && opt('unmark-skip'))
+	{
+		push(@$raErrors, "You cannot specify both --mark-skip and --unmark-skip");
+	}
 
 	if ( scalar(@$raErrors) )
 	{
