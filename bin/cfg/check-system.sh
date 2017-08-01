@@ -103,6 +103,7 @@ GITSVN_PKG=""
 USE_SCHEMACRAWLER=""
 USE_POSTGRES=""
 USE_MYSQL=""
+USE_REDIS=""
 USE_PIDGIN=""
 CUSTOM_PKG=""
 
@@ -182,6 +183,9 @@ RUBY_SASS_COMMANDS="ruby gem rake sass compass foundation"
 POSTGRES_PKG="psql:postgresql-client-9.3 pfm pgadmin3:pgadmin3-data pgadmin3"
 POSTGRES_NODE_PKG="node-pg"
 POSTGRES_NPM_PKG="node-dbi"
+
+REDIS_PKG="redis-cli:redis-server"
+REDIS_CMDS="redis-cli redis-server"
 
 # BlisMedia Druid reporting requirements
 DRUID_PKG="apache2"
@@ -603,6 +607,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	VPN_PKG=""
 	#EBOOK_READER=""
 	DRUID_PKG=""
+	USE_REDIS=1
 
 	DIGIKAM_PKG="digikam /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so:gstreamer1.0-plugins-ugly /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so:gstreamer1.0-libav"
 	# ttf-ancient-fonts - Symbola used for emacs emoji
@@ -835,6 +840,7 @@ fi
 [ -z "$P4MERGE_PKG"       ] && P4MERGE_CMD=""
 [ -z "$RUBY_PKG"          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
 [ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z "$USE_REDIS"         ] && REDIS_PKG="" && REDIS_CMDS=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
@@ -915,6 +921,7 @@ INSTALL_FROM="
 	$MVN_PKG
 	$POSTGRES_PKG
 	$DRUID_PKG
+   $REDIS_PKG
 	$PIDGIN_CMD
 	$PIDGIN_SKYPE_PKG
 	$VPN_PKG
@@ -940,6 +947,7 @@ COMMANDS="
 	$SLACK_CMD
 	$PINTA_CMD
 	$ELIXIR_CMDS
+   $REDIS_CMDS
 "
 
 PACKAGES="

@@ -1143,6 +1143,7 @@ libjavascriptcoregtk-3.0-0:amd64
 libjbig0:amd64
 libjbig0:i386
 libjbig2dec0
+libjemalloc1
 libjpeg8:amd64
 libjpeg8:i386
 libjpeg-progs
@@ -2396,6 +2397,8 @@ qtdeclarative5-window-plugin:amd64
 rake
 readline-common
 realtek-rts-cr-dkms
+redis-server
+redis-tools
 remmina
 remmina-common
 remmina-plugin-rdp
