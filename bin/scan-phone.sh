@@ -3,8 +3,9 @@
 
 MTP=/data/me/mtp
 phone=$MTP/Phone
+backup=samsung-galaxy-note4-edge/phone
 
-pushd ~/d/backup
+pushd ~/d/backup > /dev/null
 
 if [ ! -d $phone ]; then
 	echo will try to mount phone $phone
@@ -15,12 +16,16 @@ fi
 jmtpfs $MTP
 
 if [ ! -d $phone ]; then
-	echo was unable to mount the phone, is it connected?
+	echo was unable to mount the phone, is it connected and unlocked?
 	exit 1
 fi
 
+echo getting file list from phone...
 find-ez.sh $phone > phone.lst
-find-ez.sh samsung-galaxy-note4-edge/phone > phone-backup.lst
-shell-sync.pl $phone samsung-galaxy-note4-edge/phone phone.lst phone-backup.lst > go.shP
+echo getting file list from local backup...
+find-ez.sh $backup > phone-backup.lst
+echo generating shell sync script go.sh
+shell-sync.pl $phone $backup phone.lst phone-backup.lst > go.sh
+chmod +x go.sh
 
 echo created go.sh to update backup files from phone contents.
