@@ -4,6 +4,8 @@
 # if no second parameter is given
 # put.sh relative/path ... [target-path]
 
+INDEX=music.txt
+
 function usage
 {
 	local message
@@ -16,6 +18,7 @@ function usage
 	echo $0 source-path ... [target-path]
 	echo " "
 	echo put a directory or a file somewhere else but preserve the relative path structure.
+	echo keeps a list of all the files in VOLUMENAME-$INDEX and stores one on the remote as $INDEX
 	exit $exit
 }
 
@@ -29,6 +32,9 @@ function put
 	fi
 	if [ -z "$dest" ]; then
 		usage "You must provide a target-path or set the TO= environment variable."
+	fi
+	if [ -f "$dest" ]; then
+		usage "You must provide a target-path, not a file, or set the TO= environment variable."
 	fi
 
 	dir=`dirname "$src"`
@@ -46,16 +52,22 @@ function put
 
 function summary
 {
-	local dest
+	local dest loc volume
 	dest="$1"
+	volume=`dirname "$dest"`
+	loc=`dirname "$1"`
+	loc=`basename "$loc"`-$INDEX
 
-	echo generating music.txt
-	pushd "$dest/.." >> /dev/null && (find music -type f | sort > music.txt ; popd >> /dev/null)
-	df -k "$dest"
+	echo generating $volume/$INDEX and saving a local copy to `pwd`/$loc
+	pushd "$volume" >> /dev/null
+	find music -type f | sort > $INDEX
+	popd >> /dev/null
+	cp "$volume/$INDEX" "$loc"
+	df -k "$dest" | perl -pne 's{\A}{# }xmsg' | tee --append "$loc"
 }
 
 SRC="$1"
-if [ -z "$TO"]; then
+if [ -z "$TO" ]; then
 	if [ ! -z "$3" ]; then
 		usage "You cannot specify more than two files unless the target directory is defined in the TO= envirionment variable."
 	else
