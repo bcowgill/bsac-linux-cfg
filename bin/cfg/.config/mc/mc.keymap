@@ -1,0 +1,40 @@
+# mc - midnight commander keymap overrides for use with i3 window manager
+# in learn keys menu, pressing shift-f3 registers as f13, so f19 = shift f9
+[main]
+Help = f1; alt-f1
+
+EditForceInternal = f12
+DirSize = alt-backslash
+
+# main ctrl-x key maps
+[main:xmap]
+
+[panel]
+
+[dialog]
+Help = f1; alt-f1
+
+[input]
+Complete = alt-tab; alt-x
+
+
+[listbox]
+
+[tree]
+Help = f1; alt-f1
+
+[help]
+Help = f1; alt-f1
+
+[editor]
+Help = f1; alt-f1
+Complete = alt-tab; alt-x
+UserMenu = f11; ctrl-alt-u
+[viewer]
+Help = f1; alt-f1
+
+[viewer:hex]
+Help = f1; alt-f1
+
+[diffviewer]
+Help = f1; alt-f1

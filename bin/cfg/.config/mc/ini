@@ -157,8 +157,39 @@ f20=\\e[21\;3~
 kpasterisk=\\eOj
 backspace=
 
+[FindFile]
+file_case_sens=true
+file_shell_pattern=true
+file_find_recurs=true
+file_skip_hidden=false
+file_all_charsets=false
+content_use=true
+content_case_sens=true
+content_regexp=false
+content_first_hit=false
+content_whole_words=false
+content_all_charsets=false
+ignore_dirs_enable=true
+ignore_dirs=
+
+[HotlistConfig]
+expanded_view_of_groups=0
+
+[DiffView]
+show_symbols=false
+show_numbers=false
+tab_size=8
+diff_quality=0
+diff_ignore_tws=false
+diff_ignore_all_space=false
+diff_ignore_space_change=false
+diff_tab_expansion=false
+diff_ignore_case=false
+
 [Panelize]
 Find *.orig after patching=find . -name \\*.orig -print
 Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm /011 \\) -o \\( -perm -02000 -a -perm /01 \\) \\) -print
+Find backup files=find-bak.sh
 Find rejects after patching=find . -name \\*.rej -print
+Find source code=find-code.sh
 Modified git files=git ls-files --modified
