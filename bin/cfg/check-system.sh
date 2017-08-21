@@ -299,6 +299,7 @@ NPM_GLOBAL_PKG="
 	node-sass
 	lessc:less
 	mocha
+   jstest
 	phantomjs:phantomjs-prebuilt
 	/usr/local/lib/node_modules/karma/bin/karma:karma
 	karma:karma-cli
@@ -591,6 +592,7 @@ COMMANDS_LIST="
 "
 
 if [ "$HOSTNAME" == "akston" ]; then
+   LINK_DOWNLOADS=1
 	GIT_VER=1.9.1
 	NODE_VER=v0.10.25
 	USE_KDE=""
@@ -1122,6 +1124,10 @@ dir_linked_to bin workspace/play/bsac-linux-cfg/bin "linux config scripts in wor
 dir_linked_to tx workspace/tx "transfer area in workspace"
 dir_linked_to projects workspace/projects "projects area in workspace"
 dir_linked_to bk $DROP_BACKUP "backup area in Dropbox"
+
+if [ ! -z $LINK_DOWNLOADS ]; then
+	dir_linked_to Downloads d/Download "download directory in personal tree"
+fi
 
 dir_exists  bin/cfg "bin configuration missing"
 file_linked_to go.sh bin/$ONBOOT "on reboot script configured"
