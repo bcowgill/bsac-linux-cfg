@@ -15,6 +15,7 @@ if [ "$COMPANY" == "" ]; then
 	#	javascript-good-parts
 	#	simple-design
 	MIX="
+		50% nonviolent-communication
 		aristotle
 		greatest-salesman-in-the-world
 		liberty
