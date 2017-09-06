@@ -17,6 +17,7 @@ if [ "$COMPANY" == "" ]; then
 	MIX="
 		50% nonviolent-communication
 		aristotle
+		bsac-misc
 		greatest-salesman-in-the-world
 		liberty
 		matrix
@@ -153,4 +154,3 @@ do
 done
 
 exit 0
-

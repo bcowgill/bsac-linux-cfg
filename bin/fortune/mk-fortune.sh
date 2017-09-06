@@ -5,6 +5,41 @@
 LIB=/usr/share/games/fortunes
 FORTUNES=`ls *.fortune`
 
+rm fortune.failures.lst
+touch fortune.failures.lst
+
+function test_fortune_output
+{
+	local file FILE count SUCCESS FAILS
+	file="$1"
+	for count in 5 4 3 2 1; do
+		if [ 0 == `fortune "$file" | wc -l` ]; then
+			FAILS=1
+		else
+			SUCCESS=1
+		fi
+	done
+	if [ -z $SUCCESS ]; then
+		FILE=`fortune -f "$file" 2>&1`
+		echo "NOT OK fortune $FILE shows no output" | tee --append fortune.failures.lst
+	else
+		echo OK fortune $file shows something at least some of the time.
+	fi
+}
+
+function test_fortune
+{
+	local file FILE
+	file="$1"
+	if fortune "$file" > /dev/null; then
+		echo OK fortune $file returns zero
+		test_fortune_output "$file"
+	else
+		FILE=`fortune -f "$file" 2>&1`
+		echo "NOT OK fortune $FILE returns non-zero" | tee --append fortune.failures.lst
+	fi
+}
+
 for file in $FORTUNES
 do
 	if grep CRLF $file > /dev/null; then
@@ -13,18 +48,16 @@ do
 		dos2unix $file
 	fi
 	strfile -r $file
-	#echo "test fortune file locally"
-	#fortune `pwd`/$file
+	test_fortune `pwd`/$file
 	BASE=`basename $file .fortune`
 	echo "install $file in global dir"
 	sudo cp $file $LIB/$BASE
 	sudo cp $file.dat $LIB/$BASE.dat
-	#echo "test fortune in global dir"
-	#fortune $BASE
+	test_fortune $BASE
 done
 
 touch known-fortunes.lst
-ls *.fortune | perl -pne 's{\.fortune}{}xmsg; s{\A}{\t\t}xmsg;' > all-fortunes.lst 
+ls *.fortune | perl -pne 's{\.fortune}{}xmsg; s{\A}{\t\t}xmsg;' > all-fortunes.lst
 
 pushd starwars && ./mk-fortune-starwars.sh && popd
 
@@ -35,6 +68,8 @@ cmp known-fortunes.lst all-fortunes.lst || (\
 	vim ~/bin/random-text.sh \
 )
 rm all-fortunes.lst
+cat fortune.failures.lst
+rm fortune.failures.lst
 
 exit 0
 Makefile example
