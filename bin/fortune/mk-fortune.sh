@@ -19,11 +19,14 @@ function test_fortune_output
 			SUCCESS=1
 		fi
 	done
+	FILE=`fortune -f "$file" 2>&1`
 	if [ -z $SUCCESS ]; then
-		FILE=`fortune -f "$file" 2>&1`
-		echo "NOT OK fortune $FILE shows no output" | tee --append fortune.failures.lst
+		echo "NOT OK fortune $FILE shows no output ever" | tee --append fortune.failures.lst
 	else
 		echo OK fortune $file shows something at least some of the time.
+		if [ ! -z $FAILS ]; then
+			echo "NOT COMPLETELY OK fortune $FILE shows no output sometimes" | tee --append fortune.failures.lst
+		fi
 	fi
 }
 
