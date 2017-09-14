@@ -4,24 +4,34 @@
 
 #cat > ~/bin/fire.sh
 #!/bin/bash
-git stash save
-git checkout -b FIRE && git push --set-upstream origin FIRE
-git stash apply
+BRANCH=${1:-FIRE}
 
-git add `git status | perl -ne '
-if (!$found) {
-	$found = 1 if m{
-		\A (Untracked \s files:)
-	}xms
-}
-if (!$print && $found) {
-	$print = 1 if m{\A \t}xms;
-}
-print if $print && m{\A \t}xms;
-'`
+if git stash save "stash for emergency commit to $BRANCH"; then
+	if git checkout -b $BRANCH; then
+		NEWBRANCH=1
+		echo OK emergency branch $BRANCH created
+		git push --set-upstream origin $BRANCH
+	fi
+	git stash apply
+	if [ ! -z $NEWBRANCH ]; then
 
-git commit -am "EMERGENCY COMMIT"
-git push
+		git add `git status | perl -ne '
+		if (!$found) {
+			$found = 1 if m{
+				\A (Untracked \s files:)
+			}xms
+		}
+		if (!$print && $found) {
+			$print = 1 if m{\A \t}xms;
+		}
+		print if $print && m{\A \t}xms;
+		'`
+		git commit -am "EMERGENCY COMMIT $BRANCH"
+		git push
+	else
+		echo NOT OK emergency branch $BRANCH NOT created
+		exit 1
+	fi
+fi
 #^D
 #chmod +x ~/bin/fire.sh
-
