@@ -21,6 +21,7 @@ if [ "$COMPANY" == "" ]; then
 		greatest-salesman-in-the-world
 		liberty
 		matrix
+		philosophy
 		poems
 		respect
 		rule-britannia

@@ -1,0 +1,66 @@
+Premise: A proposition used to justify a conclusion.
+%
+In a town where all men must be clean shaven by law, the Barber is a man who must operate by strict rules:
+
+1. The Barber must shave all men who do not shave themselves.
+2. The Barber must not shave any man who does shave himself.
+Who shaves the Barber?
+
+Bertrand Russell
+%
+Species of Argument:
+1. Deductive
+2. Inductive
+3. Abductive
+4. Argument by Analogy
+5. Reductio Ad Absurdum
+%
+Entailment (Deductive Argument)
+If A is true, B must follow. A necessarily leads to B.
+
+Premise 1: All X are Y. (A)
+Premise 2: Z is an X. (A)
+Conclusion: Z is Y. (B)
+%
+Valid Argument (Deductive)
+
+An argument is valid if the truth of the premises guarantees (entails) the truth of the conclusion.
+
+Validity is not the same as Truth.
+
+If the premises are true, then your conclusion can't be false.
+
+But if a premise is false the conclusion may be false.
+%
+Truth: a Deductively Sound Argument
+An argument which is Valid and where all Premises are True.
+%
+Induction
+
+Using past experience to make future predictions.
+%
+Inductive and Abductive Arguments
+
+If the premises are true it only means that the conclusion is likely to be true.
+
+You must gather more evidence to have a better chance of having a true conclusion.
+%
+When you have eliminated the impossible, whatever remains, however improbable, must be the truth.
+
+Sherlock Holmes
+%
+Abduction
+
+Drawing a conclusion based on the explanation that best explains a state of events, rather than from evidence provided by the premises.
+%
+Interlocutors
+
+People participating in a dialogue, debate, or conversation.
+%
+Counterargument
+
+An argument presented to oppose or refute another argument.
+%
+Socratic Method
+
+Learning through a dialectic exchange of ideas, rather than a passive transmission or information.
