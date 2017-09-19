@@ -41,6 +41,7 @@ set +o posix
 #BAIL_OUT=font
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
+#BAIL_OUT=mongo
 #BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
@@ -104,6 +105,7 @@ USE_SCHEMACRAWLER=""
 USE_POSTGRES=""
 USE_MYSQL=""
 USE_REDIS=""
+USE_MONGO=""
 USE_PIDGIN=""
 CUSTOM_PKG=""
 
@@ -191,6 +193,14 @@ REDIS_CMDS="redis-cli redis-server"
 DRUID_PKG="apache2"
 DRUID_PERL_MODULES="CGI::Fast DBI DBD::mysql JSON"
 DRUID_PACKAGES="/usr/lib/apache2/modules/mod_fcgid.so:libapache2-mod-fcgid"
+
+# Mongo DB install
+MONGO_PKG="mongod:mongodb-org"
+MONGO_CMD="mongod"
+MONGO_CMDS="$MONGO_CMD mongo mongodump mongoexport mongofiles mongoimport"
+MONGO_KEY=0C49F3730359A14518585931BC711F9BA15703C6
+MONGO_KEYCHK=A15703C6
+MONGO_KEYSVR="hkp://keyserver.ubuntu.com:80"
 
 PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
@@ -610,6 +620,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	#EBOOK_READER=""
 	DRUID_PKG=""
 	USE_REDIS=1
+	USE_MONGO=1
 
 	DIGIKAM_PKG="digikam /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so:gstreamer1.0-plugins-ugly /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so:gstreamer1.0-libav"
 	# ttf-ancient-fonts - Symbola used for emacs emoji
@@ -843,6 +854,7 @@ fi
 [ -z "$RUBY_PKG"          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
 [ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$USE_REDIS"         ] && REDIS_PKG="" && REDIS_CMDS=""
+[ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
@@ -924,6 +936,7 @@ INSTALL_FROM="
 	$POSTGRES_PKG
 	$DRUID_PKG
    $REDIS_PKG
+   $MONGO_PKG
 	$PIDGIN_CMD
 	$PIDGIN_SKYPE_PKG
 	$VPN_PKG
@@ -950,6 +963,7 @@ COMMANDS="
 	$PINTA_CMD
 	$ELIXIR_CMDS
    $REDIS_CMDS
+   $MONGO_CMDS
 "
 
 PACKAGES="
@@ -1645,6 +1659,16 @@ if [ ! -z "$ELIXIR_PKG" ]; then
 fi
 
 BAIL_OUT elixir
+
+# https://docs.mongodb.com/tutorials/install-mongodb-on-ubuntu/
+if [ ! -z "$USE_MONGO" ]; then
+	apt_has_key_adv_recv $MONGO_KEYCHK $MONGO_KEY $MONGO_KEYSVR "key fingerprint for mongo database"
+	apt_has_source_listd_check "mongodb-org-3.4.list" "deb [ arch=amd64 ] http://repo.mongodb.org/apt/ubuntu $UBUNTU/mongodb-org/3.4 multiverse" "http://repo.mongodb.org/apt/ubuntu" "adding apt source for mongo database"
+	cmd_exists $MONGO_CMD || (sudo apt-get update && sudo apt-get install $MONGO_PKG)
+	#sudo service mongod start
+fi # USE_MONGO
+
+BAIL_OUT mongo
 
 echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM

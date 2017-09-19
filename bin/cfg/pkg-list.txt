@@ -2007,6 +2007,11 @@ mobile-broadband-provider-info
 modemmanager
 module-init-tools
 mokutil
+mongodb-org
+mongodb-org-mongos
+mongodb-org-server
+mongodb-org-shell
+mongodb-org-tools
 mono-4.0-gac
 mono-gac
 mono-runtime

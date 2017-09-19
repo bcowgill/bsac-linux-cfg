@@ -1852,6 +1852,17 @@ function apt_has_source_listd {
 	file_has_text "$file" "$source"
 }
 
+function apt_has_source_listd_check {
+	local name source check message file
+   name="$1"
+	source="$2"
+   check="$3"
+	message="$4"
+   file="/etc/apt/sources.list.d/$name.list"
+   make_root_file_exist "$file" "$source" "$message"
+	file_has_text "$file" "$check"
+}
+
 function apt_must_not_have_source {
 	local source message
 	source="$1"
@@ -1890,6 +1901,27 @@ function apt_has_key_adv {
 	else
 		NOT_OK "apt-key adv missing $key trying to install [$message]" || echo " "
 		sudo apt-key adv --keyserver "$url" --recv-keys $key
+		if sudo apt-key list | grep "$keycheck"; then
+			OK "apt-key installed $key"
+		else
+			NOT_OK "apt-key could not install $key [$message]"
+			return 1
+		fi
+	fi
+	return 0
+}
+
+function apt_has_key_adv_recv {
+	local keycheck key url message
+	keycheck="$1"
+	key="$2"
+	url="$3"
+	message="$4"
+	if sudo apt-key list | grep "$keycheck"; then
+		OK "apt-key has $key"
+	else
+		NOT_OK "apt-key adv missing $key trying to install [$message]" || echo " "
+		sudo apt-key adv --keyserver "$url" --recv $key
 		if sudo apt-key list | grep "$keycheck"; then
 			OK "apt-key installed $key"
 		else
