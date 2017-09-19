@@ -5,13 +5,13 @@ http://flight-manual.atom.io/getting-started/sections/atom-basics/#platform-linu
 KEY:ATOM:CMD Ctrl-Shift-p Open the command palette to execute a command
 KEY:ATOM:CONFIG Ctrl-, Open the settings tab
 KEY:ATOM:EDIT
-KEY:ATOM:NAV
-KEY:ATOM:VIEW
+KEY:ATOM:NAV Alt-\ Focus to the Tree View
+KEY:ATOM:VIEW Ctrl-\ Toggle the Tree View
 KEY:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets
 KEY:ATOM:FIND Ctrl-m Move to matching bracket
 KEY:ATOM:FIND Ctrl-t  Fuzzy Finder - popup to open any file by incremental search
 KEY:ATOM:PASTE
-KEY:ATOM:CODE
+KEY:ATOM:CODE Ctrl-r Jump to a method
 KEY:ATOM:DOC
 KEY:ATOM:BUILD
 KEY:ATOM:DEBUGGER
