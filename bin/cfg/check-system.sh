@@ -201,7 +201,7 @@ MONGO_CMDS="$MONGO_CMD mongo mongodump mongoexport mongofiles mongoimport"
 MONGO_KEY=0C49F3730359A14518585931BC711F9BA15703C6
 MONGO_KEYCHK=A15703C6
 MONGO_KEYSVR="hkp://keyserver.ubuntu.com:80"
-#TODO install Robomongo == Robo 3T
+# TODO install Robomongo == Robo 3T
 
 PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
@@ -1801,6 +1801,12 @@ crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$L
 crontab_has_command "mkdir"
 crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 crontab_has_command "wcdscan.sh"
+#15 20,22 * * 1-5           $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
+#15 8,13,20 * * 6-7         $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
+crontab_has_command "ezbackup.sh"
+
+crontab_has_command "random-desktop.sh" "0,15,30,45 * * * * DISPLAY=:0 \$HOME/bin/random-desktop.sh > /tmp/\$LOGNAME/crontab-random-desktop.log 2>&1" "crontab change desktop background"
+crontab_has_command "random-desktop.sh"
 
 if [ ! -z "$COMPANY" ]; then
 	file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
@@ -1812,6 +1818,14 @@ if [ ! -z "$COMPANY" ]; then
 	file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 	crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
 	crontab_has_command "backup-work.sh"
+	crontab_has_command "night.sh"
+	crontab_has_command "brighter.sh"
+else
+	crontab_has_command "track-battery.pl" "* * * * * \$HOME/bin/track-battery.pl > /tmp/\$LOGNAME/crontab-track-battery.log 2>&1" "crontab warn about battery drain"
+	crontab_has_command "track-battery.pl"
+	#*/7 19,20,21,22,23 * * 1-5 $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
+	#*/7 * * * 6-7              $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
+	crontab_has_command "retag.sh"
 fi
 
 BAIL_OUT crontab
