@@ -17,6 +17,7 @@ node_modules
 WebStorm
 idea
 sys-snapshot*
+battery-level.txt
 
 # erlang/elixir
 *.beam
