@@ -19,7 +19,7 @@ our $DEBUG = 0;
 our $NOISY = 0;
 
 our $save_file = "$FindBin::Bin/battery-level.txt";
-our $sound_dir = "$FindBin::Bin/sounds/BatteryWarnings";
+our $sound_dir = "$FindBin::Bin/sounds/BatteryWarnings/wav";
 our $sound_ext = '.wav';
 
 sub say_if_fallen_below
