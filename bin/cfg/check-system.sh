@@ -201,7 +201,7 @@ MONGO_CMDS="$MONGO_CMD mongo mongodump mongoexport mongofiles mongoimport"
 MONGO_KEY=0C49F3730359A14518585931BC711F9BA15703C6
 MONGO_KEYCHK=A15703C6
 MONGO_KEYSVR="hkp://keyserver.ubuntu.com:80"
-# TODO install Robomongo == Robo 3T
+#TODO install Robomongo == Robo 3T
 
 PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
@@ -386,12 +386,14 @@ EMACS_BASE=emacs24
 #https://atom.io/download/deb
 #https://atom-installer.github.com/v1.9.9/atom-amd64.deb?s=1471476867&ext=.deb
 #ATOM_VER=v1.10.0-beta7
-ATOM_VER=v1.9.9
+#ATOM_VER=v1.21.0-beta2
+ATOM_VER=1.20.1
 ATOM_PKG=atom-amd64.deb
 ATOM_CMD=atom
-ATOM_URL=https://atom-installer.github.com
-ATOM_APM_PKG=activate-power-mode
-#ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
+ATOM_URL=https://atom.io/download/deb
+#ATOM_URL=https://atom-installer.github.com
+ATOM_APM_PKG="activate-power-mode change-case"
+#ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
 SUBLIME_PKG=sublime-text_build-3114_amd64.deb
@@ -889,7 +891,7 @@ WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
 WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
 
-ATOM_URL=$ATOM_URL/$ATOM_VER/$ATOM_PKG
+#ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
@@ -1098,6 +1100,7 @@ which elixir && elixir -v
 which php && php -v
 which composer && composer -v | head -7
 which tsc && tsc -v
+which atom && atom -v
 echo END versions
 
 BAIL_OUT versions
@@ -1852,9 +1855,24 @@ fi
 # TODO how to use the TAGS file in emacs?
 
 if [ ! -z "$ATOM_PKG" ]; then
-	install_command_package_from_url $ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor"
-# TODO lib-check-system installer
-	apm install $ATOM_APM_PKG
+	if [ ! -e "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG" ]; then
+		[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
+		install_command_package_from_url install-$ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor" || /bin/true
+		cmd_exists $ATOM_CMD
+		if atom --version | grep Atom | grep $ATOM_VER; then
+			OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
+			# TODO lib-check-system installer
+			if apm install $ATOM_APM_PKG; then
+				OK "atom packages installed: $ATOM_APM_PKG"
+				mv "$DOWNLOAD/$ATOM_PKG" "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG"
+			else
+				NOT_OK "atom packages failed: $ATOM_APM_PKG"
+			fi
+		else
+			atom --version
+			NOT_OK "atom $ATOM_VER not installed"
+		fi
+	fi
 else
 	OK "will not configure atom editor unless ATOM_PKG is non-zero"
 fi
