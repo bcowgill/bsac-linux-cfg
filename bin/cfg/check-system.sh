@@ -201,7 +201,7 @@ MONGO_CMDS="$MONGO_CMD mongo mongodump mongoexport mongofiles mongoimport"
 MONGO_KEY=0C49F3730359A14518585931BC711F9BA15703C6
 MONGO_KEYCHK=A15703C6
 MONGO_KEYSVR="hkp://keyserver.ubuntu.com:80"
-#TODO install Robomongo == Robo 3T
+#  TODO install Robomongo == Robo 3T
 
 PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
@@ -327,6 +327,9 @@ NPM_GLOBAL_PKG="
 	alm
 	yarn
 "
+
+# for hosted front end static assets: html, js, css
+SURGE_NPM_PKG=surge
 
 # Typescript editor support
 # https://github.com/Microsoft/TypeScript/wiki/TypeScript-Editor-Support
@@ -695,6 +698,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	#POSTGRES_PKG=""
 	#POSTGRES_NODE_PKG=""
 	#POSTGRES_NPM_PKG=""
+	SURGE_NPM_PKG=""
 	DRUID_PKG=""
 	PIDGIN_SKYPE_PKG=""
 	VPN_PKG=""
@@ -737,6 +741,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
    NODE_VER="v6.9.2"
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
+	SURGE_NPM_PKG=""
 	VIRTUALBOX_REL=$(lsb_release -sc)
 	USE_KDE=""
 	CHARLES_PKG=""
@@ -816,6 +821,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	NODE_PKG=""
 	NODE_CMD="node"
 	NODE_CMDS="node npm"
+	SURGE_NPM_PKG=""
 	SCREENSAVER_PKG=""
 	DROPBOX_URL=""
 	SUBLIME_PKG=""
@@ -926,6 +932,7 @@ NODE_PKG_LIST="
 NPM_GLOBAL_PKG_LIST="
 	$NPM_GLOBAL_PKG
 	$POSTGRES_NPM_PKG
+	$SURGE_NPM_PKG
 "
 
 INSTALL_FROM="
