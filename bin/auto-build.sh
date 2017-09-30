@@ -8,6 +8,10 @@ TIMES=50
 LOOPS=0
 IGNORE='\.log$|\.swp$|\.bak$|~$|\.\#.*$|\#.+\#$|\.yml$|\.orig$|\.kate-swp$|/\.git/|/node_modules/|/public/doc/'
 DEBUG=1
+DATE=date
+if [ "$OSTYPE" == "linux-gnu" ]; then
+	DATE="date --rfc-3339=seconds"
+fi
 
 if [ -z "$1" ]; then
 	echo Usage: $0 build-command [watch-dir]
@@ -22,7 +26,9 @@ fi
 echo BUILD=$BUILD
 echo WATCHDIR="$WATCHDIR"
 echo TOUCH=$TOUCH
+echo PAUSE=$PAUSE
 echo IGNORE="$IGNORE"
+$DATE
 
 function debug
 {
@@ -41,16 +47,16 @@ do
 	if [ -f $TOUCH ]; then
 		if [ `find $WATCHDIR -newer $TOUCH -type f | egrep -v "$IGNORE" | tee auto-build.log | wc -l` == 0 ]; then
 			if [ $LOOPS -gt $TIMES ]; then
-				echo `date --rfc-3339=seconds` still nothing new... `pwd`
+				echo `$DATE` still nothing new... `pwd`
 				LOOPS=0
 			fi
 		else
-			echo `date --rfc-3339=seconds` "building ($BUILD) because of something new"
+			echo `$DATE` "building ($BUILD) because of something new"
 			find $WATCHDIR -newer $TOUCH -type f | egrep -v "$IGNORE" | head
 			BUILDIT=1
 		fi
 	else
-		echo `date --rfc-3339=seconds` "building ($BUILD) because of no $TOUCH file"
+		echo `$DATE` "building ($BUILD) because of no $TOUCH file"
 		BUILDIT=1
 	fi
 	if [ $BUILDIT == 1 ]; then
