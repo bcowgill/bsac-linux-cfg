@@ -3,15 +3,35 @@ atom editor command quick reference
 http://flight-manual.atom.io/getting-started/sections/atom-basics/#platform-linux
 
 KEY:ATOM:CMD Ctrl-Shift-p Open the command palette to execute a command
+KEY:ATOM:CMD Ctrl-q Exit atom
 KEY:ATOM:CONFIG Ctrl-, Open the settings tab
-KEY:ATOM:EDIT
 KEY:ATOM:NAV Alt-\ Focus to the Tree View
+KEY:ATOM:NAV Ctrl-Shift-\ Show active file in Tree View
 KEY:ATOM:VIEW Ctrl-\ Toggle the Tree View
+KEY:ATOM:VIEW Ctrl-x Close current tab
+KEY:ATOM:VIEW Ctrl-F4 Close current tab
+KEY:ATOM:VIEW Ctrl-Shift-9 Toggle git tab
+KEY:ATOM:VIEW Ctrl-9 Focus to git tab
+KEY:ATOM:VIEW Ctrl-Shift-8 Toggle github tab
+KEY:ATOM:VIEW Ctrl-8 Focus to github tab
+KEY:ATOM:VIEW Ctrl-Shift-m Toggle Markdown preview window
+KEY:ATOM:VIEW Ctrl-k left Split pane to left
+KEY:ATOM:VIEW Ctrl-k right Split pane to right
+KEY:ATOM:VIEW Ctrl-k up Split pane above
+KEY:ATOM:VIEW Ctrl-k down Split pane below
+KEY:ATOM:EDIT Ctrl-Shift-p Change   Change case commands
 KEY:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets
+KEY:ATOM:FIND Ctrl-f Find/Replace text
+KEY:ATOM:FIND Ctrl-Shift-f Find/Replace text in project
 KEY:ATOM:FIND Ctrl-m Move to matching bracket
-KEY:ATOM:FIND Ctrl-t  Fuzzy Finder - popup to open any file by incremental search
+KEY:ATOM:CODE Ctrl-Shift-r View symbols/methods in project (needs a tag file)
+KEY:ATOM:FIND Ctrl-t Fuzzy Finder - popup to open any file by incremental search
+KEY:ATOM:CODE Ctrl-r View symbols/methods and jump to definition
+KEY:ATOM:CODE Ctrl-Alt-down Go to symbol declaration (needs a tag file)
+KEY:ATOM:CODE Ctrl-Alt-up Jump back from symbol declaration
+KEY:ATOM:FUN Ctrl-Alt-o Toggle activation of power mode
+
 KEY:ATOM:PASTE
-KEY:ATOM:CODE Ctrl-r Jump to a method
 KEY:ATOM:DOC
 KEY:ATOM:BUILD
 KEY:ATOM:DEBUGGER
@@ -19,7 +39,6 @@ KEY:ATOM:CONFIG
 KEY:ATOM:CHANGES
 KEY:ATOM:TABS
 KEY:ATOM:HELP
-KEY:ATOM:FUN Ctrl-Alt-o Toggle activation of power mode
 
 Packages installed:
 activate-power-mode
