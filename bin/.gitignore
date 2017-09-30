@@ -1,23 +1,32 @@
 java
 p4merge
+node_modules
+idea
+
+# backup files
 *~
 *.bak
 *.swp
 *.kate-swp
-wcd.go
+
 backup-work-manual.sh
 backup-work.sh
-check-system.sh
 get-from-home.sh
+
 cfg/id_rsa
 cfg/*/id_rsa
 cfg/workshare/check-workshare.sh
+
+# generated files
 *.fortune.dat
-node_modules
-WebStorm
-idea
+
+# saved state/log/temporary files
 sys-snapshot*
+check-system.env*.log
+wcd.go
 battery-level.txt
+fortune/auto-build-all.log
+fortune/last-build.timestamp
 
 # erlang/elixir
 *.beam
@@ -27,10 +36,13 @@ battery-level.txt
 .\#*
 
 # symbolic links to things
+check-system.sh
 template/unicode
 i3-dock.sh
 i3-launch.sh
 Downloads
+WebStorm
+robo3t
 
 # ignore editor tag files
 TAGS

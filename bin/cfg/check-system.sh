@@ -201,7 +201,18 @@ MONGO_CMDS="$MONGO_CMD mongo mongodump mongoexport mongofiles mongoimport"
 MONGO_KEY=0C49F3730359A14518585931BC711F9BA15703C6
 MONGO_KEYCHK=A15703C6
 MONGO_KEYSVR="hkp://keyserver.ubuntu.com:80"
-# TODO install Robomongo == Robo 3T
+
+# Robomongo == Robo 3T - GUI for mongo db administration
+ROBO3T_VER=1.1.1
+ROBO3T_CHK=c93c6b0
+ROBO3T_CMD=robo3t.sh
+ROBO3T_URL=https://download.robomongo.org
+#ROBO3T_URL=https://download.robomongo.org/$ROBO3T_VER/linux/$ROBO3T_ARCHIVE.tar.gz
+#ROBO3T_ARCHIVE=robo3t-$ROBO3T_VER-linux-x86_64-$ROBO3T_CHK
+#ROBO3T_URL=$ROBO3T_URL/$ROBO3T_VER/linux/$ROBO3T_ARCHIVE.tar.gz
+#ROBO3T_DIR=$ROBO3T_ARCHIVE
+#ROBO3T_EXTRACTED_DIR=$DOWNLOAD/$ROBO3T_DIR
+#ROBO3T_EXTRACTED=$ROBO3T_EXTRACTED_DIR/bin/robo3t
 
 PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
@@ -897,6 +908,12 @@ P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
 WEBSTORM_EXTRACTED_DIR="$DOWNLOAD/$WEBSTORM_DIR"
 WEBSTORM_EXTRACTED="$WEBSTORM_EXTRACTED_DIR/bin/webstorm.sh"
 WEBSTORM_URL=$WEBSTORM_URL/$WEBSTORM_ARCHIVE.tar.gz
+
+ROBO3T_ARCHIVE=robo3t-$ROBO3T_VER-linux-x86_64-$ROBO3T_CHK
+ROBO3T_URL=$ROBO3T_URL/$ROBO3T_VER/linux/$ROBO3T_ARCHIVE.tar.gz
+ROBO3T_DIR=$ROBO3T_ARCHIVE
+ROBO3T_EXTRACTED_DIR=$DOWNLOAD/$ROBO3T_DIR
+ROBO3T_EXTRACTED=$ROBO3T_EXTRACTED_DIR/bin/robo3t
 
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
@@ -1906,12 +1923,18 @@ fi # SUBLIME_PKG
 if [ ! -z "$WEBSTORM_ARCHIVE" ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
 	cmd_exists $WEBSTORM_CMD "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
-	dir_linked_to bin/WebStorm $DOWNLOAD/$WEBSTORM_DIR "current WebStorm dir linked to bin/WebStorm"
+	dir_linked_to bin/WebStorm $WEBSTORM_EXTRACTED_DIR "current WebStorm dir linked to bin/WebStorm"
    # RUN_PATH = u'/home/bcowgill/bin/WebStorm/bin/webstorm.sh'
    # CONFIG_PATH = u'/home/bcowgill/.WebStorm2016.2/config'
 	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
 	file_has_text "/usr/local/bin/wstorm" "$HOME/.$WEBSTORM_CONFIG/config" "webstorm refers to config dir"
 fi # WEBSTORM_ARCHIVE
+
+if [ ! -z "$ROBO3T_ARCHIVE" ]; then
+	install_file_from_url_zip "$ROBO3T_EXTRACTED" "$ROBO3T_ARCHIVE.tar.gz" "$ROBO3T_URL" "download mongo db robo 3T UI"
+	dir_linked_to bin/robo3t $ROBO3T_EXTRACTED_DIR "current robo3t dir linked to bin/robo3t"
+	cmd_exists $ROBO3T_CMD "robo3t runner script present"
+fi # ROBO3T_ARCHIVE
 
 if [ ! -z "$VSLICK_ARCHIVE" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
