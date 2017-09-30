@@ -201,7 +201,7 @@ MONGO_CMDS="$MONGO_CMD mongo mongodump mongoexport mongofiles mongoimport"
 MONGO_KEY=0C49F3730359A14518585931BC711F9BA15703C6
 MONGO_KEYCHK=A15703C6
 MONGO_KEYSVR="hkp://keyserver.ubuntu.com:80"
-#  TODO install Robomongo == Robo 3T
+# TODO install Robomongo == Robo 3T
 
 PIDGIN_CMD="pidgin" # "pidgin-guifications pidgin-themes pidgin-plugin-pack"
 PIDGIN_SKYPE="/usr/lib/purple-2/libskype.so"
@@ -644,6 +644,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 		shutter
 		cowsay
 		gimp
+		dia
 	"
 	#NODE_PKG=""
 	#SUBLIME_PKG=""

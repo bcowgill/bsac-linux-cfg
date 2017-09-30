@@ -172,7 +172,11 @@ dell-recovery-bootloader
 dell-super-key
 desktop-file-utils
 dh-python
+dia
+dia-common
+dia-libs
 dialog
+dia-shapes
 dictionaries-common
 diffmerge
 diffstat
@@ -426,6 +430,7 @@ grub-efi-amd64-signed
 gsettings-desktop-schemas
 gsettings-ubuntu-schemas
 gsfonts
+gsfonts-x11
 gstreamer0.10-alsa:amd64
 gstreamer0.10-fluendo-mp3:amd64
 gstreamer0.10-nice:amd64
