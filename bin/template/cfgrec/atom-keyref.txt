@@ -20,6 +20,8 @@ KEY:ATOM:VIEW Ctrl-k right Split pane to right
 KEY:ATOM:VIEW Ctrl-k up Split pane above
 KEY:ATOM:VIEW Ctrl-k down Split pane below
 KEY:ATOM:EDIT Ctrl-Shift-p Change   Change case commands
+KEY:ATOM:EDIT Ctrl-up Move current line up one line
+KEY:ATOM:EDIT Ctrl-down Move current line down one line
 KEY:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets
 KEY:ATOM:FIND Ctrl-f Find/Replace text
 KEY:ATOM:FIND Ctrl-Shift-f Find/Replace text in project
