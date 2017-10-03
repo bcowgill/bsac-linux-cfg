@@ -6,6 +6,8 @@ WHERE="${1:-.}"
 shift
 
 pushd "$WHERE" > /dev/null && (\
-	ls -a $* | egrep '\.(_.+|apdisk|DS_Store|Trash|Trashes|Spotlight-V100)$'; \
+	ls -a $* | egrep '(\$(Recycle.Bin)|\.(_.+|apdisk|DS_Store|Trash|Trash-.+|Trashes|Spotlight-V100|fseventsd|TemporaryItems))$'; \
+	# .Trash .Trash-UID are ubuntu linux
+	# $Recycle.Bin is windows
 	popd > /dev/null \
 )
