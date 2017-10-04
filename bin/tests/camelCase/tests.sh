@@ -33,10 +33,10 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-PROGRAM=../../CamelCase.pl
+PROGRAM=../../CamelCaseX.pl
 CMD=`basename $PROGRAM`
 echo TEST $CMD standard input
-TEST=CamelCase
+TEST=CamelCaseX
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
