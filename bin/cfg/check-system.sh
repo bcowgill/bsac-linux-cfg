@@ -27,16 +27,18 @@ set -e
 #https://github.com/nodejs/LTS#lts_schedule
 #https://github.com/adobe-fonts/source-code-pro/
 
-set -o posix
-set > $HOME/bin/check-system.env0.log
-set +o posix
+if [ -e $HOME/bin ]; then
+	set -o posix
+	set > $HOME/bin/check-system.env0.log
+	set +o posix
+fi
 
 # set FRESH_NPM to reinstall npm packages so they are updated
 #FRESH_NPM=1
 
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
-#BAIL_OUT=versions
+BAIL_OUT=versions
 #BAIL_OUT=init
 #BAIL_OUT=font
 #BAIL_OUT=diff
