@@ -1058,9 +1058,11 @@ INSTALL_FILE_PACKAGES="
 	$DRUID_PACKAGES
 "
 
-set -o posix
-set > $HOME/bin/check-system.env.log
-set +o posix
+if [ -e $HOME/bin ]; then
+	set -o posix
+	set > $HOME/bin/check-system.env.log
+	set +o posix
+fi
 }
 set_derived_env
 
