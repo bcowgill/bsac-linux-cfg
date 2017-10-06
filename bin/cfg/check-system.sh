@@ -1094,10 +1094,12 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
 file_exists $HOME/.COMPANY "company env variable setup file"
 
-# provides lsb_release command as well.
-cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
+if [ -z $MAC ]; then
+	# provides lsb_release command as well.
+	cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
+fi
 
-uname -a && get-release.sh -a && id
+uname -a && get-all-release.sh && id
 
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
