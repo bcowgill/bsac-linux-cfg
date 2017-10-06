@@ -13,7 +13,7 @@
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
-#set -x
+set -x
 
 # chrome URLs open in case session buddy fails
 #http://askubuntu.com/questions/800601/where-is-system-disk-info-stored/801162#801162
@@ -27,16 +27,18 @@ set -e
 #https://github.com/nodejs/LTS#lts_schedule
 #https://github.com/adobe-fonts/source-code-pro/
 
-set -o posix
-set > $HOME/bin/check-system.env0.log
-set +o posix
+if [ -e $HOME/bin ]; then
+	set -o posix
+	set > $HOME/bin/check-system.env0.log
+	set +o posix
+fi
 
 # set FRESH_NPM to reinstall npm packages so they are updated
 #FRESH_NPM=1
 
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
-#BAIL_OUT=versions
+BAIL_OUT=versions
 #BAIL_OUT=init
 #BAIL_OUT=font
 #BAIL_OUT=diff
@@ -86,8 +88,11 @@ function set_env {
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
+if which sw_vers > /dev/null; then
+	MAC=1
+fi
 UBUNTU=trusty
-LSB_RELEASE=`lsb_release -sc`
+LSB_RELEASE=`get-release.sh`
 COMPANY=
 ULIMITFILES=1024
 #ULIMITFILES=8096
@@ -670,6 +675,15 @@ if [ "$HOSTNAME" == "akston" ]; then
 	# HEREIAM CFG
 fi
 
+if [ "$HOSTNAME" == "L-156131255.local" ]; then
+	# Change settings for wipro mac workstation
+	EMAIL=brent.cowgill@wipro.com
+	COMPANY=wipro
+	MAC=1
+	UBUNTU=10.12.6
+	GIT_VER=2.13.5
+fi
+
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	# Change settings for clearbooks linux workstation
 	AUSER=brent
@@ -754,7 +768,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
 	SURGE_NPM_PKG=""
-	VIRTUALBOX_REL=$(lsb_release -sc)
+	VIRTUALBOX_REL=$(get-release.sh)
 	USE_KDE=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
@@ -1047,9 +1061,11 @@ INSTALL_FILE_PACKAGES="
 	$DRUID_PACKAGES
 "
 
-set -o posix
-set > $HOME/bin/check-system.env.log
-set +o posix
+if [ -e $HOME/bin ]; then
+	set -o posix
+	set > $HOME/bin/check-system.env.log
+	set +o posix
+fi
 }
 set_derived_env
 
@@ -1078,10 +1094,12 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
 file_exists $HOME/.COMPANY "company env variable setup file"
 
-# provides lsb_release command as well.
-cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
+if [ -z $MAC ]; then
+	# provides lsb_release command as well.
+	cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
+fi
 
-uname -a && lsb_release -a && id
+uname -a && get-all-release.sh && id
 
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
@@ -1111,7 +1129,8 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 get_git
 
 echo VERSIONS
-check_linux "$UBUNTU"
+echo MAC=$MAC
+check_linux "$UBUNTU" $MAC
 which git && git --version
 which java && java -version && ls $JAVA_JVM
 which perl && perl --version
