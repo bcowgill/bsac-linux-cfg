@@ -13,7 +13,7 @@
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
-#set -x
+set -x
 
 # chrome URLs open in case session buddy fails
 #http://askubuntu.com/questions/800601/where-is-system-disk-info-stored/801162#801162
@@ -670,6 +670,15 @@ if [ "$HOSTNAME" == "akston" ]; then
 	EMACS_VER=24.3
 
 	# HEREIAM CFG
+fi
+
+if [ "$HOSTNAME" == "L-156131255.local" ]; then
+	# Change settings for wipro mac workstation
+	EMAIL=brent.cowgill@wipro.com
+	COMPANY=wipro
+	MAC=1
+	UBUNTU=10.12.6
+	GIT_VER=2.13.5
 fi
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
