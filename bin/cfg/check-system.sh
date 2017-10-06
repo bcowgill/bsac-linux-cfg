@@ -88,6 +88,9 @@ function set_env {
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
+if which sw_vers > /dev/null; then
+	MAC=1
+fi
 UBUNTU=trusty
 LSB_RELEASE=`get-release.sh`
 COMPANY=
@@ -1124,7 +1127,8 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 get_git
 
 echo VERSIONS
-check_linux "$UBUNTU"
+echo MAC=$MAC
+check_linux "$UBUNTU" $MAC
 which git && git --version
 which java && java -version && ls $JAVA_JVM
 which perl && perl --version

@@ -119,8 +119,11 @@ function stop {
 }
 
 function check_linux {
-	local version check file which
+	local version ismac check file which checkmac os
+	checkmac=0
+	os=linux
 	version="$1"
+	ismac="$2"
 	which=`which lsb_release`
 	if [ ! -z "$which" ]; then
 		check=$(lsb_release -sc 2> /dev/null)
@@ -141,11 +144,24 @@ function check_linux {
 		if [ -f $file ]; then
 			check="$file: `cat $file | grep Raspberry`"
 		fi
+		which=`which sw_vers`
+		if [ ! -z "$which" ]; then
+			check=$(sw_vers -productVersion 2> /dev/null)
+			check="$check"
+			checkmac=1
+			os=darwin
+		fi
+	fi
+	if [ "$checkmac" == "$ismac" ]; then
+		OK "machine is $os as expected"
+	else
+		NOT_OK "machine is $os did not expect that"
+		return 1
 	fi
 	if [ "${check:-unknown}" == "$version" ]; then
-		OK "linux version $version"
+		OK "$os version $version"
 	else
-		NOT_OK "linux version not $version [$check]"
+		NOT_OK "$os version not $version [$check]"
 		return 1
 	fi
 	return 0
