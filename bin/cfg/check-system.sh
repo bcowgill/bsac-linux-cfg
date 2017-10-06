@@ -89,7 +89,7 @@ AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
 UBUNTU=trusty
-LSB_RELEASE=`lsb_release -sc`
+LSB_RELEASE=`get-release.sh`
 COMPANY=
 ULIMITFILES=1024
 #ULIMITFILES=8096
@@ -756,7 +756,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
 	SURGE_NPM_PKG=""
-	VIRTUALBOX_REL=$(lsb_release -sc)
+	VIRTUALBOX_REL=$(get-release.sh)
 	USE_KDE=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
@@ -1083,7 +1083,7 @@ file_exists $HOME/.COMPANY "company env variable setup file"
 # provides lsb_release command as well.
 cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 
-uname -a && lsb_release -a && id
+uname -a && get-release.sh -a && id
 
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
