@@ -1,5 +1,7 @@
 #!/bin/bash
 # start a mac terminal command in a specific directory
+# https://stackoverflow.com/questions/989349/running-a-command-in-a-new-mac-os-x-terminal-window
+
 DIR=`pwd`
 CMD=""
 if [ ! -z "$1" ]; then

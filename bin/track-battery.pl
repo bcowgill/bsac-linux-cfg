@@ -15,8 +15,8 @@ use File::Slurp qw(:std);
 use autodie qw(open);
 
 our $VERSION = 0.1;
-our $DEBUG = 0;
-our $NOISY = 0;
+our $DEBUG = $ENV{DEBUG} || 0;
+our $NOISY = $ENV{NOISY} || 0;
 
 our $save_file = "$FindBin::Bin/battery-level.txt";
 our $sound_dir = "$FindBin::Bin/sounds/BatteryWarnings/wav";
