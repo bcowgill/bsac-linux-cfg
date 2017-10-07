@@ -2,6 +2,11 @@
 # starts a cross-platform xterm with a command to run.
 # Also sets the window title and class to match the command name
 
+if [ -e /Applications ]; then
+	open -a /Applications/Utilities/Terminal.app $*
+	exit 0
+fi
+
 # font family (-fa), font size (-fs)
 # reverse video (-rv), NOT show tool bar (-tb), set cursor to box (+uc), blink cursor (-bc), visual bell (-vb), sun/PC keyboard codes (-sp)
 # allow jump scroll (-j), Titled build (-T), class name XTermBuild

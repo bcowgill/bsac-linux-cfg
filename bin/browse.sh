@@ -1,6 +1,13 @@
 #!/bin/bash
 # open a cross-platform gui file browser
 
+if [ -e /Applications ]; then
+	if [ -e /System/Library/CoreServices/Finder.app ]; then
+		open -a Finder $*
+		exit 0
+	fi
+fi
+
 if which nautilus; then
 	nautilus --no-desktop $* &
 	exit 0
