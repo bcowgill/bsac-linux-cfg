@@ -1307,16 +1307,17 @@ file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
 file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
+file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
+file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
+file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
+file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english 
 
 if [ -z $MAC ]; then
 
-file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
-file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
 dir_linked_to .gconf bin/cfg$COMP/.gconf/ "gnome configuration files linked"
-file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
-file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english dictionary"
+dictionary"
 
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
