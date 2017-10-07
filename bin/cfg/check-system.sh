@@ -41,6 +41,7 @@ fi
 BAIL_OUT=versions
 #BAIL_OUT=init
 #BAIL_OUT=font
+#BAIL_OUT=xfont
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=mongo
@@ -326,7 +327,7 @@ NPM_GLOBAL_PKG="
 	node-sass
 	lessc:less
 	mocha
-   jstest
+	jstest
 	phantomjs:phantomjs-prebuilt
 	/usr/local/lib/node_modules/karma/bin/karma:karma
 	karma:karma-cli
@@ -624,7 +625,7 @@ COMMANDS_LIST="
 "
 
 if [ "$HOSTNAME" == "akston" ]; then
-   LINK_DOWNLOADS=1
+	LINK_DOWNLOADS=1
 	GIT_VER=1.9.1
 	NODE_VER=v0.10.25
 	USE_KDE=""
@@ -681,6 +682,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	COMPANY=wipro
 	MAC=1
 	UBUNTU=10.12.6
+	ULIMITFILES=4864
 	GIT_VER=2.13.5
 fi
 
@@ -762,9 +764,9 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	ULIMITFILES=1024
 	BIG_DATA="/data"
 	VPN_PKG=""
-   JAVA_VER=java-8-openjdk-amd64
+	JAVA_VER=java-8-openjdk-amd64
 	# set FRESH_NPM=1 once if you update NODE_VER
-   NODE_VER="v6.9.2"
+	NODE_VER="v6.9.2"
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
 	SURGE_NPM_PKG=""
@@ -858,7 +860,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
-   DOCKER_PKG=""
+	DOCKER_PKG=""
 fi # raspberrypi
 
 }
@@ -868,10 +870,10 @@ set_env
 function set_derived_env {
 DROP_BACKUP=Dropbox/WorkSafe/_tx/$COMPANY
 if [ -z "$COMPANY" ]; then
-   COMP=""
+	COMP=""
 	ONBOOT=cfg/onboot.sh
 else
-   COMP="/$COMPANY"
+	COMP="/$COMPANY"
 	ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 fi
 
@@ -977,8 +979,8 @@ INSTALL_FROM="
 	$MVN_PKG
 	$POSTGRES_PKG
 	$DRUID_PKG
-   $REDIS_PKG
-   $MONGO_PKG
+	$REDIS_PKG
+	$MONGO_PKG
 	$PIDGIN_CMD
 	$PIDGIN_SKYPE_PKG
 	$VPN_PKG
@@ -1004,8 +1006,8 @@ COMMANDS="
 	$SLACK_CMD
 	$PINTA_CMD
 	$ELIXIR_CMDS
-   $REDIS_CMDS
-   $MONGO_CMDS
+	$REDIS_CMDS
+	$MONGO_CMDS
 "
 
 PACKAGES="
@@ -1031,7 +1033,7 @@ PACKAGES="
 	$PULSEAUDIO_PKG
 	$KEYBOARD_PKG
 	$ELIXIR_PKG
-   $DOCKER_PRE
+	$DOCKER_PRE
 "
 
 PERL_MODULES="
@@ -1168,6 +1170,12 @@ which tsc && tsc -v
 which atom && atom -v
 echo END versions
 
+if [ ! -e $HOME/bin ]; then
+	set -o posix
+	set > $HOME/check-system.env.log
+	set +o posix
+fi
+
 BAIL_OUT versions
 
 # chicken egg bootstrap:
@@ -1179,9 +1187,10 @@ fi
 if [ -e $HOME/bin ]; then
 	if [ ! -e $HOME/bin/cfg/check-system.sh ]; then
 		# comment out this line only on first machine setup
-		#NOT_OK "MAYBE there is a $HOME/bin dir, we will install ourself there. "
+		NOT_OK "MAYBE there is a $HOME/bin dir, we will install ourself there. "
 		mv $HOME/bin $HOME/bin.saved
 		git clone https://github.com/bcowgill/bsac-linux-cfg.git
+		make_dir_exist workspace/play
 		mv bsac-linux-cfg workspace/play
 		ln -s workspace/play/bsac-linux-cfg/bin
 		popd
@@ -1263,6 +1272,8 @@ else
 	exit 1
 fi
 
+if [ -z $MAC ]; then
+
 # https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 if grep -rl inotify /etc/sysctl.conf /etc/sysctl.d; then
 	OK "inotify settings are configured in /etc/sysctl.conf or /etc/sysctl.d"
@@ -1285,27 +1296,32 @@ else
 	OK "plenty of space on /boot"
 fi
 
+fi # not MAC
+
 # Shell configuration files
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
-file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
-file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 #file_linked_to .perltidyrc bin/cfg/.perltidyrc-$COMPANY "perltidyrc configured for $COMPANY"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
 #file_linked_to .vimrc bin/cfg/.vimrc  "vim configured"
+file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
+
+if [ -z $MAC ]; then
+
+file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
+file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
-file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 dir_linked_to .gconf bin/cfg$COMP/.gconf/ "gnome configuration files linked"
+file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
+file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english dictionary"
+
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
 file_linked_to bin/i3-launch.sh  $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
 file_linked_to bin/i3-dock.sh    $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
-
-file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
-file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english dictionary"
 
 [ -d .config/mc ] && HAS_MC=1
 make_dir_exist .config/mc "midnight commander configuration file dir"
@@ -1313,6 +1329,8 @@ if [ ${HAS_MC:-)} == 0 ]; then
 	OK "MAYBE copying midnight commander configuration"
 	cp bin/cfg/.config/mc/* .config/mc/ || NOT_OK "unable to copy midnight commander configuration"
 fi
+
+fi # not MAC
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
@@ -1356,6 +1374,8 @@ if [ ! -z "$BIG_DATA" ]; then
 		dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
 fi
 
+BAIL_OUT init
+
 # Fonts ================================================================
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
 cmd_exists wget
@@ -1380,7 +1400,7 @@ FILE=.fonts/SourceCodePro-Black.otf
 file_exists $FILE || cp $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
 file_exists $FILE "SourceCodePro fonts still not installed"
 cmd_exists fc-cache "font cache program needed"
-cmd_exists fc-list "font cache list program needed"
+cmd_exists dc-list "font cache list program needed"
 fc-cache --verbose | grep 'new cache contents' || echo " "
 if ( fc-list | grep ProFontWindows ) ; then
 	OK "ProFontWindows font is cached"
@@ -1415,7 +1435,7 @@ install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts/examples/UTF-8-test.txt" "
 #install_file_from_url "$DOWNLOAD/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
 dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sample unicode files"
 
-BAIL_OUT init
+BAIL_OUT font
 
 # MUSTDO finish this
 if /bin/false ; then
@@ -1491,10 +1511,10 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 fi # USE_KDE set
 
-BAIL_OUT font
+BAIL_OUT xfont
 
 if [ ! -z "$USE_I3" ]; then
-   apt_has_source_listd "i3window-manager" "deb http://debian.sur5r.net/i3/ $LSB_RELEASE universe" "adding i3wm source for apt"
+	apt_has_source_listd "i3window-manager" "deb http://debian.sur5r.net/i3/ $LSB_RELEASE universe" "adding i3wm source for apt"
 	cmd_exists $I3WM_CMD || (sudo apt-get update; sudo apt-get --allow-unauthenticated install sur5r-keyring; sudo apt-get update; sudo apt-get install $I3WM_CMD)
 	cmd_exists $I3WM_CMD
 else
@@ -1567,7 +1587,7 @@ if [ ! -z "$SVN_PKG" ]; then
 	file_exists /usr/lib/x86_64-linux-gnu/jni/libsvnjavahl-1.so "svn and eclipse setup lib exists"
 	dir_linked_to /usr/lib/jni /usr/lib/x86_64-linux-gnu/jni "svn and eclipse symlink exists" root
 	apt_has_key WANdisco http://opensource.wandisco.com/wandisco-debian.gpg "key fingerprint for svn 1.8 wandisco"
-   apt_has_source_listd WANdisco "deb http://opensource.wandisco.com/ubuntu $LSB_RELEASE svn18" "adding WANdisco source for apt"
+	apt_has_source_listd WANdisco "deb http://opensource.wandisco.com/ubuntu $LSB_RELEASE svn18" "adding WANdisco source for apt"
 	if svn --version | grep " version " | grep $SVN_VER; then
 		OK "svn command version correct"
 	else
@@ -1964,8 +1984,8 @@ if [ ! -z "$WEBSTORM_ARCHIVE" ]; then
 	install_file_from_url_zip "$WEBSTORM_EXTRACTED" "$WEBSTORM_ARCHIVE.tar.gz" "$WEBSTORM_URL" "download webstorm installer"
 	cmd_exists $WEBSTORM_CMD "you need to manually install WebStorm with WebStorm.sh command from $DOWNLOAD/$WEBSTORM_ARCHIVE dir"
 	dir_linked_to bin/WebStorm $WEBSTORM_EXTRACTED_DIR "current WebStorm dir linked to bin/WebStorm"
-   # RUN_PATH = u'/home/bcowgill/bin/WebStorm/bin/webstorm.sh'
-   # CONFIG_PATH = u'/home/bcowgill/.WebStorm2016.2/config'
+	# RUN_PATH = u'/home/bcowgill/bin/WebStorm/bin/webstorm.sh'
+	# CONFIG_PATH = u'/home/bcowgill/.WebStorm2016.2/config'
 	file_has_text "/usr/local/bin/wstorm" "$HOME/bin/WebStorm" "webstorm refers to current link"
 	file_has_text "/usr/local/bin/wstorm" "$HOME/.$WEBSTORM_CONFIG/config" "webstorm refers to config dir"
 fi # WEBSTORM_ARCHIVE
@@ -2036,19 +2056,19 @@ BAIL_OUT repos
 if [ ! -z "$DOCKER_PKG" ]; then
 	cmd_exists $DOCKER_CMD || (sudo apt-get update && sudo apt-get install $DOCKER_PRE)
 	apt_has_key_adv $DOCKER_KEYCHK $DOCKER_KEY $DOCKER_KEYSVR "key fingerprint for Docker Engine"
-   apt_has_source_listd docker "https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
-   cmd_exists $DOCKER_CMD || (sudo apt-get update && apt-cache policy $DOCKER_PKG | grep apt.dockerproject.org/repo && install_command_from $DOCKER_CMD $DOCKER_PKG)
-   add_user_to_group $DOCKER_GRP $AUSER "allow docker to be started without root permissions"
+	apt_has_source_listd docker "https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
+	cmd_exists $DOCKER_CMD || (sudo apt-get update && apt-cache policy $DOCKER_PKG | grep apt.dockerproject.org/repo && install_command_from $DOCKER_CMD $DOCKER_PKG)
+	add_user_to_group $DOCKER_GRP $AUSER "allow docker to be started without root permissions"
 fi
 
 BAIL_OUT docker
 
 if [ ! -z "$VPN_PKG" ]; then
-   # https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
-   # for VPN after installing bridge-utils need to restart network
-   #[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
-   #"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
-   #See my screenshots for Workshare specific config. "
+	# https://www.linux.com/learn/tutorials/457103-install-and-configure-openvpn-server-on-linux
+	# for VPN after installing bridge-utils need to restart network
+	#[14:48:25] Bruno Bossola: Manuel Morales to Linux Users
+	#"Habemus VPN! And it works from the UI. I followed this http://labnotes.decampo.org/2012/12/ubuntu-1210-connect-to-microsoft-vpn.html
+	#See my screenshots for Workshare specific config. "
 
 	FILE="$VPN_CONFIG"
 	file_exists "$FILE" "vpn bridge configuration" || copy_file_to_root "$HOME/bin/cfg$COMP/bridge-vpn" "$FILE" "install vpn config for iface br0 inet static"
@@ -2065,7 +2085,7 @@ BAIL_OUT vpn
 if [  ! -z "$PHP_PKG" ]; then
 	# install composer php package manager
 	cmd_exists $PHP_CMD "need php command"
-   if cmd_exists composer; then
+	if cmd_exists composer; then
 		echo OK PHP composer package manager preset
 	else
 		$PHP_CMD -r "copy('https://getcomposer.org/installer', '$DOWNLOAD/composer-setup.php');"
