@@ -42,10 +42,10 @@ fi
 #BAIL_OUT=init
 #BAIL_OUT=font
 #BAIL_OUT=xfont
-BAIL_OUT=diff
+#BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=mongo
-#BAIL_OUT=install
+BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
@@ -684,17 +684,19 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	UBUNTU=10.12.6
 	ULIMITFILES=4864
 	GIT_VER=2.13.5
+	GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
 	SKYPE_PKG=""
 	SLACK_PKG=""
 	CHARLES_PKG=""
 	VIRTUALBOX_PKG=""
-	DIFFMERGE_PKG=“”. # TODO
-	P4MERGE_PKG=“”. # TODO
+	DIFFMERGE_PKG="" # TODO
+	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
 	NODE_PKG="" # TODO
 	NVM_PKG="" # TODO
+	MONO_PKG=""
 	ATOM_PKG="" # TODO
 	PINTA_PKG=""
 	ELIXIR_PKG=""
@@ -923,6 +925,8 @@ fi
 # final package configuration based on what has been turned on
 GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
+
+if [ -z $MAC ]; then
 GIT_PKG_AFTER="
 	/usr/share/doc-base/git-tools:git-doc
 	/usr/lib/git-core/git-gui:git-gui
@@ -930,6 +934,7 @@ GIT_PKG_AFTER="
 	tig
 	$GITSVN_PKG
 "
+fi # not MAC
 
 if [ ! -z $NVM_VER ]; then
 	NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
@@ -1171,6 +1176,9 @@ check_linux "$UBUNTU" $MAC
 which git && git --version
 if [ -z $MAC ]; then
 	which java && java -version && ls $JAVA_JVM
+	which apt-get && apt-get —version
+else
+	which brew && brew —version
 fi
 which perl && perl --version
 which python && python --version
@@ -1599,6 +1607,8 @@ fi # VIRTUALBOX_PKG
 if [ ! -z "$SVN_PKG" ]; then
 	apt_has_source "deb http://ppa.launchpad.net/svn/ppa/ubuntu $LSB_RELEASE main" "apt config for svn update missing"
 	apt_has_source "deb-src http://ppa.launchpad.net/svn/ppa/ubuntu $LSB_RELEASE main" "apt config for svn update missing"
+else
+	OK "will not configure subversion unless SVN_PKG is non-zero"
 fi
 
 if [ ! -z "$MONO_PKG" ]; then
@@ -1608,6 +1618,8 @@ if [ ! -z "$MONO_PKG" ]; then
 #	sudo apt-get update
 #	sudo apt-get install $MONO_PKG
 	cmd_exists $MONO_CMD
+else
+	OK "will not configure mono unless MONO_PKG is non-zero"
 fi
 
 if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
@@ -1645,7 +1657,11 @@ has_ssh_keys $COMPANY
 which git
 if git --version | grep " version " | grep $GIT_VER; then
 	OK "git command version correct"
-	installs_from "$GIT_PKG_AFTER" "additional git packages"
+	if [ ! -z "$GIT_PKG_AFTER" ]; then
+		installs_from "$GIT_PKG_AFTER" "additional git packages"
+	else
+		OK "will not install git tools unless GIT_PKG_AFTER is non-zero"
+	fi
 else
 	NOT_OK "git command version incorrect, want $GIT_VER - will try update"
 	# old setup for git 1.9.1
@@ -1653,7 +1669,11 @@ else
 	apt_has_source ppa:pdoes/ppa "repository for git"
 	sudo apt-get update
 	apt-cache show git | grep '^Version:'
-	installs_from "$GIT_PKG_AFTER" "additional git packages"
+	if [ ! -z "$GIT_PKG_AFTER" ]; then
+		installs_from "$GIT_PKG_AFTER" "additional git packages"
+	else
+		OK "will not install git tools unless GIT_PKG_AFTER is non-zero"
+	fi
 	NOT_OK "exiting after git update, try again."
 	exit 1
 
@@ -1686,13 +1706,15 @@ else
 	OK "will not configure git-svn unless GITSVN_PKG is non-zero"
 fi # GITSVN_PKG
 
+if [ -z $MAC ]; then # TODO
 GIT_COMPLETE=/usr/share/bash-completion/completions/git
 if file_exists "$GIT_COMPLETE" > /dev/null ; then
 	# git installs completion file but not in right place any more
 	file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
 else
-	file_exists /etc/bash_completion.d/git "git completeion file in etc"
+	file_exists /etc/bash_completion.d/git "git completion file in etc"
 fi
+fi # not MAC
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
 	OK "git config has been set up"
@@ -1812,7 +1834,9 @@ installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"
 
-file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
+if [ -z $MAC ]; then
+	file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
+fi # not MAC
 
 BAIL_OUT install
 

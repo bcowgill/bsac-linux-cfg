@@ -1,10 +1,22 @@
 #!/bin/bash
+# cross-platform find packages and files
 PKG=$1
 if [ -z "$PKG" ]; then
 	echo find packages and files
-	echo dpkg -l / dlocate / dpkg -L / apt-file search / dpkg -S
+	echo dpkg -l / dlocate / dpkg -L / apt-file search / dpkg -S / brew info / brew search / brew list
 	exit 1
 else
+	if which brew > /dev/null; then
+		echo "### brew info"
+		brew info $PKG
+		echo "### brew search"
+		brew search /$PKG/ | sort
+		echo "### brew search --desc"
+		brew search --desc /$PKG/
+		echo "### brew list -- listing of files in package"
+		brew list $PKG
+		exit 0
+	fi
 	echo "### dpkg -l -- list exact"
 	which dpkg > /dev/null  && dpkg -l $PKG
 	echo "### dlocate -- fast listing of files in package"
