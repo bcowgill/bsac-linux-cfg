@@ -39,7 +39,7 @@ function debug
 	fi
 }
 
-while  [ /bin/true ]
+while  [ true ]
 do
 	BUILDIT=0
 	if [ ! -f "$PAUSE" ]; then

@@ -14,9 +14,9 @@ else
 fi
 
 # enable to see how command line modified
-if /bin/false; then
+if false; then
 	set -x
-	/bin/true git grep $*
+	true git grep $*
 	set +x
 fi
 

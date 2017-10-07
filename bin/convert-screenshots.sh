@@ -12,7 +12,7 @@ for file in $DIR/*.ppm; do
 	output=`basename "$file" .ppm`
 	FILE="$DIR/$output.png"
 	if [ -f "$FILE" ]; then
-		/bin/true
+		true
 		#echo $FILE already exists, will not convert.
 	else
 		touch "$FILE"

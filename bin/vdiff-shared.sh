@@ -45,7 +45,7 @@ diff_them $FILE $FROM $TO $REVERSE
 FILE=render-tt.pl
 diff_them $FILE $FROM $TO $REVERSE
 
-if /bin/false; then
+if false; then
 	FROM=$HOME/
 	TO=$HOME/
 	FILE=

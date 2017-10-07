@@ -532,7 +532,7 @@ export NUM_PARTIALS=9
 
 # touch-randomly.sh
 # touch some files at random so partial backup test has something to do
-while /bin/true;
+while true;
 do
 	FILE=`find ~/Documents/test/unicode/ -type f | choose.pl`
 	touch $FILE

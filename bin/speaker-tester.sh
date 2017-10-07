@@ -21,7 +21,7 @@ speaker-test $ARGS &
 while sleep 1
 do
 	if ps -ef --cols 256 | grep -v speaker-tester.sh | grep -v grep | grep $CONTROLLER > /dev/null ; then
-		/bin/true
+		true
 	else
 		killall speaker-test
 		exit

@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # only run some things as needed
-DOIT=/bin/false
-#DOIT=/bin/true
+DOIT=false
+#DOIT=true
 
-PJ42=/bin/false
-DASH=/bin/true
-KARMA=/bin/true
-KARMA=/bin/false
+PJ42=false
+DASH=true
+KARMA=true
+KARMA=false
 
 # always run these
-RUNIT=/bin/true
+RUNIT=true
 
 TEST_DIR=$HOME/workspace/projects/infinity-plus-dashboard/test
 

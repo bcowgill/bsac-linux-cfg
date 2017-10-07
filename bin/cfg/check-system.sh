@@ -39,8 +39,8 @@ fi
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
 #BAIL_OUT=versions
-BAIL_OUT=init
-#BAIL_OUT=font
+#BAIL_OUT=init
+BAIL_OUT=font
 #BAIL_OUT=xfont
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
@@ -1237,7 +1237,7 @@ if [ ! -z "$INI_DIR" ]; then
 	rm -rf $INI_DIR
 	make_dir_exist /tmp/$USER "user's own temporary directory"
 	if dir_exists tmp "tmp dir in user home" ; then
-		/bin/true
+		true
 	else
 		dir_linked_to tmp /tmp/$USER "make a tmp in home dir point to /tmp/"
 	fi
@@ -1439,7 +1439,7 @@ dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sa
 BAIL_OUT font
 
 # MUSTDO finish this
-if /bin/false ; then
+if false ; then
 if xlsfonts | grep xyzzy > /dev/null ; then
 	OK "ucs unicode fonts are installed"
 else
@@ -1943,7 +1943,7 @@ fi
 if [ ! -z "$ATOM_PKG" ]; then
 	if [ ! -e "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG" ]; then
 		[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
-		install_command_package_from_url install-$ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor" || /bin/true
+		install_command_package_from_url install-$ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor" || true
 		cmd_exists $ATOM_CMD
 		if atom --version | grep Atom | grep $ATOM_VER; then
 			OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
@@ -2485,7 +2485,7 @@ function DISABLED {
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_upper_csur-8.0.01.ttf
 # wget http://unifoundry.com/pub/unifont-8.0.01/font-builds/unifont_sample-8.0.01.ttf
 
-if /bin/false ; then
+if false ; then
 # TODO some notes on how to set up then robot framework browser test system
 # for workshare.
 # https://github.com/workshare/qa

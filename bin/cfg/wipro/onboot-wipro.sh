@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # only run some things as needed
-DOIT=/usr/bin/false
-#DOIT=/usr/bin/true
+DOIT=false
+#DOIT=true
 
 # always run these
-RUNIT=/usr/bin/true
+RUNIT=true
 
 TEST_DIR=$HOME/workspace/projects/TODO/test
 

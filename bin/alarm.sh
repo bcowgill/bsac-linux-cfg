@@ -18,7 +18,7 @@ if [ ! -z "$WHEN" ]; then
 fi
 
 echo $NOW: playing alarm file "$SOUND"
-while /bin/true; do
+while true; do
 	aplay -D sysdefault:CARD=PCH "$SOUND"
 	sleep $WAIT
 done

@@ -7,7 +7,7 @@ else
 	RUN="$*"
 fi
 
-while  [ /bin/true ]
+while  [ true ]
 do
 	echo Press ^C to stop keeping it up [ $RUN ]
 	sleep 2

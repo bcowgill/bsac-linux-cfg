@@ -10,9 +10,9 @@ else
 fi
 
 # enable to see how command line modified
-if /bin/false; then
+if false; then
 	set -x
-	/bin/true egrep -r $ESOPTS "$*" .
+	true egrep -r $ESOPTS "$*" .
 	set +x
 fi
 
