@@ -1,5 +1,5 @@
 #!/bin/bash
-# play a sound file
+# play a sound file cross-platform
 
 CARD=1
 SOUND=${1:-$HOME/bin/sounds/laser.wav}

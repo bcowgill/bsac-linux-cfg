@@ -1,5 +1,5 @@
 #!/bin/bash
-# set sound level and play a blip
+# set sound level cross-platform and play a blip
 
 CARD=1
 LEVEL=${1:-0%}

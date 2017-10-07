@@ -68,7 +68,7 @@ function NOT_OK {
 	return 0
 }
 
-# Show a notification message if possible
+# Show a cross-platform notification message if possible
 function mynotify {
 	local title message
 	title="$2"

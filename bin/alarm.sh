@@ -1,5 +1,5 @@
 #!/bin/bash
-# play a sound file as an alarm now, or at a specified time
+# cross-platform play a sound file as an alarm now, or at a specified time
 # alarm.sh "2017-01-02 10:01" [sound-file]
 
 CARD=1

@@ -1,5 +1,5 @@
 #!/bin/bash
-# open a gui file browser
+# open a cross-platform gui file browser
 
 if which nautilus; then
 	nautilus --no-desktop $* &

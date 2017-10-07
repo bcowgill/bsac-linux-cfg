@@ -1,4 +1,5 @@
 #!/bin/sh
+# cross-platform gui editor launcher
 #
 # This code is released in public domain by Han Boetes <han@mijncomputer.nl>
 #

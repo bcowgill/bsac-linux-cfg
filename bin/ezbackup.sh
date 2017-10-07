@@ -348,6 +348,7 @@ function say {
 	fi
 }
 
+# cross-platform notification function
 function mynotify {
 	local title message
 	title="$2"

@@ -1,5 +1,5 @@
 #!/bin/bash
-# starts an xterm with a command to run.
+# starts a cross-platform xterm with a command to run.
 # Also sets the window title and class to match the command name
 
 # font family (-fa), font size (-fs)

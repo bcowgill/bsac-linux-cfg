@@ -1,5 +1,5 @@
 #!/bin/bash
-# show a notification using whatever notifier is installed
+# show a cross-platform notification using whatever notifier is installed
 
 function mynotify {
 	local title message
