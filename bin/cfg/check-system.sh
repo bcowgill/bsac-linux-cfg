@@ -40,9 +40,9 @@ fi
 # search for "BAIL_OUT name" to see where that point is.
 #BAIL_OUT=versions
 #BAIL_OUT=init
-BAIL_OUT=font
+#BAIL_OUT=font
 #BAIL_OUT=xfont
-#BAIL_OUT=diff
+BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=mongo
 #BAIL_OUT=install
@@ -684,6 +684,22 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	UBUNTU=10.12.6
 	ULIMITFILES=4864
 	GIT_VER=2.13.5
+	USE_I3=""
+	USE_KDE=""
+	SKYPE_PKG=""
+	SLACK_PKG=""
+	CHARLES_PKG=""
+	VIRTUALBOX_PKG=""
+	DIFFMERGE_PKG=“”. # TODO
+	P4MERGE_PKG=“”. # TODO
+	DRUID_PKG=""
+	NODE_PKG="" # TODO
+	NVM_PKG="" # TODO
+	ATOM_PKG="" # TODO
+	PINTA_PKG=""
+	ELIXIR_PKG=""
+	DOCKER_PKG=""
+	SUBLIME_PKG=""
 fi
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -1454,6 +1470,8 @@ dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sa
 
 BAIL_OUT font
 
+if [ -z $MAC ]; then
+
 # MUSTDO finish this
 if false ; then
 if xlsfonts | grep xyzzy > /dev/null ; then
@@ -1527,6 +1545,8 @@ if cmd_exists kfontinst > /dev/null ; then
 
 fi # kfontinst command exists
 fi # USE_KDE set
+
+fi # not MAC
 
 BAIL_OUT xfont
 
