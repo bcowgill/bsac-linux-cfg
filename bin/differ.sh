@@ -8,7 +8,7 @@ DIFFERWAIT='| less -R'
 DIFFERDIRS=0
 DIFFERGUI=0
 
-DIFFER=`which $1`
+DIFFER=`which ${1:-nosuchdifferprogram}`
 
 [ -z $DIFFER ] && DIFFER=`which diffmerge`
 [ -z $DIFFER ] && DIFFER=`which meld`
