@@ -660,7 +660,7 @@ function install_file_from_url {
 	url="$3"
 	message="$4"
 	var_exists DOWNLOAD "$DOWNLOAD"
-	file_exists "$file" > /dev/null || (echo MAYBE NOT OK Try to install $file from $package at $url; wget --output-document $DOWNLOAD/$package $url)
+	file_exists "$file" > /dev/null || (echo MAYBE NOT OK Try to install $file from $package at $url; http_get "$DOWNLOAD/$package" "$url")
 	file_exists "$file" "$message"
 }
 
@@ -1007,7 +1007,7 @@ function install_command_package_from_url {
 	url="$3"
 	message="$4"
 	var_exists DOWNLOAD "$DOWNLOAD"
-	file_exists "$DOWNLOAD/$package" "$message" > /dev/null || (echo Try to install $cmd from $package at $url [$message]; wget --output-document "$DOWNLOAD/$package" $url && force_install_command_package $cmd "$package" "$message")
+	file_exists "$DOWNLOAD/$package" "$message" > /dev/null || (echo Try to install $cmd from $package at $url [$message]; http_get "$DOWNLOAD/$package" $url && force_install_command_package $cmd "$package" "$message")
 	install_command_package $cmd "$package"
 }
 
@@ -1099,14 +1099,14 @@ function port_should_not_be_listening {
 	return 0
 }
 
-# Make http request with wget and optionally show log file on error
+# Make http request and optionally show log file on error
 function http_request_show {
 	local url message log
 	url="$1"
 	message="$2"
 	log="$3"
 	echo Send a request to $url [$message]
-	if wget --output-document=- "$url" ; then
+	if http_dump "$url" ; then
 		OK "got response to $url"
 	else
 		NOT_OK "no response from $url [$message]" || echo " "
@@ -1114,6 +1114,35 @@ function http_request_show {
 			cat "$log"
 		fi
 		return 1
+	fi
+}
+
+function http_get {
+	local output url
+	output="$1"
+	url="$2"
+	if which wget > /dev/null; then
+		wget --output-document="$output" "$url"
+	else
+		if which curl > /dev/null; then
+			curl --output "$output" "$url"
+		else
+			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
+		fi
+	fi
+}
+
+function http_dump {
+	local url
+	url="$1"
+	if which wget > /dev/null; then
+		wget -q --output-document=- "$url"
+	else
+		if which curl > /dev/null; then
+			curl "$url"
+		else
+			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
+		fi
 	fi
 }
 
@@ -1895,7 +1924,7 @@ function apt_has_key {
 		OK "apt-key has $key"
 	else
 		NOT_OK "apt-key missing $key trying to install [$message]" || echo " "
-		wget -q "$url" -O- | sudo apt-key add -
+		http_dump "$url" | sudo apt-key add -
 		if sudo apt-key list | grep "$key"; then
 			OK "apt-key installed $key"
 		else

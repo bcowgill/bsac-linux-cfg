@@ -5,7 +5,7 @@
 DIR=`pwd`
 CMD=""
 if [ ! -z "$1" ]; then
-	if [ -d "$DIR" ]; then
+	if [ -d "$1" ]; then
 		DIR="$1"
 		shift
 	fi

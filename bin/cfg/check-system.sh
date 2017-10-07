@@ -1186,7 +1186,7 @@ fi
 
 if [ -e $HOME/bin ]; then
 	if [ ! -e $HOME/bin/cfg/check-system.sh ]; then
-		# comment out this line only on first machine setup
+		# comment out this next line only on first machine setup
 		NOT_OK "MAYBE there is a $HOME/bin dir, we will install ourself there. "
 		mv $HOME/bin $HOME/bin.saved
 		git clone https://github.com/bcowgill/bsac-linux-cfg.git
@@ -1310,14 +1310,13 @@ file_linked_to .screenrc bin/cfg/.screenrc "screen command layouts configured"
 file_linked_to .my.cnf bin/cfg/.my.cnf "mysql configured"
 file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
-file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english 
+file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english dictionary"
 
 if [ -z $MAC ]; then
 
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
 dir_linked_to .gconf bin/cfg$COMP/.gconf/ "gnome configuration files linked"
-dictionary"
 
 make_dir_exist .config/i3 "i3 configuration file dir"
 file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
@@ -1372,21 +1371,20 @@ if [ ! -z "$BIG_DATA" ]; then
 	make_dir_exist "$BIG_DATA/$USER/VirtualBox" "VirtualBox dir on /data"
 	dir_linked_to "$HOME/VirtualBox VMs" "$BIG_DATA/$USER/VirtualBox" "link for VirtualBox VMs"
 	dir_exists "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "MAYBE ie vms directory" && \
-		dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
+	dir_linked_to $HOME/.ievms "$BIG_DATA/$USER/VirtualBox/ie-vm-downloads" "link for ievms script"
 fi
 
 BAIL_OUT init
 
 # Fonts ================================================================
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
-cmd_exists wget
 install_file_from_url_zip $DOWNLOAD/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
 install_file_from_url_zip $DOWNLOAD/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
 install_file_from_url_zip $DOWNLOAD/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
 echo YOUDO You have to manually install ProFontWindows with your Font Manager from $DOWNLOAD/MProFont/ProFontWindows.ttf
 
 # alternative install: npm install git://github.com/adobe-fonts/source-code-pro.git#release
-# https://github.com/adobe-fonts/source-code-pro/
+# https://github.com/adobe-fonts/source-code-pro/ archive/1.017R.zip
 SC_PRO_VERSION=1.017R
 SC_PRO_ARCHIVE=source-code-pro-$SC_PRO_VERSION
 install_file_from_url_zip $DOWNLOAD/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
@@ -1400,6 +1398,9 @@ file_exists $FILE "ProFontWindows still not installed"
 FILE=.fonts/SourceCodePro-Black.otf
 file_exists $FILE || cp $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
 file_exists $FILE "SourceCodePro fonts still not installed"
+
+if [ -z $MAC ]; then
+
 cmd_exists fc-cache "font cache program needed"
 cmd_exists dc-list "font cache list program needed"
 fc-cache --verbose | grep 'new cache contents' || echo " "
@@ -1414,17 +1415,32 @@ else
 	NOT_OK "SourceCodePro font is not cached"
 fi
 
-# Get unicode fonts and examples
-# http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
-# http://www.cl.cam.ac.uk/~mgk25/ucs/quick-intro.txt
-# http://www.cl.cam.ac.uk/~mgk25/unicode.html#x11
-URL=http://www.cl.cam.ac.uk/~mgk25
 if [ ! -f xlsfonts.lst  ]; then
 	locale -a > locale-a.lst
 	xset q > xset-q.lst
 	xlsfonts > xlsfonts.lst
 	fc-list > fc-list.lst
 fi
+
+else
+	# on Mac Library/Fonts/ contains installed fonts, manually install from .fonts/ dir
+	file_exists Library/Fonts/ProFontWindows.ttf ”ProFontWindows font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-Black.otf ”SourceCodePro Black font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-Bold.otf ”SourceCodePro Bold font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-ExtraLight.otf ”SourceCodePro ExtraLight font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-Light.otf ”SourceCodePro Light font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-Medium.otf ”SourceCodePro Medium font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-Regular.otf ”SourceCodePro Regular font installed on Mac”
+	file_exists Library/Fonts/SourceCodePro-Semibold.otf ”SourceCodePro Semibold font installed on Mac”
+
+fi # not MAC
+
+# Get unicode fonts and examples
+# http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
+# http://www.cl.cam.ac.uk/~mgk25/ucs/quick-intro.txt
+# http://www.cl.cam.ac.uk/~mgk25/unicode.html#x11
+URL=http://www.cl.cam.ac.uk/~mgk25
+
 CHECK=`LC_CTYPE=en_GB.UTF-8 locale charmap`
 if [ ${CHECK:-NOTOK} == UTF-8 ]; then
 	OK "UTF-8 locale is supported"
