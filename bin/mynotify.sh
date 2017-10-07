@@ -16,7 +16,7 @@ function mynotify {
 		fi
 		notify-send --expire-time=15000 "$title" "$message"
 	fi
-
+	echo “`date`: $2: $1” >> $HOME/mynotify.log
 }
 
 mynotify "$1" "$2"
