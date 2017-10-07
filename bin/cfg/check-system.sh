@@ -1176,9 +1176,9 @@ check_linux "$UBUNTU" $MAC
 which git && git --version
 if [ -z $MAC ]; then
 	which java && java -version && ls $JAVA_JVM
-	which apt-get && apt-get —version
+	which apt-get && apt-get --version
 else
-	which brew && brew —version
+	which brew && brew --version
 fi
 which perl && perl --version
 which python && python --version
