@@ -38,8 +38,8 @@ fi
 
 # set BAIL_OUT to stop after a specific point reached
 # search for "BAIL_OUT name" to see where that point is.
-BAIL_OUT=versions
-#BAIL_OUT=init
+#BAIL_OUT=versions
+BAIL_OUT=init
 #BAIL_OUT=font
 #BAIL_OUT=xfont
 #BAIL_OUT=diff
