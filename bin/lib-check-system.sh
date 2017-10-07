@@ -84,7 +84,7 @@ function mynotify {
 		fi
 		notify-send --expire-time=15000 "$title" "$message"
 	fi
-
+	echo “`date`: $2: $1” >> $HOME/mynotify.log
 }
 
 # Show summary of failures and total tests
@@ -125,8 +125,7 @@ function check_linux {
 	os=linux
 	version="$1"
 	ismac="$2"
-	which=`which lsb_release`
-	if [ ! -z "$which" ]; then
+	if which lsb_release > /dev/null; then
 		check=$(lsb_release -sc 2> /dev/null)
 	else
 		file=/etc/issue

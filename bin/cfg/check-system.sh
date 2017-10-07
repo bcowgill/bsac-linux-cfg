@@ -13,7 +13,7 @@
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
-set -x
+#set -x
 
 # chrome URLs open in case session buddy fails
 #http://askubuntu.com/questions/800601/where-is-system-disk-info-stored/801162#801162
@@ -1109,7 +1109,18 @@ if grep $USER /etc/group | grep sudo; then
 	#/etc/group:bcowgill:x:1001:
 	#etc/sudoers:bcowgill   ALL=(ALL:ALL) ALL
 else
-	NOT_OK "user $USER does not have sudo privileges"
+	if [ ! -z $MAC ]; then
+		[ -e check-my-sudo.tmp ] && sudo rm check-my-sudo.tmp
+		sudo touch check-my-sudo.tmp
+		if ls -al check-my-sudo.tmp | grep root; then
+			OK "user $USER has sudo privileges"
+			sudo rm check-my-sudo.tmp
+		else
+			NOT_OK "user $USER does not have sudo privileges"
+		fi
+	else
+		NOT_OK "user $USER does not have sudo privileges"
+	fi
 fi
 
 pushd $HOME
@@ -1117,7 +1128,11 @@ pushd $HOME
 if [ "$HOME" == "/home/me" ]; then
 	dir_exists "$HOME" "home dir ok"
 else
-   dir_link_exists "/home/me" "$HOME" "need to alias home dir as /home/me"
+	if [ -z $MAC ]; then
+		dir_link_exists "/home/me" "$HOME" "need to alias home dir as /home/me"
+	else
+		NOT_OK "MAYBE cannot link /home/me on Mac"
+	fi
 fi
 
 make_dir_exist workspace/play "workspace play area missing"
@@ -1128,11 +1143,17 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
 get_git
 
+# on Mac when java not installed, running java command requests an install with dialog box
+#L-156131255:bin bcowgill$ ls -al /usr/bin/java
+#lrwxr-xr-x  1 root  wheel  74 23 Mar  2017 /usr/bin/java -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
+
 echo VERSIONS
 echo MAC=$MAC
 check_linux "$UBUNTU" $MAC
 which git && git --version
-which java && java -version && ls $JAVA_JVM
+if [ -z $MAC ]; then
+	which java && java -version && ls $JAVA_JVM
+fi
 which perl && perl --version
 which python && python --version
 which ruby && ruby --version
