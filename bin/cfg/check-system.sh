@@ -237,9 +237,13 @@ EBOOK_READER="calibre"
 PINTA_PKG="pinta"
 PINTA_CMD="pinta"
 
-PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
+if [ -z $MAC ]; then
+	PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
+	TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
+else
+	PERL_PKG="cpanm:cpanminus"
+fi
 
-TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 
 NVM_VER="v0.31.4"
 #NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
@@ -448,8 +452,10 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-PULSEAUDIO_PKG="pavucontrol pavumeter speaker-test"
-KEYBOARD_PKG="showkey evtest"
+if [ -z $MAC ]; then
+	PULSEAUDIO_PKG="pavucontrol pavumeter speaker-test"
+	KEYBOARD_PKG="showkey evtest"
+fi
 
 GITHUB_URL=https://github.com/bcowgill
 MY_REPOS="
@@ -517,19 +523,13 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 # Mobile phone mounting tools
 MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 
-#vim-scripts requires ruby - loads of color schemes and helpful vim scripts
-# runit
-# jhead for jpeg EXIF header editing
-INSTALL_CMDS="
-	dlocate deborphan
+INSTALL_MACLINUX="
 	tcsh
 	curl wget
 	vim ctags
-	$EMACS_BASE
 	screen tmux cmatrix
 	colordiff
-	meld
-	dos2unix flip
+	dos2unix
 	htop
 	ncdu
 	lsof
@@ -537,16 +537,42 @@ INSTALL_CMDS="
 	mmv
 	pv
 	fortune
+	mc
+	multitail
+	jhead
+	$PHP_CMD:$PHP_PKG
+"
+
+INSTALL_LINUX="
+	dlocate deborphan
+	$EMACS_BASE
+	meld
+	flip
 	unicode
 	gettext
 	iselect
-	mc
-	multitail root-tail
+	root-tail
 	fbcat
-	jhead
 	chromium-browser
 	$MTP_PKG
-	$PHP_CMD:$PHP_PKG
+"
+
+INSTALL_MAC="
+"
+
+if [ -z $MAC ]; then
+	INSTALL_MAC=""
+else
+	INSTALL_LINUX=""
+fi # not MAC
+
+#vim-scripts requires ruby - loads of color schemes and helpful vim scripts
+# runit
+# jhead for jpeg EXIF header editing
+INSTALL_CMDS="
+	$INSTALL_MACLINUX
+	$INSTALL_LINUX
+	$INSTALL_MAC
 "
 
 # HEREIAM SUGGESTED
@@ -594,14 +620,24 @@ INSTALL_CMDS="
 # Recommended packages:
 # minidnla
 
-INSTALL_LIST="
+INSTALL_LINUX="
 	wcd.exec:wcd
 	calc:apcalc
+	gvim:vim-gtk
+	perlcritic:libperl-critic-perl
+"
+
+if [ -z $MAC ]; then
+	true
+else
+	INSTALL_LINUX=""
+fi
+
+INSTALL_LIST="
+	$INSTALL_LINUX
 	ssh:openssh-client
 	sshd:openssh-server
-	gvim:vim-gtk
 	perldoc:perl-doc
-	perlcritic:libperl-critic-perl
 	dot:graphviz
 	convert:imagemagick
 	gpm
@@ -702,6 +738,9 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	ELIXIR_PKG=""
 	DOCKER_PKG=""
 	SUBLIME_PKG=""
+	EMACS_BASE=""
+	VPN_PKG=""
+	EBOOK_READER=""
 fi
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -759,7 +798,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	ELIXIR_PKG=""
 	#KSCREENSAVER_PKG=""
 	#SCREENSAVER_PKG=""
-	#EMACS_PKG=""
+	#EMACS_BASE=""
 	ATOM_PKG=""
 	ATOM_APM_PKG=""
 	SUBLIME_PKG=""
@@ -895,6 +934,8 @@ else
 	ONBOOT=cfg/$COMPANY/onboot-$COMPANY.sh
 fi
 
+I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
+
 # disable commands for omitted packages
 [ -z "$SVN_PKG"           ] && SVN_CMD=""
 [ -z "$SKYPE_PKG"         ] && SKYPE_CMD=""
@@ -956,8 +997,7 @@ ROBO3T_EXTRACTED=$ROBO3T_EXTRACTED_DIR/bin/robo3t
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
-I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
-
+if [ ! -z $EMACS_BASE ]; then
 EMACS_PKG="
 	$EMACS_BASE
 	/usr/share/emacs/$EMACS_VER/lisp/minibuffer.el.gz:${EMACS_BASE}-el
@@ -967,6 +1007,7 @@ EMACS_PKG="
 	ctags:exuberant-ctags
 	/usr/share/doc/libparse-exuberantctags-perl/copyright:libparse-exuberantctags-perl
 "
+fi
 
 SLACK_URL="$SLACK_URL/$SLACK_PKG"
 
