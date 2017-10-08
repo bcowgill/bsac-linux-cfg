@@ -84,7 +84,7 @@ function mynotify {
 		fi
 		notify-send --expire-time=15000 "$title" "$message"
 	fi
-	echo “`date`: $2: $1” >> $HOME/mynotify.log
+	echo "`date`: $2: $1" >> $HOME/mynotify.log
 }
 
 # Show summary of failures and total tests
@@ -124,7 +124,7 @@ function check_linux {
 	checkmac=0
 	os=linux
 	version="$1"
-	ismac="$2"
+	ismac="${2:-0}"
 	if which lsb_release > /dev/null; then
 		check=$(lsb_release -sc 2> /dev/null)
 	else
@@ -522,7 +522,7 @@ function dir_linked_to {
 if which brew > /dev/null; then
 	PKGINST=brew
 else
-	PKGINST=“sudo apt-get“
+	PKGINST="sudo apt-get"
 fi
 
 function file_exists_from_package {

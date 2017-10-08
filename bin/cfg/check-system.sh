@@ -54,7 +54,7 @@ fi
 #BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
-BAIL_OUT=crontab
+#BAIL_OUT=crontab
 #BAIL_OUT=editors
 #BAIL_OUT=custom
 #BAIL_OUT=repos
@@ -1477,7 +1477,7 @@ file_exists $FILE "SourceCodePro fonts still not installed"
 if [ -z $MAC ]; then
 
 cmd_exists fc-cache "font cache program needed"
-cmd_exists dc-list "font cache list program needed"
+cmd_exists fc-list "font cache list program needed"
 fc-cache --verbose | grep 'new cache contents' || echo " "
 if ( fc-list | grep ProFontWindows ) ; then
 	OK "ProFontWindows font is cached"
