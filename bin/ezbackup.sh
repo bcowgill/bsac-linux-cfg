@@ -2,7 +2,7 @@
 # Easy backup system just give source and destination. Will do a full backup
 # and then partial backups of what changed since last backup.
 
-#set -x
+set -x
 
 DEBUG=0
 CFG=$HOME/.BACKUP
@@ -247,9 +247,21 @@ function partial_backup {
 	TIMESTAMP="$BK_DIR/partial.$NUM.timestamp"
 
 	define_logs .$NUM
-	echo newer than: `ls -alh $NEWER`
+	get_tar_newer "$NEWER"
+	NEWER=$RESULT
 	touch "$TIMESTAMP" && tar cvzf "$BACKUP" --newer "$NEWER" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
+}
+
+function get_tar_newer {
+	local file
+	file="$1"
+	echo newer than: `ls -alh $file`
+	if [ "$OSTYPE" == "darwin16" ]; then
+		RESULT=`ls -lT "$file" | perl -pne '$_ = qq{$1\n} if m{\w+ \s+ \w+ \s+ \d+ \s+ ( \d+ \s+ \w+ \s+ \d+ : \d+ : \d+ \s+ \d+ )}xmsg'`
+	else
+		RESULT="$file"
+	fi
 }
 
 function define_logs {
@@ -318,13 +330,27 @@ function check_space {
 }
 
 function filter_logs {
+	# remove "a Path/filename" entries from error log and put into output log
+	perl -ne '
+		if (m{\Aa \s (\S.+\z)}xms)
+		{ 
+			my $path = "/$1";
+			chomp($path);
+			$path .= -d $path ? "/" : "";
+			print "$path\n";
+		}
+	' "$ERRLOG" >> "$LOG"
 	# make lists of filenames, files and directories from the backup
 	perl -ne 'if (m{/ \s* \z}xms) { print } else { print STDERR }' "$LOG" > "$DIRLOG" 2> "$FILELOG"
 	perl -pne 's{\A .+ /}{}xms' "$FILELOG" | sort | uniq > "$FILENAMELOG"
 
 	# filter error log into ignored and relevant
 	perl -ne '
-		if (m{
+		if (m{\Aa \s \S}xms)
+		{ 
+			;
+		}
+		elsif (m{
 			socket \s ignored
 			| file \s is \s unchanged
 			| Removing \s leading .+ from \s
@@ -353,7 +379,7 @@ function mynotify {
 	local title message
 	title="$2"
 	message="$1"
-	which osascript > /dev/null && osascript -e "display notification \"$message\" with title \"$title\" with subtitle \"ezbackup.sh\""
+	which osascript > /dev/null && osascript -e "display notification \"$message\" with title \"$title\""
 	which notify > /dev/null && notify -t "$title" -m "$message"
 	if which notify-send > /dev/null ; then
 		if [ -z "$title" ]; then
