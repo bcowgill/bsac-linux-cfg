@@ -60,7 +60,7 @@ fi
 #BAIL_OUT=repos
 #BAIL_OUT=docker
 #BAIL_OUT=vpn
-#BAIL_OUT=php
+BAIL_OUT=php
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -741,6 +741,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	NODE_PKG="" # TODO
 	NVM_PKG="" # TODO
 	MONO_PKG=""
+	PHP_PKG=""
 	ATOM_PKG="" # TODO
 	PINTA_PKG=""
 	ELIXIR_PKG=""
@@ -751,6 +752,9 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	EBOOK_READER=""
 	SCREENSAVER_PKG=""
 	SURGE_NPM_PKG=""
+	WEBSTORM_ARCHIVE=""
+	VSLICK_ARCHIVE=""
+	MY_REPOS="perljs"
 fi # wipro mac
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -960,7 +964,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$RUBY_PKG"          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
 [ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$USE_REDIS"         ] && REDIS_PKG="" && REDIS_CMDS=""
-[ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD=""
+[ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD="" && ROBO3T_ARCHIVE=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
@@ -2044,7 +2048,9 @@ fi
 
 BAIL_OUT crontab
 
-file_present prettydiff.js "html beautifier file"
+if which pretty diff > /dev/null; then
+	file_present prettydiff.js "html beautifier file"
+fi
 
 if [ ! -z "$EMACS_PKG" ]; then
 	install_file "$HOME/.emacs" "$HOME/bin/cfg/.emacs" "emacs configuration file exists"
@@ -2116,12 +2122,6 @@ if [ ! -z "$WEBSTORM_ARCHIVE" ]; then
 	file_has_text "/usr/local/bin/wstorm" "$HOME/.$WEBSTORM_CONFIG/config" "webstorm refers to config dir"
 fi # WEBSTORM_ARCHIVE
 
-if [ ! -z "$ROBO3T_ARCHIVE" ]; then
-	install_file_from_url_zip "$ROBO3T_EXTRACTED" "$ROBO3T_ARCHIVE.tar.gz" "$ROBO3T_URL" "download mongo db robo 3T UI"
-	dir_linked_to bin/robo3t $ROBO3T_EXTRACTED_DIR "current robo3t dir linked to bin/robo3t"
-	cmd_exists $ROBO3T_CMD "robo3t runner script present"
-fi # ROBO3T_ARCHIVE
-
 if [ ! -z "$VSLICK_ARCHIVE" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
 	cmd_exists $VSLICK_CMD "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
@@ -2169,6 +2169,14 @@ if [ ! -z "$USE_SCHEMACRAWLER" ]; then
 	fi # USE_MYSQL
 fi # USE_SCHEMACRAWLER
 
+if [ ! -z "$USE_MONGO" ]; then
+	if [ ! -z "$ROBO3T_ARCHIVE" ]; then
+		install_file_from_url_zip "$ROBO3T_EXTRACTED" "$ROBO3T_ARCHIVE.tar.gz" "$ROBO3T_URL" "download mongo db robo 3T UI"
+		dir_linked_to bin/robo3t $ROBO3T_EXTRACTED_DIR "current robo3t dir linked to bin/robo3t"
+		cmd_exists $ROBO3T_CMD "robo3t runner script present"
+	fi # ROBO3T_ARCHIVE
+fi # USE_MONGO
+
 BAIL_OUT custom
 
 cmd_exists git "need git to clone repos"
@@ -2185,7 +2193,7 @@ if [ ! -z "$DOCKER_PKG" ]; then
 	apt_has_source_listd docker "https://apt.dockerproject.org/repo ubuntu-$LSB_RELEASE main" "Adding source for docker to apt"
 	cmd_exists $DOCKER_CMD || (sudo apt-get update && apt-cache policy $DOCKER_PKG | grep apt.dockerproject.org/repo && install_command_from $DOCKER_CMD $DOCKER_PKG)
 	add_user_to_group $DOCKER_GRP $AUSER "allow docker to be started without root permissions"
-fi
+fi # DOCKER_PKG
 
 BAIL_OUT docker
 
@@ -2204,7 +2212,7 @@ if [ ! -z "$VPN_PKG" ]; then
 		OK "restart network after vpn bridge configuration"
 		sudo /etc/init.d/networking restart
 	fi
-fi
+fi # VPN_PKG
 
 BAIL_OUT vpn
 
