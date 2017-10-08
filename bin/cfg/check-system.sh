@@ -51,10 +51,10 @@ fi
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
-BAIL_OUT=npm
+#BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
-#BAIL_OUT=crontab
+BAIL_OUT=crontab
 #BAIL_OUT=editors
 #BAIL_OUT=custom
 #BAIL_OUT=repos
@@ -628,10 +628,19 @@ INSTALL_LINUX="
 	perlcritic:libperl-critic-perl
 "
 
+COMMANDS_LINUX="
+	apt-file
+	wcd.exec
+	gettext
+	gitk
+	meld
+"
+
 if [ -z $MAC ]; then
 	true
 else
 	INSTALL_LINUX=""
+	COMMANDS_LINUX=""
 fi
 
 INSTALL_LIST="
@@ -653,14 +662,10 @@ INSTALL_FILES="
 fi # not MAC
 
 COMMANDS_LIST="
-	apt-file
-	wcd.exec
-	gettext
+	$COMMANDS_LINUX
 	git
-	gitk
 	perl
 	dot
-	meld
 "
 
 if [ "$HOSTNAME" == "akston" ]; then
@@ -713,7 +718,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	EMACS_VER=24.3
 
 	# HEREIAM CFG
-fi
+fi # akston linux
 
 if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	# Change settings for wipro mac workstation
@@ -746,7 +751,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	EBOOK_READER=""
 	SCREENSAVER_PKG=""
 	SURGE_NPM_PKG=""
-fi
+fi # wipro mac
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	# Change settings for clearbooks linux workstation
@@ -815,7 +820,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	GOOGLE_CHROME_PKG=""
 	#FLASH_ARCHIVE=""
 	SC_PRO_ARCHIVE=""
-fi
+fi # clearbooks
 
 if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	# Change settings for workshare linux laptop
@@ -844,7 +849,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	VSLICK_ARCHIVE=""
 	SUBLIME_CFG=""
 	PINTA_PKG=""
-fi
+fi # workshare
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
 	# Change settings for the raspberry pi
@@ -1968,14 +1973,22 @@ fi
 BAIL_OUT npm
 
 if [ ! -z "$DROPBOX_URL" ]; then
-	make_dir_exist workspace/dropbox-dist "dropbox distribution files"
-	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
-	file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
-	if ps -ef --cols 256 | grep -v grep | grep dropbox-dist > /dev/null; then
-		OK "dropbox daemon is running"
+	if [ ! -z $MAC ]; then
+		if ps -efww | grep -v grep | grep Dropbox.app > /dev/null; then
+			OK "dropbox daemon is running"
+		else
+			NOT_OK "dropbox daemon is not running, you need to manually install dropbox"
+		fi
 	else
-		NOT_OK "dropbox daemon is not running, will try to start it"
-		dropbox.sh
+		make_dir_exist workspace/dropbox-dist "dropbox distribution files"
+		file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
+		file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
+		if ps -ef --cols 256 | grep -v grep | grep dropbox-dist > /dev/null; then
+			OK "dropbox daemon is running"
+		else
+			NOT_OK "dropbox daemon is not running, will try to start it"
+			dropbox.sh
+		fi
 	fi
 fi
 
@@ -1996,14 +2009,18 @@ BAIL_OUT commands
 echo CRON table setup
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
-crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
-crontab_has_command "wcdscan.sh"
 #15 20,22 * * 1-5           $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 #15 8,13,20 * * 6-7         $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 crontab_has_command "ezbackup.sh"
+crontab_has_command "track-battery.pl" "* * * * * \$HOME/bin/track-battery.pl > /tmp/\$LOGNAME/crontab-track-battery.log 2>&1" "crontab warn about battery drain"
+crontab_has_command "track-battery.pl"
 
-crontab_has_command "random-desktop.sh" "0,15,30,45 * * * * DISPLAY=:0 \$HOME/bin/random-desktop.sh > /tmp/\$LOGNAME/crontab-random-desktop.log 2>&1" "crontab change desktop background"
-crontab_has_command "random-desktop.sh"
+if [ -z $MAC ]; then
+	crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
+	crontab_has_command "wcdscan.sh"
+	crontab_has_command "random-desktop.sh" "0,15,30,45 * * * * DISPLAY=:0 \$HOME/bin/random-desktop.sh > /tmp/\$LOGNAME/crontab-random-desktop.log 2>&1" "crontab change desktop background"
+	crontab_has_command "random-desktop.sh"
+fi # not MAC
 
 if [ ! -z "$COMPANY" ]; then
 	file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
@@ -2015,11 +2032,11 @@ if [ ! -z "$COMPANY" ]; then
 	file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 	crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
 	crontab_has_command "backup-work.sh"
-	crontab_has_command "night.sh"
-	crontab_has_command "brighter.sh"
+	if [ -z $MAC ]; then
+		crontab_has_command "night.sh"
+		crontab_has_command "brighter.sh"
+	fi # not MAC
 else
-	crontab_has_command "track-battery.pl" "* * * * * \$HOME/bin/track-battery.pl > /tmp/\$LOGNAME/crontab-track-battery.log 2>&1" "crontab warn about battery drain"
-	crontab_has_command "track-battery.pl"
 	#*/7 19,20,21,22,23 * * 1-5 $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
 	#*/7 * * * 6-7              $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
 	crontab_has_command "retag.sh"
