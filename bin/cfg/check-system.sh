@@ -45,13 +45,13 @@ fi
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=mongo
-BAIL_OUT=install
+#BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
 #BAIL_OUT=perl
 #BAIL_OUT=ruby
 #BAIL_OUT=files
-#BAIL_OUT=npm
+BAIL_OUT=npm
 #BAIL_OUT=dropbox
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
@@ -237,7 +237,7 @@ EBOOK_READER="calibre"
 PINTA_PKG="pinta"
 PINTA_CMD="pinta"
 
-if [ -z $MAC ]; then
+if [ -z $MAC ]; then # TODO MAC PKGS
 	PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
 	TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 else
@@ -452,7 +452,7 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-if [ -z $MAC ]; then
+if [ -z $MAC ]; then  # TODO MAC PKGS
 	PULSEAUDIO_PKG="pavucontrol pavumeter speaker-test"
 	KEYBOARD_PKG="showkey evtest"
 fi
@@ -620,6 +620,7 @@ INSTALL_CMDS="
 # Recommended packages:
 # minidnla
 
+# TODO MAC PKGS
 INSTALL_LINUX="
 	wcd.exec:wcd
 	calc:apcalc
@@ -644,10 +645,12 @@ INSTALL_LIST="
 	markdown
 "
 
+if [ -z $MAC ]; then # TODO MAC PKGS
 INSTALL_FILES="
 	/usr/share/doc/fortunes/copyright:fortunes
 	/usr/share/doc-base/vim-referencemanual:vim-doc
 "
+fi # not MAC
 
 COMMANDS_LIST="
 	apt-file
@@ -741,6 +744,8 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	EMACS_BASE=""
 	VPN_PKG=""
 	EBOOK_READER=""
+	SCREENSAVER_PKG=""
+	SURGE_NPM_PKG=""
 fi
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -967,7 +972,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 GIT_TAR=git-$GIT_VER
 GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
-if [ -z $MAC ]; then
+if [ -z $MAC ]; then  # TODO MAC PKGS
 GIT_PKG_AFTER="
 	/usr/share/doc-base/git-tools:git-doc
 	/usr/lib/git-core/git-gui:git-gui
@@ -1215,7 +1220,7 @@ echo VERSIONS
 echo MAC=$MAC
 check_linux "$UBUNTU" $MAC
 which git && git --version
-if [ -z $MAC ]; then
+if [ -z $MAC ]; then # TODO MAC PKGS
 	which java && java -version && ls $JAVA_JVM
 	which apt-get && apt-get --version
 else
@@ -1747,7 +1752,7 @@ else
 	OK "will not configure git-svn unless GITSVN_PKG is non-zero"
 fi # GITSVN_PKG
 
-if [ -z $MAC ]; then # TODO
+if [ -z $MAC ]; then # TODO MAC PKGS
 GIT_COMPLETE=/usr/share/bash-completion/completions/git
 if file_exists "$GIT_COMPLETE" > /dev/null ; then
 	# git installs completion file but not in right place any more
@@ -1881,9 +1886,11 @@ fi # not MAC
 
 BAIL_OUT install
 
-dir_exists "$NODE_LIB" "global node command"
-dir_exists "$NODE_LIB" "global node_modules"
-[ ! -z "$NODE_PKG" ] && installs_from "$NODE_PKG_LIST"
+if [ ! -z "$NODE_PKG" ]; then
+	dir_exists "$NODE_LIB" "global node command"
+	dir_exists "$NODE_LIB" "global node_modules"
+	installs_from "$NODE_PKG_LIST"
+fi
 
 BAIL_OUT node
 
