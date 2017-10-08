@@ -4,6 +4,8 @@ Mac OSX command quick reference
  mac tilde
  mac quotes
 
+TODO Mac keys for screenshot
+
 Ctrl-Shift-Power Sleep the screen only
 Cmd-Alt-Power  Sleep your mac
 Close the lid
