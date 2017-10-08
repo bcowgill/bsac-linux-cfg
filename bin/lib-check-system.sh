@@ -519,11 +519,17 @@ function dir_linked_to {
 	fi
 }
 
+if which brew > /dev/null; then
+	PKGINST=brew
+else
+	PKGINST=“sudo apt-get“
+fi
+
 function file_exists_from_package {
 	local file package
 	file="$1"
 	package="$2"
-	file_exists "$file" "sudo apt-get install $package"
+	file_exists "$file" "$PKGINST install $package"
 }
 
 function file_is_executable {
@@ -552,7 +558,7 @@ function var_exists {
 
 # get git if possible
 function get_git {
-	cmd_exists git || ( echo doing an upgrade to get git; sudo apt-get update && sudo apt-get upgrade && sudo apt-get install git && exit 11)
+	cmd_exists git || ( echo doing an upgrade to get git; $PKGINST update && $PKGINST upgrade && $PKGINST install git && exit 11)
 
 }
 
@@ -591,7 +597,7 @@ function install_from {
 	if [ ! -z "$which" ] ; then
 		OK "command $file exists [$which]"
 	else
-		file_exists "$file" > /dev/null || (echo want to install cmd/file $file from $package; sudo apt-get install "$package")
+		file_exists "$file" > /dev/null || (echo want to install cmd/file $file from $package; $PKGINST install "$package")
 		which=`which "$file"`
 		if [ ! -z "$which" ] ; then
 			OK "command $file exists [$which]"
@@ -628,7 +634,7 @@ function install_file_from {
 	local file package
 	file="$1"
 	package="$2"
-	file_exists "$file" > /dev/null || (echo want to install file $file from $package; sudo apt-get install "$package")
+	file_exists "$file" > /dev/null || (echo want to install file $file from $package; $PKGINST install "$package")
 	file_exists "$file" "use dpkg -L $package to get list of files installed by package"
 }
 
@@ -843,7 +849,7 @@ function cmd_exists { # command_exists
 		OK "command $cmd exists [$which]"
 	else
 		if [ -z "$message" ]; then
-			message="sudo apt-get install $cmd"
+			message="$PKGINST install $cmd"
 		fi
 		NOT_OK "command $cmd missing [$message]"
 		return 1
@@ -878,7 +884,7 @@ function install_command_from {
 	if [ -z "$package" ]; then
 		package="$command"
 	fi
-	cmd_exists "$command" > /dev/null || (echo want to install command $command from $package; sudo apt-get $options install "$package")
+	cmd_exists "$command" > /dev/null || (echo want to install command $command from $package; $PKGINST $options install "$package")
 	cmd_exists "$command" || return 1
 }
 
@@ -889,7 +895,7 @@ function install_command_from_packages {
 	command="$1"
 	packages="$2"
 	options="$3"
-	cmd_exists "$command" > /dev/null || (echo want to install command $command from $packages; sudo apt-get $options install $packages)
+	cmd_exists "$command" > /dev/null || (echo want to install command $command from $packages; $PKGINST $options install $packages)
 	cmd_exists "$command" || return 1
 }
 
@@ -902,7 +908,7 @@ function install_commands {
 	for cmd in $commands
 	do
 		if [ ! -z "$cmd" ]; then
-			cmd_exists $cmd > /dev/null || (echo want to install command $cmd ; sudo apt-get install "$cmd")
+			cmd_exists $cmd > /dev/null || (echo want to install command $cmd ; $PKGINST install "$cmd")
 			cmd_exists $cmd || error=""
 		fi
 	done
@@ -950,7 +956,7 @@ function force_install_command_from {
 		package="$command"
 	fi
 	echo forced to install $command from $package for "$message"
-	sudo apt-get $options install "$package"
+	$PKGINST $options install "$package"
 	cmd_exists "$command" || return 1
 }
 
