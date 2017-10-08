@@ -1,5 +1,9 @@
 Mac OSX command quick reference
 
+~ proper tilde
+ mac tilde
+ mac quotes
+
 Ctrl-Shift-Power Sleep the screen only
 Cmd-Alt-Power  Sleep your mac
 Close the lid
