@@ -1,0 +1,19 @@
+Mac OSX command quick reference
+
+Ctrl-Shift-Power Sleep the screen only
+Cmd-Alt-Power  Sleep your mac
+Close the lid
+
+Menu/Apple Icon/Sleep. Lock the Mac
+
+Drag /System/Library/Frameworks/ScreenSaver.framework/Versions/A/Resources/ScreenSaverEngine icon to the dock to have a dock icon for locking Mac.
+
+Application/Utilities/Keychain Access Menu/Keychain Access/Preferences/show keychain access in menu bar
+Creates a padlock icon you can use to lock the Mac.
+
+System Preferences/Users & Groups/Login Options/show fast user switching menu
+Now Menu/Name or Icon/Login Window will lock your Mac
+
+Locking your Mac
+https://www.cnet.com/uk/how-to/7-ways-to-lock-your-macbook/
+
