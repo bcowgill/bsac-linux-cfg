@@ -2,7 +2,7 @@
 # Easy backup system just give source and destination. Will do a full backup
 # and then partial backups of what changed since last backup.
 
-set -x
+#set -x
 
 DEBUG=0
 CFG=$HOME/.BACKUP
