@@ -60,7 +60,7 @@ fi
 #BAIL_OUT=repos
 #BAIL_OUT=docker
 #BAIL_OUT=vpn
-BAIL_OUT=php
+#BAIL_OUT=php
 #BAIL_OUT=
 
 if [ ! -z $1 ]; then
@@ -2288,7 +2288,11 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 FILE=".gitconfig"
 git config --global gui.fontdiff "-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0"
 ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
-ini_file_has_text "$FILE" "gui/fontui = -family FreeSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
+if [ -z $MAC ]; then
+	ini_file_has_text "$FILE" "gui/fontui = -family FreeSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
+else
+	ini_file_has_text "$FILE" "gui/fontui = -family LucidaSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
+fi
 ini_file_has_text "$FILE" "gui/tabsize = 4" "git gui tabsize Edit / Options"
 
 # gitk configuration
@@ -2479,6 +2483,7 @@ else
 	OK "charles will not be configured unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
+if [ ! -z $DIFFMERGE_PKG ]; then
 # Sourcegear Diffmerge colors
 cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 FILE=".SourceGear DiffMerge"
@@ -2521,7 +2526,9 @@ if [ -f "$FILE" ]; then
 	ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
 	ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
 fi # diffmerge config file
-
+fi # DIFFMERGE_PKG
+ 
+if [ ! -z $P4MERGE_PKG ]; then
 # Perforce p4merge colors
 FILE=".p4merge/ApplicationSettings.xml"
 file_linked_to "$FILE" "$HOME/bin/cfg/.p4merge-ApplicationSettings.xml" "Perforce Merge config linked"
@@ -2534,6 +2541,7 @@ if [ -f "$FILE" ]; then
 	file_contains_text $FILE "<Int varName=.TabWidth.>4" "Edit / Preferences"
 	file_contains_text $FILE "<Bool varName=.ShowLineNumbers.>true" "Edit / Preferences"
 fi # perforce merge config file
+fi # P4MERGE_PKG
 
 if [ ! -z "$SUBLIME_CFG" ]; then
 	# sublime configuration

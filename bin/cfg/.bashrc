@@ -146,6 +146,7 @@ if [ ! -z $COMPANY ]; then
 	PATH=$HOME/bin/$COMPANY:$PATH
 fi
 
+if which __git_ps1 > /dev/null; then
 # BSAC show git branch on command prompt
 # see /etc/bash_completion.d/git for options
 # Prompt branch looks like: (master *+$%<>)
@@ -169,6 +170,8 @@ else
     PS1_SHORT='${debian_chroot:+($debian_chroot)}\W\[$(__git_ps1 " (%s)")\]\$ '
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\[$(__git_ps1 " (%s)")\]\$ '
 fi
+fi # __git_ps1
+
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
