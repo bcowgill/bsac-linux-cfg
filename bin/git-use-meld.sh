@@ -3,6 +3,7 @@
 # git difftool --no-prompt filenane
 # or
 # git mergetool --no-prompt filename
+# https://stackoverflow.com/questions/43317697/setting-up-and-using-meld-as-your-git-difftool-and-mergetool-mac-syatem
 #
 # Using it on a merge:
 # git merge something   indicates conflicts
