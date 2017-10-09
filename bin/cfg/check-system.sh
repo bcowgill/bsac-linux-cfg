@@ -523,6 +523,11 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 # Mobile phone mounting tools
 MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 
+# meld - caskroom/cask
+BREW_TAPS="
+	caskroom/cask
+"
+
 INSTALL_MACLINUX="
 	tcsh
 	curl wget
@@ -546,7 +551,6 @@ INSTALL_MACLINUX="
 INSTALL_LINUX="
 	dlocate deborphan
 	$EMACS_BASE
-	meld
 	flip
 	unicode
 	gettext
@@ -554,6 +558,7 @@ INSTALL_LINUX="
 	root-tail
 	fbcat
 	chromium-browser
+	meld
 	$MTP_PKG
 "
 
@@ -1873,6 +1878,7 @@ fi # USE_MONGO
 
 BAIL_OUT mongo
 
+echo BIG BREW_TAPS $BREW_TAPS
 echo BIG INSTALL_CMDS $INSTALL_CMDS
 echo BIG INSTALL FROM $INSTALL_FROM
 echo BIG INSTALL FILES $INSTALL_FILES
@@ -1885,6 +1891,7 @@ echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 
+brew_taps_from "$BREW_TAPS"
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"

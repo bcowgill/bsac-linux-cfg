@@ -585,6 +585,51 @@ function install_file {
 	file_exists "$file" "$message"
 }
 
+# pin a tap for mac brew package manager
+function brew_has_tap {
+	local tap
+	tap="$1"
+	if which brew > /dev/null; then
+		if brew tap | grep "$tap"; then
+			OK "brew has tap $tap"
+		else
+			NOT_OK "brew has no tap $tap configured"
+			return 1
+		fi
+	fi
+	return 0
+}
+
+function brew_tap_from {
+	local tap
+	tap="$1"
+	if which brew > /dev/null; then
+		brew_has_tap "$tap" > /dev/null || (echo want to pin a tap $tap; brew tap "$tap")
+		brew_has_tap "$tap"
+	fi
+	return 0
+}
+
+function brew_taps_from {
+	local list message package error
+	list="$1"
+	message="$2"
+	error=""
+	if which brew > /dev/null; then
+		for package in $list
+		do
+			brew_tap_from $package || error="$error $package"
+		done
+		if [ ! -z "$error" ]; then
+			NOT_OK "errors for brew_tap_from$error [$message]"
+			error=1
+		else
+			error=0
+		fi
+		return $error
+	fi
+}
+
 # install a command or file from a package
 function install_from {
 	local file package which
@@ -621,7 +666,7 @@ function installs_from {
 		install_from $file $package || error="$error $file_pkg"
 	done
 	if [ ! -z "$error" ]; then
-		NOT_OK "errors for install_from$error"
+		NOT_OK "errors for install_from$error [$message]"
 		error=1
 	else
 		error=0
@@ -653,7 +698,7 @@ function install_files_from {
 		install_file_from $file $package $options || error="$error $file_pkg"
 	done
 	if [ ! -z "$error" ]; then
-		NOT_OK "errors for install_files_from$error"
+		NOT_OK "errors for install_files_from$error [$message]"
 	fi
 	return $error
 }
