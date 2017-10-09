@@ -1,8 +1,8 @@
 Mac OSX command quick reference
 
 ~ proper tilde
- mac tilde
- mac quotes
+~ mac tilde
+“” mac quotes
 
 TODO Mac keys for screenshot
 

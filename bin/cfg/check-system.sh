@@ -563,6 +563,7 @@ INSTALL_LINUX="
 "
 
 INSTALL_MAC="
+	meld:caskroom/cask/meld
 "
 
 if [ -z $MAC ]; then
@@ -1891,7 +1892,7 @@ echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 
-brew_taps_from "$BREW_TAPS"
+#brew_taps_from "$BREW_TAPS"
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"
