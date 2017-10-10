@@ -258,96 +258,6 @@ N_VER="v2.1.7"
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_CMD="nodejs"
-NODE_CMDS="$NODE_CMD npm"
-NODE_LIB=/usr/lib/nodejs
-NODE_MOD=/usr/lib/node_modules
-if [ ! -d "$NODE_MOD" ]; then
-	NODE_MOD=/usr/local/lib/node_modules
-fi
-NODE_PKG="
-	$NODE_CMDS
-	node:nodejs-legacy
-	/usr/share/doc/node-debug/copyright:node-debug
-	$NODE_LIB/eyes.js:node-eyes
-	$NODE_LIB/glob.js:node-glob
-	/usr/share/doc/node-inherits/copyright:node-inherits
-	$NODE_LIB/mkdirp/index.js:node-mkdirp
-	$NODE_LIB/rimraf/index.js:node-rimraf
-"
-NODE_CUSTOM_PKG="
-	$NODE_LIB/abbrev.js:node-abbrev
-	$NODE_LIB/async.js:node-async
-	$NODE_LIB/base64id.js:node-base64id
-	$NODE_LIB/bignumber.js:node-bignumber
-	$NODE_LIB/bytes/index.js:node-bytes
-	$NODE_LIB/chrono.js:node-chrono
-	$NODE_LIB/cli/index.js:node-cli
-	/usr/share/doc/node-colors/copyright:node-colors
-	/usr/share/doc/node-commander/copyright:node-commander
-	$NODE_LIB/contextify/index.js:node-contextify
-	$NODE_LIB/daemon/index.js:node-daemon
-	$NODE_LIB/dequeue/index.js:node-dequeue
-	/usr/share/doc/node-diff/copyright:node-diff
-	$NODE_LIB/dirty/index.js:node-dirty
-	$NODE_LIB/fstream/index.js:node-fstream
-	$NODE_LIB/get/index.js:node-get
-	$NODE_LIB/growl.js:node-growl
-	$NODE_LIB/ini.js:node-ini
-	$NODE_LIB/JSV/index.js:node-jsv
-	$NODE_LIB/keypress.js:node-keypress
-	$NODE_LIB/lockfile.js:node-lockfile
-	$NODE_LIB/minimatch.js:node-minimatch
-	$NODE_LIB/nopt.js:node-nopt
-	$NODE_LIB/once.js:node-once
-	/usr/share/doc/node-optimist/copyright:node-optimist
-	$NODE_LIB/osenv.js:node-osenv
-	$NODE_LIB/read.js:node-read
-	$NODE_LIB/readdirp/index.js:node-readdirp
-	$NODE_LIB/request/index.js:node-request
-	$NODE_LIB/retry/index.js:node-retry
-	$NODE_LIB/security.js:node-security
-	$NODE_LIB/semver/index.js:node-semver
-	$NODE_LIB/step.js:node-step
-	$NODE_LIB/tar/index.js:node-tar
-	$NODE_LIB/tinycolor.js:node-tinycolor
-	$NODE_LIB/traverse.js:node-traverse
-	$NODE_LIB/which.js:node-which
-	$NODE_LIB/wordwrap.js:node-wordwrap
-	/usr/share/doc/node-zipfile/copyright:node-zipfile
-"
-
-NPM_LIB=/usr/local/lib/node_modules
-NPM_GLOBAL_PKG="
-	n
-	prettydiff
-	uglifyjs:uglify-js
-	jsdoc
-	jshint
-	eslint
-	jscs
-	flow:flow-bin
-	babel:babel-cli
-	node-debug
-	node-sass
-	lessc:less
-	mocha
-	jstest
-	phantomjs:phantomjs-prebuilt
-	/usr/local/lib/node_modules/karma/bin/karma:karma
-	karma:karma-cli
-	$NPM_LIB/karma-chrome-launcher/index.js:karma-chrome-launcher
-	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
-	bower
-	yo
-	grunt:grunt-cli
-	grunt-init
-	express:express-generator
-	$NODE_MOD/node-notifier/README.md:node-notifier
-	ncu:npm-check-updates
-	tsc:typescript tslint typings tsfmt:typescript-formatter
-	alm
-	yarn
-"
 
 # for hosted front end static assets: html, js, css
 SURGE_NPM_PKG=surge
@@ -745,7 +655,8 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	DIFFMERGE_PKG="" # TODO
 	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
-	NODE_PKG="" # TODO
+	NODE_CMD=node
+	NODE_VER=v8.6.0
 	NVM_PKG="" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
@@ -924,9 +835,8 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		cowsay
 		linuxlogo
 	"
-	NODE_PKG=""
+	NODE_VER=""
 	NODE_CMD="node"
-	NODE_CMDS="node npm"
 	SURGE_NPM_PKG=""
 	SCREENSAVER_PKG=""
 	DROPBOX_URL=""
@@ -943,6 +853,110 @@ fi # raspberrypi
 
 }
 set_env
+
+function set_node_env {
+NODE_CMDS="$NODE_CMD npm"
+NODE_LIB=/usr/lib/$NODE_CMD
+NPM_LIB=/usr/local/lib/node_modules
+NODE_MOD=/usr/lib/node_modules
+if [ ! -e "$NODE_LIB" ]; then
+	NODE_LIB=/usr/local/bin/$NODE_CMD
+fi
+if [ ! -d "$NODE_MOD" ]; then
+	NODE_MOD=/usr/local/lib/node_modules
+fi
+
+if [ -z $MAC ]; then
+NODE_PKG="
+	$NODE_CMDS
+	node:nodejs-legacy
+	/usr/share/doc/node-debug/copyright:node-debug
+	$NODE_LIB/eyes.js:node-eyes
+	$NODE_LIB/glob.js:node-glob
+	/usr/share/doc/node-inherits/copyright:node-inherits
+	$NODE_LIB/mkdirp/index.js:node-mkdirp
+	$NODE_LIB/rimraf/index.js:node-rimraf
+"
+NODE_CUSTOM_PKG="
+	$NODE_LIB/abbrev.js:node-abbrev
+	$NODE_LIB/async.js:node-async
+	$NODE_LIB/base64id.js:node-base64id
+	$NODE_LIB/bignumber.js:node-bignumber
+	$NODE_LIB/bytes/index.js:node-bytes
+	$NODE_LIB/chrono.js:node-chrono
+	$NODE_LIB/cli/index.js:node-cli
+	/usr/share/doc/node-colors/copyright:node-colors
+	/usr/share/doc/node-commander/copyright:node-commander
+	$NODE_LIB/contextify/index.js:node-contextify
+	$NODE_LIB/daemon/index.js:node-daemon
+	$NODE_LIB/dequeue/index.js:node-dequeue
+	/usr/share/doc/node-diff/copyright:node-diff
+	$NODE_LIB/dirty/index.js:node-dirty
+	$NODE_LIB/fstream/index.js:node-fstream
+	$NODE_LIB/get/index.js:node-get
+	$NODE_LIB/growl.js:node-growl
+	$NODE_LIB/ini.js:node-ini
+	$NODE_LIB/JSV/index.js:node-jsv
+	$NODE_LIB/keypress.js:node-keypress
+	$NODE_LIB/lockfile.js:node-lockfile
+	$NODE_LIB/minimatch.js:node-minimatch
+	$NODE_LIB/nopt.js:node-nopt
+	$NODE_LIB/once.js:node-once
+	/usr/share/doc/node-optimist/copyright:node-optimist
+	$NODE_LIB/osenv.js:node-osenv
+	$NODE_LIB/read.js:node-read
+	$NODE_LIB/readdirp/index.js:node-readdirp
+	$NODE_LIB/request/index.js:node-request
+	$NODE_LIB/retry/index.js:node-retry
+	$NODE_LIB/security.js:node-security
+	$NODE_LIB/semver/index.js:node-semver
+	$NODE_LIB/step.js:node-step
+	$NODE_LIB/tar/index.js:node-tar
+	$NODE_LIB/tinycolor.js:node-tinycolor
+	$NODE_LIB/traverse.js:node-traverse
+	$NODE_LIB/which.js:node-which
+	$NODE_LIB/wordwrap.js:node-wordwrap
+	/usr/share/doc/node-zipfile/copyright:node-zipfile
+"
+else
+	# Mac node
+NODE_PKG="
+	$NODE_CMDS
+"
+fi
+
+NPM_GLOBAL_PKG="
+	n
+	prettydiff
+	uglifyjs:uglify-js
+	jsdoc
+	jshint
+	eslint
+	jscs
+	flow:flow-bin
+	babel:babel-cli
+	node-inspector
+	node-sass
+	lessc:less
+	mocha
+	jstest
+	phantomjs:phantomjs-prebuilt
+	$NPM_LIB/karma/bin/karma:karma
+	karma:karma-cli
+	$NPM_LIB/karma-chrome-launcher/index.js:karma-chrome-launcher
+	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
+	bower
+	yo
+	grunt:grunt-cli
+	grunt-init
+	express:express-generator
+	$NODE_MOD/node-notifier/README.md:node-notifier
+	ncu:npm-check-updates
+	tsc:typescript tslint typings tsfmt:typescript-formatter
+	alm
+	yarn
+"
+} # set_node_env
 
 # set_derived_env values will depend on those defined in set_env
 function set_derived_env {
@@ -974,7 +988,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD="" && ROBO3T_ARCHIVE=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
-[ -z "$NODE_PKG"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$ATOM_PKG"          ] && ATOM_CMD=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
@@ -1045,6 +1059,8 @@ fi
 if [ ! -z "$EMACS_PKG" ]; then
 	EMACS_PKG="$EMACS_PKG /usr/share/emacs/$EMACS_VER/lisp/linum.el.gz:$EMACS_BASE-el"
 fi
+
+set_node_env
 
 NODE_PKG_LIST="
 	$NODE_PKG
@@ -1924,6 +1940,12 @@ echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 
+if [ ! -z $MAC ]; then
+	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
+	cmd_exists brew
+	cmd_exists xcode-select "you must manually install xcode from the Applie App store"
+fi
+
 #brew_taps_from "$BREW_TAPS"
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
@@ -1936,9 +1958,11 @@ fi # not MAC
 BAIL_OUT install
 
 if [ ! -z "$NODE_PKG" ]; then
-	dir_exists "$NODE_LIB" "global node command"
-	dir_exists "$NODE_LIB" "global node_modules"
 	installs_from "$NODE_PKG_LIST"
+	if [ -z $MAC ]; then
+		dir_exists "$NODE_LIB" "global node command"
+	fi
+	dir_exists "$NODE_MOD" "global node_modules"
 fi
 
 BAIL_OUT node
