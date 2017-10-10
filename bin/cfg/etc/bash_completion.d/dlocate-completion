@@ -1,0 +1,33 @@
+# Debian GNU dlocate(1) completion
+#
+have dlocate && {
+_dlocate()
+{
+	local cur prev
+
+	COMPREPLY=()
+	cur=${COMP_WORDS[COMP_CWORD]}
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+
+	case "$prev" in
+	-S)
+		_filedir
+		return 0
+		;;
+	-@(L|l|s|ls|du|conf|lsconf|md5sum|md5check|man))
+		COMPREPLY=( $( _xfunc dpkg _comp_dpkg_installed_packages "$cur" ) )
+		return 0
+		;;
+	*)
+		COMPREPLY=( $( compgen -W '-h -H -V -S -L -l -s -ls -du \
+			-conf -lsconf -md5sum -md5check -man --help \
+			--version' -- $cur ) )
+		return 0
+		;;
+	esac
+	
+	# notreached
+	return 0
+}
+complete -F _dlocate $filenames dlocate
+}
