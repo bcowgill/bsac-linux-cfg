@@ -1,0 +1,20 @@
+user.name=Brent S.A. Cowgill
+user.email=brent.cowgill@wipro.com
+push.default=simple
+rerere.enabled=true
+rerere.autoupdate=true
+alias.graph=log --oneline --graph --decorate --all
+gui.fontui=-family LucidaSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+gui.fontdiff=-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0
+gui.tabsize=4
+diff.tool=meld
+difftool.prompt=false
+difftool.meld.trustexitcode=true
+difftool.meld.cmd=open -W -a Meld --args "$LOCAL" "$PWD/$REMOTE"
+merge.tool=meld
+mergetool.prompt=false
+mergetool.meld.trustexitcode=true
+mergetool.meld.cmd=open -W -a Meld --args --auto-merge "$PWD/$LOCAL" "$PWD/$BASE" "$PWD/$REMOTE" --output="$PWD/$MERGED"
+difftool.diffmerge.cmd=/usr/bin/diffmerge --nosplash "$LOCAL" "$REMOTE"
+mergetool.diffmerge.trustexitcode=true
+mergetool.diffmerge.cmd=/usr/bin/diffmerge --nosplash --merge --result="$MERGED" "$LOCAL" "$BASE" "$REMOTE"
