@@ -9,7 +9,7 @@ if [ ! -e $BACKUP ]; then
 fi
 
 pushd ~
-	rm .bash* && tar xvzf $HERE/$BACKUP
+	rm .bash* ; tar xvzf $HERE/$BACKUP
 popd
 
 echo OK your .bash configs have been restored from $HERE/$BACKUP

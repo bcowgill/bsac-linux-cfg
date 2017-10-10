@@ -9,7 +9,7 @@ if [ -e $BACKUP ]; then
 fi
 
 pushd ~
-	tar cvzf $HERE/$BACKUP .bash* && rm .bash* && cp $HERE/.bash* .
+	tar cvzf $HERE/$BACKUP --exclude .bash_sessions .bash* && rm .bash* ; cp $HERE/.bash* .
 popd
 
 echo OK your .bash configs have been stored in $HERE/$BACKUP and debug versions have been installed in $HOME
