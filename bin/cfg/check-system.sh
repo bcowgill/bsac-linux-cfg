@@ -524,6 +524,7 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 
 # meld - caskroom/cask
+BREW="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 BREW_TAPS="
 	caskroom/cask
 "
@@ -638,8 +639,6 @@ COMMANDS_LINUX="
 	apt-file
 	wcd.exec
 	gettext
-	gitk
-	meld
 "
 
 if [ -z $MAC ]; then
@@ -672,6 +671,8 @@ COMMANDS_LIST="
 	git
 	perl
 	dot
+	meld
+	gitk
 "
 
 if [ "$HOSTNAME" == "akston" ]; then
@@ -733,7 +734,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	MAC=1
 	UBUNTU=10.12.6
 	ULIMITFILES=4864
-	GIT_VER=2.13.5
+	GIT_VER=2.14.2
 	GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
@@ -984,8 +985,14 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
-GIT_TAR=git-$GIT_VER
-GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
+if [ -z $MAC ]; then
+	GIT_TAR=git-$GIT_VER
+	GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
+else
+	GIT_TAR=git-$GIT_VER-intel-universal-mavericks.dmg
+	GIT_URL=https://downloads.sourceforge.net/project/git-osx-installer/$GIT_TAR
+#?r=https%3A%2F%2Fgit-scm.com%2Fdownload%2Fmac&ts=1507631580&use_mirror=kent
+fi
 
 if [ -z $MAC ]; then  # TODO MAC PKGS
 GIT_PKG_AFTER="
@@ -1239,7 +1246,7 @@ if [ -z $MAC ]; then # TODO MAC PKGS
 	which java && java -version && ls $JAVA_JVM
 	which apt-get && apt-get --version
 else
-	which brew && brew --version
+	which brew && $BREW --version
 fi
 which perl && perl --version
 which python && python --version
@@ -1725,33 +1732,55 @@ if git --version | grep " version " | grep $GIT_VER; then
 	fi
 else
 	NOT_OK "git command version incorrect, want $GIT_VER - will try update"
-	# old setup for git 1.9.1
-	# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
-	apt_has_source ppa:pdoes/ppa "repository for git"
-	sudo apt-get update
-	apt-cache show git | grep '^Version:'
-	if [ ! -z "$GIT_PKG_AFTER" ]; then
-		installs_from "$GIT_PKG_AFTER" "additional git packages"
-	else
-		OK "will not install git tools unless GIT_PKG_AFTER is non-zero"
-	fi
-	NOT_OK "exiting after git update, try again."
-	exit 1
+	if [ -z $MAC ]; then
+		# old setup for git 1.9.1
+		# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
+		apt_has_source ppa:pdoes/ppa "repository for git"
+		sudo apt-get update
+		apt-cache show git | grep '^Version:'
+		if [ ! -z "$GIT_PKG_AFTER" ]; then
+			installs_from "$GIT_PKG_AFTER" "additional git packages"
+		else
+			OK "will not install git tools unless GIT_PKG_AFTER is non-zero"
+		fi
+		NOT_OK "exiting after git update, try again."
+		exit 1
 
-	sudo apt-get install $GIT_PKG_MAKE
-	# upgrading git on ubuntu
-	# https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
-	make_dir_exist $DOWNLOAD
-	pushd $DOWNLOAD
-	wget $GIT_URL
-	tar xvzf $GIT_TAR.tar.gz
-	cd $GIT_TAR
-	make prefix=/usr/local all
-	sudo make prefix=/usr/local install
-	sudo apt-get install $GIT_PKG_AFTER
-	popd
-	NOT_OK "exiting after git update, try again."
-	exit 1
+		sudo apt-get install $GIT_PKG_MAKE
+		# upgrading git on ubuntu
+		# https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
+		make_dir_exist $DOWNLOAD
+		pushd $DOWNLOAD
+		wget $GIT_URL
+		tar xvzf $GIT_TAR.tar.gz
+		cd $GIT_TAR
+		make prefix=/usr/local all
+		sudo make prefix=/usr/local install
+		sudo apt-get install $GIT_PKG_AFTER
+		popd
+		NOT_OK "exiting after git update, try again."
+		exit 1
+	else
+		# Mac git install
+		# https://stackoverflow.com/questions/17582685/install-gitk-on-mac#comment40309665_25090800
+		# https://sourceforge.net/projects/git-osx-installer/files/git-2.14.1-intel-universal-mavericks.dmg/download?use_mirror=autoselect
+		if [ `which git` != /usr/local/bin/git ]; then
+			echo "NOT OK MAYBE default git is installed, will upgrade"
+			$BREW update; $BREW doctor && $BREW install git
+			if [ `which git` == /usr/local/bin/git ]; then
+				OK "git upgraded"
+			else
+				NOT_OK "git not upgraded correctly"
+			fi
+		else
+			OK "homebrew version of git is installed."
+		fi
+	fi
+	if git --version | grep " version " | grep $GIT_VER; then
+		OK "git command version correct"
+	else
+		NOT_OK "git command version incorrect, want $GIT_VER"
+	fi
 fi # GIT_VER
 
 if [ ! -z "$GITSVN_PKG" ]; then

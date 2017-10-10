@@ -216,6 +216,7 @@ fi
 export CHROME_BIN=`which chromium-browser`
 export NODE=`which node`
 
+export PATH=$PATH:"/usr/local/sbin"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export PATH=`upath.sh`

@@ -520,7 +520,7 @@ function dir_linked_to {
 }
 
 if which brew > /dev/null; then
-	PKGINST=brew
+	PKGINST=HOMEBREW_NO_AUTO_UPDATE=1 brew
 else
 	PKGINST="sudo apt-get"
 fi
@@ -590,7 +590,7 @@ function brew_has_tap {
 	local tap
 	tap="$1"
 	if which brew > /dev/null; then
-		if brew tap | grep "$tap"; then
+		if $PKGINST tap | grep "$tap"; then
 			OK "brew has tap $tap"
 		else
 			NOT_OK "brew has no tap $tap configured"
@@ -604,7 +604,7 @@ function brew_tap_from {
 	local tap
 	tap="$1"
 	if which brew > /dev/null; then
-		brew_has_tap "$tap" > /dev/null || (echo want to pin a tap $tap; brew tap "$tap")
+		brew_has_tap "$tap" > /dev/null || (echo want to pin a tap $tap; $PKGINST tap "$tap")
 		brew_has_tap "$tap"
 	fi
 	return 0

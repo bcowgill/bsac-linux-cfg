@@ -125,6 +125,10 @@ alias pkgless='pkgless.sh'
 alias pkgfiles='pkgfiles.sh'
 alias pkgls='dpkg -L'
 
+if [ $OSTYPE == darwin16 ]; then
+	alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
+fi
+
 # some virtualbox aliases
 alias ls-vbox='ls -al ~/VirtualBox\ VMs/ ~/.ievms/ ~/.config/VirtualBox/'
 
