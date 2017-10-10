@@ -524,7 +524,7 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 
 # meld - caskroom/cask
-BREW="HOMEBREW_NO_AUTO_UPDATE=1 brew"
+HOMEBREW_NO_AUTO_UPDATE=1
 BREW_TAPS="
 	caskroom/cask
 "
@@ -733,7 +733,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	COMPANY=wipro
 	MAC=1
 	UBUNTU=10.12.6
-	ULIMITFILES=4864
+	ULIMITFILES=7168
 	GIT_VER=2.14.2
 	GIT_PKG_AFTER=""
 	USE_I3=""
@@ -1246,7 +1246,7 @@ if [ -z $MAC ]; then # TODO MAC PKGS
 	which java && java -version && ls $JAVA_JVM
 	which apt-get && apt-get --version
 else
-	which brew && $BREW --version
+	which brew && brew --version
 fi
 which perl && perl --version
 which python && python --version
@@ -1769,7 +1769,7 @@ else
 		# https://sourceforge.net/projects/git-osx-installer/files/git-2.14.1-intel-universal-mavericks.dmg/download?use_mirror=autoselect
 		if [ `which git` != /usr/local/bin/git ]; then
 			echo "NOT OK MAYBE default git is installed, will upgrade"
-			$BREW update; $BREW doctor && $BREW install git
+			brew update; brew doctor && brew install git
 			if [ `which git` == /usr/local/bin/git ]; then
 				OK "git upgraded"
 			else
@@ -2341,7 +2341,11 @@ if [ -f "$FILE" ]; then
 	# There are other colors in the config file which are not in the UI
 	file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
 	file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
-	file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
+	if [ -z $MAC ]; then
+		file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
+	else
+		file_has_text "$FILE" "set uifont {{Lucida Grande} 12 bold}" "Edit / Preferences / Font"
+	fi
 	file_has_text "$FILE" "set uicolor black" "Edit / Preferences / Colors"
 	file_has_text "$FILE" "set bgcolor #001000" "Edit / Preferences / Colors"
 	file_has_text "$FILE" "set fgcolor #ff58ff" "Edit / Preferences / Colors"

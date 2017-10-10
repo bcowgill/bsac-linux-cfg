@@ -520,7 +520,7 @@ function dir_linked_to {
 }
 
 if which brew > /dev/null; then
-	PKGINST=HOMEBREW_NO_AUTO_UPDATE=1 brew
+	PKGINST=brew
 else
 	PKGINST="sudo apt-get"
 fi

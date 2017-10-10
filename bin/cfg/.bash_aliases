@@ -8,6 +8,7 @@ alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
 alias upath='PATH=`echo $PATH | upath.sh`'
 
 alias chksys='check-system.sh 2>&1 | tee ~/check.log | grep "NOT OK"'
+alias dochks='rm ~/mynotify.log; check-system.sh 2>&1 | tee ~/check.log; less ~/mynotify.log ~/check.log'
 
 alias sc=sound-control.sh
 
