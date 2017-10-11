@@ -1943,7 +1943,12 @@ echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 if [ ! -z $MAC ]; then
 	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
 	cmd_exists brew
-	cmd_exists xcode-select "you must manually install xcode from the Applie App store"
+	if xcodebuild 2>&1 | grep 'requires Xcode'; then
+		NOT_OK "XCode is required, please install from App Store. it takes hours to download."
+		exit 1
+	else
+		OK "XCode is installed."
+	fi
 fi
 
 #brew_taps_from "$BREW_TAPS"
@@ -1963,6 +1968,7 @@ if [ ! -z "$NODE_PKG" ]; then
 		dir_exists "$NODE_LIB" "global node command"
 	fi
 	dir_exists "$NODE_MOD" "global node_modules"
+	node_module_exists path "test that node module checking works"
 fi
 
 BAIL_OUT node

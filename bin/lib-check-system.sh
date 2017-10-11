@@ -1200,6 +1200,33 @@ function http_dump {
 #============================================================================
 # node/npm/grunt related commands and packages
 
+function node_check {
+	NODE=node
+	if ! which $NODE > /dev/null; then
+		NODE=nodejs
+	fi
+	if ! which $NODE > /dev/null; then
+		NOT_OK "node command does not exist"
+		return 1
+	fi
+	return 0
+}
+
+# Check that a node module is available
+function node_module_exists {
+	local module message NODE
+	module="$1"
+	message="$2"
+	node_check
+	if $NODE -e 'try { var arg = process.argv[1]; require(arg); console.log("OK node module " + arg + " is installed"); process.exit(0); } catch (err) { console.error(process.execPath + " " + process.version); process.exit(1)}' -- $module > /dev/null; then
+		OK "node module $module is installed"
+	else
+		NOT_OK "node module $module is not installed [$message]"
+		return 1
+	fi
+	return 0
+}
+
 # Install a command or file with the node package manager
 function install_npm_command_from {
 	local command package
