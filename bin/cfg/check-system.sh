@@ -1943,7 +1943,7 @@ echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 if [ ! -z $MAC ]; then
 	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
 	cmd_exists brew
-	if xcodebuild 2>&1 | grep 'requires Xcode'; then
+	if xcodebuild -version 2>&1 | grep 'requires Xcode'; then
 		NOT_OK "XCode is required, please install from App Store. it takes hours to download."
 		exit 1
 	else
