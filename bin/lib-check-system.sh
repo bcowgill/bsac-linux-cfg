@@ -902,6 +902,24 @@ function cmd_exists { # command_exists
 	return 0
 }
 
+function app_exists {
+	local cmd message
+	cmd="$1"
+	message="$2"
+	if which sw_vers > /dev/null; then
+		if [ -d "/Applications/$cmd" ] ; then
+			OK "application $cmd exists [/Applications/$cmd]"
+		else
+			if [ -z "$message" ]; then
+				message="manually install $cmd from App Store"
+			fi
+			NOT_OK "application $cmd missing [$message]"
+			return 1
+		fi
+	fi
+	return 0
+}
+
 function commands_exist {
 	local commands error
 	commands="$1"
@@ -1401,6 +1419,49 @@ function install_grunt_templates_from {
 	done
 	if [ ! -z "$error" ]; then
 		NOT_OK "errors for install_grunt_templates_from$error"
+		error=1
+	else
+		error=0
+	fi
+	return $error
+}
+
+#============================================================================
+# apm related commands and packages
+
+# Check that an apm module is available
+function apm_module_exists {
+	local module message
+	module="$1"
+	message="$2"
+
+	if apm list | egrep \\s$module@; then
+		OK "apm module $module is installed"
+	else
+		NOT_OK "apm module $module is not installed [$message]"
+		return 1
+	fi
+	return 0
+}
+
+function install_apm_module {
+	local module
+	module="$1"
+	apm_module_exists "$module" > /dev/null || (echo want to install apm module $module; apm install "$module")
+	apm_module_exists "$module"
+}
+
+function install_apm_modules_from {
+	local list message package error
+	list="$1"
+	message="$2"
+	error=""
+	for package in $list
+	do
+		install_apm_module "$package" || error="$error $package"
+	done
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_apm_module$error [$message]"
 		error=1
 	else
 		error=0

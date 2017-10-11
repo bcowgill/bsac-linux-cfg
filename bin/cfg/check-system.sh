@@ -1116,11 +1116,14 @@ COMMANDS="
 	$SVN_CMD
 	$MVN_CMD
 	$I3WM_CMD
+"
+
+COMMANDS_CUSTOM="
+	$ATOM_CMD
 	$CHARLES_CMD
 	$DIFFMERGE_CMD
 	$SKYPE_CMD
 	$PIDGIN_CMD
-	$ATOM_CMD
 	$SLACK_CMD
 	$PINTA_CMD
 	$ELIXIR_CMDS
@@ -1201,6 +1204,7 @@ echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG INSTALL_FILES=$INSTALL_FILES
 echo CONFIG COMMANDS=$COMMANDS
+echo CONFIG COMMANDS_CUSTOM=$COMMANDS_CUSTOM
 echo CONFIG PACKAGES=$PACKAGES
 echo CONFIG NODE_PKG_LIST=$NODE_PKG_LIST
 echo CONFIG PERL_MODULES=$PERL_MODULES
@@ -1289,6 +1293,7 @@ which php && php -v
 which composer && composer -v | head -7
 which tsc && tsc -v
 which atom && atom -v
+which apm && apm --no-color -version
 echo END versions
 
 if [ ! -e $HOME/bin ]; then
@@ -1956,12 +1961,7 @@ echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 if [ ! -z $MAC ]; then
 	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
 	cmd_exists brew
-	if xcodebuild -version 2>&1 | grep 'requires Xcode'; then
-		NOT_OK "XCode is required, please install from App Store. it takes hours to download."
-		# TODO MAC RESTORE THIS exit 1
-	else
-		OK "XCode is installed."
-	fi
+	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
 fi
 
 #brew_taps_from "$BREW_TAPS"
@@ -2156,23 +2156,24 @@ fi
 
 if [ ! -z "$ATOM_PKG" ]; then
 	if [ ! -e "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG" ]; then
-		[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
-		install_command_package_from_url install-$ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor" || true
-		cmd_exists $ATOM_CMD
-		cmd_exists apm "atom package manager"
-		if atom --version | grep Atom | grep $ATOM_VER; then
-			OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
-			# TODO lib-check-system installer
-			if apm install $ATOM_APM_PKG; then
-				OK "atom packages installed: $ATOM_APM_PKG"
-				mv "$DOWNLOAD/$ATOM_PKG" "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG"
-			else
-				NOT_OK "atom packages failed: $ATOM_APM_PKG"
-			fi
+		#[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
+		if [ -z $MAC ]; then
+			install_command_package_from_url $ATOM_CMD "$ATOM_PKG" "$ATOM_URL" "github atom editor" || true
 		else
-			atom --version
-			NOT_OK "atom $ATOM_VER not installed"
+			install_file_from_url_zip "$DOWNLOAD/Atom.app/Contents/PkgInfo" "$ATOM_PKG" "$ATOM_URL" "github atom editor for mac"
+			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app" 
 		fi
+	fi
+	app_exists Atom.app
+	cmd_exists $ATOM_CMD
+	cmd_exists apm "atom package manager"
+	if atom --version | grep Atom | grep $ATOM_VER; then
+		OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
+		install_apm_modules_from "$ATOM_APM_PKG"
+		[ -e "$DOWNLOAD/$ATOM_PKG" ] && mv "$DOWNLOAD/$ATOM_PKG" "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG"
+	else
+		atom --version
+		NOT_OK "atom $ATOM_VER not installed"
 	fi
 else
 	OK "will not configure atom editor unless ATOM_PKG is non-zero"
@@ -2314,6 +2315,7 @@ if [  ! -z "$PHP_PKG" ]; then
 	fi
 fi
 
+commands_exist "$COMMANDS_CUSTOM"
 BAIL_OUT php
 
 # HEREIAM CUSTOM INSTALL
