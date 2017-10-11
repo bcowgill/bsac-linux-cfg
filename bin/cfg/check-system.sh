@@ -329,6 +329,9 @@ ATOM_URL=https://atom.io/download/deb
 ATOM_APM_PKG="activate-power-mode change-case"
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
+# Atom Mac
+#https://github.com/atom/atom/releases/download/v1.21.0/atom-mac.zip
+
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
 SUBLIME_PKG=sublime-text_build-3114_amd64.deb
 SUBLIME_CFG=.config/sublime-text-3
@@ -657,10 +660,12 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	DRUID_PKG=""
 	NODE_CMD=node
 	NODE_VER=v8.6.0
-	NVM_PKG="" # TODO
+	NVM_VER="" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
-	ATOM_PKG="" # TODO
+	ATOM_VER=1.21.0
+	ATOM_PKG=atom-mac.zip
+	ATOM_URL=https://github.com/atom/atom/releases/download
 	PINTA_PKG=""
 	ELIXIR_PKG=""
 	DOCKER_PKG=""
@@ -925,6 +930,19 @@ NODE_PKG="
 "
 fi
 
+NPM_GLOBAL_LINUX_PKG="
+	node-inspector
+	phantomjs:phantomjs-prebuilt
+	$NPM_LIB/karma/bin/karma:karma
+	karma:karma-cli
+	$NPM_LIB/karma-chrome-launcher/index.js:karma-chrome-launcher
+	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
+"
+
+if [ ! -z $MAC ]; then
+	NPM_GLOBAL_LINUX_PKG=""
+fi
+
 NPM_GLOBAL_PKG="
 	n
 	prettydiff
@@ -935,16 +953,10 @@ NPM_GLOBAL_PKG="
 	jscs
 	flow:flow-bin
 	babel:babel-cli
-	node-inspector
 	node-sass
 	lessc:less
 	mocha
 	jstest
-	phantomjs:phantomjs-prebuilt
-	$NPM_LIB/karma/bin/karma:karma
-	karma:karma-cli
-	$NPM_LIB/karma-chrome-launcher/index.js:karma-chrome-launcher
-	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
 	bower
 	yo
 	grunt:grunt-cli
@@ -955,6 +967,7 @@ NPM_GLOBAL_PKG="
 	tsc:typescript tslint typings tsfmt:typescript-formatter
 	alm
 	yarn
+	$NPM_GLOBAL_LINUX_PKG
 "
 } # set_node_env
 
@@ -1034,7 +1047,7 @@ ROBO3T_DIR=$ROBO3T_ARCHIVE
 ROBO3T_EXTRACTED_DIR=$DOWNLOAD/$ROBO3T_DIR
 ROBO3T_EXTRACTED=$ROBO3T_EXTRACTED_DIR/bin/robo3t
 
-#ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
+ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 SUBLIME_URL=$SUBLIME_URL/$SUBLIME_PKG
 
@@ -1945,7 +1958,7 @@ if [ ! -z $MAC ]; then
 	cmd_exists brew
 	if xcodebuild -version 2>&1 | grep 'requires Xcode'; then
 		NOT_OK "XCode is required, please install from App Store. it takes hours to download."
-		exit 1
+		# TODO MAC RESTORE THIS exit 1
 	else
 		OK "XCode is installed."
 	fi
@@ -2146,6 +2159,7 @@ if [ ! -z "$ATOM_PKG" ]; then
 		[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
 		install_command_package_from_url install-$ATOM_CMD $ATOM_PKG $ATOM_URL "github atom editor" || true
 		cmd_exists $ATOM_CMD
+		cmd_exists apm "atom package manager"
 		if atom --version | grep Atom | grep $ATOM_VER; then
 			OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
 			# TODO lib-check-system installer
