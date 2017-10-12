@@ -250,8 +250,13 @@ NVM_VER="v0.31.4"
 NVM_DIR="$HOME/.nvm"
 NVM_VER_DIR="$NVM_DIR/versions/node"
 NVM_CMD="$NVM_DIR/nvm.sh"
-NVM_LTS_VER="v4.4.7"
-NVM_LATEST_VER="v6.3.1"
+
+#NVM_LTS_VER="v4.4.7"
+#NVM_LATEST_VER="v6.3.1"
+# nvm ls-remote --lts | tail -1
+# nvm ls-remote | tail -1
+NVM_LTS_VER="v6.11.4"
+NVM_LATEST_VER="v8.6.0"
 
 N_VER="v2.1.7"
 
@@ -659,11 +664,11 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
 	NODE_CMD=node
-	NODE_VER=v8.6.0
-	NVM_VER="" # TODO
+	NODE_VER="v8.6.0"
+	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
-	ATOM_VER=1.21.0
+	ATOM_VER="1.21.0"
 	ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
 	PINTA_PKG=""
@@ -931,6 +936,7 @@ NODE_PKG="
 fi
 
 NPM_GLOBAL_LINUX_PKG="
+	node-sass
 	node-inspector
 	phantomjs:phantomjs-prebuilt
 	$NPM_LIB/karma/bin/karma:karma
@@ -953,7 +959,6 @@ NPM_GLOBAL_PKG="
 	jscs
 	flow:flow-bin
 	babel:babel-cli
-	node-sass
 	lessc:less
 	mocha
 	jstest
@@ -2161,7 +2166,7 @@ if [ ! -z "$ATOM_PKG" ]; then
 			install_command_package_from_url $ATOM_CMD "$ATOM_PKG" "$ATOM_URL" "github atom editor" || true
 		else
 			install_file_from_url_zip "$DOWNLOAD/Atom.app/Contents/PkgInfo" "$ATOM_PKG" "$ATOM_URL" "github atom editor for mac"
-			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app" 
+			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app"
 		fi
 	fi
 	app_exists Atom.app
@@ -2617,7 +2622,7 @@ if [ -f "$FILE" ]; then
 	ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
 fi # diffmerge config file
 fi # DIFFMERGE_PKG
- 
+
 if [ ! -z $P4MERGE_PKG ]; then
 # Perforce p4merge colors
 FILE=".p4merge/ApplicationSettings.xml"

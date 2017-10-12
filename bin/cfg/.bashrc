@@ -209,7 +209,7 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
     if [ -e "$HOME/.nvmrc" ]; then
         nvm use > /dev/null
     else
-        nvm use v6.9.2 > /dev/null
+        nvm use v8.6.0 > /dev/null
     fi
 fi
 
