@@ -47,3 +47,6 @@ robo3t
 # ignore editor tag files
 TAGS
 tags
+
+# Mac files
+.DS_Store

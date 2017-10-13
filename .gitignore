@@ -3,3 +3,6 @@
 # Sublime editor project files
 *.sublime-project
 *.sublime-workspace
+
+# Mac files
+.DS_Store
