@@ -175,6 +175,10 @@ DIFFMERGE_CMD=diffmerge
 DIFFMERGE_PKG=diffmerge_4.2.0.697.stable_amd64.deb
 DIFFMERGE_URL=http://download-us.sourcegear.com/DiffMerge/4.2.0/$DIFFMERGE_PKG
 
+#DIFFMERGE_CMD=diffmerge.sh
+#DIFFMERGE_PKG=DiffMerge.4.2.1.1013.intel.stable.dmg
+#DIFFMERGE_URL=http://download.sourcegear.com/DiffMerge/4.2.1/$DIFFMERGE_PKG
+
 # Perforce p4merge tool
 # HELIX P4MERGE: VISUAL MERGE TOOL
 P4MERGE_VER=p4v-2015.2.1315639
@@ -660,7 +664,9 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	SLACK_PKG=""
 	CHARLES_PKG=""
 	VIRTUALBOX_PKG=""
-	DIFFMERGE_PKG="" # TODO
+	DIFFMERGE_CMD=diffmerge.sh
+	DIFFMERGE_PKG=DiffMerge.4.2.1.1013.intel.stable.dmg
+	DIFFMERGE_URL=http://download.sourcegear.com/DiffMerge/4.2.1/$DIFFMERGE_PKG
 	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
 	NODE_CMD=node
@@ -1915,6 +1921,9 @@ fi
 
 if [ ! -z "$DIFFMERGE_PKG" ]; then
 	install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
+	if [ ! -z $MAC ]; then
+		app_exists DiffMerge.app "you must manually install downloaded diffmerge dmg file"
+	fi
 else
 	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"
 fi
@@ -2580,48 +2589,58 @@ else
 fi # CHARLES_PKG
 
 if [ ! -z $DIFFMERGE_PKG ]; then
-# Sourcegear Diffmerge colors
-cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
-FILE=".SourceGear DiffMerge"
-file_linked_to "$FILE" "$HOME/bin/cfg$COMP/$FILE" "SourceGear DiffMerge config linked"
-if [ -f "$FILE" ]; then
-	#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
-	#ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
-	ini_file_has_text "$FILE" "/File/Font=18:76:ProFontWindows"
-	ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
-	ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
-	ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
-	ini_file_has_text "$FILE" "/File/Color/Caret/fg=16777215"
-	ini_file_has_text "$FILE" "/File/Color/Conflict/bg=4194304"
-	ini_file_has_text "$FILE" "/File/Color/Conflict/fg=16744576"
-	ini_file_has_text "$FILE" "/File/Color/Conflict/IL/bg=4721920"
-	ini_file_has_text "$FILE" "/File/Color/EolUnknown/fg=1973790"
-	ini_file_has_text "$FILE" "/File/Color/LineNr/bg=0"
-	ini_file_has_text "$FILE" "/File/Color/NoneEqual/bg=4194304"
-	ini_file_has_text "$FILE" "/File/Color/NoneEqual/fg=16711680"
-	ini_file_has_text "$FILE" "/File/Color/NoneEqual/IL/bg=4194304"
-	ini_file_has_text "$FILE" "/File/Color/Omit/bg=0"
-	ini_file_has_text "$FILE" "/File/Color/Omit/fg=3552822"
-	ini_file_has_text "$FILE" "/File/Color/Selection/fg=16776960"
-	ini_file_has_text "$FILE" "/File/Color/SubEqual/bg=16384"
-	ini_file_has_text "$FILE" "/File/Color/SubEqual/fg=65280"
-	ini_file_has_text "$FILE" "/File/Color/SubEqual/IL/bg=32768"
-	ini_file_has_text "$FILE" "/File/Color/SubNotEqual/bg=64"
-	ini_file_has_text "$FILE" "/File/Color/SubNotEqual/fg=65535"
-	ini_file_has_text "$FILE" "/File/Color/SubNotEqual/IL/bg=64"
-	ini_file_has_text "$FILE" "/File/Color/Void/bg=0"
-	ini_file_has_text "$FILE" "/File/Color/Void/fg=2631720"
-	ini_file_has_text "$FILE" "/File/Color/Window/bg=0"
-	ini_file_has_text "$FILE" "/Folder/Font=16:76:ProFontWindows"
-	ini_file_has_text "$FILE" "/Folder/Color/Different/bg=0"
-	ini_file_has_text "$FILE" "/Folder/Color/Equal/bg=0"
-	ini_file_has_text "$FILE" "/Folder/Color/Equal/fg=16777215"
-	ini_file_has_text "$FILE" "/Folder/Color/Equivalent/bg=0"
-	ini_file_has_text "$FILE" "/Folder/Color/Error/bg=1"
-	ini_file_has_text "$FILE" "/Folder/Color/Folders/bg=0"
-	ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
-	ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
-fi # diffmerge config file
+	if [ -z $MAC ]; then
+		# Sourcegear Diffmerge colors
+		cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
+		FILE=".SourceGear DiffMerge"
+		file_linked_to "$FILE" "$HOME/bin/cfg$COMP/$FILE" "SourceGear DiffMerge config linked"
+		if [ -f "$FILE" ]; then
+			#ini_file_has_text "$FILE" "/File/Font=16:76:ProFontWindows"
+			#ini_file_has_text "$FILE" "/File/Font=11:76:ProFontWindows"
+			ini_file_has_text "$FILE" "/File/Font=18:76:ProFontWindows"
+			ini_file_has_text "$FILE" "/File/Color/AllEqual/bg=0"
+			ini_file_has_text "$FILE" "/File/Color/AllEqual/fg=16776960"
+			ini_file_has_text "$FILE" "/File/Color/AllEqual/Unimp/fg=8421504"
+			ini_file_has_text "$FILE" "/File/Color/Caret/fg=16777215"
+			ini_file_has_text "$FILE" "/File/Color/Conflict/bg=4194304"
+			ini_file_has_text "$FILE" "/File/Color/Conflict/fg=16744576"
+			ini_file_has_text "$FILE" "/File/Color/Conflict/IL/bg=4721920"
+			ini_file_has_text "$FILE" "/File/Color/EolUnknown/fg=1973790"
+			ini_file_has_text "$FILE" "/File/Color/LineNr/bg=0"
+			ini_file_has_text "$FILE" "/File/Color/NoneEqual/bg=4194304"
+			ini_file_has_text "$FILE" "/File/Color/NoneEqual/fg=16711680"
+			ini_file_has_text "$FILE" "/File/Color/NoneEqual/IL/bg=4194304"
+			ini_file_has_text "$FILE" "/File/Color/Omit/bg=0"
+			ini_file_has_text "$FILE" "/File/Color/Omit/fg=3552822"
+			ini_file_has_text "$FILE" "/File/Color/Selection/fg=16776960"
+			ini_file_has_text "$FILE" "/File/Color/SubEqual/bg=16384"
+			ini_file_has_text "$FILE" "/File/Color/SubEqual/fg=65280"
+			ini_file_has_text "$FILE" "/File/Color/SubEqual/IL/bg=32768"
+			ini_file_has_text "$FILE" "/File/Color/SubNotEqual/bg=64"
+			ini_file_has_text "$FILE" "/File/Color/SubNotEqual/fg=65535"
+			ini_file_has_text "$FILE" "/File/Color/SubNotEqual/IL/bg=64"
+			ini_file_has_text "$FILE" "/File/Color/Void/bg=0"
+			ini_file_has_text "$FILE" "/File/Color/Void/fg=2631720"
+			ini_file_has_text "$FILE" "/File/Color/Window/bg=0"
+			ini_file_has_text "$FILE" "/Folder/Font=16:76:ProFontWindows"
+			ini_file_has_text "$FILE" "/Folder/Color/Different/bg=0"
+			ini_file_has_text "$FILE" "/Folder/Color/Equal/bg=0"
+			ini_file_has_text "$FILE" "/Folder/Color/Equal/fg=16777215"
+			ini_file_has_text "$FILE" "/Folder/Color/Equivalent/bg=0"
+			ini_file_has_text "$FILE" "/Folder/Color/Error/bg=1"
+			ini_file_has_text "$FILE" "/Folder/Color/Folders/bg=0"
+			ini_file_has_text "$FILE" "/Folder/Color/Folders/fg=16777215"
+			ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
+	fi # diffmerge config file
+	else
+		# MAC config
+		FILE="Library/Preferences/com.sourcegear.DiffMerge.plist"
+
+		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge Mac properties"
+
+		FILE="Library/Preferences/SourceGear DiffMerge Preferences"
+		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge Mac preferences"
+	fi # not MAC
 fi # DIFFMERGE_PKG
 
 if [ ! -z $P4MERGE_PKG ]; then
