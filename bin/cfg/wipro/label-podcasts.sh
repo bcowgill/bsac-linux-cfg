@@ -1,11 +1,11 @@
 #!/bin/bash
-# label all NN-title.mp3 files and output to labelled directory
+# label all original/NN-title.mp3 files and output to current directory
 FILE="$1"
 
 if [ -z $FILE ]; then
 	for f in *.mp3; do echo $f; ./label-podcasts.sh $f; done
 else
-	TO="labelled/$FILE"
+	TO="../$FILE"
 	TRK=`echo $FILE | perl -pne '$_ = "$1\n" if m{(\d+)-}xms'`
 
 	SONG="Wipro On Air - Podcast $TRK"
