@@ -3,6 +3,8 @@ Mac OSX command quick reference
 ~ proper tilde
 ~ mac tilde
 “” mac quotes
+^ proper caret
+mac caret
 
 TODO Mac keys for screenshot
 
