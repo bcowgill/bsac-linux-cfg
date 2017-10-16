@@ -2,13 +2,13 @@
 # $Id: Makefile,v 1.5 2006/01/16 20:43:02 me Exp $
 # Brent S. A. Cowgill
 
-PJ=perl/character_samples
-PKG=character-samples.tgz 
-PKG_LIST=character_samples
+SHELL=/bin/bash
+PJ=character-samples
+PKG=character-samples.tgz
+PKG_LIST=character-samples
 
 UMASK=022
-CVSROOT=/cvsroot
-DEV_AREA=/home/me/d/s/$(PJ)
+DEV_AREA=/home/me/bin/$(PJ)
 PKG_AREA=/home/swlib/_mine
 PKG_TMP_AREA=/home/swlib/_tmp
 LIVE_PACKAGE=$(PKG_TMP_AREA)/live-$(PKG)
@@ -19,25 +19,25 @@ test:
 clean:
 	rm -rf td/test_run
 
-# Commands to repackage and install
+# Commands to repackage and install (sudo make package)
 package:
 	@cd $(PKG_TMP_AREA);\
 	umask $(UMASK);\
 	rm -rf s;\
-	cvs -d $(CVSROOT) export -kv -r HEAD s/$(PJ);\
+	mkdir -p s/$(PJ);\
+	cp -R $(DEV_AREA)/* s/$(PJ)/;\
 	rm -rf s/$(PJ)/data s/$(PJ)/Makefile s/$(PJ)/pj.*;\
-	mv s/$(PJ) s;\
 	chown -R root:root s;\
-	pushd s > /dev/null; tar cvzf $(PKG_AREA)/$(PKG) $(PKG_LIST); chown root:root $(PKG_AREA)/$(PKG); popd >/dev/null;\
+	pushd s > /dev/null; tar cvzf $(PKG_AREA)/$(PKG) $(PKG_LIST); chown root:root $(PKG_AREA)/$(PKG); popd > /dev/null;\
 	echo Rebuilt package $(PKG_AREA)/$(PKG) for project $(PJ)
 
 #==========================================================================
-# Standard commands for installing, getting a live package and diffing live vs package 
+# Standard commands for installing, getting a live package and diffing live vs package
 #==========================================================================
 
 install:
-	@pushd $(HOME)/docs > /dev/null &&  tar xvzf $(PKG_AREA)/$(PKG); popd > /dev/null
-	@echo Installed package $(PKG_AREA)/$(PKG) under $(HOME)/docs
+	@pushd $(HOME)/d/docs > /dev/null && tar xvzf $(PKG_AREA)/$(PKG); popd > /dev/null
+	@echo Installed package $(PKG_AREA)/$(PKG) under $(HOME)/d/docs
 
 rebuild: package install
 
@@ -54,4 +54,3 @@ clean_live_pkg: clean_temp
 .PHONY: install
 
 .PHONY: clean_temp
-
