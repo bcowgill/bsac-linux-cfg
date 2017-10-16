@@ -972,6 +972,7 @@ NPM_GLOBAL_PKG="
 	tsc:typescript tslint typings tsfmt:typescript-formatter
 	alm
 	yarn
+	create-react-app
 	$NPM_GLOBAL_LINUX_PKG
 "
 } # set_node_env
