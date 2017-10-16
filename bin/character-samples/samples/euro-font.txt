@@ -1,0 +1,11 @@
+abcdefghijklm
+ABCDEFGHIJKLM
+nopqrstuvwxyz
+NOPQRSTUVWXYZ
+1234567890
+`!-={}[];'#:@~
+¬”£$%^&*()_+
+\,./
+|<>?
+úíóáÚÍÓÁ
+

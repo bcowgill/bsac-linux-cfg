@@ -1,0 +1,34 @@
+Word For Windows
+
+Insert/Symbol/Special Characters
+
+Em dash >-<
+En dash >-<
+Non breaking hyphen >-<
+Optional hyphen ><
+Em space > <
+En space > <
+1/4 En space > <
+Nonbreaking space > <
+Copyright >(c)<
+Registered >(r)<
+Trademark >(tm)<
+Section >õ<
+Paragraph >ô<
+Ellipsis >...<
+Single opening quote >'<
+Single closing quote >'<
+Double opening quote >"<
+Double closing quote >"<
+No-width optional break >?<
+No-width no-break >?<
+
+Insert/Symbol/Symbols/(normal text)
+Cents -½-
+Pound -œ-
+Euro -_-
+Yen -¾-
+Lower case e/ -‚-
+Lower case e^ -ˆ-
+Lower case e: -‰-
+

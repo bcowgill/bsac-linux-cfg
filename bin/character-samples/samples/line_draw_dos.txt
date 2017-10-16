@@ -1,0 +1,89 @@
+IBM Code Page Line Drawing Characters
+vslick/win OEM Fixed Font or Terminal with Script set to OEM/DOS
+or -misc-letter gothic line-medium-r-normal--0-0-0-0-m-0-ascii-0
+
+Double Lines
+201 203 205 187  ÉËÍ»
+204 206 186 185  ÌÎº¹
+200 202 205 188  ÈÊÍ¼
+
+Double Lines Horizontally
+213 209 205 184  ÕÑÍ¸
+198 216 179 181  ÆØ³µ
+212 207 205 190  ÔÏÍ¾
+
+Double Lines Vertically
+214 210 196 183  ÖÒÄ·
+199 215 186 182  Ç×º¶
+211 208 196 189  ÓÐÄ½
+
+Single Lines
+218 194 196 191  ÚÂÄ¿
+195 197 179 180  ÃÅ³´
+192 193 196 217  ÀÁÄÙ
+
+ASCII Lines
+ 47  45  45  92  /--\
+124  43 124 124  |+||
+ 92  45  45  47  \--/
+
+ASCII Lines II
+ 42  45  45  42  *--*
+124  43 124 124  |+||
+ 42  45  45  42  *--*
+
+Shading Gradient
+176 177 178 219  °±²Û
+
+Half-Cell Shaded
+220 221 222 223  ÜÝÞß
+
+OEM Fixed Font Double Lines
+  1  22   6   2  
+ 25  16   5  23  
+  3  21   6   4  
+
+OEM Fixed Font Shading Gradient
+ 26  20 127 
+
+Windows Font Single Lines
+  1  22   6   2  
+ 25  16   5  23  
+  3  21   6   4  
+
+MS Line Draw Font Single Lines
+Single Lines
+ 13  24  18  12  
+ 21  15  25  25  
+ 14  23  18  11  
+
+abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+0123456789
+
+UK
+¬!"£$%^&*()_+
+`1234567890-=
+ QWERTYUIOP{}
+ qwertyuiop[]
+ ASDFGHJKL:@~
+ asdfghjkl;'#
+|ZXCVBNM<>?
+\zxcvbnm,./
+
+US
+~!@#$%^&*()_+
+`1234567890-=
+ QWERTYUIOP{}
+ qwertyuiop[]
+ ASDFGHJKL:"|
+ asdfghjkl;'\
+|ZXCVBNM<>?
+\zxcvbnm,./
+
+Dollar:      $
+Tilde:       ~
+L Sterling:  £
+Logical Not: ¬
+Backslash:   \
+

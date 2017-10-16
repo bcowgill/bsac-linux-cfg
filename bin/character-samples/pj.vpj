@@ -1,0 +1,53 @@
+[GLOBAL]
+workingdir=.
+version=7.0
+packname=Custom makefile, any compiler
+MACRO=\n
+[CONFIGURATIONS]
+config=,Release
+[COMPILER.Release]
+compile=copts: concur|capture|savecurrent|menu: Compile:&Compilecmd: make %n.ootheropts: 
+make=copts: concur|capture|saveworkspacefiles|menu: Build:&Buildcmd: makeotheropts: 
+rebuild=copts: concur|capture|menu: Rebuild:&Rebuildcmd: otheropts: 
+debug=copts: concur|capture|buildfirst|xterm|menu: Debug:&Debugcmd: gdb %bd%ootheropts: 
+execute=copts: concur|capture|buildfirst|saveworkspacefiles|menu: Execute:E&xecutecmd: pjotheropts: 
+includedirs=%(INCLUDE)
+sysincludedirs=
+reffile=
+libs=
+outputfile=
+prebuildcmds=
+postbuildcmds=
+stoponprebuilderrors=0
+stoponpostbuilderrors=0
+[FILES]
+bkcap_text.pl
+char_list.pl
+char_table.pl
+char_table_utf8.pl
+chars.pl
+data/keyboard_bkcaps.txt
+samples/DodgyCharacters.html
+samples/DodgyCharacters.txt
+samples/DodgyCharactersDOS.txt
+samples/DodgyCharactersUTF16.txt
+samples/DodgyCharactersUTF16BigEnd.txt
+samples/DodgyCharactersUTF8.txt
+samples/ascii_list.txt
+samples/ascii_list_named.txt
+samples/asciitab.txt
+samples/euro-font.txt
+samples/font.txt
+samples/line_draw.txt
+samples/line_draw_dos.txt
+samples/perl_syntax_colors.pl
+samples/uk-keyboard.txt
+samples/us-keyboard.txt
+samples/fonts/font_table_bkcap.html
+samples/fonts/font_table_mslinedraw.html
+samples/fonts/font_table_open_symbol.html
+samples/fonts/font_table_open_symbol_utf.html
+samples/fonts/font_table_standard_symbols.html
+samples/fonts/font_table_symbol.html
+samples/fonts/keyboard_keys_bkcap.txt
+[ASSOCIATION]
