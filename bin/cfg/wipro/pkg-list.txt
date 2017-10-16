@@ -17,6 +17,8 @@ gpm
 graphviz
 htop
 icu4c
+id3lib
+id3v2
 imagemagick
 jhead
 jpeg

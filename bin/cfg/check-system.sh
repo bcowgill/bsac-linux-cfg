@@ -468,6 +468,7 @@ INSTALL_MACLINUX="
 	mc
 	multitail
 	jhead
+	id3v2
 	$PHP_CMD:$PHP_PKG
 "
 
@@ -655,7 +656,6 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	COMPANY=wipro
 	MAC=1
 	UBUNTU=10.12.6
-	ULIMITFILES=7168
 	GIT_VER=2.14.2
 	GIT_PKG_AFTER=""
 	USE_I3=""
@@ -674,7 +674,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
-	ATOM_VER="1.21.0"
+	ATOM_VER="1.21.1"
 	ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
 	PINTA_PKG=""
@@ -1393,6 +1393,7 @@ if [ ! -z "$COMPANY" ]; then
 	fi
 fi
 
+if [ -z $MAC ]; then
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
 	OK "ulimit for open files is good"
@@ -1409,8 +1410,6 @@ else
 	echo YOUDO You have to logout/login again for ulimit to take effect.
 	exit 1
 fi
-
-if [ -z $MAC ]; then
 
 # https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 if grep -rl inotify /etc/sysctl.conf /etc/sysctl.d; then
