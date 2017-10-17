@@ -902,22 +902,48 @@ function cmd_exists { # command_exists
 	return 0
 }
 
-function app_exists {
+function has_app {
 	local cmd message
 	cmd="$1"
 	message="$2"
 	if which sw_vers > /dev/null; then
 		if [ -d "/Applications/$cmd" ] ; then
 			OK "application $cmd exists [/Applications/$cmd]"
-		else
-			if [ -z "$message" ]; then
-				message="manually install $cmd from App Store"
-			fi
-			NOT_OK "application $cmd missing [$message]"
-			return 1
+			return 0
 		fi
 	fi
-	return 0
+	echo MAYBE NOT OK "application $cmd does not exist [/Applications/$cmd] [$message]"
+	return 1
+}
+
+function app_exists {
+	local cmd message
+	cmd="$1"
+	message="$2"
+	if [ -z "$message" ]; then
+		message="manually install $cmd from App Store"
+	fi
+	if has_app "$cmd" > /dev/null; then
+		OK "application $cmd exists"
+		return 0
+	else
+		NOT_OK "application $cmd does not exist [$message]"
+	fi
+	return 1
+}
+
+function cmd_or_app_exists {
+	local cmd message
+	cmd="$1"
+	message="$2"
+	if has_app "$cmd" "$message"; then
+		return 0
+	else
+		if cmd_exists "$cmd" "$message"; then
+			return 0
+		fi
+	fi
+	return 1
 }
 
 function commands_exist {
@@ -1053,8 +1079,8 @@ function install_command_package {
 	package="$2"
 	message="$3"
 	var_exists DOWNLOAD "$DOWNLOAD"
-	cmd_exists "$cmd" > /dev/null || (file_exists "$DOWNLOAD/$package" "$message" && sudo dpkg --install "$DOWNLOAD/$package")
-	cmd_exists "$cmd" $message || return 1
+	cmd_or_app_exists "$cmd" > /dev/null || (file_exists "$DOWNLOAD/$package" "$message" && sudo dpkg --install "$DOWNLOAD/$package")
+	cmd_or_app_exists "$cmd" $message || return 1
 }
 
 # Force install a command from a package (.deb) already downloaded manually

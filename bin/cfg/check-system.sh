@@ -134,6 +134,14 @@ SLACK_DEPS="/usr/share/doc/libindicator7/copyright:libindicator7 /usr/share/doc/
 SLACK_URL="https://downloads.slack-edge.com/linux_releases"
 SLACK_CMD="slack"
 
+KARABINER_CMD=Karabiner-Elements.app
+KARABINER_PKG=Karabiner-Elements-11.1.0.dmg
+KARABINER_URL=https://pqrs.org/osx/karabiner/files/$KARABINER_PKG
+
+ITERM_CMD=iTerm.app
+ITERM_PKG=iTerm2-3_1_2.zip
+ITERM_URL=https://iterm2.com/downloads/stable/$ITERM_PKG
+
 # http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
 VIRTUALBOX_CMD="VirtualBox"
 VIRTUALBOX_CMDS="dkms $VIRTUALBOX_CMD"
@@ -2101,6 +2109,14 @@ else
 	OK "will not configure slack messenger unless SLACK_PKG is non-zero"
 fi
 
+if [ ! -z $MAC ]; then
+	install_command_package_from_url $ITERM_CMD $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
+	app_exists $ITERM_CMD "you must manually install downloaded iTerm2 dmg file"
+
+	install_command_package_from_url $KARABINER_CMD $KARABINER_PKG $KARABINER_URL "Karabiner-Elements keyboard remapper program"
+	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"
+fi
+
 commands_exist "$COMMANDS"
 BAIL_OUT commands
 
@@ -2845,6 +2861,10 @@ echo TODO gvim font setting config
 } # DISABLED
 
 pkg-list.sh > bin/cfg$COMP/pkg-list.txt
+
+if [ ! -z $MAC ]; then
+	ls-mac-apps.sh > bin/cfg$COMP/mac-apps.txt
+fi
 
 popd
 

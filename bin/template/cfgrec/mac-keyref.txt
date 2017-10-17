@@ -6,6 +6,16 @@ Mac OSX command quick reference
 ^ proper caret
 mac caret
 
+International keyboard workarounds:
+for single/double/backtick quote string type  quote quote space left-arrow
+for tilde ctrl-cmd-space tilde add to favourites
+for caret ctrl-cmd-space circumflex accent add to favourites
+export t=~
+export c=^
+
+Karabiner Github issue raised
+https://github.com/tekezo/Karabiner-Elements/issues/1048
+
 TODO Mac keys for screenshot
 
 Ctrl-Shift-Power Sleep the screen only
@@ -24,4 +34,3 @@ Now Menu/Name or Icon/Login Window will lock your Mac
 
 Locking your Mac
 https://www.cnet.com/uk/how-to/7-ways-to-lock-your-macbook/
-

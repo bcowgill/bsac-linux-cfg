@@ -225,4 +225,9 @@ export PATH=`upath.sh`
 #export LANG=en_UK.UTF-8
 #export LANGUAGE=en_UK.UTF-8
 
+# on a Mac international keyboard, cannot easily type tilde and caret
+if which sw_vers > /dev/null; then
+	export t=~
+	export c=^
+fi
 
