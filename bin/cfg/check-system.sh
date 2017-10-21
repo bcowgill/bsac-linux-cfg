@@ -343,7 +343,11 @@ ATOM_PKG=atom-amd64.deb
 ATOM_CMD=atom
 ATOM_URL=https://atom.io/download/deb
 #ATOM_URL=https://atom-installer.github.com
-ATOM_APM_PKG="activate-power-mode change-case"
+ATOM_APM_PKG="
+	activate-power-mode
+	change-case
+	atom-beautify
+"
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 # Atom Mac
