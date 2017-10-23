@@ -53,6 +53,7 @@ fi
 #BAIL_OUT=files
 #BAIL_OUT=npm
 #BAIL_OUT=dropbox
+#BAIL_OUT=maven
 #BAIL_OUT=commands
 #BAIL_OUT=crontab
 #BAIL_OUT=editors
@@ -177,6 +178,7 @@ MVN_VER="3.0.4"
 
 JAVA_VER=java-7-openjdk-amd64
 JAVA_JVM=/usr/lib/jvm
+JAVA_CMD=java
 
 # http://sourcegear.com/diffmerge/downloads.php
 DIFFMERGE_CMD=diffmerge
@@ -672,6 +674,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
+	USE_JAVA=1
 	SKYPE_PKG=""
 	SLACK_PKG=""
 	CHARLES_PKG=""
@@ -681,6 +684,11 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	DIFFMERGE_URL=http://download.sourcegear.com/DiffMerge/4.2.1/$DIFFMERGE_PKG
 	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
+	JAVA_URL=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+	JAVA_VER=jdk-8u151-macosx-x64
+	JAVA_PKG=$JAVA_VER.dmg
+	MVN_PKG="mvn:maven"
+	MVN_VER="3.5.0"
 	NODE_CMD=node
 	NODE_VER="v8.6.0"
 	NVM_VER="0.31.4" # TODO
@@ -1900,34 +1908,25 @@ else
 	fi
 fi
 
-if [ ! -z "$MVN_PKG" ]; then
-	cmd_exists mvn
-	if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
-		OK "mvn command version correct"
-	else
-		NOT_OK "mvn command version incorrect"
-		exit 1
-	fi
-
-	if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
-		OK "M2_HOME set correctly"
-	else
-		NOT_OK "M2_HOME is incorrect $M2_HOME"
-		exit 1
-	fi
-else
-	OK "will not configure maven unless MVN_PKG is non-zero"
-fi # MVN_PKG
-
 if [ ! -z "$USE_JAVA" ]; then
-	if [ "x$JAVA_HOME" == "x$JAVA_JVM/$JAVA_VER" ]; then
-		OK "JAVA_HOME set correctly"
-		file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
+	if [ -z $MAC ]; then
+		if [ "x$JAVA_HOME" == "x$JAVA_JVM/$JAVA_VER" ]; then
+			OK "JAVA_HOME set correctly"
+			file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
+		else
+			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
+			exit 1
+		fi # JAVA_HOME
+		dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 	else
-		NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
-		exit 1
-	fi # JAVA_HOME
-	dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
+		install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
+		if [ -z $JAVA_HOME ]; then
+			OK "JAVA_HOME set correctly"
+		else
+			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
+			exit 1
+		fi
+	fi
 fi
 
 if [ ! -z "$DIFFMERGE_PKG" ]; then
@@ -2106,6 +2105,27 @@ if [ ! -z "$DROPBOX_URL" ]; then
 fi
 
 BAIL_OUT dropbox
+
+if [ ! -z "$MVN_PKG" ]; then
+	cmd_exists mvn
+	if mvn --version | grep "Apache Maven " | grep $MVN_VER; then
+		OK "mvn command version correct"
+	else
+		NOT_OK "mvn command version incorrect"
+		exit 1
+	fi
+
+	if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
+		OK "M2_HOME set correctly"
+	else
+		NOT_OK "M2_HOME is incorrect $M2_HOME"
+		exit 1
+	fi
+else
+	OK "will not configure maven unless MVN_PKG is non-zero"
+fi # MVN_PKG
+
+BAIL_OUT maven
 
 if [ ! -z "$SLACK_PKG" ]; then
 	install_command_package_from_url $SLACK_CMD $SLACK_PKG $SLACK_URL "slack messaging system"

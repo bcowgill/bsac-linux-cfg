@@ -31,6 +31,7 @@ libtool
 little-cms2
 lzo
 markdown
+maven
 midnight-commander
 mmv
 multitail

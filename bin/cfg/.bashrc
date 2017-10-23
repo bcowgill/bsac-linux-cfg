@@ -194,6 +194,12 @@ if [ $HOSTNAME == raspberrypi ]; then
     export JAVA_HOME=/usr/lib/jvm/jdk-8-oracle-arm-vfp-hflt
 fi
 
+# BSAC wipro setup
+if [ "x$COMPANY" == "xwipro" ]; then
+    export JAVA_HOME=
+    export M2_HOME=
+fi
+
 #BSAC match cygwin put functions in separate sourced file
 if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
@@ -230,4 +236,3 @@ if which sw_vers > /dev/null; then
 	export t=~
 	export c=^
 fi
-
