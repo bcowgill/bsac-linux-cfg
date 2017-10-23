@@ -34,3 +34,5 @@ Now Menu/Name or Icon/Login Window will lock your Mac
 
 Locking your Mac
 https://www.cnet.com/uk/how-to/7-ways-to-lock-your-macbook/
+
+KEY:MAC:EDIT fn-backspace Delete character under the cursor.
