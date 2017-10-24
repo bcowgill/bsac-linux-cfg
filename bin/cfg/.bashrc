@@ -196,6 +196,7 @@ fi
 
 # BSAC wipro setup
 if [ "x$COMPANY" == "xwipro" ]; then
+    # /Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home
     export JAVA_HOME=
     export M2_HOME=
 fi
