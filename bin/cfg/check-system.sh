@@ -635,6 +635,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 
 	DIGIKAM_PKG="digikam /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so:gstreamer1.0-plugins-ugly /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so:gstreamer1.0-libav"
 	# ttf-ancient-fonts - Symbola used for emacs emoji
+   # sox - sound player mp3 format installed
 	CUSTOM_PKG="
 		gnucash
 		audacity
@@ -646,6 +647,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
 		/usr/share/fonts/truetype/ttf-ancient-scripts/Symbola605.ttf:ttf-ancient-fonts
 		cmus
+      sox /usr/share/doc/libsox-fmt-all/copyright:libsox-fmt-all
 		shutter
 		cowsay
 		gimp
