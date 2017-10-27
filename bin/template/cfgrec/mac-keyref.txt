@@ -36,3 +36,9 @@ Locking your Mac
 https://www.cnet.com/uk/how-to/7-ways-to-lock-your-macbook/
 
 KEY:MAC:EDIT fn-backspace Delete character under the cursor.
+KEY:MAC:CMD Cmd-Shift-3 Capture the entire screen in a screenshot on the Desktop.
+KEY:MAC:CMD Cmd-Ctrl-Shift-3 Capture the entire screen to clipboard.
+KEY:MAC:CMD Cmd-Shift-4 Capture a portion of the screen in a screenshot on the Desktop.
+KEY:MAC:CMD Cmd-Ctrl-Shift-4 Capture a portion of the screen to clipboard.
+KEY:MAC:CMD Cmd-Shift-4-Space Capture an application in a screenshot on the Desktop.
+KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to clipboard.
