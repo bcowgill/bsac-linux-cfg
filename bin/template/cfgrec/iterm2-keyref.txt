@@ -1,0 +1,3 @@
+Mac iTerm2 command quick reference
+
+ITERM:KEY:VIEW Alt-Cmd-; Turn on highlighted cursor line
