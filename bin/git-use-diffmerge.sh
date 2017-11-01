@@ -9,6 +9,18 @@
 # git merge something   indicates conflicts
 # git mergetool
 
+# /usr/bin/diffmerge
+DIFFM=`which diffmerge`
+if [ -z $DIFFM ]; then
+	echo NOT OK diffmerge is not installed.
+fi
+if which sgdm.exe; then
+	DIFFM=git-diffmerge.sh
+fi
+if [ "x$OSTYPE" == "xdarwin16" ]; then
+	DIFFM="/Applications/DiffMerge.app/Contents/MacOS/DiffMerge"
+fi
+
 if [ "x$1" == "xfalse" ]; then
 	git config --global --unset diff.tool
 	git config --global --unset difftool.diffmerge.cmd
@@ -17,11 +29,11 @@ if [ "x$1" == "xfalse" ]; then
 	git config --global --unset mergetool.diffmerge.cmd
 else
 	git config --global diff.tool diffmerge
-	git config --global difftool.diffmerge.cmd "/usr/bin/diffmerge --nosplash \"\$LOCAL\" \"\$REMOTE\""
+	git config --global difftool.diffmerge.cmd "$DIFFM --nosplash \"\$LOCAL\" \"\$REMOTE\""
 
 	git config --global merge.tool diffmerge
 	git config --global mergetool.diffmerge.trustExitCode true
-	git config --global mergetool.diffmerge.cmd "/usr/bin/diffmerge --nosplash --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
+	git config --global mergetool.diffmerge.cmd "$DIFFM --nosplash --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
 	if which sgdm.exe; then
 		echo sgdm.exe
 		git config --global difftool.diffmerge.cmd "git-diffmerge.sh \"\$LOCAL\" \"\$REMOTE\""
