@@ -1,3 +1,4 @@
 Mac iTerm2 command quick reference
 
 ITERM:KEY:VIEW Alt-Cmd-; Turn on highlighted cursor line
+ITERM:KEY:CMD Alt-Cmd-a Be alerted when a long-running command completes.

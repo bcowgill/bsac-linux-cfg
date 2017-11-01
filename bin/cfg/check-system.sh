@@ -979,6 +979,7 @@ fi
 
 NPM_GLOBAL_PKG="
 	n
+	node-inspector
 	prettydiff
 	uglifyjs:uglify-js
 	jsdoc
