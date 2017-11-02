@@ -25,6 +25,8 @@ alias promptshort='source `which toggle-prompt-short.sh`'
 
 alias em='NO_AT_BRIDGE=1 emacs'
 
+alias ascii='pushd ~/bin/character-samples/samples; mc; popd'
+
 #  like mkdir -p for files you want to touch
 alias touch-p='touch_p'
 
