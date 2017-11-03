@@ -20,3 +20,10 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+if [ ! -z $ITERM_PROFILE ]; then
+  if [ -f "$HOME/bin/cfg/iterm2-shell-integration.sh" ]; then
+      # iTerm2 shell integration benefits:
+      # https://iterm2.com/documentation-shell-integration.html
+    . "$HOME/bin/cfg/iterm2-shell-integration.sh"
+  fi
+fi
