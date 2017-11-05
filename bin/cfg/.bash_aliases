@@ -175,6 +175,7 @@ alias wcds='\wcd -z50 ='
 alias wcdl='\wcd -z50'
 alias wcdo='\wcd -z50 -o'
 alias wcdls='\wcd -z50 --to-stdout'
+alias wcdfind='cat ~/.wcd/.treedata.wcd | egrep'
 alias wcdscan='\wcd -z50 -s &'
 alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
 

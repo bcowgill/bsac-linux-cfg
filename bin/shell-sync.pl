@@ -113,7 +113,7 @@ sub shell_sync
 	$remoteDir =~ s{/\z}{}xmsg;
 	$backupDir =~ s{/\z}{}xmsg;
 	print qq{# synchronize files from "$remoteDir/" to "$backupDir/"\n};
-	print qq{set -x\n};
+	print qq{#set -x\n};
 	my $fn = <<'EOFN';
 	update () {
 		local source target
