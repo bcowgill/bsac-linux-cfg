@@ -93,10 +93,14 @@ else
    if which diffmerge >> /dev/null; then
       alias vdiff='diffmerge --nosplash'
    else
-      if which meld >> /dev/null; then
-         alias vdiff='meld'
+      if which diffmerge.sh >> /dev/null; then
+         alias vdiff='diffmerge.sh --nosplash'
       else
-         alias vdiff='vimdiff'
+         if which meld >> /dev/null; then
+            alias vdiff='meld'
+         else
+            alias vdiff='vimdiff'
+         fi
       fi
    fi
 fi
