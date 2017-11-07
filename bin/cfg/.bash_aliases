@@ -65,7 +65,7 @@ fi
 
 # default options for some commands
 alias cdiff='colordiff'
-alias now='( date --rfc-3339=seconds ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
+alias now='( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 alias egrep='\egrep --exclude-dir=.git'
 alias xterm='\xterm -fa "ProFontWindows" -fs 11'
 
@@ -80,7 +80,7 @@ alias gss='git status'
 alias gfo='git f*ck off'
 alias glog='git log --oneline --graph --decorate --all'
 alias ggraph='git graph --simplify-by-decoration'
-alias gitpp='touch pause-build.timestamp; git pull --rebase && git push && date --rfc-3339=seconds'
+alias gitpp='touch pause-build.timestamp; git pull --rebase && git push && datestamp.sh'
 alias pause='touch pause-build.timestamp'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program

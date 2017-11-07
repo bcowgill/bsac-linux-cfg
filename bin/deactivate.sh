@@ -5,7 +5,7 @@
 for file in $*; do
 	perl -i.bak -pne '
 	BEGIN {
-		our $banner = "// DEACTIVATED @{[`date --rfc-3339=seconds`]}\n"
+		our $banner = "// DEACTIVATED @{[`datestamp.sh`]}\n"
 	}
 	s{\A}{// }xmsg;
 	s{\A//\s\n}{//\n}xmsg;

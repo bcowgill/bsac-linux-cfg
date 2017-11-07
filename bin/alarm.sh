@@ -8,12 +8,12 @@ SOUND=${2:-$HOME/bin/sounds/chime.wav}
 POLL=5
 WAIT=1
 
-NOW=`date --rfc-3339=seconds | cut -c 1-16`
+NOW=`datestamp.sh | cut -c 1-16`
 if [ ! -z "$WHEN" ]; then
 	echo $NOW: alarm will go off at $WHEN
 	while [ "$NOW" != "$WHEN" ]; do
 		sleep $POLL
-		NOW=`date --rfc-3339=seconds | cut -c 1-16`
+		NOW=`datestamp.sh | cut -c 1-16`
 	done
 fi
 

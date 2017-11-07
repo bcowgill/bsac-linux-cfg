@@ -10,7 +10,7 @@ IGNORE='\.log$|\.swp$|\.bak$|~$|\.\#.*$|\#.+\#$|\.yml$|\.orig$|\.kate-swp$|/\.gi
 DEBUG=1
 DATE=date
 if [ "$OSTYPE" == "linux-gnu" ]; then
-	DATE="date --rfc-3339=seconds"
+	DATE="datestamp.sh"
 fi
 
 if [ -z "$1" ]; then
