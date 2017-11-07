@@ -2,3 +2,4 @@ Mac iTerm2 command quick reference
 
 ITERM:KEY:VIEW Alt-Cmd-; Turn on highlighted cursor line
 ITERM:KEY:CMD Alt-Cmd-a Be alerted when a long-running command completes.
+ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/Paste
