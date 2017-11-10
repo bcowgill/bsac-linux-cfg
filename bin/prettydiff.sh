@@ -8,6 +8,10 @@
 INDENT_TABS=1
 INDENT_SIZE=4
 
+if [ -z $NODE ]; then
+	NODE=nodejs
+fi
+
 FILE="$1"
 OUTPUT="$2"
 if [ -z "$1" ]; then
@@ -31,11 +35,11 @@ fi
 if [ "${INDENT_TABS:-}" == "1" ]; then
 	# indent with tabs, use perl to help as seems no option in the node code
 	if [ -z "$OUTPUT" ]; then
-		nodejs $PRETTYDIFF readmethod:"filescreen" mode:"beautify" inchar:"\t" insize:"1" source:"$FILE"  | perl -pne 's{\A ((\\t)+)}{"\t" x (length($1) / 2)}xmsge'
+		$NODE $PRETTYDIFF readmethod:"filescreen" mode:"beautify" inchar:"\t" insize:"1" source:"$FILE"  | perl -pne 's{\A ((\\t)+)}{"\t" x (length($1) / 2)}xmsge'
 	else
-		nodejs $PRETTYDIFF readmethod:"filescreen" mode:"beautify" inchar:"\t" insize:"1" source:"$FILE"  | perl -pne 's{\A ((\\t)+)}{"\t" x (length($1) / 2)}xmsge' > "$OUTPUT"
+		$NODE $PRETTYDIFF readmethod:"filescreen" mode:"beautify" inchar:"\t" insize:"1" source:"$FILE"  | perl -pne 's{\A ((\\t)+)}{"\t" x (length($1) / 2)}xmsge' > "$OUTPUT"
 	fi
 else
 	# indent with 2 spaces
-	nodejs $PRETTYDIFF readmethod:"$METHOD" mode:"beautify" inchar:' ' insize:"$INDENT_SIZE" source:"$FILE" output:"$OUTPUT"
+	$NODE $PRETTYDIFF readmethod:"$METHOD" mode:"beautify" inchar:' ' insize:"$INDENT_SIZE" source:"$FILE" output:"$OUTPUT"
 fi
