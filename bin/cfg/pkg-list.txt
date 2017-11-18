@@ -308,7 +308,6 @@ gallery-app
 gcc
 gcc-4.8
 gcc-4.8-base:amd64
-gcc-4.8-base:i386
 gcc-4.9-base:amd64
 gcc-4.9-base:i386
 gconf2
@@ -501,6 +500,7 @@ icedtea-6-plugin:amd64
 icedtea-netx:amd64
 icedtea-netx-common
 icoutils
+id3v2
 ifupdown
 imagemagick
 imagemagick-common
@@ -619,7 +619,6 @@ libasound2:amd64
 libasound2-data
 libasound2:i386
 libasound2-plugins:amd64
-libasound2-plugins:i386
 libaspell15
 libasprintf0c2:amd64
 libasprintf-dev:amd64
@@ -642,7 +641,6 @@ libatspi2.0-0:amd64
 libattica0.4:amd64
 libattr1:amd64
 libaudio2:amd64
-libaudio2:i386
 libaudit1:amd64
 libaudit-common
 libauthen-sasl-perl
@@ -652,7 +650,6 @@ libavahi-client3:i386
 libavahi-common3:amd64
 libavahi-common3:i386
 libavahi-common-data:amd64
-libavahi-common-data:i386
 libavahi-core7:amd64
 libavahi-glib1:amd64
 libavahi-gobject0:amd64
@@ -1111,6 +1108,7 @@ libical1
 libice6:amd64
 libice6:i386
 libicu52:amd64
+libid3-3.8.3c2a
 libid3tag0
 libidl0:amd64
 libidl-common
@@ -1150,7 +1148,6 @@ libjbig0:i386
 libjbig2dec0
 libjemalloc1
 libjpeg8:amd64
-libjpeg8:i386
 libjpeg-progs
 libjpeg-turbo8:amd64
 libjpeg-turbo8:i386
@@ -1515,7 +1512,6 @@ libqmi-glib0:amd64
 libqmobipocket1
 libqpdf13:amd64
 libqt4-dbus:amd64
-libqt4-dbus:i386
 libqt4-declarative:amd64
 libqt4-declarative:i386
 libqt4-designer:amd64
@@ -1530,7 +1526,6 @@ libqt4-script:i386
 libqt4-scripttools:amd64
 libqt4-sql:amd64
 libqt4-sql:i386
-libqt4-sql-mysql:i386
 libqt4-sql-sqlite:amd64
 libqt4-svg:amd64
 libqt4-test:amd64
@@ -1661,6 +1656,14 @@ libsort-naturally-perl
 libsoundtouch0:amd64
 libsoup2.4-1:amd64
 libsoup-gnome2.4-1:amd64
+libsox2:amd64
+libsox-fmt-all:amd64
+libsox-fmt-alsa:amd64
+libsox-fmt-ao:amd64
+libsox-fmt-base:amd64
+libsox-fmt-mp3:amd64
+libsox-fmt-oss:amd64
+libsox-fmt-pulse:amd64
 libsoxr0:amd64
 libspandsp2
 libspectre1:amd64
@@ -2169,6 +2172,8 @@ openssh-server
 openssh-sftp-server
 openssl
 os-prober
+osspd
+osspd-pulseaudio
 overlay-scrollbar
 overlay-scrollbar-gtk2:amd64
 overlay-scrollbar-gtk3:amd64
@@ -2459,8 +2464,8 @@ signon-plugin-oauth2
 signon-plugin-password
 signon-ui
 simple-scan
-skype
 skype-bin
+skypeforlinux
 smartmontools
 smbclient
 sni-qt:amd64
@@ -2471,6 +2476,7 @@ software-properties-common
 software-properties-gtk
 soprano-daemon
 sound-theme-freedesktop
+sox
 speech-dispatcher
 speech-dispatcher-audio-plugins:amd64
 sphinx-voxforge-hmm-en

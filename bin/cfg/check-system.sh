@@ -127,8 +127,9 @@ CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 
-SKYPE_CMD=skype
-SKYPE_PKG="skype skype-bin"
+SKYPE_CMD=skypeforlinux
+SKYPE_PKG="skypeforlinux-64.deb"
+SKYPE_URL=https://go.skype.com/$SKYPE_PKG
 
 SLACK_PKG="slack-desktop-2.1.2-amd64.deb"
 SLACK_DEPS="/usr/share/doc/libindicator7/copyright:libindicator7 /usr/share/doc/libappindicator1/copyright:libappindicator1"
@@ -536,14 +537,6 @@ INSTALL_CMDS="
 # from nodejs etc debian-keyring g++-multilib g++-4.8-multilib gcc-4.8-doc libstdc++6-4.8-dbg
 # libstdc++-4.8-doc node-hawk node-aws-sign node-oauth-sign
 # node-http-signature
-# from skype nas:i386 glibc-doc:i386 locales:i386 rng-tools:i386 gnutls-bin:i386
-# krb5-doc:i386 krb5-user:i386 libvisual-0.4-plugins:i386
-# gstreamer-codec-install:i386 gnome-codec-install:i386
-# gstreamer1.0-tools:i386 gstreamer1.0-plugins-base:i386 jackd2:i386
-# pulseaudio:i386 libqt4-declarative-folderlistmodel:i386
-# libqt4-declarative-gestures:i386 libqt4-declarative-particles:i386
-# libqt4-declarative-shaders:i386 qt4-qmlviewer:i386 libqt4-dev:i386
-# libicu48:i386 libthai0:i386 qt4-qtconfig:i386
 # Recommended packages:
 # xml-core:i386
 # from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
@@ -696,6 +689,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
+	ATOM_CMD=Atom.app
 	ATOM_VER="1.21.1"
 	ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
@@ -1716,12 +1710,6 @@ else
 	OK "will not configure charles proxy unless CHARLES_PKG is non-zero"
 fi # CHARLES_PKG
 
-if [ ! -z "$SKYPE_PKG" ]; then
-	apt_has_source "deb http://archive.canonical.com/ $LSB_RELEASE partner" "apt config for skype missing"
-else
-	OK "will not configure skype unless SKYPE_PKG is non-zero"
-fi # SKYPE_PKG
-
 if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	# http://ubuntuhandbook.org/index.php/2015/07/install-virtualbox-5-0-ubuntu-15-04-14-04-12-04/
 	# https://www.virtualbox.org/wiki/Linux_Downloads
@@ -1761,14 +1749,14 @@ else
 	OK "will not configure mono unless MONO_PKG is non-zero"
 fi
 
-if [ ! -z "$CHARLES_PKG$SVN_PKG$SKYPE_PKG$VIRTUALBOX_PKG" ]; then
+if [ ! -z "$CHARLES_PKG$SVN_PKG$VIRTUALBOX_PKG" ]; then
 
-	echo MAYBE DO MANUALLY apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG $VIRTUALBOX_PKG
-	[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG $SKYPE_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
+	echo MAYBE DO MANUALLY apt-get install $CHARLES_PKG $SVN_PKG $VIRTUALBOX_PKG
+	[ -f go.sudo ] && (sudo apt-get update; sudo apt-get install $CHARLES_PKG $SVN_PKG && sudo apt-get -f install && echo YOUDO: set charles license: $CHARLES_LICENSE)
 fi
 
 [ ! -z "$CHARLES_PKG" ] && cmd_exists $CHARLES_CMD
-[ ! -z "$SKYPE_PKG" ] && cmd_exists $SKYPE_CMD
+#[ ! -z "$SKYPE_PKG" ] && cmd_exists $SKYPE_CMD
 
 if [ ! -z "$SVN_PKG" ]; then
 	cmd_exists svn
@@ -2136,6 +2124,12 @@ else
 	OK "will not configure slack messenger unless SLACK_PKG is non-zero"
 fi
 
+if [ ! -z "$SKYPE_PKG" ]; then
+	install_command_package_from_url $SKYPE_CMD $SKYPE_PKG $SKYPE_URL "skypeforlinux messaging system"
+else
+	OK "will not configure skypeforlinux unless SKYPE_PKG is non-zero"
+fi
+
 if [ ! -z $MAC ]; then
 	install_command_package_from_url $ITERM_CMD $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
 	app_exists $ITERM_CMD "you must manually install downloaded iTerm2 dmg file"
@@ -2221,7 +2215,7 @@ if [ ! -z "$ATOM_PKG" ]; then
 			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app"
 		fi
 	fi
-	app_exists Atom.app
+	cmd_or_app_exists $ATOM_CMD
 	cmd_exists $ATOM_CMD
 	cmd_exists apm "atom package manager"
 	if atom --version | grep Atom | grep $ATOM_VER; then

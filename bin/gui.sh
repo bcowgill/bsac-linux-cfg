@@ -20,7 +20,7 @@ run_logged chromium-browser
 sleep 1
 run_logged firefox
 sleep 1
-run_logged skype
+run_logged skypeforlinux
 sleep 1
 run_logged gnome-terminal
 
