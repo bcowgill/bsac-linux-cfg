@@ -344,6 +344,7 @@ EMACS_BASE=emacs24
 ATOM_VER=1.20.1
 ATOM_PKG=atom-amd64.deb
 ATOM_CMD=atom
+ATOM_APP=atom
 ATOM_URL=https://atom.io/download/deb
 #ATOM_URL=https://atom-installer.github.com
 ATOM_APM_PKG="
@@ -689,7 +690,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
-	ATOM_CMD=Atom.app
+	ATOM_APP=Atom.app
 	ATOM_VER="1.21.1"
 	ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
@@ -1031,7 +1032,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
-[ -z "$ATOM_PKG"          ] && ATOM_CMD=""
+[ -z "$ATOM_PKG"          ] && ATOM_CMD="" && ATOM_APP=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
 [ -z "$DOCKER_PKG"        ] && DOCKER_CMD="" && DOCKER_PRE=""
@@ -2106,11 +2107,13 @@ if [ ! -z "$MVN_PKG" ]; then
 		exit 1
 	fi
 
-	if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
-		OK "M2_HOME set correctly"
-	else
-		NOT_OK "M2_HOME is incorrect $M2_HOME"
-		exit 1
+	if [ -z $MAC ]; then
+		if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
+			OK "M2_HOME set correctly"
+		else
+			NOT_OK "M2_HOME is incorrect $M2_HOME"
+			exit 1
+		fi
 	fi
 else
 	OK "will not configure maven unless MVN_PKG is non-zero"
@@ -2215,7 +2218,7 @@ if [ ! -z "$ATOM_PKG" ]; then
 			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app"
 		fi
 	fi
-	cmd_or_app_exists $ATOM_CMD
+	cmd_or_app_exists $ATOM_APP
 	cmd_exists $ATOM_CMD
 	cmd_exists apm "atom package manager"
 	if atom --version | grep Atom | grep $ATOM_VER; then

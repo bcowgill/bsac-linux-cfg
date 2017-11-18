@@ -34,9 +34,12 @@ GarageBand.app /Applications/
 Google Chrome.app /Applications/
 app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/61.0.3163.100/Google Chrome Framework.framework/Versions/A/Resources/
 Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/61.0.3163.100/
+app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/62.0.3202.94/Google Chrome Framework.framework/Versions/A/Resources/
+Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/62.0.3202.94/
 iBooks.app /Applications/
 Image Capture.app /Applications/
 iMovie.app /Applications/
+Install macOS High Sierra.app /Applications/
 iTerm.app /Applications/
 Autoupdate.app /Applications/iTerm.app/Contents/Frameworks/Sparkle.framework/Versions/A/Resources/
 iTunes.app /Applications/

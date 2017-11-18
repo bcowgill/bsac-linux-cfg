@@ -89,10 +89,10 @@ function mynotify {
 
 # Show summary of failures and total tests
 function ENDS {
-	echo "update db" && sudo updatedb &
 	mynotify "$message" ""
 	say "$TEST_FAILS test failures (may be hidden)"
 	say "$TEST_CASES test cases"
+	echo "update db" && updatedb.sh &
 }
 
 # Say something on the terminal and with OS UI notification system
