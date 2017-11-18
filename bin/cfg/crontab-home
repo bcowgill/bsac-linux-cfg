@@ -1,11 +1,12 @@
 PATH=/usr/bin:/bin:/home/me/bin
-* * * * *           mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log      2>&1
-*/5 19,20,21,22,23 * * 1-5 $HOME/bin/wcdscan.sh   > /tmp/$LOGNAME/crontab-wcdscan.log  2>&1
-*/5 * * * 6-7              $HOME/bin/wcdscan.sh   > /tmp/$LOGNAME/crontab-wcdscan.log  2>&1
-*/7 19,20,21,22,23 * * 1-5 $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
-*/7 * * * 6-7              $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
-0 0,12 * * *               $HOME/bin/moon-shot.sh > /tmp/$LOGNAME/crontab-moon-shot.log 2>&1
-15 20,22 * * 1-5           DISPLAY=:0 $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
-15 8,13,20 * * 6-7         DISPLAY=:0 $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
-* * * * *                  DISPLAY=:0 $HOME/bin/track-battery.pl > /tmp/$LOGNAME/crontab-track-battery.log 2>&1
-0,15,30,45 * * * *         DISPLAY=:0 $HOME/bin/random-desktop.sh > /tmp/$LOGNAME/crontab-random-desktop.log 2>&1
+* * * * *                  mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log      2>&1
+*/5 19,20,21,22,23 * * 1-5 $HOME/bin/wcdscan.sh   > /tmp/$LOGNAME/crontab-wcdscan.log    2>&1
+*/5 * * * 6-7              $HOME/bin/wcdscan.sh   > /tmp/$LOGNAME/crontab-wcdscan.log    2>&1
+*/7 19,20,21,22,23 * * 1-5 $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log      2>&1
+*/7 * * * 6-7              $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log      2>&1
+0 0,6,12,18 * * *          $HOME/bin/moon-shot.sh > /tmp/$LOGNAME/crontab-moon-shot.log  2>&1
+40 7,19 * * *              $HOME/bin/moon-shot.sh > /tmp/$LOGNAME/crontab-moon-shot.log  2>&1
+15 20,22 * * 1-5           DISPLAY=:0 $HOME/bin/ezbackup.sh        > /tmp/$LOGNAME/crontab-ezbackup.log        2>&1
+15 8,13,20 * * 6-7         DISPLAY=:0 $HOME/bin/ezbackup.sh        > /tmp/$LOGNAME/crontab-ezbackup.log        2>&1
+* * * * *                  DISPLAY=:0 $HOME/bin/track-battery.pl   > /tmp/$LOGNAME/crontab-track-battery.log   2>&1
+0,15,30,45 * * * *         DISPLAY=:0 $HOME/bin/random-desktop.sh  > /tmp/$LOGNAME/crontab-random-desktop.log  2>&1
