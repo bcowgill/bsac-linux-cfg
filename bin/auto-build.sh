@@ -9,8 +9,8 @@ LOOPS=0
 IGNORE='\.log$|\.swp$|\.bak$|~$|\.\#.*$|\#.+\#$|\.yml$|\.orig$|\.kate-swp$|/\.git/|/node_modules/|/public/doc/'
 DEBUG=1
 DATE=date
-if [ "$OSTYPE" == "linux-gnu" ]; then
-	DATE="datestamp.sh"
+if which datestamp.sh > /dev/null; then
+	DATE=datestamp.sh
 fi
 
 if [ -z "$1" ]; then
