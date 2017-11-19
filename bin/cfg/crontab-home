@@ -2,6 +2,8 @@ PATH=/usr/bin:/bin:/home/me/bin
 * * * * *                  mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log      2>&1
 */5 19,20,21,22,23 * * 1-5 $HOME/bin/wcdscan.sh   > /tmp/$LOGNAME/crontab-wcdscan.log    2>&1
 */5 * * * 6-7              $HOME/bin/wcdscan.sh   > /tmp/$LOGNAME/crontab-wcdscan.log    2>&1
+*/5 19,20,21,22,23 * * 1-5 $HOME/bin/scan-tree.sh $HOME $HOME/scan- > /tmp/$LOGNAME/crontab-scan-tree.log  2>&1
+*/5 * * * 6-7              $HOME/bin/scan-tree.sh $HOME $HOME/scan- > /tmp/$LOGNAME/crontab-scan-tree.log  2>&1
 */7 19,20,21,22,23 * * 1-5 $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log      2>&1
 */7 * * * 6-7              $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log      2>&1
 0 0,6,12,18 * * *          $HOME/bin/moon-shot.sh > /tmp/$LOGNAME/crontab-moon-shot.log  2>&1
