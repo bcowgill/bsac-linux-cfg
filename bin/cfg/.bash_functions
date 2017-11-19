@@ -61,6 +61,17 @@ ecd () {
     fi
     #PS1="\u@\h:$PWD\n:> "
 }
+#   definition of the enhanced pushd command
+epushd () {
+    if [ -d "$1" ]; then
+       builtin pushd "$1"
+    else
+       builtin pushd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
+           iselect -a -Q "$1" -n "pushdir" \
+                   -t "Push Directory to..."`
+    fi
+    #PS1="\u@\h:$PWD\n:> "
+}
 
 fi
 
