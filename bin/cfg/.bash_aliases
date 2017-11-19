@@ -171,6 +171,10 @@ alias utf8-sample=unicode-sample.sh
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
+if which sw_vers > /dev/null; then
+   # no wcd available on Mac
+   true
+else
 # wcdscan rescan configured directories in background
 # wd default color graphic tree selector.
 # wcda ascii based tree selector.
@@ -193,6 +197,7 @@ alias wcdls='wd -w --to-stdout'
 alias wcdfind='cat ~/.wcd/.treedata.wcd | egrep'
 alias wcdscan='wd -s &'
 alias wcdv='wcd -z 50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+fi
 
 alias charles-up='source `which proxy-to-charles.sh`'
 alias charles-down='source `which proxy-off.sh`'
