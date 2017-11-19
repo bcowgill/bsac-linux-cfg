@@ -1857,14 +1857,16 @@ else
 fi # GITSVN_PKG
 
 if [ -z $MAC ]; then # TODO MAC PKGS
-GIT_COMPLETE=/usr/share/bash-completion/completions/git
-if file_exists "$GIT_COMPLETE" > /dev/null ; then
-	# git installs completion file but not in right place any more
-	file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
-else
-	file_exists /etc/bash_completion.d/git "git completion file in etc"
-fi
-fi # not MAC
+	GIT_COMPLETE=/usr/share/bash-completion/completions/git
+	if file_exists "$GIT_COMPLETE" > /dev/null ; then
+		# git installs completion file but not in right place any more
+		file_linked_to_root /etc/bash_completion.d/git /usr/share/bash-completion/completions/git
+	else
+		file_exists /etc/bash_completion.d/git "git completion file in etc"
+	fi
+else # MAC completion
+	install_file_from $(brew --prefix)/etc/bash_completion bash-completion
+fi # MAC
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
 	OK "git config has been set up"

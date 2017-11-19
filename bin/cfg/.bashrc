@@ -112,7 +112,10 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-
+if which sw_vers > /dev/null; then
+  # bash completion on MAC
+  [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+fi
 #==========================================================================
 # BSAC custom changes from /etc/skel
 

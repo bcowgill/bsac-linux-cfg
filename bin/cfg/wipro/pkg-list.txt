@@ -1,3 +1,4 @@
+bash-completion
 cmatrix
 colordiff
 cpanminus
