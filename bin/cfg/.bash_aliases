@@ -182,13 +182,14 @@ alias pushmc='. $HOME/bin/mc-wrapper.sh'
 # wd - or + go back or forward in wcd stack
 # wcdv view configuration
 # -z 50 wcd dir stack size
-alias wcd='\wcd -z 50 -g --compact-tree --center-tree --color'
-alias wd='wcd -z 50 -g --compact-tree --center-tree --color'
-alias wcda='wd --ascii-tree'
+# -w always a wild match, not exact match
+alias wcd='\wcd -w -z 50 -g --compact-tree --center-tree --color'
+alias wd='wcd -w -z 50 -g --compact-tree --center-tree --color'
+alias wcda='wd -w --ascii-tree'
 alias wcds='wd ='
-alias wcdl='wcd -z 50'
-alias wcdo='wcd -z 50 -o'
-alias wcdls='wd --to-stdout'
+alias wcdl='wcd -w -z 50'
+alias wcdo='wcd -w -z 50 -o'
+alias wcdls='wd -w --to-stdout'
 alias wcdfind='cat ~/.wcd/.treedata.wcd | egrep'
 alias wcdscan='wd -s &'
 alias wcdv='wcd -z 50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
