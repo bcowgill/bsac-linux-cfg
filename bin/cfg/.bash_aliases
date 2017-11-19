@@ -171,23 +171,27 @@ alias utf8-sample=unicode-sample.sh
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
-# wcd default color graphic selector.
-# wcdls just list what dirs match.
-# wcds show the wcd dir stack
 # wcdscan rescan configured directories in background
+# wd default color graphic tree selector.
+# wcda ascii based tree selector.
+# wcdl paged select list.
+# wcdo for stdio select list.
+# wcdls just list what dirs match.
+# wcdfind use regex match against list of directories.
+# wcds show the wcd dir stack and allow select
+# wd - or + go back or forward in wcd stack
 # wcdv view configuration
-# wcdl for normal select list.
-# wcdo for stdio version select list
-alias wcd='\wcd -z50 -g --compact-tree --center-tree --color'
-alias wd='wcd'
-alias wcda='\wcd -z50 -g --compact-tree --center-tree --color --ascii-tree'
-alias wcds='\wcd -z50 ='
-alias wcdl='\wcd -z50'
-alias wcdo='\wcd -z50 -o'
-alias wcdls='\wcd -z50 --to-stdout'
+# -z 50 wcd dir stack size
+alias wcd='\wcd -z 50 -g --compact-tree --center-tree --color'
+alias wd='wcd -z 50 -g --compact-tree --center-tree --color'
+alias wcda='wd --ascii-tree'
+alias wcds='wd ='
+alias wcdl='wcd -z 50'
+alias wcdo='wcd -z 50 -o'
+alias wcdls='wd --to-stdout'
 alias wcdfind='cat ~/.wcd/.treedata.wcd | egrep'
-alias wcdscan='\wcd -z50 -s &'
-alias wcdv='\wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+alias wcdscan='wd -s &'
+alias wcdv='wcd -z 50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
 
 alias charles-up='source `which proxy-to-charles.sh`'
 alias charles-down='source `which proxy-off.sh`'
