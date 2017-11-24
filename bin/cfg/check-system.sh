@@ -504,6 +504,7 @@ INSTALL_LINUX="
 
 INSTALL_MAC="
 	meld:caskroom/cask/meld
+	7z:p7zip
 "
 
 if [ -z $MAC ]; then

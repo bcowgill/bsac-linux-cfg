@@ -41,6 +41,7 @@ node
 openssl
 openssl@1.1
 openvpn
+p7zip
 pcre
 pv
 s-lang
