@@ -6,6 +6,7 @@ MIX="
 	20% simple-design
 	15% javascript-good-parts
 	5% emacs
+	lean
 	starwars
 "
 
@@ -19,6 +20,7 @@ if [ "$COMPANY" == "" ]; then
 		aristotle
 		bsac-misc
 		greatest-salesman-in-the-world
+		lean
 		liberty
 		matrix
 		philosophy
@@ -155,3 +157,4 @@ do
 done
 
 exit 0
+# New fortune files exist, amend the MIX setting at top of script...

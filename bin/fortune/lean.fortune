@@ -1,0 +1,255 @@
+What are we doing?
+%
+Why are we doing this?
+%
+What is the current way of doing this?
+%
+Are there problems with current practices?
+%
+Are there better ways of doing this?
+%
+Five continual questions of Lean practice:
+
+What are we doing?
+
+Why are we doing this?
+
+What is the current way of doing this?
+
+Are there problems with current practices?
+
+Are there better ways of doing this?
+%
+Lean is a system designed to provide the tools and practices for people to continually improve their work.
+
+Jeff Liker, The Toyota Way
+%
+Lean thinking is a way to do more and more with less human effort, equipment, time and space to come closer and closer to giving customers exactly what they want
+
+Jim Womack, The Machine that Changed the World
+%
+Toyota Production System
+
+Goal: Highest Quality, Lowest Cost, Shortest Lead Time
+
+Just-in-time           Jidoka
+Continuous Flow        Stop and notify
+Takt Time              abnormalities
+Pull System
+
+Heijunka  - Standardized Work - Kaizen
+=============== Stability ===============
+%
+Waste Elimination
+
+Work
+Value Adding Steps
+Non-Value Adding Steps -> Adds No Value, Costs Time and Money -> Waste (Muda)
+
+i.e. Time walking to get a tool is a waste.
+%
+Value relates entirely to what the customer expects.
+%
+Wastes
+
+Type I
+non-value adding
+unavoidable wastes
+wastes should be optimized
+
+Type II
+non-value adding
+avoidable wastes
+wastes should be eliminated
+%
+Sources of Waste in Manufacturing
+
+Over-production
+Waiting
+Transportation
+Over-processing
+Excess inventory
+Unnecessary movements
+Defects
+(Unutilized people skills)
+%
+Examples of Waste in Software
+
+Over-production
+  * doing initial estimates for all incoming change requests whereas only some of them will be implemented in the next release
+  * "value added feature" when not required by customer
+
+Waiting
+  * waiting for customer feedback, information, resources
+  * waiting for completion of predecessor tasks, clarification on requirements
+  * delay / lack of user response
+  * ticket/CR waiting to be tested by testing team
+
+Transportation
+  * customer deliverable going through multiple hands
+  * re-assignment to the right groups because of wrong ticket allocation
+  * ticket containing insufficient information leading to queries
+
+Over-processing
+  * complete cycle of regression tests done on application for a GUI field change or a report change
+
+Excess inventory
+  * features developed but not yet deployed
+  * MRs/CRs with preliminary analysis & estimation done but not included for current release
+  * tickets pending user clarifications
+  * lots of tickets in work in process state
+
+Unnecessary movements
+  * searching for required information (document, email, etc)
+  * engineer searching for work instructions on email / shar point sites / by calling up colleagues
+  * engineer needing to manually set up systems before being able to do work.
+
+Defects
+  * defects, rework
+  * poor documentation
+  * incomplete documentation (not kept up-to-date)
+
+(Unutilized people skills)
+%
+Increasing Efficiency by Eliminating the 3 M's
+
+Muda - Waste
+Mura - unevenness in workload
+Muri - overburden on men and machines
+
+Mura leads to Muri
+Mura and Muri lead ultimately to Muda
+%
+Software Inefficiencies
+Unevenness (Mura)
+  * inflow of bugs high immediately after the 1st production release
+  * slack time in the initial phases of project
+  * uneven skill distribution within team
+
+Overburden (Muri)
+  * testing teams overburdened due to delayed code drops
+  * a few resources overburdened due to disparity of competency in teams
+  * team overworked near to delivery day
+%
+Lean Thinking Core Principles
+
+Continuous Improvement
+
+Value -> Value Stream -> Flow -> Pull -> back to Value
+%
+Value Stream Mapping
+
+Map every stage of the process as it currently is to identify value added time vs activity (elapsed) time.
+
+Process Cycle Efficiency (PE) = Sum (Value added time) / Sum (Activity time)
+%
+Flow
+
+Movement of items in an end-to-end production process.
+Focus on value-addition at each step in the value stream.
+Minimize the time taken for the movement of an item in the value stream and eliminating the wait time.
+%
+Kaizen
+
+Change for the better
+%
+Continuous Improvement
+
+Look for improvement opportunities
+Experiment with possible solutions
+Implement solutions to realize the benefits
+%
+Hansei - Relentless Reflection
+
+Learning from problems
+Learning leads to improvements
+An intellectual and emotional learning exercise by individuals at individual level
+
+Recognize gaps between expected outcome and actual outcome.
+Being conscious of own responsibility and accepting rather then denying it.
+Committing to look for ways to improve.
+%
+Fourteen Guiding Lean Principles in four groups
+
+Problem Solving
+  * try to become a learning organization through relentless reflection (Hansei) and continuous improvement (Kaizen)
+  * go and see yourself (Genchi Genbutsu) to get first-hand information
+  * make decisions by generating and considering different options and by taking consensus. Once consensus is reached implement decisions rapidly
+
+People & Partners
+  * grow leaders who live the philosophy
+  * provide opportunity for growth to exceptional people and teams who follow your company's philosophy
+  * respect, develop and challenge your people and teams
+  * respect and help suppliers attain higher levels of performance
+
+Process (Eliminates Waste)
+  * create process flow to surface problems
+  * use pull systems to avoid overproduction
+  * level out the workload (Heijunka)
+  * stop when there is a quality problem (Jidoka)l
+  * standardize tasks for continuous improvement
+  * use visual controls
+  * use only reliable technology
+
+Philosophy (Long term thinking)
+  * management decision making should always be in line with the stated mission and long term objectives
+  * even if such decisions are not in line with expected short term results, long term objectives will have higher importance
+%
+Lean practices result in improvements in three key areas
+
+Quality  Cost  Schedule
+
+Often when focussing only on one area it negatively affects the other two areas.
+With lean, focus is on wholistic improvement.
+%
+Lean Practice - Creating flow
+
+Reduces work-in-process and finished goods inventory
+Surfaces problems
+Drives efficiency in operations
+%
+Takt Time
+
+Taktzeit - rhythmic time in German
+
+Gives rhythm to the system to operate at a steady pace to meet customer demand
+
+Takt Time = Available Time / Customer Demand
+%
+SMED - Single Minute Exchange of Die
+
+Displace - major tasks moved offline
+Eliminate
+Reduce
+Standardize
+Automate
+%
+5S Practice for Worstation Efficiency
+
+Sort
+  * wanted and unwanted items (remove)
+
+Straighten
+  * organize for easy access
+  * right place/location for each work item ensure kept current at all times
+  * place items as close as possible to where they will be used
+
+Shine
+  * keep workplace clean
+  * delete dead code, extraneous comments, etc
+  * exposes abnormal conditions in the current process
+
+Standardize
+  * define rules, methods and frequency for Sorting, Straightening and Shining
+  * display the rules to relevant team members
+  * trains personnel to detect deviations and abnormalities with all five senses
+  * unless standardized, it cannot be improved
+
+Sustain
+  * maintain orderliness and practise the first 4Ss
+  * label and follow procedures
+  * institutionalize the process and strive for greater efficiency
+%
+Automation
+
+
