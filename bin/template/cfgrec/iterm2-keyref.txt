@@ -1,6 +1,11 @@
 Mac iTerm2 command quick reference
 
-ITERM:KEY:VIEW Alt-Cmd-; Turn on highlighted cursor line
+ITERM:KEY:VIEW Alt-Cmd-; Turn on highlighted cursor line.
+ITERM:KEY:VIEW Shift-Cmd-b Toggle view of tool belt.
 ITERM:KEY:CMD Alt-Cmd-a Be alerted when a long-running command completes.
-ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/Paste
+ITERM:KEY:CMD Shift-Cmd-; Show pop up window of command history.
+ITERM:KEY:CMD Cmd-; Complete command from command history.
+ITERM:KEY:CMD Alt-Shift-Cmd-y Toggle auto-command completion.
+ITERM:KEY:CMD Cmd-Alt-/ Show pop up window of recent directories.
+ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/paste.
 ITERM:KEY:EDIT Cmd-/ Show the cursor when you've lost track of it.
