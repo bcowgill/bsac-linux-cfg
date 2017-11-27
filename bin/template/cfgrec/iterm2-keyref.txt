@@ -9,3 +9,9 @@ ITERM:KEY:CMD Alt-Shift-Cmd-y Toggle auto-command completion.
 ITERM:KEY:CMD Cmd-Alt-/ Show pop up window of recent directories.
 ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/paste.
 ITERM:KEY:EDIT Cmd-/ Show the cursor when you've lost track of it.
+
+Easy paste of binary file to remote terminals
+Finder - Copy a file.
+iTerm -
+$ base64 -D > binary.file
+Edit / Paste Special / Paste File Base64-Encoded
