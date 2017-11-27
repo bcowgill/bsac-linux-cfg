@@ -351,6 +351,7 @@ ATOM_APM_PKG="
 	activate-power-mode
 	change-case
 	atom-beautify
+	language-javascript-jsx
 "
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
@@ -465,6 +466,7 @@ MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 HOMEBREW_NO_AUTO_UPDATE=1
 BREW_TAPS="
 	caskroom/cask
+	cloudfoundry/tap
 "
 
 INSTALL_MACLINUX="
@@ -707,6 +709,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	WEBSTORM_ARCHIVE=""
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
+	CUSTOM_PKG="cf:cf-cli"
 fi # wipro mac
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -1984,7 +1987,7 @@ if [ ! -z $MAC ]; then
 	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
 fi
 
-#brew_taps_from "$BREW_TAPS"
+brew_taps_from "$BREW_TAPS"
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"
@@ -2140,8 +2143,8 @@ if [ ! -z $MAC ]; then
 	install_command_package_from_url $ITERM_CMD $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
 	app_exists $ITERM_CMD "you must manually install downloaded iTerm2 dmg file"
 
-	install_command_package_from_url $KARABINER_CMD $KARABINER_PKG $KARABINER_URL "Karabiner-Elements keyboard remapper program"
-	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"
+#	install_command_package_from_url $KARABINER_CMD $KARABINER_PKG $KARABINER_URL "Karabiner-Elements keyboard remapper program"
+#	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"
 fi
 
 commands_exist "$COMMANDS"

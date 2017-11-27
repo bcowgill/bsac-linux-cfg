@@ -44,8 +44,6 @@ iTerm.app /Applications/
 Autoupdate.app /Applications/iTerm.app/Contents/Frameworks/Sparkle.framework/Versions/A/Resources/
 iTunes.app /Applications/
 iTunesHelper.app /Applications/iTunes.app/Contents/MacOS/
-Karabiner-Elements.app /Applications/
-Karabiner-EventViewer.app /Applications/
 Keynote.app /Applications/
 Launchpad.app /Applications/
 Mail.app /Applications/

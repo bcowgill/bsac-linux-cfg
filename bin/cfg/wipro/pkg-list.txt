@@ -1,4 +1,5 @@
 bash-completion
+cf-cli
 cmatrix
 colordiff
 cpanminus
