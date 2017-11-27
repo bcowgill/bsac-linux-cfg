@@ -136,6 +136,19 @@ if [ "x$COMPANY" == "xworkshare" ]; then
 	export REPOS="core-ui files-ui groups-ui dealroom-ui new-ui"
 fi
 
+if [ "x$COMPANY" == "xwipro" ]; then
+  export PJ=$HOME/workspace/projects
+  export MAS=sprint0/trunk
+  export REPOS="
+  	pas-card-control-api
+  	pas-card-control-api-ucd-deploy
+  	pas-card-control-mock
+  	pas-card-control-visa-adapter
+  	pas-card-controls-cwa
+  	pas-card-controls-cwa-ucd-deploy
+  "
+fi
+
 export PATH=$HOME/bin:$PATH
 export EDITOR=/usr/bin/vim
 export WCDSCAN=$HOME
