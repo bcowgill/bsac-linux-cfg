@@ -2,6 +2,8 @@ Mac iTerm2 command quick reference
 
 ITERM:KEY:VIEW Alt-Cmd-; Turn on highlighted cursor line.
 ITERM:KEY:VIEW Shift-Cmd-b Toggle view of tool belt.
+ITERM:KEY:VIEW Cmd-D Split a tab into two vertical panes.
+ITERM:KEY:VIEW Shift-Cmd-D Split a tab into two horizontal panes.
 ITERM:KEY:CMD Alt-Cmd-a Be alerted when a long-running command completes.
 ITERM:KEY:CMD Shift-Cmd-; Show pop up window of command history.
 ITERM:KEY:CMD Cmd-; Complete command from command history.
