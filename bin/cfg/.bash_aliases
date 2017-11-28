@@ -69,6 +69,10 @@ if [ "x$COMPANY" == "xclearbooks" ]; then
 	alias grst='git-rebase.sh origin/staging'
 fi
 
+if [ "x$COMPANY" == "xwipro" ]; then
+	alias yts='yarn test:summary'
+fi
+
 # default options for some commands
 alias cdiff='colordiff'
 alias now='( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
