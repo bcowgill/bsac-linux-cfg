@@ -4,6 +4,9 @@
 
 FORTUNE=starwars.fortune
 LIB=/usr/share/games/fortunes
+if [ ! -d $LIB ]; then
+	LIB=/usr/local/Cellar/fortune/9708/share/games/fortunes
+fi
 rm $FORTUNE
 
 echo "May the force be with you" >> $FORTUNE

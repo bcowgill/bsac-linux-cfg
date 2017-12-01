@@ -3,6 +3,10 @@
 # http://bradthemad.org/tech/notes/fortune_makefile.php
 
 LIB=/usr/share/games/fortunes
+if [ ! -d $LIB ]; then
+	LIB=/usr/local/Cellar/fortune/9708/share/games/fortunes
+fi
+
 FORTUNES=`ls *.fortune`
 
 rm fortune.failures.lst
@@ -21,11 +25,11 @@ function test_fortune_output
 	done
 	FILE=`fortune -f "$file" 2>&1`
 	if [ -z $SUCCESS ]; then
-		echo "NOT OK fortune $FILE shows no output ever" | tee --append fortune.failures.lst
+		echo "NOT OK fortune $FILE shows no output ever" | tee -a fortune.failures.lst
 	else
 		echo OK fortune $file shows something at least some of the time.
 		if [ ! -z $FAILS ]; then
-			echo "NOT COMPLETELY OK fortune $FILE shows no output sometimes" | tee --append fortune.failures.lst
+			echo "NOT COMPLETELY OK fortune $FILE shows no output sometimes" | tee -a fortune.failures.lst
 		fi
 	fi
 }
@@ -39,7 +43,7 @@ function test_fortune
 		test_fortune_output "$file"
 	else
 		FILE=`fortune -f "$file" 2>&1`
-		echo "NOT OK fortune $FILE returns non-zero" | tee --append fortune.failures.lst
+		echo "NOT OK fortune $FILE returns non-zero" | tee -a fortune.failures.lst
 	fi
 }
 

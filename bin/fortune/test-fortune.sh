@@ -2,6 +2,9 @@
 # test fortune files
 
 LIB=/usr/share/games/fortunes
+if [ ! -d $LIB ]; then
+	LIB=/usr/local/Cellar/fortune/9708/share/games/fortunes
+fi
 
 function test_fortune_output
 {

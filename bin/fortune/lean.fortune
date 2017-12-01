@@ -238,10 +238,10 @@ SMED - Single Minute Exchange of Die
 Displace - major tasks moved offline
 Eliminate
 Reduce
-Standardize
+Standardise
 Automate
 %
-5S Practice for Worstation Efficiency
+5S Practice for Workstation Efficiency
 
 Sort
   * wanted and unwanted items (remove)
@@ -267,6 +267,89 @@ Sustain
   * label and follow procedures.
   * institutionalize the process and strive for greater efficiency.
 %
-Automation
+Autonomation - Intelligent Automation - Jidoka
 
+  * Automate a process and make the machines alert when there are problems.
+  * One person can monitor multiple processes and stop the production line when a problem occurs.
+  * Multiple people work to solve the problem before resuming the line.
+  * Stop when there is a quality problem.
+%
+Mistake Proofing - Poka Yoke
 
+Avoid defects using simple mechanisms and practices:
+  * enabling the system to prevent mistakes.
+  * raising an alarm when a mistake is made.
+
+Three golden rules of Mistake Proofing:
+  * Don't accept a defect/mistake from a supplier.
+  * Don't make a defect.
+  * Don't pass on a defect to a customer.
+
+Practices for Mistake Proofing:
+  * checklist based on past defectsx which can re-occur.
+  * automated tests that will run the moment a build is made/compiled.
+%
+Visual controls
+
+The central idea is to make the status of an activity or process visible.
+
+  * Present the current status of production schedule quality and problem to be made visible.
+  * Easy to see, understand and respond to.
+%
+Go See Yourself - Genchi Gengutsu
+
+  * Helps decision makers to have first hand and reliable information.
+  * Calls for direct observation of the situation.
+  * Know work environment, interact with team members, and use the learning to provide solutions for operational excellence.
+%
+Five Whys for Root Cause Analysis
+
+Problem -> Why -> Why -> Why -> Why -> Why -> Root cause
+
+In most cases the root cause can be found by asking up to five rounds of Why.
+In come cases one may find multiple causes, keep tracing each branch until you get to the root of each.
+%
+5Ss - Workstation efficiency
+Jidoka - Process improvement
+Heijunka - Production planning
+5 Whys - Problem Solving
+Visual Controls - Sufacing problems nearly
+SMED - Process improvements
+Takt time - Production planning
+Creating flow - Surfacing problems nearly
+Automation - Process improvement
+%
+Lean Thinking @ Wipro
+
+We want to bring the next generation of Lean thinking into our processes and weave it into our system so that it will lead to a sustainable competitive advantage.
+
+Azim Premji
+%
+Lean Implementation at wipro
+  * Operational excellence
+    * Research ideal tools and practices
+    * Pilot the tools and practices
+    * Refine as necessary
+    * Broadbase the tools/practices in right contexts across the organization
+  * Branding through differentiation
+%
+Wipro Lean Journey
+
+2004 Begins
+Phase 0 - 2005-Oct-2008-Mar - Lean Productivity Office created to pilot projects.
+Phase 1 - 2008-Apr-2008-Jul - Deploy Lean on a larger basis Lean Center of Excellence created.
+Phase 2 - 2008-Dec - Lean implemented in higher value projects, Training sessions created.
+Phase 3 - 2009-Apr-2009-Jun - Lean intervention successful, integration with Agile, Wipro Quality Management System.
+Phase 4 - 2009-Jul-2010-Mar - Excellent Index tools introduced to track lean implementation.
+Phase 5 - 2010-Apr-Way Ahead - Team productivity, stay current with latest lean practices and tools.
+%
+Wipro benefits of lean
+  * Delivery excellence
+    * Maintenance projects higher levels of Sustenance productivity
+    * Rejection index and bug fix productivity improved
+  * Increased productivity
+    * 10-15% increase in productivity
+    * 20% increase in capability to handle requirements volatility across development projects
+  * Operational Excellence
+    * offset challenges of complexity and higher rookie ratio on larger projects
+    * control overruns and turn around project efficiency
