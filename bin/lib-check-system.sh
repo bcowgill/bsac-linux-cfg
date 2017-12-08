@@ -120,11 +120,11 @@ function stop {
 }
 
 function check_linux {
-	local version ismac check file which checkmac os
-	checkmac=0
+	local version ismacos check file which checkmacos os
+	checkmacos=0
 	os=linux
 	version="$1"
-	ismac="${2:-0}"
+	ismacos="${2:-0}"
 	if which lsb_release > /dev/null; then
 		check=$(lsb_release -sc 2> /dev/null)
 	else
@@ -148,11 +148,11 @@ function check_linux {
 		if [ ! -z "$which" ]; then
 			check=$(sw_vers -productVersion 2> /dev/null)
 			check="$check"
-			checkmac=1
+			checkmacos=1
 			os=darwin
 		fi
 	fi
-	if [ "$checkmac" == "$ismac" ]; then
+	if [ "$checkmacos" == "$ismacos" ]; then
 		OK "machine is $os as expected"
 	else
 		NOT_OK "machine is $os did not expect that"
@@ -585,7 +585,7 @@ function install_file {
 	file_exists "$file" "$message"
 }
 
-# pin a tap for mac brew package manager
+# pin a tap for macos brew package manager
 function brew_has_tap {
 	local tap
 	tap="$1"

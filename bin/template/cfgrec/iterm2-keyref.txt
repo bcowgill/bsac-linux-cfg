@@ -10,8 +10,10 @@ ITERM:KEY:CMD Shift-Cmd-; Show pop up window of command history.
 ITERM:KEY:CMD Cmd-; Complete command from command history.
 ITERM:KEY:CMD Alt-Shift-Cmd-y Toggle auto-command completion.
 ITERM:KEY:CMD Cmd-Alt-/ Show pop up window of recent directories.
-ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/paste.
 ITERM:KEY:EDIT Cmd-/ Show the cursor when you've lost track of it.
+ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/paste.
+ITERM:KEY:EDIT Cmd-MouseDrag To make multiple discontinuous selections.
+ITERM:KEY:EDIT Alt-Cmd-MouseDrag To select a vertical area of terminal output.
 
 Easy paste of binary file to remote terminals
 Finder - Copy a file.

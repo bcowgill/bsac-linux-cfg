@@ -91,7 +91,7 @@ AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
 if which sw_vers > /dev/null; then
-	MAC=1
+	MACOS=1
 fi
 UBUNTU=trusty
 LSB_RELEASE=`get-release.sh`
@@ -252,7 +252,7 @@ EBOOK_READER="calibre"
 PINTA_PKG="pinta"
 PINTA_CMD="pinta"
 
-if [ -z $MAC ]; then # TODO MAC PKGS
+if [ -z $MACOS ]; then # TODO MACOS PKGS
 	PERL_PKG="cpanm:cpanminus /usr/share/doc/perl/README.gz:perl-doc"
 	TEMPERATURE_PKG="sensors:lm-sensors hddtemp"
 else
@@ -348,6 +348,8 @@ ATOM_APP=atom
 ATOM_URL=https://atom.io/download/deb
 #ATOM_URL=https://atom-installer.github.com
 ATOM_APM_PKG="
+  file-icons
+  autosave
 	activate-power-mode
 	change-case
 	atom-beautify
@@ -355,7 +357,7 @@ ATOM_APM_PKG="
 "
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
-# Atom Mac
+# Atom MACOS
 #https://github.com/atom/atom/releases/download/v1.21.0/atom-mac.zip
 
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
@@ -391,7 +393,7 @@ VSLICK_URL="http://www.slickedit.com/dl/dl.php?type=trial&platform=linux64&produ
 VSLICK_EXTRACTED_DIR="$DOWNLOAD/$VSLICK_ARCHIVE"
 VSLICK_EXTRACTED="$VSLICK_EXTRACTED_DIR/vsinst"
 
-if [ -z $MAC ]; then  # TODO MAC PKGS
+if [ -z $MACOS ]; then  # TODO MACOS PKGS
 	PULSEAUDIO_PKG="pavucontrol pavumeter speaker-test"
 	KEYBOARD_PKG="showkey evtest"
 fi
@@ -469,7 +471,7 @@ BREW_TAPS="
 	cloudfoundry/tap
 "
 
-INSTALL_MACLINUX="
+INSTALL_MACOSLINUX="
 	tcsh
 	curl wget
 	vim ctags
@@ -504,24 +506,24 @@ INSTALL_LINUX="
 	$MTP_PKG
 "
 
-INSTALL_MAC="
+INSTALL_MACOS="
 	meld:caskroom/cask/meld
 	7z:p7zip
 "
 
-if [ -z $MAC ]; then
-	INSTALL_MAC=""
+if [ -z $MACOS ]; then
+	INSTALL_MACOS=""
 else
 	INSTALL_LINUX=""
-fi # not MAC
+fi # not MACOS
 
 #vim-scripts requires ruby - loads of color schemes and helpful vim scripts
 # runit
 # jhead for jpeg EXIF header editing
 INSTALL_CMDS="
-	$INSTALL_MACLINUX
+	$INSTALL_MACOSLINUX
 	$INSTALL_LINUX
-	$INSTALL_MAC
+	$INSTALL_MACOS
 "
 
 # HEREIAM SUGGESTED
@@ -561,7 +563,7 @@ INSTALL_CMDS="
 # Recommended packages:
 # minidnla
 
-# TODO MAC PKGS
+# TODO MACOS PKGS
 INSTALL_LINUX="
 	wcd.exec:wcd
 	calc:apcalc
@@ -575,7 +577,7 @@ COMMANDS_LINUX="
 	gettext
 "
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 	true
 else
 	INSTALL_LINUX=""
@@ -593,12 +595,12 @@ INSTALL_LIST="
 	markdown
 "
 
-if [ -z $MAC ]; then # TODO MAC PKGS
+if [ -z $MACOS ]; then # TODO MACOS PKGS
 INSTALL_FILES="
 	/usr/share/doc/fortunes/copyright:fortunes
 	/usr/share/doc-base/vim-referencemanual:vim-doc
 "
-fi # not MAC
+fi # not MACOS
 
 COMMANDS_LIST="
 	$COMMANDS_LINUX
@@ -664,10 +666,10 @@ if [ "$HOSTNAME" == "akston" ]; then
 fi # akston linux
 
 if [ "$HOSTNAME" == "L-156131255.local" ]; then
-	# Change settings for wipro mac workstation
+	# Change settings for wipro MACOS workstation
 	EMAIL=brent.cowgill@wipro.com
 	COMPANY=wipro
-	MAC=1
+	MACOS=1
 	UBUNTU=10.12.6
 	GIT_VER=2.14.2
 	GIT_PKG_AFTER=""
@@ -710,7 +712,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
 	CUSTOM_PKG="cf:cf-cli"
-fi # wipro mac
+fi # wipro MACOS
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	# Change settings for clearbooks linux workstation
@@ -903,7 +905,7 @@ if [ ! -d "$NODE_MOD" ]; then
 	NODE_MOD=/usr/local/lib/node_modules
 fi
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 NODE_PKG="
 	$NODE_CMDS
 	node:nodejs-legacy
@@ -956,7 +958,7 @@ NODE_CUSTOM_PKG="
 	/usr/share/doc/node-zipfile/copyright:node-zipfile
 "
 else
-	# Mac node
+	# MACOS node
 NODE_PKG="
 	$NODE_CMDS
 "
@@ -972,7 +974,7 @@ NPM_GLOBAL_LINUX_PKG="
 	$NPM_LIB/karma-phantomjs-launcher/index.js:karma-phantomjs-launcher
 "
 
-if [ ! -z $MAC ]; then
+if [ ! -z $MACOS ]; then
 	NPM_GLOBAL_LINUX_PKG=""
 fi
 
@@ -1046,7 +1048,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 	GIT_TAR=git-$GIT_VER
 	GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 else
@@ -1055,7 +1057,7 @@ else
 #?r=https%3A%2F%2Fgit-scm.com%2Fdownload%2Fmac&ts=1507631580&use_mirror=kent
 fi
 
-if [ -z $MAC ]; then  # TODO MAC PKGS
+if [ -z $MACOS ]; then  # TODO MACOS PKGS
 GIT_PKG_AFTER="
 	/usr/share/doc-base/git-tools:git-doc
 	/usr/lib/git-core/git-gui:git-gui
@@ -1063,7 +1065,7 @@ GIT_PKG_AFTER="
 	tig
 	$GITSVN_PKG
 "
-fi # not MAC
+fi # not MACOS
 
 if [ ! -z $NVM_VER ]; then
 	NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
@@ -1252,7 +1254,7 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
 file_exists $HOME/.COMPANY "company env variable setup file"
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 	# provides lsb_release command as well.
 	cmd_exists apt-file || (sudo apt-get install apt-file && sudo apt-file update)
 fi
@@ -1267,7 +1269,7 @@ if grep $USER /etc/group | grep sudo; then
 	#/etc/group:bcowgill:x:1001:
 	#etc/sudoers:bcowgill   ALL=(ALL:ALL) ALL
 else
-	if [ ! -z $MAC ]; then
+	if [ ! -z $MACOS ]; then
 		[ -e check-my-sudo.tmp ] && sudo rm check-my-sudo.tmp
 		sudo touch check-my-sudo.tmp
 		if ls -al check-my-sudo.tmp | grep root; then
@@ -1286,10 +1288,10 @@ pushd $HOME
 if [ "$HOME" == "/home/me" ]; then
 	dir_exists "$HOME" "home dir ok"
 else
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		dir_link_exists "/home/me" "$HOME" "need to alias home dir as /home/me"
 	else
-		NOT_OK "MAYBE cannot link /home/me on Mac"
+		NOT_OK "MAYBE cannot link /home/me on MACOS"
 	fi
 fi
 
@@ -1301,15 +1303,15 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
 get_git
 
-# on Mac when java not installed, running java command requests an install with dialog box
+# on MACOS when java not installed, running java command requests an install with dialog box
 #L-156131255:bin bcowgill$ ls -al /usr/bin/java
 #lrwxr-xr-x  1 root  wheel  74 23 Mar  2017 /usr/bin/java -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
 
 echo VERSIONS
-echo MAC=$MAC
-check_linux "$UBUNTU" $MAC
+echo MACOS=$MACOS
+check_linux "$UBUNTU" $MACOS
 which git && git --version
-if [ -z $MAC ]; then # TODO MAC PKGS
+if [ -z $MACOS ]; then # TODO MACOS PKGS
 	which java && java -version && ls $JAVA_JVM
 	which apt-get && apt-get --version
 else
@@ -1415,7 +1417,7 @@ if [ ! -z "$COMPANY" ]; then
 	fi
 fi
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 touch go.sudo; rm go.sudo
 if [ `ulimit -n` == $ULIMITFILES ]; then
 	OK "ulimit for open files is good"
@@ -1455,12 +1457,12 @@ else
 	OK "plenty of space on /boot"
 fi
 
-fi # not MAC
+fi # not MACOS
 
 # Shell configuration files
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
-if [ ! -z $MAC ]; then
+if [ ! -z $MACOS ]; then
 	file_linked_to .bash_profile bin/cfg/.bash_profile "bash_profile configured"
 fi
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
@@ -1474,7 +1476,7 @@ file_linked_to .pgadmin3 bin/cfg/.pgadmin3 "postgres admin tool configured"
 file_linked_to .aspell.en.pws bin/cfg/.aspell.en.pws "aspell personal word list for english dictionary"
 file_linked_to .aspell.en.prepl bin/cfg/.aspell.en.prepl "aspell personal replacements for english dictionary"
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 
 file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and other X programs"
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
@@ -1492,7 +1494,7 @@ if [ ${HAS_MC:-)} == 0 ]; then
 	cp bin/cfg/.config/mc/* .config/mc/ || NOT_OK "unable to copy midnight commander configuration"
 fi
 
-fi # not MAC
+fi # not MACOS
 
 if [ ! -z "$MOUNT_DATA" ]; then
 	if [ -z "$BIG_DATA" ]; then
@@ -1561,7 +1563,7 @@ FILE=.fonts/SourceCodePro-Black.otf
 file_exists $FILE || cp $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
 file_exists $FILE "SourceCodePro fonts still not installed"
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 
 cmd_exists fc-cache "font cache program needed"
 cmd_exists fc-list "font cache list program needed"
@@ -1585,17 +1587,17 @@ if [ ! -f xlsfonts.lst  ]; then
 fi
 
 else
-	# on Mac Library/Fonts/ contains installed fonts, manually install from .fonts/ dir
-	file_exists Library/Fonts/ProFontWindows.ttf ”ProFontWindows font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-Black.otf ”SourceCodePro Black font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-Bold.otf ”SourceCodePro Bold font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-ExtraLight.otf ”SourceCodePro ExtraLight font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-Light.otf ”SourceCodePro Light font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-Medium.otf ”SourceCodePro Medium font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-Regular.otf ”SourceCodePro Regular font installed on Mac”
-	file_exists Library/Fonts/SourceCodePro-Semibold.otf ”SourceCodePro Semibold font installed on Mac”
+	# on MACOS Library/Fonts/ contains installed fonts, manually install from .fonts/ dir
+	file_exists Library/Fonts/ProFontWindows.ttf ”ProFontWindows font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-Black.otf ”SourceCodePro Black font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-Bold.otf ”SourceCodePro Bold font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-ExtraLight.otf ”SourceCodePro ExtraLight font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-Light.otf ”SourceCodePro Light font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-Medium.otf ”SourceCodePro Medium font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-Regular.otf ”SourceCodePro Regular font installed on MACOS”
+	file_exists Library/Fonts/SourceCodePro-Semibold.otf ”SourceCodePro Semibold font installed on MACOS”
 
-fi # not MAC
+fi # not MACOS
 
 # Get unicode fonts and examples
 # http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
@@ -1616,7 +1618,7 @@ dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sa
 
 BAIL_OUT font
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 
 # MUSTDO finish this
 if false ; then
@@ -1692,7 +1694,7 @@ if cmd_exists kfontinst > /dev/null ; then
 fi # kfontinst command exists
 fi # USE_KDE set
 
-fi # not MAC
+fi # not MACOS
 
 BAIL_OUT xfont
 
@@ -1796,7 +1798,7 @@ if git --version | grep " version " | grep $GIT_VER; then
 	fi
 else
 	NOT_OK "git command version incorrect, want $GIT_VER - will try update"
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		# old setup for git 1.9.1
 		# http://blog.avirtualhome.com/git-ppa-for-ubuntu/
 		apt_has_source ppa:pdoes/ppa "repository for git"
@@ -1825,7 +1827,7 @@ else
 		NOT_OK "exiting after git update, try again."
 		exit 1
 	else
-		# Mac git install
+		# MACOS git install
 		# https://stackoverflow.com/questions/17582685/install-gitk-on-mac#comment40309665_25090800
 		# https://sourceforge.net/projects/git-osx-installer/files/git-2.14.1-intel-universal-mavericks.dmg/download?use_mirror=autoselect
 		if [ `which git` != /usr/local/bin/git ]; then
@@ -1860,7 +1862,7 @@ else
 	OK "will not configure git-svn unless GITSVN_PKG is non-zero"
 fi # GITSVN_PKG
 
-if [ -z $MAC ]; then # TODO MAC PKGS
+if [ -z $MACOS ]; then # TODO MACOS PKGS
 	GIT_COMPLETE=/usr/share/bash-completion/completions/git
 	if file_exists "$GIT_COMPLETE" > /dev/null ; then
 		# git installs completion file but not in right place any more
@@ -1868,9 +1870,9 @@ if [ -z $MAC ]; then # TODO MAC PKGS
 	else
 		file_exists /etc/bash_completion.d/git "git completion file in etc"
 	fi
-else # MAC completion
+else # MACOS completion
 	install_file_from $(brew --prefix)/etc/bash_completion bash-completion
-fi # MAC
+fi # MACOS
 
 if [ x`git config --global --get user.email` == x$EMAIL ]; then
 	OK "git config has been set up"
@@ -1907,7 +1909,7 @@ else
 fi
 
 if [ ! -z "$USE_JAVA" ]; then
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		if [ "x$JAVA_HOME" == "x$JAVA_JVM/$JAVA_VER" ]; then
 			OK "JAVA_HOME set correctly"
 			file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
@@ -1929,7 +1931,7 @@ fi
 
 if [ ! -z "$DIFFMERGE_PKG" ]; then
 	install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
-	if [ ! -z $MAC ]; then
+	if [ ! -z $MACOS ]; then
 		app_exists DiffMerge.app "you must manually install downloaded diffmerge dmg file"
 	fi
 else
@@ -1981,7 +1983,7 @@ echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
 
-if [ ! -z $MAC ]; then
+if [ ! -z $MACOS ]; then
 	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
 	cmd_exists brew
 	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
@@ -1992,15 +1994,15 @@ installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 	file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"
-fi # not MAC
+fi # not MACOS
 
 BAIL_OUT install
 
 if [ ! -z "$NODE_PKG" ]; then
 	installs_from "$NODE_PKG_LIST"
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		dir_exists "$NODE_LIB" "global node command"
 	fi
 	dir_exists "$NODE_MOD" "global node_modules"
@@ -2083,7 +2085,7 @@ fi
 BAIL_OUT npm
 
 if [ ! -z "$DROPBOX_URL" ]; then
-	if [ ! -z $MAC ]; then
+	if [ ! -z $MACOS ]; then
 		if ps -efww | grep -v grep | grep Dropbox.app > /dev/null; then
 			OK "dropbox daemon is running"
 		else
@@ -2113,7 +2115,7 @@ if [ ! -z "$MVN_PKG" ]; then
 		exit 1
 	fi
 
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		if [ "x$M2_HOME" == "x/usr/share/maven" ]; then
 			OK "M2_HOME set correctly"
 		else
@@ -2139,7 +2141,7 @@ else
 	OK "will not configure skypeforlinux unless SKYPE_PKG is non-zero"
 fi
 
-if [ ! -z $MAC ]; then
+if [ ! -z $MACOS ]; then
 	install_command_package_from_url $ITERM_CMD $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
 	app_exists $ITERM_CMD "you must manually install downloaded iTerm2 dmg file"
 
@@ -2162,12 +2164,12 @@ crontab_has_command "ezbackup.sh"
 crontab_has_command "track-battery.pl" "* * * * * \$HOME/bin/track-battery.pl > /tmp/\$LOGNAME/crontab-track-battery.log 2>&1" "crontab warn about battery drain"
 crontab_has_command "track-battery.pl"
 
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 	crontab_has_command "wcdscan.sh" "*/10 9,10,11,12,13,14,15,16,17,18 * * * \$HOME/bin/wcdscan.sh > /tmp/\$LOGNAME/crontab-wcdscan.log 2>&1" "crontab update change dir scan"
 	crontab_has_command "wcdscan.sh"
 	crontab_has_command "random-desktop.sh" "0,15,30,45 * * * * DISPLAY=:0 \$HOME/bin/random-desktop.sh > /tmp/\$LOGNAME/crontab-random-desktop.log 2>&1" "crontab change desktop background"
 	crontab_has_command "random-desktop.sh"
-fi # not MAC
+fi # not MACOS
 
 if [ ! -z "$COMPANY" ]; then
 	file_linked_to bin/backup-work.sh $HOME/bin/cfg/$COMPANY/backup-work-$COMPANY.sh "daily backup script"
@@ -2179,10 +2181,10 @@ if [ ! -z "$COMPANY" ]; then
 	file_exists bin/cfg/$COMPANY/crontab-$HOSTNAME "crontab missing" || backup-work.sh
 	crontab_has_command "backup-work.sh" "30 17,18 * * * \$HOME/bin/backup-work.sh > /tmp/\$LOGNAME/crontab-backup-work.log 2>&1" "crontab daily backup configuration"
 	crontab_has_command "backup-work.sh"
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		crontab_has_command "night.sh"
 		crontab_has_command "brighter.sh"
-	fi # not MAC
+	fi # not MACOS
 else
 	#*/7 19,20,21,22,23 * * 1-5 $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
 	#*/7 * * * 6-7              $HOME/bin/retag.sh all > /tmp/$LOGNAME/crontab-retag.log    2>&1
@@ -2217,10 +2219,10 @@ fi
 if [ ! -z "$ATOM_PKG" ]; then
 	if [ ! -e "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG" ]; then
 		#[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
-		if [ -z $MAC ]; then
+		if [ -z $MACOS ]; then
 			install_command_package_from_url $ATOM_CMD "$ATOM_PKG" "$ATOM_URL" "github atom editor" || true
 		else
-			install_file_from_url_zip "$DOWNLOAD/Atom.app/Contents/PkgInfo" "$ATOM_PKG" "$ATOM_URL" "github atom editor for mac"
+			install_file_from_url_zip "$DOWNLOAD/Atom.app/Contents/PkgInfo" "$ATOM_PKG" "$ATOM_URL" "github atom editor for MACOS"
 			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app"
 		fi
 	fi
@@ -2434,7 +2436,7 @@ maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 FILE=".gitconfig"
 git config --global gui.fontdiff "-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0"
 ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0" "git gui font Edit / Options"
-if [ -z $MAC ]; then
+if [ -z $MACOS ]; then
 	ini_file_has_text "$FILE" "gui/fontui = -family FreeSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
 else
 	ini_file_has_text "$FILE" "gui/fontui = -family LucidaSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
@@ -2447,7 +2449,7 @@ if [ -f "$FILE" ]; then
 	# There are other colors in the config file which are not in the UI
 	file_has_text "$FILE" "set mainfont {ProFontWindows 18}" "Edit / Preferences / Font"
 	file_has_text "$FILE" "set textfont {ProFontWindows 18}" "Edit / Preferences / Font"
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		file_has_text "$FILE" "set uifont {{DejaVu Sans} 12 bold}" "Edit / Preferences / Font"
 	else
 		file_has_text "$FILE" "set uifont {{Lucida Grande} 12 bold}" "Edit / Preferences / Font"
@@ -2634,7 +2636,7 @@ else
 fi # CHARLES_PKG
 
 if [ ! -z $DIFFMERGE_PKG ]; then
-	if [ -z $MAC ]; then
+	if [ -z $MACOS ]; then
 		# Sourcegear Diffmerge colors
 		cmd_exists ini-inline.pl "missing command to convert INI file to inline settings for search"
 		FILE=".SourceGear DiffMerge"
@@ -2678,14 +2680,14 @@ if [ ! -z $DIFFMERGE_PKG ]; then
 			ini_file_has_text "$FILE" "/Folder/Color/Peerless/bg=0"
 	fi # diffmerge config file
 	else
-		# MAC config
+		# MACOS config
 		FILE="Library/Preferences/com.sourcegear.DiffMerge.plist"
 
-		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge Mac properties"
+		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS properties"
 
 		FILE="Library/Preferences/SourceGear DiffMerge Preferences"
-		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge Mac preferences"
-	fi # not MAC
+		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS preferences"
+	fi # not MACOS
 fi # DIFFMERGE_PKG
 
 if [ ! -z $P4MERGE_PKG ]; then
@@ -2892,7 +2894,7 @@ echo TODO gvim font setting config
 
 pkg-list.sh > bin/cfg$COMP/pkg-list.txt
 
-if [ ! -z $MAC ]; then
+if [ ! -z $MACOS ]; then
 	ls-mac-apps.sh > bin/cfg$COMP/mac-apps.txt
 fi
 
