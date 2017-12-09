@@ -1,6 +1,6 @@
 #!/bin/bash
 # save a png of what the moon currently looks like.
-OUTPUT=$HOME/d/Dropbox/Photos/Wallpaper/WorkSafe/astronomy-photos/earth-moon
+OUTPUT=$HOME/d/Dropbox/Photos/Wallpaper/WorkSafe/astronomy-photos/earth-moon/moon-phases
 URL=http://aa.usno.navy.mil/imagery/moon
 #URL="http://api.usno.navy.mil/imagery/moon.png?sequence=15&ID=AA-URL"
 FILE=$OUTPUT/moon-phase-`datestampfn.sh`.png
