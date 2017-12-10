@@ -22,6 +22,7 @@ testSuite render-tt "render a perl Template::Toolkit page with specific variable
 testSuite perltidy-me "evaluate perltidy formatting options" $PROVE
 testSuite scan-code "scan code for static issues" $PROVE
 testSuite scan-js "scan javascript for clean code" $PROVE
+testSuite calc "perl calc substitute" $PROVE
 
 testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
 $PROVE ./unit-tests.sh

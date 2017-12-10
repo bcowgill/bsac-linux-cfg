@@ -1,0 +1,22 @@
+3+4
+sqrt(-1)
+(3,4)
+[3,5]
+{a=>1,b=>3}
+spherical_to_cartesian(4, 0.3, 0.4)
+asin(2)
+asin_real(2)
+great_circle_distance(0.1, 0.2, 0.2, 0.1, 4)
+great_circle_direction(0.1, 0.2, 0.2, 0.1)
+great_circle_bearing(0.1, 0.2, 0.2, 0.1)
+great_circle_destination(0.1, 0.2, 0.2, 0.1)
+great_circle_midpoint(0.1, 0.2, 0.2, 0.1)
+great_circle_waypoint(0.1, 0.2, 0.2, 0.1, 0.75)
+Math::BigFloat -> new('12_3.456_789_123_456_789E-2')
+Math::BigInt->new('562789012345678901234')
+Math::BigRat->new('1302938945098/7238')
+2*(4 - 3*i)
+Re(2*(4 - 3*i))
+Im(2*(4 - 3*i))
+arg(2*(4 - 3*i))
+abs(cplx(3,4))
