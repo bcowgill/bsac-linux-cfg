@@ -2893,9 +2893,32 @@ echo TODO gvim font setting config
 } # DISABLED
 
 pkg-list.sh > bin/cfg$COMP/pkg-list.txt
+OK "updated bin/cfg$COMP/pkg-list.txt"
 
 if [ ! -z $MACOS ]; then
 	ls-mac-apps.sh > bin/cfg$COMP/mac-apps.txt
+	OK "updated bin/cfg$COMP/mac-apps.txt"
+fi
+
+if [ ! -z `which npm` ]; then
+	npm -g --no-color list > bin/cfg$COMP/npm-pkg-list.txt 2>&1 || true
+	OK "updated bin/cfg$COMP/npm-pkg-list.txt"
+fi
+
+if [ ! -z `which apm` ]; then
+	apm --no-color list > bin/cfg$COMP/atom-pkg-list.txt 2>&1 || true
+	OK "updated bin/cfg$COMP/atom-pkg-list.txt"
+fi
+
+if [ ! -z `which cpanp` ]; then
+  cpanp o > bin/cfg$COMP/cpanp-pkg-out-of-date.txt
+	OK "updated bin/cfg$COMP/cpanp-pkg-out-of-date.txt"
+	OUTPUT=`cpanp b | perl -ne '$q= chr(39); print if s{Wrote \s+ autobundle \s+ to \s+ $q(.+)$q}{$1}xms'`
+	echo cpanp bundle file: "$OUTPUT"
+	if [ ! -z "$OUTPUT" ]; then
+		mv $OUTPUT bin/cfg$COMP/cpanp-autobundle.pm
+		OK "updated bin/cfg$COMP/cpanp-autobundle.pm"
+	fi
 fi
 
 popd

@@ -338,3 +338,5 @@ ssl.app /Applications/Xcode.app/Contents/Developer/usr/share/xcs/CouchDB/lib/erl
 stdlib.app /Applications/Xcode.app/Contents/Developer/usr/share/xcs/CouchDB/lib/erlang/lib/stdlib-1.19.4/ebin/
 syntax_tools.app /Applications/Xcode.app/Contents/Developer/usr/share/xcs/CouchDB/lib/erlang/lib/syntax_tools-1.6.13/ebin/
 xmerl.app /Applications/Xcode.app/Contents/Developer/usr/share/xcs/CouchDB/lib/erlang/lib/xmerl-1.3.6/ebin/
+zoom.us.app /Applications/
+Transcode.app /Applications/zoom.us.app/Contents/Frameworks/
