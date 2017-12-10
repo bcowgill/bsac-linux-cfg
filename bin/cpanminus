@@ -10,3 +10,4 @@ Pod/Usage.pm
 File/MimeInfo.pm
 File/Type.pm
 Module/Filename.pm
+Math/BigRat.pm

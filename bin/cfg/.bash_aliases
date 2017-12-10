@@ -310,3 +310,10 @@ fi
 # alias l='ls -CF'                              #
 alias lss='ls -al -oSr'   # list by size reversed
 
+# if calc is missing, simulate it with perl
+if which calc >> /dev/null; then
+	true
+else
+	alias calc=calc.sh
+fi
+
