@@ -13,3 +13,5 @@ https://emojipedia.org/banana/
 🍒 	Cherries
 🍓 	Strawberry
 🍅 	Tomato
+🍩 	Doughnut
+🍟 	French Fries
