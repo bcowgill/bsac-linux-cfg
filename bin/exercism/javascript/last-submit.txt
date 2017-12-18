@@ -1,0 +1,5 @@
+Your JavaScript solution for Simple Cipher has been submitted. View it here:
+http://exercism.io/submissions/85c031f0493645488b4014fd2b5642c6
+
+See related solutions and get involved here:
+http://exercism.io/tracks/javascript/exercises/simple-cipher
