@@ -992,6 +992,7 @@ NPM_GLOBAL_PKG="
 	lessc:less
 	mocha
 	jstest
+	jasmine
 	bower
 	yo
 	grunt:grunt-cli

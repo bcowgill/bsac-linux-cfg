@@ -111,10 +111,10 @@
   108     2.61         2.97     JSON                                 ISHIGAKI  
   109     2.27202      2.97     JSON::PP                             ISHIGAKI  
   110     2.34         3.04     JSON::XS                             MLEHMANN  
-  111     6.05         6.30     LWP                                  OALDERS   
+  111     6.05         6.31     LWP                                  ETHER     
   112     6.04         6.07     LWP::Protocol::https                 OALDERS   
   113     1.895        1.903    Lingua::EN::Inflect                  DCONWAY   
-  114     0.33         0.426    List::MoreUtils                      REHSACK   
+  114     0.33         0.428    List::MoreUtils                      REHSACK   
   115     1.27         1.49     List::Util                           PEVANS    
   116     1.23         1.28     Locale::Maketext                     TODDR     
   117     3.25         3.55     Locale::Script                       SBECK     
@@ -139,7 +139,7 @@
   136     2.001                 Mouse::Tiny                          SYOHEX    
   137     0.65         0.67     NEXT                                 NEILB     
   138     1.00         1.001    Net::DBus                            DANBERR   
-  139     0.68         1.13     Net::DNS                             NLNETLABS 
+  139     0.68         1.14     Net::DNS                             NLNETLABS 
   140   932.00      1096.00     Net::DNS::RR::NIMLOC                 NLNETLABS 
   141     1.70         1.75     Net::Domain::TLD                     ALEXP     
   142     6.06         6.17     Net::HTTP                            OALDERS   
@@ -163,7 +163,7 @@
   160     1.000002     1.001003 Path::IsDev                          KENTNL    
   161     0.052        0.104    Path::Tiny                           DAGOLDEN  
   162     1.003        1.01     Perl::OSType                         DAGOLDEN  
-  163 20120701.00     20170521.00     Perl::Tidy                           SHANCOCK  
+  163 20120701.00     20171214.00     Perl::Tidy                           SHANCOCK  
   164     0.18         0.20     PerlIO::gzip                         NWCLARK   
   165     0.07         0.08     PerlIO::via::QuotedPrint             SHAY      
   166     1.60         1.73     Pod::Checker                         MAREKR    
@@ -216,7 +216,7 @@
   213     0.99         1.00     Tie::File                            TODDR     
   214     1.9725       1.9746   Time::HiRes                          JHI       
   215     1.23         1.25     Time::Local                          DROLSKY   
-  216     1.2001       1.3202   Time::Piece                          ESAYM     
+  216     1.2001       1.3203   Time::Piece                          ESAYM     
   217     1.60         1.72     URI                                  ETHER     
   218     0.05         0.27     UUID                                 JRM       
   219     0.97         1.25     Unicode::Collate                     SADAHIRO  
