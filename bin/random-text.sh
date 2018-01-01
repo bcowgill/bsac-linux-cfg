@@ -16,7 +16,8 @@ if [ "$COMPANY" == "" ]; then
 	#	javascript-good-parts
 	#	simple-design
 	MIX="
-		50% nonviolent-communication
+		25% nonviolent-communication
+		25% secret-code-of-success
 		aristotle
 		bsac-misc
 		greatest-salesman-in-the-world
@@ -157,4 +158,3 @@ do
 done
 
 exit 0
-# New fortune files exist, amend the MIX setting at top of script...
