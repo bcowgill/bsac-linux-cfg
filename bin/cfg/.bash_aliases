@@ -83,6 +83,7 @@ alias screenls='ls /var/run/screen/S-$USER'
 alias pstree='\pstree -a -h -p -u'
 
 # some aliases for git rebasing
+alias gcp='git cherry-pick'
 alias gmt='git mergetool'
 alias grc='git rebase --continue'
 alias grs='git rebase --skip'
