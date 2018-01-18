@@ -71,6 +71,7 @@ fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
 	alias yts='yarn test:summary'
+	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
 fi
 
 # default options for some commands
