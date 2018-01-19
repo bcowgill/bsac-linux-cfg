@@ -9,6 +9,10 @@ export default function promiseTracer(group = 'Promise', traceOn = false) {
     return (v) => { log.debug(`${group}@${l}`, v); return v; };
   });
 
+  const warn = make((l) => {
+    return (v) => { log.warn(`${group}@${l}`, v); return v; };
+  });
+
   const error = make((l) => {
     return (v) => { log.error(`${group}@${l}`, v); return v; };
   });
@@ -30,5 +34,22 @@ export default function promiseTracer(group = 'Promise', traceOn = false) {
     };
   });
 
-  return { trace, label, error };
+  const caught = make((fn, l) => {
+    return (v) => {
+      let out;
+      warn(`${l} in`)(v);
+      try {
+        out = fn(v);
+        warn(`${l} out`)(out);
+      }
+      catch (exception)
+      {
+        error(`${l} throws`)(exception);
+        throw exception;
+      }
+      return out;
+    };
+  });
+
+  return { trace, caught, label, error, warn };
 }

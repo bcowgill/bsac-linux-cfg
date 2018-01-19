@@ -12,6 +12,10 @@ function promiseTracer(group = 'Promise', traceOn = false) {
     return (v) => { log.debug(`${group}@${l}`, v); return v; };
   });
 
+  const warn = make((l) => {
+    return (v) => { log.warn(`${group}@${l}`, v); return v; };
+  });
+
   const error = make((l) => {
     return (v) => { log.error(`${group}@${l}`, v); return v; };
   });
@@ -33,17 +37,34 @@ function promiseTracer(group = 'Promise', traceOn = false) {
     };
   });
 
-  return { trace, label, error };
+  const caught = make((fn, l) => {
+    return (v) => {
+      let out;
+      warn(`${l} in`)(v);
+      try {
+        out = fn(v);
+        warn(`${l} out`)(out);
+      }
+      catch (exception)
+      {
+        error(`${l} throws`)(exception);
+        throw exception;
+      }
+      return out;
+    };
+  });
+
+  return { trace, caught, label, error, warn };
 }
 // === end of module ================================
 
 // Usage:
 const TRACE = true;
 
-// const {trace, label, error} = require('promiseTracer')('ModuleName', TRACE);
+// const {trace, caught, label, error, warn } = require('promiseTracer')('ModuleName', TRACE);
 // or
 // import promiseTracer from 'promiseTracer';
-const {trace, label, error} = promiseTracer('ModuleName', TRACE);
+const {trace, caught, label, error, warn } = promiseTracer('ModuleName', TRACE);
 
 var p = fetch('/foo')
   .then(
@@ -56,3 +77,5 @@ p.then(label('then c'))
 p
   .then(trace(status => status.a.b.c, 'then B'))
   .catch(error('catch d'))
+
+new Promise((resolve, reject) => setTimeout(caught(reject, 'new reject'), 8000));
