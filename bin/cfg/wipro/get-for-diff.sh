@@ -3,16 +3,21 @@
 
 REPO=../pas-card-controls-cwa
 
-BRANCH=sprint16/carouselFix2
-BR_DIR=carouselFix2
-OTHER=sprint16/pas-14899-get-cms-fix
-OTHER_DIR=pas-14899-get-cms-fix
-
+BRANCH=sprint16/cf
+BR_DIR=cf
 #BRANCH=develop
 #BR_DIR=$BRANCH
-#OTHER=sprint16/carouselFix
-#OTHER=sprint0/pas-14904-log
-#OTHER_DIR=pas-14904-log
+#BRANCH=sprint0/belogger
+#BR_DIR=belogger
+
+#OTHER=sprint16/carouselFix2
+#OTHER_DIR=carouselFix2
+#OTHER=sprint0/trunk
+#OTHER_DIR=trunk
+#OTHER=master
+#OTHER_DIR=$OTHER
+OTHER=sprint16/cf-saved
+OTHER_DIR=cf-saved
 
 EXCLUDE="--exclude node_modules --exclude .git"
 
