@@ -3,7 +3,7 @@
 export default function promiseTracer(group = 'Promise', traceOn = false) {
   const log = console;
   const identity = v => v;
-  const make = (fn) => traceOn ? fn : identity;
+  const make = traceOn ? identity : fn => identity;
 
   const label = make((l) => {
     return (v) => { log.debug(`${group}@${l}`, v); return v; };

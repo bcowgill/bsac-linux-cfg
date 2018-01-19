@@ -6,7 +6,7 @@
 function promiseTracer(group = 'Promise', traceOn = false) {
   const log = console;
   const identity = v => v;
-  const make = (fn) => traceOn ? fn : identity;
+  const make = traceOn ? identity : fn => identity;
 
   const label = make((l) => {
     return (v) => { log.debug(`${group}@${l}`, v); return v; };
@@ -56,4 +56,3 @@ p.then(label('then c'))
 p
   .then(trace(status => status.a.b.c, 'then B'))
   .catch(error('catch d'))
-
