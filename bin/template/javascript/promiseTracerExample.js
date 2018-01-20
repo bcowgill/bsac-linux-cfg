@@ -5,11 +5,12 @@
 // export default
 function promiseTracer(group = 'Promise', traceOn = false) {
   const log = console;
+  const debug = console.debug || console.info || console.log;
   const identity = v => v;
   const make = traceOn ? identity : fn => identity;
 
   const label = make((l) => {
-    return (v) => { log.debug(`${group}@${l}`, v); return v; };
+    return (v) => { debug(`${group}@${l}`, v); return v; };
   });
 
   const warn = make((l) => {
