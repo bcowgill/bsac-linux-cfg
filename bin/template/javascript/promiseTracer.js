@@ -1,5 +1,4 @@
 // A tiny little tool for tracing through promises
-
 export default function promiseTracer(group = 'Promise', traceOn = false) {
   const log = console;
   const identity = v => v;
