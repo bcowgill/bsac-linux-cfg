@@ -1,3 +1,12 @@
+# Code Review Purpose
+
+* To transfer knowledge of best practices to the team.
+* To ensure other team members know what is going to master.
+* To let other team members check if unit tests are adequate.
+* To reduce duplication as other team members see common patterns.
+* A sober period of reflection on the code (by the author and others) to make sure it isn't shit.
+* To ensure other team members are happy to support the code once it goes live.
+
 # Code Review Principles
 
 In general we adhere to the guidelines of [Robert C. Martin](https://www.amazon.co.uk/Robert-Martin-Clean-Code-Collection-ebook/dp/B00666M59G) in his book [Clean Code](https://www.investigatii.md/uploads/resurse/Clean_Code.pdf)
