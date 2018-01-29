@@ -193,3 +193,14 @@ function weather
 #
 # alias cd=cd_func
 
+if [ "x$COMPANY" == "xwipro" ]; then
+function grep_cfroutes
+{
+	local branch
+	set +x
+	for branch in $*; do
+		echo $branch
+		ls-cfroutes | grep $branch | sort
+	done
+}
+fi

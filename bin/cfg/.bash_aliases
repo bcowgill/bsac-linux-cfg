@@ -72,7 +72,7 @@ fi
 if [ "x$COMPANY" == "xwipro" ]; then
 	alias yts='yarn test:summary'
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
-	alias ls-cfroutes='for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done'
+	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
 fi
 
 # default options for some commands
