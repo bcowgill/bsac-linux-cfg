@@ -16,6 +16,6 @@ if echo "$NAME" | grep 'rebasing'; then
 fi
 
 MSG=`mktemp`
-perl -e "print qq{$NAME: \n# VIM use :cq to abort the commit, :wq to write changes and quit\n}" | cat - "$1" >> "$MSG" \
+perl -e "my \$dir = shift; print qq{$NAME: \n# in dir: \$dir\n# VIM use ESC :cq to abort the commit, ESC :wq to write changes and quit, ESC u to undo last change and ESC :help for help.\n}" "`pwd`" | cat - "$1" >> "$MSG" \
 	&& git log -3 | perl -pne 'BEGIN { print "# Previous few commits:\n"; }; s{\A}{#\t}xms' >> "$MSG" \
 	&& mv "$MSG" "$1"
