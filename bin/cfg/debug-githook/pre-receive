@@ -1,0 +1,63 @@
+#!/bin/sh
+PRE="`date` pre-receive:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+echo $PRE GIT_PUSH_OPTION_COUNT: $GIT_PUSH_OPTION_COUNT >> $LOG
+echo $PRE GIT_PUSH_OPTION_0: $GIT_PUSH_OPTION_0 >> $LOG
+echo $PRE GIT_PUSH_OPTION_1: $GIT_PUSH_OPTION_1 >> $LOG
+echo $PRE GIT_PUSH_OPTION_2: $GIT_PUSH_OPTION_2 >> $LOG
+echo $PRE GIT_PUSH_OPTION_3: $GIT_PUSH_OPTION_3 >> $LOG
+echo $PRE GIT_PUSH_OPTION_4: $GIT_PUSH_OPTION_4 >> $LOG
+echo $PRE GIT_PUSH_OPTION_5: $GIT_PUSH_OPTION_5 >> $LOG
+echo $PRE GIT_PUSH_OPTION_6: $GIT_PUSH_OPTION_6 >> $LOG
+echo $PRE GIT_PUSH_OPTION_7: $GIT_PUSH_OPTION_7 >> $LOG
+echo $PRE GIT_PUSH_OPTION_8: $GIT_PUSH_OPTION_8 >> $LOG
+echo $PRE GIT_PUSH_OPTION_9: $GIT_PUSH_OPTION_9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+# https://git-scm.com/docs/githooks
+# This hook is invoked by git-receive-pack when it reacts to git push and updates reference(s) in its repository. Just before starting to update refs on the remote repository, the pre-receive hook is invoked. Its exit status determines the success or failure of the update.
+#
+# This hook executes once for the receive operation. It takes no arguments, but for each ref to be updated it receives on standard input a line of the format:
+#
+# <old-value> SP <new-value> SP <ref-name> LF
+# where <old-value> is the old object name stored in the ref, <new-value> is the new object name to be stored in the ref and <ref-name> is the full name of the ref. When creating a new ref, <old-value> is 40 0.
+#
+# If the hook exits with non-zero status, none of the refs will be updated. If the hook exits with zero, updating of individual refs can still be prevented by the update hook.
+#
+# Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
+#
+# The number of push options given on the command line of git push --push-option=... can be read from the environment variable GIT_PUSH_OPTION_COUNT, and the options themselves are found in GIT_PUSH_OPTION_0, GIT_PUSH_OPTION_1,…​ If it is negotiated to not use the push options phase, the environment variables will not be set. If the client selects to use push options, but doesn’t transmit any, the count variable will be set to zero, GIT_PUSH_OPTION_COUNT=0.
+#
+# See the section on "Quarantine Environment" in git-receive-pack[1] for some caveats.
+
+# STDIN = what is being received
+# STDOUT/STDERR = sent back to user on other end
+
+echo "List of what is being received:" >> $LOG
+echo "old_value new_value ref_name" >> $LOG
+IFS=' '
+while read old_value new_value ref_name
+do
+	echo "$old_value $new_value $ref_name" >> $LOG
+done

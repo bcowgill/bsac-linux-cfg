@@ -1,0 +1,31 @@
+#!/bin/sh
+PRE="`date` post-merge:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+# https://git-scm.com/docs/githooks
+# This hook is invoked by git merge, which happens when a git pull is done on a local repository. The hook takes a single parameter, a status flag specifying whether or not the merge being done was a squash merge. This hook cannot affect the outcome of git merge and is not executed, if the merge failed due to conflicts.
+#
+# This hook can be used in conjunction with a corresponding pre-commit hook to save and restore any form of metadata associated with the working tree (e.g.: permissions/ownership, ACLS, etc). See contrib/hooks/setgitperms.perl for an example of how to do this.
+SQUASH="$1" # 1=squash

@@ -1,0 +1,30 @@
+#!/bin/sh
+PRE="`date` pre-rebase:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+# https://git-scm.com/docs/githooks
+# This hook is called by git rebase and can be used to prevent a branch from getting rebased. The hook may be called with one or two parameters. The first parameter is the upstream from which the series was forked. The second parameter is the branch being rebased, and is not set when rebasing the current branch.
+UPSTREAM="$1"
+BRANCH="$2"

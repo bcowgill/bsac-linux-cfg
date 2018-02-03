@@ -1,0 +1,45 @@
+#!/bin/sh
+PRE="`date` post-update:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+#
+# An example hook script for post-update
+#
+# To enable this hook, rename this file to "post-update".
+#
+# https://git-scm.com/docs/githooks
+# This hook is invoked by git-receive-pack when it reacts to git push and updates reference(s) in its repository. It executes on the remote repository once after all the refs have been updated.
+#
+# It takes a variable number of parameters, each of which is the name of ref that was actually updated.
+#
+# This hook is meant primarily for notification, and cannot affect the outcome of git-receive-pack.
+#
+# The post-update hook can tell what are the heads that were pushed, but it does not know what their original and updated values are, so it is a poor place to do log old..new. The post-receive hook does get both original and updated values of the refs. You might consider it instead if you need them.
+#
+# When enabled, the default post-update hook runs git update-server-info to keep the information used by dumb transports (e.g., HTTP) up to date. If you are publishing a Git repository that is accessible via HTTP, you should probably enable this hook.
+#
+# Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
+# ARGS each is a ref that has been updated
+# STDOUT/STDERR = sent back to user on other end

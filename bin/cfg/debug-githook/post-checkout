@@ -1,0 +1,35 @@
+#!/bin/sh
+PRE="`date` post-checkout:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+# https://git-scm.com/docs/githooks
+# This hook is invoked when a git checkout is run after having updated the worktree. The hook is given three parameters: the ref of the previous HEAD, the ref of the new HEAD (which may or may not have changed), and a flag indicating whether the checkout was a branch checkout (changing branches, flag=1) or a file checkout (retrieving a file from the index, flag=0). This hook cannot affect the outcome of git checkout.
+#
+# It is also run after git clone, unless the --no-checkout (-n) option is used. The first parameter given to the hook is the null-ref, the second the ref of the new HEAD and the flag is always 1. Likewise for git worktree add unless --no-checkout is used.
+#
+# This hook can be used to perform repository validity checks, auto-display differences from the previous HEAD if different, or set working dir metadata properties.
+PREV_HEAD="$1"  # null ref for git clone
+NEW_HEAD="$2"
+FILE_OR_BRANCH="$3" # 0=file 1=branch

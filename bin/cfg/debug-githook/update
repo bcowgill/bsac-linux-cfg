@@ -1,0 +1,57 @@
+#!/bin/sh
+PRE="`date` update:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+# An example update hook script.
+# Called by "git receive-pack" with arguments: refname sha1-old sha1-new
+#
+# To enable this hook, rename this file to "update".
+#
+# https://git-scm.com/docs/githooks
+# This hook is invoked by git-receive-pack when it reacts to git push and updates reference(s) in its repository. Just before updating the ref on the remote repository, the update hook is invoked. Its exit status determines the success or failure of the ref update.
+#
+# The hook executes once for each ref to be updated, and takes three parameters:
+#
+# the name of the ref being updated,
+#
+# the old object name stored in the ref,
+#
+# and the new object name to be stored in the ref.
+#
+# A zero exit from the update hook allows the ref to be updated. Exiting with a non-zero status prevents git-receive-pack from updating that ref.
+#
+# This hook can be used to prevent forced update on certain refs by making sure that the object name is a commit object that is a descendant of the commit object named by the old object name. That is, to enforce a "fast-forward only" policy.
+#
+# It could also be used to log the old..new status. However, it does not know the entire set of branches, so it would end up firing one e-mail per ref when used naively, though. The post-receive hook is more suited to that.
+#
+# In an environment that restricts the users' access only to git commands over the wire, this hook can be used to implement access control without relying on filesystem ownership and group membership. See git-shell[1] for how you might use the login shell to restrict the user’s access to only git commands.
+#
+# Both standard output and standard error output are forwarded to git send-pack on the other end, so you can simply echo messages for the user.
+#
+# The default update hook, when enabled—​and with hooks.allowunannotated config option unset or set to false—​prevents unannotated tags to be pushed.
+REF_NAME="$1"
+OLD_REV="$2"
+NEW_REV="$3"
+# STDOUT/STDERROR is sent to the remote user as messages

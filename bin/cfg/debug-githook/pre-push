@@ -1,0 +1,71 @@
+#!/bin/sh
+PRE="`date` pre-push:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE HOSTNAME: $HOSTNAME TYPE: $MACHTYPE $HOSTTYPE $OSTYPE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE DISPLAY: $DISPLAY TERM: $TERM LANG: $LANG TZ: $TZ PWD: $PWD >> $LOG
+echo $PRE SHLVL: $SHLVL -: $- UID: $UID EUID: $EUID PPID: $PPID WINDOWID: $WINDOWID COL: $COLUMNS LINES: $LINES $BASH $BASH_VERSION >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Args: $* >> $LOG
+echo $PRE Arg1: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+echo $PRE Arg4: $4 >> $LOG
+echo $PRE Arg5: $5 >> $LOG
+echo $PRE Arg6: $6 >> $LOG
+echo $PRE Arg7: $7 >> $LOG
+echo $PRE Arg8: $8 >> $LOG
+echo $PRE Arg9: $9 >> $LOG
+git status >> $LOG
+unset PRE
+set >> $LOG
+echo --------------------------------------------- >> $LOG
+#
+# An example hook script to verify what is about to be pushed.
+# Called by "git push" after it has checked the remote status, but
+# before anything has been pushed.  If this script exits with a
+# non-zero status nothing will be pushed.
+#
+# This hook is called with the following parameters:
+#
+# $1 -- Name of the remote to which the push is being done
+# $2 -- URL to which the push is being done
+#
+# If pushing without using a named remote those arguments will be equal.
+#
+# Information about the commits which are being pushed is supplied as
+# lines to the standard input in the form:
+#
+#   <local ref> <local sha1> <remote ref> <remote sha1>
+#
+# This sample shows how to prevent push of commits where the log message
+# starts with "WIP" (work in progress).
+#
+# https://git-scm.com/docs/githooks
+# This hook is called by git push and can be used to prevent a push from taking place. The hook is called with two parameters which provide the name and location of the destination remote, if a named remote is not being used both values will be the same.
+#
+# Information about what is to be pushed is provided on the hook’s standard input with lines of the form:
+#
+# <local ref> SP <local sha1> SP <remote ref> SP <remote sha1> LF
+# For instance, if the command git push origin master:foreign were run the hook would receive a line like the following:
+#
+# refs/heads/master 67890 refs/heads/foreign 12345
+# although the full, 40-character SHA-1s would be supplied. If the foreign ref does not yet exist the <remote SHA-1> will be 40 0. If a ref is to be deleted, the <local ref> will be supplied as (delete) and the <local SHA-1> will be 40 0. If the local commit was specified by something other than a name which could be expanded (such as HEAD~, or a SHA-1) it will be supplied as it was originally given.
+#
+# If this hook exits with a non-zero status, git push will abort without pushing anything. Information about why the push is rejected may be sent to the user by writing to standard error.
+REMOTE="$1"
+URL="$2"
+# STDIN = what is being pushed
+# STDERR = reason why push is rejected
+
+echo "List of what is being pushed:" >> $LOG
+echo "local_ref local_sha remote_ref remote_sha" >> $LOG
+IFS=' '
+while read local_ref local_sha remote_ref remote_sha
+do
+	echo "$local_ref $local_sha $remote_ref $remote_sha" >> $LOG
+done
