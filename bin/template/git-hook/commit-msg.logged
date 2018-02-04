@@ -59,19 +59,20 @@ perl -ne '
 			"Say what?",
 			"No comprendo.",
 			"Pardon me?",
-			"You did what!?",
 			"Watchoo talkin$Q about, Willis?",
 			"No hablo whatever that was.",
 			"You talking to me, punk?",
 			"Throw me a bone here, that tells me nothing.",
 			"Really? You thought THAT was a good commit description?",
+			"You did what!?",
+			"Try writing an actual sentence, with a noun, a verb, etc.",
 			"I think I${Q}m beginning to understand.",
-			"Tell me more, tell me more, like does he have a car?",
 			"Explain it to me like I${Q}m a child.",
+			"Tell me more, tell me more, like does he have a car?",
 			"Tell me about your childhood.",
 			"A little bit louder now!",
-			"I didn${Q}t think it was possible to do that!",
 			"It${Q}s beginning to look a lot like Christmas.",
+			"I didn${Q}t think it was possible to do that!",
 			"Once more, with feeling.",
 			"That actually worked?",
 			"Close, but no cigar.",
@@ -160,6 +161,8 @@ EOM
 		s{([a-z])$Q([a-z])}{$1$2}xmsgi;  # de-contract
 		s{[^a-z0-9_-]+}{\ }xmsgi;        # de-punctuate
 
+		print qq{\nDescription found: $description\n};
+
 		m{\A [A-Z]}xms || fail("Description must begin with a capital letter.");
 		praise("A capital letter");
 
@@ -167,8 +170,6 @@ EOM
 		s{\b $NIL_RE \b \s* }{}xmsg;     # remove pointless words
 
 		praise("A description of some sort") if $total_words && $total_words <= 3;
-
-		print qq{\nDescription found: $_\n};
 
 		my @words = split(/\s+/);
 		scalar(@words) > $WORDS || fail(sarcasm($total_words, $description));

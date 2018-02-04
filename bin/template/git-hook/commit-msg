@@ -136,6 +136,8 @@ EOM
 		s{([a-z])$Q([a-z])}{$1$2}xmsgi;  # de-contract
 		s{[^a-z0-9_-]+}{\ }xmsgi;        # de-punctuate
 
+		print qq{\nDescription found: $description\n};
+
 		m{\A [A-Z]}xms || fail("Description must begin with a capital letter.");
 		praise("A capital letter");
 
@@ -143,8 +145,6 @@ EOM
 		s{\b $NIL_RE \b \s* }{}xmsg;     # remove pointless words
 
 		praise("A description of some sort") if $total_words && $total_words <= 3;
-
-		print qq{\nDescription found: $_\n};
 
 		my @words = split(/\s+/);
 		scalar(@words) > $WORDS || fail(sarcasm($total_words, $description));
