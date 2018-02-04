@@ -52,7 +52,7 @@ if echo "$NAME" | grep 'rebasing' > /dev/null; then
 	exit;
 fi
 
-if [ -z "$WORKON"]; then
+if [ -z "$WORKON" ]; then
 	NAME="wip $NAME: "
 	# grab the ticket info from last commit?
 else
