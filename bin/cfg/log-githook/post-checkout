@@ -10,6 +10,11 @@ echo $PRE PATH: $PATH >> $LOG
 echo $PRE GIT_DIR: $GIT_DIR >> $LOG
 echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
 echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+if echo $SSH_ASKPASS | grep git-gui > /dev/null; then
+	echo $PRE git gui: yes >> $LOG
+else
+	echo $PRE git gui: no >> $LOG
+fi
 echo $PRE Arg1 PREV_HEAD: $1 >> $LOG
 echo $PRE Arg2 NEW_HEAD: $2 >> $LOG
 echo $PRE Arg3 BRANCH_OR_FILE: $3 >> $LOG
