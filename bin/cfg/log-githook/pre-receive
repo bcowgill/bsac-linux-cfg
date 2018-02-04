@@ -1,0 +1,36 @@
+#!/bin/sh
+# https://git-scm.com/docs/githooks
+PRE="`date` pre-receive:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE PWD: $PWD >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE GIT_PUSH_OPTION_COUNT: $GIT_PUSH_OPTION_COUNT >> $LOG
+
+IDX=0
+while [ $IDX -lt $GIT_PUSH_OPTION_COUNT ]
+do
+	VAR=GIT_PUSH_OPTION_$IDX
+	eval "VAL=\$$VAR"
+	echo $PRE $VAR: $VAL >> $LOG
+	IDX=$(( $IDX + 1 ))
+done
+
+echo "List of what is being received:" >> $LOG
+echo "old_value new_value ref_name" >> $LOG
+IFS=' '
+while read old_value new_value ref_name
+do
+	echo "$old_value $new_value $ref_name" >> $LOG
+done
+echo --------------------------------------------- >> $LOG
+git status >> $LOG
+echo --------------------------------------------- >> $LOG
+echo $PRE git hook logged
+exit 0
+echo "UPDATING REFS PREVENTED"; exit 1  # to prevent ref updates

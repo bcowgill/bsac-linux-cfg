@@ -1,0 +1,29 @@
+#!/bin/sh
+# https://git-scm.com/docs/githooks
+PRE="`date` pre-push:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE PWD: $PWD >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Arg1 REMOTE: $1 >> $LOG
+echo $PRE Arg2 REMOTE_URL: $2 >> $LOG
+
+echo "List of what is being pushed:" >> $LOG
+echo "local_ref local_sha remote_ref remote_sha" >> $LOG
+IFS=' '
+while read local_ref local_sha remote_ref remote_sha
+do
+	echo "$local_ref $local_sha $remote_ref $remote_sha" >> $LOG
+done
+
+echo --------------------------------------------- >> $LOG
+git status >> $LOG
+echo --------------------------------------------- >> $LOG
+echo $PRE git hook logged
+exit 0
+echo "ALL PUSHES PREVENTED"; exit 1 # to prevent all pushes

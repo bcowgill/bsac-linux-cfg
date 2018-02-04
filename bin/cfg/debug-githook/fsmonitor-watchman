@@ -38,4 +38,6 @@ echo --------------------------------------------- >> $LOG
 # An optimized way to tell git "all files have changed" is to return the filename /.
 #
 # The exit status determines whether git will use the data from the hook to limit its search. On error, it will fall back to verifying all files and folders.
+VERSION="$1"
+ELAPSED_NANOSECS="$2"
 echo /

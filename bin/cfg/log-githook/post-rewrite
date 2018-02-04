@@ -1,0 +1,28 @@
+#!/bin/sh
+# https://git-scm.com/docs/githooks
+PRE="`date` post-rewrite:"}
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE PWD: $PWD >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Arg1 COMMAND: $1 >> $LOG
+echo $PRE Arg2: $2 >> $LOG
+echo $PRE Arg3: $3 >> $LOG
+
+echo "List of rewritten commits:" >> $LOG
+echo "old_value new_value extra_info" >> $LOG
+IFS=' '
+while read old_value new_value extra_info
+do
+	echo "$old_value $new_value $extra_info" >> $LOG
+done
+echo --------------------------------------------- >> $LOG
+git status >> $LOG
+echo --------------------------------------------- >> $LOG
+echo $PRE git hook logged
+exit 0
