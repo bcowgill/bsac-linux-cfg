@@ -1,5 +1,32 @@
 #!/bin/sh
-# Git hook to prefix a commit message with the branch name or a ticket from $WORKON.
+# https://git-scm.com/docs/githooks
+PRE="`date` prepare-commit-msg:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE PWD: $PWD >> $LOG
+if echo $SSH_ASKPASS | grep git-gui > /dev/null; then
+	echo $PRE git gui: yes >> $LOG
+else
+	echo $PRE git gui: no >> $LOG
+fi
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+echo $PRE Arg1 ORIG_MSG: $1 >> $LOG
+cat "$1" >> $LOG
+echo --------------------------------------------- >> $LOG
+echo $PRE Arg2 SOURCE: $2 >> $LOG
+echo $PRE Arg3 SHA: $3 >> $LOG
+echo --------------------------------------------- >> $LOG
+git status >> $LOG
+echo --------------------------------------------- >> $LOG
+echo $PRE git hook logged
+
+# Git hook to prefix a commit message with the branch name
+# or a message from $WORKON.
 # And show the directory you are in.
 # Also shows the last 3 commit log messages for reference
 # And tells you how to abort the commit using VIM
@@ -43,3 +70,6 @@ echo "$NAME" >> "$MSG" \
 	&& echo "# Previous few commits:" >> "$MSG" \
 	&& git log -3 | perl -pne 's{\A\s*\z}{#\n}xms || s{\A}{#\t}xms;' >> "$MSG" \
 	&& mv "$MSG" "$ORIG_MSG"
+
+exit 0
+echo "ALL COMMITS PREVENTED"; exit 1 # to prevent all commits
