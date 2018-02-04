@@ -9,6 +9,7 @@ perl -ne '
 	BEGIN
 	{
 		$Q = chr(39); # single quote
+		$NO_TICKET = 1;
 
 		$WORDS = 5;    # minimum number of words in message
 		$MAX_LEN = 100; # 0 for no length limit
@@ -16,7 +17,7 @@ perl -ne '
 		$PREFIX = "begin, wip, bdd, tests, fixed, resolved, release, hotfix, or review.";
 		$PREFIX_RE = qr{(begin|wip|bdd|tests|fixed|resolved|release|hotfix|review)}xms;
 
-		$TIK = "XYZ-NNNN:";
+		$TIK = $NO_TICKET ? "" : "XYZ-NNNN:";
 		$TICKET = "a ticket number i.e. $TIK";
 		$TICKET_RE = qr{[A-Z]{3,} - \d+ :}xms;
 
@@ -24,7 +25,8 @@ perl -ne '
 
 		@FEELING = qw(
 			extraordinary good outstanding champion fine ok
-			great hallelulah amen nice capital
+			great hallelulah amen nice capital excellent
+			awesome
 		);
 
 		@REASONS = (
@@ -124,7 +126,11 @@ EOM
 		s{\A $PREFIX_RE \s+ }{}xms || explain("Commit message MUST begin with $PREFIX");
 		praise("A work type");
 
-		s{\A $TICKET_RE \s*}{}xms || explain("Commit message MUST contain $TICKET");
+		unless ($NO_TICKET)
+		{
+
+			s{\A $TICKET_RE \s*}{}xms || explain("Commit message MUST contain $TICKET");
+		}
 		praise("A ticket id");
 		# print qq{\nNOW: $_ \n};
 
