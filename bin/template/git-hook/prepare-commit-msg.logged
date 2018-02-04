@@ -25,6 +25,8 @@ git status >> $LOG
 echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
 
+#HOOK
+#!/bin/sh
 # Git hook to prefix a commit message with the branch name
 # or a message from $WORKON.
 # And show the directory you are in.
@@ -47,6 +49,11 @@ if echo $SSH_ASKPASS | grep git-gui > /dev/null; then
     exit;
 fi
 
+# if commit message is prepared from another source, just go with what they gave.
+if [ ! -z "$SOURCE" ]; then
+	exit;
+fi
+
 NAME=$(git branch | grep '*' | sed 's/* //')
 if echo "$NAME" | grep 'rebasing' > /dev/null; then
 	exit;
@@ -63,6 +70,7 @@ MSG=`mktemp`
 echo "$NAME" >> "$MSG" \
 	&& echo "# in dir: `pwd`" >> "$MSG" \
 	&& echo "# [POLICY] (wip|fixed|resolved) branch: Description of changes made." >> "$MSG" \
+	&& echo "# set WORKON= variable to use as a template." >> "$MSG" \
 	&& echo "# VIM use ESC :cq to abort the commit, ESC :wq to write changes and quit" >> "$MSG" \
 	&& echo "# VIM ESC u to undo last change and ESC :help for help." >> "$MSG" \
 	&& echo -n "#" >> "$MSG" \
@@ -70,6 +78,12 @@ echo "$NAME" >> "$MSG" \
 	&& echo "# Previous few commits:" >> "$MSG" \
 	&& git log -3 | perl -pne 's{\A\s*\z}{#\n}xms || s{\A}{#\t}xms;' >> "$MSG" \
 	&& mv "$MSG" "$ORIG_MSG"
+#/HOOK
+
+echo --------------------------------------------- >> $LOG
+echo Prepared commit message: >> $LOG
+cat "$1" >> $LOG
+echo --------------------------------------------- >> $LOG
 
 exit 0
 echo "ALL COMMITS PREVENTED"; exit 1 # to prevent all commits

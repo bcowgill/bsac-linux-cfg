@@ -21,6 +21,11 @@ if echo $SSH_ASKPASS | grep git-gui > /dev/null; then
     exit;
 fi
 
+# if commit message is prepared from another source, just go with what they gave.
+if [ ! -z "$SOURCE" ]; then
+	exit;
+fi
+
 NAME=$(git branch | grep '*' | sed 's/* //')
 if echo "$NAME" | grep 'rebasing' > /dev/null; then
 	exit;
