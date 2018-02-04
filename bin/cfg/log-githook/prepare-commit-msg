@@ -24,5 +24,15 @@ echo --------------------------------------------- >> $LOG
 git status >> $LOG
 echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
+
+#HOOK
+#/HOOK
+
+
+echo --------------------------------------------- >> $LOG
+echo Prepared commit message: >> $LOG
+cat "$1" >> $LOG
+echo --------------------------------------------- >> $LOG
+
 exit 0
 echo "ALL COMMITS PREVENTED"; exit 1 # to prevent all commits
