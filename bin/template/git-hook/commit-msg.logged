@@ -28,8 +28,10 @@ echo $PRE git hook logged
 # First line must adhere to policy.
 # Second line must be blank.
 # Go nuts on the remaining lines.
+# Filter out any lines starting with '#'
 ORIG_MSG="$1"
 
+grep -vE '^#'  "$ORIG_MSG" | \
 perl -ne '
 	BEGIN
 	{
@@ -182,13 +184,13 @@ EOM
 	}
 	elsif ($. == 2)
 	{
-		m{\A \s* \z}xms || fail("Second line of commit message must be blank.");
+		m{\A \s* \z}xms || fail("Second line of commit message must be blank.\nGot: [\n$_]\n");
 	}
 	else
 	{
 		exit 0;
 	}
-' "$ORIG_MSG"
+'
 exit $?;
 #/HOOK
 

@@ -7,7 +7,7 @@
 # copy this file to your repository .git/hooks/prepare-commit-msg
 
 ORIG_MSG="$1"
-SOURCE="$2" # message, template, squash, commit
+SOURCE="$2" # message, template, squash, commit, or null
 AMEND_COMMIT="$3"
 
 # Prevents insertion of duplicate branch/ticket names
