@@ -5,6 +5,10 @@ touch ~/githook.log
 pushd ../../cfg/log-githook/
 	./install.sh
 popd
-./install.sh prepare-commit-msg.logged prepare-commit-msg
-./install.sh commit-msg.logged commit-msg
+
+for f in prepare-commit-msg commit-msg
+do
+	inject-middle.sh '\#HOOK\n' '\#/HOOK\n' $f $f.logged
+	./install.sh $f.logged $f
+done
 
