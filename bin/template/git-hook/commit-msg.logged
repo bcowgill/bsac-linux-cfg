@@ -1,0 +1,189 @@
+#!/bin/sh
+# https://git-scm.com/docs/githooks
+PRE="`date` commit-msg:"
+LOG=~/githook.log
+echo === $PRE $0 entered ========================= >> $LOG
+echo $PRE LOGNAME: $LOGNAME USER: $USER HOME: $HOME >> $LOG
+echo $PRE PWD: $PWD >> $LOG
+echo $PRE EDITOR: $EDITOR >> $LOG
+echo $PRE PATH: $PATH >> $LOG
+echo $PRE GIT_DIR: $GIT_DIR >> $LOG
+echo $PRE GIT_EDITOR: $GIT_EDITOR >> $LOG
+echo $PRE core.hooksPath: `git config core.hooksPath` >> $LOG
+if echo $SSH_ASKPASS | grep git-gui > /dev/null; then
+	echo $PRE git gui: yes >> $LOG
+else
+	echo $PRE git gui: no >> $LOG
+fi
+echo $PRE Arg1 ORIG_MSG: $1 >> $LOG
+cat "$1" >> $LOG
+echo --------------------------------------------- >> $LOG
+git status >> $LOG
+echo --------------------------------------------- >> $LOG
+echo $PRE git hook logged
+
+#HOOK
+#!/bin/sh
+# Git hook script to check the commit log message.
+# First line must adhere to policy.
+# Second line must be blank.
+# Go nuts on the remaining lines.
+ORIG_MSG="$1"
+
+perl -ne '
+	BEGIN
+	{
+		$Q = chr(39); # single quote
+
+		$WORDS = 5;    # minimum number of words in message
+		$MAX_LEN = 100; # 0 for no length limit
+
+		$PREFIX = "begin, wip, bdd, tests, fixed, resolved, release, hotfix, or review.";
+		$PREFIX_RE = qr{(begin|wip|bdd|tests|fixed|resolved|release|hotfix|review)}xms;
+
+		$TIK = "XYZ-NNNN:";
+		$TICKET = "a ticket number i.e. $TIK";
+		$TICKET_RE = qr{[A-Z]{3,} - \d+ :}xms;
+
+		$NIL_RE = qr{((chang|fix|resolv|releas)(e[ds]?|ing)|review(s|ed|ing)?|a[snt]?|are|th(e(m|[rs]e)?|is|at)|i[st]?|to|o[fn])}i;
+
+		@FEELING = qw(
+			extraordinary good outstanding champion fine ok
+			great hallelulah amen nice capital
+		);
+
+		@REASONS = (
+			# Order this list from rude, vague responses first for
+			# very short descriptions toward more polite and precise
+			# instructions for those who provided more words.
+			"Say what?",
+			"No comprendo.",
+			"Pardon me?",
+			"You did what!?",
+			"Watchoo talkin$Q about, Willis?",
+			"No hablo whatever that was.",
+			"You talking to me, punk?",
+			"Throw me a bone here, that tells me nothing.",
+			"Really? You thought THAT was a good commit description?",
+			"I think I${Q}m beginning to understand.",
+			"Tell me more, tell me more, like does he have a car?",
+			"Explain it to me like I${Q}m a child.",
+			"Tell me about your childhood.",
+			"A little bit louder now!",
+			"I didn${Q}t think it was possible to do that!",
+			"It${Q}s beginning to look a lot like Christmas.",
+			"Once more, with feeling.",
+			"That actually worked?",
+			"Close, but no cigar.",
+			"Description should have at least $WORDS MEANINGFUL words.",
+			"Could you describe that change with a few more words?",
+			"Explain it a little more for me.",
+#"",
+		);
+
+		#print qq{TICKET_RE: $TICKET_RE\n};
+	}
+	sub explain
+	{
+		my ($reason) = @_;
+		warn(qq{\n\n$reason\n\n});
+		warn <<"EOM";
+[POLICY] Your commit message is not formatted correctly!
+Message format must be like:
+
+release $TIK Description of release (for releases)
+hotfix $TIK Description of hot fix (for hot fixes to production)
+review $TIK Case title (for peer review changes after fixex/resolved)
+resolved $TIK Case title (for features)
+fixed $TIK Case title (for bugs)
+wip $TIK Description of change (for work in process)
+bdd $TIK Description of tests (for automation tests in process)
+tests $TIK Description of tests (for other tests in process)
+begin $TIK Case title (for initial branch creation to begin work)
+
+First letter of Case Title/Description must be capitalised.
+Description must have a fair number of words in it.
+Second line of message must be blank.
+Remaining lines can be as descriptive as you like.
+EOM
+		exit 2;
+	}
+	sub fail
+	{
+		my ($reason) = @_;
+		warn(qq{\n\n$reason\n});
+		exit 1;
+	}
+	sub choose
+	{
+		my (@choices) = @_;
+		my $choice = int(rand() * scalar(@choices));
+		return $choices[$choice];
+	}
+	sub weighted
+	{
+		my ($offset, @choices) = @_;
+		my $num = scalar(@choices);
+		my $choice = $offset + int(rand() * $num);
+		# print "weight: $offset, $num, $choice\n";
+		$choice = $num - 1 if $choice >= $num;
+		return $choices[$choice];
+	}
+	sub praise
+	{
+		my ($message) = @_;
+		print qq{$message, @{[choose(@FEELING)]}!\n};
+	}
+	sub sarcasm
+	{
+		my ($words, $description) = @_;
+		return qq{Problem with Description of change:\n\t"$description"\n\n}
+			. weighted($words, @REASONS);
+	}
+
+	if ($. == 1)
+	{
+		$MAX_LEN && (length($_) < $MAX_LEN || fail("First line of commit message (@{[length($_)]} chars) is too long. (<$MAX_LEN) "));
+
+		s{\A $PREFIX_RE \s+ }{}xms || explain("Commit message MUST begin with $PREFIX");
+		praise("A work type");
+
+		s{\A $TICKET_RE \s*}{}xms || explain("Commit message MUST contain $TICKET");
+		praise("A ticket id");
+		# print qq{\nNOW: $_ \n};
+
+		my $description = $_;
+		chomp($description);
+		praise("A filename perhaps") if $description =~ m{\w+\.\w+};
+		praise("A directory perhaps") if $description =~ m{\w+/};
+
+		s{([a-z])$Q([a-z])}{$1$2}xmsgi;  # de-contract
+		s{[^a-z0-9_-]+}{\ }xmsgi;        # de-punctuate
+
+		m{\A [A-Z]}xms || fail("Description must begin with a capital letter.");
+		praise("A capital letter");
+
+		my $total_words = scalar(split(/\s+/));
+		s{\b $NIL_RE \b \s* }{}xmsg;     # remove pointless words
+
+		praise("A description of some sort") if $total_words && $total_words <= 3;
+
+		print qq{\nDescription found: $_\n};
+
+		my @words = split(/\s+/);
+		scalar(@words) > $WORDS || fail(sarcasm($total_words, $description));
+	}
+	elsif ($. == 2)
+	{
+		m{\A \s* \z}xms || fail("Second line of commit message must be blank.");
+	}
+	else
+	{
+		exit 0;
+	}
+' "$ORIG_MSG"
+exit $?;
+#/HOOK
+
+exit 0
+echo "ALL COMMITS PREVENTED"; exit 1 # to prevent all commits
