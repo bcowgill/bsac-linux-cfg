@@ -6,4 +6,5 @@ pushd ../../cfg/log-githook/
 	./install.sh
 popd
 ./install.sh prepare-commit-msg.logged prepare-commit-msg
+./install.sh commit-msg.logged commit-msg
 
