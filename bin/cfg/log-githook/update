@@ -22,5 +22,9 @@ echo --------------------------------------------- >> $LOG
 git status >> $LOG
 echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
+
+#HOOK
+#/HOOK
+
 exit 0
 echo "ALL REF UPDATES PREVENTED"; exit 1 # to prevent all ref updates

@@ -21,5 +21,9 @@ echo $PRE Arg2 ELAPSED_NANOSECS: $2 >> $LOG
 echo --------------------------------------------- >> $LOG
 git status >> $LOG
 echo --------------------------------------------- >> $LOG
+
+#HOOK
+#/HOOK
+
 echo / # indicate all files may have changed
 exit 0

@@ -19,5 +19,9 @@ echo --------------------------------------------- >> $LOG
 git status >> $LOG
 echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
+
+#HOOK
+#/HOOK
+
 exit 0
 echo "GIT GC ABORTED"; exit 1

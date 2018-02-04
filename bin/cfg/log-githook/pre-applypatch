@@ -19,5 +19,9 @@ echo --------------------------------------------- >> $LOG
 git status >> $LOG
 echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
+
+#HOOK
+#/HOOK
+
 exit 0
 echo "PATCH APPLIED, NOT COMMITTED"; exit 1; # to prevent the commit so you can examine the patch

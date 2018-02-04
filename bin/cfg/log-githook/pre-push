@@ -30,5 +30,9 @@ echo --------------------------------------------- >> $LOG
 git status >> $LOG
 echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
+
+#HOOK
+#/HOOK
+
 exit 0
 echo "ALL PUSHES PREVENTED"; exit 1 # to prevent all pushes
