@@ -1,7 +1,7 @@
 #!/bin/bash
 # installs the git logging hooks followed by the hooks here
-rm ~/githooks.log
-touch ~/githooks.log
+rm ~/githook.log
+touch ~/githook.log
 pushd ../../cfg/log-githook/
 	./install.sh
 popd
