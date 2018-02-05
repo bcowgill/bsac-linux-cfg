@@ -10,6 +10,11 @@ grep -vE '^#'  "$ORIG_MSG" | \
 perl -ne '
 	BEGIN
 	{
+		# suppress wide character in print messages with unicode
+		binmode STDOUT, ":utf8";
+		binmode STDERR, ":utf8";
+		$CHECK = "\N{U+2714}";
+		$CROSS = "\N{U+2718}";
 		$Q = chr(39); # single quote
 		$NO_TICKET = 1;
 
@@ -94,7 +99,7 @@ EOM
 	sub fail
 	{
 		my ($reason) = @_;
-		warn(qq{\n\n$reason\n});
+		warn(qq{\n\n$CROSS $reason\n});
 		exit 1;
 	}
 	sub choose
@@ -115,7 +120,7 @@ EOM
 	sub praise
 	{
 		my ($message) = @_;
-		print qq{$message, @{[choose(@FEELING)]}!\n};
+		print qq{$CHECK $message, @{[choose(@FEELING)]}!\n};
 	}
 	sub sarcasm
 	{

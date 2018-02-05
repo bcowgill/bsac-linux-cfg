@@ -35,6 +35,11 @@ grep -vE '^#'  "$ORIG_MSG" | \
 perl -ne '
 	BEGIN
 	{
+		# suppress wide character in print messages with unicode
+		binmode STDOUT, ":utf8";
+		binmode STDERR, ":utf8";
+		$CHECK = "\N{U+2714}";
+		$CROSS = "\N{U+2718}";
 		$Q = chr(39); # single quote
 		$NO_TICKET = 1;
 
@@ -44,9 +49,9 @@ perl -ne '
 		$PREFIX = "begin, wip, bdd, tests, fixed, resolved, release, hotfix, or review.";
 		$PREFIX_RE = qr{(begin|wip|bdd|tests|fixed|resolved|release|hotfix|review)}xms;
 
-		$TIK = $NO_TICKET ? "" : "XYZ-NNNN:";
+		$TIK = $NO_TICKET ? "" : "XYZ-NNNN";
 		$TICKET = "a ticket number i.e. $TIK";
-		$TICKET_RE = qr{[A-Z]{3,} - \d+ :}xms;
+		$TICKET_RE = qr{[A-Z]{2,} - \d+ }xms;
 
 		$NIL_RE = qr{((chang|fix|resolv|releas)(e[ds]?|ing)|review(s|ed|ing)?|a[snt]?|are|th(e(m|[rs]e)?|is|at)|i[st]?|to|o[fn])}i;
 
@@ -110,13 +115,16 @@ First letter of Case Title/Description must be capitalised.
 Description must have a fair number of words in it.
 Second line of message must be blank.
 Remaining lines can be as descriptive as you like.
+
+See JIRA Smart commit documentation for more that you can do with this.
+https://confluence.atlassian.com/bitbucket/processing-jira-software-issues-with-smart-commit-messages-298979931.html#ProcessingissueswithSmartCommits-multiline
 EOM
 		exit 2;
 	}
 	sub fail
 	{
 		my ($reason) = @_;
-		warn(qq{\n\n$reason\n});
+		warn(qq{\n\n$CROSS $reason\n});
 		exit 1;
 	}
 	sub choose
@@ -137,7 +145,7 @@ EOM
 	sub praise
 	{
 		my ($message) = @_;
-		print qq{$message, @{[choose(@FEELING)]}!\n};
+		print qq{$CHECK $message, @{[choose(@FEELING)]}!\n};
 	}
 	sub sarcasm
 	{
