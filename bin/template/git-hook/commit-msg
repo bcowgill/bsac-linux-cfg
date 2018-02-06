@@ -4,17 +4,41 @@
 # Second line must be blank.
 # Go nuts on the remaining lines.
 # Filter out any lines starting with '#'
+#echo hooks/commit-msg
+#echo GIT_PARAMS=$GIT_PARAMS
+#echo PARAMS=$*
+
+# support getting params from GIT_PARAMS for husky
+function get_params {
+	if [ ! -z $1 ]; then
+		ORIG_MSG="$1"
+	fi
+}
+
 ORIG_MSG="$1"
+get_params $GIT_PARAMS
 
 grep -vE '^#'  "$ORIG_MSG" | \
 perl -ne '
+  sub no_unicode
+	{
+		if ($ENV{SSH_ASKPASS} =~ m{git-gui}xms)
+		{
+			return 1
+		}
+		return 0;
+	}
 	BEGIN
 	{
 		# suppress wide character in print messages with unicode
 		binmode STDOUT, ":utf8";
 		binmode STDERR, ":utf8";
-		$CHECK = "\N{U+2714}";
-		$CROSS = "\N{U+2718}";
+		$CHECK = "\N{U+2714}  ";
+		$CROSS = "\N{U+2718}  ";
+		if (no_unicode()) {
+			$CHECK = "";
+			$CROSS = "";
+		}
 		$Q = chr(39); # single quote
 		$NO_TICKET = 1;
 
@@ -113,7 +137,7 @@ EOM
 	sub fail
 	{
 		my ($reason) = @_;
-		warn(qq{\n\n$CROSS $reason\n});
+		warn(qq{\n\n$CROSS$reason\n});
 		exit 1;
 	}
 	sub choose
@@ -131,17 +155,17 @@ EOM
 		my $choice = ($words - $meaningful) + int(rand() * $num);
 		# print "weight: $words, $meaningful, $num, $choice\n";
 		$choice = $num - 1 if $choice >= $num;
-		return $choices[$choice];
+		return "$CROSS$choices[$choice]";
 	}
 	sub praise
 	{
 		my ($message) = @_;
-		print qq{$CHECK $message, @{[choose(@FEELING)]}!\n};
+		print qq{$CHECK$message, @{[choose(@FEELING)]}!\n};
 	}
 	sub sarcasm
 	{
 		my ($words, $meaningful, $description) = @_;
-		return qq{Problem with Description of change:\n\t"$description"\n\n}
+		return qq{Insufficient description of change:\n\t"$description"\n\n}
 			. weighted($words, $meaningful, @REASONS);
 	}
 
@@ -168,9 +192,8 @@ EOM
 		s{([a-z])$Q([a-z])}{$1$2}xmsgi;  # de-contract
 		s{[^a-z0-9_-]+}{\ }xmsgi;        # de-punctuate
 
-		print qq{\nDescription found: $description\n};
-
 		m{\A [A-Z]}xms || fail("Description must begin with a capital letter.");
+		print qq{\nDescription found: $description\n};
 		praise("A capital letter");
 
 		my $total_words = scalar(split(/\s+/));
