@@ -2,14 +2,21 @@
 # installs the git logging hooks followed by the hooks here
 rm ~/githook.log
 touch ~/githook.log
+
+echo install logging version of hooks first...
 pushd ../../cfg/log-githook/
 	./install.sh
 popd
 
-for f in prepare-commit-msg commit-msg
+echo install our hooks now...
+for f in applypatch-msg commit-msg git-sh-setup pre-applypatch pre-commit prepare-commit-msg pre-rebase update
 do
-	inject-middle.sh '\#HOOK\n' '\#/HOOK\n' $f $f.logged
-	./install.sh $f.logged $f
+	if [ -f $f.logged ]; then
+		inject-middle.sh '\#HOOK\n' '\#/HOOK\n' $f $f.logged
+		./install.sh $f.logged $f
+	else
+		./install.sh $f
+	fi
 done
 
 # Test the prepare-commit-msg and commit-msg hooks

@@ -14,4 +14,5 @@ EOF
 	exit 1
 fi
 
+echo cp $HOOK ../../../.git/hooks/$RENAME
 cp $HOOK ../../../.git/hooks/$RENAME
