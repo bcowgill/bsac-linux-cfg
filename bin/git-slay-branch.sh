@@ -14,7 +14,7 @@ else
 	read prompt
 	if [ ${prompt:-n} == y ]; then
 		if git branch --delete --remote "origin/$branch"; then
-			git push origin --delete "$branch"
+			git push --no-verify origin --delete "$branch"
 			echo success
 		else
 			echo Do you want to force a delete [y/N] ?
