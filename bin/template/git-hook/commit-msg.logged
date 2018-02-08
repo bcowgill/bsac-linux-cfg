@@ -61,34 +61,48 @@ perl -ne '
 			awesome
 		);
 
+		my $help = "Description should have at least $WORDS MEANINGFUL words.";
 		@REASONS = (
 			# Order this list from rude, vague responses first for
 			# very short descriptions toward more polite and precise
 			# instructions for those who provided more words.
-			"Say what?",
-			"No comprendo.",
-			"Pardon me?",
-			"Watchoo talkin$Q about, Willis?",
-			"No hablo whatever that was.",
-			"You talking to me, punk?",
-			"Throw me a bone here, that tells me nothing.",
+			[ # no words
+				"Say what?",
+				"No comprendo.",
+				"Pardon me?",
+				"Watchoo talkin$Q about, Willis?",
+				"No hablo whatever that was.",
+				"You talking to me, punk?",
+				"Throw me a bone here, that tells me nothing.",
+				$help,
+			],
+			[ # 1 word
 			"Really? You thought THAT was a good commit description?",
 			"You did what!?",
 			"Try writing an actual sentence, with a noun, a verb, etc.",
 			"I think I${Q}m beginning to understand.",
+			$help
+			],
+			[ # 2 words
 			"Explain it to me like I${Q}m a child.",
 			"Tell me more, tell me more, like does he have a car?",
 			"Tell me about your childhood.",
-			"A little bit louder now!",
-			"It${Q}s beginning to look a lot like Christmas.",
-			"I didn${Q}t think it was possible to do that!",
-			"Once more, with feeling.",
-			"That actually worked?",
-			"Close, but no cigar.",
-			"Description should have at least $WORDS MEANINGFUL words.",
-			"Could you describe that change with a few more words?",
-			"Explain it a little more for me.",
-#"",
+			$help
+			],
+			[ # 3 words
+				"A little bit louder now!",
+				"It${Q}s beginning to look a lot like Christmas.",
+				"Could you describe that change with a few more words?",
+				$help,
+			],
+			[ # 4 words
+				"I didn${Q}t think it was possible to do that!",
+				"Once more, with feeling.",
+				"That actually worked?",
+				"Close, but no cigar.",
+				"Explain it a little more for me.",
+				$help,
+			]
 		);
 
 		#print qq{TICKET_RE: $TICKET_RE\n};
@@ -135,10 +149,12 @@ EOM
 	}
 	sub weighted
 	{
-		my ($offset, @choices) = @_;
+		my ($words, $meaningful, @choices) = @_;
 		my $num = scalar(@choices);
-		my $choice = $offset + int(rand() * $num);
-		# print "weight: $offset, $num, $choice\n";
+		my $raChoices = $choices[$words >= $num ? $num - 1 : $words];
+		$num = scalar(@$raChoices);
+		my $choice = ($words - $meaningful) + int(rand() * $num);
+		# print "weight: $words, $meaningful, $num, $choice\n";
 		$choice = $num - 1 if $choice >= $num;
 		return $choices[$choice];
 	}
@@ -149,9 +165,9 @@ EOM
 	}
 	sub sarcasm
 	{
-		my ($words, $description) = @_;
+		my ($words, $meaningful, $description) = @_;
 		return qq{Problem with Description of change:\n\t"$description"\n\n}
-			. weighted($words, @REASONS);
+			. weighted($words, $meaningful, @REASONS);
 	}
 
 	if ($. == 1)
@@ -188,7 +204,7 @@ EOM
 		praise("A description of some sort") if $total_words && $total_words <= 3;
 
 		my @words = split(/\s+/);
-		scalar(@words) > $WORDS || fail(sarcasm($total_words, $description));
+		scalar(@words) > $WORDS || fail(sarcasm($total_words, scalar(@words), $description));
 	}
 	elsif ($. == 2)
 	{
