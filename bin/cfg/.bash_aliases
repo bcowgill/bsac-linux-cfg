@@ -70,7 +70,9 @@ if [ "x$COMPANY" == "xclearbooks" ]; then
 fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
+	alias grom='git-rebase.sh origin/master'
 	alias yts='yarn test:summary'
+
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
 	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
 	alias ls-mca='ls-cfroutes | grep "mca-j2" | perl -pne "s{\\A.+-cwa-(.+?)\\..+\\z}{\$1\\n}xmsg;" | sort | uniq'
@@ -86,15 +88,19 @@ alias screenls='ls /var/run/screen/S-$USER'
 alias pstree='\pstree -a -h -p -u'
 
 # some aliases for git rebasing
+alias gfa='git fetch --all'
+alias gpr='touch pause-build.timestamp; git pull --rebase'
+alias gca='git commit --amend'
 alias gcp='git cherry-pick'
+alias gma='git merge --abort'
 alias gmt='git mergetool'
+alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias grs='git rebase --skip'
-alias gss='git status'
-alias gfo='git f*ck off'
 alias glog='git log --oneline --graph --decorate --all'
 alias ggraph='git graph --simplify-by-decoration'
 alias gitpp='touch pause-build.timestamp; git pull --rebase && git push && datestamp.sh'
+alias rpb='rm pause-build.timestamp'
 alias pause='touch pause-build.timestamp'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
