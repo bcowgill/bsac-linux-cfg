@@ -52,7 +52,7 @@ perl -ne '
 		$TICKET = "a ticket number i.e. $TIK";
 		$TICKET_RE = qr{[A-Z]{2,} - \d+ }xms;
 
-		$NIL_RE = qr{((chang|fix|resolv|releas)(e[ds]?|ing)|review(s|ed|ing)?|a[snt]?|are|th(e(m|[rs]e)?|is|at)|i[st]?|to|o[fn])}i;
+		$NIL_RE = qr{((chang|fix|resolv|releas)(e[ds]?|ing)?|review(s|ed|ing)?|a[snt]?|a(re|nd)|th(e(m|[rs]e)?|is|at)|i[st]?|too?|o[fnr])}i;
 
 		@FEELING = qw(
 			extraordinary good outstanding champion fine ok
@@ -70,25 +70,26 @@ perl -ne '
 				"No comprendo.",
 				"Pardon me?",
 				"Watchoo talkin$Q about, Willis?",
-				"No hablo whatever that was.",
-				"You talking to me, punk?",
 				"Throw me a bone here, that tells me nothing.",
 				$help,
 			],
 			[ # 1 word
-			"Really? You thought THAT was a good commit description?",
-			"You did what!?",
-			"Try writing an actual sentence, with a noun, a verb, etc.",
-			"I think I${Q}m beginning to understand.",
-			$help
+				"No hablo whatever that was.",
+				"You talking to me, punk?",
+				"You did what!?",
+				"Really? You thought THAT was a good commit description?",
+				"Try writing an actual sentence, with a noun, a verb, etc.",
+				$help,
 			],
 			[ # 2 words
-			"Explain it to me like I${Q}m a child.",
-			"Tell me more, tell me more, like does he have a car?",
-			"Tell me about your childhood.",
-			$help
+				"Explain it to me like I${Q}m a child.",
+				"Tell me more, tell me more, like does he have a car?",
+				"Tell me about your childhood.",
+				"Give me a little more to work with.",
+				$help,
 			],
 			[ # 3 words
+				"I think I${Q}m beginning to understand.",
 				"A little bit louder now!",
 				"It${Q}s beginning to look a lot like Christmas.",
 				"Could you describe that change with a few more words?",
@@ -153,9 +154,9 @@ EOM
 		my $raChoices = $choices[$words >= $num ? $num - 1 : $words];
 		$num = scalar(@$raChoices);
 		my $choice = ($words - $meaningful) + int(rand() * $num);
-		# print "weight: $words, $meaningful, $num, $choice\n";
+		# print "weight: w:$words, m:$meaningful, n:$num, c:$choice\n";
 		$choice = $num - 1 if $choice >= $num;
-		return "$CROSS$choices[$choice]";
+		return "$CROSS$raChoices->[$choice]";
 	}
 	sub praise
 	{
@@ -197,10 +198,11 @@ EOM
 		praise("A capital letter");
 
 		my $total_words = scalar(split(/\s+/));
-		s{\b $NIL_RE \b \s* }{}xmsg;     # remove pointless words
+		s{\b $NIL_RE \b \s* }{}xmsgi;     # remove pointless words
 
 		praise("A description of some sort") if $total_words && $total_words <= 3;
 
+		# print "Meaningful Description: $_\n";
 		my @words = split(/\s+/);
 		scalar(@words) > $WORDS || fail(sarcasm($total_words, scalar(@words), $description));
 	}
