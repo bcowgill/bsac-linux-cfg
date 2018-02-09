@@ -89,6 +89,8 @@ alias pstree='\pstree -a -h -p -u'
 
 # some aliases for git rebasing
 alias gfa='git fetch --all'
+alias gbl='git branch --list'
+alias gblr='git branch --list --remote'
 alias gpr='touch pause-build.timestamp; git pull --rebase'
 alias gca='git commit --amend'
 alias gcp='git cherry-pick'
