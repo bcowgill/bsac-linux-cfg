@@ -1,0 +1,41 @@
+
+// top comment is left alone
+
+const code = 42; // but this is history
+
+/**/
+
+//
+
+/*************
+ also gone
+*************/
+
+/*
+ also gone
+*/
+
+/*************
+ sorry, this comment lives!
+*************/
+
+/*
+ sorry, this comment lives!
+*/
+
+/* eslint no-confusing-arrow: 0 */
+
+/**
+ javadoc lite
+*/
+
+/**
+ javadoc marked
+ @param value integer
+*/
+
+/* jslint no-confusing-arrow: 0 */
+/* jshint no-confusing-arrow: 0 */
+/* jscs no-confusing-arrow: 0 */
+/* istanbul no-confusing-arrow: 0 */
+/* prettier no-confusing-arrow: 0 */
