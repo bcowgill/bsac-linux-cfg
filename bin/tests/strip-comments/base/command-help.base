@@ -1,0 +1,6 @@
+usage: ../../strip-comments.pl [--help] filename...
+
+Strips out C/C++ style comments from source code in files specified.
+
+--show will show the comments which would be stripped, but leaves them in place.
+--keep will show the comments which are kept, without stripping anything from the file.

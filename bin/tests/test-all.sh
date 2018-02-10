@@ -15,6 +15,7 @@ testSuite df-k "format df -k command output more legibly" $PROVE
 testSuite spaces "show spaces nulls and end of lines" $PROVE
 testSuite ls-tabs "report on tab indentation in file" $PROVE
 testSuite fix-commas "fix leading/trailing commas in files" $PROVE
+testSuite strip-comments "show or strip out comments from files" $PROVE
 
 testSuite pretty-elements "format HTML elements nicely" $PROVE
 testSuite ls-tt-tags "list template toolkit tags in templates" $PROVE

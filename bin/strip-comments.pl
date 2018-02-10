@@ -1,7 +1,32 @@
 #!/usr/bin/env perl
+# show or strip comments from source code
+
 use strict;
 use warnings;
-local $/ = undef;
+use English -no_match_vars;
+use File::Slurp;
+use open IN => ':raw';
+
+sub usage
+{
+	print <<"USAGE";
+usage: $0 [--help] filename...
+
+Strips out C/C++ style comments from source code in files specified.
+
+--show will show the comments which would be stripped, but leaves them in place.
+--keep will show the comments which are kept, without stripping anything from the file.
+USAGE
+	exit 0;
+}
+
+if (scalar(@ARGV) && $ARGV[0] eq '--help')
+{
+	usage();
+}
+
+local $INPUT_RECORD_SEPARATOR = undef;
+
 my $file = <>;
 my @comments = ();
 my @keep_comments = ();
@@ -27,7 +52,7 @@ my $JAVADOC = ''; # or strict or undefined
 
 sub grab_it
 {
-  my ($string, $re) = @_;
+  my ($string, $re) = @ARG;
   my $got = '';
   if ($string =~ m{$re}xms)
   {
@@ -39,7 +64,7 @@ sub grab_it
 
 sub keep_comment
 {
-  my ($prespace, $comment, $space, $message) = @_;
+  my ($prespace, $comment, $space, $message) = @ARG;
   my $punct = '';
   my $comma = qr{[,:\.]}xms;
   ($punct, $message) = grab_it($message, qr{\A([^a-z0-9\s]+ \s*)}xms);
@@ -69,7 +94,7 @@ sub keep_comment
 
 sub replace_comment
 {
-  my ($prespace, $comment, $space, $message, $with)  = @_;
+  my ($prespace, $comment, $space, $message, $with)  = @ARG;
   my $replace;
   if (keep_comment($prespace, $comment, $space, $message))
   {
