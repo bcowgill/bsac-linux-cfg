@@ -8,4 +8,8 @@
  sorry, this comment lives!
 */
 /* eslint no-confusing-arrow: 0 */
+/* jslint no-confusing-arrow: 0 */
+/* jshint no-confusing-arrow: 0 */
+/* jscs no-confusing-arrow: 0 */
+/* istanbul no-confusing-arrow: 0 */
 /* prettier no-confusing-arrow: 0 */

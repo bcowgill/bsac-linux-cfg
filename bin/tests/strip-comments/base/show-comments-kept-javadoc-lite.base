@@ -2,10 +2,20 @@
 // top comment is left alone
 
 /*************
+ also gone
+*************/
+/*************
  sorry, this comment lives!
 *************/
 /*
  sorry, this comment lives!
 */
 /* eslint no-confusing-arrow: 0 */
+/**
+ javadoc lite
+*/
+/**
+ javadoc marked
+ @param value integer
+*/
 /* prettier no-confusing-arrow: 0 */

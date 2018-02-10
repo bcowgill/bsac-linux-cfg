@@ -1,3 +1,5 @@
+Invalid option --invalid
+
 usage: ../../strip-comments.pl [--help] filename...
 
 Strips out C/C++ style comments from source code in files specified.

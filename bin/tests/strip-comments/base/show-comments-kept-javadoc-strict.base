@@ -8,4 +8,8 @@
  sorry, this comment lives!
 */
 /* eslint no-confusing-arrow: 0 */
+/**
+ javadoc marked
+ @param value integer
+*/
 /* prettier no-confusing-arrow: 0 */
