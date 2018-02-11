@@ -1,0 +1,1 @@
+Skeleton bash configuration files
