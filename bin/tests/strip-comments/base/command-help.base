@@ -2,6 +2,7 @@ usage: ../../strip-comments.pl [--help] filename...
 
 Strips out C/C++ style comments from source code in files specified.
 
+--inplace=.bak will edit the file in place backing up to file extension provided.
 --show will show the comments which would be stripped, but leaves them in place.
 --keep will show the comments which are kept, without stripping anything from the file.
 --eslint or --noeslint allows or strips eslint directive comments

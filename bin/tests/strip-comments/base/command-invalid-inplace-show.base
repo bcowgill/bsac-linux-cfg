@@ -1,4 +1,4 @@
-Invalid option --invalid
+You cannot specify both --inplace and --stripped
 
 usage: ../../strip-comments.pl [--help] filename...
 
