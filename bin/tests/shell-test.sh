@@ -150,6 +150,21 @@ function assertCommandFails
    return 0
 }
 
+function assertFileMissing
+{
+	local expected test
+	expected="$1"
+	test="$2"
+   if [ ! -f "$expected" ]; then
+      OK "$test file does not exist: $expected"
+	else
+      NOT_OK "file was created $expected - $test"
+      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
+      return $ERROR_STOP
+	fi
+	return 0
+}
+
 function assertFilesEqual
 {
    local actual expected test
