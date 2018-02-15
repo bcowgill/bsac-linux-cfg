@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Git hook script to check the commit log message.
 # First line must adhere to policy.
 # Second line must be blank.
@@ -172,6 +172,7 @@ EOM
 
 	if ($. == 1)
 	{
+		print "$_";
 		$MAX_LEN && (length($_) < $MAX_LEN || fail("First line of commit message (@{[length($_)]} chars) is too long. (<$MAX_LEN) "));
 
 		s{\A $PREFIX_RE \s+ }{}xms || explain("Commit message MUST begin with $PREFIX");

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # https://git-scm.com/docs/githooks
 PRE="`date` commit-msg:"
 LOG=~/githook.log
@@ -23,23 +23,47 @@ echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
 
 #HOOK
-#!/bin/sh
+#!/bin/bash
 # Git hook script to check the commit log message.
 # First line must adhere to policy.
 # Second line must be blank.
 # Go nuts on the remaining lines.
 # Filter out any lines starting with '#'
+#echo hooks/commit-msg
+#echo GIT_PARAMS=$GIT_PARAMS
+#echo PARAMS=$*
+
+# support getting params from GIT_PARAMS for husky
+function get_params {
+	if [ ! -z $1 ]; then
+		ORIG_MSG="$1"
+	fi
+}
+
 ORIG_MSG="$1"
+get_params $GIT_PARAMS
 
 grep -vE '^#'  "$ORIG_MSG" | \
 perl -ne '
+  sub no_unicode
+	{
+		if ($ENV{SSH_ASKPASS} =~ m{git-gui}xms)
+		{
+			return 1
+		}
+		return 0;
+	}
 	BEGIN
 	{
 		# suppress wide character in print messages with unicode
 		binmode STDOUT, ":utf8";
 		binmode STDERR, ":utf8";
-		$CHECK = "\N{U+2714}";
-		$CROSS = "\N{U+2718}";
+		$CHECK = "\N{U+2714}  ";
+		$CROSS = "\N{U+2718}  ";
+		if (no_unicode()) {
+			$CHECK = "";
+			$CROSS = "";
+		}
 		$Q = chr(39); # single quote
 		$NO_TICKET = 1;
 
@@ -53,7 +77,7 @@ perl -ne '
 		$TICKET = "a ticket number i.e. $TIK";
 		$TICKET_RE = qr{[A-Z]{2,} - \d+ }xms;
 
-		$NIL_RE = qr{((chang|fix|resolv|releas)(e[ds]?|ing)|review(s|ed|ing)?|a[snt]?|are|th(e(m|[rs]e)?|is|at)|i[st]?|to|o[fn])}i;
+		$NIL_RE = qr{((chang|fix|resolv|releas)(e[ds]?|ing)?|review(s|ed|ing)?|a[snt]?|a(re|nd)|th(e(m|[rs]e)?|is|at)|i[st]?|too?|o[fnr])}i;
 
 		@FEELING = qw(
 			extraordinary good outstanding champion fine ok
@@ -71,25 +95,26 @@ perl -ne '
 				"No comprendo.",
 				"Pardon me?",
 				"Watchoo talkin$Q about, Willis?",
-				"No hablo whatever that was.",
-				"You talking to me, punk?",
 				"Throw me a bone here, that tells me nothing.",
 				$help,
 			],
 			[ # 1 word
-			"Really? You thought THAT was a good commit description?",
-			"You did what!?",
-			"Try writing an actual sentence, with a noun, a verb, etc.",
-			"I think I${Q}m beginning to understand.",
-			$help
+				"No hablo whatever that was.",
+				"You talking to me, punk?",
+				"You did what!?",
+				"Really? You thought THAT was a good commit description?",
+				"Try writing an actual sentence, with a noun, a verb, etc.",
+				$help,
 			],
 			[ # 2 words
-			"Explain it to me like I${Q}m a child.",
-			"Tell me more, tell me more, like does he have a car?",
-			"Tell me about your childhood.",
-			$help
+				"Explain it to me like I${Q}m a child.",
+				"Tell me more, tell me more, like does he have a car?",
+				"Tell me about your childhood.",
+				"Give me a little more to work with.",
+				$help,
 			],
 			[ # 3 words
+				"I think I${Q}m beginning to understand.",
 				"A little bit louder now!",
 				"It${Q}s beginning to look a lot like Christmas.",
 				"Could you describe that change with a few more words?",
@@ -138,7 +163,7 @@ EOM
 	sub fail
 	{
 		my ($reason) = @_;
-		warn(qq{\n\n$CROSS $reason\n});
+		warn(qq{\n\n$CROSS$reason\n});
 		exit 1;
 	}
 	sub choose
@@ -154,24 +179,25 @@ EOM
 		my $raChoices = $choices[$words >= $num ? $num - 1 : $words];
 		$num = scalar(@$raChoices);
 		my $choice = ($words - $meaningful) + int(rand() * $num);
-		# print "weight: $words, $meaningful, $num, $choice\n";
+		# print "weight: w:$words, m:$meaningful, n:$num, c:$choice\n";
 		$choice = $num - 1 if $choice >= $num;
-		return $choices[$choice];
+		return "$CROSS$raChoices->[$choice]";
 	}
 	sub praise
 	{
 		my ($message) = @_;
-		print qq{$CHECK $message, @{[choose(@FEELING)]}!\n};
+		print qq{$CHECK$message, @{[choose(@FEELING)]}!\n};
 	}
 	sub sarcasm
 	{
 		my ($words, $meaningful, $description) = @_;
-		return qq{Problem with Description of change:\n\t"$description"\n\n}
+		return qq{Insufficient description of change:\n\t"$description"\n\n}
 			. weighted($words, $meaningful, @REASONS);
 	}
 
 	if ($. == 1)
 	{
+		print "$_";
 		$MAX_LEN && (length($_) < $MAX_LEN || fail("First line of commit message (@{[length($_)]} chars) is too long. (<$MAX_LEN) "));
 
 		s{\A $PREFIX_RE \s+ }{}xms || explain("Commit message MUST begin with $PREFIX");
@@ -193,16 +219,16 @@ EOM
 		s{([a-z])$Q([a-z])}{$1$2}xmsgi;  # de-contract
 		s{[^a-z0-9_-]+}{\ }xmsgi;        # de-punctuate
 
-		print qq{\nDescription found: $description\n};
-
 		m{\A [A-Z]}xms || fail("Description must begin with a capital letter.");
+		print qq{\nDescription found: $description\n};
 		praise("A capital letter");
 
 		my $total_words = scalar(split(/\s+/));
-		s{\b $NIL_RE \b \s* }{}xmsg;     # remove pointless words
+		s{\b $NIL_RE \b \s* }{}xmsgi;     # remove pointless words
 
 		praise("A description of some sort") if $total_words && $total_words <= 3;
 
+		# print "Meaningful Description: $_\n";
 		my @words = split(/\s+/);
 		scalar(@words) > $WORDS || fail(sarcasm($total_words, scalar(@words), $description));
 	}

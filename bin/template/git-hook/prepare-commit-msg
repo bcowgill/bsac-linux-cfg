@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Git hook to prefix a commit message with the branch name
 # or a message from $WORKON.
 # And show the directory you are in.

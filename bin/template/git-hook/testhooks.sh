@@ -13,6 +13,9 @@ for f in applypatch-msg commit-msg git-sh-setup pre-applypatch pre-commit prepar
 do
 	if [ -f $f.logged ]; then
 		inject-middle.sh '\#HOOK\n' '\#/HOOK\n' $f $f.logged
+		if grep function $f.logged > /dev/null ; then
+			perl -i.bak -pne 's{/bin/sh}{/bin/bash}xmsg' $f.logged
+		fi
 		./install.sh $f.logged $f
 	else
 		./install.sh $f

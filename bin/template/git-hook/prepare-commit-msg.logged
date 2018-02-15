@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # https://git-scm.com/docs/githooks
 PRE="`date` prepare-commit-msg:"
 LOG=~/githook.log
@@ -26,7 +26,7 @@ echo --------------------------------------------- >> $LOG
 echo $PRE git hook logged
 
 #HOOK
-#!/bin/sh
+#!/bin/bash
 # Git hook to prefix a commit message with the branch name
 # or a message from $WORKON.
 # And show the directory you are in.
@@ -34,9 +34,19 @@ echo $PRE git hook logged
 # And tells you how to abort the commit using VIM
 # copy this file to your repository .git/hooks/prepare-commit-msg
 
+# support getting params from GIT_PARAMS for husky
+function get_params {
+	if [ ! -z $1 ]; then
+		ORIG_MSG="$1"
+		SOURCE="$2" # message, template, squash, commit, or null
+		AMEND_COMMIT="$3"
+	fi
+}
+
 ORIG_MSG="$1"
 SOURCE="$2" # message, template, squash, commit, or null
 AMEND_COMMIT="$3"
+get_params $GIT_PARAMS
 
 # Prevents insertion of duplicate branch/ticket names
 if [ "$AMEND_COMMIT" ]; then
