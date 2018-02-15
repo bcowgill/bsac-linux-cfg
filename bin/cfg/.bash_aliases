@@ -72,6 +72,7 @@ fi
 if [ "x$COMPANY" == "xwipro" ]; then
 	alias grom='git-rebase.sh origin/master'
 	alias yts='yarn test:summary'
+	alias ytw='yarn test:watch'
 
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
 	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
@@ -88,6 +89,7 @@ alias screenls='ls /var/run/screen/S-$USER'
 alias pstree='\pstree -a -h -p -u'
 
 # some aliases for git rebasing
+alias gss='git status; echo == $? =='
 alias gfa='git fetch --all'
 alias gbl='git branch --list'
 alias gblr='git branch --list --remote'
