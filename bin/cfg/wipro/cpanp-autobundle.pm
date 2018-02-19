@@ -1,4 +1,4 @@
-package Snapshot_2017_12_08_00;
+package Snapshot_2018_02_19_00;
 
 $VERSION = '0.01';
 
@@ -8,13 +8,13 @@ __END__
 
 =head1 NAME
 
-Snapshot_2017_12_08_00 - Snapshot of your installation at Fri Dec  8 14:11:58 2017
+Snapshot_2018_02_19_00 - Snapshot of your installation at Mon Feb 19 12:19:31 2018
 
 =head1 SYNOPSIS
 
 To install the modules from this snapshot, run:
 
-  cpanp -i file://full/path/to/Snapshot_2017_12_08_00.pm
+  cpanp -i file://full/path/to/Snapshot_2018_02_19_00.pm
 
 =head1 CONTENTS
 
@@ -1167,6 +1167,8 @@ DateTime::TimeZone::Africa::Monrovia 1.63
 DateTime::TimeZone::Africa::Nairobi 1.63
 
 DateTime::TimeZone::Africa::Ndjamena 1.63
+
+DateTime::TimeZone::Africa::Sao_Tome 1.63
 
 DateTime::TimeZone::Africa::Tripoli 1.63
 
@@ -5866,7 +5868,7 @@ Characteristics of this binary (from libperl):
   Built under darwin
   Compiled at Feb  6 2017 22:16:22
   %ENV:
-    PERL5_CPANPLUS_IS_RUNNING="1152"
+    PERL5_CPANPLUS_IS_RUNNING="25318"
     PERL5_CPANPLUS_IS_VERSION="0.9135"
     PERL_READLINE_NOWARN="1"
   @INC:

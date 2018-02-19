@@ -16,6 +16,7 @@ git
 glib
 go
 gpm
+gradle
 graphviz
 htop
 icu4c

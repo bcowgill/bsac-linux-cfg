@@ -32,10 +32,10 @@ FortiClientUpdate.app /Applications/FortiClient.app/Contents/Resources/runtime.h
 FortiClientUninstaller.app /Applications/
 GarageBand.app /Applications/
 Google Chrome.app /Applications/
-app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/61.0.3163.100/Google Chrome Framework.framework/Versions/A/Resources/
-Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/61.0.3163.100/
-app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/62.0.3202.94/Google Chrome Framework.framework/Versions/A/Resources/
-Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/62.0.3202.94/
+app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/63.0.3239.132/Google Chrome Framework.framework/Versions/A/Resources/
+Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/63.0.3239.132/
+app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/64.0.3282.167/Google Chrome Framework.framework/Versions/A/Resources/
+Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/64.0.3282.167/
 iBooks.app /Applications/
 Image Capture.app /Applications/
 iMovie.app /Applications/
@@ -57,7 +57,6 @@ OsfWebHost.app /Applications/Microsoft Excel.app/Contents/Frameworks/osf.framewo
 Microsoft Activity Monitor.app /Applications/Microsoft Excel.app/Contents/SharedSupport/
 Microsoft Error Reporting.app /Applications/Microsoft Excel.app/Contents/SharedSupport/
 Office365ServiceV2.app /Applications/Microsoft Excel.app/Contents/SharedSupport/
-Microsoft Error Reporting.app /Applications/Microsoft Excel.app/Contents/XPCServices/com.microsoft.FontDigest-XPCService.xpc/Contents/SharedSupport/
 Microsoft Messenger.app /Applications/
 Alerts Daemon.app /Applications/Microsoft Messenger.app/Contents/SharedSupport/
 Microsoft Messenger Daemon.app /Applications/Microsoft Messenger.app/Contents/SharedSupport/
@@ -79,7 +78,6 @@ Microsoft Activity Monitor.app /Applications/Microsoft PowerPoint.app/Contents/S
 Microsoft Error Reporting.app /Applications/Microsoft PowerPoint.app/Contents/SharedSupport/
 Office365ServiceV2.app /Applications/Microsoft PowerPoint.app/Contents/SharedSupport/
 Open XML for Excel.app /Applications/Microsoft PowerPoint.app/Contents/SharedSupport/
-Microsoft Error Reporting.app /Applications/Microsoft PowerPoint.app/Contents/XPCServices/com.microsoft.FontDigest-XPCService.xpc/Contents/SharedSupport/
 Microsoft Word.app /Applications/
 OsfWebHost.app /Applications/Microsoft Word.app/Contents/Frameworks/osf.framework/Versions/A/
 Microsoft Activity Monitor.app /Applications/Microsoft Word.app/Contents/SharedSupport/
@@ -104,6 +102,8 @@ Remote Desktop Connection.app /Applications/
 Safari.app /Applications/
 Siri.app /Applications/
 Skype for Business.app /Applications/
+Sourcetree.app /Applications/
+Autoupdate.app /Applications/Sourcetree.app/Contents/Frameworks/Sparkle.framework/Versions/A/Resources/
 Stickies.app /Applications/
 System Preferences.app /Applications/
 TextEdit.app /Applications/

@@ -489,6 +489,7 @@ INSTALL_MACOSLINUX="
 	multitail
 	jhead
 	id3v2
+	gradle
 	$PHP_CMD:$PHP_PKG
 "
 
