@@ -28,7 +28,12 @@ pushd $DOCROOT
 (echo Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
 python -m $HTTP_MOD $PORT >> $LOG 2>&1 &
 sleep 2
-ps -ef --cols 256 | grep python | grep $HTTP_MOD
+if which sw_vers > /dev/null; then
+  # MACOS
+	ps -ef -ww | grep python | grep $HTTP_MOD
+else
+	# linux below, mac above
+	ps -ef --cols 256 | grep python | grep $HTTP_MOD
+fi
 wget --output-document=/dev/null http://localhost:$PORT/favicon.ico
 popd
-
