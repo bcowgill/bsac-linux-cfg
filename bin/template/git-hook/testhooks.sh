@@ -29,6 +29,7 @@ echo "a bad message from template" > template
 
 git commit -t template
 git commit -m "wip temp file to delete.a an a a a"
+git commit -m "wip In change fix resolve release changed fixed resolved released changes fixes resolves releases changing fixing resolving releasing review reviews reviewed reviewing a as an at are the them there these this that i is it to too of on or and"
 git commit
 WORKON="wip message from WORKON var" git commit
 git commit --amend
