@@ -15,3 +15,8 @@ const code = 42;
 /* eslint no-confusing-arrow: 0 */
 /* prettier no-confusing-arrow: 0 */
 
+/* eslint-disable no-confusing-arrow */
+/* eslint-enable no-confusing-arrow */
+/* eslint-disable-line no-confusing-arrow */
+/* eslint-disable-next-line no-confusing-arrow */
+
