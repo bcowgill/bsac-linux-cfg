@@ -5,6 +5,11 @@
 /*
  also gone
 */
+/*
+  a comment with a url is allowed as it must be documenting
+  somthing tricky.
+  http://www.url.com
+*/
 /**
  javadoc lite
 */
@@ -19,3 +24,5 @@
 // but this is history
 
 //
+
+// see https://www.url.com

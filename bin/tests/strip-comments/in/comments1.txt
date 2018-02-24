@@ -23,6 +23,13 @@ const code = 42; // but this is history
  sorry, this comment lives!
 */
 
+/*
+  a comment with a url is allowed as it must be documenting
+  somthing tricky.
+  http://www.url.com
+*/
+// see https://www.url.com
+
 /* eslint no-confusing-arrow: 0 */
 
 /**

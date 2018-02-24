@@ -57,7 +57,7 @@ Strips out C/C++ style comments from source code in files specified.
 --javadoc or --javadoc=strictc  allows only javadoc comments with a \@word reference in them
 --javadoc=lite allows all javadoc comments
 
-Allows a single comment block at top of file.  Strips all other comments which do not begin with an apology.  By default allows eslint and prettier comment directives.
+Allows a single comment block at top of file.  Strips all other comments which do not begin with an apology.  Allows comments containint a URL as they are probably documenting something difficult.  By default allows eslint and prettier comment directives.
 USAGE
 	exit ($message ? 1 : 0);
 }
@@ -138,7 +138,7 @@ sub check_options
 
 sub main
 {
-	$KEEP_RE = join('|', grep { $Keep{$ARG} } keys(%Keep));
+	$KEEP_RE = 'https?://|' . join('|', grep { $Keep{$ARG} } keys(%Keep));
 	$KEEP_RE = "|$KEEP_RE" if length($KEEP_RE);
 	if (scalar(@ARGV))
 	{

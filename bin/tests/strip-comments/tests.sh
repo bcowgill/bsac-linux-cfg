@@ -162,6 +162,20 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+SAMPLE=in/top-comment6.txt
+echo TEST $CMD top comment block in file preserved - with eslint directive
+TEST=top-comment-eslint
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 SAMPLE=in/comments1.txt
 echo TEST $CMD general test of stripping comments
 TEST=comments-stripped
