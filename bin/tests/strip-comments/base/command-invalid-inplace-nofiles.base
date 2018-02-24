@@ -1,20 +1,3 @@
 You must specify a filename when using --inplace
 
-usage: ../../strip-comments.pl [--help] filename...
-
-Strips out C/C++ style comments from source code in files specified.
-
---inplace=.bak will edit the file in place backing up to file extension provided.
---show will show the comments which would be stripped, but leaves them in place.
---keep will show the comments which are kept, without stripping anything from the file.
---eslint or --noeslint allows or strips eslint directive comments
---jslint or --nojslint allows or strips jslint directive comments
---jshint or --nojshint allows or strips jshint directive comments
---jscs   or --nojscs allows or strips jscs directive comments
---istanbul or --noistanbul allows or strips istanbul directive comments
---prettier or --prettier allows or strips prettier directive comments
---nojavadoc or --javadoc=strip strips out all javadoc comments
---javadoc or --javadoc=strictc  allows only javadoc comments with a @word reference in them
---javadoc=lite allows all javadoc comments
-
-Allows a single comment block at top of file.  Strips all other comments which do not begin with an apology.  Allows comments containint a URL as they are probably documenting something difficult.  By default allows eslint and prettier comment directives.
+usage: ../../strip-comments.pl [options] filename...

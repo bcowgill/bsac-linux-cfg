@@ -1,16 +1,28 @@
-
 // top comment is left alone
 
 const code = 42;
-
 
 /*************
  sorry, this comment lives!
 *************/
 
 /*
- sorry, this comment lives!
+ sorry. this comment lives!
 */
+
+/*
+ apologies: this comment lives!
+*/
+
+// sorry about this comment, it shall live on!
+
+/*
+  a comment with a url is allowed as it must be documenting
+  somthing tricky.
+  http://www.url.com
+*/
+
+// see https://www.url.com
 
 /* eslint no-confusing-arrow: 0 */
 /* prettier no-confusing-arrow: 0 */
@@ -19,4 +31,3 @@ const code = 42;
 /* eslint-enable no-confusing-arrow */
 /* eslint-disable-line no-confusing-arrow */
 /* eslint-disable-next-line no-confusing-arrow */
-

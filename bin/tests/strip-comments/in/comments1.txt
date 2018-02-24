@@ -20,14 +20,23 @@ const code = 42; // but this is history
 *************/
 
 /*
- sorry, this comment lives!
+ sorry. this comment lives!
 */
+
+/*
+ apologies: this comment lives!
+*/
+
+// sorry about this comment, it shall live on!
+
+// but the sorry came too late for this comment
 
 /*
   a comment with a url is allowed as it must be documenting
   somthing tricky.
   http://www.url.com
 */
+
 // see https://www.url.com
 
 /* eslint no-confusing-arrow: 0 */

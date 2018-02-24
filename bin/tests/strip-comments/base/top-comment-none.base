@@ -1,0 +1,3 @@
+const NO_TOP_COMMENT = true;
+/* eslint max-len: 100 */
+/* prettier ignore */

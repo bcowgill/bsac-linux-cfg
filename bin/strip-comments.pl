@@ -15,19 +15,28 @@ my $bl = qr{(\A|\n)}xms;
 my $el = qr{(\z|\n)}xms;
 
 my $INPLACE;
-my $STRIP = 1;
-my $SHOW = 'keep';
+my $STRIP   = 1;
+my $SHOW    = 'keep';
 my $JAVADOC = ''; # or strict or undefined
 my %Keep = (
-	eslint => 1,
-	jslint => 0,
-	jshint => 0,
-	jscs => 0,
+	eslint   => 1,
+	jslint   => 0,
+	jshint   => 0,
+	jscs     => 0,
 	istanbul => 0,
 	prettier => 1,
 );
+my %Directive = (
+	eslint   => 1,
+	jslint   => 1,
+	jshint   => 1,
+	jscs     => 1,
+	prettier => 1,
+);
 my $KEEP_RE;
+my $DIRECTIVE_RE;
 
+my @directives = ();
 my @comments = ();
 my @keep_comments = ();
 
@@ -40,24 +49,29 @@ sub usage
 	my ($message) = @ARG;
 	print "$message\n\n" if ($message);
 	print <<"USAGE";
-usage: $0 [--help] filename...
+usage: $0 [options] filename...
 
 Strips out C/C++ style comments from source code in files specified.
 
 --inplace=.bak will edit the file in place backing up to file extension provided.
 --show will show the comments which would be stripped, but leaves them in place.
 --keep will show the comments which are kept, without stripping anything from the file.
---eslint or --noeslint allows or strips eslint directive comments
---jslint or --nojslint allows or strips jslint directive comments
---jshint or --nojshint allows or strips jshint directive comments
---jscs   or --nojscs allows or strips jscs directive comments
---istanbul or --noistanbul allows or strips istanbul directive comments
---prettier or --prettier allows or strips prettier directive comments
+--eslint or --noeslint    allows or strips eslint directive comments
+--jslint or --nojslint    allows or strips jslint directive comments
+--jshint or --nojshint    allows or strips jshint directive comments
+--jscs or --nojscs        allows or strips jscs directive comments
+--prettieror --prettier   allows or strips prettier directive comments
+--istanbulor --noistanbul allows or strips istanbul directive comments
 --nojavadoc or --javadoc=strip strips out all javadoc comments
---javadoc or --javadoc=strictc  allows only javadoc comments with a \@word reference in them
---javadoc=lite allows all javadoc comments
+--javadoc=lite                 allows all javadoc comments
+--javadoc or --javadoc=strict  allows only javadoc comments with a \@word reference in them
+--help show the command help you are reading now
 
-Allows a single comment block at top of file.  Strips all other comments which do not begin with an apology.  Allows comments containint a URL as they are probably documenting something difficult.  By default allows eslint and prettier comment directives.
+Allows any permitted directive comments (eslint, etc) at the top of the file.
+Allows a single contiguous comment block at top of file after the directives.
+Strips out all other comments which do not begin with an apology.
+Allows comments containing a URL as they are probably documenting something difficult.
+By default allows eslint and prettier comment directives only.
 USAGE
 	exit ($message ? 1 : 0);
 }
@@ -138,8 +152,8 @@ sub check_options
 
 sub main
 {
-	$KEEP_RE = 'https?://|' . join('|', grep { $Keep{$ARG} } keys(%Keep));
-	$KEEP_RE = "|$KEEP_RE" if length($KEEP_RE);
+	$KEEP_RE      = join('|', grep { $Keep{$ARG} } keys(%Keep));
+	$DIRECTIVE_RE = join('|', grep { $Directive{$ARG} } keys(%Directive));
 	if (scalar(@ARGV))
 	{
 		foreach my $file (@ARGV)
@@ -202,17 +216,48 @@ sub process_file_content
 {
 	my ($file) = @ARG;
 
+	$file =~ s{\A \s+}{}xmsg;
+	# so that http:// is not mistaken for a // comment
+	$file =~ s{(\w+:)//}{$1 / /}xmsg;
+
+	my $at_the_top = 1;
+	@directives = ();
 	@comments = ();
 	@keep_comments = ();
+
 	my $top_comment;
-	($top_comment, $file) = grab_it($file, qr{ \A ( (\s*) (// [^\n]* $el)+ ) }xms);
-	#print "tc1: $top_comment\n[$file]\n";
-	($top_comment, $file) = grab_it($file, qr{ \A ( (\s*) (/\* .*? \*/) ) }xms) unless $top_comment;
-	#print "tc2: $top_comment\n[$file]\n";
+	my $comment;
+
+	while ($at_the_top)
+	{
+		($comment, $file) = grab_one_comment($file);
+		if (is_directive_comment($comment))
+		{
+			$comment =~ s{\s* \z}{}xms;
+			# print "push directive: [$comment]\n";
+			push(@directives, $comment) if is_kept_directive_comment($comment);
+		}
+		elsif (is_comment($comment))
+		{
+			$file = "$comment$file";
+			#print "is comment:$file\n";
+			($top_comment, $file) = grab_comment($file);
+			($top_comment, $file) = omit_trailing_directives($top_comment, $file);
+			$at_the_top = 0;
+		}
+		else
+		{
+			$at_the_top = 0;
+		}
+	}
+
+	# print qq{directives: @{[join("\n", @directives)]}\ntop_comment: $top_comment\n};
+
 	if ($top_comment)
 	{
-		push(@keep_comments, $top_comment);
+		push(@directives, $top_comment);
 	}
+	push(@keep_comments, @directives);
 
 	# /***** something ******/
 	# /* sorry, this is ok... */
@@ -240,16 +285,19 @@ sub process_file_content
 	my $output;
 	if ($STRIP)
 	{
-		$output = "$top_comment$file\n";
+		$output = join("\n", @directives, "$file");
 	}
 	elsif ($SHOW eq 'keep')
 	{
-		$output = join("\n", @keep_comments);
+		$output = join("\n\n", @keep_comments);
 	}
 	else
 	{
-		$output = join("\n", @comments);
+		$output = join("\n\n", @comments);
 	}
+	$output =~ s{(\w+:)\s+/\s+/}{$1//}xmsg;
+	$output =~ s{\n\n+}{\n\n}xmsg;
+	$output =~ s{\s* \z}{\n}xms;
 	return $output;
 }
 
@@ -265,43 +313,117 @@ sub grab_it
 	return ($got, $string);
 }
 
+sub grab_one_comment
+{
+	my ($file) = @ARG;
+	my $top_comment;
+	($top_comment, $file) = grab_it($file, qr{ \A (?:\s*) (/\* .*? \*/) }xms);
+	($top_comment, $file) = grab_it($file, qr{ \A (?:\s*) (// [^\n]* $el) }xms) unless $top_comment;
+	return ($top_comment, $file);
+}
+
+sub grab_comment
+{
+	my ($file) = @ARG;
+	my $top_comment;
+	($top_comment, $file) = grab_it($file, qr{ \A ( (\s*) (/\* .*? \*/) ) }xms);
+	($top_comment, $file) = grab_it($file, qr{ \A ( (\s*) (// [^\n]* $el)+ ) }xms) unless $top_comment;
+	return ($top_comment, $file);
+}
+
+sub omit_trailing_directives
+{
+	my ($comment_block, $file) = @ARG;
+	if ($comment_block =~ m{\A //}xms)
+	{
+		my @comments = ();
+		my @directives = split(/\n/, $comment_block);
+		while (scalar(@directives))
+		{
+			my $comment = shift(@directives);
+			if (is_directive_comment($comment))
+			{
+				unshift(@directives, $comment);
+				last;
+			}
+			push(@comments, $comment);
+		}
+		$comment_block = join("\n", @comments);
+		push(@directives, $file);
+		$file = join("\n", @directives);
+	}
+	return ($comment_block, $file);
+}
+
+sub is_comment
+{
+	my ($message) = @ARG;
+	return ($message =~ m{\A /[/*]}xms) ? 1 : 0;
+}
+
+sub is_directive_comment
+{
+	my ($message) = @ARG;
+	my $result = ($message =~ m{ \A /[/*] \s* ($DIRECTIVE_RE) }xms) ? 1 : 0;
+	#print "is_directive_comment: $result\n[$message]\n/$DIRECTIVE_RE/\n";
+	return $result;
+}
+
+sub is_kept_directive_comment
+{
+	my ($message) = @ARG;
+	if (length($KEEP_RE))
+	{
+		return ($message =~ m{ \A /[/*] \s* ($KEEP_RE) }xms) ? 1 : 0;
+	}
+	return 0;
+}
+
 sub keep_comment
 {
 	my ($prespace, $comment, $space, $message) = @ARG;
 	my $punct = '';
-	my $comma = qr{[,:\.]}xms;
+	my $comma = '[,:\.]';
 	($punct, $message) = grab_it($message, qr{\A([^a-z0-9\s]+ \s*)}xms);
-
-	if ($message =~ m{ \A (sorry$comma|apologies$comma$KEEP_RE) }xms)
+	# print qq{\nkeep_comment: comment: [$comment]\npunct: [$punct]\nmessage: [$message]\nKEEP_RE: [$KEEP_RE]\n};
+	my $result = 0;
+	if (length($KEEP_RE) && $message =~ m{ \A $KEEP_RE }xms)
 	{
-		return 1;
+		$result = 1;
 	}
-	if ($message =~ m{ \A (sorry|apologies)[,:\.] }xms)
+	elsif ($message =~ m{ \A (sorry|apologies)$comma? }xmsi)
 	{
-		return 1;
+		$result = 2;
 	}
-	if ($punct =~ m{\A \* \s*}xms)
+	elsif ($message =~ m{ \w+:\s+/\s+/\w+ }xms)
+	{
+		# an escaped  url http: / /www....
+		$result = 3;
+	}
+	elsif ($punct =~ m{\A \* \s*}xms)
 	{
 		if ($JAVADOC eq "strict")
 		{
-			return ($message =~ m{\@\w+}xms);
+			$result = ($message =~ m{\@\w+}xms);
 		}
 		elsif ($JAVADOC)
 		{
-			return 1;
+			$result = 4;
 		}
 	}
-
-	return 0;
+	# print qq{result: $result\n};
+	return $result;
 }
 
 sub replace_comment
 {
 	my ($prespace, $comment, $space, $message, $with) = @ARG;
 	my $replace;
+	# print qq{\nreplace_comment comment: [$comment]\nmessage: [$message]\nwith: [$with]\n};
 	if (keep_comment($prespace, $comment, $space, $message))
 	{
 		$replace = $prespace . $comment;
+		# print qq{keep: replace: [$replace]\ncomment: [$comment]\n};
 		push(@keep_comments, $comment);
 	}
 	else

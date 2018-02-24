@@ -1,25 +1,48 @@
-
 // top comment is left alone
 
 /*************
  also gone
 *************/
+
 /*************
  sorry, this comment lives!
 *************/
+
 /*
- sorry, this comment lives!
+ sorry. this comment lives!
 */
+
+/*
+ apologies: this comment lives!
+*/
+
+/*
+  a comment with a url is allowed as it must be documenting
+  somthing tricky.
+  http://www.url.com
+*/
+
 /* eslint no-confusing-arrow: 0 */
+
 /**
  javadoc lite
 */
+
 /**
  javadoc marked
  @param value integer
 */
+
 /* prettier no-confusing-arrow: 0 */
+
 /* eslint-disable no-confusing-arrow */
+
 /* eslint-enable no-confusing-arrow */
+
 /* eslint-disable-line no-confusing-arrow */
+
 /* eslint-disable-next-line no-confusing-arrow */
+
+// sorry about this comment, it shall live on!
+
+// see https://www.url.com

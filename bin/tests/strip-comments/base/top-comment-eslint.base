@@ -1,0 +1,3 @@
+/* eslint max-len: 100 */
+// top comment is left alone and also an eslint style directive preceding the top comment
+// contiguous with the first comment

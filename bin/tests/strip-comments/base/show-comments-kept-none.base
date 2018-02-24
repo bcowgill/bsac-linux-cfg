@@ -1,9 +1,23 @@
-
 // top comment is left alone
 
 /*************
  sorry, this comment lives!
 *************/
+
 /*
- sorry, this comment lives!
+ sorry. this comment lives!
 */
+
+/*
+ apologies: this comment lives!
+*/
+
+/*
+  a comment with a url is allowed as it must be documenting
+  somthing tricky.
+  http://www.url.com
+*/
+
+// sorry about this comment, it shall live on!
+
+// see https://www.url.com

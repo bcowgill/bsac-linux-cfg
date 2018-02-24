@@ -1,0 +1,9 @@
+const NO_TOP_COMMENT = true;
+/* eslint max-len: 100 */
+/* prettier ignore */
+
+/*
+  top comment is left alone and also any directives preceding the top comment
+  contiguous with the first comment
+*/
+// not part of the first comment

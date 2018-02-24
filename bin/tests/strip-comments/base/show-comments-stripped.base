@@ -1,28 +1,32 @@
 /**/
+
 /*************
  also gone
 *************/
+
 /*
  also gone
 */
-/*
-  a comment with a url is allowed as it must be documenting
-  somthing tricky.
-  http://www.url.com
-*/
+
 /**
  javadoc lite
 */
+
 /**
  javadoc marked
  @param value integer
 */
+
 /* jslint no-confusing-arrow: 0 */
+
 /* jshint no-confusing-arrow: 0 */
+
 /* jscs no-confusing-arrow: 0 */
+
 /* istanbul no-confusing-arrow: 0 */
+
 // but this is history
 
 //
 
-// see https://www.url.com
+// but the sorry came too late for this comment
