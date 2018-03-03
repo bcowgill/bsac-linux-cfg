@@ -60,3 +60,10 @@ const code = 42; // but this is history
 /* eslint-enable no-confusing-arrow */
 /* eslint-disable-line no-confusing-arrow */
 /* eslint-disable-next-line no-confusing-arrow */
+
+if (condition)
+{
+} // condition
+else
+{
+} // !condition

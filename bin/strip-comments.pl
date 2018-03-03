@@ -18,6 +18,7 @@ my $INPLACE;
 my $STRIP   = 1;
 my $SHOW    = 'keep';
 my $JAVADOC = ''; # or strict or undefined
+my $BRACE_MARKERS = 1;
 my %Keep = (
 	eslint   => 1,
 	jslint   => 0,
@@ -56,6 +57,7 @@ Strips out C/C++ style comments from source code in files specified.
 --inplace=.bak will edit the file in place backing up to file extension provided.
 --show will show the comments which would be stripped, but leaves them in place.
 --keep will show the comments which are kept, without stripping anything from the file.
+--braces or --nobraces    allows or strips comments immediately after a closing brace
 --eslint or --noeslint    allows or strips eslint directive comments
 --jslint or --nojslint    allows or strips jslint directive comments
 --jshint or --nojshint    allows or strips jshint directive comments
@@ -71,6 +73,7 @@ Allows any permitted directive comments (eslint, etc) at the top of the file.
 Allows a single contiguous comment block at top of file after the directives.
 Strips out all other comments which do not begin with an apology.
 Allows comments containing a URL as they are probably documenting something difficult.
+Allows by default a comment after a closing brace so you can document the condition that started that scope.
 By default allows eslint and prettier comment directives only.
 USAGE
 	exit ($message ? 1 : 0);
@@ -96,7 +99,7 @@ sub process_args
 			$STRIP = 0;
 			$SHOW = 'keep';
 		}
-		elsif ($option =~ m{\A --(no)?((esl|jsl|jsh)int|jscs|istanbul|prettier)}xms)
+		elsif ($option =~ m{\A --(no)?((esl|jsl|jsh)int|jscs|istanbul|prettier) \z}xms)
 		{
 			if (exists($Keep{$2}))
 			{
@@ -107,7 +110,7 @@ sub process_args
 				usage("Invalid option $option");
 			}
 		}
-		elsif ($option =~ m{\A --(no)?javadoc(=(strip|strict|lite))?}xms)
+		elsif ($option =~ m{\A --(no)?javadoc(=(strip|strict|lite))? \z}xms)
 		{
 			if ( $1 || ($3 && $3 eq 'strip'))
 			{
@@ -121,6 +124,10 @@ sub process_args
 			{
 				$JAVADOC = 'strict';
 			}
+		}
+		elsif ($option =~ m{\A --(no)?brace \z}xms)
+		{
+			$BRACE_MARKERS = !$1;
 		}
 		elsif ($option =~ m{\A --inplace(=(.+))?}xms)
 		{
@@ -217,8 +224,12 @@ sub process_file_content
 	my ($file) = @ARG;
 
 	$file =~ s{\A \s+}{}xmsg;
+
 	# so that http:// is not mistaken for a // comment
 	$file =~ s{(\w+:)//}{$1 / /}xmsg;
+
+   # must pre-mark brace comments so they are not removed
+	$file =~ s{(\} \s* //)}{$1sorry ALLOW BRACE MARKERS}xmsg if $BRACE_MARKERS;
 
 	my $at_the_top = 1;
 	@directives = ();
@@ -295,7 +306,11 @@ sub process_file_content
 	{
 		$output = join("\n\n", @comments);
 	}
+
+	# undo special repacement protection markers for http and brace markers.
 	$output =~ s{(\w+:)\s+/\s+/}{$1//}xmsg;
+	$output =~ s{sorry \s+ ALLOW \s+ BRACE \s+ MARKERS}{}xmsg if $BRACE_MARKERS;
+
 	$output =~ s{\n\n+}{\n\n}xmsg;
 	$output =~ s{\s* \z}{\n}xms;
 	return $output;
