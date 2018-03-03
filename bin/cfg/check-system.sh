@@ -981,6 +981,7 @@ fi
 
 NPM_GLOBAL_PKG="
 	n
+	npm-json5
 	node-inspector
 	prettydiff
 	uglifyjs:uglify-js
