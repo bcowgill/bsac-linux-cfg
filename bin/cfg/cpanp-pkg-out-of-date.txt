@@ -51,7 +51,7 @@
    48     2.52         2.55     Digest::MD5                          GAAS
    49     5.8401       6.01     Digest::SHA                          MSHELOR
    50     4.15         4.22     EV                                   MLEHMANN
-   51     1.90         1.908    Email::Address                       RJBS
+   51     1.90         1.909    Email::Address                       RJBS
    52     1.192        1.202    Email::Valid                         RJBS
    53     2.49         2.97     Encode                               DANKOGAI
    54     1.03         1.05     Encode::Locale                       GAAS
@@ -146,7 +146,7 @@
   143     1.70         1.75     Net::Domain::TLD                     ALEXP
   144     6.06         6.17     Net::HTTP                            OALDERS
   145     2.12         3.11     Net::Netrc                           SHAY
-  146     2.41         2.63     Net::Ping                            RURBAN
+  146     2.41         2.64     Net::Ping                            RURBAN
   147     1.01         1.04     Net::SMTP::SSL                       RJBS
   148     2.85         2.86     Net::SSL                             NANIS
   149     1.58         1.84     Net::SSLeay                          MIKEM
@@ -186,69 +186,70 @@
   183     0.25         0.28     Socket6                              UMEMOTO
   184     1.02         1.03     Sort::Naturally                      BINGOS
   185     2.41         2.51     Storable                             AMS
-  186     1.03         1.04     String::ShellQuote                   ROSCH
-  187     0.986        0.987    Sub::Exporter                        RJBS
-  188     0.04         0.14     Sub::Identify                        RGARCIA
-  189     0.927        0.928    Sub::Install                         RJBS
-  190     0.05         0.21     Sub::Name                            ETHER
-  191     0.25         0.28     Sub::Uplevel                         DAGOLDEN
-  192     0.32         0.35     Sys::Syslog                          SAPER
-  193     3.26         3.28     TAP::Parser::Utils                   OVID
-  194     1.04         1.05     Task::Weaken                         ETHER
-  195     2.26         2.27     Template                             ABW
-  196     4.02         4.06     Term::ANSIColor                      RRA
-  197     1.13         1.17     Term::Cap                            JSTOWE
-  198     1.12         1.14     Term::ReadLine                       FLORA
-  199     0.42         0.46     Term::UI                             BINGOS
-  200     1.302047     1.302125 Test2                                EXODIST
-  201     1.12         1.127    Test::Deep                           RJBS
-  202     3.26         3.41     Test::Harness                        LEONT
-  203     0.15         0.16     Test::LeakTrace                      LEEJO
-  204     0.34         0.35     Test::Most                           OVID
-  205     1.121        1.13     Test::Perl::Critic::Policy           PETDANCE
-  206     0.30         0.32     Test::Warn                           BIGJ
-  207     2.02         2.03     Text::Balanced                       SHAY
-  208     1.44         1.45     Text::Diff                           NEILB
-  209     0.0601       0.13     Text::Levenshtein                    NEILB
-  210     1.000001     1.000031 Text::Markdown                       BOBTFISH
-  211     3.28         3.30     Text::ParseWords                     CHORNY
-  212     3.04         3.05     Text::Soundex                        RJBS
-  213  2012.0818    2013.0523   Text::Wrap                           MUIR
-  214     3.02         3.12     Thread::Queue                        JDHEDDEN
-  215     2.12         2.13     Thread::Semaphore                    JDHEDDEN
-  216     0.99         1.00     Tie::File                            TODDR
-  217     1.9725       1.9754   Time::HiRes                          JHI
-  218     1.23         1.25     Time::Local                          DROLSKY
-  219     1.2001       1.3204   Time::Piece                          ESAYM
-  220     1.60         1.73     URI                                  ETHER
-  221     0.05         0.27     UUID                                 JRM
-  222     0.97         1.25     Unicode::Collate                     SADAHIRO
-  223     1.16         1.25     Unicode::Normalize                   KHW
-  224     0.59         0.62     Unicode::UTF8                        CHANSEN
-  225     1.73         1.87     WWW::Mechanize                       OALDERS
-  226     6.01         6.02     WWW::RobotRules                      GAAS
-  227     1.11         1.12     XML::NamespaceSupport                PERIGRIN
-  228     2.41         2.44     XML::Parser                          TODDR
-  229     0.99         1.00     XML::SAX                             GRANTM
-  230     1.07         1.09     XML::SAX::Base                       GRANTM
-  231     0.40         0.51     XML::SAX::Expat                      BJOERN
-  232     2.20         2.24     XML::Simple                          GRANTM
-  233     3.44         3.52     XML::Twig                            MIROD
-  234     0.13         0.14     XML::XPathEngine                     MIROD
-  235     0.16         0.24     XSLoader                             SAPER
-  236     1.56         1.73     YAML::Tiny                           ETHER
-  237     0.31         0.34     aliased                              ETHER
-  238     2.23         2.29     autodie                              PJF
-  239     1.07         1.11     autouse                              RJBS
-  240     0.34         0.49     bigint                               PJACKLAM
-  241     3.72         3.74     common::sense                        MLEHMANN
-  242     1.27         1.33     constant                             RJBS
-  243     2.16         2.23     fields                               RJBS
-  244     0.0602       0.0608   if                                   XSAWYERX
-  245     0.4003       0.50     inc::latest                          DAGOLDEN
-  246     1.008023     2.000024 local::lib                           HAARG
-  247     0.225        0.236    parent                               CORION
-  248     5.015004     5.021011 perlfaq                              LLAP
-  249     1.86         2.21     threads                              JDHEDDEN
-  250     1.43         1.58     threads::shared                      JDHEDDEN
-  251     0.9902       0.9918   version                              JPEACOCK
+  186     1.17         1.18     String::Format                       SREZIC
+  187     1.03         1.04     String::ShellQuote                   ROSCH
+  188     0.986        0.987    Sub::Exporter                        RJBS
+  189     0.04         0.14     Sub::Identify                        RGARCIA
+  190     0.927        0.928    Sub::Install                         RJBS
+  191     0.05         0.21     Sub::Name                            ETHER
+  192     0.25         0.28     Sub::Uplevel                         DAGOLDEN
+  193     0.32         0.35     Sys::Syslog                          SAPER
+  194     3.26         3.28     TAP::Parser::Utils                   OVID
+  195     1.04         1.05     Task::Weaken                         ETHER
+  196     2.26         2.27     Template                             ABW
+  197     4.02         4.06     Term::ANSIColor                      RRA
+  198     1.13         1.17     Term::Cap                            JSTOWE
+  199     1.12         1.14     Term::ReadLine                       FLORA
+  200     0.42         0.46     Term::UI                             BINGOS
+  201     1.302047     1.302128 Test2                                EXODIST
+  202     1.12         1.127    Test::Deep                           RJBS
+  203     3.26         3.41     Test::Harness                        LEONT
+  204     0.15         0.16     Test::LeakTrace                      LEEJO
+  205     0.34         0.35     Test::Most                           OVID
+  206     1.121        1.13     Test::Perl::Critic::Policy           PETDANCE
+  207     0.30         0.32     Test::Warn                           BIGJ
+  208     2.02         2.03     Text::Balanced                       SHAY
+  209     1.44         1.45     Text::Diff                           NEILB
+  210     0.0601       0.13     Text::Levenshtein                    NEILB
+  211     1.000001     1.000031 Text::Markdown                       BOBTFISH
+  212     3.28         3.30     Text::ParseWords                     CHORNY
+  213     3.04         3.05     Text::Soundex                        RJBS
+  214  2012.0818    2013.0523   Text::Wrap                           MUIR
+  215     3.02         3.12     Thread::Queue                        JDHEDDEN
+  216     2.12         2.13     Thread::Semaphore                    JDHEDDEN
+  217     0.99         1.00     Tie::File                            TODDR
+  218     1.9725       1.9754   Time::HiRes                          JHI
+  219     1.23         1.25     Time::Local                          DROLSKY
+  220     1.2001       1.3204   Time::Piece                          ESAYM
+  221     1.60         1.73     URI                                  ETHER
+  222     0.05         0.27     UUID                                 JRM
+  223     0.97         1.25     Unicode::Collate                     SADAHIRO
+  224     1.16         1.25     Unicode::Normalize                   KHW
+  225     0.59         0.62     Unicode::UTF8                        CHANSEN
+  226     1.73         1.87     WWW::Mechanize                       OALDERS
+  227     6.01         6.02     WWW::RobotRules                      GAAS
+  228     1.11         1.12     XML::NamespaceSupport                PERIGRIN
+  229     2.41         2.44     XML::Parser                          TODDR
+  230     0.99         1.00     XML::SAX                             GRANTM
+  231     1.07         1.09     XML::SAX::Base                       GRANTM
+  232     0.40         0.51     XML::SAX::Expat                      BJOERN
+  233     2.20         2.24     XML::Simple                          GRANTM
+  234     3.44         3.52     XML::Twig                            MIROD
+  235     0.13         0.14     XML::XPathEngine                     MIROD
+  236     0.16         0.24     XSLoader                             SAPER
+  237     1.56         1.73     YAML::Tiny                           ETHER
+  238     0.31         0.34     aliased                              ETHER
+  239     2.23         2.29     autodie                              PJF
+  240     1.07         1.11     autouse                              RJBS
+  241     0.34         0.49     bigint                               PJACKLAM
+  242     3.72         3.74     common::sense                        MLEHMANN
+  243     1.27         1.33     constant                             RJBS
+  244     2.16         2.23     fields                               RJBS
+  245     0.0602       0.0608   if                                   XSAWYERX
+  246     0.4003       0.50     inc::latest                          DAGOLDEN
+  247     1.008023     2.000024 local::lib                           HAARG
+  248     0.225        0.236    parent                               CORION
+  249     5.015004     5.021011 perlfaq                              LLAP
+  250     1.86         2.21     threads                              JDHEDDEN
+  251     1.43         1.58     threads::shared                      JDHEDDEN
+  252     0.9902       0.9918   version                              JPEACOCK

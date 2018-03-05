@@ -981,6 +981,7 @@ fi
 
 NPM_GLOBAL_PKG="
 	n
+	npm-find
 	npm-json5
 	node-inspector
 	prettydiff

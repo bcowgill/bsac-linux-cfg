@@ -53,7 +53,7 @@ const code = 42; // but this is history
 /* jslint no-confusing-arrow: 0 */
 /* jshint no-confusing-arrow: 0 */
 /* jscs no-confusing-arrow: 0 */
-/* istanbul no-confusing-arrow: 0 */
+   /* istanbul no-confusing-arrow: 0 */
 /* prettier no-confusing-arrow: 0 */
 
 /* eslint-disable no-confusing-arrow */
