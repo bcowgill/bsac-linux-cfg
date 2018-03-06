@@ -9,11 +9,11 @@ end_of_line = lf
 insert_final_newline = true
 
 # Set default charset
-[*.{editorconfig,js,jsx,json,json5,ts,tsx,py,scss,css,html,ex,exs,php}]
+[*.{editorconfig,js,jsx,json,json5,ts,tsx,py,scss,css,html,ex,exs,php,groovy}]
 charset = utf-8
 
 # 4 space indentation
-[*.py]
+[*.{py,groovy}]
 indent_style = space
 indent_size = 4
 
