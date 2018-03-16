@@ -8,12 +8,13 @@ Strips out C/C++ style comments from source code in files specified.
 --show will show the comments which would be stripped, but leaves them in place.
 --keep will show the comments which are kept, without stripping anything from the file.
 --braces or --nobraces    allows or strips comments immediately after a closing brace
---eslint or --noeslint    allows or strips eslint directive comments
+--eslint or --noeslint    allows or strips eslint directive comments, allowed by default
 --jslint or --nojslint    allows or strips jslint directive comments
 --jshint or --nojshint    allows or strips jshint directive comments
 --jscs or --nojscs        allows or strips jscs directive comments
---prettieror --prettier   allows or strips prettier directive comments
+--prettieror --prettier   allows or strips prettier directive comments, allowed by default
 --istanbulor --noistanbul allows or strips istanbul directive comments
+--sonar      --nosonar    allows or strips sonar directive comments, allowed by default
 --nojavadoc or --javadoc=strip strips out all javadoc comments
 --javadoc=lite                 allows all javadoc comments
 --javadoc or --javadoc=strict  allows only javadoc comments with a @word reference in them
@@ -24,4 +25,4 @@ Allows a single contiguous comment block at top of file after the directives.
 Strips out all other comments which do not begin with an apology.
 Allows comments containing a URL as they are probably documenting something difficult.
 Allows by default a comment after a closing brace so you can document the condition that started that scope.
-By default allows eslint and prettier comment directives only.
+By default allows eslint, prettier and sonar comment directives only.

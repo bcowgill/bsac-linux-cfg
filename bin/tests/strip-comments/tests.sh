@@ -303,7 +303,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="--keep --brace --eslint --jslint --jshint --jscs --istanbul --prettier $DEBUG"
+	ARGS="--keep --brace --eslint --jslint --jshint --jscs --istanbul --prettier --sonar $DEBUG"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -317,7 +317,7 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="--keep --nobrace --noeslint --nojslint --nojshint --nojscs --noistanbul --noprettier --nojavadoc --javadoc=strip $DEBUG"
+	ARGS="--keep --nobrace --noeslint --nojslint --nojshint --nojscs --noistanbul --noprettier --nosonar --nojavadoc --javadoc=strip $DEBUG"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

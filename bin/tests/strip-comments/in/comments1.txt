@@ -61,6 +61,8 @@ const code = 42; // but this is history
 /* eslint-disable-line no-confusing-arrow */
 /* eslint-disable-next-line no-confusing-arrow */
 
+// NOSONAR
+
 if (condition)
 {
 } // condition

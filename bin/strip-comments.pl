@@ -26,6 +26,7 @@ my %Keep = (
 	jscs     => 0,
 	istanbul => 0,
 	prettier => 1,
+	nosonar  => 1,
 );
 my %Directive = (
 	eslint   => 1,
@@ -33,6 +34,7 @@ my %Directive = (
 	jshint   => 1,
 	jscs     => 1,
 	prettier => 1,
+	nosonar  => 1,
 );
 my $KEEP_RE;
 my $DIRECTIVE_RE;
@@ -58,12 +60,13 @@ Strips out C/C++ style comments from source code in files specified.
 --show will show the comments which would be stripped, but leaves them in place.
 --keep will show the comments which are kept, without stripping anything from the file.
 --braces or --nobraces    allows or strips comments immediately after a closing brace
---eslint or --noeslint    allows or strips eslint directive comments
+--eslint or --noeslint    allows or strips eslint directive comments, allowed by default
 --jslint or --nojslint    allows or strips jslint directive comments
 --jshint or --nojshint    allows or strips jshint directive comments
 --jscs or --nojscs        allows or strips jscs directive comments
---prettieror --prettier   allows or strips prettier directive comments
+--prettieror --prettier   allows or strips prettier directive comments, allowed by default
 --istanbulor --noistanbul allows or strips istanbul directive comments
+--sonar      --nosonar    allows or strips sonar directive comments, allowed by default
 --nojavadoc or --javadoc=strip strips out all javadoc comments
 --javadoc=lite                 allows all javadoc comments
 --javadoc or --javadoc=strict  allows only javadoc comments with a \@word reference in them
@@ -74,7 +77,7 @@ Allows a single contiguous comment block at top of file after the directives.
 Strips out all other comments which do not begin with an apology.
 Allows comments containing a URL as they are probably documenting something difficult.
 Allows by default a comment after a closing brace so you can document the condition that started that scope.
-By default allows eslint and prettier comment directives only.
+By default allows eslint, prettier and sonar comment directives only.
 USAGE
 	exit ($message ? 1 : 0);
 }
@@ -89,6 +92,8 @@ sub process_args
 	while (scalar(@ARGV) && $ARGV[0] =~ m{\A --}xms)
 	{
 		my $option = shift(@ARGV);
+		my $reOpt = qr{\A --(no)?((esl|jsl|jsh)int|jscs|istanbul|prettier) \z}xms;
+		# print "process_args: [$option] $reOpt @{[($option =~ $reOpt) ? 1 : 0]}\n";
 		if ($option eq '--show')
 		{
 			$STRIP = 0;
@@ -99,7 +104,11 @@ sub process_args
 			$STRIP = 0;
 			$SHOW = 'keep';
 		}
-		elsif ($option =~ m{\A --(no)?((esl|jsl|jsh)int|jscs|istanbul|prettier) \z}xms)
+		elsif ($option =~ m{\A --(no)?sonar \z}xms)
+		{
+			$Keep{nosonar} = ($1 ? 0 : 1);
+		}
+		elsif ($option =~ $reOpt)
 		{
 			if (exists($Keep{$2}))
 			{
@@ -379,7 +388,7 @@ sub is_comment
 sub is_directive_comment
 {
 	my ($message) = @ARG;
-	my $result = ($message =~ m{ \A /[/*] \s* ($DIRECTIVE_RE) }xms) ? 1 : 0;
+	my $result = ($message =~ m{ \A /[/*] \s* ($DIRECTIVE_RE) }xmsi) ? 1 : 0;
 	#print "is_directive_comment: $result\n[$message]\n/$DIRECTIVE_RE/\n";
 	return $result;
 }
@@ -389,7 +398,7 @@ sub is_kept_directive_comment
 	my ($message) = @ARG;
 	if (length($KEEP_RE))
 	{
-		return ($message =~ m{ \A /[/*] \s* ($KEEP_RE) }xms) ? 1 : 0;
+		return ($message =~ m{ \A /[/*] \s* ($KEEP_RE) }xmsi) ? 1 : 0;
 	}
 	return 0;
 }
@@ -399,10 +408,10 @@ sub keep_comment
 	my ($prespace, $comment, $space, $message) = @ARG;
 	my $punct = '';
 	my $comma = '[,:\.]';
-	($punct, $message) = grab_it($message, qr{\A([^a-z0-9\s]+ \s*)}xms);
+	($punct, $message) = grab_it($message, qr{\A([^a-z0-9\s]+ \s*)}xmsi);
 	# print qq{\nkeep_comment: comment: [$comment]\npunct: [$punct]\nmessage: [$message]\nKEEP_RE: [$KEEP_RE]\n};
 	my $result = 0;
-	if (length($KEEP_RE) && $message =~ m{ \A $KEEP_RE }xms)
+	if (length($KEEP_RE) && $message =~ m{ \A $KEEP_RE }xmsi)
 	{
 		$result = 1;
 	}
