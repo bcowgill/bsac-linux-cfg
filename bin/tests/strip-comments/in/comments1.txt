@@ -53,13 +53,15 @@ const code = 42; // but this is history
 /* jslint no-confusing-arrow: 0 */
 /* jshint no-confusing-arrow: 0 */
 /* jscs no-confusing-arrow: 0 */
-/* istanbul no-confusing-arrow: 0 */
+   /* istanbul no-confusing-arrow: 0 */
 /* prettier no-confusing-arrow: 0 */
 
 /* eslint-disable no-confusing-arrow */
 /* eslint-enable no-confusing-arrow */
 /* eslint-disable-line no-confusing-arrow */
 /* eslint-disable-next-line no-confusing-arrow */
+
+// NOSONAR
 
 if (condition)
 {
