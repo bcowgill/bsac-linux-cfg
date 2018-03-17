@@ -76,6 +76,7 @@ if [ "x$COMPANY" == "xwipro" ]; then
 
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
 	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
+	alias ls-cfappdyn='(for a in j2-pas-card-control-api-ft-PAS-15693 j2-pas-card-control-mock-ft-PAS-15693; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
 	alias ls-mca='ls-cfroutes | grep "mca-j2" | perl -pne "s{\\A.+-cwa-(.+?)\\..+\\z}{\$1\\n}xmsg;" | sort | uniq'
 fi
 
