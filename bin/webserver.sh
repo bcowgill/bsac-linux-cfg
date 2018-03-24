@@ -37,3 +37,5 @@ else
 fi
 wget --output-document=/dev/null http://localhost:$PORT/favicon.ico
 popd
+ps -ef | grep -i $HTTP_MOD
+
