@@ -4,8 +4,10 @@ if which pmset > /dev/null; then
 	pmset -g batt
 	exit 0
 fi
-for power in `upower --enumerate`; do
-    echo $power
-    upower --show-info $power | perl -ne 's{\s+}{ }xmsg; print if m{BAT|percent|capacity}xms'
-done
+if which upower > /dev/null; then
+	for power in `upower --enumerate`; do
+		echo $power
+		upower --show-info $power | perl -ne 's{\s+}{ }xmsg; print if m{BAT|percent|capacity}xms'
+	done
+fi
 echo " "

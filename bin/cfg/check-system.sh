@@ -471,147 +471,6 @@ BREW_TAPS="
 	cloudfoundry/tap
 "
 
-INSTALL_MACOSLINUX="
-	tcsh
-	curl wget
-	vim ctags
-	screen tmux cmatrix
-	colordiff
-	dos2unix
-	htop
-	ncdu
-	lsof
-	fdupes
-	mmv
-	pv
-	fortune
-	mc
-	multitail
-	jhead
-	id3v2
-	gradle
-	$PHP_CMD:$PHP_PKG
-"
-
-INSTALL_LINUX="
-	dlocate deborphan
-	$EMACS_BASE
-	flip
-	unicode
-	gettext
-	iselect
-	root-tail
-	fbcat
-	chromium-browser
-	meld
-	$MTP_PKG
-"
-
-INSTALL_MACOS="
-	meld:caskroom/cask/meld
-	7z:p7zip
-"
-
-if [ -z $MACOS ]; then
-	INSTALL_MACOS=""
-else
-	INSTALL_LINUX=""
-fi # not MACOS
-
-#vim-scripts requires ruby - loads of color schemes and helpful vim scripts
-# runit
-# jhead for jpeg EXIF header editing
-INSTALL_CMDS="
-	$INSTALL_MACOSLINUX
-	$INSTALL_LINUX
-	$INSTALL_MACOS
-"
-
-# HEREIAM SUGGESTED
-# from ssh rssh molly-guard monkeysphere
-# from gvim ri ruby-dev ruby1.9.1-examples ri1.9.1 graphviz ruby1.9.1-dev ruby-switch
-#  cscope ttf-dejavu
-# from perlcritic libscalar-number-perl
-# from graphviz  graphviz-doc
-# from imagemagick   imagemagick-doc autotrace enscript ffmpeg gimp gnuplot grads hp2xx html2ps
-#  libwmf-bin mplayer povray radiance texlive-base-bin transfig ufraw-batch
-#    libfftw3-bin libfftw3-dev
-# from cpanminus libcapture-tiny-perl
-# from lm-sensors fancontrol sensord read-edid i2c-tools
-# from hddtemp ksensors
-# from meld libbonobo2-bin desktop-base libgnomevfs2-bin libgnomevfs2-extra gamin fam
-# gnome-mime-data python-gnome2-doc libgtksourceview2.0-dev python-pyorbit-dbg
-# from nodejs etc debian-keyring g++-multilib g++-4.8-multilib gcc-4.8-doc libstdc++6-4.8-dbg
-# libstdc++-4.8-doc node-hawk node-aws-sign node-oauth-sign
-# node-http-signature
-# Recommended packages:
-# xml-core:i386
-# from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
-#    i3lock suckless-tools i3status dunst libanyevent-i3-perl libjson-xs-perl
-# from calibre fonts-stix fonts-mathjax-extras libjs-mathjax-doc python-apsw-doc
-#  python-markdown-doc ttf-bitstream-vera python-paste python-webob-doc
-# from digikam Suggested packages:
-# digikam-doc systemsettings libqt4-sql-mysql docbook docbook-dsssl
-# docbook-defguide dbtoepub docbook-xsl-doc-html docbook-xsl-doc-pdf
-# docbook-xsl-doc-text docbook-xsl-doc docbook-xsl-saxon fop libsaxon-java
-# libxalan2-java libxslthl-java xalan python-wxgtk2.8
-# libterm-readline-gnu-perl libterm-readline-perl-perl djvulibre-bin finger
-# gallery gimp kmail vorbis-tools gpsd gsl-ref-psdoc gsl-doc-pdf gsl-doc-info
-# gsl-ref-html hspell libqca2-plugin-cyrus-sasl libqca2-plugin-gnupg
-# libqca2-plugin-ossl qtmobility-l10n libquazip-doc phonon-backend-vlc
-# gstreamer1.0-plugins-ugly phonon4qt5-backend-gstreamer perlsgml w3-recs
-# opensp
-# Recommended packages:
-# minidnla
-
-# TODO MACOS PKGS
-INSTALL_LINUX="
-	wcd.exec:wcd
-	calc:apcalc
-	gvim:vim-gtk
-	perlcritic:libperl-critic-perl
-"
-
-COMMANDS_LINUX="
-	apt-file
-	wcd.exec
-	gettext
-"
-
-if [ -z $MACOS ]; then
-	true
-else
-	INSTALL_LINUX=""
-	COMMANDS_LINUX=""
-fi
-
-INSTALL_LIST="
-	$INSTALL_LINUX
-	ssh:openssh-client
-	sshd:openssh-server
-	perldoc:perl-doc
-	dot:graphviz
-	convert:imagemagick
-	gpm
-	markdown
-"
-
-if [ -z $MACOS ]; then # TODO MACOS PKGS
-INSTALL_FILES="
-	/usr/share/doc/fortunes/copyright:fortunes
-	/usr/share/doc-base/vim-referencemanual:vim-doc
-"
-fi # not MACOS
-
-COMMANDS_LIST="
-	$COMMANDS_LINUX
-	git
-	perl
-	dot
-	meld
-	gitk
-"
-
 if [ "$HOSTNAME" == "akston" ]; then
 	LINK_DOWNLOADS=1
 	GIT_VER=1.9.1
@@ -814,6 +673,7 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 fi # workshare
 
 if [ "$HOSTNAME" == "raspberrypi" ]; then
+	echo RASPBERRYPI
 	# Change settings for the raspberry pi
 
 	UBUNTU="/etc/rpi-issue: Raspberry Pi reference 2015-02-16 (armhf)"
@@ -821,10 +681,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	ULIMITFILES=1024
 	GIT_VER="1.7.10.4"
 	JAVA_VER=jdk-8-oracle-arm-vfp-hflt
-	NODE_VER="v0.10.28"
 	BIG_DATA=""
 	COMPANY=raspberrypi
 	USE_I3=""
+	USE_KDE=""
 	I3WM_PKG=""
 	CHARLES_PKG=""
 	SKYPE_PKG=""
@@ -833,6 +693,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	MONO_PKG=""
 	DIFFMERGE_PKG=""
 	P4MERGE_PKG=""
+	ERL_OBSERVER_PKG=""
+	ERLANG_PKG=""
+	ELIXIR_PKG=""
+	PHP_PKG=""
 	RUBY_GEMS="sass foundation"
 	RUBY_SASS_COMMANDS="ruby gem $RUBY_GEMS"
 	USE_PIDGIN=""
@@ -875,8 +739,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		cowsay
 		linuxlogo
 	"
-	NODE_VER=""
-	NODE_CMD="node"
+	NODE_VER="v0.6.19"
+	NODE_CMD="nodejs"
+	NODE2_PKG="no"
+	NODE_CUSTOM_PKG="no"
 	SURGE_NPM_PKG=""
 	SCREENSAVER_PKG=""
 	DROPBOX_URL=""
@@ -889,16 +755,21 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	GOOGLE_CHROME_PKG=""
 	FLASH_URL=""
 	DOCKER_PKG=""
+	MTP_PKG=""
+	EMACS_BASE=""
+	PINTA_PKG=""
 fi # raspberrypi
 
 }
 set_env
 
 function set_node_env {
+echo ===================
 NODE_CMDS="$NODE_CMD npm"
 NODE_LIB=/usr/lib/$NODE_CMD
 NPM_LIB=/usr/local/lib/node_modules
 NODE_MOD=/usr/lib/node_modules
+
 if [ ! -e "$NODE_LIB" ]; then
 	NODE_LIB=/usr/local/bin/$NODE_CMD
 fi
@@ -910,54 +781,64 @@ if [ -z $MACOS ]; then
 NODE_PKG="
 	$NODE_CMDS
 	node:nodejs-legacy
-	/usr/share/doc/node-debug/copyright:node-debug
-	$NODE_LIB/eyes.js:node-eyes
-	$NODE_LIB/glob.js:node-glob
 	/usr/share/doc/node-inherits/copyright:node-inherits
-	$NODE_LIB/mkdirp/index.js:node-mkdirp
-	$NODE_LIB/rimraf/index.js:node-rimraf
 "
-NODE_CUSTOM_PKG="
-	$NODE_LIB/abbrev.js:node-abbrev
-	$NODE_LIB/async.js:node-async
-	$NODE_LIB/base64id.js:node-base64id
-	$NODE_LIB/bignumber.js:node-bignumber
-	$NODE_LIB/bytes/index.js:node-bytes
-	$NODE_LIB/chrono.js:node-chrono
-	$NODE_LIB/cli/index.js:node-cli
-	/usr/share/doc/node-colors/copyright:node-colors
-	/usr/share/doc/node-commander/copyright:node-commander
-	$NODE_LIB/contextify/index.js:node-contextify
-	$NODE_LIB/daemon/index.js:node-daemon
-	$NODE_LIB/dequeue/index.js:node-dequeue
-	/usr/share/doc/node-diff/copyright:node-diff
-	$NODE_LIB/dirty/index.js:node-dirty
-	$NODE_LIB/fstream/index.js:node-fstream
-	$NODE_LIB/get/index.js:node-get
-	$NODE_LIB/growl.js:node-growl
-	$NODE_LIB/ini.js:node-ini
-	$NODE_LIB/JSV/index.js:node-jsv
-	$NODE_LIB/keypress.js:node-keypress
-	$NODE_LIB/lockfile.js:node-lockfile
-	$NODE_LIB/minimatch.js:node-minimatch
-	$NODE_LIB/nopt.js:node-nopt
-	$NODE_LIB/once.js:node-once
-	/usr/share/doc/node-optimist/copyright:node-optimist
-	$NODE_LIB/osenv.js:node-osenv
-	$NODE_LIB/read.js:node-read
-	$NODE_LIB/readdirp/index.js:node-readdirp
-	$NODE_LIB/request/index.js:node-request
-	$NODE_LIB/retry/index.js:node-retry
-	$NODE_LIB/security.js:node-security
-	$NODE_LIB/semver/index.js:node-semver
-	$NODE_LIB/step.js:node-step
-	$NODE_LIB/tar/index.js:node-tar
-	$NODE_LIB/tinycolor.js:node-tinycolor
-	$NODE_LIB/traverse.js:node-traverse
-	$NODE_LIB/which.js:node-which
-	$NODE_LIB/wordwrap.js:node-wordwrap
-	/usr/share/doc/node-zipfile/copyright:node-zipfile
-"
+if [ "x$NODE2_PKG" == "xno" ]; then
+	NODE2_PKG=
+else
+	NODE2_PKG="
+		/usr/share/doc/node-debug/copyright:node-debug
+		$NODE_LIB/glob.js:node-glob
+		$NODE_LIB/mkdirp/index.js:node-mkdirp
+		$NODE_LIB/eyes.js:node-eyes
+		$NODE_LIB/rimraf/index.js:node-rimraf
+	"
+fi
+if [ "x$NODE_CUSTOM_PKG" == "xno" ]; then
+	NODE_CUSTOM_PKG=
+else
+	NODE_CUSTOM_PKG="
+		$NODE_LIB/abbrev.js:node-abbrev
+		$NODE_LIB/async.js:node-async
+		$NODE_LIB/base64id.js:node-base64id
+		$NODE_LIB/bignumber.js:node-bignumber
+		$NODE_LIB/bytes/index.js:node-bytes
+		$NODE_LIB/chrono.js:node-chrono
+		$NODE_LIB/cli/index.js:node-cli
+		/usr/share/doc/node-colors/copyright:node-colors
+		/usr/share/doc/node-commander/copyright:node-commander
+		$NODE_LIB/contextify/index.js:node-contextify
+		$NODE_LIB/daemon/index.js:node-daemon
+		$NODE_LIB/dequeue/index.js:node-dequeue
+		/usr/share/doc/node-diff/copyright:node-diff
+		$NODE_LIB/dirty/index.js:node-dirty
+		$NODE_LIB/fstream/index.js:node-fstream
+		$NODE_LIB/get/index.js:node-get
+		$NODE_LIB/growl.js:node-growl
+		$NODE_LIB/ini.js:node-ini
+		$NODE_LIB/JSV/index.js:node-jsv
+		$NODE_LIB/keypress.js:node-keypress
+		$NODE_LIB/lockfile.js:node-lockfile
+		$NODE_LIB/minimatch.js:node-minimatch
+		$NODE_LIB/nopt.js:node-nopt
+		$NODE_LIB/once.js:node-once
+		/usr/share/doc/node-optimist/copyright:node-optimist
+		$NODE_LIB/osenv.js:node-osenv
+		$NODE_LIB/read.js:node-read
+		$NODE_LIB/readdirp/index.js:node-readdirp
+		$NODE_LIB/request/index.js:node-request
+		$NODE_LIB/retry/index.js:node-retry
+		$NODE_LIB/security.js:node-security
+		$NODE_LIB/semver/index.js:node-semver
+		$NODE_LIB/step.js:node-step
+		$NODE_LIB/tar/index.js:node-tar
+		$NODE_LIB/tinycolor.js:node-tinycolor
+		$NODE_LIB/traverse.js:node-traverse
+		$NODE_LIB/which.js:node-which
+		$NODE_LIB/wordwrap.js:node-wordwrap
+		/usr/share/doc/node-zipfile/copyright:node-zipfile
+	"
+fi
 else
 	# MACOS node
 NODE_PKG="
@@ -1035,13 +916,14 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$GITSVN_PKG"        ] && GITSVN_CMD=""
 [ -z "$DIFFMERGE_PKG"     ] && DIFFMERGE_CMD=""
 [ -z "$P4MERGE_PKG"       ] && P4MERGE_CMD=""
+[ -z "$PHP_PKG"           ] && PHP_CMD=""
 [ -z "$RUBY_PKG"          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
 [ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$USE_REDIS"         ] && REDIS_PKG="" && REDIS_CMDS=""
 [ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD="" && ROBO3T_ARCHIVE=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
-[ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_CUSTOM_PKG="" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_PKG="" && NODE2_PKG="no" && NODE_CUSTOM_PKG="no" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$ATOM_PKG"          ] && ATOM_CMD="" && ATOM_APP=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
@@ -1052,6 +934,154 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 # HEREIAM DERIVED
 
 # final package configuration based on what has been turned on
+
+INSTALL_MACOSLINUX="
+	tcsh
+	curl wget
+	vim ctags
+	screen tmux cmatrix
+	colordiff
+	dos2unix
+	htop
+	ncdu
+	lsof
+	fdupes
+	mmv
+	pv
+	fortune
+	mc
+	multitail
+	jhead
+	id3v2
+	gradle
+"
+
+INSTALL_LINUX="
+	dlocate deborphan
+	$EMACS_BASE
+	flip
+	unicode
+	gettext
+	iselect
+	root-tail
+	fbcat
+	chromium-browser
+	meld
+	$MTP_PKG
+"
+
+INSTALL_MACOS="
+	meld:caskroom/cask/meld
+	7z:p7zip
+"
+
+if [ -z $MACOS ]; then
+	INSTALL_MACOS=""
+else
+	INSTALL_LINUX=""
+fi # not MACOS
+
+#vim-scripts requires ruby - loads of color schemes and helpful vim scripts
+# runit
+# jhead for jpeg EXIF header editing
+INSTALL_CMDS="
+	$INSTALL_MACOSLINUX
+	$INSTALL_LINUX
+	$INSTALL_MACOS
+"
+
+# HEREIAM SUGGESTED
+# from ssh rssh molly-guard monkeysphere
+# from gvim ri ruby-dev ruby1.9.1-examples ri1.9.1 graphviz ruby1.9.1-dev ruby-switch
+#  cscope ttf-dejavu
+# from perlcritic libscalar-number-perl
+# from graphviz  graphviz-doc
+# from imagemagick   imagemagick-doc autotrace enscript ffmpeg gimp gnuplot grads hp2xx html2ps
+#  libwmf-bin mplayer povray radiance texlive-base-bin transfig ufraw-batch
+#    libfftw3-bin libfftw3-dev
+# from cpanminus libcapture-tiny-perl
+# from lm-sensors fancontrol sensord read-edid i2c-tools
+# from hddtemp ksensors
+# from meld libbonobo2-bin desktop-base libgnomevfs2-bin libgnomevfs2-extra gamin fam
+# gnome-mime-data python-gnome2-doc libgtksourceview2.0-dev python-pyorbit-dbg
+# from nodejs etc debian-keyring g++-multilib g++-4.8-multilib gcc-4.8-doc libstdc++6-4.8-dbg
+# libstdc++-4.8-doc node-hawk node-aws-sign node-oauth-sign
+# node-http-signature
+# Recommended packages:
+# xml-core:i386
+# from i3wm libevent-perl libio-async-perl libpoe-perl dwm stterm surf
+#    i3lock suckless-tools i3status dunst libanyevent-i3-perl libjson-xs-perl
+# from calibre fonts-stix fonts-mathjax-extras libjs-mathjax-doc python-apsw-doc
+#  python-markdown-doc ttf-bitstream-vera python-paste python-webob-doc
+# from digikam Suggested packages:
+# digikam-doc systemsettings libqt4-sql-mysql docbook docbook-dsssl
+# docbook-defguide dbtoepub docbook-xsl-doc-html docbook-xsl-doc-pdf
+# docbook-xsl-doc-text docbook-xsl-doc docbook-xsl-saxon fop libsaxon-java
+# libxalan2-java libxslthl-java xalan python-wxgtk2.8
+# libterm-readline-gnu-perl libterm-readline-perl-perl djvulibre-bin finger
+# gallery gimp kmail vorbis-tools gpsd gsl-ref-psdoc gsl-doc-pdf gsl-doc-info
+# gsl-ref-html hspell libqca2-plugin-cyrus-sasl libqca2-plugin-gnupg
+# libqca2-plugin-ossl qtmobility-l10n libquazip-doc phonon-backend-vlc
+# gstreamer1.0-plugins-ugly phonon4qt5-backend-gstreamer perlsgml w3-recs
+# opensp
+# Recommended packages:
+# minidnla
+
+# TODO MACOS PKGS
+INSTALL_LINUX="
+	wcd.exec:wcd
+	calc:apcalc
+	gvim:vim-gtk
+	perlcritic:libperl-critic-perl
+"
+
+COMMANDS_LINUX="
+	apt-file
+	wcd.exec
+	gettext
+"
+
+if [ -z $MACOS ]; then
+	true
+else
+	INSTALL_LINUX=""
+	COMMANDS_LINUX=""
+fi
+
+INSTALL_LIST="
+	$INSTALL_LINUX
+	ssh:openssh-client
+	sshd:openssh-server
+	perldoc:perl-doc
+	dot:graphviz
+	convert:imagemagick
+	gpm
+	markdown
+"
+
+if [ -z $MACOS ]; then # TODO MACOS PKGS
+INSTALL_FILES="
+	/usr/share/doc/fortunes/copyright:fortunes
+	/usr/share/doc-base/vim-referencemanual:vim-doc
+"
+fi # not MACOS
+
+COMMANDS_LIST="
+	$COMMANDS_LINUX
+	git
+	perl
+	dot
+	meld
+	gitk
+"
+
+if [ ! -z $PHP_CMD ]; then
+	INSTALL_MACOSLINUX="
+		$INSTALL_MACOSLINUX
+		$PHP_CMD:$PHP_PKG
+	"
+fi
+
 if [ -z $MACOS ]; then
 	GIT_TAR=git-$GIT_VER
 	GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
@@ -1117,6 +1147,7 @@ set_node_env
 
 NODE_PKG_LIST="
 	$NODE_PKG
+	$NODE2_PKG
 	$NODE_CUSTOM_PKG
 	$POSTGRES_NODE_PKG
 "
@@ -1486,10 +1517,12 @@ file_linked_to .Xresources bin/cfg/.Xresources "xresources config for xterm and 
 file_linked_to .xscreensaver bin/cfg$COMP/.xscreensaver "xscreensaver configuration"
 dir_linked_to .gconf bin/cfg$COMP/.gconf/ "gnome configuration files linked"
 
-make_dir_exist .config/i3 "i3 configuration file dir"
-file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
-file_linked_to bin/i3-launch.sh  $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
-file_linked_to bin/i3-dock.sh    $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
+if [ ! -z $USE_I3 ]; then
+	make_dir_exist .config/i3 "i3 configuration file dir"
+	file_linked_to .config/i3/config $HOME/bin/cfg$COMP/.i3-config "i3 window manager configuration"
+	file_linked_to bin/i3-launch.sh  $HOME/bin/cfg$COMP/i3-launch.sh "i3 window manager launch configuration"
+	file_linked_to bin/i3-dock.sh    $HOME/bin/cfg$COMP/i3-dock.sh "i3 window manager docking configuration"
+fi
 
 [ -d .config/mc ] && HAS_MC=1
 make_dir_exist .config/mc "midnight commander configuration file dir"

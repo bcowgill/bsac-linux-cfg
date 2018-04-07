@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="history-direntry" mtime="1432207332" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/rc-local-ntp-2015-05-21-12-13</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/rc-local-wlan-2015-05-19</stringvalue>
+		</li>
+	</entry>
+	<entry name="history-fileentry" mtime="1435694419" type="list" ltype="string">
+		<li type="string">
+			<stringvalue>/home/pi/workspace/play/bsac-linux-cfg/bin/cfg/raspberrypi/crontab-raspberrypi</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/.depend.stop</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/.depend.start</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/.depend.boot</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/rc.local</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/ntp</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/hwclock.sh</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/raspbian-upgrade/etc/init.d/fake-hwclock</stringvalue>
+		</li>
+		<li type="string">
+			<stringvalue>/home/pi/snapshot/rc-local-ntp-2015-05-21-12-13/02-cron.log</stringvalue>
+		</li>
+	</entry>
+</gconf>

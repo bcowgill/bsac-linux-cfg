@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<gconf>
+	<entry name="edit_command_custom" mtime="1432054455" type="string">
+		<stringvalue>leafpad</stringvalue>
+	</entry>
+	<entry name="edit_command_type" mtime="1432054448" type="string">
+		<stringvalue>custom</stringvalue>
+	</entry>
+	<entry name="use_syntax_highlighting" mtime="1432054321" type="bool" value="true"/>
+	<entry name="show_whitespace" mtime="1432054313" type="bool" value="true"/>
+	<entry name="show_line_numbers" mtime="1432054307" type="bool" value="true"/>
+	<entry name="window_size_y" mtime="1432054418" type="int" value="885"/>
+	<entry name="window_size_x" mtime="1432054418" type="int" value="1772"/>
+	<entry name="custom_font" mtime="1432054296" type="string">
+		<stringvalue>ProFontWindows 18</stringvalue>
+	</entry>
+	<entry name="use_custom_font" mtime="1432052081" type="bool" value="true"/>
+</gconf>

@@ -3,4 +3,6 @@
 echo Battery: `battery-percent.sh`
 #battery.sh
 echo " "
-sensors
+if which sensors > /dev/null; then
+	sensors
+fi

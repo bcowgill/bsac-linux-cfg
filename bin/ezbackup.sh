@@ -33,7 +33,11 @@ function usage {
 	local message code
 	message="$1"
 	code=0
-	[ ! -z "$message" ] && (code=1; echo $message; echo " ")
+	if [ ! -z "$message" ] ; then
+		code=1
+		echo $message
+		echo " "
+	fi
 	echo usage:
 	echo "$CMD [--debug] [--help] [check|status|full|partial|restore] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
 	echo " "
