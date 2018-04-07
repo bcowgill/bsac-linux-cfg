@@ -79,7 +79,7 @@ fi
 MSG=`mktemp`
 echo "$NAME" >> "$MSG" \
 	&& echo "# in dir: `pwd`" >> "$MSG" \
-	&& echo "# [POLICY] (wip|fixed|resolved) branch: Description of changes made." >> "$MSG" \
+	&& echo "# [POLICY] (wip|fixed|resolved) [On branch:] Description of changes made." >> "$MSG" \
 	&& echo "# set WORKON= variable to use as a template." >> "$MSG" \
 	&& echo "# VIM use ESC :cq to abort the commit, ESC :wq to write changes and quit." >> "$MSG" \
 	&& echo "# VIM ESC u to undo last change and ESC :help for help." >> "$MSG" \
