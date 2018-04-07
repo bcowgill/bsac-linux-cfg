@@ -207,8 +207,8 @@ EOM
 		{
 
 			s{\A $TICKET_RE \s*}{}xms || explain("Commit message MUST contain $TICKET");
+			praise("A ticket id");
 		}
-		praise("A ticket id");
 		# print qq{\nNOW: $_ \n};
 
 		my $description = $_;
@@ -219,7 +219,7 @@ EOM
 		s{([a-z])$Q([a-z])}{$1$2}xmsgi;  # de-contract
 		s{[^a-z0-9_-]+}{\ }xmsgi;        # de-punctuate
 
-		m{\A [A-Z]}xms || fail("Description must begin with a capital letter.");
+		m{\A [A-Z]}xms || fail(qq{Description must begin with a capital letter.\n\t"$description"});
 		print qq{\nDescription found: $description\n};
 		praise("A capital letter");
 
