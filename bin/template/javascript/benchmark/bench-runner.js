@@ -5,11 +5,18 @@ function loadCode (modName, varName) {
 		imported = require(modName);
 	} catch (exception) {
 		//console.error('loadCode', exception);
+		if (typeof window === 'undefined') {
+			throw new Error(varName + ' = require(' + modName + ') unable to load or find in globals');
+		}
 		imported = window[varName];
+	}
+	if (typeof imported === 'undefined' || imported === null) {
+		throw new Error(varName + ' = require(' + modName + ') unable to load or find in globals');
 	}
 	//console.log('loadCode ' + varName + ' from ' + modName, imported);
 	return imported;
 }
+
 var runBenchmark = loadCode('./bench-tools', 'runBenchmark');
 
 var Tests = {
@@ -19,6 +26,9 @@ var Tests = {
 	'String#indexOf': function StringIndexOfTest() {
 		'Hello World!'.indexOf('o') > -1;
 	},
+	'String#match': function StringMatchTest() {
+		!!'Hello World!'.match(/o/);
+	}
 };
 
 runBenchmark(Tests);
