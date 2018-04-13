@@ -1,14 +1,18 @@
 <html>
 <head>
 <title>Javascript Benchmark Example</title>
-<script src="node_modules/lodash/lodash.js"></script>
-<script src="node_modules/platform/platform.js"></script>
-<script src="node_modules/benchmark/benchmark.js"></script>
-<script src="bench-tools.js"></script>
+<script type="text/javascript" src="node_modules/lodash/lodash.js"></script>
+<script type="text/javascript" src="node_modules/platform/platform.js"></script>
+<script type="text/javascript" src="node_modules/benchmark/benchmark.js"></script>
+<script type="text/javascript" src="bench-tools.js"></script>
+
+<!-- Each test loaded here needs to be included in bench-runner.js as well -->
+<script type="text/javascript" src="test-find.js"></script>
+
 </head>
 <body>
 <h1>Example of benchmark test in browser</h1>
 <div id="spray-output-div"></div>
-<script src="bench-runner.js"></script>
+<script type="text/javascript" src="bench-runner.js"></script>
 </body>
 </html>

@@ -4,34 +4,31 @@ function loadCode (modName, varName) {
 	try {
 		imported = require(modName);
 	} catch (exception) {
-		//console.error('loadCode', exception);
+		// console.error('loadCode', exception);
 		if (typeof window === 'undefined') {
 			throw new Error(varName + ' = require(' + modName + ') unable to load or find in globals');
 		}
 		imported = window[varName];
 	}
 	if (typeof imported === 'undefined' || imported === null) {
+		console.error('did you forget to add it to index.html?');
 		throw new Error(varName + ' = require(' + modName + ') unable to load or find in globals');
 	}
-	//console.log('loadCode ' + varName + ' from ' + modName, imported);
+	// console.log('loadCode ' + varName + ' from ' + modName, imported);
 	return imported;
 }
 
 var runBenchmark = loadCode('./bench-tools', 'runBenchmark');
 
-var Tests = {
-	'RegExp#test': function RegExpTest () {
-		/o/.test('Hello World!');
-	},
-	'String#indexOf': function StringIndexOfTest() {
-		'Hello World!'.indexOf('o') > -1;
-	},
-	'String#match': function StringMatchTest() {
-		!!'Hello World!'.match(/o/);
-	}
-};
+// Each test added here needs to be added to index.html as well
+var Tests = [
+	loadCode('./test-find', 'TestFind'),
+];
 
-runBenchmark(Tests);
+Tests.forEach(function BenchMarkTest(tests) {
+	runBenchmark(tests);
+});
+
 
 // logs:
 // => RegExp#test x 4,161,532 +-0.99% (59 cycles)

@@ -27,106 +27,51 @@
 
 	/*--------------------------------------------------------------------------*/
 
-// Env.js -- subset
-// Detecting your environment and getting access to the global object
-// http://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/self
+// The data set to test against, shoule be representative of what the function really sees
+// in the correct distribution
+var Data = [
+	'',
+	'o',
+	'ao',
+	'aao',
+	'aaao',
+	'iaaao',
+	'iiaaao',
+	'iiiaaao',
+	'iiiiaaao',
+	'iiiiiaaao',
+	'iiiiiiaaao',
+	'Hello World!',
+];
 
-var makeGet = function (globalVar) {
-	return 'try { __global = __global || ' + globalVar + '} catch (exception) {}'
-}
-
-// eslint-disable-next-line no-new-func
-var getGlobal = new Function(
-	'var __global;'
-	+ makeGet('window')
-	+ makeGet('global')
-	+ makeGet('WorkerGlobalScope')
-	+ 'return __global;'
-)
-
-function _getOutputDiv (document, id) {
-	var div;
-	try {
-		div = document.getElementById(id);
-		if (!div) {
-			var newDiv = document.createElement('div');
-			newDiv.id = id;
-			document.body.insertBefore(newDiv, document.body.firstChild);
-			div = document.getElementById(id);
-		}
-	}
-	finally { void 0 }
-	return div;
-}
-
-function _addElement (document, message) {
-	try {
-		var newDiv = document.createElement('div')
-			, newContent = document.createTextNode(message)
-			, div = _getOutputDiv(document, 'spray-output-div');
-
-		newDiv.appendChild(newContent)
-		div.appendChild(newDiv);
-	}
-	finally { void 0 }
-}
-
-// Show a message in every possible place.
-var spray = function () {
-	var which = 'log';
-	var ALERT_OK = false;
-
-	var global = getGlobal()
-		, args = Array.prototype.slice.call(arguments)
-	if (global.document && global.document.body) {
-		_addElement(global.document, args.join())
-	}
-
-	if (global.console && global.console[which]) {
-		global.console[which].apply(global.console, args)
-	}
-
-	if (ALERT_OK && global.alert) {
-		global.alert.apply(global, args)
+// Each test function should operate on the data set in sequence
+function makeDataSetTest (fn) {
+	var idx = -1;
+	var length = Data.length;
+	return function findProgressive () {
+		++idx;
+		return fn(Data[idx % length]);
 	}
 }
-// End of Env.js subset
 
-var Benchmark;
-try {
-	Benchmark = require('benchmark');
-} catch (exception) {
-	var global = getGlobal();
-	Benchmark = global.Benchmark;
-}
-
-function runBenchmark (Tests, print) {
-	print = print || spray;
-	print('Benchmarks performed on ' + Benchmark.platform.description);
-
-	var suite = new Benchmark.Suite;
-
-	// add tests
-	Object.keys(Tests).forEach(function AddTest (name) {
-		suite.add(name, Tests[name]);
-	});
-	// add listeners
-	suite.on('cycle', function(event) {
-		print(String(event.target));
+var Tests = {
+	//'Baseline': makeDataSetTest(function NoopTest () {}),
+	'RegExp#test': makeDataSetTest(function RegExpTest (string) {
+		/o/.test(string);
+	}),
+	'String#indexOf': makeDataSetTest(function StringIndexOfTest(string) {
+		string.indexOf('o') > -1;
+	}),
+	'String#match': makeDataSetTest(function StringMatchTest(string) {
+		!!string.match(/o/);
 	})
-	.on('complete', function() {
-		print('Fastest is ' + this.filter('fastest').map('name'));
-	})
-	// run async
-	.run({ 'async': true });
-}
+};
 
 	/*--------------------------------------------------------------------------*/
 
-	// Export the runBenchmark function.
-	var exportMe = runBenchmark;
-	var exportName = 'runBenchmark';
+	// Export the Tests object.
+	var exportMe = Tests;
+	var exportName = 'TestFind';
 
 	/**
 	* Iterates over an object's own properties, executing the `callback` for each.
