@@ -101,7 +101,7 @@ try {
 	Benchmark = global.Benchmark;
 }
 
-function runBenchmark (Tests, print) {
+function runBenchmark (Tests, async, print) {
 	print = print || spray;
 	print('Benchmarks performed on ' + Benchmark.platform.description);
 
@@ -117,9 +117,10 @@ function runBenchmark (Tests, print) {
 	})
 	.on('complete', function() {
 		print('Fastest is ' + this.filter('fastest').map('name'));
+		print('.');
 	})
 	// run async
-	.run({ 'async': true });
+	.run({ 'async': !!async });
 }
 
 	/*--------------------------------------------------------------------------*/
@@ -157,7 +158,7 @@ function runBenchmark (Tests, print) {
 	}
 	// Check for `exports` after `define` in case a build optimizer adds an `exports` object.
 	else if (freeExports && freeModule) {
-		if (typeof exportMe === 'function') {
+		if (typeof exportMe !== 'object' || Array.isArray(exportMe) || exportMe === null) {
 			freeModule.exports = exportMe;
 		}
 		else {

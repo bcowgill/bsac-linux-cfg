@@ -64,7 +64,7 @@
 	}
 	// Check for `exports` after `define` in case a build optimizer adds an `exports` object.
 	else if (freeExports && freeModule) {
-		if (typeof exportMe === 'function') {
+		if (typeof exportMe !== 'object' || Array.isArray(exportMe) || exportMe === null) {
 			freeModule.exports = exportMe;
 		}
 		else {

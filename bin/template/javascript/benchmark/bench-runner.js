@@ -4,7 +4,7 @@ function loadCode (modName, varName) {
 	try {
 		imported = require(modName);
 	} catch (exception) {
-		// console.error('loadCode', exception);
+		console.warn('loadCode', exception);
 		if (typeof window === 'undefined') {
 			throw new Error(varName + ' = require(' + modName + ') unable to load or find in globals');
 		}
@@ -20,13 +20,20 @@ function loadCode (modName, varName) {
 
 var runBenchmark = loadCode('./bench-tools', 'runBenchmark');
 
+var TestClosureObj = loadCode('./test-closure-obj', 'TestClosureObj');
+
 // Each test added here needs to be added to index.html as well
+// can only run one at a time or output gets mixed up
 var Tests = [
 	loadCode('./test-find', 'TestFind'),
+	TestClosureObj[0],
+	TestClosureObj[1],
 ];
 
+var async = Tests.length === 1;
+
 Tests.forEach(function BenchMarkTest(tests) {
-	runBenchmark(tests);
+	runBenchmark(tests, async);
 });
 
 
