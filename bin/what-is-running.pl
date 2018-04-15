@@ -15,6 +15,7 @@ while (my $line = <>)
 	$line = "${prefix}DOCUZILLA     $line\n" if $line =~ m{mono .+ Docuzilla}xms;
 	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{python .+ (SimpleHTTP|http\.server)}xms;
 	$line = "${prefix}CHARLES PROXY $line\n" if $line =~ m{java .+ -jar \s+ /usr/lib/charles-proxy/charles.jar}xms;
+	$line = "${prefix}ATOM IDE      $line\n" if $line =~ m{/Applications/Atom.app/Contents/Frameworks/Atom}xms;
 	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ $me/bin/WebStorm}xms;
 	$line = "${prefix}INTELLIJ IDE  $line\n" if $line =~ m{java .+ $me/bin/idea}xms;
 	$line = "${prefix}INTELLIJ NODE $line\n" if $line =~ m{node(js)? .+ idea .+ JavaScriptLanguage}xms;
