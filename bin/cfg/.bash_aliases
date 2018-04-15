@@ -73,6 +73,9 @@ if [ "x$COMPANY" == "xwipro" ]; then
 	alias grom='git-rebase.sh origin/master'
 	alias yts='yarn test:summary'
 	alias ytw='yarn test:watch'
+	alias cdie8='pushd ~/workspace/projects/pas-card-controls-cwa-mca-ie8'
+	alias cdfe='pushd ~/workspace/projects/pas-card-controls-cwa'
+	alias cdkx='pushd ~/workspace/projects/know-tx'
 
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
 	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
