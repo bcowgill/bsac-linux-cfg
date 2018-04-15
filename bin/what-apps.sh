@@ -1,6 +1,6 @@
 #!/bin/bash
 # filter processes for apps of interest
-ps -ef --cols 256 | \
+pswide.sh | \
 	egrep "node|grunt|perl|python|java|ruby|elixir|keep-it-up|auto-build|baloo_file_extractor|emacs|vim|nano" | \
 	grep -v grep | \
 	grep -v what-is-running | \

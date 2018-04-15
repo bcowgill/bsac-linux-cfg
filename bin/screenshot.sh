@@ -3,7 +3,7 @@
 
 while [ true ]
 do
-	if [ `ps -ef --cols 256 | grep gnome-screenshot | grep -v grep | wc -l` == "0" ]; then
+	if [ `pswide.sh | grep gnome-screenshot | grep -v grep | wc -l` == "0" ]; then
 		gnome-screenshot --interactive
 	fi
 done

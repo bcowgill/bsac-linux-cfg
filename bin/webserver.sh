@@ -8,6 +8,11 @@ HTTP_MOD=SimpleHTTPServer
 # for python 3.0+
 #HTTP_MOD=http.server
 
+if [ "x$PORT" == "xslay" ]; then
+	PORT=
+	DOCROOT=slay
+fi
+
 if [ -z "$PORT" ]; then
 	if [ -z "$npm_package_config_port" ]; then
 		PORT=9999
@@ -21,6 +26,18 @@ if [ "x$DOCROOT" == "x" ]; then
 	DOCROOT=.
 fi
 
+if [ $DOCROOT == slay ]; then
+	# THIS WAS TESTED ON A MAC! may differ for Linux?
+	echo will slay webserver on port $PORT
+	echo `ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b"`
+	PID=`ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b" | perl -pne 's{\A \s+ \d+ \s+ (\d+) .+ \z}{$1}xmsg'`
+	echo PID=$PID
+	if [ ! -z "$PID" ]; then
+		slay.sh $PID
+	fi
+	exit 0
+fi
+
 [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
 LOG=/tmp/$USER/webserver-$PORT.log
 pushd $DOCROOT
@@ -28,13 +45,7 @@ pushd $DOCROOT
 (echo Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
 python -m $HTTP_MOD $PORT >> $LOG 2>&1 &
 sleep 2
-if which sw_vers > /dev/null; then
-  # MACOS
-	ps -ef -ww | grep python | grep $HTTP_MOD
-else
-	# linux below, mac above
-	ps -ef --cols 256 | grep python | grep $HTTP_MOD
-fi
+pswide.sh | grep python | grep $HTTP_MOD
 wget --output-document=/dev/null http://localhost:$PORT/favicon.ico
 popd
 ps -ef | grep -i $HTTP_MOD

@@ -4,9 +4,14 @@
 PID=$1
 WAIT=2
 if [ -z "$PID" ]; then
-	ps -ef --cols 256
+	pswide.sh
 	echo "PID to kill? "
 	read PID
+fi
+
+if [ $PID -lt 1000 ]; then
+	echo "PID $PID is too low a number, might be important."
+	exit 1
 fi
 
 function slay
