@@ -23,11 +23,17 @@ else
 		--genre $SPOKEN \
 		--track $TRK \
 		--artist "$ARTIST" \
+		--COMM "$SONG" \
+		--TALB "$ALBUM" \
 		--TIT1 "$ALBUM" \
+		--TIT2 "$SONG" \
+		--TPE1 "$ARTIST" \
 		--TPE2 "$ARTIST" \
 		--OWNE "$ARTIST" \
 		--TPUB "$ARTIST" \
 		--TCOP "$ARTIST © $YEAR" \
+		--TCON "Spoken" \
+		--TYER $YEAR \
 		--TLAN "English" \
 		"$TO"
 
