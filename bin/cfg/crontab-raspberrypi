@@ -29,5 +29,5 @@
 * * * * * mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log 2>&1
 30 17,18 * * * $HOME/bin/backup-work.sh > /tmp/$LOGNAME/crontab-backup-work.log 2>&1
 */10 9,10,11,12,13,14,15,16,17,18 * * * $HOME/bin/wcdscan.sh > /tmp/$LOGNAME/crontab-wcdscan.log 2>&1
-0 0,6,12,18 * * * $HOME/bin/moon-shot.sh > /tmp/$LOGNAME/crontab-moon-shot.log 2>&1
+0 0,6,12,18 * * * PATH=$PATH:$HOME/bin $HOME/bin/moon-shot.sh > /tmp/$LOGNAME/crontab-moon-shot.log 2>&1
 
