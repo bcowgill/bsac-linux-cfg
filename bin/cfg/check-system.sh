@@ -259,7 +259,6 @@ else
 	PERL_PKG="cpanm:cpanminus"
 fi
 
-
 NVM_VER="v0.31.4"
 #NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
 NVM_DIR="$HOME/.nvm"
@@ -273,7 +272,9 @@ NVM_CMD="$NVM_DIR/nvm.sh"
 NVM_LTS_VER="v6.11.4"
 NVM_LATEST_VER="v8.6.0"
 
-N_VER="v2.1.7"
+N_VER=2.1.7
+N_VERS="lts stable latest"
+N_CMD=n
 
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
@@ -743,6 +744,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	NODE_CMD="nodejs"
 	NODE2_PKG="no"
 	NODE_CUSTOM_PKG="no"
+	N_VERS="latest"
 	SURGE_NPM_PKG=""
 	SCREENSAVER_PKG=""
 	DROPBOX_URL=""
@@ -1357,7 +1359,8 @@ which python && python --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
-which n && n --version && echo node lts version: `n --lts` && echo node stable version: `n --stable` && echo node latest version: `n --latest` && n
+which n && n --version
+# && echo node lts version: `n --lts` && echo node stable version: `n --stable` && echo node latest version: `n --latest` && n
 which npm && npm --version
 which pnpm && pnpm --version
 which yarn && yarn --version
@@ -2091,14 +2094,19 @@ if [ ! -z "$NODE_PKG" ]; then
 		exit 1
 	fi
 
-# show latest/stable/long term support node versions
-# n --lts
-# n --latest
-# n --stable
-# install latest/stable noe versions
-# sudo n stable
-# sudo n lts
-# sudo n latest
+	if [ ! -z "$N_VER" ]; then
+		if $N_CMD --version | grep $N_VER; then
+			OK "n command version correct"
+		else
+			GOTVER=`$N_CMD --version`
+			NOT_OK "n command version incorrect. trying to update: $GOTVER to $N_VER"
+		fi
+		for ver in $N_VERS
+		do
+			install_node $ver
+		done
+	fi
+
 # npm install -g pnpm
 # pnpm install -g pnpm
 

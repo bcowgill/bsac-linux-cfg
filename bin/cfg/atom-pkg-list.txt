@@ -92,9 +92,9 @@ Built-in Atom Packages (91)
 └── language-yaml@0.30.1
 
 Community Packages (5) /home/me/.atom/packages
-├── activate-power-mode@2.5.0
+├── activate-power-mode@2.7.0
 ├── atom-beautify@0.30.6
 ├── change-case@0.6.5
-├── file-icons@2.1.14
+├── file-icons@2.1.15
 └── language-javascript-jsx@0.3.7
 
