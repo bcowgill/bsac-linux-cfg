@@ -11,3 +11,8 @@ template-module.js is a template for a module that works with any module loader 
 test-X.js create a new module for each test you want to run and include in bench-runner.js and index.html.
 
 open index.html in a browser or yarn start to run the benchmarks.
+
+
+converted to pnpm package manager
+pnpm add microtimer benchmark lodash platform
+git add shrinkwrap.yaml
