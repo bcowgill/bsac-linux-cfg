@@ -1358,6 +1358,8 @@ which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
 which npm && npm --version
+which pnpm && pnpm --version
+which yarn && yarn --version
 which erl && erl -eval 'halt().'
 which elixir && elixir -v
 which php && php -v
@@ -2087,6 +2089,9 @@ if [ ! -z "$NODE_PKG" ]; then
 		sudo apt-get install nodejs
 		exit 1
 	fi
+
+# npm install -g pnpm
+# pnpm install -g pnpm
 
 	npm config set registry https://registry.npmjs.org/
 	echo $NPM_GLOBAL_PKG_LIST > npm-pkg.txt
