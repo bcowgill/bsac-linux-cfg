@@ -1357,6 +1357,7 @@ which python && python --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
+which n && n --version && echo node lts version: `n --lts` && echo node stable version: `n --stable` && echo node latest version: `n --latest` && n
 which npm && npm --version
 which pnpm && pnpm --version
 which yarn && yarn --version
@@ -2090,6 +2091,14 @@ if [ ! -z "$NODE_PKG" ]; then
 		exit 1
 	fi
 
+# show latest/stable/long term support node versions
+# n --lts
+# n --latest
+# n --stable
+# install latest/stable noe versions
+# sudo n stable
+# sudo n lts
+# sudo n latest
 # npm install -g pnpm
 # pnpm install -g pnpm
 
