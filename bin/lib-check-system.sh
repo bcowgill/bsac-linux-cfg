@@ -634,7 +634,9 @@ function uninstall_from {
 	local packages
 	packages="$1"
 	$PKGINST uninstall $packages
-	$PKGINST autoremove
+	if [ $PKGINST != brew ]; then
+		$PKGINST autoremove
+	fi
 }
 
 # install a command or file from a package

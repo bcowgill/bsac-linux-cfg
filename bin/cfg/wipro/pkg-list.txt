@@ -51,3 +51,4 @@ tmux
 webp
 wget
 xz
+yarn

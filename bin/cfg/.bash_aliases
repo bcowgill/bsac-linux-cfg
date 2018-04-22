@@ -173,6 +173,7 @@ alias ls-vbox='ls -al ~/VirtualBox\ VMs/ ~/.ievms/ ~/.config/VirtualBox/'
 alias ls-nm="locate node_modules | perl -pne 's{(/node_modules).+}{\$1\n}xmsg' | uniq"
 alias npm5="npm-json5"
 alias n-ls="ls /usr/local/n/versions/node"
+alias n-vers="echo node latest: `n --latest`; echo node stable: `n --stable`; echo node lts: `n --lts`"
 # some bower aliases
 alias bower-links=bower-links.sh
 alias bower-all-links='bower-links.sh ~'

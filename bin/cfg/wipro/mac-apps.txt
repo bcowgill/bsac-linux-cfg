@@ -32,10 +32,10 @@ FortiClientUpdate.app /Applications/FortiClient.app/Contents/Resources/runtime.h
 FortiClientUninstaller.app /Applications/
 GarageBand.app /Applications/
 Google Chrome.app /Applications/
-app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/63.0.3239.132/Google Chrome Framework.framework/Versions/A/Resources/
-Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/63.0.3239.132/
-app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/64.0.3282.167/Google Chrome Framework.framework/Versions/A/Resources/
-Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/64.0.3282.167/
+app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/65.0.3325.162/Google Chrome Framework.framework/Versions/A/Resources/
+Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/65.0.3325.162/
+app_mode_loader.app /Applications/Google Chrome.app/Contents/Versions/65.0.3325.181/Google Chrome Framework.framework/Versions/A/Resources/
+Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Versions/65.0.3325.181/
 iBooks.app /Applications/
 Image Capture.app /Applications/
 iMovie.app /Applications/
@@ -84,7 +84,6 @@ Microsoft Activity Monitor.app /Applications/Microsoft Word.app/Contents/SharedS
 Microsoft Error Reporting.app /Applications/Microsoft Word.app/Contents/SharedSupport/
 Office365ServiceV2.app /Applications/Microsoft Word.app/Contents/SharedSupport/
 Open XML for Excel.app /Applications/Microsoft Word.app/Contents/SharedSupport/
-Microsoft Error Reporting.app /Applications/Microsoft Word.app/Contents/XPCServices/com.microsoft.FontDigest-XPCService.xpc/Contents/SharedSupport/
 Mission Control.app /Applications/
 Notes.app /Applications/
 Numbers.app /Applications/
@@ -96,6 +95,9 @@ Pages.app /Applications/
 Photo Booth.app /Applications/
 Photos.app /Applications/
 Preview.app /Applications/
+Pulse Secure.app /Applications/
+pdv.app /Applications/Pulse Secure.app/Contents/Plugins/JamUI/
+PulseTray.app /Applications/Pulse Secure.app/Contents/Plugins/JamUI/
 QuickTime Player.app /Applications/
 Reminders.app /Applications/
 Remote Desktop Connection.app /Applications/
@@ -107,6 +109,10 @@ Autoupdate.app /Applications/Sourcetree.app/Contents/Frameworks/Sparkle.framewor
 Stickies.app /Applications/
 System Preferences.app /Applications/
 TextEdit.app /Applications/
+The Unarchiver.app /Applications/
+Autoupdate.app /Applications/The Unarchiver.app/Contents/Frameworks/DevMateKit.framework/Versions/A/Resources/
+Problem Reporter Sandboxed.app /Applications/The Unarchiver.app/Contents/Frameworks/DevMateKit.framework/Versions/A/Resources/
+Problem Reporter.app /Applications/The Unarchiver.app/Contents/Frameworks/DevMateKit.framework/Versions/A/Resources/
 Time Machine.app /Applications/
 Activity Monitor.app /Applications/Utilities/
 AirPort Utility.app /Applications/Utilities/
@@ -126,6 +132,9 @@ System Information.app /Applications/Utilities/
 Terminal.app /Applications/Utilities/
 VoiceOver Utility.app /Applications/Utilities/
 VoiceOverUtilityCacheBuilder.app /Applications/Utilities/VoiceOver Utility.app/Contents/OtherBinaries/
+VirtualBox.app /Applications/
+VirtualBoxVM.app /Applications/VirtualBox.app/Contents/Resources/
+vmstarter.app /Applications/VirtualBox.app/Contents/Resources/
 VMware AirWatch Agent.app /Applications/
 VMware AirWatch Enrollment.app /Applications/VMware AirWatch Agent.app/Contents/Resources/
 Xcode.app /Applications/

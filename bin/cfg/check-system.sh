@@ -2103,7 +2103,8 @@ if [ ! -z "$NODE_PKG" ]; then
 			OK "n command version correct"
 		else
 			GOTVER=`$N_CMD --version`
-			NOT_OK "n command version incorrect. trying to update: $GOTVER to $N_VER"
+			NOT_OK "n command version incorrect, expected $N_VER"
+			exit 99
 		fi
 		for ver in $N_VERS
 		do
