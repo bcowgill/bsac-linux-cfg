@@ -12,7 +12,10 @@ function it (description, fnTest) {
 	}
 	catch (exception) {
 		console.error('   ✖ ' + description);
-		console.error(exception);
+		console.error('      ' + exception.name + ' ' + exception.operator);
+		console.error('      expected: ', exception.expected);
+		console.error('           got: ', exception.actual);
+		// console.error(exception);
     }
 }
 
@@ -29,14 +32,14 @@ function getObj () {
  * Iterates over an object's own properties, executing the `callback` for each.
  *
  * @private
- * @param {Object} object The object to iterate over.
+ * @param {Object} object The object/array to iterate over.
  * @param {Function} callback The function executed per own property.
  */
 function forOwn(object, callback) {
 	for (var key in object) {
-	if (hasOwnProperty.call(object, key)) {
-		callback(object[key], key, object);
-	}
+		if (hasOwnProperty.call(object, key)) {
+			callback(object[key], key, object);
+		}
 	}
 }
 
@@ -56,7 +59,19 @@ function deepFreeze (obj) {
 }
 
 function clone (obj) {
-	return obj;
+	return Object.assign({}, obj);
+}
+
+function deepClone (obj) {
+	var newObj = obj;
+	// return JSON.parse(JSON.stringify(obj));
+	if (obj !== null && typeof obj === 'object') {
+		newObj = Array.isArray(obj) ? [] : {};
+		forOwn(obj, function cloneEach (value, key) {
+			newObj[key] = deepClone(value);
+		});
+	}
+	return newObj;
 }
 
 function tryMe (fn) {
@@ -64,67 +79,87 @@ function tryMe (fn) {
 		fn();
 	}
 	catch (exception) {
-		console.error(exception);
+		console.error('      ' + exception);
 	}
 }
 
-function poke (obj) {
-	// console.log('obj', obj);
-
-	tryMe(function setX () {
-		obj.x = 23;
-	});
-	// console.log('obj after x = 23', obj);
-	it('should be frozen for .x = 23', function testPokeX () {
-		assert.deepEqual(obj, getObj());
-	});
-
-	tryMe(function changeList () {
-		obj.list[1] = 88;
-	});
-	// console.log('obj after list change 1 = 88', obj);
-	it('should be frozen for .list[1] = 88', function testPokeList () {
-		assert.deepEqual(obj, getObj());
-	});
-
-	tryMe(function pushList () {
-		obj.list.push(5);
-	});
-	// console.log('obj after list push 5', obj);
-	it('should be frozen for .list.push 5', function testPokeListPush () {
-		assert.deepEqual(obj, getObj());
-	});
-
-	tryMe(function setProp () {
-		obj.props.b = 1;
-	});
-	// console.log('obj after props b = 1', obj);
-	it('should be frozen for .props.b = 1', function testPokePropSet () {
-		assert.deepEqual(obj, getObj());
-	});
-
-	tryMe(function addProp () {
-		obj.props.c = 12;
-	});
-	// console.log('obj after props c = 12', obj);
-	it('should be frozen for .props.c = 12', function testPokePropNew () {
-		assert.deepEqual(obj, getObj());
-	});
-
-	tryMe(function delProp () {
-		delete obj.props.a;
-	});
-	// console.log('obj after delete props a', obj);
-	it('should be frozen for delete .props.a', function testPokePropDelete () {
+function pokeTest (obj, desc, fnMutate) {
+	tryMe(fnMutate(obj));
+	it(desc, function testPoke () {
 		assert.deepEqual(obj, getObj());
 	});
 }
 
-console.log('freeze obj');
-poke(freeze(getObj()));
+function pokeOkTest (obj, desc, fnMutate, fnTest) {
+	tryMe(fnMutate(obj));
+	it(desc, function testPokeOk () {
+		fnTest();
+	});
+}
 
-console.log('deepFreeze obj');
-poke(deepFreeze(getObj()));
+function poke (obj) {
+	pokeTest(obj, 'should be frozen for .x = 23', function setX (obj) {
+		return (function setObjX () { obj.x = 23; });
+	});
+
+	pokeTest(obj, 'should be frozen for .list[1] = 88', function changeList (obj) {
+		return (function changeObjList () { obj.list[1] = 88; });
+	});
+
+	pokeTest(obj, 'should be frozen for .list.push 5', function pushList (obj) {
+		return (function pushObjList () { obj.list.push(5); });
+	});
+
+	pokeTest(obj, 'should be frozen for .props.b = 1', function setProp (obj) {
+		return (function setObjProp () { obj.props.b = 1; });
+	});
+
+	pokeTest(obj, 'should be frozen for .props.c = 12', function addProp (obj) {
+		return (function addObjProp () { obj.props.c = 12; });
+	});
+
+	pokeTest(obj, 'should be frozen for delete .props.a', function delProp (obj) {
+		return ( function delObjProp () { delete obj.props.a; });
+	});
+}
+
+function pokeOk (obj) {
+	pokeOkTest(obj, 'should be mutable for .x = 23', function setXOk (obj) {
+		return (function setObjX () { obj.x = 23; });
+	}, function testSetXOk () {
+		assert.equal(obj.x, 23);
+	});
+
+	pokeOkTest(obj, 'should be mutable for .list[1] = 88', function changeList (obj) {
+		return (function changeObjList () { obj.list[1] = 88; });
+	}, function testChangeObjListOk () {
+		assert.equal(obj.list[1], 88);
+	});
+
+	pokeOkTest(obj, 'should be mutable for .list.push 5', function pushList (obj) {
+		return (function pushObjList () { obj.list.push(5); });
+	}, function testPushObjListOk () {
+		assert.equal(obj.list[obj.list.length - 1], 5);
+	});
+
+	pokeOkTest(obj, 'should be mutable for .props.b = 1', function setProp (obj) {
+		return (function setObjProp () { obj.props.b = 1; });
+	}, function testSetPropOk () {
+		assert.equal(obj.props.b, 1);
+	});
+
+	pokeOkTest(obj, 'should be mutable for .props.c = 12', function addProp (obj) {
+		return (function addObjProp () { obj.props.c = 12; });
+	}, function testAddPropOk () {
+		assert.equal(obj.props.c, 12);
+	});
+
+	pokeOkTest(obj, 'should be mutable for delete .props.a', function delProp (obj) {
+		return ( function delObjProp () { delete obj.props.a; });
+	}, function testDelPropOk () {
+		assert.equal('a' in obj.props, false);
+	});
+}
 
 describe('suite getObj', function suiteGetObj () {
 	it('should return object', function testGetObj () {
@@ -171,5 +206,29 @@ describe('suite freeze', function suiteFreeze () {
 		assert.equal(
 			freeze(42),
 			42);
+	});
+});
+
+describe('suite freeze obj [not recursively immutable]', function suiteFreezeObj () {
+	poke(freeze(getObj()));
+});
+
+describe('suite deepFreeze obj [immutable all the way down]', function suiteDeepFreezeObj () {
+	poke(deepFreeze(getObj()));
+});
+
+describe('suite clone obj [not recursively separate]', function suiteCloneObj () {
+	var obj = getObj();
+	pokeOk(clone(obj));
+	it('should leave original object as is', function testOriginal () {
+		assert.deepEqual(obj, getObj());
+	});
+});
+
+describe('suite deepClone obj [completely separate objects]', function suiteDeepCloneObj () {
+	var obj = getObj();
+	pokeOk(deepClone(obj));
+	it('should leave original object as is', function testOriginalDeep () {
+		assert.deepEqual(obj, getObj());
 	});
 });
