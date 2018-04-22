@@ -1273,6 +1273,7 @@ function pre_checks {
 }
 pre_checks
 
+echo CONFIG UNINSTALL_PKGS=$UNINSTALL_PKGS
 echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG INSTALL_FILES=$INSTALL_FILES
@@ -2033,6 +2034,9 @@ if [ ! -z $MACOS ]; then
 fi
 
 brew_taps_from "$BREW_TAPS"
+if [ ! -z "$UNINSTALL_PKGS" ]; then
+	uninstall_from "$UNINSTALL_PKGS"
+fi
 installs_from "$INSTALL_CMDS"
 installs_from "$INSTALL_FROM"
 installs_from "$CUSTOM_PKG"

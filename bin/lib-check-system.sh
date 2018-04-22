@@ -630,6 +630,13 @@ function brew_taps_from {
 	fi
 }
 
+function uninstall_from {
+	local packages
+	packages="$1"
+	$PKGINST uninstall $packages
+	$PKGINST autoremove
+}
+
 # install a command or file from a package
 function install_from {
 	local file package which
