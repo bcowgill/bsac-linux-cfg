@@ -630,12 +630,31 @@ function brew_taps_from {
 	fi
 }
 
+function filter_packages {
+	local packages remove
+	packages="$1"
+	remove="$2"
+	perl -e '
+		sub remove {
+			my ($package, $rhRemove) = @_;
+			my ($cmd_or_file, $package_name) = split(':', $package);
+			$package_name = $package_name || $cmd_or_file;
+			return $rhRemove->{$package_name};
+		}
+		my %remove = map { ($_, 1) } split(/\s+/, $ARGV[1]);
+		my @packages = grep { !remove ($_, \%remove) } split(/\s+/, $ARGV[0]);
+		print join(" ", @packages);
+	' "$packages" "$remove"
+}
+
 function uninstall_from {
 	local packages
 	packages="$1"
-	$PKGINST uninstall $packages
-	if [ $PKGINST != brew ]; then
+	if [ "$PKGINST" != "brew" ]; then
+		$PKGINST remove $packages
 		$PKGINST autoremove
+	else
+		$PKGINST uninstall $packages
 	fi
 }
 
@@ -1333,6 +1352,12 @@ function install_npm_commands_from {
 		error=0
 	fi
 	return $error
+}
+
+function uninstall_npm_global_packages {
+	local packages
+	packages="$1"
+	sudo npm remove -g $packages
 }
 
 # Install a global command with the node package manager

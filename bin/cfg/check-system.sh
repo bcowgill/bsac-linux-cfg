@@ -259,6 +259,10 @@ else
 	PERL_PKG="cpanm:cpanminus"
 fi
 
+N_VER=2.1.7
+N_VERS="lts stable latest"
+N_CMD=n
+
 NVM_VER="v0.31.4"
 #NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
 NVM_DIR="$HOME/.nvm"
@@ -272,9 +276,9 @@ NVM_CMD="$NVM_DIR/nvm.sh"
 NVM_LTS_VER="v6.11.4"
 NVM_LATEST_VER="v8.6.0"
 
-N_VER=2.1.7
-N_VERS="lts stable latest"
-N_CMD=n
+PNPM_VER="1.41.23"
+PNPM_CMD=pnpm
+PNPM_NPM_PKG=pnpm
 
 NODE_VER="v0.12.9"
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
@@ -712,7 +716,6 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		chromium
 		gnash
 		/usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash
-		tightvncserver
 		screen
 		gpm
 		fbcat
@@ -731,7 +734,6 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		perltidy
 		adjtimex
 		audacity
-		gimp
 		meld
 		htop
 		ncdu
@@ -739,6 +741,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		banner:sysvbanner
 		cowsay
 		linuxlogo
+	"
+	UNINSTALL_PKGS="
+		tightvncserver
+		gimp
 	"
 	NODE_VER="v0.6.19"
 	NODE_CMD="nodejs"
@@ -864,6 +870,8 @@ fi
 
 NPM_GLOBAL_PKG="
 	n
+	pnpm
+	yarn
 	npm-find
 	npm-json5
 	node-inspector
@@ -888,7 +896,6 @@ NPM_GLOBAL_PKG="
 	ncu:npm-check-updates
 	tsc:typescript tslint typings tsfmt:typescript-formatter
 	alm
-	yarn
 	create-react-app
 	$NPM_GLOBAL_LINUX_PKG
 "
@@ -1274,6 +1281,7 @@ function pre_checks {
 pre_checks
 
 echo CONFIG UNINSTALL_PKGS=$UNINSTALL_PKGS
+echo CONFIG UNINSTALL_NPM_PKGS=$UNINSTALL_NPM_PKGS
 echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG INSTALL_FILES=$INSTALL_FILES
@@ -2112,8 +2120,23 @@ if [ ! -z "$NODE_PKG" ]; then
 		done
 	fi
 
-# npm install -g pnpm
-# pnpm install -g pnpm
+	if [ ! -z $PNPN_VER ]; then
+		if $PNPM_CMD --version | grep $PNPM_VER; then
+			OK "pnpm command version correct"
+		else
+			GOTVER=`$PNPM_CMD --version`
+			NOT_OK "MAYBE pnpm command version incorrect, expected $PNPM_VER will try to upgrade"
+			# npm install -g pnpm
+			$PNPM_CMD install -g $PNPM_NPM_PKG
+			if $PNPM_CMD --version | grep $PNPM_VER; then
+				OK "pnpm command version correct"
+			else
+				GOTVER=`$PNPM_CMD --version`
+				NOT_OK "pnpm command failed to upgrade to version $PNPM_VER, got version $GOTVER"
+				exit 93
+			fi
+		fi
+	fi
 
 	npm config set registry https://registry.npmjs.org/
 	echo $NPM_GLOBAL_PKG_LIST > npm-pkg.txt
