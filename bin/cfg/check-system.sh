@@ -106,6 +106,7 @@ BIG_DATA="/data"
 USE_KDE=1
 USE_JAVA=""
 SVN_PKG=""
+GRADLE_PKG=""
 MVN_PKG=""
 GITSVN_PKG=""
 USE_SCHEMACRAWLER=""
@@ -174,8 +175,11 @@ GIT_PKG_MAKE="libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev buil
 #GIT_URL=https://git-core.googlecode.com/files/$GIT_TAR.tar.gz
 
 MVN_CMD="mvn"
-#MVN_PKG="mvn:maven"
+MVN_PKG="mvn:maven"
 MVN_VER="3.0.4"
+
+GRADLE_CMD="gradle"
+GRADLE_PKG="gradle"
 
 JAVA_VER=java-7-openjdk-amd64
 JAVA_JVM=/usr/lib/jvm
@@ -496,6 +500,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 	DRUID_PKG=""
 	USE_REDIS=1
 	USE_MONGO=1
+	MVN_PKG=""
+	GRADLE_PKG=""
 
 	DIGIKAM_PKG="digikam /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so:gstreamer1.0-plugins-ugly /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so:gstreamer1.0-libav"
 	# ttf-ancient-fonts - Symbola used for emacs emoji
@@ -516,6 +522,10 @@ if [ "$HOSTNAME" == "akston" ]; then
 		cowsay
 		gimp
 		dia
+	"
+	UNINSTALL_PKGS="
+		maven
+      gradle
 	"
 	#NODE_PKG=""
 	#SUBLIME_PKG=""
@@ -555,6 +565,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	JAVA_PKG=$JAVA_VER.dmg
 	MVN_PKG="mvn:maven"
 	MVN_VER="3.5.0"
+	GRADLE_PKG="gradle"
 	NODE_CMD=node
 	NODE_VER="v8.6.0"
 	NVM_VER="0.31.4" # TODO
@@ -598,6 +609,7 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	USE_JAVA=""
 	SVN_PKG=""
 	MVN_PKG=""
+	GRADLE_PKG=""
 	GITSVN_PKG=""
 	USE_SCHEMACRAWLER=""
 	USE_POSTGRES=""
@@ -922,6 +934,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$CHARLES_PKG"       ] && CHARLES_CMD=""
 [ -z "$VIRTUALBOX_PKG"    ] && VIRTUALBOX_CMDS=""
 [ -z "$MVN_PKG"           ] && MVN_CMD=""
+[ -z "$GRADLE_PKG"        ] && GRADLE_CMD=""
 [ -z "$GITSVN_PKG"        ] && GITSVN_CMD=""
 [ -z "$DIFFMERGE_PKG"     ] && DIFFMERGE_CMD=""
 [ -z "$P4MERGE_PKG"       ] && P4MERGE_CMD=""
@@ -1175,6 +1188,7 @@ INSTALL_FROM="
 	$I3WM_PKG
 	$EMACS_PKG
 	$MVN_PKG
+	$GRADLE_PKG
 	$POSTGRES_PKG
 	$DRUID_PKG
 	$REDIS_PKG
@@ -1195,6 +1209,7 @@ COMMANDS="
 	$RUBY_SASS_COMMANDS
 	$SVN_CMD
 	$MVN_CMD
+	$GRADLE_CMD
 	$I3WM_CMD
 "
 
@@ -2045,9 +2060,13 @@ brew_taps_from "$BREW_TAPS"
 if [ ! -z "$UNINSTALL_PKGS" ]; then
 	uninstall_from "$UNINSTALL_PKGS"
 fi
-installs_from "$INSTALL_CMDS"
-installs_from "$INSTALL_FROM"
-installs_from "$CUSTOM_PKG"
+
+FILTERED_LIST=`filter_packages "$INSTALL_CMDS" "$UNINSTALL_PKGS"`
+installs_from "$FILTERED_LIST"
+FILTERED_LIST=`filter_packages "$INSTALL_FROM" "$UNINSTALL_PKGS"`
+installs_from "$FILTERED_LIST"
+FILTERED_LIST=`filter_packages "$CUSTOM_PKG" "$UNINSTALL_PKGS"`
+installs_from "$FILTERED_LIST"
 
 if [ -z $MACOS ]; then
 	file_has_text "/etc/gpm.conf" "append='-B 321'" "console mouse driver reversed button order"

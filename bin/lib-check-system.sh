@@ -637,7 +637,7 @@ function filter_packages {
 	perl -e '
 		sub remove {
 			my ($package, $rhRemove) = @_;
-			my ($cmd_or_file, $package_name) = split(':', $package);
+			my ($cmd_or_file, $package_name) = split(":", $package);
 			$package_name = $package_name || $cmd_or_file;
 			return $rhRemove->{$package_name};
 		}
