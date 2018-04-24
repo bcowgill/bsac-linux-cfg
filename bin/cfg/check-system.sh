@@ -363,6 +363,44 @@ ATOM_APM_PKG="
 	change-case
 	atom-beautify
 	language-javascript-jsx
+	prettier-atom
+	atom-transpose
+	case-keep-replace
+	change-case
+	copy-path
+	duplicate-line-or-selection
+	editorconfig
+	file-icons
+	highlight-selected
+	local-history
+	project-manager
+	related
+	set-syntax
+	sort-lines
+	sublime-style-column-selection
+	tab-foldername-index
+	toggle-quotes
+	atom-wrap-in-tag
+	atom-ternjs
+	autoclose-html
+	autocomplete-modules
+	color-picker
+	docblockr
+	emmet
+	emmet-jsx-css-modules
+	es6-javascript
+	js-hyperclick
+	hyperclick
+	pigments
+	linter-eslint
+	tree-view-copy-relative-path
+	lodash-snippets
+	language-javascript-jsx
+	language-babel
+	react-es7-snippets
+	atom-jest-snippets
+	one-dark-ui
+	dracula-theme
 "
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
