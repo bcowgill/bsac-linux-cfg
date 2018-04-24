@@ -565,6 +565,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 		maven
       gradle
 	"
+	UNINSTALL_NPM_GLOBAL_PKGS=""
 	#NODE_PKG=""
 	#SUBLIME_PKG=""
 	SUBLIME_CFG=""
@@ -795,6 +796,10 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	UNINSTALL_PKGS="
 		tightvncserver
 		gimp
+	"
+	UNINSTALL_NPM_GLOBAL_PKGS="
+		jscs
+		yo
 	"
 	NODE_VER="v0.6.19"
 	NODE_CMD="nodejs"
@@ -1334,7 +1339,7 @@ function pre_checks {
 pre_checks
 
 echo CONFIG UNINSTALL_PKGS=$UNINSTALL_PKGS
-echo CONFIG UNINSTALL_NPM_PKGS=$UNINSTALL_NPM_PKGS
+echo CONFIG UNINSTALL_NPM_GLOBAL_PKGS=$UNINSTALL_NPM_GLOBAL_PKGS
 echo CONFIG INSTALL_CMDS=$INSTALL_CMDS
 echo CONFIG INSTALL_FROM=$INSTALL_FROM
 echo CONFIG INSTALL_FILES=$INSTALL_FILES
@@ -1834,7 +1839,8 @@ if [ ! -z "$VIRTUALBOX_PKG" ]; then
 	fi
 
 	apt_has_key VirtualBox http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc "key fingerprint for VirtualBox missing"
-	installs_from "$VIRTUALBOX_PKG" "additional packages for virtualbox"
+	FILTERED_LIST=`filter_packages "$VIRTUALBOX_PKG" "$UNINSTALL_PKGS"`
+	installs_from "$FILTERED_LIST" "additional packages for virtualbox"
 
 	cmd_exists dkms "need dkms command for VirtualBox"
 	cmd_exists $VIRTUALBOX_CMD || (sudo apt-get update; sudo apt-get install $VIRTUALBOX_PKG)
@@ -1897,7 +1903,8 @@ which git
 if git --version | grep " version " | grep $GIT_VER; then
 	OK "git command version correct"
 	if [ ! -z "$GIT_PKG_AFTER" ]; then
-		installs_from "$GIT_PKG_AFTER" "additional git packages"
+		FILTERED_LIST=`filter_packages "$GIT_PKG_AFTER" "$UNINSTALL_PKGS"`
+		installs_from "$FILTERED_LIST" "additional git packages"
 	else
 		OK "will not install git tools unless GIT_PKG_AFTER is non-zero"
 	fi
@@ -1910,7 +1917,8 @@ else
 		sudo apt-get update
 		apt-cache show git | grep '^Version:'
 		if [ ! -z "$GIT_PKG_AFTER" ]; then
-			installs_from "$GIT_PKG_AFTER" "additional git packages"
+			FILTERED_LIST=`filter_packages "$GIT_PKG_AFTER" "$UNINSTALL_PKGS"`
+			installs_from "$FILTERED_LIST" "additional git packages"
 		else
 			OK "will not install git tools unless GIT_PKG_AFTER is non-zero"
 		fi
@@ -2113,7 +2121,8 @@ fi # not MACOS
 BAIL_OUT install
 
 if [ ! -z "$NODE_PKG" ]; then
-	installs_from "$NODE_PKG_LIST"
+	FILTERED_LIST=`filter_packages "$NODE_PKG_LIST" "$UNINSTALL_PKGS"`
+	installs_from "$FILTERED_LIST"
 	if [ -z $MACOS ]; then
 		dir_exists "$NODE_LIB" "global node command"
 	fi
@@ -2136,7 +2145,8 @@ BAIL_OUT perl
 
 BAIL_OUT ruby
 
-installs_from "$INSTALL_FILE_PACKAGES"
+FILTERED_LIST=`filter_packages "$INSTALL_FILE_PACKAGES" "$UNINSTALL_PKGS"`
+installs_from "$FILTERED_LIST"
 
 BAIL_OUT files
 
@@ -2197,13 +2207,15 @@ if [ ! -z "$NODE_PKG" ]; then
 
 	npm config set registry https://registry.npmjs.org/
 	echo $NPM_GLOBAL_PKG_LIST > npm-pkg.txt
+	if [ ! -z "$UNINSTALL_NPM_GLOBAL_PKGS" ]; then
+		uninstall_npm_global_packages "$UNINSTALL_NPM_GLOBAL_PKGS"
+	fi
+	FILTERED_LIST=`filter_packages "$NPM_GLOBAL_PKG_LIST" "$UNINSTALL_NPM_GLOBAL_PKGS"`
 	if [ ! -z "$FRESH_NPM" ]; then
 		always_install_npm_global_from npm
-		always_install_npm_globals_from "$NPM_GLOBAL_PKG_LIST"
-		install_npm_global_commands_from "$NPM_GLOBAL_PKG_LIST"
-	else
-		install_npm_global_commands_from "$NPM_GLOBAL_PKG_LIST"
+		always_install_npm_globals_from "$FILTERED_LIST"
 	fi
+	install_npm_global_commands_from "$FILTERED_LIST"
 	is_npm_global_package_installed grunt "need grunt installed to go further."
 	if [ ! -z "$NVM_URL" ]; then
 		NVM_INST="$DOWNLOAD/nvm/install.sh"
