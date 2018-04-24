@@ -1,0 +1,47 @@
+
+#.bashrc:
+#if [ -f ~/.bash_aliases ]; then
+#    . ~/.bash_aliases
+#fi
+
+#BSAC match cygwin put functions in separate sourced file
+#if [ -f ~/.bash_functions ]; then
+#    . ~/.bash_functions
+#fi
+
+alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
+alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
+alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
+alias vivim='$EDITOR ~/.vimrc'
+
+# go up the dir tree quickly
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
+alias ........='cd ../../../../../../..'
+
+# some aliases for git rebasing
+alias gss='git status; echo == $? =='
+alias gsm="git status | perl -ne '\$done = 1 if m{Untracked \\s+ files:}xms; print unless \$done;'"
+alias gfa='git fetch --all'
+alias gbl='git branch --list'
+alias gblr='git branch --list --remote'
+alias gblu='git fetch --all; touch branches.now.lst; mv branches.now.lst branches.old.lst; git branch --list --remote | sort > branches.now.lst; vdiff branches.old.lst branches.now.lst'
+alias gpr='touch pause-build.timestamp; git pull --rebase'
+alias gca='git commit --amend'
+alias gcp='git cherry-pick'
+alias gma='git merge --abort'
+alias gmt='git mergetool'
+alias gra='git rebase --abort'
+alias grc='git rebase --continue'
+alias grs='git rebase --skip'
+alias glog='git log --oneline --graph --decorate --all'
+alias ggraph='git graph --simplify-by-decoration'
+alias gitpp='touch pause-build.timestamp; git pull --rebase && git push && datestamp.sh'
+alias rpb='rm pause-build.timestamp'
+alias pause='touch pause-build.timestamp'
+
+alias lss='ls -al -oSr'   # list by size reversed
