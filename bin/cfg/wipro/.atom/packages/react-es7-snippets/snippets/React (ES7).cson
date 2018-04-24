@@ -1,0 +1,656 @@
+'.source.js.jsx':
+  'import React':
+    'prefix': 'imr'
+    'body': """
+      import React from 'react';
+      ${1}
+    """
+
+  'import ReactDom':
+    'prefix': 'imrd'
+    'body': """
+      import ReactDom from 'react-dom';
+      ${1}
+    """
+
+  'import React, { Component }':
+    'prefix': 'imrc'
+    'body': """
+      import React, { Component } from 'react';
+      ${1}
+    """
+
+  'import React, { Component, PropTypes }':
+    'prefix': 'imrcp'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+      ${1}
+    """
+
+  'React ES7 Component':
+    'prefix': 'rc'
+    'body': """
+      import React, { Component } from 'react';
+
+
+      export default class ${1:MyComponent} extends Component {
+
+        render() {
+          return (
+            ${2:<div>MyComponent</div>}
+          );
+        }
+
+      }
+    """
+
+  'React ES7 Component with PropTypes':
+    'prefix': 'rcp'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+
+
+      export default class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${2}
+        };
+
+        render() {
+          return (
+            ${3:<div>MyComponent</div>}
+          );
+        }
+
+      }
+    """
+
+  'React ES7 Component with Constructor':
+    'prefix': 'rcc'
+    'body': """
+      import React, { Component } from 'react';
+
+
+      export default class ${1:MyComponent} extends Component {
+
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            ${3}
+          };
+        }
+
+        render() {
+          return (
+            ${4:<div>MyComponent</div>}
+          );
+        }
+
+      }
+    """
+
+  'React ES7 Component with Constructor and PropTypes':
+    'prefix': 'rccp'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+
+
+      export default class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${2}
+        };
+
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            ${3}
+          };
+        }
+
+        render() {
+          return (
+            ${4:<div>MyComponent</div>}
+          );
+        }
+
+      }
+    """
+
+  'React ES7 Redux Container':
+    'prefix': 'rcredux'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+      import { connect } from 'react-redux';
+
+
+      class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${4}
+        };
+
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            ${5}
+          };
+        }
+
+        render() {
+          return (
+            ${6:<div>MyComponent</div>}
+          );
+        }
+
+      }
+
+      const mapStateToProps = (state) => ({
+        ${2}
+      });
+
+      const mapDispatchToProps = (dispatch) => ({
+        ${3}
+      });
+
+      export default connect(mapStateToProps, mapDispatchToProps)(${1:MyComponent});
+    """
+
+  'React ES7 Redux Container Decorator':
+    'prefix': 'rcreduxd'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+      import { connect } from 'react-redux';
+
+
+      @connect(
+        state => ({ ${2} }),
+      )
+      export default class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${3}
+        };
+
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            ${4}
+          };
+        }
+
+        render() {
+          return (
+            ${5:<div>MyComponent</div>}
+          );
+        }
+
+      }
+    """
+
+  'React ES7 Relay Container':
+    'prefix': 'rcrelay'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+      import Relay from 'react-relay';
+
+
+      class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${2:viewer}: PropTypes.object.isRequired,
+        };
+
+        render() {
+          return (
+            ${5:<div>MyComponent</div>}
+          );
+        }
+
+      }
+
+      export default Relay.createContainer(${1:MyComponent}, {
+        fragments: {
+          ${2:viewer}: () => Relay.QL`
+      			fragment on ${3:Viewer} {
+      				${4:id}
+      			}
+          `,
+        },
+      });
+    """
+
+  'React ES7 Relay Container initialVariables':
+    'prefix': 'rcrelayv'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+      import Relay from 'react-relay';
+
+
+      class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${2:viewer}: PropTypes.object.isRequired,
+        };
+
+        render() {
+          return (
+            ${6:<div>MyComponent</div>}
+          );
+        }
+
+      }
+
+      export default Relay.createContainer(${1:MyComponent}, {
+        initialVariables: {
+          ${4}
+        },
+        fragments: {
+          ${2:viewer}: () => Relay.QL`
+      			fragment on ${3:Viewer} {
+      				${5:id}
+      			}
+          `,
+        },
+      });
+    """
+
+  'React ES7 Relay Container prepareVariables':
+    'prefix': 'rcrelayvp'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+      import Relay from 'react-relay';
+
+
+      class ${1:MyComponent} extends Component {
+
+        static propTypes = {
+          ${2:viewer}: PropTypes.object.isRequired,
+        };
+
+        render() {
+          return (
+            ${8:<div>MyComponent</div>}
+          );
+        }
+
+      }
+
+      export default Relay.createContainer(${1:MyComponent}, {
+        initialVariables: {
+          ${4}
+        },
+        prepareVariables(prevVariables) {
+          const ${5:include} = !!prevVariables.${6:variable};
+          return {
+            ...prevVariables,
+            ${5:include},
+          };
+        },
+        fragments: {
+          ${2:viewer}: () => Relay.QL`
+            fragment on ${3:Viewer} {
+            ${7:id}
+          }
+          `,
+        },
+      });
+    """
+
+  'React ES7 Component export':
+    'prefix': 'rce'
+    'body': """
+      import React, { Component } from 'react';
+      import PropTypes from 'prop-types';
+
+
+      class ${1:Class} extends Component {
+
+        static propTypes = {
+          ${2}
+        };
+
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            ${3}
+          };
+        }
+
+        render() {
+          return (
+            ${4:<div>MyComponent</div>}
+          );
+        }
+
+      }
+
+      export default ${1:Class};
+    """
+
+  'React ES7 Functional Component':
+    'prefix': 'rfunc'
+    'body': """
+      import React from 'react';
+      import PropTypes from 'prop-types';
+
+
+      export default function ${1}(${3:props}) {
+        return (
+          ${4:<div>MyComponent</div>}
+        );
+      }
+
+      ${1}.propTypes = {
+        ${2}
+      };
+    """
+
+  'React ES7 Functional Arrow Component':
+    'prefix': 'rarrow'
+    'body': """
+      import React from 'react';
+      import PropTypes from 'prop-types';
+
+
+      const $1 = (${3:props}) => (
+        ${4:<div />}
+      );
+
+      ${1}.propTypes = {
+        ${2}
+      };
+
+      export default ${1};
+    """
+
+  'React ES7 Constructor':
+    'prefix': 'rconst'
+    'body': """
+      constructor(props) {
+        super(props);
+
+        ${1}
+      }
+    """
+
+  'React ES6 bind method to this':
+    'prefix': 'rbm',
+    'body': """
+      this.${1} = this.${1}.bind(this);
+    """
+
+  'React ES7 bind method to this':
+    'prefix': 'rbm7',
+    'body': """
+      this.${1} = ::this.${1};
+    """
+
+  'React componentWillMount (ES7)':
+    'prefix': 'cwm'
+    'body': """
+      componentWillMount() {
+        ${1}
+      }
+    """
+
+  'React componentDidMount (ES7)':
+    'prefix': 'cdm'
+    'body': """
+      componentDidMount() {
+        ${1}
+      }
+    """
+
+  'React componentWillReceiveProps (ES7)':
+    'prefix': 'cwr'
+    'body': """
+      componentWillReceiveProps(nextProps) {
+        ${1}
+      }
+    """
+
+  'React shouldComponentUpdate (ES7)':
+    'prefix': 'scu'
+    'body': """
+      shouldComponentUpdate(nextProps, nextState) {
+        ${1}
+      }
+    """
+
+  'React componentWillUpdate (ES7)':
+    'prefix': 'cwu'
+    'body': """
+      componentWillUpdate(nextProps, nextState) {
+        ${1}
+      }
+    """
+
+  'React componentDidUpdate (ES7)':
+    'prefix': 'cdu'
+    'body': """
+      componentDidUpdate(prevProps, prevState) {
+        ${1}
+      }
+    """
+
+  'React componentWillUnmount (ES7)':
+    'prefix': 'cwun'
+    'body': """
+      componentWillUnmount() {
+        ${1}
+      }
+    """
+
+  'React this.props':
+    'prefix': 'props'
+    'body': 'this.props${1}'
+
+  'React this.state':
+    'prefix': 'state'
+    'body': 'this.state${1}'
+
+  'React cx({ ... }) (ES7)':
+    'prefix': 'cx'
+    'body': """
+      cx({
+        ${1}: ${2},
+      });
+    """
+
+  'React static defaultProps = { ... } (ES7)':
+    'prefix': 'dp'
+    'body': """
+      static defaultProps = {
+        ${1}
+      };
+    """
+
+  'React static propTypes = { ... } (ES7)':
+    'prefix': 'pt'
+    'body': """
+      static propTypes = {
+        ${1}: PropTypes.${2:string},
+      };
+    """
+
+  'React static contextTypes = { ... } (ES7)':
+    'prefix': 'ct'
+    'body': """
+      static contextTypes = {
+        ${1}: PropTypes.${2:string},
+      };
+    """
+
+  'React static childContextTypes = { ... } (ES7)':
+    'prefix': 'cct'
+    'body': """
+      static childContextTypes = {
+        ${1}: PropTypes.${2:string},
+      };
+    """
+
+  'React getChildContext (ES7)':
+    'prefix': 'gcct'
+    'body': """
+      getChildContext() {
+        return ${1}
+      }
+    """
+
+  'React setState({ ... }) (ES7)':
+    'prefix': 'sst'
+    'body': """
+      this.setState({
+        ${1}: ${2},
+      });
+    """
+
+  # PropType array
+  'PropTypes.array':
+    'prefix': 'pta'
+    'body': 'PropTypes.array'
+  'PropTypes.array.isRequired':
+    'prefix': 'ptar'
+    'body': 'PropTypes.array.isRequired'
+
+  # PropType bool
+  'PropTypes.bool':
+    'prefix': 'ptb'
+    'body': 'PropTypes.bool'
+  'PropTypes.bool.isRequired':
+    'prefix': 'ptbr'
+    'body': 'PropTypes.bool.isRequired'
+
+  # PropType function
+  'PropTypes.func':
+    'prefix': 'ptf'
+    'body': 'PropTypes.func'
+  'PropTypes.func.isRequired':
+    'prefix': 'ptfr'
+    'body': 'PropTypes.func.isRequired'
+
+  # PropType number
+  'PropTypes.number':
+    'prefix': 'ptn'
+    'body': 'PropTypes.number'
+  'PropTypes.number.isRequired':
+    'prefix': 'ptnr'
+    'body': 'PropTypes.number.isRequired'
+
+  # PropType object
+  'PropTypes.object':
+    'prefix': 'ptobj'
+    'body': 'PropTypes.object'
+  'PropTypes.object.isRequired':
+    'prefix': 'ptobjr'
+    'body': 'PropTypes.object.isRequired'
+
+  # PropType string
+  'PropTypes.string':
+    'prefix': 'pts'
+    'body': 'PropTypes.string'
+  'PropTypes.string.isRequired':
+    'prefix': 'ptsr'
+    'body': 'PropTypes.string.isRequired'
+
+  # PropType node
+  'PropTypes.node':
+    'prefix': 'ptnode'
+    'body': 'PropTypes.node'
+  'PropTypes.node.isRequired':
+    'prefix': 'ptnoder'
+    'body': 'PropTypes.node.isRequired'
+
+  # PropType element
+  'PropTypes.element':
+    'prefix': 'pte'
+    'body': 'PropTypes.element'
+  'PropTypes.element.isRequired':
+    'prefix': 'pter'
+    'body': 'PropTypes.element.isRequired'
+
+  # PropType instanceOf
+  'PropTypes.instanceOf':
+    'prefix': 'pti'
+    'body': 'PropTypes.instanceOf(${1})'
+  'PropTypes.instanceOf.isRequired':
+    'prefix': 'ptir'
+    'body': 'PropTypes.instanceOf(${1}).isRequired'
+
+  # PropType oneOf
+  'PropTypes.oneOf':
+    'prefix': 'ptof'
+    'body': 'PropTypes.oneOf([${1}])'
+  'PropTypes.oneOf.isRequired':
+    'prefix': 'ptofr'
+    'body': 'PropTypes.oneOf([${1}]).isRequired'
+
+  # PropType oneOfType
+  'PropTypes.oneOfType':
+    'prefix': 'ptoft'
+    'body': """
+      PropTypes.oneOfType([
+        ${1}
+      ])
+    """
+  'PropTypes.oneOfType.isRequired':
+    'prefix': 'ptoftr'
+    'body': """
+      PropTypes.oneOfType([
+        ${1}
+      ]).isRequired
+    """
+
+  # PropType arrayOf
+  'PropTypes.arrayOf':
+    'prefix': 'ptao'
+    'body': 'PropTypes.arrayOf(${1})'
+  'PropTypes.arrayOf.isRequired':
+    'prefix': 'ptaor'
+    'body': 'PropTypes.arrayOf(${1}).isRequired'
+
+  # PropType objectOf
+  'PropTypes.objectOf':
+    'prefix': 'ptobjo'
+    'body': 'PropTypes.objectOf(${1})'
+  'PropTypes.objectOf.isRequired':
+    'prefix': 'ptobjor'
+    'body': 'PropTypes.objectOf(${1}).isRequired'
+
+  # PropType shape
+  'PropTypes.shape({...})':
+    'prefix': 'ptshape'
+    'body': """
+      PropTypes.shape({
+        ${1}
+      })
+    """
+  'PropTypes.shape({...}).isRequired':
+    'prefix': 'ptshaper'
+    'body': """
+      PropTypes.shape({
+        ${1}
+      }).isRequired
+    """
+
+  # PropType any
+  'PropTypes.any':
+    'prefix': 'ptany'
+    'body': 'PropTypes.any'
+  'PropTypes.any.isRequired':
+    'prefix': 'ptanyr'
+    'body': 'PropTypes.any.isRequired'
