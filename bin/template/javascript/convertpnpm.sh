@@ -7,15 +7,17 @@ du -sk
 PROJ=`find . -name package.json \
 	| grep -vE '/.(atom|n[pv]m|cache/yarn)/' \
 	| grep -v /check-system/ \
+	| grep -v /npmyarn/ \
+	| grep -v /Atom.app/ \
+	| grep -v /Library/Caches/Yarn/ \
 	| grep -v node_modules \
 	| perl -pne 's{/package\.json}{}xmsg'
 `
-
 for d in $PROJ
 do
 	if [ -d $d/node_modules ]; then
 		echo $d has node_modules
-		SAVE=/data/me/saved_node_modules/$d
+		SAVE=/data/bcowgill/saved_node_modules/$d
 		mkdir -p $SAVE
 		pushd $d
 			mv node_modules $SAVE

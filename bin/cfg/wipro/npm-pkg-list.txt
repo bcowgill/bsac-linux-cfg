@@ -6253,6 +6253,7 @@
 │     ├── graceful-fs@4.1.9 deduped
 │     ├── imurmurhash@0.1.4 deduped
 │     └── slide@1.1.6 deduped
+├── pnpm@1.41.2
 ├── prettydiff@99.0.1
 ├─┬ tslint@5.7.0
 │ ├─┬ babel-code-frame@6.26.0
