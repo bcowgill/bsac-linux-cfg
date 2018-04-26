@@ -1,0 +1,12 @@
+
+var x = 6, y = 7, z = 42; // some comment
+
+	const x = [], y = null, z = {};
+
+	let x = 4,
+		y = "this; is a problem",
+		z = { a: 42, y: 43 };
+
+	let x = 4,
+		z = { a: 42, y: 43 },
+		y = "this; is a problem";
