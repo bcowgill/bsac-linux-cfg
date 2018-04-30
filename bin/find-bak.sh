@@ -3,5 +3,12 @@
 
 # use find-bak.sh -delete
 # to delete the files found
-find . \( -iname '*.bak' -o -name '*~' -o -name '*.rej' \) $*
-#find . \( -iname '*.bak' -o -name '*~' -o -name '*.orig' -o -name '*.rej' \) $*
+find . \( \
+	-name node_modules \
+\) \
+-prune -o \( \
+	-iname '*.bak' \
+	-o -name '*~' \
+	-o -name '*.rej'
+\) $*
+# -o -name '*.orig'
