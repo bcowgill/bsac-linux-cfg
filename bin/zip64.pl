@@ -31,9 +31,9 @@ local $/ = undef;
 my $buf = <DATA>;
 close(DATA);
 $buf =~ s{
-	(?:\A|\n) ([^:]+) :
+	(?:\A|\n|\x0a|\x0d\x0a) ([^:]+) :
 	([^:]+) :
-	\n (.+?) \n==/\1==
+	(?:\n|\x0a|\x0d\x0a) (.+?) (?:\n|\x0a|\x0d\x0a)==/\1==
 }{
 	decode_file($1, $2, $3)
 }xmsge;
