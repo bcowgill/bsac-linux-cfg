@@ -2438,6 +2438,7 @@ if file_exists "$VIM_AUTOLOAD/plug.vim"; then
 else
 	make_dir_exist "$VIM_AUTOLOAD" "vim autoload directory exists"
 	curl -fLo $VIM_AUTOLOAD/plug.vim --create-dirs $VIM_PLUG_URL
+	NOT_OK "MAYBE you need to manually run vim and execute :PlugInstall command once."
 	file_exists "$VIM_AUTOLOAD/plug.vim" "vim plug plugin manager"
 fi
 
