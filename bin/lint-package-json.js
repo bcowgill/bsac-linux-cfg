@@ -87,7 +87,7 @@ function main () {
 		const files = [];
 		for (idx = ARG1; idx < process.argv.length; idx++)
 		{
-			const filename = process.argv[idx];
+			var filename = process.argv[idx];
 			if (!processArg(filename))
 			{
 				files.push(filename);
