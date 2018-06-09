@@ -7,15 +7,15 @@
 
 /*
 
-n use 6.0.0 ./lint-package-json.js ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js notafilename ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js --not-an-option ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-error.json ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev --no-strict --allow-url --allow-file --allow-git --allow-github --allow-tag=latest --allow-tag=beta1 ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
-n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --no-strict --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js notafilename ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js --not-an-option ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-error.json ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev --no-strict --allow-url --allow-file --allow-git --allow-github --allow-tag=latest --allow-tag=beta1 ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
+n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --no-strict --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
 */
 
 const fs = require('fs');
