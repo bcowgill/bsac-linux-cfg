@@ -1,0 +1,7 @@
+Object.values/Object.entries
+String padding
+Object.getOwnPropertyDescriptors
+Trailing commas in function parameter lists and calls
+Async Functions
+
+https://hackernoon.com/es8-was-released-and-here-are-its-main-new-features-ee9c394adf66

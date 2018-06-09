@@ -1,0 +1,4 @@
+Array.prototype.includes (Domenic Denicola, Rick Waldron)
+Exponentiation Operator (Rick Waldron)
+
+http://2ality.com/2016/01/ecmascript-2016.html

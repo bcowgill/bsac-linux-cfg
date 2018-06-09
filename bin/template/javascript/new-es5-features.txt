@@ -1,0 +1,77 @@
+- Trailing commas are ok
+
+- No reserved words for property names
+
+- NaN, Infinity, undefined : are all constants
+
+- parseInt() defaults to radix 10
+
+- /regexp/ produces new reg ex object every time
+
+- JSON.parse(), JSON.stringify()
+
+- Function.prototype.bind
+
+- String.prototype.trim
+
+- Array.prototype.every, filter, forEach, indexOf, lastIndexOf, map, reduce, reduceRight, some,
+
+- Date.now()
+
+- Date.prototype.toISOString
+
+- new Date(string) and Date.parse(string) will try ISO format 1st
+
+- Array.isArray()
+
+- Object.keys(), Object.create(), Object.defineProperty, Object.defineProperties,
+
+Object.getOwnPropertyDescriptor(), Object.getOwnPropertyNames(obj), Object.getPrototypeOf(obj)
+
+- Object.seal(), Object.freeze(), Object.preventExtensions(), Object.isSealed(), Object.isFrozen(),
+
+Object.isExtensible()
+
+- Property attributes: writeable, value, enumerable, configurable, get, set
+
+
+
+- 'use strict';
+
+- Strict Mode:
+
+  No more implied global variables within functions.
+
+  this is not bound to the global object by function form.
+
+  apply and call do not default to the global object.
+
+  No with statement.
+
+  Setting a writeable: false property will throw.
+
+  Deleting a configurable: false property will throw.
+
+  Restrictions on eval.
+
+  eval and arguments are reserved.
+
+  arguments not linked to parameters.
+
+  No more arguments.caller or arguments.callee.
+
+  No more octal literals.
+
+  Duplicate names in an object literal or function parameters are a syntax error
+
+
+
+
+
+references:
+
+http://www.slideshare.net/douglascrockford/level-7-ecmascript-5-the-new-parts
+
+https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Object
+
+https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array#Methods
