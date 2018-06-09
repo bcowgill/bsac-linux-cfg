@@ -6,15 +6,16 @@
 // Node cmd arg processing: http://stackabuse.com/command-line-arguments-in-node-js/  try yargs, minimist modules
 
 /*
-./lint-package-json.js ; echo == $? ==
-./lint-package-json.js notafilename ; echo == $? ==
-./lint-package-json.js --not-an-option ; echo == $? ==
-./lint-package-json.js tests/lint-package-json/in/package-error.json ; echo == $? ==
-./lint-package-json.js tests/lint-package-json/in/package-test.json ; echo == $? ==
-./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev ; echo == $? ==
-./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev --no-strict --allow-url --allow-file --allow-git --allow-github --allow-tag=latest --allow-tag=beta1 ; echo == $? ==
-./lint-package-json.js tests/lint-package-json/in/package-ok.json --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
-./lint-package-json.js tests/lint-package-json/in/package-ok.json --no-strict --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
+
+n use 6.0.0 ./lint-package-json.js ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js notafilename ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js --not-an-option ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-error.json ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev --no-strict --allow-url --allow-file --allow-git --allow-github --allow-tag=latest --allow-tag=beta1 ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
+n use 6.0.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --no-strict --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
 */
 
 const fs = require('fs');
@@ -35,43 +36,45 @@ const ELINT = 4;
 const ESYNTAX = 5;
 const EUNKNOWN = 6;
 
-let fileName;
-let packageJson;
-let strictLock = true;
-let skipDev = false;
-let allowGit = false;
-let allowGithub = false;
-let allowUrl = false;
-let allowFile = false;
+var fileName;
+var packageJson;
+var strictLock = true;
+var skipDev = false;
+var allowGit = false;
+var allowGithub = false;
+var allowUrl = false;
+var allowFile = false;
 
-let inProgress = 0;
-let errors = 0;
-let syntax = 0;
-let unknown = 0;
-let devDepError;
+var inProgress = 0;
+var errors = 0;
+var syntax = 0;
+var unknown = 0;
+var devDepError;
 
 const allowTags = {};
 
 main();
 
-function usage (message = '')
+function usage (message)
 {
-	const help = `
-${message}
-Usage: ${binname()} [options...] filename ...
-
-Checks your package.json to ensure that dependency versions are locked down so that continuous integration (CI) builds are stable.
-
--d or --skip-dev        will skip checks on devDependencies.
--f or --allow-file      will allow file URL's as dependencies.
--g or --allow-git       will allow git URI's as dependencies as long as they specify a specific commit.
--h or --allow-github    will allow github user/reponame as dependencies as long as they specify a specific commit.
--r or --allow-tag=name  will allow a specifically named release tag as a dependency version.
--t or --no-strict       will allow ~semver as a dependency version. [t=tilde]
--u or --allow-url       will allow URL's as dependencies.
-
-see also: https://docs.npmjs.com/files/package.json
-`.trim();
+	message = message || '';
+	const help =
+message +
+'\nUsage: ' + binname() + ' [options...] filename ...' +
+'\n' +
+'\nChecks your package.json to ensure that dependency versions are locked down so that continuous integration (CI) builds are stable.' +
+'\nRequires node v6.0.0+.' +
+'\n' +
+'\n-d or --skip-dev        will skip checks on devDependencies.' +
+'\n-f or --allow-file      will allow file URL\'s as dependencies.' +
+'\n-g or --allow-git       will allow git URI\'s as dependencies as long as they specify a specific commit.' +
+'\n-h or --allow-github    will allow github user/reponame as dependencies as long as they specify a specific commit.' +
+'\n-r or --allow-tag=name  will allow a specifically named release tag as a dependency version.' +
+'\n-t or --no-strict       will allow ~semver as a dependency version. [t=tilde]' +
+'\n-u or --allow-url       will allow URL\'s as dependencies.' +
+'\n' +
+'\nsee also: https://docs.npmjs.com/files/package.json' +
+'\n'.trim();
 
 	console.log(help);
 	process.exit(EUSAGE);
@@ -80,7 +83,7 @@ see also: https://docs.npmjs.com/files/package.json
 function main () {
 	if (process.argv.length > ARG1)
 	{
-		let idx;
+		var idx;
 		const files = [];
 		for (idx = ARG1; idx < process.argv.length; idx++)
 		{
@@ -90,7 +93,7 @@ function main () {
 				files.push(filename);
 			}
 		}
-		files.forEach((filename) => {
+		files.forEach(function loopLint (filename) {
 			lintFile(filename);
 		});
 
@@ -170,7 +173,7 @@ function handleSyntaxError (exception, fileName, packageRaw) {
 }
 
 function showSyntaxError (filename, raw, position) {
-	let before = raw.substr(0, position);
+	var before = raw.substr(0, position);
 	const line = lineNumber(before);
 	before = back2Lines(before);
 	const after = keep2Lines(raw.substr(position));
@@ -248,7 +251,7 @@ function processArg (arg)
 
 function binname ()
 {
-	return __filename.replace(`${__dirname}/`, '');
+	return __filename.replace(__dirname + '/', '');
 }
 
 function error (dependencies, name, version, message) {
@@ -260,7 +263,7 @@ function error (dependencies, name, version, message) {
 function checkLockDown (dependencies) {
 	if (packageJson[dependencies]) {
 		Object.keys(packageJson[dependencies]).forEach(function checkDependencyVersion (name) {
-			let version = packageJson[dependencies][name];
+			var version = packageJson[dependencies][name];
 			if (allowGit && /^git.*:\/\/.+\#semver\:/.test(version)) {
 				version = version.replace(/^git.+#semver:/, '');
 			}
@@ -333,24 +336,25 @@ function willReadFileToString(filename, cb)
 function willReadStreamToString(stream, cb)
 {
 	const chunks = [];
-	stream.on('data', (chunk) => {
+	stream.on('data', function onStreamData (chunk) {
 		chunks.push(chunk.toString());
 	});
-	stream.on('end', () => {
+	stream.on('end', function onStreamEnd () {
 		cb(chunks.join(''));
 	});
-	stream.on('error', (error) => {
+	stream.on('error', function onStreamError (error) {
 		fileError(error);
 	})
 }
 
-function fileError (error, mode = 'Read')
+function fileError (error, mode)
 {
+	mode = mode || 'Read';
 	// error = { Error: ENOENT: no such file or directory, open 'that.js' errno: -2, code: 'ENOENT', syscall: 'open', path: 'that.js' }
 	if (error)
 	{
 		const dir = process.cwd();
-		console.error(`${error.path}: ${mode} ${error.toString()} [current dir ${dir}]`);
+		console.error(error.path + ': ' + mode + ' ' + error.toString() + ' [current dir ' + dir + ']');
 		process.exit(mode === 'Read' ? EREAD : EWRITE);
 	}
 }
