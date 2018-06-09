@@ -1,5 +1,10 @@
+# https://github.com/pnpm/pnpm#install
 #npm install -g pnpm
 #pnpm install -g pnpm
+#pnpm outdated -g
+
+BACKUP=/data/bcowgill/saved_node_modules
+
 date
 echo Before conversion disk space used
 du -sk
@@ -17,7 +22,7 @@ for d in $PROJ
 do
 	if [ -d $d/node_modules ]; then
 		echo $d has node_modules
-		SAVE=/data/bcowgill/saved_node_modules/$d
+		SAVE=$BACKUP/$d
 		mkdir -p $SAVE
 		pushd $d
 			mv node_modules $SAVE
