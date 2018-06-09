@@ -1,0 +1,24 @@
+{
+  "name": "benchmark-example",
+  "version": "1.0.0",
+  "description": "An example use of benchmark module in node and browser.",
+  "main": "bench-runner.js",
+  "author": "Brent S.A. Cowgill",
+  "license": "MIT",
+  "scripts": {
+    "test": "node bench-runner.js",
+    "start": "node bench-runner.js",
+    "build": "node bench-runner.js"
+  },
+  "dependencies": {
+    "benchmarktt": "~2.1.4"
+  },
+  "devDependencies": {
+    "benchmarkwht": "http://someting.com",
+    "benchmarkwfi": "file:someting.js",
+    "benchmarkweid": "git://github.com/repo.git#v1.2.3",
+    "github2": "user/project#v1.2.3",
+    "github3": "user/project#feature\/branch",
+    "benchmarkweids": "2.1.3"
+  }
+}
