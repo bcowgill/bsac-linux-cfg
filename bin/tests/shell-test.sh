@@ -98,6 +98,27 @@ function testSuite
    return 0
 }
 
+function testSuiteArg
+{
+   local dir arg suite prove
+   dir="$1"
+   arg="$2"
+   suite="$3"
+   prove="$4"
+   testSuiteBegin "$dir" "$suite"
+   [ -d in ] || mkdir in
+   [ -d out ] || mkdir out
+   [ -d base ] || mkdir base
+   if [ -x ./tests.sh ]; then
+      $prove ./tests.sh "$arg"
+   else
+      NOT_OK "./tests.sh does not exist in `pwd`"
+      return 1
+   fi
+   popd > /dev/null
+   return 0
+}
+
 function cleanUpAfterTests
 {
    # clean up output directory if no failures

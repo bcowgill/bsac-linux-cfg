@@ -260,7 +260,8 @@ sub checkMandatoryOptions {
 # Perform command line option processing and call main function.
 sub getOptions {
     $Var{rhGetopt}{roParser}->configure( @{ $Var{rhGetopt}{raConfig} } );
-    $Var{rhGetopt}{result} = $Var{rhGetopt}{roParser}
+    $Var{rhGetopt}{result} =
+      $Var{rhGetopt}{roParser}
       ->getoptions( $Var{rhArg}{rhOpt}, @{ $Var{rhGetopt}{raOpts} } );
     if ( $Var{rhGetopt}{result} ) {
         manual() if $Var{rhArg}{rhOpt}{man};

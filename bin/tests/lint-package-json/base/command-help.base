@@ -1,0 +1,16 @@
+
+Usage: lint-package-json.js [options...] filename ...
+
+Checks your package.json to ensure that dependency versions are locked down so that continuous integration (CI) builds are stable.
+Requires node v6.0.0+.
+
+-d or --skip-dev        will skip checks on devDependencies.
+-f or --allow-file      will allow file URL's as dependencies.
+-g or --allow-git       will allow git URI's as dependencies as long as they specify a specific commit.
+-h or --allow-github    will allow github user/reponame as dependencies as long as they specify a specific commit.
+-r or --allow-tag=name  will allow a specifically named release tag as a dependency version.
+-t or --no-strict       will allow ~semver as a dependency version. [t=tilde]
+-u or --allow-url       will allow URL's as dependencies.
+-? or --help            shows program help.
+
+see also: https://docs.npmjs.com/files/package.json

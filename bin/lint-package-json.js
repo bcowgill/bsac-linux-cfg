@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 // TODO test on windows for file name handling
-// TODO test on oldest version of node available
 // Lint your package.json to ensure dependencies are locked down.
 // npm install -g lint-package-json
 // Node cmd arg processing: http://stackabuse.com/command-line-arguments-in-node-js/  try yargs, minimist modules
@@ -72,12 +71,13 @@ message +
 '\n-r or --allow-tag=name  will allow a specifically named release tag as a dependency version.' +
 '\n-t or --no-strict       will allow ~semver as a dependency version. [t=tilde]' +
 '\n-u or --allow-url       will allow URL\'s as dependencies.' +
+'\n-? or --help            shows program help.' +
 '\n' +
 '\nsee also: https://docs.npmjs.com/files/package.json' +
 '\n'.trim();
 
 	console.log(help);
-	process.exit(EUSAGE);
+	process.exit(message.length ? EUSAGE : OK);
 }
 
 function main () {
@@ -137,7 +137,7 @@ function lintFile (filename) {
 	willReadFileToString(fileName, function lintWhenRead (packageRaw) {
 		try
 		{
-			packageJson = require(fileName);
+			packageJson = JSON.parse(packageRaw);
 			if (DEBUG) {
 				console.log('package:', fileName, packageJson);
 			}
@@ -163,21 +163,31 @@ function lintFile (filename) {
 function handleSyntaxError (exception, fileName, packageRaw) {
 	// exception:  SyntaxError: /home/me/workspace/play/bsac-linux-cfg/bin/package.json: Unexpected string in JSON at position 679
 	// Unexpected token , in JSON at position 0
-	const regex = /^.+ in JSON at position (\d+).*$/;
+	// SyntaxError: Unexpected string
+
+	const regex = /^.+: (.+) in JSON at position (\d+).*$/;
+	const regexNoPos = /^SyntaxError: (.+)/;
+	var error;
 	if (regex.test(exception)) {
-		const position = exception.replace(regex, '$1');
-		showSyntaxError(fileName, packageRaw, position);
+		error = exception.replace(regex, '$1');
+		const position = exception.replace(regex, '$2');
+		showSyntaxError(fileName, packageRaw, position, error);
+		return true;
+	}
+	else if (regexNoPos.test(exception)) {
+		error = exception.replace(regexNoPos, '$1');
+		console.error('SyntaxError: ' + fileName + ' ' + error);
 		return true;
 	}
 	return false;
 }
 
-function showSyntaxError (filename, raw, position) {
+function showSyntaxError (filename, raw, position, error) {
 	var before = raw.substr(0, position);
 	const line = lineNumber(before);
 	before = back2Lines(before);
 	const after = keep2Lines(raw.substr(position));
-	console.error('SyntaxError: ' + filename + ' @' + position + ', line ' + line + ' indicated by <HERE> below.');
+	console.error('SyntaxError: ' + filename + ' @' + position + ', line ' + line + ' ' + error + ' indicated by <HERE> below.');
 	console.error(before + '<HERE>' + after);
 }
 
@@ -203,7 +213,11 @@ function normalizeNewlines (text) {
 
 function processArg (arg)
 {
-	if (arg === '-d' || arg === '--skip-dev')
+	if (arg === '-?' || arg === '--help')
+	{
+		usage();
+	}
+	else if (arg === '-d' || arg === '--skip-dev')
 	{
 		skipDev = true;
 		return true;

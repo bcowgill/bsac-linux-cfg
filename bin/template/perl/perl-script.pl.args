@@ -1,0 +1,7 @@
+# an example command line arguments file for perl-script.pl
+# use with perl-script.pl @perl-script.pl.args
+--length 42
+--hex=0x3c7e
+--file=console.log
+--name=fred
+--map key=value

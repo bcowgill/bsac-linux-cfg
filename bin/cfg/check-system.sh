@@ -263,8 +263,10 @@ else
 	PERL_PKG="cpanm:cpanminus"
 fi
 
+//TODO install n versions from here
 N_VER=2.1.7
-N_VERS="lts stable latest"
+N_VERS="lts stable latest 0.10.0 4.0.0 5.0.0 6.0.0 7.0.0 8.11.1 9.10.1 10.0.0"
+N_IO_VERS="1.0.0  2.0.0  3.0.0"
 N_CMD=n
 
 NVM_VER="v0.31.4"

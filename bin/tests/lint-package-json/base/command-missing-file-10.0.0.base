@@ -1,0 +1,1 @@
+./notafilename: Read Error: ENOENT: no such file or directory, open './notafilename' [current dir PWD/lint-package-json]

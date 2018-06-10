@@ -1,0 +1,7 @@
+./in/package-ok.json: dependencies.benchmarktt [~2.1.4] matches versions too loosely. [--no-strict to allow.]
+./in/package-ok.json: devDependencies.benchmarkwht [http://someting.com] http dependencies are forbidden. [--allow-url to allow.]
+./in/package-ok.json: devDependencies.benchmarkwfi [file:someting.js] file dependencies are forbidden. [--allow-file to allow.]
+./in/package-ok.json: devDependencies.github2 [user/project#v1.2.3] github dependencies are forbidden. [--allow-github to allow.]
+./in/package-ok.json: devDependencies.github3 [user/project#feature/branch] github dependencies are forbidden. [--allow-github to allow.]
+specify --skip-dev to ignore version checks on devDependencies
+Please lock down the above dependency versions to an exact number.

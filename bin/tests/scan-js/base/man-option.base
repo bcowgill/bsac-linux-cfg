@@ -1,95 +1,95 @@
 NAME
-    scan-js.pl - scan a javascript file and see if the functions are arranged
-    as suggested by Uncle Bob's Clean Code book.
+       scan-js.pl - scan a javascript file and see if the functions are
+       arranged as suggested by Uncle Bob's Clean Code book.
 
 AUTHOR
-    Brent S.A. Cowgill
+       Brent S.A. Cowgill
 
 SYNOPSIS
-    scan-js.pl [options] [@options-file ...] [file ...]
+       scan-js.pl [options] [@options-file ...] [file ...]
 
-            Options:
-            --show-code      negatable. show the code after comment and string extraction
-            --verbose        negatable. show more info about functions. default false
-            --mess           negatable. show more info about functions. default true
-            --summary        negatable. show summary of each file. default true
-            --comment-char   use character to replace text in comment extraction
-            --string-char    use character to replace text in string extraction
-            --lint-length    allowed length of jshint control comments to ignore
-            --version        display program version
-            --help -?        brief help message
-            --man            full help message
-            --debug          incremental. increase the amount of debugging information shown
+               Options:
+               --show-code      negatable. show the code after comment and string extraction
+               --verbose        negatable. show more info about functions. default false
+               --mess           negatable. show more info about functions. default true
+               --summary        negatable. show summary of each file. default true
+               --comment-char   use character to replace text in comment extraction
+               --string-char    use character to replace text in string extraction
+               --lint-length    allowed length of jshint control comments to ignore
+               --version        display program version
+               --help -?        brief help message
+               --man            full help message
+               --debug          incremental. increase the amount of debugging information shown
 
 OPTIONS
-    --show-code or --noshow-code
-                    negatable. default false. Print out the source code after comments and
-                    strings have been extracted.  This allow you to diagnose code which might be
-                    excessively tricky.
+       --show-code or --noshow-code
+                       negatable. default false. Print out the source code after comments and
+                       strings have been extracted.  This allow you to diagnose code which might be
+                       excessively tricky.
 
-    --verbose or --noverbose
-                    negatable. default false. Print out additional information instead of just
-                    mess warnings.
+       --verbose or --noverbose
+                       negatable. default false. Print out additional information instead of just
+                       mess warnings.
 
-    --mess or --nomess
-                    negatable. default true. Print out warnings about possible messy code.
+       --mess or --nomess
+                       negatable. default true. Print out warnings about possible messy code.
 
-    --summary or --nosummary
-                    negatable. default true. Print out summary of each file.
+       --summary or --nosummary
+                       negatable. default true. Print out summary of each file.
 
-    --comment-char=s
-                    optional. Defaults to '-'. Set the character to use to replace the text
-                    found in comments. Used with --show-code. If set to the empty string
-                    --comment-char='' then comments will not be stripped from the code.
+       --comment-char=s
+                       optional. Defaults to '-'. Set the character to use to replace the text
+                       found in comments. Used with --show-code. If set to the empty string
+                       --comment-char='' then comments will not be stripped from the code.
 
-    --string-char=s
-                    optional. Defaults to '_'. Set the character to use to replace the text
-                    found in strings. Used with --show-code. If set to the empty string
-                    --string-char='' then strings will not be stripped from the code.
-                    This is useful if functions are referred to by name in some strings.
+       --string-char=s
+                       optional. Defaults to '_'. Set the character to use to replace the text
+                       found in strings. Used with --show-code. If set to the empty string
+                       --string-char='' then strings will not be stripped from the code.
+                       This is useful if functions are referred to by name in some strings.
 
-    --lint-length=n
-                    optional. Defaults to 30. The maximum length of a jshint or jslint comment
-                    for it to not count against the amount of comments in the file. If there
-                    is only one such comment in the file it is also ignored.
+       --lint-length=n
+                       optional. Defaults to 30. The maximum length of a jshint or jslint comment
+                       for it to not count against the amount of comments in the file. If there
+                       is only one such comment in the file it is also ignored.
 
-    --version
-                    Prints the program version and exit.
+       --version
+                       Prints the program version and exit.
 
-    --help or -?
-                    Print a brief help message and exit.
+       --help or -?
+                       Print a brief help message and exit.
 
-    --man
-                    Print the full help message and exit.
+       --man
+                       Print the full help message and exit.
 
 DESCRIPTION
-            B<This program> will read the given Javascript file(s) and examine
-            whether the functions are ordered from high level to low level as
-            suggested by Robert C. Martin's book Clean Code.
+               B<This program> will read the given Javascript file(s) and examine
+               whether the functions are ordered from high level to low level as
+               suggested by Robert C. Martin's book Clean Code.
 
-            This program is not a general purpose Javascript analysis tool. It
-            assumes the code is pretty clean, not minified, etc. It will not look
-            for obfuscated function definitions for example.
+               This program is not a general purpose Javascript analysis tool. It
+               assumes the code is pretty clean, not minified, etc. It will not look
+               for obfuscated function definitions for example.
 
 GRUNT SETUP
-    In order to allow this script to use jshint to check how clean your code
-    is you need a build target in your Gruntfile.js which enables jshint
-    checking of a single file.
+       In order to allow this script to use jshint to check how clean your
+       code is you need a build target in your Gruntfile.js which enables
+       jshint checking of a single file.
 
-            jshint: {
-                    single: {
-                            // grunt jshint:single --check-file filename
-                            src: [grunt.option('check-file') || 'package.json']
-                    },
-                    ...
-            }
+               jshint: {
+                       single: {
+                               // grunt jshint:single --check-file filename
+                               src: [grunt.option('check-file') || 'package.json']
+                       },
+                       ...
+               }
 
 EXAMPLES
-            scan-js.pl template/unminified/jquery-2.1.1.js
+               scan-js.pl template/unminified/jquery-2.1.1.js
 
-            scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
+               scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less
 
-            scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
+               scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less
 
-            FILES=`git diff --name-status $FROM $TO | perl -pne 's{\A [AM] \s+}{}xms'`; for file in $FILES; do scan-js.pl $file; done
+               FILES=`git diff --name-status $FROM $TO | perl -pne 's{\A [AM] \s+}{}xms'`; for file in $FILES; do scan-js.pl $file; done
 

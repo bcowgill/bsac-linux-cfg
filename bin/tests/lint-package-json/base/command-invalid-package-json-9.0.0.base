@@ -1,0 +1,4 @@
+SyntaxError: in/package-error.json @576, line 22 Unexpected string indicated by <HERE> below.
+    "platformsedddd": "latest"
+    <HERE>"platformseddddd": "beta1",
+    "platformsedddsddd": "1.2-beta1"

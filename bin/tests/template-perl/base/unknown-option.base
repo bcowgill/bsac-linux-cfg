@@ -1,6 +1,9 @@
 Unknown option: unknown-option
+the directory of my script is: PWD/template/perl
+the base name of my script is: perl-script.pl
+the canonical location of my script is: PWD/template/perl/perl-script.pl
 Usage:
-    perl.pl [options] [@options-file ...] [file ...]
+    perl-script.pl [options] [@options-file ...] [file ...]
 
      Options:
        --version        display program version

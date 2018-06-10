@@ -1,34 +1,37 @@
 NAME
-    sample - Using GetOpt::Long and Pod::Usage
+       perl-script.pl - Using GetOpt::Long and Pod::Usage
 
 AUTHOR
-    Brent S.A. Cowgill
+       Brent S.A. Cowgill
 
 SYNOPSIS
-    perl.pl [options] [@options-file ...] [file ...]
+       perl-script.pl [options] [@options-file ...] [file ...]
 
-     Options:
-       --version        display program version
-       --help -?        brief help message
-       --man            full help message
+        Options:
+          --version        display program version
+          --help -?        brief help message
+          --man            full help message
 
 OPTIONS
-    --version
-             Prints the program version and exit.
+       --version
+                Prints the program version and exit.
 
-    --help or -?
-             Print a brief help message and exit.
+       --help or -?
+                Print a brief help message and exit.
 
-    --man
-             Print the full help message and exit.
+       --man
+                Print the full help message and exit.
 
 DESCRIPTION
-     Template for a perl script with the usual bells and whistles.
-     Supports long option parsing and perldoc perl.pl to show pod.
+        Template for a perl script with the usual bells and whistles.
+        Supports long option parsing and perldoc perl-script.pl to show pod.
 
-     B<This program> will read the given input file(s) and do something
-     useful with the contents thereof. It does not modify the input files.
+        B<This program> will read the given input file(s) and do something
+        useful with the contents thereof. It does not modify the input files.
 
 EXAMPLES
-     template/perl.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
+        template/perl/perl-script.pl --length=32 --file this.txt filename.inline --in - --out - --ratio=43.345 --debug --debug --debug --name=fred --name=barney --map key=value --map this=that -m short=value --hex=0x3c7e --width -- --also-a-file -
 
+
+
+perl vX.XX                      YYYY-MM-DD                    PERL-SCRIPT(1)

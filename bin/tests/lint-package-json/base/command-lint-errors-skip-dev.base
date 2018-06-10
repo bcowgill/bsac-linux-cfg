@@ -1,0 +1,10 @@
+./in/package-test.json: dependencies.benchmark [^2.1.4] matches versions too loosely.
+./in/package-test.json: dependencies.benchmarktt [~2.1.4] matches versions too loosely. [--no-strict to allow.]
+./in/package-test.json: dependencies.lodash [<4.17.5] matches a range of versions.
+./in/package-test.json: dependencies.microtime [>2.1.7] matches a range of versions.
+./in/package-test.json: dependencies.platform [^1.3.5] matches versions too loosely.
+./in/package-test.json: dependencies.platforms [*] matches any version.
+./in/package-test.json: dependencies.platformse [] matches any version.
+./in/package-test.json: dependencies.platformsedddd [latest] matches a release tag name. [--allow-tag=latest to allow.]
+./in/package-test.json: dependencies.platformseddddd [beta1] matches a release tag name. [--allow-tag=beta1 to allow.]
+Please lock down the above dependency versions to an exact number.

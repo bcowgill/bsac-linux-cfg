@@ -4,7 +4,7 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../template/perl/perl.pl
+PROGRAM=../../template/perl/perl-script.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/sample.txt
 DEBUG=--debug
@@ -23,6 +23,12 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
+function clean_path {
+	local output
+	output="$1"
+	perl -i -pne 's{(my \s+ script \s+ is: \s+).+?(template/perl)}{$1PWD/$2}xms' "$output"
+}
+
 echo TEST $CMD --version option
 TEST=version-option
 if [ 0 == "$SKIP" ]; then
@@ -32,6 +38,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --version"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -47,6 +54,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --unknown-option"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -74,6 +82,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $MANDATORY"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -87,6 +96,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="--entire $DEBUG $MANDATORY"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -101,6 +111,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE $MANDATORY"
 	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -114,6 +125,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="--entire $DEBUG $SAMPLE $MANDATORY"
 	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -128,10 +140,10 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE $MANDATORY"
 	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
 cleanUpAfterTests
-

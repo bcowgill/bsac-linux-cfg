@@ -1,0 +1,22 @@
+./in/package-test.json: dependencies.benchmark [^2.1.4] matches versions too loosely.
+./in/package-test.json: dependencies.benchmarktt [~2.1.4] matches versions too loosely. [--no-strict to allow.]
+./in/package-test.json: dependencies.lodash [<4.17.5] matches a range of versions.
+./in/package-test.json: dependencies.microtime [>2.1.7] matches a range of versions.
+./in/package-test.json: dependencies.platform [^1.3.5] matches versions too loosely.
+./in/package-test.json: dependencies.platforms [*] matches any version.
+./in/package-test.json: dependencies.platformse [] matches any version.
+./in/package-test.json: dependencies.platformsedddd [latest] matches a release tag name. [--allow-tag=latest to allow.]
+./in/package-test.json: dependencies.platformseddddd [beta1] matches a release tag name. [--allow-tag=beta1 to allow.]
+./in/package-test.json: devDependencies.platformser [1.0.0 - 2.0.0] matches a range of versions.
+./in/package-test.json: devDependencies.platformsere [1.0.0 || 2.0.0] matches a range of versions.
+./in/package-test.json: devDependencies.benchmarkw [2.1.x] matches a range of versions.
+./in/package-test.json: devDependencies.benchmarkwht [http://someting.com] http dependencies are forbidden. [--allow-url to allow.]
+./in/package-test.json: devDependencies.benchmarkwfi [file:someting.js] file dependencies are forbidden. [--allow-file to allow.]
+./in/package-test.json: devDependencies.benchmarkwe [git://github.com/repo.git] git dependencies are forbidden. [--allow-git to allow.]
+./in/package-test.json: devDependencies.benchmarkweid [git://github.com/repo.git#v1.2.3] git dependencies are forbidden. [--allow-git to allow.]
+./in/package-test.json: devDependencies.benchmarkweii [git://github.com/repo.git#semver:^1.2.3] git dependencies are forbidden. [--allow-git to allow.]
+./in/package-test.json: devDependencies.github [user/project] github dependencies are forbidden. [--allow-github to allow.]
+./in/package-test.json: devDependencies.github2 [user/project#v1.2.3] github dependencies are forbidden. [--allow-github to allow.]
+./in/package-test.json: devDependencies.github3 [user/project#feature/branch] github dependencies are forbidden. [--allow-github to allow.]
+specify --skip-dev to ignore version checks on devDependencies
+Please lock down the above dependency versions to an exact number.
