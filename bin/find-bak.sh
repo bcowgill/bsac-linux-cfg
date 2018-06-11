@@ -9,6 +9,6 @@ find . \( \
 -prune -o \( \
 	-iname '*.bak' \
 	-o -name '*~' \
-	-o -name '*.rej'
+	-o -name '*.rej' \
 \) $*
 # -o -name '*.orig'
