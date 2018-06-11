@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// TODO test on windows for file name handling
 // TODO separate repo and install to node_modules/.bin
 // Lint your package.json to ensure dependencies are locked down.
 // npm install -g lint-package-json
@@ -253,7 +252,8 @@ function processArg (arg)
 
 function binname ()
 {
-	return __filename.replace(__dirname + '/', '');
+	const LEAD_DIRSEP = /^[\/\\]/;
+	return __filename.replace(__dirname, '').replace(LEAD_DIRSEP, '');
 }
 
 function error (dependencies, name, version, message) {

@@ -57,7 +57,8 @@ const processES3 = require('es3ify');
 
 function binname ()
 {
-	return __filename.replace(`${__dirname}/`, '');
+	const LEAD_DIRSEP = /^[\/\\]/;
+	return __filename.replace(__dirname, '').replace(LEAD_DIRSEP, '');
 }
 
 function willReadFileToString(filename, cb)
