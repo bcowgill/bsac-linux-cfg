@@ -1,21 +1,9 @@
 #!/usr/bin/env node
 // TODO test on windows for file name handling
+// TODO separate repo and install to node_modules/.bin
 // Lint your package.json to ensure dependencies are locked down.
 // npm install -g lint-package-json
 // Node cmd arg processing: http://stackabuse.com/command-line-arguments-in-node-js/  try yargs, minimist modules
-
-/*
-
-n use 0.10.0 ./lint-package-json.js ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js notafilename ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js --not-an-option ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-error.json ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-test.json --skip-dev --no-strict --allow-url --allow-file --allow-git --allow-github --allow-tag=latest --allow-tag=beta1 ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
-n use 0.10.0 ./lint-package-json.js tests/lint-package-json/in/package-ok.json --no-strict --allow-url --allow-file --allow-git --allow-github ; echo == $? ==
-*/
 
 const fs = require('fs');
 
@@ -35,22 +23,22 @@ const ELINT = 4;
 const ESYNTAX = 5;
 const EUNKNOWN = 6;
 
-var fileName;
-var packageJson;
+// command line options
 var strictLock = true;
 var skipDev = false;
 var allowGit = false;
 var allowGithub = false;
 var allowUrl = false;
 var allowFile = false;
+const allowTags = {};
 
+var fileName;
+var packageJson;
 var inProgress = 0;
 var errors = 0;
 var syntax = 0;
 var unknown = 0;
 var devDepError;
-
-const allowTags = {};
 
 main();
 
