@@ -95,6 +95,7 @@ alias pstree='\pstree -a -h -p -u'
 # some aliases for git rebasing
 alias gss='git status; echo == $? =='
 alias gsm="git status | perl -ne '\$done = 1 if m{Untracked \\s+ files:}xms; print unless \$done;'"
+alias gud="echo \`git status | grep 'deleted: ' | perl -pne 's{\s*deleted:\s*}{}xms'\`"
 alias gfa='git fetch --all'
 alias gbl='git branch --list'
 alias gblr='git branch --list --remote'
