@@ -1,25 +1,31 @@
-shell-test - a library for testing command line programs
+# shell-test - a library for testing command line programs
 
-Brent S.A. Cowgill
+## Origins
 
-apologies this is not really in .md format right now.
+Author: Brent S.A. Cowgill
+
+apologies this is not really in good .md format right now.
 
 License: Unlicense http://unlicense.org/
 
 Github original: https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/tests/shell-test.sh
 
-- Test Anywhere Protocol (TAP) compatible output - use with the prove command for running test suites quietly and summarizing output
+## Features
 
+- Test Anywhere Protocol (TAP) compatible output - use with the prove command for running test suites quietly and summarizing output
 - Assertions for checking program exit codes.
 - Assertions for file/dir existence, equality, header equality.
 - Assertions for comparing program output with a base file stored on disk.
 - Test suite function to cd into a test dir and create in/out/base dirs and cleanup out/ afterwards.
 - Structure your tests so skipping can be easy.
 
+## Quick Start
+
 tests.template.sh - an example of the simplest possible test of a command line program
 
-Directory structure for testing:
+### Directory structure for testing:
 
+```
 test-all.sh      - script to run all tests in subdirs
 shell-test.sh    - this library for testing from the shell
 program-to-test/ - directory for a program being tested
@@ -27,30 +33,44 @@ program-to-test/ - directory for a program being tested
   in/            - directory for input files to the program being tested
   base/          - directory for base snapshots of program output
   out/           - output from program under test generated at test time and verified against the bas/ files
+```
 
-test-all.sh prove   - to run all test plans with the prove program (quieter output and summarizes the pass/fail for each project)
+### How to run tests
+
+```bash
+test-all.sh prove   # to run all test plans with the prove program (quieter output and summarizes the pass/fail for each project)
 
 cd program-to-test
-./tests.sh        - run the nests noisily showing all pass/fail
-prove ./tests.sh  - run the tests with prove to summarize the pass/fail status
+./tests.sh        # run the nests noisily showing all pass/fail
+prove ./tests.sh  # run the tests with prove to summarize the pass/fail status
+```
 
-When a test fails you will see:
+### When a test fails you will see:
 
+```bash
 NOT OK 17 files differ - const-file-canon-names
 
 vdiff out/const-file-canon-names.out base/const-file-canon-names.base
+```
 
 if you have an alias for vdiff to your favourite visual difference utility
 you simply copy that line and execute it.  You can update the base file from your diff tool directly or simply type (if using bash)
 
+```bash
 ^vdiff^cp
+```
 
 After the pasted command to copy the output file to replace the base file.
 
+I use diffmerge for visual differencing so my alias would be:
+
+```bash
 alias vdiff='diffmerge --nosplash'
+```
 
-Anatomy of a test suite / case
+### Anatomy of a test suite / case
 
+```bash
 #!/bin/bash
 # Shell script based test plan
 # set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
@@ -102,3 +122,4 @@ fi
 ... more tests
 
 cleanUpAfterTests
+```
