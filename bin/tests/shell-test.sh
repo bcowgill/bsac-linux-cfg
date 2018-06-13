@@ -1,6 +1,6 @@
 # some functions for testing things from shell scripts
 # Brent S.A. Cowgill
-# License: Unlicense http://unlicense.org/:wq
+# License: Unlicense http://unlicense.org/
 # Github original: https://github.com/bcowgill/bsac-linux-cfg/raw/master/bin/tests/shell-test.sh
 # have a look into shUnit http://shunit2.googlecode.com/svn/trunk/source/2.1/doc/shunit2.html#id16
 
@@ -171,6 +171,21 @@ function assertCommandFails
    return 0
 }
 
+function assertFileExists
+{
+	local expected test
+	expected="$1"
+	test="$2"
+   if [ -f "$expected" ]; then
+      OK "$test file was created: $expected"
+	else
+      NOT_OK "file was NOT created $expected - $test"
+      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
+      return $ERROR_STOP
+	fi
+	return 0
+}
+
 function assertFileMissing
 {
 	local expected test
@@ -180,6 +195,36 @@ function assertFileMissing
       OK "$test file does not exist: $expected"
 	else
       NOT_OK "file was created $expected - $test"
+      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
+      return $ERROR_STOP
+	fi
+	return 0
+}
+
+function assertDirExists
+{
+	local expected test
+	expected="$1"
+	test="$2"
+   if [ -d "$expected" ]; then
+      OK "$test directory was created: $expected"
+	else
+      NOT_OK "directory was NOT created $expected - $test"
+      TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
+      return $ERROR_STOP
+	fi
+	return 0
+}
+
+function assertDirMissing
+{
+	local expected test
+	expected="$1"
+	test="$2"
+   if [ ! -d "$expected" ]; then
+      OK "$test directory does not exist: $expected"
+	else
+      NOT_OK "directory was created $expected - $test"
       TEST_FAILURES=$(( $TEST_FAILURES + 1 ))
       return $ERROR_STOP
 	fi
