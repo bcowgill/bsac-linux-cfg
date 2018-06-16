@@ -93,7 +93,7 @@ function unlock {
 function die {
 	local code message
 	code=$1
-	message="ERROR: $2"
+	message="ERROR: [`date`] $2"
 	log_error "$message"
 	[ -z $LOCK_ERROR ] && unlock
 	exit $code
@@ -253,7 +253,7 @@ function partial_backup {
 	define_logs .$NUM
 	get_tar_newer "$NEWER"
 	NEWER=$RESULT
-	touch "$TIMESTAMP" && tar cvzf "$BACKUP" --newer "$NEWER" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
+	touch "$TIMESTAMP" && tar cvzf "$BACKUP" $NEWER "$SOURCE/" > "$LOG" 2> "$ERRLOG"
 	filter_logs
 }
 
@@ -262,9 +262,10 @@ function get_tar_newer {
 	file="$1"
 	echo newer than: `ls -alh $file`
 	if [ "$OSTYPE" == "darwin16" ]; then
-		RESULT=`ls -lT "$file" | perl -pne '$_ = qq{$1\n} if m{\w+ \s+ \w+ \s+ \d+ \s+ ( \d+ \s+ \w+ \s+ \d+ : \d+ : \d+ \s+ \d+ )}xmsg'`
+		RESULT="--newer-than $file"
+		#RESULT=`ls -lT "$file" | perl -pne '$_ = qq{$1\n} if m{\w+ \s+ \w+ \s+ \d+ \s+ ( \d+ \s+ \w+ \s+ \d+ : \d+ : \d+ \s+ \d+ )}xmsg'`
 	else
-		RESULT="$file"
+		RESULT="--newer $file"
 	fi
 }
 
@@ -402,6 +403,7 @@ function summary {
 	echo Backup complete: $BACKUP
 	echo From: $SOURCE
 	ls -alh "$BACKUP"
+	say "`date`"
 	message="`cat "$FILELOG" | wc -l` files backed up"
 	say "$message"
 	message="`cat "$DIRLOG" | wc -l` directories backed up"
