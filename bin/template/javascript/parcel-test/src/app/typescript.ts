@@ -1,4 +1,4 @@
-import '../assests/styles.scss';
+import '../styles/styles.scss';
 
 interface Data
 {

@@ -1,6 +1,6 @@
-import styles from '../assets/styles.scss';
-import { that } from './facade';
-import thing from './facade';
+import { that } from '../scripts/facade';
+import thing from '../scripts/facade';
+import styles from '../styles/styles.scss';
 
 console.log(`The ${thing} is, I am ${that} guy!`);
 

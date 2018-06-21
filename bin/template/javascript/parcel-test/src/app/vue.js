@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue.js';
-import '../assets/styles.scss';
+import '../styles/styles.scss';
 import App from './app.vue';
 
 const app = window.addEventListener(
