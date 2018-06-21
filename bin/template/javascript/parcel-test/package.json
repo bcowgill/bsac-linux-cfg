@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A test of the parcel bundler for browser and node using pnpm package manager",
   "main": "src/app/javascript.js",
-  "engines" : { "node" : ">=8.0.0" },
+  "engines" : {
+    "pnpm": "*",
+    "node" : ">=8.0.0"
+  },
   "scripts": {
     "clean": "rimraf dist/ dist-dev/ dist-node/",
     "prestart": "rimraf dist-dev/",
