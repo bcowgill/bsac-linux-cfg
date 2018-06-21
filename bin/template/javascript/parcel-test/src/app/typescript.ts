@@ -1,5 +1,7 @@
 import '../styles/styles.scss';
 
+console.log('Start of typescript app');
+
 interface Data
 {
 	framework: string;
