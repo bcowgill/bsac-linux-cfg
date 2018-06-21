@@ -1,5 +1,5 @@
-import { that } from '../scripts/facade';
-import thing from '../scripts/facade';
+import { that } from '../facade';
+import thing from '../facade';
 import styles from '../styles/styles.scss';
 
 console.log(`The ${thing} is, I am ${that} guy!`);
