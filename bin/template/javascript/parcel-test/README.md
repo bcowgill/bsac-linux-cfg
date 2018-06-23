@@ -46,6 +46,11 @@ pnpm install --save-dev microtimer benchmark lodash platform
 + microtimer 1.1.0
 + platform 1.3.5
 
+TODO consider reporting to parcel team.
+got this working for node and a build target for the browser but have to fix things up with a post-build script as parcel screws things up.
+cannot run a dev build of benchmark for the same reason.  Also found sometimes parcel gets confused and need to delete its .cache
+
+
 all the packages from pnpm
 + @vue/component-compiler-utils 2.0.0
 + ansi-styles 3.2.1
