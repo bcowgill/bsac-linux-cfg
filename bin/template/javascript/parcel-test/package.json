@@ -8,6 +8,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
+    "clean:all": "rimraf .cache/ dist/ dist-dev/ dist-node/",
     "clean": "rimraf dist/ dist-dev/ dist-node/",
     "prestart": "rimraf dist-dev/",
     "prestart:react": "rimraf dist-dev/",
@@ -33,11 +34,14 @@
     "prebuild:react": "rimraf dist/",
     "prebuild:vue": "rimraf dist/",
     "prebuild:typescript": "rimraf dist/",
+    "prebuild:benchmark": "rimraf dist/",
     "prebuild:all": "rimraf dist/",
     "build": "parcel build src/index.html",
     "build:react": "parcel build src/react.html",
     "build:vue": "parcel build src/vue.html",
     "build:typescript": "parcel build src/typescript.html",
+    "build:benchmark": "parcel build src/benchmark.html",
+    "postbuild:benchmarknot": "./scripts/post-build-benchmark.sh",
     "build:all": "parcel build src/combined.html"
   },
   "keywords": [
