@@ -27,10 +27,15 @@ if [ "x$DOCROOT" == "x" ]; then
 fi
 
 if [ $DOCROOT == slay ]; then
-	# THIS WAS TESTED ON A MAC! may differ for Linux?
 	echo will slay webserver on port $PORT
-	echo `ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b"`
-	PID=`ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b" | perl -pne 's{\A \s+ \d+ \s+ (\d+) .+ \z}{$1}xmsg'`
+	if which sw_vers > /dev/null; then
+		# MAC!
+		echo `ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b"`
+		PID=`ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b" | perl -pne 's{\A \s+ \d+ \s+ (\d+) .+ \z}{$1}xmsg'`
+	else
+		echo `ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b"`
+		PID=`ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b" | perl -pne 's{\A \s* \w+ \s+ (\d+) .+ \z}{$1}xmsg'`
+	fi
 	echo PID=$PID
 	if [ ! -z "$PID" ]; then
 		slay.sh $PID
