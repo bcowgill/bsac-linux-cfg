@@ -11,9 +11,9 @@
     "build": "node bench-runner.js"
   },
   "dependencies": {
-    "benchmark": "^2.1.4",
-    "lodash": "^4.17.5",
-    "microtime": "^2.1.7",
-    "platform": "^1.3.5"
+    "benchmark": "2.1.4",
+    "lodash": "4.17.5",
+    "microtime": "2.1.7",
+    "platform": "1.3.5"
   }
 }
