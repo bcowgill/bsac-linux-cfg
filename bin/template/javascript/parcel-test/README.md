@@ -39,6 +39,13 @@ pnpm install --savea-dev typescript
 + typescript 2.9.2
 
 
+# for Benchmark
+pnpm install --save-dev microtimer benchmark lodash platform
++ benchmark 2.1.4
++ lodash 4.17.10
++ microtimer 1.1.0
++ platform 1.3.5
+
 all the packages from pnpm
 + @vue/component-compiler-utils 2.0.0
 + ansi-styles 3.2.1
