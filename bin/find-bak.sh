@@ -3,6 +3,12 @@
 
 # use find-bak.sh -delete
 # to delete the files found
+
+PRINT=
+if [ -z "$1" ]; then
+	PRINT=-print
+fi
+
 find . \( \
 	-name node_modules \
 \) \
@@ -10,5 +16,5 @@ find . \( \
 	-iname '*.bak' \
 	-o -name '*~' \
 	-o -name '*.rej' \
-\) $*
+\) $* $PRINT
 # -o -name '*.orig'
