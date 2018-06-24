@@ -50,6 +50,14 @@ TODO consider reporting to parcel team.
 got this working for node and a build target for the browser but have to fix things up with a post-build script as parcel screws things up.
 cannot run a dev build of benchmark for the same reason.  Also found sometimes parcel gets confused and need to delete its .cache
 
+FAILED: start:react target stopped working loading prop-types module for development mode.
+# for using appropriate polyfills based on target environment
+pnpm install babel-polyfill --save-dev
+and adjust .babelrc accordingly
+useBuiltIns: true
+debug:true
+and import babel-polyfill once only in your project.
++ babel-polyfill 6.26.0
 
 all the packages from pnpm
 + @vue/component-compiler-utils 2.0.0
