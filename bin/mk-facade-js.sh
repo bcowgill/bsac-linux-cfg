@@ -143,7 +143,8 @@ fi
 ##echo FACADE_TEMPLATE=$FACADE_TEMPLATE
 
 move "$FROM" "$TO"
-make_facade "$FROM" "$MODULE.$EXT"
+#make_facade "$FROM" "$MODULE.$EXT"
+make_facade "$FROM" "$MODULE"
 if [ ! -z "$TEST_PLAN_TO" ]; then
 	move "$TEST_PLAN" "$TEST_PLAN_TO"
 fi
