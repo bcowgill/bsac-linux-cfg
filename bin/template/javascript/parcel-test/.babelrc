@@ -1,0 +1,44 @@
+{
+	"env": {
+		"node": {
+			"presets": [
+				["env", {
+					"debug": true,
+					"useBuiltIns": false,
+					"targets": {
+						"node": "current"
+					}
+				}]
+			]
+		},
+		"development": {
+			"presets": [
+				["env", {
+					"debug": true,
+					"useBuiltIns": false
+				}],
+				"react"
+			]
+		},
+		"test": {
+			"presets": [
+				["env", {
+					"debug": true,
+					"useBuiltIns": false,
+					"targets": {
+						"node": "current"
+					}
+				}]
+			]
+		},
+		"production": {
+			"presets": [
+				["env", {
+					"debug": false,
+					"useBuiltIns": false
+				}],
+				"react"
+			]
+		}
+	}
+}
