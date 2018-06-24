@@ -29,6 +29,7 @@
     "debug": "parcel build src/app/javascript.js -d dist-node/ --target node --no-minify && node debug dist-node/javascript.js",
     "node:typescript": "parcel build src/app/typescript.ts -d dist-node/ --detailed-report --log-level 3 --target node --no-minify && node dist-node/typescript.js",
     "benchmark": "parcel build src/benchmark/bench-runner.js -d dist-node/ --detailed-report --log-level 3 --target node --no-minify && node dist-node/bench-runner.js",
+    "esall": "parcel build src/lib/esall.js -d dist-node/ --detailed-report --log-level 3 --target node --no-minify && node dist-node/esall.js",
     "debug:typescript": "parcel build src/app/typescript.ts -d dist-node/ --target node --no-minify && node debug dist-node/typescript.js",
     "prebuild": "rimraf dist/",
     "prebuild:react": "rimraf dist/",
