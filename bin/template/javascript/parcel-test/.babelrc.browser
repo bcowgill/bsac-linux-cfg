@@ -1,0 +1,9 @@
+{
+	"presets": [
+		["env", {
+			"debug": true,
+			"useBuiltIns": false
+		}],
+		"react"
+	]
+}

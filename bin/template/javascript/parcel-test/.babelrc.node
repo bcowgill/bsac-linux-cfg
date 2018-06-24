@@ -1,0 +1,11 @@
+{
+	"presets": [
+		["env", {
+			"debug": true,
+			"useBuiltIns": false,
+			"targets": {
+				"node": "current"
+			}
+		}]
+	]
+}

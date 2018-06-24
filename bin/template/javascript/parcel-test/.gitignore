@@ -3,3 +3,6 @@ dist-dev/
 dist-node/
 dist/
 node_modules/
+
+# because we copy .babelrc.node or .browser in place before a build.
+.babelrc
