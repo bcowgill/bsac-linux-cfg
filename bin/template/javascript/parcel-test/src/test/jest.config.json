@@ -1,16 +1,15 @@
 {
   "setupFiles": [
-    "<rootDir>/specs/jest-setup.js"
+    "<rootDir>/src/test/jest-setup.js"
   ],
-  "setupTestFrameworkScriptFile": "<rootDir>/specs/jest-setup-test-framework.js",
+  "setupTestFrameworkScriptFile": "<rootDir>/src/test/jest-setup-test-framework.js",
   "roots": [
-    "src/",
-    "specs/"
+    "src/"
   ],
   "notify": true,
   "verbose": false,
   "collectCoverage": true,
-  "coverageDirectory": "dashboard/unit-testing",
+  "coverageDirectory": "coverage",
   "coverageReporters": [
     "json",
     "lcov",
@@ -19,9 +18,7 @@
   ],
   "collectCoverageFrom": [
     "src/**/**",
-    "specs/test-tools/**",
     "!**/index.js",
-    "!**/app.mount.jsx",
     "!**/test.js",
     "!**/*.spec.js",
     "!**/*.spec.jsx"
@@ -29,7 +26,7 @@
   "coveragePathIgnorePatterns": [
     "/(style|stub)\\.js$",
     "/dist/",
-    "/dist-release/"
+    "/dist-*/"
   ],
   "coverageThreshold": {
     "global": {
@@ -53,18 +50,5 @@
     "jsx"
   ],
   "moduleNameMapper": {
-     "^assets(.*)$": "src/assets$1",
-     "^components(.*)$": "src/components$1",
-     "^journeys(.*)$": "src/journeys$1",
-     "^resources(.*)$": "src/resources$1",
-     "^sass(.*)$": "src/sass$1",
-     "^utils(.*)$": "src/utils$1",
-     "^core/src(.*)$": "<rootDir>/core-lib$1",
-     "^brand/font(.*)$": "<rootDir>/specs/brand/brand-font-unit-tests",
-     "^brand/colour(.*)$": "<rootDir>/specs/brand/brand-colour-unit-tests",
-     "^brand/icon(.*)$": "<rootDir>/specs/brand/brand-icon-unit-tests",
-     "^config/variables(.*)$": "<rootDir>/specs/brand/brand-variables-unit-tests",
-     "^config/api-paths(.*)$": "<rootDir>/specs/brand/api-paths-unit-tests",
-     "^specs(.*)$": "<rootDir>/specs$1"
   }
 }
