@@ -9,6 +9,7 @@ devDependencies:
   enzyme: 3.3.0
   fbjs: 0.8.17
   jest: 23.2.0
+  jest-environment-jsdom: 23.2.0
   lodash: 4.17.10
   microtimer: 1.1.0
   node-sass: 4.9.0
@@ -24,6 +25,7 @@ devDependencies:
   vue: 2.5.16
   vue-hot-reload-api: 2.3.0
   vue-template-compiler: 2.5.16
+  weak: 1.0.1
 packages:
   /@babel/code-frame/7.0.0-beta.51:
     dependencies:
@@ -953,6 +955,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-FK1hE4EtLTfXLme0ystLtyZQXxE=
+  /bindings/1.3.0:
+    dev: true
+    resolution:
+      integrity: sha512-DpLh5EzMR2kzvX1KIlVC0VkC3iZtHKTgdtZ0a3pglBZdaQFjt5S9g9xd1lE+YvXyfd6mtCeRnrUfOLYiTMlNSw==
   /block-stream/0.0.9:
     dependencies:
       inherits: 2.0.3
@@ -1728,13 +1734,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-vrqULLffYU1Q2tLdJvaCYbONStnfkfimRxXNaGjxMldI0C7JPBC4rB1RyjhfdZ4m1frm8pM9uRPKH3d2knZ8gg==
-  /cssom/0.3.2:
+  /cssom/0.3.3:
     dev: true
     resolution:
-      integrity: sha1-uANhcMefB6kP8vFuIihAJ6JDhIs=
+      integrity: sha512-pjE/I/NSp3iyeoxXN5QaoJpgzYUMj2dJHx9OSufoTliJLDx+kuOQaMCJW8OwvrKJswhXUHnHN6eUmUSETN0msg==
   /cssstyle/0.3.1:
     dependencies:
-      cssom: 0.3.2
+      cssom: 0.3.3
     dev: true
     resolution:
       integrity: sha512-tNvaxM5blOnxanyxI6panOsnfiyLRj3HV4qjqqS45WPNS1usdYWRUQjqTEEELK73lpeP/1KoIGYUwrBn/VcECA==
@@ -3113,26 +3119,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-JP1iAaR4LPUFYcgQJ2r8fRLXEZU=
-  /is-number/4.0.0:
-    dev: true
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha512-rSklcAIlf1OmFdyAqbnWTLVelsQ58uvZ66S/ZyawjWqIviTWCjg2PzVGw8WUA+nNuPTqb4wgA+NszrJ+08LlgQ==
   /is-obj/1.0.1:
     dev: true
     engines:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
-  /is-odd/2.0.0:
-    dependencies:
-      is-number: 4.0.0
-    dev: true
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha512-OTiixgpZAT1M4NHgS5IguFp/Vz2VI3U7Goh4/HA1adtwyLtSBrxYlcSYkhpAE07s4fKEcjrFxyvtQBND4vFQyQ==
   /is-plain-obj/1.1.0:
     dev: true
     engines:
@@ -3651,7 +3643,7 @@ packages:
       acorn: 5.7.1
       acorn-globals: 4.1.0
       array-equal: 1.0.0
-      cssom: 0.3.2
+      cssom: 0.3.3
       cssstyle: 0.3.1
       data-urls: 1.0.0
       domexception: 1.0.1
@@ -3991,7 +3983,7 @@ packages:
       extglob: 2.0.4
       fragment-cache: 0.2.1
       kind-of: 6.0.2
-      nanomatch: 1.2.9
+      nanomatch: 1.2.13
       object.pick: 1.3.0
       regex-not: 1.0.2
       snapdragon: 0.8.2
@@ -4085,14 +4077,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-bAdJv7fBLhWC+/Bls0Oza+mvTaNQtP+1RyhhhvD95pgUJz6XM5IzgmxOkItJ9tkoCiplvAnXI1tNmmUD/eScyA==
-  /nanomatch/1.2.9:
+  /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
       array-unique: 0.3.2
       define-property: 2.0.2
       extend-shallow: 3.0.2
       fragment-cache: 0.2.1
-      is-odd: 2.0.0
       is-windows: 1.0.2
       kind-of: 6.0.2
       object.pick: 1.3.0
@@ -4103,7 +4094,7 @@ packages:
     engines:
       node: '>=0.10.0'
     resolution:
-      integrity: sha512-n8R9bS8yQ6eSXaV6jHUpKzD8gLsin02w1HSFiegwrs9E098Ylhw5jdyKPaYqvHknHaSCKTPp7C8dGCQ0q9koXA==
+      integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==
   /natural-compare/1.4.0:
     dev: true
     resolution:
@@ -6516,6 +6507,14 @@ packages:
       node: '>=0.1.95'
     resolution:
       integrity: sha1-KAlUdsbffJDJYxOJkMClQj60uYY=
+  /weak/1.0.1:
+    dependencies:
+      bindings: 1.3.0
+      nan: 2.10.0
+    dev: true
+    requiresBuild: true
+    resolution:
+      integrity: sha1-q5mqswcGlZqgIAy4z1RbucszuZ4=
   /webidl-conversions/4.0.2:
     dev: true
     resolution:
@@ -6715,6 +6714,7 @@ specifiers:
   enzyme: ^3.3.0
   fbjs: 0.8.17
   jest: ^23.2.0
+  jest-environment-jsdom: ^23.2.0
   lodash: 4.17.10
   microtimer: 1.1.0
   node-sass: 4.9.0
@@ -6730,3 +6730,4 @@ specifiers:
   vue: 2.5.16
   vue-hot-reload-api: 2.3.0
   vue-template-compiler: 2.5.16
+  weak: ^1.0.1

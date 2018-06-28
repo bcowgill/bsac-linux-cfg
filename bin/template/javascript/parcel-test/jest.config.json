@@ -21,7 +21,8 @@
     "!**/index.js",
     "!**/test.js",
     "!**/*.spec.js",
-    "!**/*.spec.jsx"
+    "!**/*.spec.jsx",
+    "!src/test/jest*.js"
   ],
   "coveragePathIgnorePatterns": [
     "/(style|stub)\\.js$",

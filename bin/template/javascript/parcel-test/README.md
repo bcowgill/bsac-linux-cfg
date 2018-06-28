@@ -60,11 +60,13 @@ and import babel-polyfill once only in your project.
 + babel-polyfill 6.26.0
 
 # for jest and enzyme unit testing and coverage
-pnpm install jest babel-jest react-test-renderer enzyme --save-dev
+pnpm install jest babel-jest jest-environment-jsdom weak react-test-renderer enzyme --save-dev
 + jest 23.2.0
 + babel-jest 23.2.0
 + react-test-renderer 16.4.1
 + enzyme 3.3.0
++ jest-environment-jsdom 23.2.0
++ weak 1.0.1
 
 all the packages from pnpm
 + @vue/component-compiler-utils 2.0.0

@@ -28,7 +28,8 @@
 					"targets": {
 						"node": "current"
 					}
-				}]
+				}],
+				"react"
 			]
 		},
 		"production": {
