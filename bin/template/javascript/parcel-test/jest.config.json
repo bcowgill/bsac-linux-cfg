@@ -8,7 +8,7 @@
   ],
   "notify": true,
   "verbose": false,
-  "collectCoverage": true,
+  "collectCoverage": false,
   "coverageDirectory": "coverage",
   "coverageReporters": [
     "json",
@@ -22,6 +22,10 @@
     "!**/test.js",
     "!**/*.spec.js",
     "!**/*.spec.jsx",
+    "!src/app/**",
+    "!src/benchmark/**",
+    "!src/facade/**",
+    "!src/lib/**",
     "!src/test/jest*.js"
   ],
   "coveragePathIgnorePatterns": [
