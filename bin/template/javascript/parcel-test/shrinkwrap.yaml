@@ -19,6 +19,7 @@ devDependencies:
   prop-types: 15.6.1
   react: 16.4.1
   react-dom: 16.4.1
+  react-style-proptype: 3.2.1
   react-test-renderer: 16.4.1
   rimraf: 2.6.2
   typescript: 2.9.2
@@ -5200,6 +5201,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-xpb0PpALlFWNw/q13A+1aHeyJyLYCg0/cCHPUA43zYluZuIPHaHL3k8OBsTgQtxqW0FhyDEMvi8fZ/+7+r4OSQ==
+  /react-style-proptype/3.2.1:
+    dependencies:
+      prop-types: 15.6.1
+    dev: true
+    resolution:
+      integrity: sha512-Z02QsgmdZ4wYNxJsHhNGGZsIF8+MO93fYmdPaC+ljdqX3rq8tl/fSMXOGBbofGJNzq5W/2LFcONllmV6vzyYHA==
   /react-test-renderer/16.4.1:
     dependencies:
       fbjs: 0.8.17
@@ -6724,6 +6731,7 @@ specifiers:
   prop-types: 15.6.1
   react: 16.4.1
   react-dom: 16.4.1
+  react-style-proptype: ^3.2.1
   react-test-renderer: ^16.4.1
   rimraf: 2.6.2
   typescript: 2.9.2

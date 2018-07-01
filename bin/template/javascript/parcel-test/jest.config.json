@@ -22,6 +22,7 @@
     "!**/test.js",
     "!**/*.spec.js",
     "!**/*.spec.jsx",
+    "!**/*.snap",
     "!src/app/**",
     "!src/benchmark/**",
     "!src/facade/**",

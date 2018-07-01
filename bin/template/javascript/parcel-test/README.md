@@ -15,7 +15,7 @@ pnpm install --save-dev parcel-bundler rimraf node-sass
 + rimraf 2.6.2
 
 # for react
-pnpm install --save-dev react react-dom fbjs prop-types object-assign babel-core babel-preset-env babel-preset-react
+pnpm install --save-dev react react-dom fbjs prop-types object-assign babel-core babel-preset-env babel-preset-react react-style-proptype
 echo '{ "presets": [ "env", "react" ] }' > .babelrc
 + babel-core 6.26.3
 + babel-preset-env 1.7.0
@@ -25,6 +25,7 @@ echo '{ "presets": [ "env", "react" ] }' > .babelrc
 + prop-types 15.6.1
 + react 16.4.1
 + react-dom 16.4.1
++ react-style-proptype 3.2.1
 
 # for vue
 pnpm install --save-dev vue vue-template-compiler vue-hot-reload-api ansi-styles@3.2.1 @vue/component-compiler-utils
