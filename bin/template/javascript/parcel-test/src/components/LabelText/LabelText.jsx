@@ -33,7 +33,16 @@
 	  idForm: PropTypes.string,
 	  className: PropTypes.string,
 	  type: PropTypes.oneOf( [ 'text', 'email', 'password', 'search', 'tel', 'url' ] ),
-	  inputMode: PropTypes.oneOf( [ 'none', 'text', 'decimal', 'numeric' ] ), // mobile virtual keyboard type
+	  inputMode: PropTypes.oneOf( [
+		 'none',
+		 'text',
+		 'decimal',
+		 'numeric',
+		 'tel',
+		 'search',
+		 'email',
+		 'url'
+	  ] ), // mobile virtual keyboard type
 	  tabindex: PropTypes.number,
 
 	  // labelling and values
@@ -139,7 +148,9 @@
 	  let pattern = undefined;
 	  if ( typeof props.pattern === 'object' && props.pattern.constructor === RegExp )
 	  {
-		 pattern = props.pattern.toString().replace( /\$?\/[a-z]*$/, '$' ).replace( /^(\^|)/, '^' );
+		 pattern = props.pattern.toString()
+			.replace( /\$?\/[a-z]*$/, '$' )
+			.replace( /^(\^|)/, '^' );
 	  }
 	  return pattern;
    }
@@ -147,6 +158,7 @@
    function getCharSize( props )
    {
 	  let charSize = undefined;
+
 	  if ( props.charSize && props.charSize !== 20 )
 	  {
 		 charSize = props.charSize;
@@ -157,6 +169,7 @@
    function incremental( props )
    {
 	  let incremental = undefined;
+
 	  if ( props.type === 'search' )
 	  {
 		 incremental = props.nsIncremental;
