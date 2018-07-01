@@ -90,9 +90,61 @@
 				  } );
 			   } );
 
-			it.skip( 'should render with pattern to parse regex properly', noop );
-			it.skip( 'should render with charSize prop not default of 20', noop );
-			it.skip( 'should render type search with non standard browser props', noop );
+			it( 'should render with pattern to parse regex properly',
+			   function testLabelTextPattern()
+			   {
+				  snapshotTest( {
+					 label: 'LABEL',
+					 pattern: /start(.+)end/,
+				  } );
+			   } );
+
+			it( 'should render with pattern that has ^ $ in it',
+			   function testLabelTextPattern()
+			   {
+				  snapshotTest( {
+					 label: 'LABEL',
+					 pattern: /^start(.+)end$/,
+				  } );
+			   } );
+
+			it( 'should render with charSize prop not default of 20',
+			   function testLabelTextCharSize()
+			   {
+				  snapshotTest( {
+					 label: 'LABEL',
+					 charSize: 44,
+				  } );
+			   } );
+
+			it( 'should render type not search with non standard browser props - ignored',
+			   function testLabelTextNotSearchNonStandard()
+			   {
+				  snapshotTest( {
+					 label: 'LABEL',
+					 type: 'url',
+					 nsAutoCorrect: 'on',
+					 nsIncremental: true,
+					 nsActionHint: 'go',
+					 nsResults: 5,
+					 nsErrorMessage: 'NON-STANDARD ERROR MESSAGE',
+				  } );
+			   } );
+
+			it( 'should render type search with non standard browser props',
+			   function testLabelTextSearchNonStandard()
+			   {
+				  snapshotTest( {
+					 label: 'LABEL',
+					 type: 'search',
+					 nsAutoCorrect: 'on',
+					 nsIncremental: true,
+					 nsActionHint: 'go',
+					 nsResults: 5,
+					 nsErrorMessage: 'NON-STANDARD ERROR MESSAGE',
+				  } );
+			   } );
+
 			it.skip( 'should render with all props', noop );
 		 } ); // render snapshot tests
 

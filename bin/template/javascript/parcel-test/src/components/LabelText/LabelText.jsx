@@ -150,7 +150,7 @@
 	  {
 		 pattern = props.pattern.toString()
 			.replace( /\$?\/[a-z]*$/, '$' )
-			.replace( /^(\^|)/, '^' );
+			.replace( /^\/\^?/, '^' );
 	  }
 	  return pattern;
    }
