@@ -112,6 +112,60 @@ exports[`src/components/ <LabelText> component render snapshot tests should rend
 </label>
 `;
 
+exports[`src/components/ <LabelText> component render snapshot tests should render with all props 1`] = `
+<label
+  className="LabelText CSS-CLASS"
+  form="ID-FORM"
+  htmlFor="txtID"
+  id="ID"
+  style={
+    Object {
+      "content": "\\"MOCK STYLE LABEL\\"",
+    }
+  }
+>
+  LABEL
+  <input
+    aria-describedby="ID-ARIA-DESCRIBEDBY"
+    aria-details="ID-ARIA-DETAILS"
+    aria-errormessage="ID-ARIA-ERROR-MESSAGE"
+    aria-invalid={false}
+    aria-labelledby="ID"
+    aria-multiline={false}
+    aria-placeholder="PLACEHOLDER"
+    aria-required={true}
+    autoComplete="off"
+    autoCorrect="off"
+    disabled={false}
+    id="txtID"
+    inputMode="numeric"
+    list="ID-DATALIST"
+    max={123456789012}
+    maxLength={12}
+    min={1}
+    minLength={2}
+    mozactionhint="send"
+    multiple={false}
+    name="txtID"
+    pattern="^0+[0-9]+$"
+    readOnly={false}
+    required={true}
+    role="search"
+    size={13}
+    spellCheck={false}
+    step={5}
+    style={
+      Object {
+        "font": "\\"MOCK STYLE INPUT\\"",
+      }
+    }
+    type="text"
+    value="01"
+    x-moz-errormessage="NON-STANDARD ERROR MESSAGE"
+  />
+</label>
+`;
+
 exports[`src/components/ <LabelText> component render snapshot tests should render with aria label + labelby and empty label 1`] = `
 <label
   className="LabelText"

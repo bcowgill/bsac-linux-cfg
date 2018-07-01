@@ -6,6 +6,15 @@
 
    const noop = function () { };
 
+   const mockStyle = {
+	  label: {
+		 content: '"MOCK STYLE LABEL"',
+	  },
+	  input: {
+		 font: '"MOCK STYLE INPUT"',
+	  },
+   };
+
    describe( suite, function descLabelTextSuite()
    {
 	  function buildComponent( props )
@@ -100,7 +109,7 @@
 			   } );
 
 			it( 'should render with pattern that has ^ $ in it',
-			   function testLabelTextPattern()
+			   function testLabelTextPatternCaretDollar()
 			   {
 				  snapshotTest( {
 					 label: 'LABEL',
@@ -145,7 +154,47 @@
 				  } );
 			   } );
 
-			it.skip( 'should render with all props', noop );
+			it( 'should render with all props',
+			   function testLabelTextRenderAllProps()
+			   {
+				  snapshotTest( {
+					 idForm: 'ID-FORM',
+					 className: 'CSS-CLASS',
+					 type: 'text',
+					 inputMode: 'numeric',
+					 tabindex: 99,
+					 label: 'LABEL',
+					 placeholder: 'PLACEHOLDER',
+					 value: '01',
+					 autoComplete: 'off',
+					 idDataList: 'ID-DATALIST',
+					 disabled: false,
+					 readOnly: false,
+					 required: true,
+					 multiple: false,
+					 invalid: false,
+					 minLength: 2,
+					 maxLength: 12,
+					 pattern: /0+[0-9]+/,
+					 spellCheck: false,
+					 min: 1,
+					 max: 123456789012,
+					 step: 5,
+					 charSize: 13,
+					 style: mockStyle,
+					 role: 'search',
+					 ariaLabel: 'ARIA LABEL',
+					 idAriaLabelledby: 'ID-ARIA-LABELLEDBY',
+					 idAriaDescribedby: 'ID-ARIA-DESCRIBEDBY',
+					 idAriaDetails: 'ID-ARIA-DETAILS',
+					 idAriaErrorMessage: 'ID-ARIA-ERROR-MESSAGE',
+					 nsAutoCorrect: 'off',
+					 nsIncremental: false,
+					 nsActionHint: 'send',
+					 nsResults: 4,
+					 nsErrorMessage: 'NON-STANDARD ERROR MESSAGE',
+				  } );
+			   } );
 		 } ); // render snapshot tests
 
 	  describe( 'style override tests',
