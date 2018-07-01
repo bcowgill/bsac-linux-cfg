@@ -1,6 +1,7 @@
    import React from 'react';
    import renderer from 'react-test-renderer';
    import LabelText from './';
+   import { warnPropErrors } from './';
 
    const suite = 'src/components/ <LabelText> component';
 
@@ -35,13 +36,26 @@
 	  describe( 'property warning tests',
 		 function descLabelTextPropWarningSuite()
 		 {
-			it.skip( 'should emit a warning if not labelled properly', noop );
-			it.skip( 'should not emit the same warning more than once', noop );
+			it( 'should emit a warning if not labelled properly -- only once',
+			   function testLabelTextPropWarn()
+			   {
+				  const spy = jest.fn().mockReturnValue( 1 );
+				  warnPropErrors( {}, { error: spy } );
+				  expect( spy ).toHaveBeenCalledTimes( 1 );
+				  expect( spy ).toHaveBeenCalledWith(
+					 "Warning: Failed prop combination: One of these props: `label`, `ariaLabel`, `idAriaLabelledby` is required in `LabelText`, but none were provided.\n    in LabelText"
+				  );
+
+				  warnPropErrors( {}, { error: spy } );
+				  warnPropErrors( {}, { error: spy } );
+				  expect( spy ).toHaveBeenCalledTimes( 1 );
+			   } );
 		 } ); // property warning tests
 
 	  describe( 'render snapshot tests',
 		 function descLabelTextSnapshotSuite()
 		 {
+			// http://jestjs.io/docs/en/snapshot-testing.html#content
 			function snapshotTest( props )
 			{
 			   const component = buildComponent( props );

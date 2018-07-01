@@ -234,17 +234,24 @@
 	  }
    };
 
-   function warnError( errorId, props, konsole = console )
+   function warnError(
+	  errorId,
+	  props,
+	  /*istanbul ignore next */
+	  konsole = console
+   )
    {
 	  if ( propWarnings[ errorId ] )
 	  {
-		 console.error( `Warning: ${propWarnings[ errorId ]( props )}\n    in ${displayName}` );
+		 konsole.error( `Warning: ${propWarnings[ errorId ]( props )}\n    in ${displayName}` );
 		 delete propWarnings[ errorId ];
 	  }
    }
 
-   function warnPropErrors( props, konsole )
+   // TODO pull out into a utility function
+   export function warnPropErrors( props, konsole )
    {
+	  /* istanbul ignore next */
 	  if ( process.env.NODE_ENV !== 'production' )
 	  {
 		 if ( empty( props.label ) )
