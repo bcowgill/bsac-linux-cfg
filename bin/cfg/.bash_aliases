@@ -177,6 +177,7 @@ alias npm5="npm-json5"
 #alias n-ls="ls /usr/local/n/versions/node"
 alias n-ls="(n io list; n list) | perl -ne 'print if m{\A\s*\d}xms'"
 alias n-vers="echo node latest: `n --latest`; echo node stable: `n --stable`; echo node lts: `n --lts`"
+alias nvu="nvm use `cat .nvmrc`"
 # some bower aliases
 alias bower-links=bower-links.sh
 alias bower-all-links='bower-links.sh ~'
