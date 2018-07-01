@@ -221,17 +221,16 @@
 	  }
    };
 
-   function warnError( errorId, props )
+   function warnError( errorId, props, konsole = console )
    {
 	  if ( propWarnings[ errorId ] )
 	  {
 		 console.error( `Warning: ${propWarnings[ errorId ]( props )}\n    in ${displayName}` );
 		 delete propWarnings[ errorId ];
 	  }
-
    }
 
-   function warnPropErrors( props )
+   function warnPropErrors( props, konsole )
    {
 	  if ( process.env.NODE_ENV !== 'production' )
 	  {
@@ -239,8 +238,7 @@
 		 {
 			if ( empty( props.idAriaLabelledby ) && empty( props.ariaLabel ) )
 			{
-			   warnError( 'label', props );
-			   warnError( 'label', props );
+			   warnError( 'label', props, konsole );
 			}
 		 }
 	  }
