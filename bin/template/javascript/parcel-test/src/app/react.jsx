@@ -1,9 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import LabelText from '../components/LabelText';
 import '../styles/styles.scss';
 
 const App = () => (
-	<h1>Hello ALL from React and parcel!</h1>
+	<section>
+		<h1>Hello ALL from React and parcel!</h1>
+		<LabelText
+			id="ID"
+			value="VALUE"
+			label="LABEL"
+			readOnly={true}
+		/>
+	</section>
 );
 App.displayName = 'App';
 

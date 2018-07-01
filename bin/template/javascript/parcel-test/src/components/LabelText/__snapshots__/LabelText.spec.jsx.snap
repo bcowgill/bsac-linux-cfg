@@ -3,25 +3,23 @@
 exports[`src/components/ <LabelText> component should render with minimal properties 1`] = `
 <label
   className="LabelText"
-  for="txtID"
+  htmlFor="txtID"
   id="ID"
 >
   LABEL
   <input
-    ariaInvalid={false}
-    ariaLabelledby="ID"
-    ariaMultiline={false}
-    ariaReadonly={false}
-    ariaRequired={false}
-    autocomplete="off"
+    aria-invalid={false}
+    aria-labelledby="ID"
+    aria-multiline={false}
+    aria-required={false}
     disabled={false}
     id="txtID"
     multiple={false}
     name="txtID"
-    readonly={false}
+    readOnly={false}
     required={false}
     role="textbox"
-    spellcheck={false}
+    spellCheck={false}
     type="text"
     value="VALUE"
   />

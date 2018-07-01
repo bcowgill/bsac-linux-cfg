@@ -15,11 +15,17 @@ pnpm install --save-dev parcel-bundler rimraf node-sass
 + rimraf 2.6.2
 
 # for react
-pnpm install --save-dev react react-dom fbjs prop-types object-assign babel-core babel-preset-env babel-preset-react react-style-proptype
+pnpm install --save-dev react react-dom fbjs prop-types object-assign babel-core babel-preset-env babel-plugin-add-module-exports babel-plugin-transform-export-extensions babel-plugin-transform-class-properties babel-plugin-transform-exponentiation-operator babel-plugin-transform-object-rest-spread babel-preset-react react-style-proptype
 echo '{ "presets": [ "env", "react" ] }' > .babelrc
+transform add module exports may be unneeded.
 + babel-core 6.26.3
 + babel-preset-env 1.7.0
 + babel-preset-react 6.24.1
++ babel-plugin-add-module-exports 0.2.1
++ babel-plugin-transform-export-extensions 6.22.0
++ babel-plugin-transform-class-properties 6.24.1
++ babel-plugin-transform-exponentiation-operator 6.24.1
++ babel-plugin-transform-object-rest-spread 6.26.0
 + fbjs 0.8.17
 + object-assign 4.1.1
 + prop-types 15.6.1

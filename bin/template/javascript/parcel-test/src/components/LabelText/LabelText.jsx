@@ -8,25 +8,44 @@
 
    const displayName = 'LabelText';
 
+   const ariaPropTypes = {
+	  // WAI-ARIA props for accessibility
+	  role: PropTypes.string,
+	  ariaLabel: PropTypes.string, // if no visible label this can be used
+	  idAriaLabelledby: PropTypes.string, // if no visible label this has priority over ariaLabel
+	  idAriaDescribedby: PropTypes.string, // id of element containing longer description
+	  idAriaDetails: PropTypes.string, // id of elements containg much more details
+	  idAriaErrorMessage: PropTypes.string, // id of element showing error messagd when invalid
+   };
+
+   const nonStandardPropTypes = {
+	  // ns = non-standard
+	  nsAutoCorrect: PropTypes.oneOf( [ 'on', 'off' ] ), // safari
+	  nsIncremental: PropTypes.bool, // safari and chrome
+	  nsActionHint: PropTypes.oneOf( [ 'go', 'done', 'next', 'search', 'send' ] ), // mozilla mobile virtual keyboard Enter key
+	  nsResults: PropTypes.number, // safari
+	  nsErrorMessage: PropTypes.string, // mozilla
+   };
+
    const propTypes = {
 	  // basic identity and form of the text input
 	  id: PropTypes.string.isRequired,
 	  idForm: PropTypes.string,
 	  className: PropTypes.string,
 	  type: PropTypes.oneOf( [ 'text', 'email', 'password', 'search', 'tel', 'url' ] ),
-	  inputmode: PropTypes.oneOf( [ 'none', 'text', 'decimal', 'numeric' ] ), // mobile virtual keyboard type
+	  inputMode: PropTypes.oneOf( [ 'none', 'text', 'decimal', 'numeric' ] ), // mobile virtual keyboard type
 	  tabindex: PropTypes.number,
 
 	  // labelling and values
 	  label: PropTypes.string,
 	  placeholder: PropTypes.string,
 	  value: PropTypes.string.isRequired,
-	  autocomplete: PropTypes.string, // off, on, name. etc... see input spec url above
+	  autoComplete: PropTypes.string, // off, on, name. etc... see input spec url above
 	  idDataList: PropTypes.string,
 
 	  // on/off properties
 	  disabled: PropTypes.bool,
-	  readonly: PropTypes.bool,
+	  readOnly: PropTypes.bool,
 	  required: PropTypes.bool,
 	  multiple: PropTypes.bool,
 	  invalid: PropTypes.bool,
@@ -35,7 +54,7 @@
 	  minLength: PropTypes.number,
 	  maxLength: PropTypes.number,
 	  pattern: PropTypes.instanceOf( RegExp ), // will match against entire value
-	  spellcheck: PropTypes.oneOfType( [
+	  spellCheck: PropTypes.oneOfType( [
 		 PropTypes.oneOf( [ 'default' ] ),
 		 PropTypes.bool,
 	  ] ),
@@ -48,20 +67,8 @@
 		 PropTypes.number,
 	  ] ),
 
-	  // WAI-ARIA props for accessibility
-	  role: PropTypes.string,
-	  ariaLabel: PropTypes.string, // if no visible label this can be used
-	  idAriaLabelledby: PropTypes.string, // if no visible label this has priority over ariaLabel
-	  idAriaDescribedby: PropTypes.string, // id of element containing longer description
-	  idAriaDetails: PropTypes.string, // id of elements containg much more details
-	  idAriaErrorMessage: PropTypes.string, // id of element showing error messagd when invalid
-
-	  // ns = non-standard
-	  nsAutoCorrect: PropTypes.oneOf( [ 'on', 'off' ] ), // safari
-	  nsIncremental: PropTypes.bool, // safari and chrome
-	  nsActionHint: PropTypes.oneOf( [ 'go', 'done', 'next', 'search', 'send' ] ), // mozilla mobile virtual keyboard Enter key
-	  nsResults: PropTypes.number, // safari
-	  nsErrorMessage: PropTypes.string, // mozilla
+	  ...ariaPropTypes,
+	  ...nonStandardPropTypes,
 
 	  // style related
 	  charSize: PropTypes.number,
@@ -75,21 +82,27 @@
 	  idForm: undefined,
 	  className: '',
 	  type: 'text',
-	  inputmode: undefined,
+	  inputMode: undefined,
 	  tabindex: undefined,
 	  label: '',
 	  placeholder: undefined,
 	  autocomplete: 'off',
 	  idDataList: undefined,
 	  disabled: false,
-	  readonly: false,
+	  readOnly: false,
 	  required: false,
 	  multiple: false,
 	  invalid: false,
 	  minLength: undefined,
 	  maxLength: undefined,
 	  pattern: undefined,
-	  spellcheck: false,
+	  spellCheck: false,
+	  role: undefined,
+	  ariaLabel: undefined,
+	  idAriaLabelledby: undefined,
+	  idAriaDescribedby: undefined,
+	  idAriaDetails: undefined,
+	  idAriaErrorMessage: undefined,
 	  nsAutoCorrect: undefined,
 	  nsIncremental: undefined,
 	  nsIncremental: undefined,
@@ -106,13 +119,13 @@
    function getInputMode( props )
    {
 	  const type = props.type;
-	  let inputmode = props.inputmode;
+	  let inputMode = props.inputMode;
 
 	  if ( /^(tel|email|url)$/.test( type ) )
 	  {
-		 inputmode = undefined;
+		 inputMode = undefined;
 	  }
-	  return inputmode;
+	  return inputMode;
    }
 
    function multipleValues( props )
@@ -188,22 +201,33 @@
 
 	  return {
 		 role,
-		 ariaLabel,
-		 ariaLabelledby, // id list
-		 ariaPlaceholder: props.placeholder,
-		 ariaDescribedby: props.idAriaDescribedby,
-		 ariaDetails: props.idAriaDetails,
-		 ariaRequired: props.required,
-		 ariaReadonly: props.readonly,
-		 ariaInvalid: props.invalid,
-		 ariaErrormessage: props.idAriaErrorMessage,
-		 ariaMultiline: false,
+		 'aria-label': ariaLabel,
+		 'aria-labelledby': ariaLabelledby,
+		 'aria-placeholder': props.placeholder,
+		 'aria-describedby': props.idAriaDescribedby,
+		 'aria-details': props.idAriaDetails,
+		 'aria-required': props.required,
+		 'aria-readonly': props.readonly,
+		 'aria-invalid': props.invalid,
+		 'aria-errormessage': props.idAriaErrorMessage,
+		 'aria-multiline': false,
 	  };
    }
 
-   function warnError( errorId )
+   const propWarnings = {
+	  label( props )
+	  {
+		 return `Failed prop combination: One of these props: \`label\`, \`ariaLabel\`, \`idAriaLabelledby\` is required in \`${displayName}\`, but none were provided.`;
+	  }
+   };
+
+   function warnError( errorId, props )
    {
-	  console.error( `Warning: Failed prop combination: One of these props: \`label\`, \`ariaLabel\`, \`idAriaLabelledby\` is required in \`${displayName}\`, but none were provided.\n    in ${displayName}` );
+	  if ( propWarnings[ errorId ] )
+	  {
+		 console.error( `Warning: ${propWarnings[ errorId ]( props )}\n    in ${displayName}` );
+		 delete propWarnings[ errorId ];
+	  }
 
    }
 
@@ -215,7 +239,8 @@
 		 {
 			if ( empty( props.idAriaLabelledby ) && empty( props.ariaLabel ) )
 			{
-			   warnError( 'label' );
+			   warnError( 'label', props );
+			   warnError( 'label', props );
 			}
 		 }
 	  }
@@ -237,7 +262,7 @@
 		 <label
 			id={props.id}
 			className={[ displayName, props.className ].join( ' ' ).trim()}
-			for={idInput}
+			htmlFor={idInput}
 			form={props.idForm}
 			style={props.style && props.style.label}
 		 >
@@ -246,22 +271,22 @@
 			   id={idInput}
 			   name={idInput}
 			   type={props.type}
-			   inputmode={inputMode}
+			   inputMode={inputMode}
 			   value={props.value}
-			   autocomplete={props.autocomplete}
+			   autoComplete={props.autoComplete}
 			   list={props.idDataList}
 			   disabled={props.disabled}
-			   readonly={props.readonly}
+			   readOnly={props.readOnly}
 			   required={props.required}
 			   multiple={multiple}
 			   minLength={props.minLength}
 			   maxLength={props.maxLength}
 			   pattern={pattern}
-			   spellcheck={props.spellcheck}
-			   autocorrect={props.nsAutoCorrect}
+			   spellCheck={props.spellCheck}
+			   autoCorrect={props.nsAutoCorrect}
 			   incremental={nsIncremental}
 			   mozactionhint={props.nsActionHint}
-			   xMozErrormessage={props.nsErrorMessage}
+			   x-moz-errormessage={props.nsErrorMessage}
 			   results={nsResults}
 			   min={props.min}
 			   max={props.max}

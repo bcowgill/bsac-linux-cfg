@@ -1,7 +1,7 @@
    import React from 'react';
    import renderer from 'react-test-renderer';
 
-   import LabelText from './LabelText';
+   import LabelText from './';
 
    const suite = 'src/components/ <LabelText> component';
 
