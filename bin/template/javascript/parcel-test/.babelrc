@@ -1,10 +1,4 @@
 {
-	"plugins": [
-		"transform-exponentiation-operator",
-		"transform-object-rest-spread",
-		"transform-class-properties",
-		"transform-export-extensions"
-	],
 	"env": {
 		"node": {
 			"presets": [
@@ -15,10 +9,7 @@
 						"node": "current"
 					}
 				}]
-			],
-			"plugins": [
-				"transform-export-extensions"
-			],
+			]
 		},
 		"development": {
 			"presets": [
@@ -27,7 +18,7 @@
 					"useBuiltIns": false
 				}],
 				"react"
-			]
+			]`
 		},
 		"test": {
 			"presets": [
@@ -39,10 +30,7 @@
 					}
 				}],
 				"react"
-			],
-			"plugins": [
-				"transform-export-extensions"
-			],
+			]
 		},
 		"production": {
 			"presets": [
