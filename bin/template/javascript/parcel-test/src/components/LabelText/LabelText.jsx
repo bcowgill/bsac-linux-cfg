@@ -5,6 +5,7 @@
    import React from 'react';
    import PropTypes from 'prop-types';
    import PropTypesStyle from 'react-style-proptype';
+   import warnError from '../../util/prop-errors';
 
    const displayName = 'LabelText';
 
@@ -234,21 +235,6 @@
 	  }
    };
 
-   function warnError(
-	  errorId,
-	  props,
-	  /*istanbul ignore next */
-	  konsole = console
-   )
-   {
-	  if ( propWarnings[ errorId ] )
-	  {
-		 konsole.error( `Warning: ${propWarnings[ errorId ]( props )}\n    in ${displayName}` );
-		 delete propWarnings[ errorId ];
-	  }
-   }
-
-   // TODO pull out into a utility function
    export function warnPropErrors( props, konsole )
    {
 	  /* istanbul ignore next */
@@ -258,7 +244,7 @@
 		 {
 			if ( empty( props.idAriaLabelledby ) && empty( props.ariaLabel ) )
 			{
-			   warnError( 'label', props, konsole );
+			   warnError( displayName, 'label', props, propWarnings, konsole );
 			}
 		 }
 	  }
