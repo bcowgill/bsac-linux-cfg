@@ -1,8 +1,5 @@
 /*
   help with testing exports from a Facade or module
-
-  cp src/containers/index.spec.js src/new/path/
-  ./test-one.sh src/new/path/index.spec.js --run
 */
 /* eslint-disable prefer-arrow-callback */
 import keys from 'lodash/keys';
