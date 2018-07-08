@@ -8,6 +8,7 @@ import prepareYMD from './prepareYMD';
 
 const suite = 'src/util isPossibleDate';
 
+const symbol = [Symbol.iterator];
 const validDates = [
   ['2000', '1', '2'],
   [2000, 1, 2],
@@ -21,6 +22,8 @@ const invalidDates = [
   [2000, 61, 290],
   [2000, 2, 30],
   [1999, 2, 29],
+  ['0'],
+  symbol,
 ];
 
 describe(suite, function descIsPossibleDate() {
@@ -79,7 +82,8 @@ describe(suite, function descIsPossibleDate() {
   });
 
   invalidDates.map((dateArray) => {
-    it('should handle invalid dates: ' + dateArray.join(', '), function testIsPossibleDateInvalid() {
+    const testCase = dateArray === symbol ? '[Symbol.iterator]' : dateArray.join(', ');
+    it('should handle invalid dates: ' + testCase, function testIsPossibleDateInvalid() {
       expect(isPossibleDateYMD.apply(null, dateArray)).toBeFalsy();
       expect(isPossibleDateYMDString.apply(null, dateArray)).toBeFalsy();
       expect(isPossibleDateYMDParts.apply(null, dateArray)).toBeFalsy();

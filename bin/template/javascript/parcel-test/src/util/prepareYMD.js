@@ -1,6 +1,9 @@
 // prepareYMD.js
 // somewhat internal to prepare year month date values for possible date validation
 
+import toString from 'lodash/toString'; // handles Symbol properly
+import isSymbol from 'lodash/isSymbol';
+
 const DECIMAL = 10;
 const reDateString = /^(-?\d{4,6})-(\d{2})-(\d{2})$/;
 
@@ -8,12 +11,17 @@ function INVALID_DATE() {
   return new Date('2000-99-99');
 }
 
+// The only type of object which busts parseInt is a symbol
+function safeParseInt(thing, radix = DECIMAL) {
+  return isSymbol(thing) ? NaN : parseInt(thing, radix);
+}
+
 // pad to number of digits with optional negative sign
 function padDigits(value, length) {
   if (value < 0) {
     return '-' + padDigits(-value, length);
   }
-  const valueString = '' + value;
+  const valueString = toString(value);
   if (valueString.length >= length) {
     return valueString;
   }
@@ -58,17 +66,18 @@ export function dateOf(dateString, dateInfo = {}) {
 // dateString: yyyy-mm-dd or -yyyyyy-mm-dd
 // returns array of year, month, day values or false
 export function parseDateString(dateString) {
-  const match = ('' + dateString).match(reDateString);
+  isSymbol(dateString)
+  const match = toString(dateString).match(reDateString);
   return match ? [match[1], match[2], match[3]] : false;
 }
 
 // year, month, day should be parseable as an integer
 // or you will get an invalid date returned
 export default function prepareYMD(year, month, day) {
-  const yearValue = parseInt(year, DECIMAL);
-  const monthValue = parseInt(month, DECIMAL);
-  const dayValue = parseInt(day, DECIMAL);
-  const yearString = '' + padYear(yearValue);
+  const yearValue = safeParseInt(year);
+  const monthValue = safeParseInt(month);
+  const dayValue = safeParseInt(day);
+  const yearString = toString(padYear(yearValue));
   const monthString = (monthValue < 10 ? '0' : '') + monthValue;
   const dayString = (dayValue < 10 ? '0' : '') + dayValue;
   const dateString = `${yearString}-${monthString}-${dayString}`;
