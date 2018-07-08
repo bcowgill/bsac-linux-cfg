@@ -1,6 +1,7 @@
 // prepareYMD.js
 // somewhat internal to prepare year month date values for possible date validation
 
+import padStart from 'lodash/padStart';
 import toString from 'lodash/toString'; // handles Symbol properly
 import isSymbol from 'lodash/isSymbol';
 
@@ -19,13 +20,9 @@ function safeParseInt(thing, radix = DECIMAL) {
 // pad to number of digits with optional negative sign
 function padDigits(value, length) {
   if (value < 0) {
-    return '-' + padDigits(-value, length);
+    return '-' + padStart(-value, length, '0');
   }
-  const valueString = toString(value);
-  if (valueString.length >= length) {
-    return valueString;
-  }
-  return '0' + padDigits(value, length - 1);
+  return padStart(value, length, '0');
 }
 
 // pad year to 4 digits if positive or 6 digits if negative
