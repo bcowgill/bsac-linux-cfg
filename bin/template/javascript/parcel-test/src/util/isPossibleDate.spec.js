@@ -1,6 +1,8 @@
 import isDate from 'lodash/isDate';
+import isPossibleDateYMDString from './isPossibleDateYMDString';
+import isPossibleDateYMDParts from './isPossibleDateYMDParts';
+import isPossibleDateYMD from './isPossibleDateYMD';
 import isPossibleDate from './isPossibleDate';
-import * as pd from './isPossibleDate';
 import prepareYMD from './prepareYMD';
 
 
@@ -23,13 +25,13 @@ const invalidDates = [
 
 describe(suite, function descIsPossibleDate() {
   it('isPossibleDateYMD should return date object for valid dates: ', function testIsPossibleDateValidAsDate() {
-    const date = pd.isPossibleDateYMD(2000, 3, 4);
+    const date = isPossibleDateYMD(2000, 3, 4);
     expect(isDate(date)).toBeTruthy();
   });
 
   it('isPossibleDateYMD should return date object for timestamp 0: ', function testIsPossibleDateValidZero() {
     const zeroDate = new Date(0);
-    const date = pd.isPossibleDateYMD(
+    const date = isPossibleDateYMD(
       1900 + zeroDate.getYear(),
       1 + zeroDate.getMonth(),
       zeroDate.getDate());
@@ -37,12 +39,12 @@ describe(suite, function descIsPossibleDate() {
   });
 
   it('isPossibleDateYMDString should return YMD dateString for valid dates: ', function testIsPossibleDateValidAsDateString() {
-    const date = pd.isPossibleDateYMDString(2000, 3, 4);
+    const date = isPossibleDateYMDString(2000, 3, 4);
     expect(date).toBe('2000-03-04');
   });
 
   it('isPossibleDateYMDParts should return YMD padded array for valid dates: ', function testIsPossibleDateValidAsArray() {
-    const date = pd.isPossibleDateYMDParts(2000, 3, 4);
+    const date = isPossibleDateYMDParts(2000, 3, 4);
     expect(date).toEqual(["2000", "03", "04"]);
   });
 
@@ -66,9 +68,9 @@ describe(suite, function descIsPossibleDate() {
 
   validDates.map((dateArray) => {
     it('should handle valid dates: ' + dateArray.join(', '), function testIsPossibleDateValid() {
-      expect(pd.isPossibleDateYMD.apply(null, dateArray)).toBeTruthy();
-      expect(pd.isPossibleDateYMDString.apply(null, dateArray)).toBeTruthy();
-      expect(pd.isPossibleDateYMDParts.apply(null, dateArray)).toBeTruthy();
+      expect(isPossibleDateYMD.apply(null, dateArray)).toBeTruthy();
+      expect(isPossibleDateYMDString.apply(null, dateArray)).toBeTruthy();
+      expect(isPossibleDateYMDParts.apply(null, dateArray)).toBeTruthy();
       expect(isPossibleDate.apply(null, dateArray)).toBeTruthy();
 
       const dateString = prepareYMD.apply(null, dateArray).yyyymmdd;
@@ -78,9 +80,9 @@ describe(suite, function descIsPossibleDate() {
 
   invalidDates.map((dateArray) => {
     it('should handle invalid dates: ' + dateArray.join(', '), function testIsPossibleDateInvalid() {
-      expect(pd.isPossibleDateYMD.apply(null, dateArray)).toBeFalsy();
-      expect(pd.isPossibleDateYMDString.apply(null, dateArray)).toBeFalsy();
-      expect(pd.isPossibleDateYMDParts.apply(null, dateArray)).toBeFalsy();
+      expect(isPossibleDateYMD.apply(null, dateArray)).toBeFalsy();
+      expect(isPossibleDateYMDString.apply(null, dateArray)).toBeFalsy();
+      expect(isPossibleDateYMDParts.apply(null, dateArray)).toBeFalsy();
       expect(isPossibleDate.apply(null, dateArray)).toBeFalsy();
 
       const dateString = prepareYMD.apply(null, dateArray).yyyymmdd;
