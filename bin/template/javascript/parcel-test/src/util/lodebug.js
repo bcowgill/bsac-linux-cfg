@@ -1,5 +1,11 @@
+import has from 'lodash/has';
+import trim from 'lodash/trim';
 import isValidDate from './isValidDate';
 import isPossibleDate from './isPossibleDate';
+
+function length(thing) {
+  return has(thing, 'length') ? thing.length : false;
+}
 
 const identifiers = [
    ["isUndefined", require("lodash/isUndefined")],
@@ -88,7 +94,9 @@ function debug(name, value) {
   const result = identifiers
     .map(classify)
     .join(' ')
-    .split(/\n\s*/)
+    .split(/\n/)
+    .map(trim)
+    .filter(length)
     .map(nameLine(name));
   return result;
 }
