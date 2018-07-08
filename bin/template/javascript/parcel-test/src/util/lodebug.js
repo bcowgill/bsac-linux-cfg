@@ -1,3 +1,6 @@
+import isValidDate from './isValidDate';
+import isPossibleDate from './isPossibleDate';
+
 const identifiers = [
    ["isUndefined", require("lodash/isUndefined")],
    ["isNull", require("lodash/isNull")],
@@ -13,6 +16,8 @@ const identifiers = [
    ["\n"],
    ["isError", require("lodash/isError")],
    ["isDate", require("lodash/isDate")],
+   ["isValidDate", isValidDate],
+   ["isPossibleDate", isPossibleDate],
    ["isRegExp", require("lodash/isRegExp")],
    ["isElement", require("lodash/isElement")],
    ["\n"],

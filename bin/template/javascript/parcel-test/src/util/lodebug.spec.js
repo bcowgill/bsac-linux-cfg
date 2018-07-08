@@ -1,3 +1,5 @@
+//import React from 'react';
+//import renderer from 'react-test-renderer';
 import lodebug from './lodebug';
 
 let error;
@@ -7,6 +9,11 @@ try {
 catch (exception) {
   error = exception;
 }
+
+const dateInvalid = new Date('2000-19-99');
+
+//const Component = function render (props) {};
+//const component = renderer.create(function () { <div />);
 
 const testData = [
   [
@@ -106,6 +113,7 @@ const testData = [
   [
     '0', [
       "\"0\": isString",
+      "\"0\": isPossibleDate",
       "\"0\": isArrayLike",
       "\"0\": _isIndex _isKey _isKeyable _isStrictComparable",
     ],
@@ -160,11 +168,44 @@ const testData = [
     new Date(), [
       "new Date(): isObject",
       "new Date(): isObjectLike",
-      "new Date(): isDate",
+      "new Date(): isDate isValidDate isPossibleDate",
       "new Date(): isEmpty",
       "new Date(): _isKey",
     ],
     'new Date()',
+  ],
+  [
+    dateInvalid, [
+      "new Date(invalid): isObject",
+      "new Date(invalid): isObjectLike",
+      "new Date(invalid): isDate",
+      "new Date(invalid): isEmpty",
+      "new Date(invalid): _isKey",
+    ],
+    'new Date(invalid)',
+  ],
+  [
+    dateInvalid.getMonth(), [
+      "new Date(invalid).getMonth(): isNumber",
+      "new Date(invalid).getMonth(): isEmpty isNaN",
+      "new Date(invalid).getMonth(): _isKey _isKeyable",
+    ],
+    'new Date(invalid).getMonth()',
+  ],
+  [
+    '2000-01-02', [
+      "2000-01-02: isString",
+      "2000-01-02: isPossibleDate",
+      "2000-01-02: isArrayLike",
+      "2000-01-02: _isKey _isKeyable _isStrictComparable",
+    ],
+  ],
+  [
+    '2000-22-45', [
+      "2000-22-45: isString",
+      "2000-22-45: isArrayLike",
+      "2000-22-45: _isKey _isKeyable _isStrictComparable",
+    ],
   ],
   [
     /^/, [
@@ -173,6 +214,28 @@ const testData = [
       "/^/: isRegExp",
       "/^/: isEmpty",
       "/^/: _isKey",
+    ],
+  ],
+//  [
+//    component.find('div').get(0), [
+//    ],
+//    '',
+//  ],
+  [
+    eval, [
+      "eval: isObject",
+      "eval: isFunction",
+      "eval: isEmpty isNative",
+      "eval: ",
+    ],
+    'eval',
+  ],
+  [
+    (function () { return arguments; })(1,2,3), [
+      "[object Arguments]: isObject",
+      "[object Arguments]: isObjectLike",
+      "[object Arguments]: isArguments isArrayLike isArrayLikeObject",
+      "[object Arguments]: _isFlattenable",
     ],
   ],
 /*  [
