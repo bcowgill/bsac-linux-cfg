@@ -406,6 +406,13 @@ describe('lodebug', function descLodebugSuite () {
     ]);
   });
 
+  it('should debug to console (coverage)', function testLodebugConsole() {
+    // no need to clean up spy afterEach as we run with --resetMocks etc in package.json
+    const spy = jest.spyOn(console, 'log').mockReturnValue(1);
+    lodebug('fortyTwo', 42);
+    expect(spy).toHaveBeenCalledTimes(3);
+  });
+
   testData.map(([value, expected, named = `${value}`]) => {
     it(`should debug a value: ${named}`, function testLodebugValue() {
       const output = [];

@@ -4,7 +4,8 @@ import isValidDate from './isValidDate';
 import isPossibleDate from './isPossibleDate';
 
 function length(thing) {
-  return has(thing, 'length') ? thing.length : false;
+  return thing.length;
+//  return has(thing, 'length') ? thing.length : false;
 }
 
 const identifiers = [
