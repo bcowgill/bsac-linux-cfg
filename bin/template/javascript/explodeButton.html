@@ -39,18 +39,36 @@ button {
 // https://javascriptweekly.com/link/50578/1c006a79dc
 // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 // useDelta works well on Google Chrome and Safari.
-// !useDelta for Firefox
+// !useDelta for Firefox but takes longer to get accurate frame rate
 function CalibrateFrameRate(useDelta, maxFrames) {
 	var MILLIS = 1000;
-	var RELIABLE_FRAME = 4; // for useDelta
-	var DEFAULT_FRAMES = useDelta ? RELIABLE_FRAME + 1 : 20;
+	var RELIABLE_FRAME = useDelta ? 4 : 5;
+	var DEFAULT_FRAMES = useDelta ? RELIABLE_FRAME + 1 : 60 * 5;
 	var maxFrames = Math.max(maxFrames || DEFAULT_FRAMES, DEFAULT_FRAMES);
 	var start;
 	var prev = NaN;
 	var now = NaN;
 	var frames = 0;
+	var totalFrameRate = 0;
+	var frameRateSamples = 0;
 	var calibrated = false;
 	// var data = [];
+
+	function calcFrameRate () {
+		var frameRate = NaN;
+		if (useDelta && frames >= RELIABLE_FRAME) {
+			frameRate = MILLIS / (now - prev);
+		}
+		if (!useDelta) {
+			if (calibrated) {
+				frameRate = totalFrameRate / frameRateSamples;
+			}
+			else {
+				frameRate = MILLIS * frames / (now - start);
+			}
+		}
+		return frameRate;
+	}
 
 	function calibrateFrameRate (timestamp) {
 		var idAnimFrame = window.requestAnimationFrame(calibrateFrameRate);
@@ -64,16 +82,23 @@ function CalibrateFrameRate(useDelta, maxFrames) {
 				prev = now;
 				now = timestamp;
 				frames += 1;
+				if (!useDelta && frames >= RELIABLE_FRAME) {
+					totalFrameRate += calcFrameRate();
+					frameRateSamples++;
+				}
 				stop = false;
 			}
 			else {
 				calibrated = true;
 			}
 		}
-		/*data.push({
-			frames: frames, delta: now - prev, start: start, prev: prev, now: now
+		/*
+		data.push({
+			frames: frames, delta: now - prev, start: start, prev: prev, now: now,
+			totalFrameRate: totalFrameRate, frameRateSamples: frameRateSamples
 		});
 		*/
+
 		if (stop) {
 			window.cancelAnimationFrame(idAnimFrame);
 		}
@@ -83,16 +108,7 @@ function CalibrateFrameRate(useDelta, maxFrames) {
 	return {
 		isCalibrated: function () { return calibrated; },
 		useDelta: function () { return !!useDelta; },
-		frameRate: function () {
-			var frameRate = NaN;
-			if (useDelta && frames >= RELIABLE_FRAME) {
-				frameRate = MILLIS / (now - prev);
-			}
-			if (!useDelta) {
-				frameRate = MILLIS * frames / (now - start);
-			}
-			return frameRate;
-		},
+		frameRate: calcFrameRate,
 		// data: function () { return data; },
 		delta: function () { return now - prev; },
 		frames: function () { return frames; },
@@ -102,13 +118,14 @@ function CalibrateFrameRate(useDelta, maxFrames) {
 
 }
 
-var useDelta = false;
+var useDelta = true;
 var idealFPS = 60; // most common fps for monitors
 var frameRate = new CalibrateFrameRate(useDelta); // actual fps for user's monitor
 
 // Source Adding particle effects to DOM elements with canvas
 // https://css-tricks.com/adding-particle-effects-to-dom-elements-with-canvas/
 // adjusted to handle different monitor frame rates using the calibrator above.
+// TODO needs to handle a window resize by recreating the canvas
 
 var btn = document.querySelector("button");
 var ctx;
