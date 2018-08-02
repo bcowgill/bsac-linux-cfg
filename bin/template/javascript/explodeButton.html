@@ -38,16 +38,22 @@ button {
 // inspired by article about animated particle effects and gaming monitor frame rates
 // https://javascriptweekly.com/link/50578/1c006a79dc
 // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
-function CalibrateFrameRate(maxFrames) {
+// useDelta works well on Google Chrome and Safari.
+// !useDelta for Firefox
+function CalibrateFrameRate(useDelta, maxFrames) {
+	var MILLIS = 1000;
+	var RELIABLE_FRAME = 4; // for useDelta
+	var DEFAULT_FRAMES = useDelta ? RELIABLE_FRAME + 1 : 20;
+	var maxFrames = Math.max(maxFrames || DEFAULT_FRAMES, DEFAULT_FRAMES);
 	var start;
-	var now;
-	var elapsed = NaN;
+	var prev = NaN;
+	var now = NaN;
 	var frames = 0;
-	var maxFrames = maxFrames || 1200;
-	var frameRate = NaN;
 	var calibrated = false;
+	// var data = [];
 
 	function calibrateFrameRate (timestamp) {
+		var idAnimFrame = window.requestAnimationFrame(calibrateFrameRate);
 		var stop = true;
 		if (!start) {
 			start = timestamp;
@@ -55,6 +61,7 @@ function CalibrateFrameRate(maxFrames) {
 		}
 		else {
 			if (frames < maxFrames) {
+				prev = now;
 				now = timestamp;
 				frames += 1;
 				stop = false;
@@ -62,27 +69,42 @@ function CalibrateFrameRate(maxFrames) {
 			else {
 				calibrated = true;
 			}
-			elapsed = (now - start) / 1000;
-			frameRate = frames / elapsed;
 		}
-		if (!stop) {
-			window.requestAnimationFrame(calibrateFrameRate);
+		/*data.push({
+			frames: frames, delta: now - prev, start: start, prev: prev, now: now
+		});
+		*/
+		if (stop) {
+			window.cancelAnimationFrame(idAnimFrame);
 		}
 	}
 	window.requestAnimationFrame(calibrateFrameRate);
 
 	return {
 		isCalibrated: function () { return calibrated; },
-		frameRate: function () { return frameRate; },
+		useDelta: function () { return !!useDelta; },
+		frameRate: function () {
+			var frameRate = NaN;
+			if (useDelta && frames >= RELIABLE_FRAME) {
+				frameRate = MILLIS / (now - prev);
+			}
+			if (!useDelta) {
+				frameRate = MILLIS * frames / (now - start);
+			}
+			return frameRate;
+		},
+		// data: function () { return data; },
+		delta: function () { return now - prev; },
 		frames: function () { return frames; },
 		maxFrames: function () { return maxFrames; },
-		elapsed: function () { return elapsed; }
+		elapsed: function () { return now - start; }
 	};
 
 }
 
+var useDelta = false;
 var idealFPS = 60; // most common fps for monitors
-var frameRate = new CalibrateFrameRate(1); // actual fps for user's monitor
+var frameRate = new CalibrateFrameRate(useDelta); // actual fps for user's monitor
 
 // Source Adding particle effects to DOM elements with canvas
 // https://css-tricks.com/adding-particle-effects-to-dom-elements-with-canvas/
