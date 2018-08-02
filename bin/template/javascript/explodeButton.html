@@ -1,0 +1,239 @@
+<html>
+	<head>
+		<title>Test of animated particles</title>
+<style>
+body {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  margin: 0;
+}
+button {
+  min-width: 135px;
+  max-width: 200px;
+  min-height: 50px;
+  border: 0;
+  outline: 0;
+
+  color: white;
+
+  /* pink to orange */
+  background: #ee0979;
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+
+  vertical-align: top;
+}
+button {
+  cursor: pointer;
+}
+</style>
+
+		<script src="https://s3.us-east-2.amazonaws.com/zachsaucier-com/html2canvas.min.js"></script>
+	</head>
+	<body>
+		<button>Button</button>
+	</body>
+<script>
+// An object to determine the animation frame frame rate (fps)
+// inspired by article about animated particle effects and gaming monitor frame rates
+// https://javascriptweekly.com/link/50578/1c006a79dc
+// https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
+function CalibrateFrameRate(maxFrames) {
+	var start;
+	var now;
+	var elapsed = NaN;
+	var frames = 0;
+	var maxFrames = maxFrames || 1200;
+	var frameRate = NaN;
+	var calibrated = false;
+
+	function calibrateFrameRate (timestamp) {
+		var stop = true;
+		if (!start) {
+			start = timestamp;
+			stop = false;
+		}
+		else {
+			if (frames < maxFrames) {
+				now = timestamp;
+				frames += 1;
+				stop = false;
+			}
+			else {
+				calibrated = true;
+			}
+			elapsed = (now - start) / 1000;
+			frameRate = frames / elapsed;
+		}
+		if (!stop) {
+			window.requestAnimationFrame(calibrateFrameRate);
+		}
+	}
+	window.requestAnimationFrame(calibrateFrameRate);
+
+	return {
+		isCalibrated: function () { return calibrated; },
+		frameRate: function () { return frameRate; },
+		frames: function () { return frames; },
+		maxFrames: function () { return maxFrames; },
+		elapsed: function () { return elapsed; }
+	};
+
+}
+
+var idealFPS = 60; // most common fps for monitors
+var frameRate = new CalibrateFrameRate(1); // actual fps for user's monitor
+
+// Source Adding particle effects to DOM elements with canvas
+// https://css-tricks.com/adding-particle-effects-to-dom-elements-with-canvas/
+// adjusted to handle different monitor frame rates using the calibrator above.
+
+var btn = document.querySelector("button");
+var ctx;
+
+var colorInfoElem = document.querySelector("#colorInfo");
+html2canvas(btn).then(canvas => {
+  ctx = canvas.getContext("2d");
+
+  createParticleCanvas();
+
+  let reductionFactor = 17;
+  btn.addEventListener("click", e => {
+    // Get the color data for our button
+    let width = btn.offsetWidth;
+    let height = btn.offsetHeight
+    let colorData = ctx.getImageData(0, 0, width, height).data;
+
+    // Keep track of how many times we've iterated (in order to reduce
+    // the total number of particles create)
+    let count = 0;
+
+    // Go through every location of our button and create a particle
+    for(let localX = 0; localX < width; localX++) {
+      for(let localY = 0; localY < height; localY++) {
+        if(count % reductionFactor === 0) {
+          let index = (localY * width + localX) * 4;
+          let rgbaColorArr = colorData.slice(index, index + 4);
+
+          let bcr = btn.getBoundingClientRect();
+          let globalX = bcr.left + localX;
+          let globalY = bcr.top + localY;
+
+          createParticleAtPoint(globalX, globalY, rgbaColorArr);
+        }
+        count++;
+      }
+    }
+  });
+});
+
+
+/* An "exploding" particle effect that uses circles */
+var ExplodingParticle = function() {
+  // Set how long we want our particle to animate for
+  this.animationDuration = 1000; // in ms
+
+  // Set the speed for our particle
+  this.speed = {
+    x: -5 + Math.random() * 10,
+    y: -5 + Math.random() * 10
+  };
+
+  // Size our particle
+  this.radius = 5 + Math.random() * 5;
+
+  // Animation time/speed factor for varying fps rates
+  var rateFactor = idealFPS / frameRate.frameRate();
+
+  // Set a max time to live for our particle
+  this.life = (30 + Math.random() * 10) / rateFactor;
+  this.remainingLife = this.life;
+
+  // This function will be called by our animation logic later on
+  this.draw = ctx => {
+    let p = this;
+
+    if(this.remainingLife > 0
+    && this.radius > 0) {
+      // Draw a circle at the current location
+      ctx.beginPath();
+      ctx.arc(p.startX, p.startY, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(" + this.rgbArray[0] + ',' + this.rgbArray[1] + ',' + this.rgbArray[2] + ", 1)";
+      ctx.fill();
+
+      // Update the particle's location and life (better to do this outside the animation frame)
+      // accounting for monitors with faster than 60 fps frame rates.
+      p.remainingLife -= 1;
+      p.radius -= 0.25 * rateFactor;
+      p.startX += p.speed.x * rateFactor;
+      p.startY += p.speed.y * rateFactor;
+    }
+  }
+}
+
+var particles = [];
+function createParticleAtPoint(x, y, colorData) {
+  let particle = new ExplodingParticle();
+  particle.rgbArray = colorData;
+  particle.startX = x;
+  particle.startY = y;
+  particle.startTime = Date.now();
+
+  particles.push(particle);
+}
+
+
+var particleCanvas, particleCtx;
+function createParticleCanvas() {
+  // Create our canvas
+  particleCanvas = document.createElement("canvas");
+  particleCtx = particleCanvas.getContext("2d");
+
+  // Size our canvas
+  particleCanvas.width = window.innerWidth;
+  particleCanvas.height = window.innerHeight;
+
+  // Position out canvas
+  particleCanvas.style.position = "absolute";
+  particleCanvas.style.top = "0";
+  particleCanvas.style.left = "0";
+
+  // Make sure it's on top of other elements
+  particleCanvas.style.zIndex = "1001";
+
+  // Make sure other elements under it are clickable
+  particleCanvas.style.pointerEvents = "none";
+
+  // Add our canvas to the page
+  document.body.appendChild(particleCanvas);
+}
+
+
+
+function update() {
+  // Clear out the old particles
+  if(typeof particleCtx !== "undefined") {
+    particleCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  }
+
+  // Draw all of our particles in their new location
+  for(let i = 0; i < particles.length; i++) {
+    particles[i].draw(particleCtx);
+
+    // Simple way to clean up if the last particle is done animating
+    if(i === particles.length - 1) {
+      let percent = (Date.now() - particles[i].startTime) / particles[i].animationDuration;
+
+      if(percent > 1) {
+        particles = [];
+      }
+    }
+  }
+
+  // Animate performantly
+  window.requestAnimationFrame(update);
+}
+window.requestAnimationFrame(update);
+</script>
+</html>
+
