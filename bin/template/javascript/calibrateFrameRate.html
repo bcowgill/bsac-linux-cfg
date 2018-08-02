@@ -1,0 +1,65 @@
+<html>
+<script>
+// An object to determine the animation frame frame rate (fps)
+// inspired by article about animated particle effects and gaming monitor frame rates
+// https://javascriptweekly.com/link/50578/1c006a79dc
+// https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
+function CalibrateFrameRate(maxFrames) {
+	var start;
+	var now;
+	var elapsed = NaN;
+	var frames = 0;
+	var maxFrames = maxFrames || 1200;
+	var frameRate = NaN;
+	var calibrated = false;
+
+	function calibrateFrameRate (timestamp) {
+		var stop = true;
+		if (!start) {
+			start = timestamp;
+			stop = false;
+		}
+		else {
+			if (frames < maxFrames) {
+				now = timestamp;
+				frames += 1;
+				stop = false;
+			}
+			else {
+				calibrated = true;
+			}
+			elapsed = (now - start) / 1000;
+			frameRate = frames / elapsed;
+		}
+		if (!stop) {
+			window.requestAnimationFrame(calibrateFrameRate);
+		}
+	}
+	window.requestAnimationFrame(calibrateFrameRate);
+
+	return {
+		isCalibrated: function () { return calibrated; },
+		frameRate: function () { return frameRate; },
+		frames: function () { return frames; },
+		maxFrames: function () { return maxFrames; },
+		elapsed: function () { return elapsed; }
+	};
+
+}
+
+var frameRate = new CalibrateFrameRate(1);
+var timer;
+
+function showCalibration () {
+	console.log('Frame Rate:', frameRate.frameRate(), frameRate.frames(), frameRate.elapsed());
+	if (frameRate.isCalibrated()) {
+		clearInterval(timer);
+		timer = undefined;
+	}
+}
+
+timer = setInterval(showCalibration, 10);
+showCalibration();
+
+</script>
+</html>
