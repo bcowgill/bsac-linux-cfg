@@ -263,7 +263,7 @@ else
 	PERL_PKG="cpanm:cpanminus"
 fi
 
-//TODO install n versions from here
+# TODO install n versions from here
 N_VER=2.1.7
 N_VERS="lts stable latest 0.10.0 4.0.0 5.0.0 6.0.0 7.0.0 8.11.1 9.10.1 10.0.0"
 N_IO_VERS="1.0.0  2.0.0  3.0.0"
@@ -602,8 +602,11 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
 	JAVA_URL=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-	JAVA_VER=jdk-8u151-macosx-x64
-	JAVA_PKG=$JAVA_VER.dmg
+	JAVA_VER=jdk1.8.0_151.jdk
+	JAVA_PKG_VER=jdk-8u151-macosx-x64
+	JAVA_PKG=$JAVA_PKG_VER.dmg
+	JAVA_JVM=/Library/Java/JavaVirtualMachines/$JAVA_VER/Contents/Home
+	JAVA_HOME=$JAVA_JVM
 	MVN_PKG="mvn:maven"
 	MVN_VER="3.5.0"
 	GRADLE_PKG="gradle"
@@ -628,7 +631,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	WEBSTORM_ARCHIVE=""
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
-	CUSTOM_PKG="cf:cf-cli"
+	CUSTOM_PKG="cf:cf-cli groovy"
 fi # wipro MACOS
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -1418,11 +1421,15 @@ echo MACOS=$MACOS
 check_linux "$UBUNTU" $MACOS
 which git && git --version
 if [ -z $MACOS ]; then # TODO MACOS PKGS
-	which java && java -version && ls $JAVA_JVM
 	which apt-get && apt-get --version
 else
 	which brew && brew --version
 fi
+[ -x /usr/libexec/java_home ] && /usr/libexec/java_home
+which java && java -version && ls $JAVA_JVM
+which groovy && groovy -version
+#You should set GROOVY_HOME:
+#  export GROOVY_HOME=/usr/local/opt/groovy/libexec
 which perl && perl --version
 which python && python --version
 which ruby && ruby --version
@@ -2029,16 +2036,26 @@ if [ ! -z "$USE_JAVA" ]; then
 			OK "JAVA_HOME set correctly"
 			file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
 		else
-			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
+			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME [$JAVA_JVM/$JAVA_VER]"
 			exit 1
 		fi # JAVA_HOME
 		dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 	else
 		install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
-		if [ -z $JAVA_HOME ]; then
+		if [ "x$JAVA_HOME" == "x$JAVA_JVM" ]; then
 			OK "JAVA_HOME set correctly"
+			file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
 		else
-			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME"
+			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME [$JAVA_JVM]"
+			exit 1
+		fi
+	fi
+	if which groovy; then
+		if [ ! -z "$GROOVY_HOME" ]; then
+			OK "GROOVY_HOME is set"
+			file_exists "$GROOVY_HOME/bin/groovy" "groovy is actually there"
+		else
+			NOT_OK "GROOVY_HOME is incorrect"
 			exit 1
 		fi
 	fi

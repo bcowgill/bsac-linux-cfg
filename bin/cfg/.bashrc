@@ -213,8 +213,9 @@ fi
 # BSAC wipro setup
 if [ "x$COMPANY" == "xwipro" ]; then
     # /Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home
-    export JAVA_HOME=
+    export JAVA_HOME=`/usr/libexec/java_home -v1.8`
     export M2_HOME=
+    export GROOVY_HOME=/usr/local/opt/groovy/libexec
 fi
 
 #BSAC match cygwin put functions in separate sourced file
