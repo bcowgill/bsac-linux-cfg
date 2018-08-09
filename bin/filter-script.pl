@@ -27,7 +27,9 @@ while (my $line = <>) {
 	$line =~ s{$esc\]0; (.+) $ctrlg .+ $esc\[00m}{$1}xmsg;
 	# ANSI control sequences for color
 	$line =~ s{$esc\[\d+m}{}xmsg;
+	$line =~ s{$esc\[\d+;\d+m}{}xmsg;
 	$line =~ s{$esc\[C}{}xmsg;
+	$line =~ s{$esc\]0;}{\n}xmsg;
 
 	# handle backspacing by deleting character
 	$line =~ s{$ctrlg+}{}xmsg;
