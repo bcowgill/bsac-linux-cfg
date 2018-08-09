@@ -6,11 +6,44 @@ import keys from 'lodash/keys';
 import isArray from 'lodash/isArray';
 import forEach from 'lodash/forEach';
 
+/*
+// a simple test of a facade file for unit test coverage
+import facadeTestHelper from './facade-helper';
+import * as Facade from './';
+
+const suite = 'src/TEMPLATE Facade';
+
+// eslint-disable prefer-arrow-callback
+describe(suite, function descTEMPLATEFacadeSuite() {
+  const exportHelper = {
+    suite,
+    exportsTested: 0,
+    totalExports: 2,
+    // defaultExportType: 'object',
+    defaultExports: ['ExampleContainer'],
+    defaultExportNamed: 'ExampleContainer',
+    // moreDefaultTests(defaultExport, Facade, exportHelper) { it(...); },
+    // namedExports: ['TEMPLATE'],
+    exportChecks: {
+      ExampleContainer: {
+        type: 'function',
+        moreTests: function testTEMPLATE(exampleContainer) {
+          expect(exampleContainer.displayName).toBe('Connect(ExampleContainer)');
+        },
+      },
+    },
+  };
+
+  facadeTestHelper(exportHelper, Facade);
+});
+
+*/
 export function checkConstant(obj, name, value = name) {
   it(`should have named constant ${name}`, function testNamedConstant() {
     expect(obj[name]).toBe(value);
   });
 }
+
 
 function facadeHelper(exportHelper, Facade) {
   function getType(thing) {
