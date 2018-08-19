@@ -44,7 +44,6 @@ export function checkConstant(obj, name, value = name) {
   });
 }
 
-
 function facadeHelper(exportHelper, Facade) {
   function getType(thing) {
     if (isArray(thing)) {
@@ -68,9 +67,12 @@ function facadeHelper(exportHelper, Facade) {
 
   it('should have correct number of exports', function testNumberOfExports() {
     const actual = keys(Facade).length;
+    /* istanbul ignore next */
     if (actual !== exportHelper.totalExports) {
+      /* istanbul ignore next */
       /* eslint-disable no-console */
       console.error(`${exportHelper.suite}\nnamedExports`, keys(Facade).sort());
+      /* istanbul ignore next */
       console.error(Facade);
       /* eslint-enable no-console */
     }
