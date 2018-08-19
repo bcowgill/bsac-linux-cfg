@@ -30,6 +30,7 @@ while (my $line = <>) {
 	$line =~ s{$esc\[\d+;\d+m}{}xmsg;
 	$line =~ s{$esc\[C}{}xmsg;
 	$line =~ s{$esc\]0;}{\n}xmsg;
+	$line =~ s{$esc\[K}{}xmsg;
 
 	# handle backspacing by deleting character
 	$line =~ s{$ctrlg+}{}xmsg;

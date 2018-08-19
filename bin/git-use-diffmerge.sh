@@ -10,7 +10,7 @@
 # git mergetool
 
 # /usr/bin/diffmerge
-DIFFM=`which diffmerge`
+DIFFM=`which diffmerge || which diffmerge.sh`
 if [ -z $DIFFM ]; then
 	echo NOT OK diffmerge is not installed.
 fi
