@@ -587,7 +587,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	COMPANY=wipro
 	MACOS=1
 	UBUNTU=10.12.6
-	GIT_VER=2.14.2
+	GIT_VER=2.19.0
 	GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
