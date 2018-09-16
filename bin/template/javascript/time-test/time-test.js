@@ -48,6 +48,21 @@ console.log("Date Time String       ", now.toTimeString())
 console.log("Date Locale Date String", now.toLocaleDateString())
 console.log("Date Locale String     ", now.toLocaleString())
 
+const format = require('date-fns/format');
+const NICE = 'dddd D MMM YYYY h:mm:ss A ZZZ';
+
+// Issue raised with date-fns for ZZZ format as (BST) for example
+// https://github.com/date-fns/date-fns/issues/873
+function myformat(date, string) {
+	let TZ = '';
+	const match = date.toString().match(/(\(.+\))/);
+	if (match) {
+		TZ = match[1];
+	}
+	return format(date, string.replace(/\bZZZ\b/g, '|||')).replace(/\|\|\|/g, TZ);
+}
+console.log("Nice Date Format       ", myformat(now, NICE))
+
 const tm = require('timemachine')
 	assert = require('assert')
 
