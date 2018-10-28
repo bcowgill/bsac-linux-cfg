@@ -19,6 +19,7 @@ fi
 
 echo $NOW: playing alarm file "$SOUND"
 while true; do
-	aplay -D sysdefault:CARD=PCH "$SOUND"
+	sound-play.sh "$SOUND"
+
 	sleep $WAIT
 done
