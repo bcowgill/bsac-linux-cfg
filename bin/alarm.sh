@@ -2,7 +2,6 @@
 # cross-platform play a sound file as an alarm now, or at a specified time
 # alarm.sh "2017-01-02 10:01" [sound-file]
 
-CARD=1
 WHEN=$1
 SOUND=${2:-$HOME/bin/sounds/chime.wav}
 POLL=5
