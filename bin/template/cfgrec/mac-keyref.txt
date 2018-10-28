@@ -16,8 +16,6 @@ export c=^
 Karabiner Github issue raised
 https://github.com/tekezo/Karabiner-Elements/issues/1048
 
-TODO Mac keys for screenshot
-
 Ctrl-Shift-Power Sleep the screen only
 Cmd-Alt-Power  Sleep your mac - requires password to unlock
 Close the lid
@@ -42,3 +40,11 @@ KEY:MAC:CMD Cmd-Shift-4 Capture a portion of the screen in a screenshot on the D
 KEY:MAC:CMD Cmd-Ctrl-Shift-4 Capture a portion of the screen to clipboard.
 KEY:MAC:CMD Cmd-Shift-4-Space Capture an application in a screenshot on the Desktop.
 KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to clipboard.
+
+Handy Key Reference on Mac
+Cmd-Alt-Power      Sleep Lock
+Screenshots        +Ctrl = clipboard
+Cmd-Shift-3        Entire Screen
+Cmd-Shift-4-Space  Application Only
+Cmd-Shift-4        Select Area
+
