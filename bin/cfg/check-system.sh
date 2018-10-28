@@ -604,7 +604,7 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	DRUID_PKG=""
 	JAVA_URL=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 	JAVA_VER=jdk1.8.0_151.jdk
-	JAVA_PKG_VER=jdk-8u191-macosx-x64
+	JAVA_PKG_VER=jdk-8u151-macosx-x64
 	JAVA_PKG=$JAVA_PKG_VER.dmg
 	JAVA_JVM=/Library/Java/JavaVirtualMachines/$JAVA_VER/Contents/Home
 	JAVA_HOME=$JAVA_JVM
@@ -1426,8 +1426,8 @@ if [ -z $MACOS ]; then # TODO MACOS PKGS
 else
 	which brew && brew --version
 fi
-# MUSTDO RESTORE THIS LINE [ -x /usr/libexec/java_home ] && /usr/libexec/java_home
-# MUSTDO RESTORE THIS LINE which java && java -version && ls $JAVA_JVM
+[ -x /usr/libexec/java_home ] && /usr/libexec/java_home
+which java && java -version && ls $JAVA_JVM
 which groovy && groovy -version
 #You should set GROOVY_HOME:
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
@@ -2048,6 +2048,7 @@ if [ ! -z "$USE_JAVA" ]; then
 		fi # JAVA_HOME
 		dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 	else
+		# MACOS here
 		install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
 		if [ "x$JAVA_HOME" == "x$JAVA_JVM" ]; then
 			OK "JAVA_HOME set correctly"
@@ -2069,9 +2070,10 @@ if [ ! -z "$USE_JAVA" ]; then
 fi
 
 if [ ! -z "$DIFFMERGE_PKG" ]; then
+	echo CHECK $DIFFMERGE_CMD $DIFMERGE_PKG
 	install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
 	if [ ! -z $MACOS ]; then
-		app_exists DiffMerge.app "you must manually install downloaded diffmerge dmg file"
+		app_exists DiffMerge.app "you must manually install downloaded diffmerge dmg file and Extras/diffmerge.sh"
 	fi
 else
 	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"
