@@ -2151,12 +2151,11 @@ BAIL_OUT install
 
 if [ ! -z "$NODE_PKG" ]; then
 	FILTERED_LIST=`filter_packages "$NODE_PKG_LIST" "$UNINSTALL_PKGS"`
+	echo NODE PKGS: $FILTERED_LIST
 	installs_from "$FILTERED_LIST"
 	if [ -z $MACOS ]; then
 		dir_exists "$NODE_LIB" "global node command"
 	fi
-	dir_exists "$NODE_MOD" "global node_modules"
-	node_module_exists path "test that node module checking works"
 fi
 
 BAIL_OUT node
@@ -2245,6 +2244,8 @@ if [ ! -z "$NODE_PKG" ]; then
 		always_install_npm_globals_from "$FILTERED_LIST"
 	fi
 	install_npm_global_commands_from "$FILTERED_LIST"
+	dir_exists "$NODE_MOD" "global node_modules"
+	node_module_exists path "test that node module checking works"
 	is_npm_global_package_installed grunt "need grunt installed to go further."
 	if [ ! -z "$NVM_URL" ]; then
 		NVM_INST="$DOWNLOAD/nvm/install.sh"
