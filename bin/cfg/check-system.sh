@@ -615,6 +615,7 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	#NODE_VER="v8.12.0"
 	NODE_VER="v11.0.0"
 	NODE_BREW="node@8"
+	NODE_MOD=/usr/local/Cellar/node@8/8.12.0/lib/node_modules
 	N_VER=2.1.12
 	N_VERS="lts stable latest 8.12.0 11.0.0"
 	NVM_VER="0.31.4" # TODO
@@ -841,7 +842,7 @@ echo ===================
 NODE_CMDS="$NODE_CMD npm"
 NODE_LIB=/usr/lib/$NODE_CMD
 NPM_LIB=/usr/local/lib/node_modules
-NODE_MOD=/usr/lib/node_modules
+NODE_MOD=${NODE_MOD:-/usr/lib/node_modules}
 
 if [ ! -e "$NODE_LIB" ]; then
 	NODE_LIB=/usr/local/bin/$NODE_CMD
