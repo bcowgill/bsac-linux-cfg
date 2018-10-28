@@ -1946,12 +1946,12 @@ else
 		# https://www.digitalocean.com/community/articles/how-to-install-git-on-ubuntu-12-04
 		make_dir_exist $DOWNLOAD
 		pushd $DOWNLOAD
-		wget $GIT_URL
-		tar xvzf $GIT_TAR.tar.gz
-		cd $GIT_TAR
-		make prefix=/usr/local all
-		sudo make prefix=/usr/local install
-		sudo apt-get install $GIT_PKG_AFTER
+			wget $GIT_URL
+			tar xvzf $GIT_TAR.tar.gz
+			cd $GIT_TAR
+			make prefix=/usr/local all
+			sudo make prefix=/usr/local install
+			sudo apt-get install $GIT_PKG_AFTER
 		popd
 		NOT_OK "exiting after git update, try again."
 		exit 1
@@ -1965,7 +1965,14 @@ else
 			if [ `which git` == /usr/local/bin/git ]; then
 				OK "git upgraded"
 			else
-				NOT_OK "git not upgraded correctly"
+				echo "NOT OK MAYBE git not upgraded correctly try download"
+				make_dir_exist $DOWNLOAD
+				pushd $DOWNLOAD
+					wget $GIT_URL
+					echo "MAYBE DO MANUALLY install package $GIT_TAR"
+					NOT_OK "exiting after git update, try again."
+					exit 1
+				popd
 			fi
 		else
 			OK "homebrew version of git is installed."
