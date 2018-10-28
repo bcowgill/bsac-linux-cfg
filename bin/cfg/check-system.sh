@@ -614,6 +614,7 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	NODE_CMD=/usr/local/bin/node
 	NODE_VER="v8.12.0"
 	NODE_BREW="node@8"
+	N_VER=2.1.12
 	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
@@ -2217,6 +2218,11 @@ if [ ! -z "$NODE_PKG" ]; then
 	fi
 
 	if [ ! -z "$N_VER" ]; then
+		if which $N_CMD > /dev/null; then
+			OK "n command exists"
+		else
+			always_install_npm_global_from $N_CMD
+		fi
 		if $N_CMD --version | grep $N_VER; then
 			OK "n command version correct"
 		else
