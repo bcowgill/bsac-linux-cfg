@@ -611,8 +611,9 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	MVN_PKG="mvn:maven"
 	MVN_VER="3.5.0"
 	GRADLE_PKG="gradle"
-	NODE_CMD=node
-	NODE_VER="v8.6.0"
+	NODE_CMD=/usr/local/bin/node
+	NODE_VER="v8.12.0"
+	NODE_BREW="node@8"
 	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
@@ -2190,15 +2191,29 @@ if [ ! -z "$NODE_PKG" ]; then
 	else
 		GOTVER=`$NODE_CMD --version`
 		NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER"
-		echo HEREIAM STOP NODE
-		exit 88
-		#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
-		sudo apt-get update
-		sudo apt-get install -y python-software-properties python g++ make
-		sudo add-apt-repository ppa:chris-lea/node.js
-		sudo apt-get update
-		sudo apt-get install nodejs
-		exit 1
+		if [ -z $MACOS ]; then
+			echo HEREIAM STOP NODE
+			exit 88
+			#https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager#wiki-ubuntu-mint-elementary-os
+			sudo apt-get update
+			sudo apt-get install -y python-software-properties python g++ make
+			sudo add-apt-repository ppa:chris-lea/node.js
+			sudo apt-get update
+			sudo apt-get install nodejs
+			exit 1
+		else
+			# MACOS node upgrade
+			if [ ! -z "$NODE_BREW" ]; then
+				# https://apple.stackexchange.com/questions/171530/how-do-i-downgrade-node-or-install-a-specific-previous-version-using-homebrew
+				brew unlink node
+				brew install $NODE_BREW
+				brew link $NODE_BREW
+				/usr/local/bin/node --version
+			fi
+			GOTVER=`$NODE_CMD --version`
+			NOT_OK "node upgrade $GOT_VER to $NODE_VER using $NODE_BREW check if it worked."
+			exit 1
+		fi
 	fi
 
 	if [ ! -z "$N_VER" ]; then
