@@ -78,6 +78,7 @@ fi
 function BAIL_OUT {
 	local stage
 	stage=$1
+	echo "BAIL_OUT? $stage"
 	if [ "x$BAIL_OUT" == "x$stage" ]; then
 		NOT_OK "BAIL_OUT=$BAIL_OUT is set, stopping"
 		exit 44
@@ -581,12 +582,12 @@ if [ "$HOSTNAME" == "akston" ]; then
 	# HEREIAM CFG
 fi # akston linux
 
-if [ "$HOSTNAME" == "L-156131255.local" ]; then
+if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	# Change settings for wipro MACOS workstation
 	EMAIL=brent.cowgill@wipro.com
 	COMPANY=wipro
 	MACOS=1
-	UBUNTU=10.12.6
+	UBUNTU=10.13.4
 	GIT_VER=2.19.0
 	GIT_PKG_AFTER=""
 	USE_I3=""
@@ -603,7 +604,7 @@ if [ "$HOSTNAME" == "L-156131255.local" ]; then
 	DRUID_PKG=""
 	JAVA_URL=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 	JAVA_VER=jdk1.8.0_151.jdk
-	JAVA_PKG_VER=jdk-8u151-macosx-x64
+	JAVA_PKG_VER=jdk-8u191-macosx-x64
 	JAVA_PKG=$JAVA_PKG_VER.dmg
 	JAVA_JVM=/Library/Java/JavaVirtualMachines/$JAVA_VER/Contents/Home
 	JAVA_HOME=$JAVA_JVM
@@ -1425,8 +1426,8 @@ if [ -z $MACOS ]; then # TODO MACOS PKGS
 else
 	which brew && brew --version
 fi
-[ -x /usr/libexec/java_home ] && /usr/libexec/java_home
-which java && java -version && ls $JAVA_JVM
+# MUSTDO RESTORE THIS LINE [ -x /usr/libexec/java_home ] && /usr/libexec/java_home
+# MUSTDO RESTORE THIS LINE which java && java -version && ls $JAVA_JVM
 which groovy && groovy -version
 #You should set GROOVY_HOME:
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
@@ -1658,6 +1659,12 @@ if [ ! -z "$BIG_DATA" ]; then
 fi
 
 BAIL_OUT init
+
+if [ ! -z $MACOS ]; then
+	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
+	cmd_exists brew
+	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
+fi
 
 # Fonts ================================================================
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781
@@ -2114,12 +2121,6 @@ echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
-
-if [ ! -z $MACOS ]; then
-	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
-	cmd_exists brew
-	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
-fi
 
 brew_taps_from "$BREW_TAPS"
 if [ ! -z "$UNINSTALL_PKGS" ]; then
