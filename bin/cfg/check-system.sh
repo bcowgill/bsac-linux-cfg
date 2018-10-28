@@ -1,6 +1,6 @@
 #!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
-# check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK'
+# check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK' ; alarm.sh
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
 
 # Search for 'begin' for start of script
@@ -632,7 +632,7 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	WEBSTORM_ARCHIVE=""
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
-	CUSTOM_PKG="cf:cf-cli groovy"
+	CUSTOM_PKG="cf:cf-cli groovy /usr/local/Cellar/shared-mime-info/1.10/README:shared-mime-info"
 fi # wipro MACOS
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
