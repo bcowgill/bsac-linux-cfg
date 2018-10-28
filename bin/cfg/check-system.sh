@@ -612,9 +612,11 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	MVN_VER="3.5.0"
 	GRADLE_PKG="gradle"
 	NODE_CMD=/usr/local/bin/node
-	NODE_VER="v8.12.0"
+	#NODE_VER="v8.12.0"
+	NODE_VER="v11.0.0"
 	NODE_BREW="node@8"
 	N_VER=2.1.12
+	N_VERS="lts stable latest 8.12.0 11.0.0"
 	NVM_VER="0.31.4" # TODO
 	MONO_PKG=""
 	PHP_PKG=""
@@ -2191,7 +2193,7 @@ if [ ! -z "$NODE_PKG" ]; then
 		OK "node command version correct"
 	else
 		GOTVER=`$NODE_CMD --version`
-		NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER"
+		NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER $NODE_CMD"
 		if [ -z $MACOS ]; then
 			echo HEREIAM STOP NODE
 			exit 88

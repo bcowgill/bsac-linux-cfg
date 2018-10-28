@@ -1300,7 +1300,10 @@ function node_check {
 function install_node {
 	local named version
 	named=$1
-	version=`n --$named`
+	version=$named
+	if n --$named > /dev/null; then
+		version=`n --$named`
+	fi
 	if ls_node_vers | grep $version; then
 		OK "node $named version is installed: $version"
 	else
