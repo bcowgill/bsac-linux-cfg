@@ -355,8 +355,9 @@ EMACS_BASE=emacs24
 #ATOM_VER=v1.21.0-beta2
 ATOM_VER=1.20.1
 ATOM_PKG=atom-amd64.deb
+ATOM_APM=apm
 ATOM_CMD=atom
-ATOM_APP=atom
+ATOM_APP=$ATOM_CMD
 ATOM_URL=https://atom.io/download/deb
 #ATOM_URL=https://atom-installer.github.com
 ATOM_APM_PKG="
@@ -609,11 +610,11 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	JAVA_JVM=/Library/Java/JavaVirtualMachines/$JAVA_VER/Contents/Home
 	JAVA_HOME=$JAVA_JVM
 	MVN_PKG="mvn:maven"
-	MVN_VER="3.5.0"
+	MVN_VER="3.5.4"
 	GRADLE_PKG="gradle"
 	NODE_CMD=/usr/local/bin/node
 	#NODE_VER="v8.12.0"
-	NODE_VER="v11.0.0"
+	NODE_VER="v11.1.0"
 	NODE_BREW="node@8"
 	NODE_MOD=/usr/local/Cellar/node@8/8.12.0/lib/node_modules
 	N_VER=2.1.12
@@ -622,7 +623,9 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	MONO_PKG=""
 	PHP_PKG=""
 	ATOM_APP=Atom.app
-	ATOM_VER="1.21.1"
+	# MUSTDO re-enable this once apm fixed
+	ATOM_APM=""
+	ATOM_VER="1.32.1"
 	ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
 	PINTA_PKG=""
@@ -1000,7 +1003,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
 [ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_PKG="" && NODE2_PKG="no" && NODE_CUSTOM_PKG="no" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
-[ -z "$ATOM_PKG"          ] && ATOM_CMD="" && ATOM_APP=""
+[ -z "$ATOM_PKG"          ] && ATOM_CMD="" && ATOM_APP="" && ATOM_APM=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
 [ -z "$DOCKER_PKG"        ] && DOCKER_CMD="" && DOCKER_PRE=""
@@ -2428,7 +2431,7 @@ fi
 
 if [ ! -z "$ATOM_PKG" ]; then
 	if [ ! -e "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG" ]; then
-		#[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
+		[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
 		if [ -z $MACOS ]; then
 			install_command_package_from_url $ATOM_CMD "$ATOM_PKG" "$ATOM_URL" "github atom editor" || true
 		else
@@ -2441,7 +2444,9 @@ if [ ! -z "$ATOM_PKG" ]; then
 	cmd_exists apm "atom package manager"
 	if atom --version | grep Atom | grep $ATOM_VER; then
 		OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
-		install_apm_modules_from "$ATOM_APM_PKG"
+		if [ ! -z $ATOM_APM ]; then
+			install_apm_modules_from "$ATOM_APM_PKG"
+		fi
 		[ -e "$DOWNLOAD/$ATOM_PKG" ] && mv "$DOWNLOAD/$ATOM_PKG" "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG"
 	else
 		atom --version
