@@ -1,4 +1,4 @@
-package Snapshot_2018_04_24_00;
+package Snapshot_2018_11_04_00;
 
 $VERSION = '0.01';
 
@@ -8,13 +8,13 @@ __END__
 
 =head1 NAME
 
-Snapshot_2018_04_24_00 - Snapshot of your installation at Tue Apr 24 20:14:07 2018
+Snapshot_2018_11_04_00 - Snapshot of your installation at Sun Nov  4 13:54:01 2018
 
 =head1 SYNOPSIS
 
 To install the modules from this snapshot, run:
 
-  cpanp -i file://full/path/to/Snapshot_2018_04_24_00.pm
+  cpanp -i file://full/path/to/Snapshot_2018_11_04_00.pm
 
 =head1 CONTENTS
 
@@ -226,13 +226,13 @@ App::Cpan 1.61
 
 App::Packer::PAR 0.91
 
-App::Prove 3.39
+App::Prove 3.42
 
-App::Prove::State 3.39
+App::Prove::State 3.42
 
-App::Prove::State::Result 3.39
+App::Prove::State::Result 3.42
 
-App::Prove::State::Result::Test 3.39
+App::Prove::State::Result::Test 3.42
 
 AppConfig 1.71
 
@@ -542,7 +542,7 @@ CPANPLUS::Shell::Default::Plugins::Remote 0.9135
 
 CPANPLUS::Shell::Default::Plugins::Source 0.9135
 
-Capture::Tiny 0.46
+Capture::Tiny 0.48
 
 Carp 1.29
 
@@ -1870,9 +1870,9 @@ Devel::Peek 1.11
 
 Devel::SelfStubber 1.05
 
-Devel::StackTrace 2.02
+Devel::StackTrace 2.03
 
-Devel::StackTrace::Frame 2.02
+Devel::StackTrace::Frame 2.03
 
 Digest 1.17
 
@@ -1966,9 +1966,9 @@ Error::Simple undef
 
 Eval::Closure 0.11
 
-Exception::Class 1.43
+Exception::Class 1.44
 
-Exception::Class::Base 1.43
+Exception::Class::Base 1.44
 
 Expect 1.21
 
@@ -2114,7 +2114,7 @@ Fatal 2.13
 
 Fcntl 1.11
 
-File::BaseDir 0.07
+File::BaseDir 0.08
 
 File::Basename 2.84
 
@@ -2138,17 +2138,17 @@ File::Glob 1.20_01
 
 File::GlobMapper 1.000
 
-File::IconTheme 0.07
+File::IconTheme 0.08
 
 File::Listing 6.04
 
-File::MimeInfo 0.28
+File::MimeInfo 0.29
 
-File::MimeInfo::Applications 0.28
+File::MimeInfo::Applications 0.29
 
-File::MimeInfo::Magic 0.28
+File::MimeInfo::Magic 0.29
 
-File::MimeInfo::Rox 0.28
+File::MimeInfo::Rox 0.29
 
 File::Path 2.09
 
@@ -2180,7 +2180,7 @@ File::Type 0.22
 
 File::Type::Builder 0.11
 
-File::UserDirs 0.07
+File::UserDirs 0.08
 
 File::Which 1.09
 
@@ -2512,9 +2512,9 @@ Inline::denter undef
 
 Internals 1.1
 
-JSON::PP 2.94
+JSON::PP 2.97001
 
-JSON::PP::Boolean 2.94
+JSON::PP::Boolean 2.97001
 
 JSON::Syck 1.27
 
@@ -2581,8 +2581,6 @@ List::MoreUtils 0.33
 List::Util 1.38
 
 List::Util::XS 1.38
-
-Locale::Codes 3.25
 
 Locale::Codes::Constants 3.25
 
@@ -3984,8 +3982,6 @@ Net::DNS::RR::DHCID 1096
 
 Net::DNS::RR::DNAME 1096
 
-Net::DNS::RR::EID 1096
-
 Net::DNS::RR::EUI48 1139
 
 Net::DNS::RR::EUI64 1139
@@ -4024,11 +4020,7 @@ Net::DNS::RR::NAPTR 1096
 
 Net::DNS::RR::NID 1096
 
-Net::DNS::RR::NIMLOC 1096
-
 Net::DNS::RR::NS 1096
-
-Net::DNS::RR::NSAP 1096
 
 Net::DNS::RR::NULL 1144
 
@@ -4910,97 +4902,97 @@ Sys::Hostname::Long 1.4
 
 Sys::Syslog 0.32
 
-TAP::Base 3.39
+TAP::Base 3.42
 
-TAP::Formatter::Base 3.39
+TAP::Formatter::Base 3.42
 
-TAP::Formatter::Color 3.39
+TAP::Formatter::Color 3.42
 
-TAP::Formatter::Console 3.39
+TAP::Formatter::Console 3.42
 
-TAP::Formatter::Console::ParallelSession 3.39
+TAP::Formatter::Console::ParallelSession 3.42
 
-TAP::Formatter::Console::Session 3.39
+TAP::Formatter::Console::Session 3.42
 
-TAP::Formatter::File 3.39
+TAP::Formatter::File 3.42
 
-TAP::Formatter::File::Session 3.39
+TAP::Formatter::File::Session 3.42
 
-TAP::Formatter::Session 3.39
+TAP::Formatter::Session 3.42
 
-TAP::Harness 3.39
+TAP::Harness 3.42
 
-TAP::Harness::Env 3.39
+TAP::Harness::Env 3.42
 
-TAP::Object 3.39
+TAP::Object 3.42
 
-TAP::Parser 3.39
+TAP::Parser 3.42
 
-TAP::Parser::Aggregator 3.39
+TAP::Parser::Aggregator 3.42
 
-TAP::Parser::Grammar 3.39
+TAP::Parser::Grammar 3.42
 
-TAP::Parser::Iterator 3.39
+TAP::Parser::Iterator 3.42
 
-TAP::Parser::Iterator::Array 3.39
+TAP::Parser::Iterator::Array 3.42
 
-TAP::Parser::Iterator::Process 3.39
+TAP::Parser::Iterator::Process 3.42
 
-TAP::Parser::Iterator::Stream 3.39
+TAP::Parser::Iterator::Stream 3.42
 
-TAP::Parser::IteratorFactory 3.39
+TAP::Parser::IteratorFactory 3.42
 
-TAP::Parser::Multiplexer 3.39
+TAP::Parser::Multiplexer 3.42
 
-TAP::Parser::Result 3.39
+TAP::Parser::Result 3.42
 
-TAP::Parser::Result::Bailout 3.39
+TAP::Parser::Result::Bailout 3.42
 
-TAP::Parser::Result::Comment 3.39
+TAP::Parser::Result::Comment 3.42
 
-TAP::Parser::Result::Plan 3.39
+TAP::Parser::Result::Plan 3.42
 
-TAP::Parser::Result::Pragma 3.39
+TAP::Parser::Result::Pragma 3.42
 
-TAP::Parser::Result::Test 3.39
+TAP::Parser::Result::Test 3.42
 
-TAP::Parser::Result::Unknown 3.39
+TAP::Parser::Result::Unknown 3.42
 
-TAP::Parser::Result::Version 3.39
+TAP::Parser::Result::Version 3.42
 
-TAP::Parser::Result::YAML 3.39
+TAP::Parser::Result::YAML 3.42
 
-TAP::Parser::ResultFactory 3.39
+TAP::Parser::ResultFactory 3.42
 
-TAP::Parser::Scheduler 3.39
+TAP::Parser::Scheduler 3.42
 
-TAP::Parser::Scheduler::Job 3.39
+TAP::Parser::Scheduler::Job 3.42
 
-TAP::Parser::Scheduler::Spinner 3.39
+TAP::Parser::Scheduler::Spinner 3.42
 
-TAP::Parser::Source 3.39
+TAP::Parser::Source 3.42
 
-TAP::Parser::SourceHandler 3.39
+TAP::Parser::SourceHandler 3.42
 
-TAP::Parser::SourceHandler::Executable 3.39
+TAP::Parser::SourceHandler::Executable 3.42
 
-TAP::Parser::SourceHandler::File 3.39
+TAP::Parser::SourceHandler::File 3.42
 
-TAP::Parser::SourceHandler::Handle 3.39
+TAP::Parser::SourceHandler::Handle 3.42
 
-TAP::Parser::SourceHandler::Perl 3.39
+TAP::Parser::SourceHandler::Perl 3.42
 
-TAP::Parser::SourceHandler::RawTAP 3.39
+TAP::Parser::SourceHandler::RawTAP 3.42
 
 TAP::Parser::Utils 3.26
 
-TAP::Parser::YAMLish::Reader 3.39
+TAP::Parser::YAMLish::Reader 3.42
 
-TAP::Parser::YAMLish::Writer 3.39
+TAP::Parser::YAMLish::Writer 3.42
 
 Task::Weaken 1.04
 
-Template 2.27
+Template 2.28
 
 Template::Base 2.78
 
@@ -5106,117 +5098,123 @@ Term::UI::History undef
 
 Test 1.26
 
-Test2 1.302098
+Test2 1.302140
 
-Test2::API 1.302098
+Test2::API 1.302140
 
-Test2::API::Breakage 1.302098
+Test2::API::Breakage 1.302140
 
-Test2::API::Context 1.302098
+Test2::API::Context 1.302140
 
-Test2::API::Instance 1.302098
+Test2::API::Instance 1.302140
 
-Test2::API::Stack 1.302098
+Test2::API::Stack 1.302140
 
-Test2::Event 1.302098
+Test2::Event 1.302140
 
-Test2::Event::Bail 1.302098
+Test2::Event::Bail 1.302140
 
-Test2::Event::Diag 1.302098
+Test2::Event::Diag 1.302140
 
-Test2::Event::Encoding 1.302098
+Test2::Event::Encoding 1.302140
 
-Test2::Event::Exception 1.302098
+Test2::Event::Exception 1.302140
 
-Test2::Event::Fail 1.302098
+Test2::Event::Fail 1.302140
 
-Test2::Event::Generic 1.302098
+Test2::Event::Generic 1.302140
 
-Test2::Event::Note 1.302098
+Test2::Event::Note 1.302140
 
-Test2::Event::Ok 1.302098
+Test2::Event::Ok 1.302140
 
-Test2::Event::Pass 1.302098
+Test2::Event::Pass 1.302140
 
-Test2::Event::Plan 1.302098
+Test2::Event::Plan 1.302140
 
-Test2::Event::Skip 1.302098
+Test2::Event::Skip 1.302140
 
-Test2::Event::Subtest 1.302098
+Test2::Event::Subtest 1.302140
 
-Test2::Event::TAP::Version 1.302098
+Test2::Event::TAP::Version 1.302140
 
-Test2::Event::Waiting 1.302098
+Test2::Event::V2 1.302140
 
-Test2::EventFacet 1.302098
+Test2::Event::Waiting 1.302140
 
-Test2::EventFacet::About 1.302098
+Test2::EventFacet 1.302140
 
-Test2::EventFacet::Amnesty 1.302098
+Test2::EventFacet::About 1.302140
 
-Test2::EventFacet::Assert 1.302098
+Test2::EventFacet::Amnesty 1.302140
 
-Test2::EventFacet::Control 1.302098
+Test2::EventFacet::Assert 1.302140
 
-Test2::EventFacet::Error 1.302098
+Test2::EventFacet::Control 1.302140
 
-Test2::EventFacet::Info 1.302098
+Test2::EventFacet::Error 1.302140
 
-Test2::EventFacet::Meta 1.302098
+Test2::EventFacet::Hub 1.302140
 
-Test2::EventFacet::Parent 1.302098
+Test2::EventFacet::Info 1.302140
 
-Test2::EventFacet::Plan 1.302098
+Test2::EventFacet::Meta 1.302140
 
-Test2::EventFacet::Trace 1.302098
+Test2::EventFacet::Parent 1.302140
 
-Test2::Formatter 1.302098
+Test2::EventFacet::Plan 1.302140
 
-Test2::Formatter::TAP 1.302098
+Test2::EventFacet::Render 1.302140
 
-Test2::Hub 1.302098
+Test2::EventFacet::Trace 1.302140
 
-Test2::Hub::Interceptor 1.302098
+Test2::Formatter 1.302140
 
-Test2::Hub::Interceptor::Terminator 1.302098
+Test2::Formatter::TAP 1.302140
 
-Test2::Hub::Subtest 1.302098
+Test2::Hub 1.302140
 
-Test2::IPC 1.302098
+Test2::Hub::Interceptor 1.302140
 
-Test2::IPC::Driver 1.302098
+Test2::Hub::Interceptor::Terminator 1.302140
 
-Test2::IPC::Driver::Files 1.302098
+Test2::Hub::Subtest 1.302140
 
-Test2::Tools::Tiny 1.302098
+Test2::IPC 1.302140
 
-Test2::Util 1.302098
+Test2::IPC::Driver 1.302140
 
-Test2::Util::ExternalMeta 1.302098
+Test2::IPC::Driver::Files 1.302140
 
-Test2::Util::Facets2Legacy 1.302098
+Test2::Tools::Tiny 1.302140
 
-Test2::Util::HashBase 0.005
+Test2::Util 1.302140
 
-Test2::Util::Trace 1.302098
+Test2::Util::ExternalMeta 1.302140
 
-Test::Builder 1.302098
+Test2::Util::Facets2Legacy 1.302140
 
-Test::Builder::Formatter 1.302098
+Test2::Util::HashBase 1.302140
 
-Test::Builder::IO::Scalar 2.113
+Test2::Util::Trace 1.302140
 
-Test::Builder::Module 1.302098
+Test::Builder 1.302140
 
-Test::Builder::Tester 1.302098
+Test::Builder::Formatter 1.302140
 
-Test::Builder::Tester::Color 1.302098
+Test::Builder::IO::Scalar 2.114
 
-Test::Builder::TodoDiag 1.302098
+Test::Builder::Module 1.302140
+
+Test::Builder::Tester 1.302140
+
+Test::Builder::Tester::Color 1.302140
+
+Test::Builder::TodoDiag 1.302140
 
 Test::CheckDeps 0.010
 
-Test::Deep 1.127
+Test::Deep 1.128
 
 Test::Deep::All undef
 
@@ -5308,7 +5306,7 @@ Test::Exception 0.43
 
 Test::Fatal 0.013
 
-Test::Harness 3.39
+Test::Harness 3.42
 
 Test::LeakTrace 0.16
 
@@ -5316,7 +5314,7 @@ Test::LeakTrace::Script undef
 
 Test::Moose 2.1202
 
-Test::More 1.302098
+Test::More 1.302140
 
 Test::Most 0.35
 
@@ -5334,17 +5332,17 @@ Test::Requires 0.07
 
 Test::Script 1.07
 
-Test::Simple 1.302098
+Test::Simple 1.302140
 
 Test::SubCalls 1.09
 
-Test::Tester 1.302098
+Test::Tester 1.302140
 
-Test::Tester::Capture 1.302098
+Test::Tester::Capture 1.302140
 
-Test::Tester::CaptureRunner 1.302098
+Test::Tester::CaptureRunner 1.302140
 
-Test::Tester::Delegate 1.302098
+Test::Tester::Delegate 1.302140
 
 Test::Trap 0.2.3
 
@@ -5356,9 +5354,9 @@ Test::Trap::Builder::SystemSafe 0.2.3
 
 Test::Trap::Builder::TempFile 0.2.3
 
-Test::Warn 0.32
+Test::Warn 0.36
 
-Test::use::ok 1.302098
+Test::use::ok 1.302140
 
 Text::Abbrev 1.02
 
@@ -5766,7 +5764,7 @@ namespace::autoclean 0.15
 
 namespace::clean 0.24
 
-ok 1.302098
+ok 1.302140
 
 oo undef
 
@@ -5823,8 +5821,8 @@ warnings::register 1.02
 Summary of my perl5 (revision 5 version 18 subversion 2) configuration:
    
   Platform:
-    osname=darwin, osvers=16.0, archname=darwin-thread-multi-2level
-    uname='darwin osx320.apple.com 16.0 darwin kernel version 15.0.0: wed jun 22 17:57:08 pdt 2016; root:xnu-3247.1.106.2.9~1development_x86_64 x86_64 '
+    osname=darwin, osvers=17.0, archname=darwin-thread-multi-2level
+    uname='darwin osx339.sd.apple.com 17.0 darwin kernel version 16.1.0: wed jun 14 23:26:09 pdt 2017; root:xnu-3789.21.4.1.6~1development_x86_64 x86_64 '
     config_args='-ds -e -Dprefix=/usr -Dccflags=-g  -pipe  -Dldflags= -Dman3ext=3pm -Duseithreads -Duseshrplib -Dinc_version_list=none -Dcc=cc'
     hint=recommended, useposix=true, d_sigaction=define
     useithreads=define, usemultiplicity=define
@@ -5835,13 +5833,13 @@ Summary of my perl5 (revision 5 version 18 subversion 2) configuration:
     cc='cc', ccflags ='-arch x86_64 -arch i386 -g -pipe -fno-common -DPERL_DARWIN -fno-strict-aliasing -fstack-protector',
     optimize='-Os',
     cppflags='-g -pipe -fno-common -DPERL_DARWIN -fno-strict-aliasing -fstack-protector'
-    ccversion='', gccversion='4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.34)', gccosandvers=''
+    ccversion='', gccversion='4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.31)', gccosandvers=''
     intsize=4, longsize=8, ptrsize=8, doublesize=8, byteorder=12345678
     d_longlong=define, longlongsize=8, d_longdbl=define, longdblsize=16
     ivtype='long', ivsize=8, nvtype='double', nvsize=8, Off_t='off_t', lseeksize=8
     alignbytes=8, prototype=define
   Linker and Libraries:
-    ld='cc -mmacosx-version-min=10.12.5', ldflags ='-arch x86_64 -arch i386 -fstack-protector'
+    ld='cc', ldflags ='-arch x86_64 -arch i386 -fstack-protector'
     libpth=/usr/lib /usr/local/lib
     libs= 
     perllibs=
@@ -5866,9 +5864,9 @@ Characteristics of this binary (from libperl):
 	/Library/Perl/Updates/<version> comes before system perl directories
 	installprivlib and installarchlib points to the Updates directory
   Built under darwin
-  Compiled at Feb  6 2017 22:16:22
+  Compiled at Oct  7 2017 16:20:38
   %ENV:
-    PERL5_CPANPLUS_IS_RUNNING="52667"
+    PERL5_CPANPLUS_IS_RUNNING="33813"
     PERL5_CPANPLUS_IS_VERSION="0.9135"
     PERL_READLINE_NOWARN="1"
   @INC:

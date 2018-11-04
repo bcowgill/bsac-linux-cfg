@@ -640,7 +640,14 @@ if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	WEBSTORM_ARCHIVE=""
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
-	CUSTOM_PKG="cf:cf-cli groovy /usr/local/Cellar/shared-mime-info/1.10/README:shared-mime-info"
+	CUSTOM_PKG="
+		yarn
+		/usr/local/Cellar/lzo/2.10/lib/liblzo2.dylib:lzo
+		editorconfig
+		cf:cf-cli
+		groovy
+		/usr/local/Cellar/shared-mime-info/1.10/README:shared-mime-info
+	"
 fi # wipro MACOS
 
 if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
@@ -1455,7 +1462,9 @@ which php && php -v
 which composer && composer -v | head -7
 which tsc && tsc -v
 which atom && atom -v
-which apm && apm --no-color -version
+if [ ! -z $ATOM_APM ]; then
+	which apm && apm --no-color -version
+fi
 echo END versions
 
 if [ ! -e $HOME/bin ]; then
@@ -3112,7 +3121,7 @@ pkg-list.sh > bin/cfg$COMP/pkg-list.txt
 OK "updated bin/cfg$COMP/pkg-list.txt"
 
 if [ ! -z $MACOS ]; then
-	ls-mac-apps.sh > bin/cfg$COMP/mac-apps.txt
+	ls-mac-apps.sh | sort > bin/cfg$COMP/mac-apps.txt
 	OK "updated bin/cfg$COMP/mac-apps.txt"
 fi
 
@@ -3121,9 +3130,11 @@ if [ ! -z `which npm` ]; then
 	OK "updated bin/cfg$COMP/npm-pkg-list.txt"
 fi
 
-if [ ! -z `which apm` ]; then
-	apm --no-color list > bin/cfg$COMP/atom-pkg-list.txt 2>&1 || true
-	OK "updated bin/cfg$COMP/atom-pkg-list.txt"
+if [ ! -z $ATOM_APM ]; then
+	if [ ! -z `which apm` ]; then
+		apm --no-color list > bin/cfg$COMP/atom-pkg-list.txt 2>&1 || true
+		OK "updated bin/cfg$COMP/atom-pkg-list.txt"
+	fi
 fi
 
 if [ ! -z `which cpanp` ]; then
