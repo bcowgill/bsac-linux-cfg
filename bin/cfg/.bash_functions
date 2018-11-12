@@ -204,3 +204,19 @@ function grep_cfroutes
 	done
 }
 fi
+
+# https://github.com/robbyrussell/oh-my-zsh
+function git_current_branch
+{
+  local ref
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || \
+  ref=$(git rev-parse --short HEAD 2> /dev/null) || return
+  echo ${ref#refs/heads/}
+}
+
+# Reset changes to a file in the last commit
+# http://mjk.space/git-aliases-i-cant-live-without/
+function gfr
+{
+	git reset @~ "$@" && git commit --amend --no-edit
+}
