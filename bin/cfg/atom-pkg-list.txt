@@ -91,10 +91,44 @@ Built-in Atom Packages (91)
 ├── language-xml@0.35.2
 └── language-yaml@0.30.1
 
-Community Packages (5) /home/me/.atom/packages
+Community Packages (39) /home/me/.atom/packages
+├── Sublime-Style-Column-Selection@1.7.5
 ├── activate-power-mode@2.7.0
 ├── atom-beautify@0.30.6
+├── atom-jest-snippets@2.1.0
+├── atom-ternjs@0.18.3
+├── atom-transpose@0.3.5
+├── atom-wrap-in-tag@0.6.0
+├── autoclose-html@0.23.0
+├── autocomplete-modules@2.2.5
+├── case-keep-replace@0.6.2
 ├── change-case@0.6.5
+├── color-picker@2.3.0
+├── copy-path@0.5.1
+├── docblockr@0.13.7
+├── dracula-syntax@2.0.7
+├── duplicate-line-or-selection@0.9.0
+├── editorconfig@2.2.2
+├── emmet@2.4.3
+├── emmet-jsx-css-modules@1.0.0
+├── es6-javascript@1.0.0
 ├── file-icons@2.1.15
-└── language-javascript-jsx@0.3.7
+├── highlight-selected@0.14.0
+├── hyperclick@0.1.5
+├── js-hyperclick@1.15.0
+├── language-babel@2.85.0
+├── language-javascript-jsx@0.3.7
+├── linter-eslint@8.4.1
+├── local-history@4.3.1
+├── lodash-snippets@2.0.0
+├── pigments@0.40.2
+├── prettier-atom@0.55.2
+├── project-manager@3.3.6
+├── react-es7-snippets@0.3.13
+├── related@0.3.5
+├── set-syntax@0.4.0
+├── sort-lines@0.18.0
+├── tab-foldername-index@3.3.0
+├── toggle-quotes@1.1.3
+└── tree-view-copy-relative-path@1.2.0
 

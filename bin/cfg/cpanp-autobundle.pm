@@ -1,4 +1,4 @@
-package Snapshot_2018_04_24_00;
+package Snapshot_2018_11_15_00;
 
 $VERSION = '0.01';
 
@@ -8,13 +8,13 @@ __END__
 
 =head1 NAME
 
-Snapshot_2018_04_24_00 - Snapshot of your installation at Tue Apr 24 21:27:31 2018
+Snapshot_2018_11_15_00 - Snapshot of your installation at Thu Nov 15 20:23:52 2018
 
 =head1 SYNOPSIS
 
 To install the modules from this snapshot, run:
 
-  cpanp -i file://full/path/to/Snapshot_2018_04_24_00.pm
+  cpanp -i file://full/path/to/Snapshot_2018_11_15_00.pm
 
 =head1 CONTENTS
 
@@ -2302,6 +2302,116 @@ Digest::file 1.16
 
 DirHandle 1.04
 
+Dpkg 1.01
+
+Dpkg::BuildFlags 1.03
+
+Dpkg::BuildOptions 1.01
+
+Dpkg::BuildProfiles 0.01
+
+Dpkg::Changelog 1.00
+
+Dpkg::Changelog::Debian 1.00
+
+Dpkg::Changelog::Entry 1.00
+
+Dpkg::Changelog::Entry::Debian 1.01
+
+Dpkg::Changelog::Parse 1.00
+
+Dpkg::Checksums 1.00
+
+Dpkg::Compression 1.02
+
+Dpkg::Compression::FileHandle 1.00
+
+Dpkg::Compression::Process 1.00
+
+Dpkg::Conf 1.01
+
+Dpkg::Control 1.00
+
+Dpkg::Control::Changelog 1.00
+
+Dpkg::Control::Fields 1.00
+
+Dpkg::Control::FieldsCore 1.00
+
+Dpkg::Control::Hash 1.00
+
+Dpkg::Control::HashCore 1.01
+
+Dpkg::Control::Info 1.00
+
+Dpkg::Control::Types 0.01
+
+Dpkg::Deps 1.02
+
+Dpkg::ErrorHandling 0.02
+
+Dpkg::Exit 1.01
+
+Dpkg::File 0.01
+
+Dpkg::Gettext 1.00
+
+Dpkg::IPC 1.00
+
+Dpkg::Index 1.00
+
+Dpkg::Interface::Storable 1.00
+
+Dpkg::Package 0.01
+
+Dpkg::Path 1.02
+
+Dpkg::Shlibs 0.02
+
+Dpkg::Shlibs::Cppfilt 0.01
+
+Dpkg::Shlibs::Objdump 0.01
+
+Dpkg::Shlibs::Symbol 0.01
+
+Dpkg::Shlibs::SymbolFile 0.01
+
+Dpkg::Source::Archive 0.01
+
+Dpkg::Source::Functions 0.01
+
+Dpkg::Source::Package 1.01
+
+Dpkg::Source::Package::V1 0.01
+
+Dpkg::Source::Package::V2 0.01
+
+Dpkg::Source::Package::V3::Bzr 0.01
+
+Dpkg::Source::Package::V3::Custom 0.01
+
+Dpkg::Source::Package::V3::Git 0.02
+
+Dpkg::Source::Package::V3::Native 0.01
+
+Dpkg::Source::Package::V3::Quilt 0.01
+
+Dpkg::Source::Patch 0.01
+
+Dpkg::Source::Quilt 0.01
+
+Dpkg::Substvars 1.02
+
+Dpkg::Vars 0.03
+
+Dpkg::Vendor 1.01
+
+Dpkg::Vendor::Debian 0.01
+
+Dpkg::Vendor::Default 0.01
+
+Dpkg::Vendor::Ubuntu 0.01
+
 Dumpvalue 1.17
 
 DynaLoader 1.18
@@ -3376,8 +3486,6 @@ List::Util 1.27
 
 List::Util::XS 1.27
 
-Locale::Codes 3.25
-
 Locale::Codes::Constants 3.25
 
 Locale::Codes::Country 3.25
@@ -3754,8 +3862,6 @@ Net::DNS::RR::DHCID 718
 
 Net::DNS::RR::DNAME 932
 
-Net::DNS::RR::EID 932
-
 Net::DNS::RR::HINFO 932
 
 Net::DNS::RR::HIP 718
@@ -3780,11 +3886,7 @@ Net::DNS::RR::MX 932
 
 Net::DNS::RR::NAPTR 932
 
-Net::DNS::RR::NIMLOC 932
-
 Net::DNS::RR::NS 932
-
-Net::DNS::RR::NSAP 932
 
 Net::DNS::RR::NULL 932
 
@@ -5830,7 +5932,7 @@ Characteristics of this binary (from libperl):
   Built under linux
   Compiled at Mar  1 2016 17:15:04
   %ENV:
-    PERL5_CPANPLUS_IS_RUNNING="31955"
+    PERL5_CPANPLUS_IS_RUNNING="11481"
     PERL5_CPANPLUS_IS_VERSION="0.9135"
     PERL_READLINE_NOWARN="1"
   @INC:

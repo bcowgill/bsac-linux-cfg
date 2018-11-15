@@ -266,6 +266,8 @@ fi
 
 # TODO install n versions from here
 N_VER=2.1.7
+# MUSTDO restore version numbers but must fix lib- code so it works
+#N_VERS="lts stable latest"
 N_VERS="lts stable latest 0.10.0 4.0.0 5.0.0 6.0.0 7.0.0 8.11.1 9.10.1 10.0.0"
 N_IO_VERS="1.0.0  2.0.0  3.0.0"
 N_CMD=n
@@ -381,7 +383,7 @@ ATOM_APM_PKG="
 	related
 	set-syntax
 	sort-lines
-	sublime-style-column-selection
+	Sublime-Style-Column-Selection
 	tab-foldername-index
 	toggle-quotes
 	atom-wrap-in-tag
@@ -404,8 +406,9 @@ ATOM_APM_PKG="
 	react-es7-snippets
 	atom-jest-snippets
 	one-dark-ui
-	dracula-theme
 "
+# MUSTDO investigate these package failures
+#	dracula-theme
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 # Atom MACOS
