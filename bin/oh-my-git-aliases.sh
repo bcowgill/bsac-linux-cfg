@@ -14,6 +14,7 @@ alias g='git'
 alias gst='g status'
 
 alias gfe='g fetch'
+alias gfea='gfe --all' # BSAC
 
 alias gco='g checkout'
 alias gcd='gco develop'
@@ -41,7 +42,7 @@ alias gap='ga --patch'
 alias gai='ga -i'
 
 alias gb='g branch'
-alias gba='g branch -a'
+alias gba='gb -a'
 
 alias ggr='git grep'
 
@@ -73,6 +74,8 @@ alias gsts='git stash show --text'
 alias gsta='g stash'
 alias gstp='gsta pop'
 alias gstd='gsta drop'
+alias gstaa='gsta apply' # BSAC
+alias gdrop='gsta save crap; gstd' # BSAC
 
 alias gcl='g clone'
 
