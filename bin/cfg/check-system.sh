@@ -1595,6 +1595,7 @@ fi
 fi # not MACOS
 
 # Shell configuration files
+file_linked_to .git_aliases bin/cfg/git-aliases.sh  "git alias configured"
 file_linked_to .bash_aliases bin/cfg/.bash_aliases  "bash alias configured"
 file_linked_to .bash_functions bin/cfg/.bash_functions "bash functions configured"
 if [ ! -z $MACOS ]; then
