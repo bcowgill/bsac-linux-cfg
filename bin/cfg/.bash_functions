@@ -216,7 +216,7 @@ function git_current_branch
 
 # Reset changes to a file in the last commit
 # http://mjk.space/git-aliases-i-cant-live-without/
-function gfr
+function grf
 {
 	git reset @~ "$@" && git commit --amend --no-edit
 }

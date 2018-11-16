@@ -95,56 +95,102 @@ alias pstree='\pstree -a -h -p -u'
 # http://mjk.space/git-aliases-i-cant-live-without/
 # https://github.com/mjkonarski/oh-my-git-aliases/blob/master/oh-my-git-aliases.sh#L71
 alias g='git'
-alias gcl='git clone'
-# also, gco -  will checkout the last branch you had
-alias gco='git checkout'
-alias gcm='git checkout master'
-alias gss='git status; echo == $? =='
-alias gst='git status'
-alias gsm="git status | perl -ne '\$done = 1 if m{Untracked \\s+ files:}xms; print unless \$done;'"
+
+alias gst='g status'
+alias gss='gst; echo == $? =='
+alias gsm="gst | perl -ne '\$done = 1 if m{Untracked \\s+ files:}xms; print unless \$done;'"
 alias gud="echo \`git status | grep 'deleted: ' | perl -pne 's{\s*deleted:\s*}{}xms'\`"
-alias gf='git fetch'
-alias gfa='git fetch --all'
-alias gbl='git branch --list'
-alias gblr='git branch --list --remote'
-alias gblu='git fetch --all; touch branches.now.lst; mv branches.now.lst branches.old.lst; git branch --list --remote | sort > branches.now.lst; vdiff branches.old.lst branches.now.lst'
-alias gpr='touch pause-build.timestamp; git pull --rebase'
-alias gd='git diff'
-alias gdc='git diff --cached'
-alias ga='git add'
-alias gsta='git stash save'
-alias gstp='git stash pop'
-alias gca='git commit -a'
-alias gcv='git commit --no-verify'
-alias gca='git commit --amend'
-alias gca!='git commit -a --amend'
-alias gcp='git cherry-pick'
-alias gcpa='git cherry-pick --abort'
-alias gcpc='git cherry-pick --continue'
-alias gma='git merge --abort'
-alias gmt='git mergetool'
-alias ggrh='git reset --hard @{u}'
-alias grom='git-rebase.sh origin/master'
-alias grbiom='git rebase --interactive origin/master'
-alias gra='git rebase --abort'
-alias grc='git rebase --continue'
-alias grs='git rebase --skip'
-alias glog='git log --oneline --graph --decorate --all'
-alias ggraph='git graph --simplify-by-decoration'
-alias gp='git push'
-alias ggpush='git push origin $(git_current_branch)'
+
+alias gfe='g fetch'
+alias gfea='gfe --all'
+
+# also, gco -  will checkout the last branch you had
+alias gco='g checkout'
+alias gcd='gco develop'
+alias gcm='gco master'
+
+alias gp='g push'
+alias ggpush='gp origin $(git_current_branch)'
 alias gpb=ggpush
 # ggpushf warning - dangerous, be careful especially on master
-alias ggpushf='git push --force-with-lease origin $(git_current_branch)'
-alias glr='git pull --rebase'
-alias gitpp='touch pause-build.timestamp; git pull --rebase && git push origin $(git_current_branch) && datestamp.sh'
+alias ggpushf='gp --force-with-lease origin $(git_current_branch)'
+alias ggpusht='g push origin --tags'
+
+alias gc='g commit'  # clashes with gc command
+alias gc!='gc --amend'
+alias gca='gc -a'
+alias gca!='gca --amend'
+alias gcv='gc --no-verify'
+
+alias gl='g pull'
+alias glr='gl --rebase'
+alias glff='gl --ff-only'
+alias gpr='pause; glr'
+alias gitpp='pause; glr && gpb && datestamp.sh'
 alias rpb='rm pause-build.timestamp'
 alias pause='touch pause-build.timestamp'
 
+alias gm='g merge'
+alias gma='gm --abort'
+alias gmff='gm --ff-only'
+alias gmnff='gm --no-ff'
+alias gmt='g mergetool'
+
+alias ga='g add'
+alias gap='ga --patch'
+alias gai='ga -i'
+
+alias gb='g branch'
+alias gba='gb -a'
+alias gbl='gb --list'
+alias gblr='gb --list --remote'
+alias gblu='gfea; touch branches.now.lst; mv branches.now.lst branches.old.lst; gblr | sort > branches.now.lst; vdiff branches.old.lst branches.now.lst'
+
+alias ggr='g grep'
+
+alias grb='g rebase'
+alias grbi='grb --interactive'
+alias grom='git-rebase.sh origin/master'
+alias grbiod='grbi origin/develop'
+alias grbiom='grbi origin/master'
+alias grba='grb --abort'
+alias grbc='grb --continue'
+alias grbs='grb --skip'
+
+alias gt='g tag'
+
+alias gre='g reset'
+alias greh='gre --hard'
+alias ggrh='greh @{u}'
+
+alias gd='g diff'
+alias gdc='gd --cached'
+alias gdo='gdt origin/$(git_current_branch) $(git_current_branch)'
+alias gdt='gitdiffns'
+
+alias gcp='g cherry-pick'
+alias gcpa='gcp --abort'
+alias gcpc='gcp --continue'
+
+alias gsta='g stash'
+alias gsts='gsta show --text'
+alias gstas='gsta save'
+alias gstaa='gsta apply'
+alias gstd='gsta drop'
+alias gstp='gsta pop'
+alias gdrop='gstas crap; gstd'
+
+alias gcl='g clone'
+
+alias gr='g remote'
+
+alias glog='g log --oneline --graph --decorate --all'
+alias ggraph='g graph --simplify-by-decoration'
+
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
-alias gitdiff='git difftool --no-prompt'
-alias gitdiffns='git difftool --no-prompt --ignore-all-space'
+alias gitdiff='g difftool --no-prompt'
+alias gitdiffns='gitdiff --ignore-all-space'
 if which sgdm.exe >> /dev/null; then
    alias vdiff='sgdm.exe'
 else
@@ -368,4 +414,3 @@ if which calc >> /dev/null; then
 else
 	alias calc=calc.sh
 fi
-
