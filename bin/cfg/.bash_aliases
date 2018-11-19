@@ -124,7 +124,7 @@ alias i3diff='pushd ~/bin; git difftool --no-prompt  172c656043e8902d8ff7bf14af6
 alias delsame='fdupes --recurse --noempty --size --delete'
 
 # make sense of ps -ef
-alias pswhat='ps -ef --cols 256 | egrep "^($USER|`id -u`)" | what-is-running.pl'
+alias pswhat='pswide.sh | egrep "^\s*($USER|`id -u`)" | what-is-running.pl'
 
 # info about ports
 alias ls-ports='lsof -Pnl +M -i4'
@@ -150,7 +150,7 @@ alias ls-nm="locate node_modules | perl -pne 's{(/node_modules).+}{\$1\n}xmsg' |
 alias npm5="npm-json5"
 #alias n-ls="ls /usr/local/n/versions/node"
 alias n-ls="(n io list; n list) | perl -ne 'print if m{\A\s*\d}xms'"
-alias n-vers="echo node latest: `n --latest`; echo node stable: `n --stable`; echo node lts: `n --lts`"
+alias n-vers="echo node latest: \`n --latest\`; echo node stable: \`n --stable\`; echo node lts: \`n --lts\`"
 alias nvu="nvm use \`cat .nvmrc\`"
 # some bower aliases
 alias bower-links=bower-links.sh
