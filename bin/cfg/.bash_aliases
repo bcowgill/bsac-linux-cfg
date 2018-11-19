@@ -49,18 +49,18 @@ alias ........='cd ../../../../../../..'
 alias duse='(pushd ~ > /dev/null; du-sk.sh | tee _usage.log; popd > /dev/null)'
 
 if [ `hostname` == WYATT  ]; then
-   # home machine drive letters
-   alias clear='perl -e "print qq{\n} x 80"'
-   export C=/cygdrive/c
-   export D=/cygdrive/d
-   export F=/cygdrive/f
-   export K=/cygdrive/k
-   alias c:='pushd $C'
-   alias d:='pushd $D'
-   alias f:='pushd $F'
-   alias k:='pushd $K'
+	# home machine drive letters
+	alias clear='perl -e "print qq{\n} x 80"'
+	export C=/cygdrive/c
+	export D=/cygdrive/d
+	export F=/cygdrive/f
+	export K=/cygdrive/k
+	alias c:='pushd $C'
+	alias d:='pushd $D'
+	alias f:='pushd $F'
+	alias k:='pushd $K'
 
-   alias subl='"$C/Program Files/Sublime Text 2/sublime_text.exe"'
+	alias subl='"$C/Program Files/Sublime Text 2/sublime_text.exe"'
 fi
 
 if [ "x$COMPANY" == "xclearbooks" ]; then
@@ -94,27 +94,27 @@ alias pstree='\pstree -a -h -p -u'
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
 if which sgdm.exe >> /dev/null; then
-   alias vdiff='sgdm.exe'
+	alias vdiff='sgdm.exe'
 else
-   if which diffmerge >> /dev/null; then
-      alias vdiff='diffmerge --nosplash'
-   else
-      if which diffmerge.sh >> /dev/null; then
-         alias vdiff='diffmerge.sh --nosplash'
-      else
-         if which meld >> /dev/null; then
-            alias vdiff='meld'
-         else
-            alias vdiff='vimdiff'
-         fi
-      fi
-   fi
+	if which diffmerge >> /dev/null; then
+		alias vdiff='diffmerge --nosplash'
+	else
+		if which diffmerge.sh >> /dev/null; then
+			alias vdiff='diffmerge.sh --nosplash'
+		else
+			if which meld >> /dev/null; then
+				alias vdiff='meld'
+			else
+				alias vdiff='vimdiff'
+			fi
+		fi
+	fi
 fi
 
 if which p4merge >> /dev/null 2>&1 ; then
-   # p4merge is a good visual diff tool for image files but not so good for text.
-   alias imgdiff='p4merge'
-   #alias vdiff='p4merge -fg yellow -bg black' does not work
+	# p4merge is a good visual diff tool for image files but not so good for text.
+	alias imgdiff='p4merge'
+	#alias vdiff='p4merge -fg yellow -bg black' does not work
 fi
 
 # i3 window manager diff configuration
@@ -176,31 +176,31 @@ alias utf8-sample=unicode-sample.sh
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
 if which sw_vers > /dev/null; then
-   # no wcd available on Mac
-   true
+	# no wcd available on Mac
+	true
 else
-# wcdscan rescan configured directories in background
-# wd default color graphic tree selector.
-# wcda ascii based tree selector.
-# wcdl paged select list.
-# wcdo for stdio select list.
-# wcdls just list what dirs match.
-# wcdfind use regex match against list of directories.
-# wcds show the wcd dir stack and allow select
-# wd - or + go back or forward in wcd stack
-# wcdv view configuration
-# -z 50 wcd dir stack size
-# -w always a wild match, not exact match
-alias wcd='\wcd -w -z 50 -g --compact-tree --center-tree --color'
-alias wd='wcd -w -z 50 -g --compact-tree --center-tree --color'
-alias wcda='wd -w --ascii-tree'
-alias wcds='wd ='
-alias wcdl='wcd -w -z 50'
-alias wcdo='wcd -w -z 50 -o'
-alias wcdls='wd -w --to-stdout'
-alias wcdfind='cat ~/.wcd/.treedata.wcd | egrep'
-alias wcdscan='wd -s &'
-alias wcdv='wcd -z 50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+	# wcdscan rescan configured directories in background
+	# wd default color graphic tree selector.
+	# wcda ascii based tree selector.
+	# wcdl paged select list.
+	# wcdo for stdio select list.
+	# wcdls just list what dirs match.
+	# wcdfind use regex match against list of directories.
+	# wcds show the wcd dir stack and allow select
+	# wd - or + go back or forward in wcd stack
+	# wcdv view configuration
+	# -z 50 wcd dir stack size
+	# -w always a wild match, not exact match
+	alias wcd='\wcd -w -z 50 -g --compact-tree --center-tree --color'
+	alias wd='wcd -w -z 50 -g --compact-tree --center-tree --color'
+	alias wcda='wd -w --ascii-tree'
+	alias wcds='wd ='
+	alias wcdl='wcd -w -z 50'
+	alias wcdo='wcd -w -z 50 -o'
+	alias wcdls='wd -w --to-stdout'
+	alias wcdfind='cat ~/.wcd/.treedata.wcd | egrep'
+	alias wcdscan='wd -s &'
+	alias wcdv='wcd -z 50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
 fi
 
 alias charles-up='source `which proxy-to-charles.sh`'
@@ -234,47 +234,47 @@ alias findtt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; export LS_TT_TAGS_ECHO=1; find . -nam
 alias alltt='(HOLD_ECHO=$LS_TT_TAGS_ECHO; HOLD_INLINE=$LS_TT_TAGS_INLINE; export LS_TT_TAGS_ECHO=0; export LS_TT_TAGS_INLINE=1; find . -name *.tt -exec ls-tt-tags.pl {} \; | sort | uniq ; export LS_TT_TAGS_ECHO=$HOLD_ECHO; export LS_TT_TAGS_INLINE=$HOLD_INLINE)'
 
 if [ `hostname` == WYATT  ]; then
-   # home machine cygwin clear screen command missing
-   alias clear='perl -e "print qq{\n} x 80"'
+	# home machine cygwin clear screen command missing
+	alias clear='perl -e "print qq{\n} x 80"'
 fi
 alias cls=clear
 
 if [ `hostname` == worksharexps-XPS-15-9530 ]; then
-   alias viscratch='vim $HOME/workspace/000_scratch.txt'
-   alias vinotes='vim $HOME/workspace/notes.txt'
-   alias gr='grunt --gruntfile Gruntfile.linux.js'
-   alias grsq='git-rebase.sh origin/sysqa'
-   alias gpfdi='git push -f origin debug-inheritance'
-   alias gpf20='git push -f origin case#33230-code-coverage'
-   alias gcdi='git checkout debug-inheritance'
-   alias gcstory='git checkout case#29521-grid-view-comments'
-   alias gc20='git checkout case#33230-code-coverage'
+	alias viscratch='vim $HOME/workspace/000_scratch.txt'
+	alias vinotes='vim $HOME/workspace/notes.txt'
+	alias gr='grunt --gruntfile Gruntfile.linux.js'
+	alias grsq='git-rebase.sh origin/sysqa'
+	alias gpfdi='git push -f origin debug-inheritance'
+	alias gpf20='git push -f origin case#33230-code-coverage'
+	alias gcdi='git checkout debug-inheritance'
+	alias gcstory='git checkout case#29521-grid-view-comments'
+	alias gc20='git checkout case#33230-code-coverage'
 fi
 
 if [ `hostname` == slug ]; then
-   #echo modifying aliases for host at blismedia
-   # = --compact-tree not present. use -ga mode instead
-   # -T = --ascii-tree
-   # -gc = --center-tree
-   # -K  = --color
-   # -od = --to-stdout
-   # wcd will be defined as a function in .bash_functions
-   alias wd='wcd -z50 -ga -gc -K'
-   alias wcda='wcd -z50 -ga -gc -K -T'
-   alias wcds='wcd -z50 ='
-   alias wcdl='wcd -z50'
-   alias wcdo='wcd -z50 -o'
-   alias wcdls='wcd -z50 -od'
-   alias wcdscan='wcd -z50 -s &'
-   alias wcdv='wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
+	#echo modifying aliases for host at blismedia
+	# = --compact-tree not present. use -ga mode instead
+	# -T = --ascii-tree
+	# -gc = --center-tree
+	# -K  = --color
+	# -od = --to-stdout
+	# wcd will be defined as a function in .bash_functions
+	alias wd='wcd -z50 -ga -gc -K'
+	alias wcda='wcd -z50 -ga -gc -K -T'
+	alias wcds='wcd -z50 ='
+	alias wcdl='wcd -z50'
+	alias wcdo='wcd -z50 -o'
+	alias wcdls='wcd -z50 -od'
+	alias wcdscan='wcd -z50 -s &'
+	alias wcdv='wcd -z50 --verbose notadirectoryonthedisksoweshouldjustseeconfiginfoforwcd'
 
-   alias gitdiffns='git difftool --no-prompt --ignore-all-space --ignore-blank-lines'
+	alias gitdiffns='git difftool --no-prompt --ignore-all-space --ignore-blank-lines'
 
-   # Blismedia database aliases
-   # add for output to CSV format: -F ',' --no-align
-   alias dbinf='mysql -u root -p -D infinity_dashboard'
-   alias dbp42davide='psql -h pg-project42 geodata postgres'
-   alias dbp42='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser -F "," --no-align'
+	# Blismedia database aliases
+	# add for output to CSV format: -F ',' --no-align
+	alias dbinf='mysql -u root -p -D infinity_dashboard'
+	alias dbp42davide='psql -h pg-project42 geodata postgres'
+	alias dbp42='psql -h postgis-project42.cw0nipflfk4w.us-east-1.rds.amazonaws.com project42 awsuser -F "," --no-align'
 
 fi
 

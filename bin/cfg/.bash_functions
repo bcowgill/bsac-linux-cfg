@@ -3,19 +3,19 @@
 
 # show whichever command something is, a program, alias or shell function
 whichever () {
-   local cmd
-   cmd=$1
-   which $cmd
-   alias | egrep 'alias $cmd='
-   command -v $cmd
+	local cmd
+	cmd=$1
+	which $cmd
+	alias | egrep 'alias $cmd='
+	command -v $cmd
 }
 
 # cpstat copies files with stats and progress
 cpstat () {
-   local sourceDir targetDir
-   sourceDir="$1"
-   targetDir="$2"
-   tar c "$sourceDir" | pv | tar x -C "$targetDir"
+	local sourceDir targetDir
+	sourceDir="$1"
+	targetDir="$2"
+	tar c "$sourceDir" | pv | tar x -C "$targetDir"
 }
 
 # find-ez easy find shows just name, size and time
@@ -27,50 +27,50 @@ find-ez () {
 
 # rvdiff reverses the files being diffed
 rvdiff () {
-   vdiff $2 $1
+	vdiff $2 $1
 }
 
 # touch_p function like mkdir -p
 touch_p () {
-   local dir
-   dir=`dirname "$1"`
-   [ -d "$dir" ] || mkdir -p "$dir"
-   touch "$1"
+	local dir
+	dir=`dirname "$1"`
+	[ -d "$dir" ] || mkdir -p "$dir"
+	touch "$1"
 }
 
 # iselect command example of an enhanced cd command
 #   database scan for enhanced cd command
 which iselect > /dev/null 2>&1
 if [ "$?" == "0" ]; then
-   #echo we have iselect installed
+	#echo we have iselect installed
 cds () {
-  (cd $HOME;
-   find . -type d -print |\
-   sed -e "s;^\.;$HOME;" |\
-   sort -u >$HOME/.cdpaths ) &
+	(cd $HOME;
+		find . -type d -print |\
+		sed -e "s;^\.;$HOME;" |\
+		sort -u >$HOME/.cdpaths ) &
 }
 
 #   definition of the enhanced cd command
 ecd () {
-    if [ -d "$1" ]; then
-       builtin cd "$1"
-    else
-       builtin cd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
-           iselect -a -Q "$1" -n "chdir" \
-                   -t "Change Directory to..."`
-    fi
-    #PS1="\u@\h:$PWD\n:> "
+	if [ -d "$1" ]; then
+		builtin cd "$1"
+	else
+		builtin cd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
+			iselect -a -Q "$1" -n "chdir" \
+			-t "Change Directory to..."`
+	fi
+	#PS1="\u@\h:$PWD\n:> "
 }
 #   definition of the enhanced pushd command
 epushd () {
-    if [ -d "$1" ]; then
-       builtin pushd "$1"
-    else
-       builtin pushd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
-           iselect -a -Q "$1" -n "pushdir" \
-                   -t "Push Directory to..."`
-    fi
-    #PS1="\u@\h:$PWD\n:> "
+	if [ -d "$1" ]; then
+		builtin pushd "$1"
+	else
+		builtin pushd `egrep "/$1[^/]*$" $HOME/.cdpaths |\
+			iselect -a -Q "$1" -n "pushdir" \
+			-t "Push Directory to..."`
+	fi
+	#PS1="\u@\h:$PWD\n:> "
 }
 
 fi
@@ -79,11 +79,11 @@ fi
 # on cygwin the command is wcd.exe and no need for a function
 which wcd.exec > /dev/null 2>&1
 if [ "$?" == "0" ]; then
-   #echo we have wcd.exec installed
-   unalias wcd 2> /dev/null
-   if [ -f /usr/share/wcd/wcd-include.sh ]; then
-      . /usr/share/wcd/wcd-include.sh
-   fi
+	#echo we have wcd.exec installed
+	unalias wcd 2> /dev/null
+	if [ -f /usr/share/wcd/wcd-include.sh ]; then
+		. /usr/share/wcd/wcd-include.sh
+	fi
 fi
 
 # docker bash
@@ -208,10 +208,10 @@ fi
 # https://github.com/robbyrussell/oh-my-zsh
 function git_current_branch
 {
-  local ref
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || \
-  ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo ${ref#refs/heads/}
+	local ref
+	ref=$(git symbolic-ref HEAD 2> /dev/null) || \
+	ref=$(git rev-parse --short HEAD 2> /dev/null) || return
+	echo ${ref#refs/heads/}
 }
 
 # Reset changes to a file in the last commit
