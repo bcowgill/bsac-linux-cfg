@@ -1,4 +1,4 @@
-package Snapshot_2018_11_04_00;
+package Snapshot_2018_11_19_00;
 
 $VERSION = '0.01';
 
@@ -8,13 +8,13 @@ __END__
 
 =head1 NAME
 
-Snapshot_2018_11_04_00 - Snapshot of your installation at Sun Nov  4 13:54:01 2018
+Snapshot_2018_11_19_00 - Snapshot of your installation at Mon Nov 19 11:06:30 2018
 
 =head1 SYNOPSIS
 
 To install the modules from this snapshot, run:
 
-  cpanp -i file://full/path/to/Snapshot_2018_11_04_00.pm
+  cpanp -i file://full/path/to/Snapshot_2018_11_19_00.pm
 
 =head1 CONTENTS
 
@@ -5866,7 +5866,7 @@ Characteristics of this binary (from libperl):
   Built under darwin
   Compiled at Oct  7 2017 16:20:38
   %ENV:
-    PERL5_CPANPLUS_IS_RUNNING="33813"
+    PERL5_CPANPLUS_IS_RUNNING="60361"
     PERL5_CPANPLUS_IS_VERSION="0.9135"
     PERL_READLINE_NOWARN="1"
   @INC:

@@ -1,3 +1,6 @@
+[MSG] No '/Users/bcowgill/.cpanplus/custom-sources' dir, skipping custom sources
+[MSG] No '/Users/bcowgill/.cpanplus/custom-sources' dir, skipping custom sources
+[MSG] No '/Users/bcowgill/.cpanplus/custom-sources' dir, skipping custom sources
     1     0.08         0.10     Algorithm::C3                        HAARG     
     2     1.1902       1.1903   Algorithm::Diff                      TYEMQ     
     3     1.39         1.40     Apache::Test                         SHAY      
@@ -52,7 +55,7 @@
    52     1.827        1.843    DB_File                              PMQS      
    53     1.23         1.25     Data::Compare                        DCANTRELL 
    54     1.22         1.23     Data::Dump                           GAAS      
-   55     2.145        2.172    Data::Dumper                         XSAWYERX  
+   55     2.145        2.173    Data::Dumper                         XSAWYERX  
    56     2.021        2.023    Data::Dumper::Concise                ETHER     
    57     0.109        0.11     Data::OptList                        RJBS      
    58     6.30         6.40     Date::Calendar                       STBEY     
@@ -89,7 +92,7 @@
    89     0.33         0.34     File::Find::Rule                     RCLAMP    
    90     2.09         2.16     File::Path                           JKEENAN   
    91     1.52         1.58     File::Remove                         SHLOMIF   
-   92  9999.19      9999.24     File::Slurp                          CAPOEIRAB 
+   92  9999.19      9999.25     File::Slurp                          CAPOEIRAB 
    93     0.23         0.2308   File::Temp                           ETHER     
    94     1.09         1.22     File::Which                          PLICEASE  
    95     0.1008       0.101    File::chdir                          DAGOLDEN  
@@ -173,7 +176,7 @@
   173     0.10         0.13     MooseX::Types::DateTime              ETHER     
   174     0.30         0.36     MooseX::Types::Structured            ETHER     
   175     0.65         0.67     NEXT                                 NEILB     
-  176     0.74         1.18     Net::DNS                             NLNETLABS 
+  176     0.74         1.19     Net::DNS                             NLNETLABS 
   177     0.003        0.009    Net::DNS::Resolver::Programmable     BIGPRESH  
   178     6.04         6.18     Net::HTTPS                           OALDERS   
   179     0.58         0.65     Net::LDAP                            MARSCHAP  
