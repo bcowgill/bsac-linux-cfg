@@ -5,8 +5,8 @@
 whichever () {
 	local cmd
 	cmd=$1
-	which $cmd
-	alias | egrep 'alias $cmd='
+	which $cmd 2> /dev/null
+	alias | egrep "alias $cmd="
 	command -V $cmd
 }
 
