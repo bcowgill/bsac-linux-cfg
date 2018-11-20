@@ -7,7 +7,7 @@ whichever () {
 	cmd=$1
 	which $cmd
 	alias | egrep 'alias $cmd='
-	command -v $cmd
+	command -V $cmd
 }
 
 # cpstat copies files with stats and progress
