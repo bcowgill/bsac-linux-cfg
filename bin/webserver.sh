@@ -5,8 +5,12 @@
 PORT=$1
 DOCROOT=$2
 HTTP_MOD=SimpleHTTPServer
-# for python 3.0+
-#HTTP_MOD=http.server
+
+PYVER=`python --version 2>&1 | perl -pne 's{Python \s+(\d+).+}{$1\n}xmsg'`
+if [ ${PYVER:-0} -gt 2 ]; then
+	# for python 3.0+
+	HTTP_MOD=http.server
+fi
 
 if [ "x$PORT" == "xslay" ]; then
 	PORT=
@@ -28,8 +32,8 @@ fi
 
 if [ $DOCROOT == slay ]; then
 	echo will slay webserver on port $PORT
-	if which sw_vers > /dev/null; then
-		# MAC!
+	if which sw_vers > /dev/null 2>&1 ; then
+		# MACOS!
 		echo `ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b"`
 		PID=`ps -ef | grep $HTTP_MOD | grep -v grep | egrep "\\b$PORT\\b" | perl -pne 's{\A \s+ \d+ \s+ (\d+) .+ \z}{$1}xmsg'`
 	else
@@ -51,7 +55,10 @@ pushd $DOCROOT
 python -m $HTTP_MOD $PORT >> $LOG 2>&1 &
 sleep 2
 pswide.sh | grep python | grep $HTTP_MOD
-wget --output-document=/dev/null http://localhost:$PORT/favicon.ico
+if which wget 2> /dev/null; then
+	wget --output-document=/dev/null http://localhost:$PORT/favicon.ico
+else
+	curl > /dev/null http://localhost:$PORT/favicon.ico
+fi
 popd
 ps -ef | grep -i $HTTP_MOD
-
