@@ -117,8 +117,8 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-if which sw_vers > /dev/null; then
-  # bash completion on MAC
+if which sw_vers > /dev/null 2>&1 ; then
+  # bash completion on MACOS
   [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 fi
 #==========================================================================
@@ -255,7 +255,8 @@ export PATH=`upath.sh`
 #export LANGUAGE=en_UK.UTF-8
 
 # on a Mac international keyboard, cannot easily type tilde and caret
-if which sw_vers > /dev/null; then
+if which sw_vers > /dev/null 2>&1; then
+  # MACOS
 	export t=~
 	export c=^
 fi

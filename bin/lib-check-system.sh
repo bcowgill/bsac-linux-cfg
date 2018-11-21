@@ -947,7 +947,7 @@ function has_app {
 	local cmd message
 	cmd="$1"
 	message="$2"
-	if which sw_vers > /dev/null; then
+	if which sw_vers > /dev/null 2>&1 ; then
 		if [ -d "/Applications/$cmd" ] ; then
 			OK "application $cmd exists [/Applications/$cmd]"
 			return 0

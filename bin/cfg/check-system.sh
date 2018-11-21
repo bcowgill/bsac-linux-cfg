@@ -91,7 +91,7 @@ function set_env {
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
 EMAIL=zardoz@infoserve.net
-if which sw_vers > /dev/null; then
+if which sw_vers > /dev/null 2>&1 ; then
 	MACOS=1
 fi
 UBUNTU=trusty

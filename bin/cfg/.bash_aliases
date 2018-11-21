@@ -175,7 +175,7 @@ alias utf8-sample=unicode-sample.sh
 # use midnight commander to select a directory to pushd
 alias pushmc='. $HOME/bin/mc-wrapper.sh'
 
-if which sw_vers > /dev/null; then
+if which sw_vers > /dev/null 2>&1; then
 	# no wcd available on Mac
 	true
 else
