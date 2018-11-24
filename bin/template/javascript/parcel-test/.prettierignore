@@ -1,0 +1,13 @@
+# configure which files to ignore by the prettier command
+# this file should be mainly identical to .eslintignore
+/build/**
+/coverage/**
+/docs/**
+/jsdoc/**
+/tmp/**
+/dist/**
+/dist-release/**
+/applications/commons/teamsite/**
+/applications/**/dist/**
+/applications/**/src/assets/**
+/applications/**/src/mockdata/scripts/utag.js
