@@ -161,6 +161,15 @@ alias ls-bower='find . -name bower_components; echo $HOME/.config/configstore; l
 alias bower-ls=ls-bower
 alias bower-unlink='bower uninstall'
 
+# some prettier aliases
+alias pty="prettier --no-semi --use-tabs --tab-width 3 --single-quote --trailing-comma es5 --arrow-parens always"
+alias _pty="pty '**/*.{js,jsx,ts,tsx,json,json5,css,less,scss,htm,html,md}'"
+alias ptyls='_pty --list-different'
+alias ptyp='pty --stdin' # --parser type
+alias ptyfx='_pty --write'
+alias ptycf='prettier --find-config-path' # filename
+alias ptyfi='prettier --file-info' # filename
+
 # image tagging aliases
 # add -json for json output
 # add -r recursive
