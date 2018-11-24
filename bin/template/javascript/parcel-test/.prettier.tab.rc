@@ -1,8 +1,17 @@
 {
-	"semi": false,
-	"useTabs": true,
-	"tabWidth": 3,
-	"singleQuote": true,
-	"trailingComma": "es5",
-	"arrowParens": "always"
+  "semi": false,
+  "useTabs": true,
+  "tabWidth": 3,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "arrowParens": "always",
+  "overrides": [
+    {
+      "files": ["*.json", "*.json5"],
+      "options": {
+        "useTabs": false,
+        "tabWidth": 2
+      }
+    }
+  ]
 }
