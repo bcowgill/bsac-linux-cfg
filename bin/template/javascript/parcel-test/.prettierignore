@@ -9,3 +9,4 @@
 /dist-dev/**
 /dist-node/**
 /.cache/**
+/.eslintcache

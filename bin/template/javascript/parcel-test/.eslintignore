@@ -1,0 +1,12 @@
+# configure which files to ignore by the eslint command
+# this file should be mainly identical to .prettierignore
+/build/**
+/coverage/**
+/docs/**
+/jsdoc/**
+/tmp/**
+/dist/**
+/dist-dev/**
+/dist-node/**
+/.cache/**
+/.eslintcache

@@ -1,4 +1,5 @@
 .cache/
+.eslintcache
 dist-dev/
 dist-node/
 dist/

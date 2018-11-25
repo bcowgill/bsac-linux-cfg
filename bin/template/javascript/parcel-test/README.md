@@ -111,3 +111,27 @@ run yarn install again to fix deps before trying again.
 
 Typescript
 yarn add --dev typescript
+
+Prettier
+
+yarn add --dev prettier
+
+ESlint
+yarn add --dev eslint eslint-plugin-prettier eslint-config-prettier
+eslint --init
+
++ eslint 5.9.0
+
+? How would you like to configure ESLint? Answer questions about your style
+? Are you using ECMAScript 6 features? Yes
+? Are you using ES6 modules? Yes
+? Where will your code run? Browser, Node
+? Do you use CommonJS? Yes
+? Do you use JSX? Yes
+? Do you use React Yes
+? What style of indentation do you use? Tabs
+? What quotes do you use for strings? Single
+? What line endings do you use? Unix
+? Do you require semicolons? No
+? What format do you want your config file to be in? JavaScript
+Installing eslint-plugin-react

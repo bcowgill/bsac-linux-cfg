@@ -170,6 +170,11 @@ alias ptyfx='_pty --write'
 alias ptycf='prettier --find-config-path' # filename
 alias ptyfi='prettier --file-info' # filename
 
+# some eslint aliases
+alias esl="eslint '**/*.{js,jsx,ts,tsx}'"
+alias eslcf='eslint --print-config'
+alias eslp='eslint --stdin'
+
 # image tagging aliases
 # add -json for json output
 # add -r recursive
