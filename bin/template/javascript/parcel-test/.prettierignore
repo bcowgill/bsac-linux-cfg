@@ -8,8 +8,4 @@
 /dist/**
 /dist-dev/**
 /dist-node/**
-/applications/commons/teamsite/**
-/applications/**/dist/**
-/applications/**/src/assets/**
-/applications/**/src/mockdata/scripts/utag.js
 /.cache/**
