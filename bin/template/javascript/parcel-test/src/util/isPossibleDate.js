@@ -11,6 +11,7 @@ import isPossibleDateReturn from './isPossibleDateReturn'
 // returns dateInfo object (see prepareYMD()) or false
 export default function isPossibleDate(checkDate, ...rest) {
 	const ymd =
+		// prettier-ignore
 		(rest.length < 2)
 			? parseDateString(checkDate)
 			: [checkDate, rest[0], rest[1]]
