@@ -1,36 +1,30 @@
-import '../styles/styles.scss';
+import '../styles/styles.scss'
 
-console.log('Start of typescript app');
+console.log('Start of typescript app')
 
-interface Data
-{
-	framework: string;
-	packager: string;
+interface Data {
+	framework: string
+	packager: string
 }
 
-function getData(): Data
-{
+function getData(): Data {
 	return {
 		framework: 'Typescript',
 		packager: 'Parcel',
-	};
+	}
 }
 
-const data = getData();
+const data = getData()
 
 if (typeof document !== 'undefined') {
-	const framework = document.getElementById( 'tsapp' );
+	const framework = document.getElementById('tsapp')
 
-	window.addEventListener(
-		'load',
-		() =>
-		{
-			framework.style.color = '#ff3e96';
-			framework.style.fontSize = '2rem';
-			framework.style.fontWeight = 'bold';
-			framework.innerHTML = `Hello from ${data.framework} and ${data.packager}!`;
-		}
-	);
+	window.addEventListener('load', () => {
+		framework.style.color = '#ff3e96'
+		framework.style.fontSize = '2rem'
+		framework.style.fontWeight = 'bold'
+		framework.innerHTML = `Hello from ${data.framework} and ${data.packager}!`
+	})
 }
 
-console.log(`Hello from ${data.framework} and ${data.packager}!`);
+console.log(`Hello from ${data.framework} and ${data.packager}!`)

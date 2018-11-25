@@ -13,29 +13,29 @@ const Data = [
 	'iiiiiaaao',
 	'iiiiiiaaao',
 	'Hello World!',
-];
+]
 
 // Each test function should operate on the data set in sequence
-function makeDataSetTest (fn) {
-	let idx = -1;
-	const length = Data.length;
-	return function findProgressive () {
-		++idx;
-		return fn(Data[idx % length]);
+function makeDataSetTest(fn) {
+	let idx = -1
+	const length = Data.length
+	return function findProgressive() {
+		++idx
+		return fn(Data[idx % length])
 	}
 }
 
 const Tests = {
 	//'Baseline': makeDataSetTest(function NoopTest () {}),
-	'RegExp#test': makeDataSetTest(function RegExpTest (string) {
-		/o/.test(string);
+	'RegExp#test': makeDataSetTest(function RegExpTest(string) {
+		;/o/.test(string)
 	}),
 	'String#indexOf': makeDataSetTest(function StringIndexOfTest(string) {
-		string.indexOf('o') > -1;
+		string.indexOf('o') > -1
 	}),
 	'String#match': makeDataSetTest(function StringMatchTest(string) {
-		!!string.match(/o/);
-	})
-};
+		!!string.match(/o/)
+	}),
+}
 
-export default Tests;
+export default Tests

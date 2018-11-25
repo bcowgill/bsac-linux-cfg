@@ -3,12 +3,13 @@
 // http://stackoverflow.com/questions/17575790/environment-detection-node-js-or-browser
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/self
 
-const makeGet = function (globalVar) {
+const makeGet = function(globalVar) {
 	return 'try { __global = __global || ' + globalVar + '} catch (exception) {}'
 }
 
 // eslint-disable-next-line no-new-func
 export const getGlobal = new Function(
+	// prettier-ignore
 	'var __global;'
 	+ makeGet('window')
 	+ makeGet('global')
@@ -16,40 +17,42 @@ export const getGlobal = new Function(
 	+ 'return __global;'
 )
 
-function _getOutputDiv (document, id) {
-	let div;
+function _getOutputDiv(document, id) {
+	let div
 	try {
-		div = document.getElementById(id);
+		div = document.getElementById(id)
 		if (!div) {
-			const newDiv = document.createElement('div');
-			newDiv.id = id;
-			document.body.insertBefore(newDiv, document.body.firstChild);
-			div = document.getElementById(id);
+			const newDiv = document.createElement('div')
+			newDiv.id = id
+			document.body.insertBefore(newDiv, document.body.firstChild)
+			div = document.getElementById(id)
 		}
+	} finally {
+		void 0
 	}
-	finally { void 0 }
-	return div;
+	return div
 }
 
-function _addElement (document, message) {
+function _addElement(document, message) {
 	try {
-		const newDiv = document.createElement('div')
-			, newContent = document.createTextNode(message)
-			, div = _getOutputDiv(document, 'spray-output-div');
+		const newDiv = document.createElement('div'),
+			newContent = document.createTextNode(message),
+			div = _getOutputDiv(document, 'spray-output-div')
 
 		newDiv.appendChild(newContent)
-		div.appendChild(newDiv);
+		div.appendChild(newDiv)
+	} finally {
+		void 0
 	}
-	finally { void 0 }
 }
 
 // Show a message in every possible place.
-const spray = function () {
-	const which = 'log';
-	const ALERT_OK = false;
+const spray = function() {
+	const which = 'log'
+	const ALERT_OK = false
 
-	const global = getGlobal()
-		, args = Array.prototype.slice.call(arguments)
+	const global = getGlobal(),
+		args = Array.prototype.slice.call(arguments)
 	if (global.document && global.document.body) {
 		_addElement(global.document, args.join())
 	}
@@ -63,4 +66,4 @@ const spray = function () {
 	}
 }
 
-export default spray;
+export default spray

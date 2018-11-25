@@ -1,3 +1,3 @@
-const thing = 'THING';
-export default thing;
-export const that = 'THAT';
+const thing = 'THING'
+export default thing
+export const that = 'THAT'

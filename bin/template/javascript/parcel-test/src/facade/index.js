@@ -1,2 +1,2 @@
-export * from './facade';
-export { default } from './facade';
+export * from './facade'
+export { default } from './facade'
