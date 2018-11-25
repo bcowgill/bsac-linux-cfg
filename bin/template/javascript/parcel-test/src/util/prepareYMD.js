@@ -33,7 +33,7 @@ function padYear(yearValue) {
 	} // prettier-ignore
 	else if (yearValue < 0) {
 		yearString = padDigits(yearValue, 6)
-	}
+	} // prettier-ignore
 	else {
 		yearString = padDigits(yearValue, 4)
 	}

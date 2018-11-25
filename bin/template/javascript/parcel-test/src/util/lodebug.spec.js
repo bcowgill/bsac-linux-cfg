@@ -133,7 +133,7 @@ const testData = [
 			// prettier-ignore
 			'{}: isObject',
 			'{}: isPlainObject isObjectLike',
-			'{}: isEmpty'
+			'{}: isEmpty',
 		],
 		'{}',
 	],
@@ -231,7 +231,7 @@ const testData = [
 			// prettier-ignore
 			'eval: isObject',
 			'eval: isFunction',
-			'eval: isEmpty isNative'
+			'eval: isEmpty isNative',
 		],
 		'eval',
 	],
