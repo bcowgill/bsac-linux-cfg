@@ -33,6 +33,12 @@ indent_style = tab
 tab_width = 3
 trim_trailing_whitespace = true
 
+# Tab indentation for html
+[*.{htm,html}]
+indent_style = tab
+tab_width = 2
+trim_trailing_whitespace = true
+
 # 2 space indentation, i.e. npm package.json, elixir, erlang
 [*.{json,json5,ex,exs}]
 indent_style = space
