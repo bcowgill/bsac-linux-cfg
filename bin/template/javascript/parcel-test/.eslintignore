@@ -10,3 +10,7 @@
 /dist-node/**
 /.cache/**
 /.eslintcache
+# files with deliberate syntax errors, flummoxxing eslint
+src/app/typescript.ts
+src/components/LabelText/index.js
+src/util/lodebug.spec.js

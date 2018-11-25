@@ -828,7 +828,7 @@
     "generator-star-spacing": "off",
     "implicit-arrow-linebreak": "off",
     "indent": [
-      "error",
+      "off",
       "tab"
     ],
     "indent-legacy": "off",
@@ -917,10 +917,9 @@
   "parserOptions": {
     "ecmaFeatures": {
       "globalReturn": true,
-      "jsx": true,
-      "experimentalObjectRestSpread": true
+      "jsx": true
     },
-    "ecmaVersion": 6,
+    "ecmaVersion": "2019",
     "sourceType": "module"
   },
   "extends": [

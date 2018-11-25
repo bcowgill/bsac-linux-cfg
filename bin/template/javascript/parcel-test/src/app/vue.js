@@ -7,7 +7,7 @@ const app = window.addEventListener('load', () => {
 		el: '#vueapp',
 		name: App,
 		components: { App },
-		template: `<App />`,
+		template: `<App />`, // eslint-disable-line
 	})
 })
 
