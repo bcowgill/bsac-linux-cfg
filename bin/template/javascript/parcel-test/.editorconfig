@@ -9,7 +9,7 @@ end_of_line = lf
 insert_final_newline = true
 
 # Set default charset
-[*.{editorconfig,js,jsx,json,json5,ts,tsx,py,scss,css,htm,html,ex,exs,php,groovy}]
+[*.{editorconfig,eslintrc,prettierrc,babelrc,js,jsx,json,json5,ts,tsx,py,scss,css,htm,html,ex,exs,php,groovy}]
 charset = utf-8
 
 # 4 space indentation

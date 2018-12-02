@@ -8,7 +8,7 @@
     "node": ">=8.0.0"
   },
   "scripts": {
-    "clean:all": "rimraf .cache/ dist/ dist-dev/ dist-node/",
+    "clean:all": "npm run clean -- .cache/ coverage/",
     "clean": "rimraf dist/ dist-dev/ dist-node/",
     "prestart": "rimraf dist-dev/ && bash -c scripts/pre-browser.sh",
     "prestart:react": "npm run prestart",
@@ -25,9 +25,10 @@
     "start:all": "parcel src/combined.html -d dist-dev/",
     "start:benchmark": "parcel src/benchmark.html -d dist-dev/",
     "start:esall": "parcel src/esall.html -d dist-dev/",
-    "prettier": "prettier --write **/*.{js,jsx,ts,tsx,json,json5,css,less,scss,htm,html,md}",
-    "lint": "eslint **/*.{js,jsx,ts,tsx}",
-    "lint:fix": "eslint --fix **/*.{js,jsx,ts,tsx}",
+    "prettier": "prettier --write .eslintrc .prettierrc .babelrc **/*.{js,jsx,ts,tsx,json,json5,css,less,scss,htm,html,md}",
+    "_lint": "eslint **/*.{js,jsx,ts,tsx}",
+    "lint": "npm run _lint -- --format codeframe",
+    "lint:fix": "npm run _lint -- --fix",
     "pretest": "bash -c scripts/pre-node.sh",
     "pretest:update": "npm run pretest",
     "pretest:debug": "npm run pretest",

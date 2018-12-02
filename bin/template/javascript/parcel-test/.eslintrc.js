@@ -1,4 +1,5 @@
 module.exports = {
+    // TODO try it "parser": "babel-eslint",
     "env": {
         "browser": true,
         "commonjs": true,
@@ -7,8 +8,8 @@ module.exports = {
         "node": true
     },
     "extends": [
-        "plugin:prettier/recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
     ],
     "settings": {
         "react": {

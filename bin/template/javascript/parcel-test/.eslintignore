@@ -1,7 +1,9 @@
 # configure which files to ignore by the eslint command
 # this file should be mainly identical to .prettierignore
+/node_modules/**
 /build/**
 /coverage/**
+**/__snapshots__/
 /docs/**
 /jsdoc/**
 /tmp/**
@@ -10,6 +12,19 @@
 /dist-node/**
 /.cache/**
 /.eslintcache
+.DS_Store
+.DS_Store?
+._*
+*.DS_Store
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.sublime-*
+nbproject/
+*.iml
+.idea
+.vs/
+*~
 # files with deliberate syntax errors, flummoxxing eslint
 src/app/typescript.ts
 src/components/LabelText/index.js
