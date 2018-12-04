@@ -9,7 +9,7 @@ end_of_line = lf
 insert_final_newline = true
 
 # Set default charset
-[*.{editorconfig,js,jsx,json,json5,ts,tsx,py,scss,css,htm,html,ex,exs,php,groovy}]
+[*.{editorconfig,eslintrc,stylelintrc,prettierrc,babelrc,js,jsx,json,json5,ts,tsx,py,scss,css,htm,html,ex,exs,php,groovy}]
 charset = utf-8
 
 # 4 space indentation
@@ -40,7 +40,7 @@ tab_width = 2
 trim_trailing_whitespace = true
 
 # 2 space indentation, i.e. npm package.json, elixir, erlang
-[*.{json,json5,ex,exs}]
+[*.{json,json5,ex,exs,eslintrc,stylelintrc,prettierrc,babelrc}]
 indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true

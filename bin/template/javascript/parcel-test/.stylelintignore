@@ -1,5 +1,5 @@
-# configure which files to ignore by the prettier command
-# this file should be mainly identical to .eslintignore and .stylelintignore
+# configure which files to ignore by the stylelint command
+# this file should be mainly identical to .eslintignore and .prettierignore
 /node_modules/**
 /build/**
 /coverage/**

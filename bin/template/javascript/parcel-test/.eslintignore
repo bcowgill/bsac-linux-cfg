@@ -1,5 +1,5 @@
 # configure which files to ignore by the eslint command
-# this file should be mainly identical to .prettierignore
+# this file should be mainly identical to .prettierignore and .stylelintignore
 /node_modules/**
 /build/**
 /coverage/**
@@ -12,6 +12,7 @@
 /dist-node/**
 /.cache/**
 /.eslintcache
+/.stylelintcache
 .DS_Store
 .DS_Store?
 ._*

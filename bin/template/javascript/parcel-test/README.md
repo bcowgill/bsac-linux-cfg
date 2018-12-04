@@ -135,3 +135,9 @@ eslint --init
 ? Do you require semicolons? No
 ? What format do you want your config file to be in? JavaScript
 Installing eslint-plugin-react
+
+Stylelint
+pnpm install --save-dev stylelint stylelint-config-standard stylelint-config-recommended stylelint-config-prettier
+
+# no... 
+yarn add --dev stylelint stylelint-config-prettier stylelint-config-recommended stylelint-config-standard eslint-config-stylelint

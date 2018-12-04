@@ -6,7 +6,8 @@ dist/
 dist-dev/
 dist-node/
 .cache/
-.eslintcache
+.eslintcache/
+.stylelintcache/
 .DS_Store
 .DS_Store?
 ._*

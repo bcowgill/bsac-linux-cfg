@@ -173,7 +173,16 @@ alias ptyfi='prettier --file-info' # filename
 # some eslint aliases
 alias esl="eslint '**/*.{js,jsx,ts,tsx}'"
 alias eslcf='eslint --print-config'
-alias eslp='eslint --stdin'
+alias eslp='eslint --stdin' # --stdin-filename filename --parser type
+
+#f some stylelint aliases
+alias stl="stylelint '**/*.{htm,html,css,less,sass,scss,ss}'"
+alias stlcf="stylelint --print-config"
+alias stlfx="stl --fix"
+alias stlp="stylelint --stdin" # --stdin-filename filename --syntax type
+alias stlvb="stl --formatter verbose"
+alias stlrd="stl --report-needless-disables"
+alias stlid="stl --ignore-disables"
 
 # image tagging aliases
 # add -json for json output
