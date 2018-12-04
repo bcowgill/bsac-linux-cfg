@@ -1,57 +1,65 @@
 {
-	"plugins": [
-		"transform-exponentiation-operator",
-		"transform-object-rest-spread",
-		"transform-class-properties",
-		"transform-export-extensions"
-	],
-	"env": {
-		"node": {
-			"presets": [
-				["env", {
-					"debug": true,
-					"useBuiltIns": false,
-					"targets": {
-						"node": "current"
-					}
-				}]
-			],
-			"plugins": [
-				"transform-export-extensions"
-			]
-		},
-		"development": {
-			"presets": [
-				["env", {
-					"debug": true,
-					"useBuiltIns": false
-				}],
-				"react"
-			]
-		},
-		"test": {
-			"presets": [
-				["env", {
-					"debug": true,
-					"useBuiltIns": false,
-					"targets": {
-						"node": "current"
-					}
-				}],
-				"react"
-			],
-			"plugins": [
-				"transform-export-extensions"
-			]
-		},
-		"production": {
-			"presets": [
-				["env", {
-					"debug": false,
-					"useBuiltIns": false
-				}],
-				"react"
-			]
-		}
-	}
+  "plugins": [
+    "transform-exponentiation-operator",
+    "transform-object-rest-spread",
+    "transform-class-properties",
+    "transform-export-extensions"
+  ],
+  "env": {
+    "node": {
+      "presets": [
+        [
+          "env",
+          {
+            "debug": true,
+            "useBuiltIns": false,
+            "targets": {
+              "node": "current"
+            }
+          }
+        ]
+      ],
+      "plugins": ["transform-export-extensions"]
+    },
+    "development": {
+      "presets": [
+        [
+          "env",
+          {
+            "debug": true,
+            "useBuiltIns": false
+          }
+        ],
+        "react"
+      ]
+    },
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "debug": true,
+            "useBuiltIns": false,
+            "targets": {
+              "node": "current"
+            }
+          }
+        ],
+        "react"
+      ],
+      "plugins": ["transform-export-extensions"]
+    },
+    "production": {
+      "presets": [
+        [
+          "env",
+          {
+            "debug": false,
+            "useBuiltIns": false
+          }
+        ],
+        "react"
+      ]
+    }
+  }
 }
