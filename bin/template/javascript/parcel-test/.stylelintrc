@@ -1,6 +1,15 @@
 {
-  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "extends": [
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-standard",
+    "stylelint-config-prettier"
+  ],
   "rules": {
+    "max-nesting-depth": 3,
+    "selector-max-compound-selectors": 3,
+    "selector-no-qualifying-type": true,
+    "order/properties-alphabetical-order": null,
+    "property-no-vendor-prefix": true,
     "length-zero-no-unit": true,
     "color-hex-length": "short",
     "function-name-case": "lower",
