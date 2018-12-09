@@ -141,3 +141,7 @@ pnpm install --save-dev stylelint stylelint-config-sass-guidelines stylelint-con
 
 # no... 
 yarn add --dev stylelint stylelint-config-prettier stylelint-config-recommended stylelint-config-standard eslint-config-stylelint
+
+Husky
+pnpm install husky lint-staged
+

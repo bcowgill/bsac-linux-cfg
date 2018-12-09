@@ -2,6 +2,22 @@
   "name": "parcel-test",
   "version": "1.0.0",
   "description": "A test of the parcel bundler for browser and node using pnpm package manager",
+  "author": "Brent S.A. Cowgill",
+  "license": "Unlicense",
+  "keywords": [
+    "parcel-bundler",
+    "pnpm",
+    "yarn",
+    "react",
+    "vue",
+    "typescript",
+    "prettier",
+    "eslint",
+    "jest",
+    "react-test-renderer",
+    "enzyme",
+    "test"
+  ],
   "main": "src/app/javascript.js",
   "engines": {
     "pnpm": "*",
@@ -75,22 +91,12 @@
     "build:esall": "NODE_ENV=production parcel build src/esall.html",
     "build:all": "NODE_ENV=production parcel build src/combined.html"
   },
-  "keywords": [
-    "parcel-bundler",
-    "pnpm",
-    "yarn",
-    "react",
-    "vue",
-    "typescript",
-    "prettier",
-    "eslint",
-    "jest",
-    "react-test-renderer",
-    "enzyme",
-    "test"
-  ],
-  "author": "Brent S.A. Cowgill",
-  "license": "Unlicense",
+  "husky": {
+	"hooks": {
+		"pre-commit": "npm run prtty && npm run lint && npm run test",
+		"pre-push": "npm run coverage && npm run build:all"
+	}
+  },"
   "devDependencies": {
     "@vue/component-compiler-utils": "2.0.0",
     "ansi-styles": "3.2.1",
