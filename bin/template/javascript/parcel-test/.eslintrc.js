@@ -26,9 +26,21 @@ module.exports = {
 	plugins: ['react'],
 	globals: {},
 	rules: {
-		indent: ['off', 'tab'],
-		'linebreak-style': ['error', 'unix'],
-		quotes: ['error', 'single'],
-		semi: ['error', 'never'],
+		indent: [
+			'off',
+			'tab'
+		],
+		'linebreak-style': [
+			'error',
+			'unix'
+		],
+		quotes: [
+			'error',
+			'single'
+		],
+		semi: [
+			'error',
+			'never'
+		],
 	},
 }
