@@ -92,10 +92,10 @@
     "build:all": "NODE_ENV=production parcel build src/combined.html"
   },
   "husky": {
-	"hooks": {
-		"pre-commit": "npm run prtty && npm run lint && npm run test",
-		"pre-push": "npm run coverage && npm run build:all"
-	}
+    "hooks": {
+      "pre-commit": "npm run prtty && npm run lint && npm run test",
+      "pre-push": "npm run coverage && npm run build:all"
+    }
   },"
   "devDependencies": {
     "@vue/component-compiler-utils": "2.0.0",
