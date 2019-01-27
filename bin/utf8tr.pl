@@ -168,6 +168,62 @@ my %Alphabet = (
 			'0' => 'E0030',
 		},
 	},
+	# http://www.omniglot.com/writing/ogham.htm
+	'ogham' => {
+		'normal' => {
+			'_case' => 'lc',
+			'_preserve' => 's{[<>]}{}xmsg; s{\A}{>}xmsg; s{\z|\n}{<\n}xmsg;      s{[^><\s\.,;:!\?a-z0-9\-+]}{}xmsgi; s{(\d+\.\d*|\.\d+)(e[+-]\d+)?}{}xmsgi; s{[0-9\-+]}{}xmsg; s{[\.,;:!\?]\s*}{<\n>}xmsg; s{\s*<}{<}xmsg; s{<+}{<}xmsg; s{\ \ +}{ }xmsg; s{>\s*<}{\n}xmsg; s{(<\n)([^>])}{$1>$2}xmsg;',
+			'a' => '1681',
+			'_map' => {
+				' ' => '1680',
+				#' ' => '2012', # for appearance in console
+
+				'b' => '1681',
+				'l' => '1682',
+				'f' => '1683',
+				'w' => '1683',
+				's' => '1684',
+				'n' => '1685',
+
+				'h' => '1686',
+				'y' => '1686',
+				'd' => '1687',
+				't' => '1688',
+				'c' => '1689',
+				'k' => '1689',
+				'q' => '168A', # kw
+
+				'm' => '168B',
+				'g' => '168C',
+				'ng' => '168D',
+				'gw' => '168D',
+				'sw' => '168E',
+				'ts' => '168E',
+				'z' => '168E', # sw/ts
+				'r' => '168F',
+
+				'a' => '1690',
+				'o' => '1691',
+				'u' => '1692',
+				'e' => '1693',
+				'i' => '1694',
+
+				'ea' => '1695',
+				'oi' => '1696',
+				'ui' => '1697',
+				'ia' => '1698',
+				'ae' => '1699',
+
+				'p' => '169A',
+				'>' => '169B', # start of text
+				'<' => '169C', # end of text
+
+				'v' => '1683', # arbitrary not in alphabet
+				'x' => '1689', # arbitrary not in alphabet
+				'j' => '1694', # arbitrary not in alphabet
+			},
+		},
+	},
 	'case' => {
 		'normal' => {
 			'a' => '61',
@@ -230,11 +286,24 @@ sub getTranslations
 	$raPath = $raPath || [];
 	foreach my $key (keys(%$rhStyles))
 	{
-		next if length($key) == 1 || !ref($rhStyles->{$key});
+		# print "check: $key\n";
+		next if length($key) == 1 || $key =~ m{^_}xms || !ref($rhStyles->{$key});
 		if ($rhStyles->{$key}{a} || $rhStyles->{$key}{A})
 		{
 			push(@AllStyles, join(".", join(".", @$raPath), $key));
 			my $regex = makeTranslation($rhStyles->{$key});
+			$rhStyles->{$key}{translate} = $regex;
+
+			# convert tr[][] to s{}{} for spacing out wide chars
+			$regex =~ s{\A tr\{ (.+?) \} .+ \z }{s{([ $1])}{\$1 }g}xms;
+			$regex =~ s{\{\}\z}{s}xms;
+			$rhStyles->{$key}{regex} = $regex;
+		}
+
+		if ($rhStyles->{$key}{_map})
+		{
+			push(@AllStyles, join(".", join(".", @$raPath), $key));
+			my $regex = makeTranslationMap($rhStyles->{$key}{_map});
 			$rhStyles->{$key}{translate} = $regex;
 
 			# convert tr[][] to s{}{} for spacing out wide chars
@@ -457,14 +526,18 @@ sub translate
 {
 	my ($string, $rhStyle, $rhOpts) = @ARG;
 
+	# print Dumper($rhStyle);
 	local $ARG = $string;
 	$ARG =~ tr[a-zA-Z][A-Za-z] if $rhOpts->{flip};
+	eval "\$ARG = $rhStyle->{_case}(\$ARG)" if ($rhStyle->{_case});
+	eval $rhStyle->{_preserve} if $rhStyle->{_preserve};
+   # print "translate: $ARG\n";
 	eval $rhStyle->{regex} if $rhOpts->{spaced};
 	eval $rhStyle->{translate};
 	return $ARG;
 }
 
-# product tr/// matching string for a style
+# produce tr/// matching string for a style
 # $_ =~ tr{a-z}{\x{1d68a}-\x{1d6a3}};
 sub makeTranslation
 {
@@ -487,6 +560,36 @@ sub makeTranslation
 	my $tr = qq{tr{$from}{$to}};
 	#print "tr $tr\n";
 	return $tr;
+}
+
+# produce tr/// matching string for a mapped style
+# $_ =~ tr{a-z}{\x{1d68a}-\x{1d6a3}};
+sub makeTranslationMap
+{
+	my ($rhStyleMap) = @ARG;
+	my $from = "";
+	my $to = "";
+	my @replace = ();
+
+	foreach my $find (sort { length($b) <=> length($a) || $a cmp $b } keys(%$rhStyleMap))
+	{
+		my $replace = '\x{' . $rhStyleMap->{$find} . '}';
+		if (length($find) == 1)
+		{
+			$from .= $find;
+			$to .= $replace;
+		}
+		else
+		{
+			push(@replace, "s{$find}{$replace}xmsg;")
+		}
+	}
+
+	my $tr = qq{tr{$from}{$to}};
+   my $search = join(' ', @replace);
+	# print "map s $search";
+	# print "map tr $tr\n";
+	return $search . $tr;
 }
 
 # get tr[a-z][A-Z] ranges given start chars and count
