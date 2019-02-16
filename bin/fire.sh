@@ -10,7 +10,7 @@ if git stash save "stash for emergency commit to $BRANCH"; then
 	if git checkout -b $BRANCH; then
 		NEWBRANCH=1
 		echo OK emergency branch $BRANCH created
-		git push --set-upstream origin $BRANCH
+		git push --no-verify --set-upstream origin $BRANCH
 	fi
 	git stash apply
 	if [ ! -z $NEWBRANCH ]; then
@@ -26,8 +26,8 @@ if git stash save "stash for emergency commit to $BRANCH"; then
 		}
 		print if $print && m{\A \t}xms;
 		'`
-		git commit -am "EMERGENCY COMMIT $BRANCH"
-		git push
+		git commit --no-verify -am "EMERGENCY COMMIT $BRANCH"
+		git push --no-verify
 	else
 		echo NOT OK emergency branch $BRANCH NOT created
 		exit 1
