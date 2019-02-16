@@ -555,6 +555,8 @@ if [ "$HOSTNAME" == "akston" ]; then
 		gnucash
 		audacity
 		oggconvert
+		winff-qt
+		avconv
 		$DIGIKAM_PKG
 		samba
 		mount.cifs:cifs-utils
