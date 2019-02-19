@@ -1,0 +1,40 @@
+[http]
+	sslVerify = false
+[merge]
+	tool = kdiff3
+	tool = kdiff3
+	tool = kdiff3
+[mergetool "kdiff3"]
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = false
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = true
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = true
+[diff]
+	guitool = kdiff3
+	guitool = kdiff3
+	tool = meld
+	guitool = kdiff3
+[difftool "kdiff3"]
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = false
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = true
+	path = C:/Program Files/KDiff3/kdiff3.exe
+	trustExitCode = true
+[user]
+	name = Brent S.A. Cowgill
+	email = brent.cowgill@lloydsbanking.com
+[push]
+	default = simple
+[difftool]
+	prompt = false
+[difftool "meld"]
+	trustExitCode = true
+	cmd = " \"$LOCAL\" \"$PWD/$REMOTE\""
+[mergetool]
+	prompt = false
+[mergetool "meld"]
+	trustExitCode = true
+	cmd = " --auto-merge \"$PWD/$LOCAL\" \"$PWD/$BASE\" \"$PWD/$REMOTE\" --output=\"$PWD/$MERGED\""

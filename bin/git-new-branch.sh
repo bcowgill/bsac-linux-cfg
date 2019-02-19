@@ -12,7 +12,7 @@ fi
 echo Will create a new branch from current one. Press Enter.
 read WAIT
 git checkout -b "$NEW" && \
-	git push --set-upstream origin "$NEW"
+	git push --set-upstream origin "$NEW" --no-verify
 
 echo Teammates can get your branch with:
 echo "git fetch && git checkout origin/$NEW"
