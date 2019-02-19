@@ -1,25 +1,11 @@
 #!/bin/bash
 # see info about a file/dir/archive
-DIR=${1:-.}
-
-if [ -d "$DIR" ]; then
-	ls "$DIR"
-else
-	if file "$DIR" | grep -i "zip archive data" > /dev/null ; then
-		zipinfo "$DIR"
-	elif file "$DIR" | grep -i "gzip compressed data" > /dev/null ; then
-		tar tvzf "$DIR"
-	elif file "$DIR" | grep -i "tar archive" > /dev/null ; then
-		tar tvf "$DIR"
-	elif file "$DIR" | grep -i "image data" > /dev/null ; then
-		file "$DIR"
-	else
-		file "$DIR"
-		less "$DIR"
-	fi
-fi
-exit
 # linux version below for ref/reuse...
+
+SEE=see
+if echo $OS | grep -i 'windows' > /dev/null; then
+	SEE=start
+fi
 
 function see_archive {
 	local file
@@ -75,39 +61,42 @@ function see_binary {
 function see_image {
 	# PNG image data
 	if file "$file" | egrep 'MS Windows icon resource'> /dev/null; then
-		base=`basename "$file"`
-		ppm=`mktemp /tmp/$base.XXXXXX.ppm`
-		winicontoppm "$file" > $ppm
-		see $ppm
-		rm $ppm
+		$SEE "$file"
+#		base=`basename "$file"`
+#		ppm=`mktemp /tmp/$base.XXXXXX.ppm`
+#		winicontoppm "$file" > $ppm
+#		see $ppm
+#		rm $ppm
 		return 0
 	fi
 	if file "$file" | egrep 'pixmap image'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'PC bitmap'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'PostScript'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'PDF document'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'Targa image data'> /dev/null; then
-		feh "$file"
+		$SEE "$file"
+#		feh "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'image (data|text)'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if [ "`basename $file`" == "`basename $file .xbm`.xbm" ]; then
-		see "$file"
+		start "$file"
+#		see "$file"
 		return 0
 	fi
 	return 1
@@ -128,4 +117,3 @@ for file in $* ; do
 		ls -al "$file"
 	fi
 done
-

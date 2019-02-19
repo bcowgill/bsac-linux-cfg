@@ -11,26 +11,26 @@
 # hlsearch on (H) or off (h):
 ~h
 # Last Search Pattern:
-~MSle0~/PATH
+~MSle0~/see 
 
 # Last Substitute String:
 $
 
 # Command Line History (newest to oldest):
 :wq
-|2,0,1550584439,,"wq"
+|2,0,1550594569,,"wq"
+:1
+|2,0,1550594420,,"1"
+:q!
+|2,0,1550593463,,"q!"
 :q
-|2,0,1550584282,,"q"
+|2,0,1550593403,,"q"
+:w
+|2,0,1550593241,,"w"
 :n
 |2,0,1550583774,,"n"
-:1
-|2,0,1550583268,,"1"
-:q!
-|2,0,1550502167,,"q!"
 :Wq
 |2,0,1550227862,,"Wq"
-:w
-|2,0,1550222441,,"w"
 :qw
 |2,0,1550161828,,"qw"
 :122
@@ -69,6 +69,16 @@ $
 |2,0,0,,"w!"
 
 # Search String History (newest to oldest):
+?/see 
+|2,1,1550594421,47,"see "
+?/see
+|2,1,1550594397,47,"see"
+?/hexdump
+|2,1,1550593761,47,"hexdump"
+?/see_image
+|2,1,1550593609,47,"see_image"
+?/see_binary
+|2,1,1550593426,47,"see_binary"
 ?/PATH
 |2,1,1550578037,47,"PATH"
 ?/postinstall
@@ -324,279 +334,364 @@ $
 
 # Registers:
 "0	LINE	0
-	WHOM=lloyds
-	TO=/o/cdrive/d/home
-	DEL=$TO/../DELETEME
+			start "$file"
+|3,0,0,1,1,0,1550593741,"		start \"$file\""
+""1	LINE	0
 	
-	if [ "$COMPANY" == "$WHOM" ]; then
-		echo Saving $COMPANY config to network $TO for safe keeping
+	exit
+	
+	DIR=${1:-.}
+	
+	if [ -d "$DIR" ]; then
+		ls "$DIR"
 	else
-		echo This script is only for use on $WHOM computer.
-		exit 1
+		if file "$DIR" | grep -i "zip archive data" > /dev/null ; then
+			zipinfo "$DIR"
+		elif file "$DIR" | grep -i "gzip compressed data" > /dev/null ; then
+			tar tvzf "$DIR"
+		elif file "$DIR" | grep -i "tar archive" > /dev/null ; then
+			tar tvf "$DIR"
+		elif file "$DIR" | grep -i "image data" > /dev/null ; then
+			file "$DIR"
+		else
+			file "$DIR"
+			less "$DIR"
+		fi
 	fi
-|3,0,0,1,10,0,1550583772,"WHOM=lloyds","TO=/o/cdrive/d/home","DEL=$TO/../DELETEME","","if [ \"$COMPANY\" == \"$WHOM\" ]; then","	echo Saving $COMPANY config to network $TO for safe keeping","else","	echo This script is only for use on $WHOM computer.","	exit 1","fi"
-"1	LINE	0
-	CFG=$OUT/bin/cfg/wipro-lloyds
-|3,0,1,1,1,0,1550583935,"CFG=$OUT/bin/cfg/wipro-lloyds"
+	exit
+|3,1,1,1,22,0,1550594520,"","exit","","DIR=${1:-.}","","if [ -d \"$DIR\" ]; then","	ls \"$DIR\"","else","	if file \"$DIR\" | grep -i \"zip archive data\" > /dev/null ; then","		zipinfo \"$DIR\"","	elif file \"$DIR\" | grep -i \"gzip compressed data\" > /dev/null ; then","		tar tvzf \"$DIR\"","	elif file \"$DIR\" | grep -i \"tar archive\" > /dev/null ; then","		tar tvf \"$DIR\"","	elif file \"$DIR\" | grep -i \"image data\" > /dev/null ; then",>17
+|<"		file \"$DIR\"","	else","		file \"$DIR\"","		less \"$DIR\"","	fi","fi","exit"
 "2	LINE	0
-	save-cfg.sh
-|3,0,2,1,1,0,1550583916,"save-cfg.sh"
+	#		see "$file"
+|3,0,2,1,1,0,1550594479,"#		see \"$file\""
 "3	LINE	0
-	
-|3,0,3,1,1,0,1550583908,""
+	#		see "$file"
+|3,0,3,1,1,0,1550594467,"#		see \"$file\""
 "4	LINE	0
-	rm $CFG/.bash_history
-|3,0,4,1,1,0,1550583905,"rm $CFG/.bash_history"
+	#		see "$file"
+|3,0,4,1,1,0,1550594459,"#		see \"$file\""
 "5	LINE	0
-	cp ~/.bash* $CFG
-|3,0,5,1,1,0,1550583901,"cp ~/.bash* $CFG"
+	#		see "$file"
+|3,0,5,1,1,0,1550594447,"#		see \"$file\""
 "6	LINE	0
-	
-|3,0,6,1,1,0,1550583859,""
+			start "$file"
+|3,0,6,1,1,0,1550594435,"		start \"$file\""
 "7	LINE	0
-	OUT=~/workspace/bsac-cfg-cwa
-	CFG=$OUT/bin/cfg/wipro-lloyds
-	BR=bsac-test
-|3,0,7,1,3,0,1550583835,"OUT=~/workspace/bsac-cfg-cwa","CFG=$OUT/bin/cfg/wipro-lloyds","BR=bsac-test"
+	DIR=${1:-.}
+	
+	if [ -d "$DIR" ]; then
+		ls "$DIR"
+	else
+		if file "$DIR" | grep -i "zip archive data" > /dev/null ; then
+			zipinfo "$DIR"
+		elif file "$DIR" | grep -i "gzip compressed data" > /dev/null ; then
+			tar tvzf "$DIR"
+		elif file "$DIR" | grep -i "tar archive" > /dev/null ; then
+			tar tvf "$DIR"
+		elif file "$DIR" | grep -i "image data" > /dev/null ; then
+			file "$DIR"
+		else
+			file "$DIR"
+			less "$DIR"
+		fi
+	fi
+	exit
+|3,0,7,1,19,0,1550593227,"DIR=${1:-.}","","if [ -d \"$DIR\" ]; then","	ls \"$DIR\"","else","	if file \"$DIR\" | grep -i \"zip archive data\" > /dev/null ; then","		zipinfo \"$DIR\"","	elif file \"$DIR\" | grep -i \"gzip compressed data\" > /dev/null ; then","		tar tvzf \"$DIR\"","	elif file \"$DIR\" | grep -i \"tar archive\" > /dev/null ; then","		tar tvf \"$DIR\"","	elif file \"$DIR\" | grep -i \"image data\" > /dev/null ; then","		file \"$DIR\"","	else",>17
+|<"		file \"$DIR\"","		less \"$DIR\"","	fi","fi","exit"
 "8	LINE	0
-	DEL=$TO/../DELETEME
-|3,0,8,1,1,0,1550583783,"DEL=$TO/../DELETEME"
+	CFG=$OUT/bin/cfg/wipro-lloyds
+|3,0,8,1,1,0,1550583935,"CFG=$OUT/bin/cfg/wipro-lloyds"
 "9	LINE	0
-	TO=/o/cdrive/d/home
-|3,0,9,1,1,0,1550583783,"TO=/o/cdrive/d/home"
-""-	CHAR	0
-	s
-|3,1,36,0,1,0,1550584436,"s"
+	save-cfg.sh
+|3,0,9,1,1,0,1550583916,"save-cfg.sh"
+"-	CHAR	0
+	t
+|3,0,36,0,1,0,1550594476,"t"
 
 # File marks:
-'0  21  0  ~/.bashrc
-|4,48,21,0,1550584439,"~/.bashrc"
-'1  35  0  ~/backup.sh
-|4,49,35,0,1550584282,"~/backup.sh"
-'2  22  3  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,50,22,3,1550584046,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
-'3  21  10  ~/backup.sh
-|4,51,21,10,1550583722,"~/backup.sh"
-'4  21  10  ~/backup.sh
-|4,52,21,10,1550583722,"~/backup.sh"
-'5  21  10  ~/backup.sh
-|4,53,21,10,1550583722,"~/backup.sh"
-'6  21  10  ~/backup.sh
-|4,54,21,10,1550583722,"~/backup.sh"
-'7  23  35  ~/.bashrc
-|4,55,23,35,1550583714,"~/.bashrc"
-'8  23  35  ~/.bashrc
-|4,56,23,35,1550583714,"~/.bashrc"
-'9  23  35  ~/.bashrc
-|4,57,23,35,1550583714,"~/.bashrc"
+'0  47  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,48,47,0,1550594569,"~/bin/cfg/wipro-lloyds/see.sh"
+'1  1  54  ~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG
+|4,49,1,54,1550594287,"~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG"
+'2  77  14  ~/bin/cfg/wipro-lloyds/see.sh
+|4,50,77,14,1550593773,"~/bin/cfg/wipro-lloyds/see.sh"
+'3  73  14  ~/bin/cfg/wipro-lloyds/see.sh
+|4,51,73,14,1550593773,"~/bin/cfg/wipro-lloyds/see.sh"
+'4  82  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,52,82,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+'5  79  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,53,79,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+'6  80  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,54,80,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+'7  76  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,55,76,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+'8  55  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,56,55,30,1550593403,"~/bin/cfg/wipro-lloyds/see.sh"
+'9  55  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,57,55,30,1550593403,"~/bin/cfg/wipro-lloyds/see.sh"
 
 # Jumplist (newest first):
+-'  47  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,47,0,1550594569,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  2  2  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,2,2,1550594422,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550594421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  113  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,113,3,1550594416,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  99  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,99,3,1550594416,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  95  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,95,3,1550594416,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  86  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,86,3,1550594416,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  82  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,82,3,1550594415,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  78  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,78,3,1550594415,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  73  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,73,3,1550594413,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  68  3  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,68,3,1550594413,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  64  2  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,64,2,1550594413,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  61  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,61,9,1550594402,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,9,1550594398,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  10  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,10,9,1550594397,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  5  6  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,5,6,1550594397,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  77  14  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,77,14,1550594341,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  54  ~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG
+|4,39,1,54,1550594287,"~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG"
+-'  1  54  ~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG
+|4,39,1,54,1550594287,"~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG"
+-'  73  14  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,73,14,1550593773,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  73  14  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,73,14,1550593773,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550593761,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550593761,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  113  26  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,113,26,1550593611,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  113  26  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,113,26,1550593611,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  80  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,80,0,1550593609,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  80  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,80,0,1550593609,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  79  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,79,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  76  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,76,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  76  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,76,0,1550593463,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550593441,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550593441,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  120  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,120,0,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  118  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,118,0,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  45  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,45,9,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  126  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,126,0,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  45  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,45,9,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  118  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,118,0,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  45  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,45,9,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  126  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,126,0,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  45  9  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,45,9,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  118  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,118,0,1550593426,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  59  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,59,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  141  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,141,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  54  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,54,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  133  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,133,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  54  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,54,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  141  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,141,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  54  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,54,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  133  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,133,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  54  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,54,0,1550593421,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  55  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,55,30,1550593412,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,30,1550593412,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,30,1550593412,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,30,1550593412,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,30,1550593412,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,30,1550593403,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  50  30  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,50,30,1550593403,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550593386,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,1,0,1550593386,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  114  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,114,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  122  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,122,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  114  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,114,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  114  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,114,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  122  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,122,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  114  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,114,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  114  0  ~/bin/cfg/wipro-lloyds/see.sh
+|4,39,114,0,1550593381,"~/bin/cfg/wipro-lloyds/see.sh"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
+-'  1  0  ~/.bashrc
+|4,39,1,0,1550593374,"~/.bashrc"
 -'  21  0  ~/.bashrc
-|4,39,21,0,1550584439,"~/.bashrc"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550584421,"~/.bashrc"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550584282,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550584282,"~/backup.sh"
--'  4  0  ~/backup.sh
-|4,39,4,0,1550584276,"~/backup.sh"
--'  4  0  ~/backup.sh
-|4,39,4,0,1550584276,"~/backup.sh"
--'  22  3  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,22,3,1550584046,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  22  3  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,22,3,1550584046,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  22  3  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,22,3,1550584046,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  22  3  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,22,3,1550584046,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  1  0  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,1,0,1550583774,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  1  0  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,1,0,1550583774,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  4  0  ~/backup.sh
-|4,39,4,0,1550583774,"~/backup.sh"
--'  1  0  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,1,0,1550583774,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  1  0  ~/bin/cfg/wipro-lloyds/save-lloyds.sh
-|4,39,1,0,1550583774,"~/bin/cfg/wipro-lloyds/save-lloyds.sh"
--'  4  0  ~/backup.sh
-|4,39,4,0,1550583774,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583766,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583766,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583766,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583766,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583722,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583722,"~/backup.sh"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550583714,"~/.bashrc"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550583714,"~/.bashrc"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550583714,"~/.bashrc"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550583714,"~/.bashrc"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550583714,"~/.bashrc"
--'  23  35  ~/.bashrc
-|4,39,23,35,1550583714,"~/.bashrc"
--'  23  32  ~/.bashrc
-|4,39,23,32,1550583628,"~/.bashrc"
--'  23  32  ~/.bashrc
-|4,39,23,32,1550583628,"~/.bashrc"
--'  23  32  ~/.bashrc
-|4,39,23,32,1550583628,"~/.bashrc"
--'  23  32  ~/.bashrc
-|4,39,23,32,1550583628,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  32  0  ~/.bashrc
-|4,39,32,0,1550583617,"~/.bashrc"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  21  10  ~/backup.sh
-|4,39,21,10,1550583613,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583600,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  35  0  ~/backup.sh
-|4,39,35,0,1550583516,"~/backup.sh"
--'  1  0  ~/backup.sh
-|4,39,1,0,1550583294,"~/backup.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  1  0  ~/backup.sh
-|4,39,1,0,1550583294,"~/backup.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  1  0  ~/backup.sh
-|4,39,1,0,1550583294,"~/backup.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
--'  2  0  ~/bin/cfg/wipro-lloyds/save-cfg.sh
-|4,39,2,0,1550583294,"~/bin/cfg/wipro-lloyds/save-cfg.sh"
+|4,39,21,0,1550593368,"~/.bashrc"
 
 # History of marks within files (newest to oldest):
 
+> ~/bin/cfg/wipro-lloyds/see.sh
+	*	1550594568	0
+	"	47	0
+	^	94	6
+	.	120	0
+	+	3	0
+	+	120	4
+	+	120	0
+	+	82	0
+	+	64	13
+	+	65	0
+	+	66	0
+	+	67	0
+	+	68	0
+	+	69	0
+	+	70	0
+	+	73	0
+	+	77	0
+	+	78	0
+	+	81	0
+	+	82	0
+	+	85	0
+	+	86	0
+	+	89	0
+	+	90	0
+	+	94	0
+	+	95	0
+	+	98	0
+	+	99	0
+	+	9	0
+	+	6	37
+	+	8	0
+	+	6	42
+	+	7	9
+	+	5	6
+	+	64	6
+	+	73	6
+	+	78	0
+	+	77	5
+	+	81	6
+	+	82	0
+	+	85	5
+	+	86	0
+	+	89	5
+	+	94	5
+	+	95	0
+	+	120	0
+
+> ~/workspace/bsac-cfg-cwa/.git/COMMIT_EDITMSG
+	*	1550594287	0
+	"	1	54
+	^	1	55
+	.	1	54
+	+	1	54
+
 > ~/.bashrc
-	*	1550584438	0
-	"	21	0
+	*	1550593371	0
+	"	1	0
 	^	23	38
 	.	23	48
 	+	23	35
@@ -1902,21 +1997,3 @@ $
 	"	4	17
 	.	4	17
 	+	4	17
-
-> ~/workspace/o4b/o4b-payments-cwa/specs/jest.config.json
-	*	1547547165	0
-	"	59	2
-	.	35	0
-	+	41	18
-	+	34	0
-	+	35	0
-
-> ~/workspace/o4b/o4b-payments-cwa/templates/test-api.md
-	*	1547546027	0
-	"	13	2
-	^	32	3
-	.	32	2
-	+	1	1
-	+	2	0
-	+	8	2
-	+	32	2
