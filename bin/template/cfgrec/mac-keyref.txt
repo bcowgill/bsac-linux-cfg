@@ -43,6 +43,7 @@ KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to cli
 
 Handy Key Reference on Mac
 Cmd-Alt-Power      Sleep Lock
+Cmd-Ctrl-q         Screen Lock
 Screenshots        +Ctrl = clipboard
 Cmd-Shift-3        Entire Screen
 Cmd-Shift-4-Space  Application Only

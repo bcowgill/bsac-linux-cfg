@@ -1,5 +1,5 @@
 #!/bin/bash
-# mulitline search/replace to fix javascript lint problems
+# multiline search/replace to fix javascript lint problems
 
 if [ ! -z "$2" ]; then
 	for FILE in $*

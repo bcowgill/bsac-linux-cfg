@@ -1,5 +1,5 @@
 #!/bin/bash
-# mulitline search/replace to fix BDD test files
+# multiline search/replace to fix BDD test files
 
 cp $1 $1.bak
 perl -e '
