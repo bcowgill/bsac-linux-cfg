@@ -250,6 +250,10 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export PATH=`upath.sh`
 
+export COLUMNS
+export LINES
+
+
 #export LC_ALL=en_UK.UTF-8
 #export LANG=en_UK.UTF-8
 #export LANGUAGE=en_UK.UTF-8

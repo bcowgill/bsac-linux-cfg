@@ -70,6 +70,8 @@ if [ "x$COMPANY" == "xclearbooks" ]; then
 fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
+	alias nrdl='npm run dev:lloyds:commercial'
+	alias nrdb='npm run dev:bos:commercial'
 	alias yts='yarn test:summary'
 	alias ytw='yarn test:watch'
 	alias cdie8='pushd ~/workspace/projects/pas-card-controls-cwa-mca-ie8'
