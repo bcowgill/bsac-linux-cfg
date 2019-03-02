@@ -17,13 +17,14 @@ while (my $line = <>)
 	$line = "${prefix}CHARLES PROXY $line\n" if $line =~ m{java .+ -jar \s+ /usr/lib/charles-proxy/charles.jar}xms;
 	$line = "${prefix}ATOM IDE      $line\n" if $line =~ m{/Applications/Atom.app/Contents/Frameworks/Atom}xms;
 	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ $me/bin/WebStorm}xms;
+	$line = "${prefix}KARMA         $line\n" if $line =~ m{node(js)? .+ karma \s* start}xms;
+	$line =~ s{--grep}{--g-r-e-p}xmsg;
+	$line = "${prefix}KARMAWEBSTORM $line\n" if $line =~ m{node(js)? .+ intellij .+ karma}xms;
+	$line = "${prefix}KARMAWSSERVER $line\n" if $line =~ m{node(js)? .+ karma .+ capture}xms;
 	$line = "${prefix}INTELLIJ IDE  $line\n" if $line =~ m{java .+ $me/bin/idea}xms;
 	$line = "${prefix}INTELLIJ NODE $line\n" if $line =~ m{node(js)? .+ idea .+ JavaScriptLanguage}xms;
 	$line = "${prefix}ALM WORKER    $line\n" if $line =~ m{node(js)? .+ /alm/ .+ workers}xms;
 	$line = "${prefix}EMACS         $line\n" if $line =~ m{emacs}xms;
-	$line = "${prefix}KARMA         $line\n" if $line =~ m{node(js)? .+ karma \s* start}xms;
-	$line = "${prefix}KARMAWEBSTORM $line\n" if $line =~ m{node(js)? .+ intellij .+ karma}xms;
-	$line = "${prefix}KARMAWSSERVER $line\n" if $line =~ m{node(js)? .+ karma .+ capture}xms;
 	$line = "${prefix}EXPRESS       $line\n" if $line =~ m{node(js)? .+ \./bin/www}xms;
 	$line = "${prefix}WEBPACK       $line\n" if $line =~ m{node(js)? .+ webpack}xms;
 	$line = "${prefix}FLOWSERVER    $line\n" if $line =~ m{node_modules .+ flow \s+ start}xms;
