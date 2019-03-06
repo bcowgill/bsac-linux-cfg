@@ -98,7 +98,7 @@ function process_photo {
 		if [ $width -gt $height ]; then
 			format=landscape
 		fi
-		filename=`echo $photo | W=$width H=$height perl -pne 'tr/ _/--/; s{-{2,}}{-}xmsg; s{-(landscape|portrait)}{}xmsgi; s{\d+x\d+}{}xmsg; s{(\.\w+)\s*\z}{-$ENV{W}x$ENV{H}$1}xms; s{-{2,}}{-}xmsg; s{-\.}{.}xms; s{\A-}{}xms'`
+		filename=`echo $photo | W=$width H=$height perl -pne 'tr/ _/--/; s{-{2,}}{-}xmsg; s{-(landscape|portrait)}{}xmsgi; s{\d+x\d+}{}xmsg; s{(\.\w+)\s*\z}{-$ENV{W}x$ENV{H}$1}xms; s{-{2,}}{-}xmsg; s{-\.}{.}xms; s{\A-}{}xms; s{\.(JPG|PNG)}{"." . lc($1)}xmse'`
 
 		final="$resized"
 		if [ $format == portrait ]; then
@@ -122,8 +122,16 @@ for photo in *.jpg;
 do
 	process_photo "$photo"
 done
+for photo in *.JPG;
+do
+	process_photo "$photo"
+done
 for photo in *.png;
 do
 	process_photo "$photo"
 done
-rmdir landscape portraiat 2> /dev/null
+for photo in *.PNG;
+do
+	process_photo "$photo"
+done
+rmdir landscape portrait 2> /dev/null
