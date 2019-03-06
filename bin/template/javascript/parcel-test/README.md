@@ -145,3 +145,4 @@ yarn add --dev stylelint stylelint-config-prettier stylelint-config-recommended 
 Husky
 pnpm install husky lint-staged
 
+TODO react-test-library instead of enzyme and snapshot testing.
