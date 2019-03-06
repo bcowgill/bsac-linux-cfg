@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-perl-script.pl - Using GetOpt::Long and Pod::Usage
+perl-script.pl - TODO short usage - full fat perl script template using GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace, internal DATA, usage/warning/debug output, full arg handling
 
 =head1 AUTHOR
 
@@ -13,6 +13,8 @@ Brent S.A. Cowgill
 =head1 SYNOPSIS
 
 perl-script.pl [options] [@options-file ...] [file ...]
+
+TODO short description - full fat perl script template using GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace, internal DATA, usage/warning/debug output, full arg handling
 
  Options:
    --version        display program version
@@ -166,6 +168,10 @@ sub setArg
 {
 	my ( $arg, $value ) = @ARG;
 	return $Var{'rhArg'}{$arg} = $value;
+}
+
+while (my $line = <DATA>) {
+	print "$line";
 }
 
 my $lines_seen = 0;
@@ -434,3 +440,5 @@ sub manual
 }
 
 __END__
+__DATA__
+I am the data.

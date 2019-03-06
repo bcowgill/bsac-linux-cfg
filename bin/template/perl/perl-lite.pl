@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# TODO short description
+# TODO short description - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling
 
 use strict;
 use warnings;
@@ -56,7 +56,7 @@ sub usage
 	print <<"USAGE";
 usage: $0
 
-TODO short usage
+TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling
 USAGE
 	exit($msg ? 1: 0);
 }

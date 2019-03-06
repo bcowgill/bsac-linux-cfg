@@ -14,6 +14,8 @@ Brent S.A. Cowgill
 
 perl-inplace.pl [options] [@options-file ...] [file ...]
 
+TODO short description - perl script template to process file in place with full features
+
  Options:
    --version        display program version
    --help -?        brief help message
