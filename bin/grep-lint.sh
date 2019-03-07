@@ -1,6 +1,6 @@
 #!/bin/bash
 # find all lint/prettier/coverage override references in files under git control
-git grep -E '(/[\*/]|<!--|#)\s*(((es|style)lint|prettier|global|js[hl]int)[a-z-]*|istanbul ignore( [a-z]+)?)' $*
+git grep -E '(/[\*/]|<!--|#)\s*(((es|style)lint|prettier|global|js[hl]int|jscs:?)[a-z-]*|istanbul ignore( [a-z]+)?)' $*
 
 exit $?
 
@@ -75,4 +75,11 @@ https://docs.sonarqube.org/latest/project-administration/narrowing-the-focus/
 
 /* jslint max-len */
 
+https://stackoverflow.com/questions/32424795/jshint-and-jscs-inline-ignore-for-the-same-next-line/32754878
+
 /* jshint max-len */
+/* jshint ignore:start */
+/* jshint ignore:end */
+
+/* jscs:disable */
+/* jscs:enable */
