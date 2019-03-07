@@ -19,7 +19,7 @@ FILE="$1" perl -e '
 	local $/ = undef;
 	my $q = chr(39);
 	my $Q = chr(34);
-	my $DEBUG = 1;
+	my $DEBUG = 0;
 
 	$_ = <>;
 
