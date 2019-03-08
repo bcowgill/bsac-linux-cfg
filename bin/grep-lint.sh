@@ -1,6 +1,6 @@
 #!/bin/bash
-# find all lint/prettier/coverage override references in files under git control
-git grep -E '(/[\*/]|<!--|#)\s*(((es|style)lint|prettier|global|js[hl]int|jscs:?)[a-z-]*|istanbul ignore( [a-z]+)?)' $*
+# find all lint/prettier/coverage override references and TODO like comments in files under git control
+git grep -E '(/[\*/]|<!--|#)\s*(((es|style)lint|prettier|global|js[hl]int|jscs:?|sonar|TODO|MUSTDO|HACK|FIXME)[a-z-]*|istanbul ignore( [a-z]+)?)' $*
 
 exit $?
 
@@ -73,6 +73,8 @@ https://github.com/gotwarlost/istanbul/blob/master/ignoring-code-for-coverage.md
 Sonar
 https://docs.sonarqube.org/latest/project-administration/narrowing-the-focus/
 
+/* sonar ... actually is fully customisable so could be anything */
+
 /* jslint max-len */
 
 https://stackoverflow.com/questions/32424795/jshint-and-jscs-inline-ignore-for-the-same-next-line/32754878
@@ -83,3 +85,8 @@ https://stackoverflow.com/questions/32424795/jshint-and-jscs-inline-ignore-for-t
 
 /* jscs:disable */
 /* jscs:enable */
+
+/* TODO ... */
+/* MUSTDO ... */
+/* FIXME ... */
+/* HACK ... */
