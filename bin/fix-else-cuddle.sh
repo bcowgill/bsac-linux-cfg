@@ -5,8 +5,15 @@
 #
 # } else {
 
+# }
+# // comment
+# else {
+#
+# } else {
+#   // comment
+
 # find files which need fixing and fix them.
-# for file in `ggr else app/ | grep -v '}' | perl -pne 's{:.+\n}{\n}xmsg' | sort | uniq`; do echo $file; fix-else-cuddle.sh $file; done
+# for file in `ggr else app/ | grep -v '}' | perl -pne 's{:.+\n}{\n}xmsg' | sort | uniq`; do echo $file; INDENT=2 fix-else-cuddle.sh $file; done
 
 if [ ! -z "$2" ]; then
 	for FILE in $*
@@ -29,10 +36,20 @@ FILE="$1" perl -e '
 	my $c = "}";
 	my $DEBUG = 0;
 
+	my $INDENT = $ENV{INDENT} ? (" " x $ENV{INDENT}) : "\t";
+
 	$_ = <>;
 
 	s{
-		(\n \s* $c) \s*? 
+		(\n \s* $c) \s*?
+		\n (\s*//[^\n]+)
+		\n \s*? (else [^$o]+ $o)
+	}{
+		"$1 $3\n$INDENT$2"
+	}xmsge;
+
+	s{
+		(\n \s* $c) \s*?
 		\n \s*? else
 	}{
 		"$1 else"
