@@ -70,6 +70,8 @@ if [ "x$COMPANY" == "xclearbooks" ]; then
 fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
+	alias sl='./scripts/lint.sh'
+	alias slf='./scripts/lint-fix.sh'
 	alias nrdl='npm run dev:lloyds:commercial'
 	alias nrdb='npm run dev:bos:commercial'
 	alias yts='yarn test:summary'
