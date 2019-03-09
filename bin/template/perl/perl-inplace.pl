@@ -14,7 +14,7 @@ Brent S.A. Cowgill
 
 perl-inplace.pl [options] [@options-file ...] [file ...]
 
-TODO short description - perl script template to process file in place with full features
+TODO short description - perl script template to process file in place with full features, internal unit tests
 
  Options:
    --version        display program version
@@ -73,6 +73,9 @@ use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 
 our $VERSION = 0.1;       # shown by --version option
+our $TEST_CASES = 1;
+tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
+
 our $STDIO   = "";
 
 # Big hash of vars and constants for the program
@@ -380,6 +383,31 @@ sub manual
 		-exitval => 0,
 		-verbose => 2,
 	);
+}
+
+#===========================================================================
+# unit test functions
+#===========================================================================
+
+sub test_tab
+{
+	my ($expect, $message) = @ARG;
+
+	my $spaced = tab($message);
+	is($spaced, $expect, "tab: [$message] == [$expect]");
+}
+
+#===========================================================================
+# unit test suite
+#===========================================================================
+
+sub tests
+{
+	eval "use Test::More tests => $TEST_CASES;";
+	eval "use Test::Exception;";
+
+	test_tab("         Hello", "\t\t\tHello");
+	exit 0;
 }
 
 __END__

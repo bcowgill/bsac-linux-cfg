@@ -4,7 +4,7 @@
 
 =head1 NAME
 
-perl-script.pl - TODO short usage - full fat perl script template using GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace, internal DATA, usage/warning/debug output, full arg handling
+perl-script.pl - TODO short usage - full fat perl script template using GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace, internal DATA, usage/warning/debug output, full arg handling, internal unit tests
 
 =head1 AUTHOR
 
@@ -14,7 +14,7 @@ Brent S.A. Cowgill
 
 perl-script.pl [options] [@options-file ...] [file ...]
 
-TODO short description - full fat perl script template using GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace, internal DATA, usage/warning/debug output, full arg handling
+TODO short description - full fat perl script template using GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace, internal DATA, usage/warning/debug output, full arg handling, internal unit tests
 
  Options:
    --version        display program version
@@ -73,6 +73,9 @@ use File::Slurp qw(:std);
 use autodie qw(open);
 
 our $VERSION = 0.1;       # shown by --version option
+our $TEST_CASES = 1;
+tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
+
 our $STDIO   = "";
 
 use FindBin;
@@ -437,6 +440,31 @@ sub manual
 		-exitval => 0,
 		-verbose => 2,
 	);
+}
+
+#===========================================================================
+# unit test functions
+#===========================================================================
+
+sub test_tab
+{
+	my ($expect, $message) = @ARG;
+
+	my $spaced = tab($message);
+	is($spaced, $expect, "tab: [$message] == [$expect]");
+}
+
+#===========================================================================
+# unit test suite
+#===========================================================================
+
+sub tests
+{
+	eval "use Test::More tests => $TEST_CASES;";
+	eval "use Test::Exception;";
+
+	test_tab("         Hello", "\t\t\tHello");
+	exit 0;
 }
 
 __END__

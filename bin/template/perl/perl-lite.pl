@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# TODO short description - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling
+# TODO short description - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests
 
 use strict;
 use warnings;
@@ -15,6 +15,9 @@ use autodie qw(open);
 
 our $VERSION = 0.1;
 our $DEBUG = 1;
+
+our $TEST_CASES = 1;
+tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 warning("oops");
 debug("debug");
@@ -56,12 +59,36 @@ sub usage
 	print <<"USAGE";
 usage: $0
 
-TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling
+TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests
 USAGE
 	exit($msg ? 1: 0);
+}
+
+#===========================================================================
+# unit test functions
+#===========================================================================
+
+sub test_tab
+{
+	my ($expect, $message) = @ARG;
+
+	my $spaced = tab($message);
+	is($spaced, $expect, "tab: [$message] == [$expect]");
+}
+
+#===========================================================================
+# unit test suite
+#===========================================================================
+
+sub tests
+{
+	eval "use Test::More tests => $TEST_CASES;";
+	eval "use Test::Exception;";
+
+	test_tab("         Hello", "\t\t\tHello");
+	exit 0;
 }
 
 __END__
 __DATA__
 I am the data.
-
