@@ -18,10 +18,9 @@ $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
 our $TEST_CASES = 25;
-tests() if scalar(@ARGV) && $ARGV[0] eq '--test';
-our $DRY_RUN = $ENV{DRY_RUN} || 0;
 our $TRACE = 0;
 
+tests() if scalar(@ARGV) && $ARGV[0] eq '--test';
 usage() if !scalar(@ARGV) || $ARGV[0] eq '--help';
 
 print "HEREIAM1 @ARGV\n" if $TRACE;
@@ -133,12 +132,12 @@ sub parse_from_top
 	}
 	elsif ($top =~ s{
 		\A (
-			(\s* //)? \s* import \s+ .+? from \s* (['"]) (.+?) \3 [^\n]* (\n|\z)
+			(\s* //)? \s* import \s+ (.+? from \s*)? (['"]) (.+?) \4 [^\n]* (\n|\z)
 		)
 	}{}xms)
 	{
 		my $found = $1;
-		my $module = $4;
+		my $module = $5;
 
 		$rhState->{token} = 'IMPORT';
 		$rhState->{found} = $found;
@@ -155,7 +154,7 @@ sub parse_from_top
 			{
 				$len -= length($1);
 			}
-			if ($ch =~ m{from \s* (['"]) .+? \1 \s* ;? ([^\n]*) (\n|\z)}xms)
+			if ($ch =~ m{(['"]) .+? \1 \s* ;? ([^\n]*) (\n|\z)}xms)
 			{
 				$len -= length($2);
 			}
@@ -464,6 +463,25 @@ sub tests
 		},
 		"  // filename.js - the top of the file\n // whatever else\n   other crap",
 		"multiple comment lines");
+
+	test_parse_from_top({
+			state => 'BEFORE',
+			output => [],
+			imports => [],
+			lines => [],
+			token => 'IMPORT',
+			found => "   import 'path/filename'; /* stuff */\n",
+			'import' => {
+				length => 26,
+				type => 'PACKAGE',
+				lines => [
+					"   import 'path/filename'; /* stuff */\n",
+				],
+			},
+			top => "   some other crap",
+		},
+		"   import 'path/filename'; /* stuff */\n   some other crap",
+		"import with no variables");
 
 	test_parse_from_top({
 			state => 'BEFORE',
