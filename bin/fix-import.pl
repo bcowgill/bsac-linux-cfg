@@ -17,7 +17,7 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-our $TEST_CASES = 112;
+our $TEST_CASES = 114;
 our $DRY_RUN = $ENV{DRY_RUN} || 0;
 our $TRACE = 0;
 

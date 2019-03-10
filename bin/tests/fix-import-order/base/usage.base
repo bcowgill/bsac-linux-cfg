@@ -1,0 +1,15 @@
+../../fix-import-order.pl javascript-file [...]
+
+This script reorders import references in a Javascript source file into a nice triangle.  Absolute imports first in ascending line length.  Followed by relative imports in descending line length.
+
+It keeps an eslint-disable-next-line or other comment directly above the import that follows it.
+
+A sorted import section might look like this:
+
+	import React from 'react';
+	import PropTypes from 'prop-types';
+	// eslint-disable-line no-extraneous-dependencies
+	import Frog from 'components/frogger';
+	import log from '../utils/log';
+	import fire from './fire';
+

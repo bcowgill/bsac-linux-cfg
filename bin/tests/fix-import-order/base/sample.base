@@ -1,0 +1,10 @@
+// sample.js - a sample JS file to reorder imports
+
+	import React from 'react';
+	import PropTypes from 'prop-types';
+	// eslint-disable-line no-extraneous-dependencies
+	import Frog from 'components/frogger';
+	import log from '../utils/log';
+	import fire from './fire';
+
+const width = 42;

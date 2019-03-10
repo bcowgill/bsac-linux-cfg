@@ -1,0 +1,6 @@
+debug
+__DATA__
+I am the data.
+usage: ../../template/perl/perl-lite.pl
+
+TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests

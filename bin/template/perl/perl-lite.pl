@@ -26,7 +26,7 @@ while (my $line = <DATA>) {
 	print "$line";
 }
 
-usage("problem");
+usage();
 
 # make tabs 3 spaces
 sub tab

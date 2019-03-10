@@ -1,6 +1,8 @@
 the directory of my script is: PWD/template/perl
 the base name of my script is: perl-script.pl
 the canonical location of my script is: PWD/template/perl/perl-script.pl
+__DATA__
+I am the data.
 1 
 9 one line
 12 and another

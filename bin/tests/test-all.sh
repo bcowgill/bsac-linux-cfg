@@ -10,6 +10,7 @@ testSuiteBegin lint-package-json "linter for package.json to lock dependencies"
 popd > /dev/null
 
 testSuite filter-man "filter perldoc man page output for test plan comparisons" $PROVE
+testSuite template-perl-lite "lightweight perl template for simple file processing" $PROVE
 testSuite template-perl "perl template for scanning files" $PROVE
 testSuite template-perl-inplace "perl template for scanning and editing files in place" $PROVE
 testSuite df-k "format df -k command output more legibly" $PROVE
@@ -37,6 +38,9 @@ testSuite perltidy-me "evaluate perltidy formatting options" $PROVE
 
 echo "fix-import unit tests"
 $PROVE ./fix-import.t
+echo "fix-import-order unit tests"
+$PROVE ./fix-import-order.t
+testSuite fix-import-order "fix javascript import order in files" $PROVE
 
 PLAN 2
 OK "all test suites completed"

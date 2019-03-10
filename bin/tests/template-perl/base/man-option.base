@@ -1,11 +1,19 @@
 NAME
-       perl-script.pl - Using GetOpt::Long and Pod::Usage
+       perl-script.pl - TODO short usage - full fat perl script template using
+       GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace,
+       internal DATA, usage/warning/debug output, full arg handling, internal
+       unit tests
 
 AUTHOR
        Brent S.A. Cowgill
 
 SYNOPSIS
        perl-script.pl [options] [@options-file ...] [file ...]
+
+       TODO short description - full fat perl script template using
+       GetOpt::Long and Pod::Usage, slurp a stdin/files and process/replace,
+       internal DATA, usage/warning/debug output, full arg handling, internal
+       unit tests
 
         Options:
           --version        display program version
