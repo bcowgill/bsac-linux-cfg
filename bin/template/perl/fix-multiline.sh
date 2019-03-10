@@ -18,7 +18,7 @@ Fixes:
 
 Examples:
 
-	for f in `git grep -lE 'extends (Pure|React\.)?Component'`; do echo $f; fix-multiline.sh $f; done
+	for f in \`git grep -lE 'propTypes|defaultProps'\`; do echo \$f; fix-multiline.sh \$f; done
 "
 	exit 1
 fi
@@ -47,33 +47,61 @@ LINTFIX=0 FILENAME="$1" perl -e '
 
 	$_ = <>;
 
-	if ($_ !~ m{static \s+ displayName}xms)
+	# is displayName const NOT already present?
+	if ($_ =~ m{propTypes|defaultProps}xms && $_ !~ m{const \s+ displayName \s* = \s* [$q$Q]}xms)
 	{
-		# class AccountDetails extends Component {
-		#   static displayName = "AccountDetails";
-		s{(
-			(\w+) \s+ extends \s+ (Pure|React\.)?Component \s* \{ \s*?
-			\n)
-			(\s*)
-		}{
-			"$1$4static displayName = $q$2$q;\n$4"
-		}xmse;
+		my $displayName;
+		# Check for React components as classes...
+		if ($_ =~ m{extends \s+ .*Component}xms)
+		{
+			# TODO move propTypes defaultProps contextTypes into class as statics.
 
-		# PageHeader.propTypes = {
-		# insert it above the .propTypes declaration for pure render functions
-		s{((\w+)\.propTypes\s*=\s*\{)}{$2.displayName = $q$2$q;\n\n$1}xms;
+			my $has_static = 0;
+			# class AccountDetails extends Component {
+			#   static displayName = "AccountDetails";
+			s{(
+				class \s+
+				(\w+) \s+ extends \s+ (Pure|React\.)?Component \s* \{ \s*?
+				\n)
+				(\s*)
+			}{
+				$has_static = 1;
+				$displayName = $2;
+				"const displayName = $q$2$q;\n\n$1$4static displayName = displayName;\n$4"
+			}xmse;
 
-		# export const FAQComponent = props => ( or { or <
-		# const mapStateToProps
-		# insert it above the mapStateToProps function
-		s{
-			(const \s+ (\w+) \s* = \s* (?:props|\(\)) \s* => \s* [\(\{<]
-				.+?
-			)
-			((?:export \s+ default \s+ $2|(?:export\s+)? const \s+ mapStateToProps \s* = \s*))
-		}{
-			"$1$2.displayName = $q$2$q;\n\n$3"
-		}xmse;
+			# PageHeader.propTypes = {
+			# insert it above the .propTypes declaration for pure render functions
+			s{((\w+)\.propTypes\s*=\s*\{)}{$2.displayName = displayName;\n\n$1}xms unless $has_static;
+
+			# export const FAQComponent = props => ( or { or <
+			# const mapStateToProps
+			# insert it above the mapStateToProps function
+			s{
+				(const \s+ (\w+) \s* = \s* (?:props|\(\)) \s* => \s* [\(\{<]
+					.+?
+				)
+				((?:export \s+ default \s+ $2|(?:export\s+)? const \s+ mapStateToProps \s* = \s*))
+			}{
+				"$1$2.displayName = displayName;\n\n$3"
+			}xmse unless $has_static;
+			}
+		else
+		{
+			# React components as pure functions...
+
+			# PageHeader.propTypes = {
+			# insert it above the .propTypes declaration for pure render functions
+			s{((\w+)\.propTypes\s*=\s*\{)}{
+				$displayName = $2;
+				"$2.displayName = displayName;\n\n$1"
+			}xmse;
+
+			if ($displayName)
+			{
+				s{((const|function) \s+ $displayName \s*)}{const displayName = $q$displayName$q;\n\n$1}xms;
+			}
+		}
 	}
 
 	# replace anonymous functions in test plans for better stack traces
