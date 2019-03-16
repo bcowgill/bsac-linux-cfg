@@ -124,7 +124,7 @@ alias gstas='gsta save'
 alias gstaa='gsta apply'
 alias gstd='gsta drop'
 alias gstp='gsta pop'
-alias gdrop='gstas crap; gstd'
+alias gdrop='gstas crap && gstd'
 
 alias gcl='g clone'
 
