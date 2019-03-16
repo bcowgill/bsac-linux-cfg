@@ -1,0 +1,7 @@
+’“”‘’
+
+
+Don’t - apostrophe from Word on Mac
+“Quoted” - double quotes from Word on Mac
+‘Quoted’ - single quotes from Word on Mac
+
