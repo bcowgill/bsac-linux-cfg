@@ -142,7 +142,7 @@ if [ "x$COMPANY" == "xworkshare" ]; then
 fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
-  export PJ=$HOME/workspace/projects
+  export PJ=$HOME/workspace/projects:./node_modules/.bin
   export MAS=sprint0/trunk
   export REPOS="
   	pas-card-control-api
@@ -240,6 +240,10 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
     else
         nvm use v8.6.0 > /dev/null
     fi
+fi
+
+if [ -z "$NODEJS_ORG_MIRROR" ]; then
+	export NODEJS_ORG_MIRROR="$NVM_NODEJS_ORG_MIRROR"
 fi
 
 export CHROME_BIN=`which chromium-browser`
