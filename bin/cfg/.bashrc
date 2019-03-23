@@ -167,7 +167,7 @@ if [ ! -z $COMPANY ]; then
 	PATH=$HOME/bin/$COMPANY:$PATH
 fi
 
-if which __git_ps1 > /dev/null; then
+if command -V __git_ps1 > /dev/null; then
 # BSAC show git branch on command prompt
 # see /etc/bash_completion.d/git for options
 # Prompt branch looks like: (master *+$%<>)
