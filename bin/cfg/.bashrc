@@ -102,6 +102,12 @@ if [ -f ~/.git_aliases ]; then
     . ~/.git_aliases
 fi
 
+if command -V __git_ps1 > /dev/null 2> /dev/null; then
+	true
+else
+	. ~/bin/cfg/git-sh-prompt
+fi
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -121,6 +127,7 @@ if which sw_vers > /dev/null 2>&1 ; then
   # bash completion on MACOS
   [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 fi
+
 #==========================================================================
 # BSAC custom changes from /etc/skel
 
@@ -167,7 +174,7 @@ if [ ! -z $COMPANY ]; then
 	PATH=$HOME/bin/$COMPANY:$PATH
 fi
 
-if command -V __git_ps1 > /dev/null; then
+if command -V __git_ps1 > /dev/null 2> /dev/null; then
 # BSAC show git branch on command prompt
 # see /etc/bash_completion.d/git for options
 # Prompt branch looks like: (master *+$%<>)
