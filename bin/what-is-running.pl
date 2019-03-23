@@ -26,6 +26,8 @@ while (my $line = <>)
 	$line = "${prefix}ALM WORKER    $line\n" if $line =~ m{node(js)? .+ /alm/ .+ workers}xms;
 	$line = "${prefix}EMACS         $line\n" if $line =~ m{emacs}xms;
 	$line = "${prefix}EXPRESS       $line\n" if $line =~ m{node(js)? .+ \./bin/www}xms;
+	$line = "${prefix}CYPRESS       $line\n" if $line =~ m{node(js)? .+ \.bin/cypress}xms;
+	$line = "${prefix}CYPRESS       $line\n" if $line =~ m{Cypress.app}xms;
 	$line = "${prefix}WEBPACK       $line\n" if $line =~ m{node(js)? .+ webpack}xms;
 	$line = "${prefix}FLOWSERVER    $line\n" if $line =~ m{node_modules .+ flow \s+ start}xms;
 	$line = "${prefix}REACTSTORYBK  $line\n" if $line =~ m{node(js)? .+ storybook}xms;
