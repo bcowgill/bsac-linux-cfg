@@ -10,6 +10,16 @@ if [ ! -z "$2" ]; then
 	exit $?
 fi
 
+if [ -z "$1" ]; then
+	echo "
+usage: $0 file-name ...
+
+This will add an additional describe call to a test plan including the path to it.
+Useful for test reporters which do not tell you which test plan an error is from.
+"
+	exit 0
+fi
+
 cp "$1" "$1.bak"
 FILE="$1" perl -e '
 	use strict;
