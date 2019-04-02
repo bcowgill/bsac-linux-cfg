@@ -18,9 +18,25 @@ our $VERSION = 0.1;
 our $DEBUG = $ENV{DEBUG} || 0;
 our $NOISY = $ENV{NOISY} || 0;
 
+our $os_name = get_osname();
+our $sound_cfg =
+{
+	LINUX => {
+		dir => "$FindBin::Bin/sounds/BatteryWarnings/wav",
+		ext => ".wav",
+	},
+	MAC => {
+		dir => "$FindBin::Bin/sounds/BatteryWarnings/mp3/female/",
+		ext => ".mp3",
+	},
+};
+
 our $save_file = "$FindBin::Bin/battery-level.txt";
-our $sound_dir = "$FindBin::Bin/sounds/BatteryWarnings/wav";
-our $sound_ext = '.wav';
+our $sound_dir = $sound_cfg->{$os_name}{dir};
+our $sound_ext = $sound_cfg->{$os_name}{ext};
+
+# print "DEBUG: $ENV{OSTYPE} $os_name\n$sound_dir\n$sound_ext\n";
+# print Dumper \%ENV;
 
 sub say_if_fallen_below
 {
@@ -126,6 +142,16 @@ sub get_battery
 	my $battery = `battery-value.sh`;
 	$battery =~ s{\s* \z}{}xmsg;
 	return $battery;
+}
+
+sub get_osname
+{
+	return is_mac() ? 'MAC': 'LINUX';
+}
+
+sub is_mac
+{
+	return !system(qq{which sw_vers > /dev/null});
 }
 
 sub save
