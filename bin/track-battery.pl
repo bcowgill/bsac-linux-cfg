@@ -22,11 +22,11 @@ our $os_name = get_osname();
 our $sound_cfg =
 {
 	LINUX => {
-		dir => "$FindBin::Bin/sounds/BatteryWarnings/female/wav",
+		dir => "$FindBin::Bin/sounds/BatteryWarnings/wav/female",
 		ext => ".wav",
 	},
 	MAC => {
-		dir => "$FindBin::Bin/sounds/BatteryWarnings/female/mp3",
+		dir => "$FindBin::Bin/sounds/BatteryWarnings/mp3/female",
 		ext => ".mp3",
 	},
 };
