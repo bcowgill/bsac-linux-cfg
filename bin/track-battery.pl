@@ -26,7 +26,7 @@ our $sound_cfg =
 		ext => ".wav",
 	},
 	MAC => {
-		dir => "$FindBin::Bin/sounds/BatteryWarnings/mp3/female/",
+		dir => "$FindBin::Bin/sounds/BatteryWarnings/mp3",
 		ext => ".mp3",
 	},
 };
