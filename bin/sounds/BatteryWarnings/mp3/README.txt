@@ -1,13 +1,14 @@
 Script for Battery Warning files:
 
-CannotReadBattery.mp3   Warning.  Cannot determine battery level.
+1 BatteryCharging.mp3     The battery is now being charged.
 
-BatteryCharging.mp3     The battery is now being charged.
-BatteryWarning.mp3      Warning. The battery is now draining.
+2 BatteryCritical.mp3     Critical!  Battery failure imminent!
 
-BatteryWarning50.mp3    Warning.  The battery has reached fifty percent.
-BatteryWarning25.mp3    Warning.  The battery has reached twenty-five percent.
-BatteryWarning10.mp3    Warning.  The battery has reached ten percent.
-BatteryWarning5.mp3     Warning.  The battery has reached five percent.
+3 BatteryWarning.mp3      Warning.  The battery is now draining.
 
-BatteryCritical.mp3     Critical! Battery failure imminent!
+4 BatteryWarning5.mp3     Warning.  The battery has reached five percent.
+5 BatteryWarning10.mp3    Warning.  The battery has reached ten percent.
+6 BatteryWarning25.mp3    Warning.  The battery has reached twenty-five percent.
+7 BatteryWarning50.mp3    Warning.  The battery has reached fifty percent.
+
+8 CannotReadBattery.mp3   Warning.  Cannot determine battery level.
