@@ -589,9 +589,14 @@ if [ "$HOSTNAME" == "akston" ]; then
 fi # akston linux
 
 if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
+	COMPANY=wipro
+fi
+if [ "$HOSTNAME" == "L-156131225.local" ]; then
+	COMPANY=wipro
+fi
+if [ "$COMPANY" == "wipro" ]; then
 	# Change settings for wipro MACOS workstation
 	EMAIL=brent.cowgill@wipro.com
-	COMPANY=wipro
 	MACOS=1
 	UBUNTU=10.13.4
 	GIT_VER=2.19.0
