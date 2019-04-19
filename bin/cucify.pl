@@ -20,9 +20,10 @@ USAGE
 }
 
 my $story = $ENV{STORY} || usage('Please provide a STORY Id.');
-my $feature = $ENV{FEATURE} ? "Feature: [$story] - $ENV{FEATURE}\n" : usage('Please provide a FEATURE description.');
+my $feature = $ENV{FEATURE} ? "Feature: [$story] - $ENV{FEATURE}" : usage('Please provide a FEATURE description.');
 my $print_feature = 1;
 my $i = '  ';
+my $b = '*'; # to make parts bold for Jira
 
 while (my $line = <>) {
 	next if $line =~ m{\A\s*\z}xms;
@@ -32,10 +33,12 @@ while (my $line = <>) {
 	$line =~ s{\A\s*AC\s*(\d+)\s*}{Scenario: [$story-AC$1] }xms;
 	$line =~ s{\A\@}{$i\@}xmsi;
 	$line =~ s{\A(scenario:)}{\n$i\@devCWA\n$i$1}xmsi;
-	$line =~ s{\A(given|when|then)}{$i$i$1}xmsi;
-	$line =~ s{\A(and)}{$i$i$i$1}xmsi;
+	$line =~ s{\A(given|when|then)}{$i$i$b$1$b}xmsi;
+	$line =~ s{\A(and)}{$i$i$i$b$1$b}xmsi;
+	$line =~ s{(scenario.+)\s*\z}{$i$i$i$b$1$b}xmsi;
+	$line =~ s{(\[.+?\])}{$b$1$b}xmsg;
 	if ($print_feature) {
-		print "\n$feature";
+		print "\n*$feature*\n";
 	}
 	$print_feature = 0;
 	print "$line\n";
