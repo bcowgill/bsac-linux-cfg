@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
+
 try
 {
 	require('glob');
@@ -34,6 +36,11 @@ function binname ()
 	return __filename.replace(__dirname, '').replace(LEAD_DIRSEP, '');
 }
 
+function readJSON (fileName) {
+	const rawdata = fs.readFileSync(fileName);
+	return JSON.parse(rawdata);
+}
+
 const glob = require('glob');
 
 const testFolder = './node_modules';
@@ -42,7 +49,7 @@ function getVersionFromJSON(fileName) {
   let version;
 
   try {
-    const package = require(fileName);
+    const package = readJSON(fileName);
     version = package.version;
   } catch (exception) {
     console.error('exception', exception);
