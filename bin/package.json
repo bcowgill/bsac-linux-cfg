@@ -1,0 +1,25 @@
+{
+  "name": "bsac-linux-bin",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Personal linux tools for software development",
+  "main": "npm-pkg-ls.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./npm-pkg-vers.js"
+  },
+  "keywords": [
+    "linux",
+    "tools",
+    "software",
+    "development"
+  ],
+  "author": "Brent S.A. Cowgill",
+  "license": "UNLICENSE",
+  "dependencies": {
+    "es3ify": "^0.2.2",
+    "glob": "^7.1.3"
+  }
+}
