@@ -25,6 +25,8 @@ my $print_feature = 1;
 my $i = '  ';
 my $b = '*'; # to make parts bold for Jira
 
+$b = ''; # no bold, please
+
 while (my $line = <>) {
 	next if $line =~ m{\A\s*\z}xms;
 	next if $line =~ m{\A\s*feature}xms;
@@ -38,7 +40,7 @@ while (my $line = <>) {
 	$line =~ s{(scenario.+)\s*\z}{$i$i$i$b$1$b}xmsi;
 	$line =~ s{(\[.+?\])}{$b$1$b}xmsg;
 	if ($print_feature) {
-		print "\n*$feature*\n";
+		print "\n$b$feature$b\n";
 	}
 	$print_feature = 0;
 	print "$line\n";
