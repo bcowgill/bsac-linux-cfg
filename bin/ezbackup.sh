@@ -316,9 +316,16 @@ function time_diff {
 }
 
 function check_space {
-	local free needed
-	free=`df "$BK_DIR/" | tail -1 | perl -pne 's{(\d+) \s+ \d+ \%}{$used = $1;''}xmsge; $_ = "$used\n"'`
+	local free needed target
+	target="$BK_DIR/"
 	needed=`du "$FULL" | perl -pne 's{\A (\d+) .+}{$1\n}xmsg'`
+
+	if [ "$BK_DISK" != "$BK_DIR" ]; then
+		if [ -d "$BK_DISK" ]; then
+			target="$BK_DISK/"
+		fi
+	fi
+	free=`df "$target" | tail -1 | perl -pne 's{(\d+) \s+ \d+ \%}{$used = $1;''}xmsge; $_ = "$used\n"'`
 
 	if perl -e 'exit($ARGV[0] < $ARGV[1] ? 0 : 1)' $needed $free ; then
 		echo there is enough space available for a full backup
@@ -326,7 +333,7 @@ function check_space {
 		echo NOT OK need $needed for full backup but only $free is available.
 		if [ ! -z "$DO_FULL" ]; then
 			du -h "$FULL"
-			df -h "$BK_DIR/"
+			df -h "$target"
 			log_error "ERROR: not enough space available for full backup, need $needed, free $free. Will do a partial backup instead."
 			partial_backup
 			exit 0
@@ -338,7 +345,7 @@ function filter_logs {
 	# remove "a Path/filename" entries from error log and put into output log
 	perl -ne '
 		if (m{\Aa \s (\S.+\z)}xms)
-		{ 
+		{
 			my $path = "/$1";
 			chomp($path);
 			$path .= -d $path ? "/" : "";
@@ -352,7 +359,7 @@ function filter_logs {
 	# filter error log into ignored and relevant
 	perl -ne '
 		if (m{\Aa \s \S}xms)
-		{ 
+		{
 			;
 		}
 		elsif (m{
