@@ -588,6 +588,9 @@ if [ "$HOSTNAME" == "akston" ]; then
 	# HEREIAM CFG
 fi # akston linux
 
+if [ "$HOSTNAME" == "156131225" ]; then
+	COMPANY=wipro
+fi
 if [ "$HOSTNAME" == "L-156131225-BrentCowgill.local" ]; then
 	COMPANY=wipro
 fi
