@@ -15,5 +15,7 @@ if [ -e /Applications ]; then
 		exit 0
 	fi
 else
+	# google-chrome-stable $* &
 	chromium-browser $* &
+	# 65.0.3325.181-0ubuntu0.14.04.1
 fi
