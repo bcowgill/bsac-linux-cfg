@@ -1,4 +1,10 @@
-    1     7.07         7.14     AnyEvent                             MLEHMANN
+[MSG] No '/home/me/.cpanplus/custom-sources' dir, skipping custom sources
+
+[MSG] No '/home/me/.cpanplus/custom-sources' dir, skipping custom sources
+
+[MSG] No '/home/me/.cpanplus/custom-sources' dir, skipping custom sources
+
+    1     7.07         7.15     AnyEvent                             MLEHMANN
 
     2     0.16         0.17     AnyEvent::I3                         MSTPLBG
 
@@ -10,7 +16,7 @@
 
     6     1.30         1.64     Archive::Zip                         PHRED
 
-    7     1.10         1.24     Async::Interrupt                     MLEHMANN
+    7     1.10         1.25     Async::Interrupt                     MLEHMANN
 
     8     0.94         0.99     Attribute::Handlers                  RJBS
 
@@ -20,15 +26,15 @@
 
    11     1.18         1.26     B::Debug                             RURBAN
 
-   12     1.13         1.19     B::Keywords                          RURBAN
+   12     1.13         1.20     B::Keywords                          RURBAN
 
    13     1.17         1.20     B::Lint                              RJBS
 
    14     7.30         7.40     Bit::Vector                          STBEY
 
-   15     3.63         4.40     CGI                                  LEEJO
+   15     3.63         4.43     CGI                                  LEEJO
 
-   16     2.00         2.16     CPAN                                 ANDK
+   16     2.00         2.26     CPAN                                 ANDK
 
    17     0.007        0.014    CPAN::Meta::Check                    LEONT
 
@@ -46,11 +52,11 @@
 
    24     1.29         1.50     Carp                                 XSAWYERX
 
-   25     6.04         6.06     Carp::Clan                           KENTNL
+   25     6.04         6.07     Carp::Clan                           ETHER
 
    26     0.34         0.51     Class::Accessor                      KASEI
 
-   27     1.28         1.32     Class::Inspector                     PLICEASE
+   27     1.28         1.34     Class::Inspector                     PLICEASE
 
    28     2.09         2.12     Class::Method::Modifiers             ETHER
 
@@ -58,13 +64,13 @@
 
    30     0.36         0.41     Clone                                GARU
 
-   31     2.06         2.081    Compress::Raw::Bzip2                 PMQS
+   31     2.06         2.086    Compress::Raw::Bzip2                 PMQS
 
-   32     2.06         2.081    Compress::Raw::Zlib                  PMQS
+   32     2.06         2.086    Compress::Raw::Zlib                  PMQS
 
    33     1.50         1.51     Config::File                         THESEAL
 
-   34     0.17         0.30     Config::Perl::V                      HMBRAND
+   34     0.17         0.31     Config::Perl::V                      HMBRAND
 
    35     2.20         2.23     Config::Tiny                         RSAVAGE
 
@@ -76,7 +82,7 @@
 
    39     3.40         3.75     Cwd                                  XSAWYERX
 
-   40     1.827        1.843    DB_File                              PMQS
+   40     1.827        1.852    DB_File                              PMQS
 
    41     2.145        2.173    Data::Dumper                         XSAWYERX
 
@@ -88,11 +94,11 @@
 
    45     6.30         6.40     Date::Calendar                       STBEY
 
-   46     6.42         6.73     Date::Manip                          SBECK
+   46     6.42         6.76     Date::Manip                          SBECK
 
-   47     3.20         3.43     Devel::PPPort                        XSAWYERX
+   47     3.20         3.52     Devel::PPPort                        ATOOMIC
 
-   48     1.30         2.03     Devel::StackTrace                    DROLSKY
+   48     1.30         2.04     Devel::StackTrace                    DROLSKY
 
    49     2.52         2.55     Digest::MD5                          GAAS
 
@@ -100,13 +106,13 @@
 
    51     1.01         1.03     Dpkg                                 GUILLEM
 
-   52     4.15         4.22     EV                                   MLEHMANN
+   52     4.15         4.25     EV                                   MLEHMANN
 
-   53     1.90         1.909    Email::Address                       RJBS
+   53     1.90         1.912    Email::Address                       RJBS
 
    54     1.192        1.202    Email::Valid                         RJBS
 
-   55     2.49         2.98     Encode                               DANKOGAI
+   55     2.49         3.01     Encode                               DANKOGAI
 
    56     1.03         1.05     Encode::Locale                       GAAS
 
@@ -116,17 +122,17 @@
 
    59     5.68         5.73     Exporter                             TODDR
 
-   60     0.28021      0.28023  ExtUtils::CBuilder                   AMBS
+   60     0.28021      0.280231 ExtUtils::CBuilder                   AMBS
 
    61     0.23         0.25     ExtUtils::Constant                   NWCLARK
 
-   62     0.305        0.405    ExtUtils::Depends                    XAOC
+   62     0.305        0.80     ExtUtils::Depends                    XAOC
 
    63     1.59         2.14     ExtUtils::Install                    BINGOS
 
-   64     6.66         7.34     ExtUtils::MM_Cygwin                  BINGOS
+   64     6.66         7.36     ExtUtils::MM_Cygwin                  BINGOS
 
-   65     1.63         1.71     ExtUtils::Manifest                   BINGOS
+   65     1.63         1.72     ExtUtils::Manifest                   ETHER
 
    66     3.18         3.35     ExtUtils::ParseXS                    SMUELLER
 
@@ -152,364 +158,376 @@
 
    77     2.09         2.16     File::Path                           JKEENAN
 
-   78     1.03         1.116    File::ShareDir                       REHSACK
+   78     1.10         1.11     File::RandomAccess                   EXIFTOOL
 
-   79     0.005002     1.000009 File::ShareDir::ProjectDistDir       KENTNL
+   79     1.03         1.116    File::ShareDir                       REHSACK
 
-   80  9999.19      9999.24     File::Slurp                          CAPOEIRAB
+   80     0.005002     1.000009 File::ShareDir::ProjectDistDir       KENTNL
 
-   81     0.23         0.2308   File::Temp                           ETHER
+   81  9999.19      9999.27     File::Slurp                          CAPOEIRAB
 
-   82     1.09         1.22     File::Which                          PLICEASE
+   82     0.23         0.2309   File::Temp                           ETHER
 
-   83     1.005        1.016    File::pushd                          DAGOLDEN
+   83     1.09         1.23     File::Which                          PLICEASE
 
-   84     0.89         0.94     Filter::Simple                       SMUELLER
+   84     1.005        1.016    File::pushd                          DAGOLDEN
 
-   85     1.45         1.59     Filter::Util::Call                   RURBAN
+   85     0.89         0.94     Filter::Simple                       SMUELLER
 
-   86     1.18         1.47     Finance::Quote                       ECOCODE
+   86     1.45         1.59     Filter::Util::Call                   RURBAN
 
-   87     2.50         2.69     GD                                   RURBAN
+   87     1.18         1.47     Finance::Quote                       ECOCODE
 
-   88     2.39         2.50     Getopt::Long                         JV
+   88     2.50         2.71     GD                                   RURBAN
 
-   89     0.01         0.42     Git                                  MSOUTH
+   89     2.39         2.50     Getopt::Long                         JV
 
-   90     1.304        1.328    Glib                                 XAOC
+   90     0.01         0.42     Git                                  MSOUTH
 
-   91     1.044        1.047    Gnome2                               XAOC
+   91     1.304        1.329    Glib                                 XAOC
 
-   92     1.082        1.083    Gnome2::VFS                          XAOC
+   92     1.044        1.047    Gnome2                               XAOC
 
-   93     1.249        1.24992  Gtk2                                 XAOC
+   93     1.082        1.083    Gnome2::VFS                          XAOC
 
-   94     1.022        1.023    Guard                                MLEHMANN
+   94     1.249        1.24992  Gtk2                                 XAOC
 
-   95     5.03         5.07     HTML::AsSubs                         KENTNL
+   95     1.022        1.023    Guard                                MLEHMANN
 
-   96     3.57         3.72     HTML::Filter                         GAAS
+   96     5.03         5.07     HTML::AsSubs                         KENTNL
 
-   97     2.11         2.16     HTML::FormatText                     NIGELM
+   97     3.57         3.72     HTML::Filter                         GAAS
 
-   98     2.11         2.15     HTML::TableExtract                   MSISK
+   98     6.03         6.04     HTML::Form                           OALDERS
 
-   99     6.00         6.04     HTTP::Cookies                        OALDERS
+   99     2.11         2.16     HTML::FormatText                     NIGELM
 
-  100     6.00         6.01     HTTP::Negotiate                      GAAS
+  100     2.11         2.15     HTML::TableExtract                   MSISK
 
-  101     6.00         6.18     HTTP::Request                        OALDERS
+  101     6.00         6.04     HTTP::Cookies                        OALDERS
 
-  102     0.44         0.52     HTTP::Server::Simple                 BPS
+  102     6.01         6.04     HTTP::Daemon                         OALDERS
 
-  103     0.025        0.076    HTTP::Tiny                           DAGOLDEN
+  103     6.00         6.01     HTTP::Negotiate                      GAAS
 
-  104     1.28         1.39     IO                                   TODDR
+  104     6.00         6.18     HTTP::Request                        OALDERS
 
-  105     1.00         1.001    IO::HTML                             CJM
+  105     0.44         0.52     HTTP::Server::Simple                 BPS
 
-  106     1.08         1.12     IO::Pty                              TODDR
+  106     0.025        0.076    HTTP::Tiny                           DAGOLDEN
 
-  107     2.71         2.72     IO::Socket::INET6                    SHLOMIF
+  107     1.28         1.39     IO                                   TODDR
 
-  108     1.965        2.06     IO::Socket::SSL                      SULLR
+  108     1.00         1.001    IO::HTML                             CJM
 
-  109     0.80         1.02     IPC::Cmd                             BINGOS
+  109     1.08         1.12     IO::Pty                              TODDR
 
-  110     0.92     20180523.00     IPC::Run                             TODDR
+  110     2.71         2.72     IO::Socket::INET6                    SHLOMIF
 
-  111     2.03         2.07     IPC::SysV                            MHX
+  111     1.965        2.066    IO::Socket::SSL                      SULLR
 
-  112     9.46        11.11     Image::ExifTool                      EXIFTOOL
+  112     0.80         1.02     IPC::Cmd                             BINGOS
 
-  113     6.77         6.89     Image::Magick                        JCRISTY
+  113     0.92     20180523.00     IPC::Run                             TODDR
 
-  114     2.61         2.97001  JSON                                 ISHIGAKI
+  114     2.03         2.07     IPC::SysV                            MHX
 
-  115     2.27202      2.97001  JSON::PP                             ISHIGAKI
+  115     6.77         6.89     Image::Magick                        JCRISTY
 
-  116     2.34         3.04     JSON::XS                             MLEHMANN
+  116     2.61         4.02     JSON                                 ISHIGAKI
 
-  117     6.05         6.36     LWP                                  ETHER
+  117     2.27202      4.02     JSON::PP                             ISHIGAKI
 
-  118     6.04         6.07     LWP::Protocol::https                 OALDERS
+  118     2.34         4.02     JSON::XS                             MLEHMANN
 
-  119     1.895        1.903    Lingua::EN::Inflect                  DCONWAY
+  119     6.05         6.39     LWP                                  OALDERS
 
-  120     0.33         0.428    List::MoreUtils                      REHSACK
+  120     6.02         6.04     LWP::MediaTypes                      OALDERS
 
-  121     1.27         1.50     List::Util                           PEVANS
+  121     6.04         6.07     LWP::Protocol::https                 OALDERS
 
-  122     1.23         1.28     Locale::Maketext                     TODDR
+  122     1.895        1.904    Lingua::EN::Inflect                  DCONWAY
 
-  123     3.25         3.58     Locale::Script                       SBECK
+  123     0.33         0.428    List::MoreUtils                      REHSACK
 
-  124     1.05         1.07     Locale::gettext                      PVANDRY
+  124     1.27         1.50     List::Util                           PEVANS
 
-  125     0.06         0.08     Log::Message                         BINGOS
+  125     1.23         1.28     Locale::Maketext                     TODDR
 
-  126     3.13         3.15     MIME::Base64                         GAAS
+  126     3.25         3.60     Locale::Script                       SBECK
 
-  127     2.12         2.20     Mail::Send                           MARKOV
+  127     1.05         1.07     Locale::gettext                      PVANDRY
 
-  128     1.998        1.999816 Math::BigFloat                       PJACKLAM
+  128     0.06         0.08     Log::Message                         BINGOS
 
-  129     1.998        1.999814 Math::BigInt::CalcEmu                PJACKLAM
+  129     3.13         3.15     MIME::Base64                         GAAS
 
-  130     0.30         0.5008   Math::BigInt::FastCalc               PJACKLAM
+  130     2.12         2.21     Mail::Send                           MARKOV
 
-  131     0.2604       0.2614   Math::BigRat                         PJACKLAM
+  131     1.998        1.999816 Math::BigFloat                       PJACKLAM
 
-  132     0.4003       0.4224   Module::Build                        LEONT
+  132     1.998        1.999814 Math::BigInt::CalcEmu                PJACKLAM
 
-  133     0.4003       0.421    Module::Build::ModuleInfo            LEONT
+  133     0.30         0.5008   Math::BigInt::FastCalc               PJACKLAM
 
-  134     0.4003       0.4005   Module::Build::Platform::EBCDIC      LEONT
+  134     0.2604       0.2614   Math::BigRat                         PJACKLAM
 
-  135     1.0002       1.1004   Module::CPANfile                     MIYAGAWA
+  135     0.4003       0.4229   Module::Build                        LEONT
 
-  136     3.03         5.20181  Module::CoreList                     BINGOS
+  136     0.4003       0.421    Module::Build::ModuleInfo            LEONT
 
-  137     3.03         5.201801 Module::CoreList::TieHashDelta       BINGOS
+  137     0.4003       0.4005   Module::Build::Platform::EBCDIC      LEONT
 
-  138     0.24         0.32     Module::Load                         BINGOS
+  138     1.0002       1.1004   Module::CPANfile                     MIYAGAWA
 
-  139     0.54         0.68     Module::Load::Conditional            BINGOS
+  139     3.03         5.201905 Module::CoreList                     BINGOS
 
-  140     1.000019     1.000033 Module::Metadata                     ETHER
+  140     3.03         5.201801 Module::CoreList::TieHashDelta       BINGOS
 
-  141     5.10         5.20     Module::Pluggable                    SIMONW
+  141     0.24         0.34     Module::Load                         BINGOS
 
-  142     0.013        0.016    Module::Runtime                      ZEFRAM
+  142     0.54         0.68     Module::Load::Conditional            BINGOS
 
-  143     2.001                 Mouse                                SKAJI
+  143     1.000019     1.000036 Module::Metadata                     ETHER
 
-  144     2.001                 Mouse::Tiny                          SYOHEX
+  144     5.10         5.20     Module::Pluggable                    SIMONW
 
-  145     0.65         0.67     NEXT                                 NEILB
+  145     0.013        0.016    Module::Runtime                      ZEFRAM
 
-  146     1.00         1.001    Net::DBus                            DANBERR
+  146     2.001                 Mouse                                SKAJI
 
-  147     0.68         1.19     Net::DNS                             NLNETLABS
+  147     2.001                 Mouse::Tiny                          SYOHEX
 
-  148     1.70         1.75     Net::Domain::TLD                     ALEXP
+  148     0.65         0.67     NEXT                                 NEILB
 
-  149     6.06         6.18     Net::HTTP                            OALDERS
+  149     1.00         1.001    Net::DBus                            DANBERR
 
-  150     2.12         3.11     Net::Netrc                           SHAY
+  150     0.68         1.20     Net::DNS                             NLNETLABS
 
-  151     2.41         2.71     Net::Ping                            RURBAN
+  151     1.70         1.75     Net::Domain::TLD                     ALEXP
 
-  152     1.01         1.04     Net::SMTP::SSL                       RJBS
+  152     6.06         6.19     Net::HTTP                            OALDERS
 
-  153     2.85         2.86     Net::SSL                             NANIS
+  153     2.12         3.11     Net::Netrc                           SHAY
 
-  154     1.58         1.85     Net::SSLeay                          MIKEM
+  154     2.41         2.72     Net::Ping                            RURBAN
 
-  155     0.46         0.48     Object::Accessor                     BINGOS
+  155     1.01         1.04     Net::SMTP::SSL                       RJBS
 
-  156     1.215        1.236    PPI                                  MITHALDU
+  156     2.85         2.86     Net::SSL                             NANIS
 
-  157     1.215        1.22     PPI::Exception::ParserTimeout        MITHALDU
+  157     1.58         1.88     Net::SSLeay                          CHRISN
 
-  158     0.036        0.063    PPIx::Regexp                         WYANT
+  158     0.46         0.48     Object::Accessor                     BINGOS
 
-  159     0.02         0.06     Package::Constants                   BINGOS
+  159     1.215        1.269    PPI                                  MITHALDU
 
-  160     1.224        1.227    Pango                                XAOC
+  160     1.215        1.22     PPI::Exception::ParserTimeout        MITHALDU
 
-  161     0.36         0.38     Params::Check                        BINGOS
+  161     1.215        1.236    PPI::Token::_QuoteEngine             MITHALDU
 
-  162     0.013        0.015    Params::Classify                     ZEFRAM
+  162     0.036        0.065    PPIx::Regexp                         WYANT
 
-  163     1.4409       2.15001  Parse::CPAN::Meta                    DAGOLDEN
+  163     0.02         0.06     Package::Constants                   BINGOS
 
-  164     1.01         1.02     Parse::ExuberantCTags                SMUELLER
+  164     1.224        1.227    Pango                                XAOC
 
-  165     0.33         0.37     Path::Class                          KWILLIAMS
+  165     0.36         0.38     Params::Check                        BINGOS
 
-  166     0.004                 Path::FindDev                        KENTNL
+  166     0.013        0.015    Params::Classify                     ZEFRAM
 
-  167     1.000002     1.001003 Path::IsDev                          KENTNL
+  167     1.4409       2.15001  Parse::CPAN::Meta                    DAGOLDEN
 
-  168     0.052        0.108    Path::Tiny                           DAGOLDEN
+  168     1.01         1.02     Parse::ExuberantCTags                SMUELLER
 
-  169     1.003        1.01     Perl::OSType                         DAGOLDEN
+  169     0.33         0.37     Path::Class                          KWILLIAMS
 
-  170 20120701.00     20180220.00     Perl::Tidy                           SHANCOCK
+  170     0.004                 Path::FindDev                        KENTNL
 
-  171     0.18         0.20     PerlIO::gzip                         NWCLARK
+  171     1.000002     1.001003 Path::IsDev                          KENTNL
 
-  172     0.07         0.08     PerlIO::via::QuotedPrint             SHAY
+  172     0.052        0.108    Path::Tiny                           DAGOLDEN
 
-  173     1.60         1.73     Pod::Checker                         MAREKR
+  173     1.121        1.132    Perl::Critic::Policy::Documentation::RequirePodLinksIncludeText PETDANCE
 
-  174     1.04         1.07     Pod::Escapes                         NEILB
+  174     1.003        1.01     Perl::OSType                         DAGOLDEN
 
-  175     2.27         4.11     Pod::Man                             RRA
+  175 20120701.00     20190601.00     Perl::Tidy                           SHANCOCK
 
-  176     1.60         1.63     Pod::ParseUtils                      MAREKR
+  176     0.18         0.20     PerlIO::gzip                         NWCLARK
 
-  177     3.19         3.28     Pod::Perldoc                         MALLEN
+  177     0.07         0.08     PerlIO::via::QuotedPrint             SHAY
 
-  178     3.28         3.35     Pod::Simple                          KHW
+  178     1.60         1.73     Pod::Checker                         MAREKR
 
-  179     1.61         1.69     Pod::Usage                           MAREKR
+  179     1.04         1.07     Pod::Escapes                         NEILB
 
-  180     1.12         1.20     Pod::Wordlist                        DOLMEN
+  180     2.27         4.12     Pod::Man                             RRA
 
-  181     0.50         0.55     Proc::ProcessTable                   JWB
+  181     1.60         1.63     Pod::ParseUtils                      MAREKR
 
-  182     1.31         1.32     Proc::Simple                         MSCHILLI
+  182     3.19         3.28     Pod::Perldoc                         MALLEN
 
-  183     1.04         2.05     Readonly                             SANKO
+  183     3.28         3.38     Pod::Simple                          KHW
 
-  184     0.35         0.38     Regexp::Assemble                     RSAVAGE
+  184     1.61         1.69     Pod::Usage                           MAREKR
 
-  185     1.003002     2.000006 Role::Tiny                           HAARG
+  185     1.12         1.20     Pod::Wordlist                        DOLMEN
 
-  186     1.21         1.24     SelfLoader                           SMUELLER
+  186     0.50         0.56     Proc::ProcessTable                   JWB
 
-  187     2.009        2.027    Socket                               PEVANS
+  187     1.31         1.32     Proc::Simple                         MSCHILLI
 
-  188     0.25         0.29     Socket6                              UMEMOTO
+  188     1.04         2.05     Readonly                             SANKO
 
-  189     1.02         1.03     Sort::Naturally                      BINGOS
+  189     0.35         0.38     Regexp::Assemble                     RSAVAGE
 
-  190     2.41         3.11     Storable                             XSAWYERX
+  190     1.003002     2.000006 Role::Tiny                           HAARG
 
-  191     1.17         1.18     String::Format                       SREZIC
+  191     1.21         1.24     SelfLoader                           SMUELLER
 
-  192     1.03         1.04     String::ShellQuote                   ROSCH
+  192     2.009        2.029    Socket                               PEVANS
 
-  193     0.986        0.987    Sub::Exporter                        RJBS
+  193     0.25         0.29     Socket6                              UMEMOTO
 
-  194     0.04         0.14     Sub::Identify                        RGARCIA
+  194     1.02         1.03     Sort::Naturally                      BINGOS
 
-  195     0.927        0.928    Sub::Install                         RJBS
+  195     2.41         3.15     Storable                             XSAWYERX
 
-  196     0.05         0.21     Sub::Name                            ETHER
+  196     1.17         1.18     String::Format                       SREZIC
 
-  197     0.25         0.28     Sub::Uplevel                         DAGOLDEN
+  197     1.03         1.04     String::ShellQuote                   ROSCH
 
-  198     0.32         0.35     Sys::Syslog                          SAPER
+  198     0.986        0.987    Sub::Exporter                        RJBS
 
-  199     3.26         3.28     TAP::Parser::Utils                   OVID
+  199     0.04         0.14     Sub::Identify                        RGARCIA
 
-  200     1.04         1.06     Task::Weaken                         ETHER
+  200     0.927        0.928    Sub::Install                         RJBS
 
-  201     2.26         2.28     Template                             ATOOMIC
+  201     0.05         0.21     Sub::Name                            ETHER
 
-  202     4.02         4.06     Term::ANSIColor                      RRA
+  202     0.25         0.28     Sub::Uplevel                         DAGOLDEN
 
-  203     1.13         1.17     Term::Cap                            JSTOWE
+  203     0.32         0.35     Sys::Syslog                          SAPER
 
-  204     1.12         1.14     Term::ReadLine                       FLORA
+  204     3.26         3.28     TAP::Parser::Utils                   OVID
 
-  205     0.42         0.46     Term::UI                             BINGOS
+  205     1.04         1.06     Task::Weaken                         ETHER
 
-  206     1.302047     1.30214  Test2                                EXODIST
+  206     2.26         2.29     Template                             ATOOMIC
 
-  207     1.12         1.128    Test::Deep                           RJBS
+  207     4.02         4.06     Term::ANSIColor                      RRA
 
-  208     3.26         3.42     Test::Harness                        LEONT
+  208     1.13         1.17     Term::Cap                            JSTOWE
 
-  209     0.15         0.16     Test::LeakTrace                      LEEJO
+  209     1.12         1.14     Term::ReadLine                       FLORA
 
-  210     0.34         0.35     Test::Most                           OVID
+  210     0.42         0.46     Term::UI                             BINGOS
 
-  211     1.121        1.132    Test::Perl::Critic::Policy           PETDANCE
+  211     1.302047     1.302164 Test2                                EXODIST
 
-  212     1.51         1.52     Test::Pod                            ETHER
+  212     1.12         1.128    Test::Deep                           RJBS
 
-  213     0.30         0.36     Test::Warn                           BIGJ
+  213     0.64         0.67     Test::Differences                    DCANTRELL
 
-  214     2.02         2.03     Text::Balanced                       SHAY
+  214     3.26         3.42     Test::Harness                        LEONT
 
-  215     1.44         1.45     Text::Diff                           NEILB
+  215     0.15         0.16     Test::LeakTrace                      LEEJO
 
-  216     0.0601       0.13     Text::Levenshtein                    NEILB
+  216     0.34         0.35     Test::Most                           OVID
 
-  217     1.000001     1.000031 Text::Markdown                       BOBTFISH
+  217     1.121        1.134    Test::Perl::Critic::Policy           PETDANCE
 
-  218     3.28         3.30     Text::ParseWords                     CHORNY
+  218     1.51         1.52     Test::Pod                            ETHER
 
-  219     3.04         3.05     Text::Soundex                        RJBS
+  219     0.30         0.36     Test::Warn                           BIGJ
 
-  220  2012.0818    2013.0523   Text::Wrap                           MUIR
+  220     2.02         2.03     Text::Balanced                       SHAY
 
-  221     3.02         3.13     Thread::Queue                        JDHEDDEN
+  221     1.44         1.45     Text::Diff                           NEILB
 
-  222     2.12         2.13     Thread::Semaphore                    JDHEDDEN
+  222     0.0601       0.13     Text::Levenshtein                    NEILB
 
-  223     0.99         1.00     Tie::File                            TODDR
+  223     1.000001     1.000031 Text::Markdown                       BOBTFISH
 
-  224     1.9725       1.9758   Time::HiRes                          JHI
+  224     3.28         3.30     Text::ParseWords                     CHORNY
 
-  225     1.23         1.28     Time::Local                          DROLSKY
+  225     3.04         3.05     Text::Soundex                        RJBS
 
-  226     1.2001       1.33     Time::Piece                          ESAYM
+  226  2012.0818    2013.0523   Text::Wrap                           MUIR
 
-  227     1.60         1.74     URI                                  ETHER
+  227     3.02         3.13     Thread::Queue                        JDHEDDEN
 
-  228     0.05         0.27     UUID                                 JRM
+  228     2.12         2.13     Thread::Semaphore                    JDHEDDEN
 
-  229     0.97         1.25     Unicode::Collate                     SADAHIRO
+  229     0.99         1.00     Tie::File                            TODDR
 
-  230     1.16         1.25     Unicode::Normalize                   KHW
+  230     1.9725       1.976    Time::HiRes                          ATOOMIC
 
-  231     0.59         0.62     Unicode::UTF8                        CHANSEN
+  231     1.23         1.28     Time::Local                          DROLSKY
 
-  232     1.73         1.90     WWW::Mechanize                       OALDERS
+  232     1.2001       1.33     Time::Piece                          ESAYM
 
-  233     6.01         6.02     WWW::RobotRules                      GAAS
+  233     1.60         1.76     URI                                  OALDERS
 
-  234     1.11         1.12     XML::NamespaceSupport                PERIGRIN
+  234     0.05         0.28     UUID                                 JRM
 
-  235     2.41         2.44     XML::Parser                          TODDR
+  235     0.97         1.27     Unicode::Collate                     SADAHIRO
 
-  236     0.99         1.00     XML::SAX                             GRANTM
+  236     1.16         1.26     Unicode::Normalize                   KHW
 
-  237     1.07         1.09     XML::SAX::Base                       GRANTM
+  237     0.59         0.62     Unicode::UTF8                        CHANSEN
 
-  238     0.40         0.51     XML::SAX::Expat                      BJOERN
+  238     1.73         1.91     WWW::Mechanize                       OALDERS
 
-  239     2.20         2.25     XML::Simple                          GRANTM
+  239     6.01         6.02     WWW::RobotRules                      GAAS
 
-  240     3.44         3.52     XML::Twig                            MIROD
+  240     1.11         1.12     XML::NamespaceSupport                PERIGRIN
 
-  241     0.13         0.14     XML::XPathEngine                     MIROD
+  241     2.41         2.44     XML::Parser                          TODDR
 
-  242     0.16         0.24     XSLoader                             SAPER
+  242     0.99         1.00     XML::SAX                             GRANTM
 
-  243     1.56         1.73     YAML::Tiny                           ETHER
+  243     1.07         1.09     XML::SAX::Base                       GRANTM
 
-  244     0.31         0.34     aliased                              ETHER
+  244     0.40         0.51     XML::SAX::Expat                      BJOERN
 
-  245     2.23         2.29     autodie                              PJF
+  245     2.20         2.25     XML::Simple                          GRANTM
 
-  246     1.07         1.11     autouse                              RJBS
+  246     3.44         3.52     XML::Twig                            MIROD
 
-  247     0.34         0.51     bigint                               PJACKLAM
+  247     0.13         0.14     XML::XPathEngine                     MIROD
 
-  248     3.72         3.74     common::sense                        MLEHMANN
+  248     0.16         0.24     XSLoader                             SAPER
 
-  249     1.27         1.33     constant                             RJBS
+  249     1.56         1.73     YAML::Tiny                           ETHER
 
-  250     2.16         2.23     fields                               RJBS
+  250     0.31         0.34     aliased                              ETHER
 
-  251     0.0602       0.0608   if                                   XSAWYERX
+  251     2.23         2.29     autodie                              PJF
 
-  252     0.4003       0.50     inc::latest                          DAGOLDEN
+  252     1.07         1.11     autouse                              RJBS
 
-  253     1.008023     2.000024 local::lib                           HAARG
+  253     0.34         0.51     bigint                               PJACKLAM
 
-  254     0.225        0.237    parent                               CORION
+  254     3.72         3.74     common::sense                        MLEHMANN
 
-  255     5.015004     5.201809 perlfaq                              ETHER
+  255     1.27         1.33     constant                             RJBS
 
-  256     1.86         2.21     threads                              JDHEDDEN
+  256     2.16         2.23     fields                               RJBS
 
-  257     1.43         1.58     threads::shared                      JDHEDDEN
+  257     0.0602       0.0608   if                                   XSAWYERX
 
-  258     0.9902       0.9924   version                              JPEACOCK
+  258     0.4003       0.50     inc::latest                          DAGOLDEN
+
+  259     1.008023     2.000024 local::lib                           HAARG
+
+  260     0.225        0.237    parent                               CORION
+
+  261     5.015004     5.201901 perlfaq                              ETHER
+
+  262     1.86         2.21     threads                              JDHEDDEN
+
+  263     1.43         1.59     threads::shared                      JDHEDDEN
+
+  264     0.9902       0.9924   version                              JPEACOCK

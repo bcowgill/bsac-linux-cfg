@@ -1,4 +1,4 @@
-package Snapshot_2018_11_15_00;
+package Snapshot_2019_06_02_00;
 
 $VERSION = '0.01';
 
@@ -8,13 +8,13 @@ __END__
 
 =head1 NAME
 
-Snapshot_2018_11_15_00 - Snapshot of your installation at Thu Nov 15 20:23:52 2018
+Snapshot_2019_06_02_00 - Snapshot of your installation at Sun Jun  2 17:41:23 2019
 
 =head1 SYNOPSIS
 
 To install the modules from this snapshot, run:
 
-  cpanp -i file://full/path/to/Snapshot_2018_11_15_00.pm
+  cpanp -i file://full/path/to/Snapshot_2019_06_02_00.pm
 
 =head1 CONTENTS
 
@@ -1481,6 +1481,16 @@ Date::Manip::Offset::off437 undef
 Date::Manip::Offset::off438 undef
 
 Date::Manip::Offset::off439 undef
+
+Date::Manip::Offset::off440 undef
+
+Date::Manip::Offset::off441 undef
+
+Date::Manip::Offset::off442 undef
+
+Date::Manip::Offset::off443 undef
+
+Date::Manip::Offset::off444 undef
 
 Date::Manip::Recur 6.42
 
@@ -3485,6 +3495,8 @@ List::MoreUtils 0.33
 List::Util 1.27
 
 List::Util::XS 1.27
+
+Locale::Codes 3.25
 
 Locale::Codes::Constants 3.25
 
@@ -5932,7 +5944,7 @@ Characteristics of this binary (from libperl):
   Built under linux
   Compiled at Mar  1 2016 17:15:04
   %ENV:
-    PERL5_CPANPLUS_IS_RUNNING="11481"
+    PERL5_CPANPLUS_IS_RUNNING="16428"
     PERL5_CPANPLUS_IS_VERSION="0.9135"
     PERL_READLINE_NOWARN="1"
   @INC:
