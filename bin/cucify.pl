@@ -74,6 +74,7 @@ while (my $line = <>) {
 	$line =~ s{\bAC\s*(\d+)}{AC$1}xms;
 	$line =~ s{\A\@}{$i\@}xmsi;
 	$line =~ s{\A(scenario)\s*\d+\s*:}{$1:}xmsgi;
+	$line =~ s{\A(scenario)\s*\[}{$1: [}xmsgi;
 	$line =~ s{\A(scenario:)}{\n$i\@devCWA\n$i\@skip\n$i$1}xmsi;
 	$line =~ s{\A(given|when|then)}{$i$i$b$1$b}xmsi;
 	$line =~ s{\A(and)}{$i$i$i$b$1$b}xmsi;
