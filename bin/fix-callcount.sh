@@ -11,6 +11,9 @@ Fixes sinon spy based test plans which are missing spy.callCount checks.
 Changes expect(spy.called).toBe...
      to expect(spy.callCount).toBe(0|1);
 
+Changes expect(spy.calledOnce).toBe...
+     to expect(spy.callCount).toBe(0|1);
+
 Changes ).toEqual(
      to ).toBe(
 
@@ -43,9 +46,9 @@ do
 	my $cp = q{\s*\)\s*};
 	chomp();
 	s{\).toEqual\(}{).toBe(}xms;
-	if (s{expect$op(\w+)\.called$cp\.to(.+)$}{expect($1.callCount).toBe(}xms)
+	if (s{expect$op(\w+)\.called(Once)?$cp\.to(.+)$}{expect($1.callCount).toBe(}xms)
 	{
-		my ($spy, $tail) = ($1, $2);
+		my ($spy, $tail) = ($1, $3);
 		$_ .= m{fals[ey]}xmsi ? qq{0)} : qq{1)};
 	}
 	if (/\A(\s*)expect(ObjectsDeepEqual)?\((\w+)\.(lastCall|firstCall|getCall\(0\))/xms)
