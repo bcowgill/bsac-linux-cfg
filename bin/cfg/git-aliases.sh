@@ -47,6 +47,7 @@ alias gud="echo \`git status | grep 'deleted: ' | perl -pne 's{\s*deleted:\s*}{}
 
 alias gfe='g fetch'
 alias gfea='gfe --all'
+alias gfpr='git-fetch-pull-request.sh'
 
 # also, gco -  will checkout the last branch you had
 alias gco='g checkout'

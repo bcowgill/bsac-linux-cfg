@@ -79,6 +79,10 @@ if [ "x$COMPANY" == "xwipro" ]; then
 	alias cdie8='pushd ~/workspace/projects/pas-card-controls-cwa-mca-ie8'
 	alias cdfe='pushd ~/workspace/projects/pas-card-controls-cwa'
 	alias cdkx='pushd ~/workspace/projects/know-tx'
+	alias tro='npm run unit -- --grep `head -1 tests.txt` 2>&1 | grep -vE "(Coverage for |npm ERR\\!)"'
+	alias tdo='npm run unit:debug -- --grep `head -1 tests.txt`'
+	alias tso='npm run unit:single -- --grep `head -1 tests.txt`'
+	alias pret='npm run prettier; git checkout -- README.md'
 
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
 	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
