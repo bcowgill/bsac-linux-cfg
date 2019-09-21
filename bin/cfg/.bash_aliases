@@ -2,6 +2,9 @@
 # Brent S.A. Cowgill
 # MOTE: there are custom aliases set by hostname
 
+alias please='sudo'
+alias fucking='sudo'
+
 # Show the path split into one dir per line
 alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
 # Unique path, remove duplicate dirs from path
