@@ -1,4 +1,5 @@
 #!/bin/bash
+# Perform a simple search and replace. Much like sed -i.bak -e 's/Search/Replace/' filename...
 
 function usage
 {
