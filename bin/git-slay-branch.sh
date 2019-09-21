@@ -1,6 +1,13 @@
 #!/bin/bash
 # git-slay-branch.sh delete a branch remotely and locally so it is gone forever.
 
+if [ ! -z "$2" ]; then
+	for br in $*;
+	do
+		$0 "$br"
+	done
+fi
+
 branch=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
 if [ -z $branch ]; then
 	BRANCHES=`git branch --remote --merged | grep -v -- '->'`
