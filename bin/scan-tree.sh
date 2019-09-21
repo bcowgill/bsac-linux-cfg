@@ -4,7 +4,7 @@
 DIR=${1:-$HOME}
 STORE=${2:-./}
 
-find "$DIR" -type f | OUT="$STORE" perl -ne '
+nice -n 15 find "$DIR" -type f | OUT="$STORE" perl -ne '
 	BEGIN
 	{
 		my $out = $ENV{OUT};
