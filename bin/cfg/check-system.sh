@@ -1615,6 +1615,8 @@ if [ ! -z $MACOS ]; then
 	file_linked_to .bash_profile bin/cfg/.bash_profile "bash_profile configured"
 fi
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
+# Linux top config as if typed cC0Z3<Enter> when top started
+file_linked_to .toprc bin/cfg/.toprc "toprc configured"
 file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 #file_linked_to .perltidyrc bin/cfg/.perltidyrc-$COMPANY "perltidyrc configured for $COMPANY"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"

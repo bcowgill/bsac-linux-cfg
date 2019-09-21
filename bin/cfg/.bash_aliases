@@ -70,6 +70,7 @@ if [ "x$COMPANY" == "xclearbooks" ]; then
 fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
+	alias top='\top -o +state -O cpu'
 	alias sl='./scripts/lint.sh'
 	alias slf='./scripts/lint-fix.sh'
 	alias nrdl='npm run dev:lloyds:commercial'
@@ -91,7 +92,6 @@ if [ "x$COMPANY" == "xwipro" ]; then
 fi
 
 # default options for some commands
-alias top='\top -o +state -O cpu'
 alias cdiff='colordiff'
 alias now='( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 alias egrep='\egrep --exclude-dir=.git'
