@@ -91,6 +91,7 @@ if [ "x$COMPANY" == "xwipro" ]; then
 fi
 
 # default options for some commands
+alias top='\top -o +state -O cpu'
 alias cdiff='colordiff'
 alias now='( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"'
 alias egrep='\egrep --exclude-dir=.git'
