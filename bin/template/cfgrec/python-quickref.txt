@@ -1,0 +1,71 @@
+Python programming language quick reference
+
+https://www.python.org/downloads/
+IDE PyScripter code.google.com/p/pyscripter
+
+Command Arguments
+
+TODO
+
+Basic Syntax
+
+; optional at end of line
+, can be used on LHS of assignment:  a,b = b,a
+'' "" quotes for strings
+
+Keywords
+
+and as assert break class continue def del
+elif else except exec finally for from global
+if import in is lambda not or pass
+print raise return try while with yield
+
+print formatted or unformatted
+
+print var
+print "message"
+print "%s" % "message"
+print "%d" % var
+print "message ", var
+print "message %d" % var
+
+Number Formats %d %f %i %o %x
+String Formats %s
+
+Types
+
+Everything is stored as an object.
+Variables are always references.
+
+var=42    # assign a label to a value
+type(var) # gets type of the var
+del var   # var is gone now
+
+Number Types
+Int     42 0b1011 #<binary 034 #<octal 0x10 #<hex
+Float   1.23 1.2e-4
+Complex 1.2j 23+2j  1.2e-2 + 2.3j
+Long    42L
+
+Non-number Types
+NoneType None
+Str  'string'  "string"
+Bool True False
+Byte
+
+Data Structure Types
+List [1,2,3] list([1,2,3]) range(0,10,2)  L[0] L[-1] L[0:2] L[2:5:2] len(L)
+ - ordered set of mutable heterogeneous dynamic extensible objects
+Tuple (1,2,3) tuple([1,2,3]) tuple(range(0,10,2)) T[0] T[-1] T[2:5:2] len(L)
+ - ordered set of immutable heterogeneous objects
+Dictionary { 1: 'one', 'bat': 42}  D[1] = 'ONE' del(D[1])
+ - unordered set of key value pairs
+
+List len(L) L.append(val) L.insert(idx, val) del(L[0]) L.count(val) L.extend(list) L.index(val) L.pop() L.remove(val) L.reverse() L.sort(fn)
+help(list)
+Tuple len(T) T.count(val) T.index(val)
+Dictionary D.clear() D.copy() #<shallow D.keys() D.values()
+
+Comments
+
+# a single line comment
