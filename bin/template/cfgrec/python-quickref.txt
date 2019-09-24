@@ -2,6 +2,9 @@ Python programming language quick reference
 
 https://www.python.org/downloads/
 IDE PyScripter code.google.com/p/pyscripter
+General Index https://docs.python.org/3/genindex.html
+Language Reference https://docs.python.org/3/reference/index.html
+Standard Library Reference https://docs.python.org/3/library/index.html
 
 Command Arguments
 
@@ -13,12 +16,28 @@ Basic Syntax
 , can be used on LHS of assignment:  a,b = b,a
 '' "" quotes for strings
 
+a=b  # reference copy
+import copy; a=copy.copy(b)  # shallow copy
+import copy; a=copy.deepcopy(b)  # deep copy
+
 Keywords
 
 and as assert break class continue def del
 elif else except exec finally for from global
 if import in is lambda not or pass
 print raise return try while with yield
+
+Operators
+
+Arithmetic: + - * ** / // %
+Relational: > < >= <= != <> ==
+Assignment: += -= *= /=
+Logical: and or not
+Shift / Bitwise: & | ^ ~ << >>
+Membership: in, not in
+Identity: is, is not
+
+Print
 
 print formatted or unformatted
 
@@ -28,9 +47,32 @@ print "%s" % "message"
 print "%d" % var
 print "message ", var
 print "message %d" % var
+print "message %d %s" % (var, string)
 
-Number Formats %d %f %i %o %x
+Integer Number Formats
+%b Binary (v3)
+%c Unicode character
+%d Decimal integer
+%i Decimal integer
+%o octal integer
+%x Hexadecimal integer
+%X Uppercase Hexadecimal integer
+%n Locale formatted integer (v3)
+%u ???
+
+Float and Integer Formats
+%e Exponent notation precision 6
+%E Uppercase Exponent notation precision 6
+%f Fixed point notation precision 6
+%F Uppercase Fixed point notation precision 6 (INF, NAN)
+%g General format precision 6
+%G Uppercase General format precision 6
+%n Locale based General Format (v3)
+%% Fixed point percentage notation (v3)
+%r ???
+
 String Formats %s
+all format letters  https://docs.python.org/3/library/string.html#formatspec
 
 Types
 
@@ -40,6 +82,7 @@ Variables are always references.
 var=42    # assign a label to a value
 type(var) # gets type of the var
 del var   # var is gone now
+id(var)   # memory address of var
 
 Number Types
 Int     42 0b1011 #<binary 034 #<octal 0x10 #<hex
@@ -60,6 +103,8 @@ Tuple (1,2,3) tuple([1,2,3]) tuple(range(0,10,2)) T[0] T[-1] T[2:5:2] len(L)
  - ordered set of immutable heterogeneous objects
 Dictionary { 1: 'one', 'bat': 42}  D[1] = 'ONE' del(D[1])
  - unordered set of key value pairs
+Set
+Collection
 
 List len(L) L.append(val) L.insert(idx, val) del(L[0]) L.count(val) L.extend(list) L.index(val) L.pop() L.remove(val) L.reverse() L.sort(fn)
 help(list)
@@ -69,3 +114,14 @@ Dictionary D.clear() D.copy() #<shallow D.keys() D.values()
 Comments
 
 # a single line comment
+
+I/O
+
+input(prompt) - read any type of value and store as is - even functions like id(a) or exit() !! like an eval
+raw_input(prompt) - reads any type of value and stores as string
+a=float(raw_input('Some number? '))
+a=bool(raw_input('<Enter>=False True=anything else ?'))
+
+
+Built In functions
+https://docs.python.org/3/library/functions.html
