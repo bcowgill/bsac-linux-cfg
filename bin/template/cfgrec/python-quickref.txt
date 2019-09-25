@@ -23,6 +23,17 @@ a=b  # reference copy
 import copy; a=copy.copy(b)  # shallow copy
 import copy; a=copy.deepcopy(b)  # deep copy
 
+Comments
+
+# a single line comment
+
+Keywords
+
+and as assert break class continue def del
+elif else except exec finally for from global
+if import in is lambda not or pass
+print raise return try while with yield
+
 Control Statements
 
 if condition :
@@ -58,13 +69,6 @@ for var in 1, 2, 3 :
 
 for var in range(start, stop, step) :
   print 'something', var
-
-Keywords
-
-and as assert break class continue def del
-elif else except exec finally for from global
-if import in is lambda not or pass
-print raise return try while with yield
 
 Operators
 
@@ -152,10 +156,6 @@ help(list)
 Tuple len(T) T.count(val) T.index(val)
 Dictionary D.clear() D.copy() #<shallow D.keys() D.values()
 
-Comments
-
-# a single line comment
-
 I/O
 
 input(prompt) - read any type of value and store as is - even functions like id(a) or exit() !! like an eval
@@ -163,6 +163,112 @@ raw_input(prompt) - reads any type of value and stores as string
 a=float(raw_input('Some number? '))
 a=bool(raw_input('<Enter>=False True=anything else ?'))
 
+Functions
 
 Built In functions
 https://docs.python.org/3/library/functions.html
+
+__builtins__ namespace:
+abs() delattr() hash() memoryview() set()
+all() dict() help() min() setattr()
+any() dir() hex() next() slice()
+ascii() divmod() id() object() sorted()
+bin() enumerate() input() oct() staticmethod()
+bool() eval() int() open() str()
+breakpoint() exec() isinstance() ord() sum()
+bytearray() filter() issubclass() pow() super()
+bytes() float() iter() print() tuple()
+callable() format() len() property() type()
+chr() frozenset() list() range() vars()
+classmethod() getattr() locals() repr() zip()
+compile() globals() map() reversed() __import__()
+complex() hasattr() max() round()
+'apply', 'basestring',  'buffer',  'cmp', 'coerce',  'copyright', 'credits',
+'execfile', 'exit', 'file', 'intern', 'license',  'quit', 'raw_input', 'reduce',
+'reload', 'unichr', 'unicode', 'xrange'
+
+interpreter functions:
+breakpoint()
+compile() __import__() reload()
+eval() input()
+exec() execfile()
+intern()
+exit()  quit()
+
+introspection functions:
+dir() id() hash() len()
+isinstance() issubclass() callable() type()
+globals() vars() locals() hasattr() getattr()
+memoryview() repr()
+help()
+
+object manipulation functions:
+hasattr() getattr() delattr() setattr() super() property()
+
+function manipulation functions:
+classmethod() staticmethod() apply()
+
+iterable functions:
+len() any() all() min() max() sum()
+filter() map() reversed() reduce() zip()
+iter() next() enumerate() sorted()
+range() xrange()
+cmp()
+
+constructor functions:
+object() bool() int() long() float() complex() str() bytes()
+list() bytearray() tuple() set() dict() frozenset()
+slice() memoryview() buffer() unicode()
+enumerate()
+reversed()
+classmethod() staticmethod() super() property() type()
+basestring()
+file()
+
+conversion functions:
+hex() bin() oct() chr() ord() unichr() bytearray() format() repr() coerce()
+
+mathematics functions:
+abs() cmp() min() max() round() divmod() pow() sum() complex()
+
+I/O functions:
+raw_input() input() open() print() file()
+
+v3 functions?:
+ascii() breakpoint()
+
+User Defined Functions:
+
+def functioncall():
+  print 'something'
+
+functioncall()
+
+def sample(x, y):
+  print x,y
+
+sample(10, 20)
+
+def flip(x, y):
+  return y, x
+
+a,b = flip(12, 20)
+
+def point(x=0, y=0):
+  return [x,y]
+
+origin = point()
+
+def args(*x): # multiple values passed in as a tuple called x
+  print x
+
+args(1)
+args(1,2) ...
+
+Anonyous functions
+
+label = lambda signature : expression
+
+res = lambda x,y: x + y
+
+res(1,2)
