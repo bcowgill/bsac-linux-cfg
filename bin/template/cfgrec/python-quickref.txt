@@ -1,6 +1,7 @@
 Python programming language quick reference
 
 https://www.python.org/downloads/
+Tutorial http://docs.python.org/2.7/tutorial/
 IDE PyScripter code.google.com/p/pyscripter
 General Index https://docs.python.org/3/genindex.html
 Language Reference https://docs.python.org/3/reference/index.html
@@ -15,10 +16,48 @@ Basic Syntax
 ; optional at end of line
 , can be used on LHS of assignment:  a,b = b,a
 '' "" quotes for strings
+: and at lest one white space indent instead of {} to indicate scope of functions and control statements
+  python community uses 4 spaces by convention
 
 a=b  # reference copy
 import copy; a=copy.copy(b)  # shallow copy
 import copy; a=copy.deepcopy(b)  # deep copy
+
+Control Statements
+
+if condition :
+    print 'something'
+
+if condition :
+    print 'something'
+else :
+    print 'otherwise'
+
+if condition :
+    print 'something'
+elif condition2 :
+    print 'second case'
+else :
+    print 'otherwise'
+
+initialise
+while condition :
+  print 'something',
+  increment
+
+# do ... while/until
+initialise
+while True :
+  print 'something'
+  if condition :
+    break;
+  increment
+
+for var in 1, 2, 3 :
+  print 'something', var
+
+for var in range(start, stop, step) :
+  print 'something', var
 
 Keywords
 
@@ -30,6 +69,7 @@ print raise return try while with yield
 Operators
 
 Arithmetic: + - * ** / // %
+  // = ifloordiv
 Relational: > < >= <= != <> ==
 Assignment: += -= *= /=
 Logical: and or not
@@ -48,6 +88,7 @@ print "%d" % var
 print "message ", var
 print "message %d" % var
 print "message %d %s" % (var, string)
+print var,   # does not print a newline afterward
 
 Integer Number Formats
 %b Binary (v3)
