@@ -294,3 +294,13 @@ Python modules have .py extension.
 import module1, module2,...
 from module import *
 from module import specific1, specific2,...
+
+help('modules') shows all the modules that are available
+help('modules spam') search for modules whose descriptions match spam
+dir() shows which modules are currently imported
+dir(math)  shows which members are present within a module
+
+module.__name__ the name of the module
+module.__file__ gives the file path for the module
+print module.__doc__ prints the documentation for the module
+__name__ shows __main__ as the name of the main program module
