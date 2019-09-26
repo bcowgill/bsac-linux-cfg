@@ -8,10 +8,12 @@ Language Reference https://docs.python.org/3/reference/index.html
 Standard Library Reference https://docs.python.org/3/library/index.html
 
 Command Arguments
+=================
 
 TODO
 
 Basic Syntax
+============
 
 ; optional at end of line
 , can be used on LHS of assignment:  a,b = b,a
@@ -24,10 +26,12 @@ import copy; a=copy.copy(b)  # shallow copy
 import copy; a=copy.deepcopy(b)  # deep copy
 
 Comments
+========
 
 # a single line comment
 
 Keywords
+========
 
 and as assert break class continue def del
 elif else except exec finally for from global
@@ -35,6 +39,7 @@ if import in is lambda not or pass
 print raise return try while with yield
 
 Control Statements
+==================
 
 if condition :
     print 'something'
@@ -71,6 +76,7 @@ for var in range(start, stop, step) :
   print 'something', var
 
 Operators
+=========
 
 Arithmetic: + - * ** / // %
   // = ifloordiv
@@ -82,6 +88,7 @@ Membership: in, not in
 Identity: is, is not
 
 Print
+=====
 
 print formatted or unformatted
 
@@ -120,6 +127,7 @@ String Formats %s
 all format letters  https://docs.python.org/3/library/string.html#formatspec
 
 Types
+=====
 
 Everything is stored as an object.
 Variables are always references.
@@ -157,6 +165,7 @@ Tuple len(T) T.count(val) T.index(val)
 Dictionary D.clear() D.copy() #<shallow D.keys() D.values()
 
 I/O
+===
 
 input(prompt) - read any type of value and store as is - even functions like id(a) or exit() !! like an eval
 raw_input(prompt) - reads any type of value and stores as string
@@ -164,6 +173,7 @@ a=float(raw_input('Some number? '))
 a=bool(raw_input('<Enter>=False True=anything else ?'))
 
 Functions
+=========
 
 Built In functions
 https://docs.python.org/3/library/functions.html
@@ -238,6 +248,7 @@ v3 functions?:
 ascii() breakpoint()
 
 User Defined Functions:
+=======================
 
 def functioncall():
   print 'something'
@@ -266,9 +277,20 @@ args(1)
 args(1,2) ...
 
 Anonyous functions
+==================
 
 label = lambda signature : expression
 
 res = lambda x,y: x + y
 
 res(1,2)
+
+Modules
+=======
+
+Separate namespace for functions and data.
+Python modules have .py extension.
+
+import module1, module2,...
+from module import *
+from module import specific1, specific2,...
