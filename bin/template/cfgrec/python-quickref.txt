@@ -318,3 +318,22 @@ os
 sys
 math
   math.pi
+
+Packages
+========
+
+Combines multiple modules into a folder.
+PyPi python package index portal gives access to many packages developed by others.
+https://pypi.python.org/pypi
+
+__init__.py file in the folder which initialises the package.
+should import the modules of the package and export them along with any data.
+create a source python file (compile.py or build.py) which imports the package.
+when you run that source the module will be compiled to .pyc files
+you can then distribute the .pyc files without the .py source if you like.
+
+pip command for installing packages.
+pip list
+pip install package
+pip show package
+pip uninstall package
