@@ -75,6 +75,55 @@ for var in 1, 2, 3 :
 for var in range(start, stop, step) :
   print 'something', var
 
+
+Exception Handling
+==================
+
+BaseException - the base class for python exception hierarchy
+
+Exception best practices:
+
+Step 1. Define only the likely exceptions which would arise from the block of code.
+Step 2. Define the most likely exception at the top and less likely exceptions later.
+Step 3. Define the messages corresponding to the erroneous situatinos in non-technical language.
+Step 4. Define an exception object to capture the default message.
+Step 5. Define the exceptions in a nested hierarchy from general to specific.
+Step 6. Define the generic default exceptions only in teh outermost block.
+Step 7. Define the program closure statements in the outermost block to deal with the safe closure of the program (save files, etc)
+Step 8. Use try and except keywords to define the exception block and handle the anticipated exceptions.
+Step 9. Exception handling mechanism is not going to solve the error, but would ensure the understanding or cause of the errors and terminate the program smoothly completing anything previously started if possible.
+
+try:
+  32 / 0
+  32 / 'a'
+  unknown_label
+except ZeroDivisionError:
+  print "You are trying to divide by zero."
+except (NameError, TypeError), error:
+  print "Error, the given variable is not defined in the program."
+  print error
+  print "Error type:", type(error)
+except: Exception:
+  print "All other errors..."
+else:
+  print "Carries on here only if there were no errors"
+finally:
+  print "Carries on here always, with or without an error"
+
+Details about an exception can be obtained from sys.exc_info()
+  it returns type, message, traceback
+  easy to use traceback.print_exc() to print an exception.
+  https://docs.python.org/2/library/traceback.html
+
+Debugging
+=========
+
+from traceback import print_stack
+
+print type(var) # prints the type of some variable
+print id(var)  # memory address of variable
+print_stack() # will print a stack trace at a given point
+
 Operators
 =========
 

@@ -46,8 +46,10 @@ print "\nOS process related"
 #print "os.getlogin()", os.getlogin()
 print "os.getpid()", os.getpid()
 print "os.getppid()", os.getppid()
-print "os.getresuid()", os.getresuid()
-print "os.getresgid()", os.getresgid()
+# linx only...
+if sys.platform != 'darwin':
+    print "os.getresuid()", os.getresuid()
+    print "os.getresgid()", os.getresgid()
 print "os.getuid()", os.getuid()
 print "os.getgid()", os.getgid()
 print "os.geteuid()", os.geteuid()
@@ -93,6 +95,24 @@ try:
     22/0
 except:
     print "Exception handled", sys.exc_info()
+
+try:
+    'a'/2
+except:
+    print "Horrendous error"
+else:
+    print "Else block 1 called only when no error."
+finally:
+    print "Finally block 1 called with or without error."
+
+try:
+    a = 23
+except:
+    print "Horrible error"
+else:
+    print "Else block from 2 called only when no error."
+finally:
+    print "Finally block 2 called with or without error."
 
 # Force an unhandled exception
 print 34/0
