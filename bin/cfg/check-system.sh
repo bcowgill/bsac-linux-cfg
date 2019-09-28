@@ -552,6 +552,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	# ttf-ancient-fonts - Symbola used for emacs emoji
    # sox - sound player mp3 format installed
 	CUSTOM_PKG="
+      pip:python-pip
 		gnucash
 		audacity
 		oggconvert
@@ -1461,6 +1462,7 @@ which groovy && groovy -version
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
 which perl && perl --version
 which python && python --version
+which pip && pip --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
