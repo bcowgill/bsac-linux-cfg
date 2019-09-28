@@ -2,14 +2,14 @@
 
 """Documentaation for the program"""
 
-from traceback import print_exc as print_exception, print_stack
+from traceback import print_exc, print_stack
 import python_module
+
+DEBUG=False
 
 # Lambda Functions
 
 # User defined local Functions
-
-# python statements
 
 def g():
     print "g"
@@ -18,13 +18,21 @@ def g():
 def f():
     g()
 
+def print_exception(error):
+    """Print an error or full exception trace if Debug is True"""
+    if DEBUG:
+        print "\n\n>>>>> Caught Error:"
+        print_exc()
+        print "\n\n"
+    else:
+        print "\n\n>>>>> Caught Error: %s\n" % error
+
+# Main program goes here
 try:
-    f()
     print 'Hello, world!', 4/0
-except Exception:
-    print "\n\n>>>>> Caught Error:"
-    print_exception()
-    print "\n\n"
+    f()
+except Exception, error:
+    print_exception(error)
 else:
     # happens when there were no errors
     print "Success"
