@@ -1,25 +1,35 @@
 #!/usr/bin/env python
+# How to run the tests:
+# ./python_module.test.py # basic test runner
+# py.test -l python_module.test.py  # better error reporting
 
 import unittest
 
 class IntegerArithmeticTestCase(unittest.TestCase):
     """integer arithmetic test case"""
+    def setUp(self):
+        print '\n%s {'% self.id()
+        print '\tsetUp for', self.shortDescription(),
+    def tearDown(self):
+        print '\n\ttearDown for %s\n}'% self.shortDescription()
+
     def testAdd(self):  ## test method names begin 'test*'
         """it should add integers together"""
-        print '\n', self.shortDescription()
+        print '\n\t%s'% self.shortDescription()
         #self.skipTest('skip always')
+        #self.fail('hard failure here')
         self.assertEqual((1 + 2), 3)
         self.assertEqual(0 + 1, 1)
 
     def testMultiply(self):
         """it should multiply integers together"""
-        print '\n', self.shortDescription()
+        print '\n\t%s'% self.shortDescription()
         self.assertEqual((0 * 10), 0)
         self.assertEqual((5 * 8), 40)
 
     def testAssertions(self):
         """it should test the various assertion types"""
-        print '\n', self.shortDescription()
+        print '\n\t%s'% self.shortDescription()
 
         with self.assertRaises(ZeroDivisionError):
             # change to 10 or '0' to make fail.

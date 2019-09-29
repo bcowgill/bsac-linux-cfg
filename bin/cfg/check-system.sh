@@ -3035,7 +3035,7 @@ if false ; then
 # TODO some notes on how to set up then robot framework browser test system
 # for workshare.
 # https://github.com/workshare/qa
-	ROBOT_TEST="pip:python-pip"
+	ROBOT_TEST="pip:python-pip py.test:python-pytest"
 	commands pip, pybot needed
 	sudo apt-get install chromium-chromedriver
 	sudo pip install robotframework==2.8.7
