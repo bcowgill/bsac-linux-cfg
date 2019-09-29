@@ -242,15 +242,15 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
     [[ -r $NVM_DIR/bash_completion ]] && . $NVM_DIR/bash_completion
     # nvm ls
     # nvm ls-remote
+    NODE_USE_VER=v8.6.0
     if [ -e "$HOME/.nvmrc" ]; then
-        nvm use > /dev/null
-    else
-        nvm use v8.6.0 > /dev/null
+        NODE_USE_VER=`cat "$HOME/.nvmrc"`
     fi
+    nvm use "$NODE_USE_VER"> /dev/null || (echo "You need to manually: nvm install $NVM_USE_VER")
 fi
 
 if [ -z "$NODEJS_ORG_MIRROR" ]; then
-	export NODEJS_ORG_MIRROR="$NVM_NODEJS_ORG_MIRROR"
+    export NODEJS_ORG_MIRROR="$NVM_NODEJS_ORG_MIRROR"
 fi
 
 export CHROME_BIN=`which chromium-browser`
