@@ -57,14 +57,17 @@ def parse_cli():
         if key in ('-h', '-?'):
             key = '--help'
         params[key] = opt[1]
-    print "options:", opts
+    if len(opts):
+        print "options:", opts
     return (params, args)
 
 # Main program goes here
 try:
     (opts, args) = parse_cli()
-    print "opts:", opts
-    print "args:", args
+    if len(opts):
+        print "opts:", opts
+    if len(args):
+        print "args:", args
     print 'Hello, world!', 4/0
     f()
 except getopt.GetoptError, error:
