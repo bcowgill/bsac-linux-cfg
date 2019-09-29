@@ -2,10 +2,14 @@
 
 """Documentaation for the program"""
 
+import sys
+import getopt
 from traceback import print_exc, print_stack
+
 import python_module
 
-DEBUG=False
+
+DEBUG=True
 
 # Lambda Functions
 
@@ -27,8 +31,24 @@ def print_exception(error):
     else:
         print "\n\n>>>>> Caught Error: %s\n" % error
 
+def parse_cli():
+    params = {}
+    (opts, args) = getopt.gnu_getopt(sys.argv[1:], 'vx:y:h?i:', ['help', 'indent='])
+    for opt in opts :
+        key = opt[0]
+        if key == '-i':
+            key = '--index'
+        if key in ('-h', '-?'):
+            key = '--help'
+        params[key] = opt[1]
+    print "options:", opts
+    return (params, args)
+
 # Main program goes here
 try:
+    (opts, args) = parse_cli()
+    print "opts:", opts
+    print "args:", args
     print 'Hello, world!', 4/0
     f()
 except Exception, error:

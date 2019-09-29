@@ -386,3 +386,26 @@ pip list
 pip install package
 pip show package
 pip uninstall package
+
+Command line processing
+=======================
+
+sys.argv is a list containing the program arguments
+argv[0] may contain the program name (not for the python interpreter directly it will be '')
+argv[1] always contains the first command line parameter if there is one.
+
+Raw text from command line must be typecast to python array_values
+
+eval('True') => bool True
+eval('0') => int 0
+eval('BaseException') => exceptions.BaseException
+eval('exit()') => exits from python!! so beware
+eval('import sys;') => error!
+eval('i am a dog') => error
+
+You can test strings to see what they are:
+
+''.isdigit()
+str.islower()
+
+getopt, argparse, cli are other command line parsing libraries
