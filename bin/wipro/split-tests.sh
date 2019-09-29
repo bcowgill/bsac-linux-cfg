@@ -22,7 +22,7 @@ done
 echo \* `cat tests.txt | wc -l` feature files with enabled tests
 
 # clean up names and sort the by number
-perl -pne 's{PAYO4B-}{}xms' tests.txt \
+perl -pne 's{PAYO4B-+}{}xms' tests.txt \
 	| sort -n \
 	> test-list.txt
 
