@@ -409,3 +409,35 @@ You can test strings to see what they are:
 str.islower()
 
 getopt, argparse, cli are other command line parsing libraries
+
+import sys
+import getopt
+
+(opts, args) = getopt(sys.argv[1:], 'x:y:', ['help', 'indent='])
+
+File handling
+=============
+
+Throws IOError on any error
+
+fd = open('filename.ext', 'r', bufferFlag)
+# r,w,a - read/write/append
+# b + U - binary/read+write/Universal newline suport
+# 0 buffer none, 1 line buffered, N size of buffer in memory
+fd.close()
+
+fd.name  name of the file
+fd.mode  the open mode of the file
+fd.closed is the file closed?
+
+content = fd.read() # whole file read in as text
+bytes - fd.read(1000) # read 1000 bytes from the file
+line = fd.readline()
+lines = fd.readlines()
+
+for line in fd: # process the file one line at a time
+  print line
+
+fd.write(string)
+fd.seek() - move the file pointer to a position
+fd.tell() - report where the file pointer is
