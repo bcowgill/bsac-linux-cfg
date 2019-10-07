@@ -1,9 +1,13 @@
 #!/bin/bash
 # show a sample of unicode characters
 
+
+# U+00A0 = non breaking space &nbsp;
 CODES="
+U+00A0
 U+2018 U+2019 U+201C U+201D
 U+2026 U+00A9 U+00AE U+00BC U+00BD U+00BE
+U+B0 U+2103 U+2109
 U+00A3 U+20B5 U+20A4 U+20AC U+FF04 U+FE69 U+2367
 U+2713 U+2714 U+2705
 U+2715 U+2716 U+2717 U+2718 U+2719 U+274C
