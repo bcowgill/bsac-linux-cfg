@@ -19,21 +19,46 @@ our $DEBUG = $ENV{DEBUG} || 0;
 our $NOISY = $ENV{NOISY} || 0;
 
 our $os_name = get_osname();
+our $sound_dir_base = "$FindBin::Bin/sounds/BatteryWarnings";
+our $sound_types =
+{
+	LINUX => [qw(wav mp3)],
+	MAC => [qw(mp3)],
+};
+our $sound_voices =
+{
+	'' => [qw(wav mp3 m4a)],
+   'narayanan' => [qw(wav mp3)],
+	'amrutha' => [qw(wav mp3)],
+};
 our $sound_cfg =
 {
-	LINUX => {
-		dir => "$FindBin::Bin/sounds/BatteryWarnings/wav/amrutha",
-		ext => ".wav",
-	},
-	MAC => {
-		dir => "$FindBin::Bin/sounds/BatteryWarnings/mp3/narayanan",
-		ext => ".mp3",
-	},
+	LINUX => ['', 'narayanan', 'amrutha'],
+	MAC => [qw(narayanan)],
 };
 
+sub choose
+{
+	my @choices = @ARG;
+	my $choice = int(rand() * scalar(@choices));
+	return $choices[$choice];
+}
+
+sub get_extension
+{
+	my ($raAvailable, $raVoice) = @_;
+	foreach my $voice (@$raVoice)
+	{
+		return $voice if grep { $voice eq $ARG } @$raAvailable;
+	}
+	die "cannot match a voice extension (@{[join(', ', @$raAvailable)]}) to an available extension (@{[join(', ', @$raVoice)]}) for this OS: $os_name";
+}
+
+our $voice = choose(@{$sound_cfg->{$os_name}});
+our $ext = get_extension($sound_types->{$os_name}, $sound_voices->{$voice});
 our $save_file = "$FindBin::Bin/battery-level.txt";
-our $sound_dir = $sound_cfg->{$os_name}{dir};
-our $sound_ext = $sound_cfg->{$os_name}{ext};
+our $sound_dir = "$sound_dir_base/$ext/$voice";
+our $sound_ext = ".$ext";
 
 # print "DEBUG: $ENV{OSTYPE} $os_name\n$sound_dir\n$sound_ext\n";
 # print Dumper \%ENV;
