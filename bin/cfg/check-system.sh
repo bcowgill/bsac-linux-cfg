@@ -552,7 +552,6 @@ if [ "$HOSTNAME" == "akston" ]; then
 	# ttf-ancient-fonts - Symbola used for emacs emoji
    # sox - sound player mp3 format installed
 	CUSTOM_PKG="
-      pip:python-pip
 		gnucash
 		audacity
 		oggconvert
@@ -1462,7 +1461,6 @@ which groovy && groovy -version
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
 which perl && perl --version
 which python && python --version
-which pip && pip --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
@@ -1617,8 +1615,6 @@ if [ ! -z $MACOS ]; then
 	file_linked_to .bash_profile bin/cfg/.bash_profile "bash_profile configured"
 fi
 file_linked_to .bashrc bin/cfg/.bashrc "bashrc configured"
-# Linux top config as if typed cC0Z3<Enter> when top started
-file_linked_to .toprc bin/cfg/.toprc "toprc configured"
 file_linked_to .perltidyrc bin/cfg/.perltidyrc "perltidyrc configured"
 #file_linked_to .perltidyrc bin/cfg/.perltidyrc-$COMPANY "perltidyrc configured for $COMPANY"
 file_linked_to .vimrc bin/cfg/vimrc.txt  "awesome vim configured"
@@ -3035,7 +3031,7 @@ if false ; then
 # TODO some notes on how to set up then robot framework browser test system
 # for workshare.
 # https://github.com/workshare/qa
-	ROBOT_TEST="pip:python-pip py.test:python-pytest"
+	ROBOT_TEST="pip:python-pip"
 	commands pip, pybot needed
 	sudo apt-get install chromium-chromedriver
 	sudo pip install robotframework==2.8.7
