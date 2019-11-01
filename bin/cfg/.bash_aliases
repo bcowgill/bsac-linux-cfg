@@ -84,6 +84,7 @@ if [ "x$COMPANY" == "xwipro" ]; then
 	alias cdfe='pushd ~/workspace/projects/pas-card-controls-cwa'
 	alias cdkx='pushd ~/workspace/projects/know-tx'
 	alias cro='./scripts/code-review.sh `head -1 tests.txt`'
+	alias cfo='./scripts/code-fix.sh `head -1 tests.txt`'
 	alias tro='npm run unit -- --grep `head -1 tests.txt` 2>&1 | grep -vE "(Coverage for |npm ERR\\!)"'
 	alias tdo='npm run unit:debug -- --grep `head -1 tests.txt`'
 	alias tso='npm run unit:single -- --grep `head -1 tests.txt`'
