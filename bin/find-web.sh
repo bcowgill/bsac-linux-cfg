@@ -3,5 +3,3 @@
 find-code.sh \
 	| egrep -vi '(\.|-)(min|pack)\.((c|le|sa|sc)ss|html?|jsx?|json5?)$' \
 	| egrep -i '\.((c|le|sa|sc)ss|html?|jsx?|json5?)$'
-
-
