@@ -1,1 +1,1 @@
-find-code.sh $* | egrep -i '\.(gif|pn[gm]|bmp|ico|tiff|tga|jpe?g|p[bgp]m|x[pb]m|xcf|eps|pcx|pdf)$'
+find-code.sh $* | egrep -i '\.(bmp|eps|gif|ico|jpe?g|miff|p[bgp]m|pcx|pdf|pn[gm]|svg|tga|tiff?|x[pb]m|xcf|xwd)$'
