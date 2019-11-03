@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-console
+// eslint-disable-next-line no-console, prefer-destructuring
 const warn = console.warn
 
 /*

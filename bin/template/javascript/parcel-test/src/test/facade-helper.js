@@ -1,6 +1,10 @@
 /*
-	help with testing exports from a Facade or module
+  help with testing exports from a Facade or module
+
+  cp templates/facade.spec.js src/new/path/index.spec.js
+  npm run test:unit --testRegex src/new/path/index.spec.js
 */
+
 /* eslint-disable prefer-arrow-callback */
 import keys from 'lodash/keys'
 import isArray from 'lodash/isArray'
@@ -58,7 +62,11 @@ function facadeHelper(exportHelper, Facade) {
 			exportHelper.exportsTested += 1
 			/* eslint-enable no-param-reassign */
 			expect(Facade[name]).toBeDefined()
-			expect(getType(Facade[name])).toBe(type)
+			if (type === 'enum') {
+				checkConstant(Facade, name)
+			} else {
+				expect(getType(Facade[name])).toBe(type)
+			}
 			if (moreTests) {
 				moreTests(Facade[name])
 			}
@@ -128,8 +136,10 @@ function facadeHelper(exportHelper, Facade) {
 		forEach(keys(exportHelper.exportChecks), function testAnExport(
 			exportName
 		) {
+			/* eslint-disable prefer-destructuring */
 			const type = exportHelper.exportChecks[exportName].type
 			const moreTests = exportHelper.exportChecks[exportName].moreTests
+			/* eslint-enable prefer-destructuring */
 			makeTestForExport(exportName, type, moreTests)
 		})
 	} else if (!exportHelper.namedExports) {
