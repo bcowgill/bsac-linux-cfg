@@ -6,8 +6,11 @@ HAS=has-playable.pl
 
 if [ -x ./find-unplayable.sh ]; then
 	FIND=./find-unplayable.sh
+	echo Finding unplayable files with custom script: $FIND
+else
+	echo Finding unplayable files with: $FIND
+	echo "(create ./$FIND to customize files to ignore)"
 fi
-echo Finding unplayable files with: $FIND
 $FIND | $HAS --not
 
 TOTAL=`$FIND | $HAS --not | wc -l`
