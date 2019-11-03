@@ -177,54 +177,53 @@ function code_review {
 	if git grep -E 'describe\(' "$file" > /dev/null; then
 		HEADING="checking for bad test plan practices..."
 		check_test_plan_target "$file"
-		has_js 'eslint-disable prefer-arrow-callback' "$file" "test plan should have /* eslint-disable prefer-arrow-callback */"
-		has_js 'const\s+suite\b' "$file" "test plan should define suite name"
-		has_js "'$file'" "$file" "const suite = '$file';"
-		search_js '[fx](it|describe)\s*\(' "$file"  "restore describe/it test"
-		search_js '(it|describe)\.(only|skip)\s*\(' "$file"  "restore describe/it test"
-		search_js_comments '[fx]?(it|describe)\s*\(' "$file"  "use skip feature instead of commenting out tests"
-		search_js_comments '(it|describe)\.(only|skip)\s*\(' "$file"  "use skip feature instead of commenting out tests"
-		search_js '\.called' "$file" "use .callCount instead of .called or .calledOnce"
+		has_js 'eslint-disable prefer-arrow-callback' "$file" "test plan MUST have /* eslint-disable prefer-arrow-callback */"
+		has_js 'const\s+suite\b' "$file" "test plan MUST define suite name"
+		has_js "'$file'" "$file" "test plan MUST have const suite = '$file';"
+		search_js '[fx](it|describe)\s*\(' "$file"  "MUST restore describe/it test"
+		search_js '(it|describe)\.(only|skip)\s*\(' "$file"  "MUST restore describe/it test"
+		search_js_comments '[fx]?(it|describe)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
+		search_js_comments '(it|describe)\.(only|skip)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
+		search_js '\.called' "$file" "MUST use .callCount instead of .called or .calledOnce (code-fix)"
+		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
+		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'expect\(.+\.args' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 
-		# search expect\((\w+)(.+)\)\.toBe\(true\)
-		# replace expectTrue('$1NNN', $1$2)
-		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "use expectTruthy() etc functions with numbered labels"
-		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "use expectTruthy() etc functions with numbered labels"
-		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasming.any"
+		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
 		# TODO spy.callCount missing before checking spy calls
 		# TODO expect() .toBe/Equal
-		search_js '(describe|it).+\(\)\s*=>\s*\{$' "$file"  "should name your describe/it function as descXxxSuite/testXxx instead of using anonymous"
+		search_js '(describe).+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function as descObjectNameSuite instead of using anonymous function (code-fix)"
+		search_js '(describe).+\bfunction desc[a-z]' "$file"  "MUST name your describe function as descObjectNameSubSuite instead of using anonymous function (code-fix)"
+		search_js '(it).+\(\)\s*=>\s*\{$' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		search_js '(it).+\bfunction test[a-z]' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
 	else
+		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
 			check_has_test_plan "$file"
 		fi
+		HEADING="checking for app specific idioms..."
+		search_js_filter 'function\s+(\w+(Action|Service|Middleware))\s*\(' EOB "$file"  "Actions etc should use it = EOB calling protocol"
+		search_js_filter 'const\s+(\w+(Action|Service|Middleware))\s*=\s*\(' EOB "$file" "Actions etc should use it = EOB calling protocol"
 	fi
 
-	HEADING="checking for incomplete work..."
-	search_js 'MUS''TDO' "$file"  "work which must be completed asap"
-	search_js_comments 'MUS''TDO' "$file"  "work which must be completed asap"
-	search_js 'TO''DO' "$file"  "work which needs to be done"
-	search_js_comments 'TO''DO' "$file"  "work which might need doing"
-
 	HEADING="checking for code to remove..."
-	search_js '\bdebugger\b' "$file" "remove leftover debugger breakpoints"
-	search_js '\balert\(' "$file"    "remove browser alert messages"
+	search_js '\bdebugger\b' "$file" "MUST remove leftover debugger breakpoints"
+	search_js '\balert\(' "$file"    "MUST remove browser alert messages"
 
 	HEADING="checking for practices to minimise..."
-	search_js '\bconsole\.' "$file"   "remove leftover console debug logs"
+	search_js '\bconsole\.' "$file"   "MUST remove leftover console debug logs"
 	search_js '\bNODE_ENV\b' "$file"  "reduce code blocks dependent on release environment"
 
 	HEADING="checking for unnecessary obfuscation..."
-	search_js '`\$\{\w+\}`' "$file" "pointless use of template string \`\${quotes}\`"
+	search_js '`\$\{\w+\}`' "$file" "pointless use of template string \`\${quotes}\` or use .toString()"
 
 	HEADING="checking for bad style..."
-	search_js '(#|&#[xX]|0x|\\u)[A-Fa-f0-9]*[A-F][A-Fa-f0-9]*' "$file" "hex (color) should use lower case for easier reading"
-	search_js '&#(\d+|[xX][a-fA-F0-9]+);' "$file" "should define a const character name instead of encoding a character"
+	search_js '(#|&#[xX]|0x|\\u)[A-Fa-f0-9]*[A-F][A-Fa-f0-9]*' "$file" "hex (color) MUST use lower case for easier reading"
+	search_js '&#(\d+|[xX][a-fA-F0-9]+);' "$file" "MUST define a const character name instead of encoding a character"
 	search_js '=>[^\{]*$' "$file"                 "should have { return ... } on all arrow functions"
 	search_js 'case\b[^:]+?:[^\{]*$' "$file"      "should have {} around all case X: statements"
 	search_js 'default\s*:[^\{]*$' "$file"        "should have {} around all switch default: statements"
-	search_js '([A-Z_]+)\s*:\s*(.)\1\2' "$file"   "should use list.reduce for defining Action constants"
+	search_js '([A-Z_]+)\s*:\s*(.)\1\2' "$file"   "MUST use list.reduce for defining Action constants"
 
 	if git grep -E 'from\s+(.)react\1' "$file" > /dev/null; then
 		if git grep -E 'describe\(' "$file" > /dev/null; then
@@ -235,13 +234,14 @@ function code_review {
 				HEADING="checking for React storybook issues..."
 			else
 				HEADING="checking for React issues..."
-				has_js 'displayName' "$file" "should define displayName"
-				has_js 'propTypes' "$file" "should define propTypes"
-				has_js 'defaultProps' "$file" "should define defaultProps"
-				search_js '\s+on\w+\s*\(' "$file" "dont bind events in constructor, define event with arrow function instead"
-				search_js '(this.\w+)\s*=\s*\1\.bind' "$file" "dont bind events in constructor, define event with arrow function instead"
-				search_js '=\{\s*\([^)]*\)\s*=>' "$file"  "dont use anonymous event handlers in render"
-				search_js 'src=[^\{]' "$file"  "dont use paths to assets, import them into a constant for webpack optimisation"
+				has_js 'displayName' "$file" "MUST define displayName"
+				has_js 'propTypes' "$file" "MUST define propTypes"
+				has_js 'defaultProps' "$file" "MUST define defaultProps"
+				search_js '<[a-z]+[A-Z]' "$file" "MUST not name components starting with lower case or it will render as an HTML element not a component"
+				search_js '\s+on\w+\s*\(' "$file" "MUST not bind events in constructor, define event with arrow function instead"
+				search_js '(this.\w+)\s*=\s*\1\.bind' "$file" "MUSTS not bind events in constructor, define event with arrow function instead"
+				search_js '=\{\s*\([^)]*\)\s*=>' "$file"  "MUST not use anonymous event handlers in render"
+				search_js 'src=[^\{]' "$file"  "MUST not use paths to assets, import them into a constant for webpack optimisation"
 			fi
 		fi
 	fi
@@ -251,34 +251,48 @@ function code_review {
 
 	if echo "$file" | grep -E '\.(less|sass|css)$'; then
 		HEADING="checking for bad stylesheet practices..."
-		search_js '\[data-selector=' "$file" "use class instead of data- attributes for styling"
+		search_js '\[data-selector=' "$file" "MUST use class instead of data- attributes for styling"
 	fi
 
 	if grep -E '^\s*Feature:' "$file" > /dev/null; then
 		HEADING="checking for bad Gherkin style..."
-		search_sh '@(skip|only)' "$file"              "remove @skip or @only marker"
-		search_sh ':\s+Feature:' "$file"              "incorrect Feature: indentation (should be zero)"
-		search_sh ':(\s?|\s{3,})@devCWA' "$file"      "incorrect @devCWA: indentation (should be two spaces)"
-		search_sh ':(\s?|\s{3,})@skip' "$file"        "incorrect @skip: indentation (should be two spaces)"
-		search_sh ':(\s?|\s{3,})Scenario:' "$file"    "incorrect Scenario: indentation (should be two spaces)"
-		search_sh ':(\s?|\s{3,})Background:' "$file"  "incorrect Background: indentation (should be two spaces)"
-		search_sh ':(\s{0,3}|\s{5,})Given' "$file"    "incorrect Given step indentation (should be four spaces)"
-		search_sh ':(\s{0,3}|\s{5,})When' "$file"     "incorrect When step indentation (should be four spaces)"
-		search_sh ':(\s{0,3}|\s{5,})Then' "$file"     "incorrect Then step indentation (should be four spaces)"
-		search_sh ':(\s{0,5}|\s{7,})And' "$file"      "incorrect And step indentation (should be six spaces)"
+		search_sh '@(skip|only)' "$file"              "MUST remove @skip or @only marker"
+		search_sh ':\s+Feature:' "$file"              "incorrect Feature: indentation (MUST be zero) (code-fix)"
+		search_sh ':(\s?|\s{3,})@devCWA' "$file"      "incorrect @devCWA: indentation (MUST be two spaces) (code-fix)"
+		search_sh ':(\s?|\s{3,})@skip' "$file"        "incorrect @skip: indentation (MUST be two spaces) (code-fix)"
+		search_sh ':(\s?|\s{3,})Scenario:' "$file"    "incorrect Scenario: indentation (MUST be two spaces) (code-fix)"
+		search_sh ':(\s?|\s{3,})Background:' "$file"  "incorrect Background: indentation (MUST be two spaces) (code-fix)"
+		search_sh ':(\s{0,3}|\s{5,})Given' "$file"    "incorrect Given step indentation (MUST be four spaces) (code-fix)"
+		search_sh ':(\s{0,3}|\s{5,})When' "$file"     "incorrect When step indentation (MUST be four spaces) (code-fix)"
+		search_sh ':(\s{0,3}|\s{5,})Then' "$file"     "incorrect Then step indentation (MUST be four spaces) (code-fix)"
+		search_sh ':(\s{0,5}|\s{7,})And' "$file"      "incorrect And step indentation (MUST be six spaces) (code-fix)"
 	fi
-
-	HEADING="checking for app specific idioms..."
-	search_js_filter 'function\s+(\w+(Action|Service|Middleware))\s*\(' EOB "$file"  "Actions etc should use it = EOB calling protocol"
-	search_js_filter 'const\s+(\w+(Action|Service|Middleware))\s*=\s*\(' EOB "$file" "Actions etc should use it = EOB calling protocol"
 
 	# TODO alt,aria-label= without copyText
 }
+
+if [ -z "$1" ]; then
+	echo "
+usage: $0 filename...
+
+Perform automated code review based on guidelines at:
+
+https://confluence.devops.lloydsbanking.com/display/PAS/Concrete+Examples+of+Front+End+Review
+
+Output showing MUST are hard rules to be implemented.
+
+Output showing (code-fix) can be automatically or semi-automatically fixed by the code-fix.sh script.
+
+To review all the files on your branch:
+
+$0 \`git diff --name-only develop\`
+"
+	exit 1
+fi
 
 for file in $*
 do
 	code_review "$file"
 done
-
 
 rm $TMP1 $TMP2 $TMP3

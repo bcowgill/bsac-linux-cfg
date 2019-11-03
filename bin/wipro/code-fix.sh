@@ -2,16 +2,42 @@
 # perform automated code review fixes based on guidelines at :
 # https://confluence.devops.lloydsbanking.com/display/PAS/Concrete+Examples+of+Front+End+Review
 
+if [ -z "$1" ]; then
+	echo "
+usage: $0 filename...
+
+Perform automated code review fixes based on guidelines at:
+
+https://confluence.devops.lloydsbanking.com/display/PAS/Concrete+Examples+of+Front+End+Review
+
+To fix all the files on your branch:
+
+$0 \`git diff --name-only develop\`
+"
+	exit 1
+fi
+
 FILE="$1"
 
 perl -i.bak -pne '
 	$q = chr(39);
+	if (m{function\s+desc(\w+)Suite}xms)
+	{
+		$object_name = $object_name || $1;
+	}
 
 	# fix Gherkin indentation
 	s{\A\s+(Feature:)}{$1}xms;
 	s{\A\s*(Scenario|Background:|\@skip|\@devCWA)}{  $1}xms;
 	s{\A\s*(Given|When|Then)}{    $1}xms;
 	s{\A\s*(And)}{      $1}xms;
+
+	# fix describe/it anon functions
+	if (m{(it|describe)\(.+?,\s*\(\s*\w*\s*\)\s*=>}xms) {
+		$object_name = $object_name || "ObjectName";
+		s{(describe\(.+?,\s*)(\(\s*\w*\s*\))\s*=>\s*}{$1function desc${object_name}FunctionMMM$2 }xms;
+		s{(it\(.+?,\s*)(\(\s*\w*\s*\))\s*=>\s*}{$1function test${object_name}FunctionCaseMMM$2 }xms;
+	}
 
 	# fix .calledOnce first...
 	s{expect\(\s*(\w+)(.*?)\.called(?:Once)?\s*\)\s*\.toBe(?:Truthy|True)\s*\(\s*\)}{qq{expect($1$2.callCount).toBe(1)}}xmsge;
