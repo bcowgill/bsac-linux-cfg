@@ -18,7 +18,7 @@ fi
 
 if [ `git branch --list | grep -v '*' | grep -i "$SEARCH" | wc -l` == "1" ]; then
 	BRANCH=`git branch --list | grep -v '*' | grep -i "$SEARCH"`
-	git checkout "$BRANCH"
+	git checkout $BRANCH
 else
 	git branch --list | grep -i "$SEARCH" | sort
 fi
