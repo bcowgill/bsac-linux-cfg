@@ -13,11 +13,12 @@ my $SHOW_UNPLAYABLE = 0;
 sub usage
 {
 	print <<"USAGE";
-usage: $0 [--not] [--help] < file-list
+usage: $0 [--not] [--both] [--help] < file-list
 
 This will check each sound file from a list on standard input to see if a playable version of the file is present and prints the name of those found.
 
 --not   prints out the name of the unplayable file if there are no playable ones found.
+--both  prints out both the unplayable file and the associated playable ones.
 --help  prints this help and terminates.
 
 Playable sound file extensions are: @Playable
@@ -49,6 +50,12 @@ if (grep { $_ eq '--not' } @ARGV)
 	$SHOW_UNPLAYABLE = 1;
 }
 
+if (grep { $_ eq '--both' } @ARGV)
+{
+	$SHOW_PLAYABLE = 1;
+	$SHOW_UNPLAYABLE = 1;
+}
+
 while (my $file = <STDIN>)
 {
 	chomp($file);
@@ -74,8 +81,9 @@ while (my $file = <STDIN>)
 			}
 		}
 	}
-	if ($playable == 0)
+	if ($playable == 0 || ($SHOW_PLAYABLE && $SHOW_UNPLAYABLE))
 	{
 		print qq{$file\n} if $SHOW_UNPLAYABLE;
 	}
+	print qq{\n} if $SHOW_UNPLAYABLE && $SHOW_PLAYABLE;
 }
