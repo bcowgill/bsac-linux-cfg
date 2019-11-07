@@ -33,10 +33,12 @@ perl -i.bak -pne '
 	s{\A\s*(And)}{      $1}xms;
 
 	# fix describe/it anon functions
-	if (m{(it|describe)\(.+?,\s*\(\s*\w*\s*\)\s*=>}xms) {
+	if (m{(it|describe|beforeEach|afterEach|skip\w+)\(.*?\(\s*\w*\s*\)\s*=>}xms) {
 		$object_name = $object_name || "ObjectName";
 		s{(describe\(.+?,\s*)(\(\s*\w*\s*\))\s*=>\s*}{$1function desc${object_name}FunctionMMM$2 }xms;
-		s{(it\(.+?,\s*)(\(\s*\w*\s*\))\s*=>\s*}{$1function test${object_name}FunctionCaseMMM$2 }xms;
+		s{((it|skip\w+)\(.+?,\s*)(\(\s*\w*\s*\))\s*=>\s*}{$1function test${object_name}FunctionCaseMMM$3 }xms;
+		s{(beforeEach\()\s*\(\s*\)\s*=>\s*}{$1function setupTestsMMM() }xms;
+		s{(afterEach\()\s*\(\s*\)\s*=>\s*}{$1function tearDownMMM() }xms;
 	}
 
 	# fix .calledOnce first...

@@ -8,6 +8,9 @@ TMP1=`mktemp`
 TMP2=`mktemp`
 TMP3=`mktemp`
 
+# so that output is filename:match...
+GREP="git grep"
+
 # display possible heading along with a reason
 function give_reason {
 	local reason
@@ -50,9 +53,10 @@ function search_debug {
 	file="$2"
 	reason="$3"
 	explain match "$regex"
-	git grep -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
-	echo === match1; cat $TMP1
-	echo === match2; cat $TMP2
+	#  $GREP '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
+	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
+	echo === match non-comments; cat $TMP1
+	echo === match regex; cat $TMP2
 	indent_output $TMP2 "$reason"
 }
 
@@ -63,7 +67,7 @@ function search_sh {
 	file="$2"
 	reason="$3"
 	explain match "$regex"
-	git grep -v '#' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
+	$GREP -v '#' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
 	indent_output $TMP2 "$reason"
 }
 
@@ -74,7 +78,7 @@ function search_js {
 	file="$2"
 	reason="$3"
 	explain match "$regex"
-	git grep -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
+	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
 	indent_output $TMP2 "$reason"
 }
 
@@ -85,7 +89,7 @@ function search_js_comments {
 	file="$2"
 	reason="$3"
 	explain commented "$regex"
-	git grep '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
+	$GREP '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
 	indent_output $TMP2 "$reason"
 }
 
@@ -97,7 +101,7 @@ function search_js_filter {
 	file="$3"
 	reason="$4"
 	explain match "$regex except $filter"
-	git grep -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -v "$filter" > $TMP3
+	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -v "$filter" > $TMP3
 	indent_output $TMP3 "$reason"
 }
 
@@ -108,7 +112,7 @@ function has_js {
 	file="$2"
 	message="$3"
 
-	git grep -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
+	grep -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
 	lines=`wc -l < "$TMP2"`
 	if [ $lines -lt 1 ]; then
 		if [ -z "$message" ]; then
@@ -121,47 +125,163 @@ function has_js {
 
 # check if a javascript file has the correctly named test plan file
 function check_has_test_plan {
-	local file
+	local file $SOURCE TEST_PLAN TEST_PLAN2 INDEX CONTAINER REACT
 	file="$1"
 
-	TEST_PLAN=`echo "$file" | perl -pne 's{\.js}{.spec.js}xmsg; s{/([^/]+)\z}{/test/$1}xmsg'`
+	if grep -E 'from\s+(.)(react)\1' "$file" > /dev/null; then
+		REACT=1
+	fi
+	# case 4
+	TEST_PLAN=`echo "$file" | \
+		perl -pne '
+			s{\.jsx?\z}{.spec.js}xms;
+			s{/([^/]+)\z}{/test/$1}xms
+		'`
 	if echo "$file" | grep -E "/container\.jsx?$" > /dev/null; then
-		TEST_PLAN=`echo "$file" | perl -pne 's{/([^/]+)/container\.js(x)?}{/$1/test/$1.container.spec.js$2}xmsg'`
+		# case 6,7,8
+		CONTAINER=1
+		TEST_PLAN=`echo "$file" | \
+			perl -pne '
+				s{/([^/]+)/container\.jsx?\z}{/$1/test/$1.container.spec.js}xms
+			'`
 	fi
 	if echo "$file" | grep -E "/index\.jsx?$" > /dev/null; then
-		TEST_PLAN=`echo "$file" | perl -pne 's{/([^/]+)/index\.js(x)?}{/$1/test/$1.spec.js$2}xmsg'`
+		# case 1,2,3
+		INDEX=1
+		TEST_PLAN=`echo "$file" | \
+			perl -pne '
+				s{/([^/]+)/index\.jsx?}{/$1/test/$1.spec.js}xmsg
+			'`
+			if [ "$REACT" == "1" ]; then
+				SOURCE=`echo "$TEST_PLAN" | \
+					perl -pne '
+						s{/test/}{/}xms;
+						s{\.spec\.jsx?}{.jsx}xms;
+					'`
+				give_reason "react component should be renamed(2): $SOURCE"
+			fi
 	fi
 	if [ ! -f "$TEST_PLAN" ]; then
-		give_reason "missing or misnamed test plan, didn't find: $TEST_PLAN"
+		if [ -z "$INDEX$CONTAINER" ]; then
+			# case 10
+			TEST_PLAN2=`echo "$file" | \
+				perl -pne '
+					s{\.js\z}{.spec.js}xms;
+				'`
+			if [ ! -f "$TEST_PLAN2" ]; then
+				# case 11
+				TEST_PLAN2=`echo "$file" | \
+					perl -pne '
+						s{/([^/]+)\.js\z}{/test/$1.spec.js}xms;
+					'`
+				if [ ! -f "$TEST_PLAN2" ]; then
+					# cases 4,10,11
+					give_reason "missing or misnamed test plan, didn't find(4,10,11): $TEST_PLAN or $TEST_PLAN2"
+				fi
+			fi
+		else
+			# cases 1,3,8
+			give_reason "missing or misnamed test plan, didn't find(1,3,8): $TEST_PLAN"
+		fi
 	fi
 }
 
 # check if a javascript test plan has been named to match a source file
+# 1 path-name/index.js                => test/path-name.spec.js
+# 2 path-name/index.jsx               => rename path-name/path-name.jsx
+# 3 path-name/index.jsx               => test/path-name.spec.js
+# 4 path-name/path-name.jsx           => test/path-name.spec.js
+# 5 path-name/path-name.js            => rename path-name/path-name.jsx
+# 6 path-name/container.js            => rename path-name/path-name.container.js
+# 7 path-name/container.jsx           => rename path-name/path-name.container.js
+# 8 path-name/path-name.container.js  => test/path-name.container.spec.js
+# 9 path-name/test/container.spec.js  => rename path-name/test/path-name.container.spec.js
+# 10 path-name/util.js                => path-name/util.spec.js
+# or
+# 11 path-name/util.js                => test/util.spec.js
+# 12 path-name/index.js               => rename path-name/path-name.js
+# 13 path-name/any.spec.jsx           => rename path-name/any.spec.js
+# 14 path-name/test/any.spec.jsx      => rename path-name/test/any.spec.js
 function check_test_plan_target {
-	local file
+	local file INDEX _NAME SOURCE_NAME INDEX CONTAINER REACT
 	file="$1"
 
+	if echo "$file" | grep -E '\.jsx$' > /dev/null; then
+		# case 13,14
+		give_reason "test plan is named incorrectly, should NOT have .jsx extension (13,14)"
+	fi
+	if grep -E 'from\s+(.)(react|enzyme|react-testing-library)\1' "$file" > /dev/null; then
+		REACT=1
+	fi
 	if echo $file | grep 'container.spec' > /dev/null; then
-		INDEX_NAME=`echo "$file" | perl -pne 's{/test/}{/}xmsg; s{\.container\.spec}{}xmsg; s{/[^/]+\z}{/container.js}xmsg;'`
-		SOURCE_NAME=`echo "$file" | perl -pne 's{/test/}{/}xmsg; s{\.spec}{}xmsg;'`
+		# case 6,7,8,9
+		CONTAINER=1
+		INDEX_NAME=`echo "$file" | \
+			perl -pne '
+				s{/test/}{/}xmsg;
+				s{\.container\.spec}{}xmsg;
+				s{/[^/]+\z}{/container.js}xmsg;
+			'`
+		SOURCE_NAME=`echo "$file" | \
+			perl -pne '
+				s{/test/}{/}xmsg;
+				s{\.spec}{}xmsg;
+			'`
 		if [ ! -f "$SOURCE_NAME" ]; then
 			if [ -f "$INDEX_NAME" ]; then
-				give_reason "testing target: $INDEX_NAME should be renamed: $SOURCE_NAME"
+				# case 6
+				give_reason "testing target: $INDEX_NAME should be renamed(6): $SOURCE_NAME"
 			else
-				give_reason "test plan may be named incorrectly didn't find testing target: $SOURCE_NAME"
+				if [ -f "${INDEX_NAME}x" ]; then
+					# case 7
+					give_reason "testing target: ${INDEX_NAME}x should be renamed(7): $SOURCE_NAME"
+				else
+					# case 8,9
+					give_reason "test plan may be named incorrectly didn't find testing target(8,9): $SOURCE_NAME"
+				fi
 			fi
 		fi
 	else
-		INDEX_NAME=`echo "$file" | perl -pne 's{/test/}{/}xmsg; s{\.spec}{}xmsg; s{/[^/]+\z}{/index.js}xmsg;'`
-		SOURCE_NAME=`echo "$file" | perl -pne 's{/test/}{/}xmsg; s{\.spec}{}xmsg;'`
-		if [ ! -f "$SOURCE_NAME" ]; then
-			if [ -f "$INDEX_NAME" ]; then
-				give_reason "testing target: $INDEX_NAME should be renamed: $SOURCE_NAME"
+		INDEX_NAME=`echo "$file" | \
+			perl -pne '
+				s{/test/}{/}xmsg;
+				s{\.spec}{}xmsg;
+				s{/[^/]+\z}{/index.js}xmsg;
+			'`
+		SOURCE_NAME=`echo "$file" | \
+			perl -pne '
+				s{/test/}{/}xmsg;
+				s{\.spec}{}xmsg;
+				s{(\.js)x?\z}{$1}xmsg;
+			'`
+		if [ "$REACT" == 1 ]; then
+			if [ -f "$SOURCE_NAME" ]; then
+				# case 5
+				give_reason "testing target: $SOURCE_NAME should be renamed(5): ${SOURCE_NAME}x"
 			else
-				if [ -f "${INDEX_NAME}x" ]; then
-					give_reason "testing target: ${INDEX_NAME}x should be renamed: ${SOURCE_NAME}x"
+				if [ ! -f "${SOURCE_NAME}x" ]; then
+					if [ -f "$INDEX_NAME" ]; then
+						# case 1
+						give_reason "testing target: $INDEX_NAME should be renamed(1): ${SOURCE_NAME}x"
+					else
+						if [ -f "${INDEX_NAME}x" ]; then
+							# case 2,3
+							give_reason "testing target: ${INDEX_NAME}x should be renamed(2,3): ${SOURCE_NAME}x"
+						else
+							# case 4
+							give_reason "test plan may be named incorrectly didn't find testing target(4): ${SOURCE_NAME}x"
+						fi
+					fi
+				fi
+			fi
+		else
+			if [ ! -f "$SOURCE_NAME" ]; then
+				if [ -f "$INDEX_NAME" ]; then
+					# case 12
+					give_reason "testing target: $INDEX_NAME should be renamed(12): $SOURCE_NAME"
 				else
-					give_reason "test plan may be named incorrectly didn't find testing target: $SOURCE_NAME"
+					# case 10,11
+					give_reason "test plan may be named incorrectly didn't find testing target(10,11): $SOURCE_NAME"
 				fi
 			fi
 		fi
@@ -174,12 +294,18 @@ function code_review {
 	file="$1"
 
 	echo $file:
-	if git grep -E 'describe\(' "$file" > /dev/null; then
+	# EXPLAIN=1
+	# HEADING="DEBUGGING..."
+	# search_debug 'case\b[^:]+?:[^\{]*$' "$file"      "should have {} around all case X: statements"
+	# exit 1
+
+	if grep -E 'describe\(' "$file" > /dev/null; then
 		HEADING="checking for bad test plan practices..."
 		check_test_plan_target "$file"
 		has_js 'eslint-disable prefer-arrow-callback' "$file" "test plan MUST have /* eslint-disable prefer-arrow-callback */"
 		has_js 'const\s+suite\b' "$file" "test plan MUST define suite name"
 		has_js "'$file'" "$file" "test plan MUST have const suite = '$file';"
+		# TODO beforeEach/afterEach anon functions
 		search_js '[fx](it|describe)\s*\(' "$file"  "MUST restore describe/it test"
 		search_js '(it|describe)\.(only|skip)\s*\(' "$file"  "MUST restore describe/it test"
 		search_js_comments '[fx]?(it|describe)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
@@ -187,15 +313,17 @@ function code_review {
 		search_js '\.called' "$file" "MUST use .callCount instead of .called or .calledOnce (code-fix)"
 		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
-		search_js 'expect\(.+\.args' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
+		search_js 'expect\(.+\.args.+\)\s*$' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
+		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(([^`''"]|\s*$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 
 		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
 		# TODO spy.callCount missing before checking spy calls
 		# TODO expect() .toBe/Equal
-		search_js '(describe).+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function as descObjectNameSuite instead of using anonymous function (code-fix)"
-		search_js '(describe).+\bfunction desc[a-z]' "$file"  "MUST name your describe function as descObjectNameSubSuite instead of using anonymous function (code-fix)"
-		search_js '(it).+\(\)\s*=>\s*\{$' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
-		search_js '(it).+\bfunction test[a-z]' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		search_js '(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function as descObjectNameSuite instead of using anonymous function (code-fix)"
+		search_js '(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function as descObjectNameSubSuite"
+		search_js '(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		search_js '(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function as testObjectNameFunctionMode"
+		search_js '(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function as setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
 	else
 		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
@@ -225,8 +353,8 @@ function code_review {
 	search_js 'default\s*:[^\{]*$' "$file"        "should have {} around all switch default: statements"
 	search_js '([A-Z_]+)\s*:\s*(.)\1\2' "$file"   "MUST use list.reduce for defining Action constants"
 
-	if git grep -E 'from\s+(.)react\1' "$file" > /dev/null; then
-		if git grep -E 'describe\(' "$file" > /dev/null; then
+	if grep -E 'from\s+(.)react\1' "$file" > /dev/null; then
+		if grep -E 'describe\(' "$file" > /dev/null; then
 			# a test plan with react in it
 			true
 		else
@@ -239,13 +367,13 @@ function code_review {
 				has_js 'defaultProps' "$file" "MUST define defaultProps"
 				search_js '<[a-z]+[A-Z]' "$file" "MUST not name components starting with lower case or it will render as an HTML element not a component"
 				search_js '\s+on\w+\s*\(' "$file" "MUST not bind events in constructor, define event with arrow function instead"
-				search_js '(this.\w+)\s*=\s*\1\.bind' "$file" "MUSTS not bind events in constructor, define event with arrow function instead"
+				search_js '(this.\w+)\s*=\s*\1\.bind' "$file" "MUST not bind events in constructor, define event with arrow function instead"
 				search_js '=\{\s*\([^)]*\)\s*=>' "$file"  "MUST not use anonymous event handlers in render"
 				search_js 'src=[^\{]' "$file"  "MUST not use paths to assets, import them into a constant for webpack optimisation"
 			fi
 		fi
 	fi
-	if git grep -E 'connect.+from\s+(.)react-redux\1' "$file" > /dev/null; then
+	if grep -E 'connect.+from\s+(.)react-redux\1' "$file" > /dev/null; then
 		HEADING="checking for Redux container issues..."
 	fi
 
