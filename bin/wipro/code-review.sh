@@ -299,6 +299,12 @@ function code_review {
 	# search_debug 'case\b[^:]+?:[^\{]*$' "$file"      "should have {} around all case X: statements"
 	# exit 1
 
+	HEADING="checking for incomplete work..."
+	search_js 'MUS''TDO' "$file"  "work which MUST be completed asap"
+	search_js_comments 'MUS''TDO' "$file"  "work which MUST be completed asap"
+	search_js 'TO''DO' "$file"  "work which needs to be done"
+	search_js_comments 'TO''DO' "$file"  "work which might need doing"
+
 	if grep -E 'describe\(' "$file" > /dev/null; then
 		HEADING="checking for bad test plan practices..."
 		check_test_plan_target "$file"
@@ -306,8 +312,8 @@ function code_review {
 		has_js 'const\s+suite\b' "$file" "test plan MUST define suite name"
 		has_js "'$file'" "$file" "test plan MUST have const suite = '$file';"
 		# TODO beforeEach/afterEach anon functions
-		search_js '[fx](it|describe)\s*\(' "$file"  "MUST restore describe/it test"
-		search_js '(it|describe)\.(only|skip)\s*\(' "$file"  "MUST restore describe/it test"
+		search_js '\b[fx](it|describe)\s*\(' "$file"  "MUST restore describe/it test"
+		search_js '\b(it|describe)\.(only|skip)\s*\(' "$file"  "MUST restore describe/it test"
 		search_js_comments '[fx]?(it|describe)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
 		search_js_comments '(it|describe)\.(only|skip)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
 		search_js '\.called' "$file" "MUST use .callCount instead of .called or .calledOnce (code-fix)"
@@ -319,11 +325,11 @@ function code_review {
 		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
 		# TODO spy.callCount missing before checking spy calls
 		# TODO expect() .toBe/Equal
-		search_js '(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function as descObjectNameSuite instead of using anonymous function (code-fix)"
-		search_js '(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function as descObjectNameSubSuite"
-		search_js '(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
-		search_js '(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function as testObjectNameFunctionMode"
-		search_js '(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function as setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
+		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function as descObjectNameSuite instead of using anonymous function (code-fix)"
+		search_js '\b(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function as descObjectNameSubSuite"
+		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function as testObjectNameFunctionMode"
+		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function as setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
 	else
 		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
