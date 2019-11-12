@@ -320,7 +320,7 @@ function code_review {
 		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'expect\(.+\.args.+\)\s*$' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
-		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(([^`''"]|\s*$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
+		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(\s*([^`'\''"]|$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 
 		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
 		# TODO spy.callCount missing before checking spy calls
