@@ -18,7 +18,7 @@ fi
 
 if [ `git branch --list --remote | grep -v '*' | grep -i "$SEARCH" | wc -l` == "1" ]; then
 	BRANCH=`git branch --list --remote | grep -v '*' | grep -i "$SEARCH"`
-	git-fetch-pull-request.sh "$BRANCH"
+	git-fetch-pull-request.sh $BRANCH
 else
 	git branch --list --remote | grep -i "$SEARCH" | sort
 fi
