@@ -28,6 +28,9 @@ battery-level.txt
 fortune/auto-build-all.log
 fortune/last-build.timestamp
 
+# python
+*.pyc
+
 # erlang/elixir
 *.beam
 

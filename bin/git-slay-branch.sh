@@ -6,6 +6,7 @@ if [ ! -z "$2" ]; then
 	do
 		$0 "$br"
 	done
+	git remote prune origin
 fi
 
 branch=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
