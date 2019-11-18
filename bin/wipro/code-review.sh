@@ -230,7 +230,9 @@ function check_test_plan_target {
 		if [ ! -f "$SOURCE_NAME" ]; then
 			if [ -f "$INDEX_NAME" ]; then
 				# case 6
-				give_reason "testing target: $INDEX_NAME should be renamed(6): $SOURCE_NAME"
+				# not required right now to rename container files
+				true
+				# give_reason "testing target: $INDEX_NAME should be renamed(6): $SOURCE_NAME"
 			else
 				if [ -f "${INDEX_NAME}x" ]; then
 					# case 7
@@ -294,6 +296,9 @@ function code_review {
 	file="$1"
 
 	echo $file:
+	if [ -e "$file" ]; then
+		grep -E '//\s+code-review-ok:' "$file"
+
 	# EXPLAIN=1
 	# HEADING="DEBUGGING..."
 	# search_debug 'case\b[^:]+?:[^\{]*$' "$file"      "should have {} around all case X: statements"
@@ -320,7 +325,7 @@ function code_review {
 		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'expect\(.+\.args.+\)\s*$' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
-		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(\s*([^`'\''"]|$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
+		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(\s*([^`'\''"0-9]|$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 
 		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
 		# TODO spy.callCount missing before checking spy calls
@@ -346,6 +351,7 @@ function code_review {
 
 	HEADING="checking for practices to minimise..."
 	search_js '\bconsole\.' "$file"   "MUST remove leftover console debug logs"
+	# TODO console.error.restore();
 	search_js '\bNODE_ENV\b' "$file"  "reduce code blocks dependent on release environment"
 
 	HEADING="checking for unnecessary obfuscation..."
@@ -403,6 +409,9 @@ function code_review {
 	fi
 
 	# TODO alt,aria-label= without copyText
+	else
+		echo "File not found!"
+	fi
 }
 
 if [ -z "$1" ]; then
