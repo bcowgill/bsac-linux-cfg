@@ -4,8 +4,8 @@ use strict;
 use warnings;
 use Data::Dumper;
 
-my $STOP = '32246cf89b220935bca147e077f85067517aa7c6';
-my %DAYS = qw(Sat 1 Sun 1 Mon 1);
+my $STOP = '';
+my %DAYS = qw(Sat 1 Sun 1);
 my %HOURS = map { ($_, 1) } qw(09 10 11 12 13 14 15 16 17);
 
 my $people = 0;
@@ -38,7 +38,7 @@ sub match_commit
 
 while (my $line = <STDIN>)
 {
-	last if $line =~ m{$STOP}xms;
+	last if $STOP && $line =~ m{$STOP}xms;
 	if ($line =~ m{\Acommit\s+ (\S+) \s+}xms)
 	{
 		my $commit_hash = $1;
@@ -58,7 +58,7 @@ while (my $line = <STDIN>)
 				}
 				else
 				{
-					$rhWork->{'alias'}{'Late'}++;;
+					$rhWork->{$alias}{'Late'}++;;
 				}
 				push(@$raCommits, $rhCommit);
 			}
