@@ -306,6 +306,7 @@ function code_review {
 
 	HEADING="checking for incomplete work..."
 	search_js 'MUS''TDO' "$file"  "work which MUST be completed asap"
+	search_js 'MMM|NNN' "$file"  "function of variables which need to be named properly"
 	search_js_comments 'MUS''TDO' "$file"  "work which MUST be completed asap"
 	search_js 'TO''DO' "$file"  "work which needs to be done"
 	search_js_comments 'TO''DO' "$file"  "work which might need doing"
@@ -324,17 +325,18 @@ function code_review {
 		search_js '\.called' "$file" "MUST use .callCount instead of .called or .calledOnce (code-fix)"
 		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
 		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
+		search_js '\)\.toEqual\(\s*[\{\[]' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate objects or arrays"
 		search_js 'expect\(.+\.args.+\)\s*$' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(\s*([^`'\''"0-9]|$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 
 		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
 		# TODO spy.callCount missing before checking spy calls
 		# TODO expect() .toBe/Equal
-		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function as descObjectNameSuite instead of using anonymous function (code-fix)"
-		search_js '\b(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function as descObjectNameSubSuite"
-		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function as testObjectNameFunctionMode instead of using anonymous function (code-fix)"
-		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function as testObjectNameFunctionMode"
-		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function as setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
+		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function something like descObjectNameSuite instead of using anonymous function (code-fix)"
+		search_js '\b(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function something like descObjectNameSubSuite"
+		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function something like testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function something like testObjectNameFunctionMode"
+		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function something like setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
 	else
 		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
@@ -435,7 +437,9 @@ fi
 
 for file in $*
 do
-	code_review "$file"
+	if echo "$file" | grep -vE 'code-(review|fix)\.sh' > /dev/null; then
+		code_review "$file"
+	fi
 done
 
 rm $TMP1 $TMP2 $TMP3
