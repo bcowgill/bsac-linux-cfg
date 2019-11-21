@@ -7,6 +7,7 @@ EXPLAIN=${EXPLAIN:-0}
 TMP1=`mktemp`
 TMP2=`mktemp`
 TMP3=`mktemp`
+TMP4=`mktemp`
 
 # so that output is filename:match...
 GREP="git grep"
@@ -101,8 +102,20 @@ function search_js_filter {
 	file="$3"
 	reason="$4"
 	explain match "$regex except $filter"
-	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -v "$filter" > $TMP3
+	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -vE "$filter" > $TMP3
 	indent_output $TMP3 "$reason"
+}
+
+# search non-commented javascript lines for something but not something else and show duplicated lines only
+function search_js_filter_duplicates {
+	local regex filter file reason
+	regex="$1"
+	filter="$2"
+	file="$3"
+	reason="$4"
+	explain match "$regex except $filter duplicates"
+	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -vE "$filter" | sort | tee $TMP3 | uniq -d > $TMP4
+	indent_output $TMP4 "$reason"
 }
 
 # search non-commented javascript lines and just report if missing
@@ -337,6 +350,7 @@ function code_review {
 		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function something like testObjectNameFunctionMode instead of using anonymous function (code-fix)"
 		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function something like testObjectNameFunctionMode"
 		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function something like setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
+		# TODO       it('should reject promise on server error', (done) => {
 	else
 		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
@@ -345,6 +359,7 @@ function code_review {
 		HEADING="checking for app specific idioms..."
 		search_js_filter 'function\s+(\w+(Action|Service|Middleware))\s*\(' EOB "$file"  "Actions etc should use it = EOB calling protocol"
 		search_js_filter 'const\s+(\w+(Action|Service|Middleware))\s*=\s*\(' EOB "$file" "Actions etc should use it = EOB calling protocol"
+		search_js_filter_duplicates '\(pageInfo\)' 'mockAPI' "$file" "MUST fix duplicated cypress mock-api routes"
 	fi
 
 	HEADING="checking for code to remove..."
@@ -352,8 +367,8 @@ function code_review {
 	search_js '\balert\(' "$file"    "MUST remove browser alert messages"
 
 	HEADING="checking for practices to minimise..."
-	search_js '\bconsole\.' "$file"   "MUST remove leftover console debug logs"
-	# TODO console.error.restore();
+	# excludes test plan spy console.error.restore();
+	search_js_filter '\bconsole\.\w+' 'console\.\w+\.restore\(\)' "$file"   "MUST remove leftover console debug logs"
 	search_js '\bNODE_ENV\b' "$file"  "reduce code blocks dependent on release environment"
 
 	HEADING="checking for unnecessary obfuscation..."
@@ -442,4 +457,4 @@ do
 	fi
 done
 
-rm $TMP1 $TMP2 $TMP3
+rm $TMP1 $TMP2 $TMP3 $TMP4
