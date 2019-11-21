@@ -21,9 +21,9 @@ do
 done
 echo \* `cat tests.txt | wc -l` feature files with enabled tests
 
-# clean up names and sort the by number
+# clean up names and sort randomly by the number
 perl -pne 's{PAYO4B-+}{}xms' tests.txt \
-	| sort -n \
+	| sort --sort=random\
 	> test-list.txt
 
 split-list.pl test-list.txt $PEOPLE \
@@ -34,11 +34,11 @@ do
 done
 echo " "
 
-# convert lines to checkboxes and show names
+# convert lines to checkboxes and show names in sorted order
 for file in $PEOPLE
 do
 	echo "# $file" | perl -pne 's{\.lst}{}xms'
-	cat $file | perl -pne 's{\A}{* [ ] }xms'
+	cat $file | sort --sort=numeric | perl -pne 's{\A}{* [ ] }xms'
 	echo " "
 done
 
