@@ -4,6 +4,9 @@
 
 EXPLAIN=${EXPLAIN:-0}
 
+WARNINGS=0
+
+TMP0=`mktemp`
 TMP1=`mktemp`
 TMP2=`mktemp`
 TMP3=`mktemp`
@@ -12,16 +15,26 @@ TMP4=`mktemp`
 # so that output is filename:match...
 GREP="git grep"
 
+# count up some warnings
+function warn {
+	WARNINGS=$(($WARNINGS + ${1:-1}))
+}
+
+# say something to the output file
+function say {
+	echo "$1" >> $TMP0
+}
+
 # display possible heading along with a reason
 function give_reason {
 	local reason
 	reason="$1"
 
 	if [ ! -z "$HEADING" ]; then
-		echo " $HEADING"
+		say " $HEADING"
 		HEADING=""
 	fi
-	echo "  $reason"
+	say "  $reason"
 }
 
 # if EXPLAIN display possible heading and what the regex match is for
@@ -42,6 +55,7 @@ function indent_output {
 
 	lines=`wc -l < "$file"`
 	if [ $lines -gt 0 ]; then
+		warn $lines
 		give_reason "$reason"
 		perl -pne 's{\A.+?:\s*}{      }xmsg' "$file"
 	fi
@@ -128,6 +142,7 @@ function has_js {
 	grep -v '//' "$file" | tee $TMP1 | grep -E "$regex" > $TMP2
 	lines=`wc -l < "$TMP2"`
 	if [ $lines -lt 1 ]; then
+		warn
 		if [ -z "$message" ]; then
 			give_reason "  missing $regex"
 		else
@@ -305,12 +320,16 @@ function check_test_plan_target {
 
 # perform the code review showing problems
 function code_review {
-	local file
+	local file code_review_ok
 	file="$1"
 
 	echo $file:
+	WARNINGS=0
+	WARNINGS_EXPECTED=0
+	echo -n > $TMP0
 	if [ -e "$file" ]; then
-		grep -E '//\s+code-review-ok:' "$file"
+		code_review_ok=`grep -E '//\s+code-review-ok:' "$file" | head -1 | perl -pne 's{\A.*:\s*(\d+).*\z}{$1}xms'`
+		WARNINGS_EXPECTED=${code_review_ok:-0}
 
 	# EXPLAIN=1
 	# HEADING="DEBUGGING..."
@@ -429,7 +448,15 @@ function code_review {
 	else
 		echo "File not found!"
 	fi
-}
+	if [ $(($WARNINGS - $WARNINGS_EXPECTED)) != 0 ]; then
+		if [ 0 == $WARNINGS_EXPECTED ]; then
+			echo " $WARNINGS code review warnings."
+		else
+			echo " $WARNINGS code review warnings, $WARNINGS_EXPECTED declared by code-review-ok:"
+		fi
+		cat $TMP0
+	fi
+} # code_review
 
 if [ -z "$1" ]; then
 	echo "
@@ -457,4 +484,4 @@ do
 	fi
 done
 
-rm $TMP1 $TMP2 $TMP3 $TMP4
+rm $TMP0 $TMP1 $TMP2 $TMP3 $TMP4
