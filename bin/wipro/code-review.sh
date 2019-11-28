@@ -153,6 +153,7 @@ function has_js {
 
 # check if a javascript file has the correctly named test plan file
 function check_has_test_plan {
+	# exports GOT_TEST_PLAN
 	local file $SOURCE TEST_PLAN TEST_PLAN2 INDEX CONTAINER REACT
 	file="$1"
 
@@ -162,29 +163,29 @@ function check_has_test_plan {
 	# case 4
 	TEST_PLAN=`echo "$file" | \
 		perl -pne '
-			s{\.jsx?\z}{.spec.js}xms;
+			s{\.jsx?\s*\z}{.spec.js}xms;
 			s{/([^/]+)\z}{/test/$1}xms
 		'`
-	if echo "$file" | grep -E "/container\.jsx?$" > /dev/null; then
+	if echo "$file" | grep -E "/container\.jsx?\s*$" > /dev/null; then
 		# case 6,7,8
 		CONTAINER=1
 		TEST_PLAN=`echo "$file" | \
 			perl -pne '
-				s{/([^/]+)/container\.jsx?\z}{/$1/test/$1.container.spec.js}xms
+				s{/([^/]+)/container\.jsx?\s*\z}{/$1/test/$1.container.spec.js}xms
 			'`
 	fi
-	if echo "$file" | grep -E "/index\.jsx?$" > /dev/null; then
+	if echo "$file" | grep -E "/index\.jsx?\s*$" > /dev/null; then
 		# case 1,2,3
 		INDEX=1
 		TEST_PLAN=`echo "$file" | \
 			perl -pne '
-				s{/([^/]+)/index\.jsx?}{/$1/test/$1.spec.js}xmsg
+				s{/([^/]+)/index\.jsx?\s*\z}{/$1/test/$1.spec.js}xmsg
 			'`
 			if [ "$REACT" == "1" ]; then
 				SOURCE=`echo "$TEST_PLAN" | \
 					perl -pne '
 						s{/test/}{/}xms;
-						s{\.spec\.jsx?}{.jsx}xms;
+						s{\.spec\.jsx?\s*\z}{.jsx}xms;
 					'`
 				give_reason "react component should be renamed(2): $SOURCE"
 			fi
@@ -194,13 +195,13 @@ function check_has_test_plan {
 			# case 10
 			TEST_PLAN2=`echo "$file" | \
 				perl -pne '
-					s{\.js\z}{.spec.js}xms;
+					s{\.js\s*\z}{.spec.js}xms;
 				'`
 			if [ ! -f "$TEST_PLAN2" ]; then
 				# case 11
 				TEST_PLAN2=`echo "$file" | \
 					perl -pne '
-						s{/([^/]+)\.js\z}{/test/$1.spec.js}xms;
+						s{/([^/]+)\.js\s*\z}{/test/$1.spec.js}xms;
 					'`
 				if [ ! -f "$TEST_PLAN2" ]; then
 					# cases 4,10,11
@@ -211,6 +212,12 @@ function check_has_test_plan {
 			# cases 1,3,8
 			give_reason "missing or misnamed test plan, didn't find(1,3,8): $TEST_PLAN"
 		fi
+	fi
+	if [ -f "$TEST_PLAN" ]; then
+		GOT_TEST_PLAN="$TEST_PLAN"
+	fi
+	if [ -f "$TEST_PLAN2" ]; then
+		GOT_TEST_PLAN="$TEST_PLAN2"
 	fi
 }
 
@@ -326,6 +333,7 @@ function code_review {
 	echo $file:
 	WARNINGS=0
 	WARNINGS_EXPECTED=0
+	GOT_TEST_PLAN=
 	echo -n > $TMP0
 	if [ -e "$file" ]; then
 		code_review_ok=`grep -E '//\s+code-review-ok:' "$file" | head -1 | perl -pne 's{\A.*:\s*(\d+).*\z}{$1}xms'`
@@ -372,7 +380,7 @@ function code_review {
 		# TODO       it('should reject promise on server error', (done) => {
 	else
 		# Not a test plan...
-		if echo "$file" | grep -E '\.jsx?$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
+		if echo "$file" | grep -E '\.jsx?\s*$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
 			check_has_test_plan "$file"
 		fi
 		HEADING="checking for app specific idioms..."
@@ -455,6 +463,11 @@ function code_review {
 			echo " $WARNINGS code review warnings, $WARNINGS_EXPECTED declared by code-review-ok:"
 		fi
 		cat $TMP0
+	fi
+# TODO run the test plan and/or code review it
+	if [ ! -z "$GOT_TEST_PLAN" ]; then
+		echo " has test plan:"
+		code_review "$GOT_TEST_PLAN"
 	fi
 } # code_review
 
