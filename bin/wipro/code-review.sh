@@ -4,8 +4,15 @@
 
 EXPLAIN=${EXPLAIN:-0}
 
+# CODE_REVIEW_RUN_TESTS environment variable will make use of the TEST_ONE script
+TEST_ONE=./scripts/test-one.sh
+if [ ! -x "$TEST_ONE" ]; then
+	TEST_ONE=test-one.sh
+fi
+
 WARNINGS=0
 
+# temporary output files for debugging the grep output.
 TMP0=`mktemp`
 TMP1=`mktemp`
 TMP2=`mktemp`
@@ -57,7 +64,7 @@ function indent_output {
 	if [ $lines -gt 0 ]; then
 		warn $lines
 		give_reason "$reason"
-		perl -pne 's{\A.+?:\s*}{      }xmsg' "$file"
+		perl -pne 's{\A.+?:\s*}{      }xmsg' "$file" >> $TMP0
 	fi
 }
 
@@ -327,7 +334,7 @@ function check_test_plan_target {
 
 # perform the code review showing problems
 function code_review {
-	local file code_review_ok
+	local file code_review_ok test_plan
 	file="$1"
 
 	echo $file:
@@ -464,10 +471,17 @@ function code_review {
 		fi
 		cat $TMP0
 	fi
-# TODO run the test plan and/or code review it
+
 	if [ ! -z "$GOT_TEST_PLAN" ]; then
-		echo " has test plan:"
-		code_review "$GOT_TEST_PLAN"
+		test_plan="$GOT_TEST_PLAN"
+		if [ -z "$CODE_REVIEW_RUN_TESTS" ]; then
+			echo " has test plan: (set environment CODE_REVIEW_RUN_TESTS=1 to run it)"
+			code_review "$test_plan"
+		else
+			echo " has test plan:"
+			code_review "$test_plan"
+			$TEST_ONE "$test_plan"
+		fi
 	fi
 } # code_review
 
@@ -479,11 +493,15 @@ Perform automated code review based on guidelines at:
 
 https://confluence.devops.lloydsbanking.com/display/PAS/Concrete+Examples+of+Front+End+Review
 
+If a test plan file is located for a given source file, it will also be reviewed.
+
 Output showing MUST are hard rules to be implemented.
 
-Output showing (code-fix) can be automatically or semi-automatically fixed by the code-fix.sh script.
+Output showing (code-fix) can be automatically or semi-automatically fixed by the code-fix.sh script.  Run code-review again after code-fix to see remaining issues.
 
-To review all the files on your branch:
+If the CODE_REVIEW_RUN_TESTS environment variable is defined then the test plan for the code being reviewed will be run using the $TEST_ONE script.
+
+To review all the files on your branch which differ from the develop branch:
 
 $0 \`git diff --name-only develop\`
 "
