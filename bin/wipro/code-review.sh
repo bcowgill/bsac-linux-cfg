@@ -375,9 +375,9 @@ function code_review {
 		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function something like descObjectNameSuite instead of using anonymous function (code-fix)"
 		search_js '\b(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function something like descObjectNameSubSuite"
 		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function something like testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		# TODO       it('should reject promise on server error', (done) => {
 		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function something like testObjectNameFunctionMode"
 		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function something like setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
-		# TODO       it('should reject promise on server error', (done) => {
 	else
 		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?\s*$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then

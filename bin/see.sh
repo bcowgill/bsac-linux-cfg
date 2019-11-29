@@ -1,5 +1,13 @@
 #!/bin/bash
 # see info about a file/dir/archive
+# linux version below for ref/reuse...
+
+# set -x
+
+SEE=see
+if echo $OS | grep -i 'windows' > /dev/null; then
+	SEE=start
+fi
 
 function see_archive {
 	local file
@@ -58,24 +66,24 @@ function see_image {
 		base=`basename "$file"`
 		ppm=`mktemp /tmp/$base.XXXXXX.ppm`
 		winicontoppm "$file" > $ppm
-		see $ppm
+		$SEE $ppm
 		rm $ppm
 		return 0
 	fi
 	if file "$file" | egrep 'pixmap image'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'PC bitmap'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'PostScript'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'PDF document'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
 	if file "$file" | egrep 'Targa image data'> /dev/null; then
@@ -83,11 +91,11 @@ function see_image {
 		return 0
 	fi
 	if file "$file" | egrep 'image (data|text)'> /dev/null; then
-		see "$file"
+		$SEE "$file"
 		return 0
 	fi
-	if [ "`basename $file`" == "`basename $file .xbm`.xbm" ]; then
-		see "$file"
+	if [ "`basename \"$file\"`" == "`basename \"$file\" .xbm`.xbm" ]; then
+		$SEE "$file"
 		return 0
 	fi
 	return 1
@@ -99,8 +107,8 @@ for file in $* ; do
 		exit 1
 	else
 		if [ ! -d "$file" ]; then
-			file $file
-			md5sum $file
+			file "$file"
+			md5sum "$file"
 			see_archive "$file" || see_image "$file" || see_binary "$file" || less "$file"
 		else
 			echo "$file"

@@ -1,4 +1,15 @@
 # git-aliases.sh
+# How to use these aliases:
+# http://mjk.space/git-aliases-i-cant-live-without/
+
+# Source:
+# https://github.com/mjkonarski/oh-my-git-aliases/raw/master/oh-my-git-aliases.sh
+
+# Place the below into your .bashrc or appropriate shell config file
+# if [ -f ~/.git-aliases ]; then
+#     . ~/.git-aliases
+# fi
+
 
 if git config --global --list | grep alias.h > /dev/null; then
 	echo git aliases are already configured. > /dev/null

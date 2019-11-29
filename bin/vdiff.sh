@@ -1,3 +1,4 @@
+#!/bin/bash
 if which diffmerge > /dev/null; then
 	diffmerge --nosplash $*
 else
@@ -5,3 +6,5 @@ else
 		diffmerge.sh $*
 	fi
 fi
+# windows...
+# kdiff3.exe "$1" "$2"
