@@ -15,11 +15,13 @@ FILE="$1"
 OUT="$2"
 
 if [ -z "$FILE" ]; then
-	echo Usage:
-	echo $0 filename \[output\]
-	echo Uses prettydiff.sh to unminify a file to specified file name or to file missing the .min.
-	echo flag: USE_PRETTY_DIR=$USE_PRETTY_DIR if set will create a pretty/ dir to store the file in.
-	echo flag: SET_TOP_DIR=path/ if set will inject path before file name
+	echo "
+usage: $(basename $0) filename \[output\]
+
+Uses prettydiff.sh to unminify a file to specified file name or to file missing the .min.
+flag: USE_PRETTY_DIR=$USE_PRETTY_DIR if set will create a pretty/ dir to store the file in.
+flag: SET_TOP_DIR=path/ if set will inject path before file name.
+"
 	exit 1
 fi
 if [ -z "$OUT" ]; then
@@ -44,7 +46,7 @@ if [ -z "$OUT" ]; then
 	fi
 fi
 if [ -z "$OUT" ]; then
-	echo $0: no output file specified for "$FILE"
+	echo $(basename $0): no output file specified for "$FILE"
 	exit 1
 fi
 DIR=`dirname "$OUT"`

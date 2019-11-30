@@ -4,7 +4,7 @@ set -e
 function usage
 {
 	echo "
-$0 file...
+usage: $(basename $0) file...
 
 Fixes sinon spy based test plans which are missing spy.callCount checks.
 
@@ -23,7 +23,7 @@ whenever it sees an expect(spy.lastCall...
                  or expect(spy.getCall(0)...
                  or expect(spy.firstCall...
 
-Reasonong: When unit testing with spies, if you don't check the callCount but just go right to firstCall, lastCall or getCall you can get a confusing syntax error: [TypeError: Cannot read property 'args' of null].  But if you check the callCount you will be shown a number mismatch, which is easier to understand.  Also if the code changes and your spy gets called an additional time, the callCount test will fail and you can add the additional unit tests for the new call.
+Reasoning: When unit testing with spies, if you don't check the callCount but just go right to firstCall, lastCall or getCall you can get a confusing syntax error: [TypeError: Cannot read property 'args' of null].  But if you check the callCount you will be shown a number mismatch, which is easier to understand.  Also if the code changes and your spy gets called an additional time, the callCount test will fail and you can add the additional unit tests for the new call.
 
 Changing toEqual to toBe is done because toBe is rarely the correct test to use as it is a deep comparison and is not needed on simple type tests.
 "

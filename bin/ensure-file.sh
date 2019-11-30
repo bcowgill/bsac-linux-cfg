@@ -3,9 +3,9 @@
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 path-to-filename
+usage: $(basename $0) path-to-filename
 
-This is like a simple touch, but wnsures that the file will exist if the directory doesn't.
+This is like a simple touch, but ensures that the file will exist if the directory doesn't.
 "
 	exit 1
 fi

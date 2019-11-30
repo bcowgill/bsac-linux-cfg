@@ -1,5 +1,5 @@
 You cannot specify --foreground when using the --color-only option
 You cannot specify --background when using the --color-only option
-Usage:
+usage:
     filter-css-colors.pl [options] [@options-file ...] [file ...]
 

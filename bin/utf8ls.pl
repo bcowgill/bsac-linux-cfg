@@ -19,8 +19,7 @@ my $MAX_CODEPOINT = hex('10FFFF');
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
-Usage:
-$0 [-N] [-all] U+XXXX {U+XXXX} "\\\\N{UNICODE_CHARACTER_NAME}" '\\N{UNICODE_CHARACTER_NAME}'
+usage: $0 [-N] [-all] U+XXXX {U+XXXX} "\\\\N{UNICODE_CHARACTER_NAME}" '\\N{UNICODE_CHARACTER_NAME}'
 
 Output a table of utf8 characters starting at a given code point.
 

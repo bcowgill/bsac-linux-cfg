@@ -4,7 +4,7 @@ RENAME=${2:-$HOOK}
 
 if [ -z "$HOOK" ]; then
 	cat <<EOF
-usage: $0 hook-file [rename]
+usage: $(basename $0) hook-file [rename]
 
 This script will install the named hook-file from this directory
 into the .git/hooks directory for this repository.  If the file

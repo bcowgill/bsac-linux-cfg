@@ -10,7 +10,7 @@ function usage
 	message="$1"
 	echo "$message"
 	echo "
-$0 path/to/module/index.js [extension] [facade-test-template]
+usage: $(basename $0) path/to/module/index.js [extension] [facade-test-template]
 
 This will create a javascript Facade file for a given module directory.
 

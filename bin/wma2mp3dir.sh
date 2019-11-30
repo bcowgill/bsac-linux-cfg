@@ -3,7 +3,8 @@
 FILE="$1"
 
 if [ -z "$FILE" ]; then
-	echo "usage: `basename $0` filename...
+	echo "
+usage: `basename $0` filename...
 
 This will convert a Windows Media Audio file .WMA file into a .mp3 file using the avconv utility.
 The .mp3 file will be written to the same directory as the .WMA file and the WMA file will be moved to a wma/ subdirectory.

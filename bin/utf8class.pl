@@ -52,8 +52,7 @@ my @Interesting = qw(
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
-Usage:
-$0 [-N] [-all] \\p{Letter}
+usage: $0 [-N] [-all] \\p{Letter}
 
 Output a table of utf8 characters matching the unicode properties specified.
 

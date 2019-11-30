@@ -3,7 +3,7 @@
 
 if [ "$1" == "--help" ]; then
 	echo "
-usage: $0 file ...
+usage: $(basename $0) file ...
 
 This will wrap lines in files inplace at a specific column width and preserve prefix whitespace on lines..
 
@@ -13,7 +13,7 @@ ALL_LINES  defaults to 0 and only wraps HTML lines with a < ... > on a single li
 
 example:
 
-LINE_WIDTH=100 ALL_LINES=1 $0 index.html
+LINE_WIDTH=100 ALL_LINES=1 $(basename $0) index.html
 "
 exit
 fi

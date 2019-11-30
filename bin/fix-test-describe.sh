@@ -12,7 +12,7 @@ fi
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 file-name ...
+usage: $(basename $0) file-name ...
 
 This will add an additional describe call to a test plan including the path to it.
 Useful for test reporters which do not tell you which test plan an error is from.

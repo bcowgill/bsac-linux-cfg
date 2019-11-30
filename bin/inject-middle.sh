@@ -8,13 +8,13 @@ shift
 
 if [ -z "$1" ]; then
 	cat <<EOF
-usage: $0 start end content file ...
+usage: $(basename $0) start end content file ...
 
 This script will grep a file for a section marked by an open and close marker and then inject the content from another file into it.
 
 example:
 
-$0 '\#WORKSPACEDEF\n' '\#/WORKSPACEDEF\n' content filename
+$(basename $0) '\#WORKSPACEDEF\n' '\#/WORKSPACEDEF\n' content filename
 EOF
 	exit 1
 fi

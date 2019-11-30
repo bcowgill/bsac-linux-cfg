@@ -1,5 +1,5 @@
 Unknown option: unknown-option
-Usage:
+usage:
     ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
             Options:

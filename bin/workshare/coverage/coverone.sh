@@ -15,9 +15,9 @@ PKG=package.json5
 
 TEST_PLAN=$1
 if [ -z $TEST_PLAN ]; then
-	echo usage: $0 [--all] [--list] path/to/a/single/test.spec.js
-
 	echo "
+usage: $(basename $0) [--all] [--list] path/to/a/single/test.spec.js
+
 Run coverage for a single test plan or for all of them, combining results
 into a CSV and index.html
 

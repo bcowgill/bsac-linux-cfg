@@ -6,7 +6,7 @@
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 filename...
+usage: $(basename $0) filename...
 
 Converts ES5 style import X, { Y, ... } from Z into const X = require(Z) ... for IE8 compatibility
 

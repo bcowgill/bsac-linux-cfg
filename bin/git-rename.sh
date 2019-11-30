@@ -8,8 +8,11 @@ EXT="$2"
 NEWNAME="$3"
 
 if [ -z $NEWNAME ]; then
-	echo usage: $0 src/path/filenmae.js .js filename
-	echo will rename/move the file in git and correct import references to it.
+	echo "
+usage: $(basename $0) src/path/filenmae.js .js filename
+
+This command will rename/move the file in git and correct import references to it.
+"
 	exit 1
 fi
 

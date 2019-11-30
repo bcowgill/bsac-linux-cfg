@@ -6,7 +6,7 @@ export MAX=$3
 file=$4
 
 if [ -z "$file" ]; then
-	echo Usage: $0 module seriesIndex maxComplexity complexityLogFile
+	echo usage: $(basename $0) module seriesIndex maxComplexity complexityLogFile
 	exit 1
 fi
 

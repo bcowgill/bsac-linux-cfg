@@ -1,5 +1,5 @@
 Unknown option: unknown-option
-Usage:
+usage:
     pretty-elements.pl [options] [@options-file ...] [file ...]
 
             Options:

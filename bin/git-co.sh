@@ -4,9 +4,9 @@ SEARCH="$1"
 
 if [ -z "$SEARCH" ]; then
 	echo "
-$0 search
+usage: $(basename $0) search
 
-git checkout the single branch which matches the search pattern specified.
+This program will git checkout the single branch which matches the search pattern specified.
 
 If more than one branch matches the pattern then they are shown and nothing else happens.
 

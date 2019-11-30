@@ -26,13 +26,12 @@ my $CTRL = "@{[toUTFCodePoint($TAB)]} @{[toUTFCodePoint($LINE_FEED)]} @{[toUTFCo
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
-Usage:
-$0 [filename]
+usage: $0 [filename]
 
 Read utf8 from STDIN or files and show characters as {U+XXXX} if they are a control character or $MIN_CODE or higher.  A control character is any code point below $MAX_CTRL except tab, line feed, carriage return: $CTRL
 
 EXAMPLES:
-	head -3000 ~/bin/data/unicode/unicode-names.txt | tail -1 | utf8codept.pl
+	head -3000 ~/bin/data/unicode/unicode-names.txt | tail -1 | $0
 
 USAGE
 	exit(0);

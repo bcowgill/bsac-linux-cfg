@@ -4,18 +4,18 @@
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 filename...
+usage: $(basename $0) filename...
 
 Perform multiple fixes to source code.
 
 LINTFIX env var setting ...
 
 Fixes:
-	TODO describe your fixes here... 
+	TODO describe your fixes here...
 
 Examples:
 
-	for f in \`git grep -lE 'something'\`; do echo \$f; fix-multiline.sh \$f; done
+	for f in \`git grep -lE 'something'\`; do echo \$f; $(basename $0) \$f; done
 "
 	exit 1
 fi

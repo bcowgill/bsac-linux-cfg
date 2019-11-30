@@ -8,15 +8,17 @@ option=${1:---faces}
 
 function usage
 {
-	echo Usage $0 [--help] [--faces] [--animals] [--solar] [--all]
-	echo ' '
-	echo Display unicode smiley characters or other custom named groups of characters.
-	echo ' '
-	echo --faces  shows only smiley faces.
-	echo --animals  shows only animals and animal faces.
-	echo --solar  shows only solar system symbols. or --sun --moon --earth
-	echo --stars  shows only star symbols.
-	echo --all  shows all faces.
+	echo "
+usage: $(basename $0) [--help] [--faces] [--animals] [--solar] [--all]
+
+Display unicode smiley characters or other custom named groups of characters.
+
+--faces  shows only smiley faces.
+--animals  shows only animals and animal faces.
+--solar  shows only solar system symbols. or --sun --moon --earth
+--stars  shows only star symbols.
+--all  shows all faces.
+"
 }
 
 case $option in

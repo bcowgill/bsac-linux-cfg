@@ -3,9 +3,12 @@
 # update any maxcomplexity jshint settings within javascript files.
 
 function usage {
-    echo usage: $0 [complexity] file ...
-    echo This will change all jshint maxcomplexity settings found in files.
-    echo The default complexity setting will be 1 if omitted.
+    echo "
+usage: $(basename $0) [complexity] file ...
+
+This will change all jshint maxcomplexity settings found in files.
+The default complexity setting will be 1 if omitted.
+"
     exit 1
 }
 

@@ -15,10 +15,11 @@ function usage
 		echo "$message"
 		exit=1
 	fi
-	echo $0 source-path ... [target-path]
-	echo " "
-	echo put a directory or a file somewhere else but preserve the relative path structure.
-	echo keeps a list of all the files in VOLUMENAME-$INDEX and stores one on the remote as $INDEX
+	echo "
+$(basename $0) source-path ... [target-path]
+
+put a directory or a file somewhere else but preserve the relative path structure.
+keeps a list of all the files in VOLUMENAME-$INDEX and stores one on the remote as $INDEX
 	exit $exit
 }
 

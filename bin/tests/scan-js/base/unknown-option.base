@@ -1,5 +1,5 @@
 Unknown option: unknown-option
-Usage:
+usage:
     scan-js.pl [options] [@options-file ...] [file ...]
 
             Options:

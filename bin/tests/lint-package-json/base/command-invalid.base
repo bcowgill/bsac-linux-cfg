@@ -1,5 +1,5 @@
 Unknown option specified: --invalid
-Usage: lint-package-json.js [options...] filename ...
+usage: lint-package-json.js [options...] filename ...
 
 Checks your package.json to ensure that dependency versions are locked down so that continuous integration (CI) builds are stable.
 Requires node v6.0.0+.

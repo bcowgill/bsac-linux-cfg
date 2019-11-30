@@ -8,12 +8,14 @@ INPLACE=-i.bak
 #INPLACE=""
 
 if [ -z "$1" ]; then
-	echo Usage: $0 file ...
-	echo " "
-	echo Fix up trailing space in files and adjust mixed space/tabs for indentation.
-	echo Flag INDENT_TAB=${INDENT_TAB:-0} if 1 will indent with tab characters.
-	echo Flag INDENT=$INDENT sets number of spaces to a tab stop.
-	[ -z "$INPLACE" ] || echo Flag INPLACE causes changes to be written back to original file
+	echo "
+usage: $(basename $0) file ...
+
+Fix up trailing space in files and adjust mixed space/tabs for indentation.
+Flag INDENT_TAB=${INDENT_TAB:-0} if 1 will indent with tab characters.
+Flag INDENT=$INDENT sets number of spaces to a tab stop.
+"
+[ -z "$INPLACE" ] || echo Flag INPLACE causes changes to be written back to original file.
 	exit 1
 fi
 

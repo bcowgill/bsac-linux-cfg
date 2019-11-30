@@ -38,8 +38,7 @@ my $multi_char = "\N{LATIN CAPITAL LETTER A WITH MACRON AND GRAVE}";
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print << "USAGE";
-Usage:
-$0 utf8 characters
+usage: $0 utf8 characters
 
 Debug utf8 characters from various sources. Shows an internally set literal,
 the UTF8_TEST environment variable, the file utf8-test.txt, the command line

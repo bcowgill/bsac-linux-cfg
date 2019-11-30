@@ -21,7 +21,7 @@ function usage (message = '')
 {
 	const help = `
 ${message}
-Usage: ${binname()}
+usage: ${binname()}
 
 This program shows the version number of all modules installed in ./node_modules directory.
 `.trim();

@@ -1,5 +1,5 @@
 --echo-filename option not allowed when processing standard input.
-Usage:
+usage:
     ls-tt-tags.pl [options] [@options-file ...] [file ...]
 
             Options:

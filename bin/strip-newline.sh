@@ -2,7 +2,7 @@
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 filename
+usage: $(basename $0) filename
 
 Strips the final newline from the named file.
 "

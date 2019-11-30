@@ -4,15 +4,14 @@
 # http://vimdoc.sourceforge.net/htmldoc/eval.html#search()
 
 
-FIND="$1"; 
+FIND="$1";
 shift
 
 if [ -z "$FIND" ]; then
 	echo "
-usage: $0 pattern ... other grep options ...
+usage: $(basename $0) pattern ... other grep options ...
 
-This will grep for the pattern specified and launch vim at the line number
-and column position of each match.
+This will grep for the pattern specified and launch vim at the line number and column position of each match.
 "
 	exit 1
 fi

@@ -6,13 +6,13 @@ shift
 
 if [ -z "$1" ]; then
 	cat <<EOF
-usage: $0 start end file ...
+usage: $(basename $0) start end file ...
 
 This script will grep a file for a section marked by an open and close marker and display the content found.
 
 example:
 
-$0 '#WORKSPACEDEF' '#/WORKSPACEDEF' filename
+$(basename $0) '#WORKSPACEDEF' '#/WORKSPACEDEF' filename
 EOF
 	exit 1
 fi

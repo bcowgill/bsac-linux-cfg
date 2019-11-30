@@ -4,7 +4,7 @@
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 filename...
+usage: $(basename $0) filename...
 
 Perform automated code review fixes based on guidelines at:
 
@@ -12,7 +12,7 @@ https://confluence.devops.lloydsbanking.com/display/PAS/Concrete+Examples+of+Fro
 
 To fix all the files on your branch:
 
-$0 \`git diff --name-only develop\`
+$(basename $0) \`git diff --name-only develop\`
 "
 	exit 1
 fi

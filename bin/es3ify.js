@@ -34,7 +34,7 @@ function usage (message = '')
 {
 	const help = `
 ${message}
-Usage: ${binname()} [-i] filename ...
+usage: ${binname()} [-i] filename ...
 
 Reads a javascript file and converts to ES3.
 Default operation is to show the output to standard output.

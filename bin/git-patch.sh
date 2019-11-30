@@ -8,11 +8,12 @@
 BRANCH=$1
 
 if [ -z "$BRANCH" ]; then
-	echo "usage $0 branch
+	echo "
+usage: $(basename $0) branch
 
 Will create a set of .patch files for the current branch HEAD back to the branch specified.  These patches can then be applied to a different repository.
 
-	"
+"
 	git log --oneline --graph --decorate --all | head
 	exit 1
 fi

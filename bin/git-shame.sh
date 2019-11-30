@@ -6,7 +6,7 @@ LEN=${2:-22}
 
 if [ -z "$STOP" ]; then
 	echo "
-usage: $0 YYYY-MM-DD [length]
+usage: $(basename $0) YYYY-MM-DD [length]
 
 This will display shamefully short git log messages until a certain date is reached.
 "

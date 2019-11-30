@@ -2,10 +2,13 @@
 # align all perl => keys at the same column
 
 function usage {
-	echo $0 [-N] filename
-	echo " "
-	echo "align all perl => key values at the same column."
-	echo if no column number is given it scans the input to find the ideal column to use.
+	echo "
+usage: $(basename $0) [-N] filename
+
+This program will align all perl => key values at the same column.
+
+If no column number is given it scans the input to find the ideal column to use.
+"
 	exit 1
 }
 

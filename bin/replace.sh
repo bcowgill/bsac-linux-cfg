@@ -9,7 +9,7 @@ function usage
 		echo "$message"
 	fi
 	echo "
-$0 search replace files...
+$(basename $0) search replace files...
 
 This wil perform a simple global inplace search and replace in the listed files.
 

@@ -487,7 +487,7 @@ function code_review {
 
 if [ -z "$1" ]; then
 	echo "
-usage: $0 filename...
+usage: $(basename $0) filename...
 
 Perform automated code review based on guidelines at:
 
@@ -503,7 +503,7 @@ If the CODE_REVIEW_RUN_TESTS environment variable is defined then the test plan 
 
 To review all the files on your branch which differ from the develop branch:
 
-$0 \`git diff --name-only develop\`
+$(basename $0) \`git diff --name-only develop\`
 "
 	exit 1
 fi

@@ -10,7 +10,7 @@ function usage {
 		echo -n
 	fi
 	echo "
-$0 from-tab to-tab file_name
+usage: $(basename $0) from-tab to-tab file_name
 
 This will change a files spaced indentation for example from 4 spaces to 2 spaces.
 

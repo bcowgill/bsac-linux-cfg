@@ -46,7 +46,7 @@ function usage (message)
 	message = message || '';
 	const help =
 message +
-'\nUsage: ' + binname() + ' [options...] filename ...' +
+'\nusage: ' + binname() + ' [options...] filename ...' +
 '\n' +
 '\nChecks your package.json to ensure that dependency versions are locked down so that continuous integration (CI) builds are stable.' +
 '\nRequires node v6.0.0+.' +

@@ -11,7 +11,7 @@ fi
 
 if [ -z "$1" ]; then
 	cat <<EOF
-usage: $0 [--content "content to prepend"] [content-filename] file ...
+usage: $(basename $0) [--content "content to prepend"] [content-filename] file ...
 
 This script will insert some content at the top of the files listed.
 
@@ -20,7 +20,7 @@ content-filename  specifies the file to insert into the files.
 
 example:
 
-$0 --content "/* eslint max-len: 100 */" filename
+$(basename $0) --content "/* eslint max-len: 100 */" filename
 EOF
 	exit 1
 fi

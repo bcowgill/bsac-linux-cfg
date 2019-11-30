@@ -9,7 +9,7 @@ crontab2english -- explain crontab commands in English
 
 =head1 SYNOPSIS
 
-	Usage:
+	usage:
 		% crontab2english [-f] files...
 	Or:
 		% cat files... | crontab2english

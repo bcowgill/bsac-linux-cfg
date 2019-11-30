@@ -14,8 +14,13 @@ if which datestamp.sh > /dev/null; then
 fi
 
 if [ -z "$1" ]; then
-	echo Usage: $0 build-command [watch-dir]
-	echo You must supply a build command to run.
+	echo "
+usage: $(basename $0) build-command [watch-dir]
+
+You must supply a build command to run.
+
+This will run the given build command every time a file changes in the watch-dir specified (defaults to the parent directory.)
+"
 	exit 1
 fi
 BUILD="$1"

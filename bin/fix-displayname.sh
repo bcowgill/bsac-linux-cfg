@@ -4,7 +4,7 @@
 
 if [ -z "$1" ]; then
 	echo "
-usage: [LINTFIX=[01]] [ANONTESTS=[01]] $0 filename...
+usage: [LINTFIX=[01]] [ANONTESTS=[01]] $(basename $0) filename...
 
 Perform multiple fixes to source code.
 
@@ -16,7 +16,7 @@ Fixes:
 
 Examples:
 
-	for f in \`git grep -lE 'propTypes|defaultProps'\`; do echo \$f; fix-multiline.sh \$f; done
+	for f in \`git grep -lE 'propTypes|defaultProps'\`; do echo \$f; $(basename $0) \$f; done
 "
 	exit 1
 fi

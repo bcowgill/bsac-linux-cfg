@@ -100,7 +100,7 @@ exit $failed;
 
 sub usage {
 	die <<"END";
-Usage:
+usage:
 
 $0 --contains 'exact text to fail on' command to run
 $0 --matches  'pattern to fail on'    command to run

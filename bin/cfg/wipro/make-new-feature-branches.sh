@@ -58,7 +58,7 @@ function usage {
   NOT_OK "$message"
 
   echo "
-$0 sprintNN/branch-name [bdd-pass-rate] [bdd-gulp-option]
+usage: $(basename $0) sprintNN/branch-name [bdd-pass-rate] [bdd-gulp-option]
 
 This script will create a new feature branch in all the relevant repositories.
 It will set the Jenkinsfile email distroList appropriately.
