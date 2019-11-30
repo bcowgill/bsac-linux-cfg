@@ -3,18 +3,20 @@
 # ./delsame.pl "./WD/acer_5720/Memeo/acer_5720/C_/Users/Public/Music/Sample Music" "./WD/acer_5720/Memeo/acer_5720/C_/Users/me/Documents/pda/htc-hd2-leo/AKSTON-16GB-OLD/MUSIC/Aaron Goldberg/Worlds"
 
 use strict;
+use warnings;
 use English qw(-no_match_vars);
 use Fatal qw(opendir unlink);
 use File::Spec;
 use Data::Dumper;
-use warnings;
+use FindBin;
 
 sub usage {
 	my ($message) = @ARG;
+	my $cmd = $FindBind::Script;
 	print("$message\n\n") if $message;
 
 	print <<"USAGE";
-$0 [--debug] keep-path [delete-path]
+$cmd [--debug] keep-path [delete-path]
 
 keep-path    the path to compare against for identical files.
 delete-path  the path to scan for files to delete. defaults to the current directory.
@@ -27,7 +29,7 @@ For an alternative way of deleting the same files see fdups and delsame system c
 EXAMPLES:
 
 recursively delete from current directory tree files that match another directory tree.
-find . -type d | perl -ne 'chomp; print qq{delsame.pl "\\\$HOME/d/Dropbox/\$_" "\$_"\\n}'
+find . -type d | perl -ne 'chomp; print qq{$cmd "\\\$HOME/d/Dropbox/\$_" "\$_"\\n}'
 
 delete the empty directories after cleanup
 find . -depth -type d -exec rmdir {} \\;

@@ -5,6 +5,7 @@
 use strict;
 use warnings;
 use autodie;
+use FindBin;
 
 my $TILES = shift;
 my $MULTIPLIER = shift;
@@ -22,16 +23,17 @@ $AT =~ s{\@}{}xmsg;
 
 if (! $TILES)
 {
+	my $cmd = $FindBin::Script;
 	my $scoring = join(" ", map { "$_:$V{$_}" } sort(keys(%V)));
 	print <<"USAGE";
-$0 letters 2xword|2xletter \@3
+$cmd letters 2xword|2xletter \@3
 
 find best scoring words for hanging with friends.
 
 @{[letter_histogram(\%V, 10, 3)]}
 example:
 
-$0 etaoinsrh 2xw \@5 | sort -g | grep -v x[2-9]
+$cmd etaoinsrh 2xw \@5 | sort -g | grep -v x[2-9]
 
 indicates a double word score tile at position 5
 USAGE

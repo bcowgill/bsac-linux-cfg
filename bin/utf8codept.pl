@@ -8,6 +8,8 @@ use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
 use charnames qw(:full);
+use FindBin;
+
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
@@ -25,13 +27,15 @@ my $CTRL = "@{[toUTFCodePoint($TAB)]} @{[toUTFCodePoint($LINE_FEED)]} @{[toUTFCo
 
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
+	my $cmd = $FindBin::Script;
+
 	print << "USAGE";
-usage: $0 [filename]
+usage: $cmd [filename]
 
 Read utf8 from STDIN or files and show characters as {U+XXXX} if they are a control character or $MIN_CODE or higher.  A control character is any code point below $MAX_CTRL except tab, line feed, carriage return: $CTRL
 
 EXAMPLES:
-	head -3000 ~/bin/data/unicode/unicode-names.txt | tail -1 | $0
+	head -3000 ~/bin/data/unicode/unicode-names.txt | tail -1 | $cmd
 
 USAGE
 	exit(0);

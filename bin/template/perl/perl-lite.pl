@@ -12,6 +12,7 @@ $Data::Dumper::Terse    = 1;
 
 use File::Slurp qw(:std :edit);
 use autodie qw(open);
+use FindBin;
 
 our $VERSION = 0.1;
 our $DEBUG = 1;
@@ -55,9 +56,11 @@ sub debug
 sub usage
 {
 	my ($msg) = @ARG;
+	my $cmd = $FindBin::Script;
+
 	print "$msg\n\n" if $msg;
 	print <<"USAGE";
-usage: $0
+usage: $cmd
 
 TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests
 USAGE

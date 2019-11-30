@@ -25,6 +25,7 @@ use English qw(-no_match_vars);
 use Data::Dumper;
 use Devel::Peek;
 use File::Slurp;
+use FindBin;
 
 my $some_char = "\N{U+1D538}";
 my $𝔸 = '𝔸'; # U+1D538 literal and var name
@@ -37,8 +38,10 @@ my $multi_char = "\N{LATIN CAPITAL LETTER A WITH MACRON AND GRAVE}";
 
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
+	my $cmd = $FindBin::Script;
+
 	print << "USAGE";
-usage: $0 utf8 characters
+usage: $cmd utf8 characters
 
 Debug utf8 characters from various sources. Shows an internally set literal,
 the UTF8_TEST environment variable, the file utf8-test.txt, the command line
@@ -48,14 +51,14 @@ eg.
 
 export UTF8_TEST=`utf8.pl U+1D538`
 utf8.pl U+1D538 > utf8-test.txt
-utf8.pl U+1D538 | $0
+utf8.pl U+1D538 | $cmd
 
-$0 tschüß TSCHÜSS
-$0 Σίσυφος ΣΊΣΥΦΟΣ
-$0 "henry ⅷ" "HENRY Ⅷ"
+$cmd tschüß TSCHÜSS
+$cmd Σίσυφος ΣΊΣΥΦΟΣ
+$cmd "henry ⅷ" "HENRY Ⅷ"
 
-utf8.pl U+2424 crlf U+0D U+0A   U+240A lf U+0A	U+240D cr U+0D	U+240B vt U+0B  U+240C ff U+0C  | $0
-utf8.pl 0 U+24EA U+2070 U+7C0   a U+24D0 U+C2 U+1EA9   '&' U+214B U+FE60 U+FF06 | $0
+utf8.pl U+2424 crlf U+0D U+0A   U+240A lf U+0A	U+240D cr U+0D	U+240B vt U+0B  U+240C ff U+0C  | $cmd
+utf8.pl 0 U+24EA U+2070 U+7C0   a U+24D0 U+C2 U+1EA9   '&' U+214B U+FE60 U+FF06 | $cmd
 
 USAGE
 	exit(0);

@@ -11,6 +11,7 @@ use Carp qw(croak);
 use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
+use FindBin;
 
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
@@ -34,11 +35,12 @@ main();
 sub usage
 {
 	my ($reason) = @ARG;
+	my $cmd = $FindBin::Script;
 
 	print STDERR "$reason\n\n" if $reason;
 
 	print << "USAGE";
-$0 javascript-file [...]
+$cmd javascript-file [...]
 
 This script reorders import references in a Javascript source file into a nice triangle.  Absolute imports first in ascending line length.  Followed by relative imports in descending line length.
 

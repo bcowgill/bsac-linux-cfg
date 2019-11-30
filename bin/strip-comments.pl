@@ -8,6 +8,7 @@ use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
 use open IN => ':raw';
+use FindBin;
 
 local $INPUT_RECORD_SEPARATOR = undef;
 
@@ -50,9 +51,11 @@ main();
 sub usage
 {
 	my ($message) = @ARG;
+	my $cmd = $FindBin::Script;
+
 	print "$message\n\n" if ($message);
 	print <<"USAGE";
-usage: $0 [options] filename...
+usage: $cmd [options] filename...
 
 Strips out C/C++ style comments from source code in files specified.
 

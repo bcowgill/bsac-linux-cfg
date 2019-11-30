@@ -12,6 +12,7 @@ $Data::Dumper::Terse    = 1;
 
 use File::Slurp qw(:std :edit);
 use autodie qw(open);
+use FindBin;
 
 our $VERSION = 0.1;
 our $DEBUG = 0;
@@ -124,9 +125,11 @@ sub debug
 sub usage
 {
 	my ($msg) = @ARG;
+	my $cmd = $FindBin::Script;
+
 	print "$msg\n\n" if $msg;
 	print <<"USAGE";
-usage: $0 [--help] [N] [filename] [output ...]
+usage: $cmd [--help] [N] [filename] [output ...]
 
 Divide or split a list of items into N separate lists.  Like dealing a deck of cards to N people.
 

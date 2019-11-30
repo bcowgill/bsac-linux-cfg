@@ -11,6 +11,7 @@ use Carp qw(croak);
 use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use autodie qw(open cp);
+use FindBin;
 
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
@@ -33,11 +34,12 @@ main();
 sub usage
 {
 	my ($reason) = @ARG;
+	my $cmd = $FindBin::Script;
 
 	print STDERR "$reason\n\n" if $reason;
 
 	print << "USAGE";
-$0 from-file moved-to-file [external files ...]
+$cmd from-file moved-to-file [external files ...]
 
 This script corrects require or import references in a source file which has already been moved to a new location. It also corrects import references to the moved file when they are mentioned in external files. It supports a moved-to-file named index.js by assuming it is an import loader for DirName.js where moved-to-file is of the form path/DirName/index.js. In this case it will write the import as import DirName from 'path/DirName', instead of path/DirName/index
 

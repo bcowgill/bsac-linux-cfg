@@ -70,6 +70,7 @@ use warnings;
 use Getopt::Long;
 use IPC::Open3;
 use Symbol qw(gensym);
+use FindBin;
 
 GetOptions(
 	'contains=s' => \my $contains,
@@ -99,10 +100,11 @@ waitpid( $pid, 0 );
 exit $failed;
 
 sub usage {
+	my $cmd = $FindBin::Script;
 	die <<"END";
 usage:
 
-$0 --contains 'exact text to fail on' command to run
-$0 --matches  'pattern to fail on'    command to run
+$cmd --contains 'exact text to fail on' command to run
+$cmd --matches  'pattern to fail on'    command to run
 END
 }

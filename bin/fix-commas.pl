@@ -6,6 +6,7 @@ use warnings;
 use English -no_match_vars;
 use File::Slurp;
 use open IN => ':raw';
+use FindBin;
 
 my $LEADING = 0;
 my $NL = qr{\n};
@@ -139,7 +140,7 @@ sub has_trailing_punctuation
 sub strip_trailing_comma
 {
 	my ($line) = @ARG;
-  	##print "\n\ns:$line\n\n" if $line =~ m{param3};
+	##print "\n\ns:$line\n\n" if $line =~ m{param3};
 	my $moved = ($line =~ s{ , (\s* /\* .*? \*/ \s*) \z}{$1||""}xmsge
 		|| $line =~ s{ , (\s* // .*?)? \z}{$1||""}xmsge);
 	return ($line, $moved);
@@ -148,7 +149,7 @@ sub strip_trailing_comma
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	print <<"USAGE";
-usage: $0 [--leading] [--help] filename...
+usage: $FindBin::Script [--leading] [--help] filename...
 
 Fixes comma placement in files specified.  Default is to move leading commas on a line to the end of the previous line.
 

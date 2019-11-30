@@ -10,6 +10,8 @@ use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
 use charnames qw(:loose); # :loose if you perl version supports it
 use Unicode::UCD qw( charinfo general_categories );
+use FindBin;
+
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
@@ -18,8 +20,10 @@ my $MAX_CODEPOINT = hex('10FFFF');
 
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
+	my $cmd = $FindBin::Script;
+
 	print << "USAGE";
-usage: $0 [-N] [-all] U+XXXX {U+XXXX} "\\\\N{UNICODE_CHARACTER_NAME}" '\\N{UNICODE_CHARACTER_NAME}'
+usage: $cmd [-N] [-all] U+XXXX {U+XXXX} "\\\\N{UNICODE_CHARACTER_NAME}" '\\N{UNICODE_CHARACTER_NAME}'
 
 Output a table of utf8 characters starting at a given code point.
 
@@ -28,7 +32,7 @@ Output a table of utf8 characters starting at a given code point.
 
 example:
 
-$0 -10 U+0100 \\\\N{WHITE_SMILING_FACE}
+$cmd -10 U+0100 \\\\N{WHITE_SMILING_FACE}
 USAGE
 	exit(0);
 }

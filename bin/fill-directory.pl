@@ -11,6 +11,7 @@ $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
 use autodie qw(mkdir);
+use FindBin;
 
 our $VERSION = 0.1;
 our $DEBUG = 0;
@@ -52,7 +53,7 @@ sub usage
 	my ($msg) = @ARG;
 	print "$msg\n\n" if $msg;
 	print <<"USAGE";
-usage: $0 [--help] [--debug] [directory] [prefix] [number]
+usage: $FindBin::Script [--help] [--debug] [directory] [prefix] [number]
 
 Fill a directory with directories until the directory table is full.
 

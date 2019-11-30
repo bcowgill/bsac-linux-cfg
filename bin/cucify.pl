@@ -4,17 +4,20 @@
 use strict;
 use warnings;
 use English qw(-no_match_vars);
+use FindBin;
 
 my $DEBUG = 0;
 
 sub usage
 {
 	my ($message) = @ARG;
+	my $cmd = $FindBin::Script;
+
 	print "$message\n\n" if $message;
 	print <<"USAGE";
-$0 --ask [file-name] > cypress/integration/PAYO4B-NNN-description.dev.feature
+$cmd --ask [file-name] > cypress/integration/PAYO4B-NNN-description.dev.feature
 or
-STORY="JIRA-ID" FEATURE="Name of feature" $0 [file-name]
+STORY="JIRA-ID" FEATURE="Name of feature" $cmd [file-name]
 
 This will take the Given When Then statements of Acceptance Criteria from a Jira story and format it as Cucumber compliant code.
 

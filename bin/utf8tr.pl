@@ -8,6 +8,7 @@ use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
 use charnames qw(:full); # :loose if you perl version supports it
+use FindBin;
 
 use Data::Dumper;
 
@@ -19,8 +20,9 @@ sub usage
 {
 	my ($exit) = @ARG;
 
+	my $cmd = $FindBin::Script;
 	print <<"USAGE";
-$0 [--help] [--space] [--alphabet] [--show-styles] [--all-styles] [--flip-case] [--random-style] [--words] [--sentences] style ...
+$cmd [--help] [--space] [--alphabet] [--show-styles] [--all-styles] [--flip-case] [--random-style] [--words] [--sentences] style ...
 
 Show text using alphabetic unicode characters
 
@@ -36,15 +38,15 @@ Show text using alphabetic unicode characters
 
 eg.
 
-echo Good Morning | $0 --space italic.bold
+echo Good Morning | $cmd --space italic.bold
 
-$0 --help
-$0 --show-styles
-$0 --alphabet --space
-$0 --alphabet gothic
-$0 --alphabet --all-styles
-$0 --alphabet --flip-case --all-styles
-echo Hi | $0 --space --all-styles
+$cmd --help
+$cmd --show-styles
+$cmd --alphabet --space
+$cmd --alphabet gothic
+$cmd --alphabet --all-styles
+$cmd --alphabet --flip-case --all-styles
+echo Hi | $cmd --space --all-styles
 USAGE
 
 	exit($exit || 0);

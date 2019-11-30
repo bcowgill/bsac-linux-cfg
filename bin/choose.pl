@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 # choose a random up to N lines from standard input
+
+use FindBin;
+
 srand;
 
 my $MAX = shift || 1;
@@ -9,7 +12,7 @@ if ( $MAX eq "--help" )
 {
 	print <<"USAGE";
 usage:
-$0 [number] [file ...]
+$FindBin::Script [number] [file ...]
 
 Choose lines randomly from file or standard input. If the number is given that many consecutive lines will be chosen otherwise only one line is chosen.
 USAGE

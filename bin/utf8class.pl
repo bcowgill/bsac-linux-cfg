@@ -9,6 +9,8 @@ use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars);
 use charnames qw(:loose); # :loose if you perl version supports it
 use Unicode::UCD qw( charinfo general_categories );
+use FindBin;
+
 binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
@@ -51,8 +53,10 @@ my @Interesting = qw(
 
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
+	my $cmd = $FindBin::Script;
+
 	print << "USAGE";
-usage: $0 [-N] [-all] \\p{Letter}
+usage: $cmd [-N] [-all] \\p{Letter}
 
 Output a table of utf8 characters matching the unicode properties specified.
 
@@ -65,13 +69,13 @@ http://perldoc.perl.org/perluniprops.html
 
 example:
 
-$0 -10 \\p{Letter}
+$cmd -10 \\p{Letter}
 
-$0 script=Latin
+$cmd script=Latin
 
-$0 Numeric_Value=5
+$cmd Numeric_Value=5
 
-$0 Line_Break=Hyphen
+$cmd Line_Break=Hyphen
 
 USAGE
 	exit(0);

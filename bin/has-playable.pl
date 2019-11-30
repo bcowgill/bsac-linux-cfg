@@ -5,6 +5,7 @@
 use strict;
 use warnings;
 use Data::Dumper;
+use FindBin;
 
 my @Playable = qw(mp3 wav ogg);
 my $SHOW_PLAYABLE = 1;
@@ -12,8 +13,10 @@ my $SHOW_UNPLAYABLE = 0;
 
 sub usage
 {
+	my $cmd = $FindBin::Script;
+
 	print <<"USAGE";
-usage: $0 [--not] [--both] [--help] < file-list
+usage: $cmd [--not] [--both] [--help] < file-list
 
 This will check each sound file from a list on standard input to see if a playable version of the file is present and prints the name of those found.
 
