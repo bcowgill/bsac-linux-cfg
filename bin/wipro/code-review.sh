@@ -54,7 +54,7 @@ function explain {
 	fi
 }
 
-# display possible heading and indented match output if any
+# display possible heading and indented git grep match output if any
 function indent_output {
 	local file reason lines
 	file="$1"
@@ -65,6 +65,20 @@ function indent_output {
 		warn $lines
 		give_reason "$reason"
 		perl -pne 's{\A.+?:\s*}{      }xmsg' "$file" >> $TMP0
+	fi
+}
+
+# display possible heading and indented grep match output if any
+function indent_grep_output {
+	local file reason lines
+	file="$1"
+	reason="$2"
+
+	lines=`wc -l < "$file"`
+	if [ $lines -gt 0 ]; then
+		warn $lines
+		give_reason "$reason"
+		perl -pne 's{\A\s*}{      }xmsg' "$file" >> $TMP0
 	fi
 }
 
@@ -127,16 +141,17 @@ function search_js_filter {
 	indent_output $TMP3 "$reason"
 }
 
-# search non-commented javascript lines for something but not something else and show duplicated lines only
-function search_js_filter_duplicates {
+# search javascript lines for something after but not something else and show duplicated lines only
+function search_js_filter_after_duplicates {
 	local regex filter file reason
-	regex="$1"
-	filter="$2"
-	file="$3"
-	reason="$4"
+	after="$1"
+	regex="$2"
+	filter="$3"
+	file="$4"
+	reason="$5"
 	explain match "$regex except $filter duplicates"
-	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -vE "$filter" | sort | tee $TMP3 | uniq -d > $TMP4
-	indent_output $TMP4 "$reason"
+	grep -A $after -E "$regex" "$file" | tee $TMP1 | grep -vE "$filter" | sort | tee $TMP2 | uniq -d > $TMP3
+	indent_grep_output $TMP3 "$reason"
 }
 
 # search non-commented javascript lines and just report if missing
@@ -393,7 +408,7 @@ function code_review {
 		HEADING="checking for app specific idioms..."
 		search_js_filter 'function\s+(\w+(Action|Service|Middleware))\s*\(' EOB "$file"  "Actions etc should use it = EOB calling protocol"
 		search_js_filter 'const\s+(\w+(Action|Service|Middleware))\s*=\s*\(' EOB "$file" "Actions etc should use it = EOB calling protocol"
-		search_js_filter_duplicates '\(pageInfo\)' 'mockAPI' "$file" "MUST fix duplicated cypress mock-api routes"
+		search_js_filter_after_duplicates 1 'MOCK ROUTE GROUP' 'MOCK ROUTE GROUP|--' "$file" "MUST fix duplicated cypress mock-api routes"
 	fi
 
 	HEADING="checking for code to remove..."
