@@ -1,6 +1,7 @@
 #!/bin/bash
 # Diff the windows lloyds versions of tools with the generic ones.
 
+# Usage: diff-lloyds.sh [reverse|sync]
 
 WHERE=~/workspace/projects/bsac-cfg-lloyds
 O4B=~/workspace/projects/o4b/o4b-payments-cwa
@@ -8,6 +9,10 @@ O4B=~/workspace/projects/o4b/o4b-payments-cwa
 DIFF="rvdiff.sh"
 if [ -z "$1" ]; then
 	DIFF="vdiff.sh"
+else
+	if [ "$1" == "sync" ]; then
+		DIFF="xvdiff.sh"
+	fi
 fi
 
 # DEBUG turn this on...

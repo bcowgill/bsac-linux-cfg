@@ -107,6 +107,7 @@ alias pstree='\pstree -a -h -p -u'
 
 # use source gear diffmerge, perforce p4merge or vimdiff as a visual diff program
 alias svndiff='svn diff --diff-cmd svndiffmerge.sh'
+alias xvdiff='xvdiff.sh'
 if which sgdm.exe >> /dev/null; then
 	alias vdiff='sgdm.exe'
 else
