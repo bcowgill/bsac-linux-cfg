@@ -6,14 +6,8 @@
 WHERE=~/workspace/projects/bsac-cfg-lloyds
 O4B=~/workspace/projects/o4b/o4b-payments-cwa
 
-DIFF="rvdiff.sh"
-if [ -z "$1" ]; then
-	DIFF="vdiff.sh"
-else
-	if [ "$1" == "sync" ]; then
-		DIFF="xvdiff.sh"
-	fi
-fi
+DIFF="diff.sh"
+DIRECTION="$1"
 
 # DEBUG turn this on...
 #DIFF="echo $DIFF"
@@ -22,7 +16,7 @@ function mydiff {
 	local one two
 	one="$1"
 	two="$2"
-	diff --brief "$one" "$two" || $DIFF "$one" "$two"
+	diff --brief "$one" "$two" || $DIFF "$one" "$two" $DIRECTION
 }
 
 echo Lloyds Javascript tools

@@ -6,19 +6,19 @@ DIFF=refactor
 
 diff ()
 {
-	diffmerge --nosplash $1 $2
+	vdiff.sh "$1" "$2"
 }
 
 rvdiff ()
 {
-	diffmerge --nosplash $2 $1
+	vdiff.sh "$2" "$1"
 }
 
 refactor ()
 {
-	diff $1 $2
-	rvdiff $1 $2
+	diff "$1" "$2"
+	rvdiff "$1" "$2"
 }
 
-refactor $1 $2
+refactor "$1" "$2"
 

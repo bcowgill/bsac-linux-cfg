@@ -2429,7 +2429,7 @@ fi
 
 BAIL_OUT crontab
 
-if which pretty diff > /dev/null; then
+if which prettydiff > /dev/null; then
 	file_present prettydiff.js "html beautifier file"
 fi
 

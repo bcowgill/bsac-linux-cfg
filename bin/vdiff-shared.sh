@@ -1,10 +1,7 @@
 #!/bin/bash
 # Visual diff files from my linux config versus versions in projects
 
-REVERSE=0
-if [ "$1" != "" ]; then
-	REVERSE=1
-fi
+REVERSE="$1"
 
 function diff_them {
 	local file from to reverse
@@ -12,21 +9,17 @@ function diff_them {
 	from="$2"
 	to="$3"
 	reverse="$4"
-	if diff "$from/$file" "$to/$file" > /dev/null; then
+	if diff --brief "$from/$file" "$to/$file" ; then
 		echo no differences for "$file" in "$from/" or "$to/"
 	else
-		if [ $reverse == 0 ]; then
-			$DIFF "$from/$file" "$to/$file";
-		else
-			$DIFF "$to/$file" "$from/$file";
-		fi
+		$DIFF "$from/$file" "$to/$file" $reverse;
 	fi
 }
 
 WHICH=review-infinity-plus-dashboard
 WHICH=infinity-plus-dashboard
 
-DIFF=diffmerge
+DIFF=diff.sh
 FROM=$HOME/bin
 TO=$HOME/workspace/projects/$WHICH/setup
 

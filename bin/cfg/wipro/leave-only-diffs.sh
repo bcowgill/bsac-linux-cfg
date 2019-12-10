@@ -8,7 +8,7 @@ OTHER_DIR="$2"
 for F in `find $BR_DIR -type f`; do
 	O=`perl -e 'my ($file, $dir, $dir2) = @ARGV; $file =~ s{\A$dir}{$dir2}xms; print $file' $F $BR_DIR $OTHER_DIR`
 	if [ -e "$O" ]; then
-		if diff "$F" "$O" >> /dev/null; then
+		if diff --brief "$F" "$O" ; then
 			rm "$F" "$O"
 		fi
 	else
@@ -22,7 +22,7 @@ done
 for F in `find $OTHER_DIR -type f`; do
 	O=`perl -e 'my ($file, $dir, $dir2) = @ARGV; $file =~ s{\A$dir}{$dir2}xms; print $file' $F $OTHER_DIR $BR_DIR`
 	if [ -e "$O" ]; then
-		if diff "$F" "$O" >> /dev/null; then
+		if diff --brief "$F" "$O" ; then
 			rm "$F" "$O"
 		fi
 	else

@@ -6,18 +6,18 @@ TOP=../..
 
 diff ()
 {
-    diffmerge --nosplash $TOP/$1 $TOP/$2
+    vdiff.sh "$TOP/$1" "$TOP/$2"
 }
 
 rvdiff ()
 {
-    diffmerge --nosplash $TOP/$2 $TOP/$1
+    vdiff.sh "$TOP/$2" "$TOP/$1"
 }
 
 refactor ()
 {
-    diff $1 $2
-    rvdiff $1 $2
+    diff "$1" "$2"
+    rvdiff "$1" "$2"
 }
 
 $DIFF template/perl/perl.pl template/perl/perl-inplace.pl

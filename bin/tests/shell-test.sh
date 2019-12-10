@@ -239,7 +239,7 @@ function assertFilesEqual
    test="$3"
 
    [ -f "$expected" ] || touch "$expected"
-   if diff "$actual" "$expected" > /dev/null; then
+   if diff --brief "$actual" "$expected" ; then
       OK "$test output equals base file"
    else
       NOT_OK "files differ - $test"

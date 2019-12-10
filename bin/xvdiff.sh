@@ -27,8 +27,8 @@ fi
 [ -e "$2" ] || touch "$2"
 
 function mydiff {
-	if diff "$1" "$2" > /dev/null; then
-		echo "files are identical"
+	if diff --brief "$1" "$2" ; then
+		echo "files are identical: $1 $2"
 		exit 0
 	else
 		vdiff.sh "$1" "$2"

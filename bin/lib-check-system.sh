@@ -581,7 +581,7 @@ function files_same {
 	file="$1"
 	source="$2"
 	message="$3"
-	if diff "$file" "$source" > /dev/null; then
+	if diff --brief "$file" "$source" ; then
 		OK "no change in file $1 - $message"
 	else
 		NOT_OK "file $1 has changed compared to $2 - $message"
