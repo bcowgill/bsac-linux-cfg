@@ -162,6 +162,7 @@ alias ls-vbox='ls -al ~/VirtualBox\ VMs/ ~/.ievms/ ~/.config/VirtualBox/'
 
 # some node/npm aliases
 alias ls-nm="locate node_modules | perl -pne 's{(/node_modules).+}{\$1\n}xmsg' | uniq"
+alias npn=npm
 alias npm5="npm-json5"
 #alias n-ls="ls /usr/local/n/versions/node"
 alias n-ls="(n io list; n list) | perl -ne 'print if m{\A\s*\d}xms'"
