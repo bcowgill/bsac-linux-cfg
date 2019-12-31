@@ -63,10 +63,10 @@ do
 	echo $code `utf8.pl $code`
 done
 
-if [ "$1" == "-list"]; then
+if [ "$1" == "-list" ]; then
 	exit 0
 fi
-if [ "$1" == "-l"]; then
+if [ "$1" == "-l" ]; then
 	exit 0
 fi
 

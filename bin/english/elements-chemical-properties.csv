@@ -1,0 +1,120 @@
+Z,Sym,Element,Origin of name,Group,Period,Atomic weight,Density,Melt,Boil,Heat,Neg10,Abundance,Density at 20°C ,Melting point °C ,Boiling point °C ,Year of discovery ,Discoverer
+,,,,,,u (),g / cm3,K,K,J/g·K,,,,,,,
+1,H,Hydrogen,the Greek 'hydro' and 'genes' meaning water-forming,1,1,1.0082 3 4 9,0.00008988,14.01,20.28,14.304,2.2,1400,"0,084 g/l ","-259,1 °C ","-252,9 °C ",1766,Cavendish
+2,He,Helium,the Greek 'helios' meaning sun,18,1,4.002602(2)2 4,0.0001785,0.956,4.22,5.193,–,0.008,"0,17 g/l ","-272,2 °C ","-268,9 °C ",1895,Ramsay and Cleve
+3,Li,Lithium,the Greek 'lithos' meaning stone,1,2,6.942 3 4 5 9,0.534,453.69,1560,3.582,0.98,20,"0,53 g/cm3 ","180,5 °C ",1317 °C ,1817,Arfvedson
+4,Be,Beryllium,"the Greek name for beryl, 'beryllo'",2,2,9.012182(3),1.85,1560,2742,1.825,1.57,2.8,"1,85 g/cm3 ",1278 °C ,2970 °C ,1797,Vauquelin
+5,B,Boron,"the Arabic 'buraq', which was the name for borax",13,2,10.812 3 4 9,2.34,2349,4200,1.026,2.04,10,"2,46 g/cm3 ",2300 °C ,2550 °C ,1808,Davy and Gay-Lussac
+6,C,Carbon,"the Latin 'carbo', meaning charcoal",14,2,12.0112 4 9,2.267,3800,4300,0.709,2.55,200,"3,51 g/cm3 ",3550 °C ,4827 °C ,prehistoric ,unknown
+7,N,Nitrogen,the Greek 'nitron' and 'genes' meaning nitre-forming,15,2,14.0072 4 9,0.0012506,63.15,77.36,1.04,3.04,19,"1,17 g/l ","-209,9 °C ","-195,8 °C ",1772,Rutherford
+8,O,Oxygen,the Greek 'oxy' and 'genes' meaning acid-forming,16,2,15.9992 4 9,0.001429,54.36,90.2,0.918,3.44,461000,"1,33 g/l ","-218,4 °C ","-182,9 °C ",1774,Priestley and Scheele
+9,F,Fluorine,"the Latin 'fluere', meaning to flow",17,2,18.9984032(5),0.001696,53.53,85.03,0.824,3.98,585,"1,58 g/l ","-219,6 °C ","-188,1 °C ",1886,Moissan
+10,Ne,Neon,"the Greek 'neos', meaning new",18,2,20.1797(6)2 3,0.0008999,24.56,27.07,1.03,–,0.005,"0,84 g/l ","-248,7 °C ","-246,1 °C ",1898,Ramsay and Travers
+11,Na,Sodium,the English word soda (natrium in Latin),1,3,22.98976928(2),0.971,370.87,1156,1.228,0.93,23600,"0,97 g/cm3 ","97,8 °C ",892 °C ,1807,Davy
+12,Mg,Magnesium,"Magnesia, a district of Eastern Thessaly in Greece",2,3,24.3059,1.738,923,1363,1.023,1.31,23300,"1,74 g/cm3 ","648,8 °C ",1107 °C ,1755,Black
+13,Al,Aluminium,"the Latin name for alum, 'alumen' meaning bitter salt",13,3,26.9815386(8),2.698,933.47,2792,0.897,1.61,82300,"2,70 g/cm3 ","660,5 °C ",2467 °C ,1825,Oersted
+14,Si,Silicon,"the Latin 'silex' or 'silicis', meaning flint",14,3,28.0854 9,2.3296,1687,3538,0.705,1.9,282000,"2,33 g/cm3 ",1410 °C ,2355 °C ,1824,Berzelius
+15,P,Phosphorus,"the Greek 'phosphoros', meaning bringer of light",15,3,30.973762(2),1.82,317.3,550,0.769,2.19,1050,"1,82 g/cm3 ",44 (P4) °C ,280 (P4) °C ,1669,Brandt
+16,S,Sulfur,"Either from the Sanskrit 'sulvere', or the Latin 'sulfurium', both names for sulfur",16,3,32.062 4 9,2.067,388.36,717.87,0.71,2.58,350,"2,06 g/cm3 ",113 °C ,"444,7 °C ",prehistoric ,unknown
+17,Cl,Chlorine,"the Greek 'chloros', meaning greenish yellow",17,3,35.452 3 4 9,0.003214,171.6,239.11,0.479,3.16,145,"2,95 g/l ","-34,6 °C ",-101 °C ,1774,Scheele
+18,Ar,Argon,"the Greek, 'argos', meaning idle",18,3,39.948(1)2 4,0.0017837,83.8,87.3,0.52,–,3.5,"1,66 g/l ","-189,4 °C ","-185,9 °C ",1894,Ramsay and Rayleigh
+19,K,Potassium,the English word potash (kalium in Latin),1,4,39.0983(1),0.862,336.53,1032,0.757,0.82,20900,"0,86 g/cm3 ","63,7 °C ",774 °C ,1807,Davy
+20,Ca,Calcium,the Latin 'calx' meaning lime,2,4,40.078(4)2,1.54,1115,1757,0.647,1,41500,"1,54 g/cm3 ",839 °C ,1487 °C ,1808,Davy
+21,Sc,Scandium,Scandinavia (with the Latin name Scandia),3,4,44.955912(6),2.989,1814,3109,0.568,1.36,22,"2,99 g/cm3 ",1539 °C ,2832 °C ,1879,Nilson
+22,Ti,Titanium,"Titans, the sons of the Earth goddess of Greek mythology",4,4,47.867(1),4.54,1941,3560,0.523,1.54,5650,"4,51 g/cm3 ",1660 °C ,3260 °C ,1791,Gregor and Klaproth
+23,V,Vanadium,"Vanadis, an old Norse name for the Scandinavian goddess Freyja",5,4,50.9415(1),6.11,2183,3680,0.489,1.63,120,"6,09 g/cm3 ",1890 °C ,3380 °C ,1801,del Rio
+24,Cr,Chromium,"the Greek 'chroma', meaning colour",6,4,51.9961(6),7.15,2180,2944,0.449,1.66,102,"7,14 g/cm3 ",1857 °C ,2482 °C ,1797,Vauquelin
+25,Mn,Manganese,"Either the Latin 'magnes', meaning magnet or from the black magnesium oxide, 'magnesia nigra'",7,4,54.938045(5),7.44,1519,2334,0.479,1.55,950,"7,44 g/cm3 ",1244 °C ,2097 °C ,1774,Gahn
+26,Fe,Iron,the Anglo-Saxon name iren (ferrum in Latin),8,4,55.845(2),7.874,1811,3134,0.449,1.83,56300,"7,87 g/cm3 ",1535 °C ,2750 °C ,prehistoric ,unknown
+27,Co,Cobalt,"the German word 'kobald', meaning goblin",9,4,58.933195(5),8.86,1768,3200,0.421,1.88,25,"8,89 g/cm3 ",1495 °C ,2870 °C ,1735,Brandt
+28,Ni,Nickel,the shortened of the German 'kupfernickel' meaning either devil's copper or St. Nicholas's copper,10,4,58.6934(4),8.912,1728,3186,0.444,1.91,84,"8,91 g/cm3 ",1453 °C ,2732 °C ,1751,Cronstedt
+29,Cu,Copper,"the Old English name coper in turn derived from the Latin 'Cyprium aes', meaning a metal from Cyprus",11,4,63.546(3)4,8.96,1357.77,2835,0.385,1.9,60,"8,92 g/cm3 ","1083,5 °C ",2595 °C ,prehistoric ,unknown
+30,Zn,Zinc,"the German, 'zinc', which may in turn be derived from the Persian word 'sing', meaning stone",12,4,65.38(2),7.134,692.88,1180,0.388,1.65,70,"7,14 g/cm3 ","419,6 °C ",907 °C ,prehistoric ,unknown
+31,Ga,Gallium,France (with the Latin name Gallia),13,4,69.723(1),5.907,302.9146,2477,0.371,1.81,19,"5,91 g/cm3 ","29,8 °C ",2403 °C ,1875,Lecoq de Boiskaudran
+32,Ge,Germanium,Germany (with the Latin name Germania),14,4,72.630(8),5.323,1211.4,3106,0.32,2.01,1.5,"5,32 g/cm3 ","937,4 °C ",2830 °C ,1886,Winkler
+33,As,Arsenic,the Greek name 'arsenikon' for the yellow pigment orpiment,15,4,74.92160(2),5.776,1090 7,887,0.329,2.18,1.8,"5,72 g/cm3 ",613 °C ,613 (Subl.) °C ,ca. 1250 ,Albertus Magnus
+34,Se,Selenium,Moon (with the Greek name selene),16,4,78.96(3)4,4.809,453,958,0.321,2.55,0.05,"4,82 g/cm3 ",217 °C ,685 °C ,1817,Berzelius
+35,Br,Bromine,the Greek 'bromos' meaning stench,17,4,79.9049,3.122,265.8,332,0.474,2.96,2.4,"3,14 g/cm3 ","-7,3 °C ","58,8 °C ",1826,Balard
+36,Kr,Krypton,"the Greek 'kryptos', meaning hidden",18,4,83.798(2)2 3,0.003733,115.79,119.93,0.248,3,<0.001,"3,48 g/l ","-156,6 °C ","-152,3 °C ",1898,Ramsay and Travers
+37,Rb,Rubidium,"the Latin 'rubidius', meaning deepest red",1,5,85.4678(3)2,1.532,312.46,961,0.363,0.82,90,"1,53 g/cm3 ",39 °C ,688 °C ,1861,Bunsen and Kirchhoff
+38,Sr,Strontium,"Strontian, a small town in Scotland",2,5,87.62(1)2 4,2.64,1050,1655,0.301,0.95,370,"2,63 g/cm3 ",769 °C ,1384 °C ,1790,Crawford
+39,Y,Yttrium,"Ytterby, Sweden",3,5,88.90585(2),4.469,1799,3609,0.298,1.22,33,"4,47 g/cm3 ",1523 °C ,3337 °C ,1794,Gadolin
+40,Zr,Zirconium,"the Persian 'zargun', meaning gold coloured",4,5,91.224(2)2,6.506,2128,4682,0.278,1.33,165,"6,51 g/cm3 ",1852 °C ,4377 °C ,1789,Klaproth
+41,Nb,Niobium,"Niobe, daughter of king Tantalus from Greek mythology",5,5,92.90638(2),8.57,2750,5017,0.265,1.6,20,"8,58 g/cm3 ",2468 °C ,4927 °C ,1801,Hatchet
+42,Mo,Molybdenum,the Greek 'molybdos' meaning lead,6,5,95.96(2)2,10.22,2896,4912,0.251,2.16,1.2,"10,28 g/cm3 ",2617 °C ,5560 °C ,1778,Scheele
+43,Tc,Technetium,the Greek 'tekhnetos' meaning artificial,7,5,[98]1,11.5,2430,4538,–,1.9,<0.001,"11,49 g/cm3 ",2172 °C ,5030 °C ,1937,Perrier and Segrè
+44,Ru,Ruthenium,Russia (with the Latin name Ruthenia),8,5,101.07(2)2,12.37,2607,4423,0.238,2.2,0.001,"12,45 g/cm3 ",2310 °C ,3900 °C ,1844,Claus
+45,Rh,Rhodium,"the Greek 'rhodon', meaning rose coloured",9,5,102.90550(2),12.41,2237,3968,0.243,2.28,0.001,"12,41 g/cm3 ",1966 °C ,3727 °C ,1803,Wollaston
+46,Pd,Palladium,"the then recently discovered asteroid Pallas, considered a planet at the time",10,5,106.42(1)2,12.02,1828.05,3236,0.244,2.2,0.015,"12,02 g/cm3 ",1552 °C ,3140 °C ,1803,Wollaston
+47,Ag,Silver,the Anglo-Saxon name siolfur (argentum in Latin),11,5,107.8682(2)2,10.501,1234.93,2435,0.235,1.93,0.075,"10,49 g/cm3 ","961,9 °C ",2212 °C ,prehistoric ,unknown
+48,Cd,Cadmium,"the Latin name for the mineral calmine, 'cadmia'",12,5,112.411(8)2,8.69,594.22,1040,0.232,1.69,0.159,"8,64 g/cm3 ",321 °C ,765 °C ,1817,Stromeyer and Hermann
+49,In,Indium,"the Latin 'indicium', meaning violet or indigo",13,5,114.818(1),7.31,429.75,2345,0.233,1.78,0.25,"7,31 g/cm3 ","156,2 °C ",2080 °C ,1863,Reich and Richter
+50,Sn,Tin,"the Anglo-Saxon word tin (stannum in Latin, meaning hard)",14,5,118.710(7)2,7.287,505.08,2875,0.228,1.96,2.3,"7,29 g/cm3 ",232 °C ,2270 °C ,prehistoric ,unknown
+51,Sb,Antimony,"the Greek 'anti – monos', meaning not alone (stibium in Latin)",15,5,121.760(1)2,6.685,903.78,1860,0.207,2.05,0.2,"6,69 g/cm3 ","630,7 °C ",1750 °C ,prehistoric ,unknown
+52,Te,Tellurium,"Earth, the third planet on solar system (with the Latin word tellus)",16,5,127.60(3)2,6.232,722.66,1261,0.202,2.1,0.001,"6,25 g/cm3 ","449,6 °C ",990 °C ,1782,von Reichenstein
+53,I,Iodine,the Greek 'iodes' meaning violet,17,5,126.90447(3),4.93,386.85,457.4,0.214,2.66,0.45,"4,94 g/cm3 ","113,5 °C ","184,4 °C ",1811,Courtois
+54,Xe,Xenon,the Greek 'xenos' meaning stranger,18,5,131.293(6)2 3,0.005887,161.4,165.03,0.158,2.6,<0.001,"4,49 g/l ","-111,9 °C ",-107 °C ,1898,Ramsay and Travers
+55,Cs,Caesium,"the Latin 'caesius', meaning sky blue",1,6,132.9054519(2),1.873,301.59,944,0.242,0.79,3,"1,90 g/cm3 ","28,4 °C ",690 °C ,1860,Kirchhoff and Bunsen
+56,Ba,Barium,"the Greek 'barys', meaning heavy",2,6,137.327(7),3.594,1000,2170,0.204,0.89,425,"3,65 g/cm3 ",725 °C ,1640 °C ,1808,Davy
+57,La,Lanthanum,"the Greek 'lanthanein', meaning to lie hidden",,6,138.90547(7)2,6.145,1193,3737,0.195,1.1,39,"6,16 g/cm3 ",920 °C ,3454 °C ,1839,Mosander
+58,Ce,Cerium,"Ceres, the Roman God of agriculture",,6,140.116(1)2,6.77,1068,3716,0.192,1.12,66.5,"6,77 g/cm3 ",798 °C ,3257 °C ,1803,von Hisinger and Berzelius
+59,Pr,Praseodymium,the Greek 'prasios didymos' meaning green twin,,6,140.90765(2),6.773,1208,3793,0.193,1.13,9.2,"6,48 g/cm3 ",931 °C ,3212 °C ,1895,von Welsbach
+60,Nd,Neodymium,the Greek 'neos didymos' meaning new twin,,6,144.242(3)2,7.007,1297,3347,0.19,1.14,41.5,"7,00 g/cm3 ",1010 °C ,3127 °C ,1895,von Welsbach
+61,Pm,Promethium,Prometheus of Greek mythology who stole fire from the Gods and gave it to humans,,6,[145]1,7.26,1315,3273,–,1.13,<0.001,"7,22 g/cm3 ",1080 °C ,2730 °C ,1945,Marinsky and Glendenin
+62,Sm,Samarium,"Samarskite, the name of the mineral from which it was first isolated",,6,150.36(2)2,7.52,1345,2067,0.197,1.17,7.05,"7,54 g/cm3 ",1072 °C ,1778 °C ,1879,Lecoq de Boisbaudran
+63,Eu,Europium,Europe,,6,151.964(1)2,5.243,1099,1802,0.182,1.2,2,"5,25 g/cm3 ",822 °C ,1597 °C ,1901,Demaçay
+64,Gd,Gadolinium,"Johan Gadolin, chemist, physicist and mineralogist",,6,157.25(3)2,7.895,1585,3546,0.236,1.2,6.2,"7,89 g/cm3 ",1311 °C ,3233 °C ,1880,de Marignac
+65,Tb,Terbium,"Ytterby, Sweden",,6,158.92535(2),8.229,1629,3503,0.182,1.2,1.2,"8,25 g/cm3 ",1360 °C ,3041 °C ,1843,Mosander
+66,Dy,Dysprosium,"the Greek 'dysprositos', meaning hard to get",,6,162.500(1)2,8.55,1680,2840,0.17,1.22,5.2,"8,56 g/cm3 ",1409 °C ,2335 °C ,1886,Lecoq de Boisbaudran
+67,Ho,Holmium,"Stockholm, Sweden (with the Latin name Holmia)",,6,164.93032(2),8.795,1734,2993,0.165,1.23,1.3,"8,78 g/cm3 ",1470 °C ,2720 °C ,1878,Soret
+68,Er,Erbium,"Ytterby, Sweden",,6,167.259(3)2,9.066,1802,3141,0.168,1.24,3.5,"9,05 g/cm3 ",1522 °C ,2510 °C ,1842,Mosander
+69,Tm,Thulium,"Thule, the ancient name for Scandinavia",,6,168.93421(2),9.321,1818,2223,0.16,1.25,0.52,"9,32 g/cm3 ",1545 °C ,1727 °C ,1879,Cleve
+70,Yb,Ytterbium,"Ytterby, Sweden",,6,173.054(5)2,6.965,1097,1469,0.155,1.1,3.2,"6,97 g/cm3 ",824 °C ,1193 °C ,1878,de Marignac
+71,Lu,Lutetium,"Paris, France (with the Roman name Lutetia)",3,6,174.9668(1)2,9.84,1925,3675,0.154,1.27,0.8,"9,84 g/cm3 ",1656 °C ,3315 °C ,1907,Urbain
+72,Hf,Hafnium,"Copenhagen, Denmark (with the Latin name Hafnia)",4,6,178.49(2),13.31,2506,4876,0.144,1.3,3,"13,31 g/cm3 ",2150 °C ,5400 °C ,1923,Coster and vón Hevesy
+73,Ta,Tantalum,"King Tantalus, father of Niobe from Greek mythology",5,6,180.94788(2),16.654,3290,5731,0.14,1.5,2,"16,68 g/cm3 ",2996 °C ,5425 °C ,1802,Ekeberg
+74,W,Tungsten,"the Swedish 'tung sten' meaning heavy stone (W is wolfram, the old name of the tungsten mineral wolframite)",6,6,183.84(1),19.25,3695,5828,0.132,2.36,1.3,"19,26 g/cm3 ",3407 °C ,5927 °C ,1783,Gebrüder de Elhuyar
+75,Re,Rhenium,"Rhine, a river that flows from Grisons in the eastern Swiss Alps to the North Sea coast in the Netherlands (with the Latin name Rhenia)",7,6,186.207(1),21.02,3459,5869,0.137,1.9,<0.001,"21,03 g/cm3 ",3180 °C ,5627 °C ,1925,"Noddack, Tacke and Berg"
+76,Os,Osmium,"the Greek 'osme', meaning smell",8,6,190.23(3)2,22.61,3306,5285,0.13,2.2,0.002,"22,61 g/cm3 ",3045 °C ,5027 °C ,1803,Tenant
+77,Ir,Iridium,"Iris, the Greek goddess of the rainbow",9,6,192.217(3),22.56,2719,4701,0.131,2.2,0.001,"22,65 g/cm3 ",2410 °C ,4130 °C ,1803,Tenant and andere
+78,Pt,Platinum,"the Spanish 'platina', meaning little silver",10,6,195.084(9),21.46,2041.4,4098,0.133,2.28,0.005,"21,45 g/cm3 ",1772 °C ,3827 °C ,1557,Scaliger
+79,Au,Gold,"the Anglo-Saxon word gold (aurum in Latin, meaning glow of sunrise)",11,6,196.966569(4),19.282,1337.33,3129,0.129,2.54,0.004,"19,32 g/cm3 ","1064,4 °C ",2940 °C ,prehistoric ,unknown
+80,Hg,Mercury,"Mercury, the first planet in the Solar System (Hg from former name hydrargyrum, from Greek hydr- water and argyros silver)",12,6,200.592(3),13.5336,234.43,629.88,0.14,2,0.085,"13,55 g/cm3 ","-38,9 °C ","356,6 °C ",prehistoric ,unknown
+81,Tl,Thallium,"the Greek 'thallos', meaning a green twig",13,6,204.389,11.85,577,1746,0.129,1.62,0.85,"11,85 g/cm3 ","303,6 °C ",1457 °C ,1861,Crookes
+82,Pb,Lead,the Anglo-Saxon lead (plumbum in Latin),14,6,207.2(1)2 4,11.342,600.61,2022,0.129,1.87,14,"11,34 g/cm3 ","327,5 °C ",1740 °C ,prehistoric ,unknown
+83,Bi,Bismuth,the German 'Bisemutum' a corruption of 'Weisse Masse' meaning white mass,15,6,208.98040(1)1,9.807,544.7,1837,0.122,2.02,0.009,"9,80 g/cm3 ","271,4 °C ",1560 °C ,1540,Agricola
+84,Po,Polonium,"Poland, the native country of Marie Curie, who first isolated the element",16,6,[209]1,9.32,527,1235,–,2,<0.001,"9,20 g/cm3 ",254 °C ,962 °C ,1898,Marie and Pierre Curie
+85,At,Astatine,"the Greek 'astatos', meaning unstable",17,6,[210]1,7,575,610,–,2.2,<0.001,,302 °C ,337 °C ,1940,Corson and MacKenzie
+86,Rn,Radon,"From radium, as it was first detected as an emission from radium during radioactive decay",18,6,[222]1,0.00973,202,211.3,0.094,2.2,<0.001,"9,23 g/l ",-71 °C ,"-61,8 °C ",1900,Dorn
+87,Fr,Francium,"France, where it was first discovered",1,7,[223]1,1.87,300,950,–,0.7,<0.001,,27 °C ,677 °C ,1939,Perey
+88,Ra,Radium,"the Latin 'radius', meaning ray",2,7,[226]1,5.5,973,2010,0.094,0.9,<0.001,"5,50 g/cm3 ",700 °C ,1140 °C ,1898,Marie and Pierre Curie
+89,Ac,Actinium,"the Greek 'actinos', meaning a ray",,7,[227]1,10.07,1323,3471,0.12,1.1,<0.001,"10,07 g/cm3 ",1047 °C ,3197 °C ,1899,Debierne
+90,Th,Thorium,"Thor, the Scandinavian god of thunder",,7,232.03806(2)1 2,11.72,2115,5061,0.113,1.3,9.6,"11,72 g/cm3 ",1750 °C ,4787 °C ,1829,Berzelius
+91,Pa,Protactinium,"the Greek 'protos', meaning first, as a prefix to the element actinium, which is produced through the radioactive decay of protactinium",,7,231.03588(2)1,15.37,1841,4300,–,1.5,<0.001,"15,37 g/cm3 ",1554 °C ,4030 °C ,1917,"Soddy, Cranston and Hahn"
+92,U,Uranium,"Uranus, the seventh planet in the Solar System",,7,238.02891(3)1,18.95,1405.3,4404,0.116,1.38,2.7,"18,97 g/cm3 ","1132,4 °C ",3818 °C ,1789,Klaproth
+93,Np,Neptunium,"Neptune, the eighth planet in the Solar System",,7,[237]1,20.45,917,4273,–,1.36,<0.001,"20,48 g/cm3 ",640 °C ,3902 °C ,1940,McMillan and Abelson
+94,Pu,Plutonium,"Pluto, a dwarf planet in the Solar System",,7,[244]1,19.84,912.5,3501,–,1.28,<0.001,"19,74 g/cm3 ",641 °C ,3327 °C ,1940,Seaborg
+95,Am,Americium,"Americas, the continent where the element was first synthesized",,7,[243]1,13.69,1449,2880,–,1.13,<0.001,"13,67 g/cm3 ",994 °C ,2607 °C ,1944,Seaborg
+96,Cm,Curium,"Pierre Curie, a physicist, and Marie Curie, a physicist and chemist",,7,[247]1,13.51,1613,3383,–,1.28,<0.001,"13,51 g/cm3 ",1340 °C ,,1944,Seaborg
+97,Bk,Berkelium,"Berkeley, California, USA, where the element was first synthesized",,7,[247]1,14.79,1259,2900,–,1.3,<0.001,"13,25 g/cm3 ",986 °C ,,1949,Seaborg
+98,Cf,Californium,"State of California, USA, where the element was first synthesized",,7,[251]1,15.1,1173,(1743)11,–,1.3,<0.001,"15,1 g/cm3 ",900 °C ,,1950,Seaborg
+99,Es,Einsteinium,"Albert Einstein, physicist",,7,[252]1,8.84,1133,(1269)11,–,1.3,0 8,,860 °C ,,1952,Seaborg
+100,Fm,Fermium,"Enrico Fermi, physicist",,7,[257]1,–,(1125)11,–,–,1.3,0 8,,,,1952,Seaborg
+101,Md,Mendelevium,"Dmitri Mendeleyev, chemist and inventor",,7,[258]1,–,(1100)11,–,–,1.3,0 8,,,,1955,Seaborg
+102,No,Nobelium,"Alfred Nobel, chemist, engineer, innovator, and armaments manufacturer",,7,[259]1,–,(1100)11,–,–,1.3,0 8,,,,1958,Seaborg
+103,Lr,Lawrencium,"Ernest O. Lawrence, physicist",3,7,[262]1,–,(1900)11,–,–,1.3,0 8,,,,1961,Ghiorso
+104,Rf,Rutherfordium,"Ernest Rutherford, chemist and physicist",4,7,[267]1,(23.2)11,(2400)11,(5800)11,–,–,0 8,,,,1964/69 ,Flerow oder Ghiorso
+105,Db,Dubnium,"Dubna, Russia",5,7,[268]1,(29.3)11,–,–,–,–,0 8,,,,1967/70 ,Flerow oder Ghiorso
+106,Sg,Seaborgium,"Glenn T. Seaborg, scientist",6,7,[269]1,(35.0)11,–,–,–,–,0 8,,,,1974,Oganessian
+107,Bh,Bohrium,"Niels Bohr, physicist",7,7,[270]1,(37.1)11,–,–,–,–,0 8,,,,1976,Oganessian
+108,Hs,Hassium,"Hesse, Germany, where the element was first synthesized",8,7,[269]1,(40.7)11,–,–,–,–,0 8,,,,1984,Society for Heavy Ion Research
+109,Mt,Meitnerium,"Lise Meitner, physicist",9,7,[278]1,(37.4)11,–,–,–,–,0 8,,,,1982,Society for Heavy Ion Research
+110,Ds,Darmstadtium,"Darmstadt, Germany, where the element was first synthesized",10,7,[281]1,(34.8)11,–,–,–,–,0 8,,,,1994,Society for Heavy Ion Research
+111,Rg,Roentgenium,"Wilhelm Conrad Röntgen, physicist",11,7,[281]1,(28.7)11,–,–,–,–,0 8,,,,1994,Society for Heavy Ion Research
+112,Cn,Copernicium,"Nicolaus Copernicus, astronomer",12,7,[285]1,(23.7)11,–,357 12,–,–,0 8,,,,1996,Society for Heavy Ion Research
+113,Uut,Ununtrium,IUPAC systematic element name,13,7,[286]1,(16)11,(700)11,(1400)11,–,–,0 8,,,,,
+114,Fl,Flerovium,"Georgy Flyorov, physicist",14,7,[289]1,(14)11,(340)11,(420)11,–,–,0 8,,,,,
+115,Uup,Ununpentium,IUPAC systematic element name,15,7,[288]1,(13.5)11,(700)11,(1400)11,–,–,0 8,,,,,
+116,Lv,Livermorium,"Lawrence Livermore National Laboratory (in Livermore, California) which collaborated with JINR on its synthesis",16,7,[293]1,(12.9)11,(708.5)11,(1085)11,–,–,0 8,,,,,
+117,Uus,Ununseptium,IUPAC systematic element name,17,7,[294]1,(7.2)11,(673)11,(823)11,–,–,0 8,,,,,
+118,Uuo,Ununoctium,IUPAC systematic element name,18,7,[294]1,(5.0)11 13,(258)11,(263)11,–,–,0 8,,,,,
