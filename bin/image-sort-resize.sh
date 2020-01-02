@@ -30,12 +30,31 @@ function portrait_rotate {
 	OUTPUT="$output"
 }
 
+# sets var output and modifies TEMPFILES
+function rotate {
+	local photo rotate
+	photo="$1"
+	rotate="$2"
+
+	if [ ! -z "$rotate" ]; then
+		output=`mktemp`
+		TEMPFILES="$output $TEMPFILES"
+		convert "$photo" -auto-orient -rotate $rotate $output
+	fi
+}
+
 function rotate_photo {
 	local photo rotate from output
 	photo="$1"
 	rotate=ask
 	from="$photo"
 	output="$photo"
+
+	# rotate right / left initially to set orientation
+	rotate "$from" 90
+	from=$output
+	rotate "$from" -90
+	from=$output
 
 	while [ ! -z "$rotate" ]; do
 		display "$from"
@@ -50,9 +69,7 @@ function rotate_photo {
 			*) rotate=;;
 		esac
 		if [ ! -z "$rotate" ]; then
-			output=`mktemp`
-			TEMPFILES="$output $TEMPFILES"
-			convert "$from" -auto-orient -rotate $rotate $output
+			rotate "$from" $rotate
 			from=$output
 		fi
 	done
@@ -118,19 +135,7 @@ function process_photo {
 	fi
 }
 
-for photo in *.jpg;
-do
-	process_photo "$photo"
-done
-for photo in *.JPG;
-do
-	process_photo "$photo"
-done
-for photo in *.png;
-do
-	process_photo "$photo"
-done
-for photo in *.PNG;
+for photo in `ls *.jpg *.JPG *.png *.PNG`;
 do
 	process_photo "$photo"
 done

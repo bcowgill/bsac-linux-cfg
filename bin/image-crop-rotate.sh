@@ -7,7 +7,7 @@ WIDTH=${3:-55.6}
 HEIGHT=${4:-81}
 
 rm $PREFIX*.jpg
-for photo in *.jpg;
+for photo in `ls *.jpg *.JPG *.png *.PNG`;
 do
 	identify $photo
 	IMAGE_WIDTH=`identify -format "%w" $photo`
