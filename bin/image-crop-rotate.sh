@@ -11,7 +11,7 @@ function usage {
 	echo "
 usage: $cmd [--help] prefix rotate width height
 
-Process images by rotating and cropping them as needed.
+Process images by rotating and cropping them as needed and show the result to the user.
 
 This will process all the image files in the current directory and rename them with the prefix provided.
 

@@ -1,11 +1,8 @@
 #!/bin/bash
-# process images for a slideshow on a photo frame.
-# moves or renames photos into portrait and landscape folders
-# will resize the images to match the photo frame
 
 # identify -verbose *.jpg | egrep '(Width|Length|Orientation|Geometry|Image)'
 
-
+USAGE=1
 TEMPFILES=
 
 # scale to photo frame size
@@ -14,6 +11,27 @@ WIDTH=${2:-720}
 HEIGHT=${3:-480}
 
 PORTRAIT_ROTATE=90
+
+function usage {
+	cmd=$(basename $0)
+	echo "
+usage: $cmd [--help] mode width height
+
+Process images for a slideshow on a photo frame show them to the user to manually rotate if needed.
+
+This will copy or move all the image files in the current directory into portrait and landscape folders.
+
+It will resize the images to match the photo frame dimensions.
+
+mode  can be copy or move.  default is copy
+width, height values are in pixels. default is [$WIDTH x $HEIGHT]
+"
+	exit 0
+}
+
+[ "$MODE" == "--help" ] && usage
+[ "$MODE" == "--man" ] && usage
+[ "$MODE" == "-?" ] && usage
 
 [ -e landscape ] || mkdir -p landscape
 [ -e portrait ]  || mkdir -p portrait
@@ -137,6 +155,11 @@ function process_photo {
 
 for photo in `ls *.jpg *.JPG *.png *.PNG`;
 do
+	USAGE=0
 	process_photo "$photo"
 done
 rmdir landscape portrait 2> /dev/null
+
+if [ $USAGE == 1 ]; then
+	usage
+fi
