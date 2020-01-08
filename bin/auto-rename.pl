@@ -9,33 +9,38 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-use autodie qw(open mkdir rmdir unlink);
 use FindBin;
+use File::Spec;
+use File::Copy qw(move);
+
+use autodie qw(open mkdir rmdir unlink move);
 
 # https://www.perl.com/article/37/2013/8/18/Catch-and-Handle-Signals-in-Perl/
 use sigtrap qw(handler signal_handler normal-signals);
 
 our $VERSION = 0.1;
-our $DEBUG = 1;
+our $DEBUG = 0;
 
 our $TEST_CASES = 1;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $DELAY = 1;
+my $PAD = 3;
+my $signal_received = 0;
 
 my $pattern = shift;
 my $prefix = shift;
-my $source = shift || '.';
 my $destination = shift || '.';
+my $source = shift || '.';
 
 usage('You must provide a file matching pattern.') unless $pattern;
 usage('You must provide a destination file name prefix.') unless $prefix;
 
-my $source_lock = qq{$source/auto-rename.src.lock};
-my $destination_lock = qq{$destination/auto-rename.dst.lock};
+my $source_lock = file_in_dir($source, 'auto-rename.src.lock');
+my $destination_lock = file_in_dir($destination, 'auto-rename.dst.lock');
 
-my $source_lock_stop = qq{$source_lock/stop};
-my $destination_lock_stop = qq{$destination_lock/stop};
+my $source_lock_stop = file_in_dir($source_lock, 'stop');
+my $destination_lock_stop = file_in_dir($destination_lock, 'stop');
 
 failure("source [$source] must be an existing directory.") unless -d $source;
 failure("destination [$destination] must be an existing directory.") unless -d $destination;
@@ -43,6 +48,7 @@ failure("destination [$destination] must be an existing directory.") unless -d $
 sub obtain_locks
 {
 	eval {
+		debug("lock $destination_lock", 1);
 		mkdir($destination_lock);
 	};
 	if ($EVAL_ERROR) {
@@ -50,6 +56,7 @@ sub obtain_locks
 	}
 
 	eval {
+		debug("lock $source_lock", 1);
 		mkdir($source_lock);
 	};
 	if ($EVAL_ERROR) {
@@ -125,6 +132,7 @@ sub remove_locks
 
 sub signal_handler
 {
+	$signal_received = 1;
 	remove_locks();
 	die "\n$FindBin::Script terminated by signal";
 }
@@ -140,50 +148,132 @@ to terminate...
 EOHELP
 }
 
+sub get_number
+{
+	my ($dir, $prefix) = @ARG;
+	my $number = 1;
+	my $match = qr{$prefix(\d+)\.}xms;
+	debug("find next file number for $dir/$match", 5);
+	my $dh;
+	opendir($dh, $dir);
+	while (my $file = readdir($dh))
+	{
+		my $full_filename = file_in_dir($dir, $file);
+		debug("ignore if $full_filename is a directory", 7);
+		next if (-d $full_filename);
+		if ($file =~ $match)
+		{
+			my $num = 0 + $1;
+			debug("matched $num from $file", 6);
+			$number = $num >= $number ? $num + 1 : $number;
+			debug("using number $number", 7);
+		}
+	}
+	closedir($dh);
+	debug("start naming files with number $number", 1);
+	return $number;
+}
+
+sub pad
+{
+	my ($number, $width) = @ARG;
+	my $padded = ('0' x ($width - length($number))) . $number;
+	return $padded;
+}
+
 sub get_new_files
 {
 	my ($source_dir, $pattern_match) = @ARG;
-	debug("wake, check for new file matches of $pattern_match in $source_dir", 1);
-	# TODO get files from dir which match the pattern
-	return ['blah.jpg'];
+	debug("wake, check for new file matches of $pattern_match in $source_dir", 2);
+	my $dh;
+	my $raFiles = [];
+	opendir($dh, $source_dir);
+	while (my $file = readdir($dh))
+	{
+		my $full_filename = file_in_dir($source_dir, $file);
+		debug("ignore if $full_filename is a directory", 4);
+		next if (-d $full_filename);
+		debug("check file $file vs $pattern_match", 3);
+		# TODO get files from dir which match the pattern
+		if ($file =~ m{$pattern_match}xms) {
+			debug("matched $file", 3);
+			push($raFiles, $file);
+		}
+	}
+	closedir($dh);
+	return $raFiles;
 }
 
 sub move_files
 {
-	my ($raNewFiles, $source_dir, $destination_dir, $prefix_name) = @ARG;
+	my ($raNewFiles, $source_dir, $destination_dir, $prefix_name, $number) = @ARG;
 	foreach my $file_name (@$raNewFiles)
 	{
-		move_file($source_dir, $file_name, $destination_dir, $prefix_name);
+		$number = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
 	}
+	return $number;
+}
+
+sub make_filename
+{
+	my ($prefix_name, $number, $ext) = @ARG;
+	$number = pad($number, $PAD);
+	my $to = qq{$prefix_name$number$ext};
+	debug("target file name $to", 4);
+	return $to;
 }
 
 sub move_file
 {
-	my ($source_dir, $file_name, $destination_dir, $prefix_name) = @ARG;
-	debug("move new file $source_dir/$file_name to $destination_dir/${prefix_name}NNN.ext", 1);
-	# TODO implement this, look up next NNN number and append to prefix, along with extension
+	my ($source_dir, $file_name, $destination_dir, $prefix_name, $number) = @ARG;
+	my $from = file_in_dir($source_dir, $file_name);
+	my $ext = lc(get_extension($file_name));
+	my $to = file_in_dir($destination_dir, make_filename($prefix_name, $number, $ext));
+	eval
+	{
+		print(qq{move new file "$from" to "$to"\n});
+		# copy($from, $to); # to simulate a move error
+		die qq{target file exists already} if (-e $to);
+		move($from, $to);
+	};
+	if ($EVAL_ERROR)
+	{
+		remove_locks(qq{could not move "$from" to "$to": $EVAL_ERROR});
+	}
+	return $number + 1;
 }
 
 sub main
 {
 	obtain_locks();
+	eval
+	{
+		my $number = get_number($destination, $prefix);
+		show_help();
 
-	show_help();
+		while (! -e $source_lock_stop && ! -e $destination_lock_stop) {
+			sleep($DELAY);
+			if (! -d $source_lock || ! -d $destination_lock) {
+				remove_locks("lock directory [$source_lock] or [$destination_lock] disappeared.")
+			}
+			my $raNewFiles = get_new_files($source, $pattern);
+			if ($raNewFiles){
+				$number = move_files($raNewFiles, $source, $destination, $prefix, $number);
+			}
+			# TODO show message now and then when nothing has happened for a while...
+		}
 
-	while (! -e $source_lock_stop && ! -e $destination_lock_stop) {
-		sleep($DELAY);
-		if (! -d $source_lock || ! -d $destination_lock) {
-			remove_locks("lock directory [$source_lock] or [$destination_lock] disappeared.")
-		}
-		my $raNewFiles = get_new_files($source, $pattern);
-		if ($raNewFiles){
-			move_files($raNewFiles, $source, $destination, $prefix);
-		}
-		# TODO show message now and then when nothing is happening...
+		debug("stop file [$source_lock_stop] or [$destination_lock_stop] found, exiting.", 1);
+	};
+	if ($EVAL_ERROR)
+	{
+		remove_locks($EVAL_ERROR) unless $signal_received;
+		print($EVAL_ERROR);
 	}
-
-	debug("stop file [$source_lock_stop] or [$destination_lock_stop] found, exiting.", 1);
-	remove_locks();
+	elsif (!$signal_received)
+	{
+		remove_locks();
+	}
 }
 
 # make tabs 3 spaces
@@ -214,6 +304,23 @@ sub debug
 
 ##	print "debug @{[substr($msg,0,10)]} debug: $DEBUG level: $level\n";
 	print tab($msg) . "\n" if ( $DEBUG >= $level );
+}
+
+sub file_in_dir
+{
+	my ($dir, $filename) = @ARG;
+	return File::Spec->catfile($dir, $filename);
+}
+
+sub get_extension
+{
+	my ($filename) = @ARG;
+	my $ext = '';
+	if ($filename =~ m{(\.[^.]+)\z}xms)
+	{
+		$ext = $1;
+	}
+	return $ext;
 }
 
 sub usage
