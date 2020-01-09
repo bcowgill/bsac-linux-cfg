@@ -1,9 +1,10 @@
 #!/usr/bin/env perl
+# auto-rename.pl 'Screenshot.+\.png$' screen-shot- /tmp/me/screenshots /tmp/me
 
 use strict;
 use warnings;
 
-use English qw(-no_match_vars);
+use English qw(-no_match_vars); # https://metacpan.org/pod/perlvar for reference
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
@@ -46,9 +47,9 @@ my $destination_lock_pid  = file_in_dir($destination_lock, 'pid');
 my $source_lock_origin  = file_in_dir($source_lock, 'origin');
 my $destination_lock_origin  = file_in_dir($destination_lock, 'origin');
 
-my $username = $ENV{LOGNAME} || $ENV{USER} || getpwuid($<);
+my $username = $ENV{LOGNAME} || $ENV{USER} || getpwuid($REAL_USER_ID);
 my $host = hostname();
-my $origin_info = qq{$username\@$host $0};
+my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 sub check_args
 {
@@ -460,6 +461,7 @@ sub tests
 	test_pad("123", "123");
 	test_pad("1234", "1234");
 	test_make_filename("prefix-name-023.JPG", "prefix-name-", 23, ".JPG");
+	# test_get_extension...
 	exit 0;
 }
 
