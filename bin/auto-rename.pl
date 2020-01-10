@@ -27,7 +27,7 @@ my $DELAY = 1;
 my $PAD = 3;
 my $signal_received = 0;
 
-our $TEST_CASES = 6;
+our $TEST_CASES = 10;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -378,15 +378,23 @@ sub debug
 {
 	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
+	my $message;
 
 ##	print "debug @{[substr($msg,0,10)]} debug: $DEBUG level: $level\n";
-	print tab($msg) . "\n" if ( $DEBUG >= $level );
+	if ( $DEBUG >= $level )
+	{
+		$message = tab($msg) . "\n";
+		print $message
+	}
+	return $message
 } # debug()
 
 sub warning
 {
 	my ($warning) = @ARG;
-	warn( "WARN: " . tab($warning) . "\n" );
+	my $message = "WARN: " . tab($warning) . "\n";
+	warn( $message );
+	return $message;
 } # warning()
 
 # make tabs 3 spaces
@@ -414,12 +422,18 @@ sub test_tab
 	is($result, $expect, "tab: [$message] == [$expect]");
 }
 
-sub test_pad
+sub test_warning
 {
 	my ($expect, $message) = @ARG;
+	my $result = warning($message);
+	is($result, $expect, "warn: [$message] == [$expect]");
+}
 
-	my $result = pad($message, $PAD);
-	is($result, $expect, "pad: [$message] == [$expect]");
+sub test_debug
+{
+	my ($expect, $message, $level) = @ARG;
+	my $result = debug($message, $level);
+	is($result, $expect, "debug: [$message, $level] == [@{[$expect || 'undef']}]");
 }
 
 sub test_failure
@@ -435,6 +449,14 @@ sub test_failure
 		$result = $EVAL_ERROR;
 	}
 	is($result, $expect, "failure: [$message] == [$expect]");
+}
+
+sub test_pad
+{
+	my ($expect, $message) = @ARG;
+
+	my $result = pad($message, $PAD);
+	is($result, $expect, "pad: [$message] == [$expect]");
 }
 
 sub test_make_filename
@@ -455,6 +477,9 @@ sub tests
 	eval "use Test::Exception;";
 
 	test_tab("         Hello", "\t\t\tHello");
+	test_warning("WARN: WARNING, OH MY!\n", "WARNING, OH MY!");
+	test_debug(undef, "DEBUG, OH MY!", 10000);
+	test_debug("DEBUG, OH MY!\n", "DEBUG, OH MY!", -10000);
 	test_failure("ERROR: FAILURE, OH MY!\n", "FAILURE, OH MY!");
 	test_pad("000", "");
 	test_pad("001", "1");
@@ -462,6 +487,11 @@ sub tests
 	test_pad("1234", "1234");
 	test_make_filename("prefix-name-023.JPG", "prefix-name-", 23, ".JPG");
 	# test_get_extension...
+	# test_destroy
+	# test_move_file
+# test_remove_source_lock
+# test_file_in_dir
+#...
 	exit 0;
 }
 
