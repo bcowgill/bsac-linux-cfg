@@ -27,7 +27,7 @@ my $DELAY = 1;
 my $PAD = 3;
 my $signal_received = 0;
 
-our $TEST_CASES = 10;
+our $TEST_CASES = 14;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -344,7 +344,7 @@ sub get_extension
 {
 	my ($filename) = @ARG;
 	my $ext = '';
-	if ($filename =~ m{(\.[^.]+)\z}xms)
+	if ($filename =~ m{(\.[^.]*)\z}xms)
 	{
 		$ext = $1;
 	}
@@ -467,6 +467,14 @@ sub test_make_filename
 	is($result, $expect, "make_filename: [$prefix, $number, $extension] == [$expect]");
 }
 
+sub test_get_extension
+{
+	my ($expect, $file_name) = @ARG;
+
+	my $result = get_extension($file_name);
+	is($result, $expect, "get_extension: [$file_name] == [$expect]");
+}
+
 #===========================================================================
 # unit test suite
 #===========================================================================
@@ -486,7 +494,10 @@ sub tests
 	test_pad("123", "123");
 	test_pad("1234", "1234");
 	test_make_filename("prefix-name-023.JPG", "prefix-name-", 23, ".JPG");
-	# test_get_extension...
+	test_get_extension(".EXT", "file-name.EXT");
+	test_get_extension(".", "file-name.");
+	test_get_extension("", "file-name");
+	test_get_extension(".gz", "file-name.tar.gz");
 	# test_destroy
 	# test_move_file
 # test_remove_source_lock
