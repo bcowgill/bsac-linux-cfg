@@ -27,6 +27,8 @@ alias prompter='source `which toggle-prompt.sh`'
 alias promptshort='source `which toggle-prompt-short.sh`'
 
 if [ -z $COMPANY ]; then
+	alias lesspw='less /media/me/*/PASSWDS.TXT'
+	alias vipw='vim /media/me/*/PASSWDS.TXT'
 	alias vicron='crontab -e; crontab -l > $HOME/bin/cfg/crontab-home'
 else
 	alias vicron='crontab -e; crontab -l > $HOME/bin/cfg/$COMPANY/crontab-$HOSTNAME'
