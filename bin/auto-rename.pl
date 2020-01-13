@@ -27,7 +27,7 @@ my $DELAY = 1;
 my $PAD = 3;
 my $signal_received = 0;
 
-our $TEST_CASES = 14;
+our $TEST_CASES = 22;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -212,6 +212,7 @@ sub write_file
 	open($fh, '>', $file_name);
 	print $fh $content;
 	close($fh);
+	return $content;
 }
 
 sub get_new_files
@@ -329,6 +330,7 @@ sub move_file
 sub destroy
 {
 	my ($file_name) = @ARG;
+	my $error;
 	eval
 	{
 		debug("remove $file_name", 1);
@@ -336,8 +338,10 @@ sub destroy
 	};
 	if ($EVAL_ERROR)
 	{
-		debug("destroy: $file_name: $EVAL_ERROR", 2)
+		debug("destroy: $file_name: $EVAL_ERROR", 2);
+		$error = 1;
 	}
+	return $error;
 } # destroy()
 
 sub get_extension
@@ -449,7 +453,7 @@ sub test_failure
 		$result = $EVAL_ERROR;
 	}
 	is($result, $expect, "failure: [$message] == [$expect]");
-}
+} # test_failure()
 
 sub test_pad
 {
@@ -475,6 +479,65 @@ sub test_get_extension
 	is($result, $expect, "get_extension: [$file_name] == [$expect]");
 }
 
+sub test_destroy
+{
+	my ($expect, $file_name) = @ARG;
+	# create a file to be deleted first.
+	write_file("this-file-does-not-exist.xyz", "a file to be deleted");
+	my $result = destroy($file_name);
+	is($result, $expect, "destroy: [$file_name] == [@{[$expect||'undef']}]");
+	my $exists = -e $file_name;
+	is ($exists, undef, "destroy: [$file_name] exists? [@{[$exists||'undef']}]");
+} # test_destroy()
+
+sub test_move_file
+{
+	my  ($expect, $source_dir, $file_name, $destination_dir, $prefix_name, $number) = @ARG;
+	# create a file to be moved first.
+	write_file("this-file-will-be-moved.XYZ", "a file to be moved");
+	my $result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
+	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
+	my $exists = -e $file_name;
+	is ($exists, undef, "move_file: [$file_name] exists? [@{[$exists||'undef']}]");
+	destroy("this-is-target-prefix-023.xyz");
+}
+
+# test_move_file, etc...
+
+sub read_file
+{
+	my ($file_name) = @ARG;
+	my $fh;
+	local $INPUT_RECORD_SEPARATOR = undef;
+	open($fh, '<', $file_name);
+	my $result = <$fh>;
+	close($fh);
+	return $result;
+}
+
+sub test_write_file
+{
+	my ($expect, $file_name, $content) = @ARG;
+	my $result;
+	my $expect_exists;
+	eval
+	{
+		write_file($file_name, $content);
+		$expect_exists = 1;
+		$result = read_file($file_name);
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = "error:";
+	}
+	is($result, $expect, "write_file: [$file_name] == [@{[$expect||'undef']}]");
+	my $exists = -e $file_name;
+	is ($exists, $expect_exists, "write_file: [$file_name] exists? [@{[$expect_exists||'undef']}]");
+	destroy($file_name);
+} # test_write_file()
+
+# test_remove_locks
+
 #===========================================================================
 # unit test suite
 #===========================================================================
@@ -498,11 +561,22 @@ sub tests
 	test_get_extension(".", "file-name.");
 	test_get_extension("", "file-name");
 	test_get_extension(".gz", "file-name.tar.gz");
-	# test_destroy
-	# test_move_file
+	test_destroy(1, "this-file-does-not-exist.xxx");
+	test_destroy(undef, "this-file-does-not-exist.xyz");
+	#test_move_file("error", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23);
+	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23);
 # test_remove_source_lock
 # test_file_in_dir
-#...
+# test_remove_destination_lock
+# test_move_files
+# test_get_new_files
+	test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file");
+	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file");
+# test_remove_locks
+# test_show_help
+# test_get_number
+# test_obtain_locks
+# test_signal_handler
 	exit 0;
 }
 
