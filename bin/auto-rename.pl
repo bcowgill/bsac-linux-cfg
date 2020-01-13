@@ -27,7 +27,7 @@ my $DELAY = 1;
 my $PAD = 3;
 my $signal_received = 0;
 
-our $TEST_CASES = 22;
+our $TEST_CASES = 28;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -490,19 +490,6 @@ sub test_destroy
 	is ($exists, undef, "destroy: [$file_name] exists? [@{[$exists||'undef']}]");
 } # test_destroy()
 
-sub test_move_file
-{
-	my  ($expect, $source_dir, $file_name, $destination_dir, $prefix_name, $number) = @ARG;
-	# create a file to be moved first.
-	write_file("this-file-will-be-moved.XYZ", "a file to be moved");
-	my $result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
-	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
-	my $exists = -e $file_name;
-	is ($exists, undef, "move_file: [$file_name] exists? [@{[$exists||'undef']}]");
-	destroy("this-is-target-prefix-023.xyz");
-}
-
-# test_move_file, etc...
 
 sub read_file
 {
@@ -514,6 +501,25 @@ sub read_file
 	close($fh);
 	return $result;
 }
+
+sub test_move_file
+{
+	my  ($expect, $source_dir, $file_name, $destination_dir, $prefix_name, $number) = @ARG;
+	# create a file to be moved first.
+	my $to_name = "this-is-target-prefix-023.xyz";
+	write_file("this-file-will-be-moved.XYZ", "a file to be moved");
+	my $result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
+	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
+	my $exists = -e $file_name;
+	is($exists, undef, "move_file: [$file_name] exists? [@{[$exists||'undef']}]");
+	$exists = -e $to_name;
+	is($exists, 1, "move_file: [$to_name] exists? [@{[$exists||'undef']}]");
+	$result = read_file($to_name);
+	is($result, "a file to be moved", "move_file: [$to_name] == [$result]");
+	destroy($to_name);
+}
+
+# test_move_file, etc...
 
 sub test_write_file
 {
@@ -535,6 +541,13 @@ sub test_write_file
 	is ($exists, $expect_exists, "write_file: [$file_name] exists? [@{[$expect_exists||'undef']}]");
 	destroy($file_name);
 } # test_write_file()
+
+sub test_file_in_dir
+{
+	my ($expect, $dir, $file_name) = @ARG;
+	my $result = file_in_dir($dir, $file_name);
+	is($result, $expect, "file_in_dir: [$dir, $file_name] == [$expect]");
+}
 
 # test_remove_locks
 
@@ -566,7 +579,8 @@ sub tests
 	#test_move_file("error", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23);
 	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23);
 # test_remove_source_lock
-# test_file_in_dir
+	test_file_in_dir("dir/file_name.XYZ", "dir", "file_name.XYZ");
+	test_file_in_dir("dir/file_name.XYZ", "dir/", "file_name.XYZ");
 # test_remove_destination_lock
 # test_move_files
 # test_get_new_files
