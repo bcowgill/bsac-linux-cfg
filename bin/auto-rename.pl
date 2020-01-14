@@ -27,7 +27,8 @@ my $DELAY = 1;
 my $PAD = 3;
 my $signal_received = 0;
 
-our $TEST_CASES = 28;
+our $TESTING = 0;
+our $TEST_CASES = 29;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -65,8 +66,8 @@ sub usage
 	my ($msg) = @ARG;
 	my $cmd = $FindBin::Script;
 
-	print "$msg\n\n" if $msg;
-	print <<"USAGE";
+	say("$msg\n\n") if $msg;
+	say(<<"USAGE");
 usage: $cmd pattern prefix [destination [source]]
 
 This program will automatically rename or move matching files as they appear.
@@ -120,7 +121,7 @@ sub main
 	{
 		debug("catch from main: $EVAL_ERROR", 1);
 		remove_locks($EVAL_ERROR) unless $signal_received;
-		print($EVAL_ERROR);
+		say($EVAL_ERROR);
 	}
 	elsif (!$signal_received)
 	{
@@ -188,7 +189,7 @@ sub get_number
 
 sub show_help
 {
-	print <<"EOHELP";
+	say(<<"EOHELP");
 scanning $source directory for new files matching $pattern...
    Press Ctrl-C or
    touch $source_lock_stop
@@ -314,7 +315,7 @@ sub move_file
 	my $to = file_in_dir($destination_dir, make_filename($prefix_name, $number, $ext));
 	eval
 	{
-		print(qq{move new file "$from" to "$to"\n});
+		say(qq{move new file "$from" to "$to"\n});
 		# copy($from, $to); # to simulate a move error
 		die qq{target file exists already} if (-e $to);
 		move($from, $to);
@@ -388,7 +389,14 @@ sub debug
 	if ( $DEBUG >= $level )
 	{
 		$message = tab($msg) . "\n";
-		print $message
+		if ($TESTING)
+		{
+			diag(qq{DEBUG: $message});
+		}
+		else
+		{
+			print $message
+		}
 	}
 	return $message
 } # debug()
@@ -397,7 +405,14 @@ sub warning
 {
 	my ($warning) = @ARG;
 	my $message = "WARN: " . tab($warning) . "\n";
-	warn( $message );
+	if ($TESTING)
+	{
+		diag( $message );
+	}
+	else
+	{
+		warn( $message );
+	}
 	return $message;
 } # warning()
 
@@ -410,13 +425,32 @@ sub tab
 	return $message;
 } # tab()
 
+sub say
+{
+	my ($message) = @ARG;
+	if ($TESTING)
+	{
+		diag( $message );
+	}
+	else
+	{
+		print $message;
+	}
+	return $message;
+}
+
 main();
 
 #===========================================================================
 # unit test functions
 #===========================================================================
 
-# TODO implement unit tests
+sub test_say
+{
+	my ($expect, $message) = @ARG;
+	my $result = say($message);
+	is($result, $expect, "say: [$message] == [$expect]");
+}
 
 sub test_tab
 {
@@ -430,7 +464,7 @@ sub test_warning
 {
 	my ($expect, $message) = @ARG;
 	my $result = warning($message);
-	is($result, $expect, "warn: [$message] == [$expect]");
+	is($result, $expect, "warning: [$message] == [$expect]");
 }
 
 sub test_debug
@@ -486,8 +520,7 @@ sub test_destroy
 	write_file("this-file-does-not-exist.xyz", "a file to be deleted");
 	my $result = destroy($file_name);
 	is($result, $expect, "destroy: [$file_name] == [@{[$expect||'undef']}]");
-	my $exists = -e $file_name;
-	is ($exists, undef, "destroy: [$file_name] exists? [@{[$exists||'undef']}]");
+	is_file($file_name, 'not_exists', 'destroy');
 } # test_destroy()
 
 
@@ -510,26 +543,30 @@ sub test_move_file
 	write_file("this-file-will-be-moved.XYZ", "a file to be moved");
 	my $result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
 	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
-	my $exists = -e $file_name;
-	is($exists, undef, "move_file: [$file_name] exists? [@{[$exists||'undef']}]");
-	$exists = -e $to_name;
-	is($exists, 1, "move_file: [$to_name] exists? [@{[$exists||'undef']}]");
+	is_file($file_name, 'not_exists', 'move_file from');
+	is_file($to_name, undef, 'move_file to');
 	$result = read_file($to_name);
 	is($result, "a file to be moved", "move_file: [$to_name] == [$result]");
 	destroy($to_name);
 }
 
+# TODO implement unit tests
+
 # test_move_file, etc...
+
+sub test_get_new_files
+{
+}
 
 sub test_write_file
 {
 	my ($expect, $file_name, $content) = @ARG;
 	my $result;
-	my $expect_exists;
+	my $expect_exists = 'not_exists';
 	eval
 	{
 		write_file($file_name, $content);
-		$expect_exists = 1;
+		$expect_exists = undef;
 		$result = read_file($file_name);
 	};
 	if ($EVAL_ERROR)
@@ -537,8 +574,7 @@ sub test_write_file
 		$result = "error:";
 	}
 	is($result, $expect, "write_file: [$file_name] == [@{[$expect||'undef']}]");
-	my $exists = -e $file_name;
-	is ($exists, $expect_exists, "write_file: [$file_name] exists? [@{[$expect_exists||'undef']}]");
+	is_file($file_name, $expect_exists, "write_file");
 	destroy($file_name);
 } # test_write_file()
 
@@ -552,14 +588,32 @@ sub test_file_in_dir
 # test_remove_locks
 
 #===========================================================================
+# unit test library functions
+#===========================================================================
+
+sub is_file
+{
+	my ($file_name, $expected, $test_name) = @ARG;
+	$expected ||= 'is_file';
+	$test_name = "$test_name: is_file[$file_name] == [$expected]" if $test_name;
+
+	my $result = -e $file_name ? -f _ ? 'is_file' : 'non_file' : 'not_exists';
+	is($result, $expected, $test_name);
+}
+
+# is_file_content
+
+#===========================================================================
 # unit test suite
 #===========================================================================
 
 sub tests
 {
+	$TESTING = 1;
 	eval "use Test::More tests => $TEST_CASES;";
 	eval "use Test::Exception;";
 
+	test_say("Hello, there", "Hello, there");
 	test_tab("         Hello", "\t\t\tHello");
 	test_warning("WARN: WARNING, OH MY!\n", "WARNING, OH MY!");
 	test_debug(undef, "DEBUG, OH MY!", 10000);
@@ -583,7 +637,7 @@ sub tests
 	test_file_in_dir("dir/file_name.XYZ", "dir/", "file_name.XYZ");
 # test_remove_destination_lock
 # test_move_files
-# test_get_new_files
+# test_get_new_files("one.xxx,two.xxx", ".", "\\.xxx\$");
 	test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file");
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file");
 # test_remove_locks
@@ -593,6 +647,8 @@ sub tests
 # test_signal_handler
 	exit 0;
 }
+
+# bring say, $TESTING changes over to perl template and any scripts based on this.
 
 __END__
 __DATA__
