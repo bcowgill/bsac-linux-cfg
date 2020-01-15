@@ -28,7 +28,7 @@ my $PAD = 3;
 my $signal_received = 0;
 
 our $TESTING = 0;
-our $TEST_CASES = 29;
+our $TEST_CASES = 26;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -524,17 +524,6 @@ sub test_destroy
 } # test_destroy()
 
 
-sub read_file
-{
-	my ($file_name) = @ARG;
-	my $fh;
-	local $INPUT_RECORD_SEPARATOR = undef;
-	open($fh, '<', $file_name);
-	my $result = <$fh>;
-	close($fh);
-	return $result;
-}
-
 sub test_move_file
 {
 	my  ($expect, $source_dir, $file_name, $destination_dir, $prefix_name, $number) = @ARG;
@@ -544,9 +533,7 @@ sub test_move_file
 	my $result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
 	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
 	is_file($file_name, 'not_exists', 'move_file from');
-	is_file($to_name, undef, 'move_file to');
-	$result = read_file($to_name);
-	is($result, "a file to be moved", "move_file: [$to_name] == [$result]");
+	is_file_content($to_name, "a file to be moved", 'move_file to');
 	destroy($to_name);
 }
 
@@ -562,19 +549,18 @@ sub test_write_file
 {
 	my ($expect, $file_name, $content) = @ARG;
 	my $result;
-	my $expect_exists = 'not_exists';
+	my $expect_exists = 0;
 	eval
 	{
 		write_file($file_name, $content);
-		$expect_exists = undef;
-		$result = read_file($file_name);
+		$expect_exists = 1;
 	};
 	if ($EVAL_ERROR)
 	{
 		$result = "error:";
 	}
-	is($result, $expect, "write_file: [$file_name] == [@{[$expect||'undef']}]");
-	is_file($file_name, $expect_exists, "write_file");
+	$content = 'not_exists' unless ($expect_exists);
+	is_file_content($file_name, $content, "write_file");
 	destroy($file_name);
 } # test_write_file()
 
@@ -601,7 +587,33 @@ sub is_file
 	is($result, $expected, $test_name);
 }
 
-# is_file_content
+sub is_file_content
+{
+	my ($file_name, $expected, $test_name) = @ARG;
+	$test_name = "$test_name: is_file_content[$file_name] == [$expected]" if $test_name;
+	my $result;
+
+	eval
+	{
+		$result = -e $file_name ? read_file($file_name) : 'not_exists';
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = "error: $EVAL_ERROR";
+	}
+	is($result, $expected, $test_name);
+}
+
+sub read_file
+{
+	my ($file_name) = @ARG;
+	my $fh;
+	local $INPUT_RECORD_SEPARATOR = undef;
+	open($fh, '<', $file_name);
+	my $result = <$fh>;
+	close($fh);
+	return $result;
+}
 
 #===========================================================================
 # unit test suite
