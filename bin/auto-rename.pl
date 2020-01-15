@@ -15,7 +15,7 @@ use Sys::Hostname;
 use File::Spec;
 use File::Copy qw(move);
 
-use autodie qw(open mkdir rmdir unlink move);
+use autodie qw(open mkdir rmdir unlink move opendir );
 
 # https://www.perl.com/article/37/2013/8/18/Catch-and-Handle-Signals-in-Perl/
 use sigtrap qw(handler signal_handler normal-signals);
@@ -28,7 +28,7 @@ my $PAD = 3;
 my $signal_received = 0;
 
 our $TESTING = 0;
-our $TEST_CASES = 26;
+our $TEST_CASES = 29;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -543,6 +543,22 @@ sub test_move_file
 
 sub test_get_new_files
 {
+	my ($expect, $source_dir, $pattern_match) = @ARG;
+	# create files to be found first.
+	write_file("this-file-will-be-found.XYZ", "a file to be found");
+	write_file("and-so-will-this-one.XYZ", "another file to be found");
+	my $result;
+	eval
+	{
+		$result = get_new_files($source_dir, $pattern_match);
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = ["error:"];
+	}
+	is_deeply($result, $expect, "get_new_files: [$pattern_match] == @{[scalar(@$expect)]}");
+	destroy("this-file-will-be-found.XYZ");
+	destroy("and-so-will-this-one.XYZ");
 }
 
 sub test_write_file
@@ -649,8 +665,10 @@ sub tests
 	test_file_in_dir("dir/file_name.XYZ", "dir/", "file_name.XYZ");
 # test_remove_destination_lock
 # test_move_files
-# test_get_new_files("one.xxx,two.xxx", ".", "\\.xxx\$");
-	test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file");
+   test_get_new_files([], ".", "\\.xyzzyZYXXY\$");
+   test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$");
+   test_get_new_files(["and-so-will-this-one.XYZ", "this-file-will-be-found.XYZ"], ".", "\\.XYZ\$");
+   test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file");
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file");
 # test_remove_locks
 # test_show_help
