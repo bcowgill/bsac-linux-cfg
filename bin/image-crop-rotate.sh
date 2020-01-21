@@ -1,10 +1,15 @@
 #!/bin/bash
+PROCESSED=-processed-
+NINETY=90
+W=55.6
+H=81
+
 USAGE=1
-PREFIX=${1:-processed-}
-ROTATE=${2:-90}
+PREFIX=${1:$PROCESSED}
+ROTATE=${2:-$NINETY}
 # crop percentage
-WIDTH=${3:-55.6}
-HEIGHT=${4:-81}
+WIDTH=${3:-$W}
+HEIGHT=${4:-$H}
 
 function usage {
 	cmd=$(basename $0)
@@ -15,11 +20,11 @@ Process images by rotating and cropping them as needed and show the result to th
 
 This will process all the image files in the current directory and rename them with the prefix provided.
 
-Warning: it will first delete all image files which match the prefix. default is $PREFIX
+Warning: it will first delete all image files which match the prefix. default is $PROCESSED
 
-A rotate amount of 90 is 90 degrees clockwise and -90 is 90 degrees counter-clockwise. default is $ROTATE
+A rotate amount of 90 is 90 degrees clockwise and -90 is 90 degrees counter-clockwise. default is $NINETY
 
-The width and height values are percentages. default is [$WIDTH % x $HEIGHT %]
+The width and height values are percentages. default is [$W % x $H %]
 "
 	exit 0
 }
