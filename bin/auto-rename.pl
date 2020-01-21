@@ -14,6 +14,7 @@ use FindBin;
 use Sys::Hostname;
 use File::Spec;
 use File::Copy qw(move);
+use File::Find ();
 
 use autodie qw(open mkdir rmdir unlink move opendir );
 
@@ -27,8 +28,12 @@ my $DELAY = 1;
 my $PAD = 3;
 my $signal_received = 0;
 
+my $username = $ENV{LOGNAME} || $ENV{USER} || getpwuid($REAL_USER_ID);
+my $host = hostname();
+my $origin_info = qq{$username\@$host $PROGRAM_NAME};
+
 our $TESTING = 0;
-our $TEST_CASES = 29;
+our $TEST_CASES = 37;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -36,21 +41,34 @@ my $prefix = shift;
 my $destination = shift || '.';
 my $source = shift || '.';
 
-my $source_lock = file_in_dir($source, 'auto-rename.src.lock');
-my $destination_lock = file_in_dir($destination, 'auto-rename.dst.lock');
+my $source_lock;
+my $destination_lock;
 
-my $source_lock_stop = file_in_dir($source_lock, 'stop');
-my $destination_lock_stop = file_in_dir($destination_lock, 'stop');
+my $source_lock_stop;
+my $destination_lock_stop;
 
-my $source_lock_pid  = file_in_dir($source_lock, 'pid');
-my $destination_lock_pid  = file_in_dir($destination_lock, 'pid');
+my $source_lock_pid;
+my $destination_lock_pid;
 
-my $source_lock_origin  = file_in_dir($source_lock, 'origin');
-my $destination_lock_origin  = file_in_dir($destination_lock, 'origin');
+my $source_lock_origin;
+my $destination_lock_origin;
 
-my $username = $ENV{LOGNAME} || $ENV{USER} || getpwuid($REAL_USER_ID);
-my $host = hostname();
-my $origin_info = qq{$username\@$host $PROGRAM_NAME};
+sub configure_locks
+{
+	my ($src, $dst) = @ARG;
+
+   $source_lock = file_in_dir($src, 'auto-rename.src.lock');
+   $destination_lock = file_in_dir($dst, 'auto-rename.dst.lock');
+
+   $source_lock_stop = file_in_dir($source_lock, 'stop');
+   $destination_lock_stop = file_in_dir($destination_lock, 'stop');
+
+   $source_lock_pid  = file_in_dir($source_lock, 'pid');
+   $destination_lock_pid  = file_in_dir($destination_lock, 'pid');
+
+   $source_lock_origin  = file_in_dir($source_lock, 'origin');
+   $destination_lock_origin  = file_in_dir($destination_lock, 'origin');
+}
 
 sub check_args
 {
@@ -94,6 +112,7 @@ USAGE
 sub main
 {
 	check_args();
+	configure_locks($source, $destination);
 	obtain_locks();
 	eval
 	{
@@ -209,6 +228,7 @@ sub remove_locks
 sub write_file
 {
 	my ($file_name, $content) = @ARG;
+
 	my $fh;
 	open($fh, '>', $file_name);
 	print $fh $content;
@@ -589,6 +609,69 @@ sub test_file_in_dir
 
 # test_remove_locks
 
+sub test_get_number
+{
+	my ($expect, $dir, $prefix) = @ARG;
+	write_file("auto-rename-unit-tests-get-number-exists-022.XXX", "a file for get_number function test");
+	my $result = get_number($dir, $prefix);
+	is($result, $expect, "get_number: [$dir, $prefix] == [$expect]");
+	destroy("auto-rename-unit-tests-get-number-exists-022.XXX");
+}
+
+sub test_obtain_locks
+{
+	my $dir = "auto-rename-unit-tests-obtain-lock-test";
+	my $src = file_in_dir($dir, 'source');
+	my $dst = file_in_dir($dir, 'destination');
+
+	mkdir($dir);
+	mkdir($src);
+	mkdir($dst);
+
+	configure_locks($src, $dst);
+
+	my @LockFiles = (
+		$source_lock_origin,
+		$source_lock_pid,
+		$destination_lock_origin,
+		$destination_lock_pid
+   );
+	my @LockDirs = (
+		$source_lock,
+		$destination_lock,
+		$src,
+		$dst,
+		$dir
+   );
+
+	obtain_locks();
+
+	is_dir_content($dir, 'dir,full', [ "$dst/", "$src/" ], "obtain_locks");
+	is_tree_content($dir, 'dir,full', [
+		"$dir/",
+		"$dst/",
+		"$destination_lock/",
+		"$destination_lock_origin",
+		"$destination_lock_pid",
+		"$src/",
+		"$source_lock/",
+		"$source_lock_origin",
+		"$source_lock_pid",
+	], "obtain_locks");
+
+	is_file_content($source_lock_pid, $PID, "obtain_locks");
+	is_file_content($destination_lock_pid, $PID, "obtain_locks");
+	is_file_content($source_lock_origin, $origin_info, "obtain_locks");
+	is_file_content($destination_lock_origin, $origin_info, "obtain_locks");
+
+	foreach my $file (@LockFiles) {
+		unlink($file);
+	}
+	foreach my $lock_dir (@LockDirs) {
+		rmdir($lock_dir);
+	}
+}
+
 #===========================================================================
 # unit test library functions
 #===========================================================================
@@ -601,7 +684,7 @@ sub is_file
 
 	my $result = -e $file_name ? -f _ ? 'is_file' : 'non_file' : 'not_exists';
 	is($result, $expected, $test_name);
-}
+} # is_file()
 
 sub is_file_content
 {
@@ -618,7 +701,47 @@ sub is_file_content
 		$result = "error: $EVAL_ERROR";
 	}
 	is($result, $expected, $test_name);
-}
+} # is_file_content()
+
+# check directory content for files, files and dirs or with full file name based on $mode
+sub is_dir_content
+{
+	my ($dir_name, $mode, $raExpected, $test_name) = @ARG;
+	$test_name = "$test_name: is_dir_content[$dir_name] == [@{[scalar(@$raExpected)]}]" if $test_name;
+	my @result;
+	my $use_full_name = $mode && $mode =~ m{full}xms;
+	my $show_dirs = $mode && $mode =~ m{dir}xms;
+
+	eval
+	{
+		@result = -e $dir_name ? $show_dirs ? read_dir_all($dir_name, $use_full_name) : read_dir($dir_name, $use_full_name) : qw(not_exists);
+	};
+	if ($EVAL_ERROR)
+	{
+		@result = ("error:", $EVAL_ERROR);
+	}
+	is_deeply(\@result, $raExpected, $test_name);
+} # is_dir_content
+
+# check directory content recursively with short or full file name based on $mode
+sub is_tree_content
+{
+	my ($dir_name, $mode, $raExpected, $test_name) = @ARG;
+	$test_name = "$test_name: is_tree_content[$dir_name] == [@{[scalar(@$raExpected)]}]" if $test_name;
+	my @result;
+	my $use_full_name = $mode && $mode =~ m{full}xms;
+	my $show_dirs = $mode && $mode =~ m{dir}xms;
+
+	eval
+	{
+		@result = -e $dir_name ? read_tree($dir_name, $mode) : qw(not_exists);
+	};
+	if ($EVAL_ERROR)
+	{
+		@result = ("error:", $EVAL_ERROR);
+	}
+	is_deeply(\@result, $raExpected, $test_name);
+} # is_tree_content()
 
 sub read_file
 {
@@ -629,7 +752,74 @@ sub read_file
 	my $result = <$fh>;
 	close($fh);
 	return $result;
-}
+} # read_file()
+
+# read the files in a directory return a sorted array of names or full names
+sub read_dir
+{
+	my ($dir, $use_full_name) = @ARG;
+	my $dh;
+	my @files;
+	opendir($dh, $dir);
+	while (my $file = readdir($dh))
+	{
+		my $full_filename = file_in_dir($dir, $file);
+		warning("FULL $full_filename");
+		next if (-d $full_filename);
+		push(@files, $use_full_name ? $full_filename : $file);
+	}
+	closedir($dh);
+	return sort(@files);
+} # read_dir()
+
+# read the dirs and files in a directory return a sorted array of names or full names
+sub read_dir_all
+{
+	my ($dir, $use_full_name) = @ARG;
+	my $dh;
+	my @files;
+	opendir($dh, $dir);
+	while (my $file = readdir($dh))
+	{
+		my $full_filename = file_in_dir($dir, $file);
+		next if ($file =~ m{\A\.\.?\z}xms);
+		my $name = $use_full_name ? $full_filename : $file;
+		$name .= "/" if (-d $full_filename);
+		push(@files, $name);
+	}
+	closedir($dh);
+	return sort(@files);
+} # read_dir_all()
+
+# read the dirs and files in a directory recursively and return a sorted array of names or full names
+sub read_tree
+{
+	my ($dir, $mode) = @ARG;
+	my @files;
+	my $use_full_name = $mode && $mode =~ m{full}xms;
+	my $show_dirs = $mode && $mode =~ m{dir}xms;
+
+	File::Find::find({
+		wanted => sub {
+			my ($dev,$ino,$mode,$nlink,$uid,$gid);
+
+			my $found_dir = $File::Find::dir;
+			my $name = $File::Find::name;
+			if (($dev,$ino,$mode,$nlink,$uid,$gid) = lstat($ARG))
+			{
+				if (-d _)
+				{
+					$name .= '/';
+					return unless $show_dirs;
+				}
+				$name = substr($name, length($dir) + 1) unless $use_full_name;
+				push(@files, $name);
+			}
+		}},
+		$dir
+	);
+	return sort(@files);
+} # read_tree()
 
 #===========================================================================
 # unit test suite
@@ -672,8 +862,9 @@ sub tests
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file");
 # test_remove_locks
 # test_show_help
-# test_get_number
-# test_obtain_locks
+   test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-");
+   test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-");
+   test_obtain_locks();
 # test_signal_handler
 	exit 0;
 }
