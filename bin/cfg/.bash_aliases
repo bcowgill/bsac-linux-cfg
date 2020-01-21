@@ -29,6 +29,7 @@ alias promptshort='source `which toggle-prompt-short.sh`'
 if [ -z $COMPANY ]; then
 	alias lesspw='less /media/me/*/PASSWDS.TXT'
 	alias vipw='vim /media/me/*/PASSWDS.TXT'
+	alias viphone='vim ~/d/backup/samsung-galaxy-note10/cfgrec-samsung-galaxy-note-10.txt'
 	alias vicron='crontab -e; crontab -l > $HOME/bin/cfg/crontab-home'
 else
 	alias vicron='crontab -e; crontab -l > $HOME/bin/cfg/$COMPANY/crontab-$HOSTNAME'
