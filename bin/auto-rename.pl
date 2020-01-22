@@ -33,7 +33,7 @@ my $host = hostname();
 my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
-our $TEST_CASES = 37;
+our $TEST_CASES = 46;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -537,7 +537,7 @@ sub test_destroy
 {
 	my ($expect, $file_name) = @ARG;
 	# create a file to be deleted first.
-	write_file("this-file-does-not-exist.xyz", "a file to be deleted");
+	write_file("this-file-does-not-exist.zyx", "a file to be deleted");
 	my $result = destroy($file_name);
 	is($result, $expect, "destroy: [$file_name] == [@{[$expect||'undef']}]");
 	is_file($file_name, 'not_exists', 'destroy');
@@ -547,38 +547,55 @@ sub test_destroy
 sub test_move_file
 {
 	my  ($expect, $source_dir, $file_name, $destination_dir, $prefix_name, $number) = @ARG;
+
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-move-file-test");
+
 	# create a file to be moved first.
 	my $to_name = "this-is-target-prefix-023.xyz";
 	write_file("this-file-will-be-moved.XYZ", "a file to be moved");
-	my $result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
+
+	my $result;
+	my $error;
+	eval
+	{
+		$result = move_file($source_dir, $file_name, $destination_dir, $prefix_name, $number);
+	};
+	if ($EVAL_ERROR)
+	{
+		$error = 1;
+		$result = substr($EVAL_ERROR, 0, 21);
+	}
+
 	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
 	is_file($file_name, 'not_exists', 'move_file from');
-	is_file_content($to_name, "a file to be moved", 'move_file to');
+	is_file_content($to_name, $error ? "not_exists" : "a file to be moved", 'move_file to');
 	destroy($to_name);
-}
+
+	wipe_locks($dir, $src, $dst);
+} # test_move_file()
 
 # TODO implement unit tests
-
-# test_move_file, etc...
 
 sub test_get_new_files
 {
 	my ($expect, $source_dir, $pattern_match) = @ARG;
 	# create files to be found first.
-	write_file("this-file-will-be-found.XYZ", "a file to be found");
-	write_file("and-so-will-this-one.XYZ", "another file to be found");
+	write_file("this-file-will-be-found.XYZ1", "a file to be found");
+	write_file("and-so-will-this-one.XYZ1", "another file to be found");
 	my $result;
 	eval
 	{
-		$result = get_new_files($source_dir, $pattern_match);
+		$result = [sort(@{get_new_files($source_dir, $pattern_match)})];
 	};
 	if ($EVAL_ERROR)
 	{
 		$result = ["error:"];
 	}
+	# warning("GET NEW: " . join("\n", @$result));
+	# warning("EXPECT: " . join("\n", @$expect));
 	is_deeply($result, $expect, "get_new_files: [$pattern_match] == @{[scalar(@$expect)]}");
-	destroy("this-file-will-be-found.XYZ");
-	destroy("and-so-will-this-one.XYZ");
+	destroy("this-file-will-be-found.XYZ1");
+	destroy("and-so-will-this-one.XYZ1");
 }
 
 sub test_write_file
@@ -607,7 +624,35 @@ sub test_file_in_dir
 	is($result, $expect, "file_in_dir: [$dir, $file_name] == [$expect]");
 }
 
-# test_remove_locks
+sub test_remove_locks
+{
+	my ($expect, $warning) = @ARG;
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-remove-lock-test");
+
+	is_dir_content($source_lock, 'dir,full', [
+		"$source_lock_origin",
+		"$source_lock_pid",
+	], "remove_locks: [$warning] obtained");
+
+	my $result = 'returned';
+	eval
+	{
+		remove_locks($warning);
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = $EVAL_ERROR;
+	}
+
+	is($result, $expect, "remove_locks: [$warning] == [$expect]");
+	is_tree_content($dir, 'dir,full', [
+		"$dir/",
+		"$dst/",
+		"$src/",
+	], "remove_locks: [$warning] removed");
+
+	wipe_locks($dir, $src, $dst);
+}
 
 sub test_get_number
 {
@@ -620,31 +665,9 @@ sub test_get_number
 
 sub test_obtain_locks
 {
-	my $dir = "auto-rename-unit-tests-obtain-lock-test";
-	my $src = file_in_dir($dir, 'source');
-	my $dst = file_in_dir($dir, 'destination');
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-obtain-lock-test");
 
-	mkdir($dir);
-	mkdir($src);
-	mkdir($dst);
-
-	configure_locks($src, $dst);
-
-	my @LockFiles = (
-		$source_lock_origin,
-		$source_lock_pid,
-		$destination_lock_origin,
-		$destination_lock_pid
-   );
-	my @LockDirs = (
-		$source_lock,
-		$destination_lock,
-		$src,
-		$dst,
-		$dir
-   );
-
-	obtain_locks();
+	# obtain_locks(); # called by setup_test_locks()
 
 	is_dir_content($dir, 'dir,full', [ "$dst/", "$src/" ], "obtain_locks");
 	is_tree_content($dir, 'dir,full', [
@@ -664,11 +687,54 @@ sub test_obtain_locks
 	is_file_content($source_lock_origin, $origin_info, "obtain_locks");
 	is_file_content($destination_lock_origin, $origin_info, "obtain_locks");
 
+	wipe_locks($dir, $src, $dst);
+}
+
+sub setup_test_locks
+{
+	my ($dir) = @ARG;
+	my $src = file_in_dir($dir, 'source');
+	my $dst = file_in_dir($dir, 'destination');
+
+	mkdir($dir);
+	mkdir($src);
+	mkdir($dst);
+
+	configure_locks($src, $dst);
+	obtain_locks();
+
+	return ($dir, $src, $dst);
+}
+
+sub wipe_locks
+{
+	my ($dir, $src, $dst) = @ARG;
+
+	my @LockFiles = (
+		$source_lock_origin,
+		$source_lock_pid,
+		$destination_lock_origin,
+		$destination_lock_pid
+   );
+	my @LockDirs = (
+		$source_lock,
+		$destination_lock,
+		$src,
+		$dst,
+		$dir
+   );
+
 	foreach my $file (@LockFiles) {
-		unlink($file);
+		eval
+		{
+			unlink($file);
+		};
 	}
 	foreach my $lock_dir (@LockDirs) {
-		rmdir($lock_dir);
+		eval
+		{
+			rmdir($lock_dir);
+		};
 	}
 }
 
@@ -720,6 +786,7 @@ sub is_dir_content
 	{
 		@result = ("error:", $EVAL_ERROR);
 	}
+	# warning("DIR_CONTENT:\n" . join("\n", @result));
 	is_deeply(\@result, $raExpected, $test_name);
 } # is_dir_content
 
@@ -740,6 +807,7 @@ sub is_tree_content
 	{
 		@result = ("error:", $EVAL_ERROR);
 	}
+	# warning("TREE_CONTENT:\n" . join("\n", @result));
 	is_deeply(\@result, $raExpected, $test_name);
 } # is_tree_content()
 
@@ -847,20 +915,21 @@ sub tests
 	test_get_extension("", "file-name");
 	test_get_extension(".gz", "file-name.tar.gz");
 	test_destroy(1, "this-file-does-not-exist.xxx");
-	test_destroy(undef, "this-file-does-not-exist.xyz");
-	#test_move_file("error", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23);
+	test_destroy(undef, "this-file-does-not-exist.zyx");
 	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23);
+	test_move_file("ERROR: could not move", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23);
 # test_remove_source_lock
-	test_file_in_dir("dir/file_name.XYZ", "dir", "file_name.XYZ");
-	test_file_in_dir("dir/file_name.XYZ", "dir/", "file_name.XYZ");
+	test_file_in_dir("dir/file_name.XYZ2", "dir", "file_name.XYZ2");
+	test_file_in_dir("dir/file_name.XYZ2", "dir/", "file_name.XYZ2");
 # test_remove_destination_lock
 # test_move_files
    test_get_new_files([], ".", "\\.xyzzyZYXXY\$");
    test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$");
-   test_get_new_files(["and-so-will-this-one.XYZ", "this-file-will-be-found.XYZ"], ".", "\\.XYZ\$");
+   test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$");
    test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file");
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file");
-# test_remove_locks
+	test_remove_locks("returned", "");
+	test_remove_locks("ERROR: warning message for remove locks\n", "warning message for remove locks");
 # test_show_help
    test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-");
    test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-");
