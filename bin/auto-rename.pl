@@ -33,7 +33,7 @@ my $host = hostname();
 my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
-our $TEST_CASES = 46;
+our $TEST_CASES = 55;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -551,8 +551,9 @@ sub test_move_file
 	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-move-file-test");
 
 	# create a file to be moved first.
+	my $from_name = "this-file-will-be-moved.XYZ";
 	my $to_name = "this-is-target-prefix-023.xyz";
-	write_file("this-file-will-be-moved.XYZ", "a file to be moved");
+	write_file($from_name, "a file to be moved");
 
 	my $result;
 	my $error;
@@ -569,12 +570,64 @@ sub test_move_file
 	is($result, $expect, "move_file: [$file_name,...] == [@{[$expect||'undef']}]");
 	is_file($file_name, 'not_exists', 'move_file from');
 	is_file_content($to_name, $error ? "not_exists" : "a file to be moved", 'move_file to');
+	destroy($from_name);
 	destroy($to_name);
 
 	wipe_locks($dir, $src, $dst);
 } # test_move_file()
 
 # TODO implement unit tests
+# test_remove_source_lock
+
+sub test_file_in_dir
+{
+	my ($expect, $dir, $file_name) = @ARG;
+	my $result = file_in_dir($dir, $file_name);
+	is($result, $expect, "file_in_dir: [$dir, $file_name] == [$expect]");
+}
+
+# test_remove_destination_lock
+
+sub test_move_files
+{
+	my  ($expect, $raFileNames, $source_dir, $destination_dir, $prefix_name, $number) = @ARG;
+
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-move-files-test");
+
+	# create some files to be moved first.
+	my $from_name1 = "this-file-will-be-moved.ABC";
+	my $from_name2 = "this-file-will-also-be-moved.ABC";
+	my $to_name1 = "this-is-target-prefix-023.abc";
+	my $to_name2 = "this-is-target-prefix-024.abc";
+	write_file($from_name1, "a file to be moved");
+	write_file($from_name2, "another file to be moved");
+
+	my $result;
+	my $error;
+	eval
+	{
+		$result = move_files($raFileNames, $source_dir, $destination_dir, $prefix_name, $number);
+	};
+	if ($EVAL_ERROR)
+	{
+		$error = 1;
+		$result = substr($EVAL_ERROR, 0, 21);
+	}
+
+	is($result, $expect, "move_files: [$raFileNames->[0],...] == [@{[$expect||'undef']}]");
+	foreach my $file (@$raFileNames)
+	{
+		is_file($file, 'not_exists', 'move_files from');
+	}
+	is_file_content($to_name1, $error ? "not_exists" : "a file to be moved", 'move_files to');
+	is_file_content($to_name2, $error ? "not_exists" : "another file to be moved", 'move_files to');
+	destroy($from_name1);
+	destroy($from_name2);
+	destroy($to_name1);
+	destroy($to_name2);
+
+	wipe_locks($dir, $src, $dst);
+} # test_move_files()
 
 sub test_get_new_files
 {
@@ -617,13 +670,6 @@ sub test_write_file
 	destroy($file_name);
 } # test_write_file()
 
-sub test_file_in_dir
-{
-	my ($expect, $dir, $file_name) = @ARG;
-	my $result = file_in_dir($dir, $file_name);
-	is($result, $expect, "file_in_dir: [$dir, $file_name] == [$expect]");
-}
-
 sub test_remove_locks
 {
 	my ($expect, $warning) = @ARG;
@@ -653,6 +699,8 @@ sub test_remove_locks
 
 	wipe_locks($dir, $src, $dst);
 }
+
+# test_show_help
 
 sub test_get_number
 {
@@ -690,6 +738,12 @@ sub test_obtain_locks
 	wipe_locks($dir, $src, $dst);
 }
 
+# test_signal_handler
+
+#===========================================================================
+# unit test suite helper functions
+#===========================================================================
+
 sub setup_test_locks
 {
 	my ($dir) = @ARG;
@@ -704,7 +758,7 @@ sub setup_test_locks
 	obtain_locks();
 
 	return ($dir, $src, $dst);
-}
+} # setup_test_locks()
 
 sub wipe_locks
 {
@@ -736,7 +790,7 @@ sub wipe_locks
 			rmdir($lock_dir);
 		};
 	}
-}
+} # wipe_locks()
 
 #===========================================================================
 # unit test library functions
@@ -922,7 +976,8 @@ sub tests
 	test_file_in_dir("dir/file_name.XYZ2", "dir", "file_name.XYZ2");
 	test_file_in_dir("dir/file_name.XYZ2", "dir/", "file_name.XYZ2");
 # test_remove_destination_lock
-# test_move_files
+	test_move_files(25, ["this-file-will-be-moved.ABC", "this-file-will-also-be-moved.ABC"], ".", ".", "this-is-target-prefix-", 23);
+	test_move_files("ERROR: could not move", ["this-file-does-not-exist.abc"], ".", ".", "this-is-target-prefix-", 23);
    test_get_new_files([], ".", "\\.xyzzyZYXXY\$");
    test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$");
    test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$");
