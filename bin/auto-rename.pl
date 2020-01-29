@@ -23,6 +23,8 @@ use sigtrap qw(handler signal_handler normal-signals);
 
 our $VERSION = 0.1;
 our $DEBUG = 0;
+our $DEBUG_TREE = 0;
+our $SKIP = 0;
 
 my $DELAY = 1;
 my $PAD = 3;
@@ -33,7 +35,7 @@ my $host = hostname();
 my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
-our $TEST_CASES = 55;
+our $TEST_CASES = 61;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -576,8 +578,48 @@ sub test_move_file
 	wipe_locks($dir, $src, $dst);
 } # test_move_file()
 
-# TODO implement unit tests
-# test_remove_source_lock
+sub test_remove_source_lock
+{
+	my ($expect, $warning) = @ARG;
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-remove-source-lock-test");
+
+	is_dir_content($source_lock, 'dir,full', [
+		"$source_lock_origin",
+		"$source_lock_pid",
+	], "remove_source_lock: [$warning] obtained");
+
+	my $excess_file = file_in_dir($source_lock, 'an-excess-file-in-lock-dir.excess');
+	my @ExpectTreeAfter = (
+		"$dir/",
+		"$dst/",
+		"$destination_lock/",
+		"$destination_lock_origin",
+		"$destination_lock_pid",
+		"$src/",
+	);
+
+	if ($expect ne 'returned')
+	{
+		write_file($excess_file, 'this file in lock dir will prevent removal');
+		push(@ExpectTreeAfter, ("$source_lock/", $excess_file));
+	}
+
+	my $result = 'returned';
+	eval
+	{
+		remove_source_lock($warning);
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = $EVAL_ERROR;
+	}
+
+	is($result, $expect, "remove_source_lock: [$warning] == [$expect]");
+	is_tree_content($dir, 'dir,full', \@ExpectTreeAfter, "remove_source_lock: [$warning] removed");
+
+	destroy($excess_file);
+	wipe_locks($dir, $src, $dst);
+} # test_remove_source_lock()
 
 sub test_file_in_dir
 {
@@ -698,7 +740,7 @@ sub test_remove_locks
 	], "remove_locks: [$warning] removed");
 
 	wipe_locks($dir, $src, $dst);
-}
+} # test_remove_locks()
 
 # test_show_help
 
@@ -840,7 +882,8 @@ sub is_dir_content
 	{
 		@result = ("error:", $EVAL_ERROR);
 	}
-	# warning("DIR_CONTENT:\n" . join("\n", @result));
+	warning("DIR_CONTENT_EXPECT:\n  " . join("\n  ", @$raExpected)) if $DEBUG_TREE;
+	warning("DIR_CONTENT_RESULT:\n  " . join("\n  ", @result)) if $DEBUG_TREE;
 	is_deeply(\@result, $raExpected, $test_name);
 } # is_dir_content
 
@@ -861,7 +904,8 @@ sub is_tree_content
 	{
 		@result = ("error:", $EVAL_ERROR);
 	}
-	# warning("TREE_CONTENT:\n" . join("\n", @result));
+	warning("TREE_CONTENT_EXPECT:\n  " . join("\n  ", @$raExpected)) if $DEBUG_TREE;
+	warning("TREE_CONTENT_RESULT:\n  " . join("\n  ", @result)) if $DEBUG_TREE;
 	is_deeply(\@result, $raExpected, $test_name);
 } # is_tree_content()
 
@@ -950,45 +994,51 @@ sub read_tree
 sub tests
 {
 	$TESTING = 1;
+
 	eval "use Test::More tests => $TEST_CASES;";
 	eval "use Test::Exception;";
 
-	test_say("Hello, there", "Hello, there");
-	test_tab("         Hello", "\t\t\tHello");
-	test_warning("WARN: WARNING, OH MY!\n", "WARNING, OH MY!");
-	test_debug(undef, "DEBUG, OH MY!", 10000);
-	test_debug("DEBUG, OH MY!\n", "DEBUG, OH MY!", -10000);
-	test_failure("ERROR: FAILURE, OH MY!\n", "FAILURE, OH MY!");
-	test_pad("000", "");
-	test_pad("001", "1");
-	test_pad("123", "123");
-	test_pad("1234", "1234");
-	test_make_filename("prefix-name-023.JPG", "prefix-name-", 23, ".JPG");
-	test_get_extension(".EXT", "file-name.EXT");
-	test_get_extension(".", "file-name.");
-	test_get_extension("", "file-name");
-	test_get_extension(".gz", "file-name.tar.gz");
-	test_destroy(1, "this-file-does-not-exist.xxx");
-	test_destroy(undef, "this-file-does-not-exist.zyx");
-	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23);
-	test_move_file("ERROR: could not move", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23);
-# test_remove_source_lock
-	test_file_in_dir("dir/file_name.XYZ2", "dir", "file_name.XYZ2");
-	test_file_in_dir("dir/file_name.XYZ2", "dir/", "file_name.XYZ2");
+	test_say("Hello, there", "Hello, there") unless $SKIP;
+	test_tab("         Hello", "\t\t\tHello") unless $SKIP;
+	test_warning("WARN: WARNING, OH MY!\n", "WARNING, OH MY!") unless $SKIP;
+	test_debug(undef, "DEBUG, OH MY!", 10000) unless $SKIP;
+	test_debug("DEBUG, OH MY!\n", "DEBUG, OH MY!", -10000) unless $SKIP;
+	test_failure("ERROR: FAILURE, OH MY!\n", "FAILURE, OH MY!") unless $SKIP;
+	test_pad("000", "") unless $SKIP;
+	test_pad("001", "1") unless $SKIP;
+	test_pad("123", "123") unless $SKIP;
+	test_pad("1234", "1234") unless $SKIP;
+	test_make_filename("prefix-name-023.JPG", "prefix-name-", 23, ".JPG") unless $SKIP;
+	test_get_extension(".EXT", "file-name.EXT") unless $SKIP;
+	test_get_extension(".", "file-name.") unless $SKIP;
+	test_get_extension("", "file-name") unless $SKIP;
+	test_get_extension(".gz", "file-name.tar.gz") unless $SKIP;
+	test_destroy(1, "this-file-does-not-exist.xxx") unless $SKIP;
+	test_destroy(undef, "this-file-does-not-exist.zyx") unless $SKIP;
+	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23) unless $SKIP;
+	test_move_file("ERROR: could not move", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23) unless $SKIP;
+#	$SKIP = 0;
+#	$DEBUG_TREE = 1;
+	test_remove_source_lock("returned", "") unless $SKIP;
+#	$DEBUG_TREE = 0;
+	test_remove_source_lock("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
+#	$SKIP = 1;
+	test_file_in_dir("dir/file_name.XYZ2", "dir", "file_name.XYZ2") unless $SKIP;
+	test_file_in_dir("dir/file_name.XYZ2", "dir/", "file_name.XYZ2") unless $SKIP;
 # test_remove_destination_lock
-	test_move_files(25, ["this-file-will-be-moved.ABC", "this-file-will-also-be-moved.ABC"], ".", ".", "this-is-target-prefix-", 23);
-	test_move_files("ERROR: could not move", ["this-file-does-not-exist.abc"], ".", ".", "this-is-target-prefix-", 23);
-   test_get_new_files([], ".", "\\.xyzzyZYXXY\$");
-   test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$");
-   test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$");
-   test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file");
-	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file");
-	test_remove_locks("returned", "");
-	test_remove_locks("ERROR: warning message for remove locks\n", "warning message for remove locks");
+	test_move_files(25, ["this-file-will-be-moved.ABC", "this-file-will-also-be-moved.ABC"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
+	test_move_files("ERROR: could not move", ["this-file-does-not-exist.abc"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
+   test_get_new_files([], ".", "\\.xyzzyZYXXY\$") unless $SKIP;
+   test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$") unless $SKIP;
+   test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$") unless $SKIP;
+   test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file") unless $SKIP;
+	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file") unless $SKIP;
+	test_remove_locks("returned", "") unless $SKIP;
+	test_remove_locks("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
 # test_show_help
-   test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-");
-   test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-");
-   test_obtain_locks();
+   test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-") unless $SKIP;
+   test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-") unless $SKIP;
+   test_obtain_locks() unless $SKIP;
 # test_signal_handler
 	exit 0;
 }
