@@ -35,7 +35,7 @@ my $host = hostname();
 my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
-our $TEST_CASES = 61;
+our $TEST_CASES = 64;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -614,7 +614,7 @@ sub test_remove_source_lock
 		$result = $EVAL_ERROR;
 	}
 
-	is($result, $expect, "remove_source_lock: [$warning] == [$expect]");
+	is_like($result, $expect, "remove_source_lock");
 	is_tree_content($dir, 'dir,full', \@ExpectTreeAfter, "remove_source_lock: [$warning] removed");
 
 	destroy($excess_file);
@@ -838,6 +838,40 @@ sub wipe_locks
 # unit test library functions
 #===========================================================================
 
+# acts as is() or like() based on whether $expected is a string or a regex string
+sub is_like
+{
+	my ($got, $expected, $test_name) = @ARG;
+	my $limit = 32;
+	if ($expected =~ m{\A\(\?.+\)\z}xms)
+	{
+		$test_name = "$test_name: like[@{[substr($got, 0, $limit)]}...] =~ $expected" if $test_name;
+		like($got, $expected, $test_name);
+	}
+	else
+	{
+		$test_name = "$test_name: is[@{[substr($got, 0, 32)]}...] == $expected" if $test_name;
+		is($got, $expected, $test_name);
+	}
+} # is_like()
+
+# acts as isnt() or unlike() based on whether $expected is a string or a regex string
+sub isnt_like
+{
+	my ($got, $expected, $test_name) = @ARG;
+	my $limit = 32;
+	if ($expected =~ m{\A\(\?.+\)\z}xms)
+	{
+		$test_name = "$test_name: unlike[@{[substr($got, 0, $limit)]}...] !~ $expected" if $test_name;
+		unlike($got, $expected, $test_name);
+	}
+	else
+	{
+		$test_name = "$test_name: isnt[@{[substr($got, 0, 32)]}...] != $expected" if $test_name;
+		isnt($got, $expected, $test_name);
+	}
+} # is_like()
+
 sub is_file
 {
 	my ($file_name, $expected, $test_name) = @ARG;
@@ -1017,12 +1051,13 @@ sub tests
 	test_destroy(undef, "this-file-does-not-exist.zyx") unless $SKIP;
 	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_move_file("ERROR: could not move", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23) unless $SKIP;
+	test_remove_source_lock("returned", "") unless $SKIP;
 #	$SKIP = 0;
 #	$DEBUG_TREE = 1;
-	test_remove_source_lock("returned", "") unless $SKIP;
+	test_remove_source_lock(qr{^ERROR: Can't rmdir.+?Directory not empty}, "") unless $SKIP;
+#	$SKIP = 1;
 #	$DEBUG_TREE = 0;
 	test_remove_source_lock("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
-#	$SKIP = 1;
 	test_file_in_dir("dir/file_name.XYZ2", "dir", "file_name.XYZ2") unless $SKIP;
 	test_file_in_dir("dir/file_name.XYZ2", "dir/", "file_name.XYZ2") unless $SKIP;
 # test_remove_destination_lock
