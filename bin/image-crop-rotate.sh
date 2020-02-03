@@ -1,11 +1,11 @@
 #!/bin/bash
-PROCESSED=-processed-
+PROCESSED=processed-
 NINETY=90
 W=55.6
 H=81
 
 USAGE=1
-PREFIX=${1:$PROCESSED}
+PREFIX=${1:-$PROCESSED}
 ROTATE=${2:-$NINETY}
 # crop percentage
 WIDTH=${3:-$W}
