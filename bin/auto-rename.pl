@@ -35,7 +35,7 @@ my $host = hostname();
 my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
-our $TEST_CASES = 64;
+our $TEST_CASES = 73;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -628,7 +628,49 @@ sub test_file_in_dir
 	is($result, $expect, "file_in_dir: [$dir, $file_name] == [$expect]");
 }
 
-# test_remove_destination_lock
+sub test_remove_destination_lock
+{
+	my ($expect, $warning) = @ARG;
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-remove-destination-lock-test");
+
+	is_dir_content($destination_lock, 'dir,full', [
+		"$destination_lock_origin",
+		"$destination_lock_pid",
+	], "remove_destination_lock: [$warning] obtained");
+
+	my $excess_file = file_in_dir($destination_lock, 'an-excess-file-in-lock-dir.excess');
+	my @ExpectTreeAfter = (
+		"$dir/",
+		"$dst/",
+		"$src/",
+		"$source_lock/",
+		"$source_lock_origin",
+		"$source_lock_pid",
+	);
+
+	if ($expect ne 'returned')
+	{
+		write_file($excess_file, 'this file in lock dir will prevent removal');
+		push(@ExpectTreeAfter, ("$destination_lock/", $excess_file));
+		@ExpectTreeAfter = sort(@ExpectTreeAfter);
+	}
+
+	my $result = 'returned';
+	eval
+	{
+		remove_destination_lock($warning);
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = $EVAL_ERROR;
+	}
+
+	is_like($result, $expect, "remove_destination_lock");
+	is_tree_content($dir, 'dir,full', \@ExpectTreeAfter, "remove_destination_lock: [$warning] removed");
+
+	destroy($excess_file);
+	wipe_locks($dir, $src, $dst);
+} # test_remove_destination_lock()
 
 sub test_move_files
 {
@@ -1052,15 +1094,17 @@ sub tests
 	test_move_file(24, ".", "this-file-will-be-moved.XYZ", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_move_file("ERROR: could not move", ".", "this-file-does-not-exist.xyz", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_remove_source_lock("returned", "") unless $SKIP;
-#	$SKIP = 0;
-#	$DEBUG_TREE = 1;
 	test_remove_source_lock(qr{^ERROR: Can't rmdir.+?Directory not empty}, "") unless $SKIP;
-#	$SKIP = 1;
-#	$DEBUG_TREE = 0;
 	test_remove_source_lock("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
 	test_file_in_dir("dir/file_name.XYZ2", "dir", "file_name.XYZ2") unless $SKIP;
 	test_file_in_dir("dir/file_name.XYZ2", "dir/", "file_name.XYZ2") unless $SKIP;
-# test_remove_destination_lock
+	test_remove_destination_lock("returned", "") unless $SKIP;
+#	$SKIP = 0;
+#	$DEBUG_TREE = 1;
+	test_remove_destination_lock(qr{^ERROR: Can't rmdir.+?Directory not empty}, "") unless $SKIP;
+#	$SKIP = 1;
+#	$DEBUG_TREE = 0;
+	test_remove_destination_lock("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
 	test_move_files(25, ["this-file-will-be-moved.ABC", "this-file-will-also-be-moved.ABC"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_move_files("ERROR: could not move", ["this-file-does-not-exist.abc"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
    test_get_new_files([], ".", "\\.xyzzyZYXXY\$") unless $SKIP;
