@@ -35,7 +35,7 @@ my $host = hostname();
 my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
-our $TEST_CASES = 73;
+our $TEST_CASES = 79;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
 
 my $pattern = shift;
@@ -210,7 +210,7 @@ sub get_number
 
 sub show_help
 {
-	say(<<"EOHELP");
+	return say(<<"EOHELP");
 scanning $source directory for new files matching $pattern...
    Press Ctrl-C or
    touch $source_lock_stop
@@ -784,7 +784,19 @@ sub test_remove_locks
 	wipe_locks($dir, $src, $dst);
 } # test_remove_locks()
 
-# test_show_help
+sub test_show_help
+{
+	$source = 'SOURCE';
+	$pattern = 'PATTERN';
+	my $expect = <<"EOE";
+scanning $source directory for new files matching $pattern...
+   Press Ctrl-C or
+   touch $source_lock_stop
+   touch $destination_lock_stop
+to terminate...
+EOE
+	is(show_help(), $expect, "show_help: == [$expect]");
+}
 
 sub test_get_number
 {
@@ -822,7 +834,37 @@ sub test_obtain_locks
 	wipe_locks($dir, $src, $dst);
 }
 
-# test_signal_handler
+sub test_signal_handler
+{
+	my ($expect) = @ARG;
+	my ($dir, $src, $dst) = setup_test_locks("auto-rename-unit-tests-signal-handler-test");
+
+	is($signal_received, 0, "signal_handler: flag before [$signal_received] == [0]");
+	is_dir_content($source_lock, 'dir,full', [
+		"$source_lock_origin",
+		"$source_lock_pid",
+	], "signal_handler: obtained");
+
+	my $result = 'returned';
+	eval
+	{
+		signal_handler();
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = $EVAL_ERROR;
+	}
+
+	is($signal_received, 1, "signal_handler: flag after [$signal_received] == [1]");
+	is_like($result, $expect, "signal_handler: == [$expect]");
+	is_tree_content($dir, 'dir,full', [
+		"$dir/",
+		"$dst/",
+		"$src/",
+	], "signal_handler: removed");
+
+	wipe_locks($dir, $src, $dst);
+} # test_signal_handler()
 
 #===========================================================================
 # unit test suite helper functions
@@ -1114,11 +1156,11 @@ sub tests
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file") unless $SKIP;
 	test_remove_locks("returned", "") unless $SKIP;
 	test_remove_locks("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
-# test_show_help
+	test_show_help();
    test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-") unless $SKIP;
    test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-") unless $SKIP;
    test_obtain_locks() unless $SKIP;
-# test_signal_handler
+   test_signal_handler(qr{^\nauto-rename\.pl terminated by signal at }) unless $SKIP;
 	exit 0;
 }
 
