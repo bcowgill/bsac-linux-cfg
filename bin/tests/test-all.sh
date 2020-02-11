@@ -36,11 +36,15 @@ testSuite filter-css-colors "filter and replace CSS colors in files" $PROVE
 
 testSuite perltidy-me "evaluate perltidy formatting options" $PROVE
 
+echo "auto-rename unit tests"
+$PROVE ./auto-rename.t
+
 echo "fix-import unit tests"
 $PROVE ./fix-import.t
 echo "fix-import-order unit tests"
 $PROVE ./fix-import-order.t
 testSuite fix-import-order "fix javascript import order in files" $PROVE
+
 
 PLAN 2
 OK "all test suites completed"
