@@ -25,3 +25,9 @@ tt.key {
 tt.key.inverse {
 	background: silver;
 }
+
+.download,.reference {
+	margin: 3px;
+	padding: 3px;
+	border: 1px dashed gray;
+}
