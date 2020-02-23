@@ -1,0 +1,27 @@
+body.dark {
+	color: yellow;
+	background: black;
+}
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+.inverse {
+	color: white;
+	background: black;
+}
+.dark .inverse {
+	color: black;
+	background: white;
+}
+tt.key {
+	background: silver;
+	border-top: 1px dashed black;
+	border-left: 1px dashed black;
+	border-bottom: 1px dashed gray;
+	border-right: 1px dashed gray;
+	padding: 3px;
+}
+tt.key.inverse {
+	background: silver;
+}
