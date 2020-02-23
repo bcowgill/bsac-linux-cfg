@@ -4,11 +4,43 @@
 <head>
 	<title>id.js Test Page</title>
 	<script src="./id.js"></script>
+	<style>
+	body.dark {
+		color: yellow;
+		background: black;
+	}
+	.hidden {
+		display: none;
+		visibility: hidden;
+	}
+	.inverse {
+		color: white;
+		background: black;
+	}
+	.dark .inverse {
+		color: black;
+		background: white;
+	}
+	tt.key {
+		background: silver;
+		border-top: 1px dashed black;
+		border-left: 1px dashed black;
+		border-bottom: 1px dashed gray;
+		border-right: 1px dashed gray;
+		padding: 3px;
+	}
+	tt.key.inverse {
+		background: silver;
+	}
+	</style>
 </head>
 
-<body>
+<body class="notdark">
 <main role="main">
 	<h1>id.js Test Page</h1>
+	<p>All the action is in the javascript console.</p>
+	<p>press <tt class="key inverse">F12</tt>, <tt class="key inverse">Ctrl-Shift-I</tt> or <tt class="key inverse">Cmd-Alt-I</tt> depending on your browser or operating system.</p>
+	<hr />
 </main>
 </body>
 

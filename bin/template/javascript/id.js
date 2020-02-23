@@ -61,7 +61,7 @@ let testNumber = 0;
 let passNumber = 0;
 let failNumber = 0;
 
-const SHORT = 32;
+const SHORT = 32 + 2;
 const ELLIPSIS = '...' // '…'
 
 // stringme() - ensure something is a string so it can be compared/shortened/logged
@@ -78,6 +78,10 @@ function stringme(value)
 			return value.toString();
 		}
 		return JSON.stringify(value);
+	}
+	if (typeof value === 'string')
+	{
+		return '`' + value + '`';
 	}
 	return `${value}`;
 }
@@ -103,7 +107,7 @@ function fail(got, expect, assertion = '', description = '')
 {
 	++testNumber;
 	++failNumber;
-	console.warn(`NOT OK ${testNumber} ${assertion}([${short(got)}], [${short(expect)}]) ${description}`.trim(), {
+	console.warn(`NOT OK ${testNumber} ${assertion}(${short(got)}, ${short(expect)}) ${description}`.trim(), {
 		expect, got
 	});
 }
@@ -134,8 +138,11 @@ function test()
 
 	isSame(stringme(), 'undefined', 'stringme()');
 	isSame(stringme(null), 'null', 'stringme(null)');
+	isSame(stringme(true), 'true', 'stringme(true)');
+	isSame(stringme('true'), '`true`', 'stringme(`true`)');
 	isSame(stringme(42), '42', 'stringme(42)');
 	isSame(stringme(NaN), 'NaN', 'stringme(NaN)');
+	isSame(stringme('hello'), '`hello`', 'stringme(hello)');
 	isSame(stringme({}), '{}', 'stringme({})');
 	isSame(stringme([]), '[]', 'stringme([])');
 	isSame(stringme(/^this$/i), '/^this$/i', 'stringme(regex)');
@@ -145,8 +152,8 @@ function test()
 	isSame(short(null), 'null', 'short(null)')
 	isSame(short({}), '{}', 'short({})')
 	isSame(short([]), '[]', 'short([])')
-	isSame(short('message'), 'message', 'short(message)')
-	isSame(short('messagesss123456789rA123456789B123456789C'), 'messagesss123456' + ELLIPSIS + '56789B123456789C', 'short(long...)')
+	isSame(short('message'), '`message`', 'short(message)')
+	isSame(short('messagesss123456789rA123456789B123456789C'), '`messagesss123456' + ELLIPSIS + '56789B123456789C`', 'short(long...)')
 
 	isSame(peek(), undefined, 'peek()');
 	isSame(peek(null), undefined, 'peek(null)');
