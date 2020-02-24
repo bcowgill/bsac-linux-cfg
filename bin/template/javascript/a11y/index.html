@@ -1,14 +1,35 @@
 <!doctype html>
 <html lang="en">
-
 <head>
+	<meta charset="utf-8"/>
 	<title>Web Accessibilitiy Demonstration Page</title>
 	<link rel="stylesheet" href="./style.css" />
 	<script src="./a11y.js"></script>
 </head>
 
 <body class="dark">
+
+<header id="header" role="banner">
+	<a href="#nav" id="skip-to-menu" class="skip-to-content">Skip to keyboard navigation</a>
+	<a href="#main" class="skip-to-content">Skip to main content</a>
+<h1>
+<a href="/"><img src="logo.svg" alt="XYZ Company logo" /></a> ... site header
+<form id="header-search" role="search" aria-label="Sitewide">
+  <label for="header-search-input">Search this site</label>
+  <input type="search" id="header-search-input" name="search" placeholder="Search this site" spellcheck="false">
+  <input value="Submit" type="submit">
+</form>
+</h1>
+</header>
+
+<nav id="nav" role="navigation" aria-label="Site">
+	<ul>
+		<li><a href="#">Home</a></li>
+	</ul>
+</nav>
+
 <main id="main" role="main">
+
 	<section id="main-resources" role="region" aria-label="Resources">
 	<h1>Web Accessibility Demonstration Page</h1>
 	<ul role="list">
@@ -48,6 +69,11 @@
 	</section>
 
 </main>
+
+<footer id="footer" role="contentinfo">
+<h2>© 2020 XYZ Company, All rights reserved.  ... site footer</h2>
+</footer>
+
 </body>
 
 </html>

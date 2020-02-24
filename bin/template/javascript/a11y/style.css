@@ -6,6 +6,11 @@ body.dark {
 	display: none;
 	visibility: hidden;
 }
+.skip-to-content, .sr-only {
+	visibility: hidden;
+	position: absolute;
+	left: -1000px;
+}
 .inverse {
 	color: white;
 	background: black;
