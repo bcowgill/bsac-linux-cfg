@@ -7,9 +7,14 @@ body.dark {
 	visibility: hidden;
 }
 .skip-to-content, .sr-only {
-	visibility: hidden;
 	position: absolute;
 	left: -1000px;
+}
+.skip-to-content:focus {
+	left: 0;
+	background: lemonchiffon;
+	color: blue;
+	padding: 3px;
 }
 .inverse {
 	color: white;
