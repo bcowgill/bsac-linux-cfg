@@ -72,6 +72,12 @@ h1 {
 h2 {
 	font-family: "Times New Roman", Times, serif;
 }
+nav li {
+	display: inline-block;
+}
+nav li:hover {
+	text-decoration: underline;
+}
 ul {
 	list-style-type: none;
 	-webkit-padding-start: 0;
@@ -83,16 +89,58 @@ ul {
 .todo {
 	opacity: 0.2;
 }
+
+li.cat-interaction:hover,.cat-interaction [data-category*="interaction"] a,
+li.cat-semantic:hover,.cat-semantic [data-category*="semantic"] a,
+li.cat-media:hover,.cat-media [data-category*="media"] a,
+li.cat-typography:hover,.cat-typography [data-category*="typography"] a,
+li.cat-layout:hover,.cat-layout [data-category*="layout"] a,
+li.cat-language:hover,.cat-language [data-category*="language"] a,
+li.cat-meta:hover,.cat-meta [data-category*="meta"] a {
+	color: cyan;
+	font-weight: 600;
+}
+li.cat-links:hover,.cat-links [data-category*="links"] a,
+li.cat-formatting:hover,.cat-formatting [data-category*="formatting"] a,
+li.cat-styles:hover,.cat-styles [data-category*="styles"] a,
+li.cat-audio-video:hover,.cat-audio-video [data-category*="audio/video"] a,
+li.cat-images:hover,.cat-images [data-category*="images"] a,
+li.cat-basic:hover,.cat-basic [data-category*="basic"] a,
+li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
+	color: magenta;
+	font-weight: 600;
+}
 </style>
 </head>
 
-<body class="sans-serif-font">
+<!-- TODO add cat-XXX class to body when items in nav below are hovered over or clicked to lock -->
+<body class="sans-serif-font cat-none">
 	<header id="header" class="serif-font">
 		<h1 aria-describedby="meta-description">
 			<a href="default.asp">
 				PERIODIC TABLE OF HTML5 ELEMENTS
 			</a>
 		</h1>
+		<nav aria-label="element category">
+			<ul>
+				<li class="cat-interaction">interaction</li>
+				<li class="cat-semantic">semantic</li>
+				<li class="cat-media">media</li>
+				<li class="cat-typography">typography</li>
+				<li class="cat-layout">layout</li>
+				<li class="cat-language">language</li>
+				<li class="cat-meta">meta</li>
+			</ul>
+			<ul>
+				<li class="cat-links">links</li>
+				<li class="cat-formatting">formatting</li>
+				<li class="cat-styles">styles</li>
+				<li class="cat-audio-video">audio/video</li>
+				<li class="cat-images">images</li>
+				<li class="cat-basic">basic</li>
+				<li class="cat-forms-input">forms/input</li>
+			</ul>
+		</nav>
 	</header>
 	<main id="main">
 
@@ -251,7 +299,7 @@ ul {
 			</a>
 		</li>
 		<li
-			data-category="meta,table"
+			data-category="meta,tables"
 			title="&#9;column - [meta,table] specifies column properties for each column within a colgroup element.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
 			<a
 				href="tag_col.asp">
@@ -264,14 +312,6 @@ ul {
 			<a
 				href="tag_canvas.asp">
 				canvas
-			</a>
-		</li>
-		<li
-			data-category=","
-			title="&#9;command - [,] defines .">
-			<a
-				href="tag_command.asp">
-				command
 			</a>
 		</li>
 		<li
@@ -298,67 +338,83 @@ ul {
 	<h2>D</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;dl - [,] defines .">
+			data-category="semantic,list"
+			title="&#9;description list - [semantic,list] defines a description list.  used in conjunction with dt and dd elements.">
 			<a
 				href="tag_dl.asp">
 				dl
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;dt - [,] defines .">
+			data-category="semantic,list"
+			title="&#9;define term - [semantic,list] defines a term/name in a description list.  used in conjunction with dl and dd elements.">
 			<a
 				href="tag_dt.asp">
 				dt
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;dd - [,] defines .">
+			data-category="semantic,list"
+			title="&#9;define description - [semantic,list] describes a term/name in a description list.  used in conjunction with dl and dt elements.">
 			<a
 				href="tag_dd.asp">
 				dd
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;div - [,] defines .">
+			data-category="semantic,styles"
+			title="&#9;division - [semantic,styles] defines a division or a grouping in an HTML document.  element is often used as a container for other HTML elements to style them with CSS or to perform certain tasks with JavaScript.  usually a vertical block based area of the document.">
 			<a
 				href="tag_div.asp">
 				div
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;dfn - [,] defines .">
+			data-category="semantic,formatting"
+			title="&#9;definition - [semantic,formatting] represents the defining instance of a term in HTML.   defining instance is often the first use of a term in a document.  used with a or abbr elements and title or id attributes to associate the term with its definition.">
 			<a
 				href="tag_dfn.asp">
 				dfn
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;details - [,] defines .">
+			data-category="semantic,styles,interaction"
+			title="&#9;details - [semantic,styles,interaction] specifies additional details that the user can view or hide on demand like a tooltip or accordion.  use along with summary element.  not supported in IE">
 			<a
 				href="tag_details.asp">
 				details
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;datalist - [,] defines .">
+			data-category="interaction,forms/input"
+			title="&#9;datalist - [interaction,forms/input] specifies an autocomplete list of pre-defined options for an input element.  useful to share the same list of items across different input selectors.  used with option elements to form the list.  not supported before safari 12">
 			<a
 				href="tag_datalist.asp">
 				datalist
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;del - [,] defines .">
+			data-category="semantic,formatting"
+			title="&#9;deleted text - [semantic,formatting] defines text that has been deleted from a document.  used along with ins element.">
 			<a
 				href="tag_del.asp">
 				del
+			</a>
+		</li>
+		<li
+			data-category="semantic,styles"
+			title="&#9;data - [semantic,styles] provides both a machine-readable value for data processors, and a human-readable value for rendering in a browser. use time element if the data is time or date related.">
+			<a
+				href="tag_data.asp">
+				data
+			</a>
+		</li>
+		<li
+			data-category="semantic,styles"
+			title="&#9;dialog - [semantic,styles] defines a dialog box or window.  not supported in IE/Edge">
+			<a
+				href="tag_dialog.asp">
+				dialog
 			</a>
 		</li>
 	</ul>
