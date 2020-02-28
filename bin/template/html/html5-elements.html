@@ -52,6 +52,20 @@
 	font-family: "Courier New", Courier, monospace;
 }
 
+body {
+	background: black;
+	color: white;
+}
+a {
+	color: white;
+	text-decoration: none;
+}
+a:visited {
+	color: white;
+}
+a:hover {
+	text-decoration: underline;
+}
 h1 {
 	text-align: center;
 }
@@ -63,7 +77,11 @@ ul {
 	-webkit-padding-start: 0;
 }
 .column {
+	color: #6bbc70;
 	display: inline-table;
+}
+.todo {
+	opacity: 0.2;
 }
 </style>
 </head>
@@ -78,6 +96,7 @@ ul {
 	</header>
 	<main id="main">
 
+<!-- A COLUMN ========== -->
 <div id="A" class="column">
 	<h2>A</h2>
 	<ul>
@@ -140,6 +159,7 @@ ul {
 	</ul>
 </div>
 
+<!-- B COLUMN ========== -->
 <div id="B" class="column">
 	<h2>B</h2>
 	<ul>
@@ -210,131 +230,867 @@ ul {
 	</ul>
 </div>
 
-<div id="B" class="column">
+<!-- C COLUMN ========== -->
+<div id="C" class="column">
 	<h2>C</h2>
 	<ul>
 		<li
 			data-category=","
-			title="&#9;c - [,] defines .">
+			title="&#9;caption - [,] defines .">
 			<a
-				href="tag_.asp">
-				c
+				href="tag_caption.asp">
+				caption
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;colgroup - [,] defines .">
+			<a
+				href="tag_colgroup.asp">
+				colgroup
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;col - [,] defines .">
+			<a
+				href="tag_col.asp">
+				col
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;canvas - [,] defines .">
+			<a
+				href="tag_canvas.asp">
+				canvas
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;command - [,] defines .">
+			<a
+				href="tag_command.asp">
+				command
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;code - [,] defines .">
+			<a
+				href="tag_code.asp">
+				code
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;cite - [,] defines .">
+			<a
+				href="tag_cite.asp">
+				cite
 			</a>
 		</li>
 	</ul>
 </div>
 
-caption
-colgroup
-col
-canvas
-command
-code
-cite
+<div class="todo">
 
-dl
-dt
-dd
-div
-dfn
-details
-datalist
-del
+<!-- D COLUMN ========== -->
+<div id="D" class="column">
+	<h2>D</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;dl - [,] defines .">
+			<a
+				href="tag_dl.asp">
+				dl
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;dt - [,] defines .">
+			<a
+				href="tag_dt.asp">
+				dt
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;dd - [,] defines .">
+			<a
+				href="tag_dd.asp">
+				dd
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;div - [,] defines .">
+			<a
+				href="tag_div.asp">
+				div
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;dfn - [,] defines .">
+			<a
+				href="tag_dfn.asp">
+				dfn
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;details - [,] defines .">
+			<a
+				href="tag_details.asp">
+				details
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;datalist - [,] defines .">
+			<a
+				href="tag_datalist.asp">
+				datalist
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;del - [,] defines .">
+			<a
+				href="tag_del.asp">
+				del
+			</a>
+		</li>
+	</ul>
+</div>
 
-embed
-em
+<!-- E COLUMN ========== -->
+<div id="E" class="column">
+	<h2>E</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;embed - [,] defines .">
+			<a
+				href="tag_embed.asp">
+				embed
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;em - [,] defines .">
+			<a
+				href="tag_em.asp">
+				em
+			</a>
+		</li>
+	</ul>
+</div>
 
-footer
-figure
-figcaption
-form
-fieldset
+<!-- F COLUMN ========== -->
+<div id="F" class="column">
+	<h2>F</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;footer - [,] defines .">
+			<a
+				href="tag_footer.asp">
+				footer
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;figure - [,] defines .">
+			<a
+				href="tag_figure.asp">
+				figure
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;figcaption - [,] defines .">
+			<a
+				href="tag_figcaption.asp">
+				figcaption
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;form - [,] defines .">
+			<a
+				href="tag_form.asp">
+				form
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;fieldset - [,] defines .">
+			<a
+				href="tag_fieldset.asp">
+				fieldset
+			</a>
+		</li>
+	</ul>
+</div>
 
-hr
-h1
-h2
-h3
-h4
-h5
-h6
-hgroup
-header
-html
-head
+<!-- H COLUMN ========== -->
+<div id="H" class="column">
+	<h2>H</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;hr - [,] defines .">
+			<a
+				href="tag_hr.asp">
+				hr
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;h1 - [,] defines .">
+			<a
+				href="tag_h1.asp">
+				h1
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;h2 - [,] defines .">
+			<a
+				href="tag_h2.asp">
+				h2
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;h3 - [,] defines .">
+			<a
+				href="tag_h3.asp">
+				h3
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;h4 - [,] defines .">
+			<a
+				href="tag_h4.asp">
+				h4
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;h5 - [,] defines .">
+			<a
+				href="tag_h5.asp">
+				h5
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;h6 - [,] defines .">
+			<a
+				href="tag_h6.asp">
+				h6
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;hgroup - [,] defines .">
+			<a
+				href="tag_hgroup.asp">
+				hgroup
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;header - [,] defines .">
+			<a
+				href="tag_header.asp">
+				header
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;html - [,] defines .">
+			<a
+				href="tag_html.asp">
+				html
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;head - [,] defines .">
+			<a
+				href="tag_head.asp">
+				head
+			</a>
+		</li>
+	</ul>
+</div>
 
-i
-ins
-input
-img
-iframe
+<!-- I COLUMN ========== -->
+<div id="I" class="column">
+	<h2>I</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;i - [,] defines .">
+			<a
+				href="tag_i.asp">
+				i
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;ins - [,] defines .">
+			<a
+				href="tag_ins.asp">
+				ins
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;input - [,] defines .">
+			<a
+				href="tag_input.asp">
+				input
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;img - [,] defines .">
+			<a
+				href="tag_img.asp">
+				img
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;iframe - [,] defines .">
+			<a
+				href="tag_iframe.asp">
+				iframe
+			</a>
+		</li>
+	</ul>
+</div>
 
-kbd
-keygen
+<!-- K COLUMN ========== -->
+<div id="K" class="column">
+	<h2>K</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;kbd - [,] defines .">
+			<a
+				href="tag_kbd.asp">
+				kbd
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;keygen - [,] defines .">
+			<a
+				href="tag_keygen.asp">
+				keygen
+			</a>
+		</li>
+	</ul>
+</div>
 
-legend
-label
-li
-link
+<!-- L COLUMN ========== -->
+<div id="L" class="column">
+	<h2>L</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;legend - [,] defines .">
+			<a
+				href="tag_legend.asp">
+				legend
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;label - [,] defines .">
+			<a
+				href="tag_label.asp">
+				label
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;li - [,] defines .">
+			<a
+				href="tag_li.asp">
+				li
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;link - [,] defines .">
+			<a
+				href="tag_link.asp">
+				link
+			</a>
+		</li>
+	</ul>
+</div>
 
-meta
-menu
-map
-mark
-meter
+<!-- M COLUMN ========== -->
+<div id="M" class="column">
+	<h2>M</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;meta - [,] defines .">
+			<a
+				href="tag_meta.asp">
+				meta
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;menu - [,] defines .">
+			<a
+				href="tag_menu.asp">
+				menu
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;map - [,] defines .">
+			<a
+				href="tag_map.asp">
+				map
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;mark - [,] defines .">
+			<a
+				href="tag_mark.asp">
+				mark
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;meter - [,] defines .">
+			<a
+				href="tag_meter.asp">
+				meter
+			</a>
+		</li>
+	</ul>
+</div>
 
-noscript
-nav
+<!-- N COLUMN ========== -->
+<div id="N" class="column">
+	<h2>N</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;noscript - [,] defines .">
+			<a
+				href="tag_noscript.asp">
+				noscript
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;nav - [,] defines .">
+			<a
+				href="tag_nav.asp">
+				nav
+			</a>
+		</li>
+	</ul>
+</div>
 
-output
-ol
-optgroup
-option
-object
+<!-- O COLUMN ========== -->
+<div id="O" class="column">
+	<h2>O</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;output - [,] defines .">
+			<a
+				href="tag_output.asp">
+				output
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;ol - [,] defines .">
+			<a
+				href="tag_ol.asp">
+				ol
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;optgroup - [,] defines .">
+			<a
+				href="tag_optgroup.asp">
+				optgroup
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;option - [,] defines .">
+			<a
+				href="tag_option.asp">
+				option
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;object - [,] defines .">
+			<a
+				href="tag_object.asp">
+				object
+			</a>
+		</li>
+	</ul>
+</div>
 
-p
-pre
-progress
-param
+<!-- P COLUMN ========== -->
+<div id="P" class="column">
+	<h2>P</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;p - [,] defines .">
+			<a
+				href="tag_p.asp">
+				p
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;pre - [,] defines .">
+			<a
+				href="tag_pre.asp">
+				pre
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;progress - [,] defines .">
+			<a
+				href="tag_progress.asp">
+				progress
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;param - [,] defines .">
+			<a
+				href="tag_param.asp">
+				param
+			</a>
+		</li>
+	</ul>
+</div>
 
-q
+<!-- Q COLUMN ========== -->
+<div id="Q" class="column">
+	<h2>Q</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;q - [,] defines .">
+			<a
+				href="tag_q.asp">
+				q
+			</a>
+		</li>
+	</ul>
+</div>
 
-ruby
-rt
+<!-- R COLUMN ========== -->
+<div id="R" class="column">
+	<h2>R</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;ruby - [,] defines .">
+			<a
+				href="tag_ruby.asp">
+				ruby
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;rt - [,] defines .">
+			<a
+				href="tag_rt.asp">
+				rt
+			</a>
+		</li>
+	</ul>
+</div>
 
-span
-summary
-select
-source
-style
-script
-samp
-s
-small
-strong
-section
-sub
-sup
+<!-- S COLUMN ========== -->
+<div id="S" class="column">
+	<h2>S</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;span - [,] defines .">
+			<a
+				href="tag_span.asp">
+				span
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;summary - [,] defines .">
+			<a
+				href="tag_summary.asp">
+				summary
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;select - [,] defines .">
+			<a
+				href="tag_select.asp">
+				select
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;source - [,] defines .">
+			<a
+				href="tag_source.asp">
+				source
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;style - [,] defines .">
+			<a
+				href="tag_style.asp">
+				style
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;script - [,] defines .">
+			<a
+				href="tag_script.asp">
+				script
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;samp - [,] defines .">
+			<a
+				href="tag_samp.asp">
+				samp
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;s - [,] defines .">
+			<a
+				href="tag_s.asp">
+				s
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;small - [,] defines .">
+			<a
+				href="tag_small.asp">
+				small
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;strong - [,] defines .">
+			<a
+				href="tag_strong.asp">
+				strong
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;section - [,] defines .">
+			<a
+				href="tag_section.asp">
+				section
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;sub - [,] defines .">
+			<a
+				href="tag_sub.asp">
+				sub
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;sup - [,] defines .">
+			<a
+				href="tag_sup.asp">
+				sup
+			</a>
+		</li>
+	</ul>
+</div>
 
-table
-tbody
-thead
-tfoot
-tr
-td
-th
-track
-time
-title
-textarea
+<!-- T COLUMN ========== -->
+<div id="T" class="column">
+	<h2>T</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;table - [,] defines .">
+			<a
+				href="tag_table.asp">
+				table
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;tbody - [,] defines .">
+			<a
+				href="tag_tbody.asp">
+				tbody
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;thead - [,] defines .">
+			<a
+				href="tag_thead.asp">
+				thead
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;tfoot - [,] defines .">
+			<a
+				href="tag_tfoot.asp">
+				tfoot
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;tr - [,] defines .">
+			<a
+				href="tag_tr.asp">
+				tr
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;td - [,] defines .">
+			<a
+				href="tag_td.asp">
+				td
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;th - [,] defines .">
+			<a
+				href="tag_th.asp">
+				th
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;track - [,] defines .">
+			<a
+				href="tag_track.asp">
+				track
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;time - [,] defines .">
+			<a
+				href="tag_time.asp">
+				time
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;title - [,] defines .">
+			<a
+				href="tag_title.asp">
+				title
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;textarea - [,] defines .">
+			<a
+				href="tag_textarea.asp">
+				textarea
+			</a>
+		</li>
+	</ul>
+</div>
 
-u
-ul
+<!-- U COLUMN ========== -->
+<div id="U" class="column">
+	<h2>U</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;u - [,] defines .">
+			<a
+				href="tag_u.asp">
+				u
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;ul - [,] defines .">
+			<a
+				href="tag_ul.asp">
+				ul
+			</a>
+		</li>
+	</ul>
+</div>
 
-video
-var
+<!-- V COLUMN ========== -->
+<div id="V" class="column">
+	<h2>V</h2>
+	<ul>
+		<li
+			data-category=","
+			title="&#9;video - [,] defines .">
+			<a
+				href="tag_video.asp">
+				video
+			</a>
+		</li>
+		<li
+			data-category=","
+			title="&#9;var - [,] defines .">
+			<a
+				href="tag_var.asp">
+				var
+			</a>
+		</li>
+	</ul>
+</div>
+
+</div> <!-- todo -->
 
 </main>
 <aside style="display: inline;">
+<h3> bdi/bdo example</h3>
 <ul>
   <li>User <bdi>hrefs</bdi>: 60 points</li>
   <li>User <bdi>jdoe</bdi>: 80 points</li>
