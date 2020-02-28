@@ -123,22 +123,22 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</h1>
 		<nav aria-label="element category">
 			<ul>
-				<li class="cat-interaction">interaction</li>
-				<li class="cat-semantic">semantic</li>
-				<li class="cat-media">media</li>
-				<li class="cat-typography">typography</li>
-				<li class="cat-layout">layout</li>
-				<li class="cat-language">language</li>
-				<li class="cat-meta">meta</li>
+				<li class="category cat-interaction">interaction</li>
+				<li class="category cat-semantic">semantic</li>
+				<li class="category cat-media">media</li>
+				<li class="category cat-typography">typography</li>
+				<li class="category cat-layout">layout</li>
+				<li class="category cat-language">language</li>
+				<li class="category cat-meta">meta</li>
 			</ul>
 			<ul>
-				<li class="cat-links">links</li>
-				<li class="cat-formatting">formatting</li>
-				<li class="cat-styles">styles</li>
-				<li class="cat-audio-video">audio/video</li>
-				<li class="cat-images">images</li>
-				<li class="cat-basic">basic</li>
-				<li class="cat-forms-input">forms/input</li>
+				<li class="category cat-links">links</li>
+				<li class="category cat-formatting">formatting</li>
+				<li class="category cat-styles">styles</li>
+				<li class="category cat-audio-video">audio/video</li>
+				<li class="category cat-images">images</li>
+				<li class="category cat-basic">basic</li>
+				<li class="category cat-forms-input">forms/input</li>
 			</ul>
 		</nav>
 	</header>
@@ -420,8 +420,6 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
-<div class="todo">
-
 <!-- E COLUMN ========== -->
 <div id="E" class="column">
 	<h2>E</h2>
@@ -444,6 +442,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 	</ul>
 </div>
+
+<div class="todo">
 
 <!-- F COLUMN ========== -->
 <div id="F" class="column">
@@ -1156,5 +1156,24 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 <p>s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s</p>
 <p><bdo dir="rtl">s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s </bdo></p>
 </aside>
+
+<script>
+function onMouseOverCategory(event)
+{
+	const category = event.target.className.replace(/category\s+/, '');
+	const body = document.body.className.replace(/\s*cat-[-\w]+/, '') + ' ' + category;
+	document.body.className = body;
+}
+
+function main()
+{
+	const categories = document.querySelectorAll('nav .category');
+	categories.forEach(function addCategoryMouseEvents(element) {
+		element.addEventListener("mouseenter", onMouseOverCategory);
+	});
+}
+
+main();
+</script>
 </body>
 </html>
