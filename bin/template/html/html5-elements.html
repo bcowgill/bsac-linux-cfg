@@ -113,7 +113,6 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 </style>
 </head>
 
-<!-- TODO add cat-XXX class to body when items in nav below are hovered over or clicked to lock -->
 <body class="sans-serif-font cat-none">
 	<header id="header" class="serif-font">
 		<h1 aria-describedby="meta-description">
@@ -425,16 +424,16 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<h2>E</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;embed - [,] defines .">
+			data-category="interaction,programming"
+			title="&#9;embed - [interaction,programming] defines a container for an external application or interactive content (a plug-in).">
 			<a
 				href="tag_embed.asp">
 				embed
 			</a>
 		</li>
 		<li
-			data-category=",,phrase"
-			title="&#9;em - [,,phrase] defines .">
+			data-category="typography,formatting,phrase"
+			title="&#9;emphasised - [typography,formatting,phrase] renders as emphasised text.">
 			<a
 				href="tag_em.asp">
 				em
@@ -443,47 +442,50 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
-<div class="todo">
-
 <!-- F COLUMN ========== -->
 <div id="F" class="column">
 	<h2>F</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;footer - [,] defines .">
+			data-category="semantic,styles"
+			data-use-with="body,section"
+			title="&#9;footer - [semantic,styles] defines a footer for a document or section.  should contain information about its containing element.">
 			<a
 				href="tag_footer.asp">
 				footer
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;figure - [,] defines .">
+			data-category="semantic,images"
+			data-use-with="figcaption,img,svg,canvas,code"
+			title="&#9;figure - [semantic,images] specifies self-contained content, like illustrations, diagrams, photos, code listings, etc..">
 			<a
 				href="tag_figure.asp">
 				figure
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;figcaption - [,] defines .">
+			data-category="semantic,images"
+			data-use-with="figure,img,svg,canvas"
+			title="&#9;figure caption - [semantic,images] defines a caption for a figure element.">
 			<a
 				href="tag_figcaption.asp">
 				figcaption
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;form - [,] defines .">
+			data-category="interaction,forms/input"
+			data-use-with="input,textarea,button,select,option,optgroup,fieldset,label,output"
+			title="&#9;form - [interaction,forms/input] used to create an HTML form for user input.">
 			<a
 				href="tag_form.asp">
 				form
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;fieldset - [,] defines .">
+			data-category="layout,forms/input"
+			data-use-with="form,legend"
+			title="&#9;fieldset - [layout,forms/input] used to group related elements in a form.  draws a box around the related elements.  use legend element to title the group of input fields">
 			<a
 				href="tag_fieldset.asp">
 				fieldset
@@ -491,6 +493,9 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 	</ul>
 </div>
+
+<div class="todo">
+
 
 <!-- H COLUMN ========== -->
 <div id="H" class="column">
@@ -1158,10 +1163,24 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 </aside>
 
 <script>
+// TODO on hover over an element name, highlight all tags which share the same primary category.
+// TODO show details about element when hovered over in a details area.
+// TODO show data-use-with when hover over or highlight the elements it is used with.
+
+function addClass(classes, addClasses, removeRegex = /^$/) {
+	return classes.replace(removeRegex, '').trim() + ' ' + addClasses;
+}
+
+function addClassToElement(element, addClasses, removeRegex) {
+	const newClasses = addClass(element.className, addClasses, removeRegex);
+	element.className = newClasses;
+	return newClasses;
+}
+
 function onMouseOverCategory(event)
 {
 	const category = event.target.className.replace(/category\s+/, '');
-	const body = document.body.className.replace(/\s*cat-[-\w]+/, '') + ' ' + category;
+	const body = addClass(document.body.className, category, /\s*cat-[-\w]+/g);
 	document.body.className = body;
 }
 
