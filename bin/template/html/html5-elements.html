@@ -86,6 +86,11 @@ ul {
 	color: #6bbc70;
 	display: inline-table;
 }
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+
 .todo {
 	opacity: 0.2;
 }
@@ -120,7 +125,11 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 				PERIODIC TABLE OF HTML5 ELEMENTS
 			</a>
 		</h1>
-		<nav aria-label="element category">
+		<noscript>
+			<p><i>Javascript is currently turned off or not supported, you cannot hover over categories to see which elements belong to which category.</i></p>
+		</noscript>
+		<nav id="category-nav" class="hidden" aria-label="element category">
+			<h2>Categories</h2>
 			<ul>
 				<li class="category cat-interaction">interaction</li>
 				<li class="category cat-semantic">semantic</li>
@@ -141,6 +150,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 			</ul>
 		</nav>
 	</header>
+	<hr />
 	<main id="main">
 
 <!-- A COLUMN ========== -->
@@ -705,7 +715,6 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 
 <div class="todo">
 
-
 <!-- M COLUMN ========== -->
 <div id="M" class="column">
 	<h2>M</h2>
@@ -753,21 +762,25 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
+</div><!-- todo -->
+
 <!-- N COLUMN ========== -->
 <div id="N" class="column">
 	<h2>N</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;noscript - [,] defines .">
+			data-category="interaction,programming"
+			data-use-with="head,link,style,meta"
+			title="&#9;noscript - [interaction,programming] defines an alternate content for users that have disabled scripts in their browser or have a browser that doesn't support script.">
 			<a
 				href="tag_noscript.asp">
 				noscript
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;nav - [,] defines .">
+			data-category="semantic,links,interaction"
+			data-use-with="a"
+			title="&#9;navigation - [semantic,links,interaction] defines a set of navigation links.">
 			<a
 				href="tag_nav.asp">
 				nav
@@ -775,6 +788,9 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 	</ul>
 </div>
+
+
+<div class="todo">
 
 <!-- O COLUMN ========== -->
 <div id="O" class="column">
@@ -862,13 +878,16 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
+</div> <!-- todo -->
+
 <!-- Q COLUMN ========== -->
 <div id="Q" class="column">
 	<h2>Q</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;q - [,] defines .">
+			data-category="semantic,formatting"
+			data-use-with=""
+			title="&#9;quotation - [semantic,formatting] defines a short quotation.  normally rendered with quotation marks around the quotation.">
 			<a
 				href="tag_q.asp">
 				q
@@ -882,23 +901,37 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<h2>R</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;ruby - [,] defines .">
+			data-category="language,formatting"
+			data-use-with="rt,rp"
+			title="&#9;ruby - [language,formatting] specifies a ruby (or rubi) annotation.  a small extra text, attached to the main text to indicate the pronunciation or meaning of the corresponding characters. This kind of annotation is often used in Japanese or Chinese publications.">
+			<!-- https://www.tutorialrepublic.com/html-reference/html5-ruby-tag.php -->
 			<a
 				href="tag_ruby.asp">
 				ruby
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;rt - [,] defines .">
+			data-category="language,formatting"
+			data-use-with="ruby,rp"
+			title="&#9;rubi text pronouciation - [language,formatting] defines an explanation or pronunciation of characters (for East Asian typography) in a ruby annotation.">
 			<a
 				href="tag_rt.asp">
 				rt
 			</a>
 		</li>
+		<li
+			data-category="language,formatting"
+			data-use-with="ruby,rt"
+			title="&#9;rubi paranthesis - [language,formatting] provide parentheses around a ruby text, to be shown by browsers that do not support ruby annotations.">
+			<a
+				href="tag_rp.asp">
+				rp
+			</a>
+		</li>
 	</ul>
 </div>
+
+<div class="todo">
 
 <!-- S COLUMN ========== -->
 <div id="S" class="column">
@@ -1106,21 +1139,25 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
+</div> <!-- todo -->
+
 <!-- U COLUMN ========== -->
 <div id="U" class="column">
 	<h2>U</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;u - [,] defines .">
+			data-category="typography,formatting"
+			data-use-with=""
+			title="&#9;underlined - [typography,formatting] represents some text that should be stylistically different from normal text, such as misspelled words or proper nouns in Chinese.">
 			<a
 				href="tag_u.asp">
 				u
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;ul - [,] defines .">
+			data-category="semantic,lists"
+			data-use-with="li"
+			title="&#9;unordered list - [semantic,lists] defines an unordered (bulleted) list.">
 			<a
 				href="tag_ul.asp">
 				ul
@@ -1134,16 +1171,17 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<h2>V</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;video - [,] defines .">
+			data-category="media,audio/video"
+			data-use-with="source"
+			title="&#9;video - [media,audio/video] a placeholder for a video to be shown in the document, such as a movie clip or other video streams.">
 			<a
 				href="tag_video.asp">
 				video
 			</a>
 		</li>
 		<li
-			data-category=",,phrase"
-			title="&#9;var - [,,phrase] defines .">
+			data-category="semantic,formatting,phrase"
+			title="&#9;variable - [semantic,formatting,phrase] defines a variable when documenting computer programs or mathematics.">
 			<a
 				href="tag_var.asp">
 				var
@@ -1152,9 +1190,23 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
-</div> <!-- todo -->
+<!-- W COLUMN ========== -->
+<div id="W" class="column">
+	<h2>W</h2>
+	<ul>
+		<li
+			data-category="typography,formatting"
+			title="&#9;word break opportunity - [typography,formatting] defines a possible line break.  when a word is too long, or you are afraid that the browser will break your lines at the wrong place, you can use the wbr element to add word break opportunities.">
+			<a
+				href="tag_wbr.asp">
+				wbr
+			</a>
+		</li>
+	</ul>
+</div>
 
 </main>
+<hr />
 <aside style="display: inline;">
 <h3> bdi/bdo example</h3>
 <ul>
@@ -1165,9 +1217,22 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 </ul>
 <p>s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s</p>
 <p><bdo dir="rtl">s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s </bdo></p>
+<h3> ruby/rt/rp example</h3>
+<ruby>
+漢 <rt><rp>(</rp>ㄏㄢˋ<rp>)</rp></rt>
+</ruby>
+<ruby>
+  漢 <rp>(</rp><rt>Kan</rt><rp>)</rp>
+  字 <rp>(</rp><rt>ji</rt><rp>)</rp>
+</ruby>
+<h3> wbr example</h3>
+<p>
+Super<wbr />cali<wbr />fragi<wbr />listic<wbr />expiali<wbr />docious.  Even though the sound of it is something quite atrocious.
+</p>
 </aside>
 
 <script>
+<!--
 // TODO on hover over an element name, highlight all tags which share the same primary category.
 // TODO show details about element when hovered over in a details area.
 // TODO show data-use-with when hover over or highlight the elements it is used with.
@@ -1177,7 +1242,13 @@ function addClass(classes, addClasses, removeRegex = /^$/) {
 }
 
 function addClassToElement(element, addClasses, removeRegex) {
-	const newClasses = addClass(element.className, addClasses, removeRegex);
+	const newClasses = addClass(element.className, addClasses, removeRegex).trim();
+	element.className = newClasses;
+	return newClasses;
+}
+
+function removeClassFromElement(element, removeRegex) {
+	const newClasses = addClass(element.className, '', removeRegex).trim();
 	element.className = newClasses;
 	return newClasses;
 }
@@ -1195,9 +1266,14 @@ function main()
 	categories.forEach(function addCategoryMouseEvents(element) {
 		element.addEventListener("mouseenter", onMouseOverCategory);
 	});
+	const categoryNav = document.getElementById('category-nav');
+	if (categoryNav) {
+		removeClassFromElement(categoryNav, 'hidden');
+	}
 }
 
 main();
+-->
 </script>
 </body>
 </html>
