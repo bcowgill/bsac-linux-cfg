@@ -90,7 +90,7 @@ ul {
 	display: none;
 	visibility: hidden;
 }
-
+.nobr { white-space: nowrap }
 .todo {
 	opacity: 0.2;
 }
@@ -1225,9 +1225,10 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
   漢 <rp>(</rp><rt>Kan</rt><rp>)</rp>
   字 <rp>(</rp><rt>ji</rt><rp>)</rp>
 </ruby>
-<h3> wbr example</h3>
+<h3> wbr,.nobr example (and non-breaking-space, non-breaking-hyphen)</h3>
 <p>
-Super<wbr />cali<wbr />fragi<wbr />listic<wbr />expiali<wbr />docious.  Even though the sound of it is something quite atrocious.
+Super<wbr />cali<wbr />fragi<wbr />listic<wbr />expiali<wbr />docious.  Even though the sound of it is&nbsp;something&nbsp;quite&nbsp;atrocious.
+lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we-can. <span class="nobr"><b>F</b>ortune <b>F</b>avours <b>T</b>he <b>B</b>old!</span>
 </p>
 </aside>
 
