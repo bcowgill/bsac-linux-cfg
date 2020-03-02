@@ -3,7 +3,7 @@
 # i.e.
 # # part 1
 # * [ ] 355-2-remove-for-mobile-multiple-payment.dev.feature
-PEOPLE="sandy.lst ammy.lst shabby.lst brent.lst"
+PEOPLE="raggy.lst shabby.lst brent.lst"
 if [ ! -z "$1" ]; then
 	PEOPLE="$*"
 fi
@@ -20,6 +20,10 @@ do
 	[ "$SCENARIOS" != "$SKIPS" ] && echo "$file" >> tests.txt
 done
 echo \* `cat tests.txt | wc -l` feature files with enabled tests
+# use only @master tagged files
+cp tests.txt tests-all.txt
+grep -l '@master' `cat tests-all.txt` > tests.txt
+echo \* `cat tests.txt | wc -l` feature files marked for @master branch
 
 # clean up names and sort randomly by the number
 perl -pne 's{PAYO4B-+}{}xms' tests.txt \
