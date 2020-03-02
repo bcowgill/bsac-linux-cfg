@@ -165,6 +165,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		<!-- tooltip title= appears right under the mouse (chrome) so add a tab at start to make it visible-->
 		<li
 			data-category="interaction,links"
+			data-use-with=""
 			title="&#9;anchor - [interaction,links] when clicked takes user to content on the page or on another page.">
 			<a
 				href="tag_a.asp">
@@ -173,6 +174,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,formatting"
+			data-use-with=""
 			title="&#9;abbreviation - [semantic,formatting] provides full spelling of an abbreviation.">
 			<a
 				href="tag_abbr.asp">
@@ -180,6 +182,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,styles"
+			data-use-with="h1,h2,h3,h4,h5,h6,p"
 			title="&#9;article - [semantic,styles] independent, self-contained content, can be distributed independently from the rest of the site.">
 			<a
 				href="tag_article.asp">
@@ -188,6 +191,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,styles"
+			data-use-with="h1,h2,h3,h4,h5,h6,p"
 			title="&#9;aside - [semantic,styles] defines some content aside from the content it is placed in.  The aside content should be related to the surrounding content.">
 			<a
 				href="tag_aside.asp">
@@ -196,6 +200,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,formatting"
+			data-use-with="body,article,footer,br,a"
 			title="&#9;address - [semantic,formatting] defines contact information for the author/owner of a document/article.">
 			<a
 				href="tag_address.asp">
@@ -204,6 +209,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="media,audio/video"
+			data-use-with="source,track"
 			title="&#9;audio - [media,audio/video] defines sound, such as music or other audio streams.">
 			<a
 				href="tag_audio.asp">
@@ -228,6 +234,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<ul>
 		<li
 			data-category="typography,formatting"
+			data-use-with=""
 			title="&#9;bold - [typography,formatting] defines bold text without any extra importance. use only if h1..h6, em, strong or mark cannot be used.">
 			<a
 				href="tag_b.asp">
@@ -236,6 +243,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="layout,basic"
+			data-use-with=""
 			title="&#9;break - [layout,basic] defines a single line break. useful for addresses or poems. not a paragraph separator.">
 			<a
 				href="tag_br.asp">
@@ -244,6 +252,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,basic"
+			data-use-with="html"
 			title="&#9;body - [semantic,basic] contains all the contents of an HTML document, such as text, hyperlinks, images, tables, lists, etc.">
 			<a
 				href="tag_body.asp">
@@ -252,6 +261,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="language,formatting"
+			data-use-with=""
 			title="&#9;bi-directional isolation - [language,formatting] isolates a part of text that might be formatted in a different direction from other text outside it. useful when embedding user-generated content with an unknown directionality.">
 			<a
 				href="tag_bdi.asp">
@@ -260,6 +270,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="language,formatting"
+			data-use-with=""
 			title="&#9;bi-directional override - [language,formatting] used to override the current text direction right-to-left or left-to-right.">
 			<a
 				href="tag_bdo.asp">
@@ -268,6 +279,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="meta"
+			data-use-with="head"
 			title="&#9;base - [meta] specify a default URL and a default target for all links on a page.">
 			<a
 				href="tag_base.asp">
@@ -276,6 +288,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,layout,formatting"
+			data-use-with="p"
 			title="&#9;blockquote - [semantic,layout,formatting] specifies a section that is quoted from another source.  usually indented. use q for a short quotation">
 			<a
 				href="tag_blockquote.asp">
@@ -284,6 +297,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="interaction,forms/input"
+			data-use-with="form,img,svg"
 			title="&#9;button - [interaction,forms/input] defines a focusable, clickable button.  you can put content, like text or images inside which you cannot do for an input.  always put type=button">
 			<a
 				href="tag_button.asp">
@@ -299,7 +313,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<ul>
 		<li
 			data-category="semantic,tables"
-			title="&#9;caption - [semantic,tables] defines a caption for a table.">
+			data-use-with="table"
+			title="&#9;caption - [semantic,tables] defines a caption for an HTML table.">
 			<a
 				href="tag_caption.asp">
 				caption
@@ -307,7 +322,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,tables"
-			title="&#9;column group - [semantic,tables] specifies a group of one or more columns in a table for formatting.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
+			data-use-with="table,col"
+			title="&#9;column group - [semantic,tables] specifies a group of one or more columns in an HTML table for formatting.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
 			<a
 				href="tag_colgroup.asp">
 				colgroup
@@ -315,7 +331,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="meta,tables"
-			title="&#9;column - [meta,table] specifies column properties for each column within a colgroup element.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
+			data-use-with="colgroup"
+			title="&#9;column - [meta,table] specifies column properties for each column within a colgroup element of an HTML table.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
 			<a
 				href="tag_col.asp">
 				col
@@ -323,7 +340,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="media,images,interaction"
-			data-use-with=""
+			data-use-with="script"
 			title="&#9;canvas - [media,images,interaction] used to draw graphics, on the fly, via scripting (usually JavaScript).  text inside the canvas will show for browsers which don't support it.">
 			<!--
 				Canvas Reference: https://www.w3schools.com/graphics/canvas_reference.asp
@@ -337,6 +354,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,formatting"
+			data-use-with=""
 			title="&#9;code - [semantic,formatting,phrase] defines a piece of computer code.">
 			<a
 				href="tag_code.asp">
@@ -345,6 +363,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,formatting"
+			data-use-with=""
 			title="&#9;cite - [semantic,formatting] defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.)">
 			<a
 				href="tag_cite.asp">
@@ -360,6 +379,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<ul>
 		<li
 			data-category="semantic,list"
+			data-use-with="dt,dd"
 			title="&#9;description list - [semantic,list] defines a description list.  used in conjunction with dt and dd elements.">
 			<a
 				href="tag_dl.asp">
@@ -368,7 +388,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,list"
-			title="&#9;define term - [semantic,list] defines a term/name in a description list.  used in conjunction with dl and dd elements.">
+			data-use-with="dl,dd,a"
+			title="&#9;define term - [semantic,list] defines a term/name in a description list.  used in conjunction with dl and dd elements.  use with an id attribute so that you can use a elements to link back to the term definition.">
 			<a
 				href="tag_dt.asp">
 				dt
@@ -376,6 +397,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,list"
+			data-use-with="dl,dt"
 			title="&#9;define description - [semantic,list] describes a term/name in a description list.  used in conjunction with dl and dt elements.">
 			<a
 				href="tag_dd.asp">
@@ -384,6 +406,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,styles"
+			data-use-with=""
 			title="&#9;division - [semantic,styles] defines a division or a grouping in an HTML document.  element is often used as a container for other HTML elements to style them with CSS or to perform certain tasks with JavaScript.  usually a vertical block based area of the document.">
 			<a
 				href="tag_div.asp">
@@ -392,7 +415,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,formatting"
-			title="&#9;definition - [semantic,formatting] represents the defining instance of a term in HTML.   defining instance is often the first use of a term in a document.  used with a or abbr elements and title or id attributes to associate the term with its definition.">
+			data-use-with="abbr,a"
+			title="&#9;defining instance - [semantic,formatting] represents the defining instance of a term in HTML.   defining instance is often the first use of a term in a document.  used with a or abbr elements and title or id attributes to associate the term with its definition.">
 			<a
 				href="tag_dfn.asp">
 				dfn
@@ -409,6 +433,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="interaction,forms/input"
+			data-use-with="optgroup,option,input"
 			title="&#9;data list - [interaction,forms/input] specifies an autocomplete list of pre-defined options for an input element.  useful to share the same list of items across different input selectors.  used with option elements to form the list.  not supported before safari 12">
 			<a
 				href="tag_datalist.asp">
@@ -426,6 +451,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,styles"
+			data-use-with="li"
 			title="&#9;data - [semantic,styles] provides both a machine-readable value for data processors, and a human-readable value for rendering in a browser. use time element if the data is time or date related.">
 			<a
 				href="tag_data.asp">
@@ -434,6 +460,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 		<li
 			data-category="semantic,styles"
+			data-use-with=""
 			title="&#9;dialog - [semantic,styles] defines a dialog box or window.  not supported in IE/Edge">
 			<a
 				href="tag_dialog.asp">
@@ -442,6 +469,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 		</li>
 	</ul>
 </div>
+
+<!-- TODO here is am adding data-use-with -->
 
 <!-- E COLUMN ========== -->
 <div id="E" class="column">
@@ -1092,104 +1121,120 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	</ul>
 </div>
 
-<div class="todo">
-
 <!-- T COLUMN ========== -->
 <div id="T" class="column">
 	<h2>T</h2>
 	<ul>
 		<li
-			data-category=","
-			title="&#9;table - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="caption,colgroup,col,thead,tfoot,tbody,tr,th,td"
+			title="&#9;table - [semantic,tables] defines an HTML table of information presented in rows and columns.">
 			<a
 				href="tag_table.asp">
 				table
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;tbody - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="table,tr,th,td"
+			title="&#9;table body - [semantic,tables] used to group the body content in an HTML table.">
 			<a
 				href="tag_tbody.asp">
 				tbody
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;thead - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="table,tr,th,td"
+			title="&#9;table header - [semantic,tables] used to group header content in an HTML table.  browsers can use these elements to enable scrolling of the table body independently of the header and footer. also, when printing a large table that spans multiple pages, these elements can enable the table header and footer to be printed at the top and bottom of each page.">
 			<a
 				href="tag_thead.asp">
 				thead
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;tfoot - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="table,tr,th,td"
+			title="&#9;table footer - [semantic,tables] used to group footer content in an HTML table.  browsers can use these elements to enable scrolling of the table body independently of the header and footer. also, when printing a large table that spans multiple pages, these elements can enable the table header and footer to be printed at the top and bottom of each page.">
 			<a
 				href="tag_tfoot.asp">
 				tfoot
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;tr - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="table,thead,tfoot,tbody,th,td"
+			title="&#9;table row - [semantic,tables] defines a row in an HTML table.">
 			<a
 				href="tag_tr.asp">
 				tr
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;td - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="tr"
+			title="&#9;table data cell - [semantic,tables] specifies data in a standard HTML table cell.">
 			<a
 				href="tag_td.asp">
 				td
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;th - [,] defines .">
+			data-category="semantic,tables"
+			data-use-with="tr"
+			title="&#9;table header cell - [semantic,tables] defines a row or column header cell in an HTML table.">
 			<a
 				href="tag_th.asp">
 				th
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;track - [,,] defines .">
+			data-category="media,audio/video"
+			data-use-with="audio,video"
+			title="&#9;track text - [media,audio/video] specifies text tracks for media elements audio and video.  used to specify subtitles, caption files or other files containing text, that should be visible when the media is playing.">
 			<a
 				href="tag_track.asp">
 				track
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;time - [,] defines .">
+			data-category="semantic,formatting"
+			data-use-with=""
+			title="&#9;time - [semantic,formatting] defines a human-readable date/time.  this element can also be used to encode dates and times in a machine-readable way so that user agents can offer to add birthday reminders or scheduled events to the user's calendar, and search engines can produce smarter search results.">
 			<a
 				href="tag_time.asp">
 				time
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;title - [,] defines .">
+			data-category="meta,basic"
+			data-use-with="head"
+			title="&#9;title - [meta,basic] defines the title of the document.  is required in all HTML documents.">
 			<a
 				href="tag_title.asp">
 				title
 			</a>
 		</li>
 		<li
-			data-category=","
-			title="&#9;textarea - [,] defines .">
+			data-category="interaction,forms/input"
+			data-use-with="label"
+			title="&#9;text area for multiple line input - [interaction,forms/input] defines a multi-line text input control.  can hold an unlimited number of characters, and the text renders in a fixed-width font.">
 			<a
 				href="tag_textarea.asp">
 				textarea
 			</a>
 		</li>
+		<li
+			data-category="semantic,formatting"
+			data-use-with=""
+			title="&#9;template - [semantic,formatting] holds HTML content hidden from view.  can be made visible later using Javascript.">
+			<a
+				href="tag_template.asp">
+				template
+			</a>
+		</li>
 	</ul>
 </div>
-
-</div> <!-- todo -->
 
 <!-- U COLUMN ========== -->
 <div id="U" class="column">
@@ -1222,7 +1267,7 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 	<ul>
 		<li
 			data-category="media,audio/video"
-			data-use-with="source"
+			data-use-with="source,track"
 			title="&#9;video - [media,audio/video] a placeholder for a video to be shown in the document, such as a movie clip or other video streams.">
 			<a
 				href="tag_video.asp">
@@ -1258,6 +1303,8 @@ li.cat-forms-input:hover,.cat-forms-input [data-category*="forms/input"] a {
 </main>
 <hr />
 <aside style="display: inline;">
+<details>
+<summary>Selected examples...</summary>
 <h3> bdi/bdo example</h3>
 <ul>
   <li>User <bdi>hrefs</bdi>: 60 points</li>
@@ -1286,6 +1333,7 @@ lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we
 		 Wbr - automatically add wbr on capital/lowcase transitions
 		 HyNoBr - convert hyphens in text to unicode non-breaking-hyphens
 -->
+</details>
 </aside>
 
 <script>
@@ -1293,6 +1341,8 @@ lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we
 // TODO on hover over an element name, highlight all tags which share the same primary category.
 // TODO show details about element when hovered over in a details area.
 // TODO show data-use-with when hover over or highlight the elements it is used with.
+// TODO click to lock category.  tab to category to lock highlights
+// TODO periodic table of SVG elements.
 
 function addClass(classes, addClasses, removeRegex = /^$/) {
 	return classes.replace(removeRegex, '').trim() + ' ' + addClasses;
