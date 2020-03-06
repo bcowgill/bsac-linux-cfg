@@ -134,6 +134,22 @@ li.w3schools.locked a,
 	color: magenta;
 	font-weight: 600;
 }
+.element-description {
+	background: black;
+	position: fixed;
+	bottom: 16px;
+	min-height: 0;
+	max-height: 35%;
+	overflow: hidden;
+	border: 1px solid;
+	padding: 3px 20px;
+	margin: 3px;
+	opacity: 1;
+}
+.element-description.top {
+	top: 16px;
+}
+
 </style>
 </head>
 
@@ -147,38 +163,40 @@ li.w3schools.locked a,
 		<noscript>
 			<p><i>Javascript is currently turned off or not supported, you cannot hover over categories to see which elements belong to which category.</i></p>
 		</noscript>
-		<nav id="category-nav" class="hidden" aria-label="element category">
+		<nav id="category-nav" class="hidden" role="navigation" aria-label="Element Category">
 			<h2>Categories<span class="lock-state"><sub><small> locked</small></sub></span></h2>
 			<ul>
-				<li class="category mine cat-interaction"><a href="#">interaction</a></li>
-				<li class="category mine cat-semantic"><a href="#">semantic</a></li>
-				<li class="category mine cat-media"><a href="#">media</a></li>
-				<li class="category mine cat-typography"><a href="#">typography</a></li>
-				<li class="category mine cat-layout"><a href="#">layout</a></li>
-				<li class="category mine cat-language"><a href="#">language</a></li>
-				<li class="category mine cat-meta"><a href="#">meta</a></li>
+				<li class="target category mine cat-semantic"><a href="#">semantic</a></li>
+				<li class="target category mine cat-interaction"><a href="#">interaction</a></li>
+				<li class="target category mine cat-media"><a href="#">media</a></li>
+				<li class="target category mine cat-typography"><a href="#">typography</a></li>
+				<li class="target category mine cat-layout"><a href="#">layout</a></li>
+				<li class="target category mine cat-language"><a href="#">language</a></li>
+				<li class="target category mine cat-meta"><a href="#">meta</a></li>
 			</ul>
 			<ul>
-				<li class="category w3schools cat-links"><a href="#">links</a></li>
-				<li class="category w3schools cat-formatting"><a href="#">formatting</a></li>
-				<li class="category w3schools cat-styles"><a href="#">styles</a></li>
-				<li class="category w3schools cat-audio-video"><a href="#">audio/video</a></li>
-				<li class="category w3schools cat-images"><a href="#">images</a></li>
-				<li class="category w3schools cat-basic"><a href="#">basic</a></li>
-				<li class="category w3schools cat-forms-input"><a href="#">forms/input</a></li>
-				<li class="category w3schools cat-programming"><a href="#">programming</a></li>
+				<li class="target category w3schools cat-formatting"><a href="#">formatting</a></li>
+				<li class="target category w3schools cat-styles"><a href="#">styles</a></li>
+				<li class="target category w3schools cat-basic"><a href="#">basic</a></li>
+				<li class="target category w3schools cat-forms-input"><a href="#">forms/input</a></li>
+				<li class="target category w3schools cat-images"><a href="#">images</a></li>
+				<li class="target category w3schools cat-programming"><a href="#">programming</a></li>
+				<li class="target category w3schools cat-audio-video"><a href="#">audio/video</a></li>
+				<li class="target category w3schools cat-links"><a href="#">links</a></li>
 			</ul>
 		</nav>
 	</header>
 	<hr />
-	<main id="main">
+	<main id="main" role="main">
 
+<section id="section-al" role="contentinfo" aria-label="HTML5 Elements A through L">
 <!-- A COLUMN ========== -->
 <div id="A" class="column">
 	<h2>A</h2>
 	<ul>
 		<!-- tooltip title= appears right under the mouse (chrome) so add a tab at start to make it visible-->
 		<li
+			class="target element"
 			data-category="interaction,links"
 			data-use-with=""
 			title="&#9;anchor - [interaction,links] when clicked takes user to content on the page or on another page.">
@@ -188,14 +206,17 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;abbreviation - [semantic,formatting] provides full spelling of an abbreviation.">
 			<a
 				href="tag_abbr.asp">
 				abbr
+			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with="h1,h2,h3,h4,h5,h6,p"
 			title="&#9;article - [semantic,styles] independent, self-contained content, can be distributed independently from the rest of the site.">
@@ -205,6 +226,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with="h1,h2,h3,h4,h5,h6,p"
 			title="&#9;aside - [semantic,styles] defines some content aside from the content it is placed in.  The aside content should be related to the surrounding content.">
@@ -214,6 +236,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with="body,article,footer,br,a"
 			title="&#9;address - [semantic,formatting] defines contact information for the author/owner of a document/article.">
@@ -223,6 +246,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,audio/video"
 			data-use-with="source,track"
 			title="&#9;audio - [media,audio/video] defines sound, such as music or other audio streams.">
@@ -232,6 +256,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,images"
 			data-use-with="img,map"
 			title="&#9;area - [interaction,images] defines a clickable area inside an image-map.">
@@ -248,6 +273,7 @@ li.w3schools.locked a,
 	<h2>B</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;bold - [typography,formatting] defines bold text without any extra importance. use only if h1..h6, em, strong or mark cannot be used.">
@@ -257,6 +283,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="layout,basic"
 			data-use-with=""
 			title="&#9;break - [layout,basic] defines a single line break. useful for addresses or poems. not a paragraph separator.">
@@ -266,6 +293,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with="html"
 			title="&#9;body - [semantic,basic] contains all the contents of an HTML document, such as text, hyperlinks, images, tables, lists, etc.">
@@ -275,6 +303,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="language,formatting"
 			data-use-with=""
 			title="&#9;bi-directional isolation - [language,formatting] isolates a part of text that might be formatted in a different direction from other text outside it. useful when embedding user-generated content with an unknown directionality.">
@@ -284,6 +313,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="language,formatting"
 			data-use-with=""
 			title="&#9;bi-directional override - [language,formatting] used to override the current text direction right-to-left or left-to-right.">
@@ -293,6 +323,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="meta"
 			data-use-with="head"
 			title="&#9;base - [meta] specify a default URL and a default target for all links on a page.">
@@ -302,6 +333,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,layout,formatting"
 			data-use-with="p"
 			title="&#9;blockquote - [semantic,layout,formatting] specifies a section that is quoted from another source.  usually indented. use q for a short quotation">
@@ -311,6 +343,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="form,img,svg"
 			title="&#9;button - [interaction,forms/input] defines a focusable, clickable button.  you can put content, like text or images inside which you cannot do for an input.  always put type=button">
@@ -327,6 +360,7 @@ li.w3schools.locked a,
 	<h2>C</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="table"
 			title="&#9;caption - [semantic,tables] defines a caption for an HTML table.">
@@ -336,6 +370,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="table,col"
 			title="&#9;column group - [semantic,tables] specifies a group of one or more columns in an HTML table for formatting.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
@@ -345,6 +380,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="meta,tables"
 			data-use-with="colgroup"
 			title="&#9;column - [meta,table] specifies column properties for each column within a colgroup element of an HTML table.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
@@ -354,6 +390,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,images,interaction"
 			data-use-with="script"
 			title="&#9;canvas - [media,images,interaction] used to draw graphics, on the fly, via scripting (usually JavaScript).  text inside the canvas will show for browsers which don't support it.">
@@ -368,6 +405,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;code - [semantic,formatting,phrase] defines a piece of computer code.">
@@ -377,6 +415,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;cite - [semantic,formatting] defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.)">
@@ -393,6 +432,7 @@ li.w3schools.locked a,
 	<h2>D</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,list"
 			data-use-with="dt,dd"
 			title="&#9;description list - [semantic,list] defines a description list.  used in conjunction with dt and dd elements.">
@@ -402,6 +442,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,list"
 			data-use-with="dl,dd,a"
 			title="&#9;define term - [semantic,list] defines a term/name in a description list.  used in conjunction with dl and dd elements.  use with an id attribute so that you can use a elements to link back to the term definition.">
@@ -411,6 +452,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,list"
 			data-use-with="dl,dt"
 			title="&#9;define description - [semantic,list] describes a term/name in a description list.  used in conjunction with dl and dt elements.">
@@ -420,6 +462,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with=""
 			title="&#9;division - [semantic,styles] defines a division or a grouping in an HTML document.  element is often used as a container for other HTML elements to style them with CSS or to perform certain tasks with JavaScript.  usually a vertical block based area of the document.">
@@ -429,6 +472,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with="abbr,a"
 			title="&#9;defining instance - [semantic,formatting] represents the defining instance of a term in HTML.   defining instance is often the first use of a term in a document.  used with a or abbr elements and title or id attributes to associate the term with its definition.">
@@ -438,6 +482,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles,interaction"
 			data-use-with="summary"
 			title="&#9;details - [semantic,styles,interaction] specifies additional details that the user can view or hide on demand like a tooltip or accordion.  use along with summary element.  not supported in IE">
@@ -447,6 +492,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="optgroup,option,input"
 			title="&#9;data list - [interaction,forms/input] specifies an autocomplete list of pre-defined options for an input element.  useful to share the same list of items across different input selectors.  used with option elements to form the list.  not supported before safari 12">
@@ -456,6 +502,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with="ins"
 			title="&#9;deleted text - [semantic,formatting] defines text that has been deleted from a document.  used along with ins element.  see also the s element.">
@@ -465,6 +512,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with="li"
 			title="&#9;data - [semantic,styles] provides both a machine-readable value for data processors, and a human-readable value for rendering in a browser. use time element if the data is time or date related.">
@@ -474,6 +522,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with=""
 			title="&#9;dialog - [semantic,styles] defines a dialog box or window.  not supported in IE/Edge">
@@ -490,6 +539,7 @@ li.w3schools.locked a,
 	<h2>E</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="interaction,programming"
 			data-use-with=""
 			title="&#9;embed - [interaction,programming] defines a container for an external application or interactive content (a plug-in).  see also object.">
@@ -499,6 +549,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="typography,formatting,phrase"
 			data-use-with=""
 			title="&#9;emphasised - [typography,formatting,phrase] renders as emphasised text.">
@@ -515,6 +566,7 @@ li.w3schools.locked a,
 	<h2>F</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with="body,section"
 			title="&#9;footer - [semantic,styles] defines a footer for a document or section.  should contain information about its containing element.">
@@ -524,6 +576,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,images"
 			data-use-with="figcaption,picture,img,svg,canvas,code"
 			title="&#9;figure - [semantic,images] specifies self-contained content, like illustrations, diagrams, photos, code listings, etc..">
@@ -533,6 +586,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,images"
 			data-use-with="figure,img,svg,canvas"
 			title="&#9;figure caption - [semantic,images] defines a caption for a figure element.">
@@ -542,6 +596,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="input,textarea,button,select,option,optgroup,fieldset,label,output"
 			title="&#9;form - [interaction,forms/input] used to create an HTML form for user input.">
@@ -551,6 +606,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="layout,forms/input"
 			data-use-with="form,legend"
 			title="&#9;fieldset - [layout,forms/input] used to group related elements in a form.  draws a box around the related elements.  use legend element to title the group of input fields">
@@ -567,6 +623,7 @@ li.w3schools.locked a,
 	<h2>H</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;horizontal rule - [semantic,basic] a dividing line indicating a thematic change in the content.  it separates content and indicates a change of topic.">
@@ -576,6 +633,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;heading level one - [semantic,basic] defines the most important level heading for a section.">
@@ -585,6 +643,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;heading level two - [semantic,basic] defines the second most important level heading for a section.">
@@ -594,6 +653,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;heading level three - [semantic,basic] defines the third most important level heading for a section.">
@@ -603,6 +663,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;heading level four - [semantic,basic] defines the third least important level heading for a section.">
@@ -612,6 +673,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;heading level five - [semantic,basic] defines the second least important level heading for a section.">
@@ -621,6 +683,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;heading level six - [semantic,basic] defines the least important level heading for a section.">
@@ -630,6 +693,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with="arcticle,section,h1,h2,h3,h4,h5,h6"
 			title="&#9;header - [semantic,styles] a container for introductory content or a set of navigational links within the document or a section.">
@@ -639,6 +703,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with="head,body"
 			title="&#9;html - [semantic,basic] container for all other HTML elements, except for the DOCTYPE tag.">
@@ -648,6 +713,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with="html,title,style,base,link,meta,script,noscript"
 			title="&#9;head - [semantic,basic] a container for all the head elements.  can include a title for the document, scripts, styles, meta information, and more">
@@ -664,6 +730,7 @@ li.w3schools.locked a,
 	<h2>I</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with="p"
 			title="&#9;italic - [typography,formatting] defines a part of text in an alternate voice or mood. The content of the i element is usually displayed in italic.  can be used to indicate a technical term, a phrase from another language, a thought, or a ship name, etc.  use the i element only when there is not a more appropriate semantic element such as em, strong, mark, cite, dfn.">
@@ -673,6 +740,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with="del"
 			title="&#9;inserted text - [semantic,formatting] defines a text that has been inserted into a document.  used along with the del element.">
@@ -682,6 +750,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="form,fieldset,label"
 			title="&#9;input - [interaction,forms/input] specifies an input field where the user can enter data.">
@@ -691,6 +760,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,images"
 			data-use-with=""
 			title="&#9;image - [media,images] a placeholder for an image to be shown in the document.">
@@ -700,6 +770,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,frames"
 			data-use-with=""
 			title="&#9;inline frame - [interaction,frames] used to embed another document within the current HTML document.">
@@ -716,6 +787,7 @@ li.w3schools.locked a,
 	<h2>K</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,formatting,phrase"
 			data-use-with=""
 			title="&#9;keyboard input - [semantic,formatting,phrase] defines keyboard input.">
@@ -732,6 +804,7 @@ li.w3schools.locked a,
 	<h2>L</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,forms/input"
 			data-use-with="fieldset"
 			title="&#9;legend - [semantic,forms/input] defines a caption for a group of fields in a form i.e. a fieldset element.">
@@ -741,6 +814,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,semantic,forms/input"
 			data-use-with="input,meter,progress,select,textarea"
 			title="&#9;label - [interaction,semantic,forms/input] defines a label for several form input elements.">
@@ -750,6 +824,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,lists"
 			data-use-with="ul,ol,menu"
 			title="&#9;list item - [semantic,lists] defines a list item.  used as an item in an ordered list, unordered list or a menu element">
@@ -759,6 +834,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,links,layout"
 			data-use-with="head"
 			title="&#9;link - [interaction,links,layout] defines a link between a document and an external resource.  use to associate stylesheets to the document.  see also the style element.">
@@ -769,12 +845,20 @@ li.w3schools.locked a,
 		</li>
 	</ul>
 </div>
-
+</section>
+<section id="section-description" class="element-description hidden" role="contentinfo" aria-label="HTML5 Element Information">
+<h4>a - anchor</h4>
+<p id="element-categories">cateory,list</p>
+<p id="element-associates">Use with: &lt;elements&gt;</p>
+<p id="element-description">description of currently highlighted element</p>
+</section>
+<section id="section-mz" role="contentinfo" aria-label="HTML5 Elements M through Z">
 <!-- M COLUMN ========== -->
 <div id="M" class="column">
 	<h2>M</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="meta"
 			data-use-with="head"
 			title="&#9;metadata - [meta] provides metadata about the HTML document.  metadata will not be displayed on the page, but will be machine parsable.  meta elements are typically used to specify page description, keywords, author of the document, last modified, and other metadata.">
@@ -784,6 +868,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,images"
 			data-use-with="img,area"
 			title="&#9;map - [interaction,images] define a client-side image-map. An image-map is an image with clickable areas.">
@@ -793,6 +878,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;marked text - [typography,formatting] defines marked text.  use the mark element if you want to highlight parts of your text">
@@ -802,6 +888,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting,media"
 			data-use-with="label"
 			title="&#9;meter - [semantic,formatting,media] defines a scalar measurement within a known range, or a fractional value.  this is also known as a gauge.  do not use for an active progress bar, use progress element instead.">
@@ -811,6 +898,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with="body"
 			title="&#9;main - [semantic,styles] specifies the main content of a document.  content inside the main element should be unique to the document. It should not contain any content that is repeated across documents such as sidebars, navigation links, copyright information, site logos, and search forms.  there must not be more than one main element in a document. The main element must NOT be a descendant of an article, aside, footer, header, or nav element.">
@@ -827,6 +915,7 @@ li.w3schools.locked a,
 	<h2>N</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="interaction,programming"
 			data-use-with="head,link,style,meta"
 			title="&#9;no script support - [interaction,programming] defines an alternate content for users that have disabled scripts in their browser or have a browser that doesn't support script.">
@@ -836,6 +925,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,links,interaction"
 			data-use-with="a"
 			title="&#9;navigation - [semantic,links,interaction] defines a set of navigation links.">
@@ -852,6 +942,7 @@ li.w3schools.locked a,
 	<h2>O</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="form,input"
 			title="&#9;output - [interaction,forms/input] represents the result of a calculation (like one performed by a script).">
@@ -861,6 +952,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,lists"
 			data-use-with="li"
 			title="&#9;ordered list - [semantic,lists] defines an ordered list. An ordered list can be numerical or alphabetical.">
@@ -870,6 +962,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="select,option"
 			title="&#9;option group - [interaction,forms/input] used to group and label related options in a drop-down list.">
@@ -879,6 +972,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forma/input"
 			data-use-with="select,datalist,optgroup"
 			title="&#9;option - [interaction,forma/input] defines an option in a select or data list.">
@@ -888,6 +982,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,programming,media"
 			data-use-with="body,param"
 			title="&#9;object - [interaction,programming,media] defines an embedded object within an HTML document.  use this element to embed multimedia (like audio, video, Java applets, ActiveX, PDF, and Flash) in your web pages.  you can also use the object element to embed another web page into your HTML document.  see also embed.">
@@ -904,6 +999,7 @@ li.w3schools.locked a,
 	<h2>P</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,basic"
 			data-use-with=""
 			title="&#9;paragraph - [semantic,basic] defines a paragraph.  ">
@@ -913,6 +1009,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="typography,formatting,layout"
 			data-use-with=""
 			title="&#9;preformatted text - [typography,formatting,layout] defines preformatted text in a fixed width font preserving spacing and line breaks..">
@@ -922,6 +1019,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting,media"
 			data-use-with="label"
 			title="&#9;progress bar - [semantic,formatting,media] represents the progress of a task.  see also meter.">
@@ -931,6 +1029,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,programming"
 			data-use-with="object"
 			title="&#9;parameter for object - [interaction,programming] defines parameters for plugins embedded with an object element.">
@@ -940,6 +1039,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,images"
 			data-use-with="source,img"
 			title="&#9;picture - [media,images] defines a placeholder for an image whose source is chosen to best match the size of the placeholder.  you can use high resolution images when the placeholder is larger and lower resolution images when it is small.">
@@ -956,6 +1056,7 @@ li.w3schools.locked a,
 	<h2>Q</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;quotation - [semantic,formatting] defines a short quotation.  normally rendered with quotation marks around the quotation.">
@@ -972,6 +1073,7 @@ li.w3schools.locked a,
 	<h2>R</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="language,formatting"
 			data-use-with="rt,rp"
 			title="&#9;ruby - [language,formatting] specifies a ruby (or rubi) annotation.  a small extra text, attached to the main text to indicate the pronunciation or meaning of the corresponding characters. This kind of annotation is often used in Japanese or Chinese publications.">
@@ -982,6 +1084,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="language,formatting"
 			data-use-with="ruby,rp"
 			title="&#9;rubi text pronouciation - [language,formatting] defines an explanation or pronunciation of characters (for East Asian typography) in a ruby annotation.">
@@ -991,6 +1094,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="language,formatting"
 			data-use-with="ruby,rt"
 			title="&#9;rubi paranthesis - [language,formatting] provide parentheses around a ruby text, to be shown by browsers that do not support ruby annotations.">
@@ -1007,6 +1111,7 @@ li.w3schools.locked a,
 	<h2>S</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with=""
 			title="&#9;span - [semantic,styles] used to group inline-elements in a document.">
@@ -1016,6 +1121,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles,interaction"
 			data-use-with="details"
 			title="&#9;summary - [semantic,styles,interaction] defines a visible heading for the details element. the heading can be clicked to view/hide the details.  not supported in IE/Edge">
@@ -1025,6 +1131,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="label,option"
 			title="&#9;select list - [interaction,forms/input] used to create a drop-down list.">
@@ -1034,6 +1141,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,audio/video"
 			data-use-with="audio,video,picture"
 			title="&#9;source - [media,audio/video] specify multiple media resources for media elements, such as video, audio, and picture.  allows you to specify alternative video/audio/image files which the browser may choose from, based on its media type, codec support or media query.">
@@ -1043,6 +1151,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with=''
 			title="&#9;style sheet - [semantic,styles] defines style information for an HTML document.  see also the link element.">
@@ -1052,6 +1161,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,programming"
 			data-use-with="noscript"
 			title="&#9;scripted program code - [interaction,programming] define a client-side script (JavaScript).">
@@ -1061,6 +1171,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting,phrase"
 			data-use-with=""
 			title="&#9;sample output - [semantic,formatting,phrase] defines sample output from a computer program.">
@@ -1070,6 +1181,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;struck off - [semantic,formatting] specifies text that is no longer correct, accurate or relevant.  should not be used to define replaced or deleted text.  see also the del element.">
@@ -1079,6 +1191,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;smaller text - [typography,formatting] defines smaller text (and other side comments).">
@@ -1088,6 +1201,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting,phrase"
 			data-use-with=""
 			title="&#9;strong text - [semantic,formatting,phrase] defines important text.">
@@ -1097,6 +1211,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,styles"
 			data-use-with=""
 			title="&#9;section - [semantic,styles] defines sections in a document, such as chapters, headers, footers, or any other sections of the document.">
@@ -1106,6 +1221,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;subscript text - [typography,formatting] defines subscript text.  subscript text appears half a character below the normal line, and is sometimes rendered in a smaller font.  subscript text can be used for chemical formulas, like H2O or mathematics.">
@@ -1115,6 +1231,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;superscript text - [typography,formatting] defines superscript text.  superscript text appears half a character above the normal line, and is sometimes rendered in a smaller font. superscript text can be used for footnotes or mathematics.">
@@ -1124,6 +1241,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,images,interaction"
 			data-use-with="rect,circle,ellipse,line,polyline,polygon,path,text,tspan,a,g,feXxx,defs,filter,linearGradient,radialGradient,stop"
 			title="&#9;scalable vector graphics - [media,images,interaction] defines a container for scalable vector graphics.  allows for drawing paths, boxes, circles, text, and graphic images.">
@@ -1145,6 +1263,7 @@ li.w3schools.locked a,
 	<h2>T</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="caption,colgroup,col,thead,tfoot,tbody,tr,th,td"
 			title="&#9;table - [semantic,tables] defines an HTML table of information presented in rows and columns.">
@@ -1154,6 +1273,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="table,tr,th,td"
 			title="&#9;table body - [semantic,tables] used to group the body content in an HTML table.">
@@ -1163,6 +1283,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="table,tr,th,td"
 			title="&#9;table header - [semantic,tables] used to group header content in an HTML table.  browsers can use these elements to enable scrolling of the table body independently of the header and footer. also, when printing a large table that spans multiple pages, these elements can enable the table header and footer to be printed at the top and bottom of each page.">
@@ -1172,6 +1293,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="table,tr,th,td"
 			title="&#9;table footer - [semantic,tables] used to group footer content in an HTML table.  browsers can use these elements to enable scrolling of the table body independently of the header and footer. also, when printing a large table that spans multiple pages, these elements can enable the table header and footer to be printed at the top and bottom of each page.">
@@ -1181,6 +1303,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="table,thead,tfoot,tbody,th,td"
 			title="&#9;table row - [semantic,tables] defines a row in an HTML table.">
@@ -1190,6 +1313,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="tr"
 			title="&#9;table data cell - [semantic,tables] specifies data in a standard HTML table cell.">
@@ -1199,6 +1323,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,tables"
 			data-use-with="tr"
 			title="&#9;table header cell - [semantic,tables] defines a row or column header cell in an HTML table.">
@@ -1208,6 +1333,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="media,audio/video"
 			data-use-with="audio,video"
 			title="&#9;track text - [media,audio/video] specifies text tracks for media elements audio and video.  used to specify subtitles, caption files or other files containing text, that should be visible when the media is playing.">
@@ -1217,6 +1343,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;time - [semantic,formatting] defines a human-readable date/time.  this element can also be used to encode dates and times in a machine-readable way so that user agents can offer to add birthday reminders or scheduled events to the user's calendar, and search engines can produce smarter search results.">
@@ -1226,6 +1353,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="meta,basic"
 			data-use-with="head"
 			title="&#9;title - [meta,basic] defines the title of the document.  is required in all HTML documents.">
@@ -1235,6 +1363,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="interaction,forms/input"
 			data-use-with="label"
 			title="&#9;text area for multiple line input - [interaction,forms/input] defines a multi-line text input control.  can hold an unlimited number of characters, and the text renders in a fixed-width font.">
@@ -1244,6 +1373,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting"
 			data-use-with=""
 			title="&#9;template - [semantic,formatting] holds HTML content hidden from view.  can be made visible later using Javascript.">
@@ -1260,6 +1390,7 @@ li.w3schools.locked a,
 	<h2>U</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;underlined - [typography,formatting] represents some text that should be stylistically different from normal text, such as misspelled words or proper nouns in Chinese.">
@@ -1269,6 +1400,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,lists"
 			data-use-with="li"
 			title="&#9;unordered list - [semantic,lists] defines an unordered (bulleted) list.">
@@ -1285,6 +1417,7 @@ li.w3schools.locked a,
 	<h2>V</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="media,audio/video"
 			data-use-with="source,track"
 			title="&#9;video - [media,audio/video] a placeholder for a video to be shown in the document, such as a movie clip or other video streams.">
@@ -1294,6 +1427,7 @@ li.w3schools.locked a,
 			</a>
 		</li>
 		<li
+			class="target element"
 			data-category="semantic,formatting,phrase"
 			data-use-with=""
 			title="&#9;variable - [semantic,formatting,phrase] defines a variable when documenting computer programs or mathematics.">
@@ -1310,6 +1444,7 @@ li.w3schools.locked a,
 	<h2>W</h2>
 	<ul>
 		<li
+			class="target element"
 			data-category="typography,formatting"
 			data-use-with=""
 			title="&#9;word break opportunity - [typography,formatting] defines a possible line break.  when a word is too long, or you are afraid that the browser will break your lines at the wrong place, you can use the wbr element to add word break opportunities.">
@@ -1321,6 +1456,8 @@ li.w3schools.locked a,
 	</ul>
 </div>
 
+<!-- Z COLUMN ========== -->
+</section>
 </main>
 <hr />
 <aside style="display: inline;">
@@ -1360,9 +1497,7 @@ lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we
 <script>
 <!--
 // TODO on hover over an element name, highlight all tags which share the same primary category.
-// TODO show details about element when hovered over in a details area.
 // TODO show data-use-with when hover over or highlight the elements it is used with.
-// TODO click to lock category.  tab to category to lock highlights
 // TODO periodic table of SVG elements.
 
 const DEBUG = false;
@@ -1397,12 +1532,17 @@ function findElements(query)
 	return found;
 }
 
+function injectText(element, text)
+{
+	element.innerHTML = text;
+}
+
 // remove and add a class a class string.
 function addClass(classes = '', addClasses = '', removeRegex = /^$/)
 {
-	console.warn(`add [${classes}] + [${addClasses}] - ${removeRegex}`)
+	warn(`add [${classes}] + [${addClasses}] - ${removeRegex}`)
 	const newClasses = classes.replace(removeRegex, '').trim() + ' ' + addClasses;
-	console.warn(`add == [${newClasses}]`)
+	warn(`add == [${newClasses}]`)
 	return newClasses;
 }
 
@@ -1425,6 +1565,30 @@ function addClassToElement(element, addClasses, removeRegex)
 	}
 }
 
+function toggleClassOnElement(element, addClasses, removeRegex)
+{
+	let newClasses;
+	if (element && element.length)
+	{
+		element.forEach(function toggleClassOnOneElement(node)
+			{
+				toggleClassOnElement(node, addClasses, removeRegex);
+			});
+	}
+	else if (element)
+	{
+		if (removeRegex.test(element.className))
+		{
+			removeClassFromElement(element, addClasses, removeRegex);
+		}
+		else
+		{
+			addClassToElement(element, addClasses, removeRegex);
+		}
+		return element.className;
+	}
+}
+
 // remove a class from one or a list of elements
 function removeClassFromElement(element, removeRegex)
 {
@@ -1439,25 +1603,28 @@ function removeClassFromElement(element, removeRegex)
 	else if (element)
 	{
 		newClasses = addClass(element.className, '', removeRegex).trim();
-		console.warn(`removeClass [${element.className}] ${removeRegex} [${newClasses}]`)
+		warn(`removeClass [${element.className}] ${removeRegex} [${newClasses}]`)
 		element.className = newClasses;
 	}
 	return newClasses;
 }
 
-const lockedRegex = /\s*locked\b/g;
-const categoryRegex = /(category|mine|w3schools|locked)\s+/g;
-const categoryClassRegex = /\s*cat-[-\w]+/g;
+const topRegex = /\s*\btop\b/;
+const targetRegex = /\btarget\b/;
+const hiddenRegex = /\s*\bhidden\b/;
+const lockedRegex = /\s*\blocked\b/g;
+const categoryRegex = /(target|category|mine|w3schools|locked)\s+/g;
+const categoryClassRegex = /\s*\bcat-[-\w]+/g;
 let lockCategory;
 
 function setLock(className) {
-	lockCategory = (className || '').replace(/\s*locked\b/g, '').trim();
-	console.warn(`setLock lockCategory [${lockCategory}]`);
+	lockCategory = (className || '').replace(lockedRegex, '').trim();
+	warn(`setLock lockCategory [${lockCategory}]`);
 }
 
 function lookUp(element)
 {
-	if (element.parentElement && element.parentElement.className)
+	if (element.parentElement && targetRegex.test(element.parentElement.className))
 	{
 		return element.parentElement;
 	}
@@ -1492,19 +1659,19 @@ function onMouseEnterCategory(event)
 function lockTheCategory(event)
 {
 	const className = thisClass(event.target);
-	console.warn('lockTheCategory className', className)
+	warn('lockTheCategory className', className)
 	if (lockCategory)
 	{
-		console.warn('lockTheCategory lockCategory', lockCategory)
-		if (/\blocked\b/.test(className))
+		warn('lockTheCategory lockCategory', lockCategory)
+		if (lockedRegex.test(className))
 		{
-			console.warn('currently locked')
+			warn('currently locked')
 			removeClassFromElement(findElements('.locked'), lockedRegex);
 			setLock(undefined);
 		}
 		else
 		{
-			console.warn('not currently locked')
+			warn('not currently locked')
 			removeClassFromElement(findElements('.locked'), lockedRegex);
 			addClassToElement(lookUp(event.target), 'locked');
 			setLock(highlightCategory(event));
@@ -1555,12 +1722,65 @@ function onKeyCategory(event)
 
 function onMouseLeaveCategory(event)
 {
-	console.warn(`leave lock:[${lockCategory}]`, thisClass(event.target))
+	warn(`leave lock:[${lockCategory}]`, thisClass(event.target))
 	if (!lockCategory)
 	{
 		const element = lookUp(event.target);
 		removeClassFromElement(document.body, categoryClassRegex);
 		//removeClassFromElement(element, lockedRegex);
+	}
+}
+
+const THROTTLE = 300;
+let lastMouseOver = Date.now() - THROTTLE;
+
+function onMouseEnterElement(event)
+{
+	const info = document.querySelector('#section-description');
+	if (info)
+	{
+		// console.warn('info', info)
+		removeClassFromElement(info, hiddenRegex);
+		const element = lookUp(event.target);
+		// console.warn('element', element)
+		// console.warn('find a', element.querySelector('a'))
+		const name = element.querySelector('a').innerText;
+		const title = element.getAttribute('title');
+		// console.warn(`title [${title}]`)
+		const label = title.split(' - [')[0].trim();
+		// console.warn(`name [${name}]`)
+		// console.warn(`label [${label}]`)
+		const description = title.replace(/^.+?\]\s*(.+)$/, '$1');
+		const categories = element.getAttribute('data-category').replace(',', ', ');
+		const associates = element.getAttribute('data-use-with').split(',').map(function wrapTag(name) {
+			return `&lt;${name}&gt;`
+		}).join(' ').replace(/^\s*&lt;&gt;\s*$/, '');
+
+		// console.warn(`associates [${associates}]`)
+		injectText(info.querySelector('h4'), label === name ? label : `${name} - ${label}`);
+		injectText(info.querySelector('#element-categories'), `Categories: ${categories}`);
+		injectText(info.querySelector('#element-associates'), associates ? `Use with: ${associates}` : '');
+		injectText(info.querySelector('#element-description'), description);
+	}
+}
+
+function onMouseLeaveElement(event)
+{
+	const info = document.querySelector('#section-description');
+	if (info)
+	{
+		addClassToElement(info, 'hidden', hiddenRegex);
+		//removeClassFromElement(info, topRegex);
+	}
+}
+
+function onMouseOverDescription(event)
+{
+	if (Date.now() > lastMouseOver + THROTTLE)
+	{
+		console.warn('over', lastMouseOver)
+		toggleClassOnElement(event.target, 'top', topRegex);
+		lastMouseOver = Date.now();
 	}
 }
 
@@ -1581,6 +1801,25 @@ function main()
 		element.addEventListener("keyup", onKeyUpCategory);
 		element.addEventListener("focusout", onMouseLeaveCategory);
 	});
+
+	const elements = findElements('.element');
+	elements.forEach(function addElementMouseEvents(element)
+	{
+		if (HOVER)
+		{
+			element.addEventListener("mouseenter", onMouseEnterElement);
+			element.addEventListener("mouseleave", onMouseLeaveElement);
+		}
+		element.addEventListener("focusin", onMouseEnterElement);
+		element.addEventListener("focusout", onMouseLeaveElement);
+	});
+
+	const description = findElement('#section-description');
+	if (description)
+	{
+		description.addEventListener("mouseover", onMouseOverDescription);
+	}
+
 	const categoryNav = document.getElementById('category-nav');
 	if (categoryNav)
 	{
