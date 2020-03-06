@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta http-equiv="refresh" content="70"><!-- while developing -->
+<!-- <meta http-equiv="refresh" content="70"> while developing -->
 <meta name="application-name" content="Interactive Periodic Table of HTML5 Elements">
 <meta name="keywords" content="Periodic, Table, HTML5, Element">
 <base href="https://www.w3schools.com/TAGS/" target="_blank">
@@ -98,9 +98,17 @@ ul {
 	opacity: 0.2;
 }
 
+.lock-state {
+	opacity: 0;
+}
+.locked .lock-state {
+	opacity: 1;
+}
+
 li.mine a:focus,
 li.mine a:hover,
 li.mine.locked,
+li.mine.locked a,
 .cat-interaction [data-category*="interaction"] a,
 .cat-semantic [data-category*="semantic"] a,
 .cat-media [data-category*="media"] a,
@@ -114,6 +122,7 @@ li.mine.locked,
 li.w3schools a:focus,
 li.w3schools a:hover,
 li.w3schools.locked,
+li.w3schools.locked a,
 .cat-links [data-category*="links"] a,
 .cat-formatting [data-category*="formatting"] a,
 .cat-styles [data-category*="styles"] a,
@@ -139,7 +148,7 @@ li.w3schools.locked,
 			<p><i>Javascript is currently turned off or not supported, you cannot hover over categories to see which elements belong to which category.</i></p>
 		</noscript>
 		<nav id="category-nav" class="hidden" aria-label="element category">
-			<h2>Categories</h2>
+			<h2>Categories<span class="lock-state"><sub><small> locked</small></sub></span></h2>
 			<ul>
 				<li class="category mine cat-interaction"><a href="#">interaction</a></li>
 				<li class="category mine cat-semantic"><a href="#">semantic</a></li>
@@ -1357,6 +1366,7 @@ lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we
 // TODO periodic table of SVG elements.
 
 const DEBUG = false;
+const HOVER = true;
 
 const KEY_TAB = 9;
 const KEY_SHIFT_TAB = 16;
@@ -1390,7 +1400,10 @@ function findElements(query)
 // remove and add a class a class string.
 function addClass(classes = '', addClasses = '', removeRegex = /^$/)
 {
-	return classes.replace(removeRegex, '').trim() + ' ' + addClasses;
+	console.warn(`add [${classes}] + [${addClasses}] - ${removeRegex}`)
+	const newClasses = classes.replace(removeRegex, '').trim() + ' ' + addClasses;
+	console.warn(`add == [${newClasses}]`)
+	return newClasses;
 }
 
 // remove and add a class to one or a list of elements
@@ -1426,14 +1439,21 @@ function removeClassFromElement(element, removeRegex)
 	else if (element)
 	{
 		newClasses = addClass(element.className, '', removeRegex).trim();
+		console.warn(`removeClass [${element.className}] ${removeRegex} [${newClasses}]`)
 		element.className = newClasses;
 	}
 	return newClasses;
 }
 
-const categoryRegex = /(category|mine|w3schools)\s+/g;
+const lockedRegex = /\s*locked\b/g;
+const categoryRegex = /(category|mine|w3schools|locked)\s+/g;
 const categoryClassRegex = /\s*cat-[-\w]+/g;
 let lockCategory;
+
+function setLock(className) {
+	lockCategory = (className || '').replace(/\s*locked\b/g, '').trim();
+	console.warn(`setLock lockCategory [${lockCategory}]`);
+}
 
 function lookUp(element)
 {
@@ -1464,25 +1484,36 @@ function onMouseEnterCategory(event)
 	{
 		const element = lookUp(event.target);
 		const category = highlightCategory(event);
-		removeClassFromElement(findElement('.locked'), 'locked');
-		addClassToElement(element, 'locked', 'locked');
+		removeClassFromElement(findElement('.locked'), lockedRegex);
+		addClassToElement(element, 'locked', lockedRegex);
 	}
 }
 
 function lockTheCategory(event)
 {
 	const className = thisClass(event.target);
-	console.warn('className', className)
-	if (/\blocked\b/.test(className))
+	console.warn('lockTheCategory className', className)
+	if (lockCategory)
 	{
-		removeClassFromElement(findElements('.locked'), 'locked');
-		addClassToElement(event.target, 'locked');
-		lockCategory = highlightCategory(event);
+		console.warn('lockTheCategory lockCategory', lockCategory)
+		if (/\blocked\b/.test(className))
+		{
+			console.warn('currently locked')
+			removeClassFromElement(findElements('.locked'), lockedRegex);
+			setLock(undefined);
+		}
+		else
+		{
+			console.warn('not currently locked')
+			removeClassFromElement(findElements('.locked'), lockedRegex);
+			addClassToElement(lookUp(event.target), 'locked');
+			setLock(highlightCategory(event));
+		}
 	}
 	else
 	{
-		removeClassFromElement(findElements('.locked'), 'locked');
-		lockCategory = undefined;
+			addClassToElement(lookUp(event.target), 'locked', lockedRegex);
+			setLock(highlightCategory(event));
 	}
 }
 
@@ -1524,12 +1555,12 @@ function onKeyCategory(event)
 
 function onMouseLeaveCategory(event)
 {
-	console.warn(`leave lock:${lockCategory}`, thisClass(event.target))
+	console.warn(`leave lock:[${lockCategory}]`, thisClass(event.target))
 	if (!lockCategory)
 	{
 		const element = lookUp(event.target);
 		removeClassFromElement(document.body, categoryClassRegex);
-		removeClassFromElement(element, 'locked');
+		//removeClassFromElement(element, lockedRegex);
 	}
 }
 
@@ -1538,14 +1569,17 @@ function main()
 	const categories = findElements('nav .category');
 	categories.forEach(function addCategoryMouseEvents(element)
 	{
-		element.addEventListener("mouseenter", onMouseEnterCategory);
+		if (HOVER)
+		{
+			element.addEventListener("mouseenter", onMouseEnterCategory);
+			element.addEventListener("mouseleave", onMouseLeaveCategory);
+		}
 		element.addEventListener("focusin", onMouseEnterCategory);
 		element.addEventListener("click", onMouseClickCategory);
 		element.addEventListener("keydown", onKeyCategory);
 		element.addEventListener("keypress", onKeyCategory);
 		element.addEventListener("keyup", onKeyUpCategory);
 		element.addEventListener("focusout", onMouseLeaveCategory);
-		element.addEventListener("mouseleave", onMouseLeaveCategory);
 	});
 	const categoryNav = document.getElementById('category-nav');
 	if (categoryNav)
