@@ -89,9 +89,15 @@ ul {
 	color: #6bbc70;
 	display: inline-table;
 }
+.reveal {
+	display: block;
+	visibility: visible;
+	opacity: 0;
+}
 .hidden {
 	display: none;
 	visibility: hidden;
+	opacity 0;
 }
 .nobr { white-space: nowrap }
 .todo {
@@ -144,7 +150,6 @@ li.w3schools.locked a,
 	border: 1px solid;
 	padding: 3px 20px;
 	margin: 3px;
-	opacity: 1;
 }
 .element-description.top {
 	top: 16px;
@@ -1496,17 +1501,34 @@ lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we
 
 <script>
 <!--
-// TODO on hover over an element name, highlight all tags which share the same primary category.
 // TODO show data-use-with when hover over or highlight the elements it is used with.
 // TODO periodic table of SVG elements.
 
 const DEBUG = false;
+const DEBUG_DELAY = 1;
 const HOVER = true;
 
 const KEY_TAB = 9;
 const KEY_SHIFT_TAB = 16;
 const KEY_SPACE = 32;
 const KEY_ENTER = 13;
+
+const topRegex = /\s*\btop\b/;
+const targetRegex = /\btarget\b/;
+const hiddenRegex = /\s*\bhidden\b/;
+const revealRegex = /\s*\b(hidden|reveal)\b/;
+const lockedRegex = /\s*\blocked\b/g;
+const categoryRegex = /(target|category|mine|w3schools|locked)\s+/g;
+const categoryClassRegex = /\s*\bcat-[-\w]+/g;
+
+// delay showing tooltip initially so it can be moved to top/bottom while invisible without flashing at the user.
+const REVEAL_DELAY = 50 * DEBUG_DELAY;
+// delay closing the tooltip so it doesn't flash as user moves from one element name to another rapidly.
+const INFO_DELAY = 500 * DEBUG_DELAY;
+
+let lockCategory;
+let mouseOverElement;
+let leaveDelayTimer;
 
 function warn(...args)
 {
@@ -1609,14 +1631,6 @@ function removeClassFromElement(element, removeRegex)
 	return newClasses;
 }
 
-const topRegex = /\s*\btop\b/;
-const targetRegex = /\btarget\b/;
-const hiddenRegex = /\s*\bhidden\b/;
-const lockedRegex = /\s*\blocked\b/g;
-const categoryRegex = /(target|category|mine|w3schools|locked)\s+/g;
-const categoryClassRegex = /\s*\bcat-[-\w]+/g;
-let lockCategory;
-
 function setLock(className) {
 	lockCategory = (className || '').replace(lockedRegex, '').trim();
 	warn(`setLock lockCategory [${lockCategory}]`);
@@ -1646,7 +1660,6 @@ function highlightCategory(event)
 
 function onMouseEnterCategory(event)
 {
-	// console.warn('enter', thisClass(event.target))
 	if (!lockCategory)
 	{
 		const element = lookUp(event.target);
@@ -1686,7 +1699,6 @@ function lockTheCategory(event)
 
 function onMouseClickCategory(event)
 {
-  // console.warn('click', thisClass(event.target), event.which)
 	event.preventDefault();
 	lockTheCategory(event);
 }
@@ -1700,7 +1712,6 @@ function eatEvent(event)
 
 function onKeyUpCategory(event)
 {
-	// console.warn('keyup', thisClass(event.target), event.which)
 	if (event.which !== KEY_TAB && event.which !== KEY_SHIFT_TAB)
 	{
 		eatEvent(event);
@@ -1713,7 +1724,6 @@ function onKeyUpCategory(event)
 
 function onKeyCategory(event)
 {
-	// console.warn('keyup', thisClass(event.target), event.which)
 	if (event.which !== KEY_TAB && event.which !== KEY_SHIFT_TAB)
 	{
 		eatEvent(event);
@@ -1731,57 +1741,68 @@ function onMouseLeaveCategory(event)
 	}
 }
 
-const THROTTLE = 300;
-let lastMouseOver = Date.now() - THROTTLE;
-
 function onMouseEnterElement(event)
 {
+	mouseOverElement = true;
 	const info = document.querySelector('#section-description');
 	if (info)
 	{
-		// console.warn('info', info)
-		removeClassFromElement(info, hiddenRegex);
 		const element = lookUp(event.target);
-		// console.warn('element', element)
-		// console.warn('find a', element.querySelector('a'))
 		const name = element.querySelector('a').innerText;
 		const title = element.getAttribute('title');
-		// console.warn(`title [${title}]`)
 		const label = title.split(' - [')[0].trim();
-		// console.warn(`name [${name}]`)
-		// console.warn(`label [${label}]`)
 		const description = title.replace(/^.+?\]\s*(.+)$/, '$1');
 		const categories = element.getAttribute('data-category').replace(',', ', ');
 		const associates = element.getAttribute('data-use-with').split(',').map(function wrapTag(name) {
 			return `&lt;${name}&gt;`
 		}).join(' ').replace(/^\s*&lt;&gt;\s*$/, '');
 
-		// console.warn(`associates [${associates}]`)
 		injectText(info.querySelector('h4'), label === name ? label : `${name} - ${label}`);
 		injectText(info.querySelector('#element-categories'), `Categories: ${categories}`);
 		injectText(info.querySelector('#element-associates'), associates ? `Use with: ${associates}` : '');
 		injectText(info.querySelector('#element-description'), description);
+
+		if (!leaveDelayTimer)
+		{
+			addClassToElement(info, 'reveal', revealRegex);
+			setTimeout(function revealInfo()
+			{
+				removeClassFromElement(info, revealRegex);
+			}, REVEAL_DELAY);
+		}
+	}
+}
+
+function hideElementInfo()
+{
+	const info = document.querySelector('#section-description');
+	if (info)
+	{
+			addClassToElement(info, 'hidden', hiddenRegex);
+			removeClassFromElement(info, topRegex);
 	}
 }
 
 function onMouseLeaveElement(event)
 {
-	const info = document.querySelector('#section-description');
-	if (info)
+	mouseOverElement = false;
+	if (leaveDelayTimer)
 	{
-		addClassToElement(info, 'hidden', hiddenRegex);
-		//removeClassFromElement(info, topRegex);
+		clearTimeout(leaveDelayTimer);
 	}
+	leaveDelayTimer = setTimeout(function hideInfo()
+	{
+		leaveDelayTimer = undefined;
+		if (!mouseOverElement)
+		{
+			hideElementInfo();
+		}
+	}, INFO_DELAY);
 }
 
-function onMouseOverDescription(event)
+function onMouseEnterDescription(event)
 {
-	if (Date.now() > lastMouseOver + THROTTLE)
-	{
-		console.warn('over', lastMouseOver)
-		toggleClassOnElement(event.target, 'top', topRegex);
-		lastMouseOver = Date.now();
-	}
+	toggleClassOnElement(event.target, 'top', topRegex);
 }
 
 function main()
@@ -1817,7 +1838,7 @@ function main()
 	const description = findElement('#section-description');
 	if (description)
 	{
-		description.addEventListener("mouseover", onMouseOverDescription);
+		description.addEventListener("mouseenter", onMouseEnterDescription);
 	}
 
 	const categoryNav = document.getElementById('category-nav');
