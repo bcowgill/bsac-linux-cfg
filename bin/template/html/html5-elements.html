@@ -71,8 +71,12 @@ a:hover {
 }
 h1 {
 	text-align: center;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
 }
 h2 {
+	-webkit-margin-before: 0.4em;
+	-webkit-margin-after: 0.4em;
 	font-family: "Times New Roman", Times, serif;
 }
 nav li {
@@ -81,9 +85,17 @@ nav li {
 nav li:hover,nav a:focus {
 	text-decoration: underline;
 }
+hr {
+	color: white;
+}
+.full-width {
+	width: 100%;
+}
 ul {
 	list-style-type: none;
 	-webkit-padding-start: 0;
+	-webkit-margin-before: 0.4em;
+	-webkit-margin-after: 0.4em;
 }
 .column {
 	color: #6bbc70;
@@ -158,19 +170,21 @@ li.w3schools.locked a,
 .element-description.top {
 	top: 16px;
 }
-/*
-header,nav,section {
-	max-width: max-content;
-	outline: 1px solid rebeccapurple;
+/* http://zuga.net/articles/css-flexbox-properties/ */
+.flex-container {
+	display: flex;
+	flex-direction: column;
 }
-*/
+.flex-item {
+	align-self: center;
+}
 
 </style>
 </head>
 
 <body class="sans-serif-font cat-none">
-	<header id="header" class="serif-font">
-		<h1 aria-describedby="meta-description">
+	<header id="header" class="serif-font flex-container">
+		<h1 aria-describedby="meta-description" class="flex-item">
 			<a href="default.asp">
 				PERIODIC TABLE OF HTML5 ELEMENTS
 			</a>
@@ -178,7 +192,7 @@ header,nav,section {
 		<noscript>
 			<p><i>Javascript is currently turned off or not supported, you cannot hover over categories to see which elements belong to which category.</i></p>
 		</noscript>
-		<nav id="category-nav" class="hidden" role="navigation" aria-label="Element Category">
+		<nav id="category-nav" class="hidden flex-item" role="navigation" aria-label="Element Category">
 			<h2>Categories<span class="lock-state"><sub><small> locked</small></sub></span></h2>
 			<ul>
 				<li class="target category mine cat-semantic"><a href="#">semantic</a></li>
@@ -200,11 +214,11 @@ header,nav,section {
 				<li class="target category w3schools cat-links"><a href="#">links</a></li>
 			</ul>
 		</nav>
-		<hr />
+		<hr id="header-rule" class="flex-item"/>
 	</header>
-	<main id="main" role="main">
+	<main id="main" role="main" class="flex-container">
 
-<section id="section-al" role="contentinfo" aria-label="HTML5 Elements A through L">
+<section id="section-al" role="contentinfo" aria-label="HTML5 Elements A through L" class="flex-item">
 <!-- A COLUMN ========== -->
 <div id="A" class="column">
 	<h2>A</h2>
@@ -920,7 +934,7 @@ header,nav,section {
 </div>
 </section>
 
-<section id="section-mz" role="contentinfo" aria-label="HTML5 Elements M through Z">
+<section id="section-mz" role="contentinfo" aria-label="HTML5 Elements M through Z" class="flex-item">
 <!-- M COLUMN ========== -->
 <div id="M" class="column">
 	<h2>M</h2>
@@ -1578,7 +1592,7 @@ header,nav,section {
 
 <!-- Z COLUMN ========== -->
 </section>
-<hr />
+<hr id="footer-rule" class="full-width" />
 
 <section id="section-description" class="element-description hidden" role="contentinfo" aria-label="HTML5 Element Information">
 <h4>a - anchor</h4>
@@ -1886,6 +1900,7 @@ function onMouseEnterCategory(event)
 		removeClassFromElement(findElement('.locked'), lockedRegex);
 		addClassToElement(element, 'locked', lockedRegex);
 	}
+	setRulerWidths();
 }
 
 function onMouseClickCategory(event)
@@ -1903,6 +1918,7 @@ function onMouseLeaveCategory(event)
 		removeClassFromElement(document.body, categoryClassRegex);
 		removeClassFromElement(element, lockedRegex);
 	}
+	setRulerWidths();
 }
 
 function onKeyUpCategory(event)
@@ -1955,6 +1971,16 @@ function onMouseEnterDescription(event)
 	toggleClassOnElement(event.target, 'top', topRegex);
 }
 
+function setRulerWidths()
+{
+	const header = findElement('#section-al');
+	const rulerTop = findElement('#header-rule');
+	if (header && rulerTop)
+	{
+		rulerTop.setAttribute('style', `width: ${header.clientWidth}px`);
+	}
+}
+
 function main()
 {
 	const categories = findElements('nav .category');
@@ -1996,6 +2022,9 @@ function main()
 	{
 		removeClassFromElement(categoryNav, 'hidden');
 	}
+
+	window.addEventListener('resize', setRulerWidths);
+	setRulerWidths();
 }
 
 main();
