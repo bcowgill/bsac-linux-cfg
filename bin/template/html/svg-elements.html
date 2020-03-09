@@ -4,11 +4,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <!-- <meta http-equiv="refresh" content="70"> while developing -->
-<meta name="application-name" content="Interactive Periodic Table of HTML5 Elements">
-<meta name="keywords" content="Periodic, Table, HTML5, Element">
-<base href="https://www.w3schools.com/TAGS/" target="_blank">
-<title>PERIODIC TABLE OF HTML5 ELEMENTS</title>
-<meta id="meta-description" name="description" content="A reference of HTML5 elements somewhat reminiscent of the periodic table of the elements from chemistry.">
+<meta name="application-name" content="Interactive Periodic Table of SVG Elements">
+<meta name="keywords" content="Periodic, Table, SVG, Element">
+<base href="https://www.w3schools.com/graphics/" target="_blank">
+<title>PERIODIC TABLE OF SVG ELEMENTS</title>
+<meta id="meta-description" name="description" content="A reference of SVG elements somewhat reminiscent of the periodic table of the elements from chemistry.">
 <meta name="author" content="Brent S.A. Cowgill">
 <style>
 /*
@@ -115,12 +115,7 @@ ul {
 .todo {
 	opacity: 0.2;
 }
-.wbr-break,.nbsp-break,.hyphen-break {
-	color: red;
-}
-.space-break,.nbhy-break,.nobr-break,.no-break {
-	color: blue;
-}
+
 .lock-state {
 	opacity: 0;
 }
@@ -183,14 +178,6 @@ li.w3schools.locked a,
 .flex-item {
 	align-self: center;
 }
-.resizer {
-	border: 1px solid;
-	resize: horizontal;
-	overflow: auto;
-}
-footer {
-	min-height: 5em;
-}
 
 </style>
 </head>
@@ -198,8 +185,8 @@ footer {
 <body class="sans-serif-font cat-none">
 	<header id="header" class="serif-font flex-container">
 		<h1 aria-describedby="meta-description" class="flex-item">
-			<a href="default.asp">
-				PERIODIC TABLE OF HTML5 ELEMENTS
+			<a href="svg_intro.asp">
+				PERIODIC TABLE OF SVG ELEMENTS
 			</a>
 		</h1>
 		<noscript>
@@ -231,7 +218,7 @@ footer {
 	</header>
 	<main id="main" role="main" class="flex-container">
 
-<section id="section-al" role="contentinfo" aria-label="HTML5 Elements A through L" class="flex-item">
+<section id="section-al" role="contentinfo" aria-label="SVG Elements A through L" class="flex-item">
 <!-- A COLUMN ========== -->
 <div id="A" class="column">
 	<h2>A</h2>
@@ -947,7 +934,7 @@ footer {
 </div>
 </section>
 
-<section id="section-mz" role="contentinfo" aria-label="HTML5 Elements M through Z" class="flex-item">
+<section id="section-mz" role="contentinfo" aria-label="SVG Elements M through Z" class="flex-item">
 <!-- M COLUMN ========== -->
 <div id="M" class="column">
 	<h2>M</h2>
@@ -1607,7 +1594,7 @@ footer {
 </section>
 <hr id="footer-rule" class="full-width" />
 
-<section id="section-description" class="element-description hidden" role="contentinfo" aria-label="HTML5 Element Information">
+<section id="section-description" class="element-description hidden" role="contentinfo" aria-label="SVG Element Information">
 <h4>a - anchor</h4>
 <p id="element-categories">cateory,list</p>
 <p id="element-associates">Use with: &lt;elements&gt;</p>
@@ -1616,38 +1603,15 @@ footer {
 
 </main>
 
-<aside id="#aside-examples" style="display: inline;">
+<aside style="display: inline;">
 <details>
 <summary>Selected examples...</summary>
-
-<aside id="#aside-examples-breaking" class="resizer">
-<h3> wbr,.nobr example (and non-breaking-space, non-breaking-hyphen)</h3>
-<p>
-<span class="no-break" title="just a long work with no hints for break positoins">pneumoultramicroscopicsilicovolcanoconiosis</span>
-<span class="wbr-break" title="uses wbr element to add optional word breaks">Super<wbr />cali<wbr />fragi<wbr />listic<wbr />expiali<wbr />docious.</span>
-<span class="space-break" title="uses normal spaces to break between words">Even though the sound of it</span>
-<span class="nbsp-break" title="uses nbsp entity to keep spaced text together">is&nbsp;something&nbsp;quite&nbsp;atrocious.</span>
-<span class="nbhy-break" title="uses unicode dash entity to keep hyphenated word unbroken">lets&#8209;keep&#8209;it&#8209;together&#8209;guys!</span>
-<span class="hyphen-break" title="uses normal hyphens to allow word breaks as needed">lets-keep-it-together-if-we-can.</span>
-<span class="nobr nobr-break" title="uses CSS white-space nowrap to keep spaced text together"><b>F</b>ortune <b>F</b>avours <b>T</b>he <b>B</b>old!</span>
-<p>
-(Use the resize handle to vary the width of this example to see how breaking and non-breaking words, hyphens and spaces work.)
-</p>
-</p>
-<!--
-		 React component ideas:
-		 NoBr - span.nobr or style nowrap to prevent line break between markup and text
-		 Wbr - automatically add wbr on capital/lowcase transitions
-		 HyNoBr - convert hyphens in text to unicode non-breaking-hyphens
--->
-</aside>
-
 <h3> bdi/bdo example</h3>
 <ul>
   <li>User <bdi>hrefs</bdi>: 60 points</li>
   <li>User <bdi>jdoe</bdi>: 80 points</li>
   <li>User <bdi>إيان</bdi>: 90 points</li>
-  <li title="no use of bdi or bdo elements gets the colon position wrong.">User إيان: 90 points</li>
+  <li>User إيان: 90 points</li>
 </ul>
 <p>s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s</p>
 <p><bdo dir="rtl">s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s </bdo></p>
@@ -1659,9 +1623,20 @@ footer {
   漢 <rp>(</rp><rt>Kan</rt><rp>)</rp>
   字 <rp>(</rp><rt>ji</rt><rp>)</rp>
 </ruby>
+<h3> wbr,.nobr example (and non-breaking-space, non-breaking-hyphen)</h3>
+<p>
+Super<wbr />cali<wbr />fragi<wbr />listic<wbr />expiali<wbr />docious.  Even though the sound of it is&nbsp;something&nbsp;quite&nbsp;atrocious.
+lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we-can. <span class="nobr"><b>F</b>ortune <b>F</b>avours <b>T</b>he <b>B</b>old!</span>
+</p>
+<!--
+		 React component ideas:
+		 NoBr - span.nobr or style nowrap to prevent line break between markup and text
+		 Wbr - automatically add wbr on capital/lowcase transitions
+		 HyNoBr - convert hyphens in text to unicode non-breaking-hyphens
+-->
 </details>
 </aside>
-<footer id="footer"/>
+
 <script>
 <!--
 // TODO periodic table of SVG elements.
