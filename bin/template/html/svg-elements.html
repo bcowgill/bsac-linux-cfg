@@ -1603,7 +1603,15 @@ li.mdn.locked a,
 <summary>Selected examples...</summary>
 <h3>animate, animateMotion, animateTransform example</h3>
 <svg width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-  <path fill="none" stroke="lightgrey"
+	<animateTransform
+		 attributeName="transform"
+		 attributeType="XML"
+     type="rotate"
+     from="360 0 0"
+     to="0 0 0"
+     dur="10s"
+     repeatCount="indefinite"/>
+  <path fill="none" stroke="yellow"
     d="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
 
 	<rect x="-5" y="-5" rx="2" width="10" height="10" fill="red">
