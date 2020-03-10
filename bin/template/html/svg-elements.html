@@ -6,7 +6,7 @@
 <!-- <meta http-equiv="refresh" content="70"> while developing -->
 <meta name="application-name" content="Interactive Periodic Table of SVG Elements">
 <meta name="keywords" content="Periodic, Table, SVG, Element">
-<base href="https://www.w3schools.com/graphics/" target="_blank">
+<base href="https://developer.mozilla.org/en-US/docs/Web/SVG/" target="_blank">
 <title>PERIODIC TABLE OF SVG ELEMENTS</title>
 <meta id="meta-description" name="description" content="A reference of SVG elements somewhat reminiscent of the periodic table of the elements from chemistry.">
 <meta name="author" content="Brent S.A. Cowgill">
@@ -100,6 +100,13 @@ ul {
 .column {
 	color: #6bbc70;
 	display: inline-table;
+	display: none;
+	visibility: hidden;
+}
+.column.visible {
+	color: #6bbc70;
+	display: inline-table !important;
+	visibility: visible !important;
 }
 .reveal {
 	display: block;
@@ -137,18 +144,28 @@ li.mine.locked a,
 	color: red;
 	font-weight: 600;
 }
-li.w3schools a:focus,
-li.w3schools a:hover,
-li.w3schools.locked,
-li.w3schools.locked a,
-.cat-links [data-category*="links"] a,
-.cat-formatting [data-category*="formatting"] a,
-.cat-styles [data-category*="styles"] a,
-.cat-audio-video [data-category*="audio/video"] a,
-.cat-images [data-category*="images"] a,
+li.mdn a:focus,
+li.mdn a:hover,
+li.mdn.locked,
+li.mdn.locked a,
+.cat-graphics [data-category*="graphics"] a,
+.cat-reference [data-category*="graphics reference"] a,
+.cat-animation [data-category*="animation"] a,
+.cat-container [data-category*="container"] a,
+.cat-gradient [data-category*="gradient"] a,
+.cat-filter [data-category*="filter"] a,
 .cat-basic [data-category*="basic"] a,
-.cat-programming [data-category*="programming"] a,
-.cat-forms-input [data-category*="forms/input"] a {
+.cat-font [data-category*="font"] a,
+.cat-never-render [data-category*="never rendered"] a,
+.cat-light-source [data-category*="light source"] a,
+.cat-paint-server [data-category*="paint server"] a,
+.cat-renderable [data-category*="renderable"] a,
+.cat-shape [data-category*="shape"] a,
+.cat-structure [data-category*="structure"] a,
+.cat-text-content [data-category*="text content"] a,
+.cat-text-child [data-category*="text child"] a,
+.cat-miscellaneous [data-category*="miscellaneous"] a,
+.cat-descriptive [data-category*="descriptive"] a {
 	color: magenta;
 	font-weight: 600;
 }
@@ -185,7 +202,7 @@ li.w3schools.locked a,
 <body class="sans-serif-font cat-none">
 	<header id="header" class="serif-font flex-container">
 		<h1 aria-describedby="meta-description" class="flex-item">
-			<a href="svg_intro.asp">
+			<a href="Element">
 				PERIODIC TABLE OF SVG ELEMENTS
 			</a>
 		</h1>
@@ -195,23 +212,33 @@ li.w3schools.locked a,
 		<nav id="category-nav" class="hidden flex-item" role="navigation" aria-label="Element Category">
 			<h2>Categories<span class="lock-state"><sub><small> locked</small></sub></span></h2>
 			<ul>
-				<li class="target category mine cat-semantic"><a href="#">semantic</a></li>
 				<li class="target category mine cat-interaction"><a href="#">interaction</a></li>
+<!--				<li class="target category mine cat-semantic"><a href="#">semantic</a></li>
 				<li class="target category mine cat-media"><a href="#">media</a></li>
 				<li class="target category mine cat-typography"><a href="#">typography</a></li>
 				<li class="target category mine cat-layout"><a href="#">layout</a></li>
 				<li class="target category mine cat-language"><a href="#">language</a></li>
 				<li class="target category mine cat-meta"><a href="#">meta</a></li>
+-->
 			</ul>
 			<ul>
-				<li class="target category w3schools cat-formatting"><a href="#">formatting</a></li>
-				<li class="target category w3schools cat-styles"><a href="#">styles</a></li>
-				<li class="target category w3schools cat-basic"><a href="#">basic</a></li>
-				<li class="target category w3schools cat-forms-input"><a href="#">forms/input</a></li>
-				<li class="target category w3schools cat-images"><a href="#">images</a></li>
-				<li class="target category w3schools cat-programming"><a href="#">programming</a></li>
-				<li class="target category w3schools cat-audio-video"><a href="#">audio/video</a></li>
-				<li class="target category w3schools cat-links"><a href="#">links</a></li>
+				<li class="target category mdn cat-animation"><a href="#">animation</a></li>
+				<li class="target category mdn cat-basic"><a href="#">basic</a></li>
+				<li class="target category mdn cat-container"><a href="#">container</a></li>
+				<li class="target category mdn cat-descriptive"><a href="#">descriptive</a></li>
+				<li class="target category mdn cat-filter"><a href="#">filter</a></li>
+				<li class="target category mdn cat-font"><a href="#">font</a></li>
+				<li class="target category mdn cat-gradient"><a href="#">gradient</a></li>
+				<li class="target category mdn cat-graphics"><a href="#">graphics</a></li>
+				<li class="target category mdn cat-reference"><a href="#">graphics reference</a></li>
+				<li class="target category mdn cat-light-source"><a href="#">light source</a></li>
+				<li class="target category mdn cat-never-render"><a href="#">never rendered</a></li>
+				<li class="target category mdn cat-paint-server"><a href="#">paint server/a></li>
+				<li class="target category mdn cat-renderable"><a href="#">renderable</a></li>
+				<li class="target category mdn cat-shape"><a href="#">shape</a></li>
+				<li class="target category mdn cat-text-content"><a href="#">text content</a></li>
+				<li class="target category mdn cat-text-child"><a href="#">text child</a></li>
+				<li class="target category mdn cat-miscellaneous"><a href="#">miscellaneous</a></li>
 			</ul>
 		</nav>
 		<hr id="header-rule" class="flex-item"/>
@@ -220,85 +247,52 @@ li.w3schools.locked a,
 
 <section id="section-al" role="contentinfo" aria-label="SVG Elements A through L" class="flex-item">
 <!-- A COLUMN ========== -->
-<div id="A" class="column">
+<div id="A" class="column visible">
 	<h2>A</h2>
 	<ul>
 		<!-- tooltip title= appears right under the mouse (chrome) so add a tab at start to make it visible-->
 		<li
 			class="target element"
 			data-element="a"
-			data-category="interaction,links"
+			data-category="interaction,container"
 			data-use-with=""
-			title="&#9;anchor - [interaction,links] when clicked takes user to content on the page or on another page.">
+			title="&#9;anchor - [interaction,container] creates a hyperlink to other web pages, files, locations in the same page, email addresses, or any other URL. it is very similar to HTML’s a element.  SVG's a element is a container, which means you can create a link around text (like in HTML) but also around any shape.">
 			<a
-				href="tag_a.asp">
+				href="Element/a">
 				a
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="abbr"
-			data-category="semantic,formatting"
-			data-use-with=""
-			title="&#9;abbreviation - [semantic,formatting] provides full spelling of an abbreviation.">
+			data-element="animate"
+			data-category=",animation"
+			data-use-with="circle,ellipse,line,polygon,polyline,rect"
+			title="&#9;animate attribute - [,animation] provides a way to animate an attribute of an element over time.">
 			<a
-				href="tag_abbr.asp">
-				abbr
+				href="Element/animate">
+				animate
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="article"
-			data-category="semantic,styles"
-			data-use-with="h1,h2,h3,h4,h5,h6,p"
-			title="&#9;article - [semantic,styles] independent, self-contained content, can be distributed independently from the rest of the site.">
+			data-element="animateMotion"
+			data-category=",animation"
+			data-use-with="circle,ellipse,line,polygon,polyline,rect,desc,metadata,title,mpath"
+			title="&#9;animate motion - [,animation] define how an element moves along a motion path.">
 			<a
-				href="tag_article.asp">
-				article
+				href="Element/animateMotion">
+				animateMotion
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="aside"
-			data-category="semantic,styles"
-			data-use-with="h1,h2,h3,h4,h5,h6,p"
-			title="&#9;aside - [semantic,styles] defines some content aside from the content it is placed in.  The aside content should be related to the surrounding content.">
+			data-element="animateTransform"
+			data-category=",animation"
+			data-use-with="circle,ellipse,line,polygon,polyline,rect,desc,metadata,title"
+			title="&#9;animate transform - [,animation] animates a transformation attribute on its target element, thereby allowing animations to control translation, scaling, rotation, and/or skewing..">
 			<a
-				href="tag_aside.asp">
-				aside
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="address"
-			data-category="semantic,formatting"
-			data-use-with="body,article,footer,br,a"
-			title="&#9;address - [semantic,formatting] defines contact information for the author/owner of a document/article.">
-			<a
-				href="tag_address.asp">
-				address
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="audio"
-			data-category="media,audio/video"
-			data-use-with="source,track"
-			title="&#9;audio - [media,audio/video] defines sound, such as music or other audio streams.">
-			<a
-				href="tag_audio.asp">
-				audio
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="area"
-			data-category="interaction,images"
-			data-use-with="img,map"
-			title="&#9;area - [interaction,images] defines a clickable area inside an image-map.">
-			<a
-				href="tag_area.asp">
-				area
+				href="Element/animateTransform">
+				animateTransform
 			</a>
 		</li>
 	</ul>
@@ -1364,6 +1358,7 @@ li.w3schools.locked a,
 			title="&#9;scalable vector graphics - [media,images,interaction] defines a container for scalable vector graphics.  allows for drawing paths, boxes, circles, text, and graphic images.">
 			<!--
 				SVG Reference: https://www.w3schools.com/graphics/svg_reference.asp
+					https://developer.mozilla.org/en-US/docs/Web/SVG/Element
 				SVG Tutorial: https://www.w3schools.com/graphics/svg_intro.asp
 				SVG Examples: https://www.w3schools.com/graphics/svg_examples.asp
 			-->
@@ -1606,34 +1601,31 @@ li.w3schools.locked a,
 <aside style="display: inline;">
 <details>
 <summary>Selected examples...</summary>
-<h3> bdi/bdo example</h3>
-<ul>
-  <li>User <bdi>hrefs</bdi>: 60 points</li>
-  <li>User <bdi>jdoe</bdi>: 80 points</li>
-  <li>User <bdi>إيان</bdi>: 90 points</li>
-  <li>User إيان: 90 points</li>
-</ul>
-<p>s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s</p>
-<p><bdo dir="rtl">s oo p u r -  k a l i  - f r a j i l i s t i k - e ks p ee - a l i d o sh u s </bdo></p>
-<h3> ruby/rt/rp example</h3>
-<ruby>
-漢 <rt><rp>(</rp>ㄏㄢˋ<rp>)</rp></rt>
-</ruby>
-<ruby>
-  漢 <rp>(</rp><rt>Kan</rt><rp>)</rp>
-  字 <rp>(</rp><rt>ji</rt><rp>)</rp>
-</ruby>
-<h3> wbr,.nobr example (and non-breaking-space, non-breaking-hyphen)</h3>
-<p>
-Super<wbr />cali<wbr />fragi<wbr />listic<wbr />expiali<wbr />docious.  Even though the sound of it is&nbsp;something&nbsp;quite&nbsp;atrocious.
-lets&#8209;keep&#8209;it&#8209;together&#8209;guys!  lets-keep-it-together-if-we-can. <span class="nobr"><b>F</b>ortune <b>F</b>avours <b>T</b>he <b>B</b>old!</span>
-</p>
-<!--
-		 React component ideas:
-		 NoBr - span.nobr or style nowrap to prevent line break between markup and text
-		 Wbr - automatically add wbr on capital/lowcase transitions
-		 HyNoBr - convert hyphens in text to unicode non-breaking-hyphens
+<h3>animate, animateMotion, animateTransform example</h3>
+<svg width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <path fill="none" stroke="lightgrey"
+    d="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
+
+	<rect x="-5" y="-5" rx="2" width="10" height="10" fill="red">
+    <animateMotion dur="10s" repeatCount="indefinite"
+      path="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z" />
+		<animateTransform
+			 attributeName="transform"
+			 attributeType="XML"
+       type="rotate"
+       from="0 0 0"
+       to="360 0 0"
+       dur="1s"
+       repeatCount="indefinite"/>
+		<animate attributeName="fill" values="red;orange;yellow;green;blue;indigo;violet" dur="10s" repeatCount="indefinite" />
+		<animate attributeName="width" values="10;5;10" dur="2s" repeatCount="indefinite" />
+		<animate attributeName="height" values="10;5;10" dur="2s" repeatCount="indefinite" />
+<!-- enable for perfectly centered spinning rectangle
+		<animate attributeName="x" values="-5;-2.5;-5" dur="2s" repeatCount="indefinite" />
+		<animate attributeName="y" values="-5;-2.5;-5" dur="2s" repeatCount="indefinite" />
 -->
+	</rect>
+</svg>
 </details>
 </aside>
 
@@ -1655,7 +1647,7 @@ const targetRegex = /\btarget\b/;
 const hiddenRegex = /\s*\bhidden\b/;
 const revealRegex = /\s*\b(hidden|reveal)\b/;
 const lockedRegex = /\s*\blocked\b/g;
-const categoryRegex = /(target|category|mine|w3schools|locked)\s+/g;
+const categoryRegex = /(target|category|mine|mdn|locked)\s+/g;
 const associateRegex = /\s*\bassociated\b/;
 const categoryClassRegex = /\s*\bcat-[-\w]+/g;
 
