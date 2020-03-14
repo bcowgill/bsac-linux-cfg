@@ -277,7 +277,7 @@ li.mdn.locked a,
 			class="target element"
 			data-element="animateMotion"
 			data-category=",animation"
-			data-use-with="circle,ellipse,line,polygon,polyline,rect,desc,metadata,title,mpath"
+			data-use-with="circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,symbol,use,linearGradient,meshgradient,radialGradient,stop,clipPath,color-profile,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
 			title="&#9;animate motion - [,animation] define how an element moves along a motion path.">
 			<a
 				href="Element/animateMotion">
@@ -302,14 +302,40 @@ li.mdn.locked a,
 <div id="C" class="column visible">
 	<h2>C</h2>
 	<ul>
+<!-- animation elements
+<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
+deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
+
+animate,animateMotion,animateTransform,discard,mpath,set
+
+descriptive elements
+
+desc,metadata,title
+
+shape elements
+
+circle,ellipse,line,mesh,path,polygon,polyline,rect
+
+structural elements
+
+defs,g,svg,symbol,use
+
+
+gradient elements
+
+linearGradient,meshgradient,radialGradient,stop
+
+
+
+-->
 		<li
 			class="target element"
 			data-element="circle"
-			data-category="semantic,tables"
-			data-use-with="table"
-			title="&#9;circle - [semantic,tables] defines a caption for an HTML table.">
+			data-category=",renderable"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+			title="&#9;circle - [,renderable] used to draw circles based on a center point and a radius.">
 			<a
-				href="tag_caption.asp">
+				href="Element/circle">
 				circle
 			</a>
 		</li>
@@ -320,7 +346,7 @@ li.mdn.locked a,
 			data-use-with="table,col"
 			title="&#9;clip path - [semantic,tables] specifies a group of one or more columns in an HTML table for formatting.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
 			<a
-				href="tag_colgroup.asp">
+				href="Element/">
 				clipPath
 			</a>
 		</li>
@@ -331,7 +357,7 @@ li.mdn.locked a,
 			data-use-with="colgroup"
 			title="&#9;color profile - [meta,table] specifies column properties for each column within a colgroup element of an HTML table.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
 			<a
-				href="tag_col.asp">
+				href="Element/">
 				color-profile
 			</a>
 		</li>
