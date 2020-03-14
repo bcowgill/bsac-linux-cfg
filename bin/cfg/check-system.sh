@@ -1051,6 +1051,7 @@ INSTALL_MACOSLINUX="
 	mc
 	multitail
 	jhead
+	libid3-tools
 	id3v2
 	gradle
 "
