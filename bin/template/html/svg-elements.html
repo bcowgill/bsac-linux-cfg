@@ -277,7 +277,7 @@ li.mdn.locked a,
 			class="target element"
 			data-element="animateMotion"
 			data-category=",animation"
-			data-use-with="circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,symbol,use,linearGradient,meshgradient,radialGradient,stop,clipPath,color-profile,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+			data-use-with="circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,symbol,use,linearGradient,meshgradient,radialGradient,stop,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
 			title="&#9;animate motion - [,animation] define how an element moves along a motion path.">
 			<a
 				href="Element/animateMotion">
@@ -326,7 +326,6 @@ gradient elements
 linearGradient,meshgradient,radialGradient,stop
 
 
-
 -->
 		<li
 			class="target element"
@@ -342,140 +341,52 @@ linearGradient,meshgradient,radialGradient,stop
 		<li
 			class="target element"
 			data-element="clipPath"
-			data-category="semantic,tables"
-			data-use-with="table,col"
-			title="&#9;clip path - [semantic,tables] specifies a group of one or more columns in an HTML table for formatting.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
+			data-category=",never rendered"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,text,use"
+			title="&#9;clip path - [,never rendered] defines a clipping path, to be used used by the clip-path property.  a clipping path restricts the region to which paint can be applied. conceptually, parts of the drawing that lie outside of the region bounded by the clipping path are not drawn.">
 			<a
-				href="Element/">
+				href="Element/clipPath">
 				clipPath
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="color-profile"
-			data-category="meta,tables"
-			data-use-with="colgroup"
-			title="&#9;color profile - [meta,table] specifies column properties for each column within a colgroup element of an HTML table.  useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.">
-			<a
-				href="Element/">
-				color-profile
 			</a>
 		</li>
 	</ul>
 </div>
 
 <!-- D COLUMN ========== -->
-<div id="D" class="column">
+<div id="D" class="column visible">
 	<h2>D</h2>
 	<ul>
 		<li
 			class="target element"
-			data-element="dl"
-			data-category="semantic,list"
-			data-use-with="dt,dd"
-			title="&#9;description list - [semantic,list] defines a description list.  used in conjunction with dt and dd elements.">
-			<a
-				href="tag_dl.asp">
-				dl
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="dt"
-			data-category="semantic,list"
-			data-use-with="dl,dd,a"
-			title="&#9;define term - [semantic,list] defines a term/name in a description list.  used in conjunction with dl and dd elements.  use with an id attribute so that you can use a elements to link back to the term definition.">
-			<a
-				href="tag_dt.asp">
-				dt
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="dd"
-			data-category="semantic,list"
-			data-use-with="dl,dt"
-			title="&#9;define description - [semantic,list] describes a term/name in a description list.  used in conjunction with dl and dt elements.">
-			<a
-				href="tag_dd.asp">
-				dd
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="div"
-			data-category="semantic,styles"
+			data-element="defs"
+			data-category=",list"
 			data-use-with=""
-			title="&#9;division - [semantic,styles] defines a division or a grouping in an HTML document.  element is often used as a container for other HTML elements to style them with CSS or to perform certain tasks with JavaScript.  usually a vertical block based area of the document.">
+			title="&#9;defs list - [,list] .">
 			<a
-				href="tag_div.asp">
-				div
+				href="Element/defs">
+				defs
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="dfn"
-			data-category="semantic,formatting"
-			data-use-with="abbr,a"
-			title="&#9;defining instance - [semantic,formatting] represents the defining instance of a term in HTML.   defining instance is often the first use of a term in a document.  used with a or abbr elements and title or id attributes to associate the term with its definition.">
-			<a
-				href="tag_dfn.asp">
-				dfn
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="details"
-			data-category="semantic,styles,interaction"
-			data-use-with="summary"
-			title="&#9;details - [semantic,styles,interaction] specifies additional details that the user can view or hide on demand like a tooltip or accordion.  use along with summary element.  not supported in IE">
-			<a
-				href="tag_details.asp">
-				details
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="datalist"
-			data-category="interaction,forms/input"
-			data-use-with="optgroup,option,input"
-			title="&#9;data list - [interaction,forms/input] specifies an autocomplete list of pre-defined options for an input element.  useful to share the same list of items across different input selectors.  used with option elements to form the list.  not supported before safari 12">
-			<a
-				href="tag_datalist.asp">
-				datalist
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="del"
-			data-category="semantic,formatting"
-			data-use-with="ins"
-			title="&#9;deleted text - [semantic,formatting] defines text that has been deleted from a document.  used along with ins element.  see also the s element.">
-			<a
-				href="tag_del.asp">
-				del
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="data"
-			data-category="semantic,styles"
-			data-use-with="li"
-			title="&#9;data - [semantic,styles] provides both a machine-readable value for data processors, and a human-readable value for rendering in a browser. use time element if the data is time or date related.">
-			<a
-				href="tag_data.asp">
-				data
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="dialog"
-			data-category="semantic,styles"
+			data-element="desc"
+			data-category=",list"
 			data-use-with=""
-			title="&#9;dialog - [semantic,styles] defines a dialog box or window.  not supported in IE/Edge">
+			title="&#9;desc - [,list] .">
 			<a
-				href="tag_dialog.asp">
-				dialog
+				href="Element/desc">
+				desc
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="discard"
+			data-category=",list"
+			data-use-with=""
+			title="&#9;discard - [,list] .">
+			<a
+				href="Element/discard">
+				discard
 			</a>
 		</li>
 	</ul>
@@ -1530,6 +1441,37 @@ linearGradient,meshgradient,radialGradient,stop
 -->
 	</rect>
 </svg>
+
+<h3>clipPath with CSS animation example</h3>
+<style>
+/* With a touch of CSS for browsers who *
+ * implemented the r Geometry Property. */
+
+@keyframes openYourHeart {from {r: 0} to {r: 60px}}
+
+#myClip circle {
+  animation: openYourHeart 15s infinite;
+}
+</style>
+<svg width="400" height="200" viewBox="0 0 100 100">
+  <clipPath id="myClip">
+    <!--
+      Everything outside the circle will be
+      clipped and therefore invisible.
+    -->
+    <circle cx="40" cy="35" r="35" />
+  </clipPath>
+
+  <!-- The original black heart, for reference -->
+  <path id="heart" d="M10,30 A20,20,0,0,1,50,30 A20,20,0,0,1,90,30 Q90,60,50,90 Q10,60,10,30 Z" />
+
+  <!--
+    Only the portion of the red heart
+    inside the clip circle is visible.
+  -->
+  <use clip-path="url(#myClip)" xlink:href="#heart" fill="red" />
+</svg>
+
 </details>
 </aside>
 
