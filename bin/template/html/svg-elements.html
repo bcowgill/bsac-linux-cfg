@@ -327,6 +327,46 @@ li.mdn.locked a,
 	</ul>
 </div>
 
+<!-- D COLUMN ========== -->
+<div id="D" class="column visible">
+	<h2>D</h2>
+	<ul>
+		<li
+			class="target element"
+			data-element="defs"
+			data-category=",container"
+			data-use-with="svg,animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+			title="&#9;defines objects - [,container] used to store graphical objects that will be used at a later time.  objects created inside a defs element are not rendered directly.  to display them you have to reference them (with a use element for example)..">
+			<a
+				href="Element/defs">
+				defs
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="desc"
+			data-category=",descriptive"
+			data-use-with="a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use"
+			title="&#9;description for accessibility - [,descriptive] provides an accessible, long-text description of any SVG container element or graphics element.">
+			<a
+				href="Element/desc">
+				desc
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="discard"
+			data-category=",animation"
+			data-use-with="svg,circle,ellipse,line,polygon,polyline,rect,desc,metadata,title,script"
+			title="&#9;discard at time - [,animation] allows authors to specify the time at which particular elements are to be discarded, thereby reducing the resources required by an SVG user agent.  this is particularly useful to help SVG viewers conserve memory while displaying long-running documents.  the discard element may occur wherever the animate element may.">
+			<a
+				href="Element/discard">
+				discard
+			</a>
+		</li>
+	</ul>
+</div>
+
 <!-- animation elements
 <animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
 deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
@@ -360,72 +400,23 @@ circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
 a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
 
 
+
+
 -->
 
-<!-- D COLUMN ========== -->
-<div id="D" class="column visible">
-	<h2>D</h2>
-	<ul>
-		<li
-			class="target element"
-			data-element="defs"
-			data-category=",container"
-			data-use-with="svg,animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
-			title="&#9;defines objects - [,container] used to store graphical objects that will be used at a later time.  objects created inside a defs element are not rendered directly.  to display them you have to reference them (with a use element for example)..">
-			<a
-				href="Element/defs">
-				defs
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="desc"
-			data-category=",descriptive"
-			data-use-with="a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use"
-			title="&#9;description for accessibility - [,descriptive] provides an accessible, long-text description of any SVG container element or graphics element.">
-			<a
-				href="Element/desc">
-				desc
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="discard"
-			data-category=",animation"
-			data-use-with=""
-			title="&#9;discard at time - [,animation] .">
-			<a
-				href="Element/discard">
-				discard
-			</a>
-		</li>
-	</ul>
-</div>
-
 <!-- E COLUMN ========== -->
-<div id="E" class="column">
+<div id="E" class="column visible">
 	<h2>E</h2>
 	<ul>
 		<li
 			class="target element"
-			data-element="embed"
-			data-category="interaction,programming"
-			data-use-with=""
-			title="&#9;embed - [interaction,programming] defines a container for an external application or interactive content (a plug-in).  see also object.">
+			data-element="ellipse"
+			data-category=",basic"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+			title="&#9;ellipse - [,basic] used to create ellipses based on a center coordinate, and both their x and y radius.  ellipses are unable to specify the exact orientation of the ellipse (if, for example, you wanted to draw an ellipse tilted at a 45 degree angle), but it can be rotated by using the transform attribute.">
 			<a
-				href="tag_embed.asp">
-				embed
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="em"
-			data-category="typography,formatting,phrase"
-			data-use-with=""
-			title="&#9;emphasised - [typography,formatting,phrase] renders as emphasised text.">
-			<a
-				href="tag_em.asp">
-				em
+				href="Element/ellipse">
+				ellipse
 			</a>
 		</li>
 	</ul>
@@ -1453,6 +1444,7 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 </svg>
 
 <h3>clipPath with CSS animation example</h3>
+<svg width="400" height="200" viewBox="0 0 100 100">
 <style>
 /* With a touch of CSS for browsers who *
  * implemented the r Geometry Property. */
@@ -1463,7 +1455,6 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
   animation: openYourHeart 15s infinite;
 }
 </style>
-<svg width="400" height="200" viewBox="0 0 100 100">
   <clipPath id="myClip">
     <!--
       Everything outside the circle will be
@@ -1480,6 +1471,11 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
     inside the clip circle is visible.
   -->
   <use clip-path="url(#myClip)" xlink:href="#heart" fill="red" />
+</svg>
+
+<h3>ellipse rotation example</h3>
+<svg width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <ellipse rx="50" ry="25" fill="red" transform=" translate(75,38) rotate(25,0,0) "/>
 </svg>
 
 </details>
