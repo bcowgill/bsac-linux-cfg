@@ -302,31 +302,6 @@ li.mdn.locked a,
 <div id="C" class="column visible">
 	<h2>C</h2>
 	<ul>
-<!-- animation elements
-<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
-deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
-
-animate,animateMotion,animateTransform,discard,mpath,set
-
-descriptive elements
-
-desc,metadata,title
-
-shape elements
-
-circle,ellipse,line,mesh,path,polygon,polyline,rect
-
-structural elements
-
-defs,g,svg,symbol,use
-
-
-gradient elements
-
-linearGradient,meshgradient,radialGradient,stop
-
-
--->
 		<li
 			class="target element"
 			data-element="circle"
@@ -352,6 +327,41 @@ linearGradient,meshgradient,radialGradient,stop
 	</ul>
 </div>
 
+<!-- animation elements
+<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
+deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
+
+animate,animateMotion,animateTransform,discard,mpath,set
+
+container elements
+
+a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown
+
+descriptive elements
+
+desc,metadata,title
+
+shape elements
+
+circle,ellipse,line,mesh,path,polygon,polyline,rect
+
+structural elements
+
+defs,g,svg,symbol,use
+
+gradient elements
+
+linearGradient,meshgradient,radialGradient,stop
+
+Graphics elements
+
+circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
+
+a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
+
+
+-->
+
 <!-- D COLUMN ========== -->
 <div id="D" class="column visible">
 	<h2>D</h2>
@@ -359,9 +369,9 @@ linearGradient,meshgradient,radialGradient,stop
 		<li
 			class="target element"
 			data-element="defs"
-			data-category=",list"
-			data-use-with=""
-			title="&#9;defs list - [,list] .">
+			data-category=",container"
+			data-use-with="svg,animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+			title="&#9;defines objects - [,container] used to store graphical objects that will be used at a later time.  objects created inside a defs element are not rendered directly.  to display them you have to reference them (with a use element for example)..">
 			<a
 				href="Element/defs">
 				defs
@@ -370,9 +380,9 @@ linearGradient,meshgradient,radialGradient,stop
 		<li
 			class="target element"
 			data-element="desc"
-			data-category=",list"
-			data-use-with=""
-			title="&#9;desc - [,list] .">
+			data-category=",descriptive"
+			data-use-with="a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use"
+			title="&#9;description for accessibility - [,descriptive] provides an accessible, long-text description of any SVG container element or graphics element.">
 			<a
 				href="Element/desc">
 				desc
@@ -381,9 +391,9 @@ linearGradient,meshgradient,radialGradient,stop
 		<li
 			class="target element"
 			data-element="discard"
-			data-category=",list"
+			data-category=",animation"
 			data-use-with=""
-			title="&#9;discard - [,list] .">
+			title="&#9;discard at time - [,animation] .">
 			<a
 				href="Element/discard">
 				discard
