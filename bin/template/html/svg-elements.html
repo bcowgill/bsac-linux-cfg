@@ -1406,8 +1406,70 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 <aside style="display: inline;">
 <details>
 <summary>Selected examples...</summary>
+
+<h3>SVG coordinate example</h3>
+<svg class="example-svg" width="400" height="400" viewBox="0 0 100 100">
+<style>
+.example-svg {
+	border: 1px solid;
+}
+text {
+	font: bold 3.5px sans-serif;
+	fill: yellow;
+}
+.x-axis {
+	fill: blue;
+}
+.y-axis {
+	fill: green;
+}
+.center {
+	fill: red;
+}
+</style>
+	<circle class="x-axis" cx="0" r="1.5">
+		<title>coordinate origin point</title>
+	</circle>
+
+	<circle class="x-axis" cx="25" r="1.5">
+		<title>x-axis point at 25 units</title>
+	</circle>
+	<circle class="x-axis" cx="50" r="1.5">
+		<title>x-axis point at 50 units</title>
+	</circle>
+	<circle class="x-axis" cx="75" r="1.5">
+		<title>x-axis point at 75 units</title>
+	</circle>
+	<circle class="x-axis" cx="100" r="1.5">
+		<title>x-axis point at 100 units</title>
+	</circle>
+
+	<circle class="y-axis" cy="25" r="1.5">
+		<title>y-axis point at 25 units</title>
+	</circle>
+	<circle class="y-axis" cy="50" r="1.5">
+		<title>y-axis point at 50 units</title>
+	</circle>
+	<circle class="y-axis" cy="75" r="1.5">
+		<title>y-axis point at 75 units</title>
+	</circle>
+	<circle class="y-axis" cy="100" r="1.5">
+		<title>y-axis point at 100 units</title>
+	</circle>
+
+	<circle class="center" cx="50" cy="50" r="0.5">
+		<title>center of viewBox (50,50)</title>
+	</circle>
+
+	<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)">.(25,25)</text>
+	<text x="50" y="25">.(50,25)</text>
+	<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)">.(75,25)</text>
+	<text x="25" y="50">.(25,50)</text>
+	<text x="25" y="75">.(25,75)</text>
+</svg>
+
 <h3>animate, animateMotion, animateTransform example</h3>
-<svg width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+<svg class="example-svg-animate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
 	<animateTransform
 		 attributeName="transform"
 		 attributeType="XML"
@@ -1444,7 +1506,7 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 </svg>
 
 <h3>clipPath with CSS animation example</h3>
-<svg width="400" height="200" viewBox="0 0 100 100">
+<svg class="example-clip-path" width="400" height="200" viewBox="0 0 100 100">
 <style>
 /* With a touch of CSS for browsers who *
  * implemented the r Geometry Property. */
@@ -1474,7 +1536,7 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 </svg>
 
 <h3>ellipse rotation example</h3>
-<svg width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+<svg class="example-ellipse-rotate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
   <ellipse rx="50" ry="25" fill="red" transform=" translate(75,38) rotate(25,0,0) "/>
 </svg>
 
