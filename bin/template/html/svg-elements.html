@@ -442,7 +442,7 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 			data-element="foreignObject"
 			data-category=",renderable"
 			data-use-with=""
-			title="&#9;foreign object - [,renderable] .">
+			title="&#9;foreign object - [,renderable] includes elements from a different XML namespace.  in the context of a browser, it is most likely (X)HTML.">
 			<a
 				href="Element/foreignObject">
 				foreignObject
@@ -452,11 +452,22 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 			class="target element"
 			data-element="feBlend"
 			data-category=",filter"
-			data-use-with=""
-			title="&#9;feBlend - [,filter] .">
+			data-use-with="filter,animate,set"
+			title="&#9;feBlend - [,filter] composes two objects together ruled by a certain blending mode.  this is similar to what is known from image editing software when blending two layers.  the mode is defined by the mode attribute.">
 			<a
 				href="Element/feBlend">
 				feBlend
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="feColorMatrix"
+			data-category=",filter"
+			data-use-with="filter,animate,set"
+			title="&#9;feBlend - [,filter] .">
+			<a
+				href="Element/feColorMatrix">
+				feColorMatrix
 			</a>
 		</li>
 	</ul>
@@ -1561,6 +1572,107 @@ function exampleFilter() {
 }
 exampleFilter();
 </script>
+</svg>
+
+<h3>feColorMatrix example</h3>
+<svg class="example-fecolormatrix" width="300" height="650" viewBox="0 0 300 250"
+    preserveAspectRatio="xMidYMid meet"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+.example-fecolormatrix {
+	background-color: white;
+}
+</style>
+  <!-- ref -->
+  <defs>
+    <g id="circles">
+      <circle cx="30" cy="30" r="20" fill="blue" fill-opacity="0.5" />
+      <circle cx="20" cy="50" r="20" fill="green" fill-opacity="0.5" />
+      <circle cx="40" cy="50" r="20" fill="red" fill-opacity="0.5" />
+    </g>
+  </defs>
+  <use href="#circles" />
+  <text x="70" y="50" fill="black">Reference</text>
+
+  <!-- identity matrix -->
+  <filter id="colorMeTheSame">
+    <feColorMatrix in="SourceGraphic"
+        type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 1 0" />
+   </filter>
+  <use href="#circles" transform="translate(0 70)" filter="url(#colorMeTheSame)" />
+  <text x="70" y="120" fill="black">Identity matrix</text>
+
+  <!-- Combine RGB into green matrix -->
+  <filter id="colorMeGreen">
+    <feColorMatrix in="SourceGraphic"
+        type="matrix"
+        values="0 0 0 0 0
+                1 1 1 1 0
+                0 0 0 0 0
+                0 0 0 1 0" />
+  </filter>
+  <use href="#circles" transform="translate(0 140)" filter="url(#colorMeGreen)" />
+  <text x="70" y="190" fill="black">rgbToGreen</text>
+
+  <!-- saturate -->
+  <filter id="colorMeSaturate">
+    <feColorMatrix in="SourceGraphic"
+        type="saturate"
+        values="0.2" />
+  </filter>
+  <use href="#circles" transform="translate(0 210)" filter="url(#colorMeSaturate)" />
+  <text x="70" y="260" fill="black">saturate</text>
+
+  <!-- hueRotate -->
+  <filter id="colorMeHueRotate">
+    <feColorMatrix in="SourceGraphic"
+        type="hueRotate"
+        values="180" />
+  </filter>
+  <use href="#circles" transform="translate(0 280)" filter="url(#colorMeHueRotate)" />
+  <text x="70" y="330" fill="black">hueRotate</text>
+
+  <!-- luminanceToAlpha -->
+  <filter id="colorMeLTA">
+    <feColorMatrix in="SourceGraphic"
+        type="luminanceToAlpha" />
+  </filter>
+  <use href="#circles" transform="translate(0 350)" filter="url(#colorMeLTA)" />
+  <text x="70" y="400" fill="black">luminanceToAlpha</text>
+</svg>
+
+<h3>foreignObject example</h3>
+<svg class="example-foreign-object" width=200 height=200 viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    div {
+      color: white;
+      font: 18px serif;
+      height: 100%;
+      overflow: auto;
+    }
+  </style>
+
+  <polygon points="5,5 195,10 185,185 10,195" fill="red" />
+
+  <!-- Common use case: embed HTML text into SVG -->
+  <foreignObject x="20" y="20" width="160" height="160">
+    <!--
+      In the context of SVG embedded in an HTML document, the XHTML
+      namespace could be omitted, but it is mandatory in the
+      context of an SVG document
+    -->
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Sed mollis mollis mi ut ultricies. Nullam magna ipsum,
+      porta vel dui convallis, rutrum imperdiet eros. Aliquam
+      erat volutpat.
+    </div>
+  </foreignObject>
 </svg>
 
 </details>
