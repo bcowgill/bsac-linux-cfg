@@ -1504,13 +1504,14 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 	<text x="25" y="75">.(25,75)</text>
 <script>
 function orbit() {
+	const FRAMES = 4;
 	const RADIUS = 60;
 	const INITIAL_ANGLE = 0;
-	const DELTA_ANGLE = 1;
+	const DELTA_ANGLE = 1 / FRAMES;
 	const MAX_ANGLE = 100;
-	const DELAY = 1000 / 6;
+	const DELAY = 1000 / (6 * FRAMES);
 	const INITIAL_ROTATION = 90;
-	const ANGULAR_SPEED = 4;
+	const ANGULAR_SPEED = 4 / FRAMES;
 	const SUM = '\u03a3'; // Greek capital sigma
 	const ANGLE = '\u29aa'; // MathSymbol Measured Angle Down 3 o'clock
 	const ROTATION = '\u21bb'; // Clockwise open circle arrow
@@ -1519,8 +1520,9 @@ function orbit() {
 	let rotation = INITIAL_ROTATION;
 	if (point) {
 		const timer = setInterval(function movePoint() {
+			// point.setAttribute('rotate', angle);
 			point.setAttribute('transform', `rotate(${angle},0,0) translate(${RADIUS},0) rotate(${rotation},0,0)`);
-			point.innerHTML = `.R=${RADIUS}${ANGLE}${angle}° ${ROTATION}${rotation}° ${SUM}${(angle + rotation) % 360}°`
+			point.innerHTML = `.R=${RADIUS}${ANGLE}${Math.round(angle)}° ${ROTATION}${Math.round(rotation)}° ${SUM}${(Math.round(angle + rotation)) % 360}°`
 			angle = (angle + DELTA_ANGLE) % MAX_ANGLE;
 			rotation = (rotation + ANGULAR_SPEED) % 360;
 			// clearInterval(timer);
