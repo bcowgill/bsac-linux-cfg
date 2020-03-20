@@ -198,12 +198,16 @@ li.mdn.locked a,
 div.example-container {
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: space-around;
+	justify-content: space-evenly;
 	align-items: center;
 	align-content: space-around;
+	padding-bottom: 40px;
 }
 section.example {
 	align-self: flex-start;
+}
+h3 {
+	padding: 10px;
 }
 .white-bg {
 	background-color: white;
@@ -1484,6 +1488,44 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 </svg>
 </section>
 
+<section id="example-ellipse-rotate" class="example" role="contentinfo" aria-label="SVG Example of ellipse with rotation">
+<h3>ellipse rotation example</h3>
+<svg class="example-ellipse-rotate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+  <ellipse rx="50" ry="25" fill="red" transform=" translate(75,38) rotate(25,0,0) "/>
+</svg>
+</section>
+
+<section id="example-foreign-object" class="example" role="contentinfo" aria-label="SVG Example of foreignObject element">
+<h3>foreignObject example</h3>
+<svg class="example-foreign-object" width=200 height=200 viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    div {
+      color: white;
+      font: 18px serif;
+      height: 100%;
+      overflow: auto;
+    }
+  </style>
+
+  <polygon points="5,5 195,10 185,185 10,195" fill="red" />
+
+  <!-- Common use case: embed HTML text into SVG -->
+  <foreignObject x="20" y="20" width="160" height="160">
+    <!--
+      In the context of SVG embedded in an HTML document, the XHTML
+      namespace could be omitted, but it is mandatory in the
+      context of an SVG document
+    -->
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Sed mollis mollis mi ut ultricies. Nullam magna ipsum,
+      porta vel dui convallis, rutrum imperdiet eros. Aliquam
+      erat volutpat.
+    </div>
+  </foreignObject>
+</svg>
+</section>
+
 <section id="example-svg-animate" class="example" role="contentinfo" aria-label="SVG Example of animate, animateMotion, animateTransform elements">
 <h3>animate, animateMotion, animateTransform example</h3>
 <svg class="example-svg-animate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
@@ -1552,13 +1594,6 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
     inside the clip circle is visible.
   -->
   <use clip-path="url(#example-clip-path-myClip)" xlink:href="#example-clip-path-heart" fill="red" />
-</svg>
-</section>
-
-<section id="example-ellipse-rotate" class="example" role="contentinfo" aria-label="SVG Example of ellipse with rotation">
-<h3>ellipse rotation example</h3>
-<svg class="example-ellipse-rotate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-  <ellipse rx="50" ry="25" fill="red" transform=" translate(75,38) rotate(25,0,0) "/>
 </svg>
 </section>
 
@@ -1760,36 +1795,6 @@ exampleFilter();
 </svg>
 </section>
 
-<section id="example-foreign-object" class="example" role="contentinfo" aria-label="SVG Example of foreignObject element">
-<h3>foreignObject example</h3>
-<svg class="example-foreign-object" width=200 height=200 viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    div {
-      color: white;
-      font: 18px serif;
-      height: 100%;
-      overflow: auto;
-    }
-  </style>
-
-  <polygon points="5,5 195,10 185,185 10,195" fill="red" />
-
-  <!-- Common use case: embed HTML text into SVG -->
-  <foreignObject x="20" y="20" width="160" height="160">
-    <!--
-      In the context of SVG embedded in an HTML document, the XHTML
-      namespace could be omitted, but it is mandatory in the
-      context of an SVG document
-    -->
-    <div xmlns="http://www.w3.org/1999/xhtml">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Sed mollis mollis mi ut ultricies. Nullam magna ipsum,
-      porta vel dui convallis, rutrum imperdiet eros. Aliquam
-      erat volutpat.
-    </div>
-  </foreignObject>
-</svg>
-</section>
 </div>
 </details>
 </aside>
