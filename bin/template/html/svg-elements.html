@@ -250,9 +250,10 @@ h3 {
 				<li class="target category mdn cat-reference"><a href="#">graphics reference</a></li>
 				<li class="target category mdn cat-light-source"><a href="#">light source</a></li>
 				<li class="target category mdn cat-never-render"><a href="#">never rendered</a></li>
-				<li class="target category mdn cat-paint-server"><a href="#">paint server/a></li>
+				<li class="target category mdn cat-paint-server"><a href="#">paint server</a></li>
 				<li class="target category mdn cat-renderable"><a href="#">renderable</a></li>
 				<li class="target category mdn cat-shape"><a href="#">shape</a></li>
+				<li class="target category mdn cat-structure"><a href="#">structure</a></li>
 				<li class="target category mdn cat-text-content"><a href="#">text content</a></li>
 				<li class="target category mdn cat-text-child"><a href="#">text child</a></li>
 				<li class="target category mdn cat-miscellaneous"><a href="#">miscellaneous</a></li>
@@ -402,43 +403,6 @@ h3 {
 	</ul>
 </div>
 
-<!-- animation elements
-<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
-deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
-
-animate,animateMotion,animateTransform,discard,mpath,set
-
-container elements
-
-a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown
-
-descriptive elements
-
-desc,metadata,title
-
-Filter primitive elements
-feBlend,feColorMatrix,feComponentTransfer,feComposite,feConvolveMatrix,feDiffuseLighting,feDisplacementMap,feDropShadow,feFlood,feFuncA,feFuncB,feFuncG,feFuncR,feGaussianBlur,feImage,feMerge,feMergeNode,feMorphology,feOffset,feSpecularLighting,feTile,feTurbulence
-
-shape elements
-
-circle,ellipse,line,mesh,path,polygon,polyline,rect
-
-structural elements
-
-defs,g,svg,symbol,use
-
-gradient elements
-
-linearGradient,meshgradient,radialGradient,stop
-
-Graphics elements
-
-circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
-
-a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
-
--->
-
 <!-- F COLUMN ========== -->
 <div id="F" class="column visible">
 	<h2>F</h2>
@@ -512,249 +476,132 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 	</ul>
 </div>
 
+<!-- G COLUMN ========== -->
+<div id="G" class="column visible">
+	<h2>G</h2>
+	<ul>
+		<li
+			class="target element"
+			data-element="g"
+			data-category="structure,container"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+			title="&#9;group objects - [,renderable] a container used to group other SVG elements.  transformations applied to the g element are performed on its child elements, and its attributes are inherited by its children.  it can also group multiple elements to be referenced later with the use element.">
+			<a
+				href="Element/g">
+				g
+			</a>
+		</li>
+	</ul>
+</div>
+
 <!-- H COLUMN ========== -->
-<div id="H" class="column">
+<div id="H" class="column visible">
 	<h2>H</h2>
 	<ul>
 		<li
 			class="target element"
-			data-element="hr"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;horizontal rule - [semantic,basic] a dividing line indicating a thematic change in the content.  it separates content and indicates a change of topic.">
+			data-element="hatch"
+			data-category="paint server,never rendered"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,hatchpath,script,style"
+			title="&#9;hatch fill or stroke EXPERIMENTAL - [paint server,never rendered] used to fill or stroke an object using one or more pre-defined paths that are repeated at fixed intervals in a specified direction to cover the areas to be painted.  hatches defined by the hatch element can then referenced by the fill and stroke CSS properties on a given graphics element to indicate that the given element shall be filled or stroked with the hatch.  paths are defined by hatchpath elements.">
 			<a
-				href="Element/">
-				hr
+				href="Element/hatch">
+				hatch
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="h1"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;heading level one - [semantic,basic] defines the most important level heading for a section.">
+			data-element="hatchpath"
+			data-category=",miscellaneous"
+			data-use-with="hatch,animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,script,style"
+			title="&#9;hatch path definition EXPERIMENTAL - [,miscellaneous] defines a hatch path used by the hatch element.">
 			<a
-				href="Element/">
-				h1
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="h2"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;heading level two - [semantic,basic] defines the second most important level heading for a section.">
-			<a
-				href="Element/">
-				h2
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="h3"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;heading level three - [semantic,basic] defines the third most important level heading for a section.">
-			<a
-				href="Element/">
-				h3
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="h4"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;heading level four - [semantic,basic] defines the third least important level heading for a section.">
-			<a
-				href="Element/">
-				h4
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="h5"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;heading level five - [semantic,basic] defines the second least important level heading for a section.">
-			<a
-				href="Element/">
-				h5
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="h6"
-			data-category="semantic,basic"
-			data-use-with=""
-			title="&#9;heading level six - [semantic,basic] defines the least important level heading for a section.">
-			<a
-				href="Element/">
-				h6
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="header"
-			data-category="semantic,styles"
-			data-use-with="arcticle,section,h1,h2,h3,h4,h5,h6"
-			title="&#9;header - [semantic,styles] a container for introductory content or a set of navigational links within the document or a section.">
-			<a
-				href="Element/">
-				header
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="html"
-			data-category="semantic,basic"
-			data-use-with="head,body"
-			title="&#9;html - [semantic,basic] container for all other HTML elements, except for the DOCTYPE tag.">
-			<a
-				href="Element/">
-				html
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="head"
-			data-category="semantic,basic"
-			data-use-with="html,title,style,base,link,meta,script,noscript"
-			title="&#9;head - [semantic,basic] a container for all the head elements.  can include a title for the document, scripts, styles, meta information, and more">
-			<a
-				href="Element/">
-				head
+				href="Element/hatchpath">
+				hatchpath
 			</a>
 		</li>
 	</ul>
 </div>
 
 <!-- I COLUMN ========== -->
-<div id="I" class="column">
+<div id="I" class="column visible">
 	<h2>I</h2>
 	<ul>
 		<li
 			class="target element"
-			data-element="i"
-			data-category="typography,formatting"
-			data-use-with="p"
-			title="&#9;italic - [typography,formatting] defines a part of text in an alternate voice or mood. The content of the i element is usually displayed in italic.  can be used to indicate a technical term, a phrase from another language, a thought, or a ship name, etc.  use the i element only when there is not a more appropriate semantic element such as em, strong, mark, cite, dfn.">
+			data-element="image"
+			data-category="renderable,graphics"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+			title="&#9;image inclusion - [renderable,graphics] includes images inside SVG documents.  it can display raster image files or other SVG files.  the only image formats SVG software must support are JPEG, PNG, and other SVG files.  animated GIF behavior is undefined.  SVG files displayed with image are treated as an image: external resources aren't loaded, :visited styles aren't applied, and they cannot be interactive.  to include dynamic SVG elements, try use with an external URL.  to include SVG files and run scripts inside them, try object inside of foreignObject">
 			<a
-				href="Element/">
-				i
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="ins"
-			data-category="semantic,formatting"
-			data-use-with="del"
-			title="&#9;inserted text - [semantic,formatting] defines a text that has been inserted into a document.  used along with the del element.">
-			<a
-				href="Element/">
-				ins
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="input"
-			data-category="interaction,forms/input"
-			data-use-with="form,fieldset,label"
-			title="&#9;input - [interaction,forms/input] specifies an input field where the user can enter data.">
-			<a
-				href="Element/">
-				input
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="img"
-			data-category="media,images"
-			data-use-with=""
-			title="&#9;image - [media,images] a placeholder for an image to be shown in the document.">
-			<a
-				href="Element/">
-				img
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="iframe"
-			data-category="interaction,frames"
-			data-use-with=""
-			title="&#9;inline frame - [interaction,frames] used to embed another document within the current HTML document.">
-			<a
-				href="Element/">
-				iframe
+				href="Element/image">
+				image
 			</a>
 		</li>
 	</ul>
 </div>
 
-<!-- K COLUMN ========== -->
-<div id="K" class="column">
-	<h2>K</h2>
-	<ul>
-		<li
-			class="target element"
-			data-element="kbd"
-			data-category="semantic,formatting,phrase"
-			data-use-with=""
-			title="&#9;keyboard input - [semantic,formatting,phrase] defines keyboard input.">
-			<a
-				href="Element/">
-				kbd
-			</a>
-		</li>
-	</ul>
-</div>
+<!-- animation elements
+<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
+deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
+
+animate,animateMotion,animateTransform,discard,mpath,set
+
+container elements
+
+a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown
+
+descriptive elements
+
+desc,metadata,title
+
+Filter primitive elements
+feBlend,feColorMatrix,feComponentTransfer,feComposite,feConvolveMatrix,feDiffuseLighting,feDisplacementMap,feDropShadow,feFlood,feFuncA,feFuncB,feFuncG,feFuncR,feGaussianBlur,feImage,feMerge,feMergeNode,feMorphology,feOffset,feSpecularLighting,feTile,feTurbulence
+
+shape elements
+
+circle,ellipse,line,mesh,path,polygon,polyline,rect
+
+structural elements
+
+defs,g,svg,symbol,use
+
+gradient elements
+
+linearGradient,meshgradient,radialGradient,stop
+
+Graphics elements
+
+circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
+
+a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
+
+-->
 
 <!-- L COLUMN ========== -->
-<div id="L" class="column">
+<div id="L" class="column visible">
 	<h2>L</h2>
 	<ul>
 		<li
 			class="target element"
-			data-element="legend"
-			data-category="semantic,forms/input"
-			data-use-with="fieldset"
-			title="&#9;legend - [semantic,forms/input] defines a caption for a group of fields in a form i.e. a fieldset element.">
+			data-element="line"
+			data-category="graphics,basic,renderable,shape"
+			data-use-with=""
+			title="&#9;line - [graphics,basic,renderable,shape] .">
 			<a
-				href="Element/">
-				legend
+				href="Element/line">
+				line
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="label"
-			data-category="interaction,semantic,forms/input"
-			data-use-with="input,meter,progress,select,textarea"
-			title="&#9;label - [interaction,semantic,forms/input] defines a label for several form input elements.">
+			data-element="linearGradient"
+			data-category="paint server,never rendered,gradient"
+			data-use-with=""
+			title="&#9;linearGradient - [paint server,never rendered,gradient] .">
 			<a
-				href="Element/">
-				label
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="li"
-			data-category="semantic,lists"
-			data-use-with="ul,ol,menu"
-			title="&#9;list item - [semantic,lists] defines a list item.  used as an item in an ordered list, unordered list or a menu element">
-			<a
-				href="Element/">
-				li
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="link"
-			data-category="interaction,links,layout"
-			data-use-with="head"
-			title="&#9;link - [interaction,links,layout] defines a link between a document and an external resource.  use to associate stylesheets to the document.  see also the style element.">
-			<a
-				href="Element/">
-				link
+				href="Element/linearGradient">
+				linearGradient
 			</a>
 		</li>
 	</ul>
@@ -1495,8 +1342,11 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 	<circle class="center" cx="50" cy="50" r="0.5">
 		<title>center of viewBox (50,50)</title>
 	</circle>
-
-	<text id="example-svg-radial" class="radius" transform="rotate(45,0,0) translate(60,0)">.r=60</text>
+	<line id="example-svg-radial-line" stroke="red" />
+	<g id="example-svg-radial">
+		<line id="example-svg-grouped-line" stroke="blue" />
+		<text class="radius"></text>
+	</g>
 	<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)">.(25,25)</text>
 	<text x="50" y="25">.(50,25)</text>
 	<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)">.(75,25)</text>
@@ -1515,18 +1365,33 @@ function orbit() {
 	const SUM = '\u03a3'; // Greek capital sigma
 	const ANGLE = '\u29aa'; // MathSymbol Measured Angle Down 3 o'clock
 	const ROTATION = '\u21bb'; // Clockwise open circle arrow
+
 	const point = document.getElementById('example-svg-radial');
+	const line = document.getElementById('example-svg-grouped-line');
+	const radial = document.getElementById('example-svg-radial-line');
+	line.setAttribute('x2', RADIUS);
+
 	let angle = INITIAL_ANGLE;
 	let rotation = INITIAL_ROTATION;
 	if (point) {
-		const timer = setInterval(function movePoint() {
-			// point.setAttribute('rotate', angle);
-			point.setAttribute('transform', `rotate(${angle},0,0) translate(${RADIUS},0) rotate(${rotation},0,0)`);
-			point.innerHTML = `.R=${RADIUS}${ANGLE}${Math.round(angle)}° ${ROTATION}${Math.round(rotation)}° ${SUM}${(Math.round(angle + rotation)) % 360}°`
-			angle = (angle + DELTA_ANGLE) % MAX_ANGLE;
-			rotation = (rotation + ANGULAR_SPEED) % 360;
-			// clearInterval(timer);
-		}, DELAY);
+		const text = point.querySelector('text');
+		if (text) {
+			const timer = setInterval(function movePoint() {
+				// text.setAttribute('rotate', angle);
+				if (radial) {
+					const radians = 2 * Math.PI * angle / 360;
+					const x = RADIUS * Math.cos(radians);
+					const y = RADIUS * Math.sin(radians);
+					radial.setAttribute('x2', x);
+					radial.setAttribute('y2', y);
+				}
+				point.setAttribute('transform', `rotate(${angle},0,0) translate(${RADIUS},0) rotate(${rotation},0,0)`);
+				text.innerHTML = `.R=${RADIUS}${ANGLE}${Math.round(angle)}° ${ROTATION}${Math.round(rotation)}° ${SUM}${(Math.round(angle + rotation)) % 360}°`
+				angle = (angle + DELTA_ANGLE) % MAX_ANGLE;
+				rotation = (rotation + ANGULAR_SPEED) % 360;
+				// clearInterval(timer);
+			}, DELAY);
+		}
 	}
 }
 orbit()
@@ -2023,6 +1888,25 @@ exampleFilter();
     </g>
   </g>
 </svg>
+</section>
+
+<section id="example-hatch" class="example" role="contentinfo" aria-label="SVG Example of hatch and hatchPath elements">
+<h3>hatch and hatchPath example EXPERIMENTAL</h3>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+	<title>Example of hatch element. (Experimental)</title>
+  <defs>
+    <hatch id="example-hatch-hatch" hatchUnits="userSpaceOnUse" pitch="5"
+        rotate="135">
+      <hatchpath stroke="#a080ff" stroke-width="2"/>
+    </hatch>
+  </defs>
+
+  <rect fill="url(#example-hatch-hatch)" stroke="yellow" stroke-width="2"
+     x="10%" y="10%" width="80%" height="80%" />
+</svg>
+</section>
+
+<section id="example-" class="example" role="contentinfo" aria-label="SVG Example of ... element">
 </section>
 
 </div>
