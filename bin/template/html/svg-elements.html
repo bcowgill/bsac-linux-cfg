@@ -1538,6 +1538,7 @@ orbit()
 <section id="example-ellipse-rotate" class="example" role="contentinfo" aria-label="SVG Example of ellipse with rotation">
 <h3>ellipse rotation example</h3>
 <svg class="example-ellipse-rotate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+	<title>Example of rotating an ellipse using transform as there is no rotate property.</title>
   <ellipse rx="50" ry="25" fill="red" transform=" translate(75,38) rotate(25,0,0) "/>
 </svg>
 </section>
@@ -1545,6 +1546,7 @@ orbit()
 <section id="example-foreign-object" class="example" role="contentinfo" aria-label="SVG Example of foreignObject element">
 <h3>foreignObject example</h3>
 <svg class="example-foreign-object" width=200 height=200 viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+	<title>Example of including an HTML element inside an SVG document.  You can surround HTML with graphical elements.</title>
   <style>
     div {
       color: white;
@@ -1576,6 +1578,7 @@ orbit()
 <section id="example-svg-animate" class="example" role="contentinfo" aria-label="SVG Example of animate, animateMotion, animateTransform elements">
 <h3>animate, animateMotion, animateTransform example</h3>
 <svg class="example-svg-animate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+	<title>Example of irregular paths, animation of colours, size, motion and rotation and even the SVG canvas itself.</title>
 	<animateTransform
 		 attributeName="transform"
 		 attributeType="XML"
@@ -1615,6 +1618,7 @@ orbit()
 <section id="example-clip-path" class="example" role="contentinfo" aria-label="SVG Example of clipPath element">
 <h3>clipPath with CSS animation example</h3>
 <svg class="example-clip-path" width="400" height="200" viewBox="0 0 100 100">
+	<title>Example of using a clipPath with CSS animation to reveal your picture dramatically.</title>
 <style>
 /* With a touch of CSS for browsers who *
  * implemented the r Geometry Property. */
@@ -1647,6 +1651,7 @@ orbit()
 <section id="example-filter" class="example" role="contentinfo" aria-label="SVG Example of filter and various filter primitive elements">
 <h3>filter and and various filter primitive example</h3>
 <svg class="example-filter" width="230" height="130" viewBox="0 0 230 130" xmlns="http://www.w3.org/2000/svg">
+	<title>Example of applying various filters to a shape.</title>
 <style>
 .example-filter text {
 	font: bold 12px sans-serif;
@@ -1660,8 +1665,8 @@ orbit()
 	</filter>
 	<filter id="feGaussianBlur"><feGaussianBlur stdDeviation="5"/></filter>
 
-	<circle cx="60" cy="70" r="50" fill="green" />
-	<circle id="example-filter-circle" cx="170" cy="70" r="50" fill="green" filter="url(#feBlend)" data-filter="feBlend" />
+	<circle cx="60" cy="70" r="50" fill="url(#example-fe-component-transfer-rainbow)" />
+	<circle id="example-filter-circle" cx="170" cy="70" r="50" fill="url(#example-fe-component-transfer-rainbow)" filter="url(#feBlend)" data-filter="feBlend" />
 	<text id="example-filter-label" x="105" y="12" fill="yellow">feBlend</text>
 <script>
 function exampleFilter() {
@@ -1697,6 +1702,7 @@ exampleFilter();
     preserveAspectRatio="xMidYMid meet"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Example of filtering an object using a color matrix transform.</title>
 <style>
 .example-fecolormatrix {
 	background-color: lemonchiffon;
@@ -1771,6 +1777,7 @@ exampleFilter();
 <section id="example-fe-component-transfer" class="example" role="contentinfo" aria-label="SVG Example of feComponentTransfer and linearGradient elements">
 <h3>feComponentTransfer and linearGradient example</h3>
 <svg class="example-fecomponent-transfer" width="400" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+	<title>Example of filtering an object using color component transfer functions.</title>
 <style>
 .example-fecomponent-transfer rect {
   fill: url(#example-fe-component-transfer-rainbow);
@@ -1846,6 +1853,7 @@ exampleFilter();
 <h3>feComposite, feFlood, feMerge example</h3>
 <svg class="example-fe-composite" width="500" height="295" viewBox="0 0 1100 650" version="1.1"
      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Example of filtering .</title>
 <style>
 .example-fe-composite text {
 	fill: yellow;
@@ -1859,7 +1867,7 @@ exampleFilter();
     <desc>Define two sets of six filters for each of the six compositing operators.
           The first set wipes out the background image by flooding with opaque white.
           The second set does not wipe out the background, with the result
-          that the background sometimes shines through and is other cases
+          that the background sometimes shines through and in other cases
           is blended into itself (i.e., "double-counting").</desc>
     <filter id="example-fe-composite-overFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
       <feFlood flood-color="white" flood-opacity="1" result="flood"/>
