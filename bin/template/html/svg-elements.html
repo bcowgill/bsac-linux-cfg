@@ -201,7 +201,7 @@ div.example-container {
 	justify-content: space-evenly;
 	align-items: center;
 	align-content: space-around;
-	padding-bottom: 40px;
+k	padding-bottom: 40px;
 }
 section.example {
 	align-self: flex-start;
@@ -496,6 +496,17 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 			<a
 				href="Element/feComponentTransfer">
 				feComponentTransfer
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="feComposite"
+			data-category=",filter"
+			data-use-with="animate,set,feDiffuseLighting,feSpecularLighting"
+			title="&#9;filter element composite - [,filter] performs the combination of two input images pixel-wise in image space using one of the Porter-Duff compositing operations: over, in, atop, out, xor, and lighter.  additionally, a component-wise arithmetic operation (with the result clamped between [0..1]) can be applied.  The arithmetic operation is useful for combining the output from the feDiffuseLighting and feSpecularLighting filters with texture data.">
+			<a
+				href="Element/feComposite">
+				feComposite
 			</a>
 		</li>
 	</ul>
@@ -1428,6 +1439,7 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 <section id="example-svg" class="example" role="contentinfo" aria-label="SVG Example of coordinates in svg element">
 <h3>SVG coordinate example</h3>
 <svg class="example-svg" width="400" height="400" viewBox="0 0 100 100">
+<title>Examples of coordinate system and transforms in an SVG element.</title>
 <style>
 .example-svg {
 	border: 1px solid;
@@ -1435,6 +1447,10 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 .example-svg text {
 	font: bold 3.5px sans-serif;
 	fill: yellow;
+}
+.example-svg text.radius {
+	font: bold 4.5px sans-serif;
+	fill: white;
 }
 .example-svg .x-axis {
 	fill: blue;
@@ -1480,11 +1496,40 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 		<title>center of viewBox (50,50)</title>
 	</circle>
 
+	<text id="example-svg-radial" class="radius" transform="rotate(45,0,0) translate(60,0)">.r=60</text>
 	<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)">.(25,25)</text>
 	<text x="50" y="25">.(50,25)</text>
 	<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)">.(75,25)</text>
 	<text x="25" y="50">.(25,50)</text>
 	<text x="25" y="75">.(25,75)</text>
+<script>
+function orbit() {
+	const RADIUS = 60;
+	const INITIAL_ANGLE = 0;
+	const DELTA_ANGLE = 1;
+	const MAX_ANGLE = 100;
+	const DELAY = 1000 / 6;
+	const INITIAL_ROTATION = 90;
+	const ANGULAR_SPEED = 4;
+	const SUM = '\u03a3'; // Greek capital sigma
+	const ANGLE = '\u29aa'; // MathSymbol Measured Angle Down 3 o'clock
+	const ROTATION = '\u21bb'; // Clockwise open circle arrow
+	const point = document.getElementById('example-svg-radial');
+	let angle = INITIAL_ANGLE;
+	let rotation = INITIAL_ROTATION;
+	if (point) {
+		const timer = setInterval(function movePoint() {
+			point.setAttribute('transform', `rotate(${angle},0,0) translate(${RADIUS},0) rotate(${rotation},0,0)`);
+			point.innerHTML = `.R=${RADIUS}${ANGLE}${angle}° ${ROTATION}${rotation}° ${SUM}${(angle + rotation) % 360}°`
+			angle = (angle + DELTA_ANGLE) % MAX_ANGLE;
+			rotation = (rotation + ANGULAR_SPEED) % 360;
+			// clearInterval(timer);
+		}, DELAY);
+	}
+}
+orbit()
+</script>
+
 </svg>
 </section>
 
@@ -1734,12 +1779,12 @@ exampleFilter();
 </style>
   <defs>
     <linearGradient id="example-fe-component-transfer-rainbow" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100%" y2="0">
-      <stop offset="0" stop-color="#ff0000"></stop>
-      <stop offset="0.2" stop-color="#ffff00"></stop>
-      <stop offset="0.4" stop-color="#00ff00"></stop>
-      <stop offset="0.6" stop-color="#00ffff"></stop>
-      <stop offset="0.8" stop-color="#0000ff"></stop>
-      <stop offset="1" stop-color="#800080"></stop>
+      <stop offset="0" stop-color="#f00"></stop><!-- red -->
+      <stop offset="0.2" stop-color="#ff0"></stop><!-- yellow -->
+      <stop offset="0.4" stop-color="#0f0"></stop><!-- green -->
+      <stop offset="0.6" stop-color="#0ff"></stop><!-- cyan -->
+      <stop offset="0.8" stop-color="#00f"></stop><!-- blue -->
+      <stop offset="1" stop-color="#800080"></stop><!-- violet -->
     </linearGradient>
     <filter id="example-fe-component-transfer-identity" x="0" y="0" width="100%" height="100%">
       <feComponentTransfer>
@@ -1791,6 +1836,181 @@ exampleFilter();
     <rect x="0" y="230" width="100%" height="20" style="filter:url(#example-fe-component-transfer-linear)"></rect>
     <text x="0" y="270">Gamma function</text>
     <rect x="0" y="280" width="100%" height="20" style="filter:url(#example-fe-component-transfer-gamma)"></rect>
+  </g>
+</svg>
+</section>
+
+<section id="example-fe-composite" class="example" role="contentinfo" aria-label="SVG Example of feComposite, feFlood, feMerge  elements">
+<h3>feComposite, feFlood, feMerge example</h3>
+<svg class="example-fe-composite" width="500" height="295" viewBox="0 0 1100 650" version="1.1"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+.example-fe-composite text {
+	fill: yellow;
+}
+</style>
+  <title>Example feComposite - Examples of feComposite operations</title>
+  <desc>Four rows of six pairs of overlapping triangles depicting
+        the six different feComposite operators under different
+        opacity values and different clearing of the background.</desc>
+	<defs>
+    <desc>Define two sets of six filters for each of the six compositing operators.
+          The first set wipes out the background image by flooding with opaque white.
+          The second set does not wipe out the background, with the result
+          that the background sometimes shines through and is other cases
+          is blended into itself (i.e., "double-counting").</desc>
+    <filter id="example-fe-composite-overFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feFlood flood-color="white" flood-opacity="1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="over" result="comp"/>
+      <feMerge> <feMergeNode in="flood"/> <feMergeNode in="comp"/> </feMerge>
+    </filter>
+    <filter id="example-fe-composite-inFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feFlood flood-color="white" flood-opacity="1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/>
+      <feMerge> <feMergeNode in="flood"/> <feMergeNode in="comp"/> </feMerge>
+    </filter>
+    <filter id="example-fe-composite-outFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feFlood flood-color="white" flood-opacity="1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="out" result="comp"/>
+      <feMerge> <feMergeNode in="flood"/> <feMergeNode in="comp"/> </feMerge>
+    </filter>
+    <filter id="example-fe-composite-atopFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feFlood flood-color="white" flood-opacity="1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="atop" result="comp"/>
+      <feMerge> <feMergeNode in="flood"/> <feMergeNode in="comp"/> </feMerge>
+    </filter>
+    <filter id="example-fe-composite-xorFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feFlood flood-color="white" flood-opacity="1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/>
+      <feMerge> <feMergeNode in="flood"/> <feMergeNode in="comp"/> </feMerge>
+    </filter>
+    <filter id="example-fe-composite-arithmeticFlood" filterUnits="objectBoundingBox"
+            x="-5%" y="-5%" width="110%" height="110%">
+      <feFlood flood-color="white" flood-opacity="1" result="flood"/>
+      <feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
+                   operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/>
+      <feMerge> <feMergeNode in="flood"/> <feMergeNode in="comp"/> </feMerge>
+    </filter>
+    <filter id="example-fe-composite-overNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="over" result="comp"/>
+    </filter>
+    <filter id="example-fe-composite-inNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="in" result="comp"/>
+    </filter>
+    <filter id="example-fe-composite-outNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="out" result="comp"/>
+    </filter>
+    <filter id="example-fe-composite-atopNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="atop" result="comp"/>
+    </filter>
+    <filter id="example-fe-composite-xorNoFlood" filterUnits="objectBoundingBox" x="-5%" y="-5%" width="110%" height="110%">
+      <feComposite in="SourceGraphic" in2="BackgroundImage" operator="xor" result="comp"/>
+    </filter>
+    <filter id="example-fe-composite-arithmeticNoFlood" filterUnits="objectBoundingBox"
+            x="-5%" y="-5%" width="110%" height="110%">
+      <feComposite in="SourceGraphic" in2="BackgroundImage" result="comp"
+                   operator="arithmetic" k1=".5" k2=".5" k3=".5" k4=".5"/>
+    </filter>
+    <path id="example-fe-composite-Blue100" d="M 0 0 L 100 0 L 100 100 z" fill="#00ffff" />
+    <path id="example-fe-composite-Red100" d="M 0 0 L 0 100 L 100 0 z" fill="#ff00ff" />
+    <path id="example-fe-composite-Blue50" d="M 0 125 L 100 125 L 100 225 z" fill="#00ffff" fill-opacity=".5" />
+    <path id="example-fe-composite-Red50" d="M 0 125 L 0 225 L 100 125 z" fill="#ff00ff" fill-opacity=".5" />
+    <g id="example-fe-composite-TwoBlueTriangles">
+      <use xlink:href="#example-fe-composite-Blue100"/>
+      <use xlink:href="#example-fe-composite-Blue50"/>
+    </g>
+    <g id="example-fe-composite-BlueTriangles">
+      <use transform="translate(275,25)" xlink:href="#example-fe-composite-TwoBlueTriangles"/>
+      <use transform="translate(400,25)" xlink:href="#example-fe-composite-TwoBlueTriangles"/>
+      <use transform="translate(525,25)" xlink:href="#example-fe-composite-TwoBlueTriangles"/>
+      <use transform="translate(650,25)" xlink:href="#example-fe-composite-TwoBlueTriangles"/>
+      <use transform="translate(775,25)" xlink:href="#example-fe-composite-TwoBlueTriangles"/>
+      <use transform="translate(900,25)" xlink:href="#example-fe-composite-TwoBlueTriangles"/>
+    </g>
+  </defs>
+
+  <rect fill="none" stroke="blue" x="1" y="1" width="1098" height="648"/>
+  <g font-family="Verdana" font-size="40" shape-rendering="crispEdges">
+    <desc>Render the examples using the filters that draw on top of
+          an opaque white surface, thus obliterating the background.</desc>
+    <g enable-background="new">
+      <text x="15" y="75">opacity 1.0</text>
+      <text x="15" y="115" font-size="27">(with feFlood)</text>
+      <text x="15" y="200">opacity 0.5</text>
+      <text x="15" y="240" font-size="27">(with feFlood)</text>
+      <use xlink:href="#example-fe-composite-BlueTriangles"/>
+      <g transform="translate(275,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-overFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-overFlood)" />
+        <text x="5" y="275">over</text>
+      </g>
+      <g transform="translate(400,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-inFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-inFlood)" />
+        <text x="35" y="275">in</text>
+      </g>
+      <g transform="translate(525,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-outFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-outFlood)" />
+        <text x="15" y="275">out</text>
+      </g>
+      <g transform="translate(650,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-atopFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-atopFlood)" />
+        <text x="10" y="275">atop</text>
+      </g>
+      <g transform="translate(775,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-xorFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-xorFlood)" />
+        <text x="15" y="275">xor</text>
+      </g>
+      <g transform="translate(900,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-arithmeticFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-arithmeticFlood)" />
+        <text x="-25" y="275">arithmetic</text>
+      </g>
+    </g>
+    <g transform="translate(0,325)" enable-background="new">
+    <desc>Render the examples using the filters that do not obliterate
+          the background, thus sometimes causing the background to continue
+          to appear in some cases, and in other cases the background
+          image blends into itself ("double-counting").</desc>
+      <text x="15" y="75">opacity 1.0</text>
+      <text x="15" y="115" font-size="27">(without feFlood)</text>
+      <text x="15" y="200">opacity 0.5</text>
+      <text x="15" y="240" font-size="27">(without feFlood)</text>
+      <use xlink:href="#example-fe-composite-BlueTriangles"/>
+      <g transform="translate(275,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-overNoFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-overNoFlood)" />
+        <text x="5" y="275">over</text>
+      </g>
+      <g transform="translate(400,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-inNoFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-inNoFlood)" />
+        <text x="35" y="275">in</text>
+      </g>
+      <g transform="translate(525,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-outNoFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-outNoFlood)" />
+        <text x="15" y="275">out</text>
+      </g>
+      <g transform="translate(650,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-atopNoFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-atopNoFlood)" />
+        <text x="10" y="275">atop</text>
+      </g>
+      <g transform="translate(775,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-xorNoFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-xorNoFlood)" />
+        <text x="15" y="275">xor</text>
+      </g>
+      <g transform="translate(900,25)">
+        <use xlink:href="#example-fe-composite-Red100" filter="url(#example-fe-composite-arithmeticNoFlood)" />
+        <use xlink:href="#example-fe-composite-Red50" filter="url(#example-fe-composite-arithmeticNoFlood)" />
+        <text x="-25" y="275">arithmetic</text>
+      </g>
+    </g>
   </g>
 </svg>
 </section>
