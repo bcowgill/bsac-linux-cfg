@@ -576,6 +576,11 @@ circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
 
 a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
 
+
+animation and descriptive
+
+animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title
+
 -->
 
 <!-- L COLUMN ========== -->
@@ -586,8 +591,8 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 			class="target element"
 			data-element="line"
 			data-category="graphics,basic,renderable,shape"
-			data-use-with=""
-			title="&#9;line - [graphics,basic,renderable,shape] .">
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+			title="&#9;line - [graphics,basic,renderable,shape] basic shape used to create a line connecting two points.">
 			<a
 				href="Element/line">
 				line
@@ -1283,9 +1288,10 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 <summary>Selected examples...</summary>
 
 <div class="example-container">
+
 <section id="example-svg" class="example" role="contentinfo" aria-label="SVG Example of coordinates in svg element">
 <h3>SVG coordinate example</h3>
-<svg class="example-svg" width="400" height="400" viewBox="0 0 100 100">
+<svg class="example-svg" width="400" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <title>Examples of coordinate system and transforms in an SVG element.</title>
 <style>
 .example-svg {
@@ -1342,9 +1348,10 @@ a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,elli
 	<circle class="center" cx="50" cy="50" r="0.5">
 		<title>center of viewBox (50,50)</title>
 	</circle>
-	<line id="example-svg-radial-line" stroke="red" />
+	<line id="example-svg-radial-line" stroke="red" pathLength="100" stroke-width="1" stroke-dasharray="100"><title>radial line from origin with morse code dashes saying SOS</title></line>
 	<g id="example-svg-radial">
-		<line id="example-svg-grouped-line" stroke="blue" />
+		<title>radial coordinate point labelled with custom dashed underline</title>
+		<line id="example-svg-grouped-line" stroke="blue" pathLength="100" stroke-width="2" stroke-dasharray="25 25 25 25" stroke-dashoffset="-13" />
 		<text class="radius"></text>
 	</g>
 	<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)">.(25,25)</text>
@@ -1366,10 +1373,17 @@ function orbit() {
 	const ANGLE = '\u29aa'; // MathSymbol Measured Angle Down 3 o'clock
 	const ROTATION = '\u21bb'; // Clockwise open circle arrow
 
+	// https://en.wikipedia.org/wiki/Morse_code
+	const s = '...';
+	const o = '---';
+	const wb = '/';
+	const sos = `${s} ${o} ${s} ${wb}`.replace(/\./g, '1_1_').replace(/-/g, '3_1_').replace(/1_ /g, '3_').replace(/3_\//g, '7_').replace(/_/g, ' ');
+
 	const point = document.getElementById('example-svg-radial');
 	const line = document.getElementById('example-svg-grouped-line');
 	const radial = document.getElementById('example-svg-radial-line');
 	line.setAttribute('x2', RADIUS);
+	radial.setAttribute('stroke-dasharray', sos)
 
 	let angle = INITIAL_ANGLE;
 	let rotation = INITIAL_ROTATION;
@@ -1405,6 +1419,87 @@ orbit()
 <svg class="example-ellipse-rotate" width="400" height="200" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
 	<title>Example of rotating an ellipse using transform as there is no rotate property.</title>
   <ellipse rx="50" ry="25" fill="red" transform=" translate(75,38) rotate(25,0,0) "/>
+</svg>
+</section>
+
+<section id="example-line" class="example" role="contentinfo" aria-label="SVG Example of line element">
+<h3>SVG line example</h3>
+<svg class="example-line" width="400" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<title>Example of attributes of line elements and custom capping of end points.</title>
+<style>
+.example-line text {
+	font: bold 3.5px sans-serif;
+	fill: yellow;
+}
+</style>
+<!--
+	TODO line with arrows on end
+	line join mitre
+-->
+	<title>Example of line element.</title>
+<g class="example-line-group" transform="translate(5,0)">
+	<g class="example-line-basic" transform="translate(0,5)">
+		<title>line stroke=red stroke-width=2 stroke-opacity=0.5</title>
+		<line x2="50" stroke="red" stroke-width="2" stroke-opacity="0.5" />
+		<text y="5" >stroke, stroke-width, stroke-opacity</text>
+	</g>
+	<g class="example-line-round-endpoint" transform="translate(0,15)">
+		<title>line stroke-linecap=round</title>
+		<line x2="50" stroke="red" stroke-width="2" stroke-linecap="round" />
+		<text y="5" >stroke-linecap=round</text>
+	</g>
+	<g class="example-line-squared-endpoint" transform="translate(0,25)">
+		<title>line stroke-linecap=square</title>
+		<line x2="50" stroke="red" stroke-width="2" stroke-linecap="square" />
+		<text y="5" >stroke-linecap=square</text>
+	</g>
+	<g class="example-line-custom-dash" transform="translate(0,35)">
+		<title>line pathLength=200 stroke-dasharray=1 1 2 3 5 8 13 21 34 55 stroke-dashoffset=12</title>
+		<line x2="50" stroke="red" stroke-width="2" pathLength="200" stroke-dasharray="1 1 2 3 5 8 13 21 34 55" stroke-dashoffset="12"/>
+		<text y="5" >pathLength, stroke-dasharray, stroke-dashoffset</text>
+	</g>
+	<g class="example-line-circle-endpoint" transform="translate(0,45)">
+		<title>circle cx=0 stroke=red fill=red; circle cx=50 stroke=blue fill=red; line </title>
+		<circle cx="0" r="1.5" stroke="red" fill="red"><title>start of line circle connector</title></circle>
+		<circle cx="50" r="1.5" stroke="blue" fill="red"><title>end of line circle connector</title></circle>
+		<line x2="50" stroke="red" stroke-width="2" />
+		<text y="6" >line with circle r=1.5 at end points</text>
+	</g>
+	<g class="example-line-rect-endpoint" transform="translate(0,55)">
+		<title>rect (-1.5,-1.5 x 3,3) stroke=red fill=red; rect (-1.5,-1.5 x 3,3) stroke=blue fill=red translate(50,0); line </title>
+		<rect x="-1.5" width="3" y="-1.5" height="3" rx=0.5 stroke="red" fill="red"><title>start of line square connector</title></rect>
+		<rect x="-1.5" width="3" y="-1.5" height="3" rx=0.5 stroke="blue" fill="red" transform="translate(50,0)"><title>end of line square connector</title></rect>
+		<line x2="50" stroke="red" stroke-width="2" />
+		<text y="6" >line with rect width/height=3 at end points</text>
+	</g>
+	<g class="example-line-crossbar" transform="translate(0,65)">
+		<title>rect (0,-1.5 x 1,3) stroke=red fill=red; rect (0,-1.5 x 1,3) stroke=red fill=red translate(50,0); line </title>
+		<rect width="1" y="-1.5" height="3" stroke="red" fill="red"><title>start of line crossbar</title></rect>
+		<rect width="1" y="-1.5" height="3" stroke="red" fill="red" transform="translate(50,0)"><title>end of line crossbar</title></rect>
+		<line x2="50" stroke="red" stroke-width="2" />
+		<text y="6" >line with rect width=1 height=3 at end points</text>
+	</g>
+	<g class="example-line-arrowheads" transform="translate(0,75)">
+		<title>line 5@15°; line 5@-15°; (line 5@15°; line 5@-15°) translate 50@180°; line </title>
+		<g class="start-arrow">
+			<title>start of line arrowhead</title>
+			<line x2="5" stroke="red" transform="rotate(15,0,0)" />
+			<line x2="5" stroke="red" transform="rotate(-15,0,0)" />
+		</g>
+		<g class="end-arrow" transform="translate(50,0) rotate(180,0,0)">
+			<title>end of line arrowhead</title>
+			<line x2="5" stroke="red" transform="rotate(15,0,0)" />
+			<line x2="5" stroke="red" transform="rotate(-15,0,0)" />
+		</g>
+		<line x1="2" x2="48" stroke="red" stroke-width="2" />
+		<text y="6" >line with arrow heads at end points</text>
+	</g>
+	<g class="example-line-with-border" transform="translate(0,85)">
+		<title>rect stroke=red fill=blue</title>
+		<rect x="0.5" width="49" height="1.5" stroke="red" fill="blue" />
+		<text y="5" >rect stroke fill height=2</text>
+	</g>
+</g>
 </svg>
 </section>
 
