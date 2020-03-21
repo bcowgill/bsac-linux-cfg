@@ -12,7 +12,7 @@ use FindBin;
 
 sub usage {
 	my ($message) = @ARG;
-	my $cmd = $FindBind::Script;
+	my $cmd = $FindBin::Script;
 	print("$message\n\n") if $message;
 
 	print <<"USAGE";
