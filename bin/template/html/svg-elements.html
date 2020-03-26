@@ -541,6 +541,36 @@ h3 {
 	</ul>
 </div>
 
+<!-- L COLUMN ========== -->
+<div id="L" class="column visible">
+	<h2>L</h2>
+	<ul>
+		<li
+			class="target element"
+			data-element="line"
+			data-category="graphics,basic,renderable,shape"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+			title="&#9;line - [graphics,basic,renderable,shape] basic shape used to create a line connecting two points.">
+			<a
+				href="Element/line">
+				line
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="linearGradient"
+			data-category="paint server,never rendered,gradient"
+			data-use-with="desc,metadata,title,animate,animateTransform,set,stop,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use"
+			title="&#9;linearGradient - [paint server,never rendered,gradient]  define a linear gradient that can be applied to fill or stroke of graphical elements.">
+			<a
+				href="Element/linearGradient">
+				linearGradient
+			</a>
+		</li>
+	</ul>
+</div>
+</section>
+
 <!-- animation elements
 <animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
 deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
@@ -574,103 +604,108 @@ Graphics elements
 
 circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
 
-a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown,circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
-
-
 animation and descriptive
 
 animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title
 
--->
+obsolete or deprecated
 
-<!-- L COLUMN ========== -->
-<div id="L" class="column visible">
-	<h2>L</h2>
-	<ul>
-		<li
-			class="target element"
-			data-element="line"
-			data-category="graphics,basic,renderable,shape"
-			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
-			title="&#9;line - [graphics,basic,renderable,shape] basic shape used to create a line connecting two points.">
-			<a
-				href="Element/line">
-				line
-			</a>
-		</li>
-		<li
-			class="target element"
-			data-element="linearGradient"
-			data-category="paint server,never rendered,gradient"
-			data-use-with=""
-			title="&#9;linearGradient - [paint server,never rendered,gradient] .">
-			<a
-				href="Element/linearGradient">
-				linearGradient
-			</a>
-		</li>
-	</ul>
-</div>
-</section>
+altGlyph,altGlyphDef,altGlyphItem,animateColor,color-profile,cursor,font,font-face,font-face-format,font-face-name,font-face-src,font-face-uri,glyph,glyphRef,hkern,missing-glyph,tref,vkern
+
+
+-->
 
 <section id="section-mz" role="contentinfo" aria-label="SVG Elements M through Z" class="flex-item">
 <!-- M COLUMN ========== -->
-<div id="M" class="column">
+<div id="M" class="column visible">
 	<h2>M</h2>
 	<ul>
 		<li
 			class="target element"
-			data-element="meta"
-			data-category="meta"
-			data-use-with="head"
-			title="&#9;metadata - [meta] provides metadata about the HTML document.  metadata will not be displayed on the page, but will be machine parsable.  meta elements are typically used to specify page description, keywords, author of the document, last modified, and other metadata.">
+			data-element="marker"
+			data-category="never-rendered,container"
+			data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,color-profile,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+			title="&#9;marker for path start, middle, or end points - [never-rendered,container] element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given path, line, polyline or polygon element.  markers are attached to shapes using the marker-start, marker-mid, and marker-end properties.">
 			<a
-				href="Element/">
-				meta
+				href="Element/marker">
+				marker
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="map"
+			data-element="mask"
 			data-category="interaction,images"
-			data-use-with="img,area"
-			title="&#9;map - [interaction,images] define a client-side image-map. An image-map is an image with clickable areas.">
+			data-use-with=""
+			title="&#9;mask - [interaction,images] .">
 			<a
-				href="Element/">
-				map
+				href="Element/mask">
+				mask
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="mark"
+			data-element="mesh"
 			data-category="typography,formatting"
 			data-use-with=""
-			title="&#9;marked text - [typography,formatting] defines marked text.  use the mark element if you want to highlight parts of your text">
+			title="&#9;marked text - [typography,formatting] .">
 			<a
-				href="Element/">
-				mark
+				href="Element/mesh">
+				mesh
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="meter"
+			data-element="meshgradient"
 			data-category="semantic,formatting,media"
-			data-use-with="label"
-			title="&#9;meter - [semantic,formatting,media] defines a scalar measurement within a known range, or a fractional value.  this is also known as a gauge.  do not use for an active progress bar, use progress element instead.">
+			data-use-with=""
+			title="&#9;meter - [semantic,formatting,media] .">
 			<a
-				href="Element/">
-				meter
+				href="Element/meshgradient">
+				meshgradient
 			</a>
 		</li>
 		<li
 			class="target element"
-			data-element="main"
+			data-element="meshpatch"
 			data-category="semantic,styles"
-			data-use-with="body"
-			title="&#9;main - [semantic,styles] specifies the main content of a document.  content inside the main element should be unique to the document. It should not contain any content that is repeated across documents such as sidebars, navigation links, copyright information, site logos, and search forms.  there must not be more than one main element in a document. The main element must NOT be a descendant of an article, aside, footer, header, or nav element.">
+			data-use-with=""
+			title="&#9;meshpatch - [semantic,styles] .">
 			<a
-				href="Element/">
-				main
+				href="Element/meshpatch">
+				meshpatch
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="meshrow"
+			data-category="semantic,styles"
+			data-use-with=""
+			title="&#9;meshrow - [semantic,styles] .">
+			<a
+				href="Element/meshrow">
+				meshrow
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="meshdata"
+			data-category="semantic,styles"
+			data-use-with=""
+			title="&#9;meshdata - [semantic,styles] .">
+			<a
+				href="Element/meshdata">
+				meshdata
+			</a>
+		</li>
+		<li
+			class="target element"
+			data-element="mpath"
+			data-category="semantic,styles"
+			data-use-with=""
+			title="&#9;mpath - [semantic,styles] .">
+			<a
+				href="Element/mpath">
+				mpath
 			</a>
 		</li>
 	</ul>
@@ -1360,6 +1395,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title
 	<text x="25" y="50">.(25,50)</text>
 	<text x="25" y="75">.(25,75)</text>
 <script>
+<!--
 function orbit() {
 	const FRAMES = 4;
 	const RADIUS = 60;
@@ -1409,6 +1445,7 @@ function orbit() {
 	}
 }
 orbit()
+-->
 </script>
 
 </svg>
@@ -1422,7 +1459,68 @@ orbit()
 </svg>
 </section>
 
+<section id="example-marker" class="example" role="contentinfo" aria-label="SVG Example of marker element">
+<h3>marker element example</h3>
+<svg class="example-marker" width="200" height="200" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<title>Example of using marker element with polyline element.</title>
+  <defs>
+    <!-- arrowhead marker definition -->
+    <marker id="example-marker-arrow" viewBox="0 0 10 10" refX="5" refY="5"
+        markerWidth="6" markerHeight="6"
+        orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" stroke="yellow" fill="none" />
+    </marker>
+
+    <!-- simple dot marker definition -->
+    <marker id="example-marker-dot" viewBox="0 0 10 10" refX="5" refY="5"
+        markerWidth="5" markerHeight="5">
+      <circle cx="5" cy="5" r="5" fill="red" />
+    </marker>
+  </defs>
+
+  <!-- Coordinate axes with a arrowhead in both direction -->
+  <polyline points="10,10 10,90 90,90" fill="none" stroke="white"
+   marker-start="url(#example-marker-arrow)" marker-end="url(#example-marker-arrow)"  />
+
+  <!-- Data line with polymarkers -->
+  <polyline points="15,80 29,50 43,60 57,30 71,40 85,15" fill="none" stroke="grey"
+   marker-start="url(#example-marker-dot)" marker-mid="url(#example-marker-dot)"  marker-end="url(#example-marker-dot)" />
+</svg>
+</section>
+
 <section id="example-line" class="example" role="contentinfo" aria-label="SVG Example of line element">
+<script>
+<!--
+function calculateShapes() {
+	// svg path cannot draw line at angle so you have to calculate everything...
+	function moveByAngle(degrees = 0, radius = 1) {
+		const alpha = degrees * 2 * Math.PI / 360;
+		const x = radius * Math.cos(alpha);
+		const y = radius * Math.sin(alpha);
+		return `${x} ${y}`;
+	}
+	// compute y given an angle and horizontal distance to go
+	function riseByAngle(degrees = 0, distance = 1) {
+		const alpha = degrees * 2 * Math.PI / 360;
+		const radius = distance / Math.cos(alpha);
+		const y = radius * Math.sin(alpha);
+		return `${distance} ${y}`;
+	}
+	// compute x given an angle and vertical distance to go
+	function shiftByAngle(degrees = 0, height = 1) {
+		const alpha = degrees * 2 * Math.PI / 360;
+		const radius = height / Math.sin(alpha);
+		const x = radius * Math.cos(alpha);
+		return `${x} ${height}`;
+	}
+
+	console.warn(`move 10@15 degrees`, moveByAngle(15, 10));
+	console.warn(`rise over 10 @15 degrees`, riseByAngle(15, 10));
+	console.warn(`shift up 10 @15 degrees`, shiftByAngle(15, 10));
+}
+calculateShapes();
+-->
+</script>
 <h3>SVG line example</h3>
 <svg class="example-line" width="400" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 <title>Example of attributes of line elements and custom capping of end points.</title>
@@ -1435,8 +1533,25 @@ orbit()
 <!--
 	TODO line with arrows on end
 	line join mitre
+
+path d= documentation
+https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
+
 -->
-	<title>Example of line element.</title>
+  <defs>
+    <marker id="example-line-marker-dot-red-1.5" viewBox="0 0 10 10" refX="5" refY="5"
+        markerWidth="5" markerHeight="5">
+      <circle cx="5" cy="5" r="1.5" fill="red" />
+    </marker>
+    <marker id="example-line-marker-square-blue-red-1.5" viewBox="0 0 10 10" refX="5" refY="5"
+        markerWidth="5" markerHeight="5">
+			<rect x="3.5" width="3" y="3.5" height="3" rx=0.5 stroke-width="0.5" stroke="blue" fill="red"></rect>
+    </marker>
+    <marker id="example-line-marker-crossbar-red-1.5" viewBox="0 0 10 10" refX="5" refY="5"
+        markerWidth="5" markerHeight="5">
+			<rect x="5" width="1" y="3.5" height="3" stroke="red" fill="red"></rect>
+    </marker>
+	</defs>
 <g class="example-line-group" transform="translate(5,0)">
 	<g class="example-line-basic" transform="translate(0,5)">
 		<title>line stroke=red stroke-width=2 stroke-opacity=0.5</title>
@@ -1459,24 +1574,18 @@ orbit()
 		<text y="5" >pathLength, stroke-dasharray, stroke-dashoffset</text>
 	</g>
 	<g class="example-line-circle-endpoint" transform="translate(0,45)">
-		<title>circle cx=0 stroke=red fill=red; circle cx=50 stroke=blue fill=red; line </title>
-		<circle cx="0" r="1.5" stroke="red" fill="red"><title>start of line circle connector</title></circle>
-		<circle cx="50" r="1.5" stroke="blue" fill="red"><title>end of line circle connector</title></circle>
-		<line x2="50" stroke="red" stroke-width="2" />
+		<title>line with marker-start/marker-end as circles</title>
+		<line x2="50" stroke="red" stroke-width="2" marker-start="url(#example-line-marker-dot-red-1.5)" marker-end="url(#example-line-marker-dot-red-1.5)"/>
 		<text y="6" >line with circle r=1.5 at end points</text>
 	</g>
 	<g class="example-line-rect-endpoint" transform="translate(0,55)">
-		<title>rect (-1.5,-1.5 x 3,3) stroke=red fill=red; rect (-1.5,-1.5 x 3,3) stroke=blue fill=red translate(50,0); line </title>
-		<rect x="-1.5" width="3" y="-1.5" height="3" rx=0.5 stroke="red" fill="red"><title>start of line square connector</title></rect>
-		<rect x="-1.5" width="3" y="-1.5" height="3" rx=0.5 stroke="blue" fill="red" transform="translate(50,0)"><title>end of line square connector</title></rect>
-		<line x2="50" stroke="red" stroke-width="2" />
+		<title>line with marker-start/marker-end as rounded squares</title>
+		<line x2="50" stroke="red" stroke-width="2" marker-start="url(#example-line-marker-square-blue-red-1.5)" marker-end="url(#example-line-marker-square-blue-red-1.5)" />
 		<text y="6" >line with rect width/height=3 at end points</text>
 	</g>
 	<g class="example-line-crossbar" transform="translate(0,65)">
-		<title>rect (0,-1.5 x 1,3) stroke=red fill=red; rect (0,-1.5 x 1,3) stroke=red fill=red translate(50,0); line </title>
-		<rect width="1" y="-1.5" height="3" stroke="red" fill="red"><title>start of line crossbar</title></rect>
-		<rect width="1" y="-1.5" height="3" stroke="red" fill="red" transform="translate(50,0)"><title>end of line crossbar</title></rect>
-		<line x2="50" stroke="red" stroke-width="2" />
+		<title>line with marker-start/marker-end as crossbar</title>
+		<line x2="50" stroke="red" stroke-width="2"  marker-start="url(#example-line-marker-crossbar-red-1.5)" marker-end="url(#example-line-marker-crossbar-red-1.5)" />
 		<text y="6" >line with rect width=1 height=3 at end points</text>
 	</g>
 	<g class="example-line-arrowheads" transform="translate(0,75)">
@@ -1629,6 +1738,7 @@ orbit()
 	<circle id="example-filter-circle" cx="170" cy="70" r="50" fill="url(#example-fe-component-transfer-rainbow)" filter="url(#feBlend)" data-filter="feBlend" />
 	<text id="example-filter-label" x="105" y="12" fill="yellow">feBlend</text>
 <script>
+<!--
 function exampleFilter() {
 	const SECONDS_MS = 1000;
 	const DELAY_MS = 5 * SECONDS_MS;
@@ -1652,6 +1762,7 @@ function exampleFilter() {
 	}
 }
 exampleFilter();
+-->
 </script>
 </svg>
 </section>
@@ -1987,7 +2098,7 @@ exampleFilter();
 
 <section id="example-hatch" class="example" role="contentinfo" aria-label="SVG Example of hatch and hatchPath elements">
 <h3>hatch and hatchPath example EXPERIMENTAL</h3>
-<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+<svg class="example-hatch" width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
 	<title>Example of hatch element. (Experimental)</title>
   <defs>
     <hatch id="example-hatch-hatch" hatchUnits="userSpaceOnUse" pitch="5"
