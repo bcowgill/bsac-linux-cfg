@@ -1497,32 +1497,106 @@ function calculateShapes() {
 		const alpha = degrees * 2 * Math.PI / 360;
 		const x = radius * Math.cos(alpha);
 		const y = radius * Math.sin(alpha);
-		return `${x} ${y}`;
+		return `${x},${y}`;
 	}
 	// compute y given an angle and horizontal distance to go
 	function riseByAngle(degrees = 0, distance = 1) {
 		const alpha = degrees * 2 * Math.PI / 360;
 		const radius = distance / Math.cos(alpha);
 		const y = radius * Math.sin(alpha);
-		return `${distance} ${y}`;
+		return `${distance},${y}`;
 	}
 	// compute x given an angle and vertical distance to go
 	function shiftByAngle(degrees = 0, height = 1) {
 		const alpha = degrees * 2 * Math.PI / 360;
 		const radius = height / Math.sin(alpha);
 		const x = radius * Math.cos(alpha);
-		return `${x} ${height}`;
+		return `${x},${height}`;
 	}
 
-	console.warn(`move 10@15 degrees`, moveByAngle(15, 10));
-	console.warn(`rise over 10 @15 degrees`, riseByAngle(15, 10));
-	console.warn(`shift up 10 @15 degrees`, shiftByAngle(15, 10));
+  function get(props, defaults, name) {
+		const value = name in props ? props[name] : defaults[name];
+		return (value === null || typeof value === 'undefined') ? defaults[name] : value;
+	}
+
+	// compute a horizontal arrowhead line of a given length
+	// to position the line anywhere you can use a transform in props.props
+	// i.e. props = { props: 'transform="translate(10,10) rotate(12,0,0)"' }
+	function arrowHeadLine(props = {}) {
+		const id = get(props, arrowHeadLine.defaults, 'id');
+		const className = get(props, arrowHeadLine.defaults, 'className');
+		const transform = get(props, arrowHeadLine.defaults, 'props');
+		const identity = [
+			(id ? `id="${id}"` : ''),
+			(className ? `class="${className}"`: ''),
+			(transform ? transform: '')
+		].join(' ').trim();
+
+		const stroke = get(props, arrowHeadLine.defaults, 'stroke');
+		const arrowStroke = get(props, arrowHeadLine.defaults, 'arrowStroke') || stroke;
+
+		const alpha = get(props, arrowHeadLine.defaults, 'arrowAngle') * Math.PI / 180;
+		const arrowLength = get(props, arrowHeadLine.defaults, 'arrowLength');
+		const arrowX = arrowLength * Math.cos(alpha);
+		const arrowY = arrowLength * Math.sin(alpha);
+		let arrowFill = get(props, arrowHeadLine.defaults, 'arrowFill');
+		const close = arrowFill ? ' z' : '';
+		if (typeof arrowFill !== 'string') {
+			arrowFill = arrowFill ? arrowStroke : 'none';
+		}
+
+		const penetration = get(props, arrowHeadLine.defaults, 'penetration');
+		const length = get(props, arrowHeadLine.defaults, 'length');
+		const x1 = arrowX - penetration;
+		const x2 = length - arrowX + penetration;
+		const strokeWidth = get(props, arrowHeadLine.defaults, 'stroke-width');
+
+		const M1x = arrowX;
+		const M1y = arrowY;
+		const M2x = length - arrowX;
+		const M2y = arrowY;
+		const strokeLineJoin = get(props, arrowHeadLine.defaults, 'stroke-linejoin');
+		let strokeMiterLimit = get(props, arrowHeadLine.defaults, 'stroke-miterlimit');
+		strokeMiterLimit = (typeof strokeMiterLimit !== 'number' && typeof strokeMiterLimit !== 'string') ? '' : ` stroke-miterlimit="${strokeMiterLimit}"`;
+
+		const svg = `<g${identity.length ? ' ' + identity : ''}>
+			<path d="M ${M1x},${M1y} l ${-M1x},${-M1y} ${M1x},${-M1y}${close}" stroke="${arrowStroke}" fill="${arrowFill}" stroke-linejoin="${strokeLineJoin}"${strokeMiterLimit} />
+			<path d="M ${M2x},${M2y} l ${M1x},${-M2y} ${-M1x},${-M2y}${close}" stroke="${arrowStroke}" fill="${arrowFill}" stroke-linejoin="${strokeLineJoin}"${strokeMiterLimit} />
+			<line x1="${x1}" x2="${x2}" stroke="${stroke}" fill="${stroke}" stroke-width="${strokeWidth}" />
+			</g>`;
+		return svg;
+	}
+	arrowHeadLine.defaults = {
+		id: undefined,
+		className: undefined,
+    props: '', // transform= etc props for surrounding <g>
+		length: 50,
+		penetration: 0, // amount line penetrates into the arrowhead
+		stroke: 'red',
+		'stroke-width': 2,
+		'stroke-linejoin': 'miter', // round, bevel, miter-clip, arcs
+		'stroke-miterlimit': undefined, // number
+		arrowAngle: 15,
+		arrowLength: 5,
+    arrowStroke: undefined, // defaults to stroke
+		arrowFill: false, // true or red, url(#xxx) etc...
+	};
+
+	const ANGLE = 15;
+	const DIST = 5;
+	console.warn(`move ${DIST}@${ANGLE} degrees`, moveByAngle(ANGLE, DIST));
+	console.warn(`rise over ${DIST} @${ANGLE} degrees`, riseByAngle(ANGLE, DIST));
+	console.warn(`shift up ${DIST} @${ANGLE} degrees`, shiftByAngle(ANGLE, DIST));
+	console.warn(`arrowHeadLine`, arrowHeadLine({ className: 'example-line-js-arrowhead', props: 'transform="translate(0,105)"' }))
+	console.warn(`arrowHeadLine filled`, arrowHeadLine({ className: 'example-line-js-arrowhead-filled', arrowFill: true, props: 'transform="translate(0,115)"' }))
+	console.warn(`arrowHeadLine hollow`, arrowHeadLine({ className: 'example-line-js-arrowhead-hollow', arrowFill: 'black', props: 'transform="translate(0,125)"' }))
+	console.warn(`arrowHeadLine colored`, arrowHeadLine({ className: 'example-line-js-arrowhead-colored', arrowStroke: 'blue', arrowFill: true, props: 'transform="translate(0,135)"' }))
 }
 calculateShapes();
 -->
 </script>
 <h3>SVG line example</h3>
-<svg class="example-line" width="400" height="400" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<svg class="example-line" width="400" height="500" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
 <title>Example of attributes of line elements and custom capping of end points.</title>
 <style>
 .example-line text {
@@ -1539,17 +1613,33 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 
 -->
   <defs>
+	  <path id="example-line-path-arrowhead-15deg-5" stroke-linejoin="round"
+      d="M 5.8296291314453415,6.2940952255126037
+         l -4.8296291314453415,-1.2940952255126037 4.8296291314453415,-1.2940952255126037
+         z" />
+	  <path id="example-line-path-arrowhead-end-15deg-5" stroke-linejoin="round"
+      d="M 1,6.2940952255126037
+         l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037
+         z" />
     <marker id="example-line-marker-dot-red-1.5" viewBox="0 0 10 10" refX="5" refY="5"
-        markerWidth="5" markerHeight="5">
+      markerWidth="5" markerHeight="5">
       <circle cx="5" cy="5" r="1.5" fill="red" />
     </marker>
     <marker id="example-line-marker-square-blue-red-1.5" viewBox="0 0 10 10" refX="5" refY="5"
-        markerWidth="5" markerHeight="5">
+      markerWidth="5" markerHeight="5">
 			<rect x="3.5" width="3" y="3.5" height="3" rx=0.5 stroke-width="0.5" stroke="blue" fill="red"></rect>
     </marker>
     <marker id="example-line-marker-crossbar-red-1.5" viewBox="0 0 10 10" refX="5" refY="5"
-        markerWidth="5" markerHeight="5">
+      markerWidth="5" markerHeight="5">
 			<rect x="5" width="1" y="3.5" height="3" stroke="red" fill="red"></rect>
+    </marker>
+    <marker id="example-line-marker-arrowhead-red-15deg-1.5-rise" viewBox="0 0 10 10" refX="5.8296291314453415" refY="5"
+      markerWidth="5" markerHeight="5">
+			<use xlink:href="#example-line-path-arrowhead-15deg-5" stroke="red" fill="red" />
+    </marker>
+    <marker id="example-line-marker-arrowhead-end-red-15deg-1.5-rise" viewBox="0 0 10 10" refX="1" refY="5"
+      markerWidth="5" markerHeight="5">
+			<use xlink:href="#example-line-path-arrowhead-end-15deg-5" stroke="red" fill="red" />
     </marker>
 	</defs>
 <g class="example-line-group" transform="translate(5,0)">
@@ -1576,7 +1666,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 	<g class="example-line-circle-endpoint" transform="translate(0,45)">
 		<title>line with marker-start/marker-end as circles</title>
 		<line x2="50" stroke="red" stroke-width="2" marker-start="url(#example-line-marker-dot-red-1.5)" marker-end="url(#example-line-marker-dot-red-1.5)"/>
-		<text y="6" >line with circle r=1.5 at end points</text>
+		<text y="6" >line with circle r=1.5 as end point markers</text>
 	</g>
 	<g class="example-line-rect-endpoint" transform="translate(0,55)">
 		<title>line with marker-start/marker-end as rounded squares</title>
@@ -1586,7 +1676,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 	<g class="example-line-crossbar" transform="translate(0,65)">
 		<title>line with marker-start/marker-end as crossbar</title>
 		<line x2="50" stroke="red" stroke-width="2"  marker-start="url(#example-line-marker-crossbar-red-1.5)" marker-end="url(#example-line-marker-crossbar-red-1.5)" />
-		<text y="6" >line with rect width=1 height=3 at end points</text>
+		<text y="6" >line with rect width=1 height=3 as end point markers</text>
 	</g>
 	<g class="example-line-arrowheads" transform="translate(0,75)">
 		<title>line 5@15°; line 5@-15°; (line 5@15°; line 5@-15°) translate 50@180°; line </title>
@@ -1603,11 +1693,50 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 		<line x1="2" x2="48" stroke="red" stroke-width="2" />
 		<text y="6" >line with arrow heads at end points</text>
 	</g>
-	<g class="example-line-with-border" transform="translate(0,85)">
+	<g class="example-line-arrowheads-marker" transform="translate(0,85)">
+		<title>line with marker-start/marker-end as 15° filled arrowhead</title>
+		<line x1="4.8296291314453415" x2="45.1703708685546585" stroke="red" stroke-width="2" marker-start="url(#example-line-marker-arrowhead-red-15deg-1.5-rise)" marker-end="url(#example-line-marker-arrowhead-end-red-15deg-1.5-rise)" />
+		<text y="6" >line with 15° arrow heads as end point markers</text>
+	</g>
+	<g class="example-line-with-border" transform="translate(0,95)">
 		<title>rect stroke=red fill=blue</title>
 		<rect x="0.5" width="49" height="1.5" stroke="red" fill="blue" />
 		<text y="5" >rect stroke fill height=2</text>
 	</g>
+
+<g class="example-line-js-arrowhead" transform="translate(0,105)">
+		<title>line with javascript computed arrowhead</title>
+			<path d="M 4.8296291314453415,1.2940952255126037 l -4.8296291314453415,-1.2940952255126037 4.8296291314453415,-1.2940952255126037" stroke="red" fill="none" stroke-linejoin="miter" />
+			<path d="M 45.170370868554656,1.2940952255126037 l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037" stroke="red" fill="none" stroke-linejoin="miter" />
+			<line x1="4.8296291314453415" x2="45.170370868554656" stroke="red" fill="red" stroke-width="2" />
+		<text y="6" >line with javascript computed 15° arrowhead</text>
+			</g>
+
+<g class="example-line-js-arrowhead-filled" transform="translate(0,115)">
+		<title>line with javascript computed filled arrowhead</title>
+			<path d="M 4.8296291314453415,1.2940952255126037 l -4.8296291314453415,-1.2940952255126037 4.8296291314453415,-1.2940952255126037 z" stroke="red" fill="red" stroke-linejoin="miter" />
+			<path d="M 45.170370868554656,1.2940952255126037 l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037 z" stroke="red" fill="red" stroke-linejoin="miter" />
+			<line x1="4.8296291314453415" x2="45.170370868554656" stroke="red" fill="red" stroke-width="2" />
+		<text y="6" >line with javascript computed 15° filled arrowhead</text>
+			</g>
+
+
+<g class="example-line-js-arrowhead-hollow" transform="translate(0,125)">
+		<title>line with javascript computed hollow arrowhead</title>
+			<path d="M 4.8296291314453415,1.2940952255126037 l -4.8296291314453415,-1.2940952255126037 4.8296291314453415,-1.2940952255126037 z" stroke="red" fill="black" stroke-linejoin="miter" />
+			<path d="M 45.170370868554656,1.2940952255126037 l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037 z" stroke="red" fill="black" stroke-linejoin="miter" />
+			<line x1="4.8296291314453415" x2="45.170370868554656" stroke="red" fill="red" stroke-width="2" />
+		<text y="6" >line with javascript computed 15° hollow arrowhead</text>
+			</g>
+
+<g class="example-line-js-arrowhead-colored" transform="translate(0,135)">
+		<title>line with javascript computed colored arrowhead</title>
+			<path d="M 4.8296291314453415,1.2940952255126037 l -4.8296291314453415,-1.2940952255126037 4.8296291314453415,-1.2940952255126037 z" stroke="blue" fill="blue" stroke-linejoin="miter" />
+			<path d="M 45.170370868554656,1.2940952255126037 l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037 z" stroke="blue" fill="blue" stroke-linejoin="miter" />
+			<line x1="4.8296291314453415" x2="45.170370868554656" stroke="red" fill="red" stroke-width="2" />
+		<text y="6" >line with javascript computed 15° blue arrowhead</text>
+			</g>
+
 </g>
 </svg>
 </section>
