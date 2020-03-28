@@ -1419,67 +1419,66 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)">.(75,25)</text>
 						<text x="25" y="50">.(25,50)</text>
 						<text x="25" y="75">.(25,75)</text>
-						<script>
-							<!--
-							function orbit() {
-								const FRAMES = 4;
-								const RADIUS = 60;
-								const INITIAL_ANGLE = 0;
-								const DELTA_ANGLE = 1 / FRAMES;
-								const MAX_ANGLE = 100;
-								const DELAY = 1000 / (6 * FRAMES);
-								const INITIAL_ROTATION = 90;
-								const ANGULAR_SPEED = 4 / FRAMES;
-								const SUM = '\u03a3'; // Greek capital sigma
-								const ANGLE = '\u29aa'; // MathSymbol Measured Angle Down 3 o'clock
-								const ROTATION = '\u21bb'; // Clockwise open circle arrow
+					</svg>
+					<script>
+						<!--
+						function orbit() {
+							const FRAMES = 4;
+							const RADIUS = 60;
+							const INITIAL_ANGLE = 0;
+							const DELTA_ANGLE = 1 / FRAMES;
+							const MAX_ANGLE = 100;
+							const DELAY = 1000 / (6 * FRAMES);
+							const INITIAL_ROTATION = 90;
+							const ANGULAR_SPEED = 4 / FRAMES;
+							const SUM = '\u03a3'; // Greek capital sigma
+							const ANGLE = '\u29aa'; // MathSymbol Measured Angle Down 3 o'clock
+							const ROTATION = '\u21bb'; // Clockwise open circle arrow
 
-								// https://en.wikipedia.org/wiki/Morse_code
-								const s = '...';
-								const o = '---';
-								const wb = '/';
-								const sos = `${s} ${o} ${s} ${wb}`
-									.replace(/\./g, '1_1_')
-									.replace(/-/g, '3_1_')
-									.replace(/1_ /g, '3_')
-									.replace(/3_\//g, '7_')
-									.replace(/_/g, ' ');
+							// https://en.wikipedia.org/wiki/Morse_code
+							const s = '...';
+							const o = '---';
+							const wb = '/';
+							const sos = `${s} ${o} ${s} ${wb}`
+								.replace(/\./g, '1_1_')
+								.replace(/-/g, '3_1_')
+								.replace(/1_ /g, '3_')
+								.replace(/3_\//g, '7_')
+								.replace(/_/g, ' ');
 
-								const point = document.getElementById('example-svg-radial');
-								const line = document.getElementById('example-svg-grouped-line');
-								const radial = document.getElementById('example-svg-radial-line');
-								line.setAttribute('x2', RADIUS);
-								radial.setAttribute('stroke-dasharray', sos)
+							const point = document.getElementById('example-svg-radial');
+							const line = document.getElementById('example-svg-grouped-line');
+							const radial = document.getElementById('example-svg-radial-line');
+							line.setAttribute('x2', RADIUS);
+							radial.setAttribute('stroke-dasharray', sos)
 
-								let angle = INITIAL_ANGLE;
-								let rotation = INITIAL_ROTATION;
-								if (point) {
-									const text = point.querySelector('text');
-									if (text) {
-										const timer = setInterval(function movePoint() {
-											// text.setAttribute('rotate', angle);
-											if (radial) {
-												const radians = 2 * Math.PI * angle / 360;
-												const x = RADIUS * Math.cos(radians);
-												const y = RADIUS * Math.sin(radians);
-												radial.setAttribute('x2', x);
-												radial.setAttribute('y2', y);
-											}
-											point.setAttribute('transform', `rotate(${angle},0,0) translate(${RADIUS},0) rotate(${rotation},0,0)`);
-											text.innerHTML = `.R=${RADIUS}${ANGLE}${Math.round(angle)}° ${ROTATION}${Math.round(rotation)}° ${SUM}${ (Math.round(angle + rotation)) % 360}°`
-											angle          = (angle + DELTA_ANGLE) % MAX_ANGLE;
-											rotation       = (rotation + ANGULAR_SPEED) % 360;
-											// clearInterval(timer);
-										}, DELAY);
-									}
+							let angle = INITIAL_ANGLE;
+							let rotation = INITIAL_ROTATION;
+							if (point) {
+								const text = point.querySelector('text');
+								if (text) {
+									const timer = setInterval(function movePoint() {
+										// text.setAttribute('rotate', angle);
+										if (radial) {
+											const radians = 2 * Math.PI * angle / 360;
+											const x = RADIUS * Math.cos(radians);
+											const y = RADIUS * Math.sin(radians);
+											radial.setAttribute('x2', x);
+											radial.setAttribute('y2', y);
+										}
+										point.setAttribute('transform', `rotate(${angle},0,0) translate(${RADIUS},0) rotate(${rotation},0,0)`);
+										text.innerHTML = `.R=${RADIUS}${ANGLE}${Math.round(angle)}° ${ROTATION}${Math.round(rotation)}° ${SUM}${ (Math.round(angle + rotation)) % 360}°`
+										angle          = (angle + DELTA_ANGLE) % MAX_ANGLE;
+										rotation       = (rotation + ANGULAR_SPEED) % 360;
+										// clearInterval(timer);
+									}, DELAY);
 								}
 							}
-							orbit()
+						}
+						orbit()
 
-							-->
-						</script>
-
-					</svg>
+						-->
+					</script>
 				</section>
 
 				<!-- ============================================================= -->
