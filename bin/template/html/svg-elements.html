@@ -133,6 +133,10 @@
 		.todo {
 			opacity: 0.2;
 		}
+		.experimental,
+		.undocumented {
+			opacity: 0.5;
+		}
 
 		.lock-state {
 			opacity: 0;
@@ -548,7 +552,7 @@
 				<h2>H</h2>
 				<ul>
 					<li
-						class="target element"
+						class="target element experimental"
 						data-element="hatch"
 						data-category="paint server,never rendered"
 						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,hatchpath,script,style"
@@ -693,7 +697,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						</a>
 					</li>
 					<li
-						class="target element"
+						class="target element undocumented"
 						data-element="mesh"
 						data-category="graphics,graphics reference,renderable,shape"
 						data-use-with=""
@@ -703,7 +707,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						</a>
 					</li>
 					<li
-						class="target element"
+						class="target element undocumented"
 						data-element="meshgradient"
 						data-category="gradient,never rendered,paint server"
 						data-use-with=""
@@ -713,7 +717,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						</a>
 					</li>
 					<li
-						class="target element"
+						class="target element undocumented"
 						data-element="meshpatch"
 						data-category=",miscellaneous"
 						data-use-with=""
@@ -723,7 +727,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						</a>
 					</li>
 					<li
-						class="target element"
+						class="target element undocumented"
 						data-element="meshrow"
 						data-category=",miscellaneous"
 						data-use-with=""
@@ -735,9 +739,9 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="metadata"
-						data-category="semantic,styles"
+						data-category="never rendered,descriptive"
 						data-use-with=""
-						title="&#9;metadata - [semantic,styles]  HEREIAM.">
+						title="&#9;metadata - [never rendered,descriptive]  adds metadata to SVG content.  metadata is structured information about data.  the contents of a metadata element should be elements from other XML namespaces such as RDF, FOAF, etc.">
 						<a href="Element/metadata">
 							metadata
 						</a>
@@ -745,9 +749,9 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="mpath"
-						data-category="semantic,styles"
-						data-use-with=""
-						title="&#9;mpath - [semantic,styles]  .">
+						data-category=",animation"
+						data-use-with="animateMotion,path,desc,metadata,title"
+						title="&#9;motion path - [,animation]  sub-element for the animateMotion element provides the ability to reference an external path element as the definition of a motion path.">
 						<a href="Element/mpath">
 							mpath
 						</a>
@@ -756,7 +760,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 			</div>
 
 			<!-- N COLUMN ========== -->
-			<div id="N" class="column">
+			<div id="N" class="column visible">
 				<h2>N</h2>
 				<ul>
 					<li
@@ -764,7 +768,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-element="noscript"
 						data-category="interaction,programming"
 						data-use-with="head,link,style,meta"
-						title="&#9;no script support - [interaction,programming] defines an alternate content for users that have disabled scripts in their browser or have a browser that doesn't support script.">
+						title="&#9;no script support - [interaction,programming]  HEREIAM.">
 						<a href="Element/">
 							noscript
 						</a>
@@ -2092,8 +2096,8 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					id="example-svg-animate"
 					class="example"
 					role="contentinfo"
-					aria-label="SVG Example of animate, animateMotion, animateTransform elements">
-					<h3>animate, animateMotion, animateTransform example</h3>
+					aria-label="SVG Example of animate, animateMotion, animateTransform, mpath elements">
+					<h3>animate, animateMotion, animateTransform, mpath example</h3>
 					<svg
 						class="example-svg-animate"
 						width="400"
@@ -2122,15 +2126,15 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							repeatCount="indefinite"/>
 
 						<path
+							id="example-svg-animate-motion-path"
 							fill="none"
 							stroke="yellow"
 							d="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z"/>
 
 						<rect x="-5" y="-5" rx="2" width="10" height="10" fill="red">
-							<animateMotion
-								dur="10s"
-								repeatCount="indefinite"
-								path="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z"/>
+							<animateMotion dur="10s" repeatCount="indefinite">
+								<mpath xlink:href="#example-svg-animate-motion-path"/>
+							</animateMotion>
 							<animateTransform
 								attributeName="transform"
 								attributeType="XML"
@@ -2237,32 +2241,30 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 								fill="black"/>
 
 							<!-- Everything under any other colour will be partially colour masked -->
-							<rect id="example-mask-myMask-inner-rect" x="35" y="35" width="40" height="40" fill="#f88">
+							<rect
+								id="example-mask-myMask-inner-rect"
+								x="35"
+								y="35"
+								width="40"
+								height="40"
+								fill="#f88">
+								<animate attributeName="x" values="30;45;30" dur="2s" repeatCount="indefinite"/>
+								<animate attributeName="y" values="30;45;30" dur="2s" repeatCount="indefinite"/>
 								<animate
-									 attributeName="x"
-									 values="30;45;30"
-									 dur="2s"
-									 repeatCount="indefinite"/>
+									attributeName="width"
+									values="40;10;40"
+									dur="2s"
+									repeatCount="indefinite"/>
 								<animate
-									 attributeName="y"
-									 values="30;45;30"
-									 dur="2s"
-									 repeatCount="indefinite"/>
+									attributeName="height"
+									values="40;10;40"
+									dur="2s"
+									repeatCount="indefinite"/>
 								<animate
-									 attributeName="width"
-									 values="40;10;40"
-									 dur="2s"
-									 repeatCount="indefinite"/>
-								<animate
-									 attributeName="height"
-									 values="40;10;40"
-									 dur="2s"
-									 repeatCount="indefinite"/>
-								<animate
-									 attributeName="fill"
-									 values="#f88;#888;#f88"
-									 dur="0.5s"
-									 repeatCount="indefinite"/>
+									attributeName="fill"
+									values="#f88;#888;#f88"
+									dur="0.5s"
+									repeatCount="indefinite"/>
 							</rect>
 						</mask>
 
