@@ -1325,6 +1325,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 
 			<div class="example-container">
 
+				<!-- ============================================================= -->
 				<section
 					id="example-svg"
 					class="example"
@@ -1481,6 +1482,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-ellipse-rotate"
 					class="example"
@@ -1502,6 +1504,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-marker"
 					class="example"
@@ -1559,195 +1562,12 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-line"
 					class="example"
 					role="contentinfo"
 					aria-label="SVG Example of line element">
-					<script>
-						<!--
-						function calculateShapes() {
-							// svg path cannot draw line at angle so you have to calculate everything...
-							function moveByAngle(degrees = 0, radius = 1) {
-								const alpha = degrees * 2 * Math.PI / 360;
-								const x = radius * Math.cos(alpha);
-								const y = radius * Math.sin(alpha);
-								return `${x},${y}`;
-							}
-							// compute y given an angle and horizontal distance to go
-							function riseByAngle(degrees = 0, distance = 1) {
-								const alpha = degrees * 2 * Math.PI / 360;
-								const radius = distance / Math.cos(alpha);
-								const y = radius * Math.sin(alpha);
-								return `${distance},${y}`;
-							}
-							// compute x given an angle and vertical distance to go
-							function shiftByAngle(degrees = 0, height = 1) {
-								const alpha = degrees * 2 * Math.PI / 360;
-								const radius = height / Math.sin(alpha);
-								const x = radius * Math.cos(alpha);
-								return `${x},${height}`;
-							}
-
-							// get a named value from provided props or default props
-							function get(props, defaults, name) {
-								const value = name in props
-									? props[name]
-									: defaults[name];
-								return (value === null || typeof value === 'undefined')
-									? defaults[name]
-									: value;
-							}
-
-							// given a set of line end points compute the rotation, length and transform
-							// needed to position the line
-							function calculateTransform(props = {}) {
-								const x1 = get(props, calculateTransform.defaults, 'x1');
-								const y1 = get(props, calculateTransform.defaults, 'y1');
-								const x2 = get(props, calculateTransform.defaults, 'x2');
-								const y2 = get(props, calculateTransform.defaults, 'y2');
-
-								let x = undefined;
-								let y = undefined;
-								let transform = undefined;
-								let alpha = undefined;
-								let angle = undefined;
-
-								const dx = x2 - x1;
-								const dy = y2 - y1;
-								const length = Math.sqrt(dx * dx + dy * dy);
-
-								if (length) {
-									x         = x1;
-									y         = y1;
-									alpha     = Math.atan2(dy, dx);
-									angle     = 180 * alpha / Math.PI;
-									transform = `translate(${x1},${y1}) rotate(${angle},0,0)`;
-								}
-
-								return {
-									alpha,
-									angle,
-									length: length || undefined,
-									transform,
-									x,
-									y
-								};
-							} // calculateTransform()
-							calculateTransform.defaults = {
-								x1: 0,
-								x2: 0,
-								y1: 0,
-								y2: 0
-							};
-
-							// compute a horizontal arrowhead line of a given length to position the line
-							// anywhere you can use a transform in props.props i.e. props = { props:
-							// 'transform="translate(10,10) rotate(12,0,0)"' }
-							function arrowHeadLine(props = {}) {
-								const transformProps = calculateTransform(props);
-								const id = get(props, arrowHeadLine.defaults, 'id');
-								const className = get(props, arrowHeadLine.defaults, 'className');
-								const outerProps = get(props, arrowHeadLine.defaults, 'props');
-								const identity = [
-									(id
-										? `id="${id}"`
-										: ''),
-									(className
-										? `class="${className}"`
-										: ''),
-									(transformProps.transform
-										? `transform="${transformProps.transform}"`
-										: ''),
-										(outerProps
-											? outerProps
-											: '')
-									]
-									.join(' ')
-									.trim();
-
-								const stroke = get(props, arrowHeadLine.defaults, 'stroke');
-								const arrowStroke = get(props, arrowHeadLine.defaults, 'arrowStroke') || stroke;
-
-								const alpha = get(props, arrowHeadLine.defaults, 'arrowAngle') * Math.PI / 180;
-								const arrowLength = get(props, arrowHeadLine.defaults, 'arrowLength');
-								const arrowX = arrowLength * Math.cos(alpha);
-								const arrowY = arrowLength * Math.sin(alpha);
-								let arrowFill = get(props, arrowHeadLine.defaults, 'arrowFill');
-								const close = arrowFill
-									? ' z'
-									: '';
-								if (typeof arrowFill !== 'string') {
-									arrowFill = arrowFill
-										? arrowStroke
-										: 'none';
-								}
-
-								const penetration = get(props, arrowHeadLine.defaults, 'penetration');
-								const length = get(props, arrowHeadLine.defaults, 'length') || transformProps.length;
-								const x1 = arrowX - penetration;
-								const x2 = length - arrowX + penetration;
-								const strokeWidth = get(props, arrowHeadLine.defaults, 'stroke-width');
-
-								const M1x = arrowX;
-								const M1y = arrowY;
-								const M2x = length - arrowX;
-								const M2y = arrowY;
-								const strokeLineJoin = get(props, arrowHeadLine.defaults, 'stroke-linejoin');
-								let strokeMiterLimit = get(props, arrowHeadLine.defaults, 'stroke-miterlimit');
-								strokeMiterLimit = (typeof strokeMiterLimit !== 'number' && typeof strokeMiterLimit !== 'string')
-									? ''
-									: ` stroke-miterlimit="${strokeMiterLimit}"`;
-
-								const svg = `<g${identity.length
-									? ' ' + identity
-									: ''}>
-			<path d="M ${M1x},${M1y} l ${ - M1x},${ - M1y} ${M1x},${ - M1y}${close}" stroke="${arrowStroke}" fill="${arrowFill}" stroke-linejoin="${strokeLineJoin}"${strokeMiterLimit} />
-			<path d="M ${M2x},${M2y} l ${M1x},${ - M2y} ${ - M1x},${ - M2y}${close}" stroke="${arrowStroke}" fill="${arrowFill}" stroke-linejoin="${strokeLineJoin}"${strokeMiterLimit} />
-			<line x1="${x1}" x2="${x2}" stroke="${stroke}" fill="${stroke}" stroke-width="${strokeWidth}" />
-			</g>`;
-								return svg;
-							} // arrowHeadLine()
-							arrowHeadLine.defaults = {
-								'stroke-linejoin'  : 'miter', // round, bevel, miter-clip, arcs
-								'stroke-miterlimit': undefined, // number
-								'stroke-width'     : 0.25,
-								arrowAngle         : 15,
-								arrowFill          : false, // true or red, url(#xxx) etc...
-								arrowLength        : 5,
-								arrowStroke        : undefined, // defaults to stroke
-								className          : undefined,
-								id                 : undefined,
-								length             : 50,
-								penetration        : 0, // amount line penetrates into the arrowhead
-								props              : '', // transform= etc props for surrounding <g>
-								stroke             : 'red'
-							};
-
-							const ANGLE = 15;
-							const DIST = 5;
-							console.warn(`move ${DIST}@${ANGLE} degrees`, moveByAngle(ANGLE, DIST));
-							console.warn(`rise over ${DIST} @${ANGLE} degrees`, riseByAngle(ANGLE, DIST));
-							console.warn(`shift up ${DIST} @${ANGLE} degrees`, shiftByAngle(ANGLE, DIST));
-							console.warn(`transform (1,2) to (4,5)`, calculateTransform({x1: 1, x2: 4, y1: 2, y2: 5}));
-							console.warn(`arrowHeadLine`, arrowHeadLine({className: 'example-line-js-arrowhead', props: 'transform="translate(0,105)"'}))
-							console.warn(`arrowHeadLine filled`, arrowHeadLine({arrowFill: true, className: 'example-line-js-arrowhead-filled', props: 'transform="translate(0,115)"'}))
-							console.warn(`arrowHeadLine hollow`, arrowHeadLine({arrowFill: 'black', className: 'example-line-js-arrowhead-hollow', props: 'transform="translate(0,125)"'}))
-							console.warn(`arrowHeadLine colored`, arrowHeadLine({arrowFill: true, arrowStroke: 'blue', className: 'example-line-js-arrowhead-colored', props: 'transform="translate(0,135)"'}))
-							console.warn(`arrowHeadLine colored arbitrary`, arrowHeadLine({
-								arrowFill  : true,
-								arrowStroke: 'blue',
-								className  : 'example-line-js-arrowhead-colored-arbitrary',
-								x1         : 5,
-								x2         : 55,
-								y1         : 145,
-								y2         : 152
-							}))
-						}
-						calculateShapes();
-
-						-->
-					</script>
 					<h3>SVG line example</h3>
 					<svg
 						class="example-line"
@@ -2039,8 +1859,193 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 
 						</g>
 					</svg>
+					<script>
+						<!--
+						function calculateShapes() {
+							// svg path cannot draw line at angle so you have to calculate everything...
+							function moveByAngle(degrees = 0, radius = 1) {
+								const alpha = degrees * 2 * Math.PI / 360;
+								const x = radius * Math.cos(alpha);
+								const y = radius * Math.sin(alpha);
+								return `${x},${y}`;
+							}
+							// compute y given an angle and horizontal distance to go
+							function riseByAngle(degrees = 0, distance = 1) {
+								const alpha = degrees * 2 * Math.PI / 360;
+								const radius = distance / Math.cos(alpha);
+								const y = radius * Math.sin(alpha);
+								return `${distance},${y}`;
+							}
+							// compute x given an angle and vertical distance to go
+							function shiftByAngle(degrees = 0, height = 1) {
+								const alpha = degrees * 2 * Math.PI / 360;
+								const radius = height / Math.sin(alpha);
+								const x = radius * Math.cos(alpha);
+								return `${x},${height}`;
+							}
+
+							// get a named value from provided props or default props
+							function get(props, defaults, name) {
+								const value = name in props
+									? props[name]
+									: defaults[name];
+								return (value === null || typeof value === 'undefined')
+									? defaults[name]
+									: value;
+							}
+
+							// given a set of line end points compute the rotation, length and transform
+							// needed to position the line
+							function calculateTransform(props = {}) {
+								const x1 = get(props, calculateTransform.defaults, 'x1');
+								const y1 = get(props, calculateTransform.defaults, 'y1');
+								const x2 = get(props, calculateTransform.defaults, 'x2');
+								const y2 = get(props, calculateTransform.defaults, 'y2');
+
+								let x = undefined;
+								let y = undefined;
+								let transform = undefined;
+								let alpha = undefined;
+								let angle = undefined;
+
+								const dx = x2 - x1;
+								const dy = y2 - y1;
+								const length = Math.sqrt(dx * dx + dy * dy);
+
+								if (length) {
+									x         = x1;
+									y         = y1;
+									alpha     = Math.atan2(dy, dx);
+									angle     = 180 * alpha / Math.PI;
+									transform = `translate(${x1},${y1}) rotate(${angle},0,0)`;
+								}
+
+								return {
+									alpha,
+									angle,
+									length: length || undefined,
+									transform,
+									x,
+									y
+								};
+							} // calculateTransform()
+							calculateTransform.defaults = {
+								x1: 0,
+								x2: 0,
+								y1: 0,
+								y2: 0
+							};
+
+							// compute a horizontal arrowhead line of a given length to position the line
+							// anywhere you can use a transform in props.props i.e. props = { props:
+							// 'transform="translate(10,10) rotate(12,0,0)"' }
+							function arrowHeadLine(props = {}) {
+								const transformProps = calculateTransform(props);
+								const id = get(props, arrowHeadLine.defaults, 'id');
+								const className = get(props, arrowHeadLine.defaults, 'className');
+								const outerProps = get(props, arrowHeadLine.defaults, 'props');
+								const identity = [
+									(id
+										? `id="${id}"`
+										: ''),
+									(className
+										? `class="${className}"`
+										: ''),
+									(transformProps.transform
+										? `transform="${transformProps.transform}"`
+										: ''),
+										(outerProps
+											? outerProps
+											: '')
+									]
+									.join(' ')
+									.trim();
+
+								const stroke = get(props, arrowHeadLine.defaults, 'stroke');
+								const arrowStroke = get(props, arrowHeadLine.defaults, 'arrowStroke') || stroke;
+
+								const alpha = get(props, arrowHeadLine.defaults, 'arrowAngle') * Math.PI / 180;
+								const arrowLength = get(props, arrowHeadLine.defaults, 'arrowLength');
+								const arrowX = arrowLength * Math.cos(alpha);
+								const arrowY = arrowLength * Math.sin(alpha);
+								let arrowFill = get(props, arrowHeadLine.defaults, 'arrowFill');
+								const close = arrowFill
+									? ' z'
+									: '';
+								if (typeof arrowFill !== 'string') {
+									arrowFill = arrowFill
+										? arrowStroke
+										: 'none';
+								}
+
+								const penetration = get(props, arrowHeadLine.defaults, 'penetration');
+								const length = get(props, arrowHeadLine.defaults, 'length') || transformProps.length;
+								const x1 = arrowX - penetration;
+								const x2 = length - arrowX + penetration;
+								const strokeWidth = get(props, arrowHeadLine.defaults, 'stroke-width');
+
+								const M1x = arrowX;
+								const M1y = arrowY;
+								const M2x = length - arrowX;
+								const M2y = arrowY;
+								const strokeLineJoin = get(props, arrowHeadLine.defaults, 'stroke-linejoin');
+								let strokeMiterLimit = get(props, arrowHeadLine.defaults, 'stroke-miterlimit');
+								strokeMiterLimit = (typeof strokeMiterLimit !== 'number' && typeof strokeMiterLimit !== 'string')
+									? ''
+									: ` stroke-miterlimit="${strokeMiterLimit}"`;
+
+								const svg = `<g${identity.length
+									? ' ' + identity
+									: ''}>
+			<path d="M ${M1x},${M1y} l ${ - M1x},${ - M1y} ${M1x},${ - M1y}${close}" stroke="${arrowStroke}" fill="${arrowFill}" stroke-linejoin="${strokeLineJoin}"${strokeMiterLimit} />
+			<path d="M ${M2x},${M2y} l ${M1x},${ - M2y} ${ - M1x},${ - M2y}${close}" stroke="${arrowStroke}" fill="${arrowFill}" stroke-linejoin="${strokeLineJoin}"${strokeMiterLimit} />
+			<line x1="${x1}" x2="${x2}" stroke="${stroke}" fill="${stroke}" stroke-width="${strokeWidth}" />
+			</g>`;
+								return svg;
+							} // arrowHeadLine()
+							arrowHeadLine.defaults = {
+								'stroke-linejoin'  : 'miter', // round, bevel, miter-clip, arcs
+								'stroke-miterlimit': undefined, // number
+								'stroke-width'     : 0.25,
+								arrowAngle         : 15,
+								arrowFill          : false, // true or red, url(#xxx) etc...
+								arrowLength        : 5,
+								arrowStroke        : undefined, // defaults to stroke
+								className          : undefined,
+								id                 : undefined,
+								length             : 50,
+								penetration        : 0, // amount line penetrates into the arrowhead
+								props              : '', // transform= etc props for surrounding <g>
+								stroke             : 'red'
+							};
+
+							const ANGLE = 15;
+							const DIST = 5;
+							console.warn(`move ${DIST}@${ANGLE} degrees`, moveByAngle(ANGLE, DIST));
+							console.warn(`rise over ${DIST} @${ANGLE} degrees`, riseByAngle(ANGLE, DIST));
+							console.warn(`shift up ${DIST} @${ANGLE} degrees`, shiftByAngle(ANGLE, DIST));
+							console.warn(`transform (1,2) to (4,5)`, calculateTransform({x1: 1, x2: 4, y1: 2, y2: 5}));
+							console.warn(`arrowHeadLine`, arrowHeadLine({className: 'example-line-js-arrowhead', props: 'transform="translate(0,105)"'}))
+							console.warn(`arrowHeadLine filled`, arrowHeadLine({arrowFill: true, className: 'example-line-js-arrowhead-filled', props: 'transform="translate(0,115)"'}))
+							console.warn(`arrowHeadLine hollow`, arrowHeadLine({arrowFill: 'black', className: 'example-line-js-arrowhead-hollow', props: 'transform="translate(0,125)"'}))
+							console.warn(`arrowHeadLine colored`, arrowHeadLine({arrowFill: true, arrowStroke: 'blue', className: 'example-line-js-arrowhead-colored', props: 'transform="translate(0,135)"'}))
+							console.warn(`arrowHeadLine colored arbitrary`, arrowHeadLine({
+								arrowFill  : true,
+								arrowStroke: 'blue',
+								className  : 'example-line-js-arrowhead-colored-arbitrary',
+								x1         : 5,
+								x2         : 55,
+								y1         : 145,
+								y2         : 152
+							}))
+						}
+						calculateShapes();
+
+						-->
+					</script>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-foreign-object"
 					class="example"
@@ -2083,6 +2088,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-svg-animate"
 					class="example"
@@ -2157,6 +2163,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-clip-path"
 					class="example"
@@ -2207,6 +2214,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-filter"
 					class="example"
@@ -2289,6 +2297,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-fe-color-matrix"
 					class="example"
@@ -2388,6 +2397,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-fe-component-transfer"
 					class="example"
@@ -2535,6 +2545,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-fe-composite"
 					class="example"
@@ -2938,6 +2949,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
+				<!-- ============================================================= -->
 				<section
 					id="example-hatch"
 					class="example"
