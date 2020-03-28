@@ -1514,22 +1514,67 @@ function calculateShapes() {
 		return `${x},${height}`;
 	}
 
+	// get a named value from provided props or default props
   function get(props, defaults, name) {
 		const value = name in props ? props[name] : defaults[name];
 		return (value === null || typeof value === 'undefined') ? defaults[name] : value;
 	}
 
+	// given a set of line end points compute the rotation, length and transform
+	// needed to position the line
+	function calculateTransform(props = {}) {
+		const x1 = get(props, calculateTransform.defaults, 'x1');
+		const y1 = get(props, calculateTransform.defaults, 'y1');
+		const x2 = get(props, calculateTransform.defaults, 'x2');
+		const y2 = get(props, calculateTransform.defaults, 'y2');
+
+		let x = undefined;
+		let y = undefined;
+		let transform = undefined;
+		let alpha = undefined;
+		let angle = undefined;
+
+		const dx = x2 - x1;
+		const dy = y2 - y1;
+		const length = Math.sqrt(dx * dx + dy * dy);
+
+		if (length) {
+			x = x1;
+			y = y1;
+			alpha = Math.atan2(dy, dx);
+			angle = 180 * alpha / Math.PI;
+			transform = `translate(${x1},${y1}) rotate(${angle},0,0)`;
+		}
+
+		return {
+			transform,
+			x,
+			y,
+			length: length || undefined,
+			alpha,
+			angle
+		};
+	} // calculateTransform()
+	calculateTransform.defaults = {
+		x1: 0,
+		y1: 0,
+		x2: 0,
+		y2: 0,
+	};
+
 	// compute a horizontal arrowhead line of a given length
 	// to position the line anywhere you can use a transform in props.props
 	// i.e. props = { props: 'transform="translate(10,10) rotate(12,0,0)"' }
 	function arrowHeadLine(props = {}) {
+		const transformProps = calculateTransform(props);
 		const id = get(props, arrowHeadLine.defaults, 'id');
 		const className = get(props, arrowHeadLine.defaults, 'className');
-		const transform = get(props, arrowHeadLine.defaults, 'props');
+		const outerProps = get(props, arrowHeadLine.defaults, 'props');
 		const identity = [
 			(id ? `id="${id}"` : ''),
 			(className ? `class="${className}"`: ''),
-			(transform ? transform: '')
+			(transformProps.transform ? `transform="${transformProps.transform}"`: ''),
+			(outerProps ? outerProps: '')
 		].join(' ').trim();
 
 		const stroke = get(props, arrowHeadLine.defaults, 'stroke');
@@ -1546,7 +1591,7 @@ function calculateShapes() {
 		}
 
 		const penetration = get(props, arrowHeadLine.defaults, 'penetration');
-		const length = get(props, arrowHeadLine.defaults, 'length');
+		const length = get(props, arrowHeadLine.defaults, 'length') || transformProps.length;
 		const x1 = arrowX - penetration;
 		const x2 = length - arrowX + penetration;
 		const strokeWidth = get(props, arrowHeadLine.defaults, 'stroke-width');
@@ -1565,7 +1610,7 @@ function calculateShapes() {
 			<line x1="${x1}" x2="${x2}" stroke="${stroke}" fill="${stroke}" stroke-width="${strokeWidth}" />
 			</g>`;
 		return svg;
-	}
+	} // arrowHeadLine()
 	arrowHeadLine.defaults = {
 		id: undefined,
 		className: undefined,
@@ -1573,7 +1618,7 @@ function calculateShapes() {
 		length: 50,
 		penetration: 0, // amount line penetrates into the arrowhead
 		stroke: 'red',
-		'stroke-width': 2,
+		'stroke-width': 0.25,
 		'stroke-linejoin': 'miter', // round, bevel, miter-clip, arcs
 		'stroke-miterlimit': undefined, // number
 		arrowAngle: 15,
@@ -1587,16 +1632,18 @@ function calculateShapes() {
 	console.warn(`move ${DIST}@${ANGLE} degrees`, moveByAngle(ANGLE, DIST));
 	console.warn(`rise over ${DIST} @${ANGLE} degrees`, riseByAngle(ANGLE, DIST));
 	console.warn(`shift up ${DIST} @${ANGLE} degrees`, shiftByAngle(ANGLE, DIST));
+	console.warn(`transform (1,2) to (4,5)`, calculateTransform({ x1: 1, y1: 2, x2: 4, y2: 5 }));
 	console.warn(`arrowHeadLine`, arrowHeadLine({ className: 'example-line-js-arrowhead', props: 'transform="translate(0,105)"' }))
 	console.warn(`arrowHeadLine filled`, arrowHeadLine({ className: 'example-line-js-arrowhead-filled', arrowFill: true, props: 'transform="translate(0,115)"' }))
 	console.warn(`arrowHeadLine hollow`, arrowHeadLine({ className: 'example-line-js-arrowhead-hollow', arrowFill: 'black', props: 'transform="translate(0,125)"' }))
 	console.warn(`arrowHeadLine colored`, arrowHeadLine({ className: 'example-line-js-arrowhead-colored', arrowStroke: 'blue', arrowFill: true, props: 'transform="translate(0,135)"' }))
+	console.warn(`arrowHeadLine colored arbitrary`, arrowHeadLine({ className: 'example-line-js-arrowhead-colored-arbitrary', arrowStroke: 'blue', arrowFill: true, x1: 5, y1: 145, x2: 55, y2: 152 }))
 }
 calculateShapes();
 -->
 </script>
 <h3>SVG line example</h3>
-<svg class="example-line" width="400" height="500" viewBox="0 0 100 150" xmlns="http://www.w3.org/2000/svg">
+<svg class="example-line" width="400" height="500" viewBox="0 0 100 170" xmlns="http://www.w3.org/2000/svg">
 <title>Example of attributes of line elements and custom capping of end points.</title>
 <style>
 .example-line text {
@@ -1732,6 +1779,14 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 			<path d="M 45.170370868554656,1.2940952255126037 l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037 z" stroke="blue" fill="blue" stroke-linejoin="miter" />
 			<line x1="4.8296291314453415" x2="45.170370868554656" stroke="red" fill="red" stroke-width="2" />
 		<text y="6" >line with javascript computed 15° blue arrowhead</text>
+			</g>
+
+<g class="example-line-js-arrowhead-colored-arbitrary" transform="translate(5,145) rotate(7.96961039432136,0,0)">
+		<title>arbitrary line with javascript computed colored arrowhead</title>
+			<path d="M 4.8296291314453415,1.2940952255126037 l -4.8296291314453415,-1.2940952255126037 4.8296291314453415,-1.2940952255126037 z" stroke="blue" fill="blue" stroke-linejoin="miter" />
+			<path d="M 45.170370868554656,1.2940952255126037 l 4.8296291314453415,-1.2940952255126037 -4.8296291314453415,-1.2940952255126037 z" stroke="blue" fill="blue" stroke-linejoin="miter" />
+			<line x1="4.8296291314453415" x2="45.170370868554656" stroke="red" fill="red" stroke-width="0.25" />
+		<text y="6" >arbitrary line with javascript computed 15° blue arrowhead</text>
 			</g>
 
 </g>
