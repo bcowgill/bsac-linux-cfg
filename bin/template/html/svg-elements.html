@@ -2173,8 +2173,8 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 						<title>Example of using a clipPath with CSS animation to reveal your picture
 							dramatically.</title>
 						<style>
-							/* With a touch of CSS for browsers who *
- * implemented the r Geometry Property. */
+							/* With a touch of CSS for browsers which
+								implemented the r Geometry Property. */
 							@keyframes exampleClipPathOpenYourHeart {
 								from {
 									r: 0;
@@ -2185,15 +2185,15 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							}
 
 							#example-clip-path-myClip circle {
-								animation: exampleClipPathOpenYourHeart 15s infinite;
+								animation: exampleClipPathOpenYourHeart 5s infinite;
 							}
 
 						</style>
 						<clipPath id="example-clip-path-myClip">
 							<!--
-      Everything outside the circle will be
-      clipped and therefore invisible.
-    -->
+								Everything outside the circle will be
+								clipped and therefore invisible.
+							-->
 							<circle cx="40" cy="35" r="35"/>
 						</clipPath>
 
@@ -2203,9 +2203,9 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							d="M10,30 A20,20,0,0,1,50,30 A20,20,0,0,1,90,30 Q90,60,50,90 Q10,60,10,30 Z"/>
 
 						<!--
-    Only the portion of the red heart
-    inside the clip circle is visible.
-  -->
+							Only the portion of the red heart
+							inside the clip circle is visible.
+						-->
 						<use
 							clip-path="url(#example-clip-path-myClip)"
 							xlink:href="#example-clip-path-heart"
@@ -2237,7 +2237,33 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 								fill="black"/>
 
 							<!-- Everything under any other colour will be partially colour masked -->
-							<rect x="40" y="40" width="20" height="20" fill="#f88"/>
+							<rect id="example-mask-myMask-inner-rect" x="35" y="35" width="40" height="40" fill="#f88">
+								<animate
+									 attributeName="x"
+									 values="30;45;30"
+									 dur="2s"
+									 repeatCount="indefinite"/>
+								<animate
+									 attributeName="y"
+									 values="30;45;30"
+									 dur="2s"
+									 repeatCount="indefinite"/>
+								<animate
+									 attributeName="width"
+									 values="40;10;40"
+									 dur="2s"
+									 repeatCount="indefinite"/>
+								<animate
+									 attributeName="height"
+									 values="40;10;40"
+									 dur="2s"
+									 repeatCount="indefinite"/>
+								<animate
+									 attributeName="fill"
+									 values="#f88;#888;#f88"
+									 dur="0.5s"
+									 repeatCount="indefinite"/>
+							</rect>
 						</mask>
 
 						<polygon points="-10,110 110,110 110,-10" fill="orange"/>
