@@ -3391,27 +3391,38 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 						viewBox="0 0 230 100"
 						xmlns="http://www.w3.org/2000/svg">
 						<title>Example of pattern element.</title>
-  <defs>
-    <pattern id="star" viewBox="0,0,10,10" width="10%" height="10%" patternUnits="userSpaceOnUse">
-						<animateTransform
-							attributeName="patternTransform"
-							attributeType="XML"
-							type="rotate"
-							from="360 0 0"
-							to="0 0 0"
-							dur="10s"
-							repeatCount="indefinite"/>
-						<animate
-							attributeName="x"
-							values="14;2;14"
-							dur="20s"
-							repeatCount="indefinite"/>
-      <polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" stroke="lemonchiffon" />
-    </pattern>
-  </defs>
+						<defs>
+							<pattern
+								id="example-pattern-star"
+								viewBox="0,0,10,10"
+								width="10%"
+								height="10%">
+								<animateTransform
+									attributeName="patternTransform"
+									attributeType="XML"
+									type="rotate"
+									from="360 0 0"
+									to="0 0 0"
+									dur="10s"
+									repeatCount="indefinite"/>
+								<animate attributeName="x" values="14;2;14" dur="20s" repeatCount="indefinite"/>
+								<animate
+									attributeName="patternUnits"
+									values="userSpaceOnUse;objectBoundingBox;userSpaceOnUse"
+									dur="60s"
+									repeatCount="indefinite"/>
+								<polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" stroke="lemonchiffon"/>
+							</pattern>
+						</defs>
 
-  <circle cx="50"  cy="50" r="50" fill="url(#star)"/>
-  <circle cx="180" cy="50" r="40" fill="none" stroke-width="20" stroke="url(#star)"/>
+						<circle cx="50" cy="50" r="50" fill="url(#example-pattern-star)"/>
+						<circle
+							cx="180"
+							cy="50"
+							r="40"
+							fill="none"
+							stroke-width="20"
+							stroke="url(#example-pattern-star)"/>
 					</svg>
 				</section>
 
