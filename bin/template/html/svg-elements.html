@@ -762,7 +762,6 @@ animation, descriptive, shape, structure, gradient
 
 animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop
 
-
 -->
 
 			<!-- P COLUMN ========== -->
@@ -771,7 +770,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 				<ul>
 					<li
 						class="target element"
-						data-element="path"
+						data-element="path draw"
 						data-category="shape,graphics,renderable"
 						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
 						title="&#9;path definition - [semantic,basic] path.  defines a shape.  all the basic shapes can be created with a path element.">
@@ -782,11 +781,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="pattern"
-						data-category="typography,formatting,layout"
-						data-use-with=""
-						title="&#9;pattern - [typography,formatting,layout] .">
+						data-category="paint server,container,never rendered"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+						title="&#9;pattern definition - [paint server,container,never rendered]  defines a graphics object which can be redrawn at repeated x and y-coordinate intervals (tiled) to cover an area.  the pattern is referenced by the fill and/or stroke attributes on other graphics elements to fill or stroke those elements with the referenced pattern.">
 						<a href="Element/pattern">
-							pattern HEREIAM
+							pattern
 						</a>
 					</li>
 					<li
@@ -796,7 +795,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;polygon - [semantic,formatting,media] .">
 						<a href="Element/polygon">
-							polygon
+							polygon HEREIAM
 						</a>
 					</li>
 					<li
@@ -3375,6 +3374,44 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							<text y="50">z<title>Close Path back to 10,30</title>
 							</text>
 						</g>
+					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-pattern"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of pattern element">
+					<h3>pattern example</h3>
+					<svg
+						class="example-pattern"
+						width="460"
+						height="200"
+						viewBox="0 0 230 100"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of pattern element.</title>
+  <defs>
+    <pattern id="star" viewBox="0,0,10,10" width="10%" height="10%" patternUnits="userSpaceOnUse">
+						<animateTransform
+							attributeName="patternTransform"
+							attributeType="XML"
+							type="rotate"
+							from="360 0 0"
+							to="0 0 0"
+							dur="10s"
+							repeatCount="indefinite"/>
+						<animate
+							attributeName="x"
+							values="14;2;14"
+							dur="20s"
+							repeatCount="indefinite"/>
+      <polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" stroke="lemonchiffon" />
+    </pattern>
+  </defs>
+
+  <circle cx="50"  cy="50" r="50" fill="url(#star)"/>
+  <circle cx="180" cy="50" r="40" fill="none" stroke-width="20" stroke="url(#star)"/>
 					</svg>
 				</section>
 
