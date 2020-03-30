@@ -717,6 +717,53 @@
 				</ul>
 			</div>
 
+			<!-- P COLUMN ========== -->
+			<div id="P" class="column visible">
+				<h2>P</h2>
+				<ul>
+					<li
+						class="target element"
+						data-element="path draw"
+						data-category="shape,graphics,renderable"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+						title="&#9;path definition - [semantic,basic] path.  defines a shape.  all the basic shapes can be created with a path element.">
+						<a href="Element/path">
+							path
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="pattern"
+						data-category="paint server,container,never rendered"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+						title="&#9;pattern definition - [paint server,container,never rendered]  defines a graphics object which can be redrawn at repeated x and y-coordinate intervals (tiled) to cover an area.  the pattern is referenced by the fill and/or stroke attributes on other graphics elements to fill or stroke those elements with the referenced pattern.">
+						<a href="Element/pattern">
+							pattern
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="polygon"
+						data-category="graphics,basic shapes,renderable,shape"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+						title="&#9;polygon - [graphics,basic shapes,renderable,shape]  defines a closed shape consisting of a set of connected straight line segments.  the last point is connected to the first point.  for open shapes see the polyline element.  use the path element for drawing polygons with relative coordinates">
+						<a href="Element/polygon">
+							polygon
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="polyline"
+						data-category="graphics,basic shapes,renderable,shape"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+						title="&#9;poly line - [graphics,basic shapes,renderable,shape]  defines a basic shape that creates straight lines connecting several points.  typically a polyline is used to create open shapes as the last point doesn't have to be connected to the first point.  for closed shapes see the polygon element..  use the path element for drawing polylines with relative coordinates">
+						<a href="Element/polyline">
+							polyline
+						</a>
+					</li>
+				</ul>
+			</div>
+
 			<!-- animation elements
 <animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
 deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
@@ -764,113 +811,28 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 
 -->
 
-			<!-- P COLUMN ========== -->
-			<div id="P" class="column visible">
-				<h2>P</h2>
-				<ul>
-					<li
-						class="target element"
-						data-element="path draw"
-						data-category="shape,graphics,renderable"
-						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
-						title="&#9;path definition - [semantic,basic] path.  defines a shape.  all the basic shapes can be created with a path element.">
-						<a href="Element/path">
-							path
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="pattern"
-						data-category="paint server,container,never rendered"
-						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
-						title="&#9;pattern definition - [paint server,container,never rendered]  defines a graphics object which can be redrawn at repeated x and y-coordinate intervals (tiled) to cover an area.  the pattern is referenced by the fill and/or stroke attributes on other graphics elements to fill or stroke those elements with the referenced pattern.">
-						<a href="Element/pattern">
-							pattern
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="polygon"
-						data-category="graphics,basic shapes,renderable,shape"
-						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
-						title="&#9;polygon - [graphics,basic shapes,renderable,shape] defines a closed shape consisting of a set of connected straight line segments.  the last point is connected to the first point.  for open shapes see the polyline element.  use the path element for drawing polygons with relative coordinates">
-						<a href="Element/polygon">
-							polygon
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="polyline"
-						data-category="interaction,programming"
-						data-use-with=""
-						title="&#9;poly line - [interaction,programming] .">
-						<a href="Element/polyline">
-							polyline HEREIAM
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="picture"
-						data-category="media,images"
-						data-use-with="source,img"
-						title="&#9;picture - [media,images] defines a placeholder for an image whose source is chosen to best match the size of the placeholder.  you can use high resolution images when the placeholder is larger and lower resolution images when it is small.">
-						<a href="Element/">
-							picture
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<!-- Q COLUMN ========== -->
-			<div id="Q" class="column">
-				<h2>Q</h2>
-				<ul>
-					<li
-						class="target element"
-						data-element="q"
-						data-category="semantic,formatting"
-						data-use-with=""
-						title="&#9;quotation - [semantic,formatting] defines a short quotation.  normally rendered with quotation marks around the quotation.">
-						<a href="Element/">
-							q
-						</a>
-					</li>
-				</ul>
-			</div>
-
 			<!-- R COLUMN ========== -->
-			<div id="R" class="column">
+			<div id="R" class="column visible">
 				<h2>R</h2>
 				<ul>
 					<li
 						class="target element"
-						data-element="ruby"
+						data-element="radialGradient"
 						data-category="language,formatting"
-						data-use-with="rt,rp"
-						title="&#9;ruby - [language,formatting] specifies a ruby (or rubi) annotation.  a small extra text, attached to the main text to indicate the pronunciation or meaning of the corresponding characters. This kind of annotation is often used in Japanese or Chinese publications.">
-						<!-- https://www.tutorialrepublic.com/html-reference/html5-ruby-tag.php -->
-						<a href="Element/">
-							ruby
+						data-use-with=""
+						title="&#9;radial gradient - [language,formatting] .">
+						<a href="Element/radialGradient">
+							radialGradient HEREIAM
 						</a>
 					</li>
 					<li
 						class="target element"
-						data-element="rt"
+						data-element="rect"
 						data-category="language,formatting"
-						data-use-with="ruby,rp"
-						title="&#9;rubi text pronouciation - [language,formatting] defines an explanation or pronunciation of characters (for East Asian typography) in a ruby annotation.">
-						<a href="Element/">
-							rt
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="rp"
-						data-category="language,formatting"
-						data-use-with="ruby,rt"
-						title="&#9;rubi paranthesis - [language,formatting] provide parentheses around a ruby text, to be shown by browsers that do not support ruby annotations.">
-						<a href="Element/">
-							rp
+						data-use-with=""
+						title="&#9;rectangle - [language,formatting] .">
+						<a href="Element/rect">
+							rect
 						</a>
 					</li>
 				</ul>
@@ -3392,11 +3354,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 						xmlns="http://www.w3.org/2000/svg">
 						<title>Example of pattern element.</title>
 						<defs>
-							<pattern
-								id="example-pattern-star"
-								viewBox="0,0,10,10"
-								width="10%"
-								height="10%">
+							<pattern id="example-pattern-star" viewBox="0,0,10,10" width="10%" height="10%">
 								<animateTransform
 									attributeName="patternTransform"
 									attributeType="XML"
