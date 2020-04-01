@@ -3394,39 +3394,59 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink">
 						<title>Example of radialGradient element.</title>
-  <defs>
-<!--
+						<defs>
+							<!--
 			cx="50%" cy="50%" r="50%"
 			fx="10%" fy="10%" fr="10%"
  -->
-    <radialGradient id="example-radial-gradient2-myGradient">
-      <stop offset="10%" stop-color="gold" />
-      <stop offset="95%" stop-color="red" />
- <!--
+							<radialGradient
+								 id="example-radial-gradient2-myGradient"
+			cx=".75" cy=".75" r="50%"
+							>
+								<!--
+								<stop offset="10%" stop-color="gold"/>
+								<stop offset="95%" stop-color="red"/>
+-->
 								<stop offset="0%" stop-color="#f00" class="red-color-stop"></stop>
 								<stop offset="20%" stop-color="#ff0" class="yellow-color-stop"></stop>
 								<stop offset="40%" stop-color="#0f0" class="green-color-stop"></stop>
 								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
 								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
 								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
--->
-    </radialGradient>
-  </defs>
 
-  <!-- using my linear gradient -->
-  <circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')" />
-</svg>
-<!--
+								<animate
+									attributeName="cx"
+									values="25%;75%;75%;25%;25%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="cy"
+									values="25%;75%;25%;75%;25%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="r"
+									values="25%;75%;25%;75%;25%"
+									dur="3s"
+									repeatCount="indefinite"/>
 								<animateTransform
 									attributeName="gradientTransform"
 									attributeType="XML"
 									type="rotate"
-									from="90 0 0"
-									to="-90 0 0"
-									dur="10s"
+									from="30 0 0"
+									to="-30 0 0"
+									dur="15s"
 									repeatCount="indefinite"/>
+
+							</radialGradient>
+						</defs>
+
+						<!-- using my linear gradient -->
+						<circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')"/>
+					</svg>
+					<!--
  -->
-<!--
+					<!--
 								<animate
 									attributeName="gradientUnits"
 									values="objectBoundingBox;userSpaceOnUse"
