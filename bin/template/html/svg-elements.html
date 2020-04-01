@@ -818,11 +818,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="radialGradient"
-						data-category="language,formatting"
-						data-use-with=""
-						title="&#9;radial gradient - [language,formatting] .">
+						data-category="paint server,gradient,never rendered"
+						data-use-with="desc,metadata,title,animate,animateTransform,set,stop"
+						title="&#9;radial gradient - [paint server,gradient,never rendered]  define radial gradients that can be applied to fill or stroke of graphical elements.  ">
 						<a href="Element/radialGradient">
-							radialGradient HEREIAM
+							radialGradient
 						</a>
 					</li>
 					<li
@@ -832,7 +832,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;rectangle - [language,formatting] .">
 						<a href="Element/rect">
-							rect
+							rect HEREIAM
 						</a>
 					</li>
 				</ul>
@@ -1995,17 +1995,17 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							type="rotate"
 							from="360 0 0"
 							to="0 0 0"
-							dur="10s"
+							dur="12s"
 							repeatCount="indefinite"/>
 						<animate
 							attributeName="width"
 							values="400;200;400"
-							dur="20s"
+							dur="22s"
 							repeatCount="indefinite"/>
 						<animate
 							attributeName="height"
 							values="200;100;200"
-							dur="20s"
+							dur="22s"
 							repeatCount="indefinite"/>
 
 						<path
@@ -2015,7 +2015,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							d="M20,50 C20,-50 180,150 180,50 C180-50 20,150 20,50 z"/>
 
 						<rect x="-5" y="-5" rx="2" width="10" height="10" fill="red">
-							<animateMotion dur="10s" repeatCount="indefinite">
+							<animateMotion dur="12s" repeatCount="indefinite">
 								<mpath xlink:href="#example-svg-animate-motion-path"/>
 							</animateMotion>
 							<animateTransform
@@ -2029,7 +2029,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							<animate
 								attributeName="fill"
 								values="red;orange;yellow;green;blue;indigo;violet"
-								dur="10s"
+								dur="12s"
 								repeatCount="indefinite"/>
 							<animate
 								attributeName="width"
@@ -2372,18 +2372,12 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 								y1="0"
 								x2="100%"
 								y2="0">
-								<stop offset="0" stop-color="#f00"></stop>
-								<!-- red -->
-								<stop offset="0.2" stop-color="#ff0"></stop>
-								<!-- yellow -->
-								<stop offset="0.4" stop-color="#0f0"></stop>
-								<!-- green -->
-								<stop offset="0.6" stop-color="#0ff"></stop>
-								<!-- cyan -->
-								<stop offset="0.8" stop-color="#00f"></stop>
-								<!-- blue -->
-								<stop offset="1" stop-color="#800080"></stop>
-								<!-- violet -->
+								<stop offset="0" stop-color="#f00" class="red-color-stop"></stop>
+								<stop offset="0.2" stop-color="#ff0" class="yellow-color-stop"></stop>
+								<stop offset="0.4" stop-color="#0f0" class="green-color-stop"></stop>
+								<stop offset="0.6" stop-color="#0ff" class="cyan-color-stop"></stop>
+								<stop offset="0.8" stop-color="#00f" class="blue-color-stop"></stop>
+								<stop offset="1" stop-color="#800080" class="violet-color-stop"></stop>
 							</linearGradient>
 							<filter
 								id="example-fe-component-transfer-identity"
@@ -3361,13 +3355,13 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 									type="rotate"
 									from="360 0 0"
 									to="0 0 0"
-									dur="10s"
+									dur="11s"
 									repeatCount="indefinite"/>
 								<animate attributeName="x" values="14;2;14" dur="20s" repeatCount="indefinite"/>
 								<animate
 									attributeName="patternUnits"
 									values="userSpaceOnUse;objectBoundingBox;userSpaceOnUse"
-									dur="60s"
+									dur="61s"
 									repeatCount="indefinite"/>
 								<polygon points="0,0 2,5 0,10 5,8 10,10 8,5 10,0 5,2" stroke="lemonchiffon"/>
 							</pattern>
@@ -3382,6 +3376,68 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							stroke-width="20"
 							stroke="url(#example-pattern-star)"/>
 					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-radial-gradient"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of radialGradient element">
+					<h3>radialGradient example</h3>
+
+					<svg
+						class="example-radial-gradient"
+						width="200"
+						height="200"
+						viewBox="0 0 10 10"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink">
+						<title>Example of radialGradient element.</title>
+  <defs>
+<!--
+			cx="50%" cy="50%" r="50%"
+			fx="10%" fy="10%" fr="10%"
+ -->
+    <radialGradient id="example-radial-gradient2-myGradient">
+      <stop offset="10%" stop-color="gold" />
+      <stop offset="95%" stop-color="red" />
+ <!--
+								<stop offset="0%" stop-color="#f00" class="red-color-stop"></stop>
+								<stop offset="20%" stop-color="#ff0" class="yellow-color-stop"></stop>
+								<stop offset="40%" stop-color="#0f0" class="green-color-stop"></stop>
+								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
+								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
+								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
+-->
+    </radialGradient>
+  </defs>
+
+  <!-- using my linear gradient -->
+  <circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')" />
+</svg>
+<!--
+								<animateTransform
+									attributeName="gradientTransform"
+									attributeType="XML"
+									type="rotate"
+									from="90 0 0"
+									to="-90 0 0"
+									dur="10s"
+									repeatCount="indefinite"/>
+ -->
+<!--
+								<animate
+									attributeName="gradientUnits"
+									values="objectBoundingBox;userSpaceOnUse"
+									dur="12s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="spreadMethod"
+									values="pad;reflect;repeat"
+									dur="20s"
+									repeatCount="indefinite"/>
+-->
 				</section>
 
 				<!-- ============================================================= -->
