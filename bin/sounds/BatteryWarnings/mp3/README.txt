@@ -12,3 +12,6 @@ Script for Battery Warning files:
 7 BatteryWarning50.mp3    Warning.  The battery has reached fifty percent.
 
 8 CannotReadBattery.mp3   Warning.  Cannot determine battery level.
+
+Feel free to change the wording around a little add humour or write it all into a song.
+Record using your mobile phone in a quiet room.

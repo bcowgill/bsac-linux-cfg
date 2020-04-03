@@ -10,6 +10,9 @@ if [ ! -x "$TEST_ONE" ]; then
 	TEST_ONE=test-one.sh
 fi
 
+NBSP=" "
+NBHY="‑"
+
 WARNINGS=0
 
 # temporary output files for debugging the grep output.
@@ -141,6 +144,18 @@ function search_js_filter {
 	indent_output $TMP3 "$reason"
 }
 
+# search non-commented javascript lines for something but not something else and show duplicated lines only
+function search_js_filter_duplicates {
+	local regex filter file reason
+	regex="$1"
+	filter="$2"
+	file="$3"
+	reason="$4"
+	explain match "$regex except $filter duplicates"
+	$GREP -v '//' "$file" | tee $TMP1 | grep -E "$regex" | tee $TMP2 | grep -vE "$filter" | sort | tee $TMP3 | uniq -d > $TMP4
+	indent_output $TMP4 "$reason"
+}
+
 # search javascript lines for something after but not something else and show duplicated lines only
 function search_js_filter_after_duplicates {
 	local regex filter file reason
@@ -176,7 +191,7 @@ function has_js {
 # check if a javascript file has the correctly named test plan file
 function check_has_test_plan {
 	# exports GOT_TEST_PLAN
-	local file $SOURCE TEST_PLAN TEST_PLAN2 INDEX CONTAINER REACT
+	local file SOURCE TEST_PLAN TEST_PLAN2 INDEX CONTAINER REACT
 	file="$1"
 
 	if grep -E 'from\s+(.)(react)\1' "$file" > /dev/null; then
@@ -240,6 +255,9 @@ function check_has_test_plan {
 	fi
 	if [ -f "$TEST_PLAN2" ]; then
 		GOT_TEST_PLAN="$TEST_PLAN2"
+	fi
+	if [ "$file" == "$GOT_TEST_PLAN" ]; then
+		GOT_TEST_PLAN=
 	fi
 }
 
@@ -368,7 +386,7 @@ function code_review {
 
 	HEADING="checking for incomplete work..."
 	search_js 'MUS''TDO' "$file"  "work which MUST be completed asap"
-	search_js 'MMM|NNN' "$file"  "function of variables which need to be named properly"
+	search_js '[a-z](MMM|NNN)\b' "$file"  "function or variables which need to be named properly"
 	search_js_comments 'MUS''TDO' "$file"  "work which MUST be completed asap"
 	search_js 'TO''DO' "$file"  "work which needs to be done"
 	search_js_comments 'TO''DO' "$file"  "work which might need doing"
@@ -392,13 +410,14 @@ function code_review {
 		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(\s*([^`'\''"0-9]|$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 
 		search_js '\.toEqual\(' "$file" "use .toBe() except when comparing objects/NaN/jasmine.any"
+		search_js 'expect\(isNaN\(' "$file" "use expect(...).toBeNaN() instead of expect(isNaN(...)) for better failure diagnosis"
 		# TODO spy.callCount missing before checking spy calls
 		# TODO expect() .toBe/Equal
 		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function something like descObjectNameSuite instead of using anonymous function (code-fix)"
 		search_js '\b(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function something like descObjectNameSubSuite"
-		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function something like testObjectNameFunctionMode instead of using anonymous function (code-fix)"
+		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function something like testObjectNameFunctionMode (i.e. testEditComponentRenderMinimal) instead of using anonymous function (code-fix)"
 		# TODO       it('should reject promise on server error', (done) => {
-		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function something like testObjectNameFunctionMode"
+		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function something like testObjectNameFunctionMode (i.e. testEditComponentRenderMinimal)"
 		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function something like setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
 	else
 		# Not a test plan...
@@ -406,9 +425,13 @@ function code_review {
 			check_has_test_plan "$file"
 		fi
 		HEADING="checking for app specific idioms..."
-		search_js_filter 'function\s+(\w+(Action|Service|Middleware))\s*\(' EOB "$file"  "Actions etc should use it = EOB calling protocol"
-		search_js_filter 'const\s+(\w+(Action|Service|Middleware))\s*=\s*\(' EOB "$file" "Actions etc should use it = EOB calling protocol"
+		search_js_filter 'function\s+(\w+(Action|Service|Middleware))\s*\(\s*\w' EOB "$file"  "Actions etc should use it = EOB calling protocol"
+		search_js_filter 'const\s+(\w+(Action|Service|Middleware))\s*=\s*\(\s*\w' EOB "$file" "Actions etc should use it = EOB calling protocol"
 		search_js_filter_after_duplicates 1 'MOCK ROUTE GROUP' 'MOCK ROUTE GROUP|--' "$file" "MUST fix duplicated cypress mock-api routes"
+		search_js '\bzIndex:\s*-?\d' "$file" "MUST use named zIndex instead of hard coded altitudes"
+		search_js '<button' "$file" "MUST not use button use BaseButton or another block/button component so keepAlive works"
+		search_js "$NBSP" "$file" "MUST not hard code non-breaking spaces as they cannot be seen. use &nbsp; NBSP constant or noBreakSpace() function"
+		search_js "$NBHY" "$file" "MUST not hard code non-breaking hyphens as they cannot be seen. use NBHY constant or noBreakHyphens() function"
 	fi
 
 	HEADING="checking for code to remove..."
@@ -458,6 +481,7 @@ function code_review {
 	if echo "$file" | grep -E '\.(less|sass|css)$'; then
 		HEADING="checking for bad stylesheet practices..."
 		search_js '\[data-selector=' "$file" "MUST use class instead of data- attributes for styling"
+		search_js '\bz-index:\s*-?\d' "$file" "MUST use named @z-index-definitions instead of hard coded altitudes"
 	fi
 
 	if grep -E '^\s*Feature:' "$file" > /dev/null; then

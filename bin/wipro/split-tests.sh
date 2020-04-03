@@ -21,9 +21,9 @@ do
 done
 echo \* `cat tests.txt | wc -l` feature files with enabled tests
 # use only @master tagged files
-cp tests.txt tests-all.txt
-grep -l '@master' `cat tests-all.txt` > tests.txt
-echo \* `cat tests.txt | wc -l` feature files marked for @master branch
+#cp tests.txt tests-all.txt
+#grep -l '@master' `cat tests-all.txt` > tests.txt
+#echo \* `cat tests.txt | wc -l` feature files marked for @master branch
 
 # clean up names and sort randomly by the number
 perl -pne 's{PAYO4B-+}{}xms' tests.txt \

@@ -1,9 +1,6 @@
 #!/bin/bash
 # guide to using patches to take commits from one repo to another
 # https://www.lullabot.com/articles/git-best-practices-upgrading-the-patch-process
-# git help am
-# git help diff
-# git help format-patch
 
 BRANCH=$1
 
@@ -11,8 +8,14 @@ if [ -z "$BRANCH" ]; then
 	echo "
 usage: $(basename $0) branch
 
-Will create a set of .patch files for the current branch HEAD back to the branch specified.  These patches can then be applied to a different repository.
+Will create a set of .patch files for the current branch HEAD back to the branch specified.  These patches can then be applied to a different repository.  You may want to rm *.patch before you start.
 
+See Also:
+	git help am
+	git help diff
+	git help format-patch
+
+For general understanding of the patching process.
 "
 	git log --oneline --graph --decorate --all | head
 	exit 1

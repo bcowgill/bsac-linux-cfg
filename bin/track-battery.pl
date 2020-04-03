@@ -28,7 +28,7 @@ our $sound_types =
 our $sound_voices =
 {
 	'' => [qw(wav mp3 m4a)],
-   'narayanan' => [qw(wav mp3)],
+	'narayanan' => [qw(wav mp3)],
 	'amrutha' => [qw(wav mp3)],
 };
 our $sound_cfg =
