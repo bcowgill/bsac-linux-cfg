@@ -1214,6 +1214,90 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 
 				<!-- ============================================================= -->
 				<section
+					id="example-radial-gradient"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of radialGradient element">
+					<h3>radialGradient example</h3>
+
+					<svg
+						class="example-radial-gradient"
+						width="200"
+						height="200"
+						viewBox="0 0 10 10"
+						xmlns="http://www.w3.org/2000/svg"
+						xmlns:xlink="http://www.w3.org/1999/xlink">
+						<title>Example of radialGradient element.</title>
+						<defs>
+							<!--
+			cx="50%" cy="50%" r="50%"
+			fx="10%" fy="10%" fr="10%"
+ -->
+							<radialGradient
+								id="example-radial-gradient2-myGradient"
+								cx=".75"
+								cy=".75"
+								r="50%">
+								<!--
+								<stop offset="10%" stop-color="gold"/>
+								<stop offset="95%" stop-color="red"/>
+-->
+								<stop offset="0%" stop-color="#f00" class="red-color-stop"></stop>
+								<stop offset="20%" stop-color="#ff0" class="yellow-color-stop"></stop>
+								<stop offset="40%" stop-color="#0f0" class="green-color-stop"></stop>
+								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
+								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
+								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
+
+								<animate
+									attributeName="cx"
+									values="25%;75%;75%;25%;25%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="cy"
+									values="25%;75%;25%;75%;25%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="r"
+									values="25%;75%;25%;75%;25%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animateTransform
+									attributeName="gradientTransform"
+									attributeType="XML"
+									type="rotate"
+									from="30 0 0"
+									to="-30 0 0"
+									dur="15s"
+									repeatCount="indefinite"/>
+
+							</radialGradient>
+						</defs>
+
+						<!-- using my linear gradient -->
+						<circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')"/>
+					</svg>
+					<!--
+
+ -->
+					<!--
+								<animate
+									attributeName="gradientUnits"
+									values="objectBoundingBox;userSpaceOnUse"
+									dur="12s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="spreadMethod"
+									values="pad;reflect;repeat"
+									dur="20s"
+									repeatCount="indefinite"/>
+-->
+				</section>
+
+				<!-- ============================================================= -->
+				<section
 					id="example-svg"
 					class="example"
 					role="contentinfo"
@@ -3376,88 +3460,6 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							stroke-width="20"
 							stroke="url(#example-pattern-star)"/>
 					</svg>
-				</section>
-
-				<!-- ============================================================= -->
-				<section
-					id="example-radial-gradient"
-					class="example"
-					role="contentinfo"
-					aria-label="SVG Example of radialGradient element">
-					<h3>radialGradient example</h3>
-
-					<svg
-						class="example-radial-gradient"
-						width="200"
-						height="200"
-						viewBox="0 0 10 10"
-						xmlns="http://www.w3.org/2000/svg"
-						xmlns:xlink="http://www.w3.org/1999/xlink">
-						<title>Example of radialGradient element.</title>
-						<defs>
-							<!--
-			cx="50%" cy="50%" r="50%"
-			fx="10%" fy="10%" fr="10%"
- -->
-							<radialGradient
-								 id="example-radial-gradient2-myGradient"
-			cx=".75" cy=".75" r="50%"
-							>
-								<!--
-								<stop offset="10%" stop-color="gold"/>
-								<stop offset="95%" stop-color="red"/>
--->
-								<stop offset="0%" stop-color="#f00" class="red-color-stop"></stop>
-								<stop offset="20%" stop-color="#ff0" class="yellow-color-stop"></stop>
-								<stop offset="40%" stop-color="#0f0" class="green-color-stop"></stop>
-								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
-								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
-								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
-
-								<animate
-									attributeName="cx"
-									values="25%;75%;75%;25%;25%"
-									dur="3s"
-									repeatCount="indefinite"/>
-								<animate
-									attributeName="cy"
-									values="25%;75%;25%;75%;25%"
-									dur="3s"
-									repeatCount="indefinite"/>
-								<animate
-									attributeName="r"
-									values="25%;75%;25%;75%;25%"
-									dur="3s"
-									repeatCount="indefinite"/>
-								<animateTransform
-									attributeName="gradientTransform"
-									attributeType="XML"
-									type="rotate"
-									from="30 0 0"
-									to="-30 0 0"
-									dur="15s"
-									repeatCount="indefinite"/>
-
-							</radialGradient>
-						</defs>
-
-						<!-- using my linear gradient -->
-						<circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')"/>
-					</svg>
-					<!--
- -->
-					<!--
-								<animate
-									attributeName="gradientUnits"
-									values="objectBoundingBox;userSpaceOnUse"
-									dur="12s"
-									repeatCount="indefinite"/>
-								<animate
-									attributeName="spreadMethod"
-									values="pad;reflect;repeat"
-									dur="20s"
-									repeatCount="indefinite"/>
--->
 				</section>
 
 				<!-- ============================================================= -->
