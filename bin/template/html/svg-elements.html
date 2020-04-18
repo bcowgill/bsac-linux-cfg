@@ -1222,9 +1222,9 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 
 					<svg
 						class="example-radial-gradient"
-						width="200"
+						width="400"
 						height="200"
-						viewBox="0 0 10 10"
+						viewBox="0 0 20 10"
 						xmlns="http://www.w3.org/2000/svg"
 						xmlns:xlink="http://www.w3.org/1999/xlink">
 						<title>Example of radialGradient element.</title>
@@ -1235,9 +1235,13 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
  -->
 							<radialGradient
 								id="example-radial-gradient2-myGradient"
-								cx=".75"
-								cy=".75"
-								r="50%">
+								nocx=".75"
+								nocy=".75"
+								nor="50%"
+								nofx=".45"
+								nofy=".45"
+								nofr="30%"
+							>
 								<!--
 								<stop offset="10%" stop-color="gold"/>
 								<stop offset="95%" stop-color="red"/>
@@ -1248,7 +1252,23 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
 								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
 								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
-
+<!--
+								<animate
+									attributeName="fx"
+									values="55%;45%;45%;55%;55%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="fy"
+									values="55%;45%;55%;45%;55%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="fr"
+									values="35%;55%;35%;55%;35%"
+									dur="3s"
+									repeatCount="indefinite"/>
+-->
 								<animate
 									attributeName="cx"
 									values="25%;75%;75%;25%;25%"
@@ -1264,6 +1284,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									values="25%;75%;25%;75%;25%"
 									dur="3s"
 									repeatCount="indefinite"/>
+<!--
 								<animateTransform
 									attributeName="gradientTransform"
 									attributeType="XML"
@@ -1272,12 +1293,55 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									to="-30 0 0"
 									dur="15s"
 									repeatCount="indefinite"/>
-
+-->
+							</radialGradient>
+							<radialGradient
+								id="example-radial-gradient2-myGradientCenters"
+								cx=".75"
+								cy=".75"
+								r="50%"
+								fx=".45"
+								fy=".45"
+								fr="50%"
+							>
+<!--
+								<stop offset="0%" stop-color="#f00" class="red-color-stop"></stop>
+								<stop offset="20%" stop-color="#ff0" class="yellow-color-stop"></stop>
+								<stop offset="40%" stop-color="#0f0" class="green-color-stop"></stop>
+								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
+								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
+								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
+-->
+								<stop offset="10%" stop-color="gold"/>
+								<stop offset="95%" stop-color="red"></stop>
+<!--
+									<animate
+										attributeName="cx"
+										values="0%;100%;0%"
+										dur="3s"
+										repeatCount="indefinite"/>
+									<animate
+										attributeName="cy"
+										values="0%;100%;0%"
+										dur="3s"
+										repeatCount="indefinite"/>
+-->
+									<animate
+										attributeName="fx"
+										values="100%;0%;100%"
+										dur="3s"
+										repeatCount="indefinite"/>
+									<animate
+										attributeName="fy"
+										values="100%;0%;100%"
+										dur="3s"
+										repeatCount="indefinite"/>
 							</radialGradient>
 						</defs>
 
-						<!-- using my linear gradient -->
-						<circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')"/>
+						<circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradientCenters')"/>
+						<!-- using my animated radial gradient -->
+						<circle cx="15" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')"/>
 					</svg>
 					<!--
 

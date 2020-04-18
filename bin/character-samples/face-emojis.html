@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta charset="UTF-8">
+<meta name="description" content="A catalog of Unicode face emoticons or emoji characters.">
+<meta name="author" content="Brent S.A. Cowgill">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unicode Emoji Characters</title>
+</head>
+<!--
+perl -pne 'if (m{\A\s*\z}xms) { $_ = qq{</section>\n}; next; } if (m{\A([^\t]+)\z}xms) { $title = $1; chomp($title); $lc = lc($title); $lc =~ s{\s+}{-}xmsg; $_ = qq{<section id="section-$lc" role="contentinfo" aria-label="$title face icons">\n\t<h3>$title</h3>\n}; next; } my ($char, $code, $category, $description) = split(/\t/); chomp($description); $_ = qq{\t<article class="preview">\n\t\t<span class="box">$char</span>\n\t\t<span class="box inverse">$char</span>\n\t\t<span class="details">\n\t\t\t<span class="character">$char</span>\n\t\t\t<span class="character-code">$code</span>\n\t\t\t<span class="character-category">$category</span>\n\t\t\t<span class="character-description">$description</span>\n\t\t</span>\n\t</article>\n};' face-emojis.txt  >> face-emojis.html
+
+grep 'box inverse' face-emojis.html | perl -pne 's{\A.+">}{}xms; s{<.+}{\n}xms' > face-emojis-only-newline.txt; head face-emojis-only.txt
+-->
+<body>
+
+<style>
+.preview {
+	padding: 5px;
+	margin: 5px;
+	border: 1px solid;
+	font-size: 72px;
+}
+.box {
+	text-align: center;
+	padding: 2px;
+	margin: 2px;
+	display: inline-block;
+	min-width: 84px;
+	height: 84px;
+}
+.inverse {
+	color: white;
+	background: black;
+}
+.details {
+	font-size: 16px;
+}
+.paste-area {
+	width: 100%;
+}
+.paste-input {
+	width: 97%;
+}
+header {
+	position: fixed;
+	opacity: 1;
+	background: white;
+	width: 100%;
+	padding: 5px;
+	margin: 0;
+}
+.spacer {
+	display: inline-block;
+	width: 100%;
+	height: 108px;
+	content: "\n\n\n";
+}
+</style>
+
+<header id="header">
+	<h1>Unicode Emoji Characters</h1>
+	<div class="paste-area" >
+		<label for="paste-area">Paste:</label>
+		<input class="paste-input" id="paste-area" type="text" />
+	</div>
+</header>
+
+<div class="spacer">&nbsp;</div>
+<main id="main" role="main">
+
+<section id="section-positive-emotions" role="contentinfo" aria-label="Positive Emotions face icons">
+	<h3>Positive Emotions</h3>
+	<article class="preview">
+		<span class="box">☺</span>
+		<span class="box inverse">☺</span>
+		<span class="details">
+			<span class="character">☺</span>
+			<span class="character-code">U+263A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WHITE SMILING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">☻</span>
+		<span class="box inverse">☻</span>
+		<span class="details">
+			<span class="character">☻</span>
+			<span class="character-code">U+263B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">BLACK SMILING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😇</span>
+		<span class="box inverse">😇</span>
+		<span class="details">
+			<span class="character">😇</span>
+			<span class="character-code">U+1F607</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH HALO</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😈</span>
+		<span class="box inverse">😈</span>
+		<span class="details">
+			<span class="character">😈</span>
+			<span class="character-code">U+1F608</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH HORNS</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😉</span>
+		<span class="box inverse">😉</span>
+		<span class="details">
+			<span class="character">😉</span>
+			<span class="character-code">U+1F609</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WINKING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😊</span>
+		<span class="box inverse">😊</span>
+		<span class="details">
+			<span class="character">😊</span>
+			<span class="character-code">U+1F60A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH SMILING EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😋</span>
+		<span class="box inverse">😋</span>
+		<span class="details">
+			<span class="character">😋</span>
+			<span class="character-code">U+1F60B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE SAVOURING DELICIOUS FOOD</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😌</span>
+		<span class="box inverse">😌</span>
+		<span class="details">
+			<span class="character">😌</span>
+			<span class="character-code">U+1F60C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">RELIEVED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😍</span>
+		<span class="box inverse">😍</span>
+		<span class="details">
+			<span class="character">😍</span>
+			<span class="character-code">U+1F60D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH HEART-SHAPED EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😎</span>
+		<span class="box inverse">😎</span>
+		<span class="details">
+			<span class="character">😎</span>
+			<span class="character-code">U+1F60E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH SUNGLASSES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😃</span>
+		<span class="box inverse">😃</span>
+		<span class="details">
+			<span class="character">😃</span>
+			<span class="character-code">U+1F603</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH OPEN MOUTH</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😄</span>
+		<span class="box inverse">😄</span>
+		<span class="details">
+			<span class="character">😄</span>
+			<span class="character-code">U+1F604</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH OPEN MOUTH AND SMILING EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😅</span>
+		<span class="box inverse">😅</span>
+		<span class="details">
+			<span class="character">😅</span>
+			<span class="character-code">U+1F605</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH OPEN MOUTH AND COLD SWEAT</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😆</span>
+		<span class="box inverse">😆</span>
+		<span class="details">
+			<span class="character">😆</span>
+			<span class="character-code">U+1F606</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING FACE WITH OPEN MOUTH AND TIGHTLY-CLOSED EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😀</span>
+		<span class="box inverse">😀</span>
+		<span class="details">
+			<span class="character">😀</span>
+			<span class="character-code">U+1F600</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">GRINNING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😁</span>
+		<span class="box inverse">😁</span>
+		<span class="details">
+			<span class="character">😁</span>
+			<span class="character-code">U+1F601</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">GRINNING FACE WITH SMILING EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😂</span>
+		<span class="box inverse">😂</span>
+		<span class="details">
+			<span class="character">😂</span>
+			<span class="character-code">U+1F602</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH TEARS OF JOY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😗</span>
+		<span class="box inverse">😗</span>
+		<span class="details">
+			<span class="character">😗</span>
+			<span class="character-code">U+1F617</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">KISSING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😘</span>
+		<span class="box inverse">😘</span>
+		<span class="details">
+			<span class="character">😘</span>
+			<span class="character-code">U+1F618</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE THROWING A KISS</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😙</span>
+		<span class="box inverse">😙</span>
+		<span class="details">
+			<span class="character">😙</span>
+			<span class="character-code">U+1F619</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">KISSING FACE WITH SMILING EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😚</span>
+		<span class="box inverse">😚</span>
+		<span class="details">
+			<span class="character">😚</span>
+			<span class="character-code">U+1F61A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">KISSING FACE WITH CLOSED EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😏</span>
+		<span class="box inverse">😏</span>
+		<span class="details">
+			<span class="character">😏</span>
+			<span class="character-code">U+1F60F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMIRKING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">👿</span>
+		<span class="box inverse">👿</span>
+		<span class="details">
+			<span class="character">👿</span>
+			<span class="character-code">U+1F47F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">IMP</span>
+		</span>
+	</article>
+</section>
+
+<section id="section-neutral-emotions" role="contentinfo" aria-label="Neutral Emotions face icons">
+	<h3>Neutral Emotions</h3>
+	<article class="preview">
+		<span class="box">😶</span>
+		<span class="box inverse">😶</span>
+		<span class="details">
+			<span class="character">😶</span>
+			<span class="character-code">U+1F636</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITHOUT MOUTH</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😐</span>
+		<span class="box inverse">😐</span>
+		<span class="details">
+			<span class="character">😐</span>
+			<span class="character-code">U+1F610</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">NEUTRAL FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😑</span>
+		<span class="box inverse">😑</span>
+		<span class="details">
+			<span class="character">😑</span>
+			<span class="character-code">U+1F611</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">EXPRESSIONLESS FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😒</span>
+		<span class="box inverse">😒</span>
+		<span class="details">
+			<span class="character">😒</span>
+			<span class="character-code">U+1F612</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">UNAMUSED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😔</span>
+		<span class="box inverse">😔</span>
+		<span class="details">
+			<span class="character">😔</span>
+			<span class="character-code">U+1F614</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">PENSIVE FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😴</span>
+		<span class="box inverse">😴</span>
+		<span class="details">
+			<span class="character">😴</span>
+			<span class="character-code">U+1F634</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SLEEPING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😷</span>
+		<span class="box inverse">😷</span>
+		<span class="details">
+			<span class="character">😷</span>
+			<span class="character-code">U+1F637</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH MEDICAL MASK</span>
+		</span>
+	</article>
+</section>
+<section id="section-negative-emotions" role="contentinfo" aria-label="Negative Emotions face icons">
+	<h3>Negative Emotions</h3>
+	<article class="preview">
+		<span class="box">☹</span>
+		<span class="box inverse">☹</span>
+		<span class="details">
+			<span class="character">☹</span>
+			<span class="character-code">U+2639</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WHITE FROWNING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😞</span>
+		<span class="box inverse">😞</span>
+		<span class="details">
+			<span class="character">😞</span>
+			<span class="character-code">U+1F61E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">DISAPPOINTED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😟</span>
+		<span class="box inverse">😟</span>
+		<span class="details">
+			<span class="character">😟</span>
+			<span class="character-code">U+1F61F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WORRIED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😠</span>
+		<span class="box inverse">😠</span>
+		<span class="details">
+			<span class="character">😠</span>
+			<span class="character-code">U+1F620</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">ANGRY FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😡</span>
+		<span class="box inverse">😡</span>
+		<span class="details">
+			<span class="character">😡</span>
+			<span class="character-code">U+1F621</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">POUTING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😢</span>
+		<span class="box inverse">😢</span>
+		<span class="details">
+			<span class="character">😢</span>
+			<span class="character-code">U+1F622</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CRYING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😣</span>
+		<span class="box inverse">😣</span>
+		<span class="details">
+			<span class="character">😣</span>
+			<span class="character-code">U+1F623</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">PERSEVERING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😥</span>
+		<span class="box inverse">😥</span>
+		<span class="details">
+			<span class="character">😥</span>
+			<span class="character-code">U+1F625</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">DISAPPOINTED BUT RELIEVED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😤</span>
+		<span class="box inverse">😤</span>
+		<span class="details">
+			<span class="character">😤</span>
+			<span class="character-code">U+1F624</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH LOOK OF TRIUMPH</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😓</span>
+		<span class="box inverse">😓</span>
+		<span class="details">
+			<span class="character">😓</span>
+			<span class="character-code">U+1F613</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH COLD SWEAT</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😕</span>
+		<span class="box inverse">😕</span>
+		<span class="details">
+			<span class="character">😕</span>
+			<span class="character-code">U+1F615</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CONFUSED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😖</span>
+		<span class="box inverse">😖</span>
+		<span class="details">
+			<span class="character">😖</span>
+			<span class="character-code">U+1F616</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CONFOUNDED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😛</span>
+		<span class="box inverse">😛</span>
+		<span class="details">
+			<span class="character">😛</span>
+			<span class="character-code">U+1F61B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH STUCK-OUT TONGUE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😜</span>
+		<span class="box inverse">😜</span>
+		<span class="details">
+			<span class="character">😜</span>
+			<span class="character-code">U+1F61C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH STUCK-OUT TONGUE AND WINKING EYE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😝</span>
+		<span class="box inverse">😝</span>
+		<span class="details">
+			<span class="character">😝</span>
+			<span class="character-code">U+1F61D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH STUCK-OUT TONGUE AND TIGHTLY-CLOSED EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😦</span>
+		<span class="box inverse">😦</span>
+		<span class="details">
+			<span class="character">😦</span>
+			<span class="character-code">U+1F626</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FROWNING FACE WITH OPEN MOUTH</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😧</span>
+		<span class="box inverse">😧</span>
+		<span class="details">
+			<span class="character">😧</span>
+			<span class="character-code">U+1F627</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">ANGUISHED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😨</span>
+		<span class="box inverse">😨</span>
+		<span class="details">
+			<span class="character">😨</span>
+			<span class="character-code">U+1F628</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FEARFUL FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😬</span>
+		<span class="box inverse">😬</span>
+		<span class="details">
+			<span class="character">😬</span>
+			<span class="character-code">U+1F62C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">GRIMACING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😭</span>
+		<span class="box inverse">😭</span>
+		<span class="details">
+			<span class="character">😭</span>
+			<span class="character-code">U+1F62D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">LOUDLY CRYING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😩</span>
+		<span class="box inverse">😩</span>
+		<span class="details">
+			<span class="character">😩</span>
+			<span class="character-code">U+1F629</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WEARY FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😪</span>
+		<span class="box inverse">😪</span>
+		<span class="details">
+			<span class="character">😪</span>
+			<span class="character-code">U+1F62A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SLEEPY FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😫</span>
+		<span class="box inverse">😫</span>
+		<span class="details">
+			<span class="character">😫</span>
+			<span class="character-code">U+1F62B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">TIRED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😮</span>
+		<span class="box inverse">😮</span>
+		<span class="details">
+			<span class="character">😮</span>
+			<span class="character-code">U+1F62E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH OPEN MOUTH</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😯</span>
+		<span class="box inverse">😯</span>
+		<span class="details">
+			<span class="character">😯</span>
+			<span class="character-code">U+1F62F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">HUSHED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😰</span>
+		<span class="box inverse">😰</span>
+		<span class="details">
+			<span class="character">😰</span>
+			<span class="character-code">U+1F630</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH OPEN MOUTH AND COLD SWEAT</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😱</span>
+		<span class="box inverse">😱</span>
+		<span class="details">
+			<span class="character">😱</span>
+			<span class="character-code">U+1F631</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE SCREAMING IN FEAR</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😲</span>
+		<span class="box inverse">😲</span>
+		<span class="details">
+			<span class="character">😲</span>
+			<span class="character-code">U+1F632</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">ASTONISHED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😳</span>
+		<span class="box inverse">😳</span>
+		<span class="details">
+			<span class="character">😳</span>
+			<span class="character-code">U+1F633</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FLUSHED FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😵</span>
+		<span class="box inverse">😵</span>
+		<span class="details">
+			<span class="character">😵</span>
+			<span class="character-code">U+1F635</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">DIZZY FACE</span>
+		</span>
+	</article>
+</section>
+<section id="section-head" role="contentinfo" aria-label="Head icons">
+	<h3>Heads</h3>
+	<article class="preview">
+		<span class="box">🙅</span>
+		<span class="box inverse">🙅</span>
+		<span class="details">
+			<span class="character">🙅</span>
+			<span class="character-code">U+1F645</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH NO GOOD GESTURE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🙆</span>
+		<span class="box inverse">🙆</span>
+		<span class="details">
+			<span class="character">🙆</span>
+			<span class="character-code">U+1F646</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE WITH OK GESTURE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🙎</span>
+		<span class="box inverse">🙎</span>
+		<span class="details">
+			<span class="character">🙎</span>
+			<span class="character-code">U+1F64E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">PERSON WITH POUTING FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">💆</span>
+		<span class="box inverse">💆</span>
+		<span class="details">
+			<span class="character">💆</span>
+			<span class="character-code">U+1F486</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FACE MASSAGE</span>
+		</span>
+	</article>
+</section>
+<section id="section-animals" role="contentinfo" aria-label="Animals face icons">
+	<h3>Animals</h3>
+	<article class="preview">
+		<span class="box">🐭</span>
+		<span class="box inverse">🐭</span>
+		<span class="details">
+			<span class="character">🐭</span>
+			<span class="character-code">U+1F42D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">MOUSE FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐸</span>
+		<span class="box inverse">🐸</span>
+		<span class="details">
+			<span class="character">🐸</span>
+			<span class="character-code">U+1F438</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FROG FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐹</span>
+		<span class="box inverse">🐹</span>
+		<span class="details">
+			<span class="character">🐹</span>
+			<span class="character-code">U+1F439</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">HAMSTER FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐰</span>
+		<span class="box inverse">🐰</span>
+		<span class="details">
+			<span class="character">🐰</span>
+			<span class="character-code">U+1F430</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">RABBIT FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐱</span>
+		<span class="box inverse">🐱</span>
+		<span class="details">
+			<span class="character">🐱</span>
+			<span class="character-code">U+1F431</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CAT FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😸</span>
+		<span class="box inverse">😸</span>
+		<span class="details">
+			<span class="character">😸</span>
+			<span class="character-code">U+1F638</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">GRINNING CAT FACE WITH SMILING EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😹</span>
+		<span class="box inverse">😹</span>
+		<span class="details">
+			<span class="character">😹</span>
+			<span class="character-code">U+1F639</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CAT FACE WITH TEARS OF JOY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😺</span>
+		<span class="box inverse">😺</span>
+		<span class="details">
+			<span class="character">😺</span>
+			<span class="character-code">U+1F63A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING CAT FACE WITH OPEN MOUTH</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😻</span>
+		<span class="box inverse">😻</span>
+		<span class="details">
+			<span class="character">😻</span>
+			<span class="character-code">U+1F63B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SMILING CAT FACE WITH HEART-SHAPED EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😼</span>
+		<span class="box inverse">😼</span>
+		<span class="details">
+			<span class="character">😼</span>
+			<span class="character-code">U+1F63C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CAT FACE WITH WRY SMILE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😽</span>
+		<span class="box inverse">😽</span>
+		<span class="details">
+			<span class="character">😽</span>
+			<span class="character-code">U+1F63D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">KISSING CAT FACE WITH CLOSED EYES</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😾</span>
+		<span class="box inverse">😾</span>
+		<span class="details">
+			<span class="character">😾</span>
+			<span class="character-code">U+1F63E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">POUTING CAT FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">😿</span>
+		<span class="box inverse">😿</span>
+		<span class="details">
+			<span class="character">😿</span>
+			<span class="character-code">U+1F63F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CRYING CAT FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🙀</span>
+		<span class="box inverse">🙀</span>
+		<span class="details">
+			<span class="character">🙀</span>
+			<span class="character-code">U+1F640</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WEARY CAT FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐵</span>
+		<span class="box inverse">🐵</span>
+		<span class="details">
+			<span class="character">🐵</span>
+			<span class="character-code">U+1F435</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">MONKEY FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐶</span>
+		<span class="box inverse">🐶</span>
+		<span class="details">
+			<span class="character">🐶</span>
+			<span class="character-code">U+1F436</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">DOG FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐺</span>
+		<span class="box inverse">🐺</span>
+		<span class="details">
+			<span class="character">🐺</span>
+			<span class="character-code">U+1F43A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">WOLF FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐷</span>
+		<span class="box inverse">🐷</span>
+		<span class="details">
+			<span class="character">🐷</span>
+			<span class="character-code">U+1F437</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">PIG FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐮</span>
+		<span class="box inverse">🐮</span>
+		<span class="details">
+			<span class="character">🐮</span>
+			<span class="character-code">U+1F42E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">COW FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐴</span>
+		<span class="box inverse">🐴</span>
+		<span class="details">
+			<span class="character">🐴</span>
+			<span class="character-code">U+1F434</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">HORSE FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐯</span>
+		<span class="box inverse">🐯</span>
+		<span class="details">
+			<span class="character">🐯</span>
+			<span class="character-code">U+1F42F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">TIGER FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐼</span>
+		<span class="box inverse">🐼</span>
+		<span class="details">
+			<span class="character">🐼</span>
+			<span class="character-code">U+1F43C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">PANDA FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐻</span>
+		<span class="box inverse">🐻</span>
+		<span class="details">
+			<span class="character">🐻</span>
+			<span class="character-code">U+1F43B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">BEAR FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🐲</span>
+		<span class="box inverse">🐲</span>
+		<span class="details">
+			<span class="character">🐲</span>
+			<span class="character-code">U+1F432</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">DRAGON FACE</span>
+		</span>
+	</article>
+</section>
+<section id="section-solar-system" role="contentinfo" aria-label="Solar System face icons">
+	<h3>Solar System</h3>
+	<article class="preview">
+		<span class="box">🌚</span>
+		<span class="box inverse">🌚</span>
+		<span class="details">
+			<span class="character">🌚</span>
+			<span class="character-code">U+1F31A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">NEW MOON WITH FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🌛</span>
+		<span class="box inverse">🌛</span>
+		<span class="details">
+			<span class="character">🌛</span>
+			<span class="character-code">U+1F31B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FIRST QUARTER MOON WITH FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🌜</span>
+		<span class="box inverse">🌜</span>
+		<span class="details">
+			<span class="character">🌜</span>
+			<span class="character-code">U+1F31C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">LAST QUARTER MOON WITH FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🌝</span>
+		<span class="box inverse">🌝</span>
+		<span class="details">
+			<span class="character">🌝</span>
+			<span class="character-code">U+1F31D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">FULL MOON WITH FACE</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🌞</span>
+		<span class="box inverse">🌞</span>
+		<span class="details">
+			<span class="character">🌞</span>
+			<span class="character-code">U+1F31E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">SUN WITH FACE</span>
+		</span>
+	</article>
+</section>
+<section id="section-clock" role="contentinfo" aria-label="Clock face icons">
+	<h3>Clock</h3>
+	<article class="preview">
+		<span class="box">🕐</span>
+		<span class="box inverse">🕐</span>
+		<span class="details">
+			<span class="character">🕐</span>
+			<span class="character-code">U+1F550</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE ONE OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕑</span>
+		<span class="box inverse">🕑</span>
+		<span class="details">
+			<span class="character">🕑</span>
+			<span class="character-code">U+1F551</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE TWO OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕒</span>
+		<span class="box inverse">🕒</span>
+		<span class="details">
+			<span class="character">🕒</span>
+			<span class="character-code">U+1F552</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE THREE OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕓</span>
+		<span class="box inverse">🕓</span>
+		<span class="details">
+			<span class="character">🕓</span>
+			<span class="character-code">U+1F553</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE FOUR OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕔</span>
+		<span class="box inverse">🕔</span>
+		<span class="details">
+			<span class="character">🕔</span>
+			<span class="character-code">U+1F554</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE FIVE OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕕</span>
+		<span class="box inverse">🕕</span>
+		<span class="details">
+			<span class="character">🕕</span>
+			<span class="character-code">U+1F555</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE SIX OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕖</span>
+		<span class="box inverse">🕖</span>
+		<span class="details">
+			<span class="character">🕖</span>
+			<span class="character-code">U+1F556</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE SEVEN OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕗</span>
+		<span class="box inverse">🕗</span>
+		<span class="details">
+			<span class="character">🕗</span>
+			<span class="character-code">U+1F557</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE EIGHT OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕘</span>
+		<span class="box inverse">🕘</span>
+		<span class="details">
+			<span class="character">🕘</span>
+			<span class="character-code">U+1F558</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE NINE OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕙</span>
+		<span class="box inverse">🕙</span>
+		<span class="details">
+			<span class="character">🕙</span>
+			<span class="character-code">U+1F559</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE TEN OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕚</span>
+		<span class="box inverse">🕚</span>
+		<span class="details">
+			<span class="character">🕚</span>
+			<span class="character-code">U+1F55A</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE ELEVEN OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕛</span>
+		<span class="box inverse">🕛</span>
+		<span class="details">
+			<span class="character">🕛</span>
+			<span class="character-code">U+1F55B</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE TWELVE OCLOCK</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕜</span>
+		<span class="box inverse">🕜</span>
+		<span class="details">
+			<span class="character">🕜</span>
+			<span class="character-code">U+1F55C</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE ONE-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕝</span>
+		<span class="box inverse">🕝</span>
+		<span class="details">
+			<span class="character">🕝</span>
+			<span class="character-code">U+1F55D</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE TWO-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕞</span>
+		<span class="box inverse">🕞</span>
+		<span class="details">
+			<span class="character">🕞</span>
+			<span class="character-code">U+1F55E</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE THREE-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕟</span>
+		<span class="box inverse">🕟</span>
+		<span class="details">
+			<span class="character">🕟</span>
+			<span class="character-code">U+1F55F</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE FOUR-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕠</span>
+		<span class="box inverse">🕠</span>
+		<span class="details">
+			<span class="character">🕠</span>
+			<span class="character-code">U+1F560</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE FIVE-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕡</span>
+		<span class="box inverse">🕡</span>
+		<span class="details">
+			<span class="character">🕡</span>
+			<span class="character-code">U+1F561</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE SIX-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕢</span>
+		<span class="box inverse">🕢</span>
+		<span class="details">
+			<span class="character">🕢</span>
+			<span class="character-code">U+1F562</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE SEVEN-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕣</span>
+		<span class="box inverse">🕣</span>
+		<span class="details">
+			<span class="character">🕣</span>
+			<span class="character-code">U+1F563</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE EIGHT-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕤</span>
+		<span class="box inverse">🕤</span>
+		<span class="details">
+			<span class="character">🕤</span>
+			<span class="character-code">U+1F564</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE NINE-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕥</span>
+		<span class="box inverse">🕥</span>
+		<span class="details">
+			<span class="character">🕥</span>
+			<span class="character-code">U+1F565</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE TEN-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕦</span>
+		<span class="box inverse">🕦</span>
+		<span class="details">
+			<span class="character">🕦</span>
+			<span class="character-code">U+1F566</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE ELEVEN-THIRTY</span>
+		</span>
+	</article>
+	<article class="preview">
+		<span class="box">🕧</span>
+		<span class="box inverse">🕧</span>
+		<span class="details">
+			<span class="character">🕧</span>
+			<span class="character-code">U+1F567</span>
+			<span class="character-category">[OtherSymbol]</span>
+			<span class="character-description">CLOCK FACE TWELVE-THIRTY</span>
+		</span>
+	</article>
+</section>
+
+</main>
+
+</body>
+</html>
