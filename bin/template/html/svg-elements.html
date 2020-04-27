@@ -791,7 +791,6 @@
 				</ul>
 			</div>
 
-
 			<!-- animation elements
 <animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
 deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
@@ -848,7 +847,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-element="script"
 						data-category="miscellaneous,never rendered"
 						data-use-with=""
-						title="&#9;script - [miscellaneous,never rendered] allows inclusion of scripts inside an SVG document.  while SVG's script element is equivalent to the HTML script element, it has some discrepancies, like it uses the href attribute instead of src and it doesn't support ECMAScript modules so far">
+						title="&#9;scripted program code - [miscellaneous,never rendered] allows inclusion of client side scripts inside an SVG document.  while SVG's script element is equivalent to the HTML script element, it has some discrepancies, like it uses the href attribute instead of src and it doesn't support ECMAScript modules so far">
 						<a href="Element/script">
 							script
 						</a>
@@ -856,11 +855,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="set"
-						data-category="semantic,styles,interaction"
-						data-use-with=""
-						title="&#9;set - [semantic,styles,interaction] .">
+						data-category="animation"
+						data-use-with="desc,metadata,title"
+						title="&#9;set an attribute for a duration- [animation] provides a simple means of just setting the value of an attribute for a specified duration.  it supports all attribute types, including those that cannot reasonably be interpolated, such as string and boolean values. For attributes that can be reasonably be interpolated, the animate element is usualy prefered.">
 						<a href="Element/set">
-							set HEREIAM
+							set
 						</a>
 					</li>
 					<li
@@ -870,7 +869,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;solid color - [interaction,forms/input] .">
 						<a href="Element/solidcolor">
-							solidcolor
+							solidcolor HEREIAM
 						</a>
 					</li>
 					<li
@@ -2137,8 +2136,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 								nor="50%"
 								nofx=".45"
 								nofy=".45"
-								nofr="30%"
-							>
+								nofr="30%">
 								<!--
 								<stop offset="10%" stop-color="gold"/>
 								<stop offset="95%" stop-color="red"/>
@@ -2149,7 +2147,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 								<stop offset="60%" stop-color="#0ff" class="cyan-color-stop"></stop>
 								<stop offset="80%" stop-color="#00f" class="blue-color-stop"></stop>
 								<stop offset="100%" stop-color="#800080" class="violet-color-stop"></stop>
-<!--
+								<!--
 								<animate
 									attributeName="fx"
 									values="55%;45%;45%;55%;55%"
@@ -2181,7 +2179,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 									values="25%;75%;25%;75%;25%"
 									dur="3s"
 									repeatCount="indefinite"/>
-<!--
+								<!--
 								<animateTransform
 									attributeName="gradientTransform"
 									attributeType="XML"
@@ -2199,9 +2197,8 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 								r="50%"
 								fx=".45"
 								fy=".45"
-								fr="50%"
-							>
-<!--
+								fr="50%">
+								<!--
 								<stop offset="0%" stop-color="#f00" class="red-color-stop"></stop>
 								<stop offset="20%" stop-color="#ff0" class="yellow-color-stop"></stop>
 								<stop offset="40%" stop-color="#0f0" class="green-color-stop"></stop>
@@ -2211,17 +2208,17 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 -->
 								<stop offset="10%" stop-color="gold"/>
 								<stop offset="95%" stop-color="red"></stop>
-									<animate
-										attributeName="cx"
-										values="0%;100%;0%"
-										dur="3s"
-										repeatCount="indefinite"/>
-									<animate
-										attributeName="cy"
-										values="0%;100%;0%"
-										dur="3s"
-										repeatCount="indefinite"/>
-<!--
+								<animate
+									attributeName="cx"
+									values="0%;100%;0%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<animate
+									attributeName="cy"
+									values="0%;100%;0%"
+									dur="3s"
+									repeatCount="indefinite"/>
+								<!--
 									<animate
 										attributeName="fx"
 										values="100%;0%;100%"
@@ -2236,9 +2233,17 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							</radialGradient>
 						</defs>
 
-						<circle cx="5" cy="5" r="4" fill="url('#example-radial-gradient2-myGradientCenters')"/>
+						<circle
+							cx="5"
+							cy="5"
+							r="4"
+							fill="url('#example-radial-gradient2-myGradientCenters')"/>
 						<!-- using my animated radial gradient -->
-						<circle cx="15" cy="5" r="4" fill="url('#example-radial-gradient2-myGradient')"/>
+						<circle
+							cx="15"
+							cy="5"
+							r="4"
+							fill="url('#example-radial-gradient2-myGradient')"/>
 					</svg>
 					<!--
 
@@ -3477,27 +3482,125 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 				</section>
 
-<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-  <script>
-  // <![CDATA[
-  window.addEventListener('DOMContentLoaded', () => {
-    function getColor () {
-      const R = Math.round(Math.random() * 255).toString(16).padStart(2,'0')
-      const G = Math.round(Math.random() * 255).toString(16).padStart(2,'0')
-      const B = Math.round(Math.random() * 255).toString(16).padStart(2,'0')
-      return `#${R}${G}${B}`
-    }
+				<svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+					<script>
+						// <![CDATA[
+						window.addEventListener('DOMContentLoaded', () => {
+							function getColor() {
+								const R = Math.round(Math.random() * 255)
+									.toString(16)
+									.padStart(2, '0')
+								const G = Math.round(Math.random() * 255)
+									.toString(16)
+									.padStart(2, '0')
+								const B = Math.round(Math.random() * 255)
+									.toString(16)
+									.padStart(2, '0')
+								return `#${R}${G}${B}`
+							}
 
-    document.querySelector('circle').addEventListener('click', (e) => {
-      e.target.style.fill = getColor()
-    })
-  })
-  // ]]>
-  </script>
+							document
+								.querySelector('circle')
+								.addEventListener('click', (e) => {
+									e.target.style.fill = getColor()
+								})
+						})
+						//
+						]]>
+					</script>
 
-  <circle cx="5" cy="5" r="4" />
-</svg>
+					<circle cx="5" cy="5" r="4"/>
+				</svg>
 
+				<!-- ============================================================= -->
+				<section
+					id="example-set"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of the set element">
+					<h3>set example</h3>
+					<svg
+						class="example-set"
+						width="200"
+						height="200"
+						viewBox="0 0 10 10"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of set element. Simple attribute animations for a set duration.
+							Use varous mouse clicks to see effects</title>
+						<style>
+							.example-set-rect {
+								fill: white;
+								cursor: pointer;
+							}
+							.example-set-round {
+								rx: 5px;
+								fill: green;
+							}
+							.example-set-round-aux {
+								rx: 1px;
+								fill: blue;
+							}
+							.example-set-round-double {
+								rx: 3px;
+								fill: yellow;
+							}
+							.example-set-enter {
+								stroke: yellow;
+								fill: red;
+							}
+							.example-set-leave {
+								stroke: yellow;
+								fill: cyan;
+							}
+							.example-set-down {
+								stroke: red;
+								fill: white;
+							}
+							.example-set-up {
+								stroke: violet;
+								fill: white;
+							}
+						</style>
+
+						<rect id="example_set_me" class="example-set-rect" width="10" height="10">
+							<set
+								attributeName="class"
+								to="example-set-round"
+								begin="example_set_me.click"
+								dur="2s"/>
+							<set
+								attributeName="class"
+								to="example-set-round-double"
+								begin="example_set_me.dblclick"
+								dur="2s"/>
+							<set
+								attributeName="class"
+								to="example-set-round-aux"
+								begin="example_set_me.auxclick"
+								dur="2s"/>
+							<set
+								attributeName="class"
+								to="example-set-enter"
+								begin="example_set_me.mouseenter"
+								dur="0.5s"/>
+							<set
+								attributeName="class"
+								to="example-set-leave"
+								begin="example_set_me.mouseleave"
+								dur="0.5s"/>
+							<set
+								attributeName="class"
+								to="example-set-down"
+								begin="example_set_me.mousedown"
+								dur="0.5s"/>
+							<set
+								attributeName="class"
+								to="example-set-up"
+								begin="example_set_me.mouseup"
+								dur="0.5s"/>
+						</rect>
+					</svg>
+				</section>
 
 				<!-- ============================================================= -->
 				<section
@@ -3512,25 +3615,41 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 						height="200"
 						viewBox="0 0 10 10"
 						xmlns="http://www.w3.org/2000/svg">
-						<title>Example of script element.  Click the circle to change colour.</title>
-  <script>
-  // <![CDATA[
-  window.addEventListener('DOMContentLoaded', () => {
-    function getColor () {
-      const R = Math.round(Math.random() * 255).toString(16).padStart(2,'0')
-      const G = Math.round(Math.random() * 255).toString(16).padStart(2,'0')
-      const B = Math.round(Math.random() * 255).toString(16).padStart(2,'0')
-      return `#${R}${G}${B}`
-    }
+						<title>Example of script element. Click the circle to change colour.</title>
+						<script>
+							// <![CDATA[
+							window.addEventListener('DOMContentLoaded', () => {
+								function getColor() {
+									const R = Math.round(Math.random() * 255)
+										.toString(16)
+										.padStart(2, '0')
+									const G = Math.round(Math.random() * 255)
+										.toString(16)
+										.padStart(2, '0')
+									const B = Math.round(Math.random() * 255)
+										.toString(16)
+										.padStart(2, '0')
+									return `#${R}${G}${B}`
+								}
 
-    document.querySelector('#example-script-circle').addEventListener('click', (e) => {
-      e.target.style.fill = getColor()
-    })
-  })
-  // ]]>
-  </script>
+								document
+									.querySelector('#example-script-circle')
+									.addEventListener('click', (e) => {
+										e.target.style.fill = getColor()
+									})
+							})
+							//
+							]]>
+						</script>
 
-  <circle id="example-script-circle" cx="5" cy="5" r="4" fill="rebeccapurple" stroke="rebeccapurple" stroke-width="0.125" />
+						<circle
+							id="example-script-circle"
+							cx="5"
+							cy="5"
+							r="4"
+							fill="rebeccapurple"
+							stroke="rebeccapurple"
+							stroke-width="0.125"/>
 					</svg>
 				</section>
 
