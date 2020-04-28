@@ -98,6 +98,10 @@ if [ "x$COMPANY" == "xwipro" ]; then
 	alias ls-cfroutes='(for a in j2-pas-card-control-api-master j2-pas-card-control-mock-master; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
 	alias ls-cfappdyn='(for a in j2-pas-card-control-api-ft-PAS-15693 j2-pas-card-control-mock-ft-PAS-15693; do cf app $a; done) | perl -pne "s{(routes:)\s+}{\$1\\n }xmsg; s{,}{,\\n}xmsg"'
 	alias ls-mca='ls-cfroutes | grep "mca-j2" | perl -pne "s{\\A.+-cwa-(.+?)\\..+\\z}{\$1\\n}xmsg;" | sort | uniq'
+
+# git grep -l something | in-code
+	alias in-code="grep -vE '(cypress|tests?|vendor|tools)/|\.spec\.|\.(tgz|png|gif|jpg|map|eot|woff|ttf)|(story|stub|vendor.*)\.js'"
+	alias in-tests="grep -vE '(cypress|vendor|tools)/|\.(tgz|png|gif|jpg|map|eot|woff|ttf)|(story|vendor.*)\.js' | grep -E 'tests?/|\.spec\.'"
 fi
 
 # default options for some commands
