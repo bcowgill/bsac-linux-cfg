@@ -10,8 +10,8 @@ if [ ! -x "$TEST_ONE" ]; then
 	TEST_ONE=test-one.sh
 fi
 
-NBSP=" "
-NBHY="‑"
+NBSP=" " # <-- unicode character here
+NBHY="‑" # <-- unicode character here
 
 WARNINGS=0
 
@@ -397,14 +397,15 @@ function code_review {
 		has_js 'eslint-disable prefer-arrow-callback' "$file" "test plan MUST have /* eslint-disable prefer-arrow-callback */"
 		has_js 'const\s+suite\b' "$file" "test plan MUST define suite name"
 		has_js "'$file'" "$file" "test plan MUST have const suite = '$file';"
+		has_js "setStrictObjectChecks" "$file" "test plan MUST have beforeEach with setStrictObjectChecks call"
 		# TODO beforeEach/afterEach anon functions
 		search_js '\b[fx](it|describe)\s*\(' "$file"  "MUST restore describe/it test"
 		search_js '\b(it|describe)\.(only|skip)\s*\(' "$file"  "MUST restore describe/it test"
 		search_js_comments '[fx]?(it|describe)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
 		search_js_comments '(it|describe)\.(only|skip)\s*\(' "$file"  "MUST use skip feature instead of commenting out tests"
-		search_js '\.called' "$file" "MUST use .callCount instead of .called or .calledOnce (code-fix)"
-		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
-		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "MUST use expectTruthy() etc functions with numbered labels (code-fix)"
+		search_js '\.called' "$file" "(code-fix) MUST use .callCount instead of .called or .calledOnce"
+		search_js 'toBe(True|Truthy|False|Falsy|Null|Undefined|Defined)' "$file" "(code-fix) MUST use expectTruthy() etc functions with numbered labels"
+		search_js 'to(Be|Equal)\((true|false|null|undefined)' "$file" "(code-fix) MUST use expectTruthy() etc functions with numbered labels"
 		search_js '\)\.toEqual\(\s*[\{\[]' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate objects or arrays"
 		search_js 'expect\(.+\.args.+\)\s*$' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
 		search_js 'expect\(.+\.args.+?\)\.to(Be|Equal)\(\s*([^`'\''"0-9]|$)' "$file" "use expectObjectsDeepEqual/expectArraysDeepEqual where possible to validate spy call parameters"
@@ -413,12 +414,12 @@ function code_review {
 		search_js 'expect\(isNaN\(' "$file" "use expect(...).toBeNaN() instead of expect(isNaN(...)) for better failure diagnosis"
 		# TODO spy.callCount missing before checking spy calls
 		# TODO expect() .toBe/Equal
-		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "MUST name your describe function something like descObjectNameSuite instead of using anonymous function (code-fix)"
+		search_js '\b(describe)\b.+\(\)\s*=>\s*\{$' "$file"  "(code-fix) MUST name your describe function something like descObjectNameSuite instead of using anonymous function"
 		search_js '\b(describe)\b.+\bfunction\s+(test|desc[a-z])' "$file"  "MUST name your describe function something like descObjectNameSubSuite"
-		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your it function something like testObjectNameFunctionMode (i.e. testEditComponentRenderMinimal) instead of using anonymous function (code-fix)"
+		search_js '\b(it|skip\w+)\b.+\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "(code-fix) should name your it function something like testObjectNameFunctionMode (i.e. testEditComponentRenderMinimal) instead of using anonymous function"
 		# TODO       it('should reject promise on server error', (done) => {
 		search_js '\b(it|skip\w+)\b.+\bfunction\s+(desc|test[a-z])' "$file"  "MUST name your it function something like testObjectNameFunctionMode (i.e. testEditComponentRenderMinimal)"
-		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "should name your before/afterEach function something like setupTestsMode or tearDownMode instead of using anonymous function (code-fix)"
+		search_js '\b(beforeEach|afterEach)\(\s*\w*\s*\)\s*=>\s*\{$' "$file"  "(code-fix) should name your before/afterEach function something like setupTestsMode or tearDownMode instead of using anonymous function"
 	else
 		# Not a test plan...
 		if echo "$file" | grep -E '\.jsx?\s*$' | grep -vE '(mock|stub|story)\.js' > /dev/null; then
@@ -430,8 +431,8 @@ function code_review {
 		search_js_filter_after_duplicates 1 'MOCK ROUTE GROUP' 'MOCK ROUTE GROUP|--' "$file" "MUST fix duplicated cypress mock-api routes"
 		search_js '\bzIndex:\s*-?\d' "$file" "MUST use named zIndex instead of hard coded altitudes"
 		search_js '<button' "$file" "MUST not use button use BaseButton or another block/button component so keepAlive works"
-		search_js "$NBSP" "$file" "MUST not hard code non-breaking spaces as they cannot be seen. use &nbsp; NBSP constant or noBreakSpace() function"
-		search_js "$NBHY" "$file" "MUST not hard code non-breaking hyphens as they cannot be seen. use NBHY constant or noBreakHyphens() function"
+#		search_debug "$NBSP" "$file" "MUST not hard code non-breaking spaces as they cannot be seen. use &nbsp; NBSP constant or noBreakSpace() function"
+#		search_js "$NBHY" "$file" "MUST not hard code non-breaking hyphens as they cannot be seen. use NBHY constant or noBreakHyphens() function"
 	fi
 
 	HEADING="checking for code to remove..."
@@ -487,15 +488,15 @@ function code_review {
 	if grep -E '^\s*Feature:' "$file" > /dev/null; then
 		HEADING="checking for bad Gherkin style..."
 		search_sh '@(skip|only)' "$file"              "MUST remove @skip or @only marker"
-		search_sh ':\s+Feature:' "$file"              "incorrect Feature: indentation (MUST be zero) (code-fix)"
-		search_sh ':(\s?|\s{3,})@devCWA' "$file"      "incorrect @devCWA: indentation (MUST be two spaces) (code-fix)"
-		search_sh ':(\s?|\s{3,})@skip' "$file"        "incorrect @skip: indentation (MUST be two spaces) (code-fix)"
-		search_sh ':(\s?|\s{3,})Scenario:' "$file"    "incorrect Scenario: indentation (MUST be two spaces) (code-fix)"
-		search_sh ':(\s?|\s{3,})Background:' "$file"  "incorrect Background: indentation (MUST be two spaces) (code-fix)"
-		search_sh ':(\s{0,3}|\s{5,})Given' "$file"    "incorrect Given step indentation (MUST be four spaces) (code-fix)"
-		search_sh ':(\s{0,3}|\s{5,})When' "$file"     "incorrect When step indentation (MUST be four spaces) (code-fix)"
-		search_sh ':(\s{0,3}|\s{5,})Then' "$file"     "incorrect Then step indentation (MUST be four spaces) (code-fix)"
-		search_sh ':(\s{0,5}|\s{7,})And' "$file"      "incorrect And step indentation (MUST be six spaces) (code-fix)"
+		search_sh ':\s+Feature:' "$file"              "(code-fix) incorrect Feature: indentation (MUST be zero)"
+		search_sh ':(\s?|\s{3,})@devCWA' "$file"      "(code-fix) incorrect @devCWA: indentation (MUST be two spaces)"
+		search_sh ':(\s?|\s{3,})@skip' "$file"        "(code-fix) incorrect @skip: indentation (MUST be two spaces)"
+		search_sh ':(\s?|\s{3,})Scenario:' "$file"    "(code-fix) incorrect Scenario: indentation (MUST be two spaces)"
+		search_sh ':(\s?|\s{3,})Background:' "$file"  "(code-fix) incorrect Background: indentation (MUST be two spaces)"
+		search_sh ':(\s{0,3}|\s{5,})Given' "$file"    "(code-fix) incorrect Given step indentation (MUST be four spaces)"
+		search_sh ':(\s{0,3}|\s{5,})When' "$file"     "(code-fix) incorrect When step indentation (MUST be four spaces)"
+		search_sh ':(\s{0,3}|\s{5,})Then' "$file"     "(code-fix) incorrect Then step indentation (MUST be four spaces)"
+		search_sh ':(\s{0,5}|\s{7,})And' "$file"      "(code-fix) incorrect And step indentation (MUST be six spaces)"
 	fi
 
 	# TODO alt,aria-label= without copyText
@@ -514,7 +515,7 @@ function code_review {
 	if [ ! -z "$GOT_TEST_PLAN" ]; then
 		test_plan="$GOT_TEST_PLAN"
 		if [ -z "$CODE_REVIEW_RUN_TESTS" ]; then
-			echo " has test plan: (set environment CODE_REVIEW_RUN_TESTS=1 to run it)"
+			echo " has test plan: (set environment: export CODE_REVIEW_RUN_TESTS=1 to run it)"
 			code_review "$test_plan"
 		else
 			echo " has test plan:"
