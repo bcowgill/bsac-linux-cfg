@@ -875,11 +875,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="stop"
-						data-category="media,audio/video"
-						data-use-with=""
-						title="&#9;stop - [media,audio/video] .">
+						data-category="gradient"
+						data-use-with="linearGradient,radialGradient"
+						title="&#9;stop - [gradient] defines a color and its position to use on a gradient.  this element is always a child of a linearGradient or radialGradient element.">
 						<a href="Element/stop">
-							stop HEREIAM
+							stop
 						</a>
 					</li>
 					<li
@@ -889,7 +889,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;style sheet? - [semantic,styles] .">
 						<a href="Element/style">
-							style
+							style HEREIAM
 						</a>
 					</li>
 					<li
@@ -1819,15 +1819,33 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							solidcolor.
 						</title>
 						<defs>
-							<!-- solidcolor alternative to define a color, however opacity does not work and must be used at the target site -->
-							<linearGradient id="example-ellipse-define-color" opacity="0.2"><stop id="example-ellipse-define-color-gold" offset="0" stop-color="gold"/></linearGradient>
+							<!-- solidcolor alternative to define a color and opacity -->
+							<linearGradient id="example-ellipse-define-color"><stop
+								id="example-ellipse-define-color-gold"
+								offset="0"
+								stop-color="gold"
+								stop-opacity="0.6"/></linearGradient>
+							<linearGradient id="example-ellipse-define-color2"><stop
+								id="example-ellipse-define-color-silver"
+								offset="0"
+								stop-color="silver"
+								stop-opacity="0.6"/></linearGradient>
 						</defs>
 						<ellipse
 							rx="50"
 							ry="25"
 							fill="url(#example-ellipse-define-color)"
-							opacity="0.8"
 							transform=" translate(75,38) rotate(25,0,0) "/>
+						<ellipse
+							rx="50"
+							ry="25"
+							fill="url(#example-ellipse-define-color2)"
+							transform=" translate(75,38) rotate(-25,0,0) "/>
+						<ellipse
+							rx="5"
+							ry="5"
+							fill="url(#example-ellipse-define-color)"
+							transform=" translate(75,38) "/>
 					</svg>
 					<script>
 						<!--
@@ -1836,11 +1854,17 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							let color = 'gold';
 							setInterval(function changeColor() {
 								const dom = document.getElementById('example-ellipse-define-color-gold');
+								const dom2 = document.getElementById('example-ellipse-define-color-silver');
 								if (dom) {
 									color = dom.getAttribute('stop-color') === 'gold'
 										? 'silver'
 										: 'gold';
 									dom.setAttribute('stop-color', color);
+									if (dom2) {
+										dom2.setAttribute('stop-color', color === 'gold'
+											? 'silver'
+											: 'gold');
+									}
 								}
 							}, 2000);
 						}
