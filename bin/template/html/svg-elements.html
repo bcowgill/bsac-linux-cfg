@@ -1816,10 +1816,11 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 						xmlns="http://www.w3.org/2000/svg">
 						<title>Example of rotating an ellipse using transform as there is no rotate
 							property. Also demonstrates defining colors with linearGradient alternative to
-							solidcolor.</title>
+							solidcolor.
+						</title>
 						<defs>
 							<!-- solidcolor alternative to define a color, however opacity does not work and must be used at the target site -->
-							<linearGradient id="example-ellipse-define-color" opacity="0.2"><stop offset="0" stop-color="gold"/></linearGradient>
+							<linearGradient id="example-ellipse-define-color" opacity="0.2"><stop id="example-ellipse-define-color-gold" offset="0" stop-color="gold"/></linearGradient>
 						</defs>
 						<ellipse
 							rx="50"
@@ -1828,6 +1829,25 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							opacity="0.8"
 							transform=" translate(75,38) rotate(25,0,0) "/>
 					</svg>
+					<script>
+						<!--
+						function updateColorPalette() {
+							// changing one attribute affects EVERY shape that uses that color...
+							let color = 'gold';
+							setInterval(function changeColor() {
+								const dom = document.getElementById('example-ellipse-define-color-gold');
+								if (dom) {
+									color = dom.getAttribute('stop-color') === 'gold'
+										? 'silver'
+										: 'gold';
+									dom.setAttribute('stop-color', color);
+								}
+							}, 2000);
+						}
+						updateColorPalette();
+
+						-->
+					</script>
 				</section>
 
 				<!-- ============================================================= -->
