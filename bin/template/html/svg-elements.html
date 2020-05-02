@@ -232,6 +232,9 @@
 		.white-bg {
 			background-color: white;
 		}
+		.black-bg {
+			background-color: black;
+		}
 
 	</style>
 </head>
@@ -836,6 +839,7 @@ animation, descriptive, shape, structure, gradient
 
 animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop
 
+
 -->
 
 			<!-- S COLUMN ========== -->
@@ -876,8 +880,8 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						class="target element"
 						data-element="stop"
 						data-category="gradient"
-						data-use-with="linearGradient,radialGradient"
-						title="&#9;stop - [gradient] defines a color and its position to use on a gradient.  this element is always a child of a linearGradient or radialGradient element.">
+						data-use-with="linearGradient,radialGradient,animate,set"
+						title="&#9;color stop - [gradient] defines a color and its position to use on a gradient.  this element is always a child of a linearGradient or radialGradient element.">
 						<a href="Element/stop">
 							stop
 						</a>
@@ -885,19 +889,19 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="style"
-						data-category="semantic,styles"
+						data-category="miscellaneous,never rendered"
 						data-use-with=""
-						title="&#9;style sheet? - [semantic,styles] .">
+						title="&#9;style sheet - [miscellaneous,never rendered]  allows style sheets to be embedded directly within SVG content.  SVG's style element has the same attributes as the corresponding element in HTML.">
 						<a href="Element/style">
-							style HEREIAM
+							style
 						</a>
 					</li>
 					<li
 						class="target element"
 						data-element="svg"
-						data-category="interaction,programming"
-						data-use-with=""
-						title="&#9;scalable vector graphics - [interaction,programming] .">
+						data-category="structure,container,renderable"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+						title="&#9;scalable vector graphics - [structure,container,renderable] a container that defines a new coordinate system and viewport.  it is used as the outermost element of SVG documents, but it can also be used to embed an SVG fragment inside an SVG or HTML document.  the xmlns attribute is only required on the outermost svg element of SVG documents. It is unnecessary for inner svg elements or inside HTML documents.">
 						<a href="Element/svg">
 							svg
 						</a>
@@ -909,7 +913,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;switch - [semantic,formatting,phrase] .">
 						<a href="Element/switch">
-							switch
+							switch HEREIAM
 						</a>
 					</li>
 					<li
@@ -3702,6 +3706,344 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							fill="rebeccapurple"
 							stroke="rebeccapurple"
 							stroke-width="0.125"/>
+					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-svg-inner"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of svg element embedded in another svg element">
+					<h3>svg embedded example with preserveAspectRatio when viewBox differs from svg
+						dimensions</h3>
+					<svg
+						class="example-svg-inner white-bg"
+						width="1200"
+						height="694"
+						viewBox="-4 -4 168 100"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of svg element embedded inside another svg element.</title>
+						<defs>
+							<path
+								id="example-svg-inner-smiley"
+								d="M50,10 A40,40,1,1,1,50,90 A40,40,1,1,1,50,10 M30,40 Q36,35,42,40 M58,40 Q64,35,70,40 M30,60 Q50,75,70,60 Q50,75,30,60"/>
+						</defs>
+						<style>
+							.example-svg-inner {
+								fill: yellow;
+								stroke: black;
+								stroke-width: 4;
+								stroke-linecap: round;
+							}
+							.example-svg-inner rect {
+								stroke: black;
+								fill: black;
+								stroke-width: 1;
+							}
+							.example-svg-inner rect:hover {
+								stroke: red;
+							}
+							.example-svg-inner text {
+								font: bold 8px sans-serif;
+								fill: white;
+								stroke-width: 0;
+							}
+							.example-svg-inner text.label {
+								font: bold 2px sans-serif;
+								background-color: white;
+								fill: red;
+								stroke-width: 0;
+							}
+							.example-svg-inner text.meet {
+								fill: blue;
+							}
+
+						</style>
+						<!-- (width>height) meet -->
+						<g>
+							<rect width="20" height="10">
+								<title>preserveAspectRatio="xMidYMid meet"</title>
+							</rect>
+							<svg
+								class="xMidYMid meet"
+								preserveAspectRatio="xMidYMid meet"
+								viewBox="0 0 100 100"
+								width="20"
+								height="10"><use href="#example-svg-inner-smiley"/>
+								<title>preserveAspectRatio="xMidYMid meet"</title>
+							</svg>
+							<text class="label" x="5" y="12.5">xMidYMid</text>
+						</g>
+
+						<g transform="translate(25,0)">
+							<rect width="20" height="10">
+								<title>
+									preserveAspectRatio="xMinYMid meet"
+								</title>
+							</rect>
+							<svg
+								class="xMinYMid meet"
+								preserveAspectRatio="xMinYMid meet"
+								viewBox="0 0 100 100"
+								width="20"
+								height="10"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMinYMid meet"
+								</title>
+							</svg>
+							<text class="label" x="5" y="12.5">xMinYMid</text>
+						</g>
+
+						<g transform="translate(50,0)">
+							<rect width="20" height="10">
+								<title>
+									preserveAspectRatio="xMaxYMid meet"
+								</title>
+							</rect>
+							<svg
+								class="xMaxYMid meet"
+								preserveAspectRatio="xMaxYMid meet"
+								viewBox="0 0 100 100"
+								width="20"
+								height="10"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMaxYMid meet"
+								</title>
+							</svg>
+							<text class="label" x="5" y="12.5">xMaxYMid</text>
+						</g>
+
+						<g transform="translate(0,15)">
+							<!-- (width>height) slice -->
+							<rect width="20" height="10">
+								<title>
+									preserveAspectRatio="xMidYMin slice"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMin slice"
+								preserveAspectRatio="xMidYMin slice"
+								viewBox="0 0 100 100"
+								width="20"
+								height="10"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMin slice"
+								</title>
+							</svg>
+							<text class="label" x="5" y="12.5">xMidYMin</text>
+						</g>
+
+						<g transform="translate(25,15)">
+							<rect width="20" height="10">
+								<title>
+									preserveAspectRatio="xMidYMid slice"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMid slice"
+								preserveAspectRatio="xMidYMid slice"
+								viewBox="0 0 100 100"
+								width="20"
+								height="10"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMid slice"
+								</title>
+							</svg>
+							<text class="label" x="5" y="12.5">xMidYMid</text>
+						</g>
+
+						<g transform="translate(50,15)">
+							<rect width="20" height="10">
+								<title>
+									preserveAspectRatio="xMidYMax slice"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMax slice"
+								preserveAspectRatio="xMidYMax slice"
+								viewBox="0 0 100 100"
+								width="20"
+								height="10"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMax slice"
+								</title>
+							</svg>
+							<text class="label" x="5" y="12.5">xMidYMax</text>
+						</g>
+
+						<g transform="translate(75,0)">
+							<!-- (width<height) meet -->
+							<rect width="10" height="25">
+								<title>
+									preserveAspectRatio="xMidYMin meet"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMin meet"
+								preserveAspectRatio="xMidYMin meet"
+								viewBox="0 0 100 100"
+								width="10"
+								height="25"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMin meet"
+								</title>
+							</svg>
+							<g transform="translate(-1,16.5) rotate(-90,0,0)">
+								<text class="label monospace-font">xMidYMin</text>
+							</g>
+						</g>
+
+						<g transform="translate(90,0)">
+							<rect width="10" height="25">
+								<title>
+									preserveAspectRatio="xMidYMid meet"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMid meet"
+								preserveAspectRatio="xMidYMid meet"
+								viewBox="0 0 100 100"
+								width="10"
+								height="25"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMid meet"
+								</title>
+							</svg>
+							<g transform="translate(-1,16.5) rotate(-90,0,0)">
+								<text class="label monospace-font">xMidYMid</text>
+							</g>
+						</g>
+
+						<g transform="translate(105,0)">
+							<rect width="10" height="25">
+								<title>
+									preserveAspectRatio="xMidYMax meet"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMax meet"
+								preserveAspectRatio="xMidYMax meet"
+								viewBox="0 0 100 100"
+								width="10"
+								height="25"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMax meet"
+								</title>
+							</svg>
+							<g transform="translate(-1,16.5) rotate(-90,0,0)">
+								<text class="label monospace-font">xMidYMax</text>
+							</g>
+						</g>
+
+						<g transform="translate(120,0)">
+							<!-- (width<height) slice -->
+							<rect width="10" height="25">
+								<title>
+									preserveAspectRatio="xMinYMid slice"
+								</title>
+							</rect>
+							<svg
+								class="xMinYMid slice"
+								preserveAspectRatio="xMinYMid slice"
+								viewBox="0 0 100 100"
+								width="10"
+								height="25"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMinYMid slice"
+								</title>
+							</svg>
+							<g transform="translate(-1,16.5) rotate(-90,0,0)">
+								<text class="label monospace-font">xMinYMid</text>
+							</g>
+						</g>
+
+						<g transform="translate(135,0)">
+							<rect width="10" height="25">
+								<title>
+									preserveAspectRatio="xMidYMid slice"
+								</title>
+							</rect>
+							<svg
+								class="xMidYMid slice"
+								preserveAspectRatio="xMidYMid slice"
+								viewBox="0 0 100 100"
+								width="10"
+								height="25"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMidYMid slice"
+								</title>
+							</svg>
+							<g transform="translate(-1,16.5) rotate(-90,0,0)">
+								<text class="label monospace-font">xMidYMid</text>
+							</g>
+						</g>
+
+						<g transform="translate(150,0)">
+							<rect width="10" height="25">
+								<title>
+									preserveAspectRatio="xMaxYMid slice"
+								</title>
+							</rect>
+							<svg
+								class="xMaxYMid slice"
+								preserveAspectRatio="xMaxYMid slice"
+								viewBox="0 0 100 100"
+								width="10"
+								height="25"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="xMaxYMid slice"
+								</title>
+							</svg>
+							<g transform="translate(-1,16.5) rotate(-90,0,0)">
+								<text class="label monospace-font">xMaxYMid</text>
+							</g>
+						</g>
+
+						<g transform="translate(0,32)">
+							<!-- none -->
+							<rect width="160" height="60">
+								<title>
+									preserveAspectRatio="none"
+								</title>
+							</rect>
+							<svg
+								class="none"
+								preserveAspectRatio="none"
+								viewBox="0 0 100 100"
+								width="160"
+								height="60"><use href="#example-svg-inner-smiley"/>
+								<title>
+									preserveAspectRatio="none"
+								</title>
+								<text x="39.5" y="9" fill="white" stroke="white" stroke-width="0">none</text>
+							</svg>
+						</g>
+
+						<text
+							class="label meet"
+							x="0"
+							y="-1.5"
+							textLength="70"
+							lengthAdjust="spacingAndGlyphs">meet</text>
+						<text
+							class="label meet"
+							x="0"
+							y="30"
+							textLength="70"
+							lengthAdjust="spacingAndGlyphs">slice</text>
+						<text
+							class="label meet"
+							x="75"
+							y="-1.5"
+							textLength="40"
+							lengthAdjust="spacingAndGlyphs">meet</text>
+						<text
+							class="label meet"
+							x="120"
+							y="-1.5"
+							textLength="40"
+							lengthAdjust="spacingAndGlyphs">slice</text>
 					</svg>
 				</section>
 
