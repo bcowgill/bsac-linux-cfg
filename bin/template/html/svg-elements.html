@@ -909,11 +909,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="switch"
-						data-category="semantic,formatting,phrase"
-						data-use-with=""
-						title="&#9;switch - [semantic,formatting,phrase] .">
+						data-category="renderable,container"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,a,foreignObject,g,image,svg,switch,text,use"
+						title="&#9;switch display by feature - [renderable,container] evaluates any requiredFeatures, requiredExtensions and systemLanguage attributes on its direct child elements in order, and then renders the first child where these attributes evaluate to true.  other direct children will be bypassed and therefore not rendered.  if a child element is a container element, like g element, then its subtree is also processed/rendered or bypassed/not rendered.">
 						<a href="Element/switch">
-							switch HEREIAM
+							switch
 						</a>
 					</li>
 					<li
@@ -923,7 +923,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;symbol - [semantic,formatting] .">
 						<a href="Element/symbol">
-							symbol
+							symbol HEREIAM
 						</a>
 					</li>
 					<li
@@ -4044,6 +4044,164 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							y="-1.5"
 							textLength="40"
 							lengthAdjust="spacingAndGlyphs">slice</text>
+					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-switch"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of switch element">
+					<h3>switch and arbitrary rotation example</h3>
+					<svg
+						class="example-switch white-bg"
+						width="200"
+						height="180"
+						viewBox="0 -20 100 50"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of switch element by systemLanguage and rotation about different points of text</title>
+						<line x2="100" stroke="red" stroke-width="0.5"/>
+						<line y1="-40" y2="50" stroke="red" stroke-width="0.5"/>
+						<!-- enable animations with the same class to show that effect.  translate(+), rotate, translate(-) to rotate about a different point -->
+						<g notransform="scale(-1,1) translate(-44.5,0)">
+							<!--							<animateTransform
+								class="mirror-to-normal"
+								attributeName="transform"
+								attributeType="XML"
+								type="scale"
+								from="-1 1"
+								to="1 1"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+							<!--							<animateTransform
+								attributeName="transform"
+								attributeType="XML"
+								type="scale"
+								from="-1 1"
+								to="-1 1"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+							<!--							<animateTransform
+								class="rotate-around-top-left"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="0 -12"
+								to="0 -12"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+							<!--							<animateTransform
+								class="rotate-around-bottom-right"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="44.5 0"
+								to="44.5 0"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+							<animateTransform
+								class="rotate-around-top-right"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="44.5 -12"
+								to="44.5 -12"
+								dur="2s"
+								repeatCount="indefinite"/>
+							<g>
+								<animateTransform
+									class="rotate-around-top-right rotate-around-bottom-right"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									from="0 0 0"
+									to="360 0 0"
+									dur="2s"
+									repeatCount="indefinite"/>
+								<!--							<animateTransform
+								class="rotate-around-top-left rotate-around-bottom-left"
+								attributeName="transform"
+								attributeType="XML"
+								type="rotate"
+								from="90 0 0"
+								to="-90 0 0"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+								<g>
+									<!--							<animateTransform
+								attributeName="transform"
+								attributeType="XML"
+								type="scale"
+								from="-1 1"
+								to="-1 1"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+									<!--							<animateTransform
+								class="rotate-around-bottom-right"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="-44.5 0"
+								to="-44.5 0"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+									<!--							<animateTransform
+								class="rotate-around-top-left"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="0 12"
+								to="0 12"
+								dur="2s"
+								repeatCount="indefinite"/>
+-->
+									<animateTransform
+										class="rotate-around-top-right"
+										attributeName="transform"
+										attributeType="XML"
+										type="translate"
+										from="-44.5 12"
+										to="-44.5 12"
+										dur="2s"
+										repeatCount="indefinite"/>
+									<switch>
+										<text systemLanguage="ar">مرحبا</text>
+										<text systemLanguage="de,nl">Hallo!</text>
+										<text systemLanguage="en-us">Howdy!</text>
+										<text systemLanguage="en-gb">Wotcha!</text>
+										<text systemLanguage="en-au">G'day!</text>
+										<text systemLanguage="en">Hello!</text>
+										<text systemLanguage="es">Hola!</text>
+										<text systemLanguage="fr">Bonjour!</text>
+										<text systemLanguage="ja">こんにちは</text>
+										<text systemLanguage="ru">Привет!</text>
+										<text>☺</text>
+									</switch>
+								</g>
+							</g>
+						</g>
+						<switch transform="translate(2,9) scale(0.35)">
+							<text systemLanguage="ar">systemLanguage=arabic</text>
+							<text systemLanguage="de">systemLanguage=german</text>
+							<text systemLanguage="nl">systemLanguage=dutch</text>
+							<text systemLanguage="en-us">systemLanguage=american english</text>
+							<text systemLanguage="en-gb">systemLanguage=british english</text>
+							<text systemLanguage="en-au">systemLanguage=australian english</text>
+							<text systemLanguage="en">systemLanguage=english</text>
+							<text systemLanguage="es">systemLanguage=spanish</text>
+							<text systemLanguage="fr">systemLanguage=french</text>
+							<text systemLanguage="ja">systemLanguage=japanese</text>
+							<text systemLanguage="ru">systemLanguage=russian</text>
+							<text>systemLanguage=something else</text>
+						</switch>
 					</svg>
 				</section>
 
