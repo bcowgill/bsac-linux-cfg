@@ -21,6 +21,12 @@
 		name="description"
 		content="A reference of SVG elements somewhat reminiscent of the periodic table of the elements from chemistry.">
 	<meta name="author" content="Brent S.A. Cowgill">
+	<!--
+		SVG Reference: https://www.w3schools.com/graphics/svg_reference.asp
+			https://developer.mozilla.org/en-US/docs/Web/SVG/Element
+		SVG Tutorial: https://www.w3schools.com/graphics/svg_intro.asp
+		SVG Examples: https://www.w3schools.com/graphics/svg_examples.asp
+	-->
 	<style>
 		/*
 			Standard fonts for web browsers:
@@ -919,27 +925,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="symbol"
-						data-category="semantic,formatting"
-						data-use-with=""
-						title="&#9;symbol - [semantic,formatting] .">
+						data-category="never rendered,container,renderable,structure"
+						data-use-with="use,animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop,a,clipPath,filter,foreignObject,image,marker,mask,pattern,script,style,switch,text,view"
+						title="&#9;define a symbol - [never rendered,container,renderable,structure] element is used to define graphical template objects which can be instantiated by a use element.  the use of symbol elements for graphics that are used multiple times in the same document adds structure and semantics.  documents that are rich in structure may be rendered graphically, as speech, or as braille, and thus promote accessibility.">
 						<a href="Element/symbol">
-							symbol HEREIAM
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="svg"
-						data-category="media,images,interaction"
-						data-use-with="rect,circle,ellipse,line,polyline,polygon,path,text,tspan,a,g,feXxx,defs,filter,linearGradient,radialGradient,stop"
-						title="&#9;scalable vector graphics - [media,images,interaction] defines a container for scalable vector graphics.  allows for drawing paths, boxes, circles, text, and graphic images.">
-						<!--
-				SVG Reference: https://www.w3schools.com/graphics/svg_reference.asp
-					https://developer.mozilla.org/en-US/docs/Web/SVG/Element
-				SVG Tutorial: https://www.w3schools.com/graphics/svg_intro.asp
-				SVG Examples: https://www.w3schools.com/graphics/svg_examples.asp
-			-->
-						<a href="Element/">
-							svg
+							symbol
 						</a>
 					</li>
 				</ul>
@@ -956,7 +946,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with="caption,colgroup,col,thead,tfoot,tbody,tr,th,td"
 						title="&#9;table - [semantic,tables] defines an HTML table of information presented in rows and columns.">
 						<a href="Element/">
-							table
+							table HEREIAM
 						</a>
 					</li>
 					<li
@@ -1165,6 +1155,83 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 			<summary>Selected examples...</summary>
 
 			<div class="example-container">
+
+				<!-- ============================================================= -->
+				<section
+					id="example-symbol"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of symbol and use element">
+					<h3>symbol and use example</h3>
+					<svg
+						class="example-symbol white-bg"
+						width="400"
+						height="100"
+						viewBox="0 0 80 20"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of symbol element.</title>
+						<!--
+		THIS DOES NOT MAKE SENSE
+		should be width 10 height 10 viewBox 0 0 2 2 no preserveAspectRatio circle cx 1 cy 1 r 1
+		but in that case the symbol is twice the width/height and offset far to the right of where you expect.
+    there seems to be some interaction between the svg viewbox and the symbol viewbox
+-->
+						<!-- Our symbol in its own coordinate system -->
+						<symbol
+							id="example-symbol-myDot"
+							refX="0"
+							refY="0"
+							width="10"
+							height="10"
+							viewBox="0 0 16 4"
+							preserveAspectRatio="xMinYMid meet">
+							<circle cx="1" cy="1" r="1"/>
+						</symbol>
+						<!-- A grid to materialize our symbol positioning -->
+						<path
+							d="M0,10 h80 M10,0 v20 M25,0 v20 M40,0 v20 M55,0 v20 M70,0 v20"
+							fill="none"
+							stroke="pink"/>
+
+						<!-- All instances of our symbol -->
+						<g transform="translate(0,5)">
+							<use xlink:href="#example-symbol-myDot" x="5" style="opacity:1.0"/>
+							<rect x="5" width="10" height="10" fill="none" stroke="red" stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="20" style="opacity:0.8"/>
+							<rect
+								x="20"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="35" style="opacity:0.6"/>
+							<rect
+								x="35"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="50" style="opacity:0.4"/>
+							<rect
+								x="50"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="65" style="opacity:0.2"/>
+							<rect
+								x="65"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+						</g>
+					</svg>
+				</section>
 
 				<!-- ============================================================= -->
 				<section
@@ -1953,6 +2020,27 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							points of text</title>
 						<line x2="100" stroke="red" stroke-width="0.5"/>
 						<line y1="-40" y2="50" stroke="red" stroke-width="0.5"/>
+						<g transform="translate(93,-33) scale(0.375)">
+							<!-- verticalText() call will convert this text to vertical text shown below-->
+							<text id="example-switch-vertical" fill="red">Vertical Text</text>
+							<!--
+							<g id="example-switch-vertical-rendered">
+								<text fill="red" y="0">V</text>
+								<text fill="red" y="18">e</text>
+								<text fill="red" y="36">r</text>
+								<text fill="red" y="54">t</text>
+								<text fill="red" y="72">i</text>
+								<text fill="red" y="90">c</text>
+								<text fill="red" y="108">a</text>
+								<text fill="red" y="126">l</text>
+								<text fill="red" y="144"></text>
+								<text fill="red" y="162">T</text>
+								<text fill="red" y="180">e</text>
+								<text fill="red" y="198">x</text>
+								<text fill="red" y="216">t</text>
+							</g>
+							-->
+						</g>
 						<!-- enable animations with the same class to show that effect.  translate(+), rotate, translate(-) to rotate about a different point -->
 						<g>
 							<animateTransform
@@ -2071,7 +2159,39 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 					</svg>
 					<script>
 						<!--
-						function switchTextAnimation(CYCLES = 5, DURATION = 2) {
+						function verticalText(element, optionHeight) {
+							const SVG = 'http://www.w3.org/2000/svg';
+							const attributes = element.getAttributeNames();
+							const text = element.textContent;
+							console.warn('BBOX', element.getBBox())
+							const height = optionHeight || element
+								.getBBox()
+								.height;
+							const g = document.createElementNS(SVG, 'g');
+							g.setAttribute('id', element.getAttribute('id') + '-rendered');
+							text
+								.split('')
+								.forEach(function addLetter(letter, index) {
+									const textElement = document.createElementNS(SVG, 'text');
+									for (let idx = 0; idx < attributes.length; idx += 1) {
+										const attribute = attributes[idx];
+										if (attribute !== 'id') {
+											textElement.setAttribute(attribute, element.getAttribute(attribute));
+										}
+									}
+									textElement.setAttribute('y', index * height);
+									textElement.innerHTML = letter;
+									console.warn('TEXT', letter, textElement)
+									g.appendChild(textElement);
+								});
+							console.warn('G VERTICAL', g)
+							const parent = element.parentElement;
+							parent.removeChild(element);
+							parent.appendChild(g);
+						}
+						verticalText(document.getElementById('example-switch-vertical'), 20 - 2);
+
+						function switchTextAnimation(CYCLES = 3, DURATION = 2) {
 							let currentAnimation;
 							let repeatCount = 0;
 							const animations = {};
