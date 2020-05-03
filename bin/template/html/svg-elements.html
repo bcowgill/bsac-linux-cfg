@@ -1938,6 +1938,245 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 
 				<!-- ============================================================= -->
 				<section
+					id="example-switch"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of switch element">
+					<h3>switch and arbitrary rotation example</h3>
+					<svg
+						class="example-switch white-bg"
+						width="200"
+						height="180"
+						viewBox="0 -20 100 50"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of switch element by systemLanguage and rotation about different
+							points of text</title>
+						<line x2="100" stroke="red" stroke-width="0.5"/>
+						<line y1="-40" y2="50" stroke="red" stroke-width="0.5"/>
+						<!-- enable animations with the same class to show that effect.  translate(+), rotate, translate(-) to rotate about a different point -->
+						<g>
+							<animateTransform
+								class="mirror-to-normal on-off"
+								attributeName="transform"
+								attributeType="XML"
+								type="scale"
+								from="-0.1 1"
+								to="1 1"
+								dur="2s"
+								repeatCount="indefinite"/>
+							<animateTransform
+								class="rotate-around-top-left on-off"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="0 -12"
+								to="0 -12"
+								dur="2s"
+								repeatCount="indefinite"/>
+							<animateTransform
+								class="rotate-around-bottom-right on-off"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="44.5 0"
+								to="44.5 0"
+								dur="2s"
+								repeatCount="indefinite"/>
+							<animateTransform
+								class="rotate-around-top-right on-off"
+								attributeName="transform"
+								attributeType="XML"
+								type="translate"
+								from="44.5 -12"
+								to="44.5 -12"
+								dur="2s"
+								repeatCount="indefinite"/>
+							<g>
+								<animateTransform
+									class="rotate-around-top-right rotate-around-bottom-right on-off"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									from="0 0 0"
+									to="360 0 0"
+									dur="2s"
+									repeatCount="indefinite"/>
+								<animateTransform
+									class="rotate-around-top-left rotate-around-bottom-left on-off"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									from="100 0 0"
+									to="-100 0 0"
+									dur="2s"
+									repeatCount="indefinite"/>
+								<g>
+									<animateTransform
+										class="rotate-around-bottom-right on-off"
+										attributeName="transform"
+										attributeType="XML"
+										type="translate"
+										from="-44.5 0"
+										to="-44.5 0"
+										dur="2s"
+										repeatCount="indefinite"/>
+									<animateTransform
+										class="rotate-around-top-left on-off"
+										attributeName="transform"
+										attributeType="XML"
+										type="translate"
+										from="0 12"
+										to="0 12"
+										dur="2s"
+										repeatCount="indefinite"/>
+									<animateTransform
+										class="rotate-around-top-right on-off"
+										attributeName="transform"
+										attributeType="XML"
+										type="translate"
+										from="-44.5 12"
+										to="-44.5 12"
+										dur="2s"
+										repeatCount="indefinite"/>
+									<switch>
+										<text systemLanguage="ar">مرحبا</text>
+										<text systemLanguage="de,nl">Hallo!</text>
+										<text systemLanguage="en-us">Howdy!</text>
+										<text systemLanguage="en-gb">Wotcha!</text>
+										<text systemLanguage="en-au">G'day!</text>
+										<text systemLanguage="en">Hello!</text>
+										<text systemLanguage="es">Hola!</text>
+										<text systemLanguage="fr">Bonjour!</text>
+										<text systemLanguage="ja">こんにちは</text>
+										<text systemLanguage="ru">Привет!</text>
+										<text>☺</text>
+									</switch>
+								</g>
+							</g>
+						</g>
+						<switch transform="translate(2,9) scale(0.35)">
+							<text systemLanguage="ar">systemLanguage=arabic</text>
+							<text systemLanguage="de">systemLanguage=german</text>
+							<text systemLanguage="nl">systemLanguage=dutch</text>
+							<text systemLanguage="en-us">systemLanguage=american english</text>
+							<text systemLanguage="en-gb">systemLanguage=british english</text>
+							<text systemLanguage="en-au">systemLanguage=australian english</text>
+							<text systemLanguage="en">systemLanguage=english</text>
+							<text systemLanguage="es">systemLanguage=spanish</text>
+							<text systemLanguage="fr">systemLanguage=french</text>
+							<text systemLanguage="ja">systemLanguage=japanese</text>
+							<text systemLanguage="ru">systemLanguage=russian</text>
+							<text>systemLanguage=something else</text>
+						</switch>
+					</svg>
+					<script>
+						<!--
+						function switchTextAnimation(CYCLES = 5, DURATION = 2) {
+							let currentAnimation;
+							let repeatCount = 0;
+							const animations = {};
+							const event = 'onrepeat';
+							let repeatHandler;
+							const SECONDS = 1000;
+
+							function stopAnimation() {
+								// find all .on-off elements change attribute attributeName to prefix no
+								const elements = document.querySelectorAll('#example-switch .on-off');
+								// console.warn('ONOFF', elements);
+								if (elements && elements.length) {
+									elements
+										.forEach(function turnOff(element) {
+											const name = element
+												.getAttribute('attributeName')
+												.replace(/^(no)?/, 'no');
+											element.setAttribute('attributeName', name);
+											element[event] = undefined;
+											repeatHandler  = undefined;
+
+											if (!currentAnimation) {
+												// get names of animation classes and store them
+												const classes = element
+													.getAttribute('class')
+													.split(/\s+/g)
+													.forEach(function addAnimation(animation) {
+														if (animation !== 'on-off') {
+															animations[animation] = true;
+														}
+													});
+											} // if !currentAnimation
+										}); // elements.forEach()
+
+									if (!currentAnimation) {
+										const animationOrder = Object
+											.keys(animations)
+											.sort();
+										if (animationOrder.length > 1) {
+											animations[animationOrder[animationOrder.length - 1]] = animationOrder[0];
+											for (let index = 1; index < animationOrder.length; ++index) {
+												animations[animationOrder[index - 1]] = animationOrder[index];
+											}
+										} // if animationOrder.length
+										currentAnimation = animationOrder[0];
+									} // if !currentAnimation
+								} // if found animations
+							} // stopAnimation()
+
+							// pick which animation to run, find all elements with that class, remove no prefix on attributeName
+							function startAnimation(animation) {
+								const elements = document.querySelectorAll(`#example-switch .${animation}`);
+								// console.warn('CURRENT ANIMATIONS', elements);
+								if (elements && elements.length) {
+									elements
+										.forEach(function turnOn(element) {
+											const name = element
+												.getAttribute('attributeName')
+												.replace(/^(no)?/, '');
+											element.setAttribute('attributeName', name);
+											repeatCount = 0;
+											// console.warn(`${event} added to element`, element.parentElement)
+											if (!repeatHandler) {
+												let lastCall = Date.now() + 0.75 * DURATION * SECONDS;
+												repeatHandler = function repeat() {
+													if (Date.now() > lastCall) {
+														lastCall = Date.now() + 0.75 * DURATION * SECONDS;
+														repeatCount++;
+														// console.warn(event, repeatCount)
+														if (repeatCount > CYCLES) {
+															currentAnimation = changeAnimation(currentAnimation);
+														}
+													}
+												}
+											}
+											element[event] = repeatHandler;
+										}); // elements.forEach
+								} // if found animations
+							} // startAnimation()
+
+							// stop animations, pick next one and start it
+							function changeAnimation(animation) {
+								stopAnimation();
+								const nextAnimation = animations[animation];
+								// console.warn('NEXT', nextAnimation);
+								startAnimation(nextAnimation);
+								return nextAnimation;
+							}
+
+							stopAnimation();
+							// console.warn('ANIMATIONS2', animations)
+							if (currentAnimation) {
+								startAnimation(currentAnimation);
+							}
+							// install animation event handler after 5 cycles switch to another animation
+							// type
+						}
+						switchTextAnimation();
+
+						-->
+					</script>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
 					id="example-foreign-object"
 					class="example"
 					role="contentinfo"
@@ -4045,244 +4284,6 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							textLength="40"
 							lengthAdjust="spacingAndGlyphs">slice</text>
 					</svg>
-				</section>
-
-				<!-- ============================================================= -->
-				<section
-					id="example-switch"
-					class="example"
-					role="contentinfo"
-					aria-label="SVG Example of switch element">
-					<h3>switch and arbitrary rotation example</h3>
-					<svg
-						class="example-switch white-bg"
-						width="200"
-						height="180"
-						viewBox="0 -20 100 50"
-						xmlns="http://www.w3.org/2000/svg">
-						<title>Example of switch element by systemLanguage and rotation about different
-							points of text</title>
-						<line x2="100" stroke="red" stroke-width="0.5"/>
-						<line y1="-40" y2="50" stroke="red" stroke-width="0.5"/>
-						<!-- enable animations with the same class to show that effect.  translate(+), rotate, translate(-) to rotate about a different point -->
-						<g>
-							<animateTransform
-								class="mirror-to-normal on-off"
-								attributeName="transform"
-								attributeType="XML"
-								type="scale"
-								from="-0.1 1"
-								to="1 1"
-								dur="2s"
-								repeatCount="indefinite"/>
-							<animateTransform
-								class="rotate-around-top-left on-off"
-								attributeName="transform"
-								attributeType="XML"
-								type="translate"
-								from="0 -12"
-								to="0 -12"
-								dur="2s"
-								repeatCount="indefinite"/>
-							<animateTransform
-								class="rotate-around-bottom-right on-off"
-								attributeName="transform"
-								attributeType="XML"
-								type="translate"
-								from="44.5 0"
-								to="44.5 0"
-								dur="2s"
-								repeatCount="indefinite"/>
-							<animateTransform
-								class="rotate-around-top-right on-off"
-								attributeName="transform"
-								attributeType="XML"
-								type="translate"
-								from="44.5 -12"
-								to="44.5 -12"
-								dur="2s"
-								repeatCount="indefinite"/>
-							<g>
-								<animateTransform
-									class="rotate-around-top-right rotate-around-bottom-right on-off"
-									attributeName="transform"
-									attributeType="XML"
-									type="rotate"
-									from="0 0 0"
-									to="360 0 0"
-									dur="2s"
-									repeatCount="indefinite"/>
-								<animateTransform
-									class="rotate-around-top-left rotate-around-bottom-left on-off"
-									attributeName="transform"
-									attributeType="XML"
-									type="rotate"
-									from="100 0 0"
-									to="-100 0 0"
-									dur="2s"
-									repeatCount="indefinite"/>
-								<g>
-									<animateTransform
-										class="rotate-around-bottom-right on-off"
-										attributeName="transform"
-										attributeType="XML"
-										type="translate"
-										from="-44.5 0"
-										to="-44.5 0"
-										dur="2s"
-										repeatCount="indefinite"/>
-									<animateTransform
-										class="rotate-around-top-left on-off"
-										attributeName="transform"
-										attributeType="XML"
-										type="translate"
-										from="0 12"
-										to="0 12"
-										dur="2s"
-										repeatCount="indefinite"/>
-									<animateTransform
-										class="rotate-around-top-right on-off"
-										attributeName="transform"
-										attributeType="XML"
-										type="translate"
-										from="-44.5 12"
-										to="-44.5 12"
-										dur="2s"
-										repeatCount="indefinite"/>
-									<switch>
-										<text systemLanguage="ar">مرحبا</text>
-										<text systemLanguage="de,nl">Hallo!</text>
-										<text systemLanguage="en-us">Howdy!</text>
-										<text systemLanguage="en-gb">Wotcha!</text>
-										<text systemLanguage="en-au">G'day!</text>
-										<text systemLanguage="en">Hello!</text>
-										<text systemLanguage="es">Hola!</text>
-										<text systemLanguage="fr">Bonjour!</text>
-										<text systemLanguage="ja">こんにちは</text>
-										<text systemLanguage="ru">Привет!</text>
-										<text>☺</text>
-									</switch>
-								</g>
-							</g>
-						</g>
-						<switch transform="translate(2,9) scale(0.35)">
-							<text systemLanguage="ar">systemLanguage=arabic</text>
-							<text systemLanguage="de">systemLanguage=german</text>
-							<text systemLanguage="nl">systemLanguage=dutch</text>
-							<text systemLanguage="en-us">systemLanguage=american english</text>
-							<text systemLanguage="en-gb">systemLanguage=british english</text>
-							<text systemLanguage="en-au">systemLanguage=australian english</text>
-							<text systemLanguage="en">systemLanguage=english</text>
-							<text systemLanguage="es">systemLanguage=spanish</text>
-							<text systemLanguage="fr">systemLanguage=french</text>
-							<text systemLanguage="ja">systemLanguage=japanese</text>
-							<text systemLanguage="ru">systemLanguage=russian</text>
-							<text>systemLanguage=something else</text>
-						</switch>
-					</svg>
-					<script>
-						<!--
-						function switchTextAnimation(CYCLES = 5) {
-							let currentAnimation;
-							let repeatCount = 0;
-							const animations = {};
-							const event = 'onrepeat';
-							let repeatHandler;
-
-							function stopAnimation() {
-								// find all .on-off elements change attribute attributeName to prefix no
-								const elements = document.querySelectorAll('#example-switch .on-off');
-								// console.warn('ONOFF', elements);
-								if (elements && elements.length) {
-									elements
-										.forEach(function turnOff(element) {
-											const name = element
-												.getAttribute('attributeName')
-												.replace(/^(no)?/, 'no');
-											element.setAttribute('attributeName', name);
-											element[event] = undefined;
-											repeatHandler  = undefined;
-
-											if (!currentAnimation) {
-												// get names of animation classes and store them
-												const classes = element
-													.getAttribute('class')
-													.split(/\s+/g)
-													.forEach(function addAnimation(animation) {
-														if (animation !== 'on-off') {
-															animations[animation] = true;
-														}
-													});
-											} // if !currentAnimation
-										}); // elements.forEach()
-
-									if (!currentAnimation) {
-										const animationOrder = Object
-											.keys(animations)
-											.sort();
-										if (animationOrder.length > 1) {
-											animations[animationOrder[animationOrder.length - 1]] = animationOrder[0];
-											for (let index = 1; index < animationOrder.length; ++index) {
-												animations[animationOrder[index - 1]] = animationOrder[index];
-											}
-										} // if animationOrder.length
-										currentAnimation = animationOrder[0];
-									} // if !currentAnimation
-								} // if found animations
-							} // stopAnimation()
-
-							// pick which animation to run, find all elements with that class, remove no prefix on attributeName
-							function startAnimation(animation) {
-								const elements = document.querySelectorAll(`#example-switch .${animation}`);
-								// console.warn('CURRENT ANIMATIONS', elements);
-								if (elements && elements.length) {
-									elements
-										.forEach(function turnOn(element) {
-											const name = element
-												.getAttribute('attributeName')
-												.replace(/^(no)?/, '');
-											element.setAttribute('attributeName', name);
-											repeatCount = 0;
-											// console.warn(`${event} added to element`, element.parentElement)
-											if (!repeatHandler) {
-												let lastCall = Date.now() + 1.5 * 1000;
-												repeatHandler = function repeat() {
-													if (Date.now() > lastCall) {
-														lastCall = Date.now() + 1.5 * 1000;
-														repeatCount++;
-														// console.warn(event, repeatCount)
-														if (repeatCount > CYCLES) {
-															currentAnimation = changeAnimation(currentAnimation);
-														}
-													}
-												}
-											}
-											element[event] = repeatHandler;
-										}); // elements.forEach
-								} // if found animations
-							} // startAnimation()
-
-							// stop animations, pick next one and start it
-							function changeAnimation(animation) {
-								stopAnimation();
-								const nextAnimation = animations[animation];
-								// console.warn('NEXT', nextAnimation);
-								startAnimation(nextAnimation);
-								return nextAnimation;
-							}
-
-							stopAnimation();
-							// console.warn('ANIMATIONS2', animations)
-							if (currentAnimation) {
-								startAnimation(currentAnimation);
-							}
-							// install animation event handler after 5 cycles switch to another animation
-							// type
-						}
-						switchTextAnimation();
-
-						-->
-					</script>
 				</section>
 
 				<!-- ============================================================= -->
