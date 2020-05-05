@@ -800,54 +800,6 @@
 				</ul>
 			</div>
 
-			<!-- animation elements
-<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
-deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
-
-animate,animateMotion,animateTransform,discard,mpath,set
-
-container elements
-
-a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown
-
-descriptive elements
-
-desc,metadata,title
-
-Filter primitive elements
-feBlend,feColorMatrix,feComponentTransfer,feComposite,feConvolveMatrix,feDiffuseLighting,feDisplacementMap,feDropShadow,feFlood,feFuncA,feFuncB,feFuncG,feFuncR,feGaussianBlur,feImage,feMerge,feMergeNode,feMorphology,feOffset,feSpecularLighting,feTile,feTurbulence
-
-shape elements
-
-circle,ellipse,line,mesh,path,polygon,polyline,rect
-
-structural elements
-
-defs,g,svg,symbol,use
-
-gradient elements
-
-linearGradient,meshgradient,radialGradient,stop
-
-Graphics elements
-
-circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
-
-animation and descriptive
-
-animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title
-
-obsolete or deprecated
-
-altGlyph,altGlyphDef,altGlyphItem,animateColor,color-profile,cursor,font,font-face,font-face-format,font-face-name,font-face-src,font-face-uri,glyph,glyphRef,hkern,missing-glyph,solidcolor,tref,vkern
-
-animation, descriptive, shape, structure, gradient
-
-animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop
-
-
--->
-
 			<!-- S COLUMN ========== -->
 			<div id="S" class="column visible">
 				<h2>S</h2>
@@ -935,128 +887,98 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 				</ul>
 			</div>
 
+			<!-- animation elements
+<animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
+deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
+
+animate,animateMotion,animateTransform,discard,mpath,set
+
+container elements
+
+a,defs,g,marker,mask,missing-glyph,pattern,svg,switch,symbol,unknown
+
+descriptive elements
+
+desc,metadata,title
+
+Filter primitive elements
+feBlend,feColorMatrix,feComponentTransfer,feComposite,feConvolveMatrix,feDiffuseLighting,feDisplacementMap,feDropShadow,feFlood,feFuncA,feFuncB,feFuncG,feFuncR,feGaussianBlur,feImage,feMerge,feMergeNode,feMorphology,feOffset,feSpecularLighting,feTile,feTurbulence
+
+shape elements
+
+circle,ellipse,line,mesh,path,polygon,polyline,rect
+
+structural elements
+
+defs,g,svg,symbol,use
+
+gradient elements
+
+linearGradient,meshgradient,radialGradient,stop
+
+Graphics elements
+
+circle,ellipse,image,line,mesh,path,polygon,polyline,rect,text,use
+
+animation and descriptive
+
+animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title
+
+text content
+
+textPath,text,tspan
+
+obsolete or deprecated
+
+altGlyph,altGlyphDef,altGlyphItem,animateColor,color-profile,cursor,font,font-face,font-face-format,font-face-name,font-face-src,font-face-uri,glyph,glyphRef,hkern,missing-glyph,solidcolor,tref,vkern
+
+animation, descriptive, shape, structure, gradient
+
+animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop
+
+-->
 			<!-- T COLUMN ========== -->
-			<div id="T" class="column">
+			<div id="T" class="column visible">
 				<h2>T</h2>
 				<ul>
 					<li
 						class="target element"
-						data-element="table"
+						data-element="text"
+						data-category="renderable,graphics,text content,text child"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,textPath,text,tspan,a"
+						title="&#9;text - [renderable,graphics,text content,text child] draws a graphics element consisting of text.  it's possible to apply a gradient, pattern, clipping path, mask, or filter to text element, like any other SVG graphics element.  if text is included in SVG not inside of a text element, it is not rendered.  this is different than being hidden by default, as setting the display property won't show the text.">
+						<a href="Element/text">
+							text
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="textPath"
 						data-category="semantic,tables"
-						data-use-with="caption,colgroup,col,thead,tfoot,tbody,tr,th,td"
-						title="&#9;table - [semantic,tables] defines an HTML table of information presented in rows and columns.">
-						<a href="Element/">
-							table HEREIAM
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="tbody"
-						data-category="semantic,tables"
-						data-use-with="table,tr,th,td"
-						title="&#9;table body - [semantic,tables] used to group the body content in an HTML table.">
-						<a href="Element/">
-							tbody
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="thead"
-						data-category="semantic,tables"
-						data-use-with="table,tr,th,td"
-						title="&#9;table header - [semantic,tables] used to group header content in an HTML table.  browsers can use these elements to enable scrolling of the table body independently of the header and footer. also, when printing a large table that spans multiple pages, these elements can enable the table header and footer to be printed at the top and bottom of each page.">
-						<a href="Element/">
-							thead
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="tfoot"
-						data-category="semantic,tables"
-						data-use-with="table,tr,th,td"
-						title="&#9;table footer - [semantic,tables] used to group footer content in an HTML table.  browsers can use these elements to enable scrolling of the table body independently of the header and footer. also, when printing a large table that spans multiple pages, these elements can enable the table header and footer to be printed at the top and bottom of each page.">
-						<a href="Element/">
-							tfoot
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="tr"
-						data-category="semantic,tables"
-						data-use-with="table,thead,tfoot,tbody,th,td"
-						title="&#9;table row - [semantic,tables] defines a row in an HTML table.">
-						<a href="Element/">
-							tr
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="td"
-						data-category="semantic,tables"
-						data-use-with="tr"
-						title="&#9;table data cell - [semantic,tables] specifies data in a standard HTML table cell.">
-						<a href="Element/">
-							td
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="th"
-						data-category="semantic,tables"
-						data-use-with="tr"
-						title="&#9;table header cell - [semantic,tables] defines a row or column header cell in an HTML table.">
-						<a href="Element/">
-							th
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="track"
-						data-category="media,audio/video"
-						data-use-with="audio,video"
-						title="&#9;track text - [media,audio/video] specifies text tracks for media elements audio and video.  used to specify subtitles, caption files or other files containing text, that should be visible when the media is playing.">
-						<a href="Element/">
-							track
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="time"
-						data-category="semantic,formatting"
 						data-use-with=""
-						title="&#9;time - [semantic,formatting] defines a human-readable date/time.  this element can also be used to encode dates and times in a machine-readable way so that user agents can offer to add birthday reminders or scheduled events to the user's calendar, and search engines can produce smarter search results.">
-						<a href="Element/">
-							time
+						title="&#9;text path - [semantic,tables] .">
+						<a href="Element/textPath">
+							textPath HEREIAM
 						</a>
 					</li>
 					<li
 						class="target element"
 						data-element="title"
-						data-category="meta,basic"
-						data-use-with="head"
-						title="&#9;title - [meta,basic] defines the title of the document.  is required in all HTML documents.">
-						<a href="Element/">
+						data-category="semantic,tables"
+						data-use-with=""
+						title="&#9;title - [semantic,tables] .">
+						<a href="Element/title">
 							title
 						</a>
 					</li>
 					<li
 						class="target element"
-						data-element="textarea"
-						data-category="interaction,forms/input"
-						data-use-with="label"
-						title="&#9;text area for multiple line input - [interaction,forms/input] defines a multi-line text input control.  can hold an unlimited number of characters, and the text renders in a fixed-width font.">
-						<a href="Element/">
-							textarea
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="template"
-						data-category="semantic,formatting"
+						data-element="tspan"
+						data-category="semantic,tables"
 						data-use-with=""
-						title="&#9;template - [semantic,formatting] holds HTML content hidden from view.  can be made visible later using Javascript.">
-						<a href="Element/">
-							template
+						title="&#9;tspan - [semantic,tables] .">
+						<a href="Element/tspan">
+							tspan
 						</a>
 					</li>
 				</ul>
@@ -2180,6 +2102,7 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 										}
 									}
 									textElement.setAttribute('y', index * height);
+									// textElement.setAttribute('x', 0); textElement.setAttribute('dy', height);
 									textElement.innerHTML = letter;
 									console.warn('TEXT', letter, textElement)
 									g.appendChild(textElement);
