@@ -736,6 +736,7 @@
 						data-category="shape,graphics,renderable"
 						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
 						title="&#9;path definition - [semantic,basic] path.  defines a shape.  all the basic shapes can be created with a path element.">
+						<!-- https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands -->
 						<a href="Element/path">
 							path
 						</a>
@@ -954,11 +955,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="textPath"
-						data-category="semantic,tables"
-						data-use-with=""
-						title="&#9;text path - [semantic,tables] .">
+						data-category="text content,renderable,text child"
+						data-use-with="text,path,desc,metadata,title,a,animate,set,tref,tspan"
+						title="&#9;text along a path - [text content,renderable,text child] renders text along the shape of a path.">
 						<a href="Element/textPath">
-							textPath HEREIAM
+							textPath
 						</a>
 					</li>
 					<li
@@ -968,7 +969,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;title - [semantic,tables] .">
 						<a href="Element/title">
-							title
+							title HEREIAM
 						</a>
 					</li>
 					<li
@@ -1077,83 +1078,6 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 			<summary>Selected examples...</summary>
 
 			<div class="example-container">
-
-				<!-- ============================================================= -->
-				<section
-					id="example-symbol"
-					class="example"
-					role="contentinfo"
-					aria-label="SVG Example of symbol and use element">
-					<h3>symbol and use example</h3>
-					<svg
-						class="example-symbol white-bg"
-						width="400"
-						height="100"
-						viewBox="0 0 80 20"
-						xmlns="http://www.w3.org/2000/svg">
-						<title>Example of symbol element.</title>
-						<!--
-		THIS DOES NOT MAKE SENSE
-		should be width 10 height 10 viewBox 0 0 2 2 no preserveAspectRatio circle cx 1 cy 1 r 1
-		but in that case the symbol is twice the width/height and offset far to the right of where you expect.
-    there seems to be some interaction between the svg viewbox and the symbol viewbox
--->
-						<!-- Our symbol in its own coordinate system -->
-						<symbol
-							id="example-symbol-myDot"
-							refX="0"
-							refY="0"
-							width="10"
-							height="10"
-							viewBox="0 0 16 4"
-							preserveAspectRatio="xMinYMid meet">
-							<circle cx="1" cy="1" r="1"/>
-						</symbol>
-						<!-- A grid to materialize our symbol positioning -->
-						<path
-							d="M0,10 h80 M10,0 v20 M25,0 v20 M40,0 v20 M55,0 v20 M70,0 v20"
-							fill="none"
-							stroke="pink"/>
-
-						<!-- All instances of our symbol -->
-						<g transform="translate(0,5)">
-							<use xlink:href="#example-symbol-myDot" x="5" style="opacity:1.0"/>
-							<rect x="5" width="10" height="10" fill="none" stroke="red" stroke-width="0.5"/>
-							<use xlink:href="#example-symbol-myDot" x="20" style="opacity:0.8"/>
-							<rect
-								x="20"
-								width="10"
-								height="10"
-								fill="none"
-								stroke="red"
-								stroke-width="0.5"/>
-							<use xlink:href="#example-symbol-myDot" x="35" style="opacity:0.6"/>
-							<rect
-								x="35"
-								width="10"
-								height="10"
-								fill="none"
-								stroke="red"
-								stroke-width="0.5"/>
-							<use xlink:href="#example-symbol-myDot" x="50" style="opacity:0.4"/>
-							<rect
-								x="50"
-								width="10"
-								height="10"
-								fill="none"
-								stroke="red"
-								stroke-width="0.5"/>
-							<use xlink:href="#example-symbol-myDot" x="65" style="opacity:0.2"/>
-							<rect
-								x="65"
-								width="10"
-								height="10"
-								fill="none"
-								stroke="red"
-								stroke-width="0.5"/>
-						</g>
-					</svg>
-				</section>
 
 				<!-- ============================================================= -->
 				<section
@@ -1332,12 +1256,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							}
 
 						</style>
-						<!--
-TODO ...
-path bezier examples
-path d= documentation
-https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
--->
+						<!-- https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands -->
 						<defs>
 							<path
 								id="example-line-path-arrowhead-15deg-5"
@@ -1792,6 +1711,123 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 
 						-->
 					</script>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-textpath"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of textPath element">
+					<h3>textPath example</h3>
+					<svg
+						class="example-textpath"
+						width="400"
+						height="400"
+						viewBox="0 0 200 200"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of textPath element.</title>
+						<!-- to hide the path, it is usually wrapped in a <defs> element -->
+						<defs>
+							<path
+								id="example-textpath-MyPath"
+								fill="none"
+								stroke="red"
+								d="M10,90 Q90,90 90,45 Q90,10 50,10 Q10,10 10,40 Q10,70 45,70 Q70,70 75,50"/>
+							<path
+								id="example-textpath-MyPath-reversed"
+								fill="none"
+								stroke="green"
+								d="M75,50 Q70,70 45,70 Q10,70 10,40 Q10,10 50,10 Q90,10 90,45 Q90,90 10,90"/>
+							<circle
+								id="example-textpath-circle"
+								fill="none"
+								stroke="blue"
+								cx="50"
+								cy="50"
+								r="48"/>
+							<!-- can't use actual circle as a path, so use ARC segments to get text on inside or outside -->
+							<path
+								id="example-textpath-circle-path"
+								fill="none"
+								stroke="cyan"
+								d="M2,50 A48,48 0,0,1 98,50 A48,48 0,0,1 2,50 z"/>
+							<path
+								id="example-textpath-circle-path-reversed"
+								fill="none"
+								stroke="cyan"
+								d="M2,50 A48,48 0,0,0 98,50 A48,48 0,0,0 2,50 z"/>
+						</defs>
+
+						<g>
+							<use xlink:href="#example-textpath-MyPath"/>
+							<text fill="yellow">
+								<textPath
+									href="#example-textpath-MyPath"
+									side="left"
+									spacing="exact"
+									startOffset="0">
+									Quick brown fox jumps over the lazy dog.
+								</textPath>
+							</text>
+						</g>
+						<g transform="translate(0,100)">
+							<use xlink:href="#example-textpath-MyPath-reversed"/>
+							<text fill="yellow">
+								<textPath
+									href="#example-textpath-MyPath-reversed"
+									side="left"
+									spacing="exact"
+									startOffset="0">
+									Quick brown fox jumps over the lazy dog.
+									<animate
+										attributeName="startOffset"
+										values="-25%;25%;-25%"
+										dur="10s"
+										repeatCount="indefinite"/>
+								</textPath>
+							</text>
+						</g>
+						<g transform="translate(115,15) scale(0.7) ">
+							<use xlink:href="#example-textpath-circle"/>
+							<!--	<use xlink:href="#example-textpath-circle-path" /> -->
+							<text fill="yellow" transform="translate(-10,-10) scale(1.2)">
+								<textPath
+									href="#example-textpath-circle-path"
+									side="left"
+									spacing="exact"
+									startOffset="0">
+									Quick brown fox jumps over the lazy dog.
+								</textPath>
+							</text>
+							<text fill="violet">
+								<textPath
+									href="#example-textpath-circle-path-reversed"
+									side="left"
+									spacing="exact"
+									startOffset="0">
+									Quick brown fox jumps over the lazy dog.
+								</textPath>
+							</text>
+						</g>
+						<g transform="translate(100,100)">
+							<use xlink:href="#example-textpath-MyPath"/>
+							<text fill="yellow">
+								<textPath
+									href="#example-textpath-MyPath"
+									side="right"
+									spacing="auto"
+									startOffset="5%">
+									Quick brown fox jumps over the lazy dog.
+									<animate
+										attributeName="startOffset"
+										values="-25%;25%;-25%"
+										dur="10s"
+										repeatCount="indefinite"/>
+								</textPath>
+							</text>
+						</g>
+					</svg>
 				</section>
 
 				<!-- ============================================================= -->
@@ -3770,6 +3806,83 @@ https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/d#Path_commands
 							</text>
 							<text y="50">z<title>Close Path back to 10,30</title>
 							</text>
+						</g>
+					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-symbol"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of symbol and use element">
+					<h3>symbol and use example</h3>
+					<svg
+						class="example-symbol white-bg"
+						width="400"
+						height="100"
+						viewBox="0 0 80 20"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of symbol element.</title>
+						<!--
+		THIS DOES NOT MAKE SENSE
+		should be width 10 height 10 viewBox 0 0 2 2 no preserveAspectRatio circle cx 1 cy 1 r 1
+		but in that case the symbol is twice the width/height and offset far to the right of where you expect.
+    there seems to be some interaction between the svg viewbox and the symbol viewbox
+-->
+						<!-- Our symbol in its own coordinate system -->
+						<symbol
+							id="example-symbol-myDot"
+							refX="0"
+							refY="0"
+							width="10"
+							height="10"
+							viewBox="0 0 16 4"
+							preserveAspectRatio="xMinYMid meet">
+							<circle cx="1" cy="1" r="1"/>
+						</symbol>
+						<!-- A grid to materialize our symbol positioning -->
+						<path
+							d="M0,10 h80 M10,0 v20 M25,0 v20 M40,0 v20 M55,0 v20 M70,0 v20"
+							fill="none"
+							stroke="pink"/>
+
+						<!-- All instances of our symbol -->
+						<g transform="translate(0,5)">
+							<use xlink:href="#example-symbol-myDot" x="5" style="opacity:1.0"/>
+							<rect x="5" width="10" height="10" fill="none" stroke="red" stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="20" style="opacity:0.8"/>
+							<rect
+								x="20"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="35" style="opacity:0.6"/>
+							<rect
+								x="35"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="50" style="opacity:0.4"/>
+							<rect
+								x="50"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
+							<use xlink:href="#example-symbol-myDot" x="65" style="opacity:0.2"/>
+							<rect
+								x="65"
+								width="10"
+								height="10"
+								fill="none"
+								stroke="red"
+								stroke-width="0.5"/>
 						</g>
 					</svg>
 				</section>
