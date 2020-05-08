@@ -1117,37 +1117,169 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							}
 
 						</style>
-						<circle class="x-axis" cx="0" r="1.5" aria-labelledby="example-svg-title-origin">
+						<defs>
+							<path
+								id="example-svg-clock-quarters"
+								d="M0,-37 v20 M0,37 v-20 M-37,0 h20 M37,0 h-20"
+								stroke="lime"
+								stroke-width="0.25"/>
+						</defs>
+						<g transform="translate(50,50)">
+							<g aria-labelledby="example-svg-title-hour-markers1">
+								<use xlink:href="#example-svg-clock-quarters">
+									<title id="example-svg-title-hour-markers1">an hour marker for a clock</title>
+								</use>
+							</g>
+							<g transform="rotate(30,0,0)" aria-labelledby="example-svg-title-hour-markers2">
+								<use xlink:href="#example-svg-clock-quarters">
+									<title id="example-svg-title-hour-markers2">an hour marker for a clock</title>
+								</use>
+							</g>
+							<g
+								transform="rotate(-30,0,0)"
+								aria-labelledby="example-svg-title-hour-markers3">
+								<use xlink:href="#example-svg-clock-quarters">
+									<title id="example-svg-title-hour-markers3">an hour marker for a clock</title>
+								</use>
+							</g>
+							<line
+								y2="-40"
+								stroke="red"
+								stroke-width="0.25"
+								aria-labelledby="example-svg-title-second-hand">
+								<title id="example-svg-title-second-hand">second hand of a clock</title>
+								<animateTransform
+									id="example-svg-second-hand"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									by="360"
+									dur="60s"
+									repeatCount="indefinite"/>
+							</line>
+							<line
+								y2="-35"
+								stroke="gold"
+								stroke-width="0.5"
+								aria-labelledby="example-svg-title-minute-hand">
+								<title id="example-svg-title-minute-hand">minute hand of a clock</title>
+								<animateTransform
+									id="example-svg-minute-hand"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									xfrom="0"
+									xby="360"
+									dur="3600s"
+									repeatCount="indefinite"/>
+							</line>
+							<line
+								y2="-15"
+								stroke="silver"
+								stroke-width="1.25"
+								aria-labelledby="example-svg-title-hour-hand">
+								<title id="example-svg-title-hour-hand">hour hand of a clock</title>
+								<animateTransform
+									id="example-svg-hour-hand"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									xfrom="0"
+									xby="360"
+									dur="43200s"
+									repeatCount="indefinite"/>
+							</line>
+							<script>
+								function setHand(name, degrees) {
+									const hand = document.getElementById(`example-svg-${name}-hand`);
+									if (hand) {
+										hand.setAttribute('from', degrees);
+										hand.setAttribute('by', 360);
+									}
+								}
+								function startClock(hour, minute, second) {
+									console.error('TIME', hour, minute, second)
+									setHand('hour', 30.0 * (hour + minute / 60.0));
+									setHand('minute', 6.0 * (minute + second / 60.0));
+									setHand('second', 6.0 * second);
+								}
+								const now = new Date();
+								startClock(now.getHours() % 12, now.getMinutes(), now.getSeconds());
+							</script>
+						</g>
+
+						<circle
+							class="x-axis"
+							cx="0"
+							r="1.5"
+							aria-labelledby="example-svg-title-origin">
 							<title id="example-svg-title-origin">coordinate origin point</title>
 						</circle>
 
-						<circle class="x-axis" cx="25" r="1.5" aria-labelledby="example-svg-title-x-axis-25">
+						<circle
+							class="x-axis"
+							cx="25"
+							r="1.5"
+							aria-labelledby="example-svg-title-x-axis-25">
 							<title id="example-svg-title-x-axis-25">x-axis point at 25 units</title>
 						</circle>
-						<circle class="x-axis" cx="50" r="1.5" aria-labelledby="example-svg-title-x-axis-50">
+						<circle
+							class="x-axis"
+							cx="50"
+							r="1.5"
+							aria-labelledby="example-svg-title-x-axis-50">
 							<title id="example-svg-title-x-axis-50">x-axis point at 50 units</title>
 						</circle>
-						<circle class="x-axis" cx="75" r="1.5" aria-labelledby="example-svg-title-x-axis-75">
+						<circle
+							class="x-axis"
+							cx="75"
+							r="1.5"
+							aria-labelledby="example-svg-title-x-axis-75">
 							<title id="example-svg-title-x-axis-75">x-axis point at 75 units</title>
 						</circle>
-						<circle class="x-axis" cx="100" r="1.5" aria-labelledby="example-svg-title-x-axis-100">
+						<circle
+							class="x-axis"
+							cx="100"
+							r="1.5"
+							aria-labelledby="example-svg-title-x-axis-100">
 							<title id="example-svg-title-x-axis-100">x-axis point at 100 units</title>
 						</circle>
 
-						<circle class="y-axis" cy="25" r="1.5" aria-labelledby="example-svg-title-y-axis-25">
+						<circle
+							class="y-axis"
+							cy="25"
+							r="1.5"
+							aria-labelledby="example-svg-title-y-axis-25">
 							<title id="example-svg-title-y-axis-25">y-axis point at 25 units</title>
 						</circle>
-						<circle class="y-axis" cy="50" r="1.5" aria-labelledby="example-svg-title-y-axis-50">
+						<circle
+							class="y-axis"
+							cy="50"
+							r="1.5"
+							aria-labelledby="example-svg-title-y-axis-50">
 							<title id="example-svg-title-y-axis-50">y-axis point at 50 units</title>
 						</circle>
-						<circle class="y-axis" cy="75" r="1.5" aria-labelledby="example-svg-title-y-axis-75">
+						<circle
+							class="y-axis"
+							cy="75"
+							r="1.5"
+							aria-labelledby="example-svg-title-y-axis-75">
 							<title id="example-svg-title-y-axis-75">y-axis point at 75 units</title>
 						</circle>
-						<circle class="y-axis" cy="100" r="1.5" aria-labelledby="example-svg-title-y-axis-100">
+						<circle
+							class="y-axis"
+							cy="100"
+							r="1.5"
+							aria-labelledby="example-svg-title-y-axis-100">
 							<title id="example-svg-title-y-axis-100">y-axis point at 100 units</title>
 						</circle>
 
-						<circle class="center" cx="50" cy="50" r="0.5" aria-labelledby="example-svg-title-center">
+						<circle
+							class="center"
+							cx="50"
+							cy="50"
+							r="0.5"
+							aria-labelledby="example-svg-title-center">
 							<title id="example-svg-title-center">center of viewBox (50,50)</title>
 						</circle>
 						<line
@@ -1156,12 +1288,12 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							pathLength="100"
 							stroke-width="1"
 							stroke-dasharray="100"
-							aria-labelledby="example-svg-title-radial-morse-line"
-						>
+							aria-labelledby="example-svg-title-radial-morse-line">
 							<title id="example-svg-title-radial-morse-line">radial line from origin with morse code dashes saying SOS and rotating clockwise</title>
 						</line>
 						<g id="example-svg-radial">
-							<title id="example-svg-title-radial-label">radial coordinate point labelled with custom dashed underline with additional clockwise rotation</title>
+							<title id="example-svg-title-radial-label">radial coordinate point labelled with
+								custom dashed underline with additional clockwise rotation</title>
 							<line
 								id="example-svg-grouped-line"
 								stroke="blue"
@@ -1169,11 +1301,14 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 								stroke-width="2"
 								stroke-dasharray="25 25 25 25"
 								stroke-dashoffset="-13"
-								aria-labelledby="example-svg-title-radial-label"
-							/>
+								aria-labelledby="example-svg-title-radial-label"/>
 							<text class="radius" aria-labelledby="example-svg-title-radial-label"></text>
 						</g>
-						<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)" aria-labelledby="example-svg-title-point-25-25">
+						<text
+							x="0"
+							y="0"
+							transform="translate(25,25) rotate(25,0,0)"
+							aria-labelledby="example-svg-title-point-25-25">
 							<title id="example-svg-title-point-25-25">point at (25,25) with label rotated clockwise</title>
 							.(25,25)
 						</text>
@@ -1181,7 +1316,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							<title id="example-svg-title-point-50-25">point at (50,25) with label</title>
 							.(50,25)
 						</text>
-						<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)" aria-labelledby="example-svg-title-point-75-25">
+						<text
+							x="0"
+							y="0"
+							transform="translate(75,25) rotate(-25,0,0)"
+							aria-labelledby="example-svg-title-point-75-25">
 							<title id="example-svg-title-point-75-25">point at (75,25) with label rotated anti-clockwise</title>
 							.(75,25)
 						</text>
@@ -1778,24 +1917,21 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 								stroke="cyan"
 								d="M2,50 A48,48 0,0,0 98,50 A48,48 0,0,0 2,50 z"/>
 							<path
-								 id="example-textpath-marquee"
-								 fill="none"
-								 stroke="orange"
-								 d="M65,95 l45,25"/>
+								id="example-textpath-marquee"
+								fill="none"
+								stroke="orange"
+								d="M65,95 l45,25"/>
 						</defs>
 
 						<g>
 							<use xlink:href="#example-textpath-marquee"/>
 							<text fill="yellow">
-								<textPath
-									href="#example-textpath-marquee"
-									side="left"
-									spacing="exact">
+								<textPath href="#example-textpath-marquee" side="left" spacing="exact">
 									__________Quick brown fox jumps over the lazy dog.______
 									<animate
 										attributeName="startOffset"
 										values="0;-400%"
-										dur="10s"
+										dur="25s"
 										repeatCount="indefinite"/>
 								</textPath>
 							</text>
