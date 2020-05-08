@@ -965,11 +965,11 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<li
 						class="target element"
 						data-element="title"
-						data-category="semantic,tables"
-						data-use-with=""
-						title="&#9;title - [semantic,tables] .">
+						data-category="never rendered,descriptive"
+						data-use-with="*"
+						title="&#9;title - [never rendered,descriptive] provides an accessible, short-text description of any SVG container element or graphics element.  Text in a title element is not rendered as part of the graphic, but browsers usually display it as a tooltip.  if an element can be described by visible text, it is recommended to reference that text with an aria-labelledby attribute rather than using the title element.">
 						<a href="Element/title">
-							title HEREIAM
+							title
 						</a>
 					</li>
 					<li
@@ -979,7 +979,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 						data-use-with=""
 						title="&#9;tspan - [semantic,tables] .">
 						<a href="Element/tspan">
-							tspan
+							tspan HEREIAM
 						</a>
 					</li>
 				</ul>
@@ -1088,11 +1088,12 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 					<h3>SVG coordinate example</h3>
 					<svg
 						class="example-svg"
+						aria-labelledby="example-svg-title"
 						width="400"
 						height="400"
 						viewBox="0 0 100 100"
 						xmlns="http://www.w3.org/2000/svg">
-						<title>Examples of coordinate system and transforms in an SVG element.</title>
+						<title id="example-svg-title">Examples of coordinate system and transforms in an SVG element.</title>
 						<style>
 							.example-svg {
 								border: 1px solid;
@@ -1116,63 +1117,82 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							}
 
 						</style>
-						<circle class="x-axis" cx="0" r="1.5">
-							<title>coordinate origin point</title>
+						<circle class="x-axis" cx="0" r="1.5" aria-labelledby="example-svg-title-origin">
+							<title id="example-svg-title-origin">coordinate origin point</title>
 						</circle>
 
-						<circle class="x-axis" cx="25" r="1.5">
-							<title>x-axis point at 25 units</title>
+						<circle class="x-axis" cx="25" r="1.5" aria-labelledby="example-svg-title-x-axis-25">
+							<title id="example-svg-title-x-axis-25">x-axis point at 25 units</title>
 						</circle>
-						<circle class="x-axis" cx="50" r="1.5">
-							<title>x-axis point at 50 units</title>
+						<circle class="x-axis" cx="50" r="1.5" aria-labelledby="example-svg-title-x-axis-50">
+							<title id="example-svg-title-x-axis-50">x-axis point at 50 units</title>
 						</circle>
-						<circle class="x-axis" cx="75" r="1.5">
-							<title>x-axis point at 75 units</title>
+						<circle class="x-axis" cx="75" r="1.5" aria-labelledby="example-svg-title-x-axis-75">
+							<title id="example-svg-title-x-axis-75">x-axis point at 75 units</title>
 						</circle>
-						<circle class="x-axis" cx="100" r="1.5">
-							<title>x-axis point at 100 units</title>
-						</circle>
-
-						<circle class="y-axis" cy="25" r="1.5">
-							<title>y-axis point at 25 units</title>
-						</circle>
-						<circle class="y-axis" cy="50" r="1.5">
-							<title>y-axis point at 50 units</title>
-						</circle>
-						<circle class="y-axis" cy="75" r="1.5">
-							<title>y-axis point at 75 units</title>
-						</circle>
-						<circle class="y-axis" cy="100" r="1.5">
-							<title>y-axis point at 100 units</title>
+						<circle class="x-axis" cx="100" r="1.5" aria-labelledby="example-svg-title-x-axis-100">
+							<title id="example-svg-title-x-axis-100">x-axis point at 100 units</title>
 						</circle>
 
-						<circle class="center" cx="50" cy="50" r="0.5">
-							<title>center of viewBox (50,50)</title>
+						<circle class="y-axis" cy="25" r="1.5" aria-labelledby="example-svg-title-y-axis-25">
+							<title id="example-svg-title-y-axis-25">y-axis point at 25 units</title>
+						</circle>
+						<circle class="y-axis" cy="50" r="1.5" aria-labelledby="example-svg-title-y-axis-50">
+							<title id="example-svg-title-y-axis-50">y-axis point at 50 units</title>
+						</circle>
+						<circle class="y-axis" cy="75" r="1.5" aria-labelledby="example-svg-title-y-axis-75">
+							<title id="example-svg-title-y-axis-75">y-axis point at 75 units</title>
+						</circle>
+						<circle class="y-axis" cy="100" r="1.5" aria-labelledby="example-svg-title-y-axis-100">
+							<title id="example-svg-title-y-axis-100">y-axis point at 100 units</title>
+						</circle>
+
+						<circle class="center" cx="50" cy="50" r="0.5" aria-labelledby="example-svg-title-center">
+							<title id="example-svg-title-center">center of viewBox (50,50)</title>
 						</circle>
 						<line
 							id="example-svg-radial-line"
 							stroke="red"
 							pathLength="100"
 							stroke-width="1"
-							stroke-dasharray="100">
-							<title>radial line from origin with morse code dashes saying SOS</title>
+							stroke-dasharray="100"
+							aria-labelledby="example-svg-title-radial-morse-line"
+						>
+							<title id="example-svg-title-radial-morse-line">radial line from origin with morse code dashes saying SOS and rotating clockwise</title>
 						</line>
 						<g id="example-svg-radial">
-							<title>radial coordinate point labelled with custom dashed underline</title>
+							<title id="example-svg-title-radial-label">radial coordinate point labelled with custom dashed underline with additional clockwise rotation</title>
 							<line
 								id="example-svg-grouped-line"
 								stroke="blue"
 								pathLength="100"
 								stroke-width="2"
 								stroke-dasharray="25 25 25 25"
-								stroke-dashoffset="-13"/>
-							<text class="radius"></text>
+								stroke-dashoffset="-13"
+								aria-labelledby="example-svg-title-radial-label"
+							/>
+							<text class="radius" aria-labelledby="example-svg-title-radial-label"></text>
 						</g>
-						<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)">.(25,25)</text>
-						<text x="50" y="25">.(50,25)</text>
-						<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)">.(75,25)</text>
-						<text x="25" y="50">.(25,50)</text>
-						<text x="25" y="75">.(25,75)</text>
+						<text x="0" y="0" transform="translate(25,25) rotate(25,0,0)" aria-labelledby="example-svg-title-point-25-25">
+							<title id="example-svg-title-point-25-25">point at (25,25) with label rotated clockwise</title>
+							.(25,25)
+						</text>
+						<text x="50" y="25" aria-labelledby="example-svg-title-point-50-25">
+							<title id="example-svg-title-point-50-25">point at (50,25) with label</title>
+							.(50,25)
+						</text>
+						<text x="0" y="0" transform="translate(75,25) rotate(-25,0,0)" aria-labelledby="example-svg-title-point-75-25">
+							<title id="example-svg-title-point-75-25">point at (75,25) with label rotated anti-clockwise</title>
+							.(75,25)
+						</text>
+						<text x="25" y="50" aria-labelledby="example-svg-title-point-25-50">
+							<title id="example-svg-title-point-25-50">point at (25,50) with label</title>
+							.(25,50)
+						</text>
+						<text x="25" y="75" aria-labelledby="example-svg-title-point-25-75">
+							<title id="example-svg-title-point-25-75">point at (25,75) with label</title>
+							.(25,75)
+						</text>
 					</svg>
 					<script>
 						<!--
@@ -1757,8 +1777,29 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 								fill="none"
 								stroke="cyan"
 								d="M2,50 A48,48 0,0,0 98,50 A48,48 0,0,0 2,50 z"/>
+							<path
+								 id="example-textpath-marquee"
+								 fill="none"
+								 stroke="orange"
+								 d="M65,95 l45,25"/>
 						</defs>
 
+						<g>
+							<use xlink:href="#example-textpath-marquee"/>
+							<text fill="yellow">
+								<textPath
+									href="#example-textpath-marquee"
+									side="left"
+									spacing="exact">
+									__________Quick brown fox jumps over the lazy dog.______
+									<animate
+										attributeName="startOffset"
+										values="0;-400%"
+										dur="10s"
+										repeatCount="indefinite"/>
+								</textPath>
+							</text>
+						</g>
 						<g>
 							<use xlink:href="#example-textpath-MyPath"/>
 							<text fill="yellow">
