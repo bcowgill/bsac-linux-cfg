@@ -888,6 +888,53 @@
 				</ul>
 			</div>
 
+			<!-- T COLUMN ========== -->
+			<div id="T" class="column visible">
+				<h2>T</h2>
+				<ul>
+					<li
+						class="target element"
+						data-element="text"
+						data-category="renderable,graphics,text content,text child"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,textPath,text,tspan,a"
+						title="&#9;text - [renderable,graphics,text content,text child] draws a graphics element consisting of text.  it's possible to apply a gradient, pattern, clipping path, mask, or filter to text element, like any other SVG graphics element.  if text is included in SVG not inside of a text element, it is not rendered.  this is different than being hidden by default, as setting the display property won't show the text.">
+						<a href="Element/text">
+							text
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="textPath"
+						data-category="text content,renderable,text child"
+						data-use-with="text,path,desc,metadata,title,a,animate,set,tref,tspan"
+						title="&#9;text along a path - [text content,renderable,text child] renders text along the shape of a path.">
+						<a href="Element/textPath">
+							textPath
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="title"
+						data-category="never rendered,descriptive"
+						data-use-with="*"
+						title="&#9;title - [never rendered,descriptive] provides an accessible, short-text description of any SVG container element or graphics element.  Text in a title element is not rendered as part of the graphic, but browsers usually display it as a tooltip.  if an element can be described by visible text, it is recommended to reference that text with an aria-labelledby attribute rather than using the title element.">
+						<a href="Element/title">
+							title
+						</a>
+					</li>
+					<li
+						class="target element"
+						data-element="tspan"
+						data-category="text content,renderable,text child"
+						data-use-with="desc,metadata,title,a,animate,set,tref,tspan"
+						title="&#9;text span - [text content,renderable,text child] defines a subtext within a text element or another tspan element. It allows for adjustment of the style and/or position of that subtext as needed.">
+						<a href="Element/tspan">
+							tspan
+						</a>
+					</li>
+				</ul>
+			</div>
+
 			<!-- animation elements
 <animate>, <animateColor>, <animateMotion>, <animateTransform>, <discard>, <mpath>, <set>
 deprecated <altGlyph>, <altGlyphDef>, <altGlyphItem>, <animateColor>
@@ -938,75 +985,29 @@ animation, descriptive, shape, structure, gradient
 animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,circle,ellipse,line,mesh,path,polygon,polyline,rect,defs,g,svg,symbol,use,linearGradient,meshgradient,radialGradient,stop
 
 -->
-			<!-- T COLUMN ========== -->
-			<div id="T" class="column visible">
-				<h2>T</h2>
-				<ul>
-					<li
-						class="target element"
-						data-element="text"
-						data-category="renderable,graphics,text content,text child"
-						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,textPath,text,tspan,a"
-						title="&#9;text - [renderable,graphics,text content,text child] draws a graphics element consisting of text.  it's possible to apply a gradient, pattern, clipping path, mask, or filter to text element, like any other SVG graphics element.  if text is included in SVG not inside of a text element, it is not rendered.  this is different than being hidden by default, as setting the display property won't show the text.">
-						<a href="Element/text">
-							text
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="textPath"
-						data-category="text content,renderable,text child"
-						data-use-with="text,path,desc,metadata,title,a,animate,set,tref,tspan"
-						title="&#9;text along a path - [text content,renderable,text child] renders text along the shape of a path.">
-						<a href="Element/textPath">
-							textPath
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="title"
-						data-category="never rendered,descriptive"
-						data-use-with="*"
-						title="&#9;title - [never rendered,descriptive] provides an accessible, short-text description of any SVG container element or graphics element.  Text in a title element is not rendered as part of the graphic, but browsers usually display it as a tooltip.  if an element can be described by visible text, it is recommended to reference that text with an aria-labelledby attribute rather than using the title element.">
-						<a href="Element/title">
-							title
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="tspan"
-						data-category="semantic,tables"
-						data-use-with=""
-						title="&#9;tspan - [semantic,tables] .">
-						<a href="Element/tspan">
-							tspan HEREIAM
-						</a>
-					</li>
-				</ul>
-			</div>
 
 			<!-- U COLUMN ========== -->
-			<div id="U" class="column">
+			<div id="U" class="column visible">
 				<h2>U</h2>
 				<ul>
 					<li
 						class="target element"
-						data-element="u"
+						data-element="unknown"
 						data-category="typography,formatting"
 						data-use-with=""
-						title="&#9;underlined - [typography,formatting] represents some text that should be stylistically different from normal text, such as misspelled words or proper nouns in Chinese.">
-						<a href="Element/">
-							u
+						title="&#9;unknown - [typography,formatting] .">
+						<a href="Element/unknown">
+							unknown HEREIAM
 						</a>
 					</li>
 					<li
 						class="target element"
-						data-element="ul"
+						data-element="use"
 						data-category="semantic,lists"
-						data-use-with="li"
-						title="&#9;unordered list - [semantic,lists] defines an unordered (bulleted) list.">
-						<a href="Element/">
-							ul
+						data-use-with=""
+						title="&#9;use another object - [semantic,lists] .">
+						<a href="Element/use">
+							use
 						</a>
 					</li>
 				</ul>
@@ -1146,28 +1147,14 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 								<title id="example-svg-title-second-hand">second hand of a clock</title>
 								<path
 									aria-labelledby="example-svg-title-second-hand"
-									d="M0,25 v-2.75 m0,-2.5 v-2.5 m0,-4.5 v-1.5 m0,-6.5 L0,-40 M-2.5,-35 h5"
-								/>
+									d="M0,25 v-2.75 m0,-2.5 v-2.5 m0,-4.5 v-1.5 m0,-6.5 L0,-40 M-2.5,-35 h5"/>
 								<path
 									fill="red"
 									aria-labelledby="example-svg-title-second-hand"
-									d="M-2,-31 h4 l-2,-4 z"
-								/>
-								<circle
-									cx="0"
-									cy="21"
-									r="1.25"
-								/>
-								<circle
-									cx="0"
-									cy="15"
-									r="2.25"
-								/>
-								<circle
-									cx="0"
-									cy="8"
-									r="3.25"
-								/>
+									d="M-2,-31 h4 l-2,-4 z"/>
+								<circle cx="0" cy="21" r="1.25"/>
+								<circle cx="0" cy="15" r="2.25"/>
+								<circle cx="0" cy="8" r="3.25"/>
 								<animateTransform
 									id="example-svg-second-hand"
 									attributeName="transform"
@@ -1189,9 +1176,8 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									dur="43200s"
 									repeatCount="indefinite"/>
 								<path
-									 d="M0,0 l-0.75,-8 l0.75,-7 l0.75,7 l-0.75,8 z"
-									 aria-labelledby="example-svg-title-hour-hand"
-								/>
+									d="M0,0 l-0.75,-8 l0.75,-7 l0.75,7 l-0.75,8 z"
+									aria-labelledby="example-svg-title-hour-hand"/>
 							</g>
 							<g stroke="gold" stroke-width="0.5">
 								<title id="example-svg-title-minute-hand">minute hand of a clock</title>
@@ -1204,7 +1190,9 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									xby="360"
 									dur="3600s"
 									repeatCount="indefinite"/>
-								<path d="M-0.75,0 L0,-35 l0.75,35 z" aria-labelledby="example-svg-title-minute-hand" />
+								<path
+									d="M-0.75,0 L0,-35 l0.75,35 z"
+									aria-labelledby="example-svg-title-minute-hand"/>
 							</g>
 							<script>
 								function setHand(name, degrees) {
@@ -2176,21 +2164,21 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							<!-- verticalText() call will convert this text to vertical text shown below-->
 							<text id="example-switch-vertical" fill="red">Vertical Text</text>
 							<!--
-							<g id="example-switch-vertical-rendered">
-								<text fill="red" y="0">V</text>
-								<text fill="red" y="18">e</text>
-								<text fill="red" y="36">r</text>
-								<text fill="red" y="54">t</text>
-								<text fill="red" y="72">i</text>
-								<text fill="red" y="90">c</text>
-								<text fill="red" y="108">a</text>
-								<text fill="red" y="126">l</text>
-								<text fill="red" y="144"></text>
-								<text fill="red" y="162">T</text>
-								<text fill="red" y="180">e</text>
-								<text fill="red" y="198">x</text>
-								<text fill="red" y="216">t</text>
-							</g>
+									<text fill="red" id="example-switch-vertical-rendered">
+										<tspan>V</tspan>
+										<tspan x="0" dy="18">e</tspan>
+										<tspan x="0" dy="18">r</tspan>
+										<tspan x="0" dy="18">t</tspan>
+										<tspan x="0" dy="18">i</tspan>
+										<tspan x="0" dy="18">c</tspan>
+										<tspan x="0" dy="18">a</tspan>
+										<tspan x="0" dy="18">l</tspan>
+										<tspan x="0" dy="18"> </tspan>
+										<tspan x="0" dy="18">T</tspan>
+										<tspan x="0" dy="18">e</tspan>
+										<tspan x="0" dy="18">x</tspan>
+										<tspan x="0" dy="18">t</tspan>
+									</text>
 							-->
 						</g>
 						<!-- enable animations with the same class to show that effect.  translate(+), rotate, translate(-) to rotate about a different point -->
@@ -2319,20 +2307,26 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							const height = optionHeight || element
 								.getBBox()
 								.height;
-							const g = document.createElementNS(SVG, 'g');
+							const g = document.createElementNS(SVG, 'text');
+							//							const g = document.createElementNS(SVG, 'g');
+							for (let idx = 0; idx < attributes.length; idx += 1) {
+								const attribute = attributes[idx];
+								if (attribute !== 'id') {
+									g.setAttribute(attribute, element.getAttribute(attribute));
+								}
+							}
 							g.setAttribute('id', element.getAttribute('id') + '-rendered');
 							text
 								.split('')
 								.forEach(function addLetter(letter, index) {
-									const textElement = document.createElementNS(SVG, 'text');
-									for (let idx = 0; idx < attributes.length; idx += 1) {
-										const attribute = attributes[idx];
-										if (attribute !== 'id') {
-											textElement.setAttribute(attribute, element.getAttribute(attribute));
-										}
+									const textElement = document.createElementNS(SVG, 'tspan');
+									//									const textElement = document.createElementNS(SVG, 'text');
+									if (index) {
+										textElement.setAttribute('x', 0);
+										textElement.setAttribute('dy', height);
 									}
-									textElement.setAttribute('y', index * height);
-									// textElement.setAttribute('x', 0); textElement.setAttribute('dy', height);
+									// textElement.setAttribute('y', index * height); textElement.setAttribute('x',
+									// 0); textElement.setAttribute('dy', height);
 									textElement.innerHTML = letter;
 									console.warn('TEXT', letter, textElement)
 									g.appendChild(textElement);
