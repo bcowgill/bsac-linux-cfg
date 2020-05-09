@@ -1142,12 +1142,32 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									<title id="example-svg-title-hour-markers3">an hour marker for a clock</title>
 								</use>
 							</g>
-							<line
-								y2="-40"
-								stroke="red"
-								stroke-width="0.25"
-								aria-labelledby="example-svg-title-second-hand">
+							<g fill="none" stroke="red" stroke-width="0.25">
 								<title id="example-svg-title-second-hand">second hand of a clock</title>
+								<path
+									aria-labelledby="example-svg-title-second-hand"
+									d="M0,25 v-2.75 m0,-2.5 v-2.5 m0,-4.5 v-1.5 m0,-6.5 L0,-40 M-2.5,-35 h5"
+								/>
+								<path
+									fill="red"
+									aria-labelledby="example-svg-title-second-hand"
+									d="M-2,-31 h4 l-2,-4 z"
+								/>
+								<circle
+									cx="0"
+									cy="21"
+									r="1.25"
+								/>
+								<circle
+									cx="0"
+									cy="15"
+									r="2.25"
+								/>
+								<circle
+									cx="0"
+									cy="8"
+									r="3.25"
+								/>
 								<animateTransform
 									id="example-svg-second-hand"
 									attributeName="transform"
@@ -1156,28 +1176,8 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									by="360"
 									dur="60s"
 									repeatCount="indefinite"/>
-							</line>
-							<line
-								y2="-35"
-								stroke="gold"
-								stroke-width="0.5"
-								aria-labelledby="example-svg-title-minute-hand">
-								<title id="example-svg-title-minute-hand">minute hand of a clock</title>
-								<animateTransform
-									id="example-svg-minute-hand"
-									attributeName="transform"
-									attributeType="XML"
-									type="rotate"
-									xfrom="0"
-									xby="360"
-									dur="3600s"
-									repeatCount="indefinite"/>
-							</line>
-							<line
-								y2="-15"
-								stroke="silver"
-								stroke-width="1.25"
-								aria-labelledby="example-svg-title-hour-hand">
+							</g>
+							<g fill="silver" stroke="silver" stroke-width="1.25" opacity="0.5">
 								<title id="example-svg-title-hour-hand">hour hand of a clock</title>
 								<animateTransform
 									id="example-svg-hour-hand"
@@ -1188,7 +1188,24 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									xby="360"
 									dur="43200s"
 									repeatCount="indefinite"/>
-							</line>
+								<path
+									 d="M0,0 l-0.75,-8 l0.75,-7 l0.75,7 l-0.75,8 z"
+									 aria-labelledby="example-svg-title-hour-hand"
+								/>
+							</g>
+							<g stroke="gold" stroke-width="0.5">
+								<title id="example-svg-title-minute-hand">minute hand of a clock</title>
+								<animateTransform
+									id="example-svg-minute-hand"
+									attributeName="transform"
+									attributeType="XML"
+									type="rotate"
+									xfrom="0"
+									xby="360"
+									dur="3600s"
+									repeatCount="indefinite"/>
+								<path d="M-0.75,0 L0,-35 l0.75,35 z" aria-labelledby="example-svg-title-minute-hand" />
+							</g>
 							<script>
 								function setHand(name, degrees) {
 									const hand = document.getElementById(`example-svg-${name}-hand`);
