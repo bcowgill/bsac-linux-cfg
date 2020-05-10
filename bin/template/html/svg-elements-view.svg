@@ -1,0 +1,76 @@
+<svg
+	width="615"
+	height="205"
+	viewBox="0 0 600 205"
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>An example of an SVG document with view elements you can click to change the scale using viewBox settings.</title>
+	<style>
+		/*
+			cp template/html/svg-elements-view.svg /tmp/xxx.svg; prettydiff.sh /tmp/xxx.svg template/html/svg-elements-view.svg
+		*/
+		/*
+			As SVG does not provide a default visual style for links, it's considered best practice to add some
+		*/
+		a:link,
+		a:visited {
+			cursor: pointer;
+		}
+		a:active,
+		a:hover {
+			outline: dotted 1px blue;
+		}
+		a polygon:hover,
+		a text:hover {
+			fill: blue;
+			stroke: blue;
+			fill-opacity: 0.3;
+			cursor: pointer;
+			text-decoration: underline;
+		}
+	</style>
+	<defs>
+		<radialGradient id="gradient">
+			<stop offset="0%" stop-color="#8cffa0"/>
+			<stop offset="100%" stop-color="#8ca0ff"/>
+		</radialGradient>
+	</defs>
+
+	<a href="svg-elements-view.html">
+		<circle r="48" cx="50" cy="50" style="fill:url(#gradient)">
+			<title>click to view example as SVG document</title>
+		</circle>
+	</a>
+
+	<view id="halfSizeView" viewBox="0 0 1230 410"/>
+	<view id="normalSizeView" viewBox="0 0 615 205"/>
+	<view id="doubleSizeView" viewBox="0 0 307 102"/>
+
+	<!--
+		clicking on the links below activates the view with the named ID
+		when you view this SVG document directly in a browser.
+	-->
+	<g transform="translate(105,0)">
+		<g>
+			<a class="set-view" href="#halfSizeView" xlink:href="#halfSizeView">
+				<title>click to view graphic at half normal size</title>
+				<polygon points="0,10 12,19 0,28" transform="rotate(10,0,0) translate(7,0)"/>
+				<text x="15" y="30" rotate="10" font-size="40">half size</text>
+			</a>
+		</g>
+		<g transform="translate(0,35)">
+			<a class="set-view" href="#normalSizeView" xlink:href="#normalSizeView">
+				<title>click to view graphic at normal size</title>
+				<polygon points="0,10 12,19 0,28" transform="rotate(10,0,0) translate(7,0)"/>
+				<text x="15" y="30" rotate="10" font-size="40">normal size</text>
+			</a>
+		</g>
+		<g transform="translate(0,70)">
+			<a class="set-view" href="#doubleSizeView" xlink:href="#doubleSizeView">
+				<title>click to view graphic at double normal size</title>
+				<polygon points="0,10 12,19 0,28" transform="rotate(10,0,0) translate(7,0)"/>
+				<text x="15" y="30" rotate="10" font-size="40">double size</text>
+			</a>
+		</g>
+	</g>
+</svg>

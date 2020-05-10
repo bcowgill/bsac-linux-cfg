@@ -14,7 +14,7 @@
 		wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/html/svg-elements.html
 		curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/html/svg-elements.html -o svg-elements.html
 	-->
-	<base href="https://developer.mozilla.org/en-US/docs/Web/SVG/" target="_blank">
+<base href="https://developer.mozilla.org/en-US/docs/Web/SVG/" target="_blank">
 	<title>PERIODIC TABLE OF SVG ELEMENTS</title>
 	<meta
 		id="meta-description"
@@ -991,21 +991,21 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 				<h2>U</h2>
 				<ul>
 					<li
-						class="target element"
+						class="target element undocumented"
 						data-element="unknown"
-						data-category="typography,formatting"
+						data-category="renderable,container"
 						data-use-with=""
-						title="&#9;unknown - [typography,formatting] .">
+						title="&#9;unknown TODO - [renderable,container] UNDOCUMENTED.">
 						<a href="Element/unknown">
-							unknown HEREIAM
+							unknown
 						</a>
 					</li>
 					<li
 						class="target element"
 						data-element="use"
-						data-category="semantic,lists"
-						data-use-with=""
-						title="&#9;use another object - [semantic,lists] .">
+						data-category="graphics reference,graphics,renderable,structure"
+						data-use-with="animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title"
+						title="&#9;use another object - [graphics reference,graphics,renderable,structure] takes nodes from within the SVG document, and duplicates them somewhere else.  most attributes on the use element do not override those already on the element referenced by use.  (this differs from how CSS style attributes override those set 'earlier' in the cascade).  only the attributes x, y, width, height and href on the use element will override those set on the referenced element. However, any other attributes not set on the referenced element will be applied to the use element.">
 						<a href="Element/use">
 							use
 						</a>
@@ -1014,50 +1014,21 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 			</div>
 
 			<!-- V COLUMN ========== -->
-			<div id="V" class="column">
+			<div id="V" class="column visible">
 				<h2>V</h2>
 				<ul>
 					<li
 						class="target element"
-						data-element="video"
-						data-category="media,audio/video"
-						data-use-with="source,track"
-						title="&#9;video - [media,audio/video] a placeholder for a video to be shown in the document, such as a movie clip or other video streams.">
-						<a href="Element/">
-							video
-						</a>
-					</li>
-					<li
-						class="target element"
-						data-element="var"
-						data-category="semantic,formatting,phrase"
-						data-use-with=""
-						title="&#9;variable - [semantic,formatting,phrase] defines a variable when documenting computer programs or mathematics.">
-						<a href="Element/">
-							var
+						data-element="view"
+						data-category="miscellaneous"
+						data-use-with="desc,metadata,title"
+						title="&#9;view point - [miscellaneous] a view is a defined way to view the image, like a zoom level or a detail view.">
+						<a href="Element/view">
+							view
 						</a>
 					</li>
 				</ul>
 			</div>
-
-			<!-- W COLUMN ========== -->
-			<div id="W" class="column">
-				<h2>W</h2>
-				<ul>
-					<li
-						class="target element"
-						data-element="wbr"
-						data-category="typography,formatting"
-						data-use-with=""
-						title="&#9;word break opportunity - [typography,formatting] defines a possible line break.  when a word is too long, or you are afraid that the browser will break your lines at the wrong place, you can use the wbr element to add word break opportunities.">
-						<a href="Element/">
-							wbr
-						</a>
-					</li>
-				</ul>
-			</div>
-
-			<!-- Z COLUMN ========== -->
 		</section>
 		<hr id="footer-rule" class="full-width"/>
 
@@ -3995,6 +3966,46 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 							<text y="50">z<title>Close Path back to 10,30</title>
 							</text>
 						</g>
+					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-use"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of use element">
+					<h3>use example</h3>
+					<svg
+						class="example-use"
+						width="200"
+						height="200"
+						viewBox="0 0 40 10"
+						xmlns="http://www.w3.org/2000/svg">
+						<title>Example of use element.</title>
+  <circle id="example-use-myCircle" cx="5" cy="5" r="4" stroke="blue"/>
+	<g stroke="blue">
+		<!-- another circle with no stroke/fill info as its provided by the surrounding grouping element -->
+		<circle id="example-use-myCircleBlank" cx="5" cy="5" r="4"/>
+	</g>
+  <use href="#example-use-myCircle" x="10" fill="blue"/>
+  <use href="#example-use-myCircle" x="20" fill="white" stroke="red"/>
+  <!--
+stroke="red" will be ignored above, as stroke was already set on myCircle.
+Most attributes (except for x, y, width, height and (xlink:)href)
+do not override those set in the ancestor.
+That's why the circles have different x positions, but the same stroke value.
+  -->
+  <use href="#example-use-myCircleBlank" x="30" fill="white" stroke="red">
+							<animateTransform
+								attributeName="transform"
+								attributeType="XML"
+								type="scale"
+								from="0.99,1.05"
+								to="1.01,0.95"
+								dur="0.5s"
+								repeatCount="indefinite"/>
+	</use>
 					</svg>
 				</section>
 

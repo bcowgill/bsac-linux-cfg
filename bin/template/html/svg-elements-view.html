@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta
+			name="description"
+			content="An example of an SVG document with view elements within an HTML document and the use of javascript to make those view elements actually work.">
+		<meta name="author" content="Brent S.A. Cowgill">
+		<meta name="viewport" content="">
+		<title>Example of SVG view element when inside an HTML document.</title>
+	</head>
+	<body>
+
+		<header></header>
+
+		<main>
+
+			<section>
+				<h3>Example of SVG view element when inside an HTML document.</h3>
+				<p>The links inside the SVG do not work automatically when in an HTML document.</p>
+				<p>They have been made workable using Javascript.</p>
+				<p>see also
+					<a target="_blank" href="svg-elements-view.svg">example of SVG view element</a>
+					as a standalone SVG file.</p>
+				<svg
+					width="615"
+					height="205"
+					viewBox="0 0 600 205"
+					xmlns="http://www.w3.org/2000/svg"
+					xmlns:xlink="http://www.w3.org/1999/xlink">
+					<title>Example of SVG view element when inside an HTML document.</title>
+					<style>
+						/*
+							cp template/html/svg-elements-view.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/html/svg-elements-view.html
+						*/
+		/*
+			As SVG does not provide a default visual style for links, it's considered best practice to add some
+		*/
+		@namespace svg url(http://www.w3.org/2000/svg);
+		svg|a:link,
+		svg|a:visited {
+			cursor: pointer;
+		}
+		svg|a:active,
+		svg|a:hover {
+			outline: dotted 1px blue;
+		}
+						a polygon:hover,
+						a text:hover {
+							fill: blue;
+							stroke: blue;
+							fill-opacity: 0.3;
+							cursor: pointer;
+							text-decoration: underline;
+						}
+
+					</style>
+					<defs>
+						<radialGradient id="gradient">
+							<stop offset="0%" stop-color="#8cffa0"/>
+							<stop offset="100%" stop-color="#8ca0ff"/>
+						</radialGradient>
+					</defs>
+
+					<a href="svg-elements-view.svg ">
+						<circle r="48" cx="50" cy="50" style="fill:url(#gradient)">
+							<title>click to view example as SVG document</title>
+						</circle>
+					</a>
+					<view id="halfSizeView" viewBox="0 0 1230 410"/>
+					<view id="normalSizeView" viewBox="0 0 615 205"/>
+					<view id="doubleSizeView" viewBox="0 0 307 102"/>
+
+					<!--
+						clicking on the links below activates the view with the named ID
+						when you view this SVG document directly in a browser.
+					-->
+					<g transform="translate(105,0)">
+						<g>
+							<a class="set-view" href="#halfSizeView" xlink:href="#halfSizeView">
+								<title>click to view graphic at half normal size</title>
+								<polygon points="0,10 12,19 0,28" transform="rotate(10,0,0) translate(7,0)"/>
+								<text x="15" y="30" rotate="10" font-size="40">half size</text>
+							</a>
+						</g>
+						<g transform="translate(0,35)">
+							<a class="set-view" href="#normalSizeView" xlink:href="#normalSizeView">
+								<title>click to view graphic at normal size</title>
+								<polygon points="0,10 12,19 0,28" transform="rotate(10,0,0) translate(7,0)"/>
+								<text x="15" y="30" rotate="10" font-size="40">normal size</text>
+							</a>
+						</g>
+						<g transform="translate(0,70)">
+							<a class="set-view" href="#doubleSizeView" xlink:href="#doubleSizeView">
+								<title>click to view graphic at double normal size</title>
+								<polygon points="0,10 12,19 0,28" transform="rotate(10,0,0) translate(7,0)"/>
+								<text x="15" y="30" rotate="10" font-size="40">double size</text>
+							</a>
+						</g>
+					</g>
+				</svg>
+			</section>
+
+		</main>
+
+		<footer></footer>
+
+	</body>
+	<script>
+		<!--
+		// when SVG is inside an HTML document we need to make the links work with
+		// Javascript.
+
+		function setViewBox(event) {
+			const id = event
+				.target
+				.parentElement
+				.getAttribute('xlink:href');
+			const viewer = document.getElementById(id.replace('#', ''));
+			if (viewer) {
+				const viewBox = viewer.getAttribute('viewBox');
+				const svg = document.querySelectorAll('svg');
+				for (let index = 0; index < svg.length; ++index) {
+					svg[index].setAttribute('viewBox', viewBox);
+				}
+			}
+		}
+
+		function main() {
+			const dom = document.querySelectorAll('svg a.set-view');
+			for (let index = 0; index < dom.length; ++index) {
+				dom[index].onclick = setViewBox;
+			}
+		}
+
+		main();
+
+		-->
+	</script>
+</html>
