@@ -1174,7 +1174,7 @@ animate,animateMotion,animateTransform,discard,mpath,set,desc,metadata,title,cir
 									}
 								}
 								function startClock(hour, minute, second) {
-									console.error('TIME', hour, minute, second)
+									// console.warn('TIME', hour, minute, second)
 									setHand('hour', 30.0 * (hour + minute / 60.0));
 									setHand('minute', 6.0 * (minute + second / 60.0));
 									setHand('second', 6.0 * second);
@@ -4639,6 +4639,31 @@ That's why the circles have different x positions, but the same stroke value.
 							textLength="40"
 							lengthAdjust="spacingAndGlyphs">slice</text>
 					</svg>
+				</section>
+
+				<!-- ============================================================= -->
+				<section
+					id="example-view"
+					class="example"
+					role="contentinfo"
+					aria-label="SVG Example of view element">
+					<h3>view example</h3>
+					<p>See an example of the view element in a <a href="svg-elements-view.svg">standalone SVG document.</a></p>
+					<p>See an example of the view element in an SVG element <a href="svg-elements-view.html">within an HTML document.</a></p>
+					<script>
+						<!--
+						function makeLinksAbsolute() {
+							const dom = document.querySelectorAll('#example-view a');
+							if (dom.length) {
+								for (let index = 0; index < dom.length; index++) {
+									const file = dom[index].getAttribute('href');
+									dom[index].setAttribute('href', location.href.replace(new RegExp('/[^/]+$'), '/' + file));
+								}
+							}
+						}
+						makeLinksAbsolute();
+						-->
+					</script>
 				</section>
 
 				<!-- ============================================================= -->
