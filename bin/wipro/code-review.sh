@@ -441,7 +441,7 @@ function code_review {
 
 	HEADING="checking for practices to minimise..."
 	# excludes test plan spy console.error.restore();
-	search_js_filter '\bconsole\.\w+' 'console\.\w+\.restore\(\)' "$file"   "MUST remove leftover console debug logs"
+	search_js_filter '\bconsole\.[acdegilmptw]\w+' 'console\.[acdegilmptw]\w+\.restore\(\)' "$file"   "MUST remove leftover console debug logs"
 	search_js '\bNODE_ENV\b' "$file"  "reduce code blocks dependent on release environment"
 
 	HEADING="checking for unnecessary obfuscation..."
