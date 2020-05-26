@@ -4,20 +4,46 @@
 	<meta charset="UTF-8">
 	<title>template for visible script tags</title>
 <style>
-script {
-	display: block;
+/* https://css-tricks.com/injecting-line-break/ */
+script, noscript, style {
+	outline: 1px dashed grey;
+	display: table;
 	font-family: ProFontWindows, monospace;
 	font-size: 24px;
 	font-weight: 900;
+	white-space: pre;
 }
 </style>
 </head>
 <body>
 
 <script>
+// this shows CSS styling to make Javascript code visible in the browser.
+
+// it even preserves line breaks and such instead of all getting slammed into one big body of text.
+
+</script>
+<script>
 // a comment
 var x = 21;
 console.log('x', x);
 </script>
+
+<style>
+// it even works on <style> elements in the <body> but not the ones in the <head>
+.code {
+	outline: 1px dashed cyan;
+	display: table;
+	font-family: ProFontWindows, monospace;
+	font-size: 24px;
+	font-weight: 900;
+	white-space: pre;
+}
+</style>
+
+The trick does not work on &lt;noscript&gt; elements.  Which there is one directly below.
+<noscript>
+This &lt;noscript&gt; text cannot be fooled by CSS.
+</noscript>
 </body>
 </html>
