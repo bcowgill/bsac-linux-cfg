@@ -1,109 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta charset="utf-8"/>
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<meta name="viewport" content="">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8"/>
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="">
 		<!--
 			Some useful dev commands for this file:
 			cp template/javascript/a11y/index.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/javascript/a11y/index.html
 			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/javascript/a11y/index.html
 			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/javascript/a11y/index.html -o index.html
 		-->
-	<title>Web Accessibilitiy Demonstration Page</title>
-	<link rel="stylesheet" href="./style.css" />
-	<script src="./a11y.js"></script>
-</head>
+		<title>Web Accessibilitiy Demonstration Page</title>
+		<link rel="stylesheet" href="./style.css"/>
+		<script src="./a11y.js"></script>
+	</head>
 
-<body class="dark">
+	<body class="dark">
 
-<header id="header" role="banner">
-	<a href="#nav" id="skip-to-menu" class="skip-to-content">Skip to keyboard navigation</a>
-	<a href="#main" class="skip-to-content">Skip to main content</a>
-<h1 class="sr-only">
-	Welcome, screen readers, our site is fully accessible.
-</h1>
-<a href="#report-issue" class="skip-to-content">If you have any difficulty using our site, report an accessibility issue here.</a>
-<h1>
-<a href="/"><img src="logo.svg" alt="XYZ Company animated logo" width="72px" height="72px"/></a> ... site header
-<form id="header-search" role="search" aria-label="Sitewide">
-  <label for="header-search-input">Search this site</label>
-  <input type="search" id="header-search-input" name="search" placeholder="Search this site" spellcheck="false">
-  <input value="Submit" type="submit">
-</form>
-</h1>
-</header>
+		<header id="header" role="banner">
+			<a href="#nav" id="skip-to-menu" class="skip-to-content">Skip to keyboard navigation</a>
+			<a href="#main" class="skip-to-content">Skip to main content</a>
+			<h1 class="sr-only">
+				Welcome, screen readers, our site is fully accessible.
+			</h1>
+			<a href="#report-issue" class="skip-to-content">If you have any difficulty using our site, report an accessibility issue here.</a>
+			<h1>
+				<a href="/"><img src="logo.svg" alt="XYZ Company animated logo" width="72px" height="72px"/></a>
+				... site header
+				<form id="header-search" role="search" aria-label="Sitewide">
+					<label for="header-search-input">Search this site</label>
+					<input
+						type="search"
+						id="header-search-input"
+						name="search"
+						placeholder="Search this site"
+						spellcheck="false">
+					<input value="Submit" type="submit">
+				</form>
+			</h1>
+		</header>
 
-<nav id="nav" role="navigation" aria-label="Site">
-	<ul>
-		<li><a href="#">Home</a></li>
-	</ul>
-</nav>
+		<nav id="nav" role="navigation" aria-label="Site">
+			<ul>
+				<li>
+					<a href="#">Home</a>
+				</li>
+			</ul>
+		</nav>
 
-<main id="main" role="main">
+		<main id="main" role="main">
 
-	<section id="main-resources" role="region" aria-label="Resources">
-	<h1>Web Accessibility Demonstration Page</h1>
-		<!-- when JavaScript is turned off show the user how to turn it on for full accessibility. -->
-		<noscript>
-			For full functionality of this site it is necessary to enable JavaScript. Here
-			are the
-			<a target="_blank" href="https://www.enable-javascript.com/">
-				instructions how to enable JavaScript in your web browser</a>.
-		</noscript>
-	<ul role="list">
-		<li id="main-resources-udacity" role="listitem"><a target="_blank" href="https://classroom.udacity.com/courses/ud891/lessons/8019995517/concepts/80192648550923">Udacity Course on Web Accessibility</a></li>
-		<li id="main-resources-wcag2" role="listitem"><a target="_blank" href="https://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines 2.0 (WCAG)</a></li>
-		<li id="main-resources-webaim-checklist" role="listitem"><a target="_blank" href="https://webaim.org/standards/wcag/checklist">WebAIM WCAG 2 Checklist</a><a class="download" target="_blank" href="https://webaim.org/standards/wcag/WCAG2Checklist.pdf">pdf</a></li>
-		<li id="main-resources-aria-roles" role="listitem"><a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles">WAI ARIA Roles</a></li>
+			<section id="main-resources" role="region" aria-label="Resources">
+				<h1>Web Accessibility Demonstration Page</h1>
+				<!-- when JavaScript is turned off show the user how to turn it on for full accessibility. -->
+				<noscript>
+					For full functionality of this site it is necessary to enable JavaScript. Here
+					are the
+					<a target="_blank" href="https://www.enable-javascript.com/">
+						instructions how to enable JavaScript in your web browser</a>.
+				</noscript>
+				<ul role="list">
+					<li id="main-resources-udacity" role="listitem">
+						<a
+							target="_blank"
+							href="https://classroom.udacity.com/courses/ud891/lessons/8019995517/concepts/80192648550923">Udacity Course on Web Accessibility</a>
+					</li>
+					<li id="main-resources-wcag2" role="listitem">
+						<a target="_blank" href="https://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines 2.0 (WCAG)</a>
+					</li>
+					<li id="main-resources-webaim-checklist" role="listitem">
+						<a target="_blank" href="https://webaim.org/standards/wcag/checklist">WebAIM WCAG 2 Checklist</a>
+						<a
+							class="download"
+							target="_blank"
+							href="https://webaim.org/standards/wcag/WCAG2Checklist.pdf">pdf</a>
+					</li>
+					<li id="main-resources-aria-roles" role="listitem">
+						<a
+							target="_blank"
+							href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles">WAI ARIA Roles</a>
+					</li>
 
-	</ul>
-	</section>
+				</ul>
+			</section>
 
-	<section id="main-axx-categories" role="region" aria-label="Accessibility Categories">
-	<h2>Impairment Categories</h2>
-	<ul role="list">
-		<li role="listitem">Visual</li>
-		<li role="listitem">Motor</li>
-		<li role="listitem">Hearing</li>
-		<li role="listitem">Cognitive</li>
-	</ul>
+			<section
+				id="main-axx-categories"
+				role="region"
+				aria-label="Accessibility Categories">
+				<h2>Impairment Categories</h2>
+				<ul role="list">
+					<li role="listitem">Visual</li>
+					<li role="listitem">Motor</li>
+					<li role="listitem">Hearing</li>
+					<li role="listitem">Cognitive</li>
+				</ul>
 
-	<h2>Temporality Categories</h2>
-	<ul role="list">
-		<li role="listitem">Temporary</li>
-		<li role="listitem">Permanent</li>
-		<li role="listitem">Situational</li>
-	</ul>
-	</section>
+				<h2>Temporality Categories</h2>
+				<ul role="list">
+					<li role="listitem">Temporary</li>
+					<li role="listitem">Permanent</li>
+					<li role="listitem">Situational</li>
+				</ul>
+			</section>
 
-	<section id="main-wcag-guidelines" role="region" aria-labelledby="main-wcag-guidelines-label">
-	<h2 id="main-wcag-guidelines-label">WCAG Guidelines (POUR)<a class="reference" href="#main-resources-wcag2">ref</a></h2>
-	<ul role="list">
-		<li role="listitem">Perceivable</li>
-		<li role="listitem">Operable</li>
-		<li role="listitem">Understandable</li>
-		<li role="listitem">Robust</li>
-	</ul>
-	</section>
+			<section
+				id="main-wcag-guidelines"
+				role="region"
+				aria-labelledby="main-wcag-guidelines-label">
+				<h2 id="main-wcag-guidelines-label">WCAG Guidelines (POUR)<a class="reference" href="#main-resources-wcag2">ref</a>
+				</h2>
+				<ul role="list">
+					<li role="listitem">Perceivable</li>
+					<li role="listitem">Operable</li>
+					<li role="listitem">Understandable</li>
+					<li role="listitem">Robust</li>
+				</ul>
+			</section>
 
-	<section id="main-key-reference" role="region" aria-labelledby="main-key-reference-label">
-	<h2 id="main-key-reference-label">Screen Reader Keyboard Reference</h2>
-<p>All the action is in the javascript console.</p>
-        <p>press <tt class="key inverse">F12</tt>, <tt class="key inverse">Ctrl-Shift-I</tt> or <tt class="key inverse">Cmd-Alt-I</tt> depending on your browser or operating system.</p>
-	</section>
+			<section
+				id="main-key-reference"
+				role="region"
+				aria-labelledby="main-key-reference-label">
+				<h2 id="main-key-reference-label">Screen Reader Keyboard Reference</h2>
+				<p>All the action is in the javascript console.</p>
+				<p>press
+					<tt class="key inverse">F12</tt>,
+					<tt class="key inverse">Ctrl-Shift-I</tt>
+					or
+					<tt class="key inverse">Cmd-Alt-I</tt>
+					depending on your browser or operating system.</p>
+			</section>
 
-	<section id="report-issue" role="region" aria-labelledby="report-issue-label">
-	<h2 id="report-issue-label">Report an issue with accessibility.</h2>
-	</section>
+			<section id="report-issue" role="region" aria-labelledby="report-issue-label">
+				<h2 id="report-issue-label">Report an issue with accessibility.</h2>
+			</section>
 
-</main>
+		</main>
 
-<footer id="footer" class="page-footer" role="contentinfo">
-<h2>© 2020 XYZ Company, All rights reserved.  ... site footer</h2>
-</footer>
-</body>
+		<footer id="footer" class="page-footer" role="contentinfo">
+			<h2>© 2020 XYZ Company, All rights reserved. ... site footer</h2>
+		</footer>
+	</body>
 
 </html>
