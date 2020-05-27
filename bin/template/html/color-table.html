@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Colors used in files scanned</title>
+
+	<style>
+		body {
+			color: yellow;
+			background-color: black;
+		}
+		.column-swatch {
+			background: #333;
+			width: 50px;
+		}
+		.column-name {
+			background: #333;
+			width: auto;
+		}
+		.column-const {
+			background: #333;
+			width: auto;
+		}
+		.column-hex {
+			background: #333;
+			width: auto;
+		}
+		.column-rgb {
+			background: #333;
+			width: auto;
+		}
+		.column-hsl {
+			background: #333;
+			width: auto;
+		}
+		.column-closest {
+			background: #333;
+			width: auto;
+		}
+		.color-reference caption {
+			caption-side: top; /* top bottom inherit [left right nonstandard] */
+			text-align: center; /* left right center justify start end match-parent [start end] "." [start "."] ["." end] inherit */
+		}
+		.color-reference details {
+			caption-side: bottom;
+			text-align: left;
+		}
+		table.color-reference {
+			empty-cells: show; /* show/hide */
+			word-wrap: normal; /* normal/break-word useful to cause long URLs to wrap */
+			text-align: center;
+		}
+		.color-reference th {
+			background-color: #445;
+			padding: 6px 12px 6px;
+		}
+		.color-reference td {
+			padding: 12px;
+		}
+	</style>
+</head>
+
+<body>
+<table class="color-reference">
+	<caption>
+		<i>Colors used in files scanned</i>
+	</caption>
+	<colgroup span="1" class="column-swatch"></colgroup>
+	<colgroup span="1" class="column-name"></colgroup>
+	<colgroup span="1" class="column-const"></colgroup>
+	<colgroup span="1" class="column-hex"></colgroup>
+	<colgroup span="1" class="column-rgb"></colgroup>
+	<colgroup span="1" class="column-hsl"></colgroup>
+	<colgroup span="1" class="column-closest"></colgroup>
+	<thead>
+		<tr>
+			<th title="color swatch">color</th>
+			<th title="name of color">name</th>
+			<th title="defined constant">constant</th>
+			<th title="hex representation of color">hex</th>
+			<th title="red green blue representation of color">rgb</th>
+			<th title="hue saturation luminisity representation of color">hsl</th>
+			<th title="closest named/defined constant">closest color</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<th title="color swatch">color</th>
+			<th title="name of color">name</th>
+			<th title="defined constant">constant</th>
+			<th title="hex representation of color">hex</th>
+			<th title="red green blue representation of color">rgb</th>
+			<th title="hue saturation luminisity representation of color">hsl</th>
+			<th title="closest named/defined constant">closest color</th>
+		</tr>
+	</tfoot>
+	<tbody>
+		<tr>
+			<td style="background-color: salmon;" title="salmon #FA8072 rgb(250,128,114) hsl(h,s,l)"></td>
+			<td>red</td>
+			<td></td>
+			<td>#FA8072</td>
+			<td>250,128,114</td>
+			<td>h,s,l</td>
+			<td>red</td>
+		</tr>
+		<tr>
+			<td style="background-color: %hex%;" title="%name% %const% %hex% rgb(%rgb%) hsl(%hsl%)"></td>
+			<td>%name%</td>
+			<td>%const%</td>
+			<td>%hex%</td>
+			<td>%rgb%</td>
+			<td>%hsl%</td>
+			<td>%closest%</td>
+		</tr>
+		<tr>
+			<td style="background-color: powderblue;" title="powederblue $base-blue #B0E0E6 rgb(176,224,230)"></td>
+			<td>powderblue</td>
+			<td>$base-blue</td>
+			<td>#B0E0E6</td>
+			<td>176,224,230</td>
+			<td>h,s,l</td>
+			<td>powderblue</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

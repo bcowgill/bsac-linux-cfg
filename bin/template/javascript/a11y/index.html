@@ -1,7 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8"/>
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="">
+		<!--
+			Some useful dev commands for this file:
+			cp template/javascript/a11y/index.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/javascript/a11y/index.html
+			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/javascript/a11y/index.html
+			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/javascript/a11y/index.html -o index.html
+		-->
 	<title>Web Accessibilitiy Demonstration Page</title>
 	<link rel="stylesheet" href="./style.css" />
 	<script src="./a11y.js"></script>
@@ -13,7 +23,7 @@
 	<a href="#nav" id="skip-to-menu" class="skip-to-content">Skip to keyboard navigation</a>
 	<a href="#main" class="skip-to-content">Skip to main content</a>
 <h1>
-<a href="/"><img src="logo.svg" alt="XYZ Company logo" /></a> ... site header
+<a href="/"><img src="logo.svg" alt="XYZ Company animated logo" width="72px" height="72px"/></a> ... site header
 <form id="header-search" role="search" aria-label="Sitewide">
   <label for="header-search-input">Search this site</label>
   <input type="search" id="header-search-input" name="search" placeholder="Search this site" spellcheck="false">
@@ -32,6 +42,13 @@
 
 	<section id="main-resources" role="region" aria-label="Resources">
 	<h1>Web Accessibility Demonstration Page</h1>
+		<!-- when JavaScript is turned off show the user how to turn it on for full accessibility. -->
+		<noscript>
+			For full functionality of this site it is necessary to enable JavaScript. Here
+			are the
+			<a target="_blank" href="https://www.enable-javascript.com/">
+				instructions how to enable JavaScript in your web browser</a>.
+		</noscript>
 	<ul role="list">
 		<li id="main-resources-udacity" role="listitem"><a target="_blank" href="https://classroom.udacity.com/courses/ud891/lessons/8019995517/concepts/80192648550923">Udacity Course on Web Accessibility</a></li>
 		<li id="main-resources-wcag2" role="listitem"><a target="_blank" href="https://www.w3.org/TR/WCAG20/">Web Content Accessibility Guidelines 2.0 (WCAG)</a></li>
@@ -66,6 +83,12 @@
 		<li role="listitem">Understandable</li>
 		<li role="listitem">Robust</li>
 	</ul>
+	</section>
+
+	<section id="main-key-reference" role="region" aria-labelledby="main-key-reference-label">
+	<h2 id="main-key-reference-label">Screen Reader Keyboard Reference</h2>
+<p>All the action is in the javascript console.</p>
+        <p>press <tt class="key inverse">F12</tt>, <tt class="key inverse">Ctrl-Shift-I</tt> or <tt class="key inverse">Cmd-Alt-I</tt> depending on your browser or operating system.</p>
 	</section>
 
 </main>

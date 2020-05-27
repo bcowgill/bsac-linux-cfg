@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Test of white space and wrapping</title>
+
+<style>
+section.test {
+	width: 170px;
+	padding: 10px;
+	margin: 5px;
+	outline: 1px solid rebeccapurple;
+}
+span {
+	background: lemonchiffon;
+}
+.nowrap {
+	white-space: nowrap;
+}
+.pre {
+	white-space: pre;
+}
+.pre-wrap {
+	white-space: pre-wrap;
+}
+.pre-line {
+	white-space: pre-line;
+}
+.break-spaces {
+	white-space: break-spaces;
+}
+</style>
+
+</head>
+<body>
+
+<main>
+
+<section class="title">
+	<h3>Test of white space and wrapping.</h3>
+	<p>Test of the CSS white-space setting and how it affects wrapping.</p>
+	<p>https://developer.mozilla.org/en-US/docs/Web/CSS/white-space</p>
+</section>
+
+<section class="test">
+	<h3>white-space: normal;</h3>
+	<p>Some body text with a phone number <span>+44 0123 456 7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: normal; with &amp;nbsp;</h3>
+	<p>Some body text with a phone number <span>+44&nbsp;0123&nbsp;456&nbsp;7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: normal; with &amp;#x00a0;</h3>
+	<p>https://www.w3schools.com/charsets/ref_utf_misc_symbols.asp</p>
+	<p>https://stackoverflow.com/questions/37909134/nbsp-jsx-not-working#37909363</p>
+	<p>Some body text with a phone number <span>+44&#x00a0;0123&#x00a0;456&#x00a0;7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: normal; with actual &amp;#x00a0; character</h3>
+	<p>Some body text with a phone number <span>+44 0123 456 7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: nowrap;</h3>
+	<p>Some body text with a phone number <span class="nowrap">+44 0123 456 7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: pre;</h3>
+	<p>Some body text with a phone number <span class="pre">+44 0123 456 7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: pre-line;</h3>
+	<p>Some body text with a phone number <span class="pre-line">+44 0123 456 7890</span> which we don't want to be broken across lines.</p>
+</section>
+
+<section class="test">
+	<h3>white-space: break-spaces;</h3>
+	<p>Some body text with a phone number <span class="break-spaces">+44 0123 456 7890</span> which we don't want to be broken across lines.</p>
+</section>
+</main>
+
+</body>
+</html>
