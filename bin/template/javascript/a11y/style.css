@@ -16,6 +16,19 @@ body.dark {
 	left: -1000px;
 }
 
+/* put space after screen reader only content to break up any text */
+div.sr-only:after,
+span.sr-only:after,
+h1.sr-only:after,
+h2.sr-only:after,
+h3.sr-only:after,
+h4.sr-only:after,
+h5.sr-only:after,
+h6.sr-only:after,
+p.sr-only:after, {
+	content: '.  ';
+}
+
 /* links for screen readers become visible when focussed. */
 .skip-to-content:focus {
 	left: 0;
@@ -52,4 +65,9 @@ tt.key.inverse {
 	margin: 3px;
 	padding: 3px;
 	border: 1px dashed gray;
+}
+
+/* extra space at bottom of page to allow a link jump to scroll the target header to the top of the page. */
+.page-footer {
+	padding-bottom: 52em;
 }

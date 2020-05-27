@@ -22,6 +22,10 @@
 <header id="header" role="banner">
 	<a href="#nav" id="skip-to-menu" class="skip-to-content">Skip to keyboard navigation</a>
 	<a href="#main" class="skip-to-content">Skip to main content</a>
+<h1 class="sr-only">
+	Welcome, screen readers, our site is fully accessible.
+</h1>
+<a href="#report-issue" class="skip-to-content">If you have any difficulty using our site, report an accessibility issue here.</a>
 <h1>
 <a href="/"><img src="logo.svg" alt="XYZ Company animated logo" width="72px" height="72px"/></a> ... site header
 <form id="header-search" role="search" aria-label="Sitewide">
@@ -91,12 +95,15 @@
         <p>press <tt class="key inverse">F12</tt>, <tt class="key inverse">Ctrl-Shift-I</tt> or <tt class="key inverse">Cmd-Alt-I</tt> depending on your browser or operating system.</p>
 	</section>
 
+	<section id="report-issue" role="region" aria-labelledby="report-issue-label">
+	<h2 id="report-issue-label">Report an issue with accessibility.</h2>
+	</section>
+
 </main>
 
-<footer id="footer" role="contentinfo">
+<footer id="footer" class="page-footer" role="contentinfo">
 <h2>© 2020 XYZ Company, All rights reserved.  ... site footer</h2>
 </footer>
-
 </body>
 
 </html>
