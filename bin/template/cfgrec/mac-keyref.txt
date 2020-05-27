@@ -44,8 +44,21 @@ KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to cli
 Handy Key Reference on Mac
 Cmd-Alt-Power      Sleep Lock
 Cmd-Ctrl-q         Screen Lock
+Cmd=Alt-F5         Accessibilty Options
 Screenshots        +Ctrl = clipboard
 Cmd-Shift-3        Entire Screen
 Cmd-Shift-4-Space  Application Only
 Cmd-Shift-4        Select Area
+
+Voice Over (Screen Reader)
+VO = CapsLock or Ctrl-Alt = Voice Over key
+Cmd-F5 Toggle Voice Over on/off
+Cmd-Alt-F5    Accessibility Options
+VO-k          Toggle VO Keyboard Help on/off (hold VO key for VO command assigned to key)
+VO-Cmd-Shift-RightArrow Change Voice Settings
+VO-Cmd-Shift-Up/Down    Change Voice Setting up/down
+VO-l          Read the current line
+VO-Arrows     Navigate form controls
+VO-Space      Select checkbox, push button
+VO-Shift-Up/Down Exit/Enter a table, toolbar, etc
 
