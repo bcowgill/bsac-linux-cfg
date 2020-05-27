@@ -1,21 +1,30 @@
+/* a class on the body turns on dark background. */
 body.dark {
 	color: yellow;
 	background: black;
 }
+
+/* hidden from sight and screen readers. */
 .hidden {
 	display: none;
 	visibility: hidden;
 }
-.skip-to-content, .sr-only {
+
+/* hidden from sight but not screen readers. */
+.sr-only, .skip-to-content {
 	position: absolute;
 	left: -1000px;
 }
+
+/* links for screen readers become visible when focussed. */
 .skip-to-content:focus {
 	left: 0;
 	background: lemonchiffon;
 	color: blue;
 	padding: 3px;
 }
+
+/* an inverse color set on white and dark background. */
 .inverse {
 	color: white;
 	background: black;
@@ -24,6 +33,8 @@ body.dark {
 	color: black;
 	background: white;
 }
+
+/* when documenting keyboard keys to press make it look like a keyboard */
 tt.key {
 	background: silver;
 	border-top: 1px dashed black;
@@ -36,6 +47,7 @@ tt.key.inverse {
 	background: silver;
 }
 
+/* links to external downloads or pages */
 .download,.reference {
 	margin: 3px;
 	padding: 3px;
