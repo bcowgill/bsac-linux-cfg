@@ -1,3 +1,5 @@
+/* a11y/style.css */
+
 /* a class on the body turns on dark background. */
 body.dark {
 	color: yellow;
