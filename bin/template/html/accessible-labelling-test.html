@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="">
+		<!--
+			Some useful dev commands for this file:
+			cp template/html/html5.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/html/html5.html
+			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/html/html5.html
+			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/html/html5.html -o html5.html
+		-->
+		
+
+
+<title>Accessibility Test </title>
+
+
+
+<style>
+  
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+    white-space: nowrap;
+  }
+.fail { color: red; }
+.maybe { color: orange; }
+.ok { color: green; }
+.nobr { white-space: nowrap; }
+
+
+</style>
+	</head>
+	<body>
+
+		<header></header>
+
+		<main>
+			<noscript>
+				For full functionality of this site it is necessary to enable JavaScript. Here
+				are the
+				<a target="_blank" href="https://www.enable-javascript.com/">
+					instructions how to enable JavaScript in your web browser</a>.
+			</noscript>
+			<!-- TODO grab accessibility stuff from html5-elements.html and test it here. -->
+			<section>
+				
+
+<h2>simple accessibility test</h3>
+<p>The problem is to find a way of compatibly labelling an account or phone number on screen so that an additional label can be read out and the number itself will not be read as millions but as single digits.</p>
+
+<p>It should work well with all screen readers and mouse hover where supported.</p>
+
+<p>So that <b>12345678</b> should appear on screen as a number but be read out as <i>"Account number one two three four five six seven eight"</i></p>
+
+<!-- --------------------------------
+<h3>S A T </h3>
+				
+================================= -->
+
+
+<article>
+<h3>Findings:</h3>
+
+<p>Ignoring Voice Over on Mac, <a href="#test4"><b>test 4</b></a> is the best option as it reads correctly in all cases and is the least bad option for mouse over/click.</p>
+<p>only failing for NVDA+Chrome by not reading the Account Number Label text, but still reading the numbers individually.</p>
+<p>It uses a hair thin space making it only a little longer on screen than unspaced digits.</p>
+<p>Unfortunately the numbers will wrap to the next line individually instead of as one whole word.</p>
+<p>Fixable using white-space: nowrap style.</p>
+<p>If the additional space cannot be accomodated in the design then <a href="#test1">1</a>, <a href="#test2">2</a>, <a href="#test3">3</a>, <a href="#test6">6</a>, <a href="#test7">7</a>, <a href="#test8">8</a>, <a href="#testA">A</a> are the only options and each one has its own set of drawbacks.</p>
+
+
+<table>
+	<thead>
+		<tr>
+			<th>Test
+			</th>
+			<th>Scoring
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><a href="#test1">1</a>
+			</td>
+			<td>
+				<span class="ok">reader:4</span>
+				<span class="maybe">mouse:2</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#test2">2</a>
+			</td>
+			<td>
+				<span class="fail">reader:0.5</span>
+				<span class="fail">mouse:0.5</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#test3">3</a>
+			</td>
+			<td>
+				<span class="fail">reader:0</span>
+				<span class="fail">mouse:0.5</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#test4">4</a>
+			</td>
+			<td>
+				<span class="ok">reader:3</span>
+				<span class="maybe">mouse:2</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#test6">6</a>
+			</td>
+			<td>
+				<span class="fail">reader:1</span>
+				<span class="fail">mouse:1</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#test7">7</a>
+			</td>
+			<td>
+				<span class="ok">reader:3</span>
+				<span class="maybe">mouse:2</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#test8">8</a>
+			</td>
+			<td>
+				<span class="ok">reader:3</span>
+				<span class="maybe">mouse:2</span>
+			</td>
+		</tr>
+		<tr>
+			<td><a href="#testA">A</a>
+			</td>
+			<td>
+				<span class="fail">reader:1</span>
+				<span class="fail">mouse:0.5</span>
+			</td>
+		</tr>
+	</tBODY>
+</table>
+
+<h3>Observations:</h3>
+<h4>IE + Jaws</h4>
+<ul>
+<li class="ok">1,4,5,6,7,8,9,A is read correctly as Account Number one two ...</li>
+<li class="maybe">2 is read incorrectly as one two ... no Account Number label</li>
+<li class="fail">3 is read incorrectly as Account Number one two ... one two ... (repeated twice)</li>
+<li class="ok">mouse over does not work but clicking / double clicking / selecting has some success..</li>
+<li class="ok">mouse clicking on 1,5,6 is read out correctly.</li>
+<li class="maybe">mouse clicking on 2,3,4,7,8,9,A is read out incorrectly one two ... no Account Number label.</li>
+
+<li class="ok">1,2,3,6,9,A wrap the entire account number as a single word as scren size changes.</li>
+<li class="fail">4,5,7,8 incorrectly wrap the account number a digit at a time.</li>
+</ul>
+
+<h4>Firefox + NVDA</h4>
+<ul>
+<li class="ok">1,4,5,7,8 is read correctly as Account Number one two ...</li>
+<li class="fail">2,6,A is read incorrectly as twelve million...</li>
+<li class="fail">3 is read incorrectly as Account Number one two... twelve million ...</li>
+<li class="fail">9 is read incorrectly as one braille two braille...</li>
+
+<li class="ok">mouse over on 1,4,5,7,8 is read out correctly.</li>
+<li class="fail">mouse over on 2,6,A is incorrect twelve million...</li>
+<li class="fail">mouse over on 3 is incorrect as Account Number one two...  twelve million...</li>
+<li class="fail">mouse over on 9 is incorrect one braille two braille...</li>
+
+<li class="ok">1,2,3,6,9,A wrap the entire account number as a single word as scren size changes.</li>
+<li class="fail">4,5,7,8 incorrectly wrap the account number a digit at a time.</li>
+</ul>
+
+<h4>Chrome + NVDA</h4>
+<ul>
+<li class="ok">1,4,5,7,8 is read correctly as Account Number one two ...</li>
+<li class="fail">2,6,A is read incorrectly as twelve million...</li>
+<li class="fail">3 is read incorrectly as Account Number one two... twelve million ...</li>
+<li class="fail">9 is read incorrectly as one braille two braille...</li>
+<li class="fail">mouse over on 1 is not read at all</li>
+<li class="fail">mouse over on 2,3,6 is incorrect twelve million...</li>
+<li class="maybe">mouse over on 4,5,7,8 is read out incorrectly one two ... no Account Number label.</li>
+<li class="fail">mouse over on 9 is incorrect one braille two braille...</li>
+<li class="fail">mouse over on A is incorrect just reads one digit of the number as you hover</li>
+
+<li class="ok">1,2,3,6,9,A wrap the entire account number as a single word as scren size changes.</li>
+<li class="fail">4,5,7,8 incorrectly wrap the account number a digit at a time.</li>
+</ul>
+
+<h4>Chrome + Voice Over (Mac)</h4>
+<ul>
+<li class="ok">1 is read correctly as Account Number one two ...</li>
+<li class="fail">2,3 is read incorrectly as a group Account Number one two ... then when you go forward twelve million...</li>
+<li class="fail">4,5,6,7,8,9 is read incorrectly as Account Number separately then go forward to twelve million...</li>
+<li class="maybe">A is read incorrectly as Account Number separately then go forward to read one digit per key press...</li>
+<li class="ok">mouse over is not supported by voice over</li>
+<li class="ok">1,2,3,6,9,A wrap the entire account number as a single word as scren size changes.</li>
+<li class="fail">4,5,7,8 incorrectly wrap the account number a digit at a time.</li>
+</ul>
+</article>
+
+
+<article>
+	<h2>The tests:</h3>
+	
+<a id="test1" href="#"><p>Test accessibility alternative label for screen reading and mouse over on next line.</p>
+
+</a>				
+<!-- --------------------------------
+================================= -->
+
+<span id="accessible" class="sr-only">Account Number 1 2 3 4 5 6 7 8 </span>
+				
+<span aria-labelledby="accessible" aria-hidden="true">--------------------------------------------------------------------------- 12345678 </span>
+
+				
+<span> end test 1</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>1) The above account number is read out digit by digit instead of as a number using <b>aria-labelledby</b> and <b>aria-hidden</b></p></a>
+
+				
+
+
+
+
+
+
+
+ 
+<span id="test2" aria-label="Account Number 1 2 3 4 5 6 7 8 ">--------------------------------------------------------------------------- 12345678 </span>
+
+				
+<span> end test 2</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>2) The above account number is read out digit by digit instead of as a number using <b>aria-label</b></p></a>
+			
+
+
+
+
+
+
+<span id="test3" class="sr-only">Account Number 1 2 3 4 5 6 7 8 </span>
+				
+<span>--------------------------------------------------------------------------- 12345678 </span>
+
+				
+<span> end test 3</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>3) The above account number is read out digit by digit instead of as a number using <b>sr-only class</b></p></a>
+			
+
+
+
+
+
+
+
+
+<span id="test4" class="sr-only">Account Number </span>
+				
+<span>--------------------------------------------------------------------------- 1&#8202;2&#8202;3&#8202;4&#8202;5&#8202;6&#8202;7&#8202;8 </span>
+
+				
+<span> end test 4</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>4) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200A hair space entities</b></p></a>
+			
+
+
+
+
+<!-- --------------------------------
+================================= -->
+
+
+
+<span id="test5" class="sr-only">Account Number </span>
+				
+<span>---------------------------------------------------------------------------</span>
+<span class="nobr"> 1&#8201;2&#8201;3&#8201;4&#8201;5&#8201;6&#8201;7&#8201;8 </span>
+
+				
+<span> end test 5</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<a href="#"><p>5) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+2009 thin space entities</b></p></a>
+			
+
+
+
+
+
+
+
+<span id="test6" class="sr-only">Account Number </span>
+				
+<span>--------------------------------------------------------------------------- 1&zwj;2&zwj;3&zwj;4&zwj;5&zwj;6&zwj;7&zwj;8 </span>
+
+				
+<span> end test 6</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>6) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200D zero width joiner entities</b></p></a>
+			
+
+
+
+
+
+
+<span id="test7" class="sr-only">Account Number </span>
+				
+<span>--------------------------------------------------------------------------- 1&#8203;2&#8203;3&#8203;4&#8203;5&#8203;6&#8203;7&#8203;8 </span>
+
+				
+<span> end test 7</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>7) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200B zero width space entities</b></p></a>
+			
+
+
+
+	
+
+
+<span id="test8" class="sr-only">Account Number </span>
+				
+<span>--------------------------------------------------------------------------- 1&#8203;2&#8203;3&#8203;4&#8203;5&#8203;6&#8203;7&#8203;8 </span>
+
+				
+<span> end test 8</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<a href="#"><p>8) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200B thin space entities</b></p></a>
+			
+
+
+
+
+
+
+<span id="test9" class="sr-only">Account Number </span>
+				
+<span>--------------------------------------------------------------------------- 1&#10240;2&#10240;3&#10240;4&#10240;5&#10240;6&#10240;7&#10240;8 </span>
+
+				
+<span> end test 9</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<a href="#"><p>9) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+2800 braille blank entities</b></p></a>
+			
+
+
+
+
+
+
+
+<span id="testA" class="sr-only">Account Number </span>
+				
+<span>--------------------------------------------------------------------------- <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span> </span>
+
+				
+<span> end test A</span>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<a href="#"><p>A) The above account number is read out digit by digit instead of as a number using <b>sr-only class and single digit spans</b></p></a>
+			
+
+<!-- ------------------------------
+=============================== -->
+
+</article>
+
+
+
+
+</section>
+		</main>
+
+		<footer></footer>
+
+	</body>
+</html>
