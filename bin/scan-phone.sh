@@ -58,6 +58,8 @@ if [ ! -d $phone ]; then
 	exit 1
 fi
 
+random-ringtone.sh
+
 echo getting file list from phone...
 find-ez.sh $phone > phone.lst
 echo getting file list from local backup...
