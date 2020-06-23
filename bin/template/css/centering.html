@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta name="description" content="A guide to centering content with CSS">
+		<meta name="author" content="Brent S.A. Cowgill">
+		<meta name="viewport" content="">
+		<!--
+			Some useful dev commands for this file:
+			cp template/css/centering.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/css/centering.html
+			cp template/css/centering.css /tmp/xxx.css; prettydiff.sh /tmp/xxx.css template/css/centering.css
+			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/centering.html
+			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/centering.css
+			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/centering.css -o centering.css
+		-->
+		<title>A Guide to Centering with CSS</title>
+		<link rel="stylesheet" href="centering.css" />
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>A Guide to <a target="_blank" href="https://www.w3.org/Style/Examples/007/center.en.html">Centering</a> with CSS</h3>
+				<ol>
+					<li>Centering lines of text.</li>
+					<li>Centering a block of text or an image.</li>
+					<li>Centering a block or an image vertically.</li>
+					<li>Centering absolutely positioned elements vertically (CSS3).</li>
+					<li>Centering absolutely positioned elements vertically and horizontally (CSS3).</li>
+					<li>Centering absolutely positioned elements in the viewport (CSS3).</li>
+				</ol>
+
+				<h4 class="ex center-text">1. Centering lines of text in a heading.</h4>
+				<p class="ex center-text">center the text within a paragraph.</p>
+
+				<h4>2. Centering a block of text or an image.</h4>
+				<p class="ex center-block half-width">center a paragraph of text of specified width 50%.</p>
+				<p class="ex center-block third-width">center a paragraph of text of specified width one third.</p>
+				<p class="ex center-block quarter-width">center a paragraph of text of specified width 25%.</p>
+				<p class="ex center-block">center a paragraph of text of unspecified width.  Just consumes the full width.</p>
+				<img alt="An image to center" style="width: 20em; height: 20em;" class="ex center-block" />
+
+				<h4>3. Centering a block or an image vertically. (!CSS3)</h4>
+				<div class="ex center-vertical-outer ten-lines"><p>Some text centered vertically.</p></div><br/>
+				<div class="ex center-vertical-outer ten-lines half-width">
+					<p class="center-text">Some text centered vertically and horizontally.</p>
+				</div>
+
+			</section>
+		</main>
+	</body>
+</html>

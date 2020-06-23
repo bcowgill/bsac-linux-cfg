@@ -1,0 +1,64 @@
+/*
+  A Guide to Centering with CSS
+  https://www.w3.org/Style/Examples/007/center.en.html
+*/
+
+/* put outline around examples */
+.ex {
+	outline: 1px dashed rebeccapurple;
+}
+
+/* some fixed width sizes */
+.full-width {
+	width: 100%;
+}
+
+.half-width {
+	width: 50%;
+}
+
+.third-width {
+	width: 33.33333%;
+}
+
+.quarter-width {
+	width: 25%;
+}
+
+/* some fixed height sizes */
+.ten-lines {
+	height: 20em;
+}
+
+/* 1. Centering lines of text within a heading or a paragraph. */
+h1.center-text,
+h2.center-text,
+h3.center-text,
+h4.center-text,
+h5.center-text,
+h6.center-text,
+p.center-text {
+	text-align: center;
+}
+
+/* 2. Centering a block of text or an image. */
+img.center-block,
+p.center-block {
+	display: block; /* paragraph already has this */
+/* width: ... must have some set width */
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* 3. Centering a block or an image vertically. (!CSS3) */
+
+/* the outer container must act like a table cell to allow vertical centering */
+.center-vertical-outer {
+/* height: ... must have some set height or min height */
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.center-vertical {
+	/* nothing needed on the centered thing itself. */
+}
