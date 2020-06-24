@@ -3,33 +3,6 @@
   https://www.w3.org/Style/Examples/007/center.en.html
 */
 
-/* put outline around examples */
-.ex {
-	outline: 1px dashed rebeccapurple;
-}
-
-/* some fixed width sizes */
-.full-width {
-	width: 100%;
-}
-
-.half-width {
-	width: 50%;
-}
-
-.third-width {
-	width: 33.33333%;
-}
-
-.quarter-width {
-	width: 25%;
-}
-
-/* some fixed height sizes */
-.ten-lines {
-	height: 20em;
-}
-
 /* 1. Centering lines of text within a heading or a paragraph. */
 h1.center-text,
 h2.center-text,
@@ -61,4 +34,130 @@ p.center-block {
 
 .center-vertical {
 	/* nothing needed on the centered thing itself. */
+}
+
+/*
+  4. Centering absolutely positioned elements vertically (CSS3)
+  Be careful, absolute positioning could lead to overlapping text.
+  Not exactly centered either, off by half a line height and if
+  the content flows to multiple lines it will be worse.
+*/
+
+.center-vertical-abs-outer {
+/* height: ... must have some set height or min height */
+	position: relative; /* a container for absolutely positioned elements */
+}
+
+.center-vertical-abs {
+	position: absolute;
+	top: 50%; /* place the top halfway down the container */
+	transform: translate(0, -50%); /* translate the content up by half its own height */
+}
+
+/* 5. Centering elements vertically with flex (CSS3) */
+
+.center-vertical-flex-outer {
+/* height: ... must have some set height or min height */
+	display: flex;
+	align-items: center;
+}
+
+.center-vertical-flex {
+	/* nothing needed on the centered thing itself. */
+}
+
+/*
+  6. Centering absolutely positioned elements vertically and horizontally (CSS3).
+  Be careful, absolute positioning could lead to overlapping text.
+*/
+
+.center-vertical-horizontal-abs-outer {
+/* height: ... must have some set height or min height */
+	position: relative; /* a container for absolutely positioned elements */
+}
+
+.center-vertical-horizontal-abs {
+	position: absolute;
+	top: 50%; /* place the top halfway down the container */
+	left: 50%; /* place the left edge halfway across the container */
+	margin-right: -50%;
+	transform: translate(-50%, -50%); /* translate the content up and left by half its own size */
+}
+
+/* 7. Centering elements vertically and horizontally with flex (CSS3) */
+
+.center-vertical-horizontal-flex-outer {
+/* height: ... must have some set height or min height */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.center-vertical-horizontal-flex {
+	/* nothing needed on the centered thing itself. */
+}
+
+
+/* ====================================================================== */
+
+/* put outline around examples */
+.ex {
+	outline: 1px dashed rebeccapurple;
+}
+
+/* give some background color to example elements */
+h4.ex {
+	background: #f57a7a; /* pale red */
+}
+
+p {
+	background: yellow;
+}
+
+div {
+	background: cyan;
+}
+
+img {
+	background: #61c261; /* pale green */
+}
+
+/* some fixed width sizes */
+.full-width {
+	width: 100%;
+}
+
+.half-width {
+	width: 50%;
+}
+
+.third-width {
+	width: 33.33333%;
+}
+
+.quarter-width {
+	width: 25%;
+}
+
+.twenty-columns {
+	width: 20em;
+}
+
+.forty-columns {
+	width: 40em;
+}
+
+/* some fixed height sizes */
+.fifteen-lines {
+	height: 20em;
+}
+
+.five-em-size {
+	width: 5em;
+	height: 5em;
+}
+
+.twenty-em-size {
+	width: 20em;
+	height: 20em;
 }

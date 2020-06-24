@@ -26,7 +26,9 @@
 					<li>Centering a block of text or an image.</li>
 					<li>Centering a block or an image vertically.</li>
 					<li>Centering absolutely positioned elements vertically (CSS3).</li>
+					<li>Centering elements vertically with flex (CSS3).</li>
 					<li>Centering absolutely positioned elements vertically and horizontally (CSS3).</li>
+					<li>Centering elements vertically and horizontally with flex (CSS3).</li>
 					<li>Centering absolutely positioned elements in the viewport (CSS3).</li>
 				</ol>
 
@@ -38,13 +40,49 @@
 				<p class="ex center-block third-width">center a paragraph of text of specified width one third.</p>
 				<p class="ex center-block quarter-width">center a paragraph of text of specified width 25%.</p>
 				<p class="ex center-block">center a paragraph of text of unspecified width.  Just consumes the full width.</p>
-				<img alt="An image to center" style="width: 20em; height: 20em;" class="ex center-block" />
+				<img class="ex center-block twenty-em-size" alt="An image to center"/>
 
 				<h4>3. Centering a block or an image vertically. (!CSS3)</h4>
-				<div class="ex center-vertical-outer ten-lines"><p>Some text centered vertically.</p></div><br/>
-				<div class="ex center-vertical-outer ten-lines half-width">
+				<div class="ex center-vertical-outer fifteen-lines"><p>Some text centered vertically.</p></div>
+				<br/>
+				<div class="ex center-vertical-outer fifteen-lines half-width">
 					<p class="center-text">Some text centered vertically and horizontally.</p>
 				</div>
+				<br/>
+				<div class="ex center-vertical-outer fifteen-lines twenty-columns">
+					<img class="center-block five-em-size" alt="An image to center vertically and horizontally"/>
+				</div>
+				<br/>
+
+				<h4>4. Centering absolutely positioned elements vertically (CSS3).</h4>
+				<h5>inexact vertically, inferior to (3) above.</h5>
+				<div class="ex center-vertical-abs-outer fifteen-lines">
+					<p class="center-vertical-abs">Some text centered vertically with absolute position.</p>
+				</div>
+				<br/>
+
+				<h4>5. Centering elements vertically with flex (CSS3).</h4>
+				<div class="ex center-vertical-flex-outer fifteen-lines">
+					<p class="center-vertical-flex">Some text centered vertically with flex.</p>
+				</div>
+				<br/>
+
+				<h4>6. Centering absolutely positioned elements vertically and horizontally (CSS3).</6>
+				<h5>inexact vertically, inferior to (3) above.</h5>
+				<div class="ex center-vertical-horizontal-abs-outer fifteen-lines">
+					<p class="center-vertical-horizontal-abs">Some text centered vertically and horizontally with absolute position.</p>
+				</div>
+				<br/>
+
+				<h4>7. Centering elements vertically and horizontally with flex (CSS3).</h4>
+				<div class="ex center-vertical-horizontal-flex-outer fifteen-lines ">
+					<p class="center-vertical-horizontal-flex">Some text centered vertically and horizontally with flex.</p>
+				</div>
+				<br/>
+				<div class="ex center-vertical-horizontal-flex-outer fifteen-lines forty-columns">
+					<p class="center-vertical-horizontal-flex">Some text centered vertically and horizontally with flex.</p>
+				</div>
+				<br/>
 
 			</section>
 		</main>
