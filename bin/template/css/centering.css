@@ -17,8 +17,9 @@ p.center-text {
 /* 2. Centering a block of text or an image. */
 img.center-block,
 p.center-block {
-	display: block; /* paragraph already has this */
-/* width: ... must have some set width */
+	display: block;
+	/* paragraph already has this */
+	/* width: ... must have some set width */
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -27,7 +28,7 @@ p.center-block {
 
 /* the outer container must act like a table cell to allow vertical centering */
 .center-vertical-outer {
-/* height: ... must have some set height or min height */
+	/* height: ... must have some set height or min height */
 	display: table-cell;
 	vertical-align: middle;
 }
@@ -44,20 +45,23 @@ p.center-block {
 */
 
 .center-vertical-abs-outer {
-/* height: ... must have some set height or min height */
-	position: relative; /* a container for absolutely positioned elements */
+	/* height: ... must have some set height or min height */
+	position: relative;
+	/* a container for absolutely positioned elements */
 }
 
 .center-vertical-abs {
 	position: absolute;
-	top: 50%; /* place the top halfway down the container */
-	transform: translate(0, -50%); /* translate the content up by half its own height */
+	top: 50%;
+	/* place the top halfway down the container */
+	transform: translate(0, -50%);
+	/* translate the content up by half its own height */
 }
 
 /* 5. Centering elements vertically with flex (CSS3) */
 
 .center-vertical-flex-outer {
-/* height: ... must have some set height or min height */
+	/* height: ... must have some set height or min height */
 	display: flex;
 	align-items: center;
 }
@@ -72,22 +76,26 @@ p.center-block {
 */
 
 .center-vertical-horizontal-abs-outer {
-/* height: ... must have some set height or min height */
-	position: relative; /* a container for absolutely positioned elements */
+	/* height: ... must have some set height or min height */
+	position: relative;
+	/* a container for absolutely positioned elements */
 }
 
 .center-vertical-horizontal-abs {
 	position: absolute;
-	top: 50%; /* place the top halfway down the container */
-	left: 50%; /* place the left edge halfway across the container */
+	top: 50%;
+	/* place the top halfway down the container */
+	left: 50%;
+	/* place the left edge halfway across the container */
 	margin-right: -50%;
-	transform: translate(-50%, -50%); /* translate the content up and left by half its own size */
+	transform: translate(-50%, -50%);
+	/* translate the content up and left by half its own size */
 }
 
 /* 7. Centering elements vertically and horizontally with flex (CSS3) */
 
 .center-vertical-horizontal-flex-outer {
-/* height: ... must have some set height or min height */
+	/* height: ... must have some set height or min height */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -104,11 +112,11 @@ p.center-block {
 }
 
 .center-viewport {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%)
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
 }
 
 /* ====================================================================== */
@@ -124,7 +132,8 @@ iframe.ex {
 
 /* give some background color to example elements */
 h4.ex {
-	background: #f57a7a; /* pale red */
+	background: #f57a7a;
+	/* pale red */
 }
 
 p {
@@ -136,7 +145,8 @@ div {
 }
 
 img {
-	background: #61c261; /* pale green */
+	background: #61c261;
+	/* pale green */
 }
 
 /* some fixed width sizes */
