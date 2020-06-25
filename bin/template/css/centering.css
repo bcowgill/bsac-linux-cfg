@@ -97,12 +97,29 @@ p.center-block {
 	/* nothing needed on the centered thing itself. */
 }
 
+/* 8. Centering elements vertically and horizontally in the viewport (CSS3). */
+
+.center-viewport-outer {
+	/* nothing needed on the viewport container. */
+}
+
+.center-viewport {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
 
 /* ====================================================================== */
 
 /* put outline around examples */
 .ex {
 	outline: 1px dashed rebeccapurple;
+}
+
+iframe.ex {
+	border: none;
 }
 
 /* give some background color to example elements */
@@ -160,4 +177,9 @@ img {
 .twenty-em-size {
 	width: 20em;
 	height: 20em;
+}
+
+.mostly-big {
+	width: 800px;
+	height: 600px;
 }
