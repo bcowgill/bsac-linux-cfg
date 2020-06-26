@@ -9,7 +9,6 @@
 		<!--
 			Some useful dev commands for this file:
 			cp template/css/media.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/css/media.html
-			cp template/css/center-viewport.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/css/center-viewport.html
 			cp template/css/media.css /tmp/xxx.css; prettydiff.sh /tmp/xxx.css template/css/media.css
 			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.html
 			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.css
@@ -25,6 +24,16 @@
 				<h3>A Guide to
 					<a target="_blank" href="https://www.w3.org/TR/css3-mediaqueries/">Media Queries</a>
 					with CSS</h3>
+				<p class="if-screen">You are viewing this on a screen (HTML4+)</p>
+				<p class="if-print">You are viewing this on printed output (HTML4+)</p>
+				<p class="if-aural">You are listening to this on an aural device (HTML4)</p>
+				<p class="if-speech">You are listening to this on a speech device (CSS2+)</p>
+				<p class="if-embossed">You are using this on an embossed (tactile) device (CSS2+)</p>
+				<p class="if-braille">You are feeling this on a braille device (HTML4+)</p>
+				<p class="if-handheld">You are using a handheld device (HTML4+)</p>
+				<p class="if-projection">You are viewing on a projection (HTML4+)</p>
+				<p class="if-tty">You are viewing this on a teletype (HTML4+)</p>
+				<p class="if-tv">You are viewing this on a television set (HTML4+)</p>
 			</section>
 		</main>
 	</body>

@@ -2,3 +2,172 @@
   A Guide to Media Queries with CSS
   https://www.w3.org/TR/css3-mediaqueries/
 */
+
+/*
+  Media Queries:
+  print and (resolution > 90dpi)
+  screen and (color)
+  all and (min-width: 500px)
+  (orientation: portrait)
+  (device-aspect-ratio: 16/9)
+  (min-device-width: 800px)
+
+  min- max- prefix for any
+  height, width
+  device-height, device-width
+  (orientation: portrait,landscape)
+  aspect-ratio
+  (device-aspect-ratio: N/M)
+  color -- number of bits per color component or 0 if not colour
+  color-index -- number of bits in a color index lookup
+  monochrome -- number of bits per pixel in monochrome
+  resolution -- pixel density dpi
+  (scan: progressive,interlace) -- tv scan modes
+*/
+
+@media all {
+	/* for all media */
+}
+
+/* HTML4+ screen */
+@media screen {
+	.no-screen {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not screen {
+	.if-screen {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ handheld */
+@media handheld {
+	.no-handheld {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not handheld {
+	.if-handheld {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ tv */
+@media tv {
+	.no-tv {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not tv {
+	.if-tv {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ projection */
+@media projection {
+	.no-projection {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not projection {
+	.if-projection {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ tty */
+@media tty {
+	.no-tty {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not tty {
+	.if-tty {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/*
+  HTML4+ aural, deprecated by CSS2
+*/
+@media aural {
+	.no-aural {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not aural {
+	.if-aural {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* CSS2 speech */
+@media speech {
+	.no-speech {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not speech {
+	.if-speech {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* CSS2 embossed (like a tactile device) */
+@media embossed {
+	.no-embossed {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not embossed {
+	.if-embossed {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ braille */
+@media braille {
+	.no-braille {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not braille {
+	.if-braille {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+
+/* HTML4+ print */
+@media print {
+	.no-print {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not print {
+	.if-print {
+		display: none;
+		visibility: hidden;
+	}
+}
