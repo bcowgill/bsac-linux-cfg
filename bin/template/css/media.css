@@ -1,6 +1,7 @@
 /*
   A Guide to Media Queries with CSS
   https://www.w3.org/TR/css3-mediaqueries/
+  https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries
 
   DPI vs PPI and print quality:
   https://castleink.com/blogs/printer-help/inkjet-printer-resolution-dpi-printer-guide
@@ -10,6 +11,29 @@
 
   Monitor aspect ratios:
   https://en.wikipedia.org/wiki/Display_aspect_ratio
+
+
+Aside - units to use
+https://www.w3.org/Style/Examples/007/units
+
+       recommended           occasional   not recommended
+screen rem,em,px,%              ex        pt,cm,mm,in,pc
+print  em,cm,mm,in,pt,pc,%      px,ex
+
+1in = 2.54cm = 25.4mm = 72pt = 6pc
+
+pc = pica
+em = full font height of a captial letter ACMOX
+ex = font height of lower case letter acmox
+px = small but visible. 1px horizontal line guaranteed to be visible and sharp. Must be 1/96 of an inch on a printer
+rem = root em, full font height of a capital letter for the root element font
+vw = 1/100th of the viewport width
+vh = 1/100th of the viewport height
+vmin = the smaller of vw and vh
+vmax = the larger of vw and vh
+
+Use rem, em or px for font sizes.  1em is based on being a comfortable size to read on the device in question.
+
 */
 
 /*
@@ -85,6 +109,10 @@ body {
 /* trying to keep this text at a fixed number of columns as window size changes */
 .adaptive-text {
 	font-family: monospace;
+}
+.adaptive-text-vw {
+	font-family: monospace;
+	font-size: 3.8vw;
 }
 @media (min-width: 250px) {
 	.adaptive-text {
@@ -693,6 +721,55 @@ body {
 	.if-dev-aspect-over-16-4 {
 		visibility: visible;
 		display: inline-block;
+	}
+}
+
+/* === pixel resolution ================================================== */
+/*
+
+
+
+*/
+/* TODO not tested on anything > 1 dppx */
+/* Webkit-based browsers; Older Firefox browsers (prior to Firefox 16); The standard way; dppx fallback */
+@media screen and (-webkit-min-device-pixel-ratio: 1),
+       screen and (min--moz-device-pixel-ratio: 1),
+       screen and (min-resolution: 1dppx),
+       screen and (min-resolution: 96dpi) {
+	.if-px-1 {
+			   visibility: visible;
+			   display: inline-block;
+			   outline: 1px solid black;
+	}
+}
+@media screen and (-webkit-min-device-pixel-ratio: 2),
+       screen and (min--moz-device-pixel-ratio: 2),
+       screen and (min-resolution: 2dppx),
+       screen and (min-resolution: 192dpi) {
+	.if-px-2 {
+			   visibility: visible;
+			   display: inline-block;
+			   outline: 0.5px solid black;
+	}
+}
+@media screen and (-webkit-min-device-pixel-ratio: 3),
+       screen and (min--moz-device-pixel-ratio: 3),
+       screen and (min-resolution: 3dppx),
+       screen and (min-resolution: 288dpi) {
+	.if-px-3 {
+			   visibility: visible;
+			   display: inline-block;
+			   outline: 0.3333px solid black;
+	}
+}
+@media screen and (-webkit-min-device-pixel-ratio: 4),
+       screen and (min--moz-device-pixel-ratio: 4),
+       screen and (min-resolution: 4dppx),
+       screen and (min-resolution: 384dpi) {
+	.if-px-4 {
+			   visibility: visible;
+			   display: inline-block;
+			   outline: 0.25px solid black;
 	}
 }
 
