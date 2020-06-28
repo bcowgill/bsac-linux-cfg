@@ -16,8 +16,8 @@
 			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.css -o media.css
 		-->
 		<title>A Guide to Media Queries with CSS</title>
-<style>
-/*
+		<style>
+			/*
   A Guide to Media Queries with CSS
   https://www.w3.org/TR/css3-mediaqueries/
 
@@ -31,7 +31,7 @@
   https://en.wikipedia.org/wiki/Display_aspect_ratio
 */
 
-/*
+			/*
   Media Queries:
   print and (resolution > 90dpi)
   screen and (color)
@@ -94,47 +94,47 @@
       print qq{\@media (min-$prop: ${min}$unit) and (max-$prop: ${maxx}$unit) {\n\t.adaptive-text {\n\t\t$font: $size$fontUnit;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
 
 */
-/* TODO - adjust font size by screen width to keep N columns on screen */
+			/* TODO - adjust font size by screen width to keep N columns on screen */
 
-body {
-	/* more readable */
-	font-size: 2rem;
-}
+			body {
+				/* more readable */
+				font-size: 2rem;
+			}
 
-/* trying to keep this text at a fixed number of columns as window size changes */
-.adaptive-text {
-	font-family: monospace;
-}
-@media (min-width: 250px) {
-	.adaptive-text {
-		font-size: 0.68rem;
-	}
-}
-@media (min-width: 500px) {
-	.adaptive-text {
-		font-size: 1.4rem;
-	}
-}
-@media (min-width: 1000px) {
-	.adaptive-text {
-		font-size: 3rem;
-	}
-}
+			/* trying to keep this text at a fixed number of columns as window size changes */
+			.adaptive-text {
+				font-family: monospace;
+			}
+			@media (min-width: 250px) {
+				.adaptive-text {
+					font-size: 0.68rem;
+				}
+			}
+			@media (min-width: 500px) {
+				.adaptive-text {
+					font-size: 1.4rem;
+				}
+			}
+			@media (min-width: 1000px) {
+				.adaptive-text {
+					font-size: 3rem;
+				}
+			}
 
-/* fixed width box for showing how wide screen is in 100s */
-.w100 {
-	font-size: 1rem;
-	display: inline-block;
-	background: cyan;
-	text-align: center;
-	margin: 0;
-	padding: 0;
-	border: 0;
-	width: 90px;
-	overflow: hidden;
-}
+			/* fixed width box for showing how wide screen is in 100s */
+			.w100 {
+				font-size: 1rem;
+				display: inline-block;
+				background: cyan;
+				text-align: center;
+				margin: 0;
+				padding: 0;
+				border: 0;
+				width: 90px;
+				overflow: hidden;
+			}
 
-/*
+			/*
   default is to hide anything media related.
   some queries require you to use this class with them:
   media if-width-100
@@ -145,1965 +145,1966 @@ body {
   if-color
   no-screen
 */
-.media {
-	visibility: hidden;
-	display: none;
-}
-@media all {
-	/* for all media */
-}
+			.media {
+				visibility: hidden;
+				display: none;
+			}
+			@media all {
+				/* for all media */
+			}
 
-/* HTML4+ screen */
-@media screen {
-	.no-screen {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not screen {
-	.if-screen {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ screen */
+			@media screen {
+				.no-screen {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not screen {
+				.if-screen {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* HTML4+ handheld */
-@media handheld {
-	.no-handheld {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not handheld {
-	.if-handheld {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ handheld */
+			@media handheld {
+				.no-handheld {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not handheld {
+				.if-handheld {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* HTML4+ tv */
-@media tv {
-	.no-tv {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not tv {
-	.if-tv {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ tv */
+			@media tv {
+				.no-tv {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not tv {
+				.if-tv {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* HTML4+ projection */
-@media projection {
-	.no-projection {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not projection {
-	.if-projection {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ projection */
+			@media projection {
+				.no-projection {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not projection {
+				.if-projection {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* HTML4+ tty */
-@media tty {
-	.no-tty {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not tty {
-	.if-tty {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ tty */
+			@media tty {
+				.no-tty {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not tty {
+				.if-tty {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/*
+			/*
   HTML4+ aural, deprecated by CSS2
 */
-@media aural {
-	.no-aural {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not aural {
-	.if-aural {
-		display: none;
-		visibility: hidden;
-	}
-}
+			@media aural {
+				.no-aural {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not aural {
+				.if-aural {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* CSS2 speech */
-@media speech {
-	.no-speech {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not speech {
-	.if-speech {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* CSS2 speech */
+			@media speech {
+				.no-speech {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not speech {
+				.if-speech {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* CSS2 embossed (like a tactile device) */
-@media embossed {
-	.no-embossed {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not embossed {
-	.if-embossed {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* CSS2 embossed (like a tactile device) */
+			@media embossed {
+				.no-embossed {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not embossed {
+				.if-embossed {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* HTML4+ braille */
-@media braille {
-	.no-braille {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not braille {
-	.if-braille {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ braille */
+			@media braille {
+				.no-braille {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not braille {
+				.if-braille {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* HTML4+ print */
-@media print {
-	.no-print {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media not print {
-	.if-print {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* HTML4+ print */
+			@media print {
+				.no-print {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media not print {
+				.if-print {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* === tv scan mode ===================================================== */
-@media tv and (scan: progressive), not tv {
-	.if-interlace,
-	.no-progressive {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media tv and (scan: interlace), not tv {
-	.if-progressive,
-	.no-interlace {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* === tv scan mode ===================================================== */
+			@media tv and (scan: progressive), not tv {
+				.if-interlace,
+				.no-progressive {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media tv and (scan: interlace), not tv {
+				.if-progressive,
+				.no-interlace {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* === grid device ====================================================== */
-/* a tty or phone with a single font display of rows x cols*/
-@media (grid) {
-	.if-grid {
-		display: inline-block;
-		visibility: visible;
-	}
-	.no-grid {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* === grid device ====================================================== */
+			/* a tty or phone with a single font display of rows x cols*/
+			@media (grid) {
+				.if-grid {
+					display: inline-block;
+					visibility: visible;
+				}
+				.no-grid {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* === orientation and aspect =========================================== */
-@media (orientation: portrait) {
-	.if-landscape,
-	.no-portrait {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (orientation: landscape) {
-	.if-portrait,
-	.no-landscape {
-		display: none;
-		visibility: hidden;
-	}
-}
+			/* === orientation and aspect =========================================== */
+			@media (orientation: portrait) {
+				.if-landscape,
+				.no-portrait {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (orientation: landscape) {
+				.if-portrait,
+				.no-landscape {
+					display: none;
+					visibility: hidden;
+				}
+			}
 
-/* window aspect ratio ranges */
-@media (max-aspect-ratio: 1/4) {
-	.if-aspect-under-1-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 1/4) and (max-aspect-ratio: 2/4) {
-	.if-aspect-over-1-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 2/4) and (max-aspect-ratio: 3/4) {
-	.if-aspect-over-2-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/4) {
-	.if-aspect-over-3-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 4/4) and (max-aspect-ratio: 5/4) {
-	.if-aspect-over-4-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 5/4) and (max-aspect-ratio: 6/4) {
-	.if-aspect-over-5-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 6/4) and (max-aspect-ratio: 7/4) {
-	.if-aspect-over-6-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 7/4) and (max-aspect-ratio: 8/4) {
-	.if-aspect-over-7-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 8/4) and (max-aspect-ratio: 9/4) {
-	.if-aspect-over-8-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 9/4) and (max-aspect-ratio: 10/4) {
-	.if-aspect-over-9-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 10/4) and (max-aspect-ratio: 11/4) {
-	.if-aspect-over-10-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 11/4) and (max-aspect-ratio: 12/4) {
-	.if-aspect-over-11-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 12/4) and (max-aspect-ratio: 13/4) {
-	.if-aspect-over-12-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 13/4) and (max-aspect-ratio: 14/4) {
-	.if-aspect-over-13-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 14/4) and (max-aspect-ratio: 15/4) {
-	.if-aspect-over-14-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 15/4) and (max-aspect-ratio: 16/4) {
-	.if-aspect-over-15-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-aspect-ratio: 16/4) {
-	.if-aspect-over-16-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			/* window aspect ratio ranges */
+			@media (max-aspect-ratio: 1/4) {
+				.if-aspect-under-1-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 1/4) and (max-aspect-ratio: 2/4) {
+				.if-aspect-over-1-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 2/4) and (max-aspect-ratio: 3/4) {
+				.if-aspect-over-2-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/4) {
+				.if-aspect-over-3-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 4/4) and (max-aspect-ratio: 5/4) {
+				.if-aspect-over-4-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 5/4) and (max-aspect-ratio: 6/4) {
+				.if-aspect-over-5-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 6/4) and (max-aspect-ratio: 7/4) {
+				.if-aspect-over-6-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 7/4) and (max-aspect-ratio: 8/4) {
+				.if-aspect-over-7-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 8/4) and (max-aspect-ratio: 9/4) {
+				.if-aspect-over-8-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 9/4) and (max-aspect-ratio: 10/4) {
+				.if-aspect-over-9-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 10/4) and (max-aspect-ratio: 11/4) {
+				.if-aspect-over-10-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 11/4) and (max-aspect-ratio: 12/4) {
+				.if-aspect-over-11-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 12/4) and (max-aspect-ratio: 13/4) {
+				.if-aspect-over-12-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 13/4) and (max-aspect-ratio: 14/4) {
+				.if-aspect-over-13-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 14/4) and (max-aspect-ratio: 15/4) {
+				.if-aspect-over-14-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 15/4) and (max-aspect-ratio: 16/4) {
+				.if-aspect-over-15-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-aspect-ratio: 16/4) {
+				.if-aspect-over-16-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/* deprecated for privacy / securty issues */
-/* device aspect ratios, exact */
-/* 1.0 1920x1920 air traffic */
-@media (device-aspect-ratio: 1/1) {
-	.no-dev-aspect-1-1 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-1-1 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* deprecated for privacy / securty issues */
+			/* device aspect ratios, exact */
+			/* 1.0 1920x1920 air traffic */
+			@media (device-aspect-ratio: 1/1) {
+				.no-dev-aspect-1-1 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-1-1 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 1.25 1280x1024 */
-@media (device-aspect-ratio: 5/4) {
-	.no-dev-aspect-5-4 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-5-4 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 1.25 1280x1024 */
+			@media (device-aspect-ratio: 5/4) {
+				.no-dev-aspect-5-4 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-5-4 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 1.3_ 320x240, 640x480 CGA/VGA */
-@media (device-aspect-ratio: 4/3) {
-	.no-dev-aspect-4-3 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-4-3 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 1.3_ 320x240, 640x480 CGA/VGA */
+			@media (device-aspect-ratio: 4/3) {
+				.no-dev-aspect-4-3 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-4-3 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 1.5 1152x768 */
-@media (device-aspect-ratio: 3/2) {
-	.no-dev-aspect-3-2 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-3-2 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 1.5 1152x768 */
+			@media (device-aspect-ratio: 3/2) {
+				.no-dev-aspect-3-2 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-3-2 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 1.6 1280x800, 1440x900, 1680x1050, 1920x1200 */
-@media (device-aspect-ratio: 16/10) {
-	.no-dev-aspect-16-10 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-16-10 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 1.6 1280x800, 1440x900, 1680x1050, 1920x1200 */
+			@media (device-aspect-ratio: 16/10) {
+				.no-dev-aspect-16-10 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-16-10 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 1.7_ 1920x1080 */
-@media (device-aspect-ratio: 16/9) {
-	.no-dev-aspect-16-9 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-16-9 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 1.7_ 1920x1080 */
+			@media (device-aspect-ratio: 16/9) {
+				.no-dev-aspect-16-9 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-16-9 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 1.8962_9_6_ 4096x2160 digital camera 4K */
-@media (device-aspect-ratio: 256/135) {
-	.no-dev-aspect-256-135 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-256-135 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 1.8962_9_6_ 4096x2160 digital camera 4K */
+			@media (device-aspect-ratio: 256/135) {
+				.no-dev-aspect-256-135 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-256-135 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 2.175 3840x1600 anamorphic film */
-@media (device-aspect-ratio: 12/5) {
-	.no-dev-aspect-12-5 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-12-5 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 2.175 3840x1600 anamorphic film */
+			@media (device-aspect-ratio: 12/5) {
+				.no-dev-aspect-12-5 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-12-5 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 2.25 4320x1920 3-monitor aircraft display */
-@media (device-aspect-ratio: 9/4) {
-	.no-dev-aspect-9-4 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-9-4 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 2.25 4320x1920 3-monitor aircraft display */
+			@media (device-aspect-ratio: 9/4) {
+				.no-dev-aspect-9-4 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-9-4 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 2.3_ anamorphic film */
-@media (device-aspect-ratio: 21/9) {
-	.no-dev-aspect-21-9 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-21-9 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 2.3_ anamorphic film */
+			@media (device-aspect-ratio: 21/9) {
+				.no-dev-aspect-21-9 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-21-9 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 2.3_7_0_ 2560x1080 anamorphic film */
-@media (device-aspect-ratio: 64/27) {
-	.no-dev-aspect-64-27 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-64-27 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 2.3_7_0_ 2560x1080 anamorphic film */
+			@media (device-aspect-ratio: 64/27) {
+				.no-dev-aspect-64-27 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-64-27 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 2.38_ 3440x1440 anamorphic film */
-@media (device-aspect-ratio: 43/18) {
-	.no-dev-aspect-43-18 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-43-18 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 2.38_ 3440x1440 anamorphic film */
+			@media (device-aspect-ratio: 43/18) {
+				.no-dev-aspect-43-18 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-43-18 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* 3.5_ 3480x1080 curved gaming */
-@media (device-aspect-ratio: 32/9) {
-	.no-dev-aspect-32-9 {
-		display: none;
-		visibility: hidden;
-	}
-	.if-dev-aspect-32-9 {
-		display: inline-block;
-		visibility: visible;
-	}
-}
+			/* 3.5_ 3480x1080 curved gaming */
+			@media (device-aspect-ratio: 32/9) {
+				.no-dev-aspect-32-9 {
+					display: none;
+					visibility: hidden;
+				}
+				.if-dev-aspect-32-9 {
+					display: inline-block;
+					visibility: visible;
+				}
+			}
 
-/* device aspect ratio ranges (deprecated) */
-@media (max-device-aspect-ratio: 1/4) {
-	.if-dev-aspect-under-1-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 1/4) and (max-device-aspect-ratio: 2/4) {
-	.if-dev-aspect-over-1-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 2/4) and (max-device-aspect-ratio: 3/4) {
-	.if-dev-aspect-over-2-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 3/4) and (max-device-aspect-ratio: 4/4) {
-	.if-dev-aspect-over-3-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 4/4) and (max-device-aspect-ratio: 5/4) {
-	.if-dev-aspect-over-4-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 5/4) and (max-device-aspect-ratio: 6/4) {
-	.if-dev-aspect-over-5-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 6/4) and (max-device-aspect-ratio: 7/4) {
-	.if-dev-aspect-over-6-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 7/4) and (max-device-aspect-ratio: 8/4) {
-	.if-dev-aspect-over-7-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 8/4) and (max-device-aspect-ratio: 9/4) {
-	.if-dev-aspect-over-8-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 9/4) and (max-device-aspect-ratio: 10/4) {
-	.if-dev-aspect-over-9-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 10/4) and (max-device-aspect-ratio: 11/4) {
-	.if-dev-aspect-over-10-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 11/4) and (max-device-aspect-ratio: 12/4) {
-	.if-dev-aspect-over-11-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 12/4) and (max-device-aspect-ratio: 13/4) {
-	.if-dev-aspect-over-12-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 13/4) and (max-device-aspect-ratio: 14/4) {
-	.if-dev-aspect-over-13-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 14/4) and (max-device-aspect-ratio: 15/4) {
-	.if-dev-aspect-over-14-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 15/4) and (max-device-aspect-ratio: 16/4) {
-	.if-dev-aspect-over-15-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-device-aspect-ratio: 16/4) {
-	.if-dev-aspect-over-16-4 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			/* device aspect ratio ranges (deprecated) */
+			@media (max-device-aspect-ratio: 1/4) {
+				.if-dev-aspect-under-1-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 1/4) and (max-device-aspect-ratio: 2/4) {
+				.if-dev-aspect-over-1-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 2/4) and (max-device-aspect-ratio: 3/4) {
+				.if-dev-aspect-over-2-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 3/4) and (max-device-aspect-ratio: 4/4) {
+				.if-dev-aspect-over-3-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 4/4) and (max-device-aspect-ratio: 5/4) {
+				.if-dev-aspect-over-4-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 5/4) and (max-device-aspect-ratio: 6/4) {
+				.if-dev-aspect-over-5-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 6/4) and (max-device-aspect-ratio: 7/4) {
+				.if-dev-aspect-over-6-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 7/4) and (max-device-aspect-ratio: 8/4) {
+				.if-dev-aspect-over-7-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 8/4) and (max-device-aspect-ratio: 9/4) {
+				.if-dev-aspect-over-8-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 9/4) and (max-device-aspect-ratio: 10/4) {
+				.if-dev-aspect-over-9-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 10/4) and (max-device-aspect-ratio: 11/4) {
+				.if-dev-aspect-over-10-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 11/4) and (max-device-aspect-ratio: 12/4) {
+				.if-dev-aspect-over-11-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 12/4) and (max-device-aspect-ratio: 13/4) {
+				.if-dev-aspect-over-12-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 13/4) and (max-device-aspect-ratio: 14/4) {
+				.if-dev-aspect-over-13-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 14/4) and (max-device-aspect-ratio: 15/4) {
+				.if-dev-aspect-over-14-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 15/4) and (max-device-aspect-ratio: 16/4) {
+				.if-dev-aspect-over-15-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-device-aspect-ratio: 16/4) {
+				.if-dev-aspect-over-16-4 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/* === resolution ======================================================= */
-@media screen and (max-resolution: 96dpi) {
-	.if-my-resolution-max {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-my-resolution-max {
-		display: list-item;
-	}
-}
-@media screen and (min-resolution: 96dpi) {
-	.if-my-resolution-min {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-my-resolution-min {
-		display: list-item;
-	}
-}
+			/* === resolution ======================================================= */
+			@media screen and (max-resolution: 96dpi) {
+				.if-my-resolution-max {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-my-resolution-max {
+					display: list-item;
+				}
+			}
+			@media screen and (min-resolution: 96dpi) {
+				.if-my-resolution-min {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-my-resolution-min {
+					display: list-item;
+				}
+			}
 
-/* screen resolutions */
-@media (max-resolution: 95dpi) {
-	.if-resolution-poor {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-poor {
-		display: list-item;
-	}
-}
-@media (min-resolution: 96dpi) and (max-resolution: 143dpi) {
-	.if-resolution-96 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-96 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 144dpi) and (max-resolution: 149dpi) {
-	.if-resolution-144 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-144 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 192dpi) and (max-resolution: 287dpi) {
-	.if-resolution-192 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-192 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 288dpi) and (max-resolution: 299dpi) {
-	.if-resolution-288 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-288 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 384dpi) {
-	.if-resolution-384 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-384 {
-		display: list-item;
-	}
-}
+			/* screen resolutions */
+			@media (max-resolution: 95dpi) {
+				.if-resolution-poor {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-poor {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 96dpi) and (max-resolution: 143dpi) {
+				.if-resolution-96 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-96 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 144dpi) and (max-resolution: 149dpi) {
+				.if-resolution-144 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-144 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 192dpi) and (max-resolution: 287dpi) {
+				.if-resolution-192 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-192 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 288dpi) and (max-resolution: 299dpi) {
+				.if-resolution-288 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-288 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 384dpi) {
+				.if-resolution-384 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-384 {
+					display: list-item;
+				}
+			}
 
-/* printer resolutions */
-@media (min-resolution: 150dpi) and (max-resolution: 299dpi) {
-	.if-resolution-150 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-150 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 300dpi) and (max-resolution: 599dpi) {
-	.if-resolution-300 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-300 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 600dpi) and (max-resolution: 719dpi) {
-	.if-resolution-720 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-720 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 720dpi) and (max-resolution: 1199dpi) {
-	.if-resolution-600 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-600 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 1200dpi) and (max-resolution: 1439dpi) {
-	.if-resolution-1200 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-1200 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 1440dpi) and (max-resolution: 2879dpi) {
-	.if-resolution-1440 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-1440 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 2880dpi) and (max-resolution: 4799) {
-	.if-resolution-2880 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-2880 {
-		display: list-item;
-	}
-}
-@media (min-resolution: 4800dpi) {
-	.if-resolution-4800 {
-		visibility: visible;
-		display: inline-block;
-	}
-	li.if-resolution-4800 {
-		display: list-item;
-	}
-}
+			/* printer resolutions */
+			@media (min-resolution: 150dpi) and (max-resolution: 299dpi) {
+				.if-resolution-150 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-150 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 300dpi) and (max-resolution: 599dpi) {
+				.if-resolution-300 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-300 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 600dpi) and (max-resolution: 719dpi) {
+				.if-resolution-720 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-720 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 720dpi) and (max-resolution: 1199dpi) {
+				.if-resolution-600 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-600 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 1200dpi) and (max-resolution: 1439dpi) {
+				.if-resolution-1200 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-1200 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 1440dpi) and (max-resolution: 2879dpi) {
+				.if-resolution-1440 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-1440 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 2880dpi) and (max-resolution: 4799) {
+				.if-resolution-2880 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-2880 {
+					display: list-item;
+				}
+			}
+			@media (min-resolution: 4800dpi) {
+				.if-resolution-4800 {
+					visibility: visible;
+					display: inline-block;
+				}
+				li.if-resolution-4800 {
+					display: list-item;
+				}
+			}
 
-/* === width ============================================================ */
-@media (min-width: 100px) {
-	.if-width-100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 200px) {
-	.if-width-200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 300px) {
-	.if-width-300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 400px) {
-	.if-width-400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 500px) {
-	.if-width-500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 600px) {
-	.if-width-600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 700px) {
-	.if-width-700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 800px) {
-	.if-width-800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 900px) {
-	.if-width-900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1000px) {
-	.if-width-1000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1100px) {
-	.if-width-1100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1200px) {
-	.if-width-1200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1300px) {
-	.if-width-1300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1400px) {
-	.if-width-1400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1500px) {
-	.if-width-1500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1600px) {
-	.if-width-1600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1700px) {
-	.if-width-1700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1800px) {
-	.if-width-1800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 1900px) {
-	.if-width-1900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2000px) {
-	.if-width-2000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2100px) {
-	.if-width-2100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2200px) {
-	.if-width-2200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2300px) {
-	.if-width-2300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2400px) {
-	.if-width-2400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2500px) {
-	.if-width-2500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2600px) {
-	.if-width-2600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2700px) {
-	.if-width-2700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2800px) {
-	.if-width-2800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 2900px) {
-	.if-width-2900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3000px) {
-	.if-width-3000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3100px) {
-	.if-width-3100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3200px) {
-	.if-width-3200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3300px) {
-	.if-width-3300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3400px) {
-	.if-width-3400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3500px) {
-	.if-width-3500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3600px) {
-	.if-width-3600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3700px) {
-	.if-width-3700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3800px) {
-	.if-width-3800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 3900px) {
-	.if-width-3900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4000px) {
-	.if-width-4000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4100px) {
-	.if-width-4100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4200px) {
-	.if-width-4200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4300px) {
-	.if-width-4300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4400px) {
-	.if-width-4400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4500px) {
-	.if-width-4500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4600px) {
-	.if-width-4600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4700px) {
-	.if-width-4700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4800px) {
-	.if-width-4800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 4900px) {
-	.if-width-4900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5000px) {
-	.if-width-5000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5100px) {
-	.if-width-5100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5100px) {
-	.if-width-5100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5200px) {
-	.if-width-5200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5300px) {
-	.if-width-5300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5400px) {
-	.if-width-5400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5500px) {
-	.if-width-5500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5600px) {
-	.if-width-5600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5700px) {
-	.if-width-5700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5800px) {
-	.if-width-5800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 5900px) {
-	.if-width-5900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6000px) {
-	.if-width-6000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6100px) {
-	.if-width-6100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6200px) {
-	.if-width-6200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6300px) {
-	.if-width-6300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6400px) {
-	.if-width-6400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6500px) {
-	.if-width-6500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6600px) {
-	.if-width-6600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6700px) {
-	.if-width-6700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6800px) {
-	.if-width-6800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 6900px) {
-	.if-width-6900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-width: 7000px) {
-	.if-width-7000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			/* === width ============================================================ */
+			@media (min-width: 100px) {
+				.if-width-100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 200px) {
+				.if-width-200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 300px) {
+				.if-width-300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 400px) {
+				.if-width-400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 500px) {
+				.if-width-500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 600px) {
+				.if-width-600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 700px) {
+				.if-width-700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 800px) {
+				.if-width-800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 900px) {
+				.if-width-900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1000px) {
+				.if-width-1000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1100px) {
+				.if-width-1100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1200px) {
+				.if-width-1200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1300px) {
+				.if-width-1300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1400px) {
+				.if-width-1400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1500px) {
+				.if-width-1500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1600px) {
+				.if-width-1600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1700px) {
+				.if-width-1700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1800px) {
+				.if-width-1800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 1900px) {
+				.if-width-1900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2000px) {
+				.if-width-2000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2100px) {
+				.if-width-2100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2200px) {
+				.if-width-2200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2300px) {
+				.if-width-2300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2400px) {
+				.if-width-2400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2500px) {
+				.if-width-2500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2600px) {
+				.if-width-2600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2700px) {
+				.if-width-2700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2800px) {
+				.if-width-2800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 2900px) {
+				.if-width-2900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3000px) {
+				.if-width-3000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3100px) {
+				.if-width-3100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3200px) {
+				.if-width-3200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3300px) {
+				.if-width-3300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3400px) {
+				.if-width-3400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3500px) {
+				.if-width-3500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3600px) {
+				.if-width-3600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3700px) {
+				.if-width-3700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3800px) {
+				.if-width-3800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 3900px) {
+				.if-width-3900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4000px) {
+				.if-width-4000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4100px) {
+				.if-width-4100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4200px) {
+				.if-width-4200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4300px) {
+				.if-width-4300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4400px) {
+				.if-width-4400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4500px) {
+				.if-width-4500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4600px) {
+				.if-width-4600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4700px) {
+				.if-width-4700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4800px) {
+				.if-width-4800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 4900px) {
+				.if-width-4900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5000px) {
+				.if-width-5000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5100px) {
+				.if-width-5100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5100px) {
+				.if-width-5100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5200px) {
+				.if-width-5200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5300px) {
+				.if-width-5300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5400px) {
+				.if-width-5400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5500px) {
+				.if-width-5500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5600px) {
+				.if-width-5600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5700px) {
+				.if-width-5700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5800px) {
+				.if-width-5800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 5900px) {
+				.if-width-5900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6000px) {
+				.if-width-6000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6100px) {
+				.if-width-6100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6200px) {
+				.if-width-6200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6300px) {
+				.if-width-6300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6400px) {
+				.if-width-6400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6500px) {
+				.if-width-6500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6600px) {
+				.if-width-6600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6700px) {
+				.if-width-6700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6800px) {
+				.if-width-6800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 6900px) {
+				.if-width-6900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-width: 7000px) {
+				.if-width-7000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/* === height =========================================================== */
-@media (min-height: 100px) and (max-height: 199px) {
-	.if-height-100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 200px) and (max-height: 299px) {
-	.if-height-200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 300px) and (max-height: 399px) {
-	.if-height-300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 400px) and (max-height: 499px) {
-	.if-height-400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 500px) and (max-height: 599px) {
-	.if-height-500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 600px) and (max-height: 699px) {
-	.if-height-600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 700px) and (max-height: 799px) {
-	.if-height-700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 800px) and (max-height: 899px) {
-	.if-height-800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 900px) and (max-height: 999px) {
-	.if-height-900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1000px) and (max-height: 1099px) {
-	.if-height-1000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1100px) and (max-height: 1199px) {
-	.if-height-1100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1200px) and (max-height: 1299px) {
-	.if-height-1200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1300px) and (max-height: 1399px) {
-	.if-height-1300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1400px) and (max-height: 1499px) {
-	.if-height-1400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1500px) and (max-height: 1599px) {
-	.if-height-1500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1600px) and (max-height: 1699px) {
-	.if-height-1600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1700px) and (max-height: 1799px) {
-	.if-height-1700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1800px) and (max-height: 1899px) {
-	.if-height-1800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 1900px) and (max-height: 1999px) {
-	.if-height-1900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2000px) and (max-height: 2099px) {
-	.if-height-2000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2100px) and (max-height: 2199px) {
-	.if-height-2100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2200px) and (max-height: 2299px) {
-	.if-height-2200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2300px) and (max-height: 2399px) {
-	.if-height-2300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2400px) and (max-height: 2499px) {
-	.if-height-2400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2500px) and (max-height: 2599px) {
-	.if-height-2500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2600px) and (max-height: 2699px) {
-	.if-height-2600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2700px) and (max-height: 2799px) {
-	.if-height-2700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2800px) and (max-height: 2899px) {
-	.if-height-2800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 2900px) and (max-height: 2999px) {
-	.if-height-2900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3000px) and (max-height: 3099px) {
-	.if-height-3000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3100px) and (max-height: 3199px) {
-	.if-height-3100 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3200px) and (max-height: 3299px) {
-	.if-height-3200 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3300px) and (max-height: 3399px) {
-	.if-height-3300 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3400px) and (max-height: 3499px) {
-	.if-height-3400 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3500px) and (max-height: 3599px) {
-	.if-height-3500 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3600px) and (max-height: 3699px) {
-	.if-height-3600 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3700px) and (max-height: 3799px) {
-	.if-height-3700 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3800px) and (max-height: 3899px) {
-	.if-height-3800 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 3900px) and (max-height: 3999px) {
-	.if-height-3900 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-height: 4000px) {
-	.if-height-4000 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			/* === height =========================================================== */
+			@media (min-height: 100px) and (max-height: 199px) {
+				.if-height-100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 200px) and (max-height: 299px) {
+				.if-height-200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 300px) and (max-height: 399px) {
+				.if-height-300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 400px) and (max-height: 499px) {
+				.if-height-400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 500px) and (max-height: 599px) {
+				.if-height-500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 600px) and (max-height: 699px) {
+				.if-height-600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 700px) and (max-height: 799px) {
+				.if-height-700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 800px) and (max-height: 899px) {
+				.if-height-800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 900px) and (max-height: 999px) {
+				.if-height-900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1000px) and (max-height: 1099px) {
+				.if-height-1000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1100px) and (max-height: 1199px) {
+				.if-height-1100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1200px) and (max-height: 1299px) {
+				.if-height-1200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1300px) and (max-height: 1399px) {
+				.if-height-1300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1400px) and (max-height: 1499px) {
+				.if-height-1400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1500px) and (max-height: 1599px) {
+				.if-height-1500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1600px) and (max-height: 1699px) {
+				.if-height-1600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1700px) and (max-height: 1799px) {
+				.if-height-1700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1800px) and (max-height: 1899px) {
+				.if-height-1800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 1900px) and (max-height: 1999px) {
+				.if-height-1900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2000px) and (max-height: 2099px) {
+				.if-height-2000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2100px) and (max-height: 2199px) {
+				.if-height-2100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2200px) and (max-height: 2299px) {
+				.if-height-2200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2300px) and (max-height: 2399px) {
+				.if-height-2300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2400px) and (max-height: 2499px) {
+				.if-height-2400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2500px) and (max-height: 2599px) {
+				.if-height-2500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2600px) and (max-height: 2699px) {
+				.if-height-2600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2700px) and (max-height: 2799px) {
+				.if-height-2700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2800px) and (max-height: 2899px) {
+				.if-height-2800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 2900px) and (max-height: 2999px) {
+				.if-height-2900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3000px) and (max-height: 3099px) {
+				.if-height-3000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3100px) and (max-height: 3199px) {
+				.if-height-3100 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3200px) and (max-height: 3299px) {
+				.if-height-3200 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3300px) and (max-height: 3399px) {
+				.if-height-3300 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3400px) and (max-height: 3499px) {
+				.if-height-3400 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3500px) and (max-height: 3599px) {
+				.if-height-3500 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3600px) and (max-height: 3699px) {
+				.if-height-3600 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3700px) and (max-height: 3799px) {
+				.if-height-3700 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3800px) and (max-height: 3899px) {
+				.if-height-3800 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 3900px) and (max-height: 3999px) {
+				.if-height-3900 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-height: 4000px) {
+				.if-height-4000 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/* === color ============================================================ */
+			/* === color ============================================================ */
 
-/* checks if either color or color-index is supported. */
-@media (color),(min-color-index: 1) {
-	.no-color-capable {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (not color) and (max-color-index: 0) {
-	.if-color-capable {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (color) {
-	.no-color {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (not color) {
-	.if-color {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (min-color: 1) and (max-color: 7) {
-	.if-color-1 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 8) and (max-color: 11) {
-	.if-color-8 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 12) and (max-color: 15) {
-	.if-color-12 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 16) and (max-color: 23) {
-	.if-color-16 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 24) and (max-color: 31) {
-	.if-color-24 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 32) and (max-color: 47) {
-	.if-color-32 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 48) and (max-color: 63) {
-	.if-color-48 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color: 64) {
-	.if-color-64 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			/* checks if either color or color-index is supported. */
+			@media (color),(min-color-index: 1) {
+				.no-color-capable {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (not color) and (max-color-index: 0) {
+				.if-color-capable {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (color) {
+				.no-color {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (not color) {
+				.if-color {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (min-color: 1) and (max-color: 7) {
+				.if-color-1 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 8) and (max-color: 11) {
+				.if-color-8 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 12) and (max-color: 15) {
+				.if-color-12 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 16) and (max-color: 23) {
+				.if-color-16 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 24) and (max-color: 31) {
+				.if-color-24 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 32) and (max-color: 47) {
+				.if-color-32 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 48) and (max-color: 63) {
+				.if-color-48 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color: 64) {
+				.if-color-64 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/* === color-index ====================================================== */
-/*
+			/* === color-index ====================================================== */
+			/*
   Despite the W3C specs color-index does not work in Google Chrome.
   color-index appears to be both true and false, but there is a workaround
 */
-@media (color-index) {
-	.no-color-index {
-		display: none;
-		visibility: hidden;
-	}
-}
-/* this query does not work, use >= 1 test for detection. see below */
-@media (not color-index) {
-	.if-color-index-does-not-work {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (min-color-index: 1) {
-	.if-color-index {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 1) and (max-color-index: 7) {
-	.if-color-index,
-	.if-color-index-1 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 8) and (max-color-index: 15) {
-	.if-color-index-8 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 16) and (max-color-index: 31) {
-	.if-color-index-16 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 32) and (max-color-index: 63) {
-	.if-color-index-32 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 64) and (max-color-index: 127) {
-	.if-color-index-64 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 128) and (max-color-index: 255) {
-	.if-color-index-128 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 256) {
-	.if-color-index-256 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			@media (color-index) {
+				.no-color-index {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			/* this query does not work, use >= 1 test for detection. see below */
+			@media (not color-index) {
+				.if-color-index-does-not-work {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (min-color-index: 1) {
+				.if-color-index {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 1) and (max-color-index: 7) {
+				.if-color-index,
+				.if-color-index-1 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 8) and (max-color-index: 15) {
+				.if-color-index-8 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 16) and (max-color-index: 31) {
+				.if-color-index-16 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 32) and (max-color-index: 63) {
+				.if-color-index-32 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 64) and (max-color-index: 127) {
+				.if-color-index-64 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 128) and (max-color-index: 255) {
+				.if-color-index-128 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-color-index: 256) {
+				.if-color-index-256 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/* === monochrome ============================================================ */
-/*
+			/* === monochrome ============================================================ */
+			/*
   Despite the W3C specs monochrome does not work in Google Chrome.
   monochrome appears to be both true and false, but there is a workaround.
 */
-@media (monochrome) {
-	.no-monochrome {
-		display: none;
-		visibility: hidden;
-	}
-}
-/* this query does not work, use >=1 bit for detection. see below. */
-@media (not monochrome) {
-	.if-monochrome-does-not-work {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (min-monochrome: 1) {
-	.if-monochrome {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 1) and (max-monochrome: 7) {
-	.if-monochrome-1 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 8) and (max-monochrome: 11) {
-	.if-monochrome-8 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 12) and (max-monochrome: 15) {
-	.if-monochrome-12 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 16) and (max-monochrome: 23) {
-	.if-monochrome-16 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 24) and (max-monochrome: 31) {
-	.if-monochrome-24 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 32) and (max-monochrome: 47) {
-	.if-monochrome-32 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 48) and (max-monochrome: 63) {
-	.if-monochrome-48 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-monochrome: 64) {
-	.if-monochrome-64 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
+			@media (monochrome) {
+				.no-monochrome {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			/* this query does not work, use >=1 bit for detection. see below. */
+			@media (not monochrome) {
+				.if-monochrome-does-not-work {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media (min-monochrome: 1) {
+				.if-monochrome {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 1) and (max-monochrome: 7) {
+				.if-monochrome-1 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 8) and (max-monochrome: 11) {
+				.if-monochrome-8 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 12) and (max-monochrome: 15) {
+				.if-monochrome-12 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 16) and (max-monochrome: 23) {
+				.if-monochrome-16 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 24) and (max-monochrome: 31) {
+				.if-monochrome-24 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 32) and (max-monochrome: 47) {
+				.if-monochrome-32 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 48) and (max-monochrome: 63) {
+				.if-monochrome-48 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
+			@media (min-monochrome: 64) {
+				.if-monochrome-64 {
+					visibility: visible;
+					display: inline-block;
+				}
+			}
 
-/*=== font-size ==========================================================*/
-/* a single line of text at the full width of the window */
-@media (max-width: 99px) {
-	.adaptive-text {
-		font-size: 0.152rem;
-	}
-}
-@media (min-width: 100px) and (max-width: 199px) {
-	.adaptive-text {
-		font-size: 0.304rem;
-	}
-}
-@media (min-width: 200px) and (max-width: 299px) {
-	.adaptive-text {
-		font-size: 0.609rem;
-	}
-}
-@media (min-width: 300px) and (max-width: 399px) {
-	.adaptive-text {
-		font-size: 0.914rem;
-	}
-}
-@media (min-width: 400px) and (max-width: 499px) {
-	.adaptive-text {
-		font-size: 1.218rem;
-	}
-}
-@media (min-width: 500px) and (max-width: 599px) {
-	.adaptive-text {
-		font-size: 1.523rem;
-	}
-}
-@media (min-width: 600px) and (max-width: 699px) {
-	.adaptive-text {
-		font-size: 1.828rem;
-	}
-}
-@media (min-width: 700px) and (max-width: 799px) {
-	.adaptive-text {
-		font-size: 2.132rem;
-	}
-}
-@media (min-width: 800px) and (max-width: 899px) {
-	.adaptive-text {
-		font-size: 2.437rem;
-	}
-}
-@media (min-width: 900px) and (max-width: 999px) {
-	.adaptive-text {
-		font-size: 2.742rem;
-	}
-}
-@media (min-width: 1000px) and (max-width: 1099px) {
-	.adaptive-text {
-		font-size: 3.046rem;
-	}
-}
-@media (min-width: 1100px) and (max-width: 1199px) {
-	.adaptive-text {
-		font-size: 3.351rem;
-	}
-}
-@media (min-width: 1200px) and (max-width: 1299px) {
-	.adaptive-text {
-		font-size: 3.656rem;
-	}
-}
-@media (min-width: 1300px) and (max-width: 1399px) {
-	.adaptive-text {
-		font-size: 3.96rem;
-	}
-}
-@media (min-width: 1400px) and (max-width: 1499px) {
-	.adaptive-text {
-		font-size: 4.265rem;
-	}
-}
-@media (min-width: 1500px) and (max-width: 1599px) {
-	.adaptive-text {
-		font-size: 4.57rem;
-	}
-}
-@media (min-width: 1600px) and (max-width: 1699px) {
-	.adaptive-text {
-		font-size: 4.874rem;
-	}
-}
-@media (min-width: 1700px) and (max-width: 1799px) {
-	.adaptive-text {
-		font-size: 5.179rem;
-	}
-}
-@media (min-width: 1800px) and (max-width: 1899px) {
-	.adaptive-text {
-		font-size: 5.484rem;
-	}
-}
-@media (min-width: 1900px) and (max-width: 1999px) {
-	.adaptive-text {
-		font-size: 5.788rem;
-	}
-}
-@media (min-width: 2000px) and (max-width: 2099px) {
-	.adaptive-text {
-		font-size: 6.093rem;
-	}
-}
-@media (min-width: 2100px) and (max-width: 2199px) {
-	.adaptive-text {
-		font-size: 6.398rem;
-	}
-}
-@media (min-width: 2200px) and (max-width: 2299px) {
-	.adaptive-text {
-		font-size: 6.702rem;
-	}
-}
-@media (min-width: 2300px) and (max-width: 2399px) {
-	.adaptive-text {
-		font-size: 7.007rem;
-	}
-}
-@media (min-width: 2400px) and (max-width: 2499px) {
-	.adaptive-text {
-		font-size: 7.312rem;
-	}
-}
-@media (min-width: 2500px) and (max-width: 2599px) {
-	.adaptive-text {
-		font-size: 7.616rem;
-	}
-}
-@media (min-width: 2600px) and (max-width: 2699px) {
-	.adaptive-text {
-		font-size: 7.921rem;
-	}
-}
-@media (min-width: 2700px) and (max-width: 2799px) {
-	.adaptive-text {
-		font-size: 8.226rem;
-	}
-}
-@media (min-width: 2800px) and (max-width: 2899px) {
-	.adaptive-text {
-		font-size: 8.53rem;
-	}
-}
-@media (min-width: 2900px) and (max-width: 2999px) {
-	.adaptive-text {
-		font-size: 8.835rem;
-	}
-}
-@media (min-width: 3000px) and (max-width: 3099px) {
-	.adaptive-text {
-		font-size: 9.14rem;
-	}
-}
-@media (min-width: 3100px) and (max-width: 3199px) {
-	.adaptive-text {
-		font-size: 9.444rem;
-	}
-}
-@media (min-width: 3200px) and (max-width: 3299px) {
-	.adaptive-text {
-		font-size: 9.749rem;
-	}
-}
-@media (min-width: 3300px) and (max-width: 3399px) {
-	.adaptive-text {
-		font-size: 10.054rem;
-	}
-}
-@media (min-width: 3400px) and (max-width: 3499px) {
-	.adaptive-text {
-		font-size: 10.358rem;
-	}
-}
-@media (min-width: 3500px) and (max-width: 3599px) {
-	.adaptive-text {
-		font-size: 10.663rem;
-	}
-}
-@media (min-width: 3600px) and (max-width: 3699px) {
-	.adaptive-text {
-		font-size: 10.968rem;
-	}
-}
-@media (min-width: 3700px) and (max-width: 3799px) {
-	.adaptive-text {
-		font-size: 11.272rem;
-	}
-}
-@media (min-width: 3800px) and (max-width: 3899px) {
-	.adaptive-text {
-		font-size: 11.577rem;
-	}
-}
-@media (min-width: 3900px) and (max-width: 3999px) {
-	.adaptive-text {
-		font-size: 11.882rem;
-	}
-}
-@media (min-width: 4000px) and (max-width: 4099px) {
-	.adaptive-text {
-		font-size: 12.186rem;
-	}
-}
-@media (min-width: 4100px) and (max-width: 4199px) {
-	.adaptive-text {
-		font-size: 12.491rem;
-	}
-}
-@media (min-width: 4200px) and (max-width: 4299px) {
-	.adaptive-text {
-		font-size: 12.796rem;
-	}
-}
-@media (min-width: 4300px) and (max-width: 4399px) {
-	.adaptive-text {
-		font-size: 13.1rem;
-	}
-}
-@media (min-width: 4400px) and (max-width: 4499px) {
-	.adaptive-text {
-		font-size: 13.405rem;
-	}
-}
-@media (min-width: 4500px) and (max-width: 4599px) {
-	.adaptive-text {
-		font-size: 13.71rem;
-	}
-}
-@media (min-width: 4600px) and (max-width: 4699px) {
-	.adaptive-text {
-		font-size: 14.014rem;
-	}
-}
-@media (min-width: 4700px) and (max-width: 4799px) {
-	.adaptive-text {
-		font-size: 14.319rem;
-	}
-}
-@media (min-width: 4800px) and (max-width: 4899px) {
-	.adaptive-text {
-		font-size: 14.624rem;
-	}
-}
-@media (min-width: 4900px) and (max-width: 4999px) {
-	.adaptive-text {
-		font-size: 14.928rem;
-	}
-}
-@media (min-width: 5000px) and (max-width: 5099px) {
-	.adaptive-text {
-		font-size: 15.233rem;
-	}
-}
-@media (min-width: 5100px) and (max-width: 5199px) {
-	.adaptive-text {
-		font-size: 15.538rem;
-	}
-}
-@media (min-width: 5200px) and (max-width: 5299px) {
-	.adaptive-text {
-		font-size: 15.842rem;
-	}
-}
-@media (min-width: 5300px) and (max-width: 5399px) {
-	.adaptive-text {
-		font-size: 16.147rem;
-	}
-}
-@media (min-width: 5400px) and (max-width: 5499px) {
-	.adaptive-text {
-		font-size: 16.452rem;
-	}
-}
-@media (min-width: 5500px) and (max-width: 5599px) {
-	.adaptive-text {
-		font-size: 16.756rem;
-	}
-}
-@media (min-width: 5600px) and (max-width: 5699px) {
-	.adaptive-text {
-		font-size: 17.061rem;
-	}
-}
-@media (min-width: 5700px) and (max-width: 5799px) {
-	.adaptive-text {
-		font-size: 17.366rem;
-	}
-}
-@media (min-width: 5800px) and (max-width: 5899px) {
-	.adaptive-text {
-		font-size: 17.67rem;
-	}
-}
-@media (min-width: 5900px) and (max-width: 5999px) {
-	.adaptive-text {
-		font-size: 17.975rem;
-	}
-}
-@media (min-width: 6000px) and (max-width: 6099px) {
-	.adaptive-text {
-		font-size: 18.28rem;
-	}
-}
-@media (min-width: 6100px) and (max-width: 6199px) {
-	.adaptive-text {
-		font-size: 18.584rem;
-	}
-}
-@media (min-width: 6200px) and (max-width: 6299px) {
-	.adaptive-text {
-		font-size: 18.889rem;
-	}
-}
-@media (min-width: 6300px) and (max-width: 6399px) {
-	.adaptive-text {
-		font-size: 19.194rem;
-	}
-}
-@media (min-width: 6400px) and (max-width: 6499px) {
-	.adaptive-text {
-		font-size: 19.498rem;
-	}
-}
-@media (min-width: 6500px) and (max-width: 6599px) {
-	.adaptive-text {
-		font-size: 19.803rem;
-	}
-}
-@media (min-width: 6600px) and (max-width: 6699px) {
-	.adaptive-text {
-		font-size: 20.108rem;
-	}
-}
-@media (min-width: 6700px) and (max-width: 6799px) {
-	.adaptive-text {
-		font-size: 20.412rem;
-	}
-}
-@media (min-width: 6800px) and (max-width: 6899px) {
-	.adaptive-text {
-		font-size: 20.717rem;
-	}
-}
-@media (min-width: 6900px) and (max-width: 6999px) {
-	.adaptive-text {
-		font-size: 21.022rem;
-	}
-}
-@media (min-width: 7000px) {
-	.adaptive-text {
-		font-size: 21.326rem;
-	}
-}
+			/*=== font-size ==========================================================*/
+			/* a single line of text at the full width of the window */
+			@media (max-width: 99px) {
+				.adaptive-text {
+					font-size: 0.152rem;
+				}
+			}
+			@media (min-width: 100px) and (max-width: 199px) {
+				.adaptive-text {
+					font-size: 0.304rem;
+				}
+			}
+			@media (min-width: 200px) and (max-width: 299px) {
+				.adaptive-text {
+					font-size: 0.609rem;
+				}
+			}
+			@media (min-width: 300px) and (max-width: 399px) {
+				.adaptive-text {
+					font-size: 0.914rem;
+				}
+			}
+			@media (min-width: 400px) and (max-width: 499px) {
+				.adaptive-text {
+					font-size: 1.218rem;
+				}
+			}
+			@media (min-width: 500px) and (max-width: 599px) {
+				.adaptive-text {
+					font-size: 1.523rem;
+				}
+			}
+			@media (min-width: 600px) and (max-width: 699px) {
+				.adaptive-text {
+					font-size: 1.828rem;
+				}
+			}
+			@media (min-width: 700px) and (max-width: 799px) {
+				.adaptive-text {
+					font-size: 2.132rem;
+				}
+			}
+			@media (min-width: 800px) and (max-width: 899px) {
+				.adaptive-text {
+					font-size: 2.437rem;
+				}
+			}
+			@media (min-width: 900px) and (max-width: 999px) {
+				.adaptive-text {
+					font-size: 2.742rem;
+				}
+			}
+			@media (min-width: 1000px) and (max-width: 1099px) {
+				.adaptive-text {
+					font-size: 3.046rem;
+				}
+			}
+			@media (min-width: 1100px) and (max-width: 1199px) {
+				.adaptive-text {
+					font-size: 3.351rem;
+				}
+			}
+			@media (min-width: 1200px) and (max-width: 1299px) {
+				.adaptive-text {
+					font-size: 3.656rem;
+				}
+			}
+			@media (min-width: 1300px) and (max-width: 1399px) {
+				.adaptive-text {
+					font-size: 3.96rem;
+				}
+			}
+			@media (min-width: 1400px) and (max-width: 1499px) {
+				.adaptive-text {
+					font-size: 4.265rem;
+				}
+			}
+			@media (min-width: 1500px) and (max-width: 1599px) {
+				.adaptive-text {
+					font-size: 4.57rem;
+				}
+			}
+			@media (min-width: 1600px) and (max-width: 1699px) {
+				.adaptive-text {
+					font-size: 4.874rem;
+				}
+			}
+			@media (min-width: 1700px) and (max-width: 1799px) {
+				.adaptive-text {
+					font-size: 5.179rem;
+				}
+			}
+			@media (min-width: 1800px) and (max-width: 1899px) {
+				.adaptive-text {
+					font-size: 5.484rem;
+				}
+			}
+			@media (min-width: 1900px) and (max-width: 1999px) {
+				.adaptive-text {
+					font-size: 5.788rem;
+				}
+			}
+			@media (min-width: 2000px) and (max-width: 2099px) {
+				.adaptive-text {
+					font-size: 6.093rem;
+				}
+			}
+			@media (min-width: 2100px) and (max-width: 2199px) {
+				.adaptive-text {
+					font-size: 6.398rem;
+				}
+			}
+			@media (min-width: 2200px) and (max-width: 2299px) {
+				.adaptive-text {
+					font-size: 6.702rem;
+				}
+			}
+			@media (min-width: 2300px) and (max-width: 2399px) {
+				.adaptive-text {
+					font-size: 7.007rem;
+				}
+			}
+			@media (min-width: 2400px) and (max-width: 2499px) {
+				.adaptive-text {
+					font-size: 7.312rem;
+				}
+			}
+			@media (min-width: 2500px) and (max-width: 2599px) {
+				.adaptive-text {
+					font-size: 7.616rem;
+				}
+			}
+			@media (min-width: 2600px) and (max-width: 2699px) {
+				.adaptive-text {
+					font-size: 7.921rem;
+				}
+			}
+			@media (min-width: 2700px) and (max-width: 2799px) {
+				.adaptive-text {
+					font-size: 8.226rem;
+				}
+			}
+			@media (min-width: 2800px) and (max-width: 2899px) {
+				.adaptive-text {
+					font-size: 8.53rem;
+				}
+			}
+			@media (min-width: 2900px) and (max-width: 2999px) {
+				.adaptive-text {
+					font-size: 8.835rem;
+				}
+			}
+			@media (min-width: 3000px) and (max-width: 3099px) {
+				.adaptive-text {
+					font-size: 9.14rem;
+				}
+			}
+			@media (min-width: 3100px) and (max-width: 3199px) {
+				.adaptive-text {
+					font-size: 9.444rem;
+				}
+			}
+			@media (min-width: 3200px) and (max-width: 3299px) {
+				.adaptive-text {
+					font-size: 9.749rem;
+				}
+			}
+			@media (min-width: 3300px) and (max-width: 3399px) {
+				.adaptive-text {
+					font-size: 10.054rem;
+				}
+			}
+			@media (min-width: 3400px) and (max-width: 3499px) {
+				.adaptive-text {
+					font-size: 10.358rem;
+				}
+			}
+			@media (min-width: 3500px) and (max-width: 3599px) {
+				.adaptive-text {
+					font-size: 10.663rem;
+				}
+			}
+			@media (min-width: 3600px) and (max-width: 3699px) {
+				.adaptive-text {
+					font-size: 10.968rem;
+				}
+			}
+			@media (min-width: 3700px) and (max-width: 3799px) {
+				.adaptive-text {
+					font-size: 11.272rem;
+				}
+			}
+			@media (min-width: 3800px) and (max-width: 3899px) {
+				.adaptive-text {
+					font-size: 11.577rem;
+				}
+			}
+			@media (min-width: 3900px) and (max-width: 3999px) {
+				.adaptive-text {
+					font-size: 11.882rem;
+				}
+			}
+			@media (min-width: 4000px) and (max-width: 4099px) {
+				.adaptive-text {
+					font-size: 12.186rem;
+				}
+			}
+			@media (min-width: 4100px) and (max-width: 4199px) {
+				.adaptive-text {
+					font-size: 12.491rem;
+				}
+			}
+			@media (min-width: 4200px) and (max-width: 4299px) {
+				.adaptive-text {
+					font-size: 12.796rem;
+				}
+			}
+			@media (min-width: 4300px) and (max-width: 4399px) {
+				.adaptive-text {
+					font-size: 13.1rem;
+				}
+			}
+			@media (min-width: 4400px) and (max-width: 4499px) {
+				.adaptive-text {
+					font-size: 13.405rem;
+				}
+			}
+			@media (min-width: 4500px) and (max-width: 4599px) {
+				.adaptive-text {
+					font-size: 13.71rem;
+				}
+			}
+			@media (min-width: 4600px) and (max-width: 4699px) {
+				.adaptive-text {
+					font-size: 14.014rem;
+				}
+			}
+			@media (min-width: 4700px) and (max-width: 4799px) {
+				.adaptive-text {
+					font-size: 14.319rem;
+				}
+			}
+			@media (min-width: 4800px) and (max-width: 4899px) {
+				.adaptive-text {
+					font-size: 14.624rem;
+				}
+			}
+			@media (min-width: 4900px) and (max-width: 4999px) {
+				.adaptive-text {
+					font-size: 14.928rem;
+				}
+			}
+			@media (min-width: 5000px) and (max-width: 5099px) {
+				.adaptive-text {
+					font-size: 15.233rem;
+				}
+			}
+			@media (min-width: 5100px) and (max-width: 5199px) {
+				.adaptive-text {
+					font-size: 15.538rem;
+				}
+			}
+			@media (min-width: 5200px) and (max-width: 5299px) {
+				.adaptive-text {
+					font-size: 15.842rem;
+				}
+			}
+			@media (min-width: 5300px) and (max-width: 5399px) {
+				.adaptive-text {
+					font-size: 16.147rem;
+				}
+			}
+			@media (min-width: 5400px) and (max-width: 5499px) {
+				.adaptive-text {
+					font-size: 16.452rem;
+				}
+			}
+			@media (min-width: 5500px) and (max-width: 5599px) {
+				.adaptive-text {
+					font-size: 16.756rem;
+				}
+			}
+			@media (min-width: 5600px) and (max-width: 5699px) {
+				.adaptive-text {
+					font-size: 17.061rem;
+				}
+			}
+			@media (min-width: 5700px) and (max-width: 5799px) {
+				.adaptive-text {
+					font-size: 17.366rem;
+				}
+			}
+			@media (min-width: 5800px) and (max-width: 5899px) {
+				.adaptive-text {
+					font-size: 17.67rem;
+				}
+			}
+			@media (min-width: 5900px) and (max-width: 5999px) {
+				.adaptive-text {
+					font-size: 17.975rem;
+				}
+			}
+			@media (min-width: 6000px) and (max-width: 6099px) {
+				.adaptive-text {
+					font-size: 18.28rem;
+				}
+			}
+			@media (min-width: 6100px) and (max-width: 6199px) {
+				.adaptive-text {
+					font-size: 18.584rem;
+				}
+			}
+			@media (min-width: 6200px) and (max-width: 6299px) {
+				.adaptive-text {
+					font-size: 18.889rem;
+				}
+			}
+			@media (min-width: 6300px) and (max-width: 6399px) {
+				.adaptive-text {
+					font-size: 19.194rem;
+				}
+			}
+			@media (min-width: 6400px) and (max-width: 6499px) {
+				.adaptive-text {
+					font-size: 19.498rem;
+				}
+			}
+			@media (min-width: 6500px) and (max-width: 6599px) {
+				.adaptive-text {
+					font-size: 19.803rem;
+				}
+			}
+			@media (min-width: 6600px) and (max-width: 6699px) {
+				.adaptive-text {
+					font-size: 20.108rem;
+				}
+			}
+			@media (min-width: 6700px) and (max-width: 6799px) {
+				.adaptive-text {
+					font-size: 20.412rem;
+				}
+			}
+			@media (min-width: 6800px) and (max-width: 6899px) {
+				.adaptive-text {
+					font-size: 20.717rem;
+				}
+			}
+			@media (min-width: 6900px) and (max-width: 6999px) {
+				.adaptive-text {
+					font-size: 21.022rem;
+				}
+			}
+			@media (min-width: 7000px) {
+				.adaptive-text {
+					font-size: 21.326rem;
+				}
+			}
 
-/*========================================================================*/
-</style>
-<!--		<link rel="stylesheet" href="media.css"/a> -->
+			/*========================================================================*/
+
+		</style>
+		<!--		<link rel="stylesheet" href="media.css"/a> -->
 	</head>
 	<body>
 		<main>
