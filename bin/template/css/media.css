@@ -72,7 +72,8 @@
 /* TODO - adjust font size by screen width to keep N columns on screen */
 
 body {
-	font-size: 2rem; /* more readable */
+	/* more readable */
+	font-size: 2rem;
 }
 
 /* trying to keep this text at a fixed number of columns as window size changes */
@@ -113,7 +114,6 @@ body {
 	visibility: hidden;
 	display: none;
 }
-
 @media all {
 	/* for all media */
 }
@@ -246,7 +246,6 @@ body {
 	}
 }
 
-
 /* HTML4+ print */
 @media print {
 	.no-print {
@@ -260,15 +259,16 @@ body {
 		visibility: hidden;
 	}
 }
-
 @media (orientation: portrait) {
-	.no-portrait,.if-landscape {
+	.if-landscape,
+	.no-portrait {
 		display: none;
 		visibility: hidden;
 	}
 }
 @media (orientation: landscape) {
-	.no-landscape,.if-portrait {
+	.if-portrait,
+	.no-landscape {
 		display: none;
 		visibility: hidden;
 	}
@@ -304,7 +304,7 @@ body {
 		display: list-item;
 	}
 }
-@media (min-resolution: 96dpi) and (max-resolution: 143dpi){
+@media (min-resolution: 96dpi) and (max-resolution: 143dpi) {
 	.if-resolution-96 {
 		visibility: visible;
 		display: inline-block;
@@ -313,7 +313,7 @@ body {
 		display: list-item;
 	}
 }
-@media (min-resolution: 144dpi) and (max-resolution: 149dpi){
+@media (min-resolution: 144dpi) and (max-resolution: 149dpi) {
 	.if-resolution-144 {
 		visibility: visible;
 		display: inline-block;
@@ -425,7 +425,6 @@ body {
 }
 
 /* === width ============================================================ */
-
 @media (min-width: 100px) {
 	.if-width-100 {
 		visibility: visible;
@@ -546,7 +545,6 @@ body {
 		display: inline-block;
 	}
 }
-
 @media (min-width: 2100px) {
 	.if-width-2100 {
 		visibility: visible;
@@ -855,7 +853,6 @@ body {
 }
 
 /* === height =========================================================== */
-
 @media (min-height: 100px) and (max-height: 199px) {
 	.if-height-100 {
 		visibility: visible;
@@ -1098,7 +1095,6 @@ body {
 }
 
 /* === color ============================================================ */
-
 @media (color) {
 	.no-color {
 		display: none;
@@ -1111,7 +1107,6 @@ body {
 		visibility: hidden;
 	}
 }
-
 @media (min-color: 1) and (max-color: 7) {
 	.if-color-1 {
 		visibility: visible;
@@ -1166,7 +1161,6 @@ body {
   Despite the W3C specs monochrome does not work in Google Chrome.
   monochrome appears to be both true and false
 */
-
 @media (monochrome) {
 	.no-monochrome {
 		display: none;
@@ -1179,7 +1173,6 @@ body {
 		visibility: hidden;
 	}
 }
-
 @media (min-monochrome: 1) and (max-monochrome: 7) {
 	.if-monochrome-1 {
 		visibility: visible;
@@ -1234,7 +1227,6 @@ body {
   Despite the W3C specs color-index does not work in Google Chrome.
   color-index appears to be both true and false
 */
-
 @media (color-index) {
 	.no-color-index {
 		display: none;
@@ -1247,7 +1239,6 @@ body {
 		visibility: hidden;
 	}
 }
-
 @media (min-color-index: 1) and (max-color-index: 7) {
 	.if-color-index-1 {
 		visibility: visible;
@@ -1293,7 +1284,6 @@ body {
 
 /*=== font-size ==========================================================*/
 /* a single line of text at the full width of the window */
-
 @media (max-width: 99px) {
 	.adaptive-text {
 		font-size: 0.152rem;
@@ -1505,54 +1495,54 @@ body {
 	}
 }
 @media (min-width: 4200px) and (max-width: 4299px) {
-        .adaptive-text {
-                font-size: 12.796rem;
-        }
+	.adaptive-text {
+		font-size: 12.796rem;
+	}
 }
 @media (min-width: 4300px) and (max-width: 4399px) {
-        .adaptive-text {
-                font-size: 13.1rem;
-        }
+	.adaptive-text {
+		font-size: 13.1rem;
+	}
 }
 @media (min-width: 4400px) and (max-width: 4499px) {
-        .adaptive-text {
-                font-size: 13.405rem;
-        }
+	.adaptive-text {
+		font-size: 13.405rem;
+	}
 }
 @media (min-width: 4500px) and (max-width: 4599px) {
-        .adaptive-text {
-                font-size: 13.71rem;
-        }
+	.adaptive-text {
+		font-size: 13.71rem;
+	}
 }
 @media (min-width: 4600px) and (max-width: 4699px) {
-        .adaptive-text {
-                font-size: 14.014rem;
-        }
+	.adaptive-text {
+		font-size: 14.014rem;
+	}
 }
 @media (min-width: 4700px) and (max-width: 4799px) {
-        .adaptive-text {
-                font-size: 14.319rem;
-        }
+	.adaptive-text {
+		font-size: 14.319rem;
+	}
 }
 @media (min-width: 4800px) and (max-width: 4899px) {
-        .adaptive-text {
-                font-size: 14.624rem;
-        }
+	.adaptive-text {
+		font-size: 14.624rem;
+	}
 }
 @media (min-width: 4900px) and (max-width: 4999px) {
-        .adaptive-text {
-                font-size: 14.928rem;
-        }
+	.adaptive-text {
+		font-size: 14.928rem;
+	}
 }
 @media (min-width: 5000px) and (max-width: 5099px) {
-        .adaptive-text {
-                font-size: 15.233rem;
-        }
+	.adaptive-text {
+		font-size: 15.233rem;
+	}
 }
 @media (min-width: 5100px) and (max-width: 5199px) {
-        .adaptive-text {
-                font-size: 15.538rem;
-        }
+	.adaptive-text {
+		font-size: 15.538rem;
+	}
 }
 @media (min-width: 5200px) and (max-width: 5299px) {
 	.adaptive-text {
