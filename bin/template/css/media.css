@@ -847,6 +847,10 @@ body {
 }
 
 /* === width ============================================================ */
+/*
+  don't forget your html needs:
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+*/
 @media (min-width: 100px) {
 	.if-width-100 {
 		visibility: visible;
