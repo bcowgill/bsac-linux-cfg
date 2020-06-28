@@ -1,0 +1,2602 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta name="description" content="A guide to media queries with CSS">
+		<meta name="author" content="Brent S.A. Cowgill">
+		<meta name="viewport" content="">
+		<!--
+			Some useful dev commands for this file:
+			cp template/css/media.html /tmp/xxx.html; prettydiff.sh /tmp/xxx.html template/css/media.html
+			cp template/css/media.css /tmp/xxx.css; prettydiff.sh /tmp/xxx.css template/css/media.css
+			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.html
+			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.css
+			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.html -o media.html
+			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/css/media.css -o media.css
+		-->
+		<title>A Guide to Media Queries with CSS</title>
+<style>
+/*
+  A Guide to Media Queries with CSS
+  https://www.w3.org/TR/css3-mediaqueries/
+
+  DPI vs PPI and print quality:
+  https://castleink.com/blogs/printer-help/inkjet-printer-resolution-dpi-printer-guide
+
+  CSS DPI for mobile devices:
+  https://viewportsizer.com/devices/
+
+  Monitor aspect ratios:
+  https://en.wikipedia.org/wiki/Display_aspect_ratio
+*/
+
+/*
+  Media Queries:
+  print and (resolution > 90dpi)
+  screen and (color)
+  all and (min-width: 500px)
+  (orientation: portrait)
+  (device-aspect-ratio: 16/9)
+  (min-device-width: 800px)
+
+  min- max- prefix for any
+  height, width
+  device-height, device-width
+  (orientation: portrait,landscape)
+  aspect-ratio
+  (device-aspect-ratio: N/M)
+  color -- number of bits per color component or 0 if not colour
+  color-index -- number of bits in a color index lookup
+  monochrome -- number of bits per pixel in monochrome
+  resolution -- pixel density dpi
+  (scan: progressive,interlace) -- tv scan modes
+  grid -- tty or phone display with one fixed font
+  @media handheld and (grid) and (max-width: 15em) { … }
+  @media handheld and (grid) and (device-max-height: 7em) { … }
+
+  # generate media query ranges at different break points to display content
+
+  perl -e '
+    foreach my $h (1,8,16,32,64,128,256,512) {
+      $prop = qq{width};
+      $unit = qq{px};
+      $show = qq{inline-block};
+      $min = 0+$max;
+      $max = $h;
+      $maxx = $max-1;
+      print qq{\@media (min-$prop: ${min}$unit) and (max-$prop: ${maxx}$unit) {\n\t.if-$prop-$min {\n\t\tvisibility: visible;\n\t\tdisplay: $show;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
+
+  perl -e '
+    foreach my $h (1..4*4+1) {
+      $prop = qq{device-aspect-ratio};
+      $propClass = qq{dev-aspect-over};
+      $unit = qq{/4};
+      $show = qq{inline-block};
+      $min = 0+$max;
+      $max = $h;
+      $maxx = $max;
+      print qq{\@media (min-$prop: ${min}$unit) and (max-$prop: ${maxx}$unit) {\n\t.if-$propClass-$min-4 {\n\t\tvisibility: visible;\n\t\tdisplay: $show;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
+
+
+  perl -e '
+    foreach my $h (52..71) {
+	  $at = 1500;
+      $use = 4.57;
+      $prop = qq{width};
+      $unit = qq{px};
+	  $font = qq{font-size};
+	  $fontUnit = qq{rem};
+      $min = 0+$max;
+      $max = $h . qq{00};
+      $maxx = $max-1;
+      $size = int(1000 * ($min) * $use / $at) / 1000;
+      print qq{\@media (min-$prop: ${min}$unit) and (max-$prop: ${maxx}$unit) {\n\t.adaptive-text {\n\t\t$font: $size$fontUnit;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
+
+*/
+/* TODO - adjust font size by screen width to keep N columns on screen */
+
+body {
+	/* more readable */
+	font-size: 2rem;
+}
+
+/* trying to keep this text at a fixed number of columns as window size changes */
+.adaptive-text {
+	font-family: monospace;
+}
+@media (min-width: 250px) {
+	.adaptive-text {
+		font-size: 0.68rem;
+	}
+}
+@media (min-width: 500px) {
+	.adaptive-text {
+		font-size: 1.4rem;
+	}
+}
+@media (min-width: 1000px) {
+	.adaptive-text {
+		font-size: 3rem;
+	}
+}
+
+/* fixed width box for showing how wide screen is in 100s */
+.w100 {
+	font-size: 1rem;
+	display: inline-block;
+	background: cyan;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 90px;
+	overflow: hidden;
+}
+
+/*
+  default is to hide anything media related.
+  some queries require you to use this class with them:
+  media if-width-100
+  media if-color-index
+  media if-monochrome
+  and others are just used on their own:
+  if-color-capable
+  if-color
+  no-screen
+*/
+.media {
+	visibility: hidden;
+	display: none;
+}
+@media all {
+	/* for all media */
+}
+
+/* HTML4+ screen */
+@media screen {
+	.no-screen {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not screen {
+	.if-screen {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ handheld */
+@media handheld {
+	.no-handheld {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not handheld {
+	.if-handheld {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ tv */
+@media tv {
+	.no-tv {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not tv {
+	.if-tv {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ projection */
+@media projection {
+	.no-projection {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not projection {
+	.if-projection {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ tty */
+@media tty {
+	.no-tty {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not tty {
+	.if-tty {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/*
+  HTML4+ aural, deprecated by CSS2
+*/
+@media aural {
+	.no-aural {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not aural {
+	.if-aural {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* CSS2 speech */
+@media speech {
+	.no-speech {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not speech {
+	.if-speech {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* CSS2 embossed (like a tactile device) */
+@media embossed {
+	.no-embossed {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not embossed {
+	.if-embossed {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ braille */
+@media braille {
+	.no-braille {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not braille {
+	.if-braille {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* HTML4+ print */
+@media print {
+	.no-print {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media not print {
+	.if-print {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* === tv scan mode ===================================================== */
+@media tv and (scan: progressive), not tv {
+	.if-interlace,
+	.no-progressive {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media tv and (scan: interlace), not tv {
+	.if-progressive,
+	.no-interlace {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* === grid device ====================================================== */
+/* a tty or phone with a single font display of rows x cols*/
+@media (grid) {
+	.if-grid {
+		display: inline-block;
+		visibility: visible;
+	}
+	.no-grid {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* === orientation and aspect =========================================== */
+@media (orientation: portrait) {
+	.if-landscape,
+	.no-portrait {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (orientation: landscape) {
+	.if-portrait,
+	.no-landscape {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* window aspect ratio ranges */
+@media (max-aspect-ratio: 1/4) {
+	.if-aspect-under-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 1/4) and (max-aspect-ratio: 2/4) {
+	.if-aspect-over-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 2/4) and (max-aspect-ratio: 3/4) {
+	.if-aspect-over-2-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/4) {
+	.if-aspect-over-3-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 4/4) and (max-aspect-ratio: 5/4) {
+	.if-aspect-over-4-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 5/4) and (max-aspect-ratio: 6/4) {
+	.if-aspect-over-5-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 6/4) and (max-aspect-ratio: 7/4) {
+	.if-aspect-over-6-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 7/4) and (max-aspect-ratio: 8/4) {
+	.if-aspect-over-7-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 8/4) and (max-aspect-ratio: 9/4) {
+	.if-aspect-over-8-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 9/4) and (max-aspect-ratio: 10/4) {
+	.if-aspect-over-9-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 10/4) and (max-aspect-ratio: 11/4) {
+	.if-aspect-over-10-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 11/4) and (max-aspect-ratio: 12/4) {
+	.if-aspect-over-11-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 12/4) and (max-aspect-ratio: 13/4) {
+	.if-aspect-over-12-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 13/4) and (max-aspect-ratio: 14/4) {
+	.if-aspect-over-13-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 14/4) and (max-aspect-ratio: 15/4) {
+	.if-aspect-over-14-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 15/4) and (max-aspect-ratio: 16/4) {
+	.if-aspect-over-15-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 16/4) {
+	.if-aspect-over-16-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* deprecated for privacy / securty issues */
+/* device aspect ratios, exact */
+/* 1.0 1920x1920 air traffic */
+@media (device-aspect-ratio: 1/1) {
+	.no-dev-aspect-1-1 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-1-1 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.25 1280x1024 */
+@media (device-aspect-ratio: 5/4) {
+	.no-dev-aspect-5-4 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-5-4 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.3_ 320x240, 640x480 CGA/VGA */
+@media (device-aspect-ratio: 4/3) {
+	.no-dev-aspect-4-3 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-4-3 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.5 1152x768 */
+@media (device-aspect-ratio: 3/2) {
+	.no-dev-aspect-3-2 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-3-2 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.6 1280x800, 1440x900, 1680x1050, 1920x1200 */
+@media (device-aspect-ratio: 16/10) {
+	.no-dev-aspect-16-10 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-16-10 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.7_ 1920x1080 */
+@media (device-aspect-ratio: 16/9) {
+	.no-dev-aspect-16-9 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-16-9 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.8962_9_6_ 4096x2160 digital camera 4K */
+@media (device-aspect-ratio: 256/135) {
+	.no-dev-aspect-256-135 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-256-135 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.175 3840x1600 anamorphic film */
+@media (device-aspect-ratio: 12/5) {
+	.no-dev-aspect-12-5 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-12-5 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.25 4320x1920 3-monitor aircraft display */
+@media (device-aspect-ratio: 9/4) {
+	.no-dev-aspect-9-4 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-9-4 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.3_ anamorphic film */
+@media (device-aspect-ratio: 21/9) {
+	.no-dev-aspect-21-9 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-21-9 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.3_7_0_ 2560x1080 anamorphic film */
+@media (device-aspect-ratio: 64/27) {
+	.no-dev-aspect-64-27 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-64-27 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.38_ 3440x1440 anamorphic film */
+@media (device-aspect-ratio: 43/18) {
+	.no-dev-aspect-43-18 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-43-18 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 3.5_ 3480x1080 curved gaming */
+@media (device-aspect-ratio: 32/9) {
+	.no-dev-aspect-32-9 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-32-9 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* device aspect ratio ranges (deprecated) */
+@media (max-device-aspect-ratio: 1/4) {
+	.if-dev-aspect-under-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 1/4) and (max-device-aspect-ratio: 2/4) {
+	.if-dev-aspect-over-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 2/4) and (max-device-aspect-ratio: 3/4) {
+	.if-dev-aspect-over-2-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 3/4) and (max-device-aspect-ratio: 4/4) {
+	.if-dev-aspect-over-3-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 4/4) and (max-device-aspect-ratio: 5/4) {
+	.if-dev-aspect-over-4-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 5/4) and (max-device-aspect-ratio: 6/4) {
+	.if-dev-aspect-over-5-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 6/4) and (max-device-aspect-ratio: 7/4) {
+	.if-dev-aspect-over-6-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 7/4) and (max-device-aspect-ratio: 8/4) {
+	.if-dev-aspect-over-7-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 8/4) and (max-device-aspect-ratio: 9/4) {
+	.if-dev-aspect-over-8-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 9/4) and (max-device-aspect-ratio: 10/4) {
+	.if-dev-aspect-over-9-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 10/4) and (max-device-aspect-ratio: 11/4) {
+	.if-dev-aspect-over-10-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 11/4) and (max-device-aspect-ratio: 12/4) {
+	.if-dev-aspect-over-11-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 12/4) and (max-device-aspect-ratio: 13/4) {
+	.if-dev-aspect-over-12-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 13/4) and (max-device-aspect-ratio: 14/4) {
+	.if-dev-aspect-over-13-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 14/4) and (max-device-aspect-ratio: 15/4) {
+	.if-dev-aspect-over-14-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 15/4) and (max-device-aspect-ratio: 16/4) {
+	.if-dev-aspect-over-15-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 16/4) {
+	.if-dev-aspect-over-16-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* === resolution ======================================================= */
+@media screen and (max-resolution: 96dpi) {
+	.if-my-resolution-max {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-my-resolution-max {
+		display: list-item;
+	}
+}
+@media screen and (min-resolution: 96dpi) {
+	.if-my-resolution-min {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-my-resolution-min {
+		display: list-item;
+	}
+}
+
+/* screen resolutions */
+@media (max-resolution: 95dpi) {
+	.if-resolution-poor {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-poor {
+		display: list-item;
+	}
+}
+@media (min-resolution: 96dpi) and (max-resolution: 143dpi) {
+	.if-resolution-96 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-96 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 144dpi) and (max-resolution: 149dpi) {
+	.if-resolution-144 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-144 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 192dpi) and (max-resolution: 287dpi) {
+	.if-resolution-192 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-192 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 288dpi) and (max-resolution: 299dpi) {
+	.if-resolution-288 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-288 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 384dpi) {
+	.if-resolution-384 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-384 {
+		display: list-item;
+	}
+}
+
+/* printer resolutions */
+@media (min-resolution: 150dpi) and (max-resolution: 299dpi) {
+	.if-resolution-150 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-150 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 300dpi) and (max-resolution: 599dpi) {
+	.if-resolution-300 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-300 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 600dpi) and (max-resolution: 719dpi) {
+	.if-resolution-720 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-720 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 720dpi) and (max-resolution: 1199dpi) {
+	.if-resolution-600 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-600 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 1200dpi) and (max-resolution: 1439dpi) {
+	.if-resolution-1200 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-1200 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 1440dpi) and (max-resolution: 2879dpi) {
+	.if-resolution-1440 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-1440 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 2880dpi) and (max-resolution: 4799) {
+	.if-resolution-2880 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-2880 {
+		display: list-item;
+	}
+}
+@media (min-resolution: 4800dpi) {
+	.if-resolution-4800 {
+		visibility: visible;
+		display: inline-block;
+	}
+	li.if-resolution-4800 {
+		display: list-item;
+	}
+}
+
+/* === width ============================================================ */
+@media (min-width: 100px) {
+	.if-width-100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 200px) {
+	.if-width-200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 300px) {
+	.if-width-300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 400px) {
+	.if-width-400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 500px) {
+	.if-width-500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 600px) {
+	.if-width-600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 700px) {
+	.if-width-700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 800px) {
+	.if-width-800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 900px) {
+	.if-width-900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1000px) {
+	.if-width-1000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1100px) {
+	.if-width-1100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1200px) {
+	.if-width-1200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1300px) {
+	.if-width-1300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1400px) {
+	.if-width-1400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1500px) {
+	.if-width-1500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1600px) {
+	.if-width-1600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1700px) {
+	.if-width-1700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1800px) {
+	.if-width-1800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 1900px) {
+	.if-width-1900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2000px) {
+	.if-width-2000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2100px) {
+	.if-width-2100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2200px) {
+	.if-width-2200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2300px) {
+	.if-width-2300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2400px) {
+	.if-width-2400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2500px) {
+	.if-width-2500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2600px) {
+	.if-width-2600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2700px) {
+	.if-width-2700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2800px) {
+	.if-width-2800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 2900px) {
+	.if-width-2900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3000px) {
+	.if-width-3000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3100px) {
+	.if-width-3100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3200px) {
+	.if-width-3200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3300px) {
+	.if-width-3300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3400px) {
+	.if-width-3400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3500px) {
+	.if-width-3500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3600px) {
+	.if-width-3600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3700px) {
+	.if-width-3700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3800px) {
+	.if-width-3800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 3900px) {
+	.if-width-3900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4000px) {
+	.if-width-4000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4100px) {
+	.if-width-4100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4200px) {
+	.if-width-4200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4300px) {
+	.if-width-4300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4400px) {
+	.if-width-4400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4500px) {
+	.if-width-4500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4600px) {
+	.if-width-4600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4700px) {
+	.if-width-4700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4800px) {
+	.if-width-4800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 4900px) {
+	.if-width-4900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5000px) {
+	.if-width-5000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5100px) {
+	.if-width-5100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5100px) {
+	.if-width-5100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5200px) {
+	.if-width-5200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5300px) {
+	.if-width-5300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5400px) {
+	.if-width-5400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5500px) {
+	.if-width-5500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5600px) {
+	.if-width-5600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5700px) {
+	.if-width-5700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5800px) {
+	.if-width-5800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 5900px) {
+	.if-width-5900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6000px) {
+	.if-width-6000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6100px) {
+	.if-width-6100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6200px) {
+	.if-width-6200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6300px) {
+	.if-width-6300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6400px) {
+	.if-width-6400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6500px) {
+	.if-width-6500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6600px) {
+	.if-width-6600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6700px) {
+	.if-width-6700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6800px) {
+	.if-width-6800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 6900px) {
+	.if-width-6900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-width: 7000px) {
+	.if-width-7000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* === height =========================================================== */
+@media (min-height: 100px) and (max-height: 199px) {
+	.if-height-100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 200px) and (max-height: 299px) {
+	.if-height-200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 300px) and (max-height: 399px) {
+	.if-height-300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 400px) and (max-height: 499px) {
+	.if-height-400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 500px) and (max-height: 599px) {
+	.if-height-500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 600px) and (max-height: 699px) {
+	.if-height-600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 700px) and (max-height: 799px) {
+	.if-height-700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 800px) and (max-height: 899px) {
+	.if-height-800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 900px) and (max-height: 999px) {
+	.if-height-900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1000px) and (max-height: 1099px) {
+	.if-height-1000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1100px) and (max-height: 1199px) {
+	.if-height-1100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1200px) and (max-height: 1299px) {
+	.if-height-1200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1300px) and (max-height: 1399px) {
+	.if-height-1300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1400px) and (max-height: 1499px) {
+	.if-height-1400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1500px) and (max-height: 1599px) {
+	.if-height-1500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1600px) and (max-height: 1699px) {
+	.if-height-1600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1700px) and (max-height: 1799px) {
+	.if-height-1700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1800px) and (max-height: 1899px) {
+	.if-height-1800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 1900px) and (max-height: 1999px) {
+	.if-height-1900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2000px) and (max-height: 2099px) {
+	.if-height-2000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2100px) and (max-height: 2199px) {
+	.if-height-2100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2200px) and (max-height: 2299px) {
+	.if-height-2200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2300px) and (max-height: 2399px) {
+	.if-height-2300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2400px) and (max-height: 2499px) {
+	.if-height-2400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2500px) and (max-height: 2599px) {
+	.if-height-2500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2600px) and (max-height: 2699px) {
+	.if-height-2600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2700px) and (max-height: 2799px) {
+	.if-height-2700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2800px) and (max-height: 2899px) {
+	.if-height-2800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 2900px) and (max-height: 2999px) {
+	.if-height-2900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3000px) and (max-height: 3099px) {
+	.if-height-3000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3100px) and (max-height: 3199px) {
+	.if-height-3100 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3200px) and (max-height: 3299px) {
+	.if-height-3200 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3300px) and (max-height: 3399px) {
+	.if-height-3300 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3400px) and (max-height: 3499px) {
+	.if-height-3400 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3500px) and (max-height: 3599px) {
+	.if-height-3500 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3600px) and (max-height: 3699px) {
+	.if-height-3600 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3700px) and (max-height: 3799px) {
+	.if-height-3700 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3800px) and (max-height: 3899px) {
+	.if-height-3800 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 3900px) and (max-height: 3999px) {
+	.if-height-3900 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-height: 4000px) {
+	.if-height-4000 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* === color ============================================================ */
+
+/* checks if either color or color-index is supported. */
+@media (color),(min-color-index: 1) {
+	.no-color-capable {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (not color) and (max-color-index: 0) {
+	.if-color-capable {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (color) {
+	.no-color {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (not color) {
+	.if-color {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (min-color: 1) and (max-color: 7) {
+	.if-color-1 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 8) and (max-color: 11) {
+	.if-color-8 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 12) and (max-color: 15) {
+	.if-color-12 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 16) and (max-color: 23) {
+	.if-color-16 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 24) and (max-color: 31) {
+	.if-color-24 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 32) and (max-color: 47) {
+	.if-color-32 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 48) and (max-color: 63) {
+	.if-color-48 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color: 64) {
+	.if-color-64 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* === color-index ====================================================== */
+/*
+  Despite the W3C specs color-index does not work in Google Chrome.
+  color-index appears to be both true and false, but there is a workaround
+*/
+@media (color-index) {
+	.no-color-index {
+		display: none;
+		visibility: hidden;
+	}
+}
+/* this query does not work, use >= 1 test for detection. see below */
+@media (not color-index) {
+	.if-color-index-does-not-work {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (min-color-index: 1) {
+	.if-color-index {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 1) and (max-color-index: 7) {
+	.if-color-index,
+	.if-color-index-1 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 8) and (max-color-index: 15) {
+	.if-color-index-8 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 16) and (max-color-index: 31) {
+	.if-color-index-16 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 32) and (max-color-index: 63) {
+	.if-color-index-32 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 64) and (max-color-index: 127) {
+	.if-color-index-64 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 128) and (max-color-index: 255) {
+	.if-color-index-128 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 256) {
+	.if-color-index-256 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* === monochrome ============================================================ */
+/*
+  Despite the W3C specs monochrome does not work in Google Chrome.
+  monochrome appears to be both true and false, but there is a workaround.
+*/
+@media (monochrome) {
+	.no-monochrome {
+		display: none;
+		visibility: hidden;
+	}
+}
+/* this query does not work, use >=1 bit for detection. see below. */
+@media (not monochrome) {
+	.if-monochrome-does-not-work {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (min-monochrome: 1) {
+	.if-monochrome {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 1) and (max-monochrome: 7) {
+	.if-monochrome-1 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 8) and (max-monochrome: 11) {
+	.if-monochrome-8 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 12) and (max-monochrome: 15) {
+	.if-monochrome-12 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 16) and (max-monochrome: 23) {
+	.if-monochrome-16 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 24) and (max-monochrome: 31) {
+	.if-monochrome-24 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 32) and (max-monochrome: 47) {
+	.if-monochrome-32 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 48) and (max-monochrome: 63) {
+	.if-monochrome-48 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-monochrome: 64) {
+	.if-monochrome-64 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/*=== font-size ==========================================================*/
+/* a single line of text at the full width of the window */
+@media (max-width: 99px) {
+	.adaptive-text {
+		font-size: 0.152rem;
+	}
+}
+@media (min-width: 100px) and (max-width: 199px) {
+	.adaptive-text {
+		font-size: 0.304rem;
+	}
+}
+@media (min-width: 200px) and (max-width: 299px) {
+	.adaptive-text {
+		font-size: 0.609rem;
+	}
+}
+@media (min-width: 300px) and (max-width: 399px) {
+	.adaptive-text {
+		font-size: 0.914rem;
+	}
+}
+@media (min-width: 400px) and (max-width: 499px) {
+	.adaptive-text {
+		font-size: 1.218rem;
+	}
+}
+@media (min-width: 500px) and (max-width: 599px) {
+	.adaptive-text {
+		font-size: 1.523rem;
+	}
+}
+@media (min-width: 600px) and (max-width: 699px) {
+	.adaptive-text {
+		font-size: 1.828rem;
+	}
+}
+@media (min-width: 700px) and (max-width: 799px) {
+	.adaptive-text {
+		font-size: 2.132rem;
+	}
+}
+@media (min-width: 800px) and (max-width: 899px) {
+	.adaptive-text {
+		font-size: 2.437rem;
+	}
+}
+@media (min-width: 900px) and (max-width: 999px) {
+	.adaptive-text {
+		font-size: 2.742rem;
+	}
+}
+@media (min-width: 1000px) and (max-width: 1099px) {
+	.adaptive-text {
+		font-size: 3.046rem;
+	}
+}
+@media (min-width: 1100px) and (max-width: 1199px) {
+	.adaptive-text {
+		font-size: 3.351rem;
+	}
+}
+@media (min-width: 1200px) and (max-width: 1299px) {
+	.adaptive-text {
+		font-size: 3.656rem;
+	}
+}
+@media (min-width: 1300px) and (max-width: 1399px) {
+	.adaptive-text {
+		font-size: 3.96rem;
+	}
+}
+@media (min-width: 1400px) and (max-width: 1499px) {
+	.adaptive-text {
+		font-size: 4.265rem;
+	}
+}
+@media (min-width: 1500px) and (max-width: 1599px) {
+	.adaptive-text {
+		font-size: 4.57rem;
+	}
+}
+@media (min-width: 1600px) and (max-width: 1699px) {
+	.adaptive-text {
+		font-size: 4.874rem;
+	}
+}
+@media (min-width: 1700px) and (max-width: 1799px) {
+	.adaptive-text {
+		font-size: 5.179rem;
+	}
+}
+@media (min-width: 1800px) and (max-width: 1899px) {
+	.adaptive-text {
+		font-size: 5.484rem;
+	}
+}
+@media (min-width: 1900px) and (max-width: 1999px) {
+	.adaptive-text {
+		font-size: 5.788rem;
+	}
+}
+@media (min-width: 2000px) and (max-width: 2099px) {
+	.adaptive-text {
+		font-size: 6.093rem;
+	}
+}
+@media (min-width: 2100px) and (max-width: 2199px) {
+	.adaptive-text {
+		font-size: 6.398rem;
+	}
+}
+@media (min-width: 2200px) and (max-width: 2299px) {
+	.adaptive-text {
+		font-size: 6.702rem;
+	}
+}
+@media (min-width: 2300px) and (max-width: 2399px) {
+	.adaptive-text {
+		font-size: 7.007rem;
+	}
+}
+@media (min-width: 2400px) and (max-width: 2499px) {
+	.adaptive-text {
+		font-size: 7.312rem;
+	}
+}
+@media (min-width: 2500px) and (max-width: 2599px) {
+	.adaptive-text {
+		font-size: 7.616rem;
+	}
+}
+@media (min-width: 2600px) and (max-width: 2699px) {
+	.adaptive-text {
+		font-size: 7.921rem;
+	}
+}
+@media (min-width: 2700px) and (max-width: 2799px) {
+	.adaptive-text {
+		font-size: 8.226rem;
+	}
+}
+@media (min-width: 2800px) and (max-width: 2899px) {
+	.adaptive-text {
+		font-size: 8.53rem;
+	}
+}
+@media (min-width: 2900px) and (max-width: 2999px) {
+	.adaptive-text {
+		font-size: 8.835rem;
+	}
+}
+@media (min-width: 3000px) and (max-width: 3099px) {
+	.adaptive-text {
+		font-size: 9.14rem;
+	}
+}
+@media (min-width: 3100px) and (max-width: 3199px) {
+	.adaptive-text {
+		font-size: 9.444rem;
+	}
+}
+@media (min-width: 3200px) and (max-width: 3299px) {
+	.adaptive-text {
+		font-size: 9.749rem;
+	}
+}
+@media (min-width: 3300px) and (max-width: 3399px) {
+	.adaptive-text {
+		font-size: 10.054rem;
+	}
+}
+@media (min-width: 3400px) and (max-width: 3499px) {
+	.adaptive-text {
+		font-size: 10.358rem;
+	}
+}
+@media (min-width: 3500px) and (max-width: 3599px) {
+	.adaptive-text {
+		font-size: 10.663rem;
+	}
+}
+@media (min-width: 3600px) and (max-width: 3699px) {
+	.adaptive-text {
+		font-size: 10.968rem;
+	}
+}
+@media (min-width: 3700px) and (max-width: 3799px) {
+	.adaptive-text {
+		font-size: 11.272rem;
+	}
+}
+@media (min-width: 3800px) and (max-width: 3899px) {
+	.adaptive-text {
+		font-size: 11.577rem;
+	}
+}
+@media (min-width: 3900px) and (max-width: 3999px) {
+	.adaptive-text {
+		font-size: 11.882rem;
+	}
+}
+@media (min-width: 4000px) and (max-width: 4099px) {
+	.adaptive-text {
+		font-size: 12.186rem;
+	}
+}
+@media (min-width: 4100px) and (max-width: 4199px) {
+	.adaptive-text {
+		font-size: 12.491rem;
+	}
+}
+@media (min-width: 4200px) and (max-width: 4299px) {
+	.adaptive-text {
+		font-size: 12.796rem;
+	}
+}
+@media (min-width: 4300px) and (max-width: 4399px) {
+	.adaptive-text {
+		font-size: 13.1rem;
+	}
+}
+@media (min-width: 4400px) and (max-width: 4499px) {
+	.adaptive-text {
+		font-size: 13.405rem;
+	}
+}
+@media (min-width: 4500px) and (max-width: 4599px) {
+	.adaptive-text {
+		font-size: 13.71rem;
+	}
+}
+@media (min-width: 4600px) and (max-width: 4699px) {
+	.adaptive-text {
+		font-size: 14.014rem;
+	}
+}
+@media (min-width: 4700px) and (max-width: 4799px) {
+	.adaptive-text {
+		font-size: 14.319rem;
+	}
+}
+@media (min-width: 4800px) and (max-width: 4899px) {
+	.adaptive-text {
+		font-size: 14.624rem;
+	}
+}
+@media (min-width: 4900px) and (max-width: 4999px) {
+	.adaptive-text {
+		font-size: 14.928rem;
+	}
+}
+@media (min-width: 5000px) and (max-width: 5099px) {
+	.adaptive-text {
+		font-size: 15.233rem;
+	}
+}
+@media (min-width: 5100px) and (max-width: 5199px) {
+	.adaptive-text {
+		font-size: 15.538rem;
+	}
+}
+@media (min-width: 5200px) and (max-width: 5299px) {
+	.adaptive-text {
+		font-size: 15.842rem;
+	}
+}
+@media (min-width: 5300px) and (max-width: 5399px) {
+	.adaptive-text {
+		font-size: 16.147rem;
+	}
+}
+@media (min-width: 5400px) and (max-width: 5499px) {
+	.adaptive-text {
+		font-size: 16.452rem;
+	}
+}
+@media (min-width: 5500px) and (max-width: 5599px) {
+	.adaptive-text {
+		font-size: 16.756rem;
+	}
+}
+@media (min-width: 5600px) and (max-width: 5699px) {
+	.adaptive-text {
+		font-size: 17.061rem;
+	}
+}
+@media (min-width: 5700px) and (max-width: 5799px) {
+	.adaptive-text {
+		font-size: 17.366rem;
+	}
+}
+@media (min-width: 5800px) and (max-width: 5899px) {
+	.adaptive-text {
+		font-size: 17.67rem;
+	}
+}
+@media (min-width: 5900px) and (max-width: 5999px) {
+	.adaptive-text {
+		font-size: 17.975rem;
+	}
+}
+@media (min-width: 6000px) and (max-width: 6099px) {
+	.adaptive-text {
+		font-size: 18.28rem;
+	}
+}
+@media (min-width: 6100px) and (max-width: 6199px) {
+	.adaptive-text {
+		font-size: 18.584rem;
+	}
+}
+@media (min-width: 6200px) and (max-width: 6299px) {
+	.adaptive-text {
+		font-size: 18.889rem;
+	}
+}
+@media (min-width: 6300px) and (max-width: 6399px) {
+	.adaptive-text {
+		font-size: 19.194rem;
+	}
+}
+@media (min-width: 6400px) and (max-width: 6499px) {
+	.adaptive-text {
+		font-size: 19.498rem;
+	}
+}
+@media (min-width: 6500px) and (max-width: 6599px) {
+	.adaptive-text {
+		font-size: 19.803rem;
+	}
+}
+@media (min-width: 6600px) and (max-width: 6699px) {
+	.adaptive-text {
+		font-size: 20.108rem;
+	}
+}
+@media (min-width: 6700px) and (max-width: 6799px) {
+	.adaptive-text {
+		font-size: 20.412rem;
+	}
+}
+@media (min-width: 6800px) and (max-width: 6899px) {
+	.adaptive-text {
+		font-size: 20.717rem;
+	}
+}
+@media (min-width: 6900px) and (max-width: 6999px) {
+	.adaptive-text {
+		font-size: 21.022rem;
+	}
+}
+@media (min-width: 7000px) {
+	.adaptive-text {
+		font-size: 21.326rem;
+	}
+}
+
+/*========================================================================*/
+</style>
+<!--		<link rel="stylesheet" href="media.css"/a> -->
+	</head>
+	<body>
+		<main>
+			<section>
+				<h3>A Guide to
+					<a target="_blank" href="https://www.w3.org/TR/css3-mediaqueries/">Media Queries</a>
+					with CSS</h3>
+
+				<p>Your viewport width (at 100% zoom) is at least:</p>
+				<p>
+					<span class="media if-width-100 w100">100
+					</span>
+					<span class="media if-width-200 w100">200
+					</span>
+					<span class="media if-width-300 w100">300
+					</span>
+					<span class="media if-width-400 w100">400
+					</span>
+					<span class="media if-width-500 w100">500
+					</span>
+					<span class="media if-width-600 w100">600
+					</span>
+					<span class="media if-width-700 w100">700
+					</span>
+					<span class="media if-width-800 w100">800
+					</span>
+					<span class="media if-width-900 w100">900
+					</span>
+					<span class="media if-width-1000 w100">1000
+					</span>
+					<span class="media if-width-1100 w100">1100
+					</span>
+					<span class="media if-width-1200 w100">1200
+					</span>
+					<span class="media if-width-1300 w100">1300
+					</span>
+					<span class="media if-width-1400 w100">1400
+					</span>
+					<span class="media if-width-1500 w100">1500
+					</span>
+					<span class="media if-width-1600 w100">1600
+					</span>
+					<span class="media if-width-1700 w100">1700
+					</span>
+					<span class="media if-width-1800 w100">1800
+					</span>
+					<span class="media if-width-1900 w100">1900
+					</span>
+					<span class="media if-width-2000 w100">2000
+					</span>
+					<span class="media if-width-2100 w100">2100
+					</span>
+					<span class="media if-width-2200 w100">2200
+					</span>
+					<span class="media if-width-2300 w100">2300
+					</span>
+					<span class="media if-width-2400 w100">2400
+					</span>
+					<span class="media if-width-2500 w100">2500
+					</span>
+					<span class="media if-width-2600 w100">2600
+					</span>
+					<span class="media if-width-2700 w100">2700
+					</span>
+					<span class="media if-width-2800 w100">2800
+					</span>
+					<span class="media if-width-2900 w100">2900
+					</span>
+					<span class="media if-width-3000 w100">3000
+					</span>
+					<span class="media if-width-3100 w100">3100
+					</span>
+					<span class="media if-width-3200 w100">3200
+					</span>
+					<span class="media if-width-3300 w100">3300
+					</span>
+					<span class="media if-width-3400 w100">3400
+					</span>
+					<span class="media if-width-3500 w100">3500
+					</span>
+					<span class="media if-width-3600 w100">3600
+					</span>
+					<span class="media if-width-3700 w100">3700
+					</span>
+					<span class="media if-width-3800 w100">3800
+					</span>
+					<span class="media if-width-3900 w100">3900
+					</span>
+					<span class="media if-width-4000 w100">4000
+					</span>
+					<span class="media if-width-4100 w100">4100
+					</span>
+					<span class="media if-width-4200 w100">4200
+					</span>
+					<span class="media if-width-4300 w100">4300
+					</span>
+					<span class="media if-width-4400 w100">4400
+					</span>
+					<span class="media if-width-4500 w100">4500
+					</span>
+					<span class="media if-width-4600 w100">4600
+					</span>
+					<span class="media if-width-4700 w100">4700
+					</span>
+					<span class="media if-width-4800 w100">4800
+					</span>
+					<span class="media if-width-4900 w100">4900
+					</span>
+					<span class="media if-width-5000 w100">5000
+					</span>
+					<span class="media if-width-5100 w100">5100
+					</span>
+					<span class="media if-width-4200 w100">4200
+					</span>
+					<span class="media if-width-4300 w100">4300
+					</span>
+					<span class="media if-width-4400 w100">4400
+					</span>
+					<span class="media if-width-4500 w100">4500
+					</span>
+					<span class="media if-width-4600 w100">4600
+					</span>
+					<span class="media if-width-4700 w100">4700
+					</span>
+					<span class="media if-width-4800 w100">4800
+					</span>
+					<span class="media if-width-4900 w100">4900
+					</span>
+					<span class="media if-width-5000 w100">5000
+					</span>
+					<span class="media if-width-5100 w100">5100
+					</span>
+					<span class="media if-width-5200 w100">5200
+					</span>
+					<span class="media if-width-5300 w100">5300
+					</span>
+					<span class="media if-width-5400 w100">5400
+					</span>
+					<span class="media if-width-5500 w100">5500
+					</span>
+					<span class="media if-width-5600 w100">5600
+					</span>
+					<span class="media if-width-5700 w100">5700
+					</span>
+					<span class="media if-width-5800 w100">5800
+					</span>
+					<span class="media if-width-5900 w100">5900
+					</span>
+					<span class="media if-width-6000 w100">6000
+					</span>
+					<span class="media if-width-6100 w100">6100
+					</span>
+					<span class="media if-width-6200 w100">6200
+					</span>
+					<span class="media if-width-6300 w100">6300
+					</span>
+					<span class="media if-width-6400 w100">6400
+					</span>
+					<span class="media if-width-6500 w100">6500
+					</span>
+					<span class="media if-width-6600 w100">6600
+					</span>
+					<span class="media if-width-6700 w100">6700
+					</span>
+					<span class="media if-width-6800 w100">6800
+					</span>
+					<span class="media if-width-6900 w100">6900
+					</span>
+					<span class="media if-width-7000 w100">7000
+					</span>
+				</p>
+				<p>Your viewport height (at 100% zoom) is approximately:</p>
+				<p>
+					<span class="media if-height-100">100px</span>
+					<span class="media if-height-200">200px</span>
+					<span class="media if-height-300">300px</span>
+					<span class="media if-height-400">400px</span>
+					<span class="media if-height-500">500px</span>
+					<span class="media if-height-600">600px</span>
+					<span class="media if-height-700">700px</span>
+					<span class="media if-height-800">800px</span>
+					<span class="media if-height-900">900px</span>
+					<span class="media if-height-1000">1000px</span>
+					<span class="media if-height-1100">1100px</span>
+					<span class="media if-height-1200">1200px</span>
+					<span class="media if-height-1300">1300px</span>
+					<span class="media if-height-1400">1400px</span>
+					<span class="media if-height-1500">1500px</span>
+					<span class="media if-height-1600">1600px</span>
+					<span class="media if-height-1700">1700px</span>
+					<span class="media if-height-1800">1800px</span>
+					<span class="media if-height-1900">1900px</span>
+					<span class="media if-height-2000">2000px</span>
+					<span class="media if-height-2100">2100px</span>
+					<span class="media if-height-2200">2200px</span>
+					<span class="media if-height-2300">2300px</span>
+					<span class="media if-height-2400">2400px</span>
+					<span class="media if-height-2500">2500px</span>
+					<span class="media if-height-2600">2600px</span>
+					<span class="media if-height-2700">2700px</span>
+					<span class="media if-height-2800">2800px</span>
+					<span class="media if-height-2900">2900px</span>
+					<span class="media if-height-3000">3000px</span>
+					<span class="media if-height-3100">3100px</span>
+					<span class="media if-height-3200">3200px</span>
+					<span class="media if-height-3300">3300px</span>
+					<span class="media if-height-3400">3400px</span>
+					<span class="media if-height-3500">3500px</span>
+					<span class="media if-height-3600">3600px</span>
+					<span class="media if-height-3700">3700px</span>
+					<span class="media if-height-3800">3800px</span>
+					<span class="media if-height-3900">3900px</span>
+					<span class="media if-height-4000">4000px</span>
+				</p>
+				<hr>
+
+				<p class="adaptive-text">
+					Lets try to keep this text in the window!<br/>
+					<!-- 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 -->
+				</p>
+				<hr>
+
+				<p class="no-color-capable">Your device is not
+					<b>color</b>
+					capable.(HTML4+)</p>
+
+				<p class="if-screen">You are viewing this on a
+					<b class="if-color-capable" style="color: red;">color
+					</b>capable screen (HTML4+)</p>
+				<p class="no-projection">You are not viewing this on a projection (HTML4+)</p>
+				<p class="if-projection">You are viewing this from a
+					<b class="if-color-capable" style="color: red;">color
+					</b>capbale projection (HTML4+)</p>
+
+				<p class="no-tv">You are not viewing this on television set (HTML4+)</p>
+				<p class="if-tv">You are viewing this on a
+					<b class="if-color-capable" style="color: red;">color
+					</b>capable television set with
+					<span class="if-progressive">progressive</span>
+					<span class="if-interlace">interlace</span>
+					scan (HTML4+)</p>
+
+				<p class="if-print">You are viewing this on
+					<b class="if-color-capable" style="color: red;">color
+					</b>capable printed output (HTML4+)</p>
+
+				<p class="if-portrait">Your viewport has orientation portrait. [|]</p>
+				<p class="if-landscape">Your viewport has orientation landscape. [--]</p>
+
+				<p>Your aspect ratio range is at
+					<span class="media if-aspect-under-1-4">
+						most 0.25</span>
+					<span class="media if-aspect-over-1-4">
+						least 0.25</span>
+					<span class="media if-aspect-over-2-4">
+						least 0.5</span>
+					<span class="media if-aspect-over-3-4">
+						least 0.75</span>
+					<span class="media if-aspect-over-4-4">
+						least 1.0</span>
+					<span class="media if-aspect-over-5-4">
+						least 1.25</span>
+					<span class="media if-aspect-over-6-4">
+						least 1.5</span>
+					<span class="media if-aspect-over-7-4">
+						least 1.75</span>
+					<span class="media if-aspect-over-8-4">
+						least 2.0</span>
+					<span class="media if-aspect-over-9-4">
+						least 2.25</span>
+					<span class="media if-aspect-over-10-4">
+						least 2.5</span>
+					<span class="media if-aspect-over-11-4">
+						least 2.75</span>
+					<span class="media if-aspect-over-12-4">
+						least 3.0</span>
+					<span class="media if-aspect-over-13-4">
+						least 3.25</span>
+					<span class="media if-aspect-over-14-4">
+						least 3.5</span>
+					<span class="media if-aspect-over-15-4">
+						least 3.75</span>
+					<span class="media if-aspect-over-16-4">
+						least 4.0</span>
+				</p>
+
+				<p class="no-monochrome">Your device does not have
+					<b>monochrome</b>
+					bit depth.</p>
+				<p class="media if-monochrome">Your device has a
+					<b>monochrome</b>
+					bit depth of at least:
+					<span class="media if-monochrome-1">1</span>
+					<span class="media if-monochrome-8">8</span>
+					<span class="media if-monochrome-12">12</span>
+					<span class="media if-monochrome-16">16</span>
+					<span class="media if-monochrome-24">24</span>
+					<span class="media if-monochrome-32">32</span>
+					<span class="media if-monochrome-48">48</span>
+					<span class="media if-monochrome-64">64</span>
+				</p>
+
+				<p class="no-color">Your device does not have
+					<b>color</b>
+					bit depth.</p>
+				<p class="if-color">Your device has a
+					<b style="color: red;">color</b>
+					bit depth of at least:
+					<span class="media if-color-1">1</span>
+					<span class="media if-color-8">8</span>
+					<span class="media if-color-12">12</span>
+					<span class="media if-color-16">16</span>
+					<span class="media if-color-24">24</span>
+					<span class="media if-color-32">32</span>
+					<span class="media if-color-48">48</span>
+					<span class="media if-color-64">64</span>
+				</p>
+
+				<p class="no-color-index">Your device does not have a
+					<b>color</b>
+					table index.</p>
+				<p class="media if-color-index">Your device has a
+					<b style="color: blue;">color</b>
+					table index of at least:
+					<span class="media if-color-index-1">1</span>
+					<span class="media if-color-index-8">8</span>
+					<span class="media if-color-index-16">16</span>
+					<span class="media if-color-index-32">32</span>
+					<span class="media if-color-index-64">64</span>
+					<span class="media if-color-index-128">128</span>
+					<span class="media if-color-index-256">256</span>
+				</p>
+
+				<p>Your device aspect ratio (deprecated) is
+					<span class="media if-dev-aspect-1-1">1:1 (1.0)</span>
+					<span class="media if-dev-aspect-5-4">5:4 (1.25)</span>
+					<span class="media if-dev-aspect-4-3">4:3 (1.3_)</span>
+					<span class="media if-dev-aspect-3-2">3:2 (1.5)</span>
+					<span class="media if-dev-aspect-16-10">16:10 (1.6)</span>
+					<span class="media if-dev-aspect-16-9">16:9 (1.7_)</span>
+					<span class="media if-dev-aspect-256-135">256:135 (1.8962_9_6_)</span>
+					<span class="media if-dev-aspect-12-5">12:5 (2.175)</span>
+					<span class="media if-dev-aspect-9-4">9:4 (2.25)</span>
+					<span class="media if-dev-aspect-21-9">21:9 (2.3_)</span>
+					<span class="media if-dev-aspect-64-27">64:27 (2.3_7_0_)</span>
+					<span class="media if-dev-aspect-43-18">43:18 (2.38_)</span>
+					<span class="media if-dev-aspect-32-9">32:9 (3.5_)</span>
+				</p>
+
+				<p>Your device aspect ratio range (deprecated) is at
+					<span class="media if-dev-aspect-under-1-4">
+						most 0.25</span>
+					<span class="media if-dev-aspect-over-1-4">
+						least 0.25</span>
+					<span class="media if-dev-aspect-over-2-4">
+						least 0.5</span>
+					<span class="media if-dev-aspect-over-3-4">
+						least 0.75</span>
+					<span class="media if-dev-aspect-over-4-4">
+						least 1.0</span>
+					<span class="media if-dev-aspect-over-5-4">
+						least 1.25</span>
+					<span class="media if-dev-aspect-over-6-4">
+						least 1.5</span>
+					<span class="media if-dev-aspect-over-7-4">
+						least 1.75</span>
+					<span class="media if-dev-aspect-over-8-4">
+						least 2.0</span>
+					<span class="media if-dev-aspect-over-9-4">
+						least 2.25</span>
+					<span class="media if-dev-aspect-over-10-4">
+						least 2.5</span>
+					<span class="media if-dev-aspect-over-11-4">
+						least 2.75</span>
+					<span class="media if-dev-aspect-over-12-4">
+						least 3.0</span>
+					<span class="media if-dev-aspect-over-13-4">
+						least 3.25</span>
+					<span class="media if-dev-aspect-over-14-4">
+						least 3.5</span>
+					<span class="media if-dev-aspect-over-15-4">
+						least 3.75</span>
+					<span class="media if-dev-aspect-over-16-4">
+						least 4.0</span>
+				</p>
+
+				<p>Your
+					<span class="if-screen">screen
+					</span>
+					<span class="if-print">printer
+					</span>resolution:</p>
+				<ul>
+
+					<li>
+						<span class="DISABLE-if-screen">
+							<span class="media if-resolution-poor">&lt; 96</span>
+							<span class="media if-resolution-96">&gt;= 96</span>
+							<span class="media if-resolution-144">&gt;= 144</span>
+							<span class="media if-resolution-192">&gt;= 192</span>
+							<span class="media if-resolution-288">&gt;= 288</span>
+							<span class="media if-resolution-384">&gt;= 384</span>
+						</span>
+
+						<span class="DISABLE-if-print">
+							<span class="media if-resolution-150">&gt;= 150</span>
+							<span class="media if-resolution-300">&gt;= 300</span>
+							<span class="media if-resolution-600">&gt;= 600</span>
+							<span class="media if-resolution-600">&gt;= 720</span>
+							<span class="media if-resolution-1200">&gt;= 1200</span>
+							<span class="media if-resolution-1440">&gt;= 1440</span>
+							<span class="media if-resolution-2880">&gt;= 2880</span>
+							<span class="media if-resolution-4800">&gt;= 4800</span>
+						</span>
+						dpi</li>
+
+					<li class="media if-my-resolution-min">resolution >= 96dpi - the author's laptop monitor at the time of writing.</li>
+					<li class="media if-my-resolution-max">resolution <= 96dpi - the author's laptop monitor at the time of writing.</li>
+
+					<li class="media if-resolution-poor">resolution < 96dpi - low end handheld</li>
+					<li class="media if-resolution-96">resolution >= 96dpi - first generation smart
+						phones and tablets, Apple iPhone 3, iPad 1,2,mini, Samsung Galaxy Tab 1,2,3,
+						Microsoft Surface</li>
+					<li class="media if-resolution-144">resolution >= 144dpi - second generation
+						smart phones and tablets, Amazon Kindle, Samsung Galaxy S, Microsoft Surface Pro</li>
+					<li class="media if-resolution-192">resolution >= 192dpi - computer monitor,
+						third generation smart phones and tablets, Apple iPhone 4-8, iPad 3,4,Pro,
+						Samsung Galaxy Note, S3</li>
+					<li class="media if-resolution-288">resolution >= 288dpi - third generation
+						smart phones, Apple iPhone 6+-X, Samsung Galaxy Note 3, S4-5</li>
+					<li class="media if-resolution-384">resolution >= 384dpi - fourth generation
+						smart phones, Samsung Galaxy Note 4-9, S6-10</li>
+
+					<li class="media if-resolution-150">resolution >= 150dpi - acceptable printed
+						photgraphy, 2.5" x 3.5" quality photo, 5" x 7" normal photo</li>
+					<li class="media if-resolution-300">resolution >= 300dpi - draft quality printed
+						documents, 5" x 7" quality photo, 8" x 10" normal photo, 4" x 5" highest quality
+						photo</li>
+					<li class="media if-resolution-600">resolution >= 600dpi - a letter or business
+						document with graphics, 10" x 14" quality photo</li>
+					<li class="media if-resolution-600">resolution >= 720dpi - a letter or business
+						document with graphics, 12" x 17" quality photo</li>
+					<li class="media if-resolution-1200">resolution >= 1200dpi - high quality
+						brochure, printed photography, 20" x 28" quality photo</li>
+					<li class="media if-resolution-1440">resolution >= 1440dpi - professional photography, 24" x 33.5" quality photo</li>
+					<li class="media if-resolution-2880">resolution >= 2880dpi - professional photography, 48" x 67" quality photo</li>
+					<li class="media if-resolution-4800">resolution >= 4800dpi - high end
+						professional photography, 80" x 112" quality photo</li>
+				</ul>
+
+				<p class="no-handheld">You are not using a handheld device (HTML4+)</p>
+				<p class="if-handheld">You are using a handheld device (HTML4+)</p>
+				<p class="no-tty">You are not viewing this on a teletype (HTML4+)</p>
+				<p class="if-tty">You are viewing this on a teletype (HTML4+)</p>
+				<p class="no-grid">Your device is not a grid with a single fixed font</p>
+				<p class="media if-grid">You are using this on a grid with a single fixed font</p>
+
+				<p class="no-aural">You are not listening to this on an aural device (HTML4)(deprecated)</p>
+				<p class="if-aural">You are listening to this on an aural device (HTML4)(deprecated)</p>
+				<p class="no-speech">You are not listening to this on a speech device (CSS2+)</p>
+				<p class="if-speech">You are listening to this on a speech device (CSS2+)</p>
+				<p class="no-embossed">You are not feeling this on an embossed (tactile) device (CSS2+)</p>
+				<p class="if-embossed">You are feeling this on an embossed (tactile) device (CSS2+)</p>
+				<p class="no-braille">You are not feeling this on a braille device (HTML4+)</p>
+				<p class="if-braille">You are feeling this on a braille device (HTML4+)</p>
+
+				<hr>
+				<h3>Media Queries that don't work: (tested on chrome)</h3>
+				<p class="if-monochrome-does-not-work">Your device has a
+					<b>monochrome</b>
+					bit depth of at least:
+					<span class="media if-monochrome-1">1</span>
+					<span class="media if-monochrome-8">8</span>
+					<span class="media if-monochrome-12">12</span>
+					<span class="media if-monochrome-16">16</span>
+					<span class="media if-monochrome-24">24</span>
+					<span class="media if-monochrome-32">32</span>
+					<span class="media if-monochrome-48">48</span>
+					<span class="media if-monochrome-64">64</span>
+				</p>
+
+				<p class="if-color-index-does-not-work">Your device has a
+					<b style="color: blue;">color</b>
+					table index of at least:
+					<span class="media if-color-index-1">1</span>
+					<span class="media if-color-index-8">8</span>
+					<span class="media if-color-index-16">16</span>
+					<span class="media if-color-index-32">32</span>
+					<span class="media if-color-index-64">64</span>
+					<span class="media if-color-index-128">128</span>
+					<span class="media if-color-index-256">256</span>
+				</p>
+
+			</section>
+		</main>
+	</body>
+</html>
