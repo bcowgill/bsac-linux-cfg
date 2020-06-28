@@ -235,34 +235,70 @@
 
 				<p class="adaptive-text">
 					Lets try to keep this text in the window!<br/>
-					1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+					<!-- 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 -->
 				</p>
 				<hr>
 
-				<p class="if-handheld">You are using a handheld device (HTML4+)</p>
-				<p class="no-handheld">You are not using a handheld device (HTML4+)</p>
+				<p class="no-color-capable">Your device is not <b>color</b> capable.(HTML4+)</p>
+
+
+
 
 				<p class="if-screen">You are viewing this on a
-					<b class="if-color" style="color: red;">color
+					<b class="if-color-capable" style="color: red;">color
 					</b>capable screen (HTML4+)</p>
+				<p class="no-projection">You are not viewing this on a projection (HTML4+)</p>
 				<p class="if-projection">You are viewing this from a
-					<b class="if-color" style="color: red;">color
+					<b class="if-color-capable" style="color: red;">color
 					</b>capbale projection (HTML4+)</p>
+
+				<p class="no-tv">You are not viewing this on television set (HTML4+)</p>
 				<p class="if-tv">You are viewing this on a
-					<b class="if-color" style="color: red;">color
-					</b>capable television set (HTML4+)</p>
-				<p class="if-tty">You are viewing this on a teletype (HTML4+)</p>
+					<b class="if-color-capable" style="color: red;">color
+					</b>capable television set with <span class="if-progressive">progressive</span><span class="if-interlace">interlace</span> scan (HTML4+)</p>
 
 				<p class="if-print">You are viewing this on
-					<b class="if-color" style="color: red;">color
+					<b class="if-color-capable" style="color: red;">color
 					</b>capable printed output (HTML4+)</p>
+
 				<p class="if-portrait">Your viewport has orientation portrait. [|]</p>
 				<p class="if-landscape">Your viewport has orientation landscape. [--]</p>
 
-				<p class="if-aural">You are listening to this on an aural device (HTML4)</p>
-				<p class="if-speech">You are listening to this on a speech device (CSS2+)</p>
-				<p class="if-embossed">You are feeling this on an embossed (tactile) device (CSS2+)</p>
-				<p class="if-braille">You are feeling this on a braille device (HTML4+)</p>
+				<p>Your aspect ratio range is at
+					<span class="media if-aspect-under-1-4"> most 0.25</span>
+					<span class="media if-aspect-over-1-4"> least 0.25</span>
+					<span class="media if-aspect-over-2-4"> least 0.5</span>
+					<span class="media if-aspect-over-3-4"> least 0.75</span>
+					<span class="media if-aspect-over-4-4"> least 1.0</span>
+					<span class="media if-aspect-over-5-4"> least 1.25</span>
+					<span class="media if-aspect-over-6-4"> least 1.5</span>
+					<span class="media if-aspect-over-7-4"> least 1.75</span>
+					<span class="media if-aspect-over-8-4"> least 2.0</span>
+					<span class="media if-aspect-over-9-4"> least 2.25</span>
+					<span class="media if-aspect-over-10-4"> least 2.5</span>
+					<span class="media if-aspect-over-11-4"> least 2.75</span>
+					<span class="media if-aspect-over-12-4"> least 3.0</span>
+					<span class="media if-aspect-over-13-4"> least 3.25</span>
+					<span class="media if-aspect-over-14-4"> least 3.5</span>
+					<span class="media if-aspect-over-15-4"> least 3.75</span>
+					<span class="media if-aspect-over-16-4"> least 4.0</span>
+				</p>
+
+				<p class="no-monochrome">Your device does not have
+					<b>monochrome</b>
+					bit depth.</p>
+				<p class="media if-monochrome">Your device has a
+					<b>monochrome</b>
+					bit depth of at least:
+					<span class="media if-monochrome-1">1</span>
+					<span class="media if-monochrome-8">8</span>
+					<span class="media if-monochrome-12">12</span>
+					<span class="media if-monochrome-16">16</span>
+					<span class="media if-monochrome-24">24</span>
+					<span class="media if-monochrome-32">32</span>
+					<span class="media if-monochrome-48">48</span>
+					<span class="media if-monochrome-64">64</span>
+				</p>
 
 				<p class="no-color">Your device does not have
 					<b>color</b>
@@ -280,6 +316,57 @@
 					<span class="media if-color-64">64</span>
 				</p>
 
+				<p class="no-color-index">Your device does not have a
+					<b>color</b>
+					table index.</p>
+				<p class="media if-color-index">Your device has a
+					<b style="color: blue;">color</b>
+					table index of at least:
+					<span class="media if-color-index-1">1</span>
+					<span class="media if-color-index-8">8</span>
+					<span class="media if-color-index-16">16</span>
+					<span class="media if-color-index-32">32</span>
+					<span class="media if-color-index-64">64</span>
+					<span class="media if-color-index-128">128</span>
+					<span class="media if-color-index-256">256</span>
+				</p>
+
+				<p>Your device aspect ratio (deprecated) is
+					<span class="media if-dev-aspect-1-1">1:1 (1.0)</span>
+					<span class="media if-dev-aspect-5-4">5:4 (1.25)</span>
+					<span class="media if-dev-aspect-4-3">4:3 (1.3_)</span>
+					<span class="media if-dev-aspect-3-2">3:2 (1.5)</span>
+					<span class="media if-dev-aspect-16-10">16:10 (1.6)</span>
+					<span class="media if-dev-aspect-16-9">16:9 (1.7_)</span>
+					<span class="media if-dev-aspect-256-135">256:135 (1.8962_9_6_)</span>
+					<span class="media if-dev-aspect-12-5">12:5 (2.175)</span>
+					<span class="media if-dev-aspect-9-4">9:4 (2.25)</span>
+					<span class="media if-dev-aspect-21-9">21:9 (2.3_)</span>
+					<span class="media if-dev-aspect-64-27">64:27 (2.3_7_0_)</span>
+					<span class="media if-dev-aspect-43-18">43:18 (2.38_)</span>
+					<span class="media if-dev-aspect-32-9">32:9 (3.5_)</span>
+				</p>
+
+				<p>Your device aspect ratio range (deprecated) is at
+					<span class="media if-dev-aspect-under-1-4"> most 0.25</span>
+					<span class="media if-dev-aspect-over-1-4"> least 0.25</span>
+					<span class="media if-dev-aspect-over-2-4"> least 0.5</span>
+					<span class="media if-dev-aspect-over-3-4"> least 0.75</span>
+					<span class="media if-dev-aspect-over-4-4"> least 1.0</span>
+					<span class="media if-dev-aspect-over-5-4"> least 1.25</span>
+					<span class="media if-dev-aspect-over-6-4"> least 1.5</span>
+					<span class="media if-dev-aspect-over-7-4"> least 1.75</span>
+					<span class="media if-dev-aspect-over-8-4"> least 2.0</span>
+					<span class="media if-dev-aspect-over-9-4"> least 2.25</span>
+					<span class="media if-dev-aspect-over-10-4"> least 2.5</span>
+					<span class="media if-dev-aspect-over-11-4"> least 2.75</span>
+					<span class="media if-dev-aspect-over-12-4"> least 3.0</span>
+					<span class="media if-dev-aspect-over-13-4"> least 3.25</span>
+					<span class="media if-dev-aspect-over-14-4"> least 3.5</span>
+					<span class="media if-dev-aspect-over-15-4"> least 3.75</span>
+					<span class="media if-dev-aspect-over-16-4"> least 4.0</span>
+				</p>
+
 				<p>Your
 					<span class="if-screen">screen
 					</span>
@@ -288,7 +375,7 @@
 				<ul>
 
 					<li>
-						<span class="xxif-screen">
+						<span class="DISABLE-if-screen">
 							<span class="media if-resolution-poor">&lt; 96</span>
 							<span class="media if-resolution-96">&gt;= 96</span>
 							<span class="media if-resolution-144">&gt;= 144</span>
@@ -297,7 +384,7 @@
 							<span class="media if-resolution-384">&gt;= 384</span>
 						</span>
 
-						<span class="xxif-print">
+						<span class="DISABLE-if-print">
 							<span class="media if-resolution-150">&gt;= 150</span>
 							<span class="media if-resolution-300">&gt;= 300</span>
 							<span class="media if-resolution-600">&gt;= 600</span>
@@ -343,12 +430,25 @@
 						professional photography, 80" x 112" quality photo</li>
 				</ul>
 
+				<p class="no-handheld">You are not using a handheld device (HTML4+)</p>
+				<p class="if-handheld">You are using a handheld device (HTML4+)</p>
+				<p class="no-tty">You are not viewing this on a teletype (HTML4+)</p>
+				<p class="if-tty">You are viewing this on a teletype (HTML4+)</p>
+				<p class="no-grid">Your device is not a grid with a single fixed font</p>
+				<p class="media if-grid">You are using this on a grid with a single fixed font</p>
+
+				<p class="no-aural">You are not listening to this on an aural device (HTML4)(deprecated)</p>
+				<p class="if-aural">You are listening to this on an aural device (HTML4)(deprecated)</p>
+				<p class="no-speech">You are not listening to this on a speech device (CSS2+)</p>
+				<p class="if-speech">You are listening to this on a speech device (CSS2+)</p>
+				<p class="no-embossed">You are not feeling this on an embossed (tactile) device (CSS2+)</p>
+				<p class="if-embossed">You are feeling this on an embossed (tactile) device (CSS2+)</p>
+				<p class="no-braille">You are not feeling this on a braille device (HTML4+)</p>
+				<p class="if-braille">You are feeling this on a braille device (HTML4+)</p>
+
 				<hr>
 				<h3>Media Queries that don't work: (tested on chrome)</h3>
-				<p class="no-monochrome">Your device does not have
-					<b>monochrome</b>
-					bit depth.</p>
-				<p class="if-monochrome">Your device has a
+				<p class="if-monochrome-does-not-work">Your device has a
 					<b>monochrome</b>
 					bit depth of at least:
 					<span class="media if-monochrome-1">1</span>
@@ -361,10 +461,7 @@
 					<span class="media if-monochrome-64">64</span>
 				</p>
 
-				<p class="no-color-index">Your device does not have a
-					<b>color</b>
-					table index.</p>
-				<p class="if-color-index">Your device has a
+				<p class="if-color-index-does-not-work">Your device has a
 					<b style="color: blue;">color</b>
 					table index of at least:
 					<span class="media if-color-index-1">1</span>

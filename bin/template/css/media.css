@@ -7,6 +7,9 @@
 
   CSS DPI for mobile devices:
   https://viewportsizer.com/devices/
+
+  Monitor aspect ratios:
+  https://en.wikipedia.org/wiki/Display_aspect_ratio
 */
 
 /*
@@ -30,6 +33,8 @@
   resolution -- pixel density dpi
   (scan: progressive,interlace) -- tv scan modes
   grid -- tty or phone display with one fixed font
+  @media handheld and (grid) and (max-width: 15em) { … }
+  @media handheld and (grid) and (device-max-height: 7em) { … }
 
   # generate media query ranges at different break points to display content
 
@@ -44,14 +49,15 @@
       print qq{\@media (min-$prop: ${min}$unit) and (max-$prop: ${maxx}$unit) {\n\t.if-$prop-$min {\n\t\tvisibility: visible;\n\t\tdisplay: $show;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
 
   perl -e '
-    foreach my $h (51..80) {
-      $prop = qq{width};
-      $unit = qq{px};
+    foreach my $h (1..4*4+1) {
+      $prop = qq{device-aspect-ratio};
+      $propClass = qq{dev-aspect-over};
+      $unit = qq{/4};
       $show = qq{inline-block};
       $min = 0+$max;
-      $max = $h . "00";
-      $maxx = $max-1;
-      print qq{\@media (min-$prop: ${min}$unit) {\n\t.if-$prop-$min {\n\t\tvisibility: visible;\n\t\tdisplay: $show;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
+      $max = $h;
+      $maxx = $max;
+      print qq{\@media (min-$prop: ${min}$unit) and (max-$prop: ${maxx}$unit) {\n\t.if-$propClass-$min-4 {\n\t\tvisibility: visible;\n\t\tdisplay: $show;\n\t}\n}\n} }' >> ~/bin/template/css/media.css
 
 
   perl -e '
@@ -109,7 +115,17 @@ body {
 	overflow: hidden;
 }
 
-/* default is to hide anything media related */
+/*
+  default is to hide anything media related.
+  some queries require you to use this class with them:
+  media if-width-100
+  media if-color-index
+  media if-monochrome
+  and others are just used on their own:
+  if-color-capable
+  if-color
+  no-screen
+*/
 .media {
 	visibility: hidden;
 	display: none;
@@ -259,6 +275,38 @@ body {
 		visibility: hidden;
 	}
 }
+
+/* === tv scan mode ===================================================== */
+@media tv and (scan: progressive), not tv {
+	.if-interlace,
+	.no-progressive {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+@media tv and (scan: interlace), not tv {
+	.if-progressive,
+	.no-interlace {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* === grid device ====================================================== */
+/* a tty or phone with a single font display of rows x cols*/
+@media (grid) {
+	.if-grid {
+		display: inline-block;
+		visibility: visible;
+	}
+	.no-grid {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+/* === orientation and aspect =========================================== */
 @media (orientation: portrait) {
 	.if-landscape,
 	.no-portrait {
@@ -271,6 +319,372 @@ body {
 	.no-landscape {
 		display: none;
 		visibility: hidden;
+	}
+}
+
+/* window aspect ratio ranges */
+@media (max-aspect-ratio: 1/4) {
+	.if-aspect-under-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 1/4) and (max-aspect-ratio: 2/4) {
+	.if-aspect-over-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 2/4) and (max-aspect-ratio: 3/4) {
+	.if-aspect-over-2-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 3/4) and (max-aspect-ratio: 4/4) {
+	.if-aspect-over-3-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 4/4) and (max-aspect-ratio: 5/4) {
+	.if-aspect-over-4-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 5/4) and (max-aspect-ratio: 6/4) {
+	.if-aspect-over-5-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 6/4) and (max-aspect-ratio: 7/4) {
+	.if-aspect-over-6-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 7/4) and (max-aspect-ratio: 8/4) {
+	.if-aspect-over-7-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 8/4) and (max-aspect-ratio: 9/4) {
+	.if-aspect-over-8-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 9/4) and (max-aspect-ratio: 10/4) {
+	.if-aspect-over-9-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 10/4) and (max-aspect-ratio: 11/4) {
+	.if-aspect-over-10-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 11/4) and (max-aspect-ratio: 12/4) {
+	.if-aspect-over-11-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 12/4) and (max-aspect-ratio: 13/4) {
+	.if-aspect-over-12-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 13/4) and (max-aspect-ratio: 14/4) {
+	.if-aspect-over-13-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 14/4) and (max-aspect-ratio: 15/4) {
+	.if-aspect-over-14-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 15/4) and (max-aspect-ratio: 16/4) {
+	.if-aspect-over-15-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-aspect-ratio: 16/4) {
+	.if-aspect-over-16-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
+/* deprecated for privacy / securty issues */
+/* device aspect ratios, exact */
+/* 1.0 1920x1920 air traffic */
+@media (device-aspect-ratio: 1/1) {
+	.no-dev-aspect-1-1 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-1-1 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.25 1280x1024 */
+@media (device-aspect-ratio: 5/4) {
+	.no-dev-aspect-5-4 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-5-4 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.3_ 320x240, 640x480 CGA/VGA */
+@media (device-aspect-ratio: 4/3) {
+	.no-dev-aspect-4-3 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-4-3 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.5 1152x768 */
+@media (device-aspect-ratio: 3/2) {
+	.no-dev-aspect-3-2 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-3-2 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.6 1280x800, 1440x900, 1680x1050, 1920x1200 */
+@media (device-aspect-ratio: 16/10) {
+	.no-dev-aspect-16-10 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-16-10 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.7_ 1920x1080 */
+@media (device-aspect-ratio: 16/9) {
+	.no-dev-aspect-16-9 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-16-9 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 1.8962_9_6_ 4096x2160 digital camera 4K */
+@media (device-aspect-ratio: 256/135) {
+	.no-dev-aspect-256-135 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-256-135 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.175 3840x1600 anamorphic film */
+@media (device-aspect-ratio: 12/5) {
+	.no-dev-aspect-12-5 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-12-5 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.25 4320x1920 3-monitor aircraft display */
+@media (device-aspect-ratio: 9/4) {
+	.no-dev-aspect-9-4 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-9-4 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.3_ anamorphic film */
+@media (device-aspect-ratio: 21/9) {
+	.no-dev-aspect-21-9 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-21-9 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.3_7_0_ 2560x1080 anamorphic film */
+@media (device-aspect-ratio: 64/27) {
+	.no-dev-aspect-64-27 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-64-27 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 2.38_ 3440x1440 anamorphic film */
+@media (device-aspect-ratio: 43/18) {
+	.no-dev-aspect-43-18 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-43-18 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* 3.5_ 3480x1080 curved gaming */
+@media (device-aspect-ratio: 32/9) {
+	.no-dev-aspect-32-9 {
+		display: none;
+		visibility: hidden;
+	}
+	.if-dev-aspect-32-9 {
+		display: inline-block;
+		visibility: visible;
+	}
+}
+
+/* device aspect ratio ranges (deprecated) */
+@media (max-device-aspect-ratio: 1/4) {
+	.if-dev-aspect-under-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 1/4) and (max-device-aspect-ratio: 2/4) {
+	.if-dev-aspect-over-1-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 2/4) and (max-device-aspect-ratio: 3/4) {
+	.if-dev-aspect-over-2-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 3/4) and (max-device-aspect-ratio: 4/4) {
+	.if-dev-aspect-over-3-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 4/4) and (max-device-aspect-ratio: 5/4) {
+	.if-dev-aspect-over-4-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 5/4) and (max-device-aspect-ratio: 6/4) {
+	.if-dev-aspect-over-5-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 6/4) and (max-device-aspect-ratio: 7/4) {
+	.if-dev-aspect-over-6-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 7/4) and (max-device-aspect-ratio: 8/4) {
+	.if-dev-aspect-over-7-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 8/4) and (max-device-aspect-ratio: 9/4) {
+	.if-dev-aspect-over-8-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 9/4) and (max-device-aspect-ratio: 10/4) {
+	.if-dev-aspect-over-9-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 10/4) and (max-device-aspect-ratio: 11/4) {
+	.if-dev-aspect-over-10-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 11/4) and (max-device-aspect-ratio: 12/4) {
+	.if-dev-aspect-over-11-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 12/4) and (max-device-aspect-ratio: 13/4) {
+	.if-dev-aspect-over-12-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 13/4) and (max-device-aspect-ratio: 14/4) {
+	.if-dev-aspect-over-13-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 14/4) and (max-device-aspect-ratio: 15/4) {
+	.if-dev-aspect-over-14-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 15/4) and (max-device-aspect-ratio: 16/4) {
+	.if-dev-aspect-over-15-4 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-device-aspect-ratio: 16/4) {
+	.if-dev-aspect-over-16-4 {
+		visibility: visible;
+		display: inline-block;
 	}
 }
 
@@ -1095,6 +1509,21 @@ body {
 }
 
 /* === color ============================================================ */
+
+/* checks if either color or color-index is supported. */
+@media (color),(min-color-index: 1) {
+	.no-color-capable {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (not color) and (max-color-index: 0) {
+	.if-color-capable {
+		display: none;
+		visibility: hidden;
+	}
+}
+
 @media (color) {
 	.no-color {
 		display: none;
@@ -1156,10 +1585,77 @@ body {
 	}
 }
 
+/* === color-index ====================================================== */
+/*
+  Despite the W3C specs color-index does not work in Google Chrome.
+  color-index appears to be both true and false, but there is a workaround
+*/
+@media (color-index) {
+	.no-color-index {
+		display: none;
+		visibility: hidden;
+	}
+}
+/* this query does not work, use >= 1 test for detection. see below */
+@media (not color-index) {
+	.if-color-index-does-not-work {
+		display: none;
+		visibility: hidden;
+	}
+}
+@media (min-color-index: 1) {
+	.if-color-index {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 1) and (max-color-index: 7) {
+	.if-color-index,.if-color-index-1 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 8) and (max-color-index: 15) {
+	.if-color-index-8 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 16) and (max-color-index: 31) {
+	.if-color-index-16 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 32) and (max-color-index: 63) {
+	.if-color-index-32 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 64) and (max-color-index: 127) {
+	.if-color-index-64 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 128) and (max-color-index: 255) {
+	.if-color-index-128 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+@media (min-color-index: 256) {
+	.if-color-index-256 {
+		visibility: visible;
+		display: inline-block;
+	}
+}
+
 /* === monochrome ============================================================ */
 /*
   Despite the W3C specs monochrome does not work in Google Chrome.
-  monochrome appears to be both true and false
+  monochrome appears to be both true and false, but there is a workaround.
 */
 @media (monochrome) {
 	.no-monochrome {
@@ -1167,10 +1663,17 @@ body {
 		visibility: hidden;
 	}
 }
+/* this query does not work, use >=1 bit for detection. see below. */
 @media (not monochrome) {
-	.if-monochrome {
+	.if-monochrome-does-not-work {
 		display: none;
 		visibility: hidden;
+	}
+}
+@media (min-monochrome: 1) {
+	.if-monochrome {
+		visibility: visible;
+		display: inline-block;
 	}
 }
 @media (min-monochrome: 1) and (max-monochrome: 7) {
@@ -1217,66 +1720,6 @@ body {
 }
 @media (min-monochrome: 64) {
 	.if-monochrome-64 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-
-/* === color-index ====================================================== */
-/*
-  Despite the W3C specs color-index does not work in Google Chrome.
-  color-index appears to be both true and false
-*/
-@media (color-index) {
-	.no-color-index {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (not color-index) {
-	.if-color-index {
-		display: none;
-		visibility: hidden;
-	}
-}
-@media (min-color-index: 1) and (max-color-index: 7) {
-	.if-color-index-1 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 8) and (max-color-index: 15) {
-	.if-color-index-8 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 16) and (max-color-index: 31) {
-	.if-color-index-16 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 32) and (max-color-index: 63) {
-	.if-color-index-32 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 64) and (max-color-index: 127) {
-	.if-color-index-64 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 128) and (max-color-index: 255) {
-	.if-color-index-128 {
-		visibility: visible;
-		display: inline-block;
-	}
-}
-@media (min-color-index: 256) {
-	.if-color-index-256 {
 		visibility: visible;
 		display: inline-block;
 	}
