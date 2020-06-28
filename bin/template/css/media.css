@@ -284,7 +284,6 @@ body {
 		visibility: hidden;
 	}
 }
-
 @media tv and (scan: interlace), not tv {
 	.if-progressive,
 	.no-interlace {
@@ -1523,7 +1522,6 @@ body {
 		visibility: hidden;
 	}
 }
-
 @media (color) {
 	.no-color {
 		display: none;
@@ -1610,7 +1608,8 @@ body {
 	}
 }
 @media (min-color-index: 1) and (max-color-index: 7) {
-	.if-color-index,.if-color-index-1 {
+	.if-color-index,
+	.if-color-index-1 {
 		visibility: visible;
 		display: inline-block;
 	}
