@@ -148,6 +148,7 @@ body {
 	}
 }
 
+/* TODO this seems not to be working on tablet or phones */
 /* HTML4+ handheld */
 @media handheld {
 	.no-handheld {
