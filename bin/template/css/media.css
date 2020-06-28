@@ -164,6 +164,7 @@ body {
 }
 
 /* HTML4+ tv */
+/* TODO this has not been tested on a TV browser yet */
 @media tv {
 	.no-tv {
 		display: none;
@@ -178,6 +179,7 @@ body {
 }
 
 /* HTML4+ projection */
+/* TODO this has not been tested on a projector yet */
 @media projection {
 	.no-projection {
 		display: none;
@@ -192,6 +194,7 @@ body {
 }
 
 /* HTML4+ tty */
+/* TODO this has not been tested on a tty yet */
 @media tty {
 	.no-tty {
 		display: none;
@@ -205,9 +208,8 @@ body {
 	}
 }
 
-/*
-  HTML4+ aural, deprecated by CSS2
-*/
+/* HTML4+ aural, deprecated by CSS2 */
+/* TODO this has not been tested on an aural device yet */
 @media aural {
 	.no-aural {
 		display: none;
@@ -222,6 +224,7 @@ body {
 }
 
 /* CSS2 speech */
+/* TODO this has not been tested on a speech device yet */
 @media speech {
 	.no-speech {
 		display: none;
@@ -236,6 +239,7 @@ body {
 }
 
 /* CSS2 embossed (like a tactile device) */
+/* TODO this has not been tested on an embossed device yet */
 @media embossed {
 	.no-embossed {
 		display: none;
@@ -250,6 +254,7 @@ body {
 }
 
 /* HTML4+ braille */
+/* TODO this has not been tested on a braille device yet */
 @media braille {
 	.no-braille {
 		display: none;
@@ -278,6 +283,8 @@ body {
 }
 
 /* === tv scan mode ===================================================== */
+
+/* TODO this has not been tested on a TV browser yet */
 @media tv and (scan: progressive), not tv {
 	.if-interlace,
 	.no-progressive {
@@ -295,6 +302,7 @@ body {
 
 /* === grid device ====================================================== */
 /* a tty or phone with a single font display of rows x cols*/
+/* TODO this has not been tested on a grid device yet */
 @media (grid) {
 	.if-grid {
 		display: inline-block;
@@ -1589,6 +1597,7 @@ body {
   Despite the W3C specs color-index does not work in Google Chrome.
   color-index appears to be both true and false, but there is a workaround
 */
+/* TODO this has not been tested on a color-index device yet */
 @media (color-index) {
 	.no-color-index {
 		display: none;
@@ -1657,6 +1666,7 @@ body {
   Despite the W3C specs monochrome does not work in Google Chrome.
   monochrome appears to be both true and false, but there is a workaround.
 */
+/* TODO this has not been tested on a monochrome device yet */
 @media (monochrome) {
 	.no-monochrome {
 		display: none;
