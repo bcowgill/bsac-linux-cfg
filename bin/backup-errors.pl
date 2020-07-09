@@ -10,20 +10,19 @@ Brent S.A. Cowgill
 
 =head1 SYNOPSIS
 
-backup-errors.pl --from=from-path --to=to-path file-list
+backup-errors.pl [options] --from=from-path --to=to-path file-list
 
 Given an error list of file names from a backup operation attempt to back them up again.  You can re-run until the list is finally empty if your device keeps disconnecting.
 
  Options:
-   --from           the base directory to copy files from
-   --to             the base directory to copy files to
+   --from           mandatory. the base directory to copy files from
+   --to             mandatory. the base directory to copy files to
+   --check          if specified will compute md5 checksum before copying the file
    --version        display program version
    --help -?        brief help message
    --man            full help message
 
 =head1 OPTIONS
-
-=over 8
 
 =item B<--from>
 
@@ -58,6 +57,8 @@ Given an error list of file names from a backup operation attempt to back them u
  The original file-list will be saved to a backup and a new file-list will be created for any files which failed to back up.
 
  The order that the files are backed up will be random to avoid any kind of media error which happens after a given time.
+
+ If any file is missing in the from-dir it will appear commented out in the newly written error log.  It will disappear from the file if run again while commented out.
 
 =head1 EXAMPLES
 
@@ -104,6 +105,7 @@ my $signal_received = 0;
 my %Var = (
 	rhArg => {
 		rhOpt => {
+			check   => 0,    # default checksum after copy
 			verbose => 1,    # default value for verbose
 			debug   => 0,
 			man     => 0,    # show full help page
@@ -123,6 +125,7 @@ my %Var = (
 		raOpts => [
 			"from=s",        # from directory for files to backup
 			"to=s",          # to directory for backup destination
+			"check",         # when true will checksum before it copies
 			"debug|d+",      # incremental keep specifying to increase
 			"verbose|v!",    # flag --verbose or --noverbose
 			"man",           # show manual page only
@@ -133,6 +136,7 @@ my %Var = (
 	fileName   => '<STDIN>',    # name of file
 	entireFile => '',           # entire file contents for processing
 	backupSuccess => 0,         # count of successful backups
+	backupMissing => 0,         # count of source files which were missing
 	backupFiles => {},          # map of file name to md5sum
 	backupErrors => {},          # map of files which failed to copy
 );
@@ -210,12 +214,13 @@ sub summary
 	backupFiles($errorLog);
 }
 
+# slow visible delay, used for testing critical section
 sub count
 {
 	foreach my $count (1 .. 10)
 	{
 		print "$count ...\n";
-		sleep(1); # TODO remove after testing critical section
+		sleep(1);
 	}
 }
 
@@ -245,9 +250,10 @@ sub sumUp
 	# Critical section, prevent ^C from stopping this
 	$critical_section = 1;
 	print "$Var{'backupSuccess'} files backed up.\n";
+	print "$Var{'backupMissing'} files were missing.\n";
 	my @errors = getBackupErrors();
 	print "@{[scalar(@errors)]} backup errors.\n";
-	if ($Var{'backupSuccess'})
+	if (opt('check') || $Var{'backupSuccess'} || $Var{'backupMissing'})
 	{
 		writeErrors($errorLog, \@errors);
 	}
@@ -351,7 +357,19 @@ sub backupFile
 
 	eval
 	{
-		die "$fileName not found in from-dir, cannot verify backup" unless -e $from;
+		# if file does not exist in from-dir we mark it missing in error list
+		unless (-e $from)
+		{
+			$Var{'backupMissing'}++;
+			# effectively comment out lines for files which don't exist in from-dir
+			$md5sum = $md5sum ? "#$md5sum" : "#";
+			die "$fileName not found in from-dir, cannot verify backup";
+		}
+		if (!$md5sum && opt('check'))
+		{
+				$md5sum = checkSum($from);
+				$Var{'backupFiles'}{$fileName} = $md5sum;
+		}
 		if (!-e $to)
 		{
 			createTargetDirForFile($to);
@@ -362,7 +380,7 @@ sub backupFile
 			my $targetCheckSum = checkSum($to);
 			if (!$md5sum)
 			{
-				$md5sum = md5sum($from);
+				$md5sum = checkSum($from);
 				$Var{'backupFiles'}{$fileName} = $md5sum;
 			}
 			if ($md5sum && ($md5sum ne $targetCheckSum))
@@ -378,7 +396,6 @@ sub backupFile
 
 	if ($error)
 	{
-		my $errorLine = getErrorLine($fileName);
 		error($error);
 		$Var{'backupErrors'}{$fileName} = $md5sum;
 		delete $Var{'backupFiles'}{$fileName};
