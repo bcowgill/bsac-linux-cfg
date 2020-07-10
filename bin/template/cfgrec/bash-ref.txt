@@ -1,0 +1,6 @@
+bash shell programming quick reference
+
+Rename all files with a numbered prefix.
+Demonstrates incrementing a variable (number) and padding with zeros.
+
+zeroos=000; number=0; for file in *; do count=${zeroos:${#number}:${#zeroos}}${number}; mv $file corrupt-$count-$file; number=$((number+1)); done
