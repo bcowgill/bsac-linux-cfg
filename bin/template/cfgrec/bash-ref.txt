@@ -4,3 +4,10 @@ Rename all files with a numbered prefix.
 Demonstrates incrementing a variable (number) and padding with zeros.
 
 zeroos=000; number=0; for file in *; do count=${zeroos:${#number}:${#zeroos}}${number}; mv $file corrupt-$count-$file; number=$((number+1)); done
+
+
+Rename files from IMAGE0001.AVI to front-door-001.avi preserving numbers
+
+zeroos=000; for number in 1 2 3 4 5 6 7 8 9; do count=${zeroos:${#number}:${#zeroos}}${number};  mv IMAG0$count.AVI front-door-$count.avi; done
+
+zeroos=000; for digit in 0 1 2 3 4 5 6 7 8 9; do number=1$digit; count=${zeroos:${#number}:${#zeroos}}${number}; mv IMAG0$count.AVI front-door-$count.avi; done
