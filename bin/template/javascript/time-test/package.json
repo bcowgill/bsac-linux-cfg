@@ -1,0 +1,21 @@
+{
+  "name": "time-test",
+  "version": "1.0.0",
+  "description": "A test of date time functions and forcing a particular date",
+  "main": "time-test.js",
+  "scripts": {
+    "test": "./go.sh"
+  },
+  "keywords": [
+    "timemachine",
+    "moment",
+    "date-fns"
+  ],
+  "author": "Brent S.A. Cowgill",
+  "license": "ISC",
+  "devDependencies": {
+    "date-fns": "^2.14.0",
+    "moment": "^2.27.0",
+    "timemachine": "^0.3.1"
+  }
+}

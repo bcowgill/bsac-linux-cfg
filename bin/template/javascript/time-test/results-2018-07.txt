@@ -1,0 +1,94 @@
+Gathering of results from running this test.
+Should do this when DST is active and again when it is not.
+And try it in VM's with different time zones
+
+TZ=Europe/London; export TZ
+TZ=America/Vancouver; export TZ
+
+./go.sh >> results.txt 2>&1
+
+System:
+TZ=Europe/London
+date=Tue Sep 11 19:42:26 BST 2018
+Javascript:
+node=v6.11.4
+Date getTimezoneOffset  -60
+Date valueOf            1536691346578
+Date toString           Tue Sep 11 2018 19:42:26 GMT+0100 (BST)
+Date ISO String         2018-09-11T18:42:26.578Z
+Date JSON               2018-09-11T18:42:26.578Z
+Date UTC String         Tue, 11 Sep 2018 18:42:26 GMT
+Date GMT String         Tue, 11 Sep 2018 18:42:26 GMT
+Date String             Tue Sep 11 2018
+Date Time String        19:42:26 GMT+0100 (BST)
+Date Locale Date String 9/11/2018
+Date Locale String      9/11/2018, 7:42:26 PM
+check Date constructor
+OK - 1. should default to Thu, 01 Jan 1970 00:00:00 GMT
+OK - 2. should now be set to December 25, 1991 12:12:59 via GMT dateString
+OK - 3. should now be set to December 25, 1991 12:12:59 via timestamp
+OK - 4. should stay the same for instantiation with millisecond param
+OK - 5. should now be set to December 25, 1991 12:12:59 via localtime dateString
+OK - 6. should now be set to December 25, 1991 12:12:59 via localtime dateString to GMT conversion
+OK - 7. should now be set to December 25, 1991 12:12:59 via localtime dateString to Date String
+OK - 8. should check time zone offset -- will fail based on active DST status??
+8 tests, 8 passed, 0 failed
+
+System:
+TZ=America/Vancouver
+date=Tue Sep 11 11:50:58 PDT 2018
+Javascript:
+node=v6.11.4
+Date getTimezoneOffset  420
+Date valueOf            1536691858648
+Date toString           Tue Sep 11 2018 11:50:58 GMT-0700 (PDT)
+Date ISO String         2018-09-11T18:50:58.648Z
+Date JSON               2018-09-11T18:50:58.648Z
+Date UTC String         Tue, 11 Sep 2018 18:50:58 GMT
+Date GMT String         Tue, 11 Sep 2018 18:50:58 GMT
+Date String             Tue Sep 11 2018
+Date Time String        11:50:58 GMT-0700 (PDT)
+Date Locale Date String 9/11/2018
+Date Locale String      9/11/2018, 11:50:58 AM
+check Date constructor
+OK - 1. should default to Thu, 01 Jan 1970 00:00:00 GMT
+OK - 2. should now be set to December 25, 1991 12:12:59 via GMT dateString
+OK - 3. should now be set to December 25, 1991 12:12:59 via timestamp
+OK - 4. should stay the same for instantiation with millisecond param
+5. should now be set to December 25, 1991 12:12:59 via localtime dateString { AssertionError: 'Wed, 25 Dec 1991 20:12:59 GMT' == 'Wed, 25 Dec 1991 12:12:59 GMT'
+    at test (/home/me/workspace/play/timemachine/go.js:79:10)
+    at test (/home/me/workspace/play/timemachine/go.js:34:3)
+    at Object.<anonymous> (/home/me/workspace/play/timemachine/go.js:75:1)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.runMain (module.js:604:10)
+    at run (bootstrap_node.js:383:7)
+  name: 'AssertionError',
+  actual: 'Wed, 25 Dec 1991 20:12:59 GMT',
+  expected: 'Wed, 25 Dec 1991 12:12:59 GMT',
+  operator: '==',
+  message: '\'Wed, 25 Dec 1991 20:12:59 GMT\' == \'Wed, 25 Dec 1991 12:12:59 GMT\'',
+  generatedMessage: true }
+OK - 6. should now be set to December 25, 1991 12:12:59 via localtime dateString to GMT conversion
+OK - 7. should now be set to December 25, 1991 12:12:59 via localtime dateString to Date String
+8. should check time zone offset -- will fail based on active DST status?? { AssertionError: 480 == 0
+    at test (/home/me/workspace/play/timemachine/go.js:102:10)
+    at test (/home/me/workspace/play/timemachine/go.js:34:3)
+    at Object.<anonymous> (/home/me/workspace/play/timemachine/go.js:99:1)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.runMain (module.js:604:10)
+    at run (bootstrap_node.js:383:7)
+  name: 'AssertionError',
+  actual: 480,
+  expected: 0,
+  operator: '==',
+  message: '480 == 0',
+  generatedMessage: true }
+8 tests, 6 passed, 2 failed
