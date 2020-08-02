@@ -34,6 +34,12 @@
       <dia:boolean val="false"/>
     </dia:attribute>
   </dia:window>
+  <dia:list role="color-menu">
+    <dia:attribute name="listvalue">
+      <dia:string>##D8E5E5
+#000099#</dia:string>
+    </dia:attribute>
+  </dia:list>
   <dia:list role="sheets">
     <dia:attribute name="listvalue">
       <dia:string>##</dia:string>
@@ -207,7 +213,7 @@
   </dia:boolean>
   <dia:boolean role="is_portrait">
     <dia:attribute name="booleanvalue">
-      <dia:boolean val="true"/>
+      <dia:boolean val="false"/>
     </dia:attribute>
   </dia:boolean>
   <dia:boolean role="diagram_tree_save_hidden">
