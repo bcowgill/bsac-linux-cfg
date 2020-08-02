@@ -245,7 +245,7 @@
   </dia:boolean>
   <dia:boolean role="is_portrait">
     <dia:attribute name="booleanvalue">
-      <dia:boolean val="true"/>
+      <dia:boolean val="false"/>
     </dia:attribute>
   </dia:boolean>
   <dia:boolean role="diagram_tree_save_hidden">
