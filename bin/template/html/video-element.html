@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<!-- TODO programmable loop video from start position to end position -->
+<html>
+<head>
+<style>
+.hidden {
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+}
+video {
+	width: 800px;
+}
+</style>
+</head>
+<body onkeyup="keyUp(window.event)">
+<h1 class="update"></h1>
+<h2 class="status"></h2>
+<button class="pause" onclick="pauseMe()">pause</button>
+<button class="slow" onclick="slowMe()">slow</button>
+<button class="normal" onclick="normalMe()">normal</button>
+<button class="fast" onclick="fastMe()">fast</button>
+<button class="start" onclick="startMe()">|&lt;</button>
+<button class="back" onclick="backMe()">&lt;&lt;</button>
+<button class="forward" onclick="forwardMe()">&gt;&gt;</button>
+
+<div>
+<video onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./bb.webm" loop="" autoplay="" muted="" preload="metadata" controls=""
+poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAGgAAACIAAABAAAAAdAAAAJwAAACoAAAAsAAAALoAAAC9AAAAvAAAALYAAACtAAAAgAAAADgAAAAOAAAAjAAAALgAAADoMTEx8rW1tf39/f3////////////MzMz+/////8zMzP7/////0NDQ+gAAAMIAAABxAAAALQAAAKqZmZm3AAAA3czBvv/s6+v/Z15Y/3VoY///////zMzM/v/////MzMz+/////9jY2P0+Pj7lHx8frAAAAFcBAQGhAAAApAAAANbx7+7/1dLR/zUiG/9IMyr/2tjX/6ampvz/////zMzM/vX19f///////////3R0dNMAAAB5AQEBnqCgoLUAAADQ0MbC//Du7f9yZV7/bmBZ/2dbVf80NDT2/////83Nzf20tLT07u7u/FhYWN1SUlLOMzMznwEBAZoAAACbAAAAxaqJd//RyML//f39////////////zMzM///////MzMz+Li4u9bKysvv8/Pz//////5OTk90BAQGXqKiosgAAAL41NTXaHBwc2gAAAPIRERH0AAAA+SwdGv+Le3X/SjYr/7+Tfv+4l4n/AAAA33BwcMYAAAC2AQEBkwEBAZMAAAC4y6SN/8ehhf+7m4v/t52N/7eLbv88KSL/Vzku/1Y4Lf/Ok3r/06aQ/wAAAMwAAACkAAAAowEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/QjEo/7mmnP9fRDX/15l4/9GTc/8BAQHFpqamswEBAZ4BAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/0IyKf9eQjP/XUAx/8+ObP/NjWz/AQEBwAEBAZoBAQGaAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8SEhLyiYmJ8gEBAegAAADMAAAAzAEBAbypqamyAQEBlwEBAWgBAQGKAQEBrAEBAawBAQGsAQEB3AEBAdwBAQHoRTgw/19NQP90Yln/vqOT/76Rc/8BAQG4AQEBkwEBAZMAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/AQEBtK2trbEBAQGQAAAAAAAAAAAAAAAAAAAAAAAAAAABAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/wEBAbEBAQGOAQEBjgAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8BAQGur6+vsAEBAYsAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAWgBAQGKAQEBrAEBAawBAQGsAQEBrAEBAawBAQGsAQEBrAEBAYoBAQFo+AMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA+AAAAPgAAAD4AAAA/AEAAA=="
+>Your browser does not support the video tag.</video>
+
+<video onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./bl.webm" loop="" autoplay="" muted=""
+poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAGgAAACIAAABAAAAAdAAAAJwAAACoAAAAsAAAALoAAAC9AAAAvAAAALYAAACtAAAAgAAAADgAAAAOAAAAjAAAALgAAADoMTEx8rW1tf39/f3////////////MzMz+/////8zMzP7/////0NDQ+gAAAMIAAABxAAAALQAAAKqZmZm3AAAA3czBvv/s6+v/Z15Y/3VoY///////zMzM/v/////MzMz+/////9jY2P0+Pj7lHx8frAAAAFcBAQGhAAAApAAAANbx7+7/1dLR/zUiG/9IMyr/2tjX/6ampvz/////zMzM/vX19f///////////3R0dNMAAAB5AQEBnqCgoLUAAADQ0MbC//Du7f9yZV7/bmBZ/2dbVf80NDT2/////83Nzf20tLT07u7u/FhYWN1SUlLOMzMznwEBAZoAAACbAAAAxaqJd//RyML//f39////////////zMzM///////MzMz+Li4u9bKysvv8/Pz//////5OTk90BAQGXqKiosgAAAL41NTXaHBwc2gAAAPIRERH0AAAA+SwdGv+Le3X/SjYr/7+Tfv+4l4n/AAAA33BwcMYAAAC2AQEBkwEBAZMAAAC4y6SN/8ehhf+7m4v/t52N/7eLbv88KSL/Vzku/1Y4Lf/Ok3r/06aQ/wAAAMwAAACkAAAAowEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/QjEo/7mmnP9fRDX/15l4/9GTc/8BAQHFpqamswEBAZ4BAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/0IyKf9eQjP/XUAx/8+ObP/NjWz/AQEBwAEBAZoBAQGaAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8SEhLyiYmJ8gEBAegAAADMAAAAzAEBAbypqamyAQEBlwEBAWgBAQGKAQEBrAEBAawBAQGsAQEB3AEBAdwBAQHoRTgw/19NQP90Yln/vqOT/76Rc/8BAQG4AQEBkwEBAZMAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/AQEBtK2trbEBAQGQAAAAAAAAAAAAAAAAAAAAAAAAAAABAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/wEBAbEBAQGOAQEBjgAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8BAQGur6+vsAEBAYsAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAWgBAQGKAQEBrAEBAawBAQGsAQEBrAEBAawBAQGsAQEBrAEBAYoBAQFo+AMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA+AAAAPgAAAD4AAAA/AEAAA=="
+>Your browser does not support the video tag.</video>
+
+<video onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./bt.webm" loop="" autoplay="" muted=""
+poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAGgAAACIAAABAAAAAdAAAAJwAAACoAAAAsAAAALoAAAC9AAAAvAAAALYAAACtAAAAgAAAADgAAAAOAAAAjAAAALgAAADoMTEx8rW1tf39/f3////////////MzMz+/////8zMzP7/////0NDQ+gAAAMIAAABxAAAALQAAAKqZmZm3AAAA3czBvv/s6+v/Z15Y/3VoY///////zMzM/v/////MzMz+/////9jY2P0+Pj7lHx8frAAAAFcBAQGhAAAApAAAANbx7+7/1dLR/zUiG/9IMyr/2tjX/6ampvz/////zMzM/vX19f///////////3R0dNMAAAB5AQEBnqCgoLUAAADQ0MbC//Du7f9yZV7/bmBZ/2dbVf80NDT2/////83Nzf20tLT07u7u/FhYWN1SUlLOMzMznwEBAZoAAACbAAAAxaqJd//RyML//f39////////////zMzM///////MzMz+Li4u9bKysvv8/Pz//////5OTk90BAQGXqKiosgAAAL41NTXaHBwc2gAAAPIRERH0AAAA+SwdGv+Le3X/SjYr/7+Tfv+4l4n/AAAA33BwcMYAAAC2AQEBkwEBAZMAAAC4y6SN/8ehhf+7m4v/t52N/7eLbv88KSL/Vzku/1Y4Lf/Ok3r/06aQ/wAAAMwAAACkAAAAowEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/QjEo/7mmnP9fRDX/15l4/9GTc/8BAQHFpqamswEBAZ4BAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/0IyKf9eQjP/XUAx/8+ObP/NjWz/AQEBwAEBAZoBAQGaAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8SEhLyiYmJ8gEBAegAAADMAAAAzAEBAbypqamyAQEBlwEBAWgBAQGKAQEBrAEBAawBAQGsAQEB3AEBAdwBAQHoRTgw/19NQP90Yln/vqOT/76Rc/8BAQG4AQEBkwEBAZMAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/AQEBtK2trbEBAQGQAAAAAAAAAAAAAAAAAAAAAAAAAAABAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/wEBAbEBAQGOAQEBjgAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8BAQGur6+vsAEBAYsAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAWgBAQGKAQEBrAEBAawBAQGsAQEBrAEBAawBAQGsAQEBrAEBAYoBAQFo+AMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA+AAAAPgAAAD4AAAA/AEAAA=="
+>Your browser does not support the video tag.</video>
+
+<!--
+<video ontimeupdate="onTimeChange('ontimeupdate')" onprogress="onProblem('onprogress')" onplay="onProblem('onplay')" onplaying="onProblem('onplaying')" onloadstart="onProblem('onloadstart')" onloadeddata="onProblem('onloadeddata')" onloadedmetadata="onProblem('onloadedmetadata')" onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./ars.mp4" loop="" autoplay="" muted=""
+-->
+<video ontimeupdate="onTimeChangeLoop('ontimeupdate')" onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOkLoop()" src="./ars.mp4" loop="" autoplay="" muted=""
+poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAGgAAACIAAABAAAAAdAAAAJwAAACoAAAAsAAAALoAAAC9AAAAvAAAALYAAACtAAAAgAAAADgAAAAOAAAAjAAAALgAAADoMTEx8rW1tf39/f3////////////MzMz+/////8zMzP7/////0NDQ+gAAAMIAAABxAAAALQAAAKqZmZm3AAAA3czBvv/s6+v/Z15Y/3VoY///////zMzM/v/////MzMz+/////9jY2P0+Pj7lHx8frAAAAFcBAQGhAAAApAAAANbx7+7/1dLR/zUiG/9IMyr/2tjX/6ampvz/////zMzM/vX19f///////////3R0dNMAAAB5AQEBnqCgoLUAAADQ0MbC//Du7f9yZV7/bmBZ/2dbVf80NDT2/////83Nzf20tLT07u7u/FhYWN1SUlLOMzMznwEBAZoAAACbAAAAxaqJd//RyML//f39////////////zMzM///////MzMz+Li4u9bKysvv8/Pz//////5OTk90BAQGXqKiosgAAAL41NTXaHBwc2gAAAPIRERH0AAAA+SwdGv+Le3X/SjYr/7+Tfv+4l4n/AAAA33BwcMYAAAC2AQEBkwEBAZMAAAC4y6SN/8ehhf+7m4v/t52N/7eLbv88KSL/Vzku/1Y4Lf/Ok3r/06aQ/wAAAMwAAACkAAAAowEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/QjEo/7mmnP9fRDX/15l4/9GTc/8BAQHFpqamswEBAZ4BAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/0IyKf9eQjP/XUAx/8+ObP/NjWz/AQEBwAEBAZoBAQGaAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8SEhLyiYmJ8gEBAegAAADMAAAAzAEBAbypqamyAQEBlwEBAWgBAQGKAQEBrAEBAawBAQGsAQEB3AEBAdwBAQHoRTgw/19NQP90Yln/vqOT/76Rc/8BAQG4AQEBkwEBAZMAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/AQEBtK2trbEBAQGQAAAAAAAAAAAAAAAAAAAAAAAAAAABAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/wEBAbEBAQGOAQEBjgAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8BAQGur6+vsAEBAYsAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAWgBAQGKAQEBrAEBAawBAQGsAQEBrAEBAawBAQGsAQEBrAEBAYoBAQFo+AMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA+AAAAPgAAAD4AAAA/AEAAA=="
+>Your browser does not support the video tag.</video>
+
+<video onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./ca.mp4" loop="" autoplay="" muted=""
+poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAGgAAACIAAABAAAAAdAAAAJwAAACoAAAAsAAAALoAAAC9AAAAvAAAALYAAACtAAAAgAAAADgAAAAOAAAAjAAAALgAAADoMTEx8rW1tf39/f3////////////MzMz+/////8zMzP7/////0NDQ+gAAAMIAAABxAAAALQAAAKqZmZm3AAAA3czBvv/s6+v/Z15Y/3VoY///////zMzM/v/////MzMz+/////9jY2P0+Pj7lHx8frAAAAFcBAQGhAAAApAAAANbx7+7/1dLR/zUiG/9IMyr/2tjX/6ampvz/////zMzM/vX19f///////////3R0dNMAAAB5AQEBnqCgoLUAAADQ0MbC//Du7f9yZV7/bmBZ/2dbVf80NDT2/////83Nzf20tLT07u7u/FhYWN1SUlLOMzMznwEBAZoAAACbAAAAxaqJd//RyML//f39////////////zMzM///////MzMz+Li4u9bKysvv8/Pz//////5OTk90BAQGXqKiosgAAAL41NTXaHBwc2gAAAPIRERH0AAAA+SwdGv+Le3X/SjYr/7+Tfv+4l4n/AAAA33BwcMYAAAC2AQEBkwEBAZMAAAC4y6SN/8ehhf+7m4v/t52N/7eLbv88KSL/Vzku/1Y4Lf/Ok3r/06aQ/wAAAMwAAACkAAAAowEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/QjEo/7mmnP9fRDX/15l4/9GTc/8BAQHFpqamswEBAZ4BAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/0IyKf9eQjP/XUAx/8+ObP/NjWz/AQEBwAEBAZoBAQGaAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8SEhLyiYmJ8gEBAegAAADMAAAAzAEBAbypqamyAQEBlwEBAWgBAQGKAQEBrAEBAawBAQGsAQEB3AEBAdwBAQHoRTgw/19NQP90Yln/vqOT/76Rc/8BAQG4AQEBkwEBAZMAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/AQEBtK2trbEBAQGQAAAAAAAAAAAAAAAAAAAAAAAAAAABAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/wEBAbEBAQGOAQEBjgAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8BAQGur6+vsAEBAYsAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAWgBAQGKAQEBrAEBAawBAQGsAQEBrAEBAawBAQGsAQEBrAEBAYoBAQFo+AMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA+AAAAPgAAAD4AAAA/AEAAA=="
+>Your browser does not support the video tag.</video>
+
+<video onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./bl.mp4" loop="" autoplay="" muted=""
+poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAAAAGgAAACIAAABAAAAAdAAAAJwAAACoAAAAsAAAALoAAAC9AAAAvAAAALYAAACtAAAAgAAAADgAAAAOAAAAjAAAALgAAADoMTEx8rW1tf39/f3////////////MzMz+/////8zMzP7/////0NDQ+gAAAMIAAABxAAAALQAAAKqZmZm3AAAA3czBvv/s6+v/Z15Y/3VoY///////zMzM/v/////MzMz+/////9jY2P0+Pj7lHx8frAAAAFcBAQGhAAAApAAAANbx7+7/1dLR/zUiG/9IMyr/2tjX/6ampvz/////zMzM/vX19f///////////3R0dNMAAAB5AQEBnqCgoLUAAADQ0MbC//Du7f9yZV7/bmBZ/2dbVf80NDT2/////83Nzf20tLT07u7u/FhYWN1SUlLOMzMznwEBAZoAAACbAAAAxaqJd//RyML//f39////////////zMzM///////MzMz+Li4u9bKysvv8/Pz//////5OTk90BAQGXqKiosgAAAL41NTXaHBwc2gAAAPIRERH0AAAA+SwdGv+Le3X/SjYr/7+Tfv+4l4n/AAAA33BwcMYAAAC2AQEBkwEBAZMAAAC4y6SN/8ehhf+7m4v/t52N/7eLbv88KSL/Vzku/1Y4Lf/Ok3r/06aQ/wAAAMwAAACkAAAAowEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/QjEo/7mmnP9fRDX/15l4/9GTc/8BAQHFpqamswEBAZ4BAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/0IyKf9eQjP/XUAx/8+ObP/NjWz/AQEBwAEBAZoBAQGaAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8SEhLyiYmJ8gEBAegAAADMAAAAzAEBAbypqamyAQEBlwEBAWgBAQGKAQEBrAEBAawBAQGsAQEB3AEBAdwBAQHoRTgw/19NQP90Yln/vqOT/76Rc/8BAQG4AQEBkwEBAZMAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAZCtra2xAQEBtMebiP/Bk33/v52L/7WVgf+mcFb/AQEBtK2trbEBAQGQAAAAAAAAAAAAAAAAAAAAAAAAAAABAQGOAQEBjgEBAbHNqpP/yKKI/8afhv+/lnz/q3pj/wEBAbEBAQGOAQEBjgAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBi6+vr7ABAQGu0KuW/8+pkv/OqJD/zqeP/86okf8BAQGur6+vsAEBAYsAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAWgBAQGKAQEBrAEBAawBAQGsAQEBrAEBAawBAQGsAQEBrAEBAYoBAQFo+AMAAAADAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA+AAAAPgAAAD4AAAA/AEAAA=="
+>Your browser does not support the video tag.</video>
+
+<div>
+
+<button class="pause" onclick="pauseMe()">pause</button>
+<button class="slow" onclick="slowMe()">slow</button>
+<button class="normal" onclick="normalMe()">normal</button>
+<button class="fast" onclick="fastMe()">fast</button>
+<button class="start" onclick="startMe()">|&lt;</button>
+<button class="back" onclick="backMe()">&lt;&lt;</button>
+<button class="forward" onclick="forwardMe()">&gt;&gt;</button>
+
+<script>
+const videos = document.querySelectorAll('video');
+const pauseButton = document.querySelectorAll('.pause');
+const statusArea = document.querySelectorAll('.status');
+const updateArea = document.querySelectorAll('.update');
+const BACK = 0.1;
+const SLOW = 0.1;
+const NORMAL = 0.3;
+const FAST = 1;
+const HELP = 'Keys control all videos: b s n f p &lt; &gt;';
+
+// programmable loop from 25% to 75% of the video
+const LOOP_START = 0.25;
+const LOOP_END = 0.75;
+
+// loop positions in seconds once video duration is known
+let loop_start;
+let loop_end;
+
+let pause = false;
+let rate = NORMAL;
+let status = HELP;
+let update = '';
+let log = false;
+
+function setTime(dom, time = 0) {
+	if (isVideoOk(dom)) {
+		const src = dom.src.replace(/^.+\//,'');
+		// console.warn(`setTime ${src} ${time}`)
+		dom.pause();
+		dom.currentTime = time;
+		dom.play();
+	}
+}
+
+function setStatus(dom) {
+	dom.innerHTML = status;
+}
+
+function setUpdate(dom) {
+	dom.innerHTML = update;
+}
+
+function setRate(dom) {
+	if (isVideoOk(dom)) {
+		dom.playbackRate = rate;
+	}
+}
+
+function setPause(dom) {
+	const label = pause ? "play": "pause";
+	dom.innerHTML = label;
+}
+
+function setStart(dom) {
+	setTime(dom)
+}
+
+function setBack(dom) {
+	let now = dom.currentTime;
+	now = now < BACK ? 0: now - BACK;
+	setTime(dom, now);
+}
+
+function setForward(dom) {
+	let now = dom.currentTime;
+	now = now + BACK;
+	setTime(dom, now);
+}
+
+function isVideoOk(dom) {
+	return (!isNaN(dom.duration) && dom.networkState !== dom.NETWORK_NO_SOURCE);
+}
+
+function checkVideo(dom) {
+	// console.warn('video', dom.src.replace(/^.+\//,''), dom.readyState, dom.networkState, dom.duration, dom.currentTime);
+	if (first && isNaN(dom.duration) && dom.networkState === dom.NETWORK_NO_SOURCE) {
+		errors = true;
+		const name = dom.src.replace(/^.+\//,'');
+		dom.className = 'hidden';
+		changeStatus(`Video ${name} hidden error ${dom.error.code}: ${dom.error.message}`);
+	}
+}
+
+function speed(playrate = rate / 2) {
+	rate = playrate;
+	if (playrate) {
+		pause = false;
+	}
+	videos.forEach(setRate);
+	pauseButton.forEach(setPause);
+}
+function pauseMe() {
+	if (!pause) {
+		pause = rate;
+		speed(0);
+	}
+	else {
+		speed(pause)
+	}
+	pauseButton.forEach(setPause);
+}
+
+function changeStatus(message = '') {
+	status = message;
+	statusArea.forEach(setStatus);
+}
+
+function changeUpdate(message = '') {
+	update = message;
+	updateArea.forEach(setUpdate);
+}
+
+function slowMe() {
+	speed(SLOW)
+}
+
+function normalMe() {
+	speed(NORMAL)
+}
+
+function fastMe() {
+	speed(FAST)
+}
+
+function startMe() {
+	videos.forEach(setStart);
+}
+
+function backMe() {
+	videos.forEach(setBack);
+}
+
+function forwardMe() {
+	videos.forEach(setForward);
+}
+
+function hideVideos() {
+	videos.forEach(checkVideo);
+}
+
+function onProblem(which) {
+	if (which) {
+	//	console.warn(which)
+	}
+	checkVideo(window.event.target);
+	// hideVideos();
+}
+
+function round(value = 0, points = 2) {
+	const decimals = Math.pow(10, points);
+	return Math.round(decimals * value) / decimals;
+}
+
+function percentage(value = 0, points) {
+	return round(value * 100, points) + '%';
+}
+
+function seconds(value = 0, points) {
+	return round(value, points) + 's';
+}
+
+function onTimeChange() {
+	const dom = window.event.target;
+	const src = dom.src.replace(/^.+\//,'');
+	const duration = seconds(dom.duration);
+	const now = seconds(dom.currentTime);
+	const percent = percentage(dom.currentTime / dom.duration);
+	const loop = dom.loop ? 'LOOP ': '';
+	const volume = dom.muted ? 'MUTE' : `${percentage(dom.volume)} VOL`;
+	const audio = dom.audioTracks && dom.audioTracks.length ? 'AUD ' : '';
+	const video = dom.videoTracks && dom.videoTracks.length ? 'VID ' : '';
+	const text = dom.textTracks && dom.textTracks.length ? 'TXT ' : '';
+
+	const info = `${volume} ${loop}${video}${audio}${text}${duration} ${percent} ${now} ${src}`;
+	// const info = `${percent} ${now} of ${duration} ${volume} ${loop}${video}${audio}${text}${src}`;
+	changeUpdate(info);
+}
+
+let errors = false;
+let first = true;
+function onTimeChangeLoop() {
+	const dom = window.event.target;
+	//console.warn(`${dom.currentTime} loop_start ${loop_start} loop_end ${loop_end}`);
+	if (isVideoOk(dom) && loop_end && dom.currentTime > loop_end) {
+		setTime(dom, loop_start);
+	}
+	onTimeChange();
+}
+
+function onOk() {
+	hideVideos();
+}
+
+function onOkLoop() {
+	// play this single video on a custom loop
+	const dom = window.event.target;
+	if (isVideoOk(dom)) {
+		if (first && errors) {
+			first = false;
+			loop_start = LOOP_START * dom.duration;
+			loop_end = LOOP_END * dom.duration;
+			setTime(dom, loop_start);
+		}
+	}
+	onOk();
+}
+
+function keyUp(event) {
+	let what = '';
+	const key = event.code;
+	const keyName = key.replace(/^Key/, '');
+	if (log) {
+		console.log('keyup', key);
+	}
+	switch (key) {
+		case "Numpad7": // Home
+		case "PageUp":
+		case "KeyB":
+			what = 'go to beginning of video.';
+			startMe();
+			break;
+		case "Numpad1": // End
+		case "KeyS":
+			what = `change play rate to slow: ${SLOW}.`;
+			slowMe()
+			break;
+		case "Numpad8": // Up
+		case "Numpad2": // Down
+		case "KeyN":
+			what = `change play rate to normal: ${NORMAL}.`;
+			normalMe()
+			break;
+		case "Numpad9": // PgUp
+		case "Numpad3": // PgDn
+		case "KeyF":
+			what = `change play rate to fast: ${FAST}.`;
+			fastMe()
+			break;
+		case "Backspace":
+		case "ArrowLeft":
+		case "Numpad4": // Left
+		case "Comma":   // '<'
+		case "BracketLeft": // { [
+		case "KeyW":
+			what = `back up ${BACK} seconds.`;
+			backMe()
+			break;
+		case "Numpad5":
+		case "Enter":
+		case "ArrowUp":
+		case "ArrowDown":
+		case "KeyP":
+		case "KeyM":
+		case "KeyQ":
+			what = `play or pause the video.`;
+			pauseMe()
+			break;
+		case "Numpad6": // Right
+		case "Period": // '>'
+		case "ArrowRight":
+		case "BracketRight": // } ]
+			what = `jump forward ${BACK} seconds.`;
+			forwardMe()
+			break;
+		case "Tab":
+		case "CapsLock":
+		case "ShiftLeft":
+		case "ShiftRight":
+		case "ControlLeft":
+		case "ControlRight":
+		case "AltLeft":
+		case "AltRight":
+		case "MetaLeft":
+		case "MetaRight":
+		case "KeyR": // reload
+			what = 'meta';
+			break;
+		case "KeyL":
+			what = 'toggle console log.'
+			log = !log;
+			break;
+		case "Slash":
+		case "KeyH":
+			what = HELP;
+			break;
+		default:
+			changeStatus();
+			break;
+	}
+	if (what && what !== 'meta') {
+		changeStatus(`Key pressed: ${keyName} - ${what}`);
+	}
+	if (what === HELP) {
+		changeStatus(HELP);
+	}
+}
+
+changeStatus(HELP);
+// setTimeout(hideVideos, 500)
+</script>
+</body>
+</html>
