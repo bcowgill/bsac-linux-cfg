@@ -1,5 +1,10 @@
 <!DOCTYPE HTML>
-<!-- TODO programmable loop video from start position to end position -->
+<!--
+   TODO flip horizontal/rotate buttons
+   show time as minutes / hours when needed
+   rewind 6 seconds - edit box to set how far it jumps
+   edit box to specify position by % or time code
+-->
 <html>
 <head>
 <style>
@@ -9,6 +14,7 @@
 	opacity: 0;
 }
 video {
+	transform: scaleX(1) rotate(0deg);
 	width: 800px;
 }
 </style>
@@ -23,6 +29,7 @@ video {
 <button class="start" onclick="startMe()">|&lt;</button>
 <button class="back" onclick="backMe()">&lt;&lt;</button>
 <button class="forward" onclick="forwardMe()">&gt;&gt;</button>
+<button class="mute" onclick="muteMe()">sound</button>
 
 <div>
 <video onabort="onProblem()" onerror="onProblem()" onstalled="onProblem()" oncanplay="onOk()" src="./bb.webm" loop="" autoplay="" muted="" preload="metadata" controls=""
@@ -61,12 +68,16 @@ poster="data:image/vnd.microsoft.icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAA
 <button class="start" onclick="startMe()">|&lt;</button>
 <button class="back" onclick="backMe()">&lt;&lt;</button>
 <button class="forward" onclick="forwardMe()">&gt;&gt;</button>
+<button class="mute" onclick="muteMe()">sound</button>
 
 <script>
 const videos = document.querySelectorAll('video');
+const muteButton = document.querySelectorAll('.mute');
 const pauseButton = document.querySelectorAll('.pause');
 const statusArea = document.querySelectorAll('.status');
 const updateArea = document.querySelectorAll('.update');
+const VOLUME = 0.5;
+const PEEP = VOLUME / 10;
 const BACK = 0.1;
 const SLOW = 0.1;
 const NORMAL = 0.3;
@@ -74,13 +85,15 @@ const FAST = 1;
 const HELP = 'Keys control all videos: b s n f p &lt; &gt;';
 
 // programmable loop from 25% to 75% of the video
-const LOOP_START = 0.25;
-const LOOP_END = 0.75;
+const LOOP_START = 0.5; // 0.25
+const LOOP_END = 1.75;  // 0.75
 
 // loop positions in seconds once video duration is known
 let loop_start;
 let loop_end;
 
+let muted = VOLUME;
+let volume = 0;
 let pause = false;
 let rate = NORMAL;
 let status = HELP;
@@ -111,8 +124,25 @@ function setRate(dom) {
 	}
 }
 
+function setVolume(dom) {
+	if (isVideoOk(dom)) {
+		dom.volume = volume;
+		if (volume) {
+			dom.muted = false;
+		}
+		else {
+			dom.muted = true;
+		}
+	}
+}
+
 function setPause(dom) {
 	const label = pause ? "play": "pause";
+	dom.innerHTML = label;
+}
+
+function setMute(dom) {
+	const label = muted ? "sound": "mute";
 	dom.innerHTML = label;
 }
 
@@ -146,6 +176,15 @@ function checkVideo(dom) {
 	}
 }
 
+function sound(vol = volume / 2) {
+	volume = vol;
+	if (volume) {
+		muted = false;
+	}
+	videos.forEach(setVolume);
+	muteButton.forEach(setMute);
+}
+
 function speed(playrate = rate / 2) {
 	rate = playrate;
 	if (playrate) {
@@ -154,6 +193,31 @@ function speed(playrate = rate / 2) {
 	videos.forEach(setRate);
 	pauseButton.forEach(setPause);
 }
+
+function muteMe() {
+	if (!muted) {
+		muted = volume;
+		sound(0);
+	}
+	else {
+		sound(muted)
+	}
+}
+
+function lowerMe() {
+	if (!muted) {
+		volume = Math.max(0, volume - PEEP);
+		sound(volume);
+	}
+}
+
+function raiseMe() {
+	if (!muted) {
+		volume = Math.min(1, volume + PEEP);
+		sound(volume);
+	}
+}
+
 function pauseMe() {
 	if (!pause) {
 		pause = rate;
@@ -162,7 +226,6 @@ function pauseMe() {
 	else {
 		speed(pause)
 	}
-	pauseButton.forEach(setPause);
 }
 
 function changeStatus(message = '') {
@@ -273,11 +336,26 @@ function onOkLoop() {
 function keyUp(event) {
 	let what = '';
 	const key = event.code;
-	const keyName = key.replace(/^Key/, '');
+	const keyName = key.replace(/^(Key|Digit)/, '');
 	if (log) {
 		console.log('keyup', key);
 	}
 	switch (key) {
+		case "Minus":
+		case "NumpadSubtract":
+			what = 'lower the volume'
+			lowerMe();
+			break;
+		case "Equal":
+		case "NumpadAdd":
+			what = 'increase the volume'
+			raiseMe();
+			break;
+		case "Digit0":
+		case "Numpad0":
+			what = 'toggle sound on and off'
+			muteMe();
+			break;
 		case "Numpad7": // Home
 		case "PageUp":
 		case "KeyB":
