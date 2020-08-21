@@ -12,7 +12,7 @@
 			wget https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/html/html5.html
 			curl https://raw.githubusercontent.com/bcowgill/bsac-linux-cfg/master/bin/template/html/html5.html -o html5.html
 		-->
-		
+
 
 
 <title>Accessibility Test </title>
@@ -20,7 +20,7 @@
 
 
 <style>
-  
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -36,7 +36,11 @@
 .maybe { color: orange; }
 .ok { color: green; }
 .nobr { white-space: nowrap; }
-
+.numbers {
+	width: 0px;
+	overflow: hidden;
+	display: inline-block;
+}
 
 </style>
 	</head>
@@ -53,7 +57,7 @@
 			</noscript>
 			<!-- TODO grab accessibility stuff from html5-elements.html and test it here. -->
 			<section>
-				
+
 
 <h2>simple accessibility test</h3>
 <p>The problem is to find a way of compatibly labelling an account or phone number on screen so that an additional label can be read out and the number itself will not be read as millions but as single digits.</p>
@@ -64,7 +68,7 @@
 
 <!-- --------------------------------
 <h3>S A T </h3>
-				
+
 ================================= -->
 
 
@@ -217,18 +221,18 @@
 
 <article>
 	<h2>The tests:</h3>
-	
+
 <a id="test1" href="#"><p>Test accessibility alternative label for screen reading and mouse over on next line.</p>
 
-</a>				
+</a>
 <!-- --------------------------------
 ================================= -->
 
 <span id="accessible" class="sr-only">Account Number 1 2 3 4 5 6 7 8 </span>
-				
+
 <span aria-labelledby="accessible" aria-hidden="true">--------------------------------------------------------------------------- 12345678 </span>
 
-				
+
 <span> end test 1</span>
 <br/>
 <br/>
@@ -238,7 +242,6 @@
 
 <a href="#"><p>1) The above account number is read out digit by digit instead of as a number using <b>aria-labelledby</b> and <b>aria-hidden</b></p></a>
 
-				
 
 
 
@@ -246,10 +249,11 @@
 
 
 
- 
+
+
 <span id="test2" aria-label="Account Number 1 2 3 4 5 6 7 8 ">--------------------------------------------------------------------------- 12345678 </span>
 
-				
+
 <span> end test 2</span>
 <br/>
 <br/>
@@ -258,7 +262,7 @@
 <br/>
 
 <a href="#"><p>2) The above account number is read out digit by digit instead of as a number using <b>aria-label</b></p></a>
-			
+
 
 
 
@@ -266,10 +270,10 @@
 
 
 <span id="test3" class="sr-only">Account Number 1 2 3 4 5 6 7 8 </span>
-				
+
 <span>--------------------------------------------------------------------------- 12345678 </span>
 
-				
+
 <span> end test 3</span>
 <br/>
 <br/>
@@ -278,7 +282,6 @@
 <br/>
 
 <a href="#"><p>3) The above account number is read out digit by digit instead of as a number using <b>sr-only class</b></p></a>
-			
 
 
 
@@ -286,12 +289,57 @@
 
 
 
+<a href="#">go for 4</a>
+
+<div aria-labelledby="to-select-balance-0">
+
+<span class="sr-only" id="to-select-balance-0">Balance two thousand, five hundred pounds and sixty pence </span>
+
+<span aria-hidden="true">£2,500.60 </span>
+
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<span id="test4sortcode" class="sr-only">Sort Code </span>
+<span class="nobr">00-01-99 </span>
+
+
+<br />
+<br />
+<br />
+<br />
+<a href="#">go for SECOND</a>
+<br />
+<br />
+<br />
+<br />
+
+<span id="test4" class="sr-only">Balance </span>
+<span>£2,500.60 </span>
+<br />
+<br />
+<br />
+<br />
 
 <span id="test4" class="sr-only">Account Number </span>
-				
-<span>--------------------------------------------------------------------------- 1&#8202;2&#8202;3&#8202;4&#8202;5&#8202;6&#8202;7&#8202;8 </span>
+<span class="nobr">1&#8202;2&#8202;3&#8202;4&#8202;5&#8202;6&#8202;7&#8202;8 </span>
 
-				
+
+<span id="test4names" class="sr-only">Account Name </span>
+<!-- 3 or fewer digits in string leave as is -->
+<span class="nobr">MYACCOUNT22 </span>
+
+<span id="test4reference" class="sr-only">Reference </span>
+<!-- 4 or more digits in string separate with hair space -->
+<span class="nobr">ID6&#8202;5&#8202;4&#8202;7&#8202;9-2&#8202;3 </span>
+
+<span class="nobr">ID6<div class="numbers">&#8202;</div>5<div class="numbers">&#8202;</div>4<div class="numbers">&#8202;</div>7<div class="numbers">&#8202;</div>9-2<div class="numbers">&#8202;</div>3 </span>
+
 <span> end test 4</span>
 <br/>
 <br/>
@@ -300,7 +348,7 @@
 <br/>
 
 <a href="#"><p>4) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200A hair space entities</b></p></a>
-			
+
 
 
 
@@ -311,11 +359,11 @@
 
 
 <span id="test5" class="sr-only">Account Number </span>
-				
+
 <span>---------------------------------------------------------------------------</span>
 <span class="nobr"> 1&#8201;2&#8201;3&#8201;4&#8201;5&#8201;6&#8201;7&#8201;8 </span>
 
-				
+
 <span> end test 5</span>
 <br/>
 <br/>
@@ -325,7 +373,7 @@
 
 
 <a href="#"><p>5) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+2009 thin space entities</b></p></a>
-			
+
 
 
 
@@ -334,10 +382,10 @@
 
 
 <span id="test6" class="sr-only">Account Number </span>
-				
+
 <span>--------------------------------------------------------------------------- 1&zwj;2&zwj;3&zwj;4&zwj;5&zwj;6&zwj;7&zwj;8 </span>
 
-				
+
 <span> end test 6</span>
 <br/>
 <br/>
@@ -346,7 +394,7 @@
 <br/>
 
 <a href="#"><p>6) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200D zero width joiner entities</b></p></a>
-			
+
 
 
 
@@ -354,10 +402,10 @@
 
 
 <span id="test7" class="sr-only">Account Number </span>
-				
+
 <span>--------------------------------------------------------------------------- 1&#8203;2&#8203;3&#8203;4&#8203;5&#8203;6&#8203;7&#8203;8 </span>
 
-				
+
 <span> end test 7</span>
 <br/>
 <br/>
@@ -366,18 +414,18 @@
 <br/>
 
 <a href="#"><p>7) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200B zero width space entities</b></p></a>
-			
 
 
 
-	
+
+
 
 
 <span id="test8" class="sr-only">Account Number </span>
-				
+
 <span>--------------------------------------------------------------------------- 1&#8203;2&#8203;3&#8203;4&#8203;5&#8203;6&#8203;7&#8203;8 </span>
 
-				
+
 <span> end test 8</span>
 <br/>
 <br/>
@@ -387,7 +435,7 @@
 
 
 <a href="#"><p>8) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+200B thin space entities</b></p></a>
-			
+
 
 
 
@@ -395,10 +443,10 @@
 
 
 <span id="test9" class="sr-only">Account Number </span>
-				
+
 <span>--------------------------------------------------------------------------- 1&#10240;2&#10240;3&#10240;4&#10240;5&#10240;6&#10240;7&#10240;8 </span>
 
-				
+
 <span> end test 9</span>
 <br/>
 <br/>
@@ -407,7 +455,7 @@
 <br/>
 
 <a href="#"><p>9) The above account number is read out digit by digit instead of as a number using <b>sr-only class and U+2800 braille blank entities</b></p></a>
-			
+
 
 
 
@@ -416,10 +464,10 @@
 
 
 <span id="testA" class="sr-only">Account Number </span>
-				
+
 <span>--------------------------------------------------------------------------- <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span> </span>
 
-				
+
 <span> end test A</span>
 <br/>
 <br/>
@@ -429,7 +477,7 @@
 
 
 <a href="#"><p>A) The above account number is read out digit by digit instead of as a number using <b>sr-only class and single digit spans</b></p></a>
-			
+
 
 <!-- ------------------------------
 =============================== -->
