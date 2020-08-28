@@ -123,7 +123,7 @@ alias greh='gre --hard'
 alias ggrh='greh @{u}'
 
 alias gd='g diff'
-alias gdls='gd --name-only -- '
+alias gdls='gd --name-only'
 alias gdc='gd --cached'
 alias gdo='gdt origin/$(git_current_branch) $(git_current_branch)'
 alias gdt='gitdiffns'
