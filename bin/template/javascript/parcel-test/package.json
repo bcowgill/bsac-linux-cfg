@@ -120,7 +120,7 @@
     "fbjs": "0.8.17",
     "jest": "23.2.0",
     "jest-environment-jsdom": "23.2.0",
-    "lodash": "4.17.10",
+    "lodash": "4.17.20",
     "microtimer": "1.1.0",
     "node-sass": "4.9.0",
     "object-assign": "4.1.1",
