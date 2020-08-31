@@ -78,6 +78,11 @@ f′(t) f″(t) f‴(t) f⁗(t)
 ⎲ x⁺⁻ ⁰¹²³⁴⁵⋅⁶⁷⁸⁹ ⁱⁿ
 ⎳ ᵢⱼₖₙ₌₊₋ ₀₁₂₃₄₅₆₇₈₉
 
+ ∞
+ ⎲  1
+ ⎳  n
+n=1
+
 ∀ FOR ALL
 ∁ COMPLEMENT
 ∃ THERE EXISTS
@@ -123,6 +128,55 @@ Quadratic Equation: [-b ± √(b² -4ac)]/2a
 ↇ ROMAN NUMERAL FIFTY THOUSAND
 ↈ  ROMAN NUMERAL ONE HUNDRED THOUSAND
 
+x=4
+⌠
+⎮f(x) dx
+⌡
+x=0
+
+⎛x⎞
+⎜y⎟
+⎝z⎠
+
+⎡a⎤
+⎢b⎥
+⎣c⎦
+
+⎡1 0 ⋯  0⎤
+⎢0 1     ⎥
+⎢⋮   ⋱   ⎥
+⎣0 ⋰    1⎦
+
+⎛x⎞   ⎡1 0 ⋯  0⎤ ⎛x⎞
+⎜y⎟ = ⎢0 1     ⎥ ⎜y⎟
+⎝z⎠   ⎢⋮   ⋱   ⎥ ⎝z⎠
+      ⎣0 ⋰    1⎦
+
+
+⎧
+⎨
+⎪
+⎩
+
+
+⎫
+⎬
+⎪
+⎭
+
+⎧ ⎫
+⎨ ⎬
+⎪ ⎪
+⎩ ⎭
+
+⎰
+⎱
+
+⎱
+⎰
+
+⎰ ⎱
+⎱ ⎰
 
 
 Logic
