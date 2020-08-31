@@ -1,0 +1,140 @@
+Unicode Characters Common to Mathematics:
+
+Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω
+α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ ς σ τ υ φ χ ψ ω
+ᴦ ᴧ ᴨ ᴩ ᴪ
+
+❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ❿
+➀ ➁ ➂ ➃ ➄ ➅ ➆ ➇ ➈ ➉
+➊ ➋ ➌ ➍ ➎ ➏ ➐ ➑ ➒ ➓
+① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳
+⑴  ⑵  ⑶  ⑷  ⑸  ⑹  ⑺  ⑻  ⑼  ⑽  ⑾  ⑿  ⒀  ⒁  ⒂  ⒃  ⒄  ⒅  ⒆  ⒇
+
+
+½
+¼ ¾
+↉ ⅓ ⅔
+⅕ ⅖ ⅗ ⅘
+⅙ ⅚
+⅐
+⅛ ⅜ ⅝ ⅞
+⅑
+⅒
+⅟
+⁄ FRACTION SLASH
+
+% ﹪％ ٪
+
+xⁱⁿ
+xᵝᵞᵟᵠᵡ
+x⁺⁻ ⁰¹²³⁴⁵⋅⁶⁷⁸⁹ ⁽⁾⁼
+
+Xₐₑₕᵢⱼₖₗₘ ₙₒₚᵣₛₜᵤᵥₓₔ
+Xᵦᵧᵨᵩᵪ
+V₊₋ ₀₁₂₃₄₅₆₇₈₉ ₍₎₌
+
+⋅ × ÷ ∕ ±
+
+≅ ≤ ≥
+
+1…∞
+
+
+√() ∛() ∜()
+
+㏒
+
+° ℃  ℉
+
+‘quote’
+“double quote”
+
+£ ₤
+€
+¢ ⍧ ₵ ￠
+$ ＄ ﹩💲  💵
+
+✓ ✔ ✅
+
+✕ ✖ ✗ ✘ ❌
+
+
+1Δ ☐ ❍
+
+π ℼ 𝛑 𝜋 𝝅 𝝿 𝞹
+
+U+394 Δ
+
+∞	U+221E
+
+
+f′(t) f″(t) f‴(t) f⁗(t)
+
+⅀
+
+∑
+
+∞
+⎲ x⁺⁻ ⁰¹²³⁴⁵⋅⁶⁷⁸⁹ ⁱⁿ
+⎳ ᵢⱼₖₙ₌₊₋ ₀₁₂₃₄₅₆₇₈₉
+
+∀ FOR ALL
+∁ COMPLEMENT
+∃ THERE EXISTS
+∄ THERE DOES NOT EXIST
+∊ ∈  ELEMENT OF
+∉  NOT AN ELEMENT OF
+∍ ∋  CONTAINS AS MEMBER
+∌  DOES NOT CONTAIN AS MEMBER
+
+∅ EMPTY SET
+∆ INCREMENT
+
+∂ 𝛛 𝜕 𝝏 𝞉 𝟃
+∇ 𝛁 𝛻 𝜵 𝝯 𝞩
+∇ ⋅
+∇⨯
+⋅	U+22c5	[MathSymbol,Vectors]	DOT OPERATOR
+⨯	U+2A2F	[MathSymbol,Vector]	VECTOR OR CROSS PRODUCT
+∆	U+2206	[MathSymbol,CalculusD]	INCREMENT
+
+U+2202	[MathSymbol,CalculusD]	PARTIAL DIFFERENTIAL
+∃	U+2203	[MathSymbol,Sets]	THERE EXISTS
+∄	U+2204	[MathSymbol,Sets]	THERE DOES NOT EXIST
+∅	U+2205	[MathSymbol,Sets]	EMPTY SET
+∝ PROPORTIONAL TO
+
+Quadratic Equation: [-b ± √(b² -4ac)]/2a
+
+ⅰ ⅱ ⅲ ⅳ
+ⅴ ⅵ ⅶ ⅷ ⅸ
+ⅹ ⅺ ⅻ
+ⅼ ⅽ ⅾ ⅿ
+Ⅰ Ⅱ Ⅲ Ⅳ
+Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ
+Ⅹ Ⅺ Ⅻ  ⅫⅠ ⅩⅣ
+Ⅼ 50
+Ⅽ 100
+Ⅾ 500
+Ⅿ 1000
+ↀ  ROMAN NUMERAL ONE THOUSAND C D
+ↁ ROMAN NUMERAL FIVE THOUSAND
+ↂA ROMAN NUMERAL TEN THOUSAND
+ↇ ROMAN NUMERAL FIFTY THOUSAND
+ↈ  ROMAN NUMERAL ONE HUNDRED THOUSAND
+
+
+
+Logic
+Arithmetic
+Comparison
+Fractions
+Geometry
+Algebra (equations)
+Vectors
+Matrices
+Sets
+Limits
+Calculus (Differential)
+Calculus (Integral)
+
