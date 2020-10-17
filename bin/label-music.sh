@@ -118,6 +118,10 @@ update_v2_field TPE3 "Conductor/performer refinement"
 update_v2_field TOPE "Original Artist(s) or Performer(s) (Separate with /)"
 update_v2_field TOAL "Original album/movie/show title"
 update_v2_field TORY "Original release year"
+update_v2_field TPUB "Publisher"
+update_v2_field TENC "Encoded by"
+update_v2_field TCON "Content type (overrides Genre)"
+update_v2_field WOAR "Official artist/performer webpage"
 echo ==========
 id3v2 --list "$FILE"
 
