@@ -2,33 +2,13 @@
 // ✅ All useEffect dependencies are specified
 // ⚠️ createRows() is called on every render
 // 🔴 Bug: `count` is not specified as a dependency
+// ❤ I love it!
+// 🚀 take off!
+// 📦 build it
+// ⏰ time expensive
+https://www.benmvp.com/blog/four-characters-optimize-react-component/
 
-Redux with React Hooks
-https://reactjs.org/docs/hooks-intro.html
-https://reactjs.org/docs/hooks-faq.html
-https://reactjs.org/docs/hooks-overview.html
-https://react-redux.js.org/next/api/hooks
-https://reactjs.org/docs/hooks-state.html
-HAVE READ ^^^
-https://reactjs.org/docs/hooks-effect.html
-https://www.npmjs.com/package/eslint-plugin-react-hooks#installation
-QUEUE vvv
-https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889
-https://react-hooks-cheatsheet.com/
-https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
-https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
-https://reactjs.org/docs/hooks-custom.html
-https://reactjs.org/docs/hooks-effect.html#tip-use-multiple-effects-to-separate-concerns
-https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops
-https://reactjs.org/docs/hooks-faq.html#how-does-react-associate-hook-calls-with-components
-https://reactjs.org/docs/hooks-faq.html#how-to-memoize-calculations
-https://reactjs.org/docs/hooks-reference.html#functional-updates
-https://reactjs.org/docs/hooks-rules.html
-https://reactjs.org/docs/testing-recipes.html
-https://www.robinwieruch.de/react-hooks-fetch-data/
-https://blog.isquaredsoftware.com/2019/07/blogged-answers-thoughts-on-hooks/
-https://blog.isquaredsoftware.com/2019/09/presentation-hooks-hocs-tradeoffs/
-
+We recommend using the exhaustive-deps rule as part of our eslint-plugin-react-hooks package. It warns when dependencies are specified incorrectly and suggests a fix.
 
 Crash Course in React UI testing with async code
 https://kentcdodds.com/blog/testing-implementation-details
@@ -39,3 +19,40 @@ https://kentcdodds.com/blog/test-isolation-with-react
 https://kentcdodds.com/blog/avoid-nesting-when-youre-testing
 https://kentcdodds.com/blog/aha-testing
 https://kentcdodds.com/blog/the-merits-of-mocking
+
+Design
+https://atomicdesign.bradfrost.com/chapter-2/
+
+React
+https://medium.com/javascript-in-plain-english/how-i-structure-react-apps-a76304277786
+
+React Hooks
+https://www.robinwieruch.de/react-hooks-higher-order-components
+https://www.benmvp.com/blog/four-characters-optimize-react-component/
+https://reactjs.org/docs/hooks-intro.html
+https://reactjs.org/docs/hooks-faq.html
+https://reactjs.org/docs/hooks-overview.html
+https://reactjs.org/docs/hooks-state.html
+https://reactjs.org/docs/hooks-effect.html
+
+Redux with React Hooks
+https://react-redux.js.org/next/api/hooks
+
+✅ HAVE READ ^^^
+https://reactjs.org/docs/hooks-rules.html
+https://www.npmjs.com/package/eslint-plugin-react-hooks#installation
+QUEUE vvv
+https://reactjs.org/docs/hooks-reference.html#functional-updates
+https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889
+https://react-hooks-cheatsheet.com/
+https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
+https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
+https://reactjs.org/docs/hooks-custom.html
+https://reactjs.org/docs/hooks-effect.html#tip-use-multiple-effects-to-separate-concerns
+https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops
+https://reactjs.org/docs/hooks-faq.html#how-does-react-associate-hook-calls-with-components
+https://reactjs.org/docs/hooks-faq.html#how-to-memoize-calculations
+https://reactjs.org/docs/testing-recipes.html
+https://www.robinwieruch.de/react-hooks-fetch-data/
+https://blog.isquaredsoftware.com/2019/07/blogged-answers-thoughts-on-hooks/
+https://blog.isquaredsoftware.com/2019/09/presentation-hooks-hocs-tradeoffs/
