@@ -25,6 +25,7 @@ https://atomicdesign.bradfrost.com/chapter-2/
 
 React
 https://medium.com/javascript-in-plain-english/how-i-structure-react-apps-a76304277786
+https://reactjs.org/docs/context.html
 
 React Hooks
 https://www.robinwieruch.de/react-hooks-higher-order-components
@@ -36,6 +37,7 @@ https://reactjs.org/docs/hooks-state.html
 https://reactjs.org/docs/hooks-effect.html
 
 Redux with React Hooks
+https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6
 https://react-redux.js.org/next/api/hooks
 
 ✅ HAVE READ ^^^
