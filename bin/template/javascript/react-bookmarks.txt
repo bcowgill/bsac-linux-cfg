@@ -6,8 +6,13 @@
 // 🚀 take off!
 // 📦 build it
 // ⏰ time expensive
-https://www.benmvp.com/blog/four-characters-optimize-react-component/
 
+Browsers
+Capture Browser Screenshot (no extension needed)
+https://swimburger.net/blog/web/hidden-gem-take-screenshots-using-built-in-commands-in-chrome-edge
+
+Eslint
+https://www.benmvp.com/blog/four-characters-optimize-react-component/
 We recommend using the exhaustive-deps rule as part of our eslint-plugin-react-hooks package. It warns when dependencies are specified incorrectly and suggests a fix.
 
 Crash Course in React UI testing with async code
@@ -41,6 +46,7 @@ https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6
 https://react-redux.js.org/next/api/hooks
 
 ✅ HAVE READ ^^^
+https://medium.com/cleverprogrammer/the-react-context-api-364da590aa73
 https://reactjs.org/docs/hooks-rules.html
 https://www.npmjs.com/package/eslint-plugin-react-hooks#installation
 QUEUE vvv
