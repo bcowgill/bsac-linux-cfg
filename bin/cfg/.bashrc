@@ -128,6 +128,13 @@ if which sw_vers > /dev/null 2>&1 ; then
   [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 fi
 
+# enable completion with the npm command if it hasn't been done by bash_completion above
+if [ -f ~/.npm_completion ]; then
+	# create the completion file with:
+	# npm completion > ~/.npm_completion
+	. ~/.npm_completion
+fi
+
 #==========================================================================
 # BSAC custom changes from /etc/skel
 
