@@ -8,6 +8,19 @@
 # git merge something   indicates conflicts
 # git mergetool
 
+# Quick key reference for WinMerge
+# Alt-F4         Exit
+# F6             Change to other pane
+# Alt-Up         Previous Diff
+# Alt-Down       Next Diff
+# Alt-Home       First Diff
+# Alt-Enter      Current Diff
+# Alt-End        Last Diff
+# Alt-Right      Copy changes to right
+# Alt-Left       Copy changes to left
+# Ctrl-Alt-Right Copy changes to right and go to next diff
+# Ctrl-Alt-Left  Copy changes to left andn go to next diff
+
 # Best to add the winmerge and VS code directories to your path first.
 WINMERGE=`which winMergeU`
 VSCODE=`which Code`
