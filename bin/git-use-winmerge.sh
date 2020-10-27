@@ -45,6 +45,8 @@ else
 	git config --global difftool.prompt false
 	git config --global difftool.winmerge.trustExitCode false
 	git config --global difftool.winmerge.cmd "$WINMERGE \"\$LOCAL\" \"\$PWD/\$REMOTE\" -- $OPTS"
+	# use VS Code for diffing alternatively
+	#git config --global difftool.winmerge.cmd "$VSCODE --new-window --wait --diff \"\$LOCAL\" \"\$PWD/\$REMOTE\""
 
 	git config --global merge.tool winmerge
 	git config --global mergetool.prompt false
