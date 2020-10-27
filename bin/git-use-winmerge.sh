@@ -1,5 +1,5 @@
 #!/bin/bash
-# Configure git to use winmerge or not
+# Configure git to use winmerge/vscode or not
 # git difftool --no-prompt filenane
 # or
 # git mergetool --no-prompt filename
@@ -8,7 +8,19 @@
 # git merge something   indicates conflicts
 # git mergetool
 
+# Best to add the winmerge and VS code directories to your path first.
 WINMERGE=`which winMergeU`
+VSCODE=`which Code`
+if [ -z $WINMERGE ]; then
+	echo NOT OK Your path needs to contain the winMerge executable directory
+	exit 1
+fi
+if [ -z $VSCODE ]; then
+	echo NOT OK Your path needs to contain the MS Visual Studio Codee executable directory
+	exit 1
+fi
+WINMERGE=winMergeU
+VSCODE=Code
 # https://manual.winmerge.org/en/Command_line.html
 # /e close winmerge with Esc once
 # /x close winmerge if files identical
@@ -16,12 +28,8 @@ WINMERGE=`which winMergeU`
 # /wl left side read only
 # /wr right side read only
 # /am auto-merge at the middle
-
 OPTS="/e /x /u /wl /maximize"
 OPTS3="$OPTS /wr /am"
-if [ -z $WINMERGE ]; then
-	echo NOT OK winmerge is not installed.
-fi
 
 if [ "x$1" == "xfalse" ]; then
 	git config --global --unset diff.tool
@@ -41,7 +49,13 @@ else
 	git config --global merge.tool winmerge
 	git config --global mergetool.prompt false
 	git config --global mergetool.winmerge.trustExitCode false
-	git config --global mergetool.winmerge.cmd "$WINMERGE \"\$PWD/\$LOCAL\" \"\$PWD/\$BASE\" \"\$PWD/\$REMOTE\" /o \"\$PWD/\$MERGED\" -- $OPTS3"
+	# for versions which support left/middle/right panels
+	#git config --global mergetool.winmerge.cmd "$WINMERGE \"\$PWD/\$LOCAL\" \"\$PWD/\$BASE\" \"\$PWD/\$REMOTE\" /o \"\$PWD/\$MERGED\" -- $OPTS3"
+	# for versions which support a version control incomplete merge file
+	#git config --global mergetool.winmerge.cmd "$WINMERGE \"\$PWD/\$MERGED\""
+	# use VS Code instead of winmerge if it only supports left/right panels
+	# https://code.visualstudio.com/docs/editor/command-line
+	git config --global mergetool.winmerge.cmd "$VSCODE --new-window --wait \"\$PWD/\$MERGED\""
 fi
 git config --global --list
 
@@ -50,6 +64,7 @@ exit
 diff.tool=winmerge
 merge.tool=winmerge
 difftool.winmerge.trustexitcode=false
-difftool.winmerge.cmd=/home/me/bin/winMergeU "$LOCAL" "$PWD/$REMOTE" -- /e /x /u /wl /maximize
+difftool.winmerge.cmd=winMergeU "$LOCAL" "$PWD/$REMOTE" -- /e /x /u /wl /maximize
 mergetool.winmerge.trustexitcode=false
-mergetool.winmerge.cmd=/home/me/bin/winMergeU "$PWD/$LOCAL" "$PWD/$BASE" "$PWD/$REMOTE" /o "$PWD/$MERGED" -- /e /x /u /wl /maximize /wr /am
+mergetool.winmerge.cmd=Code "$PWD/$LOCAL" "$PWD/$BASE" "$PWD/$REMOTE" /o "$PWD/$MERGED" -- /e /x /u /wl /maximize /wr /am
+mergetool.winmerge.cmd=Code --new-window --wait "$PWD/$MERGED"
