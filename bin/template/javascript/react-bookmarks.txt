@@ -6,6 +6,7 @@
 // 🚀 take off!
 // 📦 build it
 // ⏰ time expensive
+// 💰 money point
 
 Browsers
 Capture Browser Screenshot (no extension needed)
