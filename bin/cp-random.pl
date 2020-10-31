@@ -21,6 +21,7 @@ copy files at random from an input list to some destination.
    --retries=N      optional additional copies to try after first failure
    --invert         optional. invert the output to show what was not copied
    --nospace        optional. create files with no spaces or special characters in them
+   --notree         optional. create files in the target directory, do not reproduce the source tree
    --file-list=name optional. file containing list of files to choose from
    --version        display program version
    --help -?        brief help message
@@ -45,6 +46,10 @@ copy files at random from an input list to some destination.
 =item B<--space> or B<--nospace>
 
  optional. default is to allow.  Allow or prevent spaces and special characters in files and directories on the target device.
+
+=item B<--tree> or B<--notree>
+
+ optional. default is to tree.  Reproduce the source tree in the target directory or deposit all files directly in the target directory..
 
 =item B<--file-list=FILENAME>
 
@@ -114,6 +119,7 @@ my %Var = (
 			number  => 0,     # number of files to copy instead of size based
 			invert  => 0,     # show copies, not those left behind
 			space   => 1,     # allow spaces and special characters in filenames
+			tree    => 1,     # allow subdirectories in target filenames
 			verbose => 1,     # default value for verbose
 			debug   => 0,
 			man     => 0,     # show full help page
@@ -133,6 +139,7 @@ my %Var = (
 		raOpts => [
 			"invert|v!",       # invert output to show files not copied
 			"space!",          # allow spaces and special characters in filenames
+			"tree!",           # allow subdirectories in target filenames
 			"retries|r:i",     # retries after disk full
 			"number:i",        # number of files to copy instead of size based
 			"file-list:s",     # list of files to choose from
@@ -381,19 +388,35 @@ sub recordErrorFile
 sub targetFileName
 {
 	my ($targetDir, $fileName) = @ARG;
-	my $targetFileName = File::Spec->catfile(fixPath($targetDir), fixPath($fileName));
+	# TODO option notree to not create subdirectories
+	my $targetFileName;
+	if (opt('tree'))
+	{
+		$targetFileName = File::Spec->catfile(fixPath($targetDir), fixPath($fileName));
+	}
+	else
+	{
+		$targetFileName = File::Spec->catfile(fixPath($targetDir), fixPath(fileNameOnly($fileName)));
+	}
 	debug("targetFileName($targetDir, $fileName): $targetFileName\n", 4);
 	return $targetFileName;
+}
+
+sub fileNameOnly
+{
+	my ($path) = @ARG;
+	my ($volume, $directories, $fileName) = File::Spec->splitpath( $path );
+	return $fileName;
 }
 
 sub fixPath
 {
 	my ($path) = @ARG;
-   my ($volume, $directories, $fileName) = File::Spec->splitpath( $path );
-   $directories = File::Spec->catdir(map {
+	my ($volume, $directories, $fileName) = File::Spec->splitpath( $path );
+	$directories = File::Spec->catdir(map {
 		unspace($ARG)
-   } File::Spec->splitdir($directories));
-   $fileName = unspace($fileName);
+	} File::Spec->splitdir($directories));
+	$fileName = unspace($fileName);
 	$path = File::Spec->catpath($volume, $directories, $fileName);
 	return $path;
 }
@@ -416,7 +439,7 @@ sub createTargetDirForFile
 {
 	my ($targetFileName) = @ARG;
 	debug("createTargetDirForFile($targetFileName)\n", 4);
-   my ($volume, $directories, $file) = File::Spec->splitpath( $targetFileName );
+	my ($volume, $directories, $file) = File::Spec->splitpath( $targetFileName );
 	$targetFileName = File::Spec->catpath($volume, $directories);
 	debug("createTargetDirForFile: $targetFileName\n", 4);
 	make_path($targetFileName);
