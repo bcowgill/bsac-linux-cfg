@@ -283,7 +283,7 @@ sub chooseNFiles
 	while ($number && hasFilesToChoose())
 	{
 		my $rhChosen = chooseFile();
-		last unless copyFile($rhChosen);
+		last unless copyFile($targetDir, $rhChosen);
 		--$number;
 	}
 }
@@ -388,7 +388,6 @@ sub recordErrorFile
 sub targetFileName
 {
 	my ($targetDir, $fileName) = @ARG;
-	# TODO option notree to not create subdirectories
 	my $targetFileName;
 	if (opt('tree'))
 	{
