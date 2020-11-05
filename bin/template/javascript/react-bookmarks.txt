@@ -32,6 +32,7 @@ https://atomicdesign.bradfrost.com/chapter-2/
 React
 https://medium.com/javascript-in-plain-english/how-i-structure-react-apps-a76304277786
 https://reactjs.org/docs/context.html
+https://medium.com/cleverprogrammer/the-react-context-api-364da590aa73
 
 React Hooks
 https://www.robinwieruch.de/react-hooks-higher-order-components
@@ -41,22 +42,21 @@ https://reactjs.org/docs/hooks-faq.html
 https://reactjs.org/docs/hooks-overview.html
 https://reactjs.org/docs/hooks-state.html
 https://reactjs.org/docs/hooks-effect.html
+https://reactjs.org/docs/hooks-rules.html
 
 Redux with React Hooks
 https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6
 https://react-redux.js.org/next/api/hooks
 
 ✅ HAVE READ ^^^
-https://medium.com/cleverprogrammer/the-react-context-api-364da590aa73
-https://reactjs.org/docs/hooks-rules.html
+https://reactjs.org/docs/hooks-custom.html
+https://joaoforja.com/blog/how-to-test-react-components-route-change/
 https://www.npmjs.com/package/eslint-plugin-react-hooks#installation
 QUEUE vvv
 https://reactjs.org/docs/hooks-reference.html#functional-updates
 https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889
 https://react-hooks-cheatsheet.com/
 https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
-https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
-https://reactjs.org/docs/hooks-custom.html
 https://reactjs.org/docs/hooks-effect.html#tip-use-multiple-effects-to-separate-concerns
 https://reactjs.org/docs/hooks-faq.html#how-do-i-implement-getderivedstatefromprops
 https://reactjs.org/docs/hooks-faq.html#how-does-react-associate-hook-calls-with-components

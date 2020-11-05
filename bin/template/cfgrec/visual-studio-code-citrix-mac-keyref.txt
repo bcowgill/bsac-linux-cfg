@@ -28,8 +28,8 @@ KEY:TREEFOCUS:NAV Ctrl-Shift-e
 KEY:NEXTWIN:NAV
 KEY:PREVWIN:NAV
 KEY:GOTOWIN:NAV Ctrl-1 etc go to numbered editor window
-KEY:NEXTBUFFER:NAV Ctrl-Tab or Ctrl-k Ctrl-Fn-Down
-KEY:PREVBUFFER:NAV Ctrl-Shift-Tab or Ctrl-k Ctrl-Fn-Up
+KEY:NEXTBUFFER:NAV Ctrl-Tab or Ctrl-Fn-Down
+KEY:PREVBUFFER:NAV Ctrl-Shift-Tab or Ctrl-Fn-Up
 KEY:SPLITLEFT:NAV
 KEY:SPLITRIGHT:NAV Ctrl-\
 KEY:SPLITUP:NAV Ctrl-\ Ctrl-k Up
