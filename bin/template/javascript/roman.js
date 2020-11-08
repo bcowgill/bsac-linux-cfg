@@ -151,6 +151,16 @@ function RomanNumber(mixed) {
 	  this.value = getRomanFromString(this.string);
 	}
     this.string = getRomanFromNumber(this.value);
+    this.regex = regex;
+    this.roman = roman;
+    this.symbols = symbols;
+
+    if (LARGEST) {
+      this.LARGEST = LARGEST;
+    }
+    if (LONGEST) {
+      this.LONGEST = LONGEST;
+    }
 }
 
 RomanNumber.prototype = {
@@ -345,6 +355,18 @@ function assertInstanceOf(actual, expected, title = '') {
 
 function test() {
   describe('unit tests', function testSuite() {
+	describe('new RomanNumber()', function testNewRomanNumberSuite() {
+      it('should have all properties assigned', function testNewRomanNumber() {
+        const number = new RomanNumber(1999);
+        assert(number.string, 'mcmxcix', 'should have string property');
+        assert(number.value, 1999, 'should have value property');
+        assert(number.LONGEST, 100, 'should have LONGEST property');
+        assert(number.regex.toString(), '/^[ivxlcdm]+$/i', 'should have regex property');
+        assert(number.roman, 'ivxlcdm', 'should have roman property');
+        assert(number.symbols.i.amount, 1, 'should have symbols property');
+      });
+    });
+
 	describe('getRomanFromNumber()', function testGetRomanFromNumberSuite() {
 	  it('should handle invalid', function testGetRomanFromNumberInvalid() {
         assertThrows(() => new RomanNumber(-12), /RangeError: number must be a positive integer/, 'when negative');
@@ -385,6 +407,12 @@ function test() {
         assert((new RomanNumber('i')).valueOf(), 1, 'when i valueOf');
         assert((new RomanNumber('mdclxvi')).toString(), 'mdclxvi', 'when mdclxvi toString');
         assert((new RomanNumber('mdclxvi')).valueOf(), 1666, 'when mdclxvi valueOf');
+        const all = new RomanNumber(roman);
+        assert(all.toString(), 'cccxxxiv', 'when using roman numeral set toString');
+        assert(all.valueOf(), 334, 'when using roman numeral set valueOf');
+        const allReversed = new RomanNumber(roman.split('').reverse().join(''))
+        assert(allReversed.toString(), 'mdclxvi', 'when using reversed roman numeral set toString');
+        assert(allReversed.valueOf(), 1666, 'when using reversed roman numeral set valueOf');// ivxlcdm
       });
 
 	  it('should handle canonizing non-standard numbers', function testGetRomanFromStringCanon() {
