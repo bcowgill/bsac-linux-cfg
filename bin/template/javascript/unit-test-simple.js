@@ -153,8 +153,8 @@ function assert(actual, expected, title = '') {
 function assertThrows(actualFn, expected, title = '') {
   // console.warn('assertThrows', actualFn, expected, title)
   try {
-    actualFn();
-    failDump(title, expected, 'Expected to throw but did not.');
+    const result = actualFn();
+    failDump(title, result, `to throw but did not. [${expected}]`);
   }
   catch (exception) {
     if (typeof expected === 'function') {
@@ -172,7 +172,7 @@ function assertNotThrows(actualFn, expected, title = '') {
     assert(actual, expected, title);
   }
   catch (exception) {
-    failDump(title, exception, 'Expected not to throw but did.');
+    failDump(title, exception, 'not to throw but did.');
   }
 }
 

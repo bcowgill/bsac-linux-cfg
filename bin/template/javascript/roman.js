@@ -10,6 +10,8 @@ const EXTENDED = false;
 let regex = /^[ivxlcdm]+$/i;
 let roman = 'ivxlcdm';
 
+const LONGEST = 100; // false, or set to limit max repeated numerals
+const LARGEST = false; // false, or set to limit maximum valued number
 const X = 2;
 const V = 1;
 const I = 0;
@@ -64,34 +66,58 @@ function x(token, repeat) {
   return string;
 }
 
+function checkThrow(sigil, where) {
+  if (!sigil) {
+    throw new RangeError(`number cannot be represented with roman numerals ${numerals} [${where}]`);
+  }
+  return sigil;
+}
+
 function romanNumerals(number, sigils = roman) {
   if (number === 0) {
     return '';
   } else if (number >= 10) {
     const ones = number % 10;
     const tens = Math.floor(number / 10);
-    return romanNumerals(tens, sigils.substr(X)) + romanNumerals(ones, sigils);
+    if (LONGEST && sigils.length === 1) {
+      if (number > LONGEST) {
+        throw new RangeError(`number too large, requires more than ${LONGEST} repeated numerals.`)
+      }
+      return x(sigils, number);
+    } else {
+      return romanNumerals(tens, sigils.substr(X)) + romanNumerals(ones, sigils);
+    }
   } else if (number <= 3) {
-    return x(checkThrow(sigils[I]), number);
+    return x(checkThrow(sigils[I], `<=3 ${number}, ${sigils}`), number);
   } else if (number === 4) {
-    return checkThrow(sigils[I]) + checkThrow(sigils[V]);
+    if (sigils[V]) {
+      return checkThrow(sigils[I], `==4V ${number}, ${sigils}`) + sigils[V];
+    } else {
+      return x(checkThrow(sigils[I], `==4 ${number}, ${sigils}`), 4);
+    }
   } else if (number <= 8) {
-    return checkThrow(sigils[V]) + x(checkThrow(sigils[I]), number - 5);
+    if (sigils[V]) {
+      return sigils[V] + x(checkThrow(sigils[I], `<=8V ${number}, ${sigils}`), number - 5);
+    } else {
+      return x(checkThrow(sigils[I], `<=8 ${number}, ${sigils}`), number);
+    }
   } else if (number === 9) {
-    return checkThrow(sigils[I]) + checkThrow(sigils[X]);
+    if (sigils[X]) {
+      return checkThrow(sigils[I], `==9X ${number}, ${sigils}`) + sigils[X];
+    } else if (sigils[V]) {
+      return sigils[V] + x(checkThrow(sigils[I], `==9V ${number}, ${sigils}`), 4);
+    } else {
+      return x(checkThrow(sigils[I], `==9 ${number}, ${sigils}`), 9);
+    }
   }
-}
-
-function checkThrow(sigil) {
-  if (!sigil) {
-    throw new RangeError(`number cannot be represented with roman numerals ${numerals}`);
-  }
-  return sigil;
 }
 
 function getRomanFromNumber(number) {
   if (number < 0 || Math.round(number) !== number || !isFinite(number)) {
     throw new RangeError('number must be a positive integer');
+  }
+  if (LARGEST && number > LARGEST) {
+    throw new RangeError(`number too big, exceeds imposed limit of ${LARGEST}`)
   }
   if (number === 0) {
     return '';
@@ -284,8 +310,8 @@ function assert(actual, expected, title = '') {
 function assertThrows(actualFn, expected, title = '') {
   // console.warn('assertThrows', actualFn, expected, title)
   try {
-    actualFn();
-    failDump(title, expected, 'Expected to throw but did not.');
+    const result = actualFn();
+    failDump(title, result, `to throw but did not. [${expected}]`);
   }
   catch (exception) {
     if (typeof expected === 'function') {
@@ -303,7 +329,7 @@ function assertNotThrows(actualFn, expected, title = '') {
     assert(actual, expected, title);
   }
   catch (exception) {
-    failDump(title, exception, 'Expected not to throw but did.');
+    failDump(title, exception, 'not to throw but did.');
   }
 }
 
@@ -323,8 +349,11 @@ function test() {
 	  it('should handle invalid', function testGetRomanFromNumberInvalid() {
         assertThrows(() => new RomanNumber(-12), /RangeError: number must be a positive integer/, 'when negative');
         assertThrows(() => new RomanNumber(1.5), /RangeError: number must be a positive integer/, 'when non-integer');
-        assertThrows(() => new RomanNumber(4000), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when too big');
-        assertThrows(() => new RomanNumber('mmmm'), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when mmmm too big');
+        assertThrows(() => new RomanNumber(400000), /RangeError: number too large, requires more than 100 repeated numerals./, 'when 400000 too big');
+        assertThrows(() => new RomanNumber(x('m', 401)), /RangeError: number too large, requires more than 100 repeated numerals./, 'when m x 401 too big');
+        //assertThrows(() => new RomanNumber(4000), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when 4000 too big');
+        //assertThrows(() => new RomanNumber('mmmm'), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when mmmm too big');
+        //assertThrows(() => new RomanNumber(40000), /RangeXError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when 40000 too big');
 });
 
 	  it('should handle numbers', function testGetRomanFromNumber() {
@@ -369,5 +398,3 @@ function test() {
 if (RUN_TESTS) {
   test();
 }
-
-console.log('that is all')
