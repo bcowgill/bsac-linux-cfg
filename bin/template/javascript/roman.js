@@ -1,16 +1,18 @@
 #!/usr/bin/env node
+// https://www.britannica.com/science/numeral/Numeral-systems#ref797052
 
 // a cheap watch command...
 // perl -e 'while (1) { system("./roman.js | tee roman.log") if (-M "./roman.js" < -M "./roman.log"); sleep(5) }'
 
-const RUN_TESTS = true;
+const RUN_TESTS = false;
 
 const EXTENDED = false;
 
 let regex = /^[ivxlcdm]+$/i;
 let roman = 'ivxlcdm';
 
-const LONGEST = 100; // false, or set to limit max repeated numerals
+const MAX_LEN = false; // false, or set to maximum allowed string length
+const LONGEST = 100;   // false, or set to limit max repeated numerals
 const LARGEST = false; // false, or set to limit maximum valued number
 const X = 2;
 const V = 1;
@@ -68,7 +70,7 @@ function x(token, repeat) {
 
 function checkThrow(sigil, where) {
   if (!sigil) {
-    throw new RangeError(`number cannot be represented with roman numerals ${numerals} [${where}]`);
+    throw new RangeError(`number cannot be represented with roman numerals ${numerals} [${where}].`);
   }
   return sigil;
 }
@@ -114,15 +116,19 @@ function romanNumerals(number, sigils = roman) {
 
 function getRomanFromNumber(number) {
   if (number < 0 || Math.round(number) !== number || !isFinite(number)) {
-    throw new RangeError('number must be a positive integer');
+    throw new RangeError('number must be a positive integer.');
   }
   if (LARGEST && number > LARGEST) {
-    throw new RangeError(`number too big, exceeds imposed limit of ${LARGEST}`)
+    throw new RangeError(`number too big, exceeds imposed limit of ${LARGEST}.`);
   }
   if (number === 0) {
     return '';
   }
-  return romanNumerals(number);
+  const romanNumber =  romanNumerals(number);
+  if (MAX_LENGTH && romanNumber.length > MAX_LENGTH) {
+    throw newRangeError(`number too long, exceeds imposed limit of ${MAX_LENGTH} characters.`);
+  }
+  return romanNumber;
 }
 
 function getRomanFromString(string) {
@@ -369,13 +375,13 @@ function test() {
 
 	describe('getRomanFromNumber()', function testGetRomanFromNumberSuite() {
 	  it('should handle invalid', function testGetRomanFromNumberInvalid() {
-        assertThrows(() => new RomanNumber(-12), /RangeError: number must be a positive integer/, 'when negative');
-        assertThrows(() => new RomanNumber(1.5), /RangeError: number must be a positive integer/, 'when non-integer');
+        assertThrows(() => new RomanNumber(-12), /RangeError: number must be a positive integer\./, 'when negative');
+        assertThrows(() => new RomanNumber(1.5), /RangeError: number must be a positive integer\./, 'when non-integer');
         assertThrows(() => new RomanNumber(400000), /RangeError: number too large, requires more than 100 repeated numerals./, 'when 400000 too big');
         assertThrows(() => new RomanNumber(x('m', 401)), /RangeError: number too large, requires more than 100 repeated numerals./, 'when m x 401 too big');
-        //assertThrows(() => new RomanNumber(4000), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when 4000 too big');
-        //assertThrows(() => new RomanNumber('mmmm'), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when mmmm too big');
-        //assertThrows(() => new RomanNumber(40000), /RangeXError: number cannot be represented with roman numerals i,v,x,l,c,d,m/, 'when 40000 too big');
+        //assertThrows(() => new RomanNumber(4000), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m\./, 'when 4000 too big');
+        //assertThrows(() => new RomanNumber('mmmm'), /RangeError: number cannot be represented with roman numerals i,v,x,l,c,d,m\./, 'when mmmm too big');
+        //assertThrows(() => new RomanNumber(40000), /RangeXError: number cannot be represented with roman numerals i,v,x,l,c,d,m\./, 'when 40000 too big');
 });
 
 	  it('should handle numbers', function testGetRomanFromNumber() {
