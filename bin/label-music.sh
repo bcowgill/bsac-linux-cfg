@@ -122,6 +122,10 @@ update_v2_field TPUB "Publisher"
 update_v2_field TENC "Encoded by"
 update_v2_field TCON "Content type (overrides Genre)"
 update_v2_field WOAR "Official artist/performer webpage"
+update_v2_field WOAS "Official audio source webpage"
+update_v2_field WOAF "Official audio file webpage"
+update_v2_field WPUB "Official publisher webpage"
+update_v2_field WXXX "User defined URL link"
 echo ==========
 id3v2 --list "$FILE"
 
