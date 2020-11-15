@@ -1,6 +1,10 @@
 #!/bin/bash
 # scan the javascript tests for disabled tests
 
+# CUSTOM settings may need to change these on a new computer
+#TESTS="'*.test.js'"
+TESTS="'*.spec.js'"
+
 MAX_SKIP=10
 color=--color
 
@@ -14,24 +18,24 @@ if git grep LoggedComponent | egrep 'import .+ from' | grep -v LoggedComponent.s
 	ERROR=3
 fi
 
-git grep -E '^\s*(describe|it)\.skip' -- '*.spec.js' | egrep $color 'skip|only'
+git grep -E '^\s*(describe|it)\.skip' -- $TESTS | egrep $color 'skip|only'
 
 # any ocurrence of top level describe.skip() is a failure
-if git grep -E '^describe\.skip' -- '*.spec.js' | egrep $color 'skip|only' > /dev/null ; then
+if git grep -E '^describe\.skip' -- $TESTS | egrep $color 'skip|only' > /dev/null ; then
 	echo ERROR: entire test plan skipped
-	git grep -E '^describe\.skip' -- '*.spec.js' | egrep $color 'skip|only'
+	git grep -E '^describe\.skip' -- $TESTS | egrep $color 'skip|only'
 	ERROR=2
 fi
 
 # any ocurrence of .only() is a failure
-if git grep -E '^\s*(describe|it)\.only' -- '*.spec.js' | egrep $color 'skip|only' > /dev/null ; then
+if git grep -E '^\s*(describe|it)\.only' -- $TESTS | egrep $color 'skip|only' > /dev/null ; then
 	echo ERROR: tests being skipped because of only
-	git grep -E '^\s*(describe|it)\.only' -- '*.spec.js' | egrep $color 'skip|only'
+	git grep -E '^\s*(describe|it)\.only' -- $TESTS | egrep $color 'skip|only'
 	ERROR=1
 fi
 
 # too many skipped tests is a failure
-SKIPS=`git grep -E '^\s*(describe|it)\.skip' -- '*.spec.js' | wc -l`
+SKIPS=`git grep -E '^\s*(describe|it)\.skip' -- $TESTS | wc -l`
 
 if [ $SKIPS -gt $MAX_SKIP ]; then
 	ERROR=$SKIPS

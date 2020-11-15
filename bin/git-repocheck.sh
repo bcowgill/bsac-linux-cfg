@@ -5,6 +5,7 @@
 TOP=$HOME
 #DO=not
 
+# CUSTOM settings you may need to change on a new machine
 if [ `hostname` == WYATT ]; then
 	TOP=/cygdrive/d/d/s
 fi

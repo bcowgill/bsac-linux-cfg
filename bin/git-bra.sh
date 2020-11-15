@@ -1,6 +1,7 @@
 #!/bin/bash
 # show the age of a git branch by displaying the date of the last commit
 
+MASTER=${MASTER:-master}
 BRANCH="$1"
 
 if [ -z "$BRANCH" ]; then
@@ -11,7 +12,7 @@ fi
 if [ "$BRANCH" == '--all' ]; then
 	# get the last commit date for all remote branches
 	[ -f branches.log ] && rm branches.log
-	for branch in `git branch --list --remote | grep -v origin/master`
+	for branch in `git branch --list --remote | grep -v origin/$MASTER`
 	do
 		DATE=`git-bra.sh $branch 2> /dev/null | grep Date: | perl -pne 's{Date:\s+}{}xmsg;'`
 		echo $DATE $branch | \
@@ -25,5 +26,5 @@ if [ "$BRANCH" == '--all' ]; then
 fi
 
 git-fetch-pull-request.sh $BRANCH; git log | head -5 | grep Date:
-git checkout master > /dev/null
+git checkout $MASTER > /dev/null
 

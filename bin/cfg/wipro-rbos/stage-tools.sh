@@ -10,9 +10,11 @@ pushd $TO
 cp $FROM/find-bak.sh .
 cp $FROM/pswide.sh .
 cp $FROM/datestamp.sh .
-cp $FROM/git-fetch-pull-request.sh .
-cp $FROM/git-new-branch.sh .
-cp $FROM/git-rebase.sh .
+cp $FROM/git-*.sh .
+rm git-use*.sh
+cp $FROM/git-use-winmerge.sh .
+mv `grep -l CUSTOM git-*` ./cfg/wipro-rbos/
+
 popd
 
 tar cvzf wipro-rbos-tools.tgz home

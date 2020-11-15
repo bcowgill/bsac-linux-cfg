@@ -10,6 +10,8 @@
 # and replaces test/test.js text in the file with test/path-name.spec.js
 # and replaces descSuiteFileName with descPathNameSuite
 
+# CUSTOM settings you may need to change on a new machine
+# .spec.js to .test.js as needed.
 for test in $*; do
 	perl -e '
 		my $DEBUG = 0;
