@@ -1,5 +1,7 @@
 #!/bin/bash
 # find all lint/prettier/coverage override references and TODO like comments in files under git control
+# See also git-mustdo.sh mustdo.sh
+# WINDEV tool useful on windows development machine
 git grep -E '(/[\*/]|<!--|#)\s*(((es|style)lint|prettier|global|js[hl]int|jscs:?|sonar|TODO|MUSTDO|HACK|FIXME)[a-z-]*|istanbul ignore( [a-z]+)?)' $*
 
 exit $?

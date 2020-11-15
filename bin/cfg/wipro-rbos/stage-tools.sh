@@ -7,9 +7,10 @@ FROM=~/bin
 TO=./home/bin
 SMILEYS=~/bin/template/html/faces-utf8.html
 UNICODE=data/unicode/unicode-names.txt
+ENGLISH=english
 
 pushd $TO
-rm *.sh *.pl *.html $UNICODE
+rm *.sh *.pl *.html $UNICODE $ENGLISH/*.txt
 
 if [ "x$1" == "xclean" ]; then
 	exit 0
@@ -20,6 +21,8 @@ cp $SMILEYS .
 # for grep-utf8 command
 mkdir -p $UNICODE && rmdir $UNICODE
 cp ~/bin/$UNICODE $UNICODE
+mkdir -p $ENGLISH
+cp ~/bin/$ENGLISH/*english*.txt $ENGLISH/
 
 cp `grep -l WINDEV $FROM/*.pl` .
 mv `grep -l CUSTOM *.pl` ./cfg/wipro-rbos/
