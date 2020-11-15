@@ -11,7 +11,7 @@ UNICODE=data/unicode/unicode-names.txt
 pushd $TO
 rm *.sh *.pl *.html $UNICODE
 
-if [ "x$1" == "xclean" ]
+if [ "x$1" == "xclean" ]; then
 	exit 0
 fi
 
