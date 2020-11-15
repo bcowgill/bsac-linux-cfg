@@ -1,8 +1,9 @@
 # list props/state/types/context definitions/uses from react components
+# WINDEV tool useful on windows development machine
 for file in $*
 do
 	if [ ! -e $file ]; then
-		file=app/components/$file/$file.js
+		file=app/components/$file/$file.jsx
 	fi
 	perl -ne '
 	s{

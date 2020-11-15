@@ -1,9 +1,10 @@
 #!/bin/bash
 # Generate stub test plan files for all javascript files using a template.
 # Not a generic script, you have to customise a few things here to work with your layout.
+# CUSTOM settings you may have to change for a new machine
 FILE=js-objects.txt
 #FILE=js-test.txt
-find public/blis-assets/ -name '*.js' > $FILE 
+find public/blis-assets/ -name '*.js' > $FILE
 perl -ne  '
 	BEGIN {
 		use File::Slurp;

@@ -1,5 +1,6 @@
 #!/bin/bash
 # make a javascript facade file to load another module as index.js
+# WINDEV tool useful on windows development machine
 
 GIT=1
 FACADE_TEMPLATE=

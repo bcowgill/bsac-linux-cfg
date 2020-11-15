@@ -1,3 +1,4 @@
+#!/bin/bash
 # List interesting file types within directories.
 # Work in progress.
 # want something like:

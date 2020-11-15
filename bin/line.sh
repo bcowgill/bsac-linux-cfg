@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # display some text in a 78 col wide banner line
+# WINDEV tool useful on windows development machine
 
 use strict;
 use English;

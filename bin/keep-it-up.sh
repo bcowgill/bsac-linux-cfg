@@ -1,5 +1,6 @@
 #!/bin/bash
 # poor man's runit - keeps re-running a command when it dies.
+# WINDEV tool useful on windows development machine
 
 if [ -z "$1" ]; then
 	RUN='npm start'

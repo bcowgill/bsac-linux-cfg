@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
 export START=$1
 shift
 export END=$1
@@ -11,6 +12,8 @@ if [ -z "$1" ]; then
 usage: $(basename $0) start end content file ...
 
 This script will grep a file for a section marked by an open and close marker and then inject the content from another file into it.
+
+See also middle.sh, prepend.sh
 
 example:
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# run all mix tasks to make project up to date.
+# run all mix tasks to make elixir project up to date.
 
 BROWSER=browser.sh
 if [ "${1:-nothing}" == "launch" ] ; then

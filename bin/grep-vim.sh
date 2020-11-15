@@ -1,7 +1,8 @@
 #!/bin/bash
-# grep for a simple pattern and the launch vim at each match position
+# grep for a simple pattern and then launch vim at each match position
 # http://vim.wikia.com/wiki/Using_normal_command_in_a_script_for_searching
 # http://vimdoc.sourceforge.net/htmldoc/eval.html#search()
+# WINDEV tool useful on windows development machine
 
 
 FIND="$1";
