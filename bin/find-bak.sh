@@ -3,6 +3,7 @@
 
 # use find-bak.sh -delete
 # to delete the files found
+# WINDEV tool useful on windows development machine
 
 PRINT=
 if [ -z "$1" ]; then
