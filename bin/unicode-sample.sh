@@ -1,7 +1,7 @@
 #!/bin/bash
 # show a sample of unicode characters
 # unicode-sample.sh -list | column -t | column
-
+# WINDEV tool useful on windows development machine
 
 # U+00A0 = non breaking space &nbsp;
 
@@ -18,6 +18,7 @@ U+B0 U+2103 U+2109
 U+00A3 U+20B5 U+20A4 U+20AC U+FF04 U+FE69 U+2367
 U+2713 U+2714 U+2705
 U+2715 U+2716 U+2717 U+2718 U+2719 U+274C
+U+2610 U+2611 U+2612
 U+0277 U+0B50
 U+0C94 U+0FD5
 U+0FCA U+262F
@@ -45,7 +46,18 @@ U+1F4C2
 U+1F4BB
 U+0394
 U+2610
+U+25A2
+U+26AC
+U+26AA
+U+26AB
+U+2B58
+U+2B57
+U+25CC
+U+25CB
 U+274D
+U+2B55
+U+25EF
+U+2B24
 U+33D2
 U+1F427
 U+1F41B
@@ -87,3 +99,49 @@ echo "ᘜ ᓋ ᓋ ᖱ  ᙏ ᓏ ᖆ ᘗ ᓲ ᘘ ᘜ "
 echo "☂"
 echo "(っ＾▿＾)۶🍸🌟🍺٩(˘◡˘ )"
 echo "( ◑‿◑)ɔ┏🍟--🍔┑٩(^◡^ )"
+echo "// Cool comments"
+echo "// ✅ All useEffect dependencies are specified"
+echo "// 💡	Brilliant Idea light bulb"
+echo "// ☐ Todo item / ballot box"
+echo "// ☑ Done. (Happily)"
+echo "// ☒ Also Done."
+echo "// ⚠️ createRows() is called on every render"
+echo "// 🔴 Bug: count is not specified as a dependency"
+echo "// 🔵 Blue: circle"
+echo "// ⬤ Black: circle"
+echo "// ○ White: circle"
+echo "// ◌ Dotted Circle"
+echo "// ❤ I love it!"
+echo "// 🚀 take off!"
+echo "// 📦 build it"
+echo "// ⏰ time expensive"
+echo "// 💰 money point"
+echo "  NOT_OK: '✘ ', // 'NOT OK ',"
+echo "  OK    : '✔ ', // 'OK ',"
+echo "  SKIP  : '◌ ', // 'SKIP',"
+echo "▢  checkbox"
+echo "⚬	U+26AC	[OtherSymbol]	MEDIUM SMALL WHITE CIRCLE"
+echo "⚪	U+26AA	[OtherSymbol]	MEDIUM WHITE CIRCLE"
+echo "⚫	U+26AB	[OtherSymbol]	MEDIUM BLACK CIRCLE"
+echo "⌾	U+233E	[OtherSymbol]	APL FUNCTIONAL SYMBOL CIRCLE JOT"
+echo "⊙	U+2299	[MathSymbol]	CIRCLED DOT OPERATOR"
+echo "⊚	U+229A	[MathSymbol]	CIRCLED RING OPERATOR"
+echo "⭘	U+2B58	[OtherSymbol]	HEAVY CIRCLE"
+echo "⏣	U+23E3	[OtherSymbol]	BENZENE RING WITH CIRCLE"
+echo "○	U+25CB	[OtherSymbol]	WHITE CIRCLE"
+echo "◌	U+25CC	[OtherSymbol]	DOTTED CIRCLE"
+echo "◍	U+25CD	[OtherSymbol]	CIRCLE WITH VERTICAL FILL"
+echo "●	U+25CF	[OtherSymbol]	BLACK CIRCLE"
+echo "◙	U+25D9	[OtherSymbol]	INVERSE WHITE CIRCLE"
+echo "❍	U+274D	[OtherSymbol]	SHADOWED WHITE CIRCLE"
+echo "⦾	U+29BE	[MathSymbol]	CIRCLED WHITE BULLET"
+echo "⦿	U+29BF	[MathSymbol]	CIRCLED BULLET"
+echo "⭗	U+2B57	[OtherSymbol]	HEAVY CIRCLE WITH CIRCLE INSIDE"
+echo "⨀	U+2A00	[MathSymbol]	N-ARY CIRCLED DOT OPERATOR"
+echo "⛒	U+26D2	[OtherSymbol]	CIRCLED CROSSING LANES"
+echo "⭙	U+2B59	[OtherSymbol]	HEAVY CIRCLED SALTIRE"
+echo "⭕	U+2B55	[OtherSymbol]	HEAVY LARGE CIRCLE"
+echo "🔴	U+1F534	[OtherSymbol]	LARGE RED CIRCLE"
+echo "🔵	U+1F535	[OtherSymbol]	LARGE BLUE CIRCLE"
+echo "◯	U+25EF	[OtherSymbol]	LARGE CIRCLE"
+echo "⬤	U+2B24	[OtherSymbol]	BLACK LARGE CIRCLE"

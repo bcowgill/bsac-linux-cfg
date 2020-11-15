@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
 CONTENT=
 export CONTENT_FILE=$1
 shift

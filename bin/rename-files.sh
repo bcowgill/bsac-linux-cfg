@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machin
 
 if [ -z "$2" ]; then
 	echo "

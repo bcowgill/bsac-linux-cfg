@@ -1,5 +1,6 @@
 #!/bin/bash
 # time how long a command takes
+# WINDEV tool useful on windows development machine
 START=$SECONDS
 echo `datestamp.sh` Time this starting
 echo command: $*

@@ -1,5 +1,6 @@
 #!/bin/bash
 # search and replace some files, slurping the whole thing at once.
+# See also the simpler replace.sh
 
 # clean up BaseComponent inheritance
 
@@ -13,7 +14,7 @@ touch pause-build.timestamp
 
 perl $WRITE -Mstrict -MEnglish -e '
 local $INPUT_RECORD_SEPARATOR = undef;
-my $LOG_CLASS = $ENV{CMP} || "DocxumentComponent";
+my $LOG_CLASS = $ENV{CMP} || "DocumentComponent";
 my $DEL_DBG = 0;
 my $DEL_DEL = 1;
 my $DBG = "/*"."dbg:*/ "; # "//"."dbg: "

@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machin
 PREFIX="$1"
 SUFFIX="$2"
 NAME="$3"

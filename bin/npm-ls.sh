@@ -1,5 +1,6 @@
 #!/bin/bash
 # npm list in a parseable/diffable format
+# WINDEV tool useful on windows development machine
 
 if [ "$1" == "--help" ]; then
 	USAGE=1

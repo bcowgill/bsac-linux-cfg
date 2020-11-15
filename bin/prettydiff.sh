@@ -5,9 +5,11 @@
 # source: https://github.com/prettydiff/prettydiff
 # source: https://github.com/austincheney/Pretty-Diff/blob/master/lib/markup_beauty.js
 # npm install -g prettydiff
+# WINDEV tool useful on windows development machine
 INDENT_TABS=1
 INDENT_SIZE=4
 
+# CUSTOM settings you may have to change on a new computer
 if [ -z $NODE ]; then
 	NODE=nodejs
 fi
@@ -28,6 +30,9 @@ fi
 PRETTYDIFF=/usr/local/lib/node_modules/prettydiff/api/node-local.js
 if [ ! -f $PRETTYDIFF ]; then
 	PRETTYDIFF=/usr/lib/node_modules/prettydiff/api/node-local.js
+fi
+if [ ! -f $PRETTYDIFF ]; then
+	PRETTYDIFF=`which prettydiff`
 fi
 
 if [ -z "$OUTPUT" ]; then

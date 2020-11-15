@@ -1,5 +1,6 @@
 #!/bin/bash
 # show the version from package.json (or bower.json)
+# WINDEV tool useful on windows development machine
 
 FILE=package.json
 if [ ! -f $FILE ]; then

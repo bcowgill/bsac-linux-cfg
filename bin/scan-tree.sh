@@ -1,5 +1,6 @@
 #!/bin/bash
 # scan a directory tree and save files containing filenames, directory names, extensions, full file paths and full directory paths
+# WINDEV tool useful on windows development machin
 
 DIR=${1:-$HOME}
 STORE=${2:-./}

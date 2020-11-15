@@ -14,6 +14,7 @@ cp $FROM/git-*.sh .
 rm git-use*.sh
 cp $FROM/git-use-winmerge.sh .
 mv `grep -l CUSTOM git-*` ./cfg/wipro-rbos/
+cp `grep -l WINDEV *.sh` .
 
 popd
 

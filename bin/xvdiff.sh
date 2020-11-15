@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
 
 function usage {
 	if [ ! -z "$1" ]; then
@@ -10,6 +11,8 @@ Usage: $(basename $0) file1 file2
 This will cross-synchronise two files by back and forth diffing.  It will create the one that is missing, so be accurate in specifying file names.
 
 It will give you two chances to visually diff file1 with file2 then file2 with file1 and it will stop if the files are identical at any point.
+
+There is a simpler version called refactor.sh with less smarts.
 "
 	if [ ! -z "$1" ]; then
 		exit 1

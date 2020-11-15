@@ -1,5 +1,6 @@
 #!/bin/bash
 # scan for unimplemented conditions of satisfaction tests
+# See also git-grep-skipped.sh
 
 # Example what we are scanning
 #./test/spec/dialogs/views/BodyBulkDownloadView.spec.js:79:            it.skip('should publish a Mixpannel Events when click download Bible Version with Include Index', function () {

@@ -1,5 +1,9 @@
+#!/bin/bash
 # set up locale for unicode
 # https://perlgeek.de/en/article/set-up-a-clean-utf8-environment
+
+# WINDEV tool useful on windows development machine
+
 export LANG=en_GB.UTF-8
 export LANGUAGE=en_GB:en
 export LC_CTYPE="$LANG"

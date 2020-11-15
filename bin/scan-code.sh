@@ -1,10 +1,13 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
+# See also git-grep-skipped.sh
 # MUSTDO make a test file for checking this
 # scan the code for todo markers and other things we frown upon:
 #	short variable names
 #	some jshint settings being turned off
 #	console.log, alert, debugger left in the code
 #   skip or only on unit test suites/cases
+# CUSTOM settings you may have to change on a new computer
 dir=${1:-.}
 
 BAD_CLASS=1

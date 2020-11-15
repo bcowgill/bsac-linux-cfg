@@ -1,6 +1,7 @@
 #!/bin/bash
 # see info about a file/dir/archive
 # linux version below for ref/reuse...
+# WINDEV tool useful on windows development machin
 
 # set -x
 

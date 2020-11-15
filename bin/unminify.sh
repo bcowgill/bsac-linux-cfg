@@ -3,6 +3,9 @@
 # find . -name '*.min.css' -exec unminify.sh {} \;
 # find . -name '*.min.js' -exec unminify.sh {} \;
 
+# see unwebpack.sh for a simpler version if prettydiff not available.
+# WINDEV tool useful on windows development machine
+
 # TODO make these flags accessible on command line
 # create a pretty/ dir where the file is and unminify it there
 USE_PRETTY_DIR=0

@@ -2,6 +2,8 @@
 # Use python to fire up a simple web server to serve content
 # recognize the node npm config.port value if present and use that.
 
+# WINDEV tool useful on windows development machine
+
 PORT=$1
 DOCROOT=$2
 HTTP_MOD=SimpleHTTPServer

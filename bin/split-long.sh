@@ -1,5 +1,6 @@
 #!/bin/bash
 # split long lines at specified column to satisfy linters
+# WINDEV tool useful on windows development machine
 
 if [ "$1" == "--help" ]; then
 	echo "
