@@ -1,5 +1,6 @@
 #!/bin/bash
 # show unicode smiley or other named character groups
+# See also mksmiley.sh to make an HTML page full of smileys which you can zoom
 # WINDEV tool useful on windows development machine
 
 # ( head -7 template/html/html5.html | perl -pne 's{Test}{UTF8 Smiley Faces}xmsg'; smiley.sh --all| perl -pne 'chomp; $_ = qq{<p>$_</p>\n};' ; tail -2 template/html/html5.html ) > template/html/faces-utf8.html
@@ -19,8 +20,13 @@ Display unicode smiley characters or other custom named groups of characters.
 --stars  shows only star symbols.
 --weather  shows only weather and environmental symbols.
 --all  shows all faces.
+--everything  Shows every smiley option sorted.
+
+See also mksmiley.sh to make an HTML page full of smileys which you can zoom.
 "
 }
+
+ALL="all animals solar stars weather"
 
 case $option in
 	(--face|--faces)
@@ -35,6 +41,8 @@ case $option in
 		utf8ls.pl -1 U+1F525 U+263C U+2620 U+2614 -13 U+1F300 -5 U+26C4 U+2600 -2 U+2622| sort;;
 	(--all)
 		grep-utf8.sh \\bface | egrep -vi 'kangxi|clock|compatibility' | grep -vi 'die face' ;;
+	(--everything)
+		(for opt in $ALL; do smiley.sh --$opt; done) | sort | uniq;;
 	(*)
 		usage;;
 esac

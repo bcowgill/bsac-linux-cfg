@@ -5,10 +5,12 @@
 
 FROM=~/bin
 TO=./home/bin
+SMILEYS=~/bin/template/html/faces-utf8.html
 
 pushd $TO
 rm *.sh *.pl
 
+cp $SMILEYS .
 cp `grep -l WINDEV $FROM/*.pl` .
 mv `grep -l CUSTOM *.pl` ./cfg/wipro-rbos/
 
