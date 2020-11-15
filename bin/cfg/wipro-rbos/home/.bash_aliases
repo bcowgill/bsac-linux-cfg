@@ -1,3 +1,6 @@
+# CUSTOM pull in very specific aliases for system
+[ -e $HOME/bin/aliases ] && . $HOME/bin/aliases
+
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'

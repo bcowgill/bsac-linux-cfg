@@ -150,18 +150,25 @@ alias gr='g remote'
 alias glog='g log --oneline --graph --decorate --all'
 alias ggraph='g graph --simplify-by-decoration'
 
-# CUSTOM master/develop may change for you...
 # also, gco -  will checkout the last branch you had
 alias gco='g checkout'
-alias gcd='gco develop'
+
+# CUSTOM master/develop may change for you...
+alias gcd='gco dev'
+alias grbiod='grbi origin/dev'
 alias gcm='gco master'
 alias grom='git-rebase.sh origin/master'
-alias grbiod='grbi origin/develop'
 alias grbiom='grbi origin/master'
 
+alias gcod='gcd && gl'
+alias gcom='gcm && gl'
+
 # A reduced set of aliases from my usual Linux / Mac set.
+alias setls="set | perl -ne '\$stop = 1 if m{[^=]\(\)}xms; print unless \$stop'"
+
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
-alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
+alias vig='$EDITOR ~/go.sh'
+alias vial='$EDITOR ~/bin/aliases ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
 alias vivim='$EDITOR ~/.vimrc'
 
@@ -174,4 +181,15 @@ alias ......='cd ../../../../..'
 alias .......='cd ../../../../../..'
 alias ........='cd ../../../../../../..'
 
+
+alias ll='ls -l'
+alias ls='ls -F --color=auto --show-control-chars'
 alias lss='ls -al -oSr'   # list by size reversed
+alias vihosts='vim /c/Windows/System32/Drivers/etc/hosts'
+
+# CUSTOM aliases for this windows system
+alias vdiff='winMerge.exe'
+alias node='winpty node.exe'
+
+# CUSTOM pull in very specific aliases for system
+[ -e $HOME/bin/aliases ] && . $HOME/bin/aliases
