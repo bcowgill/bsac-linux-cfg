@@ -7,14 +7,17 @@ FROM=~/bin
 TO=./home/bin
 
 pushd $TO
-cp $FROM/find-bak.sh .
-cp $FROM/pswide.sh .
-cp $FROM/datestamp.sh .
-cp $FROM/git-*.sh .
+rm *.sh *.pl
+
+cp `grep -l WINDEV $FROM/*.pl` .
+mv `grep -l CUSTOM *.pl` ./cfg/wipro-rbos/
+
+cp `grep -l WINDEV $FROM/*.sh` .
+
 rm git-use*.sh
 cp $FROM/git-use-winmerge.sh .
-mv `grep -l CUSTOM git-*` ./cfg/wipro-rbos/
-cp `grep -l WINDEV *.sh` .
+
+mv `grep -l CUSTOM *.sh` ./cfg/wipro-rbos/
 
 popd
 
