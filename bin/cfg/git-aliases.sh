@@ -1,4 +1,4 @@
-# git-aliases.sh
+# .git_aliases (aka git-aliases.sh)
 # How to use these aliases:
 # http://mjk.space/git-aliases-i-cant-live-without/
 
@@ -63,11 +63,6 @@ alias gfea='gfe --all'
 alias gfpr='git-fetch-pull-request.sh'
 alias gnb='git-new-branch.sh'
 
-# also, gco -  will checkout the last branch you had
-alias gco='g checkout'
-alias gcd='gco develop'
-alias gcm='gco master'
-
 alias gp='g push'
 alias ggpush='gp origin $(git_current_branch)'
 alias gpb=ggpush
@@ -100,6 +95,7 @@ alias gap='ga --patch'
 alias gai='ga -i'
 
 alias gb='g branch'
+alias gcb='git_current_branch'
 alias gba='gb -a'
 alias gbl='gb --list'
 alias gblr='gb --list --remote'
@@ -109,9 +105,6 @@ alias ggr='g grep'
 
 alias grb='g rebase'
 alias grbi='grb --interactive'
-alias grom='git-rebase.sh origin/master'
-alias grbiod='grbi origin/develop'
-alias grbiom='grbi origin/master'
 alias grba='grb --abort'
 alias grbc='grb --continue'
 alias grbs='grb --skip'
@@ -148,3 +141,12 @@ alias gr='g remote'
 
 alias glog='g log --oneline --graph --decorate --all'
 alias ggraph='g graph --simplify-by-decoration'
+
+# CUSTOM master/develop may change for you...
+# also, gco -  will checkout the last branch you had
+alias gco='g checkout'
+alias gcd='gco develop'
+alias gcm='gco master'
+alias grom='git-rebase.sh origin/master'
+alias grbiod='grbi origin/develop'
+alias grbiom='grbi origin/master'
