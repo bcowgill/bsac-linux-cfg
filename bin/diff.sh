@@ -1,5 +1,6 @@
 #!/bin/bash
 # diff or reverse/sync diff if third parameter given
+# WINDEV tool useful on windows development machine
 
 function usage {
 	echo "

@@ -1,5 +1,6 @@
 #!/bin/bash
 # stash changes on all branches
+# WINDEV tool useful on windows development machine
 
 pushd ~/projects
 DIRS="core-ui files-ui groups-ui dealroom-ui new-ui"

@@ -14,6 +14,7 @@
 
 # find files which need fixing and fix them.
 # for file in `ggr else app/ | grep -v '}' | perl -pne 's{:.+\n}{\n}xmsg' | sort | uniq`; do echo $file; INDENT=2 fix-else-cuddle.sh $file; done
+# WINDEV tool useful on windows development machine
 
 if [ ! -z "$2" ]; then
 	for FILE in $*

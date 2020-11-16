@@ -11,7 +11,7 @@ usage: $(basename $0) start end file ...
 
 This script will grep a file for a section marked by an open and close marker and display the content found.
 
-See also inject-middle.sh, prepend.sh
+See also after.sh inject-middle.sh, between.sh, prepend.sh, until.sh
 
 example:
 

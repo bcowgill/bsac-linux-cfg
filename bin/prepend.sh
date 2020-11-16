@@ -19,7 +19,7 @@ This script will insert some content at the top of the files listed.
 --content  specify the actual content to insert into the files.
 content-filename  specifies the file to insert into the files.
 
-See also middle.sh, inject-middle.sh
+See also after.sh, middle.sh, inject-middle.sh, between.sh, until.sh
 
 example:
 

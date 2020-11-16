@@ -1,5 +1,6 @@
 #!/bin/bash
 # fix up code after a save
+# CUSTOM settings you may have to change on a new computer
 
 # example use in autofix.sh
 # FIX_INDENT=2 FIX_TAB=0 auto-build.sh fix-javascript.sh 'package.json5 app internals server src test config scripts'

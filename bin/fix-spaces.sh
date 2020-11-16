@@ -1,5 +1,6 @@
 #!/bin/bash
 # fix up spacing in a file
+# WINDEV tool useful on windows development machine
 
 # TODO make these flags accessible on command line
 INDENT_TAB=${INDENT_TAB:-1}
@@ -14,6 +15,8 @@ usage: $(basename $0) file ...
 Fix up trailing space in files and adjust mixed space/tabs for indentation.
 Flag INDENT_TAB=${INDENT_TAB:-0} if =1 will indent with tab characters.
 Flag INDENT=$INDENT sets number of spaces to a tab stop.
+
+See also fix-tabs.sh
 "
 [ -z "$INPLACE" ] || echo Flag INPLACE causes changes to be written back to original file.
 	exit 1

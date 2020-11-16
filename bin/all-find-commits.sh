@@ -1,6 +1,7 @@
 #!/bin/bash
 # grep for a commit message in all git repositories
 # as defined by PJ and REPOS environment variables
+# WINDEV tool useful on windows development machine
 
 COMMIT=$1
 if [ -z "$COMMIT" ]; then

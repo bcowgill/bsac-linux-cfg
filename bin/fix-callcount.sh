@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
 set -e
 
 function usage

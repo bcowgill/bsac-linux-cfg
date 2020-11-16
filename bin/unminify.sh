@@ -3,7 +3,8 @@
 # find . -name '*.min.css' -exec unminify.sh {} \;
 # find . -name '*.min.js' -exec unminify.sh {} \;
 
-# see unwebpack.sh for a simpler version if prettydiff not available.
+# See unwebpack.sh for a simpler version if prettydiff not available.
+# See also css-diagnose.sh debug-css.sh unminify.sh unwebpack.sh
 # WINDEV tool useful on windows development machine
 
 # TODO make these flags accessible on command line

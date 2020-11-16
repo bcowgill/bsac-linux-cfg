@@ -1,5 +1,6 @@
 #!/bin/bash
 # Ensure that a file exists by touching it and creating the directory path if needed.
+# WINDEV tool useful on windows development machine
 
 if [ -z "$1" ]; then
 	echo "

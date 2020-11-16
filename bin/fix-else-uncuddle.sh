@@ -8,6 +8,7 @@
 
 # find files which need fixing and fix them.
 # for file in `ggr -E '\} *else *\{' app/ | perl -pne 's{:.+\n}{\n}xmsg' | sort | uniq`; do echo $file; fix-else-uncuddle.sh $file; done
+# WINDEV tool useful on windows development machine
 
 
 if [ ! -z "$2" ]; then

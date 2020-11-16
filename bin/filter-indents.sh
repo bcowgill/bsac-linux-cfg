@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # filter out all indentation from a file
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

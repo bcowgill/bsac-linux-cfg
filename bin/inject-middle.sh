@@ -13,7 +13,7 @@ usage: $(basename $0) start end content file ...
 
 This script will grep a file for a section marked by an open and close marker and then inject the content from another file into it.
 
-See also middle.sh, prepend.sh
+See also after.sh, middle.sh, between.sh, prepend.sh, until.sh
 
 example:
 

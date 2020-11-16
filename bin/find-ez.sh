@@ -1,5 +1,6 @@
 #!/bin/bash
 # find-ez easy find shows just name, size and time
+# WINDEV tool useful on windows development machine
 
 find-ez () {
 	local sourceDir

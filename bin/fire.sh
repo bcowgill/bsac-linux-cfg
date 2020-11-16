@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
 #You mean you don't have an emergency commit script????? How unprofessional.
 #Go to your terminal now...
 

@@ -1,6 +1,7 @@
 #!/bin/bash
 # find all files excluding .git node_modules and bower_components
 # find-code.sh -o '\(' -name \'*.js\' -exec echo {} '\;' '\)'
+# WINDEV tool useful on windows development machine
 
 if [ -z "$1" ]; then
 	ARGS="-o -print"

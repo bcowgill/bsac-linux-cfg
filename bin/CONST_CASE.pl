@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 # convert input text from [cC]amelCase or snake_case to CONST_CASE.
+# See also camelCase.pl, CamelCaseX.pl, CONST_CASE.pl, hyphen-case.pl, snake_case.pl
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

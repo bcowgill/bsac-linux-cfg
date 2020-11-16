@@ -1,5 +1,8 @@
 #!/bin/bash
 # diagnose some webpacked CSS by formatting it nicely and then selectively enableing only specific named CSS style properties.
+# See also css-diagnose.sh debug-css.sh unminify.sh unwebpack.sh
+# WINDEV tool useful on windows development machine
+
 CSS="${1:-.}"
 
 FILES=`ls $CSS/*.css`

@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # Filter out all punctuation and reduce spacing to single
+# WINDEV tool useful on windows development machine
 use strict;
 use warnings;
 use English -no_match_vars;

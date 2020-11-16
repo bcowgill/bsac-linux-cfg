@@ -1,5 +1,6 @@
 #!/bin/bash
 # auto rebuild when things change
+# CUSTOM settings you may need to change on a new computer
 TOUCH=last-build.timestamp
 PAUSE=`pwd`/pause-build.timestamp
 WATCHDIR=..

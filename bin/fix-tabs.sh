@@ -1,4 +1,5 @@
 #!/bin/bash
+# WINDEV tool useful on windows development machine
 
 function usage {
 	local message code
@@ -17,6 +18,8 @@ This will change a files spaced indentation for example from 4 spaces to 2 space
 from-tab  number of spaces the file is currently indented per tab.
 to-tab    desired number of spaces to indent per tab.
 file_name the file whose indentation needs correction.
+
+See also fix-spaces.sh
 "
 	exit $code
 }

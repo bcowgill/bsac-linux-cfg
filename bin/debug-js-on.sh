@@ -1,7 +1,10 @@
 #!/bin/bash
 # debug-js-on.sh turn on debugging statements marked //dbg:
 # by replacing them with /*dbg:*/
+# See also activate.sh, deactivate.sh, debug-js-off.sh
+# WINDEV tool useful on windows development machine
 
+# CUSTOM settings you may have to change on a new computer
 DIR=${1:-~/projects}
 
 pushd $DIR > /dev/null

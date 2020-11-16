@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
-# convert input text to CamelCase.
+# convert input text to CamelCase. Named CamelCaseX.pl so that file systems
+# which ignore case differences can distinguish from camelCase.pl
+# See also camelCase.pl, CamelCaseX.pl, CONST_CASE.pl, hyphen-case.pl, snake_case.pl
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

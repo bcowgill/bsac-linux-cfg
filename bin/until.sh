@@ -9,6 +9,8 @@ This will show everything from standard input until a line matches the regular e
 The regular expression syntax used is perl's xms syntax.  Note, you MUST escape spaces in this format (\s or \ )
 
 Also note that \A signifies start of line and \z signifies end of line in this format.
+
+See also after.sh middle.sh inject-middle.sh between.sh prepend.sh
 "
 	exit 1
 fi

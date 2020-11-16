@@ -205,7 +205,8 @@ const TESTS = {
   fail  : 0,
   NOT_OK: '✘ ', // 'NOT OK ',
   OK    : '✔ ', // 'OK ',
-  SKIP  : 'o', // 'SKIP ', // TODO grab character from jest skip circle
+  SKIP  : '○ ', // 'SKIP', // from jest skipped tests
+  //SKIP  : '◌ ', // 'SKIP',
   pass  : 0,
   skip  : 0,
   QUIET : true,

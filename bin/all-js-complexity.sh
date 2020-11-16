@@ -1,6 +1,7 @@
 #!/bin/bash
 # generate javascript complexity information for all repositories
 # as defined by PJ and REPOS environment variables
+# WINDEV tool useful on windows development machine
 
 MAX=32
 

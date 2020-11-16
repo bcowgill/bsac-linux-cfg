@@ -1,3 +1,6 @@
+#!/bin/bash
+# interactive perl calculator supporting complex numbers, Big Integers, Big Rational and Big Float values
+# WINDEV tool useful on windows development machine
 perl -MMath::Trig -MData::Dumper -e '
 use Math::Trig qw(:pi :radial :great_circle);
 use Math::BigInt;
@@ -48,7 +51,7 @@ sub output
 				&& exists($H{sign})
 				)
 			{
-				# BigIng...
+				# BigInt...
 				print "($out)";
 			}
 			elsif (exists($H{_n})

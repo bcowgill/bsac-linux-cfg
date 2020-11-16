@@ -3,6 +3,7 @@
 
 # use find-bak.sh -delete
 # to delete the files found
+# See also find-bak.sh find-git.sh clean-git.sh clean.sh
 # WINDEV tool useful on windows development machine
 
 PRINT=
