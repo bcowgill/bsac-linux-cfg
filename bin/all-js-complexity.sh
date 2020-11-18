@@ -1,7 +1,38 @@
 #!/bin/bash
-# generate javascript complexity information for all repositories
-# as defined by PJ and REPOS environment variables
-# WINDEV tool useful on windows development machine
+
+function usage {
+	local code
+	code=$1
+	echo "
+$(basename $0) [--help|--man|-?]
+
+This will generate javascript complexity information in all git repositories as defined by PJ and REPOS environment variables.
+
+PJ      where your git projects are. i.e. $HOME/workspace
+REPOS   which git repository directories to process.
+branch  The branch you wish to check out of each repository.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+The program will change to the PJ directory then loop through the REPOS defined, changing into those directories and analysing complexity there.
+
+It may require some specific customisation based on your source code layout.
+
+See also jshint-add-complexity.sh, jshint-set-complexity-js.sh, jshint-analyse-complexity.sh, all-repos.sh, all-clean.sh, all-checkout.sh, all-grep.sh, all-push.sh, and others.
+
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
 
 MAX=32
 
@@ -30,6 +61,7 @@ do
 	echo " "
 	echo $dir ======================================================
 	pushd $dir > /dev/null
+		# CUSTOM settings you may have to change on a new computer.
 		jshint-add-complexity.sh .jshintrc 1
 		jshint-set-complexity-js.sh 1 `find app/scripts -name '*.js' 2> /dev/null` `find lib/scripts -name '*.js' 2> /dev/null`
 		grunt --no-color jshint | tee $LOG >> ../$LOG

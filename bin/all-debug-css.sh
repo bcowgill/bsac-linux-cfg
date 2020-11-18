@@ -1,25 +1,34 @@
 #!/bin/bash
-# annotate all less files for debugging in repositories
-# as defined by PJ and REPOS environment variables
-# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 # WINDEV tool useful on windows development machine
 
-if [ -z "$PJ" ]; then
-	echo NOT OK you must define the PJ environment variable to indicate where your git projects are. i.e. $HOME/workspace
-	exit 1
-else
-	if [ -z "$REPOS" ]; then
-		echo NOT OK you must define the REPOS environment variable to indicate which git repository directories to process
-		exit 2
-	fi
-	pushd $PJ
+function usage {
+	local code
+	code=$1
+	echo "
+$(basename $0) [--help|--man|-?] branch
+
+This will annotate all less files for debugging in all git repositories as defined by PJ and REPOS environment variables.
+
+PJ      where your git projects are. i.e. $HOME/workspace
+REPOS   which git repository directories to process.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+The program will change to the PJ directory then loop through the REPOS defined, changing into those directories and issuing the debug-css.sh command there.
+
+See also debug-css.sh, all-repos.sh, all-clean.sh, all-checkout.sh, all-grep.sh, all-push.sh, and others.
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
 fi
 
-for dir in $REPOS
-do
-	echo " "
-	echo $dir ======================================================
-	pushd $dir > /dev/null
-		debug-css.sh $*
-	popd > /dev/null
-done
+all-repos.sh debug-css.sh

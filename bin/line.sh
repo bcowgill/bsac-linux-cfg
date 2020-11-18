@@ -1,9 +1,35 @@
 #!/usr/bin/env perl
-# display some text in a 78 col wide banner line
 # WINDEV tool useful on windows development machine
 
 use strict;
 use English;
+use FindBin;
+
+sub usage
+{
+	print <<"USAGE";
+$FindBin::Script [--help|--man|-?]
+
+Display some text from standard input in a 78 column wide banner line.
+
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+example:
+
+echo filename | $FindBin::Script
+datestamp.sh | $FindBin::Script
+
+See also datestamp.sh
+USAGE
+	exit 0;
+}
+
+if ($ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 local $INPUT_RECORD_SEPARATOR = undef;
 my $text = <>;
