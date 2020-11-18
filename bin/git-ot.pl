@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# Use git to find commits during overtime -- i.e. outside of normal hours.
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
@@ -10,6 +12,7 @@ my %HOURS = map { ($_, 1) } qw(09 10 11 12 13 14 15 16 17);
 
 my $people = 0;
 my $rhPeople = {
+# CUSTOM settings you may have to change on a new computer
 	'brent.cowgill@wipro.com' => 'Brent'
 };
 my $raCommits = [];

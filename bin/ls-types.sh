@@ -1,5 +1,6 @@
 #!/bin/bash
 # List interesting file types within directories.
+# See also whatsin.sh, ls-types.pl
 # Work in progress.
 # want something like:
 

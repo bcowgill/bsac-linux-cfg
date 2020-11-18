@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # auto-rename.pl 'Screenshot.+\.png$' screen-shot- /tmp/me/screenshots /tmp/me
+# WINDEV tool useful on windows development machin
 
 use strict;
 use warnings;
@@ -102,6 +103,8 @@ The program attempts to create an auto-rename.src/dst.lock directory in the dest
 If the lock directories already exist it will terminate early.
 
 If you create a file called stop in either lock directory it will cause the program to terminate at the next scan.
+
+See also renumber-files.sh, rename-files.sh, cp-random.pl
 
 Example:
 

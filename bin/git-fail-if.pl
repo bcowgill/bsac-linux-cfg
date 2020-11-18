@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# WINDEV tool useful on windows development machine
 
 =item OVERVIEW
 
@@ -24,6 +25,9 @@
 =item SOURCE
 
 	http://blogs.perl.org/users/ovid/2014/07/making-git-bisect-more-useful.html
+=item SEE ALSO
+
+git-rewind.sh, git-rewind-manually.sh
 
 =item EXAMPLE
 

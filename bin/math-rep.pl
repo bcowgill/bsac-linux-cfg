@@ -1,4 +1,8 @@
 #!/usr/bin/env perl
+# An experiment in converting mathematical words and combinations into unicode character equivalents.
+# ^x is a superscript x
+# _x is a subscript x
+# other words correspond to greek letters and operators
 # echo PHI PSI del DELTA SIGMA gamma epsilon lamda mu pi rho dee epsilon phi int cross dot +- sum sqrt identical \<= \>= ^0 ^1 ^2 ^3 ^4 ^5 ^6 ^7 ^8 ^9 ^0 ^n _0 _1 _2 _3 _4 _5 _6 _7 _8 _9| math-rep.pl | utf8.pl
 
 while (<STDIN>) {

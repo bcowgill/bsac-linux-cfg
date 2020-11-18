@@ -2,7 +2,7 @@
 # annotate css/less files with a class name to identify the source file.
 # useful when CSS is required into an app and gets shoved into a <style> element thereby obscuring where it came from.
 # debug-css.sh [remove]
-# See also css-diagnose.sh debug-css.sh unminify.sh unwebpack.sh
+# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 # WINDEV tool useful on windows development machine
 
 # CUSTOM settings you may have to change on a new computer

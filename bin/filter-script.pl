@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # filter the output of the script command to remove color control codes etc
+# WINDEV tool useful on windows development machine
 
 use English qw(-no_match_vars);
 use utf8;      # so literals and identifiers can be in UTF-8

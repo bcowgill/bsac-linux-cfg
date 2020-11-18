@@ -1,8 +1,10 @@
 #!/usr/bin/env perl
 # replace SGML/HTML/XML entities with utf8 characters
+# See also grep-utf8.sh, utf*, unicode* and other unicode tools.
 
 # one-liner equivalent
 # perl -C -pe 's/&\#(\d+);/chr($1)/ge;s/&\#x([a-fA-F\d]+);/chr(hex($1))/ge;'
+# WINDEV tool useful on windows development machine
 
 use 5.012; # seamless utf
 use strict;

@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # search files for non-alpha characters (unicode, accented letters, etc)
+# WINDEV tool useful on windows development machine
 
 while (my $line = <>)
 {
@@ -9,4 +10,3 @@ while (my $line = <>)
 	# display filename, line and column number if there is a match
 	print "$ARGV:$.:" . ($-[2]+1) . ":$line" if length($2);
 }
-

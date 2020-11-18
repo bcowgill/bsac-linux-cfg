@@ -2,6 +2,7 @@
 # rewind your git repo until you manually stop or until ./git-should-stop.sh
 # indicates you should stop.
 # use this check when some manual/scripted test begins passing or failing
+# See also git-fail-if.pl, git-rewind.sh
 
 ORIGIN="$(git branch | grep \\* | cut -c 3-)"
 BRANCH="x$ORIGIN"

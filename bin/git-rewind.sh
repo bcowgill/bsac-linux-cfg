@@ -1,6 +1,7 @@
 #!/bin/bash
 # rewind your git repo to find something specific
 # you might have to tinker with things to get what you want exactly.
+# See also git-fail-if.pl, git-rewind-manually.sh
 CHECK_FILE="$1"
 SOMETHING="$2"
 SOMETHINGELSE="$3"

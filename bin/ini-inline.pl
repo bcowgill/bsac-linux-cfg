@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # convert .ini file sections/values into inline section/value format so that it is easy to search for settings
+# WINDEV tool useful on windows development machine
 
 use strict;
 use English;

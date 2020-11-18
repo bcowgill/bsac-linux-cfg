@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 # show css color and inverse color from standard input
+# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

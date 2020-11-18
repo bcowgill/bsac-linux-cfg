@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# WINDEV tool useful on windows development machine
 
 =head1 NAME
 
@@ -180,6 +181,9 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 =head1 SEE ALSO
 
 	CSS Color specs L<http://www.w3.org/TR/css3-color/>
+
+	all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
+	fix-commas.pl, JSTOOLS
 
 =head1 EXAMPLES
 

@@ -2,6 +2,7 @@
 # Reorder Javascript imports into a nice triangle.
 # Absolute imports first in ascending line length.
 # Followed by relative imports in descending line length.
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
@@ -55,6 +56,7 @@ A sorted import section might look like this:
 	import log from '../utils/log';
 	import fire from './fire';
 
+See also filter-css-colors.pl, fix-commas.pl, JSTOOLS
 USAGE
 
 	exit($reason ? 1 : 0);

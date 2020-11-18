@@ -2,6 +2,7 @@
 # Correct file import paths when a source file has moved.
 # Does not support rename except to File/index.js by creating a linker
 # index.js to File.js
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
@@ -58,6 +59,7 @@ These would not be corrected:
 ... import .... 'path/Object'
 ... import js from '!!raw!./ScopedSelectors.js';
 
+See also fix-import-order.pl JSTOOLS
 USAGE
 
 	exit($reason ? 1 : 0);

@@ -77,6 +77,10 @@ It will copy files randomly to a target location preserving directory structure.
 
 It will either copy a specific number of files or keep copying until there is no space left.
 
+=head1 SEE ALSO
+
+renumber-files.sh, rename-files.sh, auto-rename.pl, choose.pl
+
 =head1 EXAMPLES
 
  # copy random music files to a USB memory stick until it is full. Try to copy 30 additional random files when copies fail.

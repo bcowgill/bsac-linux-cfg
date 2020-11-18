@@ -14,6 +14,8 @@ The number value defaults to 001 if omitted.
 
 Specify TEST=1 $0 ... as command to only test what would happen but not do it.
 
+See also auto-rename.pl, rename-files.sh, cp-random.pl
+
 example:
 
 $0 Screen .png error-screen- 14

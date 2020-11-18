@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # convert acceptance criteria from Jira story into Cucumber for Cypress
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

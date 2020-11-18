@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # choose a random up to N lines from standard input
+# WINDEV tool useful on windows development machine
 
 use FindBin;
 
@@ -15,6 +16,8 @@ usage:
 $FindBin::Script [number] [file ...]
 
 Choose lines randomly from file or standard input. If the number is given that many consecutive lines will be chosen otherwise only one line is chosen.
+
+See also cp-random.pl
 USAGE
 	exit 1;
 }

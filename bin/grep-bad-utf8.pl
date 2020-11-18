@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # locate malformed utf8 sequences
+# WINDEV tool useful on windows development machine
 
 use strict;
 

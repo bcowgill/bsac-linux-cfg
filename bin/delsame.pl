@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 # compare files in two directories and delete the ones that are identical
 # ./delsame.pl "./WD/acer_5720/Memeo/acer_5720/C_/Users/Public/Music/Sample Music" "./WD/acer_5720/Memeo/acer_5720/C_/Users/me/Documents/pda/htc-hd2-leo/AKSTON-16GB-OLD/MUSIC/Aaron Goldberg/Worlds"
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

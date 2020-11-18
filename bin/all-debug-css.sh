@@ -1,6 +1,7 @@
 #!/bin/bash
 # annotate all less files for debugging in repositories
 # as defined by PJ and REPOS environment variables
+# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 # WINDEV tool useful on windows development machine
 
 if [ -z "$PJ" ]; then

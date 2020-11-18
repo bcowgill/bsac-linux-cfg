@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # correct comma placement for leading/trailing
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
@@ -166,6 +167,7 @@ becomes
 
 and vice versa if --leading is specified.
 
+See also filter-css-colors.pl, fix-commas.pl, JSTOOLS
 USAGE
 	exit 0;
 }
