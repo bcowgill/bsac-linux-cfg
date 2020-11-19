@@ -17,10 +17,11 @@ sub usage {
 	print("$message\n\n") if $message;
 
 	print <<"USAGE";
-$cmd [--debug] keep-path [delete-path]
+$cmd [--debug] [--help|--man|-?] keep-path [delete-path]
 
 keep-path    the path to compare against for identical files.
 delete-path  the path to scan for files to delete. defaults to the current directory.
+--help       shows help for this program.
 --debug      turns on debugging information
 
 Compares files in the delete-path and keep-path and deletes any from delete-path which are identical to the ones in the keep-path.
@@ -41,6 +42,10 @@ exit ($message ? 1 : 0);
 my $DEBUG = 0;
 
 usage("You must specify a delete-path.") unless scalar(@ARGV);
+
+if ($ARGV[0] =~ m{--help|--man|-\?}xms) {
+	usage()
+}
 
 if ('--debug' eq $ARGV[0]) {
 	$DEBUG = 1;

@@ -147,10 +147,10 @@ sub strip_trailing_comma
 	return ($line, $moved);
 }
 
-if (scalar(@ARGV) && $ARGV[0] eq '--help')
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?})
 {
 	print <<"USAGE";
-usage: $FindBin::Script [--leading] [--help] filename...
+usage: $FindBin::Script [--leading] [--help|--man|-?] filename...
 
 Fixes comma placement in files specified.  Default is to move leading commas on a line to the end of the previous line.
 

@@ -22,6 +22,41 @@ use autodie qw(open mkdir rmdir unlink move opendir );
 # https://www.perl.com/article/37/2013/8/18/Catch-and-Handle-Signals-in-Perl/
 use sigtrap qw(handler signal_handler normal-signals);
 
+sub usage
+{
+	my ($msg) = @ARG;
+	my $cmd = $FindBin::Script;
+
+	say("$msg\n\n") if $msg;
+	say(<<"USAGE");
+usage: $cmd [--help|--man|-?] pattern prefix [destination [source]]
+
+This program will automatically rename or move matching files as they appear.
+
+pattern     regex pattern to match against source file name to be renamed.
+prefix      prefix for destination file names. Will have NNN appended to it.
+destination destination directory to move file to. default is current directory.
+source      source directory to find source files in. default is current directory.
+--help      shows help for this program.
+--man       shows help for this program.
+-?          shows help for this program.
+
+The program attempts to create an auto-rename.src/dst.lock directory in the destination and source before beginning to wait for files.
+
+If the lock directories already exist it will terminate early.
+
+If you create a file called stop in either lock directory it will cause the program to terminate at the next scan.
+
+See also renumber-files.sh, rename-files.sh, cp-random.pl
+
+Example:
+
+$cmd '\\.jpg\$' screen-shot- \$HOME/screen-shots \$HOME/Desktop
+
+USAGE
+	exit($msg ? 1: 0);
+} # usage()
+
 our $VERSION = 0.1;
 our $DEBUG = 0;
 our $DEBUG_TREE = 0;
@@ -38,6 +73,11 @@ my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 our $TESTING = 0;
 our $TEST_CASES = 79;
 tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 my $pattern = shift;
 my $prefix = shift;
@@ -60,17 +100,17 @@ sub configure_locks
 {
 	my ($src, $dst) = @ARG;
 
-   $source_lock = file_in_dir($src, 'auto-rename.src.lock');
-   $destination_lock = file_in_dir($dst, 'auto-rename.dst.lock');
+	$source_lock = file_in_dir($src, 'auto-rename.src.lock');
+	$destination_lock = file_in_dir($dst, 'auto-rename.dst.lock');
 
-   $source_lock_stop = file_in_dir($source_lock, 'stop');
-   $destination_lock_stop = file_in_dir($destination_lock, 'stop');
+	$source_lock_stop = file_in_dir($source_lock, 'stop');
+	$destination_lock_stop = file_in_dir($destination_lock, 'stop');
 
-   $source_lock_pid  = file_in_dir($source_lock, 'pid');
-   $destination_lock_pid  = file_in_dir($destination_lock, 'pid');
+	$source_lock_pid  = file_in_dir($source_lock, 'pid');
+	$destination_lock_pid  = file_in_dir($destination_lock, 'pid');
 
-   $source_lock_origin  = file_in_dir($source_lock, 'origin');
-   $destination_lock_origin  = file_in_dir($destination_lock, 'origin');
+	$source_lock_origin  = file_in_dir($source_lock, 'origin');
+	$destination_lock_origin  = file_in_dir($destination_lock, 'origin');
 }
 
 sub check_args
@@ -81,38 +121,6 @@ sub check_args
 	failure("source [$source] must be an existing directory.") unless -d $source;
 	failure("destination [$destination] must be an existing directory.") unless -d $destination;
 }
-
-sub usage
-{
-	my ($msg) = @ARG;
-	my $cmd = $FindBin::Script;
-
-	say("$msg\n\n") if $msg;
-	say(<<"USAGE");
-usage: $cmd pattern prefix [destination [source]]
-
-This program will automatically rename or move matching files as they appear.
-
-pattern     regex pattern to match against source file name to be renamed.
-prefix      prefix for destination file names. Will have NNN appended to it.
-destination destination directory to move file to. default is current directory.
-source      source directory to find source files in. default is current directory.
-
-The program attempts to create an auto-rename.src/dst.lock directory in the destination and source before beginning to wait for files.
-
-If the lock directories already exist it will terminate early.
-
-If you create a file called stop in either lock directory it will cause the program to terminate at the next scan.
-
-See also renumber-files.sh, rename-files.sh, cp-random.pl
-
-Example:
-
-$cmd '\\.jpg\$' screen-shot- \$HOME/screen-shots \$HOME/Desktop
-
-USAGE
-	exit($msg ? 1: 0);
-} # usage()
 
 sub main
 {
@@ -898,14 +906,14 @@ sub wipe_locks
 		$source_lock_pid,
 		$destination_lock_origin,
 		$destination_lock_pid
-   );
+	);
 	my @LockDirs = (
 		$source_lock,
 		$destination_lock,
 		$src,
 		$dst,
 		$dir
-   );
+	);
 
 	foreach my $file (@LockFiles) {
 		eval
@@ -1152,22 +1160,22 @@ sub tests
 	test_remove_destination_lock("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
 	test_move_files(25, ["this-file-will-be-moved.ABC", "this-file-will-also-be-moved.ABC"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_move_files("ERROR: could not move", ["this-file-does-not-exist.abc"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
-   test_get_new_files([], ".", "\\.xyzzyZYXXY\$") unless $SKIP;
-   test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$") unless $SKIP;
-   test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$") unless $SKIP;
-   test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file") unless $SKIP;
+	test_get_new_files([], ".", "\\.xyzzyZYXXY\$") unless $SKIP;
+	test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$") unless $SKIP;
+	test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$") unless $SKIP;
+	test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file") unless $SKIP;
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file") unless $SKIP;
 	test_remove_locks("returned", "") unless $SKIP;
 	test_remove_locks("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
 	test_show_help();
-   test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-") unless $SKIP;
-   test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-") unless $SKIP;
-   test_obtain_locks() unless $SKIP;
-   test_signal_handler(qr{^\nauto-rename\.pl terminated by signal at }) unless $SKIP;
+	test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-") unless $SKIP;
+	test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-") unless $SKIP;
+	test_obtain_locks() unless $SKIP;
+	test_signal_handler(qr{^\nauto-rename\.pl terminated by signal at }) unless $SKIP;
 	exit 0;
 }
 
-# bring say, $TESTING changes over to perl template and any scripts based on this.
+# TODO bring say, $TESTING changes over to perl template and any scripts based on this.
 
 __END__
 __DATA__

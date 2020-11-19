@@ -23,7 +23,7 @@ USAGE
 	exit 0;
 }
 
-if ($ARGV[0] =~ m{--help|--man|-\?}xms)
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage()
 }
