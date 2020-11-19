@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-# filter the output of the script command to remove color control codes etc
 # WINDEV tool useful on windows development machine
 
 use English qw(-no_match_vars);
@@ -11,6 +10,33 @@ use warnings  qw(FATAL utf8);    # fatalize encoding glitches
 use open      qw(:std :utf8);    # undeclared streams in UTF-8
 use charnames qw(:full :short);  # unneeded in v5.16
 use Unicode::Normalize; # to check normalisation
+use FindBin;
+
+sub usage
+{
+	print <<"USAGE";
+$FindBin::Script [--help|--man|-?]
+
+Filter the output of the script command to remove color control codes etc.
+
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+See also script
+
+Example:
+
+	script script.log
+	$FindBin::Script < script.log
+USAGE
+	exit 0;
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 # Filter out ANSI color change control sequences
 my $esc = "\N{U+001B}"; # ^[ = escape
@@ -62,3 +88,5 @@ sub debugUTF8 {
 		print "line below matches [[:$class:]] ? " . (($canonical =~ m{[[:$class:]]}xms) ? 1: 0) . "\n";
 	}
 }
+
+__END__

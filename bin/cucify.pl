@@ -16,7 +16,7 @@ sub usage
 
 	print "$message\n\n" if $message;
 	print <<"USAGE";
-$cmd --ask [file-name] > cypress/integration/PAYO4B-NNN-description.dev.feature
+$cmd [--help|--man|-?] --ask [file-name] > cypress/integration/PAYO4B-NNN-description.dev.feature
 or
 STORY="JIRA-ID" FEATURE="Name of feature" $cmd [file-name]
 
@@ -26,6 +26,9 @@ This will take the Given When Then statements of Acceptance Criteria from a Jira
 file-name optional. Name of file to read cucumber text from.
 STORY     The story Id within jira or other tracking system.
 FEATURE   The description of the feature being described.
+--help    Shows help for this program.
+--man     Shows help for this program.
+-?        Shows help for this program.
 USAGE
 	exit($message ? 1 : 0);
 }
@@ -37,6 +40,11 @@ sub make_feature
 {
 	my ($story, $description) = @ARG;
 	return "Feature: [$story] - $description";
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
 }
 
 if (($ARGV[0] || '') eq '--ask')
@@ -92,3 +100,4 @@ while (my $line = <>) {
 	print "$line\n";
 }
 
+__END__
