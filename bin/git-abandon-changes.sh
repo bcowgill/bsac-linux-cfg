@@ -1,6 +1,6 @@
 #!/bin/bash
 # stash and drop your git changes
-
+# WINDEV tool useful on windows development machine
 git status --short --untracked-files=no
 echo WARNING: lose your uncommitted changes? [y/Ctrl-C to abort]
 read prompt

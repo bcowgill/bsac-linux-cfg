@@ -1,5 +1,6 @@
 #!/bin/bash
 # find the authors of shameful git commit messages up to the date provided
+# WINDEV tool useful on windows development machine
 
 STOP=$1
 LEN=${2:-22}

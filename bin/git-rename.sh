@@ -2,6 +2,7 @@
 # rename a git file in same dir and adjust import references to it
 # git-rename.sh src/path/filenmae.js js filename
 # git-rename.sh src/path/filenmae.js js filename.js
+# WINDEV tool useful on windows development machine
 
 FULLPATH="$1"
 EXT="$2"

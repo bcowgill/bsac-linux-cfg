@@ -1,5 +1,6 @@
 #!/bin/bash
 # rebase a branch and invoke merge tool if there were conflicts
+# WINDEV tool useful on windows development machine
 branch="$1"
 git fetch
 if [ -z $branch ]; then

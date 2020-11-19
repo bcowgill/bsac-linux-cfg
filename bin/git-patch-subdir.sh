@@ -1,5 +1,6 @@
 #!/bin/bash
 # https://stackoverflow.com/questions/1214906/how-do-i-merge-a-sub-directory-in-git
+# WINDEV tool useful on windows development machine
 
 FROM_BRANCH="$1"
 FROM_DIR="$2"

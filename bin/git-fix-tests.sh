@@ -10,6 +10,7 @@
 # and replaces test/test.js text in the file with test/path-name.spec.js
 # and replaces descSuiteFileName with descPathNameSuite
 
+# WINDEV tool useful on windows development machine
 # CUSTOM settings you may need to change on a new machine
 # .spec.js to .test.js as needed.
 for test in $*; do

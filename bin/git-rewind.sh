@@ -2,6 +2,7 @@
 # rewind your git repo to find something specific
 # you might have to tinker with things to get what you want exactly.
 # See also git-fail-if.pl, git-rewind-manually.sh
+# WINDEV tool useful on windows development machine
 CHECK_FILE="$1"
 SOMETHING="$2"
 SOMETHINGELSE="$3"

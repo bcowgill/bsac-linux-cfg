@@ -1,5 +1,6 @@
 #!/bin/bash
 # git-slay-branch.sh delete a branch remotely and locally so it is gone forever.
+# WINDEV tool useful on windows development machine
 
 if [ ! -z "$2" ]; then
 	for br in $*;

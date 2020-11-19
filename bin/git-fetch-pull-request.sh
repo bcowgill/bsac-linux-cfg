@@ -1,5 +1,6 @@
 #!/bin/bash
 # fetch an updated pull request that someone else has rebased.
+# WINDEV tool useful on windows development machine
 
 branch=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
 if [ -z $branch ]; then

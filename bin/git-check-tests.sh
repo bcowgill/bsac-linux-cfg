@@ -1,5 +1,6 @@
 #!/bin/bash
 # scan the javascript tests for disabled tests
+# WINDEV tool useful on windows development machine
 
 # CUSTOM settings may need to change these on a new computer
 #TESTS="'*.test.js'"

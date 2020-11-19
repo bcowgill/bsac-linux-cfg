@@ -1,10 +1,32 @@
 #!/usr/bin/env perl
-# Use git to find commits during overtime -- i.e. outside of normal hours.
 # WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
+use FindBin;
 use Data::Dumper;
+
+sub usage
+{
+	print <<"USAGE";
+$FindBin::Script [--help|--man|-?]
+
+Use git to find commits during overtime -- i.e. outside of normal hours.
+
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+You will probably need to modify the script itself for your needs.
+
+USAGE
+	exit 0;
+}
+
+if ($ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 my $STOP = '';
 my %DAYS = qw(Sat 1 Sun 1);
@@ -32,7 +54,6 @@ my %Months = qw(
 	Nov 11
 	Dec 12
 );
-
 
 sub match_commit
 {

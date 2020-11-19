@@ -22,6 +22,7 @@
 # Ctrl-Alt-Left  Copy changes to left andn go to next diff
 
 # Best to add the winmerge and VS code directories to your path first.
+# WINDEV tool useful on windows development machine
 WINMERGE=`which winMergeU`
 VSCODE=`which Code`
 if [ -z $WINMERGE ]; then

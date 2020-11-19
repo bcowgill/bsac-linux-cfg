@@ -3,6 +3,7 @@
 # move a source file somewhere else and adjust all import statements
 # which are affected by it. Only support moving directories, not rename.
 # But support creating an index linker file.
+# WINDEV tool useful on windows development machine
 
 DEBUG=${DEBUG:-0}
 MODE=${MODE:-git} # git, mv or cp

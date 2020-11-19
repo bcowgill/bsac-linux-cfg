@@ -3,6 +3,7 @@
 # indicates you should stop.
 # use this check when some manual/scripted test begins passing or failing
 # See also git-fail-if.pl, git-rewind.sh
+# WINDEV tool useful on windows development machine
 
 ORIGIN="$(git branch | grep \\* | cut -c 3-)"
 BRANCH="x$ORIGIN"

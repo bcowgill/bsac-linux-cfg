@@ -1,5 +1,6 @@
 #!/bin/bash
 # create a new feature branch local and remote from current checked out branch
+# WINDEV tool useful on windows development machine
 NEW=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
 
 git branch

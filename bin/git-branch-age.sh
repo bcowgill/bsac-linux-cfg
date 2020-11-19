@@ -1,5 +1,6 @@
 #!/bin/bash
 # show the age of a local git branch by displaying the date of the last commit
+# WINDEV tool useful on windows development machine
 
 MASTER=${MASTER:-master}
 BRANCH="$1"

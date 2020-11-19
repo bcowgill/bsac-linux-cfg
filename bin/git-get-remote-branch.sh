@@ -1,5 +1,6 @@
 #!/bin/bash
 # get a remote branch from git
+# WINDEV tool useful on windows development machine
 branch=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
 if [ -z $branch ]; then
 	git branch --remote

@@ -10,6 +10,7 @@
 # git mergetool
 
 # /usr/bin/diffmerge
+# WINDEV tool useful on windows development machine
 DIFFM=`which diffmerge || which diffmerge.sh`
 if [ -z $DIFFM ]; then
 	echo NOT OK diffmerge is not installed.

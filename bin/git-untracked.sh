@@ -1,5 +1,6 @@
 #!/bin/bash
 # show only untracked files from git
+# WINDEV tool useful on windows development machine
 git status | perl -ne '
 if (!$found) {
 	$found = 1 if m{

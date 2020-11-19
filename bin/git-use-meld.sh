@@ -8,6 +8,7 @@
 # Using it on a merge:
 # git merge something   indicates conflicts
 # git mergetool
+# WINDEV tool useful on windows development machine
 
 MELD=`which meld`
 if [ -z $MELD ]; then

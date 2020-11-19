@@ -1,5 +1,6 @@
 #!/bin/bash
 # merge a branch and invoke merge tool if there were conflicts
+# WINDEV tool useful on windows development machine
 branch="$1"
 if [ -z $branch ]; then
 	git branch

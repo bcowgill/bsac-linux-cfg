@@ -25,6 +25,7 @@
 =item SOURCE
 
 	http://blogs.perl.org/users/ovid/2014/07/making-git-bisect-more-useful.html
+
 =item SEE ALSO
 
 git-rewind.sh, git-rewind-manually.sh
@@ -53,7 +54,6 @@ git-rewind.sh, git-rewind-manually.sh
 	git bisect good
 	git bisect run git-fail-if.pl --contains "CHECKOUT IS BAD" good-bad.sh
 
-
 	good-bad.sh contains something like this:
 
 	#!/bin/bash
@@ -76,13 +76,47 @@ use IPC::Open3;
 use Symbol qw(gensym);
 use FindBin;
 
+sub usage {
+	my ($code) = @_;
+	my $cmd = $FindBin::Script;
+	die <<"END";
+usage:
+
+$cmd --contains 'exact text to fail on' command to run
+$cmd --matches  'pattern to fail on'    command to run
+$cmd --help
+$cmd --man
+
+This program is designed to work with the git bisect command to automate the discovery of the first commit which causes a predictable failure.
+
+See also git-rewind.sh, git-rewind-manually.sh
+
+Example:
+
+	Use the prove command to run tests and have STDERR examined by git-fail-if
+
+	git bisect start;
+	git bisect bad;
+	git checkout HEAD~20;
+	prove ...
+	git bisect good;
+
+	git bisect run git-fail-if.pl --contains "Field 'user' doesn't have a default value" \
+		prove t/path/to/test/that/sometimes/fails/in/different/ways.t
+END
+	exit $code;
+}
+
 GetOptions(
+	'help'       => \my $help,
+	'man'        => \my $man,
 	'contains=s' => \my $contains,
 	'matches=s'  => \my $matches,
 ) or usage();
 
-usage() unless $contains xor $matches;
-usage() unless @ARGV;
+usage(0) if $help || $man;
+usage(1) unless $contains xor $matches;
+usage(1) unless @ARGV;
 
 my $command = join ' ' => @ARGV;
 
@@ -102,13 +136,4 @@ my $failed = $matches
 waitpid( $pid, 0 );
 
 exit $failed;
-
-sub usage {
-	my $cmd = $FindBin::Script;
-	die <<"END";
-usage:
-
-$cmd --contains 'exact text to fail on' command to run
-$cmd --matches  'pattern to fail on'    command to run
-END
-}
+__END__

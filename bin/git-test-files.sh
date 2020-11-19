@@ -1,6 +1,7 @@
 #!/bin/bash
 # create/remove files in various states for git status testing.
 # should only be run when not in a merge/rebase, etc
+# WINDEV tool useful on windows development machine
 
 function ga {
 	echo git-test-files.sh test file created: $1 > $1
