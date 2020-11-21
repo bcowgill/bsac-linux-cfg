@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
 # POD in 5 mins http://juerd.nl/site.plp/perlpodtut
+# W I N D E V tool useful on windows development machin
 
 =head1 NAME
 
@@ -68,15 +69,26 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
+use FindBin;
+#use Sys::Hostname;
+#use File::Spec;
+#use File::Find ();
 use File::Copy qw(cp);    # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
-use autodie qw(open cp);
+
+use autodie qw(open cp); # mkdir rmdir unlink move opendir );
+# https://www.perl.com/article/37/2013/8/18/Catch-and-Handle-Signals-in-Perl/
+use sigtrap qw(handler signal_handler normal-signals);
 
 our $VERSION = 0.1;       # shown by --version option
-our $TEST_CASES = 1;
-tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
+
+our $TESTING = 0;
+our $TEST_CASES = 10;
+our $SKIP = 0;
 
 our $STDIO   = "";
+my $PAD = 3;
+my $signal_received = 0;
 
 # Big hash of vars and constants for the program
 my %Var = (
@@ -124,6 +136,9 @@ my %Var = (
 	fileName   => '<STDIN>',    # name of file
 );
 
+# prove command sets HARNESS_ACTIVE in ENV
+tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
+
 # Return the value of a command line option
 sub opt
 {
@@ -159,8 +174,6 @@ sub setArg
 	return $Var{'rhArg'}{$arg} = $value;
 }
 
-getOptions();
-
 sub main
 {
 	my ($raFiles) = @ARG;
@@ -182,12 +195,21 @@ sub main
 	}
 	processFiles( $raFiles ) if scalar(@$raFiles);
 	summary();
-}
+} # main()
 
 sub summary
 {
-	print "=====\nsummary after processing\n";
+	say("=====\nsummary after processing\n");
 }
+
+
+sub signal_handler
+{
+	$signal_received = 1;
+	# see auto-rename.pl for signal handling and locks()
+	# remove_locks();
+	die "\n$FindBin::Script terminated by signal";
+} # signal_handler()
 
 sub setup
 {
@@ -201,7 +223,7 @@ sub editFileInPlace
 	my ( $fileName, $suffix ) = @ARG;
 	$Var{fileName} = $fileName;
 	my $fileNameBackup = "$fileName$suffix";
-	print("editFileInPlace($fileName) backup to $fileNameBackup\n");
+	say("editFileInPlace($fileName) backup to $fileNameBackup\n");
 
 	unless ($fileName eq $fileNameBackup)
 	{
@@ -216,7 +238,7 @@ sub processEntireStdio
 	$Var{fileName} = "<STDIN>";
 	my $rContent = read_file( \*STDIN, scalar_ref => 1 );
 	doReplacement( $rContent );
-	print $$rContent;
+	say($$rContent);
 }
 
 sub processFiles
@@ -237,9 +259,9 @@ sub processEntireFile
 	# example slurp in the file and show something
 	$Var{fileName} = $fileName;
 	my $rContent = read_file( $fileName, scalar_ref => 1 );
-	print "length: " . length($$rContent) . "\n";
+	say("length: " . length($$rContent) . "\n");
 	doReplacement( $rContent );
-	print $$rContent;
+	say($$rContent);
 }
 
 sub doReplacement
@@ -317,7 +339,7 @@ sub checkMandatoryOptions
 		}
 	}
 	return $raErrors;
-}
+} # checkMandatoryOptions()
 
 # Perform command line option processing and call main function.
 sub getOptions
@@ -340,7 +362,15 @@ sub getOptions
 		# Here if unknown option provided
 		usage();
 	}
-}
+} #getOptions()
+
+# pad number with leading zeros
+sub pad
+{
+	my ($number, $width) = @ARG;
+	my $padded = ('0' x ($width - length($number))) . $number;
+	return $padded;
+} # pad()
 
 # make tabs 3 spaces
 sub tab
@@ -351,20 +381,62 @@ sub tab
 	return $message;
 }
 
-sub warning
+sub failure
 {
 	my ($warning) = @ARG;
-	warn( "WARN: " . tab($warning) . "\n" );
-}
+	die( "ERROR: " . tab($warning) . "\n" );
+} # failure()
 
 sub debug
 {
 	my ( $msg, $level ) = @ARG;
 	$level ||= 1;
+	my $message;
 
 ##	print "debug @{[substr($msg,0,10)]} debug: @{[opt('debug')]} level: $level\n";
-	print tab($msg) . "\n" if ( opt('debug') >= $level );
-}
+	if ( opt('debug') >= $level )
+	{
+		$message = tab($msg) . "\n";
+		if ($TESTING)
+		{
+			diag(qq{DEBUG: $message});
+		}
+		else
+		{
+			print $message
+		}
+	}
+	return $message
+} # debug()
+
+sub warning
+{
+	my ($warning) = @ARG;
+	my $message = "WARN: " . tab($warning) . "\n";
+	if ($TESTING)
+	{
+		diag( $message );
+	}
+	else
+	{
+		warn( $message );
+	}
+	return $message;
+} # warning()
+
+sub say
+{
+	my ($message) = @ARG;
+	if ($TESTING)
+	{
+		diag( $message );
+	}
+	else
+	{
+		print $message;
+	}
+	return $message;
+} # say()
 
 sub usage
 {
@@ -385,17 +457,76 @@ sub manual
 	);
 }
 
+getOptions(); # calls main()
+
 #===========================================================================
 # unit test functions
 #===========================================================================
+
+sub test_say
+{
+	my ($expect, $message) = @ARG;
+	my $result = say($message);
+	is($result, $expect, "say: [$message] == [$expect]");
+}
 
 sub test_tab
 {
 	my ($expect, $message) = @ARG;
 
-	my $spaced = tab($message);
-	is($spaced, $expect, "tab: [$message] == [$expect]");
+	my $result = tab($message);
+	is($result, $expect, "tab: [$message] == [$expect]");
 }
+
+sub test_warning
+{
+	my ($expect, $message) = @ARG;
+	my $result = warning($message);
+	is($result, $expect, "warning: [$message] == [$expect]");
+}
+
+sub test_debug
+{
+	my ($expect, $message, $level) = @ARG;
+	my $result = debug($message, $level);
+	is($result, $expect, "debug: [$message, $level] == [@{[$expect || 'undef']}]");
+}
+
+sub test_failure
+{
+	my ($expect, $message) = @ARG;
+
+	my $result;
+	eval {
+		failure($message);
+	};
+	if ($EVAL_ERROR)
+	{
+		$result = $EVAL_ERROR;
+	}
+	is($result, $expect, "failure: [$message] == [$expect]");
+} # test_failure()
+
+sub test_pad
+{
+	my ($expect, $message) = @ARG;
+
+	my $result = pad($message, $PAD);
+	is($result, $expect, "pad: [$message] == [$expect]");
+}
+
+#===========================================================================
+# unit test suite helper functions
+#===========================================================================
+
+# setup / teardown and other helpers specific to this test suite
+# see auto-rename.pl for setup of lock dirs etc.
+
+#===========================================================================
+# unit test library functions
+#===========================================================================
+
+# see auto-rename.pl for a wide variety of test assertions for files, directories, etc.
 
 #===========================================================================
 # unit test suite
@@ -403,10 +534,21 @@ sub test_tab
 
 sub tests
 {
+	$TESTING = 1;
+
 	eval "use Test::More tests => $TEST_CASES;";
 	eval "use Test::Exception;";
 
-	test_tab("         Hello", "\t\t\tHello");
+	test_say("Hello, there", "Hello, there") unless $SKIP;
+	test_tab("         Hello", "\t\t\tHello") unless $SKIP;
+	test_warning("WARN: WARNING, OH MY!\n", "WARNING, OH MY!") unless $SKIP;
+	test_debug(undef, "DEBUG, OH MY!", 10000) unless $SKIP;
+	test_debug("DEBUG, OH MY!\n", "DEBUG, OH MY!", -10000) unless $SKIP;
+	test_failure("ERROR: FAILURE, OH MY!\n", "FAILURE, OH MY!") unless $SKIP;
+	test_pad("000", "") unless $SKIP;
+	test_pad("001", "1") unless $SKIP;
+	test_pad("123", "123") unless $SKIP;
+	test_pad("1234", "1234") unless $SKIP;
 	exit 0;
 }
 

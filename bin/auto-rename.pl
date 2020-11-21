@@ -72,11 +72,12 @@ my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 
 our $TESTING = 0;
 our $TEST_CASES = 79;
-tests() if (scalar(@ARGV) && $ARGV[0] eq '--test');
+# prove command sets HARNESS_ACTIVE in ENV
+tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
 
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
-	usage()
+	usage();
 }
 
 my $pattern = shift;
@@ -1174,8 +1175,6 @@ sub tests
 	test_signal_handler(qr{^\nauto-rename\.pl terminated by signal at }) unless $SKIP;
 	exit 0;
 }
-
-# TODO bring say, $TESTING changes over to perl template and any scripts based on this.
 
 __END__
 __DATA__

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO if pod2usage present in perl file use --man option for the help page
+
 OUT=./man
 INDEX=$OUT/_help.txt
 
