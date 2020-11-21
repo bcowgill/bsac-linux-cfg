@@ -1,11 +1,35 @@
 #!/usr/bin/env perl
-# show css color and inverse color from standard input
-# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 # WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
 use English;
+use FindBin;
+
+sub usage
+{
+	print <<"USAGE";
+$FindBin::Script [--help|--man|-?] [file ...]
+
+Show css color and inverse color from standard input or files.
+
+file    files to process instead of standard input.
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+More detail ...
+
+# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
+
+USAGE
+	exit 0;
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 my %remap = qw(
 	white fff
@@ -41,3 +65,5 @@ sub invert_color
 	$color =~ tr[0123456789abcdefABCDEF][fedcba9876543210543210];
 	return $color;
 }
+
+__END__
