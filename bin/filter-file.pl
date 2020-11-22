@@ -32,6 +32,8 @@ Filter the output of the file command to classify files into different types and
 
 By default it will show the file name and the identified types and file extension for each file.  At the end it shows a total count and summary for the minimum common directory found in all the file names.
 
+If the file info contains mime type and encoding (from the file.sh command) it will be used in classifying the files.
+
 If it cannot classify the file it will show the touched up file output for that file to aid in diagnostics.
 
 /tmp/config-err-0GziBQ: empty
@@ -40,13 +42,13 @@ If it cannot classify the file it will show the touched up file output for that 
 
 The exit code will be zero unless some unknown file types were found, then non-zero.
 
-See also file, whatsin.sh, ls-types.sh
+See also file, file.sh, whatsin.sh, ls-types.sh
 
 Example:
 
 	Show a summary of what is in the /tmp directory:
 
-	whatsin.sh /tmp | $FindBin::Script --summary
+	whatsin.sh --mime /tmp | $FindBin::Script --summary
 
 	Process the test file output from this script:
 
@@ -243,10 +245,25 @@ while (my $line = <>) {
 		# strip away inconsequential info...
 		$file_info =~ s{, \s+ BuildID\[.+?(,|\z)}{,}xms;
 		$file_info =~ s{, \s+ last\s+modified:\s+.+?(,|\z)}{,}xms;
+		$file_info =~ s{\(URL=<[^>]*>\)}{(URL=<http://www>)}xms;
 		$file_info =~ s{\A\s*}{}xms;
 		$file_info =~ s{\s*\z}{}xms;
 
+		# handle mime type and optional encoding if present from file.sh
+		# classify.sh: text/plain; charset=us-ascii; ASCII text
+		my ($mime_type, $charset);
+		if ($file_info =~ s{\A\s*([^;]+)\s*;\s+charset=([^;]+);\s*}{}xms)
+		{
+			($mime_type, $charset) = ($1, $2)
+		}
+		elsif ($file_info =~ s{\A\s*([^;]+/[^;]+)\s*;\s*}{}xms)
+		{
+			$mime_type = $1;
+		}
+
 		my $rhFileTypes = get_types($filename, $file_info);
+		$rhFileTypes->{$mime_type} = 1 if $mime_type;
+		$rhFileTypes->{$charset} = 1 if $charset;
 		foreach my $key (keys(%$rhFileTypes))
 		{
 			++$rhTypes->{$key};
