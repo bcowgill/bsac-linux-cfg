@@ -39,13 +39,15 @@ fi
 
 if [ "x$OSTYPE" == "xdarwin16" ]; then
 	# Mac we can only get mime type, not encoding.
-	mimetype --output-format="%f: %m; %d" "$*"
+	MIME=`mimetype --output-format="%m" "$*"`
+	ERR=$?
 else
 	MIME=`file --mime-type --mime-encoding "$*"`
 	ERR=$?
-	if [ $ERR != 0 ]; then
-		exit $ERR
-	fi
 
-	echo $MIME\; `file "$*" | perl -pne 's{\A.+:\s+}{}xms'`
 fi
+
+if [ $ERR != 0 ]; then
+	exit $ERR
+fi
+echo $MIME\; `file "$*" | perl -pne 's{\A.+:\s+}{}xms'`
