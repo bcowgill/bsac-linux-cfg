@@ -7,7 +7,7 @@ function usage {
 	echo "
 $(basename $0) [--help|--man|-?] one file only
 
-This will use the file command to show both mime and file information.
+This will use the file or mimetype command to show both mime and file information.
 
 --man   Shows help for this tool.
 --help  Shows help for this tool.
@@ -17,7 +17,7 @@ The output will have the mime type and encoding displayed before the usual file 
 
 file.sh: text/x-shellscript; charset=us-ascii; Bourne-Again shell script, ASCII text executable
 
-See also file, whatsin.sh, filter-file.pl, ls-types.sh
+See also file, mimetype, whatsin.sh, filter-file.pl, ls-types.sh
 
 Example:
 
@@ -37,10 +37,15 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
-MIME=`file --mime-type --mime-encoding "$*"`
-ERR=$?
-if [ $ERR != 0 ]; then
-	exit $ERR
-fi
+if [ "x$OSTYPE" == "xdarwin16" ]; then
+	# Mac we can only get mime type, not encoding.
+	mimetype --output-format="%f: %m; %d" "$*"
+else
+	MIME=`file --mime-type --mime-encoding "$*"`
+	ERR=$?
+	if [ $ERR != 0 ]; then
+		exit $ERR
+	fi
 
-echo $MIME\; `file "$*" | perl -pne 's{\A.+:\s+}{}xms'`
+	echo $MIME\; `file "$*" | perl -pne 's{\A.+:\s+}{}xms'`
+fi
