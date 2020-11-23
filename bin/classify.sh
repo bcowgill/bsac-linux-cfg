@@ -3,6 +3,10 @@
 # and handle them one by one.
 
 # vim classify.sh ; ./classify.sh | grep -E \\[
+# ALL="file-type-archive.lst file-type-audio.lst file-type-config.lst file-type-database.lst file-type-document.lst file-type-dumps.lst file-type-executable.lst file-type-font.lst file-type-image.lst file-type-leftovers.lst file-type-program.lst file-type-shortcut.lst"
+# grep -viE 'self-extracting' file-type-archive.lst
+# grep -iE 'self-extracting' $ALL
+
 # See also classify.sh fft.pl filter-file.pl ls-types, whatsin.sh
 
 # Generate file type lists unicode, text, image, etc...
@@ -179,10 +183,13 @@ perl -pne '
 	# Archive files
 	my $binary;
 	my $do_text = $TRUE;
+
+	# ARCHIVE FILES
 	if (m(self-extracting|archive\s+data|compressed\s+data|bittorrent|ar\s+archive|jar\s+file|binary\s+package|\brpm\b)xmsi)
 	{
 		$binary = $TRUE;
 		$do_text = !$TRUE;
+		my $archive;
 		push(@type, "binary");
 		push(@type, " executable") if m{self-extracting}xms;
 
@@ -191,11 +198,51 @@ perl -pne '
 		s{\bRPM\s*}{}xms && push(@type, " rpm");
 		s{debian\s+binary\s+package\s*}{}xmsi && push(@type, " deb");
 		s{Microsoft\s+cabinet\s+archive\s+data\s*}{}xmsi && push(@type, " mscab");
-		s{(\S+)\s+(compressed|archive)\s+data\s*}{}xmsi && push(@type, " @{[lc($1)]}");
-		s{(\S+)\s+archive\s*}{}xms && push(@type, " @{[lc($1)]}");
-		#s{}{}xms && push(@type, " ");
-		# TODO handle was ".tar" => tar.gzip
+
+		if (s{(\S+)\s+(compressed|archive)\s+data\s*}{}xmsi)
+		{
+			$archive = lc($1);
+			push(@type, " $archive");
+		}
+		if (s{(\S+)\s+archive\s*}{}xms)
+		{
+			$archive = lc($1);
+			push(@type, " $archive");
+		}
+
+		if (s{was\s+"\.([^"]+)"}{}xms)
+		{
+			push(@type, " $1.$archive");
+		}
 		push(@type, " archive");
+	}
+	# FONT FILES (before documents)
+	elsif (m{
+		\bfont\b|pfm\sdata|\w+type\b|typelib
+		}xmsi)
+	{
+		$binary = $TRUE;
+		$do_text = !$TRUE;
+		push(@type, "binary");
+		push(@type, " font");
+	}
+	# DOCUMENT FILES
+	elsif (m{
+		\w+\s*document|spreadsheet|rich\s+text|\be-?book|message\s+catalog|calendar\s+file|visiting\s+card|postscript|microsoft\s+(excel|word|powerpoint|ooxml)|gnucash|lotus|mailbox|corel|htmlhelp|[tn]roff
+		}xmsi)
+	{
+		$binary = $TRUE;
+		$do_text = !$TRUE;
+		push(@type, "binary");
+	#elsif (m{opendocument|gnucash|\btroff\b|sendmail|vcard\b|vcalendar|lotus\b|spreadsheet|rich\stext\sformat|htmlhelp|mailbox|e-book|\bexcel\b|powerpoint|microsoft\sword|postscript|\sdocument|ooxml|corel|message\scatalog}xmsi)
+
+		s{(Microsoft\s+PowerPoint)\s*}{}xmsi && push(@type, " presentation");
+		s{(GnuCash\s+file)\s*}{}xmsi && push(@type, " finances");
+		s{(EPUB\s+document|Mobipocket\s+E-book)\s*}{}xmsi && push(@type, " textual ebook");
+		s{(Calc\s+spreadsheet|OpenDocument\s+Spreadsheet|Microsoft\s+Excel\s+\S+)\s*}{}xmsi && push(@type, " spreadsheet");
+		s{(Microsoft\s+Word|MS\s+Windows\s+HtmlHelp\s+Data|OpenDocument\s+Text(\s+Template)?|PDF\s+document|Writer\s+document|Rich\s+Text\s+Format\s+data)\s*}{}xmsi && push(@type, " textual");
+
+		push(@type, " document");
 	}
 
 	if ($do_text)
@@ -301,7 +348,7 @@ perl -pne '
 		$_ = qq{$type:\n$_\n};
 	}
 ' \
-	file-type-archive.lst \
+	file-type-document.lst \
 	| sort | uniq
 
 #	file-type-text.lst \
@@ -314,7 +361,6 @@ file-type-strings.lst
 file-type-nontext.lst
 file-type-leftovers.lst
 file-type-document.lst
-file-type-font.lst
 file-type-shortcut.lst
 file-type-image.lst
 file-type-audio.lst
@@ -324,6 +370,7 @@ file-type-executable.lst
 file-type-database.lst
 file-type-dumps.lst
 DONE
+file-type-font.lst
 file-type-archive.lst
 file-type-nonunicode.lst
 file-type-text.lst
