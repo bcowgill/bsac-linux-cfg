@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // https://www.britannica.com/science/numeral/Numeral-systems#ref797052
 
-// a cheap watch command...
+// a cheap / poor watch command...
 // perl -e 'while (1) { system("./roman.js | tee roman.log") if (-M "./roman.js" < -M "./roman.log"); sleep(5) }'
 
 const RUN_TESTS = false;
