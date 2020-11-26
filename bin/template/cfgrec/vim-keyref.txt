@@ -4,6 +4,10 @@ vim -O file1 file2    open two files in vertically split window
 vim -O2 file1 file2 file3    open three files in two vertically split windows
 vim -o file1 file2    open two files in horizontally split window
 
+Vim Tips Wiki
+https://vim.fandom.com/wiki/Special:Random
+https://vim.fandom.com/wiki/Macros
+
 KEY:VIM:CTRL Esc :qa! Get out of vim losing all changes (or vimdiff)
 
 KEY:VIM:INFO Ctrl-g Show location in the file and file status
@@ -28,6 +32,14 @@ KEY:VIM:COPY Esc v <move to select text> :w <FILENAME> will write selected text 
 KEY:VIM:COPY Esc r <FILENAME> Will insert the whole file at the cursor
 KEY:VIM:COPY Esc r!date Insert output of a comand at cursor (the current date here)
 KEY:VIM:COPY Esc r!cat <mouse paste> Ctrl-d Will insert everything pasted by the mouse to the file
+
+KEY:VIM:MACRO q<letter><commands>q   Record a macro to a register from a to z
+KEY:VIM:MACRO q<LETTER><commands>q   Append commands to existing macro register from a to z
+KEY:VIM:MACRO <number>@<letter>      Run macro in register from a to z
+KEY:VIM:MACRO @@  Execute the last macro again
+KEY:VIM:MACRO Esc :normal @<letter>  Execute a letter macro on each line of the visual selection
+KEY:VIM:MACRO Esc :reg <letter>... View all macros or the macro for letters given
+KEY:VIM:MACRO Esc :let @<letter>=' Ctrl-R Ctrl-R a     Edit a letter macro on command line.
 
 KEY:VIM:DIFF :diffsplit <FILENAME>  Split the window and enter diff mode on another file
 KEY:VIM:DIFF [c  Jump backwards to previous change
@@ -61,4 +73,3 @@ KEY:VIM:HELP : <letters> Tab   Complete the vim command for letters typed
 KEY:VIM:HELP Ctrl-]  Jump to help topic under cursor
 KEY:VIM:HELP Ctrl-t  Jump to previous help topic
 KEY:VIM:HELP Ctrl-o  Jump to previous help topic
-
