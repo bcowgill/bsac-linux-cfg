@@ -1,11 +1,10 @@
 #!/bin/bash
 # show a sample of unicode whitespace characters and their symbolic character
 
-# WINDEV tool useful on windows development machine
-
 # U+00A0 = non breaking space &nbsp;
 # 'NEXT LINE (NEL)' (U+0085)
 # TODO unicode character classes to identify all 'white spaces'
+# WINDEV tool useful on windows development machine
 function usage {
 	local code
 	code=$1

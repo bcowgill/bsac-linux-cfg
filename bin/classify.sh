@@ -236,11 +236,14 @@ perl -pne '
 		push(@type, "binary");
 	#elsif (m{opendocument|gnucash|\btroff\b|sendmail|vcard\b|vcalendar|lotus\b|spreadsheet|rich\stext\sformat|htmlhelp|mailbox|e-book|\bexcel\b|powerpoint|microsoft\sword|postscript|\sdocument|ooxml|corel|message\scatalog}xmsi)
 
-		s{(Microsoft\s+PowerPoint)\s*}{}xmsi && push(@type, " presentation");
+		s{(vCard\s+visiting\s+card)\s*}{}xmsi && push(@type, " contacts");
+		s{(vCalendar\s+calendar\s+file)\s*}{}xmsi && push(@type, " calendar");
+		s{(GNU\s+message\s+catalog|MMDF\s+mailbox)\s*}{}xmsi && push(@type, " email");
+		s{(Microsoft\s+PowerPoint(\s+\d+\+?)?)\s*}{}xmsi && push(@type, " presentation");
 		s{(GnuCash\s+file)\s*}{}xmsi && push(@type, " finances");
 		s{(EPUB\s+document|Mobipocket\s+E-book)\s*}{}xmsi && push(@type, " textual ebook");
-		s{(Calc\s+spreadsheet|OpenDocument\s+Spreadsheet|Microsoft\s+Excel\s+\S+)\s*}{}xmsi && push(@type, " spreadsheet");
-		s{(Microsoft\s+Word|MS\s+Windows\s+HtmlHelp\s+Data|OpenDocument\s+Text(\s+Template)?|PDF\s+document|Writer\s+document|Rich\s+Text\s+Format\s+data)\s*}{}xmsi && push(@type, " textual");
+		s{(Lotus\s+1-2-3|Calc\s+spreadsheet|OpenDocument\s+Spreadsheet|Microsoft\s+Excel\s+\S+)\s*}{}xmsi && push(@type, " spreadsheet");
+		s{(PostScript|Microsoft\s+Office\s+Word|Microsoft\s+Word(\s+\d+\+?)?|MS\s+Windows\s+HtmlHelp\s+Data|OpenDocument\s+Text(\s+Template)?|PDF\s+document|Writer\s+document|Rich\s+Text\s+Format\s+data)\s*}{}xmsi && push(@type, " textual");
 
 		push(@type, " document");
 	}
