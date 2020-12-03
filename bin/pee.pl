@@ -1,12 +1,41 @@
 #!/usr/bin/env perl
-# strip ANSI control characters from output for a log file...
-# and show start and end time as well as elapsed.
-
+# WINDEV tool useful on windows development machine
 use strict;
 use warnings;
+use FindBin;
 use English qw(-no_match_vars);
 use Fatal qw(open);
 use POSIX;
+
+sub usage
+{
+	print <<"USAGE";
+$FindBin::Script [--append] [--help|--man|-?] file
+
+Similar to tee but with date and elapsed time, line wrapping and removal of ANSI terminal control characters.
+
+WRAP      environment variable specifying what colum to wrap for the log file. default 60.
+--append  appends to the named log file instead of overwriting it.
+--help    shows help for this program.
+--man     shows help for this program.
+-?        shows help for this program.
+
+This program will print standard input to standard output and clean it up before writing it to the log file.
+
+See also tee, filter-script.pl
+
+Example:
+
+npm test | $FindBin::Script tests.log
+
+USAGE
+	exit 0;
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 # Get column wrap width from environment or use default
 # COLUMNS env var is an alternative
@@ -125,4 +154,6 @@ if ($elapsed eq '')
 
 echo(qq{$finish\nElapsed: $elapsed\n});
 close($fh);
+
+__END__
 
