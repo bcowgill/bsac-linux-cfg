@@ -142,7 +142,7 @@ fi
 if [ "$1" == "--table" ]; then
 	perl -e '
 		# substitute nul so that diffmerge can diff this file as unicode
-		my $nul = '\x{00}';
+		my $nul = q{\x{00}};
 		print <<"TABLE";
 Whitespace and Symbols for Whitespace Code Points:
 Ch	Code	Type	Name

@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# cat tests/filter-man/in/sample1.txt | pee.pl --control  xxx.log
+# cat sample-script-ansi-escapes.log | pee.pl --control sample-script-ansi-escapes-cleaned-with-pee-pl.log; vim sample-script-ansi-escapes-cleaned-with-pee-pl.log
 # WINDEV tool useful on windows development machine
 use strict;
 use warnings;
@@ -9,12 +11,16 @@ use POSIX;
 
 sub usage
 {
+	my ($message) = @ARG;
+
+	print qq{$message\n\n} if $message;
 	print <<"USAGE";
-$FindBin::Script [--append] [--help|--man|-?] file
+$FindBin::Script [--control] [--append] [--help|--man|-?] file_name
 
 Similar to tee but with date and elapsed time, line wrapping and removal of ANSI terminal control characters.
 
 WRAP      environment variable specifying what colum to wrap for the log file. default 60.
+--control shows ANSI ESC control sequences instead of replacing them with whitespace.
 --append  appends to the named log file instead of overwriting it.
 --help    shows help for this program.
 --man     shows help for this program.
@@ -29,7 +35,7 @@ Example:
 npm test | $FindBin::Script tests.log
 
 USAGE
-	exit 0;
+	exit ($message ? 1 : 0);
 }
 
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
@@ -37,9 +43,21 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 	usage()
 }
 
+my $SHOW_ESC = 0;
+my $esc = qq{\x1b};
+my $bel = qq{\x7};
+my $bs = qq{\x8};
+my $ESC = qq{ ESC};
+
 # Get column wrap width from environment or use default
 # COLUMNS env var is an alternative
 my $WRAP = $ENV{WRAP} || 60;
+
+if (scalar(@ARGV) && $ARGV[0] eq '--control')
+{
+	$SHOW_ESC = 1;
+	shift;
+}
 
 my $mode = '>';
 if (scalar(@ARGV) && $ARGV[0] eq '--append')
@@ -47,9 +65,11 @@ if (scalar(@ARGV) && $ARGV[0] eq '--append')
 	$mode = '>>';
 	shift;
 }
+
+usage("You must provide an output file name.") unless scalar(@ARGV);
+
 my $file = shift;
 
-my $esc = qq{\x1b};
 my $fh;
 open($fh, $mode, $file);
 
@@ -118,6 +138,45 @@ sub duration
 	}
 }
 
+sub show_esc
+{
+	my ($codes, $replace) = @ARG;
+	$codes =~ s{$esc}{ ESC}xmsg;
+	return $SHOW_ESC ? qq{$codes $replace} : $replace;
+}
+
+sub clean_ansi
+{
+	my ($clean) = @ARG;
+	# http://ascii-table.com/ansi-escape-sequences.php
+
+	# backspace, bell
+	if ($SHOW_ESC)
+	{
+		$clean =~ s{$bs}{<BS>}xmsg;
+	}
+	else
+	{
+		while ($clean =~ s{[^$bs]$bs}{}xmsg) {}
+	}
+	$clean =~ s{$bel}{show_esc("<BEEP>", "")}xmsge;
+
+	# cusror movement commands, put a space to set off the new text.
+	$clean =~ s{($esc\]0;)}{show_esc($1, "\n")}xmsge;
+	$clean =~ s{($esc\[[0-9;]*[ABCDfHu])}{show_esc($1, "\n")}xmsge;
+
+	# color change, etc just remove totally
+	$clean =~ s{($esc\[[0-9;]*[Kms])}{show_esc($1, "")}xmsge;
+	$clean =~ s{($esc\[=[0-9]*[hl])}{show_esc($1, "")}xmsge;
+	$clean =~ s{($esc\[\?[0-9]*h)}{show_esc($1, "")}xmsge;
+	$clean =~ s{($esc\[[0-9;]+p)}{show_esc($1, "")}xmsge;
+	$clean =~ s{($esc\[[0-9;]+"[^"]*";p)}{show_esc($1, "")}xmsge;
+
+	# clear screen, print a few lines
+	$clean =~ s{($esc\[2J)}{show_esc($1, "\n\n\n\n\n")}xmsge;
+	return $clean;
+}
+
 my $start = time();
 my $now = `date`;
 echo(qq{$now\n\n});
@@ -126,7 +185,7 @@ while (my $line = <STDIN>)
 {
 	my $clean = $line;
 	# http://ascii-table.com/ansi-escape-sequences.php
-	$clean =~ s{$esc\[[0-9;]+m}{}xmsg;
+	$clean = clean_ansi($clean);
 	echo($line, wrap($clean));
 }
 
