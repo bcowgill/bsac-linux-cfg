@@ -28,7 +28,7 @@ WRAP      environment variable specifying what colum to wrap for the log file. d
 
 This program will print standard input to standard output and clean it up before writing it to the log file.
 
-See also tee, filter-script.pl
+See also tee, filter-script.pl, filter-whitespace.pl, filter-man.pl
 
 Example:
 
@@ -148,7 +148,6 @@ sub show_esc
 sub clean_ansi
 {
 	my ($clean) = @ARG;
-	# http://ascii-table.com/ansi-escape-sequences.php
 
 	# backspace, bell
 	if ($SHOW_ESC)
@@ -161,6 +160,7 @@ sub clean_ansi
 	}
 	$clean =~ s{$bel}{show_esc("<BEEP>", "")}xmsge;
 
+	# http://ascii-table.com/ansi-escape-sequences.php
 	# cusror movement commands, put a space to set off the new text.
 	$clean =~ s{($esc\]0;)}{show_esc($1, "\n")}xmsge;
 	$clean =~ s{($esc\[[0-9;]*[ABCDfHu])}{show_esc($1, "\n")}xmsge;

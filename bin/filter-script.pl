@@ -12,18 +12,23 @@ use charnames qw(:full :short);  # unneeded in v5.16
 use Unicode::Normalize; # to check normalisation
 use FindBin;
 
+my $DEBUG = 0;
+
 sub usage
 {
 	print <<"USAGE";
 $FindBin::Script [--help|--man|-?]
 
-Filter the output of the script command to remove color control codes etc.
+Filter the output of the script command to remove ANSI color control codes etc.
 
+--debug shows counts of unicode character classes for each line.
 --help  shows help for this program.
 --man   shows help for this program.
 -?      shows help for this program.
 
-See also script
+Handles ANSI terminal codes, backspaces, terminal alarm bell, some specifics of the elixir iex console.
+
+See also script, pee.pl, filter-whitespace.pl, filter-man.pl
 
 Example:
 
@@ -38,9 +43,14 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 	usage()
 }
 
+if (scalar(@ARGV) && $ARGV[0] =~ m{--debug}xms)
+{
+	$DEBUG = 1;
+}
+
 # Filter out ANSI color change control sequences
 my $esc = "\N{U+001B}"; # ^[ = escape
-my $ctrlg = "\N{U+0007}" ; # ^G = tab
+my $ctrlg = "\N{U+0007}" ; # ^G = bell
 my $bs = "\N{U+0008}"; # ^H = backspace
 my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
 
@@ -48,7 +58,7 @@ while (my $line = <>) {
 	$line = NFD($line);   # decompose + reorder canonically
 	chomp($line);
 
-	#debugUTF8($line);
+	debugUTF8($line) if $DEBUG;
 
 	# cursor jumping on the prompt
 	$line =~ s{$esc\]0; (.+) $ctrlg .+ $esc\[00m}{$1}xmsg;
@@ -59,8 +69,8 @@ while (my $line = <>) {
 	$line =~ s{$esc\]0;}{\n}xmsg;
 	$line =~ s{$esc\[\d*K}{}xmsg;
 	$line =~ s{$esc\[\d+A}{}xmsg;
-	# handle backspacing by deleting character
 	$line =~ s{$ctrlg+}{}xmsg;
+	# handle backspacing by deleting character
 	while ($line =~ s{[^$bs] $bs}{}xmsg) {}
 
 	# iex prompt remove numbers
