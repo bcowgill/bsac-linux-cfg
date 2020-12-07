@@ -18,5 +18,10 @@ find . \( \
 	-iname '*.bak' \
 	-o -name '*~' \
 	-o -name '*.rej' \
+	-o -name '*.RESTORE' \
+	-o -name '*_REMOTE_*' \
+	-o -name '*_LOCAL_*' \
+	-o -name '*_BACKUP_*' \
+	-o -name '*_BASE_*' \
 \) $* $PRINT
 # -o -name '*.orig'

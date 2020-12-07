@@ -5,4 +5,16 @@
 # WINDEV tool useful on windows development machine
 
 LS=${1:-ls}
-$LS `find . -name '*.orig' | perl -pne 's{\.orig}{?*}'`
+$LS `find . \( \
+	-name node_modules \
+	\) \
+	-prune -o \( \
+		-name '*.orig' \
+		-o -name '*.RESTORE' \
+		-o -name '*_REMOTE_*' \
+		-o -name '*_LOCAL_*' \
+		-o -name '*_BACKUP_*' \
+		-o -name '*_BASE_*' \
+	\) -print \
+	| perl -pne 's{\.orig}{?*}'`
+
