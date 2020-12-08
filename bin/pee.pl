@@ -196,6 +196,7 @@ while (my $line = <STDIN>)
 	# http://ascii-table.com/ansi-escape-sequences.php
 	$clean = clean_ansi($clean);
 	$clean = clean_console_colors($clean);
+	$line  = clean_console_colors($line);
 	echo($line, wrap($clean));
 }
 
