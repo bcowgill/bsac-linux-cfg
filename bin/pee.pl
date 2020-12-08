@@ -179,10 +179,12 @@ sub clean_ansi
 
 # Sample console.error coloration from why-did-you-render
 # %cComponent color: #058;
+# console.group node_modules/@welldone-software/.../whyDidYouRender.js:700
 sub clean_console_colors
 {
 	my ($line) = @ARG;
 	while ($line =~ s{\%c(.*) color:\s*(\w+|\#[0-9a-fA-F]+);}{$1}xmsg) {}
+	$line =~ s{node_modules/.+/(whyDidYouRender\.js)}{$1}xmsg;
 	return $line;
 }
 
@@ -226,4 +228,6 @@ echo(qq{$finish\nElapsed: $elapsed\n});
 close($fh);
 
 __END__
+# %cComponent color: #058;
+# console.group node_modules/@welldone-software/.../whyDidYouRender.js:700
 
