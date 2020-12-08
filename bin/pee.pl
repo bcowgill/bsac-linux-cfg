@@ -177,6 +177,15 @@ sub clean_ansi
 	return $clean;
 }
 
+# Sample console.error coloration from why-did-you-render
+# %cComponent color: #058;
+sub clean_console_colors
+{
+	my ($line) = @ARG;
+	while ($line =~ s{\%c(.*) color:\s*(\w+|\#[0-9a-fA-F]+);}{$1}xmsg) {}
+	return $line;
+}
+
 my $start = time();
 my $now = `date`;
 echo(qq{$now\n\n});
@@ -186,6 +195,7 @@ while (my $line = <STDIN>)
 	my $clean = $line;
 	# http://ascii-table.com/ansi-escape-sequences.php
 	$clean = clean_ansi($clean);
+	$clean = clean_console_colors($clean);
 	echo($line, wrap($clean));
 }
 
