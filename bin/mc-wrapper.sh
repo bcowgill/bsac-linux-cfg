@@ -1,4 +1,5 @@
-# BSAC
+#!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # from /usr/lib/mc/mc-wrapper.sh altered to pushd instead of cd
 # use with this in your startup script:
 # # Don't define aliases in plain Bourne shell

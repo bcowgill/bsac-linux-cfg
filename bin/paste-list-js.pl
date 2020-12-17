@@ -1,9 +1,11 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # take a pasted list of items one per line and spit it out as a javascript array of strings one per line
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
-use English qw(-no_match_vars); 
+use English qw(-no_match_vars);
 
 my @Lines = ();
 while (my $input = <>)

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # set up locale for unicode
 # https://perlgeek.de/en/article/set-up-a-clean-utf8-environment
 

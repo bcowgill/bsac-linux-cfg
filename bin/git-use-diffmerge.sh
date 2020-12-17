@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Configure git to use diffmerge or not
 # git difftool --no-prompt filenane
 # or

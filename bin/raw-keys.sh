@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # show raw key codes - must be on a console, not Xterm or network login
 # https://wiki.archlinux.org/index.php/Extra_keyboard_keys
 

@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # cross-platform battery value indicator
 if which pmset > /dev/null; then
 	pmset -g batt | perl -ne 'print "$1\n" if m{(\d+)\%}xms'

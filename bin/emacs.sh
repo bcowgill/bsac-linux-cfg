@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # launch emacs in projects dir
 pushd $HOME/projects
 # add --debug-init for stack trace of .emacs loading

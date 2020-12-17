@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # undock the laptop from the main monitor
 source `which detect-monitors.sh`
 

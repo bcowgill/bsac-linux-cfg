@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # jshint-add-complexity.sh [.jshintrc] [complexity]
 # add/update the maxcomplexity jshint setting
 # defaults to a complexity of 4 if none specified

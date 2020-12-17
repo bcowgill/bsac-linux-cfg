@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # make a javascript facade file to load another module as index.js
+# See also git-check-tests.sh, git-fix-tests.sh, git-grep-skipped.sh, scan-specs.sh, skip-tests.sh
 # WINDEV tool useful on windows development machine
 
 GIT=1

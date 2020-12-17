@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # choose a random up to N lines from standard input
 # WINDEV tool useful on windows development machine
 

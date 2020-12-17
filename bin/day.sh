@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # make the backlight as bright as possible
 
 # super user instant max

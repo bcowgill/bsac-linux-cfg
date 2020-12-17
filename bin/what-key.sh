@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # watch for key events and show info
 # https://wiki.archlinux.org/index.php/Extra_keyboard_keys
 # https://wiki.archlinux.org/index.php/Map_scancodes_to_keycodes

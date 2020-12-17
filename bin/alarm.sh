@@ -1,6 +1,8 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # cross-platform play a sound file as an alarm now, or at a specified time
 # alarm.sh "2017-01-02 10:01" [sound-file]
+# See also quiet.sh, get-sound-level.sh, ls-sound.sh, sound-cards.sh, sound-control.sh, sound-down.sh, sound-level.sh, sound-not-ok.sh, sound-off.sh, sound-ok.sh, sound-play.sh, sound-set.sh, sound-test-console.sh, sound-test.sh, sound-toggle.sh, sound-up.sh, speaker-tester.sh
 
 WHEN=$1
 SOUND=${2:-$HOME/bin/sounds/chime.wav}

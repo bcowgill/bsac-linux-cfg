@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 
 Date.prototype.addDays = function(days) {
     var date = new Date(this.valueOf());

@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # scan-phone.sh find the files on mobile phone internal memory for use with shell-sync.pl
+# also calls random-ringtone.sh to change your ringtone.
 
 if [ -e ~/.PHONE ]; then
 	source ~/.PHONE

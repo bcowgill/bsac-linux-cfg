@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # auto-rename.pl 'Screenshot.+\.png$' screen-shot- /tmp/me/screenshots /tmp/me
 # WINDEV tool useful on windows development machin
 

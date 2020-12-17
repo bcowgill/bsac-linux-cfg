@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# extract base64 encoded 'zip' files.
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# WINDEV tool useful on windows development machine
 use strict;
 use warnings;
 use MIME::Base64 qw( decode_base64 );

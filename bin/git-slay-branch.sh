@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # git-slay-branch.sh delete a branch remotely and locally so it is gone forever.
 # WINDEV tool useful on windows development machine
 

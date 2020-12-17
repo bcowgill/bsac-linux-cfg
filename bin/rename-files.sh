@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machin
 
 if [ -z "$2" ]; then

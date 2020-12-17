@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # list the source code files that are under git control
 # ignores binaries like archives, pictures, sounds, documents, databases, executables
 # WINDEV tool useful on windows development machine

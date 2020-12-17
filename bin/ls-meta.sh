@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Show exif or id3 v1 and v2 title information for file
 
 if [ -z "$2" ]; then

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # start a mac terminal command in a specific directory
 # https://stackoverflow.com/questions/989349/running-a-command-in-a-new-mac-os-x-terminal-window
 

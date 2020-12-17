@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # tools for creating new files from templates
-# work in progress.
+# WIP Work in progress.
 
 use strict;
 use warnings;

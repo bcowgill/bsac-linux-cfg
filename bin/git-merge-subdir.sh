@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # https://stackoverflow.com/questions/1214906/how-do-i-merge-a-sub-directory-in-git
 # WINDEV tool useful on windows development machine
 

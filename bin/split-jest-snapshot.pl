@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # split a jest component snapshot into one file per snapshot so it's easier to diff each test case.
+# WINDEV tool useful on windows development machine
 
 my $dir = $ENV{SNAP_OUT_DIR} || '.';
 local $/ = undef;

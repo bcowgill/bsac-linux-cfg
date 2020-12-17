@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # put a relative file somewhere else creating directory structure
 # assumes the environment variable TO specifies the destination directcory
 # if no second parameter is given

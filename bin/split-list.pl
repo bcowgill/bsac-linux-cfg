@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # divide or split a listing of files into N separate lists.  Like dealing a deck of cards.
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

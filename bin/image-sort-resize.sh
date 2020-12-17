@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 
 # identify -verbose *.jpg | egrep '(Width|Length|Orientation|Geometry|Image)'
 

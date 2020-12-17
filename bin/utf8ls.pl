@@ -1,7 +1,9 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # utf8ls.pl
 # output a list of utf8 characters given U+XXXX code points or \N{...} code point or character name
 # processes arguments or stdin
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

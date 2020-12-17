@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # utf8codept.pl
 # output utf8 characters as {U+XXXX} code points
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

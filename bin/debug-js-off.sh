@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # debug-js-off.sh turn off debugging statements marked /*dbg:*/
 # by replacing them with //dbg:
 # See also activate.sh, deactivate.sh, debug-js-on.sh

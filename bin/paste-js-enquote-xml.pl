@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # take a pasted bunch of javascript and enquote it as XML element text
 # used for storing code in XML configuration files
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

@@ -1,7 +1,10 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show spaces, tab, and carriage return/linefeed characters in standard input
 # or from a file.
+# see also filter-whitespace.pl, etc
 # spaces.pl spacetest.txt
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

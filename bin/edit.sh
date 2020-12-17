@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # send files to a running emacs instance or start up a new one if the server is not running
 # strip any trailing :\d+ from a single file name in case you pasted from a grep listing
 

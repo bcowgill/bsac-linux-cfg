@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # utf8tr.pl
 # transliterate text/digits to alternative utf8 alphabets
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

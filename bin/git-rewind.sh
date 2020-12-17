@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # rewind your git repo to find something specific
 # you might have to tinker with things to get what you want exactly.
 # See also git-fail-if.pl, git-rewind-manually.sh

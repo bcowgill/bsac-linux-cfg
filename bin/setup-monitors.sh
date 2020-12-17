@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # detect which monitors are attached and configure resolution/orientation with xrandr
 # source `which setup-monitors.sh` will define OUTPUT_MAIN/OUTPUT_AUX/OUTPUT_RES
 

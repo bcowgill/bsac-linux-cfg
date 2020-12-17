@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# TODO WIP work in progress
 # a quick attempt to filter file type info -- see classify.sh for more details
 use strict;
 use warnings;

@@ -1,8 +1,10 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # utf8dbg.pl
 # debug some utf8 character as perl sees it.
+# WINDEV tool useful on windows development machine
 
-# TODO continued imlementing recipes from the perl unicode cookbook
+# TODO continue imlementing recipes from the perl unicode cookbook
 # http://www.perl.com/pub/2012/05/perlunicook-match-unicode-properties-in-regex.html
 
 use utf8;	  # so literals and identifiers can be in UTF-8

@@ -1,4 +1,5 @@
-
+#!/bin/bash
+# WIP Work in progress
 # a better approach than fft.pl, split types into groups of file types
 # and handle them one by one.
 

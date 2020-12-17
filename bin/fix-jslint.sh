@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # multiline search/replace to fix javascript lint problems
+# WINDEV tool useful on windows development machine
 
 if [ ! -z "$2" ]; then
 	for FILE in $*

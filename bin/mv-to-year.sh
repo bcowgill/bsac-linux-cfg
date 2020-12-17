@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # move files with a given year number in them into a year directory.
 
 if [ -z "$1" ]; then

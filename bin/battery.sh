@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # cross-platform useful battery information
 #upower --show-info /org/freedesktop/UPower/devices/battery_BAT1 \
 if which pmset > /dev/null; then

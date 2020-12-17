@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 PROCESSED=processed-
 NINETY=90
 W=55.6

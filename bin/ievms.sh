@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # sourced from https://raw.githubusercontent.com/xdissent/ievms/master/ievms.sh
 # verbose trace of commands to find out why it fails
 set -x

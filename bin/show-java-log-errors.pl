@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # parse a java log file and only show warnings and errors
+# WINDEV tool useful on windows development machine
 use strict;
 use warnings;
 use English;

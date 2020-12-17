@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # grep the jshint messages for some text
 
 MESSAGES=node_modules/grunt-contrib-jshint/node_modules/jshint/src/messages.js

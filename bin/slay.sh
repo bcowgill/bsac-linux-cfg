@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # slay a process, gently at first but more forcefully if that doesn't work
 # WINDEV tool useful on windows development machine
 

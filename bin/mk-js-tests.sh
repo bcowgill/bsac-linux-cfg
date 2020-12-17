@@ -1,6 +1,8 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Generate stub test plan files for all javascript files using a template.
 # Not a generic script, you have to customise a few things here to work with your layout.
+# WINDEV tool useful on windows development machine
 # CUSTOM settings you may have to change for a new machine
 FILE=js-objects.txt
 #FILE=js-test.txt

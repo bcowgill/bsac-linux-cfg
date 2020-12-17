@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Visual diff files from my linux config versus versions in projects
 
 REVERSE="$1"

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # show a cross-platform notification using whatever notifier is installed
 
 function mynotify {

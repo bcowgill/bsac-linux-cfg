@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # check remote repository for what has changed.
 # do a git pull to get changes after
 # WINDEV tool useful on windows development machine

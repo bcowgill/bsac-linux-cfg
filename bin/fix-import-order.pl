@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Reorder Javascript imports into a nice triangle.
 # Absolute imports first in ascending line length.
 # Followed by relative imports in descending line length.

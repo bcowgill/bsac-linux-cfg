@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Ensure that a file exists by touching it and creating the directory path if needed.
 # WINDEV tool useful on windows development machine
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Label a USB/SD card (up to 11 characters)
 
 # To set this up, I configured /etc/mtools.conf drive letters as below:

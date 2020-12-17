@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # given an unplayable sound file name, check to see if a playable version also exists.
 # ./find-unplayable.sh | has-playable.pl --not
 

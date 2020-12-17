@@ -1,7 +1,9 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # summarize what is running with java or other things
 # ps -ef --cols 256 | what-is-running.pl
 # ps -ef --cols 256 | egrep "^($USER|`id -u`)" | what-is-running.pl
+# WINDEV tool useful on windows development machine
 
 use strict;
 use English;

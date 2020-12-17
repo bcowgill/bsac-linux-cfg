@@ -1,5 +1,8 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # turn off npm proxy configuration
+# See also npm-fixup.sh, npm-ls-prod.sh, npm-ls-dev.sh, npm-ls.sh, npm-up-dev.sh, npm-up-prod.sh, npm-pkg-vers.js, packagever.sh
+# WINDEV tool useful on windows development machine
 
 npm config delete proxy
 npm config delete https-proxy

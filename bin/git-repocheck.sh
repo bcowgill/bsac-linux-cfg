@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # check all my git repos for uncommitted changes and remote updates
 # or all repos under a given directory
 

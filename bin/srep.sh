@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # search and replace some files, slurping the whole thing at once.
 # See also the simpler replace.sh
 
@@ -7,6 +8,7 @@
 # ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/|\.factory\.js'`
 # git stash save crap | grep 'No local changes' || git stash drop; ./scripts/srep.sh `git grep -l BaseComponent | grep -vE 'README|internals/|scripts/|\.factory\.js'`; rm pause-build.timestamp
 
+# WINDEV tool useful on windows development machine
 WRITE='-i.bak'
 #WRITE=
 

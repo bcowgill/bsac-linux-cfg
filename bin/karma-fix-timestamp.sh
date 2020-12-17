@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # fix a karma error: There is no timestamp for ....
 # prints out lines which you add to karma.conf.js for require module configuration
 # files: [ {pattern: 'path/to/this.css', include: false} ... ]

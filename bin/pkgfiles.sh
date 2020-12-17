@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # cross-platform find packages and files
 PKG=$1
 if [ -z "$PKG" ]; then

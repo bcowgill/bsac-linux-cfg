@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 #Time-stamp: "2001-07-29 16:07:28 MDT"
 my $VERSION = '0.71';
 require 5.00404; # I don't think there's (?: ... ) before that.

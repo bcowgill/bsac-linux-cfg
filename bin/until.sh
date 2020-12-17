@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
+# See also after.sh, prepend.sh, middle.sh, inject-middle.sh, between.sh
 if [ -z "$1" ]; then
 	echo "
 $(basename $0) regex-end

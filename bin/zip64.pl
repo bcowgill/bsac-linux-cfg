@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+# Create a self-extracting base64 encoded 'zip' file for sending files with dodgy characters over email.
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
@@ -22,7 +25,7 @@ foreach my $file (@ARGV) {
 	close INFILE;
 }
 __DATA__
-#!/usr/bin/perl
+#!/usr/bin/env perl
 use strict;
 use warnings;
 use MIME::Base64 qw( decode_base64 );

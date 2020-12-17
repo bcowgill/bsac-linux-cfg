@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Launch WebStorm sidestepping ibus keyboard issue
 # https://youtrack.jetbrains.com/issue/IDEA-78860
 #IBus 1.5.9

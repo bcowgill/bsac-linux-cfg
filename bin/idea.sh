@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Launch IntelliJ editor
 DIR=/tmp/$USER
 LOG=$DIR/idea.log

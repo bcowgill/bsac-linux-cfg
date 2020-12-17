@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Convert all ppm files in snapshots dir to png files
 # good for a cronjob
 

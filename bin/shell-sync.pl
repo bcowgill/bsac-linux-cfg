@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # poor man's rsync analyse two find listings and generate shell commands
 # to synchronize a directory
 # useful for MTP mounted mobiles which work unreliably on rsync

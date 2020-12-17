@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # start up git gui in your current project directory
 
 # WINDEV tool useful on windows development machine

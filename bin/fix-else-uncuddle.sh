@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # multiline search/replace to fix else statements which should be uncuddled
 #
 # } else {

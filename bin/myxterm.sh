@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # starts a cross-platform xterm with a command to run.
 # Also sets the window title and class to match the command name
 

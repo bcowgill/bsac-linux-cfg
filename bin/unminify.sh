@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # unminify a file by using prettydiff.sh script
 # find . -name '*.min.css' -exec unminify.sh {} \;
 # find . -name '*.min.js' -exec unminify.sh {} \;

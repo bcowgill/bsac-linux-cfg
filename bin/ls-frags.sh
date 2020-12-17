@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # scan relay containers for fragments and show them
 CONTS=`find app/containers/ -name '*.js' | grep -v index.js`
 echo $CONTS

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # check all my svn repos for uncommitted changes
 pushd $HOME > /dev/null
 REPOS=`find . -type d -name .svn | perl -pne 's{\.svn \s* \z}{\n}xms'`

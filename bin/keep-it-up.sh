@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # poor man's runit - keeps re-running a command when it dies.
 # WINDEV tool useful on windows development machine
 

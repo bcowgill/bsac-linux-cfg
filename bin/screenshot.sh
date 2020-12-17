@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # start tool to take a screenshot interactively and keep it running
 
 while [ true ]

@@ -1,9 +1,11 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # take a pasted list of items one per line and spit it out as comma separated on a single line.
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
-use English qw(-no_match_vars); 
+use English qw(-no_match_vars);
 
 my $input;
 local $INPUT_RECORD_SEPARATOR = undef;

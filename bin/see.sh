@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # see info about a file/dir/archive
 # linux version below for ref/reuse...
 # WINDEV tool useful on windows development machin

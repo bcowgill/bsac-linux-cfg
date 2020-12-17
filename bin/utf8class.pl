@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # utf8class.pl
 # output a list of utf8 characters which possess the unicode class provided
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # cycle through all console fonts of a certain size
 # asking Y or N for a font you like
 SETFONT=/bin/setfont

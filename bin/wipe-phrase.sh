@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Wipe free space on device by writing fixed data to it
 
 FILE=FILL-UP-DISK-DELETE.DAT

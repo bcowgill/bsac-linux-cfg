@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Add meta data to a song / music file that has little to none aleady.
 
 FILE="$1"

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # md5sum wrapper to handle file names with spaces in them.
 
 # md5sum.sh directory 2>&1 | tee md5sum.lst

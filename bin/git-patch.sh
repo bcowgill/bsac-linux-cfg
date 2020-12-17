@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # guide to using patches to take commits from one repo to another
 # https://www.lullabot.com/articles/git-best-practices-upgrading-the-patch-process
 # WINDEV tool useful on windows development machine

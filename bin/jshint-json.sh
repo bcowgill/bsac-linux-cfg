@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # jshint all the json files found
 
 JSOPTS="--verbose --show-non-errors"

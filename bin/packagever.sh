@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show the version from package.json (or bower.json)
+# See also npm-fixup.sh, npm-ls-prod.sh, npm-ls-dev.sh, npm-up-dev.sh, npm-up-prod.sh, npm-pkg-vers.js, nonpmproxy.sh, packagever.sh
 # WINDEV tool useful on windows development machine
 
 FILE=package.json

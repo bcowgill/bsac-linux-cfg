@@ -2,7 +2,7 @@
 # split up Template toolkit template into sub fragments.
 # ./split-template.pl views/campaign_details.tt > views/new_campaign_details.tt
 # You will have to customise the regex and fragment names to use this.
-
+# CUSTOM settings you may need to change on a new computer
 use strict;
 use warnings;
 use English -no_match_vars;

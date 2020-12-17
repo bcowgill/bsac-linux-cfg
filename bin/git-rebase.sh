@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # rebase a branch and invoke merge tool if there were conflicts
 # WINDEV tool useful on windows development machine
 branch="$1"

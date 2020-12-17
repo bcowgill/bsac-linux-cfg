@@ -4,6 +4,8 @@
 # Source:
 # https://github.com/mjkonarski/oh-my-git-aliases/raw/master/oh-my-git-aliases.sh
 
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
+
 # Place the below into your .bashrc or appropriate shell config file
 # if [ -f ~/oh-my-git-aliases.sh ]; then
 #     . ~/oh-my-git-aliases.sh

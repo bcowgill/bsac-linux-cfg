@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # remove date from config output to make generic and comparable
 # used by snapshot.sh to get a snapshot of linux setup
 

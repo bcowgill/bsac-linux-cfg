@@ -1,7 +1,8 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # scan the javascript tests for disabled tests
+# See also git-fix-tests.sh, git-grep-skipped.sh, mk-facade-js.sh, scan-specs.sh, skip-tests.sh
 # WINDEV tool useful on windows development machine
-
 # CUSTOM settings may need to change these on a new computer
 #TESTS="'*.test.js'"
 TESTS="'*.spec.js'"

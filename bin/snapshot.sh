@@ -1,4 +1,5 @@
 # no shebang line or history.log will be empty.
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Take a snapshot of the system for later comparison
 # snapshot.sh %d-directory  # will add the date to the directory created
 

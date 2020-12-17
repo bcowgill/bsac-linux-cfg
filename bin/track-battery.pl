@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # track the battery charge and announce when it is draining, charging again and when it drains to 50%, 25%, 10%, 5% and about to fail...
 
 use strict;

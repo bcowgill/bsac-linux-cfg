@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # find all mocha.css/js files and replace with a link to mocha-dark.css
 # usage  use-mocha-dark.sh [dark|light|undo] [dir-to-mocha-dark]
 

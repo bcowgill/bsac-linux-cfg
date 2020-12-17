@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # lock the screen with xscreensaver or i3-lock
 
 lemonchiffon=FFFACD

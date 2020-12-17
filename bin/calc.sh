@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # interactive perl calculator supporting complex numbers, Big Integers, Big Rational and Big Float values
 # WINDEV tool useful on windows development machine
 perl -MMath::Trig -MData::Dumper -e '

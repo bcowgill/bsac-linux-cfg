@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # list props/state/types/context definitions/uses from react components
 # WINDEV tool useful on windows development machine
 for file in $*

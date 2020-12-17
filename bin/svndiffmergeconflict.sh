@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # svn merge conflicts with diffmerge
 # http://support.sourcegear.com/viewtopic.php?f=33&t=11661
 # export SVN_MERGE=$HOME/bin/svndiffmergeconflict.sh

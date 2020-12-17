@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # backup home dir configuration files to allow a GUI config
 # change and then figure out which files changed and what the
 # differences were.

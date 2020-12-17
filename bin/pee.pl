@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # cat tests/filter-man/in/sample1.txt | pee.pl --control  xxx.log
 # cat sample-script-ansi-escapes.log | pee.pl --control sample-script-ansi-escapes-cleaned-with-pee-pl.log; vim sample-script-ansi-escapes-cleaned-with-pee-pl.log
 # WINDEV tool useful on windows development machine

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # annotate css/less files with a class name to identify the source file.
 # useful when CSS is required into an app and gets shoved into a <style> element thereby obscuring where it came from.
 # debug-css.sh [remove]

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # grep for a simple pattern and then launch vim at each match position
 # http://vim.wikia.com/wiki/Using_normal_command_in_a_script_for_searching
 # http://vimdoc.sourceforge.net/htmldoc/eval.html#search()

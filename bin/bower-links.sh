@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show bower links for local project or a specific directory.
 # you need to be above the bower_components dir for this to work.
 # usage bower-links.sh [dir]

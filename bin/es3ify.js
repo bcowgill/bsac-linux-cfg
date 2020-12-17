@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 // Convert javascript to ES3 for object property names and trailing commas.
 // npm install -g es3ify
 // Node cmd arg processing: http://stackabuse.com/command-line-arguments-in-node-js/  try yargs, minimist modules

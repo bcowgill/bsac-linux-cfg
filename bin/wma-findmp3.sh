@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # find .wma files that have a corresponding mp3 file and show the mp3 as well.
 # x.wma - look for x.mp3
 # .../wma/.../x.wma - look for .../mp3/.../x.mp3

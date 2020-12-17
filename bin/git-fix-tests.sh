@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # rename a test plan based on the actual file it is testing.
 
 # tests?/ or specs?/ directory
@@ -10,6 +11,7 @@
 # and replaces test/test.js text in the file with test/path-name.spec.js
 # and replaces descSuiteFileName with descPathNameSuite
 
+# See also git-check-tests.sh, git-grep-skipped.sh, mk-facade-js.sh, scan-specs.sh, skip-tests.sh
 # WINDEV tool useful on windows development machine
 # CUSTOM settings you may need to change on a new machine
 # .spec.js to .test.js as needed.

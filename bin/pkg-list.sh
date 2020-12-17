@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # sorted list of all brew/debian cross-platform packages
 if which brew > /dev/null; then
 	brew list | sort

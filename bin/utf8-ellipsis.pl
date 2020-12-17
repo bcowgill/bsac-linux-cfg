@@ -1,7 +1,9 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # replace ... ellipsis with actual unicode ellipsis
 
 # http://www.perl.com/pub/2012/04/perl-unicode-cookbook-always-decompose-and-recompose.html
+# WINDEV tool useful on windows development machine
 
 use English qw(-no_match_vars);
 use utf8;      # so literals and identifiers can be in UTF-8

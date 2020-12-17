@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # diff or reverse/sync diff if third parameter given
 # WINDEV tool useful on windows development machine
 

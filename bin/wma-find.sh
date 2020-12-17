@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # find .wma files which have not been converted to .mp3 files.
 # x.wma - look for x.mp3
 # .../wma/.../x.wma - look for .../mp3/.../x.mp3

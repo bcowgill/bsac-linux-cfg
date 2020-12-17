@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # perform ls command on mobile phone directory mounted on MTP
 
 if [ -e ~/.PHONE ]; then

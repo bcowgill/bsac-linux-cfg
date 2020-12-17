@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # find unplayable files and convert them to playable formats
 
 FIND=find-unplayable.sh

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # retag files for emacs/vim
 
 # emacs tag quick ref
@@ -26,7 +27,7 @@ function say {
 	local message
 	message="$1"
 	echo "$message"
-	which notify > /dev/null && notify -t "retag.sh" -m "$message"
+	which mynotify.sh > /dev/null && mynotify.sh "retag.sh" "$message"
 }
 
 function retag_dir {

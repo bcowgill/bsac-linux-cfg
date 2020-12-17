@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # find files that git leaves around after a merge conflict
 # find-git.sh rm  to remove the files
 # See also find-bak.sh find-git.sh clean-git.sh clean.sh

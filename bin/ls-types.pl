@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# WIP Work in progress see also work in fft.pl classify.sh filter-file.pl
 # WINDEV tool useful on windows development machine
 
 { use 5.006; }

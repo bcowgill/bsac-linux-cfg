@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # git-mv-src.sh source-file target-dir
 # move a source file somewhere else and adjust all import statements
 # which are affected by it. Only support moving directories, not rename.

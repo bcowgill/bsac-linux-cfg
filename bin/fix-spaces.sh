@@ -1,8 +1,10 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # fix up spacing in a file
 # WINDEV tool useful on windows development machine
 
 # TODO make these flags accessible on command line
+# See also fix-spaces.sh, fix-tabs.sh, strip-newline.sh, strip-whitespace.sh
 INDENT_TAB=${INDENT_TAB:-1}
 INDENT=${INDENT:-4}
 INPLACE=-i.bak

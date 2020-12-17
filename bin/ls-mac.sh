@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # list all hidden files a Mac creates
 # http://www.westwind.com/reference/OS-X/invisibles.html
 

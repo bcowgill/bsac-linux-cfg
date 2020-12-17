@@ -1,6 +1,7 @@
 # lib-check-system.sh - library of functions for checking linux system and setting things up
 # Brent S.A. Cowgill.
 # License: Unlicense http://unlicense.org/
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 
 # Provides perl test case like output
 # OK something worked

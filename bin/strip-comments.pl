@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show or strip comments from source code
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;

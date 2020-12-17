@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # open a cross-platform gui file browser
 
 if [ -e /Applications ]; then

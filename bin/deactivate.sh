@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # DEACTIVATE some javascript files by commenting them out completely
 # and mark with today's date
 # See also activate.sh, debug-js-on.sh debug-js-off.sh

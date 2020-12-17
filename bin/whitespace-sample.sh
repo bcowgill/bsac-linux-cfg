@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show a sample of unicode whitespace characters and their symbolic character
 
 # U+00A0 = non breaking space &nbsp;

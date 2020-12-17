@@ -1,6 +1,8 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # npm list in a parseable/diffable format
 # WINDEV tool useful on windows development machine
+# See also npm-fixup.sh, npm-ls-prod.sh, npm-ls-dev.sh, npm-up-dev.sh, npm-up-prod.sh, npm-pkg-vers.js, nonpmproxy.sh, packagever.sh
 
 if [ "$1" == "--help" ]; then
 	USAGE=1

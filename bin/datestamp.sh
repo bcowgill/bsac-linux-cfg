@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # output an rfc-3339 timestamp. or something close
 # 2017-11-07 12:32:52+00:00
 # WINDEV tool useful on windows development machine

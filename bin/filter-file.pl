@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
-# TODO more regexes for file types: documents, graphics, source code, etc need to sample file output from windows, mac and linux...
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# TODO WIP work in progress more regexes for file types: documents, graphics, source code, etc need to sample file output from windows, mac and linux...
 # WINDEV tool useful on windows development machine
 use strict;
 use warnings;

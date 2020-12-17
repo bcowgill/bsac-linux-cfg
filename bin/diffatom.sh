@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # diff current atom config files with the git controlled ones
 
 pushd ~/bin/cfg/.atom/

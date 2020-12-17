@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # darken the backlight enforcing a minimum of 1
 DEC=10
 if perl -e 'exit ($ARGV[0] <= $ARGV[1] ? 0 : 1)' `xbacklight -get` $DEC ; then

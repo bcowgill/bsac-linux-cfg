@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # fix up code after a save
 # CUSTOM settings you may have to change on a new computer
 

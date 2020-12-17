@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # turn off the touch pad and touch screen inputs
 # http://askubuntu.com/questions/65951/how-to-disable-the-touchpad
 source ~/bin/touch-config.sh

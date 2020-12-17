@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Compare system and hardware clock settings
 #Sat May  9 06:33:48 UTC 2015
 #Sat 09 May 2015 06:33:49 UTC  -0.755865 seconds

@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # convert acceptance criteria from Jira story into Cucumber for Cypress
 # WINDEV tool useful on windows development machine
 

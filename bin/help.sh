@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # TODO if pod2usage present in perl file use --man option for the help page
 
 OUT=./man

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # start up a lower screen session with build running.
 #echo usual BUILD LOWER COMPANY=$COMPANY PATH=$PATH >> /tmp/BUILD.log
 

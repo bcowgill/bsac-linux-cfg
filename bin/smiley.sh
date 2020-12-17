@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show unicode smiley or other named character groups
 # See also mksmiley.sh to make an HTML page full of smileys which you can zoom
 # WINDEV tool useful on windows development machine

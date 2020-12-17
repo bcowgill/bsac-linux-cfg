@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # correct comma placement for leading/trailing
 # WINDEV tool useful on windows development machine
 

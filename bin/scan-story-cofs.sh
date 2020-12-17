@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # scan for unimplemented conditions of satisfaction tests
 # See also git-grep-skipped.sh
 

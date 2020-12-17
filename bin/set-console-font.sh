@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # set the linux console font to something with a large number of pixels
 # so that it can be read on a high resolution video display
 

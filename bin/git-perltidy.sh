@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # perltidy the modified/added/renamed perl files from a git repo.
 # must be run from the top of your repository so the paths match up.
 # NOTE: filenames with tricky characters will be a problem, -z format remedies that but this script doesn't do that yet.

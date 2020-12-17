@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # annotate a commit with a tag
 # example tag the previous commit
 # git-tag.sh my-tag-name "description of tag" HEAD^

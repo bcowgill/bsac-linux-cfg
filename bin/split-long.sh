@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # split long lines at specified column to satisfy linters
+# See also split-brace.sh, split-comma.sh, splitdiff, split-jest-snapshot.pl, split-list.pl, split-long.sh, split-semicolon.sh, split-spaces.sh
 # WINDEV tool useful on windows development machine
 
 if [ "$1" == "--help" ]; then

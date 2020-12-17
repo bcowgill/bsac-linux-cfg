@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # fix missing displayName on react class and pure function components.
 # also fixes anonymous functions in test plans
 # WINDEV tool useful on windows development machine

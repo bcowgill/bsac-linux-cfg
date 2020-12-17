@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # auto rebuild when things change
 # CUSTOM settings you may need to change on a new computer
 TOUCH=last-build.timestamp

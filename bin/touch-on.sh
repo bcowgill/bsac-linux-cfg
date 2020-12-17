@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # turn on the touch pad and touch screen inputs
 source ~/bin/touch-config.sh
 synclient TouchpadOff=0

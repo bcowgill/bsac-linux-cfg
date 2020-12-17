@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # update local and remote branch lists
 # WINDEV tool useful on windows development machine
 MASTER=${MASTER:-master}

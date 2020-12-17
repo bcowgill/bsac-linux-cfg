@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # stash and drop your git changes
 # WINDEV tool useful on windows development machine
 git status --short --untracked-files=no

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 # TODO whatsin -- random sample of N per directory or a % of files in directory, or one of each file extension
 function usage {

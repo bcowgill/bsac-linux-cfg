@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Fill a directory with directories until the directory table is full
 
 use strict;

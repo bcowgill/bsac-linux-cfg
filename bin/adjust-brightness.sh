@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # adjust brightness up or down
 
 file="/sys/class/backlight/intel_backlight/brightness"

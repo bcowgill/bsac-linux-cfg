@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # find all lint/prettier/coverage override references and TODO like comments in files under git control
 # See also git-mustdo.sh mustdo.sh
 # WINDEV tool useful on windows development machine

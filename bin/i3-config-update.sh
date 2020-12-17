@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # update the i3-config and i3-launch file for current main and aux monitors
 
 COMPANY=

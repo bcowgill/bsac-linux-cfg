@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Perform a simple search and replace. Much like sed -i.bak -e 's/Search/Replace/' filename...
 # see also srep.sh for more complex version
 # WINDEV tool useful on windows development machine

@@ -1,4 +1,7 @@
+#!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # cross-platform browser launcher
+
 if [ -e /Applications ]; then
 	if [ -e "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ]; then
 		open -a "Google Chrome" $*

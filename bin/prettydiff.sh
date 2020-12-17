@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # use prettydiff javascript to clean up html
 # License: http://unlicense.org
 # online formatter: http://prettydiff.com/?m=beautify&html

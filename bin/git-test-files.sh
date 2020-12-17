@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # create/remove files in various states for git status testing.
 # should only be run when not in a merge/rebase, etc
 # WINDEV tool useful on windows development machine

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # compare current emacs config with version under git control
 
 DIFF=diff.sh

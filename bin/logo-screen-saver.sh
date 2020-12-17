@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # a text mode screen saver using the linuxlogo program
 
 SLEEP=20

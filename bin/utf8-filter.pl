@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
-# sample unicode-savvy filter
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# sample unicode-savvy filter - unicode search and replace tool sample
 # http://www.perl.com/pub/2012/04/perl-unicode-cookbook-always-decompose-and-recompose.html
+# WINDEV tool useful on windows development machine
 
 use English qw(-no_match_vars);
 use utf8;      # so literals and identifiers can be in UTF-8

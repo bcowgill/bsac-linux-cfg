@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # check for zero size files which have been blatted somehow
 # WINDEV tool useful on windows development machine
 # CUSTOM settings you may need to change on a new computer

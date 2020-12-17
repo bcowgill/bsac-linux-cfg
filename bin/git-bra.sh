@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show the age of a git branch by displaying the date of the last commit
 # WINDEV tool useful on windows development machine
 

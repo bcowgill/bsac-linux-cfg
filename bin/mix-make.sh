@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # run all mix tasks to make elixir project up to date.
 
 BROWSER=browser.sh

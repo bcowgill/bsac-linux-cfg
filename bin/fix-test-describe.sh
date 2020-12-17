@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # multiline search/replace to fix javascript test plan by wrapping
 # the outermost describe in the file with the filename
 # WINDEV tool useful on windows development machine

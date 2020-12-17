@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # label all original/NN-title.mp3 files and output to current directory
 FILE="$1"
 BASE=`basename $FILE`

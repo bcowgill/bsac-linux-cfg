@@ -1,6 +1,8 @@
 #!/bin/bash
 # fire up programs when running in a gui
 #charles &
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# CUSTOM settings you may have to change on a new computer
 
 [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
 

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Easy backup system just give source and destination. Will do a full backup
 # and then partial backups of what changed since last backup.
 

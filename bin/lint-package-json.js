@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 // TODO separate repo and install to node_modules/.bin
 // Lint your package.json to ensure dependencies are locked down.
 // npm install -g lint-package-json

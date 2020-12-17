@@ -1,10 +1,12 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 #You mean you don't have an emergency commit script????? How unprofessional.
 #Go to your terminal now...
 
 #cat > ~/bin/fire.sh
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 BRANCH=${1:-FIRE}
 
 if git stash save "stash for emergency commit to $BRANCH"; then

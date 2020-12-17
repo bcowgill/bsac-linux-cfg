@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # svn diff script for diffmerge
 # svn diff --diff-cmd=svndiffmerge.sh filename
 # http://support.sourcegear.com/viewtopic.php?f=33&t=11661

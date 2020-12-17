@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 #BSAC Node version manager allows you to have multiple versions of nodejs
 export NVM_DIR="$HOME/.nvm"
 if [ -s "$NVM_DIR/nvm.sh" ]; then

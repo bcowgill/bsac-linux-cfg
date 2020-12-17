@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # turn on proxying to charles for commands like wget and curl
+# See also proxy-off.sh, chrome-proxy, nonpmproxy.sh
 echo current _proxy environment variables
 set | grep -i _proxy
 

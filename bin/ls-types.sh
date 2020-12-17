@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # want something like:
 
 # docs === .doc .docx  images === .jpg .gif, etc

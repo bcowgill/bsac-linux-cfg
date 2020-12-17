@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # See also punch-in.sh punch-out.sh task.sh, waste.sh, mad.sh, glad.sh, sad.sh
 # WINDEV tool useful on windows development machine
 # CUSTOM settings you may have to change on an new machine

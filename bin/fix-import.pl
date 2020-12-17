@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # Correct file import paths when a source file has moved.
 # Does not support rename except to File/index.js by creating a linker
 # index.js to File.js

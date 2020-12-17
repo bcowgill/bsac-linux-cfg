@@ -1,3 +1,5 @@
+#!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # TODO three letter vars that are not words?
 # cat ~/bin/english/english-words-2.txt ~/bin/english/english-words-3.txt | jscs-disallowIdentifierNames.sh
 

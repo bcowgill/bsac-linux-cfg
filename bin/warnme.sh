@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Display warnings from warning log if anything there
 WARN=$HOME/warnings.log
 if perl -ne 'exit(1) if m{\S}xms' $WARN 2> /dev/null; then

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Not sure what kind of diffing capabilities are available so
 # try to figure it out.
 

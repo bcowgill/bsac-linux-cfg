@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # rename a git file in same dir and adjust import references to it
 # git-rename.sh src/path/filenmae.js js filename
 # git-rename.sh src/path/filenmae.js js filename.js

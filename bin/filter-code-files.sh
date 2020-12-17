@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # filter out file names which are source code / configuration files
 # See also filter-built-files.sh, filter-code-files.sh, filter-indents.sh, filter-punct.sh
 # WINDEV tool useful on windows development machine

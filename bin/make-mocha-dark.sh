@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # make-mocha-dark.sh mocha-light.js > mocha-dark.js
 # grab the mocha.js file and change the canvas progress indicator to
 # a dark colour scheme.

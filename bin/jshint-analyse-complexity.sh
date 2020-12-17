@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # analyse the jshint maxcomplexity output for statistics
 export MODULE=$1
 export SERIES=$2

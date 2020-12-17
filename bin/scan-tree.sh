@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # scan a directory tree and save files containing filenames, directory names, extensions, full file paths and full directory paths
 # WINDEV tool useful on windows development machin
 

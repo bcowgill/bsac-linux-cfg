@@ -1,4 +1,6 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# See also fix-spaces.sh, fix-tabs.sh, strip-newline.sh, strip-whitespace.sh
 # WINDEV tool useful on windows development machine
 
 if [ -z "$1" ]; then

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 // Show most useful information about the node process.
 
 const NODE_ENV = Object.keys(process.env).filter(env => /^(NODE|N[VP]M|TMP|USER|HOME|SHELL|PATH|LOG|TERM|COLUMN|LINE|PWD|EDITOR|LANG|TZ)/.test(env)).sort();

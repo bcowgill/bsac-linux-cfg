@@ -1,5 +1,7 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # create every type of archive for something to see what's best
+# TODO add ability to delete all but the smallest result
 
 out=$1
 shift

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # show a sample of unicode characters
 # unicode-sample.sh -list | column -t | column
 # WINDEV tool useful on windows development machine

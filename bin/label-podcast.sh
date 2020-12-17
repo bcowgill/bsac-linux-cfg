@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Touch up a podcast/song file track number, title and album
 
 TRACK=$1

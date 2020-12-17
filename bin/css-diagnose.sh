@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # diagnose some webpacked CSS by formatting it nicely and then selectively enableing only specific named CSS style properties.
 # See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 # WINDEV tool useful on windows development machine

@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # refactor two named files by diffing them A vs B then B vs A
 # a primitive version of xvdiff.sh
 # WINDEV tool useful on windows development machin

@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# sample unicode-savvy filter
+# sample unicode-savvy filter, unicode search and replace tool sample
 # http://www.perl.com/pub/2012/04/perl-unicode-cookbook-always-decompose-and-recompose.html
 
 use English qw(-no_match_vars);

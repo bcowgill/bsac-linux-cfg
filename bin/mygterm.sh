@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # launch cross-platform gnome terminal specifying an optional directory and command
 # will launch using a profile name which should be configured with the desired Font and color scheme
 # which is configured in .config/dconf/user

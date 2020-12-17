@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # jshint-set-complexity-js.sh [complexity:1] files
 # update any maxcomplexity jshint settings within javascript files.
 

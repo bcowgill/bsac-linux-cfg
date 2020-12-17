@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # tail a bunch of system log files
 # -du show status bar up at top
 # --basename show basename in status bar

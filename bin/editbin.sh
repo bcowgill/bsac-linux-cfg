@@ -1,4 +1,5 @@
 #!/bin/bash
+# BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # launch emacs in ~/bin dir
 pushd ~/bin
 EMACS_FILES=`ls -1 template/cfgrec/emacs-*.txt`

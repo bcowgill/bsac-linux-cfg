@@ -1,6 +1,8 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # toggle the short prompt on/off
 # source `which toggle-prompt-short.sh`
+# WINDEV tool useful on windows development machine
 if [ -z "$PS1_SAVED" ]; then
 	export PS1_SAVED="$PS1"
 	export PS1="$PS1_SHORT"

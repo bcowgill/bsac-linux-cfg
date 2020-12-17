@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # perl one liner version:
 # perl -C -pe 's/&\#(\d+);/chr($1)/ge;s/&\#x([a-fA-F\d]+);/chr(hex($1))/ge;'
 # WINDEV tool useful on windows development machine
