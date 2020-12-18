@@ -13,6 +13,7 @@ my $me = $ENV{USER};
 my $prefix = "___";
 while (my $line = <>)
 {
+	$line = "${prefix}BACKUP        $line\n" if $line =~ m{ezbackup}xms && $line !~ m{\scheck}xms;
 	$line = "${prefix}CALIBRE       $line\n" if $line =~ m{python .+ calibre}xms;
 	$line = "${prefix}DOCUZILLA     $line\n" if $line =~ m{mono .+ Docuzilla}xms;
 	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{python .+ (SimpleHTTP|http\.server)}xms;
