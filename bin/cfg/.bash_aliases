@@ -19,6 +19,8 @@ alias sc=sound-control.sh
 
 # edit config files and re-source them
 alias se='source ./env.sh'
+alias vims="vim --servername vim"
+alias vimsl="vim --serverlist"
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'

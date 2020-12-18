@@ -795,6 +795,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 	DRUID_PKG=""
 	CUSTOM_PKG="
 		vim
+		reptyr
 		locate
 		zip
 		cmatrix
