@@ -4,7 +4,7 @@
 
 FILE="$1"
 
-if [ -z "$FILE" ]; then
+function usage {
 	echo "
 $0 filename
 
@@ -12,7 +12,21 @@ $0 filename
 "
 
 	exit 1
+}
+
+if [ -z "$FILE" ]; then
+	usage
 fi
+if [ "$FILE" == "--help" ]; then
+	usage
+fi
+if [ "$FILE" == "--man" ]; then
+	usage
+fi
+if [ "$FILE" == "-?" ]; then
+	usage
+fi
+
 
 function update_v2_field {
 	local switch2 help CHOOSE

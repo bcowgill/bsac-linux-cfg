@@ -26,12 +26,18 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 my @default = qw(I swear by my life and my love of it never to live for the sake of another man nor ask another man to live for the sake of mine.);
 
 my $mb = 1024 * 1024;
+my $MAX = 4 * 1024 * $mb;
+my $NL = "\n"; # " "
 
-my $output = join(' ', @ARGV || @default) . ' ';
+my $length = 0;
+my $output = join(' ', @ARGV || @default) . $NL;
 $output = $output x (int($mb / length($output)));
+my $chunk = length($output);
 
 do {
 	print $output;
+	$length += $chunk;
+	die "Maximum size $MAX reached" if ($MAX && $length >= $MAX);
 } while (1);
 
 __END__
