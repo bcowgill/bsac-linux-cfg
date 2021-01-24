@@ -70,6 +70,27 @@ sub parse_frame
 	}
 	return ($frame, $paren, $bracket, $value);
 }
+
+# Fields in v2 which are in v1
+# === TIT2 (Title/songname/content description): SONG
+# === TPE1 (Lead performer(s)/Soloist(s)): ARTIST
+# === TALB (Album/Movie/Show title): ALBUM
+# === TYER (Year): 2001
+# === TRCK (Track number/Position in set): 1
+# === COMM (Comments): (ID3v1 Comment)[XXX]: COMMENT
+# === TCON (Content type): (101)
+
+# Args for v1 fields
+#		--artist ARTIST \ == TPE1
+#		--song SONG \ == TIT2
+#		--album ALBUM \ == TALB
+#		--comment COMMENT \ == COMM
+#		--desc DESCRIPTION \ == COMM
+#		--genre 101 \ == TCON
+#		--year 2001 \  == TYER
+#		--track 1/10 \ == TRCK / TPOS
+#		--total 10 \ == TPOS
+
 # Special Text Fields in id3v2
 # ()   TXXX DESC:USER DEFINED TEXT INFORMATION(colons allowed)
 # []   USER KEY:TERMS OF USE(colons allowed)
@@ -159,6 +180,7 @@ sub output_frames
 	return file_name($next_file);
 }
 
+print qq{# See details on meanings of different frame names: https://id3.org/id3v2.3.0#Text_information_frames_-_details\n};
 init_info();
 while (my $line = <>)
 {
