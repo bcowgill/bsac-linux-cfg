@@ -3,8 +3,10 @@
 # scan-phone.sh find the files on mobile phone internal memory for use with shell-sync.pl
 # also calls random-ringtone.sh to change your ringtone.
 
-if [ -e ~/.PHONE ]; then
-	source ~/.PHONE
+CONFIG=${1:-~/.PHONE}
+
+if [ -e "$CONFIG" ]; then
+	source "$CONFIG"
 fi
 
 # ~/.PHONE file contents:
@@ -60,7 +62,10 @@ if [ ! -d $phone ]; then
 	exit 1
 fi
 
-random-ringtone.sh
+if [ ! -z "$RINGTONES" ]; then
+	random-ringtone.sh
+fi
+
 
 echo getting file list from phone...
 find-ez.sh $phone > phone.lst

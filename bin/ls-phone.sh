@@ -2,8 +2,10 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # perform ls command on mobile phone directory mounted on MTP
 
-if [ -e ~/.PHONE ]; then
-	source ~/.PHONE
+CONFIG=${1:-~/.PHONE}
+
+if [ -e "$CONFIG" ]; then
+	source "$CONFIG"
 fi
 
 if [ -z "$MTP" ]; then
@@ -23,6 +25,6 @@ if [ -e $phone ]; then
 	echo $MTP
 	ls -al $MTP
 else
-	echo `ls $phone` use mnt-phone.sh to mount your phone. > /dev/stderr
+	echo `ls $phone` use mnt-phone.sh $CONFIG to mount your phone. > /dev/stderr
 	exit 2
 fi

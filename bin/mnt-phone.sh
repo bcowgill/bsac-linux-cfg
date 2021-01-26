@@ -2,8 +2,10 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # unmount and remount the phone on MTP
 
-if [ -e ~/.PHONE ]; then
-	source ~/.PHONE
+CONFIG=${1:-~/.PHONE}
+
+if [ -e "$CONFIG" ]; then
+	source "$CONFIG"
 fi
 
 if [ -z "$MTP" ]; then
@@ -14,4 +16,4 @@ fi
 #MTP=/data/me/mtp
 fusermount -u $MTP 2> /dev/null
 jmtpfs $MTP
-ls-phone.sh
+ls-phone.sh "$CONFIG"

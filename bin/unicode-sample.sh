@@ -148,6 +148,7 @@ echo "🔵	U+1F535	[OtherSymbol]	LARGE BLUE CIRCLE"
 echo "◯	U+25EF	[OtherSymbol]	LARGE CIRCLE"
 echo "⬤	U+2B24	[OtherSymbol]	BLACK LARGE CIRCLE"
 
+exit
 ␀	U+2400	[OtherSymbol]	SYMBOL FOR NULL
 ␁	U+2401	[OtherSymbol]	SYMBOL FOR START OF HEADING
 ␂	U+2402	[OtherSymbol]	SYMBOL FOR START OF TEXT

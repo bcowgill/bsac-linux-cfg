@@ -34,6 +34,7 @@ function update_v2_field {
 	help="$2"
 	echo ----------
 	id3v2 --list-rfc822 "$FILE" | grep $switch2:
+	# or help for more help info about the field.
 	echo "Enter [$switch2]: $help (or 'remove' to remove it)"
 	read CHOOSE
 	if [ -z "$CHOOSE" ]; then
@@ -45,6 +46,7 @@ function update_v2_field {
 		else
 			echo Set [$switch2] to $CHOOSE
 			id3v2 --$switch2 "$CHOOSE" "$FILE"
+			# TODO confirm it's ok by showing it back to user and asking to do it again...
 		fi
 	fi
 }
