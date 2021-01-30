@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# ./id3setup.sh > id3setup.log
+
 # produce all v2 frames as command line args...
 # id3v2 --list-frames | perl -pne 'chomp; $_ = uc($_); s{--(\w+)\s+(.+)\z}{--$1 "$1 $2" \\\n}xms'
 
@@ -12,6 +16,7 @@
 # === COMM (Comments): (ID3v1 Comment)[XXX]: COMMENT
 # === TCON (Content type): (101)
 
+# TODO Check the output of v1 tagging and v2 tagging using filter-id3.pl to check it is working correctly
 # TODO TestId3v1and2.mp3
 # TODO TestId3 v2.mp3
 
@@ -30,17 +35,18 @@ function tag1 {
 	echo TAG "$filename" $option
 	id3tag \
 		$option \
-		--artist ARTIST \
-		--song SONG \
-		--album ALBUM \
-		--comment COMMENT \
-		--desc DESCRIPTION \
+		--artist ARTISTv1 \
+		--song SONGv1 \
+		--album ALBUMv1 \
+		--comment COMMENTv1 \
+		--desc DESCRIPTIONv1 \
 		--genre 101 \
 		--year 2001 \
-		--track 1/10 \
+		--track 1 \
 		--total 10 \
 		"$filename"
 }
+
 
 function tag2 {
 	local filename option
@@ -49,43 +55,25 @@ function tag2 {
 	echo " "
 	echo TAG2 "$filename" $option
 
-	# Frames not implemented...
-#		--APIC "APIC ATTACHED PICTURE" \
-#		--AENC "AENC AUDIO ENCRYPTION" \
-#		--COMR "COMR COMMERCIAL FRAME" \ unrecignised
-#		--ENCR "ENCR ENCRYPTION METHOD REGISTRATION" \
-#		--EQUA "EQUA EQUALIZATION" \
-#		--ETCO "ETCO EVENT TIMING CODES" \
-#		--GEOB "GEOB GENERAL ENCAPSULATED OBJECT" \
-#		--GRID "GRID GROUP IDENTIFICATION REGISTRATION" \
-#		--LINK "LINK LINKED INFORMATION" \
-#		--MCDI "MCDI MUSIC CD IDENTIFIER" \
-#		--MLLT "MLLT MPEG LOCATION LOOKUP TABLE" \
-#		--OWNE "OWNE OWNERSHIP FRAME" \
-#		--PRIV "PRIV PRIVATE FRAME" \
-#		--POSS "POSS POSITION SYNCHRONISATION FRAME" \
-#		--RBUF "RBUF RECOMMENDED BUFFER SIZE" \
-#		--RVAD "RVAD RELATIVE VOLUME ADJUSTMENT" \
-#		--RVRB "RVRB REVERB" \
-#		--SYLT "SYLT SYNCHRONIZED LYRIC/TEXT" \
-#		--SYTC "SYTC SYNCHRONIZED TEMPO CODES" \
-#		--WXXX "WXXX USER DEFINED URL LINK" \
-
 	id3v2 \
 		$option \
+		--artist ARTISTv2 \
+		--song SONGv2 \
+		--album ALBUMv2 \
+		--comment DESCRIPTIONv2:COMMENTv2 \
+		--genre 143 \
+		--year 2201 \
+		--track 3/12 \
 		--TIT2 "TIT2 TITLE/SONGNAME/CONTENT DESCRIPTION" \
 		--TPE1 "TPE1 LEAD PERFORMER(S)/SOLOIST(S)" \
 		--TALB "TALB ALBUM/MOVIE/SHOW TITLE" \
 		--TYER "TYER YEAR" \
 		--TRCK "TRCK TRACK NUMBER/POSITION IN SET" \
 		--COMM "COMM COMMENTS" \
-		--COMM "LABEL1:COMM COMMENTS:ABC" \
+		--COMM "LABEL1:COMM COMMENTS:eng" \
 		--COMM "LABEL2:COMM COMMENTS
-WITH TWO LINES:ABC" \
+WITH TWO LINES:eng" \
 		--TCON "TCON CONTENT TYPE" \
-		--IPLS "IPLS INVOLVED PEOPLE LIST" \
-		--PCNT "PCNT PLAY COUNTER" \
-		--POPM "POPM POPULARIMETER" \
 		--TBPM "TBPM BPM (BEATS PER MINUTE)" \
 		--TCOM "TCOM COMPOSER" \
 		--TCOP "TCOP COPYRIGHT MESSAGE" \
@@ -118,33 +106,26 @@ WITH TWO LINES:ABC" \
 		--TSIZ "TSIZ SIZE" \
 		--TSRC "TSRC ISRC (INTERNATIONAL STANDARD RECORDING CODE)" \
 		--TSSE "TSSE SOFTWARE/HARDWARE AND SETTINGS USED FOR ENCODING" \
-		--TXXX "TXXX USER DEFINED TEXT INFORMATION" \
-		--TXXX "LABEL1:TXXX USER DEFINED TEXT INFORMATION" \
-		--TXXX "LABEL2:TXXX USER DEFINED TEXT INFORMATION
-WITH TWO LInES" \
-		--UFID "UFID UNIQUE FILE IDENTIFIER" \
-		--USER "USER TERMS OF USE" \
-		--USER "ABC:USER TERMS OF USE" \
-		--USER "DEF:USER TERMS OF USE
-WITH TWO LINES" \
-		--USLT "USLT UNSYNCHRONIZED LYRIC/TEXT TRANSCRIPTION" \
-		--USLT "LABEL1:USLT UNSYNCHRONIZED LYRIC/TEXT TRANSCRIPTION:ABC" \
+		--TXXX "LABEL1:TXXX USER DEFINED TEXT INFORMATION
+WITH TWO LINES
+ONLY ONE VALUE WORKING" \
+		--USER "eng:USER TERMS OF USE
+WITH TWO LINES
+ONLY ONE VALUE ALLOWED" \
+		--USLT "LABEL1:USLT UNSYNCHRONIZED LYRIC/TEXT TRANSCRIPTION:eng" \
 		--USLT "LABEL2:USLT UNSYNCHRONIZED LYRIC/TEXT TRANSCRIPTION
-WITH TWO LINES:DEF" \
-		--WCOM "WCOM COMMERCIAL INFORMATION" \
-		--WCOP "WCOP COPYRIGHT/LEGAL INFORMATION" \
-		--WOAF "WOAF OFFICIAL AUDIO FILE WEBPAGE" \
-		--WOAR "WOAR OFFICIAL ARTIST/PERFORMER WEBPAGE" \
-		--WOAS "WOAS OFFICIAL AUDIO SOURCE WEBPAGE" \
-		--WORS "WORS OFFICIAL INTERNET RADIO STATION HOMEPAGE" \
-		--WPAY "WPAY PAYMENT" \
-		--WPUB "WPUB OFFICIAL PUBLISHER WEBPAGE" \
+WITH TWO LINES:eng" \
+		--WCOM "WCOM COMMERCIAL INFORMATION URL" \
+		--WCOM "WCOM COMMERCIAL INFORMATION ANOTHER VALUE URL" \
+		--WCOP "WCOP COPYRIGHT/LEGAL INFORMATION URL" \
+		--WOAF "WOAF OFFICIAL AUDIO FILE WEBPAGE URL" \
+		--WOAR "WOAR OFFICIAL ARTIST/PERFORMER WEBPAGE URL" \
+		--WOAR "WOAR OFFICIAL SECOND ARTIST/PERFORMER WEBPAGE URL" \
+		--WOAS "WOAS OFFICIAL AUDIO SOURCE WEBPAGE URL" \
+		--WORS "WORS OFFICIAL INTERNET RADIO STATION HOMEPAGE URL" \
+		--WPAY "WPAY PAYMENT URL" \
+		--WPUB "WPUB OFFICIAL PUBLISHER WEBPAGE URL" \
 		"$filename"
-# TODO add more tags based on what was learned from id3test.sh
-
-echo \
-		"$filename" \
-> /dev/null
 }
 
 function info12 {
@@ -160,6 +141,7 @@ function info12 {
 	echo === id3v2 --list-rfc822 filtered
 	id3v2 --list-rfc822 "$filename" | filter-id3.pl
 }
+
 
 tag1 TestId3v1.mp3 --v1tag
 tag1 TestId3v2basic.mp3 --v2tag
@@ -181,7 +163,7 @@ TestId3v1and2.mp3
 TestId3v1.mp3
 TestId3v2.mp3
 
-ID3TAG(1)                                                               User Command                                                              ID3TAG(1)
+#ID3TAG(1)                                                               User Command                                                              ID3TAG(1)
 
 
 

@@ -198,6 +198,9 @@ WCOP="http://test.com/copyright/legal-terms/info/here"
 # --WORS The 'Official internet radio station homepage' contains a URL pointing at the homepage of the internet radio station.
 WORS="http://test.com/internet/radio/station/homepage"
 
+# --WPAY The 'Payment' frame is a URL pointing at a webpage that will handle the process of paying for this file.
+WPAY="http://test.com/pay/here"
+
 # Unimplemented or not fully working:
 # ===================================
 
