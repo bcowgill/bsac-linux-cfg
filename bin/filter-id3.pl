@@ -3,6 +3,8 @@
 # id3v2 -R Immanuel-Kant-* | DEBUG=1 filter-id3.pl | less
 # id3v2 -R Immanuel-Kant-* | filter-id3.pl | less
 
+# TODO output ENV vars for values instead of inlining them.
+
 use strict;
 use warnings;
 
