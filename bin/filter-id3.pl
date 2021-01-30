@@ -3,7 +3,7 @@
 # id3v2 -R Immanuel-Kant-* | DEBUG=1 filter-id3.pl | less
 # id3v2 -R Immanuel-Kant-* | filter-id3.pl | less
 
-# TODO output ENV vars for values instead of inlining them.
+# TODO add manual/usage details
 
 use strict;
 use warnings;
@@ -16,6 +16,9 @@ $Data::Dumper::Terse    = 1;
 
 my $DEBUG = $ENV{DEBUG} || 0;
 
+my $INLINE = 0;
+my $CH = 2;
+
 my $PAREN = '(DESC)'; # A descriptive name for multi-valued frames
 my $BRACKET = '[KEY]'; # A 3 Character identity KEY for multi-valued frames
 my $VALUE = 'TXT';
@@ -25,9 +28,13 @@ my $TEXT = 3; # index of value in @Frame array
 my $filename;
 my @Versions;
 my @Args;
+my @Defs;
 my %Frames;
 my %Errors;
 my @Frame;
+my %Env;
+my %Value;
+my %Counter = ();
 
 sub init_info
 {
@@ -36,6 +43,7 @@ sub init_info
 	%Errors = ();
 	%Frames = ();
 	@Frame = ();
+	@Defs = ();
 	@Args = ();
 }
 
@@ -96,6 +104,52 @@ sub parse_frame
 #		--track 1/10 \ == TRCK / TPOS
 #		--total 10 \ == TPOS
 
+sub store_frame
+{
+	my ($frame, $value) = @ARG;
+	# TODO handle " $ etc in values
+	if ($INLINE)
+	{
+		push(@Args, qq{\t--$frame "$value" \\\n});
+	}
+	else
+	{
+		my $name = $frame;
+		my $duplicate = 0;
+		# Combine env values that are identical...
+		if (exists $Value{$value})
+		{
+			$name = $Value{$value};
+			$duplicate = 1;
+		}
+		if (exists $Env{$name} && ($Env{$name} ne $value))
+		{
+			++$Counter{$name};
+			$name .= "_$Counter{$name}";
+		}
+		$Env{$name} = $value;
+		$Value{$value} = $name;
+		push(@Defs, qq{$name="$value"}) unless $duplicate;
+		push(@Args, qq{\t--$frame "\$$name" \\\n});
+	}
+}
+
+# sort the Defs and apply space gaps after sorting...
+sub space_defs
+{
+	my $last_frame = '';
+	my ($frame, $pre, $gap);
+
+	my @Spaced = map {
+		$frame = substr($ARG, 0, $CH);
+		$gap = $ARG =~ m{\n}xms ? "\n" : '';
+		$pre = $last_frame eq $frame ? $gap : "\n";
+		$last_frame = $frame;
+		qq{$pre$ARG$gap\n};
+	} sort @Defs;
+	return @Spaced
+}
+
 # Special Text Fields in id3v2
 # ()   TXXX DESC:USER DEFINED TEXT INFORMATION(colons allowed)
 # []   USER KEY:TERMS OF USE(colons allowed)
@@ -105,10 +159,14 @@ sub parse_frame
 # DESC can be longer description and any characters.
 sub handle_frame
 {
-	my ($frame, $paren, $bracket, $value) = @ARG;
+	my ($frame, $paren, $bracket, $value, $final) = @ARG;
 
 	return unless $frame;
 
+	if ($final)
+	{
+		chomp($value);
+	}
 	if ($paren && $bracket)
 	{
 		if (exists $Frames{$frame}{$PAREN}{$paren}{$BRACKET}{$bracket}{$VALUE})
@@ -117,11 +175,10 @@ sub handle_frame
 			$Errors{"Duplicate: $frame\($paren\)\[$bracket\]: $value"} = 1;
 		}
 		$Frames{$frame}{$PAREN}{$paren}{$BRACKET}{$bracket}{$VALUE} = $value;
-		# TODO handle " $ etc in values
 		$paren = $paren ? "$paren:" : '';
 		$bracket = $bracket ? ":$bracket" : '';
 		$paren = ':' if ($bracket && !$paren);
-		push(@Args, qq{\t--$frame "$paren$value$bracket" \\\n});
+		store_frame($frame, "$paren$value$bracket");
 	}
 	elsif ($paren)
 	{
@@ -131,9 +188,8 @@ sub handle_frame
 			$Errors{"Duplicate: $frame\($paren\): $value"} = 1;
 		}
 		$Frames{$frame}{$PAREN}{$paren}{$VALUE} = $value;
-		# TODO handle " $ etc in values
 		$paren = $paren ? "$paren:" : '';
-		push(@Args, qq{\t--$frame "$paren$value" \\\n});
+		store_frame($frame, "$paren$value");
 	}
 	elsif ($bracket)
 	{
@@ -143,9 +199,8 @@ sub handle_frame
 			$Errors{"Duplicate: $frame\[$bracket\]: $value"} = 1;
 		}
 		$Frames{$frame}{$BRACKET}{$bracket}{$VALUE} = $value;
-		# TODO handle " $ etc in values
 		$bracket = $bracket ? "$bracket:" : '';
-		push(@Args, qq{\t--$frame "$bracket$value" \\\n});
+		store_frame($frame, "$bracket$value");
 	}
 	else
 	{
@@ -155,8 +210,7 @@ sub handle_frame
 			$Errors{"Duplicate: $frame $value"} = 1;
 		}
 		$Frames{$frame}{$VALUE} = $value;
-		# TODO handle " $ etc in values
-		push(@Args, qq{\t--$frame "$value" \\\n});
+		store_frame($frame, $value);
 	}
 	return ();
 }
@@ -176,8 +230,10 @@ sub output_frames
 		print qq{# $filename }, (join(' ', @Versions) || 'No ID3 tag'), "\n";
 		if (scalar(@Args))
 		{
+			print space_defs(@Defs);
+			print "\n" unless $INLINE;
 			print qq{id3v2 \\\n};
-			print @Args;
+			print sort(@Args);
 			print qq{\t$filename\n\n};
 		}
 	}
@@ -193,8 +249,9 @@ while (my $line = <>)
 	chomp($line);
 	if ($line =~ m{\AFilename:\s(.+)\z}xms)
 	{
+		# TODO chomp off the last newling from the previous frame if it exists
 		my $file = $1;
-		@Frame = handle_frame(@Frame);
+		@Frame = handle_frame(@Frame, 'chomp');
 		$filename = output_frames($file);
 	}
 	elsif ($line =~ m{\A(.+):\s+No\s+ID3v([12])\s+tag}xms)
