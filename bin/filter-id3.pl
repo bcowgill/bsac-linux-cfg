@@ -52,18 +52,21 @@ sub parse_frame
 {
 	my ($frame, $value) = @ARG;
 	my ($paren, $bracket);
-	if ($value =~ m{\(([^\)]*)\)\[([^\]]*)\]:\s(.+)\z}xms)
+	# FRAM: (...)[...]: value
+	if ($value =~ m{\(([^\)]*)\)\[([^\]]*)\]:\s(.*)\z}xms)
 	{
 		$paren = $1; # allows any length/chars
 		$bracket = $2; # allows up to 3 characters
 		$value = $3; # no colons allowed in the value
 	}
-	elsif ($value =~ m{\(([^\)]*)\):\s(.+)\z}xms)
+	# FRAM: (...): value
+	elsif ($value =~ m{\(([^\)]*)\):\s(.*)\z}xms)
 	{
 		$paren = $1;
 		$value = $2;
 	}
-	elsif ($value =~ m{\[([^\]]*)\]:\s(.+)\z}xms)
+	# FRAM: [...]: value
+	elsif ($value =~ m{\[([^\]]*)\]:\s(.*)\z}xms)
 	{
 		$bracket = $1;
 		$value = $2;
@@ -222,6 +225,22 @@ while (my $line = <>)
 	elsif ($line =~ m{\A([A-Z1-9]{4}):\s(.+)\z}xms)
 	{
 		my ($frame, $value) = ($1, $2);
+		# handle Unknown (255) with custom text
+		# TCON: Something Else (3) (255)
+		# becomes --TCON "Something Else (3)"
+		# TCON: Salsa (143)
+		# becomes --genre 143
+		# or --TCON "(143)"
+		if ($frame eq 'TCON')
+		{
+			if (!($value =~ s{\s*\(255\)\s*\z}{}xms))
+			{
+				if ($value =~ m{(\(\d+\))\s*\z}xms)
+				{
+					$value = $1;
+				}
+			}
+		}
 		@Frame = handle_frame(@Frame);
 		@Frame = parse_frame($frame, $value);
 	}

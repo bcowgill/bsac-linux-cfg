@@ -2,6 +2,13 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Add meta data to a song / music file that has little to none aleady.
 
+# TODO
+# Ask if original or cover at start and then omit all the Original X fields
+# Ask if correct before moving on to next setting
+# Show the stored value before moving on
+# Show the comman argument as it is set
+# Add TOFN TLAN
+
 FILE="$1"
 
 function usage {
