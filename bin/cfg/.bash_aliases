@@ -43,6 +43,9 @@ alias em='NO_AT_BRIDGE=1 emacs'
 
 alias ascii='pushd ~/bin/character-samples/samples; mc; popd'
 
+alias urldecode="perl -MURI::Escape -pne '\$_ = uri_unescape(\$_)'"
+alias urlencode="perl -MURI::Escape -pne '\$_ = uri_escape(\$_)'"
+
 #  like mkdir -p for files you want to touch
 alias touch-p='touch_p'
 

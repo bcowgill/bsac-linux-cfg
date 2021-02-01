@@ -4,6 +4,7 @@
 # id3v2 -R Immanuel-Kant-* | filter-id3.pl | less
 
 # TODO add manual/usage details
+# TODO INLINE var should be command line param
 
 use strict;
 use warnings;
@@ -163,6 +164,7 @@ sub handle_frame
 
 	return unless $frame;
 
+	$value = '' unless defined $value;
 	if ($final)
 	{
 		chomp($value);
