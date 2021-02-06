@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# rm *.mp3; git co TestId3Empty.mp3
 # ./id3setup.sh > id3setup.log
 
 # produce all v2 frames as command line args...
@@ -22,10 +23,25 @@
 
 id3v2 --delete-all TestId3Empty.mp3
 
-cp TestId3Empty.mp3 TestId3v1.mp3
-cp TestId3Empty.mp3 TestId3v2basic.mp3
-cp TestId3Empty.mp3 TestId3v1and2basic.mp3
-cp TestId3Empty.mp3 TestId3v2.mp3
+function tag1nodesc {
+	local filename option
+	filename="$1"
+	option="$2"
+	echo " "
+	echo TAG "$filename" $option
+	id3tag \
+		$option \
+		--artist ARTISTv1 \
+		--song SONGv1 \
+		--album ALBUMv1 \
+		--comment "COMMENTv1
+NODESC v1" \
+		--genre 101 \
+		--year 2001 \
+		--track 1 \
+		--total 10 \
+		"$filename"
+}
 
 function tag1 {
 	local filename option
@@ -38,15 +54,15 @@ function tag1 {
 		--artist ARTISTv1 \
 		--song SONGv1 \
 		--album ALBUMv1 \
-		--comment COMMENTv1 \
 		--desc DESCRIPTIONv1 \
-		--genre 101 \
-		--year 2001 \
-		--track 1 \
-		--total 10 \
+		--comment "COMMENTv1
+WITH DESCRIPTION v1" \
+		--genre 102 \
+		--year 2002 \
+		--track 2 \
+		--total 11 \
 		"$filename"
 }
-
 
 function tag2 {
 	local filename option
@@ -139,17 +155,37 @@ function info12 {
 	echo === id3v2 --list-rfc822
 	id3v2 --list-rfc822 "$filename"
 	echo === id3v2 --list-rfc822 filtered
-	id3v2 --list-rfc822 "$filename" | filter-id3.pl
+	id3v2 --list-rfc822 "$filename" | INLINE=1 filter-id3.pl
+	echo ================================================
 }
 
+cp TestId3Empty.mp3 TestId3Tagv1.mp3
+cp TestId3Empty.mp3 TestId3Tagv1desc.mp3
 
-tag1 TestId3v1.mp3 --v1tag
-tag1 TestId3v2basic.mp3 --v2tag
-tag1 TestId3v1and2basic.mp3
+cp TestId3Empty.mp3 TestId3Tagv2basic.mp3
+cp TestId3Empty.mp3 TestId3Tagv2basicdesc.mp3
+
+cp TestId3Empty.mp3 TestId3Tagv1and2basic.mp3
+cp TestId3Empty.mp3 TestId3Tagv1and2basicdesc.mp3
+
+cp TestId3Empty.mp3 TestId3v2.mp3
+
+
+tag1nodesc TestId3Tagv1.mp3 --v1tag
+tag1 TestId3Tagv1desc.mp3 --v1tag
+
+tag1nodesc TestId3Tagv2basic.mp3 --v2tag
+tag1 TestId3Tagv2basicdesc.mp3 --v2tag
+
+tag1nodesc TestId3Tagv1and2basic.mp3
+tag1 TestId3Tagv1and2basicdesc.mp3
+
 tag2 TestId3v2.mp3
 
 info12 TestId3Empty.mp3
-info12 TestId3v1.mp3
+info12 TestId3Tagv1.mp3
+info12 TestId3Tagv1desc.mp3
+exit
 info12 TestId3v2basic.mp3
 info12 TestId3v1and2basic.mp3
 info12 TestId3v2.mp3
