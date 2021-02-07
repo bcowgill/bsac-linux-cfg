@@ -1,0 +1,65 @@
+i3 Window Manager - My Keyboard Reference
+
+# grep KEY: cfg/.i3-config | sort | perl -pne 's{\#\s}{}xms' >> template/cfgrec/i3wm-keyref.txt
+
+KEY:WIN:CFG Win-Shift-c Reload the I3 window manager configuration file
+KEY:WIN:CMD Ctrl-Alt-l Lock the screen with xscreensaver until password is provided
+KEY:WIN:CMD Ctrl-Alt-Shift-l Simple screen lock until password is provided no screen saver.
+KEY:WIN:CMD Win-d Incremental search the PATH for command to run
+KEY:WIN:CMD Win-Enter Open a new terminal window
+KEY:WIN:CMD Win-p Open a new Private browsing window
+KEY:WIN:CMD Win-Shift-d Incremental search desktop shortcut to run
+KEY:WIN:CMD Win-Shift-e Prompt to exit the I3 window manager and xterm session
+KEY:WIN:CMD Win-Shift-p Launch Print Screen application to take screen shots
+KEY:WIN:CMD Win-Shift-q Close current window
+KEY:WIN:CMD Win-Shift-r Restart the I3 window manager preserving current layout
+KEY:WIN:CMD Win-Shift-s Launch the sound control windows
+KEY:WIN:DESK Win-0 Change to the numbered desktop workspace
+KEY:WIN:DESK Win-Shift-0 Move current window to the numbered desktop workspace
+KEY:WIN:DESK Win-Tab Toggle desktop workspace to previous one
+KEY:WIN:LYT Down Resize command to expand the height
+KEY:WIN:LYT Enter Resize command to terminate resize mode
+KEY:WIN:LYT Esc Resize command to terminate resize mode
+KEY:WIN:LYT j Resize command to shrink the width
+KEY:WIN:LYT k Resize command to expand the height
+KEY:WIN:LYT Left Resize command to shrink the width
+KEY:WIN:LYT l Resize command to shrink the height
+KEY:WIN:LYT Mouse-LeftDrag Move the current floating window from the title bar
+KEY:WIN:LYT Mouse-RightDrag Resize the current floating window from the title bar
+KEY:WIN:LYT ; Resize command to expand the width
+KEY:WIN:LYT Right Resize command to expand the width
+KEY:WIN:LYT Up Resize command to shrink the height
+KEY:WIN:LYT Win-b Toggle between title bar + border / border only / no border or title bar
+KEY:WIN:LYT Win-e Change panel layout to split horizontally or vertically
+KEY:WIN:LYT Win-h Split the panel into horizontal columns, the next window opened will appear right of the current one.
+KEY:WIN:LYT Win-h Split the panel into vertical rows, the next window opened will appear below the current one.
+KEY:WIN:LYT Win-m Move current window to a floating scratchpad popup
+KEY:WIN:LYT Win-r Begin resizing the current floating window
+KEY:WIN:LYT Win-s Change panel layout to stacked like an accordion fold
+KEY:WIN:LYT Win-Shift-Down Move current windoe down
+KEY:WIN:LYT Win-Shift-j Move current window left
+KEY:WIN:LYT Win-Shift-k Move current windoe down
+KEY:WIN:LYT Win-Shift-Left Move current window left
+KEY:WIN:LYT Win-Shift-l Move current windoe up
+KEY:WIN:LYT Win-Shift-; Move current window right
+KEY:WIN:LYT Win-Shift-Right Move current window right
+KEY:WIN:LYT Win-Shift-Space Toggle current window to float freely or pop back into the current panel layout
+KEY:WIN:LYT Win-Shift-Up Move current windoe up
+KEY:WIN:LYT Win-w Change panel layout to tabbed like folder alphabetical index
+KEY:WIN:NAV Alt-Shift-Tab Focus to the window left of the current one
+KEY:WIN:NAV Alt-Tab Focus to the window right of the current one
+KEY:WIN:NAV Win-a Move the focus to the parent container panel
+KEY:WIN:NAV Win-Down Focus to the window below the current one
+KEY:WIN:NAV Win-; Focus to the window right of the current one
+KEY:WIN:NAV Win-f Toggle the current window to full screen
+KEY:WIN:NAV Win-g Go to a previously bookmarked named window and containing desktop workspace
+KEY:WIN:NAV Win-j Focus to the window left of the current one
+KEY:WIN:NAV Win-k Focus to the window below the current one
+KEY:WIN:NAV Win-Left Focus to the window left of the current one
+KEY:WIN:NAV Win-l Focus to the window above the current one
+KEY:WIN:NAV Win-o Toggle between each floating scratchpad window and none
+KEY:WIN:NAV Win-Right Focus to the window right of the current one
+KEY:WIN:NAV Win-Shift-m Ask for a bookmark name for the current window
+KEY:WIN:NAV Win-Space Move the focus between the floating window and the tiled window
+KEY:WIN:NAV Win-Up Focus to the window above the current one
+KEY:WIN:NAV Win-z Move the focus to the child container panel

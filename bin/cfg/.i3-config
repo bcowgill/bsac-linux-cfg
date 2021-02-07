@@ -191,17 +191,23 @@ font pango:$font_name $font_size
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# BSAC diagnose keys in X:
+# xev -event keyboard
+
 # BSAC start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec mygterm.sh
+# KEY:WIN:CMD Win-Enter Open a new terminal window
 
 # kill focused window
 bindsym $mod+Shift+q kill
+# KEY:WIN:CMD Win-Shift-q Close current window
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
 # BSAC set up dmenu on bottom, ignore case,  with font
 bindsym $mod+d exec dmenu_run -b -i -fn "$popup_font"
+# KEY:WIN:CMD Win-d Incremental search the PATH for command to run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -210,58 +216,84 @@ bindsym $mod+d exec dmenu_run -b -i -fn "$popup_font"
 # but that did not work, so copied the i3-dmenu-desktop command to my bin
 # dir and hard coded the dmenu command in there.
 bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
-
+# KEY:WIN:CMD Win-Shift-d Incremental search desktop shortcut to run
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
+# KEY:WIN:NAV Win-j Focus to the window left of the current one
+# KEY:WIN:NAV Win-; Focus to the window right of the current one
+# KEY:WIN:NAV Win-l Focus to the window above the current one
+# KEY:WIN:NAV Win-k Focus to the window below the current one
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+# KEY:WIN:NAV Win-Left Focus to the window left of the current one
+# KEY:WIN:NAV Win-Right Focus to the window right of the current one
+# KEY:WIN:NAV Win-Up Focus to the window above the current one
+# KEY:WIN:NAV Win-Down Focus to the window below the current one
 
 # move focused window
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
+# KEY:WIN:LYT Win-Shift-j Move current window left
+# KEY:WIN:LYT Win-Shift-; Move current window right
+# KEY:WIN:LYT Win-Shift-l Move current windoe up
+# KEY:WIN:LYT Win-Shift-k Move current windoe down
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+# KEY:WIN:LYT Win-Shift-Left Move current window left
+# KEY:WIN:LYT Win-Shift-Right Move current window right
+# KEY:WIN:LYT Win-Shift-Up Move current windoe up
+# KEY:WIN:LYT Win-Shift-Down Move current windoe down
 
 # split in horizontal orientation
 bindsym $mod+h split h
+# KEY:WIN:LYT Win-h Split the panel into horizontal columns, the next window opened will appear right of the current one.
 
 # split in vertical orientation
 bindsym $mod+v split v
+# KEY:WIN:LYT Win-h Split the panel into vertical rows, the next window opened will appear below the current one.
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+# KEY:WIN:NAV Win-f Toggle the current window to full screen
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+# KEY:WIN:LYT Win-s Change panel layout to stacked like an accordion fold
+# KEY:WIN:LYT Win-w Change panel layout to tabbed like folder alphabetical index
+# KEY:WIN:LYT Win-e Change panel layout to split horizontally or vertically
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+# KEY:WIN:LYT Win-Shift-Space Toggle current window to float freely or pop back into the current panel layout
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+# KEY:WIN:NAV Win-Space Move the focus between the floating window and the tiled window
 
 # focus the parent container
 bindsym $mod+a focus parent
+# KEY:WIN:NAV Win-a Move the focus to the parent container panel
 
 # focus the child container
 # BSAC assign to z because it's below the focus parent key
 bindsym $mod+z focus child
 #bindsym $mod+d focus child
+# KEY:WIN:NAV Win-z Move the focus to the child container panel
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -274,6 +306,7 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
+# KEY:WIN:DESK Win-0 Change to the numbered desktop workspace
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -286,15 +319,22 @@ bindsym $mod+Shift+7 move container to workspace 7
 bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
+# KEY:WIN:DESK Win-Shift-0 Move current window to the numbered desktop workspace
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+# KEY:WIN:CFG Win-Shift-c Reload the I3 window manager configuration file
+
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+# KEY:WIN:CMD Win-Shift-r Restart the I3 window manager preserving current layout
+
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 # BSAC more readable font on exit prompt
-bindsym $mod+Shift+e exec "i3-nagbar -f '$popup_font' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -f '$popup_font' -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -f '$popup_font' -t warning -m 'Exit I3?' -b 'Yes, please, I would really, really like to exit i3 and return to the text console. My windowing days are over. It was fun while it lasted.' 'i3-msg exit'"
+# KEY:WIN:CMD Win-Shift-e Prompt to exit the I3 window manager and xterm session
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -321,6 +361,19 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+# KEY:WIN:LYT Win-r Begin resizing the current floating window
+# KEY:WIN:LYT j Resize command to shrink the width
+# KEY:WIN:LYT ; Resize command to expand the width
+# KEY:WIN:LYT l Resize command to shrink the height
+# KEY:WIN:LYT k Resize command to expand the height
+# KEY:WIN:LYT Left Resize command to shrink the width
+# KEY:WIN:LYT Right Resize command to expand the width
+# KEY:WIN:LYT Up Resize command to shrink the height
+# KEY:WIN:LYT Down Resize command to expand the height
+# KEY:WIN:LYT Esc Resize command to terminate resize mode
+# KEY:WIN:LYT Enter Resize command to terminate resize mode
+# KEY:WIN:LYT Mouse-RightDrag Resize the current floating window from the title bar
+# KEY:WIN:LYT Mouse-LeftDrag Move the current floating window from the title bar
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -338,40 +391,59 @@ bar {
 # BSAC bind these to some keys Mod+Shift+m to mark and Mod+g to go to mark
 # Ask for a mark name to mark the current window
 bindsym $mod+Shift+m exec i3-input -f '$popup_font' -F 'mark %s' -l 15 -P 'Name for Window Mark: '
+# KEY:WIN:NAV Win-Shift-m Ask for a bookmark name for the current window
+#
 # Go to the container marked with above example:
 bindsym $mod+g exec i3-input -f '$popup_font' -F '[con_mark="%s"] focus' -l 15 -P 'Go to Marked Window: '
+# KEY:WIN:NAV Win-g Go to a previously bookmarked named window and containing desktop workspace
 
 # BSAC next set of key bindings inspired/copied from
 # http://i3wm.org/docs/user-contributed/lzap-config.html
 # screen locker (first move to "safe" workspace without any chat app)
 bindsym Control+$alt+Shift+l exec i3-msg workspace $nochat && i3-lock.sh i3
 bindsym Control+$alt+l exec i3-msg workspace $nochat && i3-lock.sh
+# KEY:WIN:CMD Ctrl-Alt-Shift-l Simple screen lock until password is provided no screen saver.
+# KEY:WIN:CMD Ctrl-Alt-l Lock the screen with xscreensaver until password is provided
 
 # next/previous workspace
 bindsym $alt+Tab focus right
 bindsym $alt+Shift+Tab focus left
 bindsym $win+Tab workspace back_and_forth
+# KEY:WIN:NAV Alt-Shift-Tab Focus to the window left of the current one
+# KEY:WIN:NAV Alt-Tab Focus to the window right of the current one
+# KEY:WIN:DESK Win-Tab Toggle desktop workspace to previous one
 
 # border changing
 bindsym $mod+b border toggle
+# KEY:WIN:LYT Win-b Toggle between title bar + border / border only / no border or title bar
 
 # scratchpad
 bindsym $mod+m move scratchpad
 bindsym $mod+o scratchpad show
+# KEY:WIN:LYT Win-m Move current window to a floating scratchpad popup
+# KEY:WIN:NAV Win-o Toggle between each floating scratchpad window and none
 
 #--- Brightness controls------------------------------------
-bindsym XF86MonBrightnessUp exec brighter.sh
-bindsym XF86MonBrightnessDown exec darker.sh
+# BSAC DISABLED these key names are not working too well, i3 does capture them but they don't always work.
+#bindsym XF86MonBrightnessUp exec brighter.sh
+#bindsym XF86MonBrightnessDown exec darker.sh
 
 #--- Pulse Audio controls------------------------------------
-bindsym XF86AudioRaiseVolume exec sound-up.sh
-bindsym XF86AudioLowerVolume exec sound-down.sh
-bindsym XF86AudioMute exec sound-toggle.sh
+#bindsym XF86AudioRaiseVolume exec sound-up.sh
+#bindsym XF86AudioLowerVolume exec sound-down.sh
+#bindsym XF86AudioMute exec sound-toggle.sh
 
 #
 # TEMPORARY BSAC start a browser or manual page browser with hot key
 bindsym $mod+p exec chromium-browser --incognito
 #bindsym $mod+o exec xman
+# KEY:WIN:CMD Win-p Open a new Private browsing window
+
+bindsym $mod+Shift+s exec sound-control.sh
+# KEY:WIN:CMD Win-Shift-s Launch the sound control windows
+
+bindsym $mod+Shift+p exec screenshot.sh
+# KEY:WIN:CMD Win-Shift-p Launch Print Screen application to take screen shots
 
 # Use external script to launch all windows with apps where I want them, requires sleeps
 # this script does not use the $shell and other vars defined above though so possible problems
