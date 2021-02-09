@@ -254,6 +254,8 @@ TXXX1="TXXX1:User Defined Text Information 1"
 TXXX2="TXXX2:User Defined Text Information 2
 WITH TWO LInES"
 
+# END Unimplemented or not fully working:
+
 id3v2 --delete-all TestId3.mp3
 
 

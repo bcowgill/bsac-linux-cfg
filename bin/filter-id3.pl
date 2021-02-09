@@ -131,7 +131,7 @@ sub shell_escape_dq
 	my ($value) = @ARG;
 	# Fix up special characters so the shell doesn't get messed up.
 	$value =~ s{\$}{\\\$}xmsg;
-	$value =~ s{(['`])}{\\$1}xmsg;
+	$value =~ s{(['`"])}{\\$1}xmsg;
 	return $value;
 }
 

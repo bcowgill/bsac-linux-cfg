@@ -35,6 +35,21 @@ if [ "$FILE" == "-?" ]; then
 fi
 
 
+function ask {
+	local message
+	message="$1"
+	echo "$message [Y/n]? "
+	read CHOOSE
+	case "$CHOOSE" in
+		y) CHOOSE=1;;
+		Y) CHOOSE=1;;
+		yes) CHOOSE=1;;
+		Yes) CHOOSE=1;;
+		YES) CHOOSE=1;;
+		*) CHOOSE="";;
+	esac
+}
+
 function update_v2_field {
 	local switch2 help CHOOSE
 	switch2="$1"
@@ -53,7 +68,11 @@ function update_v2_field {
 		else
 			echo Set [$switch2] to $CHOOSE
 			id3v2 --$switch2 "$CHOOSE" "$FILE"
-			# TODO confirm it's ok by showing it back to user and asking to do it again...
+			id3v2 --list-rfc822 "$FILE" | grep "$switch2: "
+			ask "Do you want to change it"
+			if [ ! -z "$CHOOSE" ]; then
+				update_v2_field "$switch2" "$help"
+			fi
 		fi
 	fi
 }
@@ -77,6 +96,11 @@ function update_both_fields {
 			echo Set $switch1[$switch2] to $CHOOSE
 			id3v2 --$switch1 "$CHOOSE" --$switch2 "$CHOOSE" "$FILE"
 		fi
+		id3v2 --list-rfc822 "$FILE" | grep "$switch2: "
+		ask "Do you want to change it"
+		if [ ! -z "$CHOOSE" ]; then
+			update_both_fields "$switch1" "$switch2" "$help"
+		fi
 	fi
 }
 
@@ -93,6 +117,11 @@ function update_comment {
 	else
 		echo Set $switch1[$switch2] to $CHOOSE
 		id3v2 --$switch1 "$CHOOSE" "$FILE"
+	fi
+	id3v2 --list-rfc822 "$FILE" | grep "$switch2: "
+	ask "Do you want to change it"
+	if [ ! -z "$CHOOSE" ]; then
+		update_comment
 	fi
 }
 
@@ -123,9 +152,22 @@ function update_genre {
 	fi
 }
 
+ask "Is this a cover or remix of an earlier original"
+COVER="$CHOOSE"
+echo $COVER
+if [ -z "$COVER" ]; then
+	ask "Is this an original recording"
+	RECORDING="$CHOOSE"
+fi
+ask "Do you have lyrics to add"
+LYRICS="$CHOOSE"
+
 id3v2 --list "$FILE"
 echo ==========
 # https://id3.org/id3v2.3.0
+update_v2_field TOFN "Original long file name including .extension"
+update_v2_field TLAN "Language code(s) eg. eng (Separate with /)"
+
 update_both_fields year TYER "Year"
 update_v2_field TPOS "Part of a set (num or num/num for 1/3 CD)"
 update_both_fields track TRCK "Track number num or num/num for Total tracks"
@@ -139,17 +181,35 @@ update_comment
 update_v2_field TCOM "Composer (Separate with /)"
 update_v2_field TPE2 "Band/orchestra/accompaniment"
 update_v2_field TPE3 "Conductor/performer refinement"
-update_v2_field TOPE "Original Artist(s) or Performer(s) (Separate with /)"
-update_v2_field TOAL "Original album/movie/show title"
-update_v2_field TORY "Original release year"
+
+if [ ! -z "$RECORDING" ]; then
+	update_v2_field TOWN "Owner or Licensee"
+	update_v2_field TCOP "Copyright date (include a trailing space)"
+	update_v2_field TDAT "Recording date DDMM"
+	update_v2_field TIME "Recording time HHMM"
+	update_v2_field TKEY "Initial musical key (3 chars) A-G b# m i.e. A#m for A sharp minor"
+	update_v2_field TBPM "Beats per minute of main part of the audio"
+fi
+
+if [ ! -z "$COVER" ]; then
+	update_v2_field TOPE "Original Artist(s) or Performer(s) (Separate with /)"
+	update_v2_field TOAL "Original album/movie/show title"
+	update_v2_field TORY "Original release year"
+	update_v2_field TOLY "Original lyricist/text Writer(s)"
+	update_v2_field TPE4 "Interpreter/Remixer/Other modifier"
+fi
 update_v2_field TPUB "Publisher"
 update_v2_field TENC "Encoded by"
+update_v2_field TEXT "Lyricist/Text Writer(s)"
 update_v2_field TCON "Content type (overrides Genre)"
 update_v2_field WOAR "Official artist/performer webpage"
-update_v2_field WOAS "Official audio source webpage"
 update_v2_field WOAF "Official audio file webpage"
+update_v2_field WOAS "Official audio source webpage"
 update_v2_field WPUB "Official publisher webpage"
-update_v2_field WXXX "User defined URL link"
+if [ ! -z "$LYRICS" ]; then
+	echo Paste your lyrics now and press Ctrl-D.
+	label-lyrics.sh "$FILE" "`cat`"
+fi
 echo ==========
 id3v2 --list "$FILE"
 
