@@ -9,8 +9,9 @@ INDEX=$OUT/_help.txt
 function usage {
 	local code
 	code=$1
+	cmd=$(basename $0)
 	echo "
-$(basename $0) [--add file...] [--make] [--list] [--help|--man|-?]
+$cmd [--add file...] [--make] [--list] [--help|--man|-?]
 
 This will generate a 'help' file for all my bin/ tools.  It runs every tool with --help and stores the output in a help.txt file so you can grep for a specific tool.
 
@@ -25,7 +26,7 @@ Example:
 
 	Find all WINDEV marked tools and add help boilerplate as needed.
 
-	$(basename $0) --add \`grep WINDEV *.*\`
+	$cmd --add \`grep WINDEV *.*\`
 "
 	exit $code
 }
@@ -109,8 +110,9 @@ exit 0
 function usage {
 	local code
 	code=$1
+	cmd=$(basename $0)
 	echo "
-$(basename $0) [--help|--man|-?]
+$cmd [--help|--man|-?]
 
 This will ...
 
