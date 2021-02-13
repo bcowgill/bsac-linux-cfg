@@ -464,7 +464,7 @@ body {
 
 /* deprecated for privacy / securty issues */
 /* device aspect ratios, exact */
-/* 1.0 1920x1920 air traffic */
+/* 1.0 1920x1920 air traffic ASPECT */
 @media (device-aspect-ratio: 1/1) {
 	.no-dev-aspect-1-1 {
 		display: none;
@@ -476,7 +476,7 @@ body {
 	}
 }
 
-/* 1.25 1280x1024 */
+/* 1.25 1280x1024 ASPECT */
 @media (device-aspect-ratio: 5/4) {
 	.no-dev-aspect-5-4 {
 		display: none;
@@ -488,7 +488,7 @@ body {
 	}
 }
 
-/* 1.3_ 320x240, 640x480 CGA/VGA */
+/* 1.3_ 320x240, 640x480 CGA/VGA ASPECT */
 @media (device-aspect-ratio: 4/3) {
 	.no-dev-aspect-4-3 {
 		display: none;
@@ -500,7 +500,7 @@ body {
 	}
 }
 
-/* 1.5 1152x768 */
+/* 1.5 1152x768 ASPECT */
 @media (device-aspect-ratio: 3/2) {
 	.no-dev-aspect-3-2 {
 		display: none;
@@ -512,7 +512,7 @@ body {
 	}
 }
 
-/* 1.6 1280x800, 1440x900, 1680x1050, 1920x1200 */
+/* 1.6 1280x800, 1440x900, 1680x1050, 1920x1200 ASPECT */
 @media (device-aspect-ratio: 16/10) {
 	.no-dev-aspect-16-10 {
 		display: none;
@@ -524,7 +524,7 @@ body {
 	}
 }
 
-/* 1.7_ 1920x1080 */
+/* 1.7_ 1920x1080 ASPECT */
 @media (device-aspect-ratio: 16/9) {
 	.no-dev-aspect-16-9 {
 		display: none;
@@ -536,7 +536,7 @@ body {
 	}
 }
 
-/* 1.8962_9_6_ 4096x2160 digital camera 4K */
+/* 1.8962_9_6_ 4096x2160 digital camera 4K ASPECT */
 @media (device-aspect-ratio: 256/135) {
 	.no-dev-aspect-256-135 {
 		display: none;
@@ -548,7 +548,7 @@ body {
 	}
 }
 
-/* 2.175 3840x1600 anamorphic film */
+/* 2.175 3840x1600 anamorphic film ASPECT */
 @media (device-aspect-ratio: 12/5) {
 	.no-dev-aspect-12-5 {
 		display: none;
@@ -560,7 +560,7 @@ body {
 	}
 }
 
-/* 2.25 4320x1920 3-monitor aircraft display */
+/* 2.25 4320x1920 3-monitor aircraft display ASPECT */
 @media (device-aspect-ratio: 9/4) {
 	.no-dev-aspect-9-4 {
 		display: none;
@@ -572,7 +572,7 @@ body {
 	}
 }
 
-/* 2.3_ anamorphic film */
+/* 2.3_ anamorphic film ASPECT */
 @media (device-aspect-ratio: 21/9) {
 	.no-dev-aspect-21-9 {
 		display: none;
@@ -584,7 +584,7 @@ body {
 	}
 }
 
-/* 2.3_7_0_ 2560x1080 anamorphic film */
+/* 2.3_7_0_ 2560x1080 anamorphic film ASPECT */
 @media (device-aspect-ratio: 64/27) {
 	.no-dev-aspect-64-27 {
 		display: none;
@@ -596,7 +596,7 @@ body {
 	}
 }
 
-/* 2.38_ 3440x1440 anamorphic film */
+/* 2.38_ 3440x1440 anamorphic film ASPECT */
 @media (device-aspect-ratio: 43/18) {
 	.no-dev-aspect-43-18 {
 		display: none;
@@ -608,7 +608,7 @@ body {
 	}
 }
 
-/* 3.5_ 3480x1080 curved gaming */
+/* 3.5_ 3480x1080 curved gaming ASPECT */
 @media (device-aspect-ratio: 32/9) {
 	.no-dev-aspect-32-9 {
 		display: none;
