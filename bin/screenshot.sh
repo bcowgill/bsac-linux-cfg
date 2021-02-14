@@ -2,7 +2,7 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # start tool to take a screenshot interactively and keep it running
 
-echo Delete the file ~/DELETE_TO_STOP_SCREENSHOTS to terminate screen shot app.
+echo Delete the file ~/_DELETE_TO_STOP_SCREENSHOTS to terminate screen shot app.
 touch ~/_DELETE_TO_STOP_SCREENSHOTS
 while [ -e ~/_DELETE_TO_STOP_SCREENSHOTS ]
 do

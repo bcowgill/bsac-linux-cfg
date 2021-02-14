@@ -177,6 +177,11 @@ if [ -e /opt/slickedit/bin ]; then
 	export PATH=/opt/slickedit/bin:$PATH
 fi
 
+if [ -e /opt/firefox/firefox ]; then
+	# manually downloaded and installed firefox update
+	export PATH=/opt/firefox:$PATH
+fi
+
 if [ ! -z $COMPANY ]; then
 	PATH=$HOME/bin/$COMPANY:$PATH
 fi

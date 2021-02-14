@@ -48,7 +48,7 @@ If the lock directories already exist it will terminate early.
 
 If you create a file called stop in either lock directory it will cause the program to terminate at the next scan.
 
-See also renumber-files.sh, rename-files.sh, cp-random.pl
+See also renumber-files.sh, rename-files.sh, cp-random.pl, renumber-by-time.sh
 
 Example:
 

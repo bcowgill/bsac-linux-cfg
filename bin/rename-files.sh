@@ -12,7 +12,7 @@ Attempts to rename files in the current directory that match the match string.
 The new file name will be converted to lower case letters.
 By default it only shows how the files would be renamed but doesn\'t do it.
 
-See also auto-rename.pl, renumber-files.sh, cp-random.pl
+See also auto-rename.pl, renumber-files.sh, cp-random.pl, renumber-by-time.sh
 
 Example:
 $0 imag photos-today-
