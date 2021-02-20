@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# Show exif or id3 v1 and v2 title information for file
+# Show exif or id3 v1 and v2 title information for media files
+# Show image metadata for picture, photo, image, archive files
 
 if [ -z "$2" ]; then
 	echo exiftool:
@@ -17,3 +18,6 @@ while [ ! -z "$1" ]; do
 	$0 "$1"
 	shift
 done
+
+exit
+file "$FILE" | grep -iE 'image|bitmap|icon|postscript|pdf|xbm|compressed'
