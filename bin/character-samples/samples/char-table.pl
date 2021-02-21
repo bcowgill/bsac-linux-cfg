@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 # print out a character table of 256 characters in 16x16 columns.
+# ./char-table.pl 8192 | tee char-table-2000.txt
 
 use utf8;
 use v5.16;
@@ -22,6 +23,11 @@ my %Hide = ();
 foreach my $code (0, 5, 7 .. 15, 142, 143) {
 	$Hide{$code} = 3;
 }
+
+# For image-magick these characters cause problems being drawn as text.
+#foreach my $code (0 .. 31) {
+#	$Hide{$code} = 3;
+#}
 
 foreach my $code (768 .. 879, 1155 .. 1161, 1473, 1474, 1476, 1477, 1479) {
 	$Hide{$code} = -2;
