@@ -8,7 +8,7 @@ WATCHDIR=..
 WAIT=6
 TIMES=50
 LOOPS=0
-IGNORE='\.log$|\.swp$|\.bak$|~$|\.\#.*$|\#.+\#$|\.yml$|\.orig$|\.kate-swp$|/\.git/|/node_modules/|/public/doc/'
+IGNORE='/\.tmp/|/\.git/|/\.idea/|/dist/|/coverage/|/node_modules/|/bower_components/|\.log$|\.timestamp$|\.swp$|\.bak$|~$|\.\#.*$|\#.+\#$|\.orig$|\.kate-swp$|\.yml$|/public/doc/'
 DEBUG=1
 DATE=date
 if which datestamp.sh > /dev/null; then

@@ -19,7 +19,7 @@
 #XREF=1
 LANGOPTS="--langmap=JavaScript:.js.jsx.json"
 # +fq adds a tag for the filename and qualified class members
-TAGOPTS="--recurse --links=no --exclude=node_modules $LANGOPTS --totals=yes"
+TAGOPTS="--recurse --links=no --exclude=.tmp --exclued=.git --exclude=node_modules --exclude=bower_components --exclude=dist --exclude=coverage $LANGOPTS --totals=yes"
 ETAGOPTS="$TAGOPTS"
 # --extra=+fq --etags-include=$HOME/bin/TAGS"
 

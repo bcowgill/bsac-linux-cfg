@@ -68,7 +68,7 @@ COPY *.txt docs/  # copy local .txt files to container image under docs/ path
 # docker build -t docuzilla-say ./
 # docker run --hostname=zilla -it docuzilla-say
 # docker tag cc0994726198 zardozcs/docuzilla-say:latest
-# docker login --username=zardozcs --email=zardoz@infoserve.net
+# docker login --username=zardozcs --email=xxx@xxx.ccc
 WARNING: login credentials saved in /home/bcowgill/.docker/config.json
 # docker push zardozcs/docuzilla-say
 # remove local images to test remote pull

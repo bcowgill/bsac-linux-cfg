@@ -5,4 +5,3 @@
 find-code.sh \
 	| egrep -vi '(\.|-)(min|pack)\.jsx?$' \
 	| egrep -i '\.jsx$'
-

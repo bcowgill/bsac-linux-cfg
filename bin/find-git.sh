@@ -7,7 +7,10 @@
 
 LS=${1:-ls}
 $LS `find . \( \
-	-name node_modules \
+	-name .git \
+	-o -name .tmp \
+	-o -name node_modules \
+	-o -name bower_components \
 	\) \
 	-prune -o \( \
 		-name '*.orig' \
@@ -19,3 +22,6 @@ $LS `find . \( \
 	\) -print \
 	| perl -pne 's{\.orig}{?*}'`
 
+# are these from git?
+#	-o -name '.#*' \
+#	-o -name '#*#$' \

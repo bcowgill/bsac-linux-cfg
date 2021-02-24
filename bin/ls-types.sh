@@ -42,6 +42,4 @@ if [ "$1" == "-?" ]; then
 fi
 
 DIR=${1:-.}
-find $DIR -type f | grep -vE '/(\.git|node_modules.*)/' | ls-types.pl | sort -g -r
-
-exit 0
+find $DIR -type f | grep -vE '/(\.(git|tmp)|(node[_-]modules|bower[_-]components).*)/' | ls-types.pl | sort -g -r

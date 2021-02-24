@@ -90,7 +90,11 @@ function set_env {
 
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
-EMAIL=zardoz@infoserve.net
+EMAIL=
+if [ -z "$EMAIL" ]; then
+	echo You need to provide your email address in function set_env
+	exit 1
+fi
 if which sw_vers > /dev/null 2>&1 ; then
 	MACOS=1
 fi
