@@ -83,6 +83,15 @@ if [ "$?" == "0" ]; then
 	unalias wcd 2> /dev/null
 	if [ -f /usr/share/wcd/wcd-include.sh ]; then
 		. /usr/share/wcd/wcd-include.sh
+		function pwcd
+		{
+			# a version of wcd which pushed the directory on the dirstack
+			local WHERE
+			\wcd "$1"
+			WHERE=`pwd`
+			cd - > /dev/null
+			pushd "$WHERE"
+		}
 	fi
 fi
 
