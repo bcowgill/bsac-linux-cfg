@@ -10,7 +10,7 @@ const EXTENDED = false;
 let regex = /^[ivxlcdm]+$/i;
 let roman = 'ivxlcdm';
 
-const MAX_LEN = false; // false, or set to maximum allowed string length
+const MAX_LENGTH = false; // false, or set to maximum allowed string length
 const LONGEST = 100;   // false, or set to limit max repeated numerals
 const LARGEST = false; // false, or set to limit maximum valued number
 const X = 2;
