@@ -15,7 +15,8 @@ if which datestamp.sh > /dev/null; then
 	DATE=datestamp.sh
 fi
 
-if [ -z "$1" ]; then
+function usage
+{
 	echo "
 usage: $(basename $0) build-command [watch-dir]
 
@@ -24,6 +25,19 @@ You must supply a build command to run.
 This will run the given build command every time a file changes in the watch-dir specified (defaults to the parent directory.)
 "
 	exit 1
+}
+
+if [ -z "$1" ]; then
+	usage
+fi
+if [ "$1" == "--help" ]; then
+	usage
+fi
+if [ "$1" == "--man" ]; then
+	usage
+fi
+if [ "$1" == "-?" ]; then
+	usage
 fi
 BUILD="$1"
 if [ ! -z "$2" ]; then
