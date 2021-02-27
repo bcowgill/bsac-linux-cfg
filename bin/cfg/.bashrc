@@ -169,7 +169,8 @@ if [ "x$COMPANY" == "xwipro" ]; then
 fi
 
 export PATH=$HOME/bin:$PATH:./node_modules/.bin
-export EDITOR=/usr/bin/vim
+export EDITOR="/usr/bin/vim --servername vim"
+
 export WCDSCAN=$HOME
 export TZ=Europe/London
 

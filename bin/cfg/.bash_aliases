@@ -24,6 +24,7 @@ alias vimsl="vim --serverlist"
 alias vib='$EDITOR ~/.bashrc; source ~/.bashrc'
 alias vial='$EDITOR ~/.bash_aliases; source ~/.bashrc'
 alias vifn='$EDITOR ~/.bash_functions; source ~/.bashrc'
+alias vipw='$EDITOR /media/me/*/PASSWDS.TXT'
 alias vitodo='$EDITOR ~/s/ontology/notes/TODO-AT-WORK.txt'
 alias vivim='$EDITOR ~/.vimrc'
 alias vii3='$EDITOR ~/bin/cfg/.i3-config ~/bin/i3-launch.sh ~/bin/i3-start.sh'
