@@ -5,6 +5,7 @@
 // perl -e 'while (1) { system("./roman.js | tee roman.log") if (-M "./roman.js" < -M "./roman.log"); sleep(5) }'
 
 const RUN_TESTS = false;
+const TAP_OUT = process && process.env && process.env.HARNESS_ACTIVE === '1';
 const EXTENDED = false;
 
 let regex = /^[ivxlcdm]+$/i;
@@ -149,12 +150,12 @@ function getRomanFromString(string) {
 }
 
 function RomanNumber(mixed) {
-	if (typeof mixed === 'number') {
+  if (typeof mixed === 'number') {
       this.value = mixed;
-	} else {
+  } else {
       this.string = `${mixed}`;
-	  this.value = getRomanFromString(this.string);
-	}
+    this.value = getRomanFromString(this.string);
+  }
     this.string = getRomanFromNumber(this.value);
     this.regex = regex;
     this.roman = roman;
@@ -179,17 +180,9 @@ RomanNumber.prototype = {
 
 //=== utilities ============================================================
 
-function error(...args) {
-  console.error(...args);
-}
-
-function warn(...args) {
-  console.warn(...args);
-}
-
-function log(...args) {
-  console.log(...args);
-}
+let error = console.error
+let warn = TAP_OUT ? console.log : console.warn
+let log = console.log
 
 //=== unit test library ====================================================
 
@@ -197,171 +190,251 @@ if (!console.group) {
   console.group = console.log;
 }
 if (!console.groupEnd) {
-  console.groupEnd = () => {};
+  console.groupEnd = function () {}
 }
 
+const BULLET = '○ '; // <- from jest skipped tests '◌ ' <- alternative
+
 const TESTS = {
-  depth : 0,
-  fail  : 0,
-  NOT_OK: '✘ ', // 'NOT OK ',
-  OK    : '✔ ', // 'OK ',
-  SKIP  : '○ ', // 'SKIP', // from jest skipped tests
-  //SKIP  : '◌ ', // 'SKIP',
-  pass  : 0,
-  skip  : 0,
-  QUIET : true,
-  total : 0
-};
+  depth: 0,
+  fail: 0,
+  DASH: TAP_OUT ? '- ' : '',
+  NOT_OK: TAP_OUT ? 'not ok ' : '✘ ',
+  OK: TAP_OUT ? 'ok ' : '✔ ',
+  SKIP: TAP_OUT ? 'not ok ' : BULLET,
+  SKIPH: TAP_OUT ? '' : BULLET, // a skipped heading
+  SKIPD: TAP_OUT ? '- skipped ' : '', // a dash in the skip message
+  pass: 0,
+  skip: 0,
+  QUIET: TAP_OUT ? false : true,
+  total: 0,
+}
+
+function plan(number) {
+  if (TAP_OUT) {
+    warn('1..' + number)
+  }
+} // plan()
+
+function heading(message) {
+  log(' - ' + message)
+}
+
+let group;
+let groupEnd;
+
+if (TAP_OUT) {
+  group = heading
+  groupEnd = function () {}
+} else {
+  group = console.group
+  groupEnd = console.groupEnd
+}
+
+function tap(glyph, message, dash) {
+  dash = dash || TESTS.DASH
+  return [glyph, TESTS.total, ' ', dash, message].join('').trim()
+}
 
 function ok(message) {
-  TESTS.pass  += 1;
-  TESTS.total += 1;
+  TESTS.pass += 1
+  TESTS.total += 1
   if (TESTS.OK && !TESTS.QUIET) {
-	warn(`${TESTS.OK}${TESTS.total} ${message}`.trim());
+    warn(tap(TESTS.OK, message))
   }
 } // ok()
 
 function fail(message) {
-  TESTS.fail  += 1;
-  TESTS.total += 1;
-  warn(`${TESTS.NOT_OK}${TESTS.total} ${message}`.trim());
+  TESTS.fail += 1
+  TESTS.total += 1
+  warn(tap(TESTS.NOT_OK, message))
 } // fail()
 
 function skip(message) {
-  TESTS.skip  += 1;
-  TESTS.total += 1;
+  TESTS.skip += 1
+  TESTS.total += 1
   if (TESTS.SKIP && !TESTS.QUIET) {
-	warn(`${TESTS.SKIP}${TESTS.total} ${message}`.trim());
+    warn(tap(TESTS.SKIP, message, TESTS.SKIPD))
   }
 } // skip()
 
-function failDump(message, actual, expected, description = '') {
-  TESTS.fail  += 1;
-  TESTS.total += 1;
-  const prefix = `${TESTS
-			        .NOT_OK}${TESTS
-			                  .total} ${message}`
-			.trim();
-  warn(`${prefix}\ngot`, actual, `\nexpected${description}:`, expected);
+function failDump(message, actual, expected, description) {
+  description = description || ''
+  TESTS.fail += 1
+  TESTS.total += 1
+  const prefix = tap(TESTS.NOT_OK, message)
+  warn(
+    [prefix, '\n', TESTS.DASH, 'got'].join(''),
+    actual,
+    ['\n', TESTS.DASH, 'expected', description, ':'].join(''),
+    expected
+  )
 } // failDump()
 
 function testSummary() {
   if (!TESTS.total) {
-	warn('no unit tests performed')
+    warn('no unit tests performed')
   } else if (TESTS.pass === TESTS.total) {
-	log(`all ${TESTS.pass} tests passed.`)
+    log('all ' + TESTS.pass + ' tests passed.')
   } else {
-	warn(`${TESTS.fail} tests failed, ${TESTS.skip} tests skipped, ${TESTS.pass} tests passed, ${TESTS.total} total.`)
+    warn(
+      [
+        TESTS.fail,
+        ' tests failed, ',
+        TESTS.skip,
+        ' tests skipped, ',
+        TESTS.pass,
+        ' tests passed, ',
+        TESTS.total,
+        ' total.',
+      ].join('')
+    )
   }
 } // testSummary()
 
 function describe(title, fnSuite) {
-  console.group(title);
-  TESTS.depth += 1;
-  try
-  {
-	fnSuite();
+  group(title)
+  TESTS.depth += 1
+  try {
+    fnSuite()
   } catch (exception) {
-	fail(`describe "${title}" caught ${exception}`);
-	error(exception);
-  } finally
-  {
-	TESTS.depth -= 1;
-	if (!TESTS.depth) {
-	  testSummary();
-	}
-	console.groupEnd(title);
+    fail('describe "' + title + '" caught ' + exception)
+    error(exception)
+  } finally {
+    TESTS.depth -= 1
+    if (!TESTS.depth) {
+      testSummary()
+    }
+    groupEnd(title)
   }
 } // describe()
 
 function xdescribe(title, fnSkip) {
-  const header = `${TESTS.SKIP} skipped - ${title}`;
-  console.group(header);
+  const header = TESTS.SKIPH + 'skipped - ' + title
+  group(header)
   // set a skip marker to skip all tests...
   if (!TESTS.depth) {
-	testSummary();
+    testSummary()
   }
-  console.groupEnd(header);
+  groupEnd(header)
 }
-describe.skip = xdescribe;
+describe.skip = xdescribe
 
 function it(title, fnTest) {
-  console.group(title);
-  try
-  {
-	const result = fnTest();
-	if (result) {
-	  fail(`it expected falsy, got ${result}`);
-	}
+  group(title)
+  try {
+    const result = fnTest()
+    if (result) {
+      fail('it expected falsy, got ' + result)
+    }
   } catch (exception) {
-	fail(`it "${title}" caught ${exception}`);
-	error(exception);
-  } finally
-  {
-	console.groupEnd(title);
+    fail('it "' + title + '" caught ' + exception)
+    error(exception)
+  } finally {
+    groupEnd(title)
   }
 } // it()
 
 function xit(title, fnSkip) {
-  const header = `${TESTS.SKIP} skipped - ${title}`;
-  console.group(header);
+  const header = TESTS.SKIPH + 'skipped - ' + title
+  group(header)
   skip(title)
-  console.groupEnd(header);
+  groupEnd(header)
 }
-it.skip = xit;
+it.skip = xit
 
-function assert(actual, expected, title = '') {
+function assert(actual, expected, title) {
+  title = title || ''
   // console.warn('assert', actual, expected, title)
   if (actual === expected) {
-	ok(title);
+    ok(title)
   } else if (expected instanceof RegExp && expected.test(actual)) {
-    ok(title);
-  } else if (typeof actual === 'number' && typeof expected === 'number' && isNaN(actual) && isNaN(expected)) {
-	ok(title);
+    ok(title)
+  } else if (
+    typeof actual === 'number' &&
+    typeof expected === 'number' &&
+    isNaN(actual) &&
+    isNaN(expected)
+  ) {
+    ok(title)
   } else {
-	failDump(title, actual, expected);
+    failDump(title, actual, expected)
   }
 } // assert()
 
-function assertThrows(actualFn, expected, title = '') {
+function assertArray(actual, expected, title) {
+  title = title || ''
+  let jsonActual, jsonExpected
+  // console.warn('assertArray', actual, expected, title)
+  if (actual === expected) {
+    ok(title)
+  } else if (
+    (jsonActual = JSON.stringify(actual)) ===
+    (jsonExpected = JSON.stringify(expected))
+  ) {
+    ok(title)
+  } else {
+    failDump(title, jsonActual, jsonExpected)
+  }
+} // assertArray()
+
+function assertObject(actual, expected, title) {
+  title = title || ''
+  let jsonActual, jsonExpected
+  // console.warn('assertObject', actual, expected, title)
+  if (actual === expected) {
+    ok(title)
+  } else if (
+    (jsonActual = JSON.stringify(actual)) ===
+    (jsonExpected = JSON.stringify(expected))
+  ) {
+    ok(title)
+  } else {
+    failDump(title, jsonActual, jsonExpected)
+  }
+} // assertObject()
+
+function assertThrows(actualFn, expected, title) {
+  title = title || ''
   // console.warn('assertThrows', actualFn, expected, title)
   try {
-    const result = actualFn();
-    failDump(title, result, `to throw but did not. [${expected}]`);
-  }
-  catch (exception) {
+    let result = actualFn()
+    failDump(title, result, 'to throw but did not. [' + expected)
+  } catch (exception) {
     if (typeof expected === 'function') {
-      assertInstanceOf(exception, expected, title);
+      assertInstanceOf(exception, expected, title)
     } else {
-      assert(exception, expected, title);
+      assert(exception, expected, title)
     }
   }
 }
 
-function assertNotThrows(actualFn, expected, title = '') {
+function assertNotThrows(actualFn, expected, title) {
+  title = title || ''
   // console.warn('assertNotThrows', actualFn, expected, title)
   try {
-    const actual = actualFn();
-    assert(actual, expected, title);
-  }
-  catch (exception) {
-    failDump(title, exception, 'not to throw but did.');
+    let actual = actualFn()
+    assert(actual, expected, title)
+  } catch (exception) {
+    failDump(title, exception, 'not to throw but did.')
   }
 }
 
-function assertInstanceOf(actual, expected, title = '') {
+function assertInstanceOf(actual, expected, title) {
+  title = title || ''
   if (actual instanceof expected) {
-	ok(title);
+    ok(title)
   } else {
-	failDump(title, actual, expected, ' instance of');
+    failDump(title, actual, expected, ' instance of')
   }
 } // assertInstanceOf()
 
 //=== unit tests ===========================================================
 
 function test() {
+  plan(32);
   describe('unit tests', function testSuite() {
-	describe('new RomanNumber()', function testNewRomanNumberSuite() {
+  describe('new RomanNumber()', function testNewRomanNumberSuite() {
       it('should have all properties assigned', function testNewRomanNumber() {
         const number = new RomanNumber(1999);
         assert(number.string, 'mcmxcix', 'should have string property');
@@ -373,8 +446,8 @@ function test() {
       });
     });
 
-	describe('getRomanFromNumber()', function testGetRomanFromNumberSuite() {
-	  it('should handle invalid', function testGetRomanFromNumberInvalid() {
+  describe('getRomanFromNumber()', function testGetRomanFromNumberSuite() {
+    it('should handle invalid', function testGetRomanFromNumberInvalid() {
         assertThrows(() => new RomanNumber(-12), /RangeError: number must be a positive integer\./, 'when negative');
         assertThrows(() => new RomanNumber(1.5), /RangeError: number must be a positive integer\./, 'when non-integer');
         assertThrows(() => new RomanNumber(400000), /RangeError: number too large, requires more than 100 repeated numerals./, 'when 400000 too big');
@@ -384,7 +457,7 @@ function test() {
         //assertThrows(() => new RomanNumber(40000), /RangeXError: number cannot be represented with roman numerals i,v,x,l,c,d,m\./, 'when 40000 too big');
 });
 
-	  it('should handle numbers', function testGetRomanFromNumber() {
+    it('should handle numbers', function testGetRomanFromNumber() {
         assertInstanceOf(new RomanNumber(1), RomanNumber, 'when 1');
         assert((new RomanNumber(0)).toString(), '', 'when zero is empty string');
         assert((new RomanNumber(0)).valueOf(), 0, 'when zero valueOf');
@@ -396,18 +469,18 @@ function test() {
       });
     }); // getRomanFromNumber()
 
-	describe('getRomanFromString()', function testGetRomanFromStringSuite() {
-	  it('should handle defaults', function testGetRomanFromStringDefault() {
+  describe('getRomanFromString()', function testGetRomanFromStringSuite() {
+    it('should handle defaults', function testGetRomanFromStringDefault() {
         assertThrows(() => new RomanNumber(), /TypeError: string must consist of roman numerals i,v,x,l,c,d,m/, 'when undefined');
         assertThrows(() => new RomanNumber(null), /TypeError: string must consist of roman numerals i,v,x,l,c,d,m/, 'when null');
       });
 
-	  it('should handle upper case', function testGetRomanFromStringUpperCase() {
+    it('should handle upper case', function testGetRomanFromStringUpperCase() {
         assert((new RomanNumber('MCMLXXXVIII')).toString(), 'mcmlxxxviii', 'when MCMLXXXVIII toString');
         assert((new RomanNumber('MCMLXXXVIII')).valueOf(), 1988, 'when MCMLXXXVIII valueOf');
       });
 
-	  it('should handle string', function testGetRomanFromString() {
+    it('should handle string', function testGetRomanFromString() {
         assertInstanceOf(new RomanNumber('i'), RomanNumber, 'when i');
         assert((new RomanNumber('i')).toString(), 'i', 'when i toString');
         assert((new RomanNumber('i')).valueOf(), 1, 'when i valueOf');
@@ -421,7 +494,7 @@ function test() {
         assert(allReversed.valueOf(), 1666, 'when using reversed roman numeral set valueOf');// ivxlcdm
       });
 
-	  it('should handle canonizing non-standard numbers', function testGetRomanFromStringCanon() {
+    it('should handle canonizing non-standard numbers', function testGetRomanFromStringCanon() {
         assert((new RomanNumber('vl')).toString(), 'xlv', 'when vl toString');
         assert((new RomanNumber('vl')).valueOf(), 45, 'when vl valueOf');
       });
@@ -429,6 +502,6 @@ function test() {
   }); // unit tests
 } // test()
 
-if (RUN_TESTS) {
+if (TAP_OUT || RUN_TESTS) {
   test();
 }
