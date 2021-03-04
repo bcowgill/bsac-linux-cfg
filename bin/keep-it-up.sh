@@ -8,11 +8,12 @@ if [ -z "$1" ]; then
 else
 	RUN="$*"
 fi
+DELAY=${2:-2}
 
 while  [ true ]
 do
 	echo Press ^C to stop keeping it up [ $RUN ]
-	sleep 2
+	sleep $DELAY
 	$RUN
 	echo Exit $? from [ $RUN ]
 done

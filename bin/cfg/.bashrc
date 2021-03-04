@@ -288,3 +288,5 @@ if which sw_vers > /dev/null 2>&1; then
 	export t=~
 	export c=^
 fi
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
