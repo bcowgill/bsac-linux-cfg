@@ -15,7 +15,10 @@
         --sort",
      "_mocha": "npm-json5 run _mocha1 -- {src,test}/**/*.{test,spec}.js",
 
-    // npm-json5 run test:single
+    // npm-json5 run testall  // runs sll tests, even skipped ones
+    "testall": "npm-json5 run _mocha1 -- {src,test}/**/*.{test,spec,skip}.js",
+
+    // npm-json5 run test1
     // npm-json5 run test -- -- --grep 'Array #indexOf'
     "test/": "npm-json5 run _mocha",  // convenience if you hit tab
     "test": "npm-json5 run _mocha",
