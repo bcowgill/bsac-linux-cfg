@@ -1,3 +1,6 @@
-Currently look at TODO.lst symlink...
+Currently mocha-dark - update css to current version
+Then incorporate it into perljs repo
+Make nyc-dark and incorporate into perljs and frontend-test repos
+previous Currently look at TODO.lst symlink...
 MUSTDO vdiff function to compare files in dirs dir1:dir2 file file file
 then can diff dir1 v dir2 version or reversed.

@@ -1,4 +1,6 @@
-The purpose of this is to show use of the mocha test runner for:
+# Mocha Dark
+
+The purpose of this is to show use of the mocha test runner and dark color scheme for:
 
 * testing node code.
 * testing in the browser.
