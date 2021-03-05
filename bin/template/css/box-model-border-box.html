@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta
+			name="description"
+			content="An example of the CSS box model">
+		<meta name="author" content="Brent S.A. Cowgill">
+		<meta name="viewport" content="">
+		<title>An example of the CSS box model - border-box</title>
+		<link rel="stylesheet" href="box-model.css"/>
+		<style>
+			/* apply a natural box layout model to all elements */
+			/* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+			html {
+				box-sizing: border-box;
+			}
+			*, *:before, *:after {
+				box-sizing: inherit;
+			}
+
+			body {
+				background: white;
+			}
+			section {
+				background: black;
+				color: white;
+				border-radius: 1em;
+				padding: 1em;
+			}
+			p {
+				background: black;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h1>CSS box model <i>border-box</i> example. Margin, Outline, Border, Padding, Content</h1>
+				<ul>
+					<li><a href="https://www.w3schools.com/Css/css_boxmodel.asp" target="_blank">W3Schools Article</a></li>
+					<li><a href="https://www.paulirish.com/2012/box-sizing-border-box-ftw/" target="_blank">Paul Irish Box Sizing Border Box FTW</a></li>
+					<li><a href="https://pressupinc.com/blog/2014/01/css-default-box-model-utter-madness-parable/" target="_blank">
+The CSS Default Box Model is Utter Madness: A Parable.</a></li>
+					<li><a href="https://pressupinc.com/blog/2014/01/whats-wrong-css-box-model-fix/" target="_blank">What’s Wrong with the CSS Box Model, and How to Fix It.</a></li>
+				</ul>
+				<p>The content boxes below have height set to 90px.  The padding and border are CONFINED to that height.  This helps preserve design layouts.  Only the margins outside can cause problems.  May scale down images in fixed sized boxes with borders.</p>
+				<div class="wrapper">
+					wrapper, red bg, no padding or margin
+					<div class="box-model"><mark>content</mark></div>
+					<p>content+padding+border: 90 height: 25px pad, 5px solid blue border, 15px dashed yellow outline, 50px margin</p>
+				</div>
+				<div class="wrapper">
+					<div class="box-model-outline"><mark>content</mark></div>
+					<p>content+padding+border(0): 90 height: 25px pad, no border, 15px dashed yellow outline, 50px margin</p>
+				</div>
+				<div class="wrapper">
+					<div class="box-model-border"><mark>content</mark></div>
+					<p>content+padding+border: 90 height: 25px pad, 5px solid blue border, no outline, 50px margin</p>
+				</div>
+				<div>
+					<h3>The Box Model</h3>
+					<ul>
+						<li>Content - The content of the box, where text and images appear.</li>
+						<li>Padding - Clears an area around the content. The padding is transparent.</li>
+						<li>Border - A border that goes around the padding and content.</li>
+						<li>Outline - An outline that centers around the outer border but does not affect the physical size.</li>
+						<li>Margin - Clears an area outside the border. The margin is transparent.</li>
+					</ul>
+					<p>default is box-sizing: content-box; which preserves the size of the content, not the outer dimensions. (design madness)</p>
+					<p>alternate:  box-sizing: border-box; which includes the border and padding inside the given dimensions.</p>
+					<p>Important: When you set the width and height properties of a border-box element with CSS, you set the width and height of the content, padding and borders. Outline counts for nothing.</p>
+					<p>Total element width = width + left margin + right margin</p>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>

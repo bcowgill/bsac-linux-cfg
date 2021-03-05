@@ -1,0 +1,35 @@
+/* Typographic ndentation of paragraphs instead of blank lines between.
+ * https://www.w3.org/Style/Examples/007/indent
+ * */
+p {
+  margin-bottom: 0
+}
+p + p {
+  text-indent: 1.5em;
+  margin-top: 0
+}
+/* to remove the indent as needed */
+p.noindent {
+  text-indent: 0
+}
+
+/* when captioning things like figures or other things: */
+figure.center-caption { text-align: center; }
+figure.center-caption p { text-indent: 0; }
+
+/* When you do need to put some space between paragraphs */
+/* small thematic break */
+p.stb { text-indent: 0; margin-top: 0.83em }
+/* medium thematic break */
+p.mtb { text-indent: 0; margin-top: 2.17em }
+/* large thematic break */
+p.ltb { text-indent: 0; margin-top: 3.08em }
+
+
+/*
+ * For highlingting the example only.
+ * */
+figure {
+	width: 600px;
+	outline: 4px dashed silver;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta
+			name="description"
+			content="An example of paragraph indenting for better readability using CSS">
+		<meta name="author" content="Brent S.A. Cowgill">
+		<meta name="viewport" content="">
+		<title>Paragraph indenting for better readability with CSS</title>
+		<link rel="stylesheet" href="paragraph-indent.css"/>
+		<style>
+			body {
+				background: white;
+			}
+			section {
+				background: black;
+				color: white;
+				border-radius: 1em;
+				padding: 1em;
+			}
+			p {
+				background: black;
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h1>Paragraph indentation example.</h1>
+				<p><mark>This paragraph is not indented because it is the first one.</mark> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p><mark>We will indent this paragraph for readability.</mark> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p>A long line of text to demonstrate the effects of the indentation when there is much much more text to read. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<h2>When figures are captioned you can remove the first indent if they are centered. Using p.caption</h2>
+				<figure>
+					<img alt="A captioned image" src="https://picsum.photos/600/400" />
+					<caption>
+						<p class="caption">Caption paragraphs need their own handling with p.caption to prevent the indent.</p>
+						<p >With another paragraph of caption will be indented.</p>
+					</caption>
+				</figure>
+				<figure class="center-caption">
+					<img alt="A captioned image" src="https://picsum.photos/600/400" />
+					<caption>
+						<p>Centered caption paragraphs need their own handling with p.caption.</p>
+						<p >With another paragraph of caption also centered.</p>
+					</caption>
+				</figure>
+				<h1>And when you do need to put some space between paragraphs.</h1>
+				<p>A long line of text to demonstrate the effects of the indentation when there is much much more text to read. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p class="stb"><mark>A SMALL THEMATIC BREAK p.stb.</mark> A long line of text to demonstrate the effects of the indentation when there is much much more text to read. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p class="mtb"><mark>A MEDIUM THEMATIC BREAK p.mtb.</mark> A long line of text to demonstrate the effects of the indentation when there is much much more text to read. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p class="ltb"><mark>A LARGE THEMATIC BREAK p.ltb.</mark> A long line of text to demonstrate the effects of the indentation when there is much much more text to read. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p>A long line of text to demonstrate the effects of the indentation when there is much much more text to read. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			</section>
+		</main>
+	</body>
+</html>

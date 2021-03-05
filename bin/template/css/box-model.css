@@ -1,0 +1,54 @@
+/* apply a natural box layout model to all elements */
+/* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+html {
+	box-sizing: border-box;
+}
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+.wrapper {
+	margin: 0;
+	padding: 0;
+	background: red;
+	color: black;
+	border: 1px solid red;
+}
+
+.box-model {
+	height: 90px;
+	background: cyan;
+	color: black;
+	margin: 50px;
+	outline: 15px dashed yellow;
+	border: 5px solid blue;
+	padding: 25px;
+}
+
+.box-model-outline {
+	height: 90px;
+	background: cyan;
+	color: black;
+	margin: 50px;
+	outline: 15px dashed yellow;
+	border: none;
+	padding: 25px;
+}
+
+.box-model-border {
+	height: 90px;
+	background: cyan;
+	color: black;
+	margin: 50px;
+	outline: none;
+	border: 5px solid blue;
+	padding: 25px;
+}
+
+mark {
+	background: rebeccapurple;
+	color: yellow;
+}
+p {
+	color: yellow;
+}
