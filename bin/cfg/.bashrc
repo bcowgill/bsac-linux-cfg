@@ -241,6 +241,7 @@ if [ "x$COMPANY" == "xwipro" ]; then
     export JAVA_HOME=`/usr/libexec/java_home -v1.8`
     export M2_HOME=
     export GROOVY_HOME=/usr/local/opt/groovy/libexec
+    export EDITOR="/usr/bin/vim"
 fi
 
 #BSAC match cygwin put functions in separate sourced file
