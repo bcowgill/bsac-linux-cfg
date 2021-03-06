@@ -1,3 +1,4 @@
+Currently template/css going through tips/tricks listed in README
 Currently mocha-dark - update css to current version
 Then incorporate it into perljs repo
 Make nyc-dark and incorporate into perljs and frontend-test repos
