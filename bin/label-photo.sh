@@ -1,32 +1,34 @@
 #!/bin/bash
 
 FILE="$1"
-CAPTION="$2"
-COMMENT="${3:-$CAPTION}"
-LABEL="${4:-$COMMENT}"
+COMMENT="$2"
+LABEL="${3:-$COMMENT}"
+CAPTION="${4:-$LABEL}"
 
 function usage {
 	local code
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?] filename caption comment label
+$cmd [--help|--man|-?] filename [comment] [label] [caption]
 
-This will label an image with meta-data for caption, comment and label.
+This will label an image with meta-data for comment, label and caption.
 
 filename The filename for the image or photo to label.
-caption  Text for the caption meta-data.
-comment  Text for the comment meta-data.  Defaults to the text for caption.
+comment  Text for the comment meta-data.
 label    Text for the label meta-data. Defaults to the text for comment.
+caption  Text for the caption meta-data.  Defaults to the text for label.
 --man    Shows help for this tool.
 --help   Shows help for this tool.
 -?       Shows help for this tool.
 
-Different image formats support different meta-data so the default is to use the same text for all three values: caption, comment, label.
+Different image formats support different meta-data so the default is to use the same text for all three values: caption, comment, label if only one is specified.
+
+If caption, comment and label are omitted it will show the current values for the image specified.
 
 Example:
 
-$cmd photo.jpg "Caption text" "Comment text" "Label text"
+$cmd photo.jpg "Comment text" "Label text" "Caption text"
 "
 	exit $code
 }
@@ -45,15 +47,17 @@ if [ -z "$FILE" ]; then
 	usage 1
 fi
 
-convert -caption "$CAPTION" \
-	-comment "$COMMENT" \
-	-label "$LABEL" \
-	"$FILE" \
-	"$FILE"
+if [ ! -z "$CAPTION" ]; then
+	convert -caption "$CAPTION" \
+		-comment "$COMMENT" \
+		-label "$LABEL" \
+		"$FILE" \
+		"$FILE"
+fi
 
 identify -format "
 %i %G
-caption: %[caption]
 comment: %[comment]
 label:   %[label]
+caption: %[caption]
 " "$FILE"
