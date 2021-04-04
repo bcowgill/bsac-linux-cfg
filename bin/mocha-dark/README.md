@@ -26,15 +26,10 @@ npm run test1 test/a-first-test.test.js
 npm run testall
   -- to run even skip.js tests
 
-etc.
 
 TODO
 
-* First, check mocha tests in browser working, then dark scheme, then update mocha to latest and update css
 * node version of perl -pne filtering
-* .html for browser testing
-* use of mocha dark color
-* submit pull request for mocha dark
 * test es6/7 code using node harmony
 * get coverage running
 * babel to transpile to es5 and test

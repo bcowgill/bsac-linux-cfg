@@ -1,9 +1,10 @@
 {
-  "name": "mocha-dark",
+  "name": "mocha-dark-testing",
   "version": "1.0.0",
-  "description": "stylesheets for dark color scheme in mocha browser test runner",
+  "description": "experiments in javascript testing with mocha-dark in the browser",
   "main": "index.js",
   "scripts": {
+    "check": "npm-check --color-always --ignore browser || true",
     // npm-json5 run json5; npm test  OR JUST npm-json5 test
     "json5": "json5 -c package.json5", // generate package.json from package.json5 not necessary
 
@@ -52,6 +53,8 @@
     "json5": "^0.5.1",      // to convert package.json5 to package.json
     "mocha": "^3.2.0",      // test runner library
     "npm-json5": "^0.1.4",  // so that package.json doesn't need to be generated
-    "requirejs": "^2.3.3"   // so require will work in the browser
+    "requirejs": "^2.3.3",  // so require will work in the browser
+    "mocha-dark": "^8.3.2",
+    "npm-check": "^5.9.2"   // so require will work in the browser
   }
 }

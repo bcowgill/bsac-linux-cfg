@@ -9,8 +9,7 @@ requirejs.config({
     // the paths config could be for a directory.
     paths: {
 //        mocha: '../node_modules/mocha/mocha',
-        mocha: '../current/mocha-dark',
-//        mocha: '../mocha/mocha',
+        mocha: '../node_modules/mocha-dark/mocha',
         chai: '../node_modules/chai/chai'
     },
 
@@ -37,6 +36,9 @@ function (require, mocha, chai) {
     ], function () {
         mocha.checkLeaks();
         mocha.globals(['jQuery']);
+        if (document && document.location && document.location.protocol !== 'file:') {
+            mocha.growl();
+        }
         mocha.run();
     });
 });
