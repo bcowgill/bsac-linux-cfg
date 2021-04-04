@@ -102,8 +102,10 @@ function failDump(message, actual, expected, description) {
 } // failDump()
 
 function testSummary() {
+	let code = 0
 	if (!TESTS.total) {
 		warn('no unit tests performed')
+		code = 1
 	} else if (TESTS.pass === TESTS.total) {
 		log('all ' + TESTS.pass + ' tests passed.')
 	} else {
@@ -119,6 +121,10 @@ function testSummary() {
 				' total.',
 			].join('')
 		)
+		code = Math.min(TESTS.fail, 255)
+		setImmediate(function terminate() {
+			process.exit(code)
+		})
 	}
 } // testSummary()
 
