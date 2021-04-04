@@ -25,7 +25,7 @@
 	trustExitCode = true
 [user]
 	name = Brent S.A. Cowgill
-	email = brent.cowgill@lloydsbanking.com
+	email = brent.cowgill@rbos.com
 [push]
 	default = simple
 [difftool]
