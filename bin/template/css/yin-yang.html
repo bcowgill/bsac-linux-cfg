@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="UTF-8">
+		<meta
+			name="description"
+			content="An example of light - dark themes and how to switch between them.">
+		<meta name="author" content="Brent S.A. Cowgill">
+		<meta name="viewport" content="">
+		<title>An example of supporting W3C and light and dark themes</title>
+		<link href="darkness.css"  rel="stylesheet" type="text/css" media="screen and (orientation: landscape)"/>
+		<link href="lightness.css" rel="stylesheet" type="text/css" media="screen and (orientation: portrait)"/>
+		<!--
+		using media query to change style sheet above does not cooperate with named themes below (ff)
+		<link title="Dark Theme"  id="dark-style"  href="darkness.css"  rel="stylesheet" type="text/css" media="screen"/>
+		<link title="Light Theme" id="light-style" href="lightness.css" rel="stylesheet" type="text/css" media="screen"/>
+		it seems all style sheets are fetched at page load...
+		<link title="Chocolate (dark, W3C)" id="w3c-chocolate-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Chocolate" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Midnight (dark, W3C)" id="w3c-midnight-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Midnight" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Modernist (W3C)" id="w3c-modernist-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Modernist" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Old Style (W3C)" id="w3c-oldstyle-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Oldstyle" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Steely (W3C)" id="w3c-steely-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Steely" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Swiss (W3C)" id="w3c-swiss-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Swiss" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Traditional (W3C)" id="w3c-traditional-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Traditional" type="text/css" media="screen, handheld, projection, tv">
+		<link title="Ultramarine (dark, W3C)" id="w3c-ultramarine-style" rel="stylesheet" href="https://www.w3.org/StyleSheets/Core/Ultramarine" type="text/css" media="screen, handheld, projection, tv">
+		-->
+
+		<style>
+.landscape,
+.portrait,
+.prefers-scheme-dark,
+.prefers-scheme-light {
+	display: none;
+	visibility: hidden;
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+	.prefers-scheme-none {
+		display: none !important;
+		visibility: hidden !important;
+	}
+	.prefers-scheme-light {
+		display: inline-block !important;
+		visibility: visible !important;
+	}
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+	.prefers-scheme-none {
+		display: none !important;
+		visibility: hidden !important;
+	}
+	.prefers-scheme-dark {
+		display: inline-block !important;
+		visibility: visible !important;
+	}
+}
+
+@media (orientation: landscape) {
+	.landscape {
+		display: inline-block !important;
+		visibility: visible !important;
+	}
+}
+@media (orientation: portrait) {
+	.portrait {
+		display: inline-block !important;
+		visibility: visible !important;
+	}
+}
+		</style>
+	</head>
+	<body>
+		<main>
+			<section>
+				<h1>Yinyang - example W3C and light and dark themed page.</h1>
+				<p>Theme changes from light to dark based on portrait or landscape mode.</p>
+				<p>CSS Media Queries:</p>
+				<p>prefers-color-scheme: <span class="prefers-scheme-none">no-preference</span><span class="prefers-scheme-light">light</span><span class="prefers-scheme-dark">dark</span></p>
+				<p>orientation: <span class="landscape">landscape</span><span class="portrait">portrait</span></p>
+				<p>Javascript matchMedia(): <span id="prefers-scheme">no-preference</span></p>
+				<ul>
+					<li><a href="https://www.w3.org/Style/Examples/007/alternatives" target="_blank">Alternative Style Sheets.</a></li>
+					<li><a href="https://www.w3.org/StyleSheets/Core/" target="_blank">W3C Core Stylesheets</a></li>
+					<li><a href="https://davidwalsh.name/prefers-color-scheme" target="_blank">CSS Media Query prefers-color-scheme</a></li>
+					<li><a href="
+						" target="_blank">
+					</a></li>
+				</ul>
+				<p>This page allows you to switch between a light and dark theme somehow...</p>
+				<h2>Firefox:</h2>
+				<p>Has a View menu with Page Style option allowing you to select the style sheet by named title. (Alt-V Y)</p>
+				<h2>Opera:</h2>
+				<p>Has a View menu with a ?Style? option allowing you to select the style sheet by named title.</p>
+				<h2>Internet Explorer:</h2>
+				<p>Has a View menu with a ?Style? option allowing you to select the style sheet by named title.</p>
+				<h2>Google Chrome:</h2>
+				<p>Requires an extension: <a href="https://chrome.google.com/webstore/detail/style-chooser/daodklicmmjhcacgkjpianadkdkbkbce" target="_blank" >Decklin Foster's Style Chooser Extension</a></p>
+			</section>
+		</main>
+	</body>
+	<script>
+function prefersColorScheme() {
+	let prefers = 'no-preference';
+	if (matchMedia('(prefers-color-scheme: dark)').matches) {
+		prefers = 'dark';
+	}
+	if (matchMedia('(prefers-color-scheme: light)').matches) {
+		prefers = 'light';
+	}
+	return prefers;
+}
+function orientation() {
+	let prefers = 'unknown';
+	if (matchMedia('(orientation: landscape)').matches) {
+		prefers = 'landscape';
+	}
+	if (matchMedia('(orientation: portrait)').matches) {
+		prefers = 'portrait';
+	}
+	return prefers;
+}
+
+function update() {
+	const span = document.getElementById('prefers-scheme')
+	if (span) {
+		const page = orientation();
+		const scheme = prefersColorScheme()
+		//console.log('prefers-color-scheme', scheme);
+		//console.log('orientation', page);
+		const now = [page, scheme].join(' ')
+		if (span.innerText !== now) {
+			span.innerText = now
+		}
+	}
+
+}
+
+setInterval(update, 50)
+	</script>
+</html>
