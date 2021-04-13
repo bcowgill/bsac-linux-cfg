@@ -1,7 +1,33 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# start a mac terminal command in a specific directory
 # https://stackoverflow.com/questions/989349/running-a-command-in-a-new-mac-os-x-terminal-window
+
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [--help|--man|-?]
+
+This will start a mac terminal command in a specific directory.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+See also mygterm.sh, float.sh, refloat.sh
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
 
 DIR=`pwd`
 CMD=""
@@ -29,4 +55,3 @@ chmod +x $trun_cmd
 
 # open it in Terminal to run it in a new Terminal window
 open -b com.apple.terminal $trun_cmd
-

@@ -1,9 +1,34 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# launch cross-platform gnome terminal specifying an optional directory and command
-# will launch using a profile name which should be configured with the desired Font and color scheme
-# which is configured in .config/dconf/user
-# mygterm.sh directory command
+
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [directory] [command] [--help|--man|-?]
+
+This will launch a cross-platform (linux, osx) terminal specifying an optional directory and command.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+It will launch using a profile name which should be configured with the desired Font and color scheme which is configured in .config/dconf/user
+
+See also mymacterm.sh, float.sh, refloat.sh
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
 
 DIR=`pwd`
 CMD=""
