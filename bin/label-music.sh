@@ -12,8 +12,9 @@
 FILE="$1"
 
 function usage {
+	cmd=`basename $0`
 	echo "
-$0 filename
+$cmd filename
 
 	You must provide a file name of a song, music file or podcast to label.
 "
@@ -130,7 +131,7 @@ function update_genre {
 	switch2="TCON"
 	echo ----------
 	id3v2 --list-rfc822 "$FILE" | grep $switch2
-	echo "Enter genre name or number (or 'remove' to remove it)"
+	echo "Enter genre name and/or number (or 'remove' to remove it)"
 	read CHOOSE
 	if [ -z "$CHOOSE" ]; then
 		echo No change to genre
@@ -202,6 +203,9 @@ update_v2_field TPUB "Publisher"
 update_v2_field TENC "Encoded by"
 update_v2_field TEXT "Lyricist/Text Writer(s)"
 update_v2_field TCON "Content type (overrides Genre)"
+echo " "
+echo "You can use the urldecode command to unescape any redirect tracking url you need to convert."
+echo " "
 update_v2_field WOAR "Official artist/performer webpage"
 update_v2_field WOAF "Official audio file webpage"
 update_v2_field WOAS "Official audio source webpage"
@@ -209,6 +213,11 @@ update_v2_field WPUB "Official publisher webpage"
 if [ ! -z "$LYRICS" ]; then
 	echo Paste your lyrics now and press Ctrl-D.
 	label-lyrics.sh "$FILE" "`cat`"
+	echo " "
+	ask "Do you want to change them"
+	if [ ! -z "$CHOOSE" ]; then
+		label-lyrics.sh "$FILE" "`cat`"
+	fi
 fi
 echo ==========
 id3v2 --list "$FILE"
