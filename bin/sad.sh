@@ -9,5 +9,9 @@ else
 	FILE=~/timeclock.txt
 fi
 NOW=`( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"`
+if [ "" == "$*" ]; then
+	echo Why are you sad, please tell me again.
+	exit 1
+fi
 echo sad 😢  because "$*" at $NOW. saved to $FILE
 echo sad 😢  "$*" at $NOW >> $FILE
