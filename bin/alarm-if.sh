@@ -1,9 +1,40 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# cross-platform play a sound file as an alarm after a given command succeeds.
-# also emits a system notification message.
-# alarm-if.sh check.sh [sound-file]
-# See also alarm.sh, quiet.sh, get-sound-level.sh, ls-sound.sh, sound-cards.sh, sound-control.sh, sound-down.sh, sound-level.sh, sound-not-ok.sh, sound-off.sh, sound-ok.sh, sound-play.sh, sound-set.sh, sound-test-console.sh, sound-test.sh, sound-toggle.sh, sound-up.sh, speaker-tester.sh
+
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd check-command [sound-file] [--help|--man|-?]
+
+A cross-platform audible alarm to sound after a given command succeeds.
+
+check-command  command to run periodically to check if condition is met.
+sound-file     a specific file to play as an alarm instead of the default one.
+--man          Shows help for this tool.
+--help         Shows help for this tool.
+-?             Shows help for this tool.
+
+Also emits a system notification message.
+
+See also alarm.sh, mynotify.sh, quiet.sh, get-sound-level.sh, ls-sound.sh, sound-cards.sh, sound-control.sh, sound-down.sh, sound-level.sh, sound-not-ok.sh, sound-off.sh, sound-ok.sh, sound-play.sh, sound-set.sh, sound-test-console.sh, sound-test.sh, sound-toggle.sh, sound-up.sh, speaker-tester.sh
+
+Example:
+
+alarm-if.sh check.sh ~/bin/soundes/kitten.ogg
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
 
 CMD=$1
 SOUND=${2:-$HOME/bin/sounds/kitten.ogg}
