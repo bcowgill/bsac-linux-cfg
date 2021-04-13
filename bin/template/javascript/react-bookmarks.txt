@@ -7,6 +7,18 @@
 // 📦 build it
 // ⏰ time expensive
 // 💰 money point
+// ☹ Frowny face
+// ☺ Smiling face
+// ☻ Smiling face
+// 😀 Grinning face
+// 😃 Big smiling face
+// 😉 Winking face
+// 😎 Smiling shades face
+// 😐 Neutral face
+// 😕 Confused face
+// 😠 Angry face
+// 😡 Pouting face
+// 😢 Crying face
 
 Browsers
 Capture Browser Screenshot (no extension needed)
