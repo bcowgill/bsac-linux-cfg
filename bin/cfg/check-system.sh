@@ -1,5 +1,6 @@
 #!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
+# cd bin; nvm use
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK' ; alarm.sh
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
 
@@ -90,9 +91,12 @@ function set_env {
 
 AUSER=$USER
 MYNAME="Brent S.A. Cowgill"
+COMPANY=
 EMAIL=
+[ -e ~/.COMPANY ] && source ~/.COMPANY
 if [ -z "$EMAIL" ]; then
 	echo You need to provide your email address in function set_env
+	echo You can define it in ~/.COMPANY file along with COMPANY=
 	exit 1
 fi
 if which sw_vers > /dev/null 2>&1 ; then
@@ -100,7 +104,6 @@ if which sw_vers > /dev/null 2>&1 ; then
 fi
 UBUNTU=trusty
 LSB_RELEASE=`get-release.sh`
-COMPANY=
 ULIMITFILES=1024
 #ULIMITFILES=8096
 DOWNLOAD=$HOME/Downloads/check-system
@@ -532,6 +535,7 @@ BREW_TAPS="
 if [ "$HOSTNAME" == "akston" ]; then
 	LINK_DOWNLOADS=1
 	GIT_VER=1.9.1
+	#GIT_VER=2.30.2
 	NODE_VER=v0.10.25
 	USE_KDE=""
 	#I3WM_PKG=""
@@ -1396,6 +1400,7 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 # begin actual system checking
 
 echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
+# MUSTDO Add EMAIL= setting if not present yet
 file_exists $HOME/.COMPANY "company env variable setup file"
 
 if [ -z $MACOS ]; then
