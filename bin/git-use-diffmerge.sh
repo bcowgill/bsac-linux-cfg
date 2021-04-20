@@ -4,7 +4,6 @@
 # git difftool --no-prompt filenane
 # or
 # git mergetool --no-prompt filename
-# https://sourcegear.com/diffmerge/webhelp/sec__git__linux.html
 #
 # Using it on a merge:
 # git merge something   indicates conflicts
@@ -17,7 +16,7 @@ if [ -z $DIFFM ]; then
 	echo NOT OK diffmerge is not installed.
 fi
 if which sgdm.exe; then
-	DIFFM=git-diffmerge.sh
+	DIFFM=sgdm.exe
 fi
 if [ "x$OSTYPE" == "xdarwin16" ]; then
 	DIFFM="/Applications/DiffMerge.app/Contents/MacOS/DiffMerge"
@@ -30,6 +29,7 @@ if [ "x$1" == "xfalse" ]; then
 	git config --global --unset mergetool.diffmerge.trustExitCode
 	git config --global --unset mergetool.diffmerge.cmd
 else
+	# https://sourcegear.com/diffmerge/webhelp/sec__git__linux.html
 	git config --global diff.tool diffmerge
 	git config --global difftool.diffmerge.cmd "$DIFFM --nosplash \"\$LOCAL\" \"\$REMOTE\""
 
@@ -37,9 +37,10 @@ else
 	git config --global mergetool.diffmerge.trustExitCode true
 	git config --global mergetool.diffmerge.cmd "$DIFFM --nosplash --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
 	if which sgdm.exe; then
+		# https://www.sourcegear.com/diffmerge/webhelp/sec__git__windows__github.html
 		echo sgdm.exe
-		git config --global difftool.diffmerge.cmd "git-diffmerge.sh \"\$LOCAL\" \"\$REMOTE\""
-		git config --global mergetool.diffmerge.cmd "git-diffmerge-merge.sh --nosplash --merge --result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
+		git config --global difftool.diffmerge.cmd "$DIFFM \"\$LOCAL\" \"\$REMOTE\""
+		git config --global mergetool.diffmerge.cmd "$DIFFM -merge -result=\"\$MERGED\" \"\$LOCAL\" \"\$BASE\" \"\$REMOTE\""
 	fi
 fi
 git config --global --list
