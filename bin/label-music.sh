@@ -39,7 +39,7 @@ fi
 function ask {
 	local message
 	message="$1"
-	echo "$message [Y/n]? "
+	echo "$message [y/N]? "
 	read CHOOSE
 	case "$CHOOSE" in
 		y) CHOOSE=1;;
@@ -49,6 +49,25 @@ function ask {
 		YES) CHOOSE=1;;
 		*) CHOOSE="";;
 	esac
+}
+
+# TODO if there are , but no \n in string ask to convert to /
+function get {
+	read CHOOSE
+	CHOOSE=`CHOOSE="$CHOOSE" perl -e '
+		my $content = $ENV{CHOOSE};
+		my $breaks = $content =~ tr[\n][\n];
+		if ($breaks < 2 && $content =~ m{,}xms)
+		{
+			print STDERR qq{\nDo you want to convert comma, space to / [y/N]? };
+			my $answer = <STDIN>;
+			if ($answer =~ m{^\s*y}xmsi)
+			{
+				$content =~ s{\s*,\s*}{/}xmsg;
+			}
+			print $content;
+		}
+	'`
 }
 
 function update_v2_field {
@@ -67,6 +86,7 @@ function update_v2_field {
 			echo Remove [$switch2]
 			id3v2 --remove-frame $switch2 "$FILE"
 		else
+			# TODO ask to convert , space to slashes (for lyrics etc)
 			echo Set [$switch2] to $CHOOSE
 			id3v2 --$switch2 "$CHOOSE" "$FILE"
 			id3v2 --list-rfc822 "$FILE" | grep "$switch2: "
@@ -152,6 +172,12 @@ function update_genre {
 		fi
 	fi
 }
+
+# main / start of program.
+
+#get
+#echo $CHOOSE
+#exit 1
 
 ask "Is this a cover or remix of an earlier original"
 COVER="$CHOOSE"
