@@ -2,6 +2,24 @@
 
 Because this has always been a bit of a dark art for me, once something is figured out I capture it here for future reference.
 
+## A process for design with CSS
+
+### From Tailwind [video](https://www.youtube.com/watch?v=YLz8pbLVwYM)
+
+* Add the HTML/semantics for the content.
+* Layout the things in the right place.
+* Make the spacing look good - margins, padding, etc.
+* Box properties (border, background, shadow)
+* Typography
+* Fun element (gradient, background image, etc)
+* Responsive
+
+### More Tailwind
+
+* [Tailwind Website](https://tailwindcss.com/)
+* [Beginner Tailwind Course](https://beginnertailwind.com/)
+   * [15 Minute Intro](https://youtu.be/6zIuAyLZPH0)
+   * [42 Minutes Showing the Prototyping Power](https://youtu.be/NRagrTU_v8o)
 
 ## W3C - A random collection of CSS examples and some help in using them.
 
@@ -53,14 +71,9 @@ He also blogs about CSS so have a look and experiment.
 
 ## Refereences
 
-CSS Box Model of Margin, Border, Padding and Content.
-
-https://www.w3schools.com/Css/css_boxmodel.asp
-
-The CSS Default Box Model is Utter Madness: A Parable.
-
-https://pressupinc.com/blog/2014/01/css-default-box-model-utter-madness-parable/
-
-What’s Wrong with the CSS Box Model, and How to Fix It.
-
-https://pressupinc.com/blog/2014/01/whats-wrong-css-box-model-fix/
+* [CSS Box Model of Margin, Border, Padding and Content.](https://www.w3schools.com/Css/css_boxmodel.asp)
+* [The CSS Default Box Model is Utter Madness: A Parable.](https://pressupinc.com/blog/2014/01/css-default-box-model-utter-madness-parable/)
+* [What’s Wrong with the CSS Box Model, and How to Fix It.](https://pressupinc.com/blog/2014/01/whats-wrong-css-box-model-fix/)
+* [Icon Finder - By Subject](http://iconfinder.com)
+* [Photos for Prototyping - By Size](https://picsum.photos)
+* [Photos for Prototyping - By Subject](https://unsplash.com) [Lorem Ipsum Generator and Source Explanation](https://lipsum.com/)
