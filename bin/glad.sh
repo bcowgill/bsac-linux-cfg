@@ -43,6 +43,7 @@ fi
 NOW=`( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"`
 if [ "" == "$*" ]; then
 	echo Why are you glad, please tell me again.
+	echo or review your notes with: less $FILE
 	exit 1
 fi
 echo glad ☺  because "$*" at $NOW. saved to $FILE
