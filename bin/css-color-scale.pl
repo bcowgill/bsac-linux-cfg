@@ -114,18 +114,24 @@ sub round
 	return int(0.5 + $value);
 }
 
+my @properties = qw{color background-color outline-color border-color border-top-color border-bottom-color border-left-color border-right-color };
 
 my %prefixes = (
 	color => 'text',
 	'background-color' => 'bg',
-	'border-color' => 'border',
 	'outline-color' => 'outline',
+	'border-top-color' => 'border-t',
+	'border-bottom-color' => 'border-b',
+	'border-left-color' => 'border-l',
+	'border-right-color' => 'border-r',
+	'border-color' => 'border',
 );
 
-# TODO hover, focus, visited, etc pseudo classes
-my @pseudo = qw(hover focus);
+my @pseudo = qw(hover active focus focus-visible focus-within visited);
 
 my @weights = qw(100 200 300 400 500 600 700 800 900);
+
+my $colon = '--';
 
 sub output_css
 {
@@ -134,14 +140,15 @@ sub output_css
 	my ($red, $green, $blue) = maximise_color($base_red, $base_green, $base_blue);
 
 	# output weighted 100-900 colors for CSS color, background color, border color, etc like tailwind.
-	foreach my $property (qw{color background-color border-color outline-color})
+	foreach my $property (@properties)
 	{
-		say("\n");
+		say("\n/* === $property rules */\n");
 		output_color_css($property, $prefixes{$property}, $name, $base_red, $base_green, $base_blue);
 		foreach my $pseudo (@pseudo)
 		{
 			output_pseudo_color_css($pseudo, $property, $prefixes{$property}, $name, $base_red, $base_green, $base_blue);
 		}
+		say("\n");
 		foreach my $weight (@weights)
 		{
 			my ($this_red, $this_green, $this_blue) = scale_color($weight, $red, $green, $blue);
@@ -151,6 +158,7 @@ sub output_css
 			{
 				output_pseudo_color_css($pseudo, $property, $prefixes{$property}, $name, $this_red, $this_green, $this_blue, $weight);
 			}
+			say("\n");
 		}
 	}
 
@@ -161,7 +169,7 @@ sub output_pseudo_color_css
 	my ($pseudo, $property, $prefix, $name, $red, $green, $blue, $suffix) = @ARG;
 	$suffix = $suffix ? "-$suffix" : '';
 
-	say(".$pseudo:$prefix-$name$suffix:$pseudo { $property: @{[rgb_out($red, $green, $blue)]}; }\n");
+	say(".$pseudo$colon$prefix-$name$suffix:$pseudo { $property: @{[rgb_out($red, $green, $blue)]}; }\n");
 }
 
 sub output_color_css
