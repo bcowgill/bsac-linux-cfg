@@ -99,7 +99,7 @@ LINTFIX=${LINTFIX:-0} ANONTESTS=${TESTS:-0} FILENAME="$1" perl -e '
 
 			if ($displayName)
 			{
-				s{((const|function) \s+ $displayName \s*)}{const displayName = $q$displayName$q;\n\n$1}xms;
+				s{((export\s+)?(const|function) \s+ $displayName \s*)}{const displayName = $q$displayName$q;\n\n$1}xms;
 			}
 		}
 	}
