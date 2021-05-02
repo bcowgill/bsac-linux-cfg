@@ -1,0 +1,27 @@
+{
+  "extends": [
+    "stylelint-config-sass-guidelines",
+    "stylelint-config-standard",
+    "stylelint-config-prettier"
+  ],
+  "rules": {
+    "max-nesting-depth": 8,
+    "selector-max-compound-selectors": 7,
+    "selector-no-qualifying-type": [true, { "ignore": "attribute" }],
+    "order/properties-alphabetical-order": null,
+    "function-name-case": null,
+    "property-no-vendor-prefix": null,
+    "length-zero-no-unit": true,
+    "color-hex-length": "short",
+    "declaration-empty-line-before": "never",
+    "selector-pseudo-element-colon-notation": "single",
+    "comment-whitespace-inside": "always",
+    "comment-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"],
+        "ignore": ["stylelint-commands"]
+      }
+    ]
+  }
+}

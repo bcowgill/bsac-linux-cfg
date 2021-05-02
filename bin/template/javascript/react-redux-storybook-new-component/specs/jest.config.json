@@ -1,0 +1,64 @@
+{
+  "rootDir": "..",
+  "setupFiles": [
+    "<rootDir>/specs/jest-setup.js",
+    "<rootDir>/specs/testPolyfill.js"
+  ],
+  "setupTestFrameworkScriptFile": "<rootDir>/specs/jest-setup-test-framework.js",
+  "roots": ["src/", "specs/"],
+  "notify": true,
+  "verbose": false,
+  "collectCoverage": false,
+  "coverageDirectory": "coverage",
+  "coverageReporters": ["json", "lcov", "text", "text-summary", "cobertura"],
+  "collectCoverageFrom": [
+    "src/**/**",
+    "specs/test-tools/**",
+    "!**/index.js",
+    "!**/test.js",
+    "!**/*.spec.js",
+    "!**/*.spec.jsx",
+    "!**/*.stories.js",
+    "!**/*.stories.jsx",
+    "!**/*.factory.jsx"
+  ],
+  "coveragePathIgnorePatterns": [
+    "/(style|stub|spec1)\\.js$",
+    "/(style|stub|spec1)\\.jsx$",
+    "/prod/",
+    "/dist/",
+    "/demo/",
+    "src/stories/",
+    "src/config/vendor/",
+    "src/config/[a-z]+/styles\\.js$",
+    "src/(journeys|services|middleware|containers)/",
+    "src/components/module/",
+    "src/components/block/message/validation-message",
+    "src/components/block/list/link/",
+    "src/components/block/text-input/(date-of-birth|text)",
+    "src/components/block/selection/select-dropdown/",
+    "src/components/block/typography/(body-copy|label)/",
+    "src/components/pattern/navigation/",
+    "src/components/pattern/form/(date-of-birth-dropdown|drop-down-field|radio-button-group|sort-code-field|text-input-field)/",
+    "src/utils/(axios|compose|http|journey|register|validations)",
+    "specs/test-tools/(asyncTest|timeTest)\\.js$"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "statements": 75,
+      "branches": 75,
+      "functions": 75,
+      "lines": 75
+    }
+  },
+  "globals": {
+    "webpack": {}
+  },
+  "moduleFileExtensions": ["js", "jsx"],
+  "moduleNameMapper": {
+    "^specs(.*)$": "<rootDir>/specs$1",
+    "^image(.*)$": "<rootDir>/src/config/client/image",
+    "^config/brand/(.*)$": "<rootDir>/src/config/client/$1.json",
+    "\\.less$": "<rootDir>/src/config/dummy.js"
+  }
+}

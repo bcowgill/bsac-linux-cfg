@@ -1,0 +1,42 @@
+# configure which files to ignore by the stylelint command
+# this file should be mainly identical to .prettierignore and .eslintignore
+
+# dependencies
+/node_modules
+
+# linting
+checkstyle.html
+/.eslintcache
+/.stylelintcache
+/.cache/**
+
+# testing
+/coverage
+**/__snapshots__/
+/storybook-static
+
+# production
+/dist
+/build
+/prod
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+*.DS_Store
+.Trashes
+ehthumbs.db
+Thumbs.db
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs
+*.sublime-*
+nbproject/
+*.iml
+.idea
+.vs/
+*~

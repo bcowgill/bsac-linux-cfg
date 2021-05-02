@@ -1,0 +1,14 @@
+This contains sample templates for a React Redux + Storybook new component generator script in use at one point in time.
+
+It also has my set-ref-dom-name utility and an app title setting utility.
+
+Was thinking of changing the replacement code to support different types of case replacements:
+If the user originally gives an object in Camel Case then alternate case versions are accessed via a suffix:
+
+%OBJ%       ObjectName
+%OBJ_CAMEL% objectName
+%OBJ_SNAKE% object_name
+%OBJ_KEBAB% object-name
+%OBJ_CONST% OBJECT_NAME
+%OBJ_DOTS%  object.name
+
