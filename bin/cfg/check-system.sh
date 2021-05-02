@@ -370,8 +370,8 @@ ATOM_APP=$ATOM_CMD
 ATOM_URL=https://atom.io/download/deb
 #ATOM_URL=https://atom-installer.github.com
 ATOM_APM_PKG="
-  file-icons
-  autosave
+	file-icons
+	autosave
 	activate-power-mode
 	change-case
 	atom-beautify
@@ -661,6 +661,7 @@ if [ "$COMPANY" == "wipro" ]; then
 	WEBSTORM_ARCHIVE=""
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
+	# brew install --cask keycastr # show keys on screen as you type them...
 	CUSTOM_PKG="
 		yarn
 		/usr/local/Cellar/lzo/2.10/lib/liblzo2.dylib:lzo
