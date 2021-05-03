@@ -1,7 +1,9 @@
 # BSAC ~/.atom/color-tabs-regex.cson for use by the Atom package 'color-tabs-regex'
 # pushd ~/.atom; rm color-tabs-regex.cson; ln -s ~/bin/cfg/atom-color-tabs-regex.cson color-tabs-regex.cson; popd
 
-# need to pick darker colors so they look good
+# use with String.match and NO break after first match.
+
+# Start with bright colors for work files and get darker for support files, configs, unit tests, etc.
 "\\.js": "red"
 "index\\.js": "magenta"
 "\\.jsx": "orange"
@@ -15,7 +17,10 @@
 "/\\..+": "white"
 "/__": "lime"
 "/__tests__/": "black"
+"\\.(test|spec)\\.js": "black"
 "/__stories__/": "steelblue"
+"/cypress/": "lemonchiffon"
+"node_modules": "pink"
 
 # "color-tabs":
 #   "-regex/":
