@@ -374,15 +374,22 @@ ATOM_APM_PKG="
 	autosave
 	editorconfig
 	file-icons
+	tree-view-auto-fold
+	tree-view-auto-reveal
+	tree-view-copy-relative-path
 	directory-color
+	zen-plus
+	zentabs
 	tab-foldername-index
 	color-tabs
 	color-tabs-regex
 	cursor-index
 	line-number-color
 	highlight-selected
+	pigments
 	Chromo-Color-Previews
 	atom-json-color
+	atom-color-the-tag-name
 	color-indent
 	color-whitespace
 	nms-color-bracket
@@ -405,46 +412,45 @@ ATOM_APM_PKG="
 	string-case
 	case-keep-replace
 	color-picker
+	var-that-color
+	atom-name-that-color
 	sort-lines
 	sort-words
 	sort-css
+	docblockr
+	atom-js-snippets
+	css-snippets
+	es6-snippets
+	osd-atom-snippets
 	local-history
 	related
 	atom-beautify
 	activate-power-mode
-	language-javascript-jsx
-	prettier-atom
-	atom-transpose
-	project-manager
-	set-syntax
 	atom-ternjs
-	docblockr
-	emmet
-	emmet-jsx-css-modules
-	es6-javascript
-	js-hyperclick
-	hyperclick
-	pigments
-	linter-eslint
-	tree-view-copy-relative-path
-	lodash-snippets
-	language-javascript-jsx
-	language-babel
-	react-es7-snippets
-	atom-jest-snippets
-	one-dark-ui
-	file-path-picker
-	color-dict
-	atom-name-that-color
-	atom-color-the-tag-name
-	var-that-color
-	color-tabs-byproject
 "
+
+# previously used packages
+#	language-javascript-jsx
+#	prettier-atom
+#	atom-transpose
+#	project-manager
+#	set-syntax
+#	emmet
+#	emmet-jsx-css-modules
+#	es6-javascript
+#	linter-eslint
+#	language-javascript-jsx
+#	language-babel
 # MUSTDO investigate these package failures
 #	dracula-theme
 #	json-level-color - not coloring by level
 #	webbox-color - fails to install
 #	an-color-picker - real color picker from any screen
+#	color-tabs-byproject - couldn't configure to my liking
+#	color-dict - not so useful
+#	file-path-picker - not working on mac
+#	js-hyperclick - needs babel? couldn't configure
+#	hyperclick
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 # Atom MACOS

@@ -77,3 +77,4 @@ He also blogs about CSS so have a look and experiment.
 * [Icon Finder - By Subject](http://iconfinder.com)
 * [Photos for Prototyping - By Size](https://picsum.photos)
 * [Photos for Prototyping - By Subject](https://unsplash.com) [Lorem Ipsum Generator and Source Explanation](https://lipsum.com/)
+* [Name that color - get nearest color name from chosen color](https://chir.ag/projects/name-that-color/#6195ED)

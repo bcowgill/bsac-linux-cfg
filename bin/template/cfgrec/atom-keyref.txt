@@ -4,6 +4,7 @@ http://flight-manual.atom.io/getting-started/sections/atom-basics/#platform-linu
 
 *** marks my most used commands -- needed in any other emulation
 
+TODO - mark linux/win/osx keys
 KEY:ATOM:CMD Ctrl-Shift-p Open the command palette to execute a command ***
 KEY:ATOM:CMD Ctrl-q Exit atom
 KEY:ATOM:CONFIG Ctrl-, Open the settings tab
@@ -22,6 +23,7 @@ KEY:ATOM:VIEW Ctrl-k right Split pane to right
 KEY:ATOM:VIEW Ctrl-k up Split pane above
 KEY:ATOM:VIEW Ctrl-k down Split pane below
 KEY:ATOM:CURSOR Ctrl-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
+KEY:ATOM:CURSOR Cmd-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
 KEY:ATOM:CURSOR Esc Clear all multiple cursor locations
 KEY:ATOM:EDIT Cmd-j [Edit/Lines/Join] Join two lines removing unnecessary space
 KEY:ATOM:EDIT Cmd-/ Line Comment/Uncomment the current line or selected lines ***
@@ -52,15 +54,22 @@ Packages installed:
 	autosave
 	editorconfig
 	file-icons
+	tree-view-auto-fold
+	tree-view-auto-reveal
+	tree-view-copy-relative-path
 	directory-color
+	zen-plus
+	zentabs
 	tab-foldername-index
 	color-tabs
 	color-tabs-regex
 	cursor-index
 	line-number-color
 	highlight-selected
+	pigments
 	Chromo-Color-Previews
 	atom-json-color
+	atom-color-the-tag-name
 	color-indent
 	color-whitespace
 	nms-color-bracket
@@ -83,13 +92,22 @@ Packages installed:
 	string-case
 	case-keep-replace
 	color-picker
+	var-that-color
+	atom-name-that-color
 	sort-lines
 	sort-words
 	sort-css
+	docblockr
+	es6-snippets
 	atom-beautify
+	atom-js-snippets
+	css-snippets
+	es6-snippets
+	osd-atom-snippets
 	local-history
 	related
 	activate-power-mode
+	atom-ternjs
 Alternates:
 	change-case
 	autocomplete-ctags / symbols-view
@@ -99,6 +117,8 @@ Package configuration:
 autosave must be enabled in package settings.
 line-number-color disable key binding in settings as conflicts with Chromo-Color-Previews
 toggle-quotes Need to set "'` to default quote characters when you install
+zen-plus must be configured for options
+zentabs configure not to close tabs which are new, unsaved, etc.
 local-history need to configure diff tool, use vdiff.sh
 related need to configure related files like test plan, story file, etc
 	saved to ~/.atom/related-patterns.cson
@@ -109,10 +129,11 @@ autocomplete-json need to turn on .eslintrc files etc support in settings
 color-picker need to configure abbreviation, auto replace, preferred hex
 color-indent need to configure gutter has the same width
 color-tabs-regex
-	TODO need a good configuration..
-	index.* vs unit tests stories, css, json, etc
+	TODO need a good configuration of colors index.* vs unit tests stories, css, json, etc
+	https://atom.io/packages/color-tabs-regex
 	saved to ~/.atom/color-tabs-regex.cson
 	see my ~/bin/cfg/atom-color-tabs-regex.cson
+atom-ternjs needs to be configured once in each project
 
 Package keymaps:
 keep-case-replace uses Ctrl-Cmd-r
@@ -163,3 +184,33 @@ color-tabs uses
 	C-A-x to remove color from current tab
 line-number-color uses
 	C-A-o to toggle line number color
+var-that-color uses
+	C-A-n to replace colors in selection with closest color name definitions
+atom-name-that-color uses
+	Context menu on a selection
+	suggests key binding C-A-Cmd-n but must do it manually
+	var-that-color and atom-name-that-color come up with different names.
+pigments uses
+	Command palette pigments for many options
+	doesn't handle color definitions in javascript files
+zentabs uses
+	A-t to trigger a cleanup of excess tabs
+	Mouse-Right on Tab to pin it from closing
+tree-view-copy-relative-path
+	Mouse-Right on a file in tree view
+zen-plus uses
+	S-F11 Toggle zen mode Linux/Win
+	C-Cmd-z Toggle zen mode
+	Cmd-C-S-f Toggle zen mode
+	Cmd-C-f Toggle full screen mode (normally)
+atom-ternjs uses
+	C-A-D find symbol definition
+	C-R find symbol references
+	A-o show docmentation for symbol
+	C-A-c rename symbol
+docblockr uses
+	/** Enter above a function creates a doc block with automatic parameters
+	/** Tab above a function creates a doc block with automatic parameters
+	Tab after insertion takes you to the next parameter to fill in.
+	/** S-Enter prevents insertion of a doc block
+	S-Enter also prevents the automatic insertion of a * in the comment

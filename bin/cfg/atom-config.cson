@@ -1,0 +1,57 @@
+# BSAC ~/.atom/config.cson for configuring Atom
+# pushd ~/.atom; rm config.cson; ln -s ~/bin/cfg/atom-config.cson config.cson; popd
+"*":
+  "Chromo-Color-Previews": {}
+  "activate-power-mode":
+    plugins:
+      playAudio: true
+      screenShake: true
+  "atom-json-color": {}
+  autoclose:
+    disabledFileExtensions: [
+      "log"
+    ]
+  "autoclose-html": {}
+  autosave:
+    enabled: true
+  "chrome-color-picker":
+    General: {}
+  "color-indent":
+    color: {}
+    gutterWidth: true
+  "color-picker":
+    abbreviateValues: true
+    automaticReplace: true
+    preferredFormat: "HEX"
+  "color-tabs-byproject":
+    borderSize: 10
+    borderStyle: "right"
+    folderDepth: 3
+    markerStyle: "corner"
+    referTo: "project name"
+  "color-tabs-regex":
+    regexEngine: "String.match"
+  core:
+    disabledPackages: [
+      "activate-power-mode"
+    ]
+    packagesWithKeymapsDisabled: [
+      "line-number-color"
+    ]
+    telemetryConsent: "no"
+  editor:
+    fontSize: 24
+  "exception-reporting":
+    userId: "2c4e8727-892c-4349-a73a-4b344d62429a"
+  "highlight-selected":
+    highlightBackground: true
+  "json-level-color": {}
+  "local-history":
+    difftoolCommand: "vdiff.sh \"{current-file}\" \"{revision-file}\""
+  related:
+    openSingleItemAutomatically: true
+  "toggle-quotes":
+    quoteCharacters: "\"'`"
+".editorconfig.source":
+  editor:
+    showInvisibles: true
