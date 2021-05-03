@@ -4,42 +4,77 @@ http://flight-manual.atom.io/getting-started/sections/atom-basics/#platform-linu
 
 *** marks my most used commands -- needed in any other emulation
 
+TODO - how to make a javascript tags file so tags command will work
+https://github.com/TyGuy/setup_ctags
+http://benradler.com/blog/2016/06/09/how-to-set-up-ctags-go-to-definition-in-atom-text-editor
 TODO - mark linux/win/osx keys
-KEY:ATOM:CMD Ctrl-Shift-p Open the command palette to execute a command ***
-KEY:ATOM:CMD Ctrl-q Exit atom
-KEY:ATOM:CONFIG Ctrl-, Open the settings tab
-KEY:ATOM:NAV Alt-\ Focus to the Tree View
-KEY:ATOM:NAV Ctrl-Shift-\ Show active file in Tree View
-KEY:ATOM:VIEW Ctrl-\ Toggle the Tree View ***
-KEY:ATOM:VIEW Ctrl-x Close current tab
-KEY:ATOM:VIEW Ctrl-F4 Close current tab
+KEY:OSX - mac only KEY:WLX win/linux only KEY - mac/win/linux
+
+KEY:OSX:ATOM:CMD Cmd-Shift-p Open the command palette to execute a command ***
+KEY:OSX:ATOM:CMD Cmd-q Exit atom
+KEY:OSX:ATOM:CONFIG Cmd-, Open the settings tab
+KEY:OSX:ATOM:VIEW Cmd-\ Toggle the Tree View ***
+KEY:OSX:ATOM:VIEW Cmd-w Close current tab
+KEY:OSX:ATOM:VIEW Ctrl-k left Split pane to left
+KEY:OSX:ATOM:VIEW Ctrl-k right Split pane to right
+KEY:OSX:ATOM:VIEW Ctrl-k up Split pane above
+KEY:OSX:ATOM:VIEW Ctrl-k down Split pane below
+KEY:OSX:ATOM:CURSOR Cmd-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
+KEY:OSX:ATOM:EDIT Cmd-j [Edit/Lines/Join] Join two lines removing unnecessary space
+KEY:OSX:ATOM:EDIT Cmd-/ Line Comment/Uncomment the current line or selected lines ***
+KEY:OSX:ATOM:EDIT Cmd-Ctrl-up Move current line up one line ***
+KEY:OSX:ATOM:EDIT Cmd-Ctrl-down Move current line down one line ***
+KEY:OSX:ATOM:MARK Cmd-Ctrl-m Mark text between matching brackets ***
+KEY:OSX:ATOM:FIND Ctrl-f Find/Replace text
+KEY:OSX:ATOM:FIND Ctrl-Shift-f Find/Replace text in project
+KEY:OSX:ATOM:FIND Cmd-Ctrl-r Find/Replace keeping case sensitivity (pkg:case-keep-replace)
+KEY:OSX:ATOM:CODE Cmd-Shift-r View symbols/methods in project (needs a tag file)
+KEY:OSX:ATOM:FIND Cmd-t Fuzzy Finder - popup to open any file by incremental search ***
+KEY:OSX:ATOM:CODE Cmd-r View symbols/methods in current file and jump to definition
+KEY:OSX:ATOM:CODE Cmd-Alt-down Go to symbol declaration (needs a tag file)
+KEY:OSX:ATOM:CODE Cmd-Alt-up Jump back from symbol declaration
+KEY:OSX:ATOM:PASTE Cmd-Shift-d Duplicate line or selection (pkg: duplicate-line-or-selection uses)
+
+KEY:WLX:ATOM:CMD Ctrl-Shift-p Open the command palette to execute a command ***
+KEY:WLX:ATOM:CMD Ctrl-q Exit atom
+KEY:WLX:ATOM:CONFIG Ctrl-, Open the settings tab
+KEY:WLX:ATOM:NAV Alt-\ Focus to the Tree View
+KEY:WLX:ATOM:NAV Ctrl-Shift-\ Show active file in Tree View (unnecessary with pkg:tree-view-auto-reveal)
+KEY:WLX:ATOM:VIEW Ctrl-\ Toggle the Tree View ***
+KEY:WLX:ATOM:VIEW Ctrl-x Close current tab
+KEY:WLX:ATOM:VIEW Ctrl-F4 Close current tab
 KEY:ATOM:VIEW Ctrl-Shift-9 Toggle git tab
 KEY:ATOM:VIEW Ctrl-9 Focus to git tab
 KEY:ATOM:VIEW Ctrl-Shift-8 Toggle github tab
 KEY:ATOM:VIEW Ctrl-8 Focus to github tab
 KEY:ATOM:VIEW Ctrl-Shift-m Toggle Markdown preview window ***
-KEY:ATOM:VIEW Ctrl-k left Split pane to left
-KEY:ATOM:VIEW Ctrl-k right Split pane to right
-KEY:ATOM:VIEW Ctrl-k up Split pane above
-KEY:ATOM:VIEW Ctrl-k down Split pane below
-KEY:ATOM:CURSOR Ctrl-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
-KEY:ATOM:CURSOR Cmd-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
+KEY:WLX:ATOM:VIEW Ctrl-k left Split pane to left
+KEY:WLX:ATOM:VIEW Ctrl-k right Split pane to right
+KEY:WLX:ATOM:VIEW Ctrl-k up Split pane above
+KEY:WLX:ATOM:VIEW Ctrl-k down Split pane below
+KEY:WLX:ATOM:CURSOR Ctrl-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
 KEY:ATOM:CURSOR Esc Clear all multiple cursor locations
-KEY:ATOM:EDIT Cmd-j [Edit/Lines/Join] Join two lines removing unnecessary space
-KEY:ATOM:EDIT Cmd-/ Line Comment/Uncomment the current line or selected lines ***
-KEY:ATOM:EDIT Ctrl-Shift-p Change   Change case commands ***
-KEY:ATOM:EDIT Ctrl-up Move current line up one line ***
-KEY:ATOM:EDIT Ctrl-down Move current line down one line ***
-KEY:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets ***
-KEY:ATOM:FIND Ctrl-f Find/Replace text
-KEY:ATOM:FIND Ctrl-Shift-f Find/Replace text in project
+KEY:WLX:ATOM:EDIT Ctrl-j [Edit/Lines/Join] Join two lines removing unnecessary space
+KEY:WLX:ATOM:EDIT Cmd-/ Line Comment/Uncomment the current line or selected lines ***
+KEY:ATOM:EDIT Ctrl-Shift-p Change case commands (pkg: change-case) ***
+KEY:WLX:ATOM:EDIT Ctrl-up Move current line up one line ***
+KEY:WLX:ATOM:EDIT Ctrl-down Move current line down one line ***
+KEY:WLX:ATOM:MARK Ctrl-Alt-m Mark text between matching brackets ***
+KEY:WLX:ATOM:FIND Ctrl-f Find/Replace text
+KEY:WLX:ATOM:FIND Ctrl-Shift-f Find/Replace text in project
+KEY:WLXTODO:ATOM:FIND Cmd-Ctrl-r Find/Replace keeping case sensitivity (pkg:case-keep-replace)
 KEY:ATOM:FIND Ctrl-m Move to matching bracket ***
-KEY:ATOM:CODE Ctrl-Shift-r View symbols/methods in project (needs a tag file)
-KEY:ATOM:FIND Ctrl-t Fuzzy Finder - popup to open any file by incremental search ***
-KEY:ATOM:CODE Ctrl-r View symbols/methods and jump to definition
-KEY:ATOM:CODE Ctrl-Alt-down Go to symbol declaration (needs a tag file)
-KEY:ATOM:CODE Ctrl-Alt-up Jump back from symbol declaration
+KEY:WLX:ATOM:CODE Ctrl-Shift-r View symbols/methods in project (needs a tag file)
+KEY:WLX:ATOM:FIND Ctrl-t Fuzzy Finder - popup to open any file by incremental search ***
+KEY:WLX:ATOM:CODE Ctrl-r View symbols/methods in current file and jump to definition
+KEY:WLX:ATOM:CODE Ctrl-Alt-down Go to symbol declaration (needs a tag file)
+KEY:WLX:ATOM:CODE Ctrl-Alt-up Jump back from symbol declaration
+KEY:ATOM:FIND Mouse-DblClick Select and highlight all matches (pkg:highlight-selected uses)
+KEY:OSX:ATOM:FIND Cmd-Ctrl-h Select and highlight all matches (pkg:highlight-selected uses)
+KEY:WLXTODO:ATOM:FIND Cmd-Ctrl-h Select and highlight all matches (pkg:highlight-selected uses)
 KEY:ATOM:FUN Ctrl-Alt-o Toggle activation of power mode
+
+KEY:ATOM:PASTE Ctrl-Shift-d Duplicate line or selection (pkg: duplicate-line-or-selection uses)
 
 KEY:ATOM:PASTE
 KEY:ATOM:DOC
@@ -136,22 +171,12 @@ color-tabs-regex
 atom-ternjs needs to be configured once in each project
 
 Package keymaps:
-keep-case-replace uses Ctrl-Cmd-r
-string-case uses
-  C-k C-c camelCase
-  C-k C-k kebab-case
-  C-k C-p PascalCase
-  C-k C-s snake_case
-          CONST_CASE
-change-case uses
-  C-k C-c camelCase
-  C-k C-s snake_case
-atom-change-case-menu has no hotkeys but many change modes.
-
+case-keep-replace uses Ctrl-Cmd-r
 duplicate-line-or-selection uses
 	C-S-d or Cmd-S-d to duplicate the line or selection
 highlight-selected uses
-	C-Cmd-h to toggle the highlighte matches
+	C-Cmd-h to toggle the highlighted matches
+TODO HEREIAM documenting OSX keys for installed packages
 related uses
 	C-S-r to open a related file
 sort-lines use command palette search for Sort
@@ -214,3 +239,15 @@ docblockr uses
 	Tab after insertion takes you to the next parameter to fill in.
 	/** S-Enter prevents insertion of a doc block
 	S-Enter also prevents the automatic insertion of a * in the comment
+
+string-case uses
+  C-k C-c camelCase
+  C-k C-k kebab-case
+  C-k C-p PascalCase
+  C-k C-s snake_case
+          CONST_CASE
+change-case uses
+  C-k C-c camelCase
+  C-k C-s snake_case
+atom-change-case-menu has no hotkeys but many change modes.
+
