@@ -142,7 +142,8 @@ Packages installed:
 	local-history
 	related
 	activate-power-mode
-	atom-ternjs
+	hyperclick
+	atom-ternjs (needs hyperclick)
 Alternates:
 	change-case
 	autocomplete-ctags / symbols-view

@@ -426,6 +426,7 @@ ATOM_APM_PKG="
 	related
 	atom-beautify
 	activate-power-mode
+	hyperclick
 	atom-ternjs
 "
 
@@ -450,7 +451,6 @@ ATOM_APM_PKG="
 #	color-dict - not so useful
 #	file-path-picker - not working on mac
 #	js-hyperclick - needs babel? couldn't configure
-#	hyperclick
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 # Atom MACOS
