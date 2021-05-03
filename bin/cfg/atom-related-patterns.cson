@@ -1,0 +1,95 @@
+# BSAC ~/.atom/related-patterns.cson for use by the Atom package 'related'
+# pushd ~/.atom; rm related-patterns.cson; ln -s ~/bin/cfg/atom-related-patterns.cson related-patterns.cson; popd
+##########################################################################
+# Related uses a set of patterns to populate a list of files related     #
+# to the one you're currently in. There are two components of a pattern: #
+# the matcher and the results.                                           #
+#                                                                        #
+# The matcher is a regular expression. You can use capture groups and    #
+# refer to them in your results. The matcher is given the path of the    #
+# current file, relative to the top-level directory. For instance, a     #
+# file located at /Users/foo/bar/test.txt, with the foo directory opened #
+# in the editor, would use the filename 'bar/test.txt' when comparing    #
+# with the matcher.                                                      #
+#                                                                        #
+# The results are list of files that will be searched whenever the       #
+# current file matches the matcher. You can refer to the capture groups  #
+# using $n (e.g., $1, $2, etc). You may also use glob patterns in your   #
+# results                                                                #
+##########################################################################
+
+# BSAC DANGER! **/ is slow on Mac!!
+# C/C++ src/header files
+'^(.*[/\\\\])?(.+)(\\.c|\\.cpp|\\.cc|\\.cxx|\\.C|\\.m|\\.mm)$': [
+    '$1/$2.h',
+    '$1/$2.hpp',
+    '$1/$2.hxx',
+    '$1/$2.hh'
+#    '**/$2.h',
+#    '**/$2.hpp',
+#    '**/$2.hxx',
+#    '**/$2.hh'
+]
+
+'^(.*[/\\\\])?(.+)(\\.h|\\.hpp|\\.hxx|\\.hh)$': [
+    '$1/$2.c',
+    '$1/$2.cpp',
+    '$1/$2.cc',
+    '$1/$2.cxx',
+    '$1/$2.C',
+    '$1/$2.m',
+    '$1/$2.mm',
+#    '**/$2.c',
+#    '**/$2.cpp',
+#    '**/$2.cc',
+#    '**/$2.cxx',
+#    '**/$2.C',
+#    '**/$2.m',
+#    '**/$2.mm',
+]
+
+# BSAC added for Javascript project related.
+# Javascript file and related facade, test plan, mock, story or factory, etc.
+'^(.*[/\\\\])?(.+)(\\.jsx?)$': [
+  '$1/$2.css',
+  '$1/$2.less',
+  '$1/$2.sass',
+  '$1/$2.test.js',
+  '$1/$2.spec.js',
+  '$1/$2.factory.js',
+  '$1/test*/$2.test.js',
+  '$1/test*/$2.spec.js',
+  '$1/test*/$2.factory.js',
+  '$1/__test*__/$2.test.js',
+  '$1/__test*__/$2.spec.js',
+  '$1/__test*__/$2.factory.js',
+  '$1/__stories__/$2.js',
+  '$1/__mock*__/$2.js',
+  '$1/index.html',
+  '$1/index.js',
+  '$1/style.js',
+  '$1/style.css',
+  '$1/style.less',
+  '$1/style.sass',
+]
+
+# Javascript test or story file find the module being tested in the directory above
+'^(.*[/\\\\])?([^/\\\\]+[/\\\\])([^/\\\\]+)(\\.(test|spec|factory|stories)\\.js)$': [
+  '$1/$3.jsx',
+  '$1/$3.js',
+]
+
+# JSON files related to each other
+'^(.*[/\\\\])?(.+)(\\.json)$': [
+  '$1/*.json',
+]
+
+# Configuration files related to each other
+'^(.*[/\\\\])?(\\..+)(ignore|rc|rc\\.json)$': [
+  '$1/.git$3',
+  '$1/.npm$3',
+  '$1/.eslint$3',
+  '$1/.stylelint$3',
+  '$1/.htmllint$3',
+  '$1/.prettier$3',
+]

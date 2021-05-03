@@ -21,6 +21,8 @@ KEY:ATOM:VIEW Ctrl-k left Split pane to left
 KEY:ATOM:VIEW Ctrl-k right Split pane to right
 KEY:ATOM:VIEW Ctrl-k up Split pane above
 KEY:ATOM:VIEW Ctrl-k down Split pane below
+KEY:ATOM:CURSOR Ctrl-MouseClick Add/Remove a multiple cursor location to allow inserting same text in multiple locations.
+KEY:ATOM:CURSOR Esc Clear all multiple cursor locations
 KEY:ATOM:EDIT Cmd-j [Edit/Lines/Join] Join two lines removing unnecessary space
 KEY:ATOM:EDIT Cmd-/ Line Comment/Uncomment the current line or selected lines ***
 KEY:ATOM:EDIT Ctrl-Shift-p Change   Change case commands ***
@@ -47,5 +49,117 @@ KEY:ATOM:TABS
 KEY:ATOM:HELP
 
 Packages installed:
-activate-power-mode
-change-case
+	autosave
+	editorconfig
+	file-icons
+	directory-color
+	tab-foldername-index
+	color-tabs
+	color-tabs-regex
+	cursor-index
+	line-number-color
+	highlight-selected
+	Chromo-Color-Previews
+	atom-json-color
+	color-indent
+	color-whitespace
+	nms-color-bracket
+	Sublime-Style-Column-Selection
+	copy-path
+	duplicate-line-or-selection
+	toggle-quotes
+	atom-wrap-in-tag
+	autoclose
+	autoclose-html
+	autocomplete
+	autocomplete-modules
+	autocomplete-date
+	autocomplete-ramda
+	autocomplete-math
+	autocomplete-json
+	gherkin-autocomplete
+	css-color-name
+	atom-change-case-menu
+	string-case
+	case-keep-replace
+	color-picker
+	sort-lines
+	sort-words
+	sort-css
+	atom-beautify
+	local-history
+	related
+	activate-power-mode
+Alternates:
+	change-case
+	autocomplete-ctags / symbols-view
+
+
+Package configuration:
+autosave must be enabled in package settings.
+line-number-color disable key binding in settings as conflicts with Chromo-Color-Previews
+toggle-quotes Need to set "'` to default quote characters when you install
+local-history need to configure diff tool, use vdiff.sh
+related need to configure related files like test plan, story file, etc
+	saved to ~/.atom/related-patterns.cson
+	see my ~/bin/cfg/atom-related-patterns.cson
+autoclose need to remove js jsx from file types to disable in
+autocomplete-json need to turn on .eslintrc files etc support in settings
+	uses schemastore.org to identify the schema for .json files
+color-picker need to configure abbreviation, auto replace, preferred hex
+color-indent need to configure gutter has the same width
+color-tabs-regex
+	TODO need a good configuration..
+	index.* vs unit tests stories, css, json, etc
+	saved to ~/.atom/color-tabs-regex.cson
+	see my ~/bin/cfg/atom-color-tabs-regex.cson
+
+Package keymaps:
+keep-case-replace uses Ctrl-Cmd-r
+string-case uses
+  C-k C-c camelCase
+  C-k C-k kebab-case
+  C-k C-p PascalCase
+  C-k C-s snake_case
+          CONST_CASE
+change-case uses
+  C-k C-c camelCase
+  C-k C-s snake_case
+atom-change-case-menu has no hotkeys but many change modes.
+
+duplicate-line-or-selection uses
+	C-S-d or Cmd-S-d to duplicate the line or selection
+highlight-selected uses
+	C-Cmd-h to toggle the highlighte matches
+related uses
+	C-S-r to open a related file
+sort-lines use command palette search for Sort
+	F5 default sort lines
+sort-css
+	F6 sort selected lines by CSS order
+Sublime-Style-Column-Selection
+	Alt-MouseDrag to select text by blocks on Windows/Mac
+	Shift-MouseDrag to select text by blocks on Linux
+cursor-index uses
+	Alt-g to go to an exact cursor index location
+toggle-quotes uses
+	C-" or Cmd-" to toggle between quote types
+atom-wrap-in-tag uses
+	C-S-w to wrap selected text in an HTML tag
+autocomplete uses
+	C-Space to offer autocompleteion suggestions
+autocomplete-date uses macros to insert dates
+	now date (dd) time (dt)
+color-picker uses
+	C-A-c or Cmd-S-c or right click to pick a color
+Chromo-Color-Previews uses
+	C-A-o to toggle color preview gutter on/off
+nms-color-bracket uses
+	A-q to toggle coloring different matching braces
+color-whitespace uses
+	C-A-c to control coloring indentation by control flow types
+color-tabs uses
+	C-A-a to assign a random color to current tab
+	C-A-x to remove color from current tab
+line-number-color uses
+	C-A-o to toggle line number color

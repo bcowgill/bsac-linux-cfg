@@ -1,0 +1,18 @@
+# BSAC ~/.atom/color-tabs-regex.cson for use by the Atom package 'color-tabs-regex'
+# pushd ~/.atom; rm color-tabs-regex.cson; ln -s ~/bin/cfg/atom-color-tabs-regex.cson color-tabs-regex.cson; popd
+"color-tabs":
+  "-regex/":
+    ".*": "rgb(75, 99, 0)"
+  "/lib" : "rgb(142, 65, 23)"
+"opened-files/":
+  ".*?\\.coffee": "rgb(134, 90, 16)"
+
+#".*\\.py": "vec3(0.79,0.15,0.15)"
+#".json": "rgb(196, 189, 91)"
+#".cson": "rgb(196, 189, 91)"
+#".xml": "rgb(196, 189, 91)"
+
+#{}"\.[jc]son": "rebeccapurple"
+#{}"__tests__": "brown"
+#{}"__stories__": "grey"
+

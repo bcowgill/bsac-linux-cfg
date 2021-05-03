@@ -369,35 +369,55 @@ ATOM_CMD=atom
 ATOM_APP=$ATOM_CMD
 ATOM_URL=https://atom.io/download/deb
 #ATOM_URL=https://atom-installer.github.com
+# Atom packages vetted 2021-05 on Mac
 ATOM_APM_PKG="
-	file-icons
 	autosave
-	activate-power-mode
-	change-case
+	editorconfig
+	file-icons
+	directory-color
+	tab-foldername-index
+	color-tabs
+	color-tabs-regex
+	cursor-index
+	line-number-color
+	highlight-selected
+	Chromo-Color-Previews
+	atom-json-color
+	color-indent
+	color-whitespace
+	nms-color-bracket
+	Sublime-Style-Column-Selection
+	copy-path
+	duplicate-line-or-selection
+	toggle-quotes
+	atom-wrap-in-tag
+	autoclose-html
+	autoclose
+	autocomplete
+	autocomplete-modules
+	autocomplete-date
+	autocomplete-ramda
+	autocomplete-math
+	autocomplete-json
+	gherkin-autocomplete
+	css-color-name
+	atom-change-case-menu
+	string-case
+	case-keep-replace
+	color-picker
+	sort-lines
+	sort-words
+	sort-css
+	local-history
+	related
 	atom-beautify
+	activate-power-mode
 	language-javascript-jsx
 	prettier-atom
 	atom-transpose
-	case-keep-replace
-	change-case
-	copy-path
-	duplicate-line-or-selection
-	editorconfig
-	file-icons
-	highlight-selected
-	local-history
 	project-manager
-	related
 	set-syntax
-	sort-lines
-	Sublime-Style-Column-Selection
-	tab-foldername-index
-	toggle-quotes
-	atom-wrap-in-tag
 	atom-ternjs
-	autoclose-html
-	autocomplete-modules
-	color-picker
 	docblockr
 	emmet
 	emmet-jsx-css-modules
@@ -413,9 +433,18 @@ ATOM_APM_PKG="
 	react-es7-snippets
 	atom-jest-snippets
 	one-dark-ui
+	file-path-picker
+	color-dict
+	atom-name-that-color
+	atom-color-the-tag-name
+	var-that-color
+	color-tabs-byproject
 "
 # MUSTDO investigate these package failures
 #	dracula-theme
+#	json-level-color - not coloring by level
+#	webbox-color - fails to install
+#	an-color-picker - real color picker from any screen
 #ATOM_URL=$ATOM_URL/v$ATOM_VER/$ATOM_PKG
 
 # Atom MACOS
