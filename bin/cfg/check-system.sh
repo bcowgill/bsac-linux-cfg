@@ -429,6 +429,8 @@ ATOM_APM_PKG="
 	hyperclick
 	atom-ternjs
 "
+# pigments - when activated takes a while to scan the project.
+# autosave and local-history messes with git checkouts and automatic test runs and marks some changed files as changed again after saving them so disabled..
 
 # previously used packages
 #	language-javascript-jsx
