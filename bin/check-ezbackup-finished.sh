@@ -30,7 +30,7 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
-if [ `ps -ef | grep 'ezbackup.sh full' | grep -v grep | wc -l` == 0 ] ; then
+if [ `pswide.sh -ef | grep 'ezbackup.sh full' | grep -v grep | wc -l` == 0 ] ; then
 	echo OK, full backup has finished.
 	exit 0
 fi
