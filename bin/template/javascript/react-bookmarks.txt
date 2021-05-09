@@ -1,25 +1,3 @@
-// Cool comments
-// ✅ All useEffect dependencies are specified
-// ⚠️ createRows() is called on every render
-// 🔴 Bug: `count` is not specified as a dependency
-// ❤ I love it!
-// 🚀 take off!
-// 📦 build it
-// ⏰ time expensive
-// 💰 money point
-// ☹ Frowny face
-// ☺ Smiling face
-// ☻ Smiling face
-// 😀 Grinning face
-// 😃 Big smiling face
-// 😉 Winking face
-// 😎 Smiling shades face
-// 😐 Neutral face
-// 😕 Confused face
-// 😠 Angry face
-// 😡 Pouting face
-// 😢 Crying face
-
 Browsers
 Capture Browser Screenshot (no extension needed)
 https://swimburger.net/blog/web/hidden-gem-take-screenshots-using-built-in-commands-in-chrome-edge

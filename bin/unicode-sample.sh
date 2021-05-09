@@ -100,6 +100,8 @@ U+1F50D U+1F50E
 U+3C0 U+213C U+1D6D1 U+1D70B U+1D745 U+1D77F U+1D7B9
 "
 
+# 🍩  doughnut
+# ⛾  coffee
 # 😎 🍁 🆗
 #
 # 🍁	U+1F341
@@ -132,6 +134,7 @@ echo "ᘜ ᓋ ᓋ ᖱ  ᙏ ᓏ ᖆ ᘗ ᓲ ᘘ ᘜ "
 echo "☂"
 echo "(っ＾▿＾)۶🍸🌟🍺٩(˘◡˘ )"
 echo "( ◑‿◑)ɔ┏🍟--🍔┑٩(^◡^ )"
+echo " "
 echo "// Cool comments"
 echo "// ✅ All useEffect dependencies are specified"
 echo "// 💡	Brilliant Idea light bulb"
@@ -149,6 +152,20 @@ echo "// 🚀 take off!"
 echo "// 📦 build it"
 echo "// ⏰ time expensive"
 echo "// 💰 money point"
+echo "// ⛾ 🍩 coffee and doughnut reward"
+echo "// ☹ Frowny face"
+echo "// ☺ Smiling face"
+echo "// ☻ Smiling face"
+echo "// 😀 Grinning face"
+echo "// 😃 Big smiling face"
+echo "// 😉 Winking face"
+echo "// 😎 Smiling shades face"
+echo "// 😐 Neutral face"
+echo "// 😕 Confused face"
+echo "// 😠 Angry face"
+echo "// 😡 Pouting face"
+echo "// 😢 Crying face"
+echo " "
 echo "  NOT_OK: '✘ ', // 'NOT OK ',"
 echo "  OK    : '✔ ', // 'OK ',"
 echo "  SKIP  : '○ ', // 'SKIP',"
