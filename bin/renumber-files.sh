@@ -5,10 +5,11 @@ PREFIX="$1"
 SUFFIX="$2"
 NAME="$3"
 NUMBER=${4:-001}
+NEWSUFFIX=${5:-$SUFFIX}
 
 if [ -z "$NAME" ]; then
 	echo "
-$0 prefix suffix name [number]
+$0 prefix suffix name [number] [new-suffix]
 
 This will rename matching files starting with the number provided.
 The number value defaults to 001 if omitted.
@@ -19,9 +20,9 @@ See also auto-rename.pl, rename-files.sh, cp-random.pl, renumber-by-time.sh
 
 example:
 
-$0 Screen .png error-screen- 14
+$0 Screen .PNG error-screen- 14 .png
 
-Will rename all the Screen*.png files found as error-screen-14.png etc...
+Will rename all the Screen*.PNG files found as error-screen-14.png etc...
 "
 	exit 1
 fi
@@ -30,9 +31,9 @@ echo NUMBER=$NUMBER
 for f in $PREFIX*$SUFFIX
 do
 	if [ -e "$f" ]; then
-		echo mv \"$f\" \"$NAME$NUMBER$SUFFIX\"
+		echo mv \"$f\" \"$NAME$NUMBER$NEWSUFFIX\"
 		if [ -z "$TEST" ]; then
-			mv "$f" "$NAME$NUMBER$SUFFIX"
+			mv "$f" "$NAME$NUMBER$NEWSUFFIX"
 		fi
 		# increment number keeping 0 padding
 		NUMBER=`perl -e '$n = shift; $l = length($n++); print qq{$n}' $NUMBER`
