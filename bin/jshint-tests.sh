@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # jshint all the javascript test files found
+# See also grep-jshint.sh jshint-add-complexity.sh jshint-analyse-complexity.sh jshint-json.sh jshint-js.sh jshint-set-complexity-js.sh jshint-tests.sh
 
 JSOPTS="--verbose --show-non-errors"
 

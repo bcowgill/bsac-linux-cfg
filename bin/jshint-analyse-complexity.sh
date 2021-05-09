@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # analyse the jshint maxcomplexity output for statistics
+# See also grep-jshint.sh jshint-add-complexity.sh jshint-analyse-complexity.sh jshint-json.sh jshint-js.sh jshint-set-complexity-js.sh jshint-tests.sh
 export MODULE=$1
 export SERIES=$2
 export MAX=$3

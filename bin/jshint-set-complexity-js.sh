@@ -2,6 +2,7 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # jshint-set-complexity-js.sh [complexity:1] files
 # update any maxcomplexity jshint settings within javascript files.
+# See also grep-jshint.sh jshint-add-complexity.sh jshint-analyse-complexity.sh jshint-json.sh jshint-js.sh jshint-set-complexity-js.sh jshint-tests.sh
 
 function usage {
     echo "
