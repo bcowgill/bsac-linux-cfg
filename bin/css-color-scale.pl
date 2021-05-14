@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-# ./css-color-scale.pl > xxx.css 2> xxx.js
 
 use strict;
 use warnings;
@@ -19,24 +18,36 @@ sub usage
 
 	say("$msg\n\n") if $msg;
 	say(<<"USAGE");
-usage: $cmd [--help|--man|-?] filename...
+usage: $cmd [--help|--man|-?] [hex | red green blue] [color-name] [js-file] [css-file]
 
-TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests
+Generates a 9 point CSS color scale given a specific color value based on the 100 to 900 weights idea of tailwind.css.  The CSS definitions will be printed to standard output or a file.  The Javascript definitions will be printed to standard error or a file.
 
-This program will ...
-
-filename    files to process instead of standard input.
+hex         a single hex color value # is optional
+red         the red color value 0-255
+green       the green color value 0-255
+blue        the blue color value 0-255
+color-name  the name to give the color in the output CSS/JS. defaults to MYCOLOR
+js-file     file to write javascript color definition to. Detects .js
+css-file    file to write css color definition to.
 --help      shows help for this program.
 --man       shows help for this program.
 -?          shows help for this program.
 
-More details...
+The color scale will range from the maximum possible CSS color value which intersects the color value given to one ninth of that value.  The output will be weighted from 100 to 900 with 100 being the darkest and 900 the brightest version of the color.  The given color may not fall on one of those weights but will be available in the CSS and JS output exactly.
 
-See also ...
+The color name will be lowercased for output to CSS.  A dash in the color name becomes an _ for Javascript output.
+
+See also filter-css-colors.pl invert-css-color.pl find-css.sh all-debug-css.sh css-diagnose.sh debug-css.sh
 
 Example:
 
-$cmd filename...
+$cmd 45 233 34 > color.css 2> color.js
+
+  defines a Javascript color set MYCOLOR in color.js and a CSS color set mycolor in color.css
+
+$cmd \#123 MY-COLOR mycolor.css my-color.js
+
+  defines a Javascript color set MY_COLOR.color = '#123' in my-color.js and a CSS color set my-color-100 to my-color-900 in mycolor.css
 
 USAGE
 	exit($msg ? 1: 0);
@@ -44,25 +55,40 @@ USAGE
 
 our $VERSION = 0.1;
 our $DEBUG = 1;
-our $SKIP = 0;
 
-our $TESTING = 0;
-our $TEST_CASES = 10;
-# prove command sets HARNESS_ACTIVE in ENV
-tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
+our $the_color;
+our $has_rgb = 0;
+our $has_outfiles = 0;
+our $say_fh;
+our $speak_fh;
 
-if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+usage() unless scalar(@ARGV);
+if ($ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage();
 }
 
 sub check_args
 {
-	# usage('You must provide a file matching pattern.') unless $pattern;
-	# usage('You must provide a destination file name prefix.') unless $prefix;
+	if (scalar(@ARGV) >= 3)
+	{
+		if ("$ARGV[0]$ARGV[1]$ARGV[2]" =~ m{\A[0-9]+\z}xms)
+		{
+			check_color_value($ARGV[0]);
+			check_color_value($ARGV[1]);
+			check_color_value($ARGV[2]);
+			$has_rgb = 1;
+		}
+	} elsif ($ARGV[0] !~ m{\A\#?[0-9a-f]{3,6}\z}xms)
+	{
+		usage('You must provide a CSS color as a single hex value or three rgb values from 0..255.')
+	}
+}
 
-	# failure("source [$source] must be an existing directory.") unless -d $source;
-	# failure("destination [$destination] must be an existing directory.") unless -d $destination;
+sub check_color_value
+{
+	my ($val) = @ARG;
+	usage("You must provide a CSS color value from 0..255, not $val") if $val > 255;
 }
 
 sub main
@@ -70,21 +96,71 @@ sub main
 	check_args();
 	eval
 	{
-		process_color('mycolor', 100, 50, 25);
+		my ($red, $green, $blue);
+		if ($has_rgb)
+		{
+			($red, $green, $blue) = ($ARGV[0], $ARGV[1], $ARGV[2]);
+			$the_color = "rgb($red, $green, $blue)";
+			shift @ARGV; shift @ARGV;
+		}
+		else
+		{
+			($red, $green, $blue) = hex_to_rgb_vector($ARGV[0]);
+			$the_color = $ARGV[0];
+		}
+		shift @ARGV;
+		my $name = shift @ARGV;
+		my $js_file = shift @ARGV || '';
+		my $css_file = shift @ARGV || '';
+
+		if ($name =~ m{\A\d+\z}xms)
+		{
+			usage('You must provide a CSS color as a single hex value or three rgb values from 0..255.')
+		}
+
+		if ($name =~ m{\.}xmsi)
+		{
+			usage('You provided too many parameters.') if $css_file;
+			$css_file = $name;
+			$name = '';
+		}
+		usage('You provided too many parameters.') if scalar(@ARGV);
+
+		if ($css_file =~ m{\.js}xmsi)
+		{
+			my $temp = $css_file;
+			$css_file = $js_file;
+			$js_file = $temp;
+		}
+
+		if ($js_file || $css_file)
+		{
+			$has_outfiles = 1;
+			open($speak_fh, '>', $js_file) if $js_file;
+			open($say_fh, '>', $css_file) if $css_file;
+		}
+		process_color($name || 'MYCOLOR', $red, $green, $blue);
 	};
 	if ($EVAL_ERROR)
 	{
 		debug("catch from main: $EVAL_ERROR", 1);
-		say($EVAL_ERROR);
+		warning($EVAL_ERROR);
 	}
 } # main()
 
 sub process_color
 {
 	my ($name, $base_red, $base_green, $base_blue) = @ARG;
+	my $jsname = $name;
+	$jsname =~ s{-}{_}xmsg;
 
-	output_css($name, $base_red, $base_green, $base_blue);
-	output_js($name, $base_red, $base_green, $base_blue);
+	if (!defined($base_green))
+	{
+		($base_red, $base_green, $base_blue) = hex_to_rgb_vector($base_red);
+	}
+
+	output_css(lc($name), $base_red, $base_green, $base_blue);
+	output_js($jsname, $base_red, $base_green, $base_blue);
 }
 
 # compute maximum intensity of color possible given a base color point.
@@ -140,6 +216,7 @@ sub output_css
 	my ($red, $green, $blue) = maximise_color($base_red, $base_green, $base_blue);
 
 	# output weighted 100-900 colors for CSS color, background color, border color, etc like tailwind.
+	say("/* A tailwind css like color scale for $name = $the_color */\n");
 	foreach my $property (@properties)
 	{
 		say("\n/* === $property rules */\n");
@@ -168,16 +245,20 @@ sub output_pseudo_color_css
 {
 	my ($pseudo, $property, $prefix, $name, $red, $green, $blue, $suffix) = @ARG;
 	$suffix = $suffix ? "-$suffix" : '';
+	my $rgb = rgb_out($red, $green, $blue);
+	my $hex = rgb_to_hex($red, $green, $blue);
 
-	say(".$pseudo$colon$prefix-$name$suffix:$pseudo { $property: @{[rgb_out($red, $green, $blue)]}; }\n");
+	say(".$pseudo$colon$prefix-$name$suffix:$pseudo { $property: $hex; /* $rgb */ }\n");
 }
 
 sub output_color_css
 {
 	my ($property, $prefix, $name, $red, $green, $blue, $suffix) = @ARG;
 	$suffix = $suffix ? "-$suffix" : '';
+	my $rgb = rgb_out($red, $green, $blue);
+	my $hex = rgb_to_hex($red, $green, $blue);
 
-	say(".$prefix-$name$suffix { $property: @{[rgb_out($red, $green, $blue)]}; }\n");
+	say(".$prefix-$name$suffix { $property: $hex; /* $rgb */ }\n");
 }
 
 sub output_js
@@ -187,6 +268,7 @@ sub output_js
 	my ($red, $green, $blue) = maximise_color($base_red, $base_green, $base_blue);
 
 	# output weighted 100-900 colors of JS color values.
+	speak("// A tailwind css like color scale\n");
 	speak("\nexport const $name = \n{\n");
 	output_color_js($name, $base_red, $base_green, $base_blue);
 	foreach my $weight (@weights)
@@ -201,14 +283,38 @@ sub output_color_js
 {
 	my ($name, $red, $green, $blue, $suffix) = @ARG;
 	$suffix = $suffix ? $suffix : 'color';
+	my $rgb = rgb_out($red, $green, $blue);
+	my $hex = rgb_to_hex($red, $green, $blue);
 
-	speak(tab(qq{\t"$suffix": "@{[rgb_out($red, $green, $blue)]}",\n}));
+	speak(tab(qq{\t"$suffix": "$hex", // $rgb\n}));
 }
 
 sub rgb_out
 {
 	my ($red, $green, $blue) = @ARG;
 	return qq{rgb($red, $green, $blue)};
+}
+
+sub rgb_to_hex
+{
+	my ($red, $green, $blue) = @ARG;
+	my $hash_color = '#' . to_hex($red) . to_hex($green) . to_hex($blue);
+	$hash_color =~ s{([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3}{$1$2$3}xmsi;
+	return $hash_color;
+}
+
+sub to_hex
+{
+	my ($val) = @ARG;
+	return sprintf("%02x", $val);
+}
+
+sub hex_to_rgb_vector
+{
+	my ($hex) = @ARG;
+	$hex =~ s{\A\#?([0-9a-f])([0-9a-f])([0-9a-f])\z}{$1$1$2$2$3$3}xmsi;
+	$hex =~ m{\A\#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\z}xmsi;
+	return (hex($1), hex($2), hex($3));
 }
 
 # make tabs 3 spaces
@@ -236,14 +342,7 @@ sub debug
 	if ( $DEBUG >= $level )
 	{
 		$message = tab($msg) . "\n";
-		if ($TESTING)
-		{
-			diag(qq{DEBUG: $message});
-		}
-		else
-		{
-			print $message
-		}
+		print $message
 	}
 	return $message
 } # debug()
@@ -252,27 +351,20 @@ sub warning
 {
 	my ($warning) = @ARG;
 	my $message = "WARN: " . tab($warning) . "\n";
-	if ($TESTING)
-	{
-		diag( $message );
-	}
-	else
-	{
-		warn( $message );
-	}
+	warn( $message );
 	return $message;
 } # warning()
 
 sub say
 {
 	my ($message) = @ARG;
-	if ($TESTING)
-	{
-		diag( $message );
-	}
-	else
+	if (!$has_outfiles)
 	{
 		print $message;
+	}
+	elsif ($say_fh)
+	{
+		print $say_fh $message;
 	}
 	return $message;
 }
@@ -280,100 +372,17 @@ sub say
 sub speak
 {
 	my ($message) = @ARG;
-	if ($TESTING)
-	{
-		diag( $message );
-	}
-	else
+	if (!$has_outfiles)
 	{
 		print STDERR $message;
+	}
+	elsif ($speak_fh)
+	{
+		print $speak_fh $message;
 	}
 	return $message;
 }
 
 main();
 
-#===========================================================================
-# unit test functions
-#===========================================================================
-
-sub test_say
-{
-	my ($expect, $message) = @ARG;
-	my $result = say($message);
-	is($result, $expect, "say: [$message] == [$expect]");
-}
-
-sub test_tab
-{
-	my ($expect, $message) = @ARG;
-
-	my $result = tab($message);
-	is($result, $expect, "tab: [$message] == [$expect]");
-}
-
-sub test_warning
-{
-	my ($expect, $message) = @ARG;
-	my $result = warning($message);
-	is($result, $expect, "warning: [$message] == [$expect]");
-}
-
-sub test_debug
-{
-	my ($expect, $message, $level) = @ARG;
-	my $result = debug($message, $level);
-	is($result, $expect, "debug: [$message, $level] == [@{[$expect || 'undef']}]");
-}
-
-sub test_failure
-{
-	my ($expect, $message) = @ARG;
-
-	my $result;
-	eval {
-		failure($message);
-	};
-	if ($EVAL_ERROR)
-	{
-		$result = $EVAL_ERROR;
-	}
-	is($result, $expect, "failure: [$message] == [$expect]");
-} # test_failure()
-
-#===========================================================================
-# unit test suite helper functions
-#===========================================================================
-
-# setup / teardown and other helpers specific to this test suite
-# see auto-rename.pl for setup of lock dirs etc.
-
-#===========================================================================
-# unit test library functions
-#===========================================================================
-
-# see auto-rename.pl for a wide variety of test assertions for files, directories, etc.
-
-#===========================================================================
-# unit test suite
-#===========================================================================
-
-sub tests
-{
-	$TESTING = 1;
-
-	eval "use Test::More tests => $TEST_CASES;";
-	eval "use Test::Exception;";
-
-	test_say("Hello, there", "Hello, there") unless $SKIP;
-	test_tab("         Hello", "\t\t\tHello") unless $SKIP;
-	test_warning("WARN: WARNING, OH MY!\n", "WARNING, OH MY!") unless $SKIP;
-	test_debug(undef, "DEBUG, OH MY!", 10000) unless $SKIP;
-	test_debug("DEBUG, OH MY!\n", "DEBUG, OH MY!", -10000) unless $SKIP;
-	test_failure("ERROR: FAILURE, OH MY!\n", "FAILURE, OH MY!") unless $SKIP;
-	exit 0;
-}
-
 __END__
-__DATA__
-I am the data.

@@ -183,7 +183,7 @@ filter-css-colors.pl [options] [@options-file ...] [file ...]
 
 	CSS Color specs L<http://www.w3.org/TR/css3-color/>
 
-	all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
+	all-debug-css.sh, css-diagnose.sh, debug-css.sh, css-color-scale.pl, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 	fix-commas.pl, JSTOOLS
 
 =head1 EXAMPLES

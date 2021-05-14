@@ -21,7 +21,7 @@ file    files to process instead of standard input.
 
 More detail ...
 
-# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, filter-css-colors.pl, find-css.sh, invert-css-color.pl
+# See also all-debug-css.sh, css-diagnose.sh, debug-css.sh, css-color-scale.pl, filter-css-colors.pl, find-css.sh, invert-css-color.pl
 
 USAGE
 	exit 0;
