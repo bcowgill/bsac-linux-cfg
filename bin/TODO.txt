@@ -1,4 +1,4 @@
-Currently css-color-scale.pl for creating custom color scales in CSS and JS like tailwind.
+Currently css-color-scale.pl for creating custom color scales in CSS and JS like tailwind. need to install tailwind and see how hover: classes are craeted.
 Currently template/css trying to do light/dark mode change based on prefers-. media query and user selection.
 Currently template/css going through tips/tricks listed in README
 Currently mocha-dark - update css to current version
