@@ -11,6 +11,8 @@ $Data::Dumper::Terse    = 1;
 
 use FindBin;
 
+my $max_weight = 900;
+
 sub usage
 {
 	my ($msg) = @ARG;
@@ -20,8 +22,9 @@ sub usage
 	say(<<"USAGE");
 usage: $cmd [--help|--man|-?] [hex | red green blue] [color-name] [js-file] [css-file]
 
-Generates a 9 point CSS color scale given a specific color value based on the 100 to 900 weights idea of tailwind.css.  The CSS definitions will be printed to standard output or a file.  The Javascript definitions will be printed to standard error or a file.
+Generates a 9 point CSS color scale given a specific color value based on the 100 to $max_weight weights idea of tailwind.css.  The CSS definitions will be printed to standard output or a file.  The Javascript definitions will be printed to standard error or a file.
 
+USE_COLOR   environment variable set to prevent maximising the color value along its vector.
 hex         a single hex color value # is optional
 red         the red color value 0-255
 green       the green color value 0-255
@@ -33,7 +36,9 @@ css-file    file to write css color definition to.
 --man       shows help for this program.
 -?          shows help for this program.
 
-The color scale will range from the maximum possible CSS color value which intersects the color value given to one ninth of that value.  The output will be weighted from 100 to 900 with 100 being the darkest and 900 the brightest version of the color.  The given color may not fall on one of those weights but will be available in the CSS and JS output exactly.
+The color scale will range from the maximum possible CSS color value which intersects the color value given to one ninth of that value.  The output will be weighted from 100 to $max_weight with 100 being the darkest and $max_weight the brightest version of the color.  The given color may not fall on one of those weights but will be available in the CSS and JS output exactly.
+
+By default the color will be maxmised along its vector but if USE_COLOR environment variable is true then the color itself will be used for weight $max_weight and all other values will be a fraction of the given color.
 
 The color name will be lowercased for output to CSS.  A dash in the color name becomes an _ for Javascript output.
 
@@ -47,7 +52,7 @@ $cmd 45 233 34 > color.css 2> color.js
 
 $cmd \#123 MY-COLOR mycolor.css my-color.js
 
-  defines a Javascript color set MY_COLOR.color = '#123' in my-color.js and a CSS color set my-color-100 to my-color-900 in mycolor.css
+  defines a Javascript color set MY_COLOR.color = '#123' in my-color.js and a CSS color set my-color-100 to my-color-$max_weight in mycolor.css
 
 USAGE
 	exit($msg ? 1: 0);
@@ -57,6 +62,7 @@ our $VERSION = 0.1;
 our $DEBUG = 1;
 
 our $the_color;
+our $normalise = !$ENV{USE_COLOR};
 our $has_rgb = 0;
 our $has_outfiles = 0;
 our $say_fh;
@@ -163,11 +169,15 @@ sub process_color
 	output_js($jsname, $base_red, $base_green, $base_blue);
 }
 
-# compute maximum intensity of color possible given a base color point.
+# compute maximum 255 intensity of color possible given a base color point.
+# if $normalise is false then the color itself is used, which may exceed the 255 intensity
 sub maximise_color
 {
 	my ($red, $green, $blue) = @ARG;
 
+	if (!$normalise) {
+		return ($red, $green, $blue);
+	}
 	my $magnitude = sqrt($red*$red + $green*$green + $blue*$blue);
 	$red = round(255 * $red / $magnitude);
 	$green = round(255 * $green / $magnitude);
@@ -178,9 +188,9 @@ sub maximise_color
 sub scale_color
 {
 	my ($weight, $red, $green, $blue) = @ARG;
-	$red = round($red * $weight / 900);
-	$green = round($green * $weight / 900);
-	$blue = round($blue * $weight / 900);
+	$red = round($red * $weight / $max_weight);
+	$green = round($green * $weight / $max_weight);
+	$blue = round($blue * $weight / $max_weight);
 	return ($red, $green, $blue);
 }
 
