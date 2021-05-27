@@ -197,6 +197,12 @@ echo "🔵	U+1F535	[OtherSymbol]	LARGE BLUE CIRCLE"
 echo "◯	U+25EF	[OtherSymbol]	LARGE CIRCLE"
 echo "⬤	U+2B24	[OtherSymbol]	BLACK LARGE CIRCLE"
 
+echo "‘Assistant’ English with “quotation” marks and apostrophe’s"
+echo "「醫療熱線」Chinese with quotation marks"
+echo "„Gesundheitsassistent“ German with quotation marks"
+echo "‘con gas’ Italian with quotation marks"
+echo "« assistant de santé » French with quotation marks"
+echo "«Asistente de Salud» Spanish with quotation marks"
 exit
 ␀	U+2400	[OtherSymbol]	SYMBOL FOR NULL
 ␁	U+2401	[OtherSymbol]	SYMBOL FOR START OF HEADING

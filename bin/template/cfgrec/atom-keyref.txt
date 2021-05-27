@@ -251,4 +251,49 @@ change-case uses
   C-k C-c camelCase
   C-k C-s snake_case
 atom-change-case-menu has no hotkeys but many change modes.
+  My manual key binding:
+	C-k C-v variableNameCase (camelCase)
+  C-k C-k kebab-case
+  C-k C-o ObjectCase (PascalCase)
+  C-k C-s snake_case
+  C-k C-c CONSTANT_CASE
+	C-k C-~ fLIP cASE
 
+	C-k C-l Atom lower-case
+	C-k C-u Atom upper-case
+
+Not enough free keys to get what you want.
+'atom-workspace':
+	'cmd-k cmd-v': 'change-case-menu:camel'
+	'cmd-k cmd-k': 'change-case-menu:param'
+	'cmd-k cmd-o': 'change-case-menu:pascal'
+	'cmd-k cmd-s': 'change-case-menu:snake'
+	'cmd-k cmd-t': 'change-case-menu:constant'
+	'cmd-k cmd-p': 'change-case-menu:swap'
+	xyzzy-xyssy
+	xyzzy_xyssy
+	xyzzy_xyssy
+
+packages being enabled to see which one causes save problem
+	-- may 27
+	editorconfig
+  duplicate-line-or-selection
+  docblockr
+  directory-color
+	-- may 26
+	gherkin-autocomplete
+	file-icons
+	es6-snippets
+	-- may 25
+	hyperclick
+	language-babel
+	highlight-selected
+	-- may 24
+	markdown-document
+	line-number-color
+
+mkdir -p src/components/Visibility/__stories__/Visibility.stories.js
+rmdir src/components/Visibility/__stories__/Visibility.stories.js
+touch src/components/Visibility/__stories__/Visibility.stories.js
+touch src/components/Visibility/Visibility.js
+ga src/components/Visibility/Visibility.js src/components/Visibility/__stories__/Visibility.stories.js
