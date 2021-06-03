@@ -19,6 +19,17 @@ if [ -z "$SUM" ]; then
 fi
 #echo SUM=$SUM
 
+add-checksums () {
+  SUM=$SUM perl -pne '
+    my @split = split(/\s+->\s+/, $_);
+    my $file = $split[0];
+    my @checksum = split(/\s+/, `$ENV{SUM} $file`);
+    pop(@checksum);
+    my $checksum = join(" ", @checksum);
+    $_ = qq{$checksum $_}
+  ' | sort
+}
+
 find-sum () {
 	local sourceDir
 	sourceDir="$1"
@@ -33,26 +44,25 @@ find-sum () {
 		# 714223608 303 config.js
 		pushd "$sourceDir" > /dev/null \
 			&& pwd | perl -pne 's{\A.+/(src/)}{$1}xms' \
-			&& find -s . \( -type f -o -type l \) -exec ls -lh {} \; \
+			&& find . \( -type f -o -type l \) -exec ls -lh {} \; \
 			| grep -v DS_Store \
-			| perl -pne 's{\A.+?\s+(\./)}{$1}xms' \
-			| SUM=$SUM perl -pne 'm{\A(\S+)}xms; my @checksum = split(/\s+/, `$ENV{SUM} $1`); $_ = qq{$checksum[0] $_}' \
+			| perl -pne '
+        chomp;
+        s{\A.+?\s+(\./)}{$1}xms;
+        $_ = qq{"$_"\n};
+        s{(\s+->\s+)}{"$1"}xms
+      ' \
+			| add-checksums \
 		&& popd > /dev/null
 	else
 		# linux output:
 		# lrwxrwxrwx 1 me me 8 Jun  3 11:39 ./xxx.lse -> list.txt
 		# -rw-rw-r-- 1 me me 9 Jun  3 11:37 ./list.txt
 		pushd "$sourceDir" > /dev/null \
+      && pwd | perl -pne 's{\A.+/(src/)}{$1}xms' \
 			&& find . \( -type f -o -type l \) -printf '"%h/%f" -> "%l"\n' \
 			| perl -pne 's{\s+->\s+""}{}xms' \
-			| SUM=$SUM perl -pne '
-				my @split = split(/\s+->\s+/, $_);
-				my $file = $split[0];
-				my @checksum = split(/\s+/, `$ENV{SUM} $file`);
-				pop(@checksum);
-				my $checksum = join(" ", @checksum);
-				$_ = qq{$checksum $_}
-			' | sort \
+			| add-checksums \
 		&& popd > /dev/null
 	fi
 }
