@@ -274,23 +274,32 @@ Not enough free keys to get what you want.
 	xyzzy_xyssy
 	xyzzy_xyssy
 
-packages being enabled to see which one causes save problem
-	-- may 27
-	editorconfig
-  duplicate-line-or-selection
-  docblockr
-  directory-color
-	-- may 26
-	gherkin-autocomplete
-	file-icons
-	es6-snippets
-	-- may 25
-	hyperclick
-	language-babel
-	highlight-selected
-	-- may 24
-	markdown-document
-	line-number-color
+	packages being enabled to see which one causes save problem
+  color-whitespace - causes inability to save files - keeps showing as changed right after a save
+  -- jun 3
+  autoclose
+  atom-wrap-in-tag
+  atom-ternjs
+  atom-name-that-color
+  atom-json-color
+  -- jun 2
+  autocomplete-math
+  autocomplete-json
+  autocomplete-date
+  autocomplete
+  autoclose-html
+  pigments
+	-- jun 1
+  color-picker
+  color-indent
+  case-keep-replace
+  autocomplete-ramda
+  autocomplete-modules
+  -- may 28
+  cursor-index
+  css-snippets
+  css-color-name
+  copy-path
 
 mkdir -p src/components/Visibility/__stories__/Visibility.stories.js
 rmdir src/components/Visibility/__stories__/Visibility.stories.js
