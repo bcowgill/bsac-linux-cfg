@@ -239,3 +239,127 @@ exit
 ␠	U+2420	[OtherSymbol]	SYMBOL FOR SPACE
 ␡	U+2421	[OtherSymbol]	SYMBOL FOR DELETE
 ␤	U+2424	[OtherSymbol]	SYMBOL FOR NEWLINE
+
+OTHER - move to unicode sample....
+⌘       U+2318  [OtherSymbol]   PLACE OF INTEREST SIGN (CMD KEY???)
+⌤       U+2324  [OtherSymbol]   UP ARROWHEAD BETWEEN TWO HORIZONTAL BARS (CTRL KEY???)
+⌥       U+2325  [OtherSymbol]   OPTION KEY
+⌦       U+2326  [OtherSymbol]   ERASE TO THE RIGHT
+⌧       U+2327  [OtherSymbol]   X IN A RECTANGLE BOX
+⌨       U+2328  [OtherSymbol]   KEYBOARD
+⌫       U+232B  [OtherSymbol]   ERASE TO THE LEFT
+⎇       U+2387  [OtherSymbol]   ALTERNATIVE KEY SYMBOL
+
+❘
+❙
+❚
+
+❘       U+2758  [OtherSymbol]   LIGHT VERTICAL BAR
+❙       U+2759  [OtherSymbol]   MEDIUM VERTICAL BAR
+❚       U+275A  [OtherSymbol]   HEAVY VERTICAL BAR
+
+█
+▉
+▊
+▋
+▌
+▍
+▎
+▏
+
+▕
+▐
+█
+
+█       U+2588  [OtherSymbol]   FULL BLOCK
+▉       U+2589  [OtherSymbol]   LEFT SEVEN EIGHTHS BLOCK
+▊       U+258A  [OtherSymbol]   LEFT THREE QUARTERS BLOCK
+▋       U+258B  [OtherSymbol]   LEFT FIVE EIGHTHS BLOCK
+▌       U+258C  [OtherSymbol]   LEFT HALF BLOCK
+▍       U+258D  [OtherSymbol]   LEFT THREE EIGHTHS BLOCK
+▎       U+258E  [OtherSymbol]   LEFT ONE QUARTER BLOCK
+▏       U+258F  [OtherSymbol]   LEFT ONE EIGHTH BLOCK
+
+█       U+2588  [OtherSymbol]   FULL BLOCK
+▐       U+2590  [OtherSymbol]   RIGHT HALF BLOCK
+▕       U+2595  [OtherSymbol]   RIGHT ONE EIGHTH BLOCK
+
+█▀▔ ▁▂▃▄▅▆▇█
+
+▁       U+2581  [OtherSymbol]   LOWER ONE EIGHTH BLOCK
+▂       U+2582  [OtherSymbol]   LOWER ONE QUARTER BLOCK
+▃       U+2583  [OtherSymbol]   LOWER THREE EIGHTHS BLOCK
+▄       U+2584  [OtherSymbol]   LOWER HALF BLOCK
+▅       U+2585  [OtherSymbol]   LOWER FIVE EIGHTHS BLOCK
+▆       U+2586  [OtherSymbol]   LOWER THREE QUARTERS BLOCK
+▇       U+2587  [OtherSymbol]   LOWER SEVEN EIGHTHS BLOCK
+█       U+2588  [OtherSymbol]   FULL BLOCK
+
+█       U+2588  [OtherSymbol]   FULL BLOCK
+▀       U+2580  [OtherSymbol]   UPPER HALF BLOCK
+▔       U+2594  [OtherSymbol]   UPPER ONE EIGHTH BLOCK
+
+▗▖
+▝▘
+
+▞▚
+▚▞
+
+
+▟▙
+▜▛
+
+▖       U+2596  [OtherSymbol]   QUADRANT LOWER LEFT
+▗       U+2597  [OtherSymbol]   QUADRANT LOWER RIGHT
+▘       U+2598  [OtherSymbol]   QUADRANT UPPER LEFT
+▙       U+2599  [OtherSymbol]   QUADRANT UPPER LEFT AND LOWER LEFT AND LOWER RIGHT
+▚       U+259A  [OtherSymbol]   QUADRANT UPPER LEFT AND LOWER RIGHT
+▛       U+259B  [OtherSymbol]   QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER LEFT
+▜       U+259C  [OtherSymbol]   QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER RIGHT
+▝       U+259D  [OtherSymbol]   QUADRANT UPPER RIGHT
+▞       U+259E  [OtherSymbol]   QUADRANT UPPER RIGHT AND LOWER LEFT
+▟       U+259F  [OtherSymbol]   QUADRANT UPPER RIGHT AND LOWER LEFT AND LOWER RIGHT
+
+░       U+2591  [OtherSymbol]   LIGHT SHADE
+▒       U+2592  [OtherSymbol]   MEDIUM SHADE
+▓       U+2593  [OtherSymbol]   DARK SHADE
+
+⎅       U+2385  [OtherSymbol]   WHITE SQUARE WITH CENTRE VERTICAL LINE
+◧       U+25E7  [OtherSymbol]   SQUARE WITH LEFT HALF BLACK
+◨       U+25E8  [OtherSymbol]   SQUARE WITH RIGHT HALF BLACK
+◩       U+25E9  [OtherSymbol]   SQUARE WITH UPPER LEFT DIAGONAL HALF BLACK
+◪       U+25EA  [OtherSymbol]   SQUARE WITH LOWER RIGHT DIAGONAL HALF BLACK
+◫       U+25EB  [OtherSymbol]   WHITE SQUARE WITH VERTICAL BISECTING LINE
+■       U+25A0  [OtherSymbol]   BLACK SQUARE
+□       U+25A1  [OtherSymbol]   WHITE SQUARE
+▢       U+25A2  [OtherSymbol]   WHITE SQUARE WITH ROUNDED CORNERS
+▣       U+25A3  [OtherSymbol]   WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+▤       U+25A4  [OtherSymbol]   SQUARE WITH HORIZONTAL FILL
+▥       U+25A5  [OtherSymbol]   SQUARE WITH VERTICAL FILL
+▦       U+25A6  [OtherSymbol]   SQUARE WITH ORTHOGONAL CROSSHATCH FILL
+▧       U+25A7  [OtherSymbol]   SQUARE WITH UPPER LEFT TO LOWER RIGHT FILL
+▨       U+25A8  [OtherSymbol]   SQUARE WITH UPPER RIGHT TO LOWER LEFT FILL
+▩       U+25A9  [OtherSymbol]   SQUARE WITH DIAGONAL CROSSHATCH FILL
+▪       U+25AA  [OtherSymbol]   BLACK SMALL SQUARE
+▫       U+25AB  [OtherSymbol]   WHITE SMALL SQUARE
+▬       U+25AC  [OtherSymbol]   BLACK RECTANGLE
+▭       U+25AD  [OtherSymbol]   WHITE RECTANGLE
+▮       U+25AE  [OtherSymbol]   BLACK VERTICAL RECTANGLE
+▯       U+25AF  [OtherSymbol]   WHITE VERTICAL RECTANGLE
+◰       U+25F0  [OtherSymbol]   WHITE SQUARE WITH UPPER LEFT QUADRANT
+◱       U+25F1  [OtherSymbol]   WHITE SQUARE WITH LOWER LEFT QUADRANT
+◲       U+25F2  [OtherSymbol]   WHITE SQUARE WITH LOWER RIGHT QUADRANT
+◳       U+25F3  [OtherSymbol]   WHITE SQUARE WITH UPPER RIGHT QUADRANT
+⬒       U+2B12  [OtherSymbol]   SQUARE WITH TOP HALF BLACK
+⬓       U+2B13  [OtherSymbol]   SQUARE WITH BOTTOM HALF BLACK
+⬔       U+2B14  [OtherSymbol]   SQUARE WITH UPPER RIGHT DIAGONAL HALF BLACK
+⬕       U+2B15  [OtherSymbol]   SQUARE WITH LOWER LEFT DIAGONAL HALF BLACK
+⬚       U+2B1A  [OtherSymbol]   DOTTED SQUARE
+<U+2B1B>        U+2B1B  [OtherSymbol]   BLACK LARGE SQUARE
+<U+2B1C>        U+2B1C  [OtherSymbol]   WHITE LARGE SQUARE
+<U+2B1D>        U+2B1D  [OtherSymbol]   BLACK VERY SMALL SQUARE
+<U+2B1E>        U+2B1E  [OtherSymbol]   WHITE VERY SMALL SQUARE
+❏       U+274F  [OtherSymbol]   LOWER RIGHT DROP-SHADOWED WHITE SQUARE
+❐       U+2750  [OtherSymbol]   UPPER RIGHT DROP-SHADOWED WHITE SQUARE
+❑       U+2751  [OtherSymbol]   LOWER RIGHT SHADOWED WHITE SQUARE
+❒       U+2752  [OtherSymbol]   UPPER RIGHT SHADOWED WHITE SQUARE

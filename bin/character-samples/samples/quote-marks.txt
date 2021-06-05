@@ -1,0 +1,67 @@
+TODO items present...
+
+Special Quotation Mark characters and abuses thereof.
+
+-- indicates aberrations or misuse of characters because of limited characters available in the early days of computing.
+
+U+22          "non-sided double quotes" [OtherPunctuation] QUOTATION MARK
+
+U+27          'non-sided single quotes' [OtherPunctuation] APOSTROPHE -- computing aberration
+
+U+60          `non-sided single accent grave quotes` [ModifierSymbol] GRAVE ACCENT -- computing aberration
+
+U+60   U+B4   `left-right single accent grave-acute quotes´ [ModifierSymbol] GRAVE/ACUTE ACCENT -- computing aberration
+
+U+AB   U+BB   «left-right double angle quotes» [InitialPunctuation] [FinalPunctuation] LEFT/RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK
+
+U+2018 U+2019 ‘left-right single quotes’ [InitialPunctuation] [FinalPunctuation] LEFT/RIGHT SINGLE QUOTATION MARK
+
+U+201C U+201D “left-right double quotes” [InitialPunctuation] [FinalPunctuation] LEFT/RIGHT DOUBLE QUOTATION MARK
+
+U+2035 U+2032 ‵left-right prime quotes′ [OtherPunctuation] [REVERSED] PRIME -- incorrect usage
+
+U+2036 U+2033 ‶left-right double prime quotes″ [OtherPunctuation] [REVERSED] DOUBLE PRIME -- incorrect usage
+
+U+2037 U+2034 ‷left-right triple prime quotes‴ [OtherPunctuation] [REVERSED] TRIPLE PRIME -- incorrect usage
+
+U+2039 U+203A ‹left-right single angle quotes› [InitialPunctuation] [FinalPunctuation] SINGLE LEFT/RIGHT-POINTING ANGLE QUOTATION MARK
+
+U+275B U+275C ❛left-right single comma quotes❜ [OtherSymbol] HEAVY SINGLE [TURNED] COMMA QUOTATION MARK ORNAMENT
+
+U+275D U+275E ❝left-right double comma quotes❞ [OtherSymbol] HEAVY DOUBLE [TURNED] COMMA QUOTATION MARK ORNAMENT
+
+U+275F        ❟non-sided low comma quotes❟ [OtherSymbol] HEAVY LOW SINGLE COMMA QUOTATION MARK ORNAMENT
+
+U+2760        ❠non-sided wider low double comma quotes❠ [OtherSymbol] HEAVY LOW DOUBLE COMMA QUOTATION MARK ORNAMENT
+
+U+276E U+276F ❮left-right wider large angle quotes❯ [OpenPunctuation] [ClosePunctuation] HEAVY LEFT/RIGHT-POINTING ANGLE QUOTATION MARK ORNAMENT
+
+U+301D U+301E 〝left-right full-width double prime quotes〞 [OpenPunctuation] [ClosePunctuation] [REVERSED] DOUBLE PRIME QUOTATION MARK
+
+U+FF02         ＂non-sided full-width double quotes＂[OtherPunctuation] FULLWIDTH QUOTATION MARK
+
+
+TODO ??? what is proper usage of these? -- find a unicode site which explains how they should be used.
+
+U+201A U+201B ‚left-right single low-high quotes‛ [OpenPunctuation] [InitialPunctuation] SINGLE LOW-9 QUOTATION MARK / SINGLE HIGH-REVERSED-9 QUOTATION MARK
+
+U+201E U+201F „left-right double low-high quotes‟ [OpenPunctuation] [InitialPunctuation] DOUBLE LOW-9 QUOTATION MARK / DOUBLE HIGH-REVERSED-9 QUOTATION MARK
+
+U+301D U+301F 〝left-right full-width high-low double prime quotes〟[OpenPunctuation] [ClosePunctuation] REVERSED/LOW DOUBLE PRIME QUOTATION MARK
+
+⍘	U+2358	[OtherSymbol]	APL FUNCTIONAL SYMBOL QUOTE UNDERBAR
+⍞	U+235E	[OtherSymbol]	APL FUNCTIONAL SYMBOL QUOTE QUAD
+
+	U+E0022	[Format]	TAG QUOTATION MARK
+
+TODO Additional incorrect.
+˴       U+2F4   [ModifierSymbol]        MODIFIER LETTER MIDDLE GRAVE ACCENT
+
+˵       U+2F5   [ModifierSymbol]        MODIFIER LETTER MIDDLE DOUBLE GRAVE ACCENT
+˶       U+2F6   [ModifierSymbol]        MODIFIER LETTER MIDDLE DOUBLE ACUTE ACCENT
+
+＇      U+FF07  [OtherPunctuation]      FULLWIDTH APOSTROPHE
+｀      U+FF40  [ModifierSymbol]        FULLWIDTH GRAVE ACCENT
+
+˝       U+2DD   [ModifierSymbol]        DOUBLE ACUTE ACCENT
+⁗       U+2057  [OtherPunctuation]      QUADRUPLE PRIME

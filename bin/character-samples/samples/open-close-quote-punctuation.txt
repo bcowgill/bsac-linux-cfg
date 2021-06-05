@@ -1,0 +1,319 @@
+
+
+QUOTATION
+
+	‘’	‘   ’	‘U+2018 U+2019 LEFT/RIGHT SINGLE QUOTATION MARK [InitialPunctuation] [FinalPunctuation]’
+
+	’‘	’   ‘	’U+2019 U+2018 LEFT/RIGHT SINGLE QUOTATION MARK [FinalPunctuation] [InitialPunctuation]‘
+
+	‚‘	‚   ‘	‚U+201A U+2018 SINGLE LOW-9 QUOTATION MARK / LEFT SINGLE QUOTATION MARK [OpenPunctuation] [InitialPunctuation]‘
+
+  ODD	‛	U+201B	[InitialPunctuation]	SINGLE HIGH-REVERSED-9 QUOTATION MARK
+
+	❛❜	❛   ❜	❛U+275B U+275C HEAVY SINGLE [TURNED/] COMMA QUOTATION MARK ORNAMENT [OtherSymbol]❜
+
+	❜❛	❜   ❛	❜U+275C U+275B HEAVY SINGLE [/TURNED] COMMA QUOTATION MARK ORNAMENT [OtherSymbol]❛
+
+	❟❟	❟   ❟	❟U+275F U+275F HEAVY LOW SINGLE COMMA QUOTATION MARK ORNAMENT [OtherSymbol]❟
+
+...DOUBLE
+
+	“”	“   ”	“U+201C U+201D LEFT/RIGHT DOUBLE QUOTATION MARK [InitialPunctuation] [FinalPunctuation]”
+
+	”“	”   “	”U+201D U+201C LEFT/RIGHT DOUBLE QUOTATION MARK [FinalPunctuation] [InitialPunctuation]“
+
+	„“	„   “	„U+201E U+201C DOUBLE LOW-9 QUOTATION MARK / LEFT DOUBLE QUOTATION MARK [OpenPunctuation] [InitialPunctuation]“
+
+  ODD	‟	U+201F	[InitialPunctuation]	DOUBLE HIGH-REVERSED-9 QUOTATION MARK
+
+	❝❞	❝   ❞	❝U+275D U+275E HEAVY DOUBLE [TURNED/] COMMA QUOTATION MARK ORNAMENT [OtherSymbol]❞
+
+	❞❝	❞   ❝	❞U+275E U+275D HEAVY DOUBLE [/TURNED] COMMA QUOTATION MARK ORNAMENT [OtherSymbol]❝
+
+	❠❠	❠   ❠	❠U+2760 U+2760 HEAVY LOW DOUBLE COMMA QUOTATION MARK ORNAMENT [OtherSymbol]❠
+
+	〝〞	〝   〞	〝U+301D U+301E [REVERSED/] DOUBLE PRIME QUOTATION MARK [OpenPunctuation] [ClosePunctuation]〞
+
+	〝〟	〝   〟	〝U+301D U+301F REVERSED/LOW DOUBLE PRIME QUOTATION MARK [OpenPunctuation] [ClosePunctuation]〟
+
+...ANGLE
+
+	‹›	‹   ›	‹U+2039 U+203A SINGLE LEFT/RIGHT-POINTING ANGLE QUOTATION MARK [InitialPunctuation] [FinalPunctuation]›
+
+	›‹	›   ‹	›U+203A U+2039 SINGLE LEFT/RIGHT-POINTING ANGLE QUOTATION MARK [FinalPunctuation] [InitialPunctuation]‹
+
+	❮❯	❮   ❯	❮U+276E U+276F HEAVY LEFT/RIGHT-POINTING ANGLE QUOTATION MARK ORNAMENT [OpenPunctuation] [ClosePunctuation]❯
+
+...DOUBLE ANGLE
+
+	«»	«   »	«U+AB   U+BB   LEFT/RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK [InitialPunctuation] [FinalPunctuation]»
+
+	»«	»   «	»U+BB   U+AB   LEFT/RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK [FinalPunctuation] [InitialPunctuation]«
+
+
+
+PARENTHESIS
+
+	()	(   )	(U+28   U+29   LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation])
+
+	⁽⁾	⁽   ⁾	⁽U+207D U+207E SUPERSCRIPT LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation]⁾
+
+	₍₎	₍   ₎	₍U+208D U+208E SUBSCRIPT LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation]₎
+
+	❨❩	❨   ❩	❨U+2768 U+2769 MEDIUM LEFT/RIGHT PARENTHESIS ORNAMENT [OpenPunctuation] [ClosePunctuation]❩
+
+	❪❫	❪   ❫	❪U+276A U+276B MEDIUM FLATTENED LEFT/RIGHT PARENTHESIS ORNAMENT [OpenPunctuation] [ClosePunctuation]❫
+
+	⟮⟯	⟮   ⟯	⟮U+27EE U+27EF MATHEMATICAL LEFT/RIGHT FLATTENED PARENTHESIS [OpenPunctuation] [ClosePunctuation]⟯
+
+	﴾﴿	﴾   ﴿	﴾U+FD3E U+FD3F ORNATE LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation]﴿
+
+	﹙﹚	﹙   ﹚	﹙U+FE59 U+FE5A SMALL LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation]﹚
+
+	（）	（   ）	（U+FF08 U+FF09 FULLWIDTH LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation]）
+
+...DOUBLE
+
+	⸨⸩	⸨   ⸩	⸨U+2E28 U+2E29 LEFT/RIGHT DOUBLE PARENTHESIS [OpenPunctuation] [ClosePunctuation]⸩
+
+...WHITE
+
+	⦅⦆	⦅   ⦆	⦅U+2985 U+2986 LEFT/RIGHT WHITE PARENTHESIS [OpenPunctuation] [ClosePunctuation]⦆
+
+	｟｠	｟   ｠	｟U+FF5F U+FF60 FULLWIDTH LEFT/RIGHT WHITE PARENTHESIS [OpenPunctuation] [ClosePunctuation]｠
+
+
+
+BRACKET
+
+	❲❳	❲   ❳	❲U+2772 U+2773 LIGHT LEFT/RIGHT TORTOISE SHELL BRACKET ORNAMENT [OpenPunctuation] [ClosePunctuation]❳
+
+	⦇⦈	⦇   ⦈	⦇U+2987 U+2988 Z NOTATION LEFT/RIGHT IMAGE BRACKET [OpenPunctuation] [ClosePunctuation]⦈
+
+	⦉⦊	⦉   ⦊	⦉U+2989 U+298A Z NOTATION LEFT/RIGHT BINDING BRACKET [OpenPunctuation] [ClosePunctuation]⦊
+
+	⦓⦔	⦓   ⦔	⦓U+2993 U+2994 LEFT/RIGHT ARC LESS-THAN BRACKET [OpenPunctuation] [ClosePunctuation]⦔
+
+	⦗⦘	⦗   ⦘	⦗U+2997 U+2998 LEFT/RIGHT BLACK TORTOISE SHELL BRACKET [OpenPunctuation] [ClosePunctuation]⦘
+
+	⸂⸃	⸂   ⸃	⸂U+2E02 U+2E03 LEFT/RIGHT SUBSTITUTION BRACKET [InitialPunctuation] [FinalPunctuation]⸃
+
+	⸃⸂	⸃   ⸂	⸃U+2E03 U+2E02 LEFT/RIGHT SUBSTITUTION BRACKET [FinalPunctuation] [InitialPunctuation]⸂
+
+	⸄⸅	⸄   ⸅	⸄U+2E04 U+2E05 LEFT/RIGHT DOTTED SUBSTITUTION BRACKET [InitialPunctuation] [FinalPunctuation]⸅
+
+	⸅⸄	⸅   ⸄	⸅U+2E05 U+2E04 LEFT/RIGHT DOTTED SUBSTITUTION BRACKET [FinalPunctuation] [InitialPunctuation]⸄
+
+	⸉⸊	⸉   ⸊	⸉U+2E09 U+2E0A LEFT/RIGHT TRANSPOSITION BRACKET [InitialPunctuation] [FinalPunctuation]⸊
+
+	⸊⸉	⸊   ⸉	⸊U+2E0A U+2E09 LEFT/RIGHT TRANSPOSITION BRACKET [FinalPunctuation] [InitialPunctuation]⸉
+
+	⸌⸍	⸌   ⸍	⸌U+2E0C U+2E0D LEFT/RIGHT RAISED OMISSION BRACKET [InitialPunctuation] [FinalPunctuation]⸍
+
+	⸍⸌	⸍   ⸌	⸍U+2E0D U+2E0C LEFT/RIGHT RAISED OMISSION BRACKET [FinalPunctuation] [InitialPunctuation]⸌
+
+	⸜⸝	⸜   ⸝	⸜U+2E1C U+2E1D LEFT/RIGHT LOW PARAPHRASE BRACKET [InitialPunctuation] [FinalPunctuation]⸝
+
+	⸝⸜	⸝   ⸜	⸝U+2E1D U+2E1C LEFT/RIGHT LOW PARAPHRASE BRACKET [FinalPunctuation] [InitialPunctuation]⸜
+
+	⸢⸣	⸢   ⸣	⸢U+2E22 U+2E23 TOP/BOTTOM LEFT/RIGHT HALF BRACKET [OpenPunctuation] [ClosePunctuation]⸣
+
+	⸤⸥	⸤   ⸥	⸤U+2E24 U+2E25 BOTTOM LEFT/RIGHT HALF BRACKET [OpenPunctuation] [ClosePunctuation]⸥
+
+	⸦⸧	⸦   ⸧	⸦U+2E26 U+2E27 LEFT/RIGHT SIDEWAYS U BRACKET [OpenPunctuation] [ClosePunctuation]⸧
+
+	【】	【   】	【U+3010 U+3011 LEFT/RIGHT BLACK LENTICULAR BRACKET [OpenPunctuation] [ClosePunctuation]】
+
+	〔〕	〔   〕	〔U+3014 U+3015 LEFT/RIGHT TORTOISE SHELL BRACKET [OpenPunctuation] [ClosePunctuation]〕
+
+	﹝﹞	﹝   ﹞	﹝U+FE5D U+FE5E SMALL LEFT/RIGHT TORTOISE SHELL BRACKET [OpenPunctuation] [ClosePunctuation]﹞
+
+...DOUBLE
+
+	⦕⦖	⦕   ⦖	⦕U+2995 U+2996 DOUBLE LEFT/RIGHT ARC GREATER-THAN BRACKET [OpenPunctuation] [ClosePunctuation]⦖
+
+...WHITE
+
+	⟬⟭	⟬   ⟭	⟬U+27EC U+27ED MATHEMATICAL LEFT/RIGHT WHITE TORTOISE SHELL BRACKET [OpenPunctuation] [ClosePunctuation]⟭
+
+	〖〗	〖   〗	〖U+3016 U+3017 LEFT/RIGHT WHITE LENTICULAR BRACKET [OpenPunctuation] [ClosePunctuation]〗
+
+	〘〙	〘   〙	〘U+3018 U+3019 LEFT/RIGHT WHITE TORTOISE SHELL BRACKET [OpenPunctuation] [ClosePunctuation]〙
+
+...SQUARE
+
+	[]	[   ]	[U+5B   U+5D   LEFT/RIGHT SQUARE BRACKET [OpenPunctuation] [ClosePunctuation]]
+
+	⁅⁆	⁅   ⁆	⁅U+2045 U+2046 LEFT/RIGHT SQUARE BRACKET WITH QUILL [OpenPunctuation] [ClosePunctuation]⁆
+
+	⦋⦌	⦋   ⦌	⦋U+298B U+298C LEFT/RIGHT SQUARE BRACKET WITH UNDERBAR [OpenPunctuation] [ClosePunctuation]⦌
+
+	［］	［   ］	［U+FF3B U+FF3D FULLWIDTH LEFT/RIGHT SQUARE BRACKET [OpenPunctuation] [ClosePunctuation]］
+
+...WHITE SQUARE
+
+	⟦⟧	⟦   ⟧	⟦U+27E6 U+27E7 MATHEMATICAL LEFT/RIGHT WHITE SQUARE BRACKET [OpenPunctuation] [ClosePunctuation]⟧
+
+	〚〛	〚   〛	〚U+301A U+301B LEFT/RIGHT WHITE SQUARE BRACKET [OpenPunctuation] [ClosePunctuation]〛
+
+...CORNER
+
+	「」	「   」	「U+300C U+300D LEFT/RIGHT CORNER BRACKET [OpenPunctuation] [ClosePunctuation]」
+
+	｢｣	｢   ｣	｢U+FF62 U+FF63 HALFWIDTH LEFT/RIGHT CORNER BRACKET [OpenPunctuation] [ClosePunctuation]｣
+
+...WHITE CORNER
+
+	『』	『   』	『U+300E U+300F LEFT/RIGHT WHITE CORNER BRACKET [OpenPunctuation] [ClosePunctuation]』
+
+...CURLY
+
+	{}	{   }	{U+7B   U+7D   LEFT/RIGHT CURLY BRACKET [OpenPunctuation] [ClosePunctuation]}
+
+	❴❵	❴   ❵	❴U+2774 U+2775 MEDIUM LEFT/RIGHT CURLY BRACKET ORNAMENT [OpenPunctuation] [ClosePunctuation]❵
+
+	﹛﹜	﹛   ﹜	﹛U+FE5B U+FE5C SMALL LEFT/RIGHT CURLY BRACKET [OpenPunctuation] [ClosePunctuation]﹜
+
+	｛｝	｛   ｝	｛U+FF5B U+FF5D FULLWIDTH LEFT/RIGHT CURLY BRACKET [OpenPunctuation] [ClosePunctuation]｝
+
+...WHITE CURLY
+
+	⦃⦄	⦃   ⦄	⦃U+2983 U+2984 LEFT/RIGHT WHITE CURLY BRACKET [OpenPunctuation] [ClosePunctuation]⦄
+
+...ANGLE
+
+	〈〉	〈   〉	〈U+2329 U+232A LEFT/RIGHT-POINTING ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]〉
+
+	❬❭	❬   ❭	❬U+276C U+276D MEDIUM LEFT/RIGHT-POINTING ANGLE BRACKET ORNAMENT [OpenPunctuation] [ClosePunctuation]❭
+
+	❰❱	❰   ❱	❰U+2770 U+2771 HEAVY LEFT/RIGHT-POINTING ANGLE BRACKET ORNAMENT [OpenPunctuation] [ClosePunctuation]❱
+
+	⟨⟩	⟨   ⟩	⟨U+27E8 U+27E9 MATHEMATICAL LEFT/RIGHT ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]⟩
+
+	⦑⦒	⦑   ⦒	⦑U+2991 U+2992 LEFT/RIGHT ANGLE BRACKET WITH DOT [OpenPunctuation] [ClosePunctuation]⦒
+
+	⧼⧽	⧼   ⧽	⧼U+29FC U+29FD LEFT/RIGHT-POINTING CURVED ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]⧽
+
+	〈〉	〈   〉	〈U+3008 U+3009 LEFT/RIGHT ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]〉
+
+...DOUBLE ANGLE
+
+	⟪⟫	⟪   ⟫	⟪U+27EA U+27EB MATHEMATICAL LEFT/RIGHT DOUBLE ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]⟫
+
+	《》	《   》	《U+300A U+300B LEFT/RIGHT DOUBLE ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]》
+
+
+
+CEILING
+
+	⌈⌉	⌈   ⌉	⌈U+2308 U+2309 LEFT/RIGHT CEILING [OpenPunctuation] [ClosePunctuation]⌉
+
+
+
+FLOOR
+
+	⌊⌋	⌊   ⌋	⌊U+230A U+230B LEFT/RIGHT FLOOR [OpenPunctuation] [ClosePunctuation]⌋
+
+
+
+FENCE
+
+	⧘⧙	⧘   ⧙	⧘U+29D8 U+29D9 LEFT/RIGHT WIGGLY FENCE [OpenPunctuation] [ClosePunctuation]⧙
+
+...DOUBLE
+
+	⧚⧛	⧚   ⧛	⧚U+29DA U+29DB LEFT/RIGHT DOUBLE WIGGLY FENCE [OpenPunctuation] [ClosePunctuation]⧛
+
+
+
+DELIMITER
+
+	⟅⟆	⟅   ⟆	⟅U+27C5 U+27C6 LEFT/RIGHT S-SHAPED BAG DELIMITER [OpenPunctuation] [ClosePunctuation]⟆
+
+
+
+MARK
+
+	༺༻	༺   ༻	༺U+F3A  U+F3B  TIBETAN MARK GUG RTAGS GYON/GYAS [OpenPunctuation] [ClosePunctuation]༻
+
+	༼༽	༼   ༽	༼U+F3C  U+F3D  TIBETAN MARK ANG KHANG GYON/GYAS [OpenPunctuation] [ClosePunctuation]༽
+
+	᚛᚜	᚛   ᚜	᚛U+169B U+169C OGHAM [/REVERSED] FEATHER MARK [OpenPunctuation] [ClosePunctuation]᚜
+
+
+
+VERTICAL
+
+⎴ ⸠ ⸡ ︵ ︹ ︻ ︗ ﹇ ﹁ ﹃ ︷ ︿ ︽
+⎶                        
+⎵ ⸡ ⸠ ︶ ︺ ︼ ︘ ﹈ ﹂ ﹄ ︸ ﹀ ︾
+
+⸠
+ｉ
+⸡	⸠⸡	U+2E20 U+2E21 LEFT/RIGHT VERTICAL BAR WITH QUILL [InitialPunctuation] [FinalPunctuation]
+
+⸡
+ｉ
+⸠	⸡⸠	U+2E21 U+2E20 LEFT/RIGHT VERTICAL BAR WITH QUILL [FinalPunctuation] [InitialPunctuation]
+
+︵
+ｉ
+︶	︵︶	U+FE35 U+FE36 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT PARENTHESIS [OpenPunctuation] [ClosePunctuation]
+
+︹
+ｉ
+︺	︹︺	U+FE39 U+FE3A PRESENTATION FORM FOR VERTICAL LEFT/RIGHT TORTOISE SHELL BRACKET [OpenPunctuation] [ClosePunctuation]
+
+︻
+ｉ
+︼	︻︼	U+FE3B U+FE3C PRESENTATION FORM FOR VERTICAL LEFT/RIGHT BLACK LENTICULAR BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...WHITE
+
+︗
+ｉ
+︘	︗︘	U+FE17 U+FE18 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT WHITE LENTICULAR BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...SQUARE
+
+⎴
+i
+⎶
+i
+⎵	⎴⎶⎵	U+23B4 U+23B6 U+23B5 TOP/BOTTOM SQUARE BRACKET [VERTICAL] / BOTTOM SQUARE BRACKET OVER TOP SQUARE BRACKET [VERTICAL] [OtherSymbol]
+
+﹇
+ｉ
+﹈	﹇﹈	U+FE47 U+FE48 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT SQUARE BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...CORNER
+
+﹁
+ｉ
+﹂	﹁﹂	U+FE41 U+FE42 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT CORNER BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...WHITE CORNER
+
+﹃
+ｉ
+﹄	﹃﹄	U+FE43 U+FE44 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT WHITE CORNER BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...CURLY
+
+︷
+ｉ
+︸	︷︸	U+FE37 U+FE38 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT CURLY BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...ANGLE
+
+︿
+ｉ
+﹀	︿﹀	U+FE3F U+FE40 PRESENTATION FORM FOR VERTICAL LEFT/RIGHT ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]
+
+...DOUBLE ANGLE
+
+︽
+ｉ
+︾	︽︾	U+FE3D U+FE3E PRESENTATION FORM FOR VERTICAL LEFT/RIGHT DOUBLE ANGLE BRACKET [OpenPunctuation] [ClosePunctuation]
+
+Created by: ./open-close-punctuation.sh | ./quote-samples.pl
