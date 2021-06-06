@@ -3,6 +3,8 @@
 # find-sum easy find shows just checksum, size, name and symlink destination
 # caveat -- only works well with file names that have no spaces in them.
 
+# See also wymlink.sh for emulating symbolic links on windows
+
 # using cksum:
 # 677252015 9 "./list.txt"
 # 677252015 9 "./xxx.lse" -> "list.txt"

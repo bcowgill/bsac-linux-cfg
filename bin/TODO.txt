@@ -1,3 +1,4 @@
+Currently wymlink.sh tool for emulating symbolic links with git commit support
 Currently /home/me/bin/character-samples/quote-samples.pl
 Currently /home/me/bin/character-samples/samples/quote-marks.txt
 Currently css-color-scale.pl for creating custom color scales in CSS and JS like tailwind. need to install tailwind and see how hover: classes are craeted.
