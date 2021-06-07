@@ -9,7 +9,7 @@ function usage {
 	echo "
 $cmd [-s] [-c] [--help|--man|-?]
 
-This will emulate symbolic links on windows i.e. wymlinks by copying the link target file to where the link is.
+This will emulate symbolic links on windows (i.e. wymlinks) by copying the link target file to where the link is.
 
 -s
 -c
@@ -80,9 +80,26 @@ find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -ne '
 			{
 				print("$line\n");
 				my $link_name = "$dir/$1";
-				my $target_name = "$dir/$2";
+        my $target_name = $2;
+        debug("sym1 $link_name target $target_name\n");
+        my $link_dir = $link_name;
+        $link_dir =~ s{/[^/]+\z}{}xms;
+        my $target_original = "$link_dir/$target_name";
+        $target_name = $target_original;
 				my $wym_name = "$link_name.wym";
-				debug("sym $link_name target $target_name wym $wym_name\n");
+        debug("sym2 $link_name target $target_name wym $wym_name\n");
+        # correct relative directory upwards /somedir/../ => /
+        while ($target_name =~ s{/([^/]+)/\.\./}{/}xmsg)
+        {
+          my $dir = $1;
+          if ($dir =~ m{\A\.\.?\z}xms)
+          {
+            $target_name = $target_original;
+          }
+          last if $target_name eq $target_original;
+        }
+				debug("fixed target $target_name\n");
+        debug(`pwd`);
 				if ($ENV{MODE} eq "-s")
 				{
 					debug("attempting wymlink...\n");
