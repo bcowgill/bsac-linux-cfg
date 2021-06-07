@@ -104,15 +104,17 @@ find-sum () {
 			# lrwxrwxrwx 1 me me 8 Jun  3 11:39 ./xxx.lse
 			# lrwxrwxrwx 1 me me 8 Jun  3 11:39 ./xxx.lse.wym
 			# -rw-rw-r-- 1 me me 9 Jun  3 11:37 ./list.txt
-			# TODO as there are no symlinks allowed, all we can do is examine existing inheritance.lst files
-			# and update the entries that are not SYM links. We rely on wymlink -c to check that file contents
-			# of symlinks haven't changed.  If they do, the Windows developer will have to manually change the
-			# inheritance.lst file and update the checksum manually.
 			pushd "$sourceDir" > /dev/null \
 				&& pwd | perl -pne 's{\A.+/(src/)}{$1}xms' \
 				&& find . \( -type f \) -exec ls -lh {} \; \
 				| filter-out \
 				| grep -vE '\.wym\s*$' \
+				| perl -pne '
+					chomp;
+					s{\A.+?\s+(\./)}{$1}xms;
+					$_ = qq{"$_"\n};
+					s{(\s+->\s+)}{"$1"}xms
+				' \
 				| add-checksums \
 			&& popd > /dev/null
 		else
