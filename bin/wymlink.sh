@@ -7,15 +7,16 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [-s] [-c] [--help|--man|-?]
+$cmd [-s] [-c] [--help|--man|-?] directory
 
 This will emulate symbolic links on windows (i.e. wymlinks) by copying the link target file to where the link is.
 
--s
--c
---man   Shows help for this tool.
---help  Shows help for this tool.
--?      Shows help for this tool.
+directory  optional directory to switch into before simulating the links.
+-s         Set up wymlinks from all inheritance.lst files found (like ln -s command)
+-c         Confirm that emulated link file contents have not changed so they can be committed.
+--man      Shows help for this tool.
+--help     Shows help for this tool.
+-?         Shows help for this tool.
 
 This command expects the find-sum.sh command to have been run first to generate inheritance.lst files in directories which contain symbolic links.
 
@@ -56,8 +57,9 @@ if [ "$1" == "-?" ]; then
 fi
 
 MODE="$1"
+DIR=${2:-.}
 
-find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -ne '
+pushd "$DIR" && find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -ne '
 	use Fatal qw{open move copy unlink};
 	sub debug { return; print "dbg: "; print @_; }
 	my $chide = "This would be easier if you were using an OS which supported symbolic links.";
@@ -129,3 +131,4 @@ find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -ne '
 		die "$@$chide\n";
 	}
 '
+popd
