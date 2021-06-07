@@ -1,9 +1,6 @@
 #!/bin/bash
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
-# wymlink.sh -- scans folder for inheritance.lst files listing the symbolic links present on mac/linux
-# wymlink.sh -s -- as above but then on Windows will replace the symbolic link files with copies of the target files, renaming the original .wym for later restoration
-# wymlink.sh -c -- commit or confirm.  scans for inheritance.lst and verfies that the link does not differ from the target and restores the link file, deleting the copy.  If any file is different from its target an error is generated for the user to manually resolve (i.e. remove the changes or convert the link to an actual file as it is no longer the same content.
 
 function usage {
 	local code

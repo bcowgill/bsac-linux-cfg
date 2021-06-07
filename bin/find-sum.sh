@@ -61,11 +61,17 @@ add-checksums () {
 	SUM=$SUM perl -pne '
 		my @split = split(/\s+->\s+/, $_);
 		my $file = $split[0];
+		chomp $file;
 		my @checksum = split(/\s+/, `$ENV{SUM} $file`);
 		pop(@checksum);
 		my $checksum = join(" ", @checksum);
-		$_ = qq{$checksum $_}
+		$_ = qq{$checksum $_};
 	' | sort
+}
+
+filter-out () {
+	grep -v DS_Store \
+	| grep -v inheritance.lst
 }
 
 find-sum () {
@@ -83,7 +89,7 @@ find-sum () {
 		pushd "$sourceDir" > /dev/null \
 			&& pwd | perl -pne 's{\A.+/(src/)}{$1}xms' \
 			&& find . \( -type f -o -type l \) -exec ls -lh {} \; \
-			| grep -v DS_Store \
+			| filter-out \
 			| perl -pne '
 				chomp;
 				s{\A.+?\s+(\./)}{$1}xms;
@@ -109,6 +115,7 @@ find-sum () {
 		pushd "$sourceDir" > /dev/null \
 			&& pwd | perl -pne 's{\A.+/(src/)}{$1}xms' \
 			&& find . \( -type f -o -type l \) -printf '"%h/%f" -> "%l"\n' \
+			| filter-out \
 			| perl -pne 's{\s+->\s+""}{}xms' \
 			| add-checksums \
 		&& popd > /dev/null
