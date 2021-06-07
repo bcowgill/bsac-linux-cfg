@@ -276,6 +276,13 @@ Not enough free keys to get what you want.
 
 	packages being enabled to see which one causes save problem
   color-whitespace - causes inability to save files - keeps showing as changed right after a save
+  -- jun 7
+  atom-js-snippets
+  atom-color-the-tag-name
+  atom-beautify
+  zen-plus
+  zen
+  sublime-style-column-selection
   -- jun 3
   autoclose
   atom-wrap-in-tag
