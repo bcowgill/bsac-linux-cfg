@@ -1,18 +1,53 @@
 #!/bin/bash
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
-# find-sum easy find shows just checksum, size, name and symlink destination
-# caveat -- only works well with file names that have no spaces in them.
 
-# See also wymlink.sh for emulating symbolic links on windows
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [--help|--man|-?] directory
 
-# using cksum:
-# 677252015 9 "./list.txt"
-# 677252015 9 "./xxx.lse" -> "list.txt"
+This will scan a directory tree given for certain files and generate a checksum (cksum or md5) listing for later comparison.
 
-# using md5sum:
-# 8052fdd2c8af1a27262a9210acd1fe58 "./list.txt"
-# 8052fdd2c8af1a27262a9210acd1fe58 "./xxx.lse" -> "list.txt"
+SUM        Environment variable to specify an alternative checksum program.
+directory  The directory to scan and generate an inheritance.lst file in.
+--man      Shows help for this tool.
+--help     Shows help for this tool.
+-?         Shows help for this tool.
+
+Lists the checksum, size, name and symlink destination for files.
+If md5 checksum is used, the size is omitted.
+
+Caveat -- only works well with file names that have no spaces in them.
+
+Example output:
+	using cksum:
+	677252015 9 "./list.txt"
+	677252015 9 "./xxx.lse" -> "list.txt"
+
+	using md5sum:
+	8052fdd2c8af1a27262a9210acd1fe58 "./list.txt"
+	8052fdd2c8af1a27262a9210acd1fe58 "./xxx.lse" -> "list.txt"
+
+See also wymlink.sh for emulating symbolic links on Windows.
+
+Example:
+
+	$cmd subdir > subdir/inheritance.lst
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
 
 if [ -z "$SUM" ]; then
 	SUM=cksum
@@ -23,14 +58,14 @@ fi
 #echo SUM=$SUM
 
 add-checksums () {
-  SUM=$SUM perl -pne '
-    my @split = split(/\s+->\s+/, $_);
-    my $file = $split[0];
-    my @checksum = split(/\s+/, `$ENV{SUM} $file`);
-    pop(@checksum);
-    my $checksum = join(" ", @checksum);
-    $_ = qq{$checksum $_}
-  ' | sort
+	SUM=$SUM perl -pne '
+		my @split = split(/\s+->\s+/, $_);
+		my $file = $split[0];
+		my @checksum = split(/\s+/, `$ENV{SUM} $file`);
+		pop(@checksum);
+		my $checksum = join(" ", @checksum);
+		$_ = qq{$checksum $_}
+	' | sort
 }
 
 find-sum () {
@@ -50,11 +85,11 @@ find-sum () {
 			&& find . \( -type f -o -type l \) -exec ls -lh {} \; \
 			| grep -v DS_Store \
 			| perl -pne '
-        chomp;
-        s{\A.+?\s+(\./)}{$1}xms;
-        $_ = qq{"$_"\n};
-        s{(\s+->\s+)}{"$1"}xms
-      ' \
+				chomp;
+				s{\A.+?\s+(\./)}{$1}xms;
+				$_ = qq{"$_"\n};
+				s{(\s+->\s+)}{"$1"}xms
+			' \
 			| add-checksums \
 		&& popd > /dev/null
 	else
