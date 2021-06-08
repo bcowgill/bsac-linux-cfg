@@ -276,6 +276,8 @@ Not enough free keys to get what you want.
 
 	packages being enabled to see which one causes save problem
   color-whitespace - causes inability to save files - keeps showing as changed right after a save
+  -- jun 8
+  activate-power-mode
   -- jun 7
   atom-js-snippets
   atom-color-the-tag-name
@@ -289,24 +291,6 @@ Not enough free keys to get what you want.
   atom-ternjs
   atom-name-that-color
   atom-json-color
-  -- jun 2
-  autocomplete-math
-  autocomplete-json
-  autocomplete-date
-  autocomplete
-  autoclose-html
-  pigments
-	-- jun 1
-  color-picker
-  color-indent
-  case-keep-replace
-  autocomplete-ramda
-  autocomplete-modules
-  -- may 28
-  cursor-index
-  css-snippets
-  css-color-name
-  copy-path
 
 mkdir -p src/components/Visibility/__stories__/Visibility.stories.js
 rmdir src/components/Visibility/__stories__/Visibility.stories.js

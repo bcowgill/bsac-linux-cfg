@@ -57,12 +57,22 @@ if [ -z "$SUM" ]; then
 fi
 #echo SUM=$SUM
 
+BLAT=`mktemp`
+
 add-checksums () {
-	SUM=$SUM perl -pne '
+	OSTYPE=$OSTYPE SUM=$SUM BLAT=$BLAT perl -pne '
 		my @split = split(/\s+->\s+/, $_);
 		my $file = $split[0];
 		chomp $file;
-		my @checksum = split(/\s+/, `$ENV{SUM} $file`);
+		my $tmp = $file;
+		my @checksum;
+		if ($ENV{OSTYPE} eq "darwin20" && `file -b $file | grep text`)
+		{
+			# windows newline characters differ so checksum on text files differ!!
+			$tmp = $ENV{BLAT};
+			system(qq{dos2unix -n $file $tmp});
+		}
+		@checksum = split(/\s+/, `$ENV{SUM} $tmp`);
 		pop(@checksum);
 		my $checksum = join(" ", @checksum);
 		$_ = qq{$checksum $_};
@@ -71,6 +81,7 @@ add-checksums () {
 
 filter-out () {
 	grep -v DS_Store \
+	| grep -vE '\.wym\s*$' \
 	| grep -v inheritance.lst
 }
 
@@ -108,7 +119,6 @@ find-sum () {
 				&& pwd | perl -pne 's{\A.+/(src/)}{$1}xms' \
 				&& find . \( -type f \) -exec ls -lh {} \; \
 				| filter-out \
-				| grep -vE '\.wym\s*$' \
 				| perl -pne '
 					chomp;
 					s{\A.+?\s+(\./)}{$1}xms;
@@ -130,6 +140,7 @@ find-sum () {
 			&& popd > /dev/null
 		fi
 	fi
+	rm $BLAT
 }
 
 find-sum "${1:-.}"
