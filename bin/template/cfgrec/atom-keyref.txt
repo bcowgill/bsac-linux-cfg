@@ -276,6 +276,8 @@ Not enough free keys to get what you want.
 
 	packages being enabled to see which one causes save problem
   color-whitespace - causes inability to save files - keeps showing as changed right after a save
+  -- jun 9
+  color-tabs
   -- jun 8
   activate-power-mode
   -- jun 7
