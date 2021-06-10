@@ -280,19 +280,6 @@ Not enough free keys to get what you want.
   color-tabs
   -- jun 8
   activate-power-mode
-  -- jun 7
-  atom-js-snippets
-  atom-color-the-tag-name
-  atom-beautify
-  zen-plus
-  zen
-  sublime-style-column-selection
-  -- jun 3
-  autoclose
-  atom-wrap-in-tag
-  atom-ternjs
-  atom-name-that-color
-  atom-json-color
 
 mkdir -p src/components/Visibility/__stories__/Visibility.stories.js
 rmdir src/components/Visibility/__stories__/Visibility.stories.js

@@ -75,12 +75,21 @@ add-checksums () {
 		@checksum = split(/\s+/, `$ENV{SUM} $tmp`);
 		pop(@checksum);
 		my $checksum = join(" ", @checksum);
+		#if ($checksum =~ m{\A\s*\z}xms)
+		#{
+		#	system("touch ./FINDSUM.ERROR");
+		#	die "$file: CHECKSUM $SUM error"
+		#}
 		$_ = qq{$checksum $_};
 	' | sort
 }
 
+# *.orig, _BASE|LOCAL|REMOTE|BACKUP_ files are created by git merge conflicts
 filter-out () {
 	grep -v DS_Store \
+	| grep -v infra.json \
+	| grep -vE '\.orig$' \
+	| grep -vE '\_(BASE|LOCAL|REMOTE|BACKUP)_[0-9]' \
 	| grep -vE '\.wym\s*$' \
 	| grep -v inheritance.lst
 }
@@ -109,6 +118,8 @@ find-sum () {
 			' \
 			| add-checksums \
 		&& popd > /dev/null
+#			| add-checksums
+#		popd > /dev/null
 	else
 		if [ "$OSTYPE" == "msys" ]; then
 			# windows output: (no symlinks, emulated by .wym files instead)
@@ -127,6 +138,8 @@ find-sum () {
 				' \
 				| add-checksums \
 			&& popd > /dev/null
+#				| add-checksums
+#			popd > /dev/null
 		else
 			# linux output:
 			# lrwxrwxrwx 1 me me 8 Jun  3 11:39 ./xxx.lse -> list.txt
@@ -138,6 +151,8 @@ find-sum () {
 				| perl -pne 's{\s+->\s+""}{}xms' \
 				| add-checksums \
 			&& popd > /dev/null
+#				| add-checksums
+#			popd > /dev/null
 		fi
 	fi
 	rm $BLAT
