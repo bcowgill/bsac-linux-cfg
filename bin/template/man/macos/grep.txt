@@ -1,0 +1,264 @@
+
+GREP(1)                   BSD General Commands Manual                  GREP(1)
+
+NNAAMMEE
+     ggrreepp, eeggrreepp, ffggrreepp, zzggrreepp, zzeeggrreepp, zzffggrreepp -- file pattern searcher
+
+SSYYNNOOPPSSIISS
+     ggrreepp [--aabbccddDDEEFFGGHHhhIIiiJJLLllmmnnOOooppqqRRSSssUUVVvvwwxxZZ] [--AA _n_u_m] [--BB _n_u_m] [--CC[_n_u_m]] [--ee _p_a_t_t_e_r_n] [--ff _f_i_l_e]
+          [----bbiinnaarryy--ffiilleess=_v_a_l_u_e] [----ccoolloorr[=_w_h_e_n]] [----ccoolloouurr[=_w_h_e_n]] [----ccoonntteexxtt[=_n_u_m]] [----llaabbeell]
+          [----lliinnee--bbuuffffeerreedd] [----nnuullll] [_p_a_t_t_e_r_n] [_f_i_l_e _._._.]
+
+DDEESSCCRRIIPPTTIIOONN
+     The ggrreepp utility searches any given input files, selecting lines that match one or more pat-
+     terns.  By default, a pattern matches an input line if the regular expression (RE) in the pat-
+     tern matches the input line without its trailing newline.  An empty expression matches every
+     line.  Each input line that matches at least one of the patterns is written to the standard
+     output.
+
+     ggrreepp is used for simple patterns and basic regular expressions (BREs); eeggrreepp can handle
+     extended regular expressions (EREs).  See re_format(7) for more information on regular expres-
+     sions.  ffggrreepp is quicker than both ggrreepp and eeggrreepp, but can only handle fixed patterns (i.e. it
+     does not interpret regular expressions).  Patterns may consist of one or more lines, allowing
+     any of the pattern lines to match a portion of the input.
+
+     zzggrreepp, zzeeggrreepp, and zzffggrreepp act like ggrreepp, eeggrreepp, and ffggrreepp, respectively, but accept input files
+     compressed with the compress(1) or gzip(1) compression utilities.
+
+     The following options are available:
+
+     --AA _n_u_m, ----aafftteerr--ccoonntteexxtt=_n_u_m
+             Print _n_u_m lines of trailing context after each match.  See also the --BB and --CC options.
+
+     --aa, ----tteexxtt
+             Treat all files as ASCII text.  Normally ggrreepp will simply print ``Binary file ...
+             matches'' if files contain binary characters.  Use of this option forces ggrreepp to output
+             lines matching the specified pattern.
+
+     --BB _n_u_m, ----bbeeffoorree--ccoonntteexxtt=_n_u_m
+             Print _n_u_m lines of leading context before each match.  See also the --AA and --CC options.
+
+     --bb, ----bbyyttee--ooffffsseett
+             The offset in bytes of a matched pattern is displayed in front of the respective
+             matched line.
+
+     --CC[_n_u_m, ----ccoonntteexxtt=_n_u_m]
+             Print _n_u_m lines of leading and trailing context surrounding each match.  The default is
+             2 and is equivalent to --AA _2 --BB _2.  Note: no whitespace may be given between the option
+             and its argument.
+
+     --cc, ----ccoouunntt
+             Only a count of selected lines is written to standard output.
+
+     ----ccoolloouurr=[_w_h_e_n, ----ccoolloorr=[_w_h_e_n]]
+             Mark up the matching text with the expression stored in GREP_COLOR environment vari-
+             able.  The possible values of when can be `never', `always' or `auto'.
+
+     --DD _a_c_t_i_o_n, ----ddeevviicceess=_a_c_t_i_o_n
+             Specify the demanded action for devices, FIFOs and sockets.  The default action is
+             `read', which means, that they are read as if they were normal files.  If the action is
+             set to `skip', devices will be silently skipped.
+
+     --dd _a_c_t_i_o_n, ----ddiirreeccttoorriieess=_a_c_t_i_o_n
+             Specify the demanded action for directories.  It is `read' by default, which means that
+             the directories are read in the same manner as normal files.  Other possible values are
+             `skip' to silently ignore the directories, and `recurse' to read them recursively,
+             which has the same effect as the --RR and --rr option.
+
+     --EE, ----eexxtteennddeedd--rreeggeexxpp
+             Interpret _p_a_t_t_e_r_n as an extended regular expression (i.e. force ggrreepp to behave as
+             eeggrreepp).
+
+     --ee _p_a_t_t_e_r_n, ----rreeggeexxpp=_p_a_t_t_e_r_n
+             Specify a pattern used during the search of the input: an input line is selected if it
+             matches any of the specified patterns.  This option is most useful when multiple --ee
+             options are used to specify multiple patterns, or when a pattern begins with a dash
+             (`-').
+
+     ----eexxcclluuddee
+             If specified, it excludes files matching the given filename pattern from the search.
+             Note that ----eexxcclluuddee patterns take priority over ----iinncclluuddee patterns, and if no ----iinncclluuddee
+             pattern is specified, all files are searched that are not excluded.  Patterns are
+             matched to the full path specified, not only to the filename component.
+
+     ----eexxcclluuddee--ddiirr
+             If --RR is specified, it excludes directories matching the given filename pattern from
+             the search.  Note that ----eexxcclluuddee--ddiirr patterns take priority over ----iinncclluuddee--ddiirr pat-
+             terns, and if no ----iinncclluuddee--ddiirr pattern is specified, all directories are searched that
+             are not excluded.
+
+     --FF, ----ffiixxeedd--ssttrriinnggss
+             Interpret _p_a_t_t_e_r_n as a set of fixed strings (i.e. force ggrreepp to behave as ffggrreepp).
+
+     --ff _f_i_l_e, ----ffiillee=_f_i_l_e
+             Read one or more newline separated patterns from _f_i_l_e.  Empty pattern lines match every
+             input line.  Newlines are not considered part of a pattern.  If _f_i_l_e is empty, nothing
+             is matched.
+
+     --GG, ----bbaassiicc--rreeggeexxpp
+             Interpret _p_a_t_t_e_r_n as a basic regular expression (i.e. force ggrreepp to behave as tradi-
+             tional ggrreepp).
+
+     --HH      Always print filename headers with output lines.
+
+     --hh, ----nnoo--ffiilleennaammee
+             Never print filename headers (i.e. filenames) with output lines.
+
+     ----hheellpp  Print a brief help message.
+
+     --II      Ignore binary files.  This option is equivalent to ----bbiinnaarryy--ffiillee=_w_i_t_h_o_u_t_-_m_a_t_c_h option.
+
+     --ii, ----iiggnnoorree--ccaassee
+             Perform case insensitive matching.  By default, ggrreepp is case sensitive.
+
+     ----iinncclluuddee
+             If specified, only files matching the given filename pattern are searched.  Note that
+             ----eexxcclluuddee patterns take priority over ----iinncclluuddee patterns.  Patterns are matched to the
+             full path specified, not only to the filename component.
+
+     ----iinncclluuddee--ddiirr
+             If --RR is specified, only directories matching the given filename pattern are searched.
+             Note that ----eexxcclluuddee--ddiirr patterns take priority over ----iinncclluuddee--ddiirr patterns.
+
+     --JJ,, ----bbzz22ddeeccoommpprreessss
+             Decompress the bzip2(1) compressed file before looking for the text.
+
+     --LL, ----ffiilleess--wwiitthhoouutt--mmaattcchh
+             Only the names of files not containing selected lines are written to standard output.
+             Pathnames are listed once per file searched.  If the standard input is searched, the
+             string ``(standard input)'' is written.
+
+     --ll, ----ffiilleess--wwiitthh--mmaattcchheess
+             Only the names of files containing selected lines are written to standard output.  ggrreepp
+             will only search a file until a match has been found, making searches potentially less
+             expensive.  Pathnames are listed once per file searched.  If the standard input is
+             searched, the string ``(standard input)'' is written.
+
+     ----mmmmaapp  Use mmap(2) instead of read(2) to read input, which can result in better performance
+             under some circumstances but can cause undefined behaviour.
+
+     --mm _n_u_m_, ----mmaaxx--ccoouunntt=_n_u_m
+             Stop reading the file after _n_u_m matches.
+
+     --nn, ----lliinnee--nnuummbbeerr
+             Each output line is preceded by its relative line number in the file, starting at line
+             1.  The line number counter is reset for each file processed.  This option is ignored
+             if --cc, --LL, --ll, or --qq is specified.
+
+     ----nnuullll  Prints a zero-byte after the file name.
+
+     --OO      If --RR is specified, follow symbolic links only if they were explicitly listed on the
+             command line.  The default is not to follow symbolic links.
+
+     --oo,, ----oonnllyy--mmaattcchhiinngg
+             Prints only the matching part of the lines.
+
+     --pp      If --RR is specified, no symbolic links are followed.  This is the default.
+
+     --qq, ----qquuiieett, ----ssiilleenntt
+             Quiet mode: suppress normal output.  ggrreepp will only search a file until a match has
+             been found, making searches potentially less expensive.
+
+     --RR, --rr, ----rreeccuurrssiivvee
+             Recursively search subdirectories listed.
+
+     --SS      If --RR is specified, all symbolic links are followed.  The default is not to follow sym-
+             bolic links.
+
+     --ss, ----nnoo--mmeessssaaggeess
+             Silent mode.  Nonexistent and unreadable files are ignored (i.e. their error messages
+             are suppressed).
+
+     --UU, ----bbiinnaarryy
+             Search binary files, but do not attempt to print them.
+
+     --VV, ----vveerrssiioonn
+             Display version information and exit.
+
+     --vv, ----iinnvveerrtt--mmaattcchh
+             Selected lines are those _n_o_t matching any of the specified patterns.
+
+     --ww, ----wwoorrdd--rreeggeexxpp
+             The expression is searched for as a word (as if surrounded by `[[:<:]]' and `[[:>:]]';
+             see re_format(7)).
+
+     --xx, ----lliinnee--rreeggeexxpp
+             Only input lines selected against an entire fixed string or regular expression are con-
+             sidered to be matching lines.
+
+     --yy      Equivalent to --ii.  Obsoleted.
+
+     --ZZ, --zz, ----ddeeccoommpprreessss
+             Force ggrreepp to behave as zzggrreepp.
+
+     ----bbiinnaarryy--ffiilleess=_v_a_l_u_e
+             Controls searching and printing of binary files.  Options are _b_i_n_a_r_y, the default:
+             search binary files but do not print them; _w_i_t_h_o_u_t_-_m_a_t_c_h: do not search binary files;
+             and _t_e_x_t: treat all files as text.
+
+     ----ccoonntteexxtt[=_n_u_m]
+             Print _n_u_m lines of leading and trailing context.  The default is 2.
+
+     ----lliinnee--bbuuffffeerreedd
+             Force output to be line buffered.  By default, output is line buffered when standard
+             output is a terminal and block buffered otherwise.
+
+     If no file arguments are specified, the standard input is used.
+
+EENNVVIIRROONNMMEENNTT
+     GREP_OPTIONS  May be used to specify default options that will be placed at the beginning of
+                   the argument list.  Backslash-escaping is not supported, unlike the behavior in
+                   GNU grep.
+
+EEXXIITT SSTTAATTUUSS
+     The ggrreepp utility exits with one of the following values:
+
+     0     One or more lines were selected.
+     1     No lines were selected.
+     >1    An error occurred.
+
+EEXXAAMMPPLLEESS
+     To find all occurrences of the word `patricia' in a file:
+
+           $ grep 'patricia' myfile
+
+     To find all occurrences of the pattern `.Pp' at the beginning of a line:
+
+           $ grep '^\.Pp' myfile
+
+     The apostrophes ensure the entire expression is evaluated by ggrreepp instead of by the user's
+     shell.  The caret `^' matches the null string at the beginning of a line, and the `\' escapes
+     the `.', which would otherwise match any character.
+
+     To find all lines in a file which do not contain the words `foo' or `bar':
+
+           $ grep -v -e 'foo' -e 'bar' myfile
+
+     A simple example of an extended regular expression:
+
+           $ egrep '19|20|25' calendar
+
+     Peruses the file `calendar' looking for either 19, 20, or 25.
+
+SSEEEE AALLSSOO
+     ed(1), ex(1), gzip(1), sed(1), re_format(7)
+
+SSTTAANNDDAARRDDSS
+     The ggrreepp utility is compliant with the IEEE Std 1003.1-2008 (``POSIX.1'') specification.
+
+     The flags [--AAaaBBbbCCDDddGGHHhhIIJJLLmmooPPRRSSUUVVwwZZ] are extensions to that specification, and the behaviour of
+     the --ff flag when used with an empty pattern file is left undefined.
+
+     All long options are provided for compatibility with GNU versions of this utility.
+
+     Historic versions of the ggrreepp utility also supported the flags [--rruuyy].  This implementation
+     supports those options; however, their use is strongly discouraged.
+
+HHIISSTTOORRYY
+     The ggrreepp command first appeared in Version 6 AT&T UNIX.
+
+BBUUGGSS
+     The ggrreepp utility does not normalize Unicode input, so a pattern containing composed characters
+     will not match decomposed input, and vice versa.
+
+BSD                              July 28, 2010                             BSD

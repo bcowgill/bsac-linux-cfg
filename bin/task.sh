@@ -43,7 +43,10 @@ fi
 NOW=`( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"`
 if [ "" == "$*" ]; then
 	echo What amazing thing are you working on, please tell me again.
-	echo or review your notes with: less $FILE
+	echo or review your notes with:
+	echo less $FILE
+	echo You last worked on:
+	grep 🚀  $FILE | tail -3
 	exit 1
 fi
 echo working on task 🚀  "$*" at $NOW. saved to $FILE

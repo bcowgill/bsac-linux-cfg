@@ -22,7 +22,7 @@ You can use that to track how your work is progressing.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
-See also punch-in.sh punch-out.sh task.sh, waste.sh, mad.sh, glad.sh, sad.sh
+See also punch-in.sh punch-out.sh task.sh waste.sh mad.sh glad.sh sad.sh
 
 "
 	exit $code

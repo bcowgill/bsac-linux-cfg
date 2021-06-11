@@ -22,7 +22,7 @@ You can then bring that up at the retrospective meeting.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
-See also punch-in.sh punch-out.sh task.sh, waste.sh, mad.sh, glad.sh, sad.sh
+See also punch-in.sh punch-out.sh task.sh waste.sh mad.sh glad.sh sad.sh
 
 Example:
 
@@ -43,7 +43,10 @@ fi
 NOW=`( datestamp.sh ; date +%a ) | perl -pne "s{\n}{ }xms; END { print qq{\n}}"`
 if [ "" == "$*" ]; then
 	echo What caused the blocker or waste, please tell me again.
-	echo or review your notes with: less $FILE
+	echo or review your notes with:
+	echo less $FILE
+	echo You last mentioned:
+	grep ⏰ $FILE | tail -3
 	exit 1
 fi
 echo waste/blocked ⏰  because "$*" at $NOW. saved to $FILE

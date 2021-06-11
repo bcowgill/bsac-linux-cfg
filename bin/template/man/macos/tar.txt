@@ -1,0 +1,695 @@
+
+TAR(1)                    BSD General Commands Manual                   TAR(1)
+
+NNAAMMEE
+     ttaarr -- manipulate tape archives
+
+SSYYNNOOPPSSIISS
+     ttaarr [_b_u_n_d_l_e_d_-_f_l_a_g_s <args>] [<_f_i_l_e> | <_p_a_t_t_e_r_n> ...]
+     ttaarr {--cc} [_o_p_t_i_o_n_s] [_f_i_l_e_s | _d_i_r_e_c_t_o_r_i_e_s]
+     ttaarr {--rr | --uu} --ff _a_r_c_h_i_v_e_-_f_i_l_e [_o_p_t_i_o_n_s] [_f_i_l_e_s | _d_i_r_e_c_t_o_r_i_e_s]
+     ttaarr {--tt | --xx} [_o_p_t_i_o_n_s] [_p_a_t_t_e_r_n_s]
+
+DDEESSCCRRIIPPTTIIOONN
+     ttaarr creates and manipulates streaming archive files.  This implementation can extract from tar,
+     pax, cpio, zip, jar, ar, xar, rpm, 7-zip, and ISO 9660 cdrom images and can create tar, pax,
+     cpio, ar, zip, 7-zip, and shar archives.
+
+     The first synopsis form shows a ``bundled'' option word.  This usage is provided for compati-
+     bility with historical implementations.  See COMPATIBILITY below for details.
+
+     The other synopsis forms show the preferred usage.  The first option to ttaarr is a mode indicator
+     from the following list:
+     --cc      Create a new archive containing the specified items.  The long option form is ----ccrreeaattee.
+     --rr      Like --cc, but new entries are appended to the archive.  Note that this only works on
+             uncompressed archives stored in regular files.  The --ff option is required.  The long
+             option form is ----aappppeenndd.
+     --tt      List archive contents to stdout.  The long option form is ----lliisstt.
+     --uu      Like --rr, but new entries are added only if they have a modification date newer than the
+             corresponding entry in the archive.  Note that this only works on uncompressed archives
+             stored in regular files.  The --ff option is required.  The long form is ----uuppddaattee.
+     --xx      Extract to disk from the archive.  If a file with the same name appears more than once
+             in the archive, each copy will be extracted, with later copies overwriting (replacing)
+             earlier copies.  The long option form is ----eexxttrraacctt.
+
+     In --cc, --rr, or --uu mode, each specified file or directory is added to the archive in the order
+     specified on the command line.  By default, the contents of each directory are also archived.
+
+     In extract or list mode, the entire command line is read and parsed before the archive is
+     opened.  The pathnames or patterns on the command line indicate which items in the archive
+     should be processed.  Patterns are shell-style globbing patterns as documented in tcsh(1).
+
+OOPPTTIIOONNSS
+     Unless specifically stated otherwise, options are applicable in all operating modes.
+
+     @@_a_r_c_h_i_v_e
+             (c and r modes only) The specified archive is opened and the entries in it will be
+             appended to the current archive.  As a simple example,
+                   ttaarr --cc --ff _- _n_e_w_f_i_l_e @@_o_r_i_g_i_n_a_l_._t_a_r
+             writes a new archive to standard output containing a file _n_e_w_f_i_l_e and all of the
+             entries from _o_r_i_g_i_n_a_l_._t_a_r.  In contrast,
+                   ttaarr --cc --ff _- _n_e_w_f_i_l_e _o_r_i_g_i_n_a_l_._t_a_r
+             creates a new archive with only two entries.  Similarly,
+                   ttaarr --cczzff _- ----ffoorrmmaatt ppaaxx @@_-
+             reads an archive from standard input (whose format will be determined automatically)
+             and converts it into a gzip-compressed pax-format archive on stdout.  In this way, ttaarr
+             can be used to convert archives from one format to another.
+
+     --aa, ----aauuttoo--ccoommpprreessss
+             (c mode only) Use the archive suffix to decide a set of the format and the compres-
+             sions.  As a simple example,
+                   ttaarr --aa --ccff _a_r_c_h_i_v_e_._t_g_z _s_o_u_r_c_e_._c _s_o_u_r_c_e_._h
+             creates a new archive with restricted pax format and gzip compression,
+                   ttaarr --aa --ccff _a_r_c_h_i_v_e_._t_a_r_._b_z_2_._u_u _s_o_u_r_c_e_._c _s_o_u_r_c_e_._h
+             creates a new archive with restricted pax format and bzip2 compression and uuencode
+             compression,
+                   ttaarr --aa --ccff _a_r_c_h_i_v_e_._z_i_p _s_o_u_r_c_e_._c _s_o_u_r_c_e_._h
+             creates a new archive with zip format,
+                   ttaarr --aa --jjccff _a_r_c_h_i_v_e_._t_g_z _s_o_u_r_c_e_._c _s_o_u_r_c_e_._h
+             ignores the ``-j'' option, and creates a new archive with restricted pax format and
+             gzip compression,
+                   ttaarr --aa --jjccff _a_r_c_h_i_v_e_._x_x_x _s_o_u_r_c_e_._c _s_o_u_r_c_e_._h
+             if it is unknown suffix or no suffix, creates a new archive with restricted pax format
+             and bzip2 compression.
+
+     ----aaccllss  (c, r, u, x modes only) Archive or extract POSIX.1e or NFSv4 ACLs. This is the reverse
+             of ----nnoo--aaccllss and the default behavior in c, r, and u modes (except on Mac OS X) or if
+             ttaarr is run in x mode as root. On Mac OS X this option translates extended ACLs to NFSv4
+             ACLs. To store extended ACLs the ----mmaacc--mmeettaaddaattaa option is preferred.
+
+     --BB, ----rreeaadd--ffuullll--bblloocckkss
+             Ignored for compatibility with other tar(1) implementations.
+
+     --bb _b_l_o_c_k_s_i_z_e, ----bblloocckk--ssiizzee _b_l_o_c_k_s_i_z_e
+             Specify the block size, in 512-byte records, for tape drive I/O.  As a rule, this argu-
+             ment is only needed when reading from or writing to tape drives, and usually not even
+             then as the default block size of 20 records (10240 bytes) is very common.
+
+     --CC _d_i_r_e_c_t_o_r_y, ----ccdd _d_i_r_e_c_t_o_r_y, ----ddiirreeccttoorryy _d_i_r_e_c_t_o_r_y
+             In c and r mode, this changes the directory before adding the following files.  In x
+             mode, change directories after opening the archive but before extracting entries from
+             the archive.
+
+     ----cchhrroooott
+             (x mode only) cchhrroooott() to the current directory after processing any --CC options and
+             before extracting any files.
+
+     ----cclleeaarr--nnoocchhaannggee--ffffllaaggss
+             (x mode only) Before removing file system objects to replace them, clear platform-spe-
+             cific file flags that might prevent removal.
+
+     ----eexxcclluuddee _p_a_t_t_e_r_n
+             Do not process files or directories that match the specified pattern.  Note that exclu-
+             sions take precedence over patterns or filenames specified on the command line.
+
+     ----ffffllaaggss
+             (c, r, u, x modes only) Archive or extract file flags. This is the reverse of
+             ----nnoo--ffffllaaggss and the default behavior in c, r, and u modes or if ttaarr is run in x mode as
+             root.
+
+     ----ffoorrmmaatt _f_o_r_m_a_t
+             (c, r, u mode only) Use the specified format for the created archive.  Supported for-
+             mats include ``cpio'', ``pax'', ``shar'', and ``ustar''.  Other formats may also be
+             supported; see libarchive-formats(5) for more information about currently-supported
+             formats.  In r and u modes, when extending an existing archive, the format specified
+             here must be compatible with the format of the existing archive on disk.
+
+     --ff _f_i_l_e, ----ffiillee _f_i_l_e
+             Read the archive from or write the archive to the specified file.  The filename can be
+             _- for standard input or standard output.  The default varies by system; on FreeBSD, the
+             default is _/_d_e_v_/_s_a_0; on Linux, the default is _/_d_e_v_/_s_t_0.
+
+     ----ggiidd _i_d
+             Use the provided group id number.  On extract, this overrides the group id in the ar-
+             chive; the group name in the archive will be ignored.  On create, this overrides the
+             group id read from disk; if ----ggnnaammee is not also specified, the group name will be set
+             to match the group id.
+
+     ----ggnnaammee _n_a_m_e
+             Use the provided group name.  On extract, this overrides the group name in the archive;
+             if the provided group name does not exist on the system, the group id (from the archive
+             or from the ----ggiidd option) will be used instead.  On create, this sets the group name
+             that will be stored in the archive; the name will not be verified against the system
+             group database.
+
+     --HH      (c and r modes only) Symbolic links named on the command line will be followed; the
+             target of the link will be archived, not the link itself.
+
+     --hh      (c and r modes only) Synonym for --LL.
+
+     --II      Synonym for --TT.
+
+     ----hheellpp  Show usage.
+
+     ----hhffssCCoommpprreessssiioonn
+             (x mode only) Mac OS X specific (v10.6 or later). Compress extracted regular files with
+             HFS+ compression.
+
+     ----iiggnnoorree--zzeerrooss
+             An alias of ----ooppttiioonnss rreeaadd__ccoonnccaatteennaatteedd__aarrcchhiivveess for compatibility with GNU tar.
+
+     ----iinncclluuddee _p_a_t_t_e_r_n
+             Process only files or directories that match the specified pattern.  Note that exclu-
+             sions specified with ----eexxcclluuddee take precedence over inclusions.  If no inclusions are
+             explicitly specified, all entries are processed by default.  The ----iinncclluuddee option is
+             especially useful when filtering archives.  For example, the command
+                   ttaarr --cc --ff _n_e_w_._t_a_r ----iinncclluuddee==''**ffoooo**'' @@_o_l_d_._t_g_z
+             creates a new archive _n_e_w_._t_a_r containing only the entries from _o_l_d_._t_g_z containing the
+             string `foo'.
+
+     --JJ, ----xxzz
+             (c mode only) Compress the resulting archive with xz(1).  In extract or list modes,
+             this option is ignored.  Note that, unlike other ttaarr implementations, this implementa-
+             tion recognizes XZ compression automatically when reading archives.
+
+     --jj, ----bbzziipp, ----bbzziipp22, ----bbuunnzziipp22
+             (c mode only) Compress the resulting archive with bzip2(1).  In extract or list modes,
+             this option is ignored.  Note that, unlike other ttaarr implementations, this implementa-
+             tion recognizes bzip2 compression automatically when reading archives.
+
+     --kk, ----kkeeeepp--oolldd--ffiilleess
+             (x mode only) Do not overwrite existing files.  In particular, if a file appears more
+             than once in an archive, later copies will not overwrite earlier copies.
+
+     ----kkeeeepp--nneewweerr--ffiilleess
+             (x mode only) Do not overwrite existing files that are newer than the versions appear-
+             ing in the archive being extracted.
+
+     --LL, ----ddeerreeffeerreennccee
+             (c and r modes only) All symbolic links will be followed.  Normally, symbolic links are
+             archived as such.  With this option, the target of the link will be archived instead.
+
+     --ll, ----cchheecckk--lliinnkkss
+             (c and r modes only) Issue a warning message unless all links to each file are
+             archived.
+
+     ----llrrzziipp
+             (c mode only) Compress the resulting archive with lrzip(1).  In extract or list modes,
+             this option is ignored.
+
+     ----llzz44   (c mode only) Compress the archive with lz4-compatible compression before writing it.
+             In input mode, this option is ignored; lz4 compression is recognized automatically on
+             input.
+
+     ----llzzmmaa  (c mode only) Compress the resulting archive with the original LZMA algorithm.  Use of
+             this option is discouraged and new archives should be created with ----xxzz instead.  Note
+             that, unlike other ttaarr implementations, this implementation recognizes LZMA compression
+             automatically when reading archives.
+
+     ----llzzoopp  (c mode only) Compress the resulting archive with lzop(1).  In extract or list modes,
+             this option is ignored.
+
+     --mm, ----mmooddiiffiiccaattiioonn--ttiimmee
+             (x mode only) Do not extract modification time.  By default, the modification time is
+             set to the time stored in the archive.
+
+     ----mmaacc--mmeettaaddaattaa
+             (c, r, u and x mode only) Mac OS X specific. Archive or extract extended ACLs and
+             extended attributes using copyfile(3) in AppleDouble format. This is the reverse of
+             ----nnoo--mmaacc--mmeettaaddaattaa.  and the default behavior in c, r, and u modes or if ttaarr is run in x
+             mode as root.
+
+     --nn, ----nnoorreeccuurrssee, ----nnoo--rreeccuurrssiioonn
+             (c, r, u modes only) Do not recursively archive the contents of directories.
+
+     ----nneewweerr _d_a_t_e
+             (c, r, u modes only) Only include files and directories newer than the specified date.
+             This compares ctime entries.
+
+     ----nneewweerr--mmttiimmee _d_a_t_e
+             (c, r, u modes only) Like ----nneewweerr, except it compares mtime entries instead of ctime
+             entries.
+
+     ----nneewweerr--tthhaann _f_i_l_e
+             (c, r, u modes only) Only include files and directories newer than the specified file.
+             This compares ctime entries.
+
+     ----nneewweerr--mmttiimmee--tthhaann _f_i_l_e
+             (c, r, u modes only) Like ----nneewweerr--tthhaann, except it compares mtime entries instead of
+             ctime entries.
+
+     ----nnoodduummpp
+             (c and r modes only) Honor the nodump file flag by skipping this file.
+
+     ----nnoopprreesseerrvveeHHFFSSCCoommpprreessssiioonn
+             (x mode only) Mac OS X specific (v10.6 or later). Do not compress extracted regular
+             files which were compressed with HFS+ compression before archived.  By default, com-
+             press the regular files again with HFS+ compression.
+
+     ----nnuullll  (use with --II or --TT) Filenames or patterns are separated by null characters, not by new-
+             lines.  This is often used to read filenames output by the --pprriinntt00 option to find(1).
+
+     ----nnoo--aaccllss
+             (c, r, u, x modes only) Do not archive or extract POSIX.1e or NFSv4 ACLs. This is the
+             reverse of ----aaccllss and the default behavior if ttaarr is run as non-root in x mode (on Mac
+             OS X as any user in c, r, u and x modes).
+
+     ----nnoo--ffffllaaggss
+             (c, r, u, x modes only) Do not archive or extract file flags. This is the reverse of
+             ----ffffllaaggss and the default behavior if ttaarr is run as non-root in x mode.
+
+     ----nnoo--mmaacc--mmeettaaddaattaa
+             (x mode only) Mac OS X specific. Do not archive or extract ACLs and extended attributes
+             using copyfile(3) in AppleDouble format. This is the reverse of ----mmaacc--mmeettaaddaattaa.  and
+             the default behavior if ttaarr is run as non-root in x mode.
+
+     --nn, ----nnoorreeccuurrssee, ----nnoo--rreeccuurrssiioonn
+
+     ----nnoo--ssaammee--oowwnneerr
+             (x mode only) Do not extract owner and group IDs.  This is the reverse of ----ssaammee--oowwnneerr
+             and the default behavior if ttaarr is run as non-root.
+
+     ----nnoo--ssaammee--ppeerrmmiissssiioonnss
+             (x mode only) Do not extract full permissions (SGID, SUID, sticky bit, ACLs, extended
+             attributes or extended file flags).  This is the reverse of --pp and the default behavior
+             if ttaarr is run as non-root.
+
+     ----nnoo--xxaattttrrss
+             (c, r, u, x modes only) Do not archive or extract extended attributes. This is the
+             reverse of ----xxaattttrrss and the default behavior if ttaarr is run as non-root in x mode.
+
+     ----nnuummeerriicc--oowwnneerr
+             This is equivalent to ----uunnaammee "" ----ggnnaammee "".  On extract, it causes user and group
+             names in the archive to be ignored in favor of the numeric user and group ids.  On cre-
+             ate, it causes user and group names to not be stored in the archive.
+
+     --OO, ----ttoo--ssttddoouutt
+             (x, t modes only) In extract (-x) mode, files will be written to standard out rather
+             than being extracted to disk.  In list (-t) mode, the file listing will be written to
+             stderr rather than the usual stdout.
+
+     --oo      (x mode) Use the user and group of the user running the program rather than those spec-
+             ified in the archive.  Note that this has no significance unless --pp is specified, and
+             the program is being run by the root user.  In this case, the file modes and flags from
+             the archive will be restored, but ACLs or owner information in the archive will be dis-
+             carded.
+
+     --oo      (c, r, u mode) A synonym for ----ffoorrmmaatt _u_s_t_a_r
+
+     ----oollddeerr _d_a_t_e
+             (c, r, u modes only) Only include files and directories older than the specified date.
+             This compares ctime entries.
+
+     ----oollddeerr--mmttiimmee _d_a_t_e
+             (c, r, u modes only) Like ----oollddeerr, except it compares mtime entries instead of ctime
+             entries.
+
+     ----oollddeerr--tthhaann _f_i_l_e
+             (c, r, u modes only) Only include files and directories older than the specified file.
+             This compares ctime entries.
+
+     ----oollddeerr--mmttiimmee--tthhaann _f_i_l_e
+             (c, r, u modes only) Like ----oollddeerr--tthhaann, except it compares mtime entries instead of
+             ctime entries.
+
+     ----oonnee--ffiillee--ssyysstteemm
+             (c, r, and u modes) Do not cross mount points.
+
+     ----ooppttiioonnss _o_p_t_i_o_n_s
+             Select optional behaviors for particular modules.  The argument is a text string con-
+             taining comma-separated keywords and values.  These are passed to the modules that han-
+             dle particular formats to control how those formats will behave.  Each option has one
+             of the following forms:
+             _k_e_y_=_v_a_l_u_e
+                     The key will be set to the specified value in every module that supports it.
+                     Modules that do not support this key will ignore it.
+             _k_e_y     The key will be enabled in every module that supports it.  This is equivalent
+                     to _k_e_y==11.
+             _!_k_e_y    The key will be disabled in every module that supports it.
+             _m_o_d_u_l_e_:_k_e_y_=_v_a_l_u_e, _m_o_d_u_l_e_:_k_e_y, _m_o_d_u_l_e_:_!_k_e_y
+                     As above, but the corresponding key and value will be provided only to modules
+                     whose name matches _m_o_d_u_l_e.
+             The currently supported modules and keys are:
+             iissoo99666600::jjoolliieett
+                     Support Joliet extensions.  This is enabled by default, use !!jjoolliieett or
+                     iissoo99666600::!!jjoolliieett to disable.
+             iissoo99666600::rroocckkrriiddggee
+                     Support Rock Ridge extensions.  This is enabled by default, use !!rroocckkrriiddggee or
+                     iissoo99666600::!!rroocckkrriiddggee to disable.
+             ggzziipp::ccoommpprreessssiioonn--lleevveell
+                     A decimal integer from 1 to 9 specifying the gzip compression level.
+             ggzziipp::ttiimmeessttaammpp
+                     Store timestamp. This is enabled by default, use !!ttiimmeessttaammpp or ggzziipp::!!ttiimmeessttaammpp
+                     to disable.
+             llrrzziipp::ccoommpprreessssiioonn=_t_y_p_e
+                     Use _t_y_p_e as compression method.  Supported values are bzip2, gzip, lzo (ultra
+                     fast), and zpaq (best, extremely slow).
+             llrrzziipp::ccoommpprreessssiioonn--lleevveell
+                     A decimal integer from 1 to 9 specifying the lrzip compression level.
+             llzz44::ccoommpprreessssiioonn--lleevveell
+                     A decimal integer from 1 to 9 specifying the lzop compression level.
+             llzz44::ssttrreeaamm--cchheecckkssuumm
+                     Enable stream checksum. This is by default, use llzz44::!!ssttrreeaamm--cchheecckkssuumm to dis-
+                     able.
+             llzz44::bblloocckk--cchheecckkssuumm
+                     Enable block checksum (Disabled by default).
+             llzz44::bblloocckk--ssiizzee
+                     A decimal integer from 4 to 7 specifying the lz4 compression block size (7 is
+                     set by default).
+             llzz44::bblloocckk--ddeeppeennddeennccee
+                     Use the previous block of the block being compressed for a compression dictio-
+                     nary to improve compression ratio.
+             llzzoopp::ccoommpprreessssiioonn--lleevveell
+                     A decimal integer from 1 to 9 specifying the lzop compression level.
+             xxzz::ccoommpprreessssiioonn--lleevveell
+                     A decimal integer from 0 to 9 specifying the xz compression level.
+             mmttrreeee::_k_e_y_w_o_r_d
+                     The mtree writer module allows you to specify which mtree keywords will be
+                     included in the output.  Supported keywords include: cckkssuumm, ddeevviiccee, ffllaaggss, ggiidd,
+                     ggnnaammee, iinnddeenntt, lliinnkk, mmdd55, mmooddee, nnlliinnkk, rrmmdd116600, sshhaa11, sshhaa225566, sshhaa338844, sshhaa551122,
+                     ssiizzee, ttiimmee, uuiidd, uunnaammee.  The default is equivalent to: ``device, flags, gid,
+                     gname, link, mode, nlink, size, time, type, uid, uname''.
+             mmttrreeee::aallll
+                     Enables all of the above keywords.  You can also use mmttrreeee::!!aallll to disable all
+                     keywords.
+             mmttrreeee::uussee--sseett
+                     Enable generation of //sseett lines in the output.
+             mmttrreeee::iinnddeenntt
+                     Produce human-readable output by indenting options and splitting lines to fit
+                     into 80 columns.
+             zziipp::ccoommpprreessssiioonn=_t_y_p_e
+                     Use _t_y_p_e as compression method.  Supported values are store (uncompressed) and
+                     deflate (gzip algorithm).
+             zziipp::eennccrryyppttiioonn
+                     Enable encryption using traditional zip encryption.
+             zziipp::eennccrryyppttiioonn=_t_y_p_e
+                     Use _t_y_p_e as encryption type.  Supported values are zipcrypt (traditional zip
+                     encryption), aes128 (WinZip AES-128 encryption) and aes256 (WinZip AES-256
+                     encryption).
+             rreeaadd__ccoonnccaatteennaatteedd__aarrcchhiivveess
+                     Ignore zeroed blocks in the archive, which occurs when multiple tar archives
+                     have been concatenated together.  Without this option, only the contents of the
+                     first concatenated archive would be read.  This option is comparable to the --ii,
+                     ----iiggnnoorree--zzeerrooss option of GNU tar.
+             If a provided option is not supported by any module, that is a fatal error.
+
+     --PP, ----aabbssoolluuttee--ppaatthhss
+             Preserve pathnames.  By default, absolute pathnames (those that begin with a / charac-
+             ter) have the leading slash removed both when creating archives and extracting from
+             them.  Also, ttaarr will refuse to extract archive entries whose pathnames contain _._. or
+             whose target directory would be altered by a symlink.  This option suppresses these
+             behaviors.
+
+     --pp, ----iinnsseeccuurree, ----pprreesseerrvvee--ppeerrmmiissssiioonnss
+             (x mode only) Preserve file permissions.  Attempt to restore the full permissions,
+             including owner, file modes, ACLs, extended attributes and extended file flags, if
+             available, for each item extracted from the archive. This is te reverse of
+             ----nnoo--ssaammee--ppeerrmmiissssiioonnss and the default if ttaarr is being run by root and can be partially
+             overridden by also specifying ----nnoo--aaccllss, ----nnoo--ffffllaaggss, ----nnoo--mmaacc--mmeettaaddaattaa or ----nnoo--xxaattttrrss.
+
+     ----ppaasssspphhrraassee _p_a_s_s_p_h_r_a_s_e
+             The _p_a_s_s_p_h_r_a_s_e is used to extract or create an encrypted archive.  Currently, zip is
+             the only supported format that supports encryption.  You shouldn't use this option
+             unless you realize how insecure use of this option is.
+
+     ----ppoossiixx
+             (c, r, u mode only) Synonym for ----ffoorrmmaatt _p_a_x
+
+     --qq, ----ffaasstt--rreeaadd
+             (x and t mode only) Extract or list only the first archive entry that matches each pat-
+             tern or filename operand.  Exit as soon as each specified pattern or filename has been
+             matched.  By default, the archive is always read to the very end, since there can be
+             multiple entries with the same name and, by convention, later entries overwrite earlier
+             entries.  This option is provided as a performance optimization.
+
+     --SS      (x mode only) Extract files as sparse files.  For every block on disk, check first if
+             it contains only NULL bytes and seek over it otherwise.  This works similar to the
+             conv=sparse option of dd.
+
+     --ss _p_a_t_t_e_r_n
+             Modify file or archive member names according to _p_a_t_t_e_r_n.  The pattern has the format
+             _/_o_l_d_/_n_e_w_/[ghHprRsS] where _o_l_d is a basic regular expression, _n_e_w is the replacement
+             string of the matched part, and the optional trailing letters modify how the replace-
+             ment is handled.  If _o_l_d is not matched, the pattern is skipped.  Within _n_e_w, ~ is sub-
+             stituted with the match, \1 to \9 with the content of the corresponding captured group.
+             The optional trailing g specifies that matching should continue after the matched part
+             and stop on the first unmatched pattern.  The optional trailing s specifies that the
+             pattern applies to the value of symbolic links.  The optional trailing p specifies that
+             after a successful substitution the original path name and the new path name should be
+             printed to standard error.  Optional trailing H, R, or S characters suppress substitu-
+             tions for hardlink targets, regular filenames, or symlink targets, respectively.
+             Optional trailing h, r, or s characters enable substitutions for hardlink targets, reg-
+             ular filenames, or symlink targets, respectively.  The default is _h_r_s which applies
+             substitutions to all names.  In particular, it is never necessary to specify h, r, or
+             s.
+
+     ----ssaammee--oowwnneerr
+             (x mode only) Extract owner and group IDs.  This is the reverse of ----nnoo--ssaammee--oowwnneerr and
+             the default behavior if ttaarr is run as root.
+
+     ----ssttrriipp--ccoommppoonneennttss _c_o_u_n_t
+             Remove the specified number of leading path elements.  Pathnames with fewer elements
+             will be silently skipped.  Note that the pathname is edited after checking inclu-
+             sion/exclusion patterns but before security checks.
+
+     --TT _f_i_l_e_n_a_m_e, ----ffiilleess--ffrroomm _f_i_l_e_n_a_m_e
+             In x or t mode, ttaarr will read the list of names to be extracted from _f_i_l_e_n_a_m_e.  In c
+             mode, ttaarr will read names to be archived from _f_i_l_e_n_a_m_e.  The special name ``-C'' on a
+             line by itself will cause the current directory to be changed to the directory speci-
+             fied on the following line.  Names are terminated by newlines unless ----nnuullll is speci-
+             fied.  Note that ----nnuullll also disables the special handling of lines containing ``-C''.
+             Note:  If you are generating lists of files using find(1), you probably want to use --nn
+             as well.
+
+     ----ttoottaallss
+             (c, r, u modes only) After archiving all files, print a summary to stderr.
+
+     --UU, ----uunnlliinnkk, ----uunnlliinnkk--ffiirrsstt
+             (x mode only) Unlink files before creating them.  This can be a minor performance opti-
+             mization if most files already exist, but can make things slower if most files do not
+             already exist.  This flag also causes ttaarr to remove intervening directory symlinks
+             instead of reporting an error.  See the SECURITY section below for more details.
+
+     ----uuiidd _i_d
+             Use the provided user id number and ignore the user name from the archive.  On create,
+             if ----uunnaammee is not also specified, the user name will be set to match the user id.
+
+     ----uunnaammee _n_a_m_e
+             Use the provided user name.  On extract, this overrides the user name in the archive;
+             if the provided user name does not exist on the system, it will be ignored and the user
+             id (from the archive or from the ----uuiidd option) will be used instead.  On create, this
+             sets the user name that will be stored in the archive; the name is not verified against
+             the system user database.
+
+     ----uussee--ccoommpprreessss--pprrooggrraamm _p_r_o_g_r_a_m
+             Pipe the input (in x or t mode) or the output (in c mode) through _p_r_o_g_r_a_m instead of
+             using the builtin compression support.
+
+     --vv, ----vveerrbboossee
+             Produce verbose output.  In create and extract modes, ttaarr will list each file name as
+             it is read from or written to the archive.  In list mode, ttaarr will produce output simi-
+             lar to that of ls(1).  An additional --vv option will also provide ls-like details in
+             create and extract mode.
+
+     ----vveerrssiioonn
+             Print version of ttaarr and lliibbaarrcchhiivvee, and exit.
+
+     --ww, ----ccoonnffiirrmmaattiioonn, ----iinntteerraaccttiivvee
+             Ask for confirmation for every action.
+
+     --XX _f_i_l_e_n_a_m_e, ----eexxcclluuddee--ffrroomm _f_i_l_e_n_a_m_e
+             Read a list of exclusion patterns from the specified file.  See ----eexxcclluuddee for more
+             information about the handling of exclusions.
+
+     ----xxaattttrrss
+             (c, r, u, x modes only) Archive or extract extended attributes. This is the reverse of
+             ----nnoo--xxaattttrrss and the default behavior in c, r, and u modes or if ttaarr is run in x mode as
+             root.
+
+     --yy      (c mode only) Compress the resulting archive with bzip2(1).  In extract or list modes,
+             this option is ignored.  Note that, unlike other ttaarr implementations, this implementa-
+             tion recognizes bzip2 compression automatically when reading archives.
+
+     --ZZ, ----ccoommpprreessss, ----uunnccoommpprreessss
+             (c mode only) Compress the resulting archive with compress(1).  In extract or list
+             modes, this option is ignored.  Note that, unlike other ttaarr implementations, this
+             implementation recognizes compress compression automatically when reading archives.
+
+     --zz, ----gguunnzziipp, ----ggzziipp
+             (c mode only) Compress the resulting archive with gzip(1).  In extract or list modes,
+             this option is ignored.  Note that, unlike other ttaarr implementations, this implementa-
+             tion recognizes gzip compression automatically when reading archives.
+
+EENNVVIIRROONNMMEENNTT
+     The following environment variables affect the execution of ttaarr:
+
+     TAR_READER_OPTIONS
+                The default options for format readers and compression readers.  The ----ooppttiioonnss
+                option overrides this.
+
+     TAR_WRITER_OPTIONS
+                The default options for format writers and compression writers.  The ----ooppttiioonnss
+                option overrides this.
+
+     LANG       The locale to use.  See environ(7) for more information.
+
+     TAPE       The default device.  The --ff option overrides this.  Please see the description of
+                the --ff option above for more details.
+
+     TZ         The timezone to use when displaying dates.  See environ(7) for more information.
+
+EEXXIITT SSTTAATTUUSS
+     The ttaarr utility exits 0 on success, and >0 if an error occurs.
+
+EEXXAAMMPPLLEESS
+     The following creates a new archive called _f_i_l_e_._t_a_r_._g_z that contains two files _s_o_u_r_c_e_._c and
+     _s_o_u_r_c_e_._h:
+           ttaarr --cczzff _f_i_l_e_._t_a_r_._g_z _s_o_u_r_c_e_._c _s_o_u_r_c_e_._h
+
+     To view a detailed table of contents for this archive:
+           ttaarr --ttvvff _f_i_l_e_._t_a_r_._g_z
+
+     To extract all entries from the archive on the default tape drive:
+           ttaarr --xx
+
+     To examine the contents of an ISO 9660 cdrom image:
+           ttaarr --ttff _i_m_a_g_e_._i_s_o
+
+     To move file hierarchies, invoke ttaarr as
+           ttaarr --ccff _- --CC _s_r_c_d_i_r _. | ttaarr --xxppff _- --CC _d_e_s_t_d_i_r
+     or more traditionally
+           cd srcdir ; ttaarr --ccff _- _. | (_c_d _d_e_s_t_d_i_r _; ttaarr --xxppff _-)
+
+     In create mode, the list of files and directories to be archived can also include directory
+     change instructions of the form --CC_f_o_o_/_b_a_z and archive inclusions of the form @@_a_r_c_h_i_v_e_-_f_i_l_e.
+     For example, the command line
+           ttaarr --cc --ff _n_e_w_._t_a_r _f_o_o_1 @@_o_l_d_._t_g_z --CC_/_t_m_p _f_o_o_2
+     will create a new archive _n_e_w_._t_a_r.  ttaarr will read the file _f_o_o_1 from the current directory and
+     add it to the output archive.  It will then read each entry from _o_l_d_._t_g_z and add those entries
+     to the output archive.  Finally, it will switch to the _/_t_m_p directory and add _f_o_o_2 to the out-
+     put archive.
+
+     An input file in mtree(5) format can be used to create an output archive with arbitrary owner-
+     ship, permissions, or names that differ from existing data on disk:
+
+           $ cat input.mtree
+           #mtree
+           usr/bin uid=0 gid=0 mode=0755 type=dir
+           usr/bin/ls uid=0 gid=0 mode=0755 type=file content=myls
+           $ tar -cvf output.tar @input.mtree
+
+     The ----nneewweerr and ----nneewweerr--mmttiimmee switches accept a variety of common date and time specifications,
+     including ``12 Mar 2005 7:14:29pm'', ``2005-03-12 19:14'', ``5 minutes ago'', and ``19:14 PST
+     May 1''.
+
+     The ----ooppttiioonnss argument can be used to control various details of archive generation or reading.
+     For example, you can generate mtree output which only contains ttyyppee, ttiimmee, and uuiidd keywords:
+           ttaarr --ccff _f_i_l_e_._t_a_r ----ffoorrmmaatt==mmttrreeee ----ooppttiioonnss==''!!aallll,,ttyyppee,,ttiimmee,,uuiidd'' _d_i_r
+     or you can set the compression level used by gzip or xz compression:
+           ttaarr --cczzff _f_i_l_e_._t_a_r ----ooppttiioonnss==''ccoommpprreessssiioonn--lleevveell==99''.
+     For more details, see the explanation of the aarrcchhiivvee__rreeaadd__sseett__ooppttiioonnss() and
+     aarrcchhiivvee__wwrriittee__sseett__ooppttiioonnss() API calls that are described in archive_read(3) and
+     archive_write(3).
+
+CCOOMMPPAATTIIBBIILLIITTYY
+     The bundled-arguments format is supported for compatibility with historic implementations.  It
+     consists of an initial word (with no leading - character) in which each character indicates an
+     option.  Arguments follow as separate words.  The order of the arguments must match the order
+     of the corresponding characters in the bundled command word.  For example,
+           ttaarr ttbbff 3322 _f_i_l_e_._t_a_r
+     specifies three flags tt, bb, and ff.  The bb and ff flags both require arguments, so there must be
+     two additional items on the command line.  The _3_2 is the argument to the bb flag, and _f_i_l_e_._t_a_r
+     is the argument to the ff flag.
+
+     The mode options c, r, t, u, and x and the options b, f, l, m, o, v, and w comply with SUSv2.
+
+     For maximum portability, scripts that invoke ttaarr should use the bundled-argument format above,
+     should limit themselves to the cc, tt, and xx modes, and the bb, ff, mm, vv, and ww options.
+
+     Additional long options are provided to improve compatibility with other tar implementations.
+
+SSEECCUURRIITTYY
+     Certain security issues are common to many archiving programs, including ttaarr.  In particular,
+     carefully-crafted archives can request that ttaarr extract files to locations outside of the tar-
+     get directory.  This can potentially be used to cause unwitting users to overwrite files they
+     did not intend to overwrite.  If the archive is being extracted by the superuser, any file on
+     the system can potentially be overwritten.  There are three ways this can happen.  Although ttaarr
+     has mechanisms to protect against each one, savvy users should be aware of the implications:
+
+     ++oo       Archive entries can have absolute pathnames.  By default, ttaarr removes the leading _/
+             character from filenames before restoring them to guard against this problem.
+
+     ++oo       Archive entries can have pathnames that include _._. components.  By default, ttaarr will
+             not extract files containing _._. components in their pathname.
+
+     ++oo       Archive entries can exploit symbolic links to restore files to other directories.  An
+             archive can restore a symbolic link to another directory, then use that link to restore
+             a file into that directory.  To guard against this, ttaarr checks each extracted path for
+             symlinks.  If the final path element is a symlink, it will be removed and replaced with
+             the archive entry.  If --UU is specified, any intermediate symlink will also be uncondi-
+             tionally removed.  If neither --UU nor --PP is specified, ttaarr will refuse to extract the
+             entry.
+     To protect yourself, you should be wary of any archives that come from untrusted sources.  You
+     should examine the contents of an archive with
+           ttaarr --ttff _f_i_l_e_n_a_m_e
+     before extraction.  You should use the --kk option to ensure that ttaarr will not overwrite any
+     existing files or the --UU option to remove any pre-existing files.  You should generally not
+     extract archives while running with super-user privileges.  Note that the --PP option to ttaarr dis-
+     ables the security checks above and allows you to extract an archive while preserving any abso-
+     lute pathnames, _._. components, or symlinks to other directories.
+
+SSEEEE AALLSSOO
+     bzip2(1), compress(1), cpio(1), gzip(1), mt(1), pax(1), shar(1), xz(1), libarchive(3),
+     libarchive-formats(5), tar(5)
+
+SSTTAANNDDAARRDDSS
+     There is no current POSIX standard for the tar command; it appeared in ISO/IEC 9945-1:1996
+     (``POSIX.1'') but was dropped from IEEE Std 1003.1-2001 (``POSIX.1'').  The options supported
+     by this implementation were developed by surveying a number of existing tar implementations as
+     well as the old POSIX specification for tar and the current POSIX specification for pax.
+
+     The ustar and pax interchange file formats are defined by IEEE Std 1003.1-2001 (``POSIX.1'')
+     for the pax command.
+
+HHIISSTTOORRYY
+     A ttaarr command appeared in Seventh Edition Unix, which was released in January, 1979.  There
+     have been numerous other implementations, many of which extended the file format.  John
+     Gilmore's ppddttaarr public-domain implementation (circa November, 1987) was quite influential, and
+     formed the basis of GNU tar.  GNU tar was included as the standard system tar in FreeBSD begin-
+     ning with FreeBSD 1.0.
+
+     This is a complete re-implementation based on the libarchive(3) library.  It was first released
+     with FreeBSD 5.4 in May, 2005.
+
+BBUUGGSS
+     This program follows ISO/IEC 9945-1:1996 (``POSIX.1'') for the definition of the --ll option.
+     Note that GNU tar prior to version 1.15 treated --ll as a synonym for the ----oonnee--ffiillee--ssyysstteemm
+     option.
+
+     The --CC _d_i_r option may differ from historic implementations.
+
+     All archive output is written in correctly-sized blocks, even if the output is being com-
+     pressed.  Whether or not the last output block is padded to a full block size varies depending
+     on the format and the output device.  For tar and cpio formats, the last block of output is
+     padded to a full block size if the output is being written to standard output or to a character
+     or block device such as a tape drive.  If the output is being written to a regular file, the
+     last block will not be padded.  Many compressors, including gzip(1) and bzip2(1), complain
+     about the null padding when decompressing an archive created by ttaarr, although they still
+     extract it correctly.
+
+     The compression and decompression is implemented internally, so there may be insignificant dif-
+     ferences between the compressed output generated by
+           ttaarr --cczzff _- _f_i_l_e
+     and that generated by
+           ttaarr --ccff _- _f_i_l_e | ggzziipp
+
+     The default should be to read and write archives to the standard I/O paths, but tradition (and
+     POSIX) dictates otherwise.
+
+     The rr and uu modes require that the archive be uncompressed and located in a regular file on
+     disk.  Other archives can be modified using cc mode with the _@_a_r_c_h_i_v_e_-_f_i_l_e extension.
+
+     To archive a file called _@_f_o_o or _-_f_o_o you must specify it as _._/_@_f_o_o or _._/_-_f_o_o, respectively.
+
+     In create mode, a leading _._/ is always removed.  A leading _/ is stripped unless the --PP option
+     is specified.
+
+     There needs to be better support for file selection on both create and extract.
+
+     There is not yet any support for multi-volume archives.
+
+     Converting between dissimilar archive formats (such as tar and cpio) using the @@_- convention
+     can cause hard link information to be lost.  (This is a consequence of the incompatible ways
+     that different archive formats store hardlink information.)
+
+BSD                            February 25, 2017                           BSD

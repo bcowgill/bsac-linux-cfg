@@ -1,0 +1,75 @@
+
+MV(1)                     BSD General Commands Manual                    MV(1)
+
+NNAAMMEE
+     mmvv -- move files
+
+SSYYNNOOPPSSIISS
+     mmvv [--ff | --ii | --nn] [--vv] _s_o_u_r_c_e _t_a_r_g_e_t
+     mmvv [--ff | --ii | --nn] [--vv] _s_o_u_r_c_e _._._. _d_i_r_e_c_t_o_r_y
+
+DDEESSCCRRIIPPTTIIOONN
+     In its first form, the mmvv utility renames the file named by the _s_o_u_r_c_e operand to the destina-
+     tion path named by the _t_a_r_g_e_t operand.  This form is assumed when the last operand does not
+     name an already existing directory.
+
+     In its second form, mmvv moves each file named by a _s_o_u_r_c_e operand to a destination file in the
+     existing directory named by the _d_i_r_e_c_t_o_r_y operand.  The destination path for each operand is
+     the pathname produced by the concatenation of the last operand, a slash, and the final pathname
+     component of the named file.
+
+     The following options are available:
+
+     --ff      Do not prompt for confirmation before overwriting the destination path.  (The --ff option
+             overrides any previous --ii or --nn options.)
+
+     --ii      Cause mmvv to write a prompt to standard error before moving a file that would overwrite
+             an existing file.  If the response from the standard input begins with the character
+             `y' or `Y', the move is attempted.  (The --ii option overrides any previous --ff or --nn
+             options.)
+
+     --nn      Do not overwrite an existing file.  (The --nn option overrides any previous --ff or --ii
+             options.)
+
+     --vv      Cause mmvv to be verbose, showing files after they are moved.
+
+     It is an error for either the _s_o_u_r_c_e operand or the destination path to specify a directory
+     unless both do.
+
+     If the destination path does not have a mode which permits writing, mmvv prompts the user for
+     confirmation as specified for the --ii option.
+
+     As the rename(2) call does not work across file systems, mmvv uses cp(1) and rm(1) to accomplish
+     the move.  The effect is equivalent to:
+
+           rm -f destination_path && \
+           cp -pRP source_file destination && \
+           rm -rf source_file
+
+DDIIAAGGNNOOSSTTIICCSS
+     The mmvv utility exits 0 on success, and >0 if an error occurs.
+
+     The command "mv dir/afile dir" will abort with an error message.
+
+LLEEGGAACCYY DDIIAAGGNNOOSSTTIICCSS
+     In legacy mode, the command "mv dir/afile dir" will fail silently, returning an exit code of 0.
+
+     For more information about legacy mode, see compat(5).
+
+SSEEEE AALLSSOO
+     cp(1), rm(1), symlink(7)
+
+CCOOMMPPAATTIIBBIILLIITTYY
+     The --nn and --vv options are non-standard and their use in scripts is not recommended.
+
+     The mmvv utility now supports HFS+ Finder and Extended Attributes and resource forks.  The mmvv
+     utility will no longer strip resource forks off of HFS files.  For an alternative method, refer
+     to cp(1).
+
+SSTTAANNDDAARRDDSS
+     The mmvv utility is expected to be IEEE Std 1003.2 (``POSIX.2'') compatible.
+
+HHIISSTTOORRYY
+     A mmvv command appeared in Version 1 AT&T UNIX.
+
+BSD                              July 9, 2002                              BSD
