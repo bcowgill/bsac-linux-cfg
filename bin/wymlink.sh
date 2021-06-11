@@ -7,12 +7,13 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [-s] [-c] [--help|--man|-?] directory
+$cmd [-z] [-s] [-c] [--help|--man|-?] directory
 
-This will emulate symbolic links on windows (i.e. wymlinks) by copying the link target file to where the link is.
+This will emulate symbolic links on Windows (i.e. wymlinks) by copying the link target file to where the link is.
 
 directory  optional directory to switch into before simulating the links.
--s         Set up wymlinks from all inheritance.lst files found (like ln -s command)
+-z         Zip/Tar up all the symbolic links to inheritance.tgz for transport to a Windows system.
+-s         Set up wymlinks from all inheritance.lst and inheritance.tgz files found (like ln -s command)
 -c         Confirm that emulated link file contents have not changed so they can be committed.
 --man      Shows help for this tool.
 --help     Shows help for this tool.
@@ -21,6 +22,8 @@ directory  optional directory to switch into before simulating the links.
 This command expects the find-sum.sh command to have been run first to generate inheritance.lst files in directories which contain symbolic links.
 
 With no options, this command simply finds all the ineritance.lst files and shows the symbolic link files and their targets.
+
+Using the -z option on an OS supporting symbolic links will tar up all the symbolic link file targets into an archive for transport to a Windows machine for later extraction and end-of-line conversion.
 
 Then, using -s option it converts the symbolic links on Windows to actual file copies and can restore the copies back to symbolic links with -c option if the contents have not changed.
 
@@ -33,7 +36,8 @@ Example:
 on Mac/Linux
 
 find-sum.sh > inheritance.lst
-git add inheritance.lst ...
+wymlink.sh -z
+git add inheritance.lst inheritance.tgz
 
 on Windows
 
@@ -58,6 +62,24 @@ fi
 
 MODE="$1"
 DIR=${2:-.}
+
+UNIX2DOS=1
+TAROPT=cvzhf
+if which sw_vers > /dev/null 2>&1 ; then
+	TAROPT=cvzHf
+fi
+
+if [ "$MODE" == "-z" ]; then
+	if [ "$OSTYPE" == "msys" ]; then
+		echo "You cannot use the -z option on Windows systems as they do not support symbolic links."
+		exit 1
+	else
+		pushd "$DIR" && tar $TAROPT inheritance.tgz `find . -type l`
+		ERR=$?
+		popd
+		exit $ERR
+	fi
+fi
 
 pushd "$DIR" && find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -ne '
 	use Fatal qw{open move copy unlink};
@@ -101,7 +123,7 @@ pushd "$DIR" && find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -n
           last if $target_name eq $target_original;
         }
 				debug("fixed target $target_name\n");
-        debug(`pwd`);
+				debug(`pwd`);
 				if ($ENV{MODE} eq "-s")
 				{
 					debug("attempting wymlink...\n");
@@ -131,4 +153,17 @@ pushd "$DIR" && find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -n
 		die "$@$chide\n";
 	}
 '
+if [ -f inheritance.tgz ]; then
+	if [ "$MODE" == "-s" ]; then
+		if [ "$OSTYPE" == "msys" ]; then
+			tar xvzf inheritance.tgz
+			if [ ! -z "$UNIX2DOS" ]; then
+				# not strictly necessary, unix2dos skips binary files.
+				#if file -b $file | grep text; then
+				unix2dos $file;
+				#fi
+			fi
+		fi
+	fi
+fi
 popd

@@ -66,7 +66,9 @@ add-checksums () {
 		chomp $file;
 		my $tmp = $file;
 		my @checksum;
-		if ($ENV{OSTYPE} eq "msys" && `file -b $file | grep text`)
+		if ($ENV{OSTYPE} eq "msys")
+		# not scrictly necessary as dos2unix skips binary files
+		# && `file -b $file | grep text`)
 		{
 			# windows newline characters differ so checksum on text files differ!!
 			$tmp = $ENV{BLAT};
