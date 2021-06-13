@@ -2,6 +2,9 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 
+TGZFILE=__inheritance__.tgz
+INHFILE=inheritance.lst
+
 function usage {
 	local code
 	code=$1
@@ -12,14 +15,14 @@ $cmd [-z] [-s] [-c] [--help|--man|-?] directory
 This will emulate symbolic links on Windows (i.e. wymlinks) by copying the link target file to where the link is.
 
 directory  optional directory to switch into before simulating the links.
--z         Zip/Tar up all the symbolic links to inheritance.tgz for transport to a Windows system.
--s         Set up wymlinks from all inheritance.lst and inheritance.tgz files found (like ln -s command)
+-z         Zip/Tar up all the symbolic links to $TGZFILE for transport to a Windows system.
+-s         Set up wymlinks from all $INHFILE and $TGZFILE files found (like ln -s command)
 -c         Confirm that emulated link file contents have not changed so they can be committed.
 --man      Shows help for this tool.
 --help     Shows help for this tool.
 -?         Shows help for this tool.
 
-This command expects the find-sum.sh command to have been run first to generate inheritance.lst files in directories which contain symbolic links.
+This command expects the find-sum.sh command to have been run first to generate $INHFILE files in directories which contain symbolic links.
 
 With no options, this command simply finds all the ineritance.lst files and shows the symbolic link files and their targets.
 
@@ -35,9 +38,9 @@ Example:
 
 on Mac/Linux
 
-find-sum.sh > inheritance.lst
+find-sum.sh > $INHFILE
 wymlink.sh -z
-git add inheritance.lst inheritance.tgz
+git add $INHFILE $TGZFILE
 
 on Windows
 
@@ -74,14 +77,14 @@ if [ "$MODE" == "-z" ]; then
 		echo "You cannot use the -z option on Windows systems as they do not support symbolic links."
 		exit 1
 	else
-		pushd "$DIR" && tar $TAROPT inheritance.tgz `find . -type l`
+		pushd "$DIR" > /dev/null && tar $TAROPT $TGZFILE `find . -type l` 2> /dev/null
 		ERR=$?
-		popd
+		popd > /dev/null
 		exit $ERR
 	fi
 fi
 
-pushd "$DIR" && find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -ne '
+pushd "$DIR" && find . -name "$INHFILE" | MODE=$MODE perl -MFile::Copy -ne '
 	use Fatal qw{open move copy unlink};
 	sub debug { return; print "dbg: "; print @_; }
 	my $chide = "This would be easier if you were using an OS which supported symbolic links.";
@@ -153,10 +156,10 @@ pushd "$DIR" && find . -name 'inheritance.lst' | MODE=$MODE perl -MFile::Copy -n
 		die "$@$chide\n";
 	}
 '
-if [ -f inheritance.tgz ]; then
+if [ -f $TGZFILE ]; then
 	if [ "$MODE" == "-s" ]; then
 		if [ "$OSTYPE" == "msys" ]; then
-			tar xvzf inheritance.tgz
+			tar xvzf $TGZFILE
 			if [ ! -z "$UNIX2DOS" ]; then
 				# not strictly necessary, unix2dos skips binary files.
 				#if file -b $file | grep text; then

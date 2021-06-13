@@ -2,6 +2,8 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 
+INHFILE=inheritance.lst
+
 function usage {
 	local code
 	code=$1
@@ -12,7 +14,7 @@ $cmd [--help|--man|-?] directory
 This will scan a directory tree given for certain files and generate a checksum (cksum or md5) listing for later comparison.
 
 SUM        Environment variable to specify an alternative checksum program.
-directory  The directory to scan and generate an inheritance.lst file in.
+directory  The directory to scan and generate an $INHFILE file in.
 --man      Shows help for this tool.
 --help     Shows help for this tool.
 -?         Shows help for this tool.
@@ -35,7 +37,7 @@ See also wymlink.sh for emulating symbolic links on Windows.
 
 Example:
 
-	$cmd subdir > subdir/inheritance.lst
+	$cmd subdir > subdir/$INHFILE
 "
 	exit $code
 }
@@ -91,9 +93,10 @@ filter-out () {
 	grep -v DS_Store \
 	| grep -v infra.json \
 	| grep -vE '\.orig$' \
+	| grep -vE '__.+__' \
 	| grep -vE '\_(BASE|LOCAL|REMOTE|BACKUP)_[0-9]' \
 	| grep -vE '\.wym\s*$' \
-	| grep -v inheritance.lst
+	| grep -v $INHFILE
 }
 
 find-sum () {
