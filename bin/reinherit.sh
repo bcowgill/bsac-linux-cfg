@@ -1,9 +1,9 @@
 #!/bin/bash
 # reinherit symbolic links to a new directory.
 
-DIR="${1:-.}"
-FROM="$2"
-TO="$3"
+FROM="$1"
+TO="$2"
+DIR="${3:-.}"
 
 function usage {
 	local code

@@ -51,10 +51,12 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
+FIELD=3
 if [ -z "$SUM" ]; then
 	SUM=cksum
 	if which md5sum > /dev/null; then
 		SUM=md5sum
+		FIELD=2
 	fi
 fi
 #echo SUM=$SUM
@@ -85,7 +87,7 @@ add-checksums () {
 		#	die "$file: CHECKSUM $SUM error"
 		#}
 		$_ = qq{$checksum $_};
-	' | sort
+	' | sort -k $FIELD
 }
 
 # *.orig, _BASE|LOCAL|REMOTE|BACKUP_ files are created by git merge conflicts
