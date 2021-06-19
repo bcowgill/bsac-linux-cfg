@@ -56,13 +56,13 @@ figure.top-caption figcaption {
 
 /* A captioned figure has a nice border and spacing around it. */
 figure.captioned {
+  text-indent: 0;
   text-align: center;
   font-style: italic;
   font-size: smaller;
-  text-indent: 0;
-  border: thin silver solid;
+  border: thin silver solid; /* figure-border if change this, change the other one too... */
   margin: 1.5em;
-  padding: 0.5em;
+  padding: 0.5em; /* figure-padding if change this, change the other one too... */
 }
 /*
   because our captioned figure has border we need to fix it up when
@@ -73,8 +73,8 @@ figure.captioned.top-caption {
   padding-top: 0;
 }
 figure.captioned.top-caption figcaption {
-  padding: 0.5em;
-  border: thin silver solid;
+  padding: 0.5em; /* figure-padding if change this, change the other one too... */
+  border: thin silver solid; /* figure-border if change this, change the other one too... */
   border-bottom: none;
 }
 
