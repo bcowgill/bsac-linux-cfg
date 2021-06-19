@@ -55,7 +55,7 @@ He also blogs about CSS so have a look and experiment.
 * centering.html
 * center-viewport.html
 
-### Typographic paragraph indentation:
+### Typographic paragraph indentation and Figure flotation:
 
 * paragraph-indent.html
 

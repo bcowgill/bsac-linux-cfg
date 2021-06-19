@@ -1,16 +1,22 @@
-/* Typographic ndentation of paragraphs instead of blank lines between.
+/* Typographic indentation of paragraphs instead of blank lines between.
  * https://www.w3.org/Style/Examples/007/indent
- * */
+ */
 p {
   margin-bottom: 0
 }
 p + p {
   text-indent: 1.5em;
-  margin-top: 0
+  margin-top: 0;
 }
 /* to remove the indent as needed */
 p.noindent {
-  text-indent: 0
+  text-indent: 0;
+}
+/* to revert to a normal paragraph as needed */
+p.npb,p.normal-para-break {
+  text-indent: 0;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 /* when captioning things like figures or other things: */
@@ -18,18 +24,69 @@ figure.center-caption { text-align: center; }
 figure.center-caption p { text-indent: 0; }
 
 /* When you do need to put some space between paragraphs */
-/* small thematic break */
-p.stb { text-indent: 0; margin-top: 0.83em }
-/* medium thematic break */
-p.mtb { text-indent: 0; margin-top: 2.17em }
-/* large thematic break */
-p.ltb { text-indent: 0; margin-top: 3.08em }
+/* small thematic/paragraph break */
+p.spb,p.small-para-break { text-indent: 0; margin-top: 0.83em; }
+/* medium thematic/paragraph break */
+p.mpb,p.medium-para-break { text-indent: 0; margin-top: 2.17em; }
+/* large thematic/paragraph break */
+p.lpb,p.large-para-break { text-indent: 0; margin-top: 3.08em; }
 
+/*
+ * Floating figures with captions
+ * https://www.w3.org/Style/Examples/007/figures
+ */
+img.scaled {
+  width: 100%;
+}
+figure.right {
+  float: right;
+  width: 30%;
+}
+figure.left {
+  float: left;
+  width: 30%;
+}
+figure.top-caption {
+  display: table;
+}
+figure.top-caption figcaption {
+  display: table-caption;
+  caption-side: top;
+}
+
+/* A captioned figure has a nice border and spacing around it. */
+figure.captioned {
+  text-align: center;
+  font-style: italic;
+  font-size: smaller;
+  text-indent: 0;
+  border: thin silver solid;
+  margin: 1.5em;
+  padding: 0.5em;
+}
+/*
+  because our captioned figure has border we need to fix it up when
+  the caption is at the top...
+*/
+figure.captioned.top-caption {
+  border-top: none;
+  padding-top: 0;
+}
+figure.captioned.top-caption figcaption {
+  padding: 0.5em;
+  border: thin silver solid;
+  border-bottom: none;
+}
 
 /*
  * For highlingting the example only.
- * */
-figure {
-	width: 600px;
-	outline: 4px dashed silver;
+ */
+figure.sample {
+  width: 600px;
+  outline: 4px dashed silver;
+}
+/* Filler text less visible as it's not the main thrust of the article */
+.filler {
+  font-weight: 100;
+  opacity: 0.5;
 }
