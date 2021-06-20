@@ -78,6 +78,43 @@ figure.captioned.top-caption figcaption {
   border-bottom: none;
 }
 
+/* https://www.w3.org/Style/Examples/007/text-shadow */
+/* proposed as text-decoration outline, but not available yet */
+.outline {
+  font-family: "My Gill Sans", Lato, sans-serif;
+  font-weight: normal;
+  font-style: italic;
+}
+.outline-blue-white {
+  color: blue;
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+.outline-gray-black {
+  color: #bbe;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* more identical box-shadows for more intensity */
+.neon-green-1 {
+  text-shadow: 0 0 0.2em #8F7;
+}
+.neon-green-1:hover {
+  text-shadow: 0 0 0.2em #8F7, 0 0 0.2em #8F7, 0 0 0.2em #8F7;
+}
+.neon-red-2 {
+  text-shadow: 0 0 0.2em #F87, 0 0 0.2em #F87;
+}
+.neon-red-2:hover {
+  text-shadow: 0 0 0.2em #F87;
+}
+.neon-blue-3 {
+  text-shadow: 0 0 0.2em #87F, 0 0 0.2em #87F, 0 0 0.2em #87F;
+}
+.neon-blue-3:hover {
+  text-shadow: 0 0 0.2em #87F;
+}
+
 /*
  * For highlingting the example only.
  */
