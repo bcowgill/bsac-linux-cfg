@@ -30,7 +30,7 @@ Assumes pretty formatted json with each key/value on separate lines with simple 
 
 Also assumes there will be no double-quotes in the key/value strings and so removes them all.
 
-See also json-plus.pl json-common.pl json_pp json_xs jq
+See also json-plus.pl json-common.pl tsv2json.sh json_pp json_xs jq
 
 Example:
 
