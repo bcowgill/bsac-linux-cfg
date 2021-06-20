@@ -1,7 +1,11 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# WINDEV tool useful on windows development machine
 
 use strict;
 use warnings;
+use English qw(-no_match_vars);
+use FindBin;
 
 my $firstFile = 1;
 my %First;
@@ -10,21 +14,39 @@ my $second = 0;
 my $common = 0;
 my $something = 0;
 
-unless (scalar(@ARGV))
+sub usage
 {
-	my $cmd = $0;
+	my $cmd = $FindBin::Script;
 	print <<"USAGE";
-$cmd first.json second.json
+$cmd [--help|--man|-?] first.json second.json
 
 This will output everything from second.json which has an identical key/value as first.json.
 
-Assumes pretty formatted json on separate lines with simple key: string-value structure.
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+Assumes pretty formatted json with each key/value on separate lines with simple key: string-value structure no deep values.
+
+Also assumes there will be no double-quotes in the key/value strings and so removes them all.
+
+See also json-plus.pl json-minus.pl json_pp json_xs jq
 
 Example:
 
 $cmd first.json second.json > second-common.json
 USAGE
 	exit 0;
+}
+
+unless (scalar(@ARGV) >= 2)
+{
+	usage()
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
 }
 
 while (my $line = <>)
@@ -71,7 +93,7 @@ while (my $line = <>)
 			$something = 1;
 		}
 	}
-	BEGIN { print "{\n" if scalar(@ARGV) }
+	BEGIN { print "{\n" if scalar(@ARGV) >= 2 && !grep { m{--help|--man|-\?}xms } @ARGV }
 	END {
 		print "\n}\n" if $something;
 		print STDERR "first: $first\nsecond: $second\nduplicate values: $common\n" if $something;
