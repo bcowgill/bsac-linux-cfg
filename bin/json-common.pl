@@ -67,9 +67,9 @@ while (my $line = <>)
 		next;
 	}
 
-	#print qq{$.?? $line ??\n} if $. == 170;
+	#print qq{LINE: $.?? $line ??\n} if $. == 3;
 	# get key, value and strip quotes
-	my ($key, $value) = split(/\s*:\s*/, $line);
+	my ($key, $value) = split_colon($line);
 	$key =~ s{"}{}xmsg;
 	$value =~ s{"}{}xmsg;
 	$value = qq{"$value"};
@@ -97,5 +97,18 @@ while (my $line = <>)
 	END {
 		print "\n}\n" if $something;
 		print STDERR "first: $first\nsecond: $second\nduplicate values: $common\n" if $something;
+	}
+	sub split_colon
+	{
+		my ($line) = @_;
+		my $key = $line;
+		my $value = "";
+		if ($line =~ m{:}xms)
+		{
+			$line =~ m{\A([^:]*?)\s*:\s*(.*)\z}xms;
+			$key = $1  || "";
+			$value = $2 || "";
+		}
+		return ($key, $value);
 	}
 }

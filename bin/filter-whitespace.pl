@@ -182,7 +182,7 @@ sub main
 		if (!$BINARY)
 		{
 			$nl = "\n";
-			chomp($line);
+			#chomp($line);
 		}
 		if ($DEBUG)
 		{
