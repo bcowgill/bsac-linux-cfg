@@ -13,5 +13,8 @@ for file in \
 	sort\
 	tar\
 	; do
-	man $file > $OUT/$file.txt
+	echo [$file]
+	if [ ! -z "$file" ]; then
+		man $file > $OUT/$file.txt
+	fi
 done
