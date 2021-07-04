@@ -2,16 +2,30 @@
 OUT=${1:-.}
 
 for file in \
-	cp\
-	file\
-	find\
-	grep\
-	ln\
-	ls\
-	mv\
-	rm\
-	sort\
-	tar\
+	awk \
+	bash \
+	cp \
+	diff \
+	file \
+	find \
+	grep \
+	head \
+	hexdump \
+	ln \
+	ls \
+	mv \
+	perl \
+	rm \
+	sed \
+	shred \
+	sort \
+	strings \
+	tail \
+	tar \
+	test \
+	tr \
+	uniq \
+	xargs \
 	; do
 	echo [$file]
 	if [ ! -z "$file" ]; then

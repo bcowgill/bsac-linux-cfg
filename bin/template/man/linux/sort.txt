@@ -1,4 +1,4 @@
-SORT(1)                                                                User Commands                                                                SORT(1)
+SORT(1)                         User Commands                         SORT(1)
 
 
 
@@ -12,7 +12,8 @@ SYNOPSIS
 DESCRIPTION
        Write sorted concatenation of all FILE(s) to standard output.
 
-       Mandatory arguments to long options are mandatory for short options too.  Ordering options:
+       Mandatory  arguments  to  long options are mandatory for short options
+       too.  Ordering options:
 
        -b, --ignore-leading-blanks
               ignore leading blanks
@@ -48,7 +49,8 @@ DESCRIPTION
               reverse the result of comparisons
 
        --sort=WORD
-              sort according to WORD: general-numeric -g, human-numeric -h, month -M, numeric -n, random -R, version -V
+              sort according to WORD: general-numeric -g,  human-numeric  -h,
+              month -M, numeric -n, random -R, version -V
 
        -V, --version-sort
               natural sort of (version) numbers within text
@@ -68,10 +70,12 @@ DESCRIPTION
               compress temporaries with PROG; decompress them with PROG -d
 
        --debug
-              annotate the part of the line used to sort, and warn about questionable usage to stderr
+              annotate  the  part  of  the  line used to sort, and warn about
+              questionable usage to stderr
 
        --files0-from=F
-              read input from the files specified by NUL-terminated names in file F; If F is - then read names from standard input
+              read input from the files specified by NUL-terminated names  in
+              file F; If F is - then read names from standard input
 
        -k, --key=KEYDEF
               sort via a key; KEYDEF gives location and type
@@ -92,13 +96,15 @@ DESCRIPTION
               use SEP instead of non-blank to blank transition
 
        -T, --temporary-directory=DIR
-              use DIR for temporaries, not $TMPDIR or /tmp; multiple options specify multiple directories
+              use  DIR for temporaries, not $TMPDIR or /tmp; multiple options
+              specify multiple directories
 
        --parallel=N
               change the number of sorts run concurrently to N
 
        -u, --unique
-              with -c, check for strict ordering; without -c, output only the first of an equal run
+              with -c, check for strict ordering; without -c, output only the
+              first of an equal run
 
        -z, --zero-terminated
               end lines with 0 byte, not newline
@@ -108,17 +114,23 @@ DESCRIPTION
        --version
               output version information and exit
 
-       KEYDEF  is F[.C][OPTS][,F[.C][OPTS]] for start and stop position, where F is a field number and C a character position in the field; both are origin
-       1, and the stop position defaults to the line's end.  If neither -t nor -b is in effect, characters in a field are counted from the beginning of the
-       preceding whitespace.  OPTS is one or more single-letter ordering options [bdfgiMhnRrV], which override global ordering options for that key.  If no
-       key is given, use the entire line as the key.
+       KEYDEF is F[.C][OPTS][,F[.C][OPTS]] for start and stop position, where
+       F is a field number and C a character position in the field; both  are
+       origin  1,  and the stop position defaults to the line's end.  If nei‐
+       ther -t nor -b is in effect, characters in a field  are  counted  from
+       the  beginning  of the preceding whitespace.  OPTS is one or more sin‐
+       gle-letter  ordering  options  [bdfgiMhnRrV],  which  override  global
+       ordering  options  for  that  key.  If no key is given, use the entire
+       line as the key.
 
-       SIZE may be followed by the following multiplicative suffixes: % 1% of memory, b 1, K 1024 (default), and so on for M, G, T, P, E, Z, Y.
+       SIZE may be followed by the following multiplicative suffixes: % 1% of
+       memory, b 1, K 1024 (default), and so on for M, G, T, P, E, Z, Y.
 
        With no FILE, or when FILE is -, read standard input.
 
-       *** WARNING *** The locale specified by the environment affects sort order.  Set LC_ALL=C to get the traditional sort order that  uses  native  byte
-       values.
+       ***  WARNING  *** The locale specified by the environment affects sort
+       order.  Set LC_ALL=C to get  the  traditional  sort  order  that  uses
+       native byte values.
 
 AUTHOR
        Written by Mike Haertel and Paul Eggert.
@@ -130,13 +142,17 @@ REPORTING BUGS
        Report sort translation bugs to <http://translationproject.org/team/>
 
 COPYRIGHT
-       Copyright © 2013 Free Software Foundation, Inc.  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
-       This is free software: you are free to change and redistribute it.  There is NO WARRANTY, to the extent permitted by law.
+       Copyright  ©  2013 Free Software Foundation, Inc.  License GPLv3+: GNU
+       GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+       This is free software: you are free to  change  and  redistribute  it.
+       There is NO WARRANTY, to the extent permitted by law.
 
 SEE ALSO
        uniq(1)
 
-       The full documentation for sort is maintained as a Texinfo manual.  If the info and sort programs are properly installed at your site, the command
+       The full documentation for sort is maintained as a Texinfo manual.  If
+       the info and sort programs are properly installed at  your  site,  the
+       command
 
               info coreutils 'sort invocation'
 
@@ -144,4 +160,4 @@ SEE ALSO
 
 
 
-GNU coreutils 8.21                                                       March 2016                                                                 SORT(1)
+GNU coreutils 8.21                March 2016                          SORT(1)
