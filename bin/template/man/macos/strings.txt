@@ -1,0 +1,64 @@
+STRINGS(1)                                                                                STRINGS(1)
+
+
+
+NNAAMMEE
+       strings - find the printable strings in a object, or other binary, file
+
+SSYYNNOOPPSSIISS
+       ssttrriinnggss [ -- ] [ --aa ] [ --oo ] [ --tt _f_o_r_m_a_t ] [ --_n_u_m_b_e_r ] [ --nn _n_u_m_b_e_r ] [--] [file ...]
+
+DDEESSCCRRIIPPTTIIOONN
+       _S_t_r_i_n_g_s  looks  for  ASCII strings in a binary file or standard input.  _S_t_r_i_n_g_s is useful for
+       identifying random object files and many other things.  A string is any sequence  of  4  (the
+       default)  or  more  printing characters [ending at, but not including, any other character or
+       EOF].  Unless the -- flag is given, _s_t_r_i_n_g_s looks in all sections of the object  files  except
+       the (__TEXT,__text) section.  If no files are specified standard input is read.
+
+       The  file  arguments may be of the form _l_i_b_x_._a_(_f_o_o_._o_), to request information about only that
+       object file  and  not  the  entire  library.    (Typically  this  argument  must  be  quoted,
+       _`_`_l_i_b_x_._a_(_f_o_o_._o_)_'_'_, to get it past the shell.)
+
+       The options to _s_t_r_i_n_g_s(1) are:
+
+       --aa     This  option  causes  _s_t_r_i_n_g_s  to  look for strings in all sections of the object file
+              (including the (__TEXT,__text) section.
+
+       --      This option causes _s_t_r_i_n_g_s to look for strings in all bytes of the files (the  default
+              for non-object files).
+
+       ----     This option causes _s_t_r_i_n_g_s to treat all the following arguments as files.
+
+       --oo     Preceded each string by its offset in the file (in decimal).
+
+       --tt _f_o_r_m_a_t
+              Write  each string preceded by its byte offset from the start of the file.  The format
+              shall be dependent on the single character used as the format option-argument:
+
+       _d      The offset shall be written in decimal.
+
+       _o      The offset shall be written in octal.
+
+       _x      The offset shall be written in hexadecimal.
+
+       --_n_u_m_b_e_r
+              The decimal _n_u_m_b_e_r is used as the minimum string length rather than the default of  4.
+
+       --nn _n_u_m_b_e_r
+              Specify  the  minimum  string  length, where the number argument is a positive decimal
+              integer. The default shall be 4.
+
+       --aarrcchh _a_r_c_h___t_y_p_e
+              Specifies the architecture, _a_r_c_h___t_y_p_e_, of the file for _s_t_r_i_n_g_s(1) to operate  on  when
+              the  file  is a universal file.  (See _a_r_c_h(3) for the currently know _a_r_c_h___t_y_p_es.)  The
+              _a_r_c_h___t_y_p_e can be "all" to operate on all architectures in the file.
+
+SSEEEE AALLSSOO
+       od(1)
+
+BBUUGGSS
+       The algorithm for identifying strings is extremely primitive.
+
+
+
+Apple, Inc.                                 June 7, 2016                                  STRINGS(1)

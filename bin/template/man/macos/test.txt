@@ -1,0 +1,165 @@
+
+TEST(1)                   BSD General Commands Manual                  TEST(1)
+
+NNAAMMEE
+     tteesstt, [[ -- condition evaluation utility
+
+SSYYNNOOPPSSIISS
+     tteesstt _e_x_p_r_e_s_s_i_o_n
+     [[ _e_x_p_r_e_s_s_i_o_n ]]
+
+DDEESSCCRRIIPPTTIIOONN
+     The tteesstt utility evaluates the expression and, if it evaluates to true, returns a zero (true)
+     exit status; otherwise it returns 1 (false).  If there is no expression, tteesstt also returns 1
+     (false).
+
+     All operators and flags are separate arguments to the tteesstt utility.
+
+     The following primaries are used to construct expression:
+
+     --bb _f_i_l_e       True if _f_i_l_e exists and is a block special file.
+
+     --cc _f_i_l_e       True if _f_i_l_e exists and is a character special file.
+
+     --dd _f_i_l_e       True if _f_i_l_e exists and is a directory.
+
+     --ee _f_i_l_e       True if _f_i_l_e exists (regardless of type).
+
+     --ff _f_i_l_e       True if _f_i_l_e exists and is a regular file.
+
+     --gg _f_i_l_e       True if _f_i_l_e exists and its set group ID flag is set.
+
+     --hh _f_i_l_e       True if _f_i_l_e exists and is a symbolic link.  This operator is retained for com-
+                   patibility with previous versions of this program.  Do not rely on its existence;
+                   use --LL instead.
+
+     --kk _f_i_l_e       True if _f_i_l_e exists and its sticky bit is set.
+
+     --nn _s_t_r_i_n_g     True if the length of _s_t_r_i_n_g is nonzero.
+
+     --pp _f_i_l_e       True if _f_i_l_e is a named pipe (FIFO).
+
+     --rr _f_i_l_e       True if _f_i_l_e exists and is readable.
+
+     --ss _f_i_l_e       True if _f_i_l_e exists and has a size greater than zero.
+
+     --tt _f_i_l_e___d_e_s_c_r_i_p_t_o_r
+                   True if the file whose file descriptor number is _f_i_l_e___d_e_s_c_r_i_p_t_o_r is open and is
+                   associated with a terminal.
+
+     --uu _f_i_l_e       True if _f_i_l_e exists and its set user ID flag is set.
+
+     --ww _f_i_l_e       True if _f_i_l_e exists and is writable.  True indicates only that the write flag is
+                   on.  The file is not writable on a read-only file system even if this test indi-
+                   cates true.
+
+     --xx _f_i_l_e       True if _f_i_l_e exists and is executable.  True indicates only that the execute flag
+                   is on.  If _f_i_l_e is a directory, true indicates that _f_i_l_e can be searched.
+
+     --zz _s_t_r_i_n_g     True if the length of _s_t_r_i_n_g is zero.
+
+     --LL _f_i_l_e       True if _f_i_l_e exists and is a symbolic link.
+
+     --OO _f_i_l_e       True if _f_i_l_e exists and its owner matches the effective user id of this process.
+
+     --GG _f_i_l_e       True if _f_i_l_e exists and its group matches the effective group id of this process.
+
+     --SS _f_i_l_e       True if _f_i_l_e exists and is a socket.
+
+     _f_i_l_e_1 --nntt _f_i_l_e_2
+                   True if _f_i_l_e_1 exists and is newer than _f_i_l_e_2.
+
+     _f_i_l_e_1 --oott _f_i_l_e_2
+                   True if _f_i_l_e_1 exists and is older than _f_i_l_e_2.
+
+     _f_i_l_e_1 --eeff _f_i_l_e_2
+                   True if _f_i_l_e_1 and _f_i_l_e_2 exist and refer to the same file.
+
+     _s_t_r_i_n_g        True if _s_t_r_i_n_g is not the null string.
+
+     _s_1 == _s_2       True if the strings _s_1 and _s_2 are identical.
+
+     _s_1 !!== _s_2      True if the strings _s_1 and _s_2 are not identical.
+
+     _s_1 << _s_2       True if string _s_1 comes before _s_2 based on the binary value of their characters.
+
+     _s_1 >> _s_2       True if string _s_1 comes after _s_2 based on the binary value of their characters.
+
+     _n_1 --eeqq _n_2     True if the integers _n_1 and _n_2 are algebraically equal.
+
+     _n_1 --nnee _n_2     True if the integers _n_1 and _n_2 are not algebraically equal.
+
+     _n_1 --ggtt _n_2     True if the integer _n_1 is algebraically greater than the integer _n_2.
+
+     _n_1 --ggee _n_2     True if the integer _n_1 is algebraically greater than or equal to the integer _n_2.
+
+     _n_1 --lltt _n_2     True if the integer _n_1 is algebraically less than the integer _n_2.
+
+     _n_1 --llee _n_2     True if the integer _n_1 is algebraically less than or equal to the integer _n_2.
+
+     If _f_i_l_e is a symbolic link, tteesstt will fully dereference it and then evaluate the expression
+     against the file referenced, except for the --hh and --LL primaries.
+
+     These primaries can be combined with the following operators:
+
+     !! _e_x_p_r_e_s_s_i_o_n  True if _e_x_p_r_e_s_s_i_o_n is false.
+
+     _e_x_p_r_e_s_s_i_o_n_1 --aa _e_x_p_r_e_s_s_i_o_n_2
+                   True if both _e_x_p_r_e_s_s_i_o_n_1 and _e_x_p_r_e_s_s_i_o_n_2 are true.
+
+     _e_x_p_r_e_s_s_i_o_n_1 --oo _e_x_p_r_e_s_s_i_o_n_2
+                   True if either _e_x_p_r_e_s_s_i_o_n_1 or _e_x_p_r_e_s_s_i_o_n_2 are true.
+
+     (( _e_x_p_r_e_s_s_i_o_n ))
+                   True if expression is true.
+
+     The --aa operator has higher precedence than the --oo operator.
+
+     Some shells may provide a builtin tteesstt command which is similar or identical to this utility.
+     Consult the builtin(1) manual page.
+
+GGRRAAMMMMAARR AAMMBBIIGGUUIITTYY
+     The tteesstt grammar is inherently ambiguous.  In order to assure a degree of consistency, the
+     cases described in the IEEE Std 1003.2 (``POSIX.2''), section D11.2/4.62.4, standard are evalu-
+     ated consistently according to the rules specified in the standards document.  All other cases
+     are subject to the ambiguity in the command semantics.
+
+     In particular, only expressions containing --aa, --oo, (( or )) can be ambiguous.
+
+EEXXIITT SSTTAATTUUSS
+     The tteesstt utility exits with one of the following values:
+
+     0       expression evaluated to true.
+
+     1       expression evaluated to false or expression was missing.
+
+     >1      An error occurred.
+
+EEXXAAMMPPLLEESS
+     Implement test FILE1 -nt FILE2 using only POSIX functionality:
+
+           test -n "$(find -L -- FILE1 -prune -newer FILE2 2>/dev/null)"
+
+     This can be modified using non-standard find(1) primaries like --nneewweerrccaa to compare other time-
+     stamps.
+
+CCOOMMPPAATTIIBBIILLIITTYY
+     For compatibility with some other implementations, the == primary can be substituted with ====
+     with the same meaning.
+
+SSEEEE AALLSSOO
+     builtin(1), expr(1), find(1), sh(1), stat(1), symlink(7)
+
+SSTTAANNDDAARRDDSS
+     The tteesstt utility implements a superset of the IEEE Std 1003.2 (``POSIX.2'') specification.  The
+     primaries <<, ====, >>, --eeff, --nntt, --oott, --GG, and --OO are extensions.
+
+BBUUGGSS
+     Both sides are always evaluated in --aa and --oo.  For instance, the writable status of _f_i_l_e will
+     be tested by the following command even though the former expression indicated false, which
+     results in a gratuitous access to the file system:
+           [ -z abc -a -w file ]
+     To avoid this, write
+           [ -z abc ] && [ -w file ]
+
+BSD                              June 1, 2013                              BSD

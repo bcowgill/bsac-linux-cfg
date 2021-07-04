@@ -1,0 +1,146 @@
+
+XARGS(1)                  BSD General Commands Manual                 XARGS(1)
+
+NNAAMMEE
+     xxaarrggss -- construct argument list(s) and execute utility
+
+SSYYNNOOPPSSIISS
+     xxaarrggss [--00oopprrtt] [--EE _e_o_f_s_t_r] [--II _r_e_p_l_s_t_r [--RR _r_e_p_l_a_c_e_m_e_n_t_s] [--SS _r_e_p_l_s_i_z_e]] [--JJ _r_e_p_l_s_t_r]
+           [--LL _n_u_m_b_e_r] [--nn _n_u_m_b_e_r [--xx]] [--PP _m_a_x_p_r_o_c_s] [--ss _s_i_z_e] [_u_t_i_l_i_t_y [_a_r_g_u_m_e_n_t _._._.]]
+
+DDEESSCCRRIIPPTTIIOONN
+     The xxaarrggss utility reads space, tab, newline and end-of-file delimited strings from the standard
+     input and executes _u_t_i_l_i_t_y with the strings as arguments.
+
+     Any arguments specified on the command line are given to _u_t_i_l_i_t_y upon each invocation, followed
+     by some number of the arguments read from the standard input of xxaarrggss.  This is repeated until
+     standard input is exhausted.
+
+     Spaces, tabs and newlines may be embedded in arguments using single (`` ' '') or double (``"'')
+     quotes or backslashes (``\'').  Single quotes escape all non-single quote characters, excluding
+     newlines, up to the matching single quote.  Double quotes escape all non-double quote charac-
+     ters, excluding newlines, up to the matching double quote.  Any single character, including
+     newlines, may be escaped by a backslash.
+
+     The options are as follows:
+
+     --00      Change xxaarrggss to expect NUL (``\0'') characters as separators, instead of spaces and
+             newlines.  This is expected to be used in concert with the --pprriinntt00 function in find(1).
+
+     --EE _e_o_f_s_t_r
+             Use _e_o_f_s_t_r as a logical EOF marker.
+
+     --II _r_e_p_l_s_t_r
+             Execute _u_t_i_l_i_t_y for each input line, replacing one or more occurrences of _r_e_p_l_s_t_r in up
+             to _r_e_p_l_a_c_e_m_e_n_t_s (or 5 if no --RR flag is specified) arguments to _u_t_i_l_i_t_y with the entire
+             line of input.  The resulting arguments, after replacement is done, will not be allowed
+             to grow beyond _r_e_p_l_s_i_z_e (or 255 if no --SS flag is specified) bytes; this is implemented
+             by concatenating as much of the argument containing _r_e_p_l_s_t_r as possible, to the con-
+             structed arguments to _u_t_i_l_i_t_y, up to _r_e_p_l_s_i_z_e bytes.  The size limit does not apply to
+             arguments to _u_t_i_l_i_t_y which do not contain _r_e_p_l_s_t_r, and furthermore, no replacement will
+             be done on _u_t_i_l_i_t_y itself.  Implies --xx.
+
+     --JJ _r_e_p_l_s_t_r
+             If this option is specified, xxaarrggss will use the data read from standard input to
+             replace the first occurrence of _r_e_p_l_s_t_r instead of appending that data after all other
+             arguments.  This option will not affect how many arguments will be read from input
+             (--nn), or the size of the command(s) xxaarrggss will generate (--ss).  The option just moves
+             where those arguments will be placed in the command(s) that are executed.  The _r_e_p_l_s_t_r
+             must show up as a distinct _a_r_g_u_m_e_n_t to xxaarrggss.  It will not be recognized if, for
+             instance, it is in the middle of a quoted string.  Furthermore, only the first occur-
+             rence of the _r_e_p_l_s_t_r will be replaced.  For example, the following command will copy
+             the list of files and directories which start with an uppercase letter in the current
+             directory to _d_e_s_t_d_i_r:
+
+                   /bin/ls -1d [A-Z]* | xargs -J % cp -Rp % destdir
+
+     --LL _n_u_m_b_e_r
+             Call _u_t_i_l_i_t_y for every _n_u_m_b_e_r non-empty lines read.  A line ending with a space contin-
+             ues to the next non-empty line.  If EOF is reached and fewer lines have been read than
+             _n_u_m_b_e_r then _u_t_i_l_i_t_y will be called with the available lines.  The --LL and --nn options are
+             mutually-exclusive; the last one given will be used.
+
+     --nn _n_u_m_b_e_r
+             Set the maximum number of arguments taken from standard input for each invocation of
+             _u_t_i_l_i_t_y.  An invocation of _u_t_i_l_i_t_y will use less than _n_u_m_b_e_r standard input arguments
+             if the number of bytes accumulated (see the --ss option) exceeds the specified _s_i_z_e or
+             there are fewer than _n_u_m_b_e_r arguments remaining for the last invocation of _u_t_i_l_i_t_y.
+             The current default value for _n_u_m_b_e_r is 5000.
+
+     --oo      Reopen stdin as _/_d_e_v_/_t_t_y in the child process before executing the command.  This is
+             useful if you want xxaarrggss to run an interactive application.
+
+     --PP _m_a_x_p_r_o_c_s
+             Parallel mode: run at most _m_a_x_p_r_o_c_s invocations of _u_t_i_l_i_t_y at once.  If _m_a_x_p_r_o_c_s is set
+             to 0, xxaarrggss will run as many processes as possible.
+
+     --pp      Echo each command to be executed and ask the user whether it should be executed.  An
+             affirmative response, `y' in the POSIX locale, causes the command to be executed, any
+             other response causes it to be skipped.  No commands are executed if the process is not
+             attached to a terminal.
+
+     --rr      Compatibility with GNU xxaarrggss.  The GNU version of xxaarrggss runs the _u_t_i_l_i_t_y argument at
+             least once, even if xxaarrggss input is empty, and it supports a --rr option to inhibit this
+             behavior.  The FreeBSD version of xxaarrggss does not run the _u_t_i_l_i_t_y argument on empty
+             input, but it supports the --rr option for command-line compatibility with GNU xxaarrggss, but
+             the --rr option does nothing in the FreeBSD version of xxaarrggss.
+
+     --RR _r_e_p_l_a_c_e_m_e_n_t_s
+             Specify the maximum number of arguments that --II will do replacement in.  If
+             _r_e_p_l_a_c_e_m_e_n_t_s is negative, the number of arguments in which to replace is unbounded.
+
+     --SS _r_e_p_l_s_i_z_e
+             Specify the amount of space (in bytes) that --II can use for replacements.  The default
+             for _r_e_p_l_s_i_z_e is 255.
+
+     --ss _s_i_z_e
+             Set the maximum number of bytes for the command line length provided to _u_t_i_l_i_t_y.  The
+             sum of the length of the utility name, the arguments passed to _u_t_i_l_i_t_y (including NULL
+             terminators) and the current environment will be less than or equal to this number.
+             The current default value for _s_i_z_e is ARG_MAX - 4096.
+
+     --tt      Echo the command to be executed to standard error immediately before it is executed.
+
+     --xx      Force xxaarrggss to terminate immediately if a command line containing _n_u_m_b_e_r arguments will
+             not fit in the specified (or default) command line length.
+
+     If _u_t_i_l_i_t_y is omitted, echo(1) is used.
+
+     Undefined behavior may occur if _u_t_i_l_i_t_y reads from the standard input.
+
+     The xxaarrggss utility exits immediately (without processing any further input) if a command line
+     cannot be assembled, _u_t_i_l_i_t_y cannot be invoked, an invocation of _u_t_i_l_i_t_y is terminated by a
+     signal, or an invocation of _u_t_i_l_i_t_y exits with a value of 255, the xxaarrggss utility stops process-
+     ing input and exits after all invocations of _u_t_i_l_i_t_y finish processing.
+
+LLEEGGAACCYY DDEESSCCRRIIPPTTIIOONN
+     In legacy mode, the --LL option treats all newlines as end-of-line, regardless of whether the
+     line is empty or ends with a space.  In addition, the --LL and --nn options are not mutually-exclu-
+     sive.
+
+     For more information about legacy mode, see compat(5).
+
+EEXXIITT SSTTAATTUUSS
+     The xxaarrggss utility exits with a value of 0 if no error occurs.  If _u_t_i_l_i_t_y cannot be found,
+     xxaarrggss exits with a value of 127, otherwise if _u_t_i_l_i_t_y cannot be executed, xxaarrggss exits with a
+     value of 126.  If any other error occurs, xxaarrggss exits with a value of 1.
+
+SSEEEE AALLSSOO
+     echo(1), find(1), execvp(3), compat(5)
+
+SSTTAANNDDAARRDDSS
+     The xxaarrggss utility is expected to be IEEE Std 1003.2 (``POSIX.2'') compliant.  The --JJ, --oo, --PP,,
+     --RR and --SS options are non-standard FreeBSD extensions which may not be available on other oper-
+     ating systems.
+
+HHIISSTTOORRYY
+     The xxaarrggss utility appeared in PWB UNIX.
+
+BBUUGGSS
+     If _u_t_i_l_i_t_y attempts to invoke another command such that the number of arguments or the size of
+     the environment is increased, it risks execvp(3) failing with E2BIG.
+
+     The xxaarrggss utility does not take multibyte characters into account when performing string com-
+     parisons for the --II and --JJ options, which may lead to incorrect results in some locales.
+
+BSD                             August 4, 2015                             BSD

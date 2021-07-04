@@ -1,0 +1,216 @@
+DIFF(1)                                     User Commands                                    DIFF(1)
+
+
+
+NNAAMMEE
+       diff - compare files line by line
+
+SSYYNNOOPPSSIISS
+       ddiiffff [_O_P_T_I_O_N]... _F_I_L_E_S
+
+DDEESSCCRRIIPPTTIIOONN
+       Compare files line by line.
+
+       --ii  ----iiggnnoorree--ccaassee
+              Ignore case differences in file contents.
+
+       ----iiggnnoorree--ffiillee--nnaammee--ccaassee
+              Ignore case when comparing file names.
+
+       ----nnoo--iiggnnoorree--ffiillee--nnaammee--ccaassee
+              Consider case when comparing file names.
+
+       --EE  ----iiggnnoorree--ttaabb--eexxppaannssiioonn
+              Ignore changes due to tab expansion.
+
+       --bb  ----iiggnnoorree--ssppaaccee--cchhaannggee
+              Ignore changes in the amount of white space.
+
+       --ww  ----iiggnnoorree--aallll--ssppaaccee
+              Ignore all white space.
+
+       --BB  ----iiggnnoorree--bbllaannkk--lliinneess
+              Ignore changes whose lines are all blank.
+
+       --II RE  ----iiggnnoorree--mmaattcchhiinngg--lliinneess=_R_E
+              Ignore changes whose lines all match RE.
+
+       ----ssttrriipp--ttrraaiilliinngg--ccrr
+              Strip trailing carriage return on input.
+
+       --aa  ----tteexxtt
+              Treat all files as text.
+
+       --cc  --CC NUM  ----ccoonntteexxtt[=_N_U_M]
+              Output NUM (default 3) lines of copied context.
+
+       --uu  --UU NUM  ----uunniiffiieedd[=_N_U_M]
+              Output NUM (default 3) lines of unified context.
+
+       ----llaabbeell LABEL
+              Use LABEL instead of file name.
+
+       --pp  ----sshhooww--cc--ffuunnccttiioonn
+              Show which C function each change is in.
+
+       --FF RE  ----sshhooww--ffuunnccttiioonn--lliinnee=_R_E
+              Show the most recent line matching RE.
+
+       --qq  ----bbrriieeff
+              Output only whether files differ.
+
+       --ee  ----eedd
+              Output an ed script.
+
+       ----nnoorrmmaall
+              Output a normal diff.
+
+       --nn  ----rrccss
+              Output an RCS format diff.
+
+       --yy  ----ssiiddee--bbyy--ssiiddee
+              Output in two columns.
+
+       --WW NUM  ----wwiiddtthh=_N_U_M
+              Output at most NUM (default 130) print columns.
+
+       ----lleefftt--ccoolluummnn
+              Output only the left column of common lines.
+
+       ----ssuupppprreessss--ccoommmmoonn--lliinneess
+              Do not output common lines.
+
+       --DD NAME  ----iiffddeeff=_N_A_M_E
+              Output merged file to show `#ifdef NAME' diffs.
+
+       ----GGTTYYPPEE--ggrroouupp--ffoorrmmaatt=_G_F_M_T
+              Similar, but format GTYPE input groups with GFMT.
+
+       ----lliinnee--ffoorrmmaatt=_L_F_M_T
+              Similar, but format all input lines with LFMT.
+
+       ----LLTTYYPPEE--lliinnee--ffoorrmmaatt=_L_F_M_T
+              Similar, but format LTYPE input lines with LFMT.
+
+       LTYPE is `old', `new', or `unchanged'.
+              GTYPE is LTYPE or `changed'.
+
+              GFMT may contain:
+
+       %<     lines from FILE1
+
+       %>     lines from FILE2
+
+       %=     lines common to FILE1 and FILE2
+
+       %[-][WIDTH][.[PREC]]{doxX}LETTER
+              printf-style spec for LETTER
+
+              LETTERs are as follows for new group, lower case for old group:
+
+       F      first line number
+
+       L      last line number
+
+       N      number of lines = L-F+1
+
+       E      F-1
+
+       M      L+1
+
+              LFMT may contain:
+
+       %L     contents of line
+
+       %l     contents of line, excluding any trailing newline
+
+       %[-][WIDTH][.[PREC]]{doxX}n
+              printf-style spec for input line number
+
+              Either GFMT or LFMT may contain:
+
+       %%     %
+
+       %c'C'  the single character C
+
+       %c'\OOO'
+              the character with octal code OOO
+
+       --ll  ----ppaaggiinnaattee
+              Pass the output through `pr' to paginate it.
+
+       --tt  ----eexxppaanndd--ttaabbss
+              Expand tabs to spaces in output.
+
+       --TT  ----iinniittiiaall--ttaabb
+              Make tabs line up by prepending a tab.
+
+       --rr  ----rreeccuurrssiivvee
+              Recursively compare any subdirectories found.
+
+       --NN  ----nneeww--ffiillee
+              Treat absent files as empty.
+
+       ----uunniiddiirreeccttiioonnaall--nneeww--ffiillee
+              Treat absent first files as empty.
+
+       --ss  ----rreeppoorrtt--iiddeennttiiccaall--ffiilleess
+              Report when two files are the same.
+
+       --xx PAT  ----eexxcclluuddee=_P_A_T
+              Exclude files that match PAT.
+
+       --XX FILE  ----eexxcclluuddee--ffrroomm=_F_I_L_E
+              Exclude files that match any pattern in FILE.
+
+       --SS FILE  ----ssttaarrttiinngg--ffiillee=_F_I_L_E
+              Start with FILE when comparing directories.
+
+       ----ffrroomm--ffiillee=_F_I_L_E_1
+              Compare FILE1 to all operands.  FILE1 can be a directory.
+
+       ----ttoo--ffiillee=_F_I_L_E_2
+              Compare all operands to FILE2.  FILE2 can be a directory.
+
+       ----hhoorriizzoonn--lliinneess=_N_U_M
+              Keep NUM lines of the common prefix and suffix.
+
+       --dd  ----mmiinniimmaall
+              Try hard to find a smaller set of changes.
+
+       ----ssppeeeedd--llaarrggee--ffiilleess
+              Assume large files and many scattered small changes.
+
+       --vv  ----vveerrssiioonn
+              Output version info.
+
+       ----hheellpp Output this help.
+
+       FILES  are `FILE1 FILE2' or `DIR1 DIR2' or `DIR FILE...' or `FILE... DIR'.  If ----ffrroomm--ffiillee or
+       ----ttoo--ffiillee is given, there are no restrictions on FILES.  If a  FILE  is  `-',  read  standard
+       input.
+
+AAUUTTHHOORR
+       Written by Paul Eggert, Mike Haertel, David Hayes, Richard Stallman, and Len Tower.
+
+RREEPPOORRTTIINNGG BBUUGGSS
+       Report bugs to <bug-gnu-utils@gnu.org>.
+
+CCOOPPYYRRIIGGHHTT
+       Copyright (C) 2002 Free Software Foundation, Inc.
+
+       This  program  comes  with NO WARRANTY, to the extent permitted by law.  You may redistribute
+       copies of this program under the terms of the GNU General Public License.  For more  informa-
+       tion about these matters, see the file named COPYING.
+
+SSEEEE AALLSSOO
+       The full documentation for ddiiffff is maintained as a Texinfo manual.  If the iinnffoo and ddiiffff pro-
+       grams are properly installed at your site, the command
+
+              iinnffoo ddiiffff
+
+       should give you access to the complete manual.
+
+
+
+diffutils 2.8.1                              April 2002                                      DIFF(1)
