@@ -7,9 +7,9 @@ function usage {
 	echo "
 $cmd [--help|--man|-?] find-key new-key [new-value] file...
 
-This will insert a new key/value in a JSON file after the key found.
+This will insert a new key/value in a JSON file before the key found.
 
-find-key  The JSON key name to find and insert the new key after.
+find-key  The JSON key name to find and insert the new key before.
 new-key   The new JSON key name to add to the file.
 new-value optional string value to assign to the new JSON key.  Empty string if omitted.
 file      The JSON files to make changes to.
@@ -31,7 +31,7 @@ Example:
 
 $cmd paragraph1 section2 *.json
 
-will insert a new section2 key with an empty string after the paragraph1 key.
+will insert a new section2 key with an empty string before the paragraph1 key.
 "
 	exit $code
 }
@@ -66,17 +66,25 @@ if [ -z "$1" ]; then
 	usage 0
 fi
 
-echo Will insert "$NEW": "$VALUE" after key "$FIND": in all files specified.
-echo $*
+echo Will insert \"$NEW\": \"$VALUE\" before key \"$FIND\": in all files specified.
 FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
   my $new = qq{  "$ENV{NEW}": "$ENV{VALUE}",\n};
-  if (m{"$ENV{FIND}":})
+  if (m{"$ENV{NEW}":})
   {
     $found++;
-    $_ .= $new;
+  };
+  if (!$found && m{"$ENV{FIND}":})
+  {
+    $found++;
+    $_ = "$new$_";
   };
   if (m[\A\s*}\s*\z]xms)
   {
-    $_ = "$new$_";
+    if (!$found)
+    {
+      chomp;
+      $_ = ",\n$new$_";
+    }
+    $found = 0;
   }
 ' $*

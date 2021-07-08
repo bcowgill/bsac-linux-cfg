@@ -1,7 +1,5 @@
 #!/bin/bash
 
-grep -E '[‛ʼ‘‚‘’❛❜❟❟‟“”„“❝❞❠❠〝〞〝〟‹›«»]' $* | grep -vE '"\b(apos|endash|[lr][sd]q)\b"'
-
 function usage {
 	local code
 	code=$1
@@ -15,12 +13,15 @@ This will find lines with unicode quotes and other characters in them from stand
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
+It spaces out the found characters and uses color to highlight them.
+
 See also utf8quotes.sh
 
 Example:
 
 ...
 "
+#It surrounds the found characters with >>> <<< to mark them.
 	exit $code
 }
 if [ "$1" == "--help" ]; then
@@ -32,4 +33,21 @@ fi
 if [ "$1" == "-?" ]; then
 	usage 0
 fi
+
+
+# For reference use with echo -e to color some text
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+PURPLE='\033[0;35m'
+NC='\033[0;0m' # No Color
+
+grep -E '[‛ʼ‘‚‘’❛❜❟❟‟“”„“❝❞❠❠〝〞〝〟‹›«»]|\\"' \
+	$* \
+	| grep -vE '"\b(apos|endash|[lr][sd]q)\b"' \
+	| perl -pne '
+		my $pre = " \033[0;35m"; # purple "  >>>  ";
+		my $post = "\033[0;0m "; # no color "  <<<  ";
+		s{([‛ʼ‘‚‘’❛❜❟❟‟“”„“❝❞❠❠〝〞〝〟‹›«»]|\\")}{$pre$1$post}xmsg;
+	'
 
