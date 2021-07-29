@@ -267,7 +267,7 @@ sub get_new_files
 		# TODO get files from dir which match the pattern
 		if ($file =~ m{$pattern_match}xms) {
 			debug("matched $file", 3);
-			push($raFiles, $file);
+			push(@$raFiles, $file);
 		}
 	}
 	closedir($dh);
