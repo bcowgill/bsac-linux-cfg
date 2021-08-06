@@ -38,7 +38,7 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
-if [ "x$OSTYPE" == "xdarwin16" ]; then
+if which sw_vers > /dev/null 2>&1 ; then
 	# Mac we can only get mime type, not encoding.
 	MIME=`mimetype --output-format="%m" "$*"`
 	ERR=$?

@@ -169,7 +169,8 @@ alias pkgless='pkgless.sh'
 alias pkgfiles='pkgfiles.sh'
 alias pkgls='dpkg -L'
 
-if [ $OSTYPE == darwin16 ]; then
+if which sw_vers > /dev/null 2>&1; then
+	# MACOS here
 	alias brew='HOMEBREW_NO_AUTO_UPDATE=1 brew'
 fi
 

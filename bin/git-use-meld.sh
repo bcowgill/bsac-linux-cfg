@@ -16,7 +16,8 @@ if [ -z $MELD ]; then
 	echo NOT OK meld is not installed.
 fi
 
-if [ "x$OSTYPE" == "xdarwin16" ]; then
+if which sw_vers > /dev/null 2>&1 ; then
+	# MACOS here
 	MELD="open -W -a Meld --args"
 fi
 

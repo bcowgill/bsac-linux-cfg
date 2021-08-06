@@ -262,7 +262,8 @@ function get_tar_newer {
 	local file
 	file="$1"
 	echo newer than: `ls -alh $file`
-	if [ "$OSTYPE" == "darwin16" ]; then
+	if which sw_vers > /dev/null 2>&1 ; then
+		# MACOS here
 		RESULT="--newer-than $file"
 		#RESULT=`ls -lT "$file" | perl -pne '$_ = qq{$1\n} if m{\w+ \s+ \w+ \s+ \d+ \s+ ( \d+ \s+ \w+ \s+ \d+ : \d+ : \d+ \s+ \d+ )}xmsg'`
 	else
