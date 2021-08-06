@@ -18,7 +18,8 @@ fi
 if which sgdm.exe; then
 	DIFFM=sgdm.exe
 fi
-if [ "x$OSTYPE" == "xdarwin16" ]; then
+if which sw_vers > /dev/null 2>&1 ; then
+	# MACOS here
 	DIFFM="/Applications/DiffMerge.app/Contents/MacOS/DiffMerge"
 fi
 
