@@ -102,6 +102,9 @@ fi
 if which sw_vers > /dev/null 2>&1 ; then
 	MACOS=1
 fi
+if [[ $OSTYPE == darwin* ]]; then
+	MACOS=1
+fi
 UBUNTU=trusty
 LSB_RELEASE=`get-release.sh`
 ULIMITFILES=1024
