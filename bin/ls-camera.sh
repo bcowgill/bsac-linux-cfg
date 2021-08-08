@@ -18,7 +18,7 @@ Shows the file name, unique image ID, file type, image size in pixels, file size
 
 If the image has a comment, label or caption as well it will be shown on a separate labelled line.
 
-See also ls-meta.sh label-photo.sh image-crop-rotate.sh image-sort-resize.sh identify display convert
+See also ls-meta.sh label-photo.sh mv-to-year.sh image-crop-rotate.sh image-sort-resize.sh identify display convert
 "
 	exit $code
 }
