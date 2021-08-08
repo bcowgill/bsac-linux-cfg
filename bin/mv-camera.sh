@@ -54,12 +54,17 @@ if [ -z "$2" ]; then
 		if [ ! -d "$DIR" ]; then
 			mkdir -p "$DIR"
 		fi
+		echo "$TARGET"
 		mv "$FILE" "$TARGET"
 	fi
 	exit 0
 fi
 
 while [ ! -z "$1" ]; do
-	$0 "$1"
+	if [ -z "$MOVE" ]; then
+		$0 --dry-run "$1"
+	else
+		$0 "$1"
+	fi
 	shift
 done
