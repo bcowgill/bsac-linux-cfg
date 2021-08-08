@@ -31,6 +31,8 @@ Handles ANSI terminal codes, backspaces, terminal alarm bell, some specifics of 
 
 See also script, pee.pl, filter-whitespace.pl, filter-man.pl
 
+See also Everything You Wanted to Know about ANSI Escape Codes: https://notes.burke.libbey.me/ansi-escape-codes/
+
 Example:
 
 	script script.log
@@ -71,6 +73,7 @@ while (my $line = <>) {
 	$line =~ s{$esc\[\d*K}{}xmsg;
 	$line =~ s{$esc\[\d+A}{}xmsg;
 	$line =~ s{$ctrlg+}{}xmsg;
+	$line =~ s{$esc\[\?\d+[hl]}{}xmsg; # Set controlling flags high/low
 	# handle backspacing by deleting character
 	while ($line =~ s{[^$bs] $bs}{}xmsg) {}
 
@@ -82,6 +85,8 @@ while (my $line = <>) {
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n}xmsg;
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n}xmsg;
 
+	$line =~ s{\A:\x0d}{\n}xmsg; # pager line from less
+	$line =~ s{\x0d}{\n}xmsg; # CR by itself convert to newline
 	$line =~ s{\s+\z}{}xms;
 
 	$line .= "\n";

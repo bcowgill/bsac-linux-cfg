@@ -1,0 +1,7 @@
+Extraneous escape character left over. Maybe it was typed on the keyboard?
+
+perl v5.18.2                                                             2014-01-11                                                             EXIFTOOL(1)
+[7m(END)[27m[K[K[K[7m(END)[27m[K[K[K[7m(END)[27m[K[K[?1l>[?1049l]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin[01;32mme@akston[00m:[01;34m~/workspace/play/bsac-linux-cfg/bin[00m (master *$% u=)$ exit
+exit
+
+Script done on Sun 08 Aug 2021 08:26:43 BST
