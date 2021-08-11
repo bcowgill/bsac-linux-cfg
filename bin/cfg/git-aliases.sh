@@ -30,6 +30,7 @@ else
 	${A}b   branch
 	${A}gr  grep
 	${A}rb  rebase
+	${A}rs  restore
 	${A}t   tag
 	${A}re  reset
 	${A}d   diff
@@ -102,6 +103,11 @@ alias gblr='gb --list --remote'
 alias gblu='gfea; touch branches.now.lst; mv branches.now.lst branches.old.lst; gblr | sort > branches.now.lst; vdiff branches.old.lst branches.now.lst'
 
 alias ggr='g grep'
+
+alias grs='g restore'
+alias grss='grs --staged'
+alias grsw='grs --worktree'
+alias grsws='grsw --staged'
 
 alias grb='g rebase'
 alias grbi='grb --interactive'
