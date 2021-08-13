@@ -34,13 +34,13 @@ https://reactjs.org/docs/hooks-state.html
 https://reactjs.org/docs/hooks-effect.html
 https://reactjs.org/docs/hooks-rules.html
 https://reactjs.org/docs/hooks-custom.html
+https://reactjs.org/docs/hooks-reference.html#functional-updates
 
 Redux with React Hooks
 https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6
 https://react-redux.js.org/next/api/hooks
 
 ✅ HAVE READ ^^^
-https://reactjs.org/docs/hooks-reference.html#functional-updates
 https://joaoforja.com/blog/how-to-test-react-components-route-change/
 https://www.npmjs.com/package/eslint-plugin-react-hooks#installation
 QUEUE vvv
