@@ -12,7 +12,7 @@ KEY:LOCKSCREEN:CMD Ctrl-Alt-Shift-l Lock the screen with xscreensaver until pass
 KEY:LAUNCHCMD:CMD Win-d Incremental search the PATH for command to run
 KEY:LAUNCHAPP:CMD Win-Shift-d Incremental search desktop shortcut to run
 KEY:LAUNCHBROWSER:CMD Win-p Open a new Private browsing window
-KEY:LAUNCHSCREENSHOT:CMD Win-Shift-p Launch Print Screen application to take screen shots
+KEY:LAUNCHSCREENSHOT:CMD Win-Shift-p Launch Print Screen application to take screen shots (capture)
 KEY:LAUNCHSOUND:CMD Win-Shift-s Launch the sound control windows
 KEY:LAUNCHTERM:CMD Win-Enter Open a new terminal window
 

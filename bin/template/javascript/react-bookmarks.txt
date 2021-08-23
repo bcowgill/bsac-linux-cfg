@@ -56,3 +56,4 @@ https://reactjs.org/docs/testing-recipes.html
 https://www.robinwieruch.de/react-hooks-fetch-data/
 https://blog.isquaredsoftware.com/2019/07/blogged-answers-thoughts-on-hooks/
 https://blog.isquaredsoftware.com/2019/09/presentation-hooks-hocs-tradeoffs/
+https://github.com/testing-library/user-event
