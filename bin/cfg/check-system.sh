@@ -461,6 +461,12 @@ ATOM_APM_PKG="
 # Atom MACOS
 #https://github.com/atom/atom/releases/download/v1.21.0/atom-mac.zip
 
+
+# MUSTDO MACOS try this...
+# Mobile Phone screen mirroring win/mac/linux
+# https://medium.com/mac-os-x/how-to-mirror-your-smart-phone-screen-in-mac-os-x-2daf018aae4d
+# https://www.vysor.io/
+
 # https://download.sublimetext.com/sublime-text_build-3114_amd64.deb
 SUBLIME_PKG=sublime-text_build-3114_amd64.deb
 SUBLIME_CFG=.config/sublime-text-3
