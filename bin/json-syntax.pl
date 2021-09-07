@@ -47,7 +47,7 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage();
 }
-if (length($offset) < 1)
+if (length($offset || "") < 1)
 {
 	usage();
 }
