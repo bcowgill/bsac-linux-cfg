@@ -2,8 +2,12 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 
+use utf8;         # so literals and identifiers can be in UTF-8
+use v5.16;       # later version so we can use case folding fc() function directly
 use strict;
 use warnings;
+use warnings  qw(FATAL utf8);   # fatalize encoding glitches
+use open qw(:std :utf8);       # undeclared streams in UTF-8
 use English qw(-no_match_vars);
 use FindBin;
 
