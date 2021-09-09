@@ -118,6 +118,7 @@ while (my $line = <>)
 	BEGIN { print "{\n" if scalar(@ARGV) >= 2 && !grep { m{--help|--man|-\?}xms } @ARGV }
 	END {
 		debug("END $something");
+		exit 1 if !$usage && $firstFile;
 		print "\n}\n" unless $usage;
 		print STDERR "first: $first\nsecond: $second\nduplicates removed from second: $removed\n" if $removed || $something;
 	}

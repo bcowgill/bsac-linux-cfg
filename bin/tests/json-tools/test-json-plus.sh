@@ -4,7 +4,8 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../json-minus.pl
+SUITE=plus
+PROGRAM=../../json-$SUITE.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/chinese1.json
 SAMPLE2=in/chinese2.json
@@ -24,7 +25,7 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 ERROR_STOP=0
 
 echo TEST $CMD command help
-TEST=command-help
+TEST=$SUITE-command-help
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -37,7 +38,7 @@ else
 fi
 
 echo TEST $CMD command invalid file
-TEST=command-invalid
+TEST=$SUITE-command-invalid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	EXPECT=1
@@ -52,7 +53,7 @@ else
 fi
 
 echo TEST $CMD success with empty json
-TEST=success-empty
+TEST=$SUITE-success-empty
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -60,6 +61,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
 	ARGS="$DEBUG"
+	echo $PROGRAM $ARGS $EMPTY1 $EMPTY1 2to $WARN to $OUT
 	$PROGRAM $ARGS $EMPTY1 $EMPTY1 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -68,7 +70,7 @@ else
 fi
 
 echo TEST $CMD success with oneline empty json
-TEST=success-empty-oneline
+TEST=$SUITE-success-empty-oneline
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -84,7 +86,7 @@ else
 fi
 
 echo TEST $CMD successful operation
-TEST=success
+TEST=$SUITE-success
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -100,7 +102,7 @@ else
 fi
 
 echo TEST $CMD successful reverse operation
-TEST=success-reverse
+TEST=$SUITE-success-reverse
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -115,8 +117,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation all dups
-TEST=success-all-dups
+echo TEST $CMD successful operation all same
+TEST=$SUITE-success-all-same
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -131,8 +133,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation nothing removed
-TEST=success-nothing-removed
+echo TEST $CMD successful operation everything added
+TEST=$SUITE-success-all-added
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
@@ -147,8 +149,8 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation nothing output
-TEST=success-nothing-output
+echo TEST $CMD successful operation no overrides
+TEST=$SUITE-success-no-overrides
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out

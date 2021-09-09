@@ -1,0 +1,17 @@
+json-plus.pl [--help|--man|-?] first.json second.json
+
+This will output everything from first.json and second.json where second.json overwrites identical key values from first.json.
+
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+Assumes pretty formatted json with each key/value on separate lines with simple key: string-value structure no deep values.
+
+Also assumes there will be no double-quotes in the key/value strings and so removes them all.
+
+See also json-minus.pl json-insert.sh json-common.pl csv2json.sh json_pp json_xs jq
+
+Example:
+
+json-plus.pl first.json second.json > second-overrides-first.json
