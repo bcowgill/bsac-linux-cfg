@@ -103,9 +103,9 @@ while (my $line = <>)
 	{
 		# output from second file if not identical value from first file.
 		++$second;
-		if ($First{$key} && $value eq $First{$key})
+		if ($First{$key} && ($value eq $First{$key}))
 		{
-			debug("dedupe k: $key v: $value with: $First{$key}\n");
+			debug("dedupe k: $key v: $value\n");
 			++$removed;
 		}
 		else

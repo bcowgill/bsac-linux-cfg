@@ -1,5 +1,7 @@
 #!/bin/bash
 
 PROVE=$1
-./test-json-minus.sh $PROVE
-./test-json-plus.sh $PROVE
+for suite in plus minus common;
+do
+	./test-json-$suite.sh $PROVE
+done
