@@ -45,6 +45,7 @@ echo "fix-import-order unit tests"
 $PROVE ./fix-import-order.t
 testSuite fix-import-order "fix javascript import order in files" $PROVE
 
+testSuite json-tools "json tools to manipulat key values" $PROVE
 
 PLAN 2
 OK "all test suites completed"
