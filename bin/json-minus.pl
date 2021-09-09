@@ -11,16 +11,19 @@ use open qw(:std :utf8);       # undeclared streams in UTF-8
 use English qw(-no_match_vars);
 use FindBin;
 
+my $DEBUG = $ENV{DEBUG} || 0;
 my $firstFile = 1;
 my %First;
 my $first = 0;
 my $second = 0;
 my $removed = 0;
 my $something = 0;
+my $usage = 0;
 
 sub usage
 {
 	my $cmd = $FindBin::Script;
+	$usage = 1;
 	print <<"USAGE";
 $cmd [--help|--man|-?] first.json second.json
 
@@ -53,20 +56,29 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 	usage()
 }
 
+sub debug
+{
+	print STDERR @ARG if $DEBUG;
+}
 
 while (my $line = <>)
 {
+	debug("firstFile: $firstFile first: $first second: $second removed: $removed something: $something First: @{[scalar(keys(%First))]}\n");
 	# kill excess spaces, commas, newlines
 	chomp $line;
 	$line =~ s{\A\s*}{}xms;
 	$line =~ s{\s*,?\s*\z}{}xms;
+	debug("line: [$line]\n");
 
 	# skip empties
-	next if ($line =~ m/\A\s*{\s*/xms);
+	next if ($line =~ m/\A\s*{\s*\z/xms);
+	next if ($line =~ m/\A\s*\z/xms);
+	debug("not empty\n");
 
 	# change when end of json found...
-	if ($line =~ m/\A\s*}\s*\z/xms)
+	if ($line =~ m/\A\s*(\{\s*)?\}\s*\z/xms)
 	{
+		debug("end JSON\n");
 		last unless $firstFile;
 		$firstFile = 0;
 		next;
@@ -81,6 +93,7 @@ while (my $line = <>)
 
 	if ($firstFile)
 	{
+		debug("store k: $key v: $value\n");
 		# store values from first file
 		warn "duplicate key with values: $key: [$value] [$First{$key}]\n" if $First{$key};
 		$First{$key} = $value;
@@ -92,6 +105,7 @@ while (my $line = <>)
 		++$second;
 		if ($First{$key} && $value eq $First{$key})
 		{
+			debug("dedupe k: $key v: $value with: $First{$key}\n");
 			++$removed;
 		}
 		else
@@ -103,8 +117,9 @@ while (my $line = <>)
 	}
 	BEGIN { print "{\n" if scalar(@ARGV) >= 2 && !grep { m{--help|--man|-\?}xms } @ARGV }
 	END {
-		print "\n}\n" if $something;
-		print STDERR "first: $first\nsecond: $second\nduplicates removed from second: $removed\n" if $something;
+		debug("END $something");
+		print "\n}\n" unless $usage;
+		print STDERR "first: $first\nsecond: $second\nduplicates removed from second: $removed\n" if $removed || $something;
 	}
 	sub split_colon
 	{

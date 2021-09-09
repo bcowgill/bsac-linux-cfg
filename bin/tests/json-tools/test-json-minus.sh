@@ -91,7 +91,23 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS $EMPTY $EMPTY 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS $EMPTY1 $EMPTY1 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD success with oneline empty json
+TEST=success-empty-oneline
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	WARN=out/$TEST.warn.out
+	BASE=base/$TEST.base
+	BASEWARN=base/$TEST.warn.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $EMPTY2 $EMPTY2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -108,6 +124,70 @@ if [ 0 == "$SKIP" ]; then
 	BASEWARN=base/$TEST.warn.base
 	ARGS="$DEBUG"
 	$PROGRAM $ARGS $SAMPLE $SAMPLE2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful reverse operation
+TEST=success-reverse
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	WARN=out/$TEST.warn.out
+	BASE=base/$TEST.base
+	BASEWARN=base/$TEST.warn.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $SAMPLE2 $SAMPLE 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation all dups
+TEST=success-all-dups
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	WARN=out/$TEST.warn.out
+	BASE=base/$TEST.base
+	BASEWARN=base/$TEST.warn.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $SAMPLE $SAMPLE 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation nothing removed
+TEST=success-nothing-removed
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	WARN=out/$TEST.warn.out
+	BASE=base/$TEST.base
+	BASEWARN=base/$TEST.warn.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $EMPTY2 $SAMPLE2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation nothing output
+TEST=success-nothing-output
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	WARN=out/$TEST.warn.out
+	BASE=base/$TEST.base
+	BASEWARN=base/$TEST.warn.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $SAMPLE2 $EMPTY2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
