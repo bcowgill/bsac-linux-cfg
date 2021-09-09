@@ -4,8 +4,8 @@
 set -e
 
 # What we're testing and sample input data
-SUITE=plus
-PROGRAM=../../json-$SUITE.pl
+SUITE=insert
+PROGRAM=../../json-$SUITE.sh
 CMD=`basename $PROGRAM`
 SAMPLE=in/chinese1.json
 SAMPLE2=in/chinese2.json
@@ -16,7 +16,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 19
+PLAN 16
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -44,7 +44,7 @@ if [ 0 == "$SKIP" ]; then
 	EXPECT=1
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --invalid --$SAMPLE"
+	ARGS="$DEBUG --invalid-key --invalid --value not$SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -60,15 +60,16 @@ if [ 0 == "$SKIP" ]; then
 	WARN=out/$TEST.warn.out
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $EMPTY1 $EMPTY1 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG findKey newKey new-value-to-add"
+	cp $EMPTY1 $OUT
+	$PROGRAM $ARGS $OUT > $WARN 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD success with oneline empty json
+echo TEST $CMD success with oneline empty json empty value
 TEST=$SUITE-success-empty-oneline
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -76,15 +77,16 @@ if [ 0 == "$SKIP" ]; then
 	WARN=out/$TEST.warn.out
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $EMPTY2 $EMPTY2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG findKey newKey"
+	cp $EMPTY2 $OUT
+	$PROGRAM $ARGS $OUT > $WARN 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation
+echo TEST $CMD successful operation insert end
 TEST=$SUITE-success
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -92,72 +94,46 @@ if [ 0 == "$SKIP" ]; then
 	WARN=out/$TEST.warn.out
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE $SAMPLE2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG findKey newKey new-value-to-add"
+	cp $SAMPLE $OUT
+	$PROGRAM $ARGS $OUT > $WARN 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful reverse operation
-TEST=$SUITE-success-reverse
+echo TEST $CMD successful operation insert first
+TEST=$SUITE-success-insert-first
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	WARN=out/$TEST.warn.out
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE2 $SAMPLE 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG file newKey new-value-to-add"
+	cp $SAMPLE $OUT
+	$PROGRAM $ARGS $OUT > $WARN 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation all same
-TEST=$SUITE-success-all-same
+echo TEST $CMD successful operation insert middle
+TEST=$SUITE-success-insert-middle
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	WARN=out/$TEST.warn.out
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE $SAMPLE 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD successful operation everything added
-TEST=$SUITE-success-all-added
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	WARN=out/$TEST.warn.out
-	BASE=base/$TEST.base
-	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $EMPTY2 $SAMPLE2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD successful operation no overrides
-TEST=$SUITE-success-no-overrides
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	WARN=out/$TEST.warn.out
-	BASE=base/$TEST.base
-	BASEWARN=base/$TEST.warn.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE2 $EMPTY2 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG extra1 newKey new-value-to-add"
+	cp $SAMPLE $OUT
+#	echo IN=$SAMPLE
+#	echo OUT=$OUT
+#	echo cp \$IN \$OUT\; DEBUG=1 $PROGRAM $ARGS \$OUT \; cat \$OUT
+	$PROGRAM $ARGS $OUT > $WARN 2>&1 || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

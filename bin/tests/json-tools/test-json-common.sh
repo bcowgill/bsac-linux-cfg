@@ -61,7 +61,6 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASEWARN=base/$TEST.warn.base
 	ARGS="$DEBUG"
-	echo $PROGRAM $ARGS $EMPTY1 $EMPTY1 2to $WARN to $OUT
 	$PROGRAM $ARGS $EMPTY1 $EMPTY1 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
