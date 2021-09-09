@@ -109,6 +109,10 @@ DEBUG=$DEBUG FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
     exit 1 unless $something
   }
 ' $*
-if which prettier > /dev/null; then
-	prettier --write $*
+if [ 0 == $? ]; then
+  if which prettier > /dev/null; then
+    prettier --write $*
+  fi
+else
+  exit $?
 fi

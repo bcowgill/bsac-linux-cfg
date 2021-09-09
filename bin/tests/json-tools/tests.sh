@@ -3,5 +3,5 @@
 PROVE=$1
 for suite in plus minus common insert;
 do
-	./test-json-$suite.sh $PROVE
+	$PROVE ./test-json-$suite.sh
 done
