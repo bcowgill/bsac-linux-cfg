@@ -4,7 +4,7 @@ the base name of my script is: perl-script.pl
 the canonical location of my script is: PWD/template/perl/perl-script.pl
 __DATA__
 I am the data.
-usage:
+Usage:
     perl-script.pl [options] [@options-file ...] [file ...]
 
     TODO short description - full fat perl script template using

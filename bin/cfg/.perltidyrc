@@ -41,7 +41,6 @@
 #--whitespace-cycle perltidy v20140328
 --entab-leading-whitespace=4
 --tabs
---default-tabsize=4
 #--default-tabsize=4 perltidy v20140328
 
 ## Slower but does multiple passes to ensure formatting is stable

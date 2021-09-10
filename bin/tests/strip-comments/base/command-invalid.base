@@ -1,6 +1,6 @@
 Invalid option --invalid
 
-usage: ../../strip-comments.pl [options] filename...
+usage: strip-comments.pl [options] filename...
 
 Strips out C/C++ style comments from source code in files specified.
 

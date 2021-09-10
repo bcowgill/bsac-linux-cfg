@@ -62,20 +62,20 @@ use Pod::Usage;
 #use Switch;
 use Data::Dumper;
 
-use File::Copy qw(cp);    # copy and preserve source files permissions
+use File::Copy qw(cp);               # copy and preserve source files permissions
 use File::Slurp qw(:std :edit);
 use Fatal qw(cp);
 
-our $VERSION = 0.1;       # shown by --version option
+our $VERSION = 0.1;                  # shown by --version option
 
 # Big hash of vars and constants for the program
 my %Var = (
 	rhArg => {
 		rhOpt => {
-			''      => 0,    # indicates standard in/out as - on command line
-			verbose => 1,    # default value for verbose
+			''      => 0,            # indicates standard in/out as - on command line
+			verbose => 1,            # default value for verbose
 			debug   => 0,
-			man     => 0,    # show full help page
+			man     => 0,            # show full help page
 		},
 		raFile => [],
 	},
@@ -83,13 +83,13 @@ my %Var = (
 		result   => undef,
 		raErrors => [],
 		raConfig => [
-			"bundling",        # bundle single char options ie ps -aux
-			"auto_version",    # supplies --version option
-			"auto_help",       # supplies --help -? options to show usage in POD SYNOPSIS
+			"bundling",              # bundle single char options ie ps -aux
+			"auto_version",          # supplies --version option
+			"auto_help",             # supplies --help -? options to show usage in POD SYNOPSIS
 ##			"debug",        # debug the argument processing
 		],
 		raOpts => [
-			"length|l=i",      # numeric required --length or -l (explicit defined)
+			"length|l=i",            # numeric required --length or -l (explicit defined)
 			"width:3"
 			, # numeric optional with default value if none given on command line but not necessarily the default assigned if not present on command line
 			"ratio|r:f",    # float optional

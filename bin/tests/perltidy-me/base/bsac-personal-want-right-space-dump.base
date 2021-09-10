@@ -55,7 +55,6 @@ For a list of token types, use perltidy --dump-token-types (-dtt)
 ?	1
 A	1
 C	1
-CORE::	-1
 F	1
 G	1
 J	1

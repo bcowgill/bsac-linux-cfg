@@ -1,5 +1,5 @@
 Unknown option: unknown-option
-usage:
+Usage:
     perl-inplace.pl [options] [@options-file ...] [file ...]
 
     TODO short description - perl script template to process file in place

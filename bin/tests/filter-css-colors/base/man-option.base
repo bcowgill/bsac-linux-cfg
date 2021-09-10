@@ -30,6 +30,7 @@ SYNOPSIS
                        --inplace        specify to modify files in place creating a backup first. [output]
                        --foreground     [not implemented] specify a color value to use for all foreground colors. [editing]
                        --background     [not implemented] specify a color value to use for all background colors. [editing]
+                       --html           [not implemented] output an html file showing every color found as a swatch table [output]
                        --echo           negatable. display original line when performing replacements. [debug]
                        --version        display program version and exit.
                        --debug          incremental. display debugging info. [debug]
@@ -124,6 +125,9 @@ OPTIONS
        --background=color or --bg=color
                        Specify a color value to use to replace all background colors with. Cannot work with --color-only.
 
+       --html=-|filename
+                       Output some html to show a swatch table of every colour found in the input files.
+
        --echo or --noecho
                        When in a --remap mode, display the original line as well.
 
@@ -141,6 +145,9 @@ DESCRIPTION
 
 SEE ALSO
                CSS Color specs L<http://www.w3.org/TR/css3-color/>
+
+               all-debug-css.sh, css-diagnose.sh, debug-css.sh, css-color-scale.pl, filter-css-colors.pl, find-css.sh, invert-css-color.pl
+               fix-commas.pl, JSTOOLS
 
 EXAMPLES
                List all color definitions in a CSS file

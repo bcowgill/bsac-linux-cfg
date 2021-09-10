@@ -1,5 +1,5 @@
 Unknown option: unknown-option
-usage:
+Usage:
     render-tt.pl [options] [@options-file ...] [file ...]
 
             Options:
