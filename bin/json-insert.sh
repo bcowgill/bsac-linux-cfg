@@ -111,7 +111,7 @@ DEBUG=$DEBUG FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
 ' $*
 if [ 0 == $? ]; then
   if which prettier > /dev/null; then
-    prettier --write $*
+    prettier --parser json --write $*
   fi
 else
   exit $?
