@@ -1,6 +1,7 @@
 perltidy version 20120701 log file on a linux system, OLD_PERL_VERSION=5.018002
+Found Configuration File >>> /home/me/bin/cfg/.perltidyrc-blismedia 
 Configuration and command line parameters for this run:
--standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -noprofile
+--starting-indentation-level=0 --indent-columns=4 --maximum-line-length=100 --iterations=4 --trim-qw --add-whitespace --delete-old-whitespace --continuation-indentation=4 --outdent-long-quotes --outdent-long-comments --nocuddled-else --paren-tightness=1 --square-bracket-tightness=1 --brace-tightness=1 --block-brace-tightness=0 --opening-brace-on-new-line --opening-sub-brace-on-new-line --opening-anonymous-sub-brace-on-new-line --noopening-brace-always-on-right --nobrace-left-and-indent --closing-token-indentation=0 --closing-paren-indentation=0 --closing-square-bracket-indentation=0 --closing-brace-indentation=0 --nospace-terminal-semicolon --nospace-for-semicolon --add-semicolons --delete-semicolons --space-after-keyword=* --format-skipping --format-skipping-begin=#<<< --format-skipping-end=#>>> --indent-block-comments --minimum-space-to-comment=4 --hanging-side-comments --closing-side-comment-warnings --closing-side-comments-balanced --static-block-comments --static-side-comments -standard-output -standard-error-output -warning-output -check-syntax -output-line-ending=unix -logfile -DEBUG -profile=/home/me/bin/cfg/.perltidyrc-blismedia
 Final parameter set for this run
 ------------------------------------
 # Final parameter set for this run.
@@ -30,16 +31,19 @@ Final parameter set for this run
 --closing-side-comment-else-flag=0
 --closing-side-comment-interval=6
 --closing-side-comment-maximum-text=20
+--closing-side-comment-warnings
 --closing-side-comments-balanced
 --closing-square-bracket-indentation=0
 --comma-arrow-breakpoints=1
---continuation-indentation=2
+--continuation-indentation=4
 --nocuddled-else
 --delete-old-newlines
---nodelete-old-whitespace
+--delete-old-whitespace
 --delete-semicolons
 --format="tidy"
 --format-skipping
+--format-skipping-begin="#<<<"
+--format-skipping-end="#>>>"
 --fuzzy-line-length
 --hanging-side-comments
 --nohtml
@@ -47,7 +51,7 @@ Final parameter set for this run
 --html-table-of-contents
 --indent-block-comments
 --indent-columns=4
---iterations=1
+--iterations=4
 --keep-old-blank-lines=1
 --logfile
 --long-block-line-count=8
@@ -55,9 +59,12 @@ Final parameter set for this run
 --look-for-selfloader
 --maximum-consecutive-blank-lines=1
 --maximum-fields-per-table=0
---maximum-line-length=80
+--maximum-line-length=100
 --minimum-space-to-comment=4
---noprofile
+--opening-anonymous-sub-brace-on-new-line
+--noopening-brace-always-on-right
+--opening-brace-on-new-line
+--opening-sub-brace-on-new-line
 --outdent-labels
 --outdent-long-comments
 --outdent-long-quotes
@@ -68,18 +75,22 @@ Final parameter set for this run
 --pass-version-line
 --perl-syntax-check-flags="-c -T"
 --pod2html
+--profile="/home/me/bin/cfg/.perltidyrc-blismedia"
 --noquiet
 --recombine
 --short-concatenation-item-length=8
 --noshow-options
---space-for-semicolon
+--space-after-keyword="*"
+--nospace-for-semicolon
+--nospace-terminal-semicolon
 --square-bracket-tightness=1
 --square-bracket-vertical-tightness=0
 --square-bracket-vertical-tightness-closing=0
 --standard-error-output
 --standard-output
+--starting-indentation-level=0
 --static-block-comments
---nostatic-side-comments
+--static-side-comments
 --notabs
 --trim-qw
 --valign
@@ -88,7 +99,6 @@ Final parameter set for this run
 To find error messages search for 'WARNING' with your editor
 Note: --syntax check will be skipped because standard output is used
 Indentation will be with 4 spaces
-Line 1 implies starting-indentation-level = 0
 The nesting depths in the table below are at the start of the lines.
 The indicated output line numbers are not always exact.
 ci = levels of continuation indentation; bk = 1 if in BLOCK, 0 if not.
@@ -97,31 +107,29 @@ in:out indent c b  nesting   code + messages; (messages begin with >>>)
 lines  levels i k            (code begins with one '.' per indent level)
 ------  ----- - - --------   -------------------------------------------
 L3:3     i0:0 0 1            >>>Entering POD section
-L3:3     i0:0 0 1            >>>Line length exceeded by 148 characters
+L3:3     i0:0 0 1            >>>Line length exceeded by 128 characters
 L3:3     i0:0 0 1            >>>Exiting POD section
 L54:54   i0:0 0 1            use strict;
-L58:59   i0:0 0 1            >>>Line length exceeded by 1 characters
-L62:64   i0:0 0 1            >>>Line length exceeded by 44 characters
+L62:64   i0:0 0 1            >>>Line length exceeded by 24 characters
 L68:70   i0:0 0 1            >>>passing VERSION line; -npvl deactivates
 L71:73   i0:0 0 1            >>>Guessing old indentation was tab character
-L93:97   i3:3 0 0 ({[        >>>Line length exceeded by 73 characters
-L104:109 i3:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
-L115:121 i0:0 0 1            sub main
+L93:96   i3:3 0 0 ({[        >>>Line length exceeded by 53 characters
+L104:107 i3:3 0 0 ({[        ..."verbose|v!", # flag --verbose o ....
+L115:118 i0:0 0 1            sub main
 L134:144 i0:0 0 1            sub setup
-L141:150 i0:0 0 1            sub processStdio
-L150:158 i0:0 0 1            sub processFiles
-L160:166 i0:0 0 1            sub processFile
-L172:177 i0:0 0 1            sub doReplacement
-L180:184 i0:0 0 1            sub editFileInPlace
-L191:194 i0:0 0 1            sub checkOptions
-L204:205 i0:0 0 1            sub checkMandatoryOptions
-L254:258 i0:0 0 1 {          }
-L257:261 i0:0 0 1            sub getOptions
-L286:287 i0:0 0 1            sub debug
-L290:290 i0:1 0 1 {          >>>Line length exceeded by 15 characters
-L294:294 i0:0 0 1            sub usage
-L305:304 i0:0 0 1            sub manual
-L311:309 i0:0 0 1 {          >>>Starting __END__ section
+L141:151 i0:0 0 1            sub processStdio
+L150:160 i0:0 0 1            sub processFiles
+L160:170 i0:0 0 1            sub processFile
+L172:182 i0:0 0 1            sub doReplacement
+L180:190 i0:0 0 1            sub editFileInPlace
+L191:201 i0:0 0 1            sub checkOptions
+L204:214 i0:0 0 1            sub checkMandatoryOptions
+L254:266 i0:0 0 1 {          }
+L257:269 i0:0 0 1            sub getOptions
+L286:297 i0:0 0 1            sub debug
+L294:305 i0:0 0 1            sub usage
+L305:316 i0:0 0 1            sub manual
+L311:322 i0:0 0 1 {          >>>Starting __END__ section
 No indentation disagreement seen
 
 2 long lines were outdented:
@@ -129,7 +137,8 @@ No indentation disagreement seen
    Last at output line 62
   use -noll to prevent outdenting, -l=n to increase line length
 
-5 output lines exceeded 80 characters:
- First at line 50 by 148 characters
- Maximum at line 50 by 148 characters
- Last at line 290 by 15 characters
+3 output lines exceeded 100 characters:
+ First at line 50 by 128 characters
+ Maximum at line 50 by 128 characters
+ Last at line 95 by 53 characters
+Converged.  Output for iteration 2 same as for iter 1.

@@ -1,6 +1,19 @@
-debug
-__DATA__
-I am the data.
-usage: ../../template/perl/perl-lite.pl
+usage: perl-lite.pl [--help|--man|-?] filename...
 
 TODO short usage - lightweight perl script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests
+
+This program will ...
+
+filename    files to process instead of standard input.
+--help      shows help for this program.
+--man       shows help for this program.
+-?          shows help for this program.
+
+More details...
+
+See also ...
+
+Example:
+
+perl-lite.pl filename...
+
