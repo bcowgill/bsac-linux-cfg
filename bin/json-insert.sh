@@ -27,7 +27,7 @@ If the find-key isn't found the new key will be inserted before the closing }
 
 If the prettier command is on the path then it will be run to clean up the files afterwards.
 
-See also json-plus.pl json-minus.pl json-insert.sh json-common.pl csv2json.sh json_pp json_xs jq
+See also json-plus.pl json-minus.pl json-insert.sh json-common.pl json-translate.pl csv2json.sh json_pp json_xs jq
 
 Example:
 

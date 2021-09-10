@@ -1,0 +1,14 @@
+{
+
+  "file": "english1",
+  "file": "chinese1",
+
+  "extra1": "english singleton",
+  "extra1": "singleton",
+
+  "landingPage.emma.availabilityIndicator": "Available in English and Traditional Chinese",
+  "landingPage.emma.availabilityIndicator": "提供英文與中文版",
+
+  "landingPage.myDoc.availabilityIndicator": "Available in English and Chinese",
+  "landingPage.myDoc.availabilityIndicator": "提供英文與中文版"
+}

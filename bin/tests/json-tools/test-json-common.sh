@@ -9,6 +9,7 @@ PROGRAM=../../json-$SUITE.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/chinese1.json
 SAMPLE2=in/chinese2.json
+DUPLICATE=in/duplicate.json
 EMPTY1=in/empty.json
 EMPTY2=in/empty-oneline.json
 DEBUG=
@@ -16,7 +17,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 20
+PLAN 22
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -47,6 +48,22 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --invalid --$SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD duplicate-warning
+TEST=$SUITE-warning-duplicate
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	WARN=out/$TEST.warn.out
+	BASE=base/$TEST.base
+	BASEWARN=base/$TEST.warn.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $DUPLICATE $EMPTY1 2> $WARN > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	assertFilesEqual "$WARN" "$BASEWARN" "$TEST stderr output"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

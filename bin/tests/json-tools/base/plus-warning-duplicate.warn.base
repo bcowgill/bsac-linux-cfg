@@ -1,0 +1,4 @@
+duplicate key with values: file: ["english2"] ["english1"]
+first: 2
+second: 0
+second overrides first: 0

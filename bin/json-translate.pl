@@ -14,9 +14,10 @@ use FindBin;
 my $DEBUG = $ENV{DEBUG} || 0;
 my $firstFile = 1;
 my %First;
+my @Keys;
 my $first = 0;
 my $second = 0;
-my $removed = 0;
+my $translate = 0;
 my $something = 0;
 my $usage = 0;
 
@@ -25,23 +26,25 @@ sub usage
 	my $cmd = $FindBin::Script;
 	$usage = 1;
 	print <<"USAGE";
-$cmd [--help|--man|-?] first.json second.json
+$cmd [--help|--man|-?] language.json foreign.json
 
-This will output everything from second.json which does not have an identical key/value from first.json.
+This will merge two translation JSON files together to provide a translation key.
 
 --help  shows help for this program.
 --man   shows help for this program.
 -?      shows help for this program.
 
+Whenever a key from foreign.json matches a key from language.json, both values will be output next to each other with the foreign.json key coming last.  Mismatched keys will also be output.
+
 Assumes pretty formatted json with each key/value on separate lines with simple key: string-value structure no deep values.
 
 Also assumes there will be no double-quotes in the key/value strings and so removes them all.
 
-See also json-plus.pl json-insert.sh json-common.pl json-translate.pl csv2json.sh json_pp json_xs jq
+See also json-plus.pl json-minus.pl json-insert.sh json-common.pl csv2json.sh json_pp json_xs jq
 
 Example:
 
-$cmd first.json second.json > deduped-second.json
+$cmd english.json french.json > english-french.json
 USAGE
 	exit 0;
 }
@@ -63,7 +66,7 @@ sub debug
 
 while (my $line = <>)
 {
-	debug("firstFile: $firstFile first: $first second: $second removed: $removed something: $something First: @{[scalar(keys(%First))]}\n");
+	debug("firstFile: $firstFile first: $first second: $second translate $translate something: $something First: @{[scalar(keys(%First))]}\n");
 	# kill excess spaces, commas, newlines
 	chomp $line;
 	$line =~ s{\A\s*}{}xms;
@@ -78,8 +81,20 @@ while (my $line = <>)
 	# change when end of json found...
 	if ($line =~ m/\A\s*(\{\s*)?\}\s*\z/xms)
 	{
-		debug("end JSON\n");
-		last unless $firstFile;
+		debug("end JSON firstFile: $firstFile second: $second\n");
+		if (!$firstFile && scalar(keys %First))
+		{
+			my $excess = $second;
+			foreach my $key (@Keys)
+			{
+				if ($First{$key})
+				{
+					print ",\n" if $excess;
+					print qq{\n  "$key": $First{$key}};
+					++$excess;
+				}
+			}
+		}
 		$firstFile = 0;
 		next;
 	}
@@ -95,32 +110,42 @@ while (my $line = <>)
 	{
 		debug("store k: $key v: $value\n");
 		# store values from first file
-		warn "duplicate key with values: $key: [$value] [$First{$key}]\n" if $First{$key};
+		if ($First{$key})
+		{
+			warn "duplicate key with values: $key: [$value] [$First{$key}]\n"
+		}
+		else
+		{
+			push(@Keys, $key);
+		}
 		$First{$key} = $value;
 		++$first;
 	}
 	else
 	{
-		# output from second file if not identical value from first file.
-		++$second;
-		if ($First{$key} && ($value eq $First{$key}))
+		# translate for second file if same key.
+		if ($First{$key} && $value ne $First{$key})
 		{
-			debug("dedupe k: $key v: $value\n");
-			++$removed;
+			debug("translate k: $key v: $value was: $First{$key}\n");
+			print ",\n" if $second;
+			print qq{\n  "$key": $First{$key},\n  "$key": $value};
+			++$translate;
 		}
 		else
 		{
-			print ",\n" if $something;
-			print qq{  "$key": $value};
-			$something = 1;
+			debug("untranslated k: $key v: $value\n");
+			print ",\n" if $second;
+			print qq{\n  "$key": $value};
 		}
+		delete $First{$key};
+		++$second if $line =~ m{"\s*:\s*"};
 	}
 	BEGIN { print "{\n" if scalar(@ARGV) >= 2 && !grep { m{--help|--man|-\?}xms } @ARGV }
 	END {
 		debug("END $something");
 		exit 1 if !$usage && $firstFile;
-		print "\n}\n" unless $usage;
-		print STDERR "first: $first\nsecond: $second\nduplicates removed from second: $removed\n" if $removed || $something;
+		print "\n}\n" if !$usage;
+		print STDERR "first: $first\nsecond: $second\ntranslations for second: $translate\n" if $translate || $something;
 	}
 	sub split_colon
 	{

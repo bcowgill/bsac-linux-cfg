@@ -1,0 +1,19 @@
+json-translate.pl [--help|--man|-?] language.json foreign.json
+
+This will merge two translation JSON files together to provide a translation key.
+
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+Whenever a key from foreign.json matches a key from language.json, both values will be output next to each other with the foreign.json key coming last.  Mismatched keys will also be output.
+
+Assumes pretty formatted json with each key/value on separate lines with simple key: string-value structure no deep values.
+
+Also assumes there will be no double-quotes in the key/value strings and so removes them all.
+
+See also json-plus.pl json-minus.pl json-insert.sh json-common.pl csv2json.sh json_pp json_xs jq
+
+Example:
+
+json-translate.pl english.json french.json > english-french.json
