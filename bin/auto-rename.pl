@@ -74,8 +74,9 @@ my $origin_info = qq{$username\@$host $PROGRAM_NAME};
 our $TESTING = 0;
 our $TEST_CASES = 79;
 # prove command sets HARNESS_ACTIVE in ENV
-tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
-
+unless ($ENV{NO_UNIT_TESTS}) {
+	tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
+}
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage();

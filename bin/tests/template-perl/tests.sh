@@ -36,7 +36,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --version"
-	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{version \s+ [\d\.]+}{version X.XX}xmsg' "$OUT"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -52,7 +52,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --unknown-option"
-	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -67,7 +67,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --man"
-	$PROGRAM $ARGS | filter-man.pl > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS | filter-man.pl > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	perl -i -pne 's{(perl \s+ v)[\d\.]+(\s+\d{4}-\d{2}-\d{2})}{${1}X.XX$2}xms; s{\d\d\d\d-\d\d-\d\d}{YYYY-MM-DD}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -81,7 +81,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $MANDATORY"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -95,7 +95,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="--entire $DEBUG $MANDATORY"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -110,7 +110,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE $MANDATORY"
-	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -124,7 +124,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="--entire $DEBUG $SAMPLE $MANDATORY"
-	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -139,7 +139,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE $MANDATORY"
-	$PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandFails $? 1 "$PROGRAM $ARGS"
 	clean_path "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

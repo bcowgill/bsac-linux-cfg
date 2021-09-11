@@ -137,7 +137,9 @@ my %Var = (
 );
 
 # prove command sets HARNESS_ACTIVE in ENV
-tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
+unless ($ENV{NO_UNIT_TESTS}) {
+	tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
+}
 
 # Return the value of a command line option
 sub opt

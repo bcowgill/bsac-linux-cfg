@@ -856,6 +856,11 @@ sub tests
 
 	# Renaming the file with index.js
 	test_fix_external_import_path('../Y/Z/File', 'src/X/Something.js', './File', $from, $to, $rename);
+	# src/X/Something.js
+	#       ../Y/Z/File
+	# src/Y/Z/File
+	# src/Y/Z/Rename/index.js
+	# src/Y/Z/Rename/Rename.js
 
 	test_module_regex('', '');
 	test_module_regex('(?^:ClickMeComponent(?:\.(?:jsx?|css|less|s[ac]ss))?)', 'ClickMeComponent');
