@@ -39,6 +39,7 @@ program-to-test/ - directory for a program being tested
 
 ```bash
 test-all.sh prove   # to run all test plans with the prove program (quieter output and summarizes the pass/fail for each project)
+./test-all.sh prove 2>&1 | tee tests.log
 
 cd program-to-test
 ./tests.sh        # run the nests noisily showing all pass/fail
