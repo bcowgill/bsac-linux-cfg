@@ -20,7 +20,7 @@ $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;
 $Data::Dumper::Terse    = 1;
 
-our $TEST_CASES = 25;
+our $TEST_CASES = 26;
 our $TRACE = 0;
 
 tests() if scalar(@ARGV) && $ARGV[0] eq '--test';

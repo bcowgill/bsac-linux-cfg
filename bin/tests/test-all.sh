@@ -26,6 +26,7 @@ testSuite scan-code "scan code for static issues" $PROVE
 testSuite scan-js "scan javascript for clean code" $PROVE
 testSuite calc "perl calc substitute" $PROVE
 testSuite git-mv-src "move a source file and repair import statements" $PROVE
+testSuite git-mk-js-facade "convert an index.js to a named file with an index.js facaed loader" $PROVE
 
 testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
 $PROVE ./unit-tests.sh

@@ -1,0 +1,12 @@
+{
+  "name": "defaultAndNamedExport",
+  "version": "1.0.0",
+  "description": "a test of a facade with a default export and a named export",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "author": "Brent S.A. Cowgill",
+  "license": "ISC"
+}
