@@ -57,3 +57,16 @@ https://www.robinwieruch.de/react-hooks-fetch-data/
 https://blog.isquaredsoftware.com/2019/07/blogged-answers-thoughts-on-hooks/
 https://blog.isquaredsoftware.com/2019/09/presentation-hooks-hocs-tradeoffs/
 https://github.com/testing-library/user-event
+
+
+Shell Script Tutorial
+https://www.shellscript.sh/exercises.html
+https://www.educba.com/software-development/software-development-tutorials/shell-scripting-tutorial/
+http://docs.linuxtone.org/ebooks/Shell/Linux%20Shell%20Scripting%20Tutorial%20v2.0.pdf
+https://www.howtoforge.com/tutorial/linux-find-command/
+https://www.howtogeek.com/412055/37-important-linux-commands-you-should-know/
+
+Perl Tutorial
+https://www.perltutorial.org/
+http://tiramisutes.github.io/images/PDF/Learning%20Perl%206th%20Edition.pdf
+https://perldoc.perl.org/perlreref
