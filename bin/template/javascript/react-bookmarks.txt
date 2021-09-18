@@ -67,15 +67,26 @@ https://docs.cypress.io/guides/getting-started/writing-your-first-test#Add-a-tes
 https://example.cypress.io/cypress-api
 https://example.cypress.io/commands/assertions#should
 
-Shell Script Tutorial
-https://www.shellscript.sh/exercises.html
+
+If you want to learn more about the Bash shell (command line and scripting) you should start with some basic tutorials, then focus on some of the shortcuts (key commands, history, aliases) so you don’t have to type so much on the command line then get to know the most useful commands that are available (grep, find, xargs, vim, head, tail, etc)
+
+For Perl, the book Learning Perl is the best but you might want to start with another basic tutorial, then focus on the power of perl oneliners.  You can do some very powerful transformations of files on a single line of perl.
+Then start to “use English” so that you don’t have to use variables named $% $_ $@ etc you can say $FORMAT_PAGE_NUMBER, $ARG or $EVAL_ERROR instead.  Get good at perl’s regular expressions to really get benefits out of it.
+
+Shell Script Knowledge Path
+Tutorials https://www.shellscript.sh/
 https://www.educba.com/software-development/software-development-tutorials/shell-scripting-tutorial/
 http://docs.linuxtone.org/ebooks/Shell/Linux%20Shell%20Scripting%20Tutorial%20v2.0.pdf
+Bash shortcuts https://www.shell-tips.com/bash/shortcuts/
+Commands
 https://www.howtoforge.com/tutorial/linux-find-command/
 https://www.howtogeek.com/412055/37-important-linux-commands-you-should-know/
-https://www.shell-tips.com/bash/
+Mastering Bash https://www.shell-tips.com/bash/
 
-Perl Tutorial
+Perl Knowledge Path
+Tutorials https://perldoc.perl.org/perl#Tutorials
 https://www.perltutorial.org/
-http://tiramisutes.github.io/images/PDF/Learning%20Perl%206th%20Edition.pdf
-https://perldoc.perl.org/perlreref
+Oneliners https://learnbyexample.github.io/learn_perl_oneliners/one-liner-introduction.html
+use English https://perldoc.perl.org/perlvar
+Regex https://perldoc.perl.org/perlrequick
+Learning Perl http://tiramisutes.github.io/images/PDF/Learning%20Perl%206th%20Edition.pdf
