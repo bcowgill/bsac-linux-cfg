@@ -73,6 +73,7 @@ https://www.educba.com/software-development/software-development-tutorials/shell
 http://docs.linuxtone.org/ebooks/Shell/Linux%20Shell%20Scripting%20Tutorial%20v2.0.pdf
 https://www.howtoforge.com/tutorial/linux-find-command/
 https://www.howtogeek.com/412055/37-important-linux-commands-you-should-know/
+https://www.shell-tips.com/bash/
 
 Perl Tutorial
 https://www.perltutorial.org/
