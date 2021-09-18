@@ -58,6 +58,14 @@ https://blog.isquaredsoftware.com/2019/07/blogged-answers-thoughts-on-hooks/
 https://blog.isquaredsoftware.com/2019/09/presentation-hooks-hocs-tradeoffs/
 https://github.com/testing-library/user-event
 
+StoryBook
+https://storybook.js.org/docs/react/get-started/introduction
+
+Cypress Crash Course
+https://www.cypress.io/features
+https://docs.cypress.io/guides/getting-started/writing-your-first-test#Add-a-test-file
+https://example.cypress.io/cypress-api
+https://example.cypress.io/commands/assertions#should
 
 Shell Script Tutorial
 https://www.shellscript.sh/exercises.html
