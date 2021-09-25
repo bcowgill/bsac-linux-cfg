@@ -2,6 +2,8 @@
 # Convers grep-utf8.sh output to Javascript key/value/var definitions
 
 # grep-utf8.sh hyphen | grep -ivE 'armenian|canadian|mongolian|diaeresis|katakana|oblique' | utf8-jsout.pl
+# grep-utf8.sh space | grep -ivE 'DecimalNumber|caseLetter|ethiopic|ogham|OtherSymbol' | utf8-jsout.pl
+# grep-utf8.sh quot | grep -ivE 'APL|YI' | utf8-jsout.pl
 
 my $INVERSE = $ENV{INVERSE}; # map char to name instead of name to char
 my $VAR = $ENV{VAR}; # output a const instead of key/value

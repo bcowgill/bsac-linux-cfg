@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # start tool to take a screenshot interactively and keep it running
+# Bound to $mod-Shift-p in my i3 windoe manager
 
 ARGS=--area
 if [ ! -z "$1" ]; then
