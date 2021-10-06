@@ -32,6 +32,7 @@ if [ "$COMPANY" == "" ]; then
 		song-of-liberty
 		the-big-kahuna-movie-quotes
 		yes-minister
+		yaron-brook-rules-for-life
 	"
 fi
 
@@ -159,3 +160,4 @@ do
 done
 
 exit 0
+# New fortune files exist, amend the MIX setting at top of script...
