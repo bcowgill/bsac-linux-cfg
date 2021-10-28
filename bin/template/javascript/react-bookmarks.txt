@@ -24,6 +24,11 @@ https://medium.com/javascript-in-plain-english/how-i-structure-react-apps-a76304
 https://reactjs.org/docs/context.html
 https://medium.com/cleverprogrammer/the-react-context-api-364da590aa73
 
+Forms
+https://reactjs.org/docs/forms.html
+https://reactjs.org/docs/uncontrolled-components.html#the-file-input-tag
+https://goshacmd.com/controlled-vs-uncontrolled-inputs-react/
+
 React Hooks
 https://www.robinwieruch.de/react-hooks-higher-order-components
 https://www.benmvp.com/blog/four-characters-optimize-react-component/

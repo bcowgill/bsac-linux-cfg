@@ -19,9 +19,9 @@ file      The JSON files to make changes to.
 
 Assumes the JSON is pretty formatted with a single key value per line.
 
-The find-key will be looked for as: "find-key":
+The find-key will be looked for as: \"find-key\":
 
-The new line inserted will be: "new-key": "new-value",
+The new line inserted will be: \"new-key\": \"new-value\",
 
 If the find-key isn't found the new key will be inserted before the closing }
 
