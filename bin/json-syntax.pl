@@ -36,7 +36,7 @@ This can help you find exactly where a JSON syntax error has happened when there
 Example of error from webpack which does not show context:
 SyntaxError: Unexpected string in JSON at position 3960 while parsing '{
 
-See also filter-whitespace.pl
+See also json-reorder.pl, filter-whitespace.pl
 
 Example:
 
