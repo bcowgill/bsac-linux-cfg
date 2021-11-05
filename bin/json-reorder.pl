@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# WINDEV tool useful on windows development machine
 
 use utf8;         # so literals and identifiers can be in UTF-8
 use v5.16;       # later version so we can use case folding fc() function directly

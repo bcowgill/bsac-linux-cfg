@@ -15,7 +15,7 @@ This will take a JSON language file and display it as a CSV UTF-8 comma delimite
 
 Assumes this format:
 
- \"message-id\": \"other lanugage text\",
+ \"message-id\": \"other language text\",
 
 Any excess spaces next to the double quotes in the other language text will be stripped and should be encoded as %sp% if necessary.
 
@@ -70,11 +70,13 @@ perl -ne '
 	# warning("QUOTES: $_") if $_ ne $orig;
 	my ($id, $language) = fix($1, $2);
 	next if $id =~ m{CHANGENEEDED}xms;
+        next if $id =~ m{\Apco\.}xms;
 	if ($id =~ m{\A([rl][sd]q|(w|nb)?sp|endash)\z}xms
 		|| $id =~ m{
 			_confluence|
 			languagePicker\.label\.|
 			(\w+)Email|
+			privacyPage\.headline|
 			global\.email(Subject|Context)|
 			\.slide\d+\.image
 		}xms
@@ -87,7 +89,7 @@ perl -ne '
 		$notes = "SET TO LEFT or RIGHT SINGLE or DOUBLE quote character for the target language if different from English" if $id =~ m{[rl][sd]q}xms;
 	}
 	print qq{$id,"$language","$translate","$notes"\n};
-	print qq{$id.NEWLANGUAGE,"EN","","Specify short name/ISO639-1 two character code for your language in your language character set See https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"\n} if $id eq "languagePicker.label";
+	print qq{system.$id.NEWLANGUAGE,"EN","","Specify short name/ISO639-1 two character code for your language in your language character set See https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"\n} if $id eq "languagePicker.label";
 
 	sub warning {
 		my ($message) = @_;
