@@ -80,10 +80,12 @@ else
   echo Will change or insert key \"$NEW\": \"$VALUE\": in all files specified.
 fi
 DEBUG=$DEBUG FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
+  BEGIN { $fileName = $ARGV[0]; }
   my $DEBUG= $ENV{DEBUG};
-  print STDERR "something: $something keys: $keys found: $found\n" if $DEBUG;
-  print STDERR "line: $_" if $DEBUG;
   ++$something;
+  ++$pos;
+  print STDERR "$fileName: something: $something keys: $keys found: $found\n" if $DEBUG;
+  print STDERR "$pos line: $_" if $DEBUG;
   my $delete = $ENV{VALUE} eq "null";
   my $new = qq{  "$ENV{NEW}": "$ENV{VALUE}"};
   if (m{"\s*:\s*"}) {
@@ -92,6 +94,11 @@ DEBUG=$DEBUG FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
   if (m{"$ENV{NEW}":})
   {
     $found++;
+    if ($found > 1)
+    {
+      print STDERR "$fileName: line $pos: duplicate key found $_";
+      exit 2;
+    }
     $_ = $delete ? "" : "$new,\n";
     --$keys if $delete;
   };
@@ -102,7 +109,7 @@ DEBUG=$DEBUG FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
     if ($oneline)
     {
       print "{\n";
-      $_ = "}\n"
+      $_ = "}\n";
     }
     if (!$found)
     {
@@ -111,14 +118,11 @@ DEBUG=$DEBUG FIND="$FIND" NEW="$NEW" VALUE="$VALUE" perl -i -pne '
       $_ = $delete ? $_ : "$join$new\n$_";
     }
     $found = 0;
+    $pos = 0;
+    $fileName = $ARGV[0];
   }
   END {
     print STDERR "END something: $something delete: $delete keys: $keys found: $found\n" if $DEBUG;
-    if ($found > 1)
-    {
-      print STDERR "key $ENV{FIND} duplicated, was found $found times.\n";
-      exit 2;
-    }
     exit 1 unless $something
   }
 ' $*

@@ -12,8 +12,11 @@ use English qw(-no_match_vars);
 use FindBin;
 
 my $DEBUG = $ENV{DEBUG} || 0;
+my $pos = 0;
+my $fileName = $ARGV[0];
 my $firstFile = 1;
 my %First;
+my %Keys;
 my $first = 0;
 my $second = 0;
 my $removed = 0;
@@ -63,12 +66,13 @@ sub debug
 
 while (my $line = <>)
 {
-	debug("firstFile: $firstFile first: $first second: $second removed: $removed something: $something First: @{[scalar(keys(%First))]}\n");
+	debug("$fileName firstFile: $firstFile first: $first second: $second removed: $removed something: $something First: @{[scalar(keys(%First))]}\n");
 	# kill excess spaces, commas, newlines
+	++$pos;
 	chomp $line;
 	$line =~ s{\A\s*}{}xms;
 	$line =~ s{\s*,?\s*\z}{}xms;
-	debug("line: [$line]\n");
+	debug("$pos: line: [$line]\n");
 
 	# skip empties
 	next if ($line =~ m/\A\s*{\s*\z/xms);
@@ -80,7 +84,9 @@ while (my $line = <>)
 	{
 		debug("end JSON\n");
 		last unless $firstFile;
+		$fileName = $ARGV[0];
 		$firstFile = 0;
+		$pos = 0;
 		next;
 	}
 
@@ -95,7 +101,11 @@ while (my $line = <>)
 	{
 		debug("store k: $key v: $value\n");
 		# store values from first file
-		warn "duplicate key with values: $key: [$value] [$First{$key}]\n" if $First{$key};
+		if ($First{$key})
+		{
+			warn "$fileName: line $pos: duplicate key with values: $key: [$value] [$First{$key}]\n";
+			exit 2 unless $value eq $First{$key};
+		}
 		$First{$key} = $value;
 		++$first;
 	}
@@ -103,6 +113,12 @@ while (my $line = <>)
 	{
 		# output from second file if not identical value from first file.
 		++$second;
+		if ($Keys{$key})
+		{
+			warn "$fileName: line $pos: duplicate key with values: $key: [$value] [$Keys{$key}]\n";
+			exit 3;
+		}
+		$Keys{$key} = $value;
 		if ($First{$key} && ($value eq $First{$key}))
 		{
 			debug("dedupe k: $key v: $value\n");

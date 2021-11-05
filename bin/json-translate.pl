@@ -12,8 +12,11 @@ use English qw(-no_match_vars);
 use FindBin;
 
 my $DEBUG = $ENV{DEBUG} || 0;
+my $pos = 0;
+my $fileName = $ARGV[0];
 my $firstFile = 1;
 my %First;
+my %Keys;
 my @Keys;
 my $first = 0;
 my $second = 0;
@@ -66,12 +69,13 @@ sub debug
 
 while (my $line = <>)
 {
-	debug("firstFile: $firstFile first: $first second: $second translate $translate something: $something First: @{[scalar(keys(%First))]}\n");
+	debug("$fileName firstFile: $firstFile first: $first second: $second translate $translate something: $something First: @{[scalar(keys(%First))]}\n");
 	# kill excess spaces, commas, newlines
+	++$pos;
 	chomp $line;
 	$line =~ s{\A\s*}{}xms;
 	$line =~ s{\s*,?\s*\z}{}xms;
-	debug("line: [$line]\n");
+	debug("$pos: line: [$line]\n");
 
 	# skip empties
 	next if ($line =~ m/\A\s*{\s*\z/xms);
@@ -95,7 +99,9 @@ while (my $line = <>)
 				}
 			}
 		}
+		$fileName = $ARGV[0];
 		$firstFile = 0;
+		$pos = 0;
 		next;
 	}
 
@@ -112,7 +118,8 @@ while (my $line = <>)
 		# store values from first file
 		if ($First{$key})
 		{
-			warn "duplicate key with values: $key: [$value] [$First{$key}]\n"
+			warn "$fileName: line $pos: duplicate key with values: $key: [$value] [$First{$key}]\n";
+			exit 2 unless $value eq $First{$key};
 		}
 		else
 		{
@@ -124,6 +131,12 @@ while (my $line = <>)
 	else
 	{
 		# translate for second file if same key.
+		if ($Keys{$key})
+		{
+			warn "$fileName: line $pos: duplicate key with values: $key: [$value] [$Keys{$key}]\n";
+			exit 3;
+		}
+		$Keys{$key} = $value;
 		if ($First{$key} && $value ne $First{$key})
 		{
 			debug("translate k: $key v: $value was: $First{$key}\n");
@@ -144,7 +157,7 @@ while (my $line = <>)
 	END {
 		debug("END $something");
 		exit 1 if !$usage && $firstFile;
-		print "\n}\n" if !$usage;
+		print "\n}\n" unless $usage;
 		print STDERR "first: $first\nsecond: $second\ntranslations for second: $translate\n" if $translate || $something;
 	}
 	sub split_colon
