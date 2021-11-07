@@ -42,7 +42,7 @@ SyntaxError: Unexpected string in JSON at position 3960 while parsing '{
 
 If you omit the offset the node and jq commands will be executed to require the JSON file and detect the error offset position.  You should specify a relative path to the file or you will get an error cannot find module.
 
-See also json-reorder.pl, filter-whitespace.pl
+See also show-line.sh, json-reorder.pl, filter-whitespace.pl
 
 Example:
 
@@ -95,7 +95,10 @@ if (length($offset || "") < 1)
 print qq{JSON syntax error at offset $offset\n};
 
 my $stop_line;
-my $pointer = "Δ\n";
+#⬆
+#⬇
+#my $pointer = "Δ\n";
+my $pointer = "⬆\n";
 my @Position = ();
 my @Buffer = ();
 my $chars = 0;
