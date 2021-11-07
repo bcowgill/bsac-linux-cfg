@@ -13,6 +13,8 @@ use Fatal qw(open);
 
 my $file = shift;
 my $offset = shift;
+my $error_line;
+my $error_col;
 
 my $line_window = shift || 3;
 my $buffer_size = 2 * $line_window + 1;
@@ -38,7 +40,7 @@ This can help you find exactly where a JSON syntax error has happened when there
 Example of error from webpack which does not show context:
 SyntaxError: Unexpected string in JSON at position 3960 while parsing '{
 
-If you omit the offset the node command will be executed to require the JSON file and detect the error offset position.  You should specify a relative path to the file or you will get an error cannot find module.
+If you omit the offset the node and jq commands will be executed to require the JSON file and detect the error offset position.  You should specify a relative path to the file or you will get an error cannot find module.
 
 See also json-reorder.pl, filter-whitespace.pl
 
@@ -46,11 +48,18 @@ Example:
 
 $FindBin::Script language.json 32000 4 | filter-whitespace.pl
 
-Display a 4 line window around the error at offset 32000 in the language.json file and replace whitespace characters with visible code characters.
+	Display a 4 line window around the error at offset 32000 in the language.json file and replace whitespace characters with visible code characters.
 
-node -r ./error-tiny.json 2>&1 > /dev/null | grep SyntaxError
+Finding where error is in JSON:
 
-SyntaxError: ..../error-tiny.json: Unexpected string in JSON at position 34
+	node -r ./error-tiny.json 2>&1 > /dev/null | grep SyntaxError
+
+		SyntaxError: ..../error-tiny.json: Unexpected string in JSON at position 34
+
+	jq '.' ./error-tiny.json 2>&1 > /dev/null | grep error
+
+		parse error: Expected separator between values at line 3, column 11
+
 USAGE
 	exit 0;
 }
@@ -63,14 +72,24 @@ if (length($offset || "") < 1)
 {
 	my $parsed = `node -r "$file" -e "process.exit()" 2>&1 > /dev/null | grep Error`;
 	print $parsed;
+
 	if ($parsed =~ m{at\s+position\s+(\d+)}xms)
 	{
 		$offset = $1;
 	}
-	else
+
+	$parsed = `jq '.' "$file" 2>&1 > /dev/null | grep error`;
+	print $parsed;
+
+	if ($parsed =~ m{at\s+line\s+(\d+),\s+column\s+(\d+)}xms)
 	{
-		usage();
+		$error_line = $1;
+		$error_col = $2;
 	}
+}
+if (length($offset || "") < 1)
+{
+	usage();
 }
 
 print qq{JSON syntax error at offset $offset\n};

@@ -1,0 +1,50 @@
+Quick Reference for jq command which manipulates json files.
+
+TODO - reading jq man page lind 972/1357 and/or/not ...
+
+Parse and output a JSON file exactly as is:
+(will report syntax errors and colour the output by default
+
+jq . this.json
+
+Compact a pretty-printed JSON file:
+
+jq --compact-output . this.json
+
+Convert unicode literals into \u escapes:
+
+jq --ascii-output . this.json
+
+Check if a key is present:
+
+jq 'has("version")' this.json
+
+Get a key's value:
+
+jq .version this.json
+
+Get a key's value unquoted:
+
+jq --raw-output .version this.json
+
+Get the number of keys in the JSON file:
+
+jq length this.json
+
+Get the keys of the JSON file in code point order:
+The order will be the same irrespective of locale settings.
+
+jq keys this.json
+
+Reorder JSON file keys into a fixed ordering:
+
+jq 'to_entries|reverse|from_entries' this.json
+
+
+Find the values which contain a given substring:
+
+jq 'map(select(contains("evil")))' this.json
+
+Quick convert some text to URL(@uri), HTML(@html), SHELL(@sh), BASE64(@base64) with character escaping.
+
+echo "This works if x < y" | jq --raw-input --raw-output '@html'
