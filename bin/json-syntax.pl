@@ -22,12 +22,12 @@ use FindBin;
 sub usage
 {
 	print <<"USAGE";
-$FindBin::Script [--help|--man|-?] file offset [lines]
+$FindBin::Script [--help|--man|-?] file [offset] [lines]
 
 This helps with JSON syntax errors cryptically given as error at offset NNN.
 
 file         JSON file with syntax error.
-offset       Byte offset reported by parser.
+offset       Byte offset reported by parser [node -r for example].
 lines        Number of before/afer lines to display around the offset.
 --help       shows help for this program.
 --man        shows help for this program.
@@ -38,6 +38,8 @@ This can help you find exactly where a JSON syntax error has happened when there
 Example of error from webpack which does not show context:
 SyntaxError: Unexpected string in JSON at position 3960 while parsing '{
 
+If you omit the offset the node command will be executed to require the JSON file and detect the error offset position.  You should specify a relative path to the file or you will get an error cannot find module.
+
 See also json-reorder.pl, filter-whitespace.pl
 
 Example:
@@ -46,6 +48,9 @@ $FindBin::Script language.json 32000 4 | filter-whitespace.pl
 
 Display a 4 line window around the error at offset 32000 in the language.json file and replace whitespace characters with visible code characters.
 
+node -r ./error-tiny.json 2>&1 > /dev/null | grep SyntaxError
+
+SyntaxError: ..../error-tiny.json: Unexpected string in JSON at position 34
 USAGE
 	exit 0;
 }
@@ -56,7 +61,16 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 }
 if (length($offset || "") < 1)
 {
-	usage();
+	my $parsed = `node -r "$file" -e "process.exit()" 2>&1 > /dev/null | grep Error`;
+	print $parsed;
+	if ($parsed =~ m{at\s+position\s+(\d+)}xms)
+	{
+		$offset = $1;
+	}
+	else
+	{
+		usage();
+	}
 }
 
 print qq{JSON syntax error at offset $offset\n};

@@ -1,0 +1,8 @@
+{
+  "name": "benchmark-example",
+  "version": "1.0.0",
+  "description": "An example use of benchmark module in node and browser.",
+  "main": "bench-runner.js",
+  "author": "Brent S.A. Cowgill",
+  "license": "MIT",
+}
