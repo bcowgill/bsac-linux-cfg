@@ -1110,6 +1110,7 @@ INSTALL_MACOSLINUX="
 	libid3-tools
 	id3v2
 	gradle
+	jq
 "
 
 INSTALL_LINUX="
