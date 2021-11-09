@@ -72,7 +72,7 @@ perl -ne '
 	# warning("QUOTES: $_") if $_ ne $orig;
 	my ($id, $language) = fix($1, $2);
 	next if $id =~ m{CHANGENEEDED}xms;
-        next if $id =~ m{\Apco\.}xms;
+	next if $id =~ m{\Apco\.}xms;
 	if ($id =~ m{\A([rl][sd]q|(w|nb)?sp|endash)\z}xms
 		|| $id =~ m{
 			_confluence|

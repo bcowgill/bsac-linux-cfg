@@ -41,11 +41,14 @@ Will not reorder the keys of a file named empty.json or files which are symbolic
 
 Provides special ordering for keys starting with global. or pco.PARTNER. or containing .CHANGENEEDED
 
+Keys with _confluence in the name are ignored.
+
 See also json-plus.pl json-minus.pl json-change.sh json-insert.sh json-common.pl json-translate.pl csv2json.sh json_pp json_xs jq
 
 Example:
 
-$cmd src/translations/empty.json src/translations/*.json src/partnerConfigs/*/translations/*.json
+$cmd src/translations/empty.json src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
+perl -i -pne 's{\\/}{/}xmsg' src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
 USAGE
 	exit 0;
 }
@@ -100,6 +103,7 @@ sub examine
     fatal_json($file, $pos, $line, "Duplicate key found.") if $FirstKeys{$key};
     $FirstKeys{$key} = 1;
     next if $key =~ m{\Apco\.}xms;
+    next if $key =~ m{_confluence\z}xms;
     $First{$key} = 2 * $pos;
     $last_global = $First{$key} + 1 if $key =~ m{\Aglobal\.}xms;
   }
@@ -142,6 +146,7 @@ sub reorder
     fatal_json($file, $pos, $line) unless $line =~ m{\A\s*"([^"]+)"}xms;
     my $key = $1;
     fatal_json($file, $pos, $line, "Duplicate key found.") if $Keys{$key};
+    next if $key =~ m{_confluence}xms;
     $Keys{$key} = 1;
     my $show_key = $key;
     if ($key =~ m{\Apco\.([^.]+)\.(.+)\z}xms)
