@@ -48,6 +48,9 @@ See also json-plus.pl json-minus.pl json-change.sh json-insert.sh json-common.pl
 Example:
 
 $cmd src/translations/empty.json src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
+
+$cmd src/translations/empty.json \`find \$PARTNER_TRANSLATIONS_FOLDERS -type f -name \'*.json\' | grep -vE \'empty.json|__|/confluence/\'\`
+
 perl -i -pne 's{\\/}{/}xmsg' src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
 USAGE
 	exit 0;
