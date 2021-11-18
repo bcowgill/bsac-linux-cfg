@@ -100,6 +100,7 @@ if [ "x$COMPANY" == "xwipro" ]; then
 	alias tro='npm run unit -- --grep `head -1 tests.txt` 2>&1 | grep -vE "(Coverage for |npm ERR\\!)"'
 	alias tdo='npm run unit:debug -- --grep `head -1 tests.txt`'
 	alias tso='npm run unit:single -- --grep `head -1 tests.txt`'
+	alias gtdo='gitdiff origin/develop `head -1 tests.txt`'
 	alias pret='npm run prettier; git checkout -- README.md'
 
 	alias ls-cfapps='cf apps | grep card-cont | perl -pne "s{\s.+}{\n}xms" | sort'
