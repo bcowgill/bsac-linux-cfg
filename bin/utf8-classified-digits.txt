@@ -1,0 +1,74 @@
+	// group:utf8 code points:number set name:number family name:unicode class // raw characters
+	"bullet:\u2780\u2781\u2782\u2783\u2784\u2785\u2786\u2787\u2788:Dingbat Circled Sans-serif Bullets:Base Family:OtherNumber", // ➀ ➁ ➂ ➃ ➄ ➅ ➆ ➇ ➈ 
+	"bullet:\u2776\u2777\u2778\u2779\u277a\u277b\u277c\u277d\u277e:Dingbat Negative Circled Bullets:Base Family:OtherNumber", // ❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ 
+	"bullet:\u278a\u278b\u278c\u278d\u278e\u278f\u2790\u2791\u2792:Dingbat Negative Circled Sans-serif Bullets:Base Family:OtherNumber", // ➊ ➋ ➌ ➍ ➎ ➏ ➐ ➑ ➒ 
+	"bullet:\u24f5\u24f6\u24f7\u24f8\u24f9\u24fa\u24fb\u24fc\u24fd:Double Circled Bullets:Base Family:OtherNumber", // ⓵ ⓶ ⓷ ⓸ ⓹ ⓺ ⓻ ⓼ ⓽ 
+	"bullet:\u2474\u2475\u2476\u2477\u2478\u2479\u247a\u247b\u247c:Parenthesized Bullets:Base Family:OtherNumber", // ⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ 
+	"bullet:\u1d369\u1d36a\u1d36b\u1d36c\u1d36d\u1d36e\u1d36f\u1d370\u1d371:Counting Rod Tens Bullets:Counting Family:OtherNumber", // 𝍩 𝍪 𝍫 𝍬 𝍭 𝍮 𝍯 𝍰 𝍱 
+	"bullet:\u1d360\u1d361\u1d362\u1d363\u1d364\u1d365\u1d366\u1d367\u1d368:Counting Rod Unit Bullets:Counting Family:OtherNumber", // 𝍠 𝍡 𝍢 𝍣 𝍤 𝍥 𝍦 𝍧 𝍨 
+	"bullet:\u1369\u136a\u136b\u136c\u136d\u136e\u136f\u1370\u1371:Ethiopic Bullets:Ethiopic Family:OtherNumber", // ፩ ፪ ፫ ፬ ፭ ፮ ፯ ፰ ፱ 
+	"bullet:\u10e60\u10e61\u10e62\u10e63\u10e64\u10e65\u10e66\u10e67\u10e68:Rumi Bullets:Other Family:OtherNumber", // 𐹠 𐹡 𐹢 𐹣 𐹤 𐹥 𐹦 𐹧 𐹨 
+	"digit:\u660\u661\u662\u663\u664\u665\u666\u667\u668\u669:Arabic-indic Digits:Arabic Family:DecimalNumber", // ٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩ 
+	"digit:\u6f0\u6f1\u6f2\u6f3\u6f4\u6f5\u6f6\u6f7\u6f8\u6f9:Extended Arabic-indic Digits:Arabic Family:DecimalNumber", // ۰ ۱ ۲ ۳ ۴ ۵ ۶ ۷ ۸ ۹ 
+	"digit:\u30\u31\u32\u33\u34\u35\u36\u37\u38\u39:0-9 Digits:Base Family:DecimalNumber", // 0 1 2 3 4 5 6 7 8 9 
+	"digit:\u24ea\u2460\u2461\u2462\u2463\u2464\u2465\u2466\u2467\u2468:Circled Digits:Base Family:OtherNumber", // ⓪ ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ 
+	"digit:\u1f101\u1f102\u1f103\u1f104\u1f105\u1f106\u1f107\u1f108\u1f109\u1f10a:Comma Digits:Base Family:OtherNumber", // 🄁 🄂 🄃 🄄 🄅 🄆 🄇 🄈 🄉 🄊 
+	"digit:\u1f100\u2488\u2489\u248a\u248b\u248c\u248d\u248e\u248f\u2490:Full Stop Digits:Base Family:OtherNumber", // 🄀 ⒈ ⒉ ⒊ ⒋ ⒌ ⒍ ⒎ ⒏ ⒐ 
+	"digit:\uff10\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19:Fullwidth Digits:Base Family:DecimalNumber", // ０ １ ２ ３ ４ ５ ６ ７ ８ ９ 
+	"digit:\u1d7ce\u1d7cf\u1d7d0\u1d7d1\u1d7d2\u1d7d3\u1d7d4\u1d7d5\u1d7d6\u1d7d7:Mathematical Bold Digits:Base Family:DecimalNumber", // 𝟎 𝟏 𝟐 𝟑 𝟒 𝟓 𝟔 𝟕 𝟖 𝟗 
+	"digit:\u1d7d8\u1d7d9\u1d7da\u1d7db\u1d7dc\u1d7dd\u1d7de\u1d7df\u1d7e0\u1d7e1:Mathematical Double-struck Digits:Base Family:DecimalNumber", // 𝟘 𝟙 𝟚 𝟛 𝟜 𝟝 𝟞 𝟟 𝟠 𝟡 
+	"digit:\u1d7f6\u1d7f7\u1d7f8\u1d7f9\u1d7fa\u1d7fb\u1d7fc\u1d7fd\u1d7fe\u1d7ff:Mathematical Monospace Digits:Base Family:DecimalNumber", // 𝟶 𝟷 𝟸 𝟹 𝟺 𝟻 𝟼 𝟽 𝟾 𝟿 
+	"digit:\u1d7ec\u1d7ed\u1d7ee\u1d7ef\u1d7f0\u1d7f1\u1d7f2\u1d7f3\u1d7f4\u1d7f5:Mathematical Sans-serif Bold Digits:Base Family:DecimalNumber", // 𝟬 𝟭 𝟮 𝟯 𝟰 𝟱 𝟲 𝟳 𝟴 𝟵 
+	"digit:\u1d7e2\u1d7e3\u1d7e4\u1d7e5\u1d7e6\u1d7e7\u1d7e8\u1d7e9\u1d7ea\u1d7eb:Mathematical Sans-serif Digits:Base Family:DecimalNumber", // 𝟢 𝟣 𝟤 𝟥 𝟦 𝟧 𝟨 𝟩 𝟪 𝟫 
+	"digit:\u9e6\u9e7\u9e8\u9e9\u9ea\u9eb\u9ec\u9ed\u9ee\u9ef:Bengali Digits:Bengali Family:DecimalNumber", // ০ ১ ২ ৩ ৪ ৫ ৬ ৭ ৮ ৯ 
+	"digit:\uae6\uae7\uae8\uae9\uaea\uaeb\uaec\uaed\uaee\uaef:Gujarati Digits:Indic Family:DecimalNumber", // ૦ ૧ ૨ ૩ ૪ ૫ ૬ ૭ ૮ ૯ 
+	"digit:\ua66\ua67\ua68\ua69\ua6a\ua6b\ua6c\ua6d\ua6e\ua6f:Gurmukhi Digits:Indic Family:DecimalNumber", // ੦ ੧ ੨ ੩ ੪ ੫ ੬ ੭ ੮ ੯ 
+	"digit:\uf20\uf21\uf22\uf23\uf24\uf25\uf26\uf27\uf28\uf29:Tibetan Digits:Indic Family:DecimalNumber", // ༠ ༡ ༢ ༣ ༤ ༥ ༦ ༧ ༨ ༩ 
+	"digit:\uce6\uce7\uce8\uce9\ucea\uceb\ucec\uced\ucee\ucef:Kannada Digits:Kannada-Telugu:DecimalNumber", // ೦ ೧ ೨ ೩ ೪ ೫ ೬ ೭ ೮ ೯ 
+	"digit:\uc66\uc67\uc68\uc69\uc6a\uc6b\uc6c\uc6d\uc6e\uc6f:Telugu Digits:Kannada-Telugu:DecimalNumber", // ౦ ౧ ౨ ౩ ౪ ౫ ౬ ౭ ౮ ౯ 
+	"digit:\ua900\ua901\ua902\ua903\ua904\ua905\ua906\ua907\ua908\ua909:Kayah Li Digits:Kayah Li Family:DecimalNumber", // ꤀ ꤁ ꤂ ꤃ ꤄ ꤅ ꤆ ꤇ ꤈ ꤉ 
+	"digit:\u17e0\u17e1\u17e2\u17e3\u17e4\u17e5\u17e6\u17e7\u17e8\u17e9:Khmer Digits:Khmer-Lao-Thai Family:DecimalNumber", // ០ ១ ២ ៣ ៤ ៥ ៦ ៧ ៨ ៩ 
+	"digit:\ued0\ued1\ued2\ued3\ued4\ued5\ued6\ued7\ued8\ued9:Lao Digits:Khmer-Lao-Thai Family:DecimalNumber", // ໐ ໑ ໒ ໓ ໔ ໕ ໖ ໗ ໘ ໙ 
+	"digit:\ue50\ue51\ue52\ue53\ue54\ue55\ue56\ue57\ue58\ue59:Thai Digits:Khmer-Lao-Thai Family:DecimalNumber", // ๐ ๑ ๒ ๓ ๔ ๕ ๖ ๗ ๘ ๙ 
+	"digit:\ud66\ud67\ud68\ud69\ud6a\ud6b\ud6c\ud6d\ud6e\ud6f:Malayalam Digits:Malayalam Family:DecimalNumber", // ൦ ൧ ൨ ൩ ൪ ൫ ൬ ൭ ൮ ൯ 
+	"digit:\u1040\u1041\u1042\u1043\u1044\u1045\u1046\u1047\u1048\u1049:Myanmar Digits:Myanmar Family:DecimalNumber", // ၀ ၁ ၂ ၃ ၄ ၅ ၆ ၇ ၈ ၉ 
+	"digit:\u1090\u1091\u1092\u1093\u1094\u1095\u1096\u1097\u1098\u1099:Myanmar Shan Digits:Myanmar Family:DecimalNumber", // ႐ ႑ ႒ ႓ ႔ ႕ ႖ ႗ ႘ ႙ 
+	"digit:\u7c0\u7c1\u7c2\u7c3\u7c4\u7c5\u7c6\u7c7\u7c8\u7c9:Nko Digits:Nko Family:DecimalNumber", // ߀ ߁ ߂ ߃ ߄ ߅ ߆ ߇ ߈ ߉ 
+	"digit:\ub66\ub67\ub68\ub69\ub6a\ub6b\ub6c\ub6d\ub6e\ub6f:Oriya Digits:Oriya Family:DecimalNumber", // ୦ ୧ ୨ ୩ ୪ ୫ ୬ ୭ ୮ ୯ 
+	"digit:\u104a0\u104a1\u104a2\u104a3\u104a4\u104a5\u104a6\u104a7\u104a8\u104a9:Osmanya Digits:Osmanya Family:DecimalNumber", // 𐒠 𐒡 𐒢 𐒣 𐒤 𐒥 𐒦 𐒧 𐒨 𐒩 
+	"digit:\u1b50\u1b51\u1b52\u1b53\u1b54\u1b55\u1b56\u1b57\u1b58\u1b59:Balinese Digits:Other Family:DecimalNumber", // ᭐ ᭑ ᭒ ᭓ ᭔ ᭕ ᭖ ᭗ ᭘ ᭙ 
+	"digit:\u11066\u11067\u11068\u11069\u1106a\u1106b\u1106c\u1106d\u1106e\u1106f:Brahmi Digits:Other Family:DecimalNumber", // 𑁦 𑁧 𑁨 𑁩 𑁪 𑁫 𑁬 𑁭 𑁮 𑁯 
+	"digit:\u11136\u11137\u11138\u11139\u1113a\u1113b\u1113c\u1113d\u1113e\u1113f:Chakma Digits:Other Family:DecimalNumber", // 𑄶 𑄷 𑄸 𑄹 𑄺 𑄻 𑄼 𑄽 𑄾 𑄿 
+	"digit:\uaa50\uaa51\uaa52\uaa53\uaa54\uaa55\uaa56\uaa57\uaa58\uaa59:Cham Digits:Other Family:DecimalNumber", // ꩐ ꩑ ꩒ ꩓ ꩔ ꩕ ꩖ ꩗ ꩘ ꩙ 
+	"digit:\ua8e0\ua8e1\ua8e2\ua8e3\ua8e4\ua8e5\ua8e6\ua8e7\ua8e8\ua8e9:Combining Devanagari Digits:Other Family:NonspacingMark", // ꣠ ꣡ ꣢ ꣣ ꣤ ꣥ ꣦ ꣧ ꣨ ꣩ 
+	"digit:\u966\u967\u968\u969\u96a\u96b\u96c\u96d\u96e\u96f:Devanagari Digits:Other Family:DecimalNumber", // ० १ २ ३ ४ ५ ६ ७ ८ ९ 
+	"digit:\ua9d0\ua9d1\ua9d2\ua9d3\ua9d4\ua9d5\ua9d6\ua9d7\ua9d8\ua9d9:Javanese Digits:Other Family:DecimalNumber", // ꧐ ꧑ ꧒ ꧓ ꧔ ꧕ ꧖ ꧗ ꧘ ꧙ 
+	"digit:\u1c40\u1c41\u1c42\u1c43\u1c44\u1c45\u1c46\u1c47\u1c48\u1c49:Lepcha Digits:Other Family:DecimalNumber", // ᱀ ᱁ ᱂ ᱃ ᱄ ᱅ ᱆ ᱇ ᱈ ᱉ 
+	"digit:\u1946\u1947\u1948\u1949\u194a\u194b\u194c\u194d\u194e\u194f:Limbu Digits:Other Family:DecimalNumber", // ᥆ ᥇ ᥈ ᥉ ᥊ ᥋ ᥌ ᥍ ᥎ ᥏ 
+	"digit:\uabf0\uabf1\uabf2\uabf3\uabf4\uabf5\uabf6\uabf7\uabf8\uabf9:Meetei Mayek Digits:Other Family:DecimalNumber", // ꯰ ꯱ ꯲ ꯳ ꯴ ꯵ ꯶ ꯷ ꯸ ꯹ 
+	"digit:\u1810\u1811\u1812\u1813\u1814\u1815\u1816\u1817\u1818\u1819:Mongolian Digits:Other Family:DecimalNumber", // ᠐ ᠑ ᠒ ᠓ ᠔ ᠕ ᠖ ᠗ ᠘ ᠙ 
+	"digit:\u19d0\u19d1\u19d2\u19d3\u19d4\u19d5\u19d6\u19d7\u19d8\u19d9:New Tai Lue Digits:Other Family:DecimalNumber", // ᧐ ᧑ ᧒ ᧓ ᧔ ᧕ ᧖ ᧗ ᧘ ᧙ 
+	"digit:\u1c50\u1c51\u1c52\u1c53\u1c54\u1c55\u1c56\u1c57\u1c58\u1c59:Ol Chiki Digits:Other Family:DecimalNumber", // ᱐ ᱑ ᱒ ᱓ ᱔ ᱕ ᱖ ᱗ ᱘ ᱙ 
+	"digit:\ua8d0\ua8d1\ua8d2\ua8d3\ua8d4\ua8d5\ua8d6\ua8d7\ua8d8\ua8d9:Saurashtra Digits:Other Family:DecimalNumber", // ꣐ ꣑ ꣒ ꣓ ꣔ ꣕ ꣖ ꣗ ꣘ ꣙ 
+	"digit:\u111d0\u111d1\u111d2\u111d3\u111d4\u111d5\u111d6\u111d7\u111d8\u111d9:Sharada Digits:Other Family:DecimalNumber", // 𑇐 𑇑 𑇒 𑇓 𑇔 𑇕 𑇖 𑇗 𑇘 𑇙 
+	"digit:\u110f0\u110f1\u110f2\u110f3\u110f4\u110f5\u110f6\u110f7\u110f8\u110f9:Sora Sompeng Digits:Other Family:DecimalNumber", // 𑃰 𑃱 𑃲 𑃳 𑃴 𑃵 𑃶 𑃷 𑃸 𑃹 
+	"digit:\u1bb0\u1bb1\u1bb2\u1bb3\u1bb4\u1bb5\u1bb6\u1bb7\u1bb8\u1bb9:Sundanese Digits:Other Family:DecimalNumber", // ᮰ ᮱ ᮲ ᮳ ᮴ ᮵ ᮶ ᮷ ᮸ ᮹ 
+	"digit:\u1a80\u1a81\u1a82\u1a83\u1a84\u1a85\u1a86\u1a87\u1a88\u1a89:Tai Tham Hora Digits:Other Family:DecimalNumber", // ᪀ ᪁ ᪂ ᪃ ᪄ ᪅ ᪆ ᪇ ᪈ ᪉ 
+	"digit:\u1a90\u1a91\u1a92\u1a93\u1a94\u1a95\u1a96\u1a97\u1a98\u1a99:Tai Tham Tham Digits:Other Family:DecimalNumber", // ᪐ ᪑ ᪒ ᪓ ᪔ ᪕ ᪖ ᪗ ᪘ ᪙ 
+	"digit:\u116c0\u116c1\u116c2\u116c3\u116c4\u116c5\u116c6\u116c7\u116c8\u116c9:Takri Digits:Other Family:DecimalNumber", // 𑛀 𑛁 𑛂 𑛃 𑛄 𑛅 𑛆 𑛇 𑛈 𑛉 
+	"digit:\ue0030\ue0031\ue0032\ue0033\ue0034\ue0035\ue0036\ue0037\ue0038\ue0039:Tag Digits:Tag Family:Format", // 󠀰 󠀱 󠀲 󠀳 󠀴 󠀵 󠀶 󠀷 󠀸 󠀹 
+	"digit:\ube6\ube7\ube8\ube9\ubea\ubeb\ubec\ubed\ubee\ubef:Tamil Digits:Tamil Family:DecimalNumber", // ௦ ௧ ௨ ௩ ௪ ௫ ௬ ௭ ௮ ௯ 
+	"digit:\ua620\ua621\ua622\ua623\ua624\ua625\ua626\ua627\ua628\ua629:Vai Digits:Vai Family:DecimalNumber", // ꘠ ꘡ ꘢ ꘣ ꘤ ꘥ ꘦ ꘧ ꘨ ꘩ 
+	"partial01:\u777:Arabic Letter Farsi Yeh With Extended Arabic-indic Below Partial01s:Arabic Family:OtherLetter", // ݷ 
+	"partial01:\u77c:Arabic Letter Hah With Extended Arabic-indic Below Partial01s:Arabic Family:OtherLetter", // ݼ 
+	"partial01:\u77d:Arabic Letter Seen With Extended Arabic-indic Above Partial01s:Arabic Family:OtherLetter", // ݽ 
+	"partial01:\u24ff:Negative Circled Partial01s:Base Family:OtherNumber", // ⓿ 
+	"partial01:\u19da:New Tai Lue Tham Partial01s:Other Family:OtherNumber", // ᧚ 
+	"partial02:\u773\u774:Arabic Letter Alef With Extended Arabic-indic Above Partial02s:Arabic Family:OtherLetter", // ݳ ݴ 
+	"partial02:\u775\u776:Arabic Letter Farsi Yeh With Extended Arabic-indic Above Partial02s:Arabic Family:OtherLetter", // ݵ ݶ 
+	"partial02:\u778\u779:Arabic Letter Waw With Extended Arabic-indic Above Partial02s:Arabic Family:OtherLetter", // ݸ ݹ 
+	"partial02:\u77a\u77b:Arabic Letter Yeh Barree With Extended Arabic-indic Above Partial02s:Arabic Family:OtherLetter", // ݺ ݻ 
+	"partial03:\uc7c\uc7d\uc7e:Telugu Fraction For Even Powers Of Four Partial03s:Kannada-Telugu:OtherNumber", // ౼ ౽ ౾ 
+	"partial04:\uc78\uc79\uc7a\uc7b:Telugu Fraction For Odd Powers Of Four Partial04s:Kannada-Telugu:OtherNumber", // ౸ ౹ ౺ ౻ 
+	"partial04:\u10a40\u10a41\u10a42\u10a43:Kharoshthi Partial04s:Other Family:OtherNumber", // 𐩀 𐩁 𐩂 𐩃 
+	// group:utf8 code points:number set name:number family name:unicode class // raw characters
