@@ -1,6 +1,6 @@
 Quick Reference for jq command which manipulates json files.
 
-TODO - reading jq man page lind 972/1357 and/or/not ...
+TODO - reading jq man page lind 1035/1357 ADVANCED FEATURES
 
 Parse and output a JSON file exactly as is:
 (will report syntax errors and colour the output by default
