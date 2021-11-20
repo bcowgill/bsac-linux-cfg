@@ -2,6 +2,8 @@
 # ( ./utf8-classify-digits.sh | sort | perl -pne 's{\A.+?"}{\t"}xms'; perl -e 'print "\t// group:utf8 code points:number set name:number family name:unicode class // raw characters\n"' ) > utf8-classified-digits.txt
 
 # TODO examine Other Family number sets for similarity in character shapes and group them like Basic and Arabic
+# TODO use to make a perl tool which converts all unicode digits into some other number set (0-9 Digits) by default
+# TODO use to make a JS library/React tool which lets you type numbers in 0-9 Digits and have them appear in other number sets as you type.
 
 # This script examines unicode digit code points and groups them into character sets so you can transliterate numerals into other number sets.
 # It groups the numbers into similar families also so you could use an alternate font for the usual 0-9 characters.
