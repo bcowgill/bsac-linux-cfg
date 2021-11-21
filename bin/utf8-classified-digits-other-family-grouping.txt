@@ -1,6 +1,19 @@
 	"bullet:\u1d369\u1d36a\u1d36b\u1d36c\u1d36d\u1d36e\u1d36f\u1d370\u1d371:Counting Rod Tens Bullets:Other Family:OtherNumber", // 𝍩 𝍪 𝍫 𝍬 𝍭 𝍮 𝍯 𝍰 𝍱 
 	"bullet:\u1d360\u1d361\u1d362\u1d363\u1d364\u1d365\u1d366\u1d367\u1d368:Counting Rod Unit Bullets:Other Family:OtherNumber", // 𝍠 𝍡 𝍢 𝍣 𝍤 𝍥 𝍦 𝍧 𝍨 
 
+Rumi:dSmn417)U
+Balinese:om8239^Nuw
+Brahmi:.123d9d9c9
+Chakma:Ov2GP)89b@
+Cham:o?6263S2ny
+Javanese:om8839cmww
+Meetei Mayek:OSCC8PPHPP
+Lepcha:o923cn5vCR
+Limbu:O6^SXCc8V7
+Mongolian:OOnmOu6nUO
+New Tai Lue:oc92qmCm^P
+Ol Chiki:
+
 	"bullet:\u10e60\u10e61\u10e62\u10e63\u10e64\u10e65\u10e66\u10e67\u10e68:Rumi Bullets:Other Family:OtherNumber", // 𐹠 𐹡 𐹢 𐹣 𐹤 𐹥 𐹦 𐹧 𐹨 
 	"digit:\u1b50\u1b51\u1b52\u1b53\u1b54\u1b55\u1b56\u1b57\u1b58\u1b59:Balinese Digits:Other Family:DecimalNumber", // ᭐ ᭑ ᭒ ᭓ ᭔ ᭕ ᭖ ᭗ ᭘ ᭙ 
 	"digit:\u11066\u11067\u11068\u11069\u1106a\u1106b\u1106c\u1106d\u1106e\u1106f:Brahmi Digits:Other Family:DecimalNumber", // 𑁦 𑁧 𑁨 𑁩 𑁪 𑁫 𑁬 𑁭 𑁮 𑁯 
