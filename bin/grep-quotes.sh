@@ -15,7 +15,7 @@ This will find lines with unicode quotes and other characters in them from stand
 
 It spaces out the found characters and uses color to highlight them.
 
-See also utf8quotes.sh
+See also utf8quotes.sh, utf8-view.sh
 
 Example:
 

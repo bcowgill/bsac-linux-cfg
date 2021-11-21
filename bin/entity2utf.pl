@@ -21,7 +21,7 @@ Replace SGML/HTML/XML entities with utf8 characters from standard input.
 --man   shows help for this program.
 -?      shows help for this program.
 
-See also grep-utf8.sh, utf*, unicode* and other unicode tools.
+See also grep-utf8.sh, utf8-view.sh, utf*, unicode* and other unicode tools.
 
 Example:
 

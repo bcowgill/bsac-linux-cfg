@@ -16,7 +16,7 @@ Locate malformed utf8 sequences from standard input or a file.
 --man   shows help for this program.
 -?      shows help for this program.
 
-See also grep-hibit.pl, utf8dbg.pl, utf82entity.pl and other unicode tools.
+See also grep-hibit.pl, utf8-view.sh, utf8dbg.pl, utf82entity.pl and other unicode tools.
 
 USAGE
 	exit 0;

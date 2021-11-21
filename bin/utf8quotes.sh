@@ -16,7 +16,7 @@ This will display a document of practical examples of unicode quotation marks an
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
-See also unicode-sample.sh unicode-alpha.sh unicode-test.pl utf8-ellipsis.pl utf8ls-letter.sh utf8ls-number.sh utf8tr.pl utf8ls.pl grep-utf8.sh grep-hibit.pl and other *utf* and *unicode* tools.
+See also unicode-sample.sh, utf8-view.sh unicode-alpha.sh unicode-test.pl utf8-ellipsis.pl utf8ls-letter.sh utf8ls-number.sh utf8tr.pl utf8ls.pl grep-utf8.sh grep-hibit.pl and other *utf* and *unicode* tools.
 
 Example:
 

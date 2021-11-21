@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Unicode Character Viewer</title>
+<style>
+.character {
+	outline: 1px dotted black;
+	width: 100%;
+	height: 800px;
+}
+input {
+	margin: 1rem;
+	width: 3rem;
+}
+a {
+	font-size: small;
+}
+text {
+	font-family: monospace;
+	font-size: 500pt;
+	fill: black;
+}
+</style>
+</head>
+<body>
+<script>
+function getCharacterLength (str) {
+  // The string iterator that is used here iterates over characters,
+  //  not mere code units
+  return [...str].length;
+}
+function codex(code) {
+	code = code.trim() || "2665" // "1fa00"
+	if (/^&#[0-9]+/.test(code)) {
+		console.log("HTML decimal entity")
+		code = Number(code.replace(/^&#([0-9]+).*$/, "$1")).toString(16)
+	}
+	else if (getCharacterLength(code) === 1) {
+		console.log("Single UTF character")
+		code = code.codePointAt(0).toString(16)
+	}
+	else {
+		console.log("otherwise")
+		code = code.replace(/[^0-9a-f]/gi, '')
+	}
+	return code
+}
+function render(code) {
+	code = codex(code)
+	console.log("code", code)
+	code = ("0000" + code).substr(-5)
+	var block = code.replace(/..$/, "00")
+	if (code.length > 4) {
+		code = code.replace(/^0/, "")
+	}
+	if (block.length > 4) {
+		block = block.replace(/^0/, "")
+	}
+
+	var elHeader = document.getElementById('header')
+	var elText = document.getElementById("text")
+	var elCodePoint = document.getElementById("code-point")
+	var elInput = document.getElementById("input")
+	var elSvg = document.getElementById("svg")
+	var elLink1 = document.getElementById("link1")
+	var elLink2 = document.getElementById("link2")
+
+	var heightAvailable = window.innerHeight - elHeader.getBoundingClientRect().bottom - 30
+	console.log("heightAvail", heightAvailable)
+
+	var utfPt = "U+" + code.toUpperCase()
+	var codePt = "0x" + code
+	var decPt = "&#" + parseInt(codePt) + ";"
+	var fontUrl = "https://s.unicode-table.com/static/fonts/u/u0000.woff";
+	var char = String.fromCodePoint(codePt)
+	console.log("utf", char, block, code, codePt, utfPt, decPt)
+
+	elSvg.style.height = heightAvailable + "px"
+	elCodePoint.innerText = utfPt + " " + decPt + " " + char
+	document.title = elCodePoint.innerText + " Unicode Viewer"
+	elInput.value = code
+	elLink1.href = elLink1.href.replace(/(en\/).*$/, "$1" + code)
+	elLink2.href = elLink2.href.replace(/(\/U).+(\.pdf)$/, "$1" + block.toUpperCase() + "$2")
+	elText.innerHTML = char
+}
+function update() {
+	var code = document.getElementById("input").value
+	console.log('value', code)
+	render(code)
+}
+</script>
+<h1 id="header">Unicode Character <span id="code-point">U+1B50</span>
+	<input id="input" type="text" onchange="update()"/>
+	<a id="link1" target="_online" href="https://unicode-table.com/en/">view online</a>
+	<a id="link2" target="_online" href="https://www.unicode.org/charts/PDF/U0000.pdf">spec</a>
+</h1>
+<svg id="svg" class="character">
+	<text id="text" x="0" y="70%">
+	</text>
+</svg>
+<script>
+	render(document.location.hash)
+</script>
+</body>
+</html>

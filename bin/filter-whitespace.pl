@@ -37,7 +37,7 @@ This will filter the whitespace characters from standard input or files and tran
 
 By default the whitespace and control characters will be converted to the special unicode symbol characters which visually show the name of the whitespace character.
 
-See also whitespace-sample.sh, spaces.pl, utf8codept.pl, utf8.pl, filter-indents.sh, fix-spaces.sh, fix-tabs.sh, filter-newlines.sh
+See also whitespace-sample.sh, spaces.pl, utf8-view.sh, utf8codept.pl, utf8.pl, filter-indents.sh, fix-spaces.sh, fix-tabs.sh, filter-newlines.sh
 
 Example:
 

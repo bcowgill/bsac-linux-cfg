@@ -15,7 +15,7 @@ Search standard input or files for non-alpha characters (unicode, accented lette
 --man   shows help for this program.
 -?      shows help for this program.
 
-See also utf8dbg.pl, grep-bad-utf8.pl, utf2entity.pl and other unicode tools.
+See also utf8dbg.pl, utf8-view.sh, grep-bad-utf8.pl, utf2entity.pl and other unicode tools.
 
 USAGE
 	exit 0;
