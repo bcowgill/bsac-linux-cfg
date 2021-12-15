@@ -31,6 +31,7 @@ $cmd [--help|--man|-?] first.json second.json ...
 
 This will reorder the keys of second.json and others based on the order found in first.json.
 
+KEEP_KEYS environment variable allows unknown keys to be kept.
 --help  shows help for this program.
 --man   shows help for this program.
 -?      shows help for this program.
@@ -39,7 +40,7 @@ Assumes pretty formatted json with each key/value on separate lines with simple 
 
 Will not reorder the keys of a file named empty.json or files which are symbolic links.
 
-Provides special ordering for keys starting with global. or pco.PARTNER. or containing .CHANGENEEDED
+Provides special ordering for keys starting with global. or pco.PARTNER. or containing .CHANGENEEDED or _copy
 
 Keys with _confluence in the name are ignored.
 
@@ -72,7 +73,7 @@ sub debug
 }
 
 sub fatal {
-  print STDERR @ARG;
+  print STDERR ("❌ ", @ARG);
   exit 1;
 }
 
@@ -80,7 +81,16 @@ sub fatal_json {
   my ($file, $pos, $line, $message) = @ARG;
   $message ||= "Unknown JSON";
   fatal("$file: line $pos: $message: $line");
-  exit 1;
+}
+
+sub warnme {
+  print STDERR ("⚠ ", @ARG);
+}
+
+sub warn_json {
+  my ($file, $pos, $line, $message) = @ARG;
+  $message ||= "WARNING";
+  warnme("$file: line $pos: $message: $line");
 }
 
 sub pad
@@ -121,6 +131,7 @@ sub get_weight
   my $weight;
   my $real_key = $key;
   $key =~ s{\.CHANGENEEDED}{}xms;
+  $key =~ s{_copy}{}xms;
   if ($key =~ m{\Aglobal\.}xms)
   {
     $weight = $First{$key} ? "@{[pad($First{$key})]} $real_key" : "@{[pad($last_global)]} $real_key";
@@ -163,7 +174,18 @@ sub reorder
     {
       $Weight{$key} = get_weight($key);
     }
-    fatal_json($file, $pos, $line, "key [$show_key] was not present in $first_file") unless $Weight{$key};
+    unless ($Weight{$key})
+    {
+      if ($ENV{KEEP_KEYS} || $key =~ m{NEW})
+      {
+        warn_json($file, $pos, $line, "key [$show_key] was not present in $first_file, assuming weight 1");
+        $Weight{$key} = 1;
+      }
+      else
+      {
+        fatal_json($file, $pos, $line, "key [$show_key] was not present in $first_file");
+      }
+    }
     chomp($line);
     $line =~ s{\s*,?\s*\z}{}xms;
     $Lines{$key} = "$line,\n";
