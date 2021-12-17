@@ -69,3 +69,4 @@ find . \( \
 	-o -name '*.orig' \
 \) $* $PRINT
 # -o -name '*.orig'
+# -o -name '*~Stashed changes'
