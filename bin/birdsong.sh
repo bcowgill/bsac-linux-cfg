@@ -6,8 +6,8 @@ NORM=-3
 PARAM=--no-show-progress
 
 DIR=$HOME/d/Music/_Ringtones/birdsong
-DICE=50
 EXCLUDE=wood-pigeon
+DICE=50
 EXT=mp3
 
 function usage {
@@ -15,13 +15,13 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?] [directory] [delay_dice] [exclude]
+$cmd [--help|--man|-?] [directory] [exclude] [delay_dice]
 
 This will play random sound files [.$EXT] from a given directory with a random delay between them.
 
 directory   The directory to choose sound files from. default is "$DIR"
-delay_dice  The number of standard dice to roll to determine the delay in seconds. default is $DICE
 exclude     The regex pattern to use for excluding chosen sound files. default is "$EXCLUDE"
+delay_dice  The number of standard dice to roll to determine the delay in seconds. default is $DICE
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
@@ -52,8 +52,8 @@ if [ "$1" == "-?" ]; then
 fi
 
 DIR=${1:-$DIR}
-DICE=${2:-$DICE}
-EXCLUDE=${3:-$EXCLUDE}
+EXCLUDE=${2:-$EXCLUDE}
+DICE=${3:-$DICE}
 
 while [ ! -z "$SONG" ];
 do
