@@ -5,9 +5,9 @@ SONG=$LAST
 NORM=-3
 PARAM=--no-show-progress
 
-DIR=${1:-$HOME/d/Music/_Ringtones/birdsong}
-DICE=${2:-50}
-EXCLUDE=${3:-wood-pigeon}
+DIR=$HOME/d/Music/_Ringtones/birdsong
+DICE=50
+EXCLUDE=wood-pigeon
 EXT=mp3
 
 function usage {
@@ -32,6 +32,11 @@ It will also filter out any file that matches "$EXCLUDE"
 
 See also choose.pl, pswide.sh
 
+Examples:
+
+watch 'ps -ef | grep play | grep -v grep'
+
+To watch for the song files which are currently being played.
 "
 	exit $code
 }
@@ -46,13 +51,17 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
+DIR=${1:-$DIR}
+DICE=${2:-$DICE}
+EXCLUDE=${3:-$EXCLUDE}
+
 while [ ! -z "$SONG" ];
 do
 	#echo 1:$LAST 2:$SONG
 	if [ "$LAST" == "$SONG" ]; then
 		SONG=`ls -1 $DIR/*.$EXT | grep -vE "$EXCLUDE" | choose.pl`
 		# pick another bird if the chosen one is currently singing.
-		if pswide.sh | grep -v grep | grep $PARAM | grep "$SONG" 2> /dev/null > /dev/null; then
+		if pswide.sh | grep -v grep | grep -- $PARAM | grep "$SONG" 2> /dev/null > /dev/null; then
 			echo $SONG is already being sung...
 			SONG="$LAST"
 		fi
