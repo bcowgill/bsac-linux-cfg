@@ -30,6 +30,8 @@ When choosing a sound file to play, it will force the next file to be different 
 
 It will also filter out any file that matches "$EXCLUDE"
 
+You can stop all the $cmd instances by touching the file SILENCE in the specified dir.
+
 See also choose.pl, pswide.sh
 
 Examples:
@@ -55,9 +57,17 @@ DIR=${1:-$DIR}
 EXCLUDE=${2:-$EXCLUDE}
 DICE=${3:-$DICE}
 
+echo You can silence all the birds with: touch $DIR/SILENCE
+if [ -e "$DIR/SILENCE" ]; then
+	rm "$DIR/SILENCE"
+fi
 while [ ! -z "$SONG" ];
 do
 	#echo 1:$LAST 2:$SONG
+	if [ -e "$DIR/SILENCE" ]; then
+		echo found file $DIR/SILENCE, exiting...
+		exit 0;
+	fi
 	if [ "$LAST" == "$SONG" ]; then
 		SONG=`ls -1 $DIR/*.$EXT | grep -vE "$EXCLUDE" | choose.pl`
 		# pick another bird if the chosen one is currently singing.
