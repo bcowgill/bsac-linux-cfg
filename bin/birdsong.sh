@@ -4,9 +4,10 @@ LAST=silence
 SONG=$LAST
 NORM=-3
 PARAM=--no-show-progress
+FLAG=_DELETE_TO_SILENCE_THE_BIRDSONG_
 
 DIR=$HOME/d/Music/_Ringtones/birdsong
-EXCLUDE=wood-pigeon
+EXCLUDE='wood-pigeon|collared-dove'
 DICE=50
 EXT=mp3
 
@@ -30,7 +31,7 @@ When choosing a sound file to play, it will force the next file to be different 
 
 It will also filter out any file that matches "$EXCLUDE"
 
-You can stop all the $cmd instances by touching the file SILENCE in the specified dir.
+You can stop all the $cmd instances by deleting the file $FLAG in the specified dir.
 
 See also choose.pl, pswide.sh
 
@@ -57,15 +58,15 @@ DIR=${1:-$DIR}
 EXCLUDE=${2:-$EXCLUDE}
 DICE=${3:-$DICE}
 
-echo You can silence all the birds with: touch $DIR/SILENCE
-if [ -e "$DIR/SILENCE" ]; then
-	rm "$DIR/SILENCE"
+echo You can silence all the birds with: rm $DIR/$FLAG
+if [ ! -e "$DIR/$FLAG" ]; then
+	touch "$DIR/$FLAG"
 fi
 while [ ! -z "$SONG" ];
 do
 	#echo 1:$LAST 2:$SONG
-	if [ -e "$DIR/SILENCE" ]; then
-		echo found file $DIR/SILENCE, exiting...
+	if [ ! -e "$DIR/$FLAG" ]; then
+		echo File $DIR/$FLAG is gone, exiting...
 		exit 0;
 	fi
 	if [ "$LAST" == "$SONG" ]; then
@@ -84,6 +85,11 @@ do
 		play $PARAM "$SONG"
 		#play $PARAM --norm=$NORM "$SONG"
 		LAST="$SONG"
+
+		if [ ! -e "$DIR/$FLAG" ]; then
+			echo File $DIR/$FLAG is gone, exiting...
+			exit 0;
+		fi
 
 		SLEEP=`DICE=$DICE perl -e 'sub r{return int(1+rand(6))}; for (1..$ENV{DICE}) {$d += r()}; print $d'`
 		echo sleep $SLEEP
