@@ -1,0 +1,15 @@
+<!-- trapezoid vs rectangle receding into the distance -->
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg style="border: 1px dotted cyan" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="640" height="480" viewBox="0 0 645 480" xml:space="preserve">
+<desc>Created with Fabric.js 3.6.3 from http://svgeditoronline.com/ then edited by hand</desc>
+<defs>
+</defs>
+	<g transform="matrix(2.83 0 0 2.9 158.32 249.33)"  >
+		<polygon style="stroke: rgb(0,0,0); stroke-width: 20; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  points="-50,45 -20,-45 20,-45 50,45 " />
+		<g transform="translate(115,0)"  >
+			<polygon style="stroke: rgb(0,0,0); stroke-width: 20; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  points="-50,45 -20,-45 20,-45 50,45 " />
+			<polygon style="stroke: rgb(255,255,255); stroke-width: 10; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke"  points="-45,40 -20,-45 20,-45 45,40 " />
+		</g>
+	</g>
+</svg>
