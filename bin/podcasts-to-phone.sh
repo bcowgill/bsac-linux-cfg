@@ -1,8 +1,6 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# scan-phone.sh find the files on mobile phone internal memory for use with shell-sync.pl
-# also calls random-ringtone.sh to change your ringtone.
-# and copies podcasts from $PODCASTS_FROM to $PODCASTS_TO/_NEW removing any from $PODCASTS_TO/REMOVE
+# copies podcasts from $PODCASTS_FROM to $PODCASTS_TO/_NEW removing any from $PODCASTS_TO/REMOVE
 
 CONFIG=${1:-~/.PHONE}
 
@@ -82,20 +80,3 @@ if [ ! -z "$PODCASTS_FROM" ]; then
 		fi
 	fi
 fi
-
-if [ ! -z "$RINGTONES" ]; then
-	random-ringtone.sh
-fi
-podcasts-to-phone.sh
-
-
-echo getting file list from phone...
-find-ez.sh $phone > phone.lst
-echo getting file list from local backup...
-find-ez.sh $backup > phone-backup.lst
-echo generating shell sync script go.sh for $backup
-echo "# phone $backup shell sync script" > go.sh
-shell-sync.pl $phone $backup phone.lst phone-backup.lst >> go.sh
-chmod +x go.sh
-
-echo created go.sh to update backup files from phone $backup contents.
