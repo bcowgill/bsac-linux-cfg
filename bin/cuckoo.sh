@@ -5,8 +5,8 @@
 CUCKOO=${1:-$HOME/bin/sounds/single-cuckoo-sound.mp3}
 DELAY=0
 
-hour=`date '+%I'`
-hour=$(($hour + 0))
+hour=`date '+%I' | perl -pne 's{\A\s*0([0-9])}{$1}xms'`
+#echo hour: $hour
 while [ $hour != "0" ];
 do
 	if [ -f "$CUCKOO" ]; then
