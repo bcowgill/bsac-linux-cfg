@@ -3,18 +3,29 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 
 # TODO select sound by name cuckoo.sh frog
-# TODO change sound used on Mac/Linux by day of week!
-# date +%u
 # Nature sound effects: https://soundbible.com/search.php?q=cricket
 
-CLUCK=$HOME/bin/sounds/single-cuckoo-sound.mp3
-TIGER="$HOME/bin/sounds/Tiger Growling-SoundBible.com-258880045.mp3"
+WHERE=$HOME/bin/sounds/
+CLUCK=single-cuckoo-sound.mp3
+
+# Default sound varies by OS and day of week
+DOW=`date +%u`
 if which sw_vers > /dev/null 2>&1 ; then
 	# MACOS
-	CLUCK="$TIGER"
+	DOW=$(($DOW-1))
 fi
+case $DOW in
+	1) CLUCK="grandfather-clock-chime.mp3" ;;
+	2) CLUCK="single-cuckoo-sound.mp3" ;;
+	3) CLUCK="Cat-Meowing.mp3" ;;
+	4) CLUCK="Cow-Moo.mp3" ;;
+	5) CLUCK="Frog-Croaking.mp3" ;;
+	6) CLUCK="Rooster-Crowing.mp3" ;;
+	7) CLUCK="Doorbell.mp3" ;;
+	*) CLUCK="Horse-Neigh-Sound.mp3" ;;
+esac
 
-CUCKOO="${1:-$CLUCK}"
+CUCKOO="${1:-$WHERE/$CLUCK}"
 DELAY=0
 
 hour=`date '+%I' | perl -pne 's{\A\s*0([0-9])}{$1}xms'`
