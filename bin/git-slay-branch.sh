@@ -55,7 +55,7 @@ if [ -z $branch ]; then
 		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`" \
 			| grep -E 'days? ago'
 	done
-	error Specify a branch name i.e. origin/ENG-2353
+	error 1 "Specify a branch name i.e. origin/ENG-2353"
 else
 	#branch=`basename "$branch"`
 	warning "Delete remote branch origin/$branch [y/N] ? "
