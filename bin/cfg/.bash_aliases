@@ -111,6 +111,7 @@ if [ "x$COMPANY" == "xwipro" ]; then
 # git grep -l something | in-code
 	alias in-code="grep -vE '(cypress|tests?|vendor|tools)/|\.spec\.|\.(tgz|png|gif|jpg|map|eot|woff|ttf)|(story|stub|vendor.*)\.js'"
 	alias in-tests="grep -vE '(cypress|vendor|tools)/|\.(tgz|png|gif|jpg|map|eot|woff|ttf)|(story|vendor.*)\.js' | grep -E 'tests?/|\.spec\.'"
+	alias ccwc="check-code.sh | grep -vE '⋅|^\s*$' | wc -l"
 fi
 
 # default options for some commands
