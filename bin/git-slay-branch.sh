@@ -11,23 +11,61 @@ if [ ! -z "$2" ]; then
 	git remote prune origin
 fi
 
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+PURPLE='\033[0;35m'
+NC='\033[0;0m' # No Color
+
+function out {
+	echo -e "$*${NC}"
+}
+
+function ok {
+	out "🆗 ${GREEN}$*"
+}
+
+function warning {
+	out "${YELLOW}⚠️  $*"
+}
+
+function error {
+	ERROR=${1:-0}
+	out "${RED}❌ ${@:2}"
+}
+
 branch=`perl -e '$_ = shift; s{origin/}{}xms; print $_' "$1"`
 if [ -z $branch ]; then
 	BRANCHES=`git branch --remote --merged | grep -v -- '->'`
+	[ -e old-branches.lst ] && rm old-branches.lst
 	for branch in $BRANCHES; do
-		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`"
+		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`" >> old-branches.lst
+		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`" \
+			| grep -E 'years? ago'
 	done
-	echo Specify a branch name i.e. origin/ENG-2353
+	for branch in $BRANCHES; do
+		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`" \
+			| grep -E 'months? ago'
+	done
+	for branch in $BRANCHES; do
+		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`" \
+			| grep -E 'weeks? ago'
+	done
+	for branch in $BRANCHES; do
+		echo "$branch		`git log --format="format:%h %cr %cn %s" $branch| head -1`" \
+			| grep -E 'days? ago'
+	done
+	error Specify a branch name i.e. origin/ENG-2353
 else
 	#branch=`basename "$branch"`
-	echo Delete remote branch origin/$branch [y/N] ?
+	warning "Delete remote branch origin/$branch [y/N] ? "
 	read prompt
 	if [ ${prompt:-n} == y ]; then
 		if git branch --delete --remote "origin/$branch"; then
 			git push --no-verify origin --delete "$branch"
-			echo success
+			ok success
 		else
-			echo Do you want to force a delete [y/N] ?
+			warning "Do you want to force a delete [y/N] ? "
 			read prompt
 			if [ ${prompt:-n} == y ]; then
 				git branch -D --remote "origin/$branch"
@@ -36,13 +74,15 @@ else
 		git remote prune origin
 	fi
 
-	echo Delete local branch $branch [y/N] ?
+	echo Current state of local branch $branch
+	git log "$branch" | head
+	warning "Delete local branch $branch [y/N] ? "
 	read prompt
 	if [ ${prompt:-n} == y ]; then
 		if git branch --delete "$branch"; then
-			echo success
+			ok success
 		else
-			echo Do you want to force a delete [y/N] ?
+			warning "Do you want to force a delete [y/N] ? "
 			read prompt
 			if [ ${prompt:-n} == y ]; then
 				git branch -D "$branch"
