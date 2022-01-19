@@ -6,6 +6,7 @@
 # Nature sound effects: https://soundbible.com/search.php?q=cricket
 
 WHERE=$HOME/bin/sounds/
+OFFSET=${2:-0}
 CLUCK=single-cuckoo-sound.mp3
 
 # Default sound varies by OS and day of week
@@ -28,8 +29,8 @@ esac
 CUCKOO="${1:-$WHERE/$CLUCK}"
 DELAY=0
 
-hour=`date '+%I' | perl -pne 's{\A\s*0([0-9])}{$1}xms'`
-#echo hour: $hour
+hour=`date '+%I' | OFFSET=$OFFSET perl -pne 's{\A\s*0([0-9])}{$1}xms; $_ = ($_ + $ENV{OFFSET}) % 12;'`
+echo hour: $hour
 while [ $hour != "0" ];
 do
 	if [ -f "$CUCKOO" ]; then
