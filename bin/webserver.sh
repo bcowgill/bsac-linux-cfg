@@ -64,4 +64,4 @@ else
 	curl > /dev/null http://localhost:$PORT/favicon.ico
 fi
 popd
-ps -ef | grep -i $HTTP_MOD
+ps -ef | grep -v grep | grep -i $HTTP_MOD
