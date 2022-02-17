@@ -179,7 +179,7 @@ sub reorder
       if ($ENV{KEEP_KEYS} || $key =~ m{NEW})
       {
         warn_json($file, $pos, $line, "key [$show_key] was not present in $first_file, assuming weight 1");
-        $Weight{$key} = 1;
+        $Weight{$key} = qq{1 $key};
       }
       else
       {
