@@ -21,6 +21,8 @@ fi
 #MTP=/data/me/mtp
 #phone=$MTP/Phone
 
+#set -x
+
 if [ -e $phone ]; then
 	echo $MTP
 	ls -al $MTP

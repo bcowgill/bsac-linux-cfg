@@ -13,6 +13,9 @@ if [ -z "$MTP" ]; then
 	exit 10
 fi
 
+
+#set -x
+
 #MTP=/data/me/mtp
 fusermount -u $MTP 2> /dev/null
 jmtpfs $MTP

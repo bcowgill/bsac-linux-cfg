@@ -2,8 +2,10 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # set ringtone randomly on mobile phone directory mounted on MTP
 
-if [ -e ~/.PHONE ]; then
-	source ~/.PHONE
+CONFIG=${1:-~/.PHONE}
+
+if [ -e "$CONFIG" ]; then
+	source "$CONFIG"
 fi
 
 if [ -z "$MTP" ]; then

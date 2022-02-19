@@ -48,6 +48,8 @@ if [ ! -d $MTP ]; then
 	exit 10
 fi
 
+#set -x
+
 pushd $BACKUP_DIR > /dev/null
 
 if [ ! -d $phone ]; then
@@ -63,30 +65,10 @@ if [ ! -d $phone ]; then
 	exit 1
 fi
 
-if [ ! -z "$PODCASTS_FROM" ]; then
-	if [ ! -z "$PODCASTS_TO" ]; then
-		if [ -d "$PODCASTS_FROM" ]; then
-			NEW="$PODCASTS_TO/_NEW"
-			REMOVE="$PODCASTS_TO/_REMOVE"
-			if [ -d "$REMOVE" ]; then
-				echo Remove podcasts from phone at $REMOVE/
-				rm "$REMOVE/*.mp3"
-			fi
-			mkdir -p "$NEW" 2> /dev/null
-			if [ -d "$NEW" ]; then
-				echo Copy podcasts from $PODCASTS_FROM/ to $NEW/
-				cp "$PODCASTS_FROM/*.mp3" "$NEW/"
-			fi
-		else
-			echo No local podcasts dir $PODCASTS_FROM found.
-		fi
-	fi
-fi
-
 if [ ! -z "$RINGTONES" ]; then
-	random-ringtone.sh
+	random-ringtone.sh "$CONFIG"
 fi
-podcasts-to-phone.sh
+podcasts-to-phone.sh "$CONFIG"
 
 
 echo getting file list from phone...
