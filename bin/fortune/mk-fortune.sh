@@ -9,7 +9,7 @@ fi
 
 FORTUNES=`ls *.fortune`
 
-rm fortune.failures.lst
+[ -e fortune.failures.lst ] && rm fortune.failures.lst
 touch fortune.failures.lst
 
 function test_fortune_output
