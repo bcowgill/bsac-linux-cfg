@@ -13,4 +13,8 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	# configure clearbooks project directory
 	cd ~/projects/clearbooks-micro-api-auth
 fi
+if [ "$HOSTNAME" == "C02TN1QRG8WL" ]; then
+	# configure allianz project directory
+	cd ~/workspace/projects/allianz/personal-assistant-app
+fi
 git gui&

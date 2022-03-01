@@ -272,6 +272,7 @@ export NODE=`which node`
 
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+which pyenv > /dev/null && export PATH="`pyenv root`/shims:$PATH"
 
 export PATH=`upath.sh`
 
