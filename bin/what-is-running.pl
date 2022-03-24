@@ -16,10 +16,12 @@ while (my $line = <>)
 	$line = "${prefix}BACKUP        $line\n" if $line =~ m{ezbackup}xms && $line !~ m{\scheck}xms;
 	$line = "${prefix}CALIBRE       $line\n" if $line =~ m{python .+ calibre}xms;
 	$line = "${prefix}DOCUZILLA     $line\n" if $line =~ m{mono .+ Docuzilla}xms;
-	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{python .+ (SimpleHTTP|http\.server)}xms;
+	$line = "${prefix}WEBSERVER     $line\n" if $line =~ m{[pP]ython .+ (SimpleHTTP|http\.server)}xms;
 	$line = "${prefix}CHARLES PROXY $line\n" if $line =~ m{java .+ -jar \s+ /usr/lib/charles-proxy/charles.jar}xms;
 	$line = "${prefix}ATOM IDE      $line\n" if $line =~ m{/Applications/Atom.app/Contents/Frameworks/Atom}xms;
 	$line = "${prefix}WEBSTORM IDE  $line\n" if $line =~ m{java .+ $me/bin/WebStorm}xms;
+	$line = "${prefix}GIT GUI       $line\n" if $line =~ m{git-gui}xms;
+	$line = "${prefix}JEST          $line\n" if $line =~ m{react-scripts .+ test}xms;
 	$line = "${prefix}KARMA         $line\n" if $line =~ m{node(js)? .+ karma \s* start}xms;
 	$line =~ s{--grep}{--g-r-e-p}xmsg;
 	$line = "${prefix}KARMAWEBSTORM $line\n" if $line =~ m{node(js)? .+ intellij .+ karma}xms;
@@ -34,7 +36,7 @@ while (my $line = <>)
 	$line = "${prefix}WEBPACK       $line\n" if $line =~ m{node(js)? .+ webpack}xms;
 	$line = "${prefix}FLOWSERVER    $line\n" if $line =~ m{node_modules .+ flow \s+ start}xms;
 	$line = "${prefix}REACTSTORYBK  $line\n" if $line =~ m{node(js)? .+ storybook}xms;
-	$line = "${prefix}NODESERVER    $line\n" if $line !~ m{\A___}xms && $line =~ m{node(js)? .+server}xms;
+	$line = "${prefix}NODESERVER    $line\n" if $line !~ m{\A___}xms && $line =~ m{node(js)? .+[sS]erver}xms;
 	$line = "${prefix}DASHBOARD     $line\n" if $line =~ m{perl .+ infinity-plus-dashboard/bin/app\.pl}xms;
 	$line = "${prefix}UPDAEMON      $line\n" if $line =~ m{perl .+ blis-location-uploadd.pl}xms;
 	#/home/bcowgill/.rvm/rubies/ruby-2.1.5/bin/ruby bin/rails server -p 3001
