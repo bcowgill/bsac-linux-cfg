@@ -8,7 +8,7 @@
 # grep -viE 'self-extracting' file-type-archive.lst
 # grep -iE 'self-extracting' $ALL
 
-# See also classify.sh fft.pl filter-file.pl ls-types, whatsin.sh find-sounds.sh find-ez-sounds.sh
+# See also classify.sh fft.pl filter-file.pl ls-types whatsin.sh filter-sounds.sh find-sounds.sh find-ez-sounds.sh
 
 # Generate file type lists unicode, text, image, etc...
 #perl -pne 's{\A.+?:\s+}{}xms' file-types.lst | sort | uniq > file-type-strings.lst
