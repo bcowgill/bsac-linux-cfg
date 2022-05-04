@@ -67,6 +67,8 @@ find . \( \
 	-o -name '.#*' \
 	-o -name '#*#$' \
 	-o -name '*.orig' \
+	-o -name '*.not' \
+	-o -name '*.hold' \
 \) $* $PRINT
 # -o -name '*.orig'
 # -o -name '*~Stashed changes'
