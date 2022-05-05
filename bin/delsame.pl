@@ -62,6 +62,7 @@ my $TALK = 0;
 my $SHOW_ONLY = 0;
 my $LS = 1;
 my $DUMP = 0;
+my $MD5SUM = "";
 
 if ($DEBUG)
 {
@@ -195,11 +196,24 @@ sub checksum
 	my ($filename) = @ARG;
 	my ($fh, $result, $md5sum);
 
-	info("md5sum $filename");
-	open($fh, '-|', 'md5sum', $filename);
+	my $try = $MD5SUM || "md5sum";
+	info("$try $filename");
+	open($fh, '-|', $try, $filename);
 	$result = <$fh>;
 	close($fh);
 	($md5sum) = split(/\s/, $result);
+	unless ($md5sum)
+	{
+		# Mac has cksum, instead.
+		$try = "cksum";
+		info("$try $filename");
+		open($fh, '-|', $try, $filename);
+		$result = <$fh>;
+		close($fh);
+		($md5sum) = split(/\s/, $result);
+		die "Error: unable to execute md5sum or cksum $filename" unless $md5sum;
+	}
+	$MD5SUM = $try;
 	return $md5sum;
 }
 
