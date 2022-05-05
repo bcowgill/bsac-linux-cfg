@@ -1,0 +1,26 @@
+jq (JSON Query) command quick reference
+
+Use it as a pretty printer:
+
+jq '.' filename.json
+  --monochrome-output
+  --color-output
+  --compact-output
+  --tab
+  --indent n
+  --sort-keys
+  --unbuffered
+  --join-output
+
+Use to get the true/false value of a single key as an exit code
+
+Example JSON:
+{ emma2: { showEmma2: true/false } }
+
+jq --exit-status '.emma2.showEmma2' src/partnerConfigs/__dev__/combined.json ; echo == $? ==
+
+Returns 0 if emma2.showEmma2 value is neither false nor null.
+Returns 1 if emma2.showEmam2 value is either false or null.
+Returns 4 if no valid result was ever produced.
+Returns 2 if some usage problem or system error.
+Returns 3 if there is a jq program compile error.
