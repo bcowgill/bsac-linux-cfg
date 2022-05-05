@@ -1,0 +1,53 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/me/.nvm/versions/node/v6.11.4/bin/node',
+1 verbose cli   '/home/me/.nvm/versions/node/v6.11.4/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'test' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.4
+4 verbose run-script [ 'pretest', 'test', 'posttest' ]
+5 info lifecycle parcel-test@1.0.0~pretest: parcel-test@1.0.0
+6 verbose lifecycle parcel-test@1.0.0~pretest: unsafe-perm in lifecycle true
+7 verbose lifecycle parcel-test@1.0.0~pretest: PATH: /home/me/.nvm/versions/node/v6.11.4/lib/node_modules/npm/bin/node-gyp-bin:/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/parcel-test/node_modules/.bin:/usr/local/sbin:/home/me/.nvm/versions/node/v6.11.4/bin:/opt/slickedit/bin:/home/me/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:./node_modules/.bin:/home/me/.rvm/bin
+8 verbose lifecycle parcel-test@1.0.0~pretest: CWD: /home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/parcel-test
+9 silly lifecycle parcel-test@1.0.0~pretest: Args: [ '-c', 'bash -c scripts/pre-node.sh' ]
+10 silly lifecycle parcel-test@1.0.0~pretest: Returned: code: 0  signal: null
+11 info lifecycle parcel-test@1.0.0~test: parcel-test@1.0.0
+12 verbose lifecycle parcel-test@1.0.0~test: unsafe-perm in lifecycle true
+13 verbose lifecycle parcel-test@1.0.0~test: PATH: /home/me/.nvm/versions/node/v6.11.4/lib/node_modules/npm/bin/node-gyp-bin:/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/parcel-test/node_modules/.bin:/usr/local/sbin:/home/me/.nvm/versions/node/v6.11.4/bin:/opt/slickedit/bin:/home/me/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:./node_modules/.bin:/home/me/.rvm/bin
+14 verbose lifecycle parcel-test@1.0.0~test: CWD: /home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/parcel-test
+15 silly lifecycle parcel-test@1.0.0~test: Args: [ '-c',
+15 silly lifecycle   'NODE_ENV=test jest --config jest.config.json --ci --notify --detectLeaks --detectOpenHandles --clearMocks --resetMocks --restoreMocks --forceExit' ]
+16 silly lifecycle parcel-test@1.0.0~test: Returned: code: 1  signal: null
+17 info lifecycle parcel-test@1.0.0~test: Failed to exec test script
+18 verbose stack Error: parcel-test@1.0.0 test: `NODE_ENV=test jest --config jest.config.json --ci --notify --detectLeaks --detectOpenHandles --clearMocks --resetMocks --restoreMocks --forceExit`
+18 verbose stack Exit status 1
+18 verbose stack     at EventEmitter.<anonymous> (/home/me/.nvm/versions/node/v6.11.4/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+18 verbose stack     at emitTwo (events.js:106:13)
+18 verbose stack     at EventEmitter.emit (events.js:191:7)
+18 verbose stack     at ChildProcess.<anonymous> (/home/me/.nvm/versions/node/v6.11.4/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+18 verbose stack     at emitTwo (events.js:106:13)
+18 verbose stack     at ChildProcess.emit (events.js:191:7)
+18 verbose stack     at maybeClose (internal/child_process.js:920:16)
+18 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:230:5)
+19 verbose pkgid parcel-test@1.0.0
+20 verbose cwd /home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/parcel-test
+21 error Linux 3.19.0-65-generic
+22 error argv "/home/me/.nvm/versions/node/v6.11.4/bin/node" "/home/me/.nvm/versions/node/v6.11.4/bin/npm" "run" "test"
+23 error node v6.11.4
+24 error npm  v3.10.10
+25 error code ELIFECYCLE
+26 error parcel-test@1.0.0 test: `NODE_ENV=test jest --config jest.config.json --ci --notify --detectLeaks --detectOpenHandles --clearMocks --resetMocks --restoreMocks --forceExit`
+26 error Exit status 1
+27 error Failed at the parcel-test@1.0.0 test script 'NODE_ENV=test jest --config jest.config.json --ci --notify --detectLeaks --detectOpenHandles --clearMocks --resetMocks --restoreMocks --forceExit'.
+27 error Make sure you have the latest version of node.js and npm installed.
+27 error If you do, this is most likely a problem with the parcel-test package,
+27 error not with npm itself.
+27 error Tell the author that this fails on your system:
+27 error     NODE_ENV=test jest --config jest.config.json --ci --notify --detectLeaks --detectOpenHandles --clearMocks --resetMocks --restoreMocks --forceExit
+27 error You can get information on how to open an issue for this project with:
+27 error     npm bugs parcel-test
+27 error Or if that isn't available, you can get their info via:
+27 error     npm owner ls parcel-test
+27 error There is likely additional logging output above.
+28 verbose exit [ 1, true ]
