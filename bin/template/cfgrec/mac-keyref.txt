@@ -44,11 +44,46 @@ KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to cli
 Handy Key Reference on Mac
 Cmd-Alt-Power      Sleep Lock
 Cmd-Ctrl-q         Screen Lock
-Cmd=Alt-F5         Accessibilty Options
+Cmd-Alt-F5         Accessibilty Options
 Screenshots        +Ctrl = clipboard
 Cmd-Shift-3        Entire Screen
 Cmd-Shift-4-Space  Application Only
 Cmd-Shift-4        Select Area
+
+Mac Mouse(MM) + Trackpad(TP) + Other Reference on Mac
+
+1f tap TP        Tap to Click (off)
+1f double tap MM Smart Zoom
+1f swipe l/r MM  Switch between pages (off)
+2f double tap TP Smart Zoom
+2f double tap MM Mission Control
+2f click TP      Secondary Click
+2f swipe l/r TP  Switch between pages
+2f swipe l/r MM  Switch between full-screen apps
+2f swipe left from right edge TP Show Notifications
+2f pinch TP      Zoom out/in
+2f rotate TP     Rotate
+3f tap on text TP  Look up
+3f swipe l/r TP  Switch between full-screen apps
+3f swipe up TP   Mission Control
+3f swipe down TP App Expose
+3f+thumb pinch   Launch Pad
+3f+thumb spread  Show Desktop
+TL corner        Mission Control
+BL corner        Start Screen Saver
+TR corner        Launch Pad
+BR corner        Disable Screen Saver
+F11              Show Desktop
+Ctrl-up          Mission Control
+Ctrl-dn          App Expose
+Cmd-space        Spotlight Search
+Cmd-space hold   Ask Siri
+
+Mission Control (shows desktops and all windows on current desktop and the app bar)
+App Expose (shows all windows for current app and the app bar)
+Launch Pad (shows app bar and pages of app icons)
+Switch between pages (browser forward/back, does not switch tabs in apps or settings)
+Look up (looks up info about the text/selection or detects data at the cursor)
 
 Voice Over (Screen Reader)
 VO = CapsLock or Ctrl-Alt = Voice Over key
