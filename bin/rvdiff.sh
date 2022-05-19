@@ -12,6 +12,14 @@ else
 		else
 			if which kdiff3.exe > /dev/null; then
 				kdiff3.exe "$2" "$1"
+			else
+				DIFFMERGE_PATH=/Applications/DiffMerge.app
+				DIFFMERGE_EXE=${DIFFMERGE_PATH}/Contents/MacOS/DiffMerge
+				if [ -x $DIFFMERGE_EXE ]; then
+					exec ${DIFFMERGE_EXE} --nosplash "$2" "$1"
+				else
+					exit 1
+				fi
 			fi
 		fi
 	fi
