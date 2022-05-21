@@ -2,11 +2,13 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # scan a directory tree and save files containing filenames, directory names, extensions, full file paths and full directory paths
 # WINDEV tool useful on windows development machin
+# See also lokate.sh
 
 DIR=${1:-$HOME}
 STORE=${2:-./}
 
-nice -n 15 find "$DIR" -type f | OUT="$STORE" perl -ne '
+echo start: `date`
+nice -n 15 find "$DIR/" -type f | OUT="$STORE" perl -ne '
 	BEGIN
 	{
 		my $out = $ENV{OUT};
@@ -20,6 +22,7 @@ nice -n 15 find "$DIR" -type f | OUT="$STORE" perl -ne '
 
 	print $fhFiles $_;
 	chomp;
+	s{//+}{/}xmsg;
 	my @paths = split(q{/}, $_);
 	my $filename = pop(@paths);
 	my $pathname = join(q{/}, @paths);
@@ -59,4 +62,4 @@ nice -n 15 find "$DIR" -type f | OUT="$STORE" perl -ne '
 		close($fhNameMap);
 	}
 '
-
+echo finis: `date`

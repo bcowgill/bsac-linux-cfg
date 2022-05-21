@@ -1,7 +1,10 @@
 #!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # cd bin; nvm use
-# check-system.sh 2>&1 | tee ~/check.log | egrep 'MAYBE|NOT OK' ; alarm.sh
+# check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
+# DEBUG=1 check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
+# check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
+# tail -f ~/check.log | egrep 'You|MAYBE|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
 
 # Search for 'begin' for start of script
@@ -14,7 +17,9 @@
 # terminate on first error
 set -e
 # turn on trace of currently running command if you need it
-#set -x
+if [ ! -z "$DEBUG" ]; then
+	set -x
+fi
 
 # chrome URLs open in case session buddy fails
 #http://askubuntu.com/questions/800601/where-is-system-disk-info-stored/801162#801162
@@ -96,7 +101,7 @@ EMAIL=
 [ -e ~/.COMPANY ] && source ~/.COMPANY
 if [ -z "$EMAIL" ]; then
 	echo You need to provide your email address in function set_env
-	echo You can define it in ~/.COMPANY file along with COMPANY=
+	echo You can define it as EMAIL= in ~/.COMPANY file along with COMPANY=
 	exit 1
 fi
 if which sw_vers > /dev/null 2>&1 ; then
@@ -152,7 +157,8 @@ KARABINER_CMD=Karabiner-Elements.app
 KARABINER_PKG=Karabiner-Elements-11.1.0.dmg
 KARABINER_URL=https://pqrs.org/osx/karabiner/files/$KARABINER_PKG
 
-ITERM_CMD=iTerm.app
+# iTerm 2.app space is a problem so we create a symlink
+ITERM_CMD="iTerm2.app"
 ITERM_PKG=iTerm2-3_1_2.zip
 ITERM_URL=https://iterm2.com/downloads/stable/$ITERM_PKG
 
@@ -212,7 +218,7 @@ P4MERGE_URL="http://www.perforce.com/downloads/Perforce/20-User#10"
 P4MERGE_PKG=p4v.tgz
 #P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
 
-RUBY_PKG="ruby ruby-dev rake"
+RUBY_PKG="ruby-dev ruby rake"
 RUBY_CMD=ruby
 #RUBY_GEMS="sass:3.4.2 compass compass-validator foundation"
 RUBY_GEMS="rake watchr sass compass compass-validator foundation"
@@ -277,12 +283,13 @@ fi
 # TODO install n versions from here
 N_VER=2.1.7
 # MUSTDO restore version numbers but must fix lib- code so it works
-#N_VERS="lts stable latest"
-N_VERS="lts stable latest 0.10.0 4.0.0 5.0.0 6.0.0 7.0.0 8.11.1 9.10.1 10.0.0"
+#N_VERS="lts latest stable"
+N_VERS="lts latest stable 0.10.0 4.0.0 5.0.0 6.0.0 7.0.0 8.11.1 9.10.1 10.0.0"
 N_IO_VERS="1.0.0  2.0.0  3.0.0"
 N_CMD=n
 
-NVM_VER="v0.31.4"
+NVM_VER="v0.39.1"
+#https://github.com/nvm-sh/nvm
 #NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
 NVM_DIR="$HOME/.nvm"
 NVM_VER_DIR="$NVM_DIR/versions/node"
@@ -292,8 +299,10 @@ NVM_CMD="$NVM_DIR/nvm.sh"
 #NVM_LATEST_VER="v6.3.1"
 # nvm ls-remote --lts | tail -1
 # nvm ls-remote | tail -1
-NVM_LTS_VER="v6.11.4"
-NVM_LATEST_VER="v8.6.0"
+# NVM_LTS_VER="v6.11.4"
+# NVM_LATEST_VER="v8.6.0"
+NVM_LTS_VER="v16.15.0"
+NVM_LATEST_VER="v18.2.0"
 
 PNPM_VER="1.41.23"
 PNPM_CMD=pnpm
@@ -654,9 +663,11 @@ fi
 if [ "$COMPANY" == "wipro" ]; then
 	# Change settings for wipro MACOS workstation
 	EMAIL=brent.cowgill@wipro.com
+	BIG_DATA=
 	MACOS=1
-	UBUNTU=10.13.4
-	GIT_VER=2.19.0
+	UBUNTU=11.6.5
+	#GIT_VER=2.35.0 MUSTDO try this later
+	GIT_VER=2.36.1
 	GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
@@ -670,29 +681,36 @@ if [ "$COMPANY" == "wipro" ]; then
 	DIFFMERGE_URL=http://download.sourcegear.com/DiffMerge/4.2.1/$DIFFMERGE_PKG
 	P4MERGE_PKG="" # TODO
 	DRUID_PKG=""
+	# http://www.oracle.com/technetwork/java/javase/downloads/index.html
+	# https://download.oracle.com/java/18/latest/jdk-18_macos-x64_bin.dmg
 	JAVA_URL=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-	JAVA_VER=jdk1.8.0_151.jdk
-	JAVA_PKG_VER=jdk-8u151-macosx-x64
+	JAVA_VER=jdk-18.0.1.1.jdk
+	JAVA_PKG_VER=jdk-18_macos-x64_bin
 	JAVA_PKG=$JAVA_PKG_VER.dmg
 	JAVA_JVM=/Library/Java/JavaVirtualMachines/$JAVA_VER/Contents/Home
-	JAVA_HOME=$JAVA_JVM
+	#JAVA_HOME=$JAVA_JVM
+	JAVA_JRE=$JAVA_JVM/bin/java
 	MVN_PKG="mvn:maven"
-	MVN_VER="3.5.4"
+	MVN_VER="3.8.5"
 	GRADLE_PKG="gradle"
 	NODE_CMD=/usr/local/bin/node
-	#NODE_VER="v8.12.0"
-	NODE_VER="v11.1.0"
+	N_VER=v8.2.0
+	N_VERS="lts latest stable 8.12.0 11.0.0"
+	# npm doesn't work with latest/stable version of node at this time
+	# NODE_VER="v16.15.0"
+	NODE_VER="v11.0.0"
 	NODE_BREW="node@8"
 	NODE_MOD=/usr/local/Cellar/node@8/8.12.0/lib/node_modules
-	N_VER=2.1.12
-	N_VERS="lts stable latest 8.12.0 11.0.0"
-	NVM_VER="0.31.4" # TODO
+	NVM_VER="v0.39.1"
 	MONO_PKG=""
 	PHP_PKG=""
+	RUBY_PKG="ruby-build ruby rake"
+	RUBY_GEMS="rake watchr"
+	RUBY_SASS_COMMANDS="ruby gem rake"
 	ATOM_APP=Atom.app
 	# MUSTDO re-enable this once apm fixed
 	ATOM_APM=""
-	ATOM_VER="1.32.1"
+	ATOM_VER="1.60.0"
 	ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
 	PINTA_PKG=""
@@ -714,7 +732,7 @@ if [ "$COMPANY" == "wipro" ]; then
 		editorconfig
 		cf:cf-cli
 		groovy
-		/usr/local/Cellar/shared-mime-info/1.10/README:shared-mime-info
+		/usr/local/Cellar/shared-mime-info/2.2/README.md:shared-mime-info
 	"
 fi # wipro MACOS
 
@@ -999,9 +1017,9 @@ NODE_PKG="
 "
 fi
 
+# node-inspector mostly not needed since node v6.3
 NPM_GLOBAL_LINUX_PKG="
 	node-sass
-	node-inspector
 	phantomjs:phantomjs-prebuilt
 	$NPM_LIB/karma/bin/karma:karma
 	karma:karma-cli
@@ -1013,13 +1031,14 @@ if [ ! -z $MACOS ]; then
 	NPM_GLOBAL_LINUX_PKG=""
 fi
 
+# node-inspector mostly not needed since node v6.3
 NPM_GLOBAL_PKG="
 	n
 	pnpm
 	yarn
 	npm-find
 	npm-json5
-	node-inspector
+	npm-cache
 	prettydiff
 	uglifyjs:uglify-js
 	jsdoc
@@ -1107,8 +1126,6 @@ INSTALL_MACOSLINUX="
 	mc
 	multitail
 	jhead
-	libid3-tools
-	id3v2
 	gradle
 	jq
 "
@@ -1124,12 +1141,15 @@ INSTALL_LINUX="
 	fbcat
 	chromium-browser
 	meld
+	libid3-tools
+	id3v2
 	$MTP_PKG
 "
 
 INSTALL_MACOS="
 	meld:caskroom/cask/meld
 	7z:p7zip
+	id3v2
 "
 
 if [ -z $MACOS ]; then
@@ -1256,10 +1276,18 @@ GIT_PKG_AFTER="
 	tig
 	$GITSVN_PKG
 "
+else
+	# gitk is in git-gui brew package
+	GIT_PKG_AFTER="
+		/usr/local/bin/git-gui:git-gui
+		tig
+		$GITSVN_PKG
+	"
 fi # not MACOS
 
 if [ ! -z $NVM_VER ]; then
-	NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
+	# NVM_URL="https://raw.githubusercontent.com/creationix/nvm/$NVM_VER/install.sh"
+	NVM_URL="https://raw.githubusercontent.com/nvm-sh/nvm/$NVM_VER/install.sh"
 fi
 
 P4MERGE_CMD="$DOWNLOAD/$P4MERGE_VER/bin/p4merge"
@@ -1448,7 +1476,7 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 # begin actual system checking
 
 echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
-# MUSTDO Add EMAIL= setting if not present yet
+echo "export EMAIL=$EMAIL" >> $HOME/.COMPANY
 file_exists $HOME/.COMPANY "company env variable setup file"
 
 if [ -z $MACOS ]; then
@@ -1466,6 +1494,7 @@ if grep $USER /etc/group | grep sudo; then
 	#/etc/group:bcowgill:x:1001:
 	#etc/sudoers:bcowgill   ALL=(ALL:ALL) ALL
 else
+	echo You need to confirm sudo priviletes, cannt check automatically.
 	if [ ! -z $MACOS ]; then
 		[ -e check-my-sudo.tmp ] && sudo rm check-my-sudo.tmp
 		sudo touch check-my-sudo.tmp
@@ -1514,7 +1543,7 @@ else
 	which brew && brew --version
 fi
 [ -x /usr/libexec/java_home ] && /usr/libexec/java_home
-which java && java -version && ls $JAVA_JVM
+which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
 which groovy && groovy -version
 #You should set GROOVY_HOME:
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
@@ -1525,9 +1554,9 @@ which node && node --version
 which nodejs && nodejs --version
 which n && n --version
 # && echo node lts version: `n --lts` && echo node stable version: `n --stable` && echo node latest version: `n --latest` && n
-which npm && npm --version
-which pnpm && pnpm --version
-which yarn && yarn --version
+which npm && (npm --version || echo seems there is no node...)
+which pnpm && (pnpm --version || echo seems there is no node...)
+which yarn && (yarn --version || echo seems there is no node...)
 which erl && erl -eval 'halt().'
 which elixir && elixir -v
 which php && php -v
@@ -1803,7 +1832,8 @@ if [ ! -f xlsfonts.lst  ]; then
 fi
 
 else
-	# on MACOS Library/Fonts/ contains installed fonts, manually install from .fonts/ dir
+	# on MACOS Library/Fonts/ contains installed fonts, manually install
+	echo You may have to install these fonts manually by dragging from .fonts/ dir
 	file_exists Library/Fonts/ProFontWindows.ttf ”ProFontWindows font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-Black.otf ”SourceCodePro Black font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-Bold.otf ”SourceCodePro Bold font installed on MACOS”
@@ -2051,15 +2081,18 @@ else
 		# https://sourceforge.net/projects/git-osx-installer/files/git-2.14.1-intel-universal-mavericks.dmg/download?use_mirror=autoselect
 		if [ `which git` != /usr/local/bin/git ]; then
 			echo "NOT OK MAYBE default git is installed, will upgrade"
-			brew update; brew doctor && brew install git
+			brew update --verbose || echo "NOT OK MAYBE brew did not update but try anyway..."
+			brew doctor && brew install git
 			if [ `which git` == /usr/local/bin/git ]; then
 				OK "git upgraded"
+				echo "MAYBE YOUDO manually brew install $GIT_PKG_AFTER"
 			else
 				echo "NOT OK MAYBE git not upgraded correctly try download"
 				make_dir_exist $DOWNLOAD
 				pushd $DOWNLOAD
 					wget $GIT_URL
-					echo "MAYBE DO MANUALLY install package $GIT_TAR"
+					echo "MAYBE YOUDO MANUALLY install package $GIT_TAR"
+					echo "MAYBE YOUDO manually brew install $GIT_PKG_AFTER"
 					NOT_OK "exiting after git update, try again."
 					exit 1
 				popd
@@ -2135,10 +2168,13 @@ else
 fi
 
 if [ ! -z "$USE_JAVA" ]; then
+	if [ -z "$JAVA_JRE" ]; then
+		JAVA_JRE="$JAVA_HOME/jre/bin/java"
+	fi
 	if [ -z $MACOS ]; then
 		if [ "x$JAVA_HOME" == "x$JAVA_JVM/$JAVA_VER" ]; then
 			OK "JAVA_HOME set correctly"
-			file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
+			file_exists "$JAVA_JRE" "java is actually there"
 		else
 			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME [$JAVA_JVM/$JAVA_VER]"
 			exit 1
@@ -2146,10 +2182,12 @@ if [ ! -z "$USE_JAVA" ]; then
 		dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 	else
 		# MACOS here
-		install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
+		if [ ! -e "$JAVA_JRE" ]; then
+			install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
+		fi
 		if [ "x$JAVA_HOME" == "x$JAVA_JVM" ]; then
 			OK "JAVA_HOME set correctly"
-			file_exists "$JAVA_HOME/jre/bin/java" "java is actually there"
+			file_exists "$JAVA_JRE" "java is actually there"
 		else
 			NOT_OK "JAVA_HOME is incorrect $JAVA_HOME [$JAVA_JVM]"
 			exit 1
@@ -2242,6 +2280,7 @@ BAIL_OUT install
 if [ ! -z "$NODE_PKG" ]; then
 	FILTERED_LIST=`filter_packages "$NODE_PKG_LIST" "$UNINSTALL_PKGS"`
 	echo NODE PKGS: $FILTERED_LIST
+	#  brew link node   may be needed on MACOS if node installed but not linked
 	installs_from "$FILTERED_LIST"
 	if [ -z $MACOS ]; then
 		dir_exists "$NODE_LIB" "global node command"
@@ -2357,17 +2396,22 @@ if [ ! -z "$NODE_PKG" ]; then
 	node_module_exists path "test that node module checking works"
 	is_npm_global_package_installed grunt "need grunt installed to go further."
 	if [ ! -z "$NVM_URL" ]; then
+		echo node version before nvm: `node --version`
 		NVM_INST="$DOWNLOAD/nvm/install.sh"
 		make_dir_exist "$DOWNLOAD/nvm" "install script for nvm"
 		install_file_from_url "$NVM_INST" nvm/install.sh "$NVM_URL"
 		file_exists "$NVM_CMD" "nvm environment startup installed" || (chmod +x $NVM_INST && bash -c "$NVM_INST" && echo "Start a new terminal to activate nvm")
-		command -v nvm || (NOT_OK "nvm function not installed will try" \
-			&& export NVM_DIR && source "$NVM_CMD" && nvm ls \
-			&& nvm ls-remote)
+		set +e
+		command -v nvm || (NOT_OK "nvm function not installed will try loading it" \
+			&& export NVM_DIR && source "$NVM_CMD" install $NVM_LTS_VER --lts --reinstall-packages-from=system || echo "NOT OK MAYBE lets see if loading nvm worked. If not, you should start a new terminal and make sure the nvm command is present"; \
+			nvm ls && nvm ls-remote)
+		set -e
+		echo MAYBE YOUDO manually: nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
+		echo MAYBE YOUDO manually: nvm install $NVM_LATEST_VER --reinstall-packages-from=system
 		dir_exists "$NVM_VER_DIR/$NVM_LTS_VER" "node long term stable version installed" || nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
 		dir_exists "$NVM_VER_DIR/$NVM_LATEST_VER" "node latest version installed" || nvm install $NVM_LATEST_VER --reinstall-packages-from=system
 		file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && echo "YOUDO manually issue command nvm use $NVM_LATEST_VER")
-		echo node version: `node --version`
+		echo node version after nvm: `node --version`
 	fi
 else
 	OK "will not configure npm unless NODE_PKG is non-zero"
@@ -2437,8 +2481,8 @@ else
 fi
 
 if [ ! -z $MACOS ]; then
-	install_command_package_from_url $ITERM_CMD $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
-	app_exists $ITERM_CMD "you must manually install downloaded iTerm2 dmg file"
+	install_command_package_from_url "$ITERM_CMD" $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
+	app_exists "$ITERM_CMD" "you must manually install downloaded iTerm2 dmg file and sudo -i ln -s 'iTerm 2.app' '/Applications/iTerm2.app'"
 
 #	install_command_package_from_url $KARABINER_CMD $KARABINER_PKG $KARABINER_URL "Karabiner-Elements keyboard remapper program"
 #	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"

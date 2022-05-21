@@ -1313,7 +1313,8 @@ function install_node {
 		if ls_node_vers | grep $version; then
 			OK "node $named version is installed: $version"
 		else
-			NOT_OK "node $named version is not installed: $version"
+			ls_node_vers
+			NOT_OK "node [$named] version is not installed: [$version]"
 			return 1
 		fi
 	fi
