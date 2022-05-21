@@ -1,6 +1,6 @@
 PATH=/Users/bcowgill/bin/wipro:/Users/bcowgill/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/bcowgill/.rvm/bin
-* * * * * mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log 2>&1
-*/19 * * * * $HOME/bin/scan-tree.sh $HOME $HOME/scan- > /tmp/$LOGNAME/crontab-scan-tree.log  2>&1
+* * * * * mkdir -p /tmp/$LOGNAME 2> /dev/null && set > /tmp/$LOGNAME/crontab-set.log 2>&1
+#*/19 * * * * $HOME/bin/scan-tree.sh $HOME $HOME/scan- > /tmp/$LOGNAME/crontab-scan-tree.log  2>&1
 30 17,18 * * * $HOME/bin/backup-work.sh > /tmp/$LOGNAME/crontab-backup-work.log 2>&1
 #25 11 * * * $HOME/bin/ezbackup.sh > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 * * * * * $HOME/bin/track-battery.pl > /tmp/$LOGNAME/crontab-track-battery.log 2>&1

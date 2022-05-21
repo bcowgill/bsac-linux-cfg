@@ -2495,7 +2495,7 @@ BAIL_OUT commands
 # end of standard install, now custom install
 
 echo CRON table setup
-crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
+crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME 2> /dev/null && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
 #15 20,22 * * 1-5           $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 #15 8,13,20 * * 6-7         $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
@@ -2508,6 +2508,10 @@ if [ -z $MACOS ]; then
 	crontab_has_command "wcdscan.sh"
 	crontab_has_command "random-desktop.sh" "0,15,30,45 * * * * DISPLAY=:0 \$HOME/bin/random-desktop.sh > /tmp/\$LOGNAME/crontab-random-desktop.log 2>&1" "crontab change desktop background"
 	crontab_has_command "random-desktop.sh"
+else
+	echo "MAYBE YOUDO You need to drag /usr/sbin/cron to System Preferences > Security & Privacy > Privacy > Full Disk Access Panel in order to grant it full access to scan your files. open /usr/sbin"
+	crontab_has_command "scan-tree.sh" "*/19 * * * * \$HOME/bin/scan-tree.sh \$HOME \$HOME/scan- > /tmp/\$LOGNAME/crontab-scan-tree.log  2>&1" "crontab scan home directory files for lokate.sh command"
+	crontab_has_command "scan-tree.sh"
 fi # not MACOS
 
 if [ ! -z "$COMPANY" ]; then
