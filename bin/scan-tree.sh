@@ -31,16 +31,18 @@ ERRORS="${STORE}errors-find.lst"
 LINKS="${STORE}links-"
 
 function split_output {
-	local out
+	local out links
 	out="$1"
-	OUT="$out" perl -ne '
+	links="$2"
+	OUT="$out" LINKS=$links perl -ne '
 		BEGIN
 		{
 			my $out = $ENV{OUT};
+			my $links = $ENV{LINKS};
 			open($fhFiles, q{>}, qq{${out}files.lst});
 			open($fhFileNames, q{>}, qq{${out}filenames.lst});
-			open($fhDirs, q{>}, qq{${out}directories.lst});
-			open($fhDirNames, q{>}, qq{${out}dirnames.lst});
+			open($fhDirs, q{>}, qq{${out}directories.lst}) unless $links;
+			open($fhDirNames, q{>}, qq{${out}dirnames.lst}) unless $links;
 			open($fhExts, q{>}, qq{${out}extensions.lst});
 			open($fhNameMap, q{>}, qq{${out}filemap.lst});
 		}
@@ -64,16 +66,17 @@ function split_output {
 		END
 		{
 			my $fh;
+			my $links = $ENV{LINKS};
 			close($fhFiles);
 
 			print $fhFileNames join(qq{\n}, sort(keys(%filenames)));
 			close($fhFileNames);
 
-			print $fhDirs join(qq{\n}, sort(keys(%dirs)));
-			close($fhDirs);
+			print $fhDirs join(qq{\n}, sort(keys(%dirs))) unless $links;
+			close($fhDirs) unless $links;
 
-			print $fhDirNames join(qq{\n}, sort(keys(%dirnames)));
-			close($fhDirNames);
+			print $fhDirNames join(qq{\n}, sort(keys(%dirnames))) unless $links;
+			close($fhDirNames) unless $links;
 
 			print $fhExts join(qq{\n}, sort(keys(%extensions)));
 			close($fhExts);
@@ -89,9 +92,15 @@ function split_output {
 	'
 }
 
-echo start: `date`
+START=`date`
+echo start: $START
 nice -n $NICE find "$DIR/" -type f 2> "$ERRORS" | split_output "$STORE"
 perl -pne 's{//+}{/}xmsg' $ERRORS
 echo links: `date`
-nice -n $NICE find "$DIR/" -type l | split_output "$LINKS"
-echo finis: `date`
+nice -n $NICE find "$DIR/" -type l | split_output "$LINKS" 1
+FINIS=`date`
+echo finis: $FINIS
+
+if which mynotify.sh > /dev/null ; then
+	mynotify.sh "From $START to $FINIS finished scanning -- lokate.sh usable" scan-tree
+fi
