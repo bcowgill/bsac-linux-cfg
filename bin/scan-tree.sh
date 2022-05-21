@@ -1,14 +1,21 @@
 #!/bin/bash
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # scan a directory tree and save files containing filenames, directory names, extensions, full file paths and full directory paths
-# WINDEV tool useful on windows development machin
-# See also lokate.sh
+# TODO - symlinks indexed to separate file broken/file/dir links-broken.lst links-dirs.lst links-files.lst
+# TODO - weird characters in file names separate list weird.lst
+# TODO - longest file names / path names list long-filenames.lst long-paths.lst
+# TODO - Mac when run from cron does not have same permissions as from a terminal
+# WINDEV tool useful on windows development machine
+# See also lokate.sh locate(1) updatedb
+
+# See how long the last scan took to complete
+# grep -E '(start|finis):' /tmp/$LOGNAME/crontab-scan-tree.log
 
 DIR=${1:-$HOME}
 STORE=${2:-./}
 
 echo start: `date`
-nice -n 15 find "$DIR/" -type f | OUT="$STORE" perl -ne '
+nice -n 15 find "$DIR/" -type f 2> "${STORE}errors-find.lst" | OUT="$STORE" perl -ne '
 	BEGIN
 	{
 		my $out = $ENV{OUT};
@@ -20,9 +27,9 @@ nice -n 15 find "$DIR/" -type f | OUT="$STORE" perl -ne '
 		open($fhNameMap, q{>}, qq{${out}filemap.lst});
 	}
 
+	s{//+}{/}xmsg;
 	print $fhFiles $_;
 	chomp;
-	s{//+}{/}xmsg;
 	my @paths = split(q{/}, $_);
 	my $filename = pop(@paths);
 	my $pathname = join(q{/}, @paths);
