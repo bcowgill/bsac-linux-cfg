@@ -4,7 +4,7 @@
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # DEBUG=1 check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
-# tail -f ~/check.log | egrep 'You|MAYBE|NOT OK'
+# tail -f ~/check.log | egrep 'You|YOU|MAYBE|BAIL|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
 
 # Search for 'begin' for start of script
@@ -666,9 +666,8 @@ if [ "$COMPANY" == "wipro" ]; then
 	BIG_DATA=
 	MACOS=1
 	UBUNTU=11.6.5
-	#GIT_VER=2.35.0 MUSTDO try this later
 	GIT_VER=2.36.1
-	GIT_PKG_AFTER=""
+	# GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
 	USE_JAVA=1
@@ -2404,7 +2403,7 @@ if [ ! -z "$NODE_PKG" ]; then
 		set +e
 		command -v nvm || (NOT_OK "nvm function not installed will try loading it" \
 			&& export NVM_DIR && source "$NVM_CMD" install $NVM_LTS_VER --lts --reinstall-packages-from=system || echo "NOT OK MAYBE lets see if loading nvm worked. If not, you should start a new terminal and make sure the nvm command is present"; \
-			nvm ls && nvm ls-remote)
+			nvm ls && nvm ls-remote | tail)
 		set -e
 		echo MAYBE YOUDO manually: nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
 		echo MAYBE YOUDO manually: nvm install $NVM_LATEST_VER --reinstall-packages-from=system
@@ -2560,12 +2559,14 @@ fi
 # TODO how to use the TAGS file in emacs?
 
 if [ ! -z "$ATOM_PKG" ]; then
-	if [ ! -e "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG" ]; then
+	ARCHIVED="$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG"
+	echo "MAYBE atom check if archived $ARCHIVED"
+	if [ ! -e $ARCHIVED ]; then
 		[ -e "$DOWNLOAD/$ATOM_PKG" ] && rm "$DOWNLOAD/$ATOM_PKG"
 		if [ -z $MACOS ]; then
 			install_command_package_from_url $ATOM_CMD "$ATOM_PKG" "$ATOM_URL" "github atom editor" || true
 		else
-			install_file_from_url_zip "$DOWNLOAD/Atom.app/Contents/PkgInfo" "$ATOM_PKG" "$ATOM_URL" "github atom editor for MACOS"
+			install_file_from_url_zip "$DOWNLOAD/Atom.app/Contents/PkgInfo" "$ATOM_PKG" "$ATOM_URL" "github atom editor for MACOS - run again to extract and copy..."
 			[ -e "$DOWNLOAD/Atom.app" ] && cp -r "$DOWNLOAD/Atom.app" /Applications && rm -rf "$DOWNLOAD/Atom.app"
 		fi
 	fi
@@ -2573,11 +2574,15 @@ if [ ! -z "$ATOM_PKG" ]; then
 	cmd_exists $ATOM_CMD
 	cmd_exists apm "atom package manager"
 	if atom --version | grep Atom | grep $ATOM_VER; then
-		OK "atom $ATOM_VER installed will install packages $ATOM_APM_PKG"
+		OK "atom $ATOM_VER installed"
 		if [ ! -z $ATOM_APM ]; then
+			OK "atom ATOM_APM will install packages $ATOM_APM_PKG"
 			install_apm_modules_from "$ATOM_APM_PKG"
+		else
+			OK "atom !ATOM_APM will skip installing packages $ATOM_APM_PKG"
 		fi
-		[ -e "$DOWNLOAD/$ATOM_PKG" ] && mv "$DOWNLOAD/$ATOM_PKG" "$DOWNLOAD/atom-v$ATOM_VER-$ATOM_PKG"
+		echo MAYBE atom move to archived $ARCHIVED
+		[ -e "$DOWNLOAD/$ATOM_PKG" ] && mv "$DOWNLOAD/$ATOM_PKG" $ARCHIVED
 	else
 		atom --version
 		NOT_OK "atom $ATOM_VER not installed"
@@ -3029,10 +3034,19 @@ if [ ! -z $DIFFMERGE_PKG ]; then
 		# MACOS config
 		FILE="Library/Preferences/com.sourcegear.DiffMerge.plist"
 
-		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS properties"
+		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS properties. YOUDO copy the light or dark preferences in place or backup recent changes you made"
 
 		FILE="Library/Preferences/SourceGear DiffMerge Preferences"
-		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS preferences"
+		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS preferences. YOUDO copy the light or dark preferences in place or backup recent changes you made"
+
+      # Manually install Diffmerge preferences
+		# cp ./cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist.dark /Users/bcowgill/bin/cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist
+		# cp "./cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences.dark" "/Users/bcowgill/bin/cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences"
+
+      # Manually update in git after a config change.
+		# rvcp.sh ./cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist /Users/bcowgill/bin/cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist
+		# rvcp.sh "./cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences" "/Users/bcowgill/bin/cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences"
+
 	fi # not MACOS
 fi # DIFFMERGE_PKG
 

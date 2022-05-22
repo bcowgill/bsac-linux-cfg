@@ -287,9 +287,23 @@ export LINES
 
 # on a Mac international keyboard, cannot easily type tilde and caret
 if which sw_vers > /dev/null 2>&1; then
-  # MACOS
-	export t=~
-	export c=^
+    # MACOS
+    export t=~
+    export c=^
 fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+if [ "x$COMPANY" == "xwipro" ]; then
+    # Added by cpan when ran it locally
+    PATH="/Users/bcowgill/perl5/bin${PATH:+:${PATH}}"
+    export PATH;
+    PERL5LIB="/Users/bcowgill/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
+    export PERL5LIB
+    PERL_LOCAL_LIB_ROOT="/Users/bcowgill/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
+    export PERL_LOCAL_LIB_ROOT
+    PERL_MB_OPT="--install_base \"/Users/bcowgill/perl5\""
+    export PERL_MB_OPT
+    PERL_MM_OPT="INSTALL_BASE=/Users/bcowgill/perl5"
+    export PERL_MM_OPT
+fi

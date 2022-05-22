@@ -783,7 +783,7 @@ function install_file_from_url_zip {
 	var_exists DOWNLOAD "$DOWNLOAD"
 	if [ ! -f "$file" ]; then
 		if [ ! -f "$DOWNLOAD/$package" ]; then
-			install_file_from_url "$file" "$package" "$url" "$message"
+			install_file_from_url "$DOWNLOAD/$package" "$package" "$url" "$message"
 		fi
 		install_file_from_zip "$file" "$package" "$message"
 	fi
