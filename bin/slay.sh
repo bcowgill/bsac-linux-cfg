@@ -16,6 +16,7 @@ function slay
 	local signal pid
 	signal=$1
 	pid=$2
+	ps -p $pid
 	kill -0 $pid 2> /dev/null && (echo kill $pid $signal; kill $signal $pid; sleep $WAIT)
 }
 
