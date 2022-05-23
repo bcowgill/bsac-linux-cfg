@@ -3046,7 +3046,6 @@ if [ ! -z $DIFFMERGE_PKG ]; then
       # Manually update in git after a config change.
 		# rvcp.sh ./cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist /Users/bcowgill/bin/cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist
 		# rvcp.sh "./cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences" "/Users/bcowgill/bin/cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences"
-
 	fi # not MACOS
 fi # DIFFMERGE_PKG
 
