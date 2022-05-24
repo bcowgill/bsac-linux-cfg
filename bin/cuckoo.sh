@@ -6,9 +6,53 @@
 # Nature sound effects: https://soundbible.com/search.php?q=cricket
 
 WHERE=$HOME/bin/sounds/
+CLUCK=single-cuckoo-sound.mp3
+CUCKOO="$WHERE$CLUCK"
+
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [--help|--man|-?] [sound-file] [offset] [chimes]
+
+This will play a cuckoo clock sound to mark the current hour or any desired number of chimes.
+
+sound-file  The sound file to play. default is $CUCKOO but varies by day of week and OS.
+offset      Add or subtract this number from the current hour when calculating chimes.  You can use this to chime the hour a few minutes early or in a different time zone.
+chimes      Specify the exact number of chimes to play ignoring the hour and offset completely.
+--man       Shows help for this tool.
+--help      Shows help for this tool.
+-?          Shows help for this tool.
+
+The specific sound file played varies by day of week for a little variety and Mac OS plays a different day's file than other OS's.
+
+If the sound file does not exist then it will count down by printing the cuckoo chimes.
+
+Example:
+
+  Use a cron entry to sound every hour.
+
+  0 * * * * \$HOME/bin/cuckoo.sh > /tmp/\$LOGNAME/crontab-cuckoo.log  2>&1
+
+  Use a cron entry to sound the hour two minutes early.
+
+  58 * * * * \$HOME/bin/cuckoo.sh "" 1 > /tmp/\$LOGNAME/crontab-cuckoo.log  2>&1
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
+
 OFFSET=${2:-0}
 CHIMES=$3
-CLUCK=single-cuckoo-sound.mp3
 
 # Default sound varies by OS and day of week
 DOW=`date +%u`
@@ -27,7 +71,7 @@ case $DOW in
 	*) CLUCK="Horse-Neigh-Sound.mp3" ;;
 esac
 
-CUCKOO="${1:-$WHERE/$CLUCK}"
+CUCKOO="${1:-$WHERE$CLUCK}"
 DELAY=0
 
 if [ -z "$CHIMES" ]; then
@@ -46,7 +90,3 @@ do
 	sleep $DELAY
 	hour=$(($hour - 1))
 done
-
-exit
-# crontab -e line to add to sound an hourly cuckoo clock
-0 * * * * $HOME/bin/cuckoo.sh > /tmp/$LOGNAME/crontab-cuckoo.log  2>&1
