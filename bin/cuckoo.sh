@@ -7,6 +7,7 @@
 
 WHERE=$HOME/bin/sounds/
 OFFSET=${2:-0}
+CHIMES=$3
 CLUCK=single-cuckoo-sound.mp3
 
 # Default sound varies by OS and day of week
@@ -29,7 +30,11 @@ esac
 CUCKOO="${1:-$WHERE/$CLUCK}"
 DELAY=0
 
-hour=`date '+%I' | OFFSET=$OFFSET perl -pne 's{\A\s*0([0-9])}{$1}xms; $_ = ($_ + $ENV{OFFSET}) % 12;'`
+if [ -z "$CHIMES" ]; then
+	hour=`date '+%I' | OFFSET=$OFFSET perl -pne 's{\A\s*0([0-9])}{$1}xms; $_ = ($_ + $ENV{OFFSET}) % 12;'`
+else
+	hour=$CHIMES
+fi
 echo hour: $hour
 while [ $hour != "0" ];
 do
