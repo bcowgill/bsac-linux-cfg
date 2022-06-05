@@ -76,6 +76,9 @@ DELAY=0
 
 if [ -z "$CHIMES" ]; then
 	hour=`date '+%I' | OFFSET=$OFFSET perl -pne 's{\A\s*0([0-9])}{$1}xms; $_ = ($_ + $ENV{OFFSET}) % 12;'`
+	if [ $hour == 0 ]; then
+		hour=12
+	fi
 else
 	hour=$CHIMES
 fi
