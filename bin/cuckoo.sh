@@ -64,7 +64,8 @@ case $DOW in
 	1) CLUCK="grandfather-clock-chime.mp3" ;;
 	2) CLUCK="single-cuckoo-sound.mp3" ;;
 	3) CLUCK="Cat-Meowing.mp3" ;;
-	4) CLUCK="Cow-Moo.mp3" ;;
+	#4) CLUCK="Cow-Moo.mp3" ;;
+	4) CLUCK="Woof.mp3" ;;
 	5) CLUCK="Frog-Croaking.mp3" ;;
 	6) CLUCK="Rooster-Crowing.mp3" ;;
 	7) CLUCK="Doorbell.mp3" ;;
