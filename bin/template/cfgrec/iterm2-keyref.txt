@@ -16,6 +16,11 @@ ITERM:KEY:EDIT Shift-Cmd-a Select the output of the last command for copy/paste.
 ITERM:KEY:EDIT Cmd-MouseDrag To make multiple discontinuous selections.
 ITERM:KEY:EDIT Alt-Cmd-MouseDrag To select a vertical area of terminal output.
 
+Configuration preferences:
+Menu / Install Shell Integration
+use Alt-Cmd-; to turn on highlight of cursor line
+
+
 Easy paste of binary file to remote terminals
 Finder - Copy a file.
 iTerm -

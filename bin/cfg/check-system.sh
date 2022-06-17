@@ -1565,6 +1565,10 @@ which atom && atom -v
 if [ ! -z $ATOM_APM ]; then
 	which apm && apm --no-color -version
 fi
+if [ ! -z $MACOS ]; then
+	ITV=`grep '# V' ~/bin/cfg/iterm2-shell-integration.sh`
+	echo iTerm2 Shell Integration version: $ITV
+fi
 echo END versions
 
 if [ ! -e $HOME/bin ]; then
