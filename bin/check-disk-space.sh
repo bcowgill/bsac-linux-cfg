@@ -16,8 +16,15 @@ function check_space {
 				$print =~ s{\%}{% full}xmsg;
 				$print =~ s{\s+}{ }xmsg;
 			}
-			print $print if $print;
-			system(qq{mynotify.sh "check-disk-space.sh" "$print"}) if $print && $ENV{NOTIFY};
+			if ($print)
+			{
+				print $print;
+				if ($ENV{NOTIFY})
+				{
+					system(qq{mynotify.sh "check-disk-space.sh" "$print"});
+					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space.mp3"}) if ($ENV{LIMIT} > 90);
+				}
+			}
 		'
 }
 
@@ -42,7 +49,6 @@ if check_space | grep  'DISK SPACE' > /dev/null; then
 	check_here /data/$USER
 	check_here /data/$USER/backup
 	check_here /tmp
-	check_here "/lost+found"
 	check_here /home
 	check_here /var
 	check_here /var/lib
