@@ -28,7 +28,7 @@ function check_here {
 		pushd "$where" > /dev/null
 		echo " "
 		echo $where - space hogs:
-		du -sh --threshold=1G *
+		du -sh --threshold=1G * 2> /dev/null
 		popd > /dev/null
 	fi
 }
@@ -38,6 +38,13 @@ if check_space | grep  'DISK SPACE' > /dev/null; then
 	check_here $HOME
 	check_here $HOME/d
 	check_here $HOME/d/backup
+	check_here $HOME/d/Download
 	check_here /data/$USER
 	check_here /data/$USER/backup
+	check_here /tmp
+	check_here "/lost+found"
+	check_here /home
+	check_here /var
+	check_here /var/lib
+	#check_here /
 fi

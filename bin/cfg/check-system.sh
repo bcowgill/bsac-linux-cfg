@@ -2500,6 +2500,11 @@ BAIL_OUT commands
 echo CRON table setup
 crontab_has_command "mkdir" "* * * * * mkdir -p /tmp/\$LOGNAME 2> /dev/null && set > /tmp/\$LOGNAME/crontab-set.log 2>&1" "crontab user temp dir creation and env var dump"
 crontab_has_command "mkdir"
+crontab_has_command "CRITICAL" "* * * * * \$HOME/bin/check-disk-space.sh 95 CRITICAL 2> /dev/null > /dev/null" "crontab warn about critical disk space issues"
+crontab_has_command "CRITICAL"
+crontab_has_command "check-disk-space.sh" "* * * * * \$HOME/bin/check-disk-space.sh 95 CRITICAL 2> /dev/null > /dev/null
+" "crontab warn about low disk space"
+crontab_has_command "check-disk-space.sh"
 #15 20,22 * * 1-5           $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 #15 8,13,20 * * 6-7         $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
 crontab_has_command "ezbackup.sh"
