@@ -42,7 +42,7 @@ function usage {
 	echo usage:
 	echo "$CMD [--debug] [--help] [check|status|full|partial|restore] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
 	echo " "
-	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, BK_DIR and BK_DISK environment variables.
+	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, BK_DIR, BK_DEV and BK_DISK environment variables.
 	echo " "
 	echo --debug option must be first and turns on display of debugging information.
 	echo --help option shows this help information.
@@ -58,8 +58,17 @@ function usage {
 	echo i.e. $CMD restore home/user/path/to/restore if SOURCE=/home/user
 	echo " "
 	echo "If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present."
+	echo "If full backukp device (BK_DEV) setting is provided, after a full backup the updatedb command will run to create an mlocate.db database for finding files on the backup disk when it has been unmounted.  Use the locatebk.sh command to find files on the backup disk."
 	echo " "
 	echo For partial backups to work you must specify an absolute or relative path for BK_DIR i.e. /path/to or ./path/to specifying using path/to will not work.
+	echo " "
+	echo "Examples:"
+	echo " "
+	echo "  ezbackup.sh full"
+	echo "  in another shell:"
+	echo "  alarm-if.sh check-ezbackup-finished.sh ~/bin/sounds/that_was_easy.wav"
+	echo " "
+	echo "See also check-ezbackup-finished.sh watcher.sh updatedb-backup.sh locatebk.sh alarm.sh alarm_if.sh"
 	exit $code
 }
 
@@ -148,6 +157,7 @@ function pre_config {
 		echo CFG=$CFG
 		echo SOURCE=$SOURCE
 		echo BK_DIR=$BK_DIR
+		echo BK_DEV=$BK_DEV
 		echo BK_DISK=$BK_DISK
 		echo FULL=$FULL
 	fi
@@ -231,6 +241,10 @@ function full_backup {
 		echo "$CMD @ `pwd`" > "$BK_DISK/summary.log"
 		echo "full backup from $USER@$HOSTNAME:$SOURCE/" >> "$BK_DISK/summary.log"
 		echo "partial backups will be stored at $HOSTNAME:$BK_DIR/" >> "$BK_DISK/summary.log"
+		if [ ! -z "$BK_DEV" ]; then
+			echo Need root access to update the mlocate database for the backup device $BK_DEV.
+			updatedb-backup.sh "$BK_DEV" --notify
+		fi
 	fi
 
 	rm $ALL_PARTIALS $ALL_PARTIAL_LOGS $ALL_PARTIAL_TIMESTAMPS 2> /dev/null

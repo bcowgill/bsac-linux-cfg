@@ -1,28 +1,45 @@
 # updatedb-backup.sh; cowsay "Backup drive has been indexed for locatebk.sh command"; alarm.sh
 
 # see also updatedb.sh locatebk.sh lokate.sh locate updatedb
-BACKUP=/media/me/ADATA-4TB
-LOCATE=mlocate-ADATA-4TB.db
-DB=/var/lib/mlocate/$LOCATE
 
-NOTIFY=$1
+if [ "$1" == "--notify" ]; then
+	NOTIFY=1
+	shift
+fi
+
+BACKUP=${1:-/media/me/ADATA-4TB}
+NAME=`basename $BACKUP`
+LOCATE=mlocate-$NAME.db
+DB=/var/lib/mlocate/$LOCATE
+DBBK=$BACKUP/mlocate.db
+
+if [ "$1" == "--notify" ]; then
+	NOTIFY=1
+	shift
+fi
+
+if [ ! -d "$BACKUP" ]; then
+	echo Backup drive $BACKUP is not mounted, cannot update the mlocate database.
+	exit 10
+fi
 
 if [ ! -z $NOTIFY ]; then
-	echo Updating locate database for backup disk: $BACKUP at $DB
+	echo Updating mlocate database for backup disk: $BACKUP at $DB
 	START=`date`
 	echo $START
 fi
 
 sudo updatedb --output $DB --database-root $BACKUP
-sudo cp $DB $BACKUP
-sudo chmod +r $BACKUP/$LOCATE
+sudo cp $DB $DBBK
+sudo chmod +r $DBBK
 
 if [ ! -z $NOTIFY ]; then
+	CR=`perl -e "print qq{\n}"`
 	END=`date`
 	echo $END
 	locatebk.sh mlocate
 	MESSAGE="Backup drive $BACKUP has been indexed for locatebk.sh command"
-	cowsay "$MESSAGE $START to $END"
+	cowsay "$MESSAGE$CR  $START$CR  $END"
 	mynotify.sh "updatedb-backup.sh" "$MESSAGE"
 	alarm.sh
 fi

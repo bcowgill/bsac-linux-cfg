@@ -12,7 +12,7 @@ This will check if full backup has finished yet -- to be used with alarm-if.sh
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
-See also alarm-if.sh, ezbackup.sh
+See also alarm-if.sh, alarm.sh, mynotify.sh, ezbackup.sh
 
 Example:
 
