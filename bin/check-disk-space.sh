@@ -3,6 +3,8 @@
 LIMIT=${1:-70}
 SEVERITY=${2:-LOW}
 
+srand;
+
 function check_space {
 	local notify
 	notify=$1
@@ -21,8 +23,9 @@ function check_space {
 				print $print;
 				if ($ENV{NOTIFY})
 				{
+					my $num = int(1+rand(3));
 					system(qq{mynotify.sh "check-disk-space.sh" "$print"});
-					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space-spoken.mp3"}) if ($ENV{LIMIT} > 90);
+					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space-spoken$num.mp3"}) if ($ENV{LIMIT} > 90);
 				}
 			}
 		'
