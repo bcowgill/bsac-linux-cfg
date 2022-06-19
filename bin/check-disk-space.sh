@@ -22,7 +22,7 @@ function check_space {
 				if ($ENV{NOTIFY})
 				{
 					system(qq{mynotify.sh "check-disk-space.sh" "$print"});
-					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space.mp3"}) if ($ENV{LIMIT} > 90);
+					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space-spoken.mp3"}) if ($ENV{LIMIT} > 90);
 				}
 			}
 		'
