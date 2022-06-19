@@ -1,14 +1,18 @@
 # see also updatedb-backup.sh updatedb.sh locate lokate.sh updatedb
 
-BACKUP=${1:-/media/me/ADATA-4TB}
+BK_DEV=/media/me/ADATA-4TB
+
+if [ -z "$2" ]; then
+	BACKUP=$BK_DEV
+else
+	BACKUP=${1:-$BK_DEV}
+	shift
+fi
+
 NAME=`basename $BACKUP`
 LOCATE=mlocate-$NAME.db
 DB=/var/lib/mlocate/$LOCATE
 DBBK=$BACKUP/mlocate.db
-
-if [ ! -z "$1" ]; then
-	shift
-fi
 
 if [ ! -e "$DB" ]; then
 	if [ ! -e "$DBBK" ]; then
