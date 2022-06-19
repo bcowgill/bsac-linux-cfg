@@ -36,18 +36,20 @@ fi
 #MTP=/data/me/mtp
 #phone=$MTP/Phone
 
-if [ -e $phone ]; then
-	echo $MTP
-	ringtone=`ls $RANDOM_RINGS | choose.pl`
+echo "random-ringtones.sh $CONFIG from [$RANDOM_RINGS] to [$RINGTONE]";
+
+if [ -e "$phone" ]; then
+	echo "$MTP"
+	ringtone=`ls "$RANDOM_RINGS" | choose.pl`
 	if [ -z "$ringtone" ]; then
-		echo failed to choose a ringtone, are there any in $RANDOM_RINGS
+		echo failed to choose a ringtone, are there any in "$RANDOM_RINGS"
 		exit 3
 	else
-		echo setting $ringtone as $RINGTONE
+		echo setting "$ringtone" as "$RINGTONE"
 		cp "$RANDOM_RINGS/$ringtone" "$RINGTONE"
 	fi
 
 else
-	echo `ls $phone` use mnt-phone.sh to mount your phone. > /dev/stderr
+	echo `ls "$phone"` use mnt-phone.sh to mount your phone. > /dev/stderr
 	exit 2
 fi

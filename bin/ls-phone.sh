@@ -23,10 +23,10 @@ fi
 
 #set -x
 
-if [ -e $phone ]; then
-	echo $MTP
-	ls -al $MTP
+if [ -e "$phone" ]; then
+	echo "$MTP"
+	ls -al "$MTP"
 else
-	echo `ls $phone` use mnt-phone.sh $CONFIG to mount your phone. > /dev/stderr
+	echo `ls "$phone"` use mnt-phone.sh $CONFIG to mount your phone. > /dev/stderr
 	exit 2
 fi

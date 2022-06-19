@@ -17,6 +17,6 @@ fi
 #set -x
 
 #MTP=/data/me/mtp
-fusermount -u $MTP 2> /dev/null
-jmtpfs $MTP
+fusermount -u "$MTP" 2> /dev/null
+jmtpfs "$MTP"
 ls-phone.sh "$CONFIG"

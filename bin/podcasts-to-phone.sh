@@ -46,18 +46,20 @@ if [ ! -d $MTP ]; then
 	exit 10
 fi
 
+echo "podcasts-to-phone.sh $CONFIG [$PODCASTS_FROM] to [$PODCASTS_TO]"
+
 pushd $BACKUP_DIR > /dev/null
 
-if [ ! -d $phone ]; then
-	echo will try to mount phone $phone
+if [ ! -d "$phone" ]; then
+	echo will try to mount phone [$phone]
 else
-	echo will try to unmount and remount phone $phone
-	fusermount -u $MTP
+	echo will try to unmount and remount phone [$phone]
+	fusermount -u "$MTP"
 fi
-jmtpfs $MTP
+jmtpfs "$MTP"
 
-if [ ! -d $phone ]; then
-	echo was unable to mount the phone, is it connected and unlocked?
+if [ ! -d "$phone" ]; then
+	echo was unable to mount the phone [$phone], is it connected and unlocked?
 	exit 1
 fi
 
