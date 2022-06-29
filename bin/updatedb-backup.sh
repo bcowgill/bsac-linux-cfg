@@ -29,7 +29,10 @@ if [ ! -z $NOTIFY ]; then
 	echo $START
 fi
 
-sudo updatedb --output $DB --database-root $BACKUP
+echo Need root access to update mlocate database at $DB
+ls -al $DB
+sudo updatedb --require-visibility=no --output $DB --database-root $BACKUP
+ls -al $DB
 sudo cp $DB $DBBK
 sudo chmod +r $DBBK
 

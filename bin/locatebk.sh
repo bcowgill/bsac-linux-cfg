@@ -6,10 +6,13 @@ if [ -z "$2" ]; then
 	BACKUP=$BK_DEV
 else
 	BACKUP=${1:-$BK_DEV}
-	shift
+	if basename $BACKUP > /dev/null 2> /dev/null; then
+		shift
+	fi
 fi
 
-NAME=`basename $BACKUP`
+NAME=`basename $BACKUP 2>/dev/null 2>/dev/null || basename $BK_DEV`
+echo NAME=$NAME
 LOCATE=mlocate-$NAME.db
 DB=/var/lib/mlocate/$LOCATE
 DBBK=$BACKUP/mlocate.db

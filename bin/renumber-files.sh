@@ -7,20 +7,22 @@ NAME="$3"
 NUMBER=${4:-001}
 NEWSUFFIX=${5:-$SUFFIX}
 
+cmd=`basename $0`
+
 if [ -z "$NAME" ]; then
 	echo "
-$0 prefix suffix name [number] [new-suffix]
+$cmd prefix suffix name [number] [new-suffix]
 
 This will rename matching files starting with the number provided.
 The number value defaults to 001 if omitted.
 
-Specify TEST=1 $0 ... as command to only test what would happen but not do it.
+Specify TEST=1 $cmd ... as command to only test what would happen but not do it.
 
 See also auto-rename.pl, rename-files.sh, cp-random.pl, renumber-by-time.sh
 
 example:
 
-$0 Screen .PNG error-screen- 14 .png
+$cmd Screen .PNG error-screen- 14 .png
 
 Will rename all the Screen*.PNG files found as error-screen-14.png etc...
 "
