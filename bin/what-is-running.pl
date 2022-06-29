@@ -48,6 +48,8 @@ while (my $line = <>)
 	$line = "${prefix}KEEP IT UP    $line\n" if $line =~ m{keep-it-up\.sh}xms;
 	$line = "${prefix}BALOO         $line\n" if $line =~ m{baloo_file_extractor}xms;
 	$line = "${prefix}SCREENSHOT    $line\n" if $line =~ m{screenshot.sh}xms;
+	# Wipro Mac accumulates runs of softwareupdate hogging memory.
+	$line = "${prefix}ZOMBIE        $line\n" if $line =~ m{bin/softwareupdate}xms;
 	print $line;
 	if ($line !~ m{\A$prefix}xms)
 	{
