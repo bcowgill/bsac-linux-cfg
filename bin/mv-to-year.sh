@@ -1,22 +1,52 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# move files with a given year number in them into a year directory.
 
-if [ -z "$1" ]; then
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
 	echo "
-usage: $(basename $0) year
+$cmd [--help|--man|-?] year
 
-Moves files or directories with the given year number in their name into a year subdirectory
+This will move files or directories with the given year number in their name into a year subdirectory.
+
+year    The year number to look for in filenames.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+The year doesn't have to be a number. If you specify 'cats' then a cats directory will be created and all files and directories with cats in the name will be moved.
+
+See also mv-spelling.pl rename-files.sh renumber-by-time.sh renumber-files.sh
+
+Example:
+
+Create a 1999 directory and move any files with 1999 in them into it.
+
+$cmd 1999
 "
-	exit 1
+	exit $code
+}
+
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
 fi
 
-Y=$1
-mkdir $Y > /dev/null
+if [ -z "$1" ]; then
+	usage
+fi
+
+Y="$1"
+mkdir "$Y" > /dev/null
 for f in *$Y*
 do
 	if [ "$f" != "$Y" ]; then
-		mv "$f" $Y/
+		mv "$f" "$Y/"
 	fi
 done
-
