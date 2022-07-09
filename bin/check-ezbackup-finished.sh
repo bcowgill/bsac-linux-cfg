@@ -30,6 +30,10 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
+if [ `pswide.sh -ef | grep 'updatedb-backup.sh' | grep -v grep | wc -l` == 1 ] ; then
+	echo OK, full backup has finished, waiting for root password to update locate database.
+	exit 0
+fi
 if [ `pswide.sh -ef | grep 'ezbackup.sh full' | grep -v grep | wc -l` == 0 ] ; then
 	echo OK, full backup has finished.
 	exit 0
