@@ -50,9 +50,14 @@ Example:
 
 $cmd src/translations/empty.json src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
 
-$cmd src/translations/empty.json \`find \$PARTNER_TRANSLATIONS_FOLDERS -type f -name \'*.json\' | grep -vE \'empty.json|__|/confluence/\'\`
+KEEP_KEYS=1 $cmd src/translations/empty.json \`find \$PARTNER_TRANSLATIONS_FOLDERS -type f -name \'*.json\' | grep -vE \'empty.json|__|/confluence/\'\`
 
 perl -i -pne 's{\\/}{/}xmsg' src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
+
+Parse the new key error messages and show them, add the following to a command.
+
+ 2>&1 | grep ⚠ | perl -pne 's{\\A.+?\\[([^\\]]+).+\\z}{  "\$1": "",\\n}xmsg' | sort | uniq
+
 USAGE
 	exit 0;
 }

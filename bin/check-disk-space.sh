@@ -3,8 +3,6 @@
 LIMIT=${1:-70}
 SEVERITY=${2:-LOW}
 
-srand;
-
 function check_space {
 	local notify
 	notify=$1
@@ -57,3 +55,17 @@ if check_space | grep  'DISK SPACE' > /dev/null; then
 	check_here /var/lib
 	#check_here /
 fi
+
+exit $?
+
+MacOS df command does not allow -output selection, must parse this...
+df -h
+Filesystem       Size   Used  Avail Capacity iused      ifree %iused  Mounted on
+/dev/disk1s5s1  466Gi   19Gi  314Gi     6%  553785 4882923135    0%   /
+devfs           192Ki  192Ki    0Bi   100%     664          0  100%   /dev
+/dev/disk1s4    466Gi  1.0Mi  314Gi     1%       1 4883476919    0%   /System/Volumes/VM
+/dev/disk1s2    466Gi  274Mi  314Gi     1%     760 4883476160    0%   /System/Volumes/Preboot
+/dev/disk1s6    466Gi  109Mi  314Gi     1%     394 4883476526    0%   /System/Volumes/Update
+/dev/disk1s1    466Gi  132Gi  314Gi    30% 3785320 4879691600    0%   /System/Volumes/Data
+map auto_home     0Bi    0Bi    0Bi   100%       0          0  100%   /System/Volumes/Data/home
+/dev/disk1s5    466Gi   19Gi  314Gi     6%  553607 4882923313    0%   /System/Volumes/Update/mnt1
