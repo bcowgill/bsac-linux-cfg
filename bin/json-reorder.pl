@@ -38,7 +38,7 @@ KEEP_KEYS environment variable allows unknown keys to be kept.
 
 Assumes pretty formatted json with each key/value on separate lines with simple key: string-value structure no deep values.
 
-Will not reorder the keys of a file named empty.json or files which are symbolic links.
+Will not reorder the keys of a file named empty*.json or files which are symbolic links.
 
 Provides special ordering for keys starting with global. or pco.PARTNER. or containing .CHANGENEEDED or _copy
 
@@ -50,13 +50,13 @@ Example:
 
 $cmd src/translations/empty.json src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
 
-KEEP_KEYS=1 $cmd src/translations/empty.json \`find \$PARTNER_TRANSLATIONS_FOLDERS -type f -name \'*.json\' | grep -vE \'empty.json|__|/confluence/\'\`
+KEEP_KEYS=1 $cmd src/translations/empty.json \`find \$PARTNER_TRANSLATIONS_FOLDERS -type f -name \'*.json\' | grep -vE \'\\bempty.+json|__|/confluence/\'\`
 
 perl -i -pne 's{\\/}{/}xmsg' src/translations/*.json src/partnerConfigs/mastercard/translations/*.json
 
 Parse the new key error messages and show them, add the following to a command.
 
- 2>&1 | grep ⚠ | perl -pne 's{\\A.+?\\[([^\\]]+).+\\z}{  "\$1": "",\\n}xmsg' | sort | uniq
+  2>&1 | grep ⚠ | perl -pne 's{\\A.+?\\[([^\\]]+).+\\z}{  "\$1": "",\\n}xmsg' | sort | uniq
 
 USAGE
 	exit 0;
@@ -218,7 +218,7 @@ sub main {
   examine($first_file);
 
   foreach my $file (@ARGV) {
-    next if $file =~ m{empty\.json};
+    next if $file =~ m{\bempty.+json};
     next if -l $file; # skip symbolic links
     reorder($file);
   }
