@@ -6,7 +6,7 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [sound-file] [--help|--man|-?]
+$cmd when [sound-file] [--help|--man|-?]
 
 A cross-platform command to play a sound file as an alarm now, or at a specified time.
 
@@ -22,6 +22,10 @@ See also alarm-if.sh, mynotify.sh, watcher.sh, check-ezbackup-finished.sh, quiet
 Example:
 
 alarm.sh "2017-01-02 10:01" ~/bin/sounds/kitten.ogg
+
+sound alarm now with alternate sound file.
+
+alarm.sh "" ~/bin/sounds/login.wav
 "
 	exit $code
 }
