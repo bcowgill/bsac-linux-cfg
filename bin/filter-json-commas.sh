@@ -46,16 +46,24 @@ if [ "$1" == "-?" ]; then
 fi
 
 perl $INPLACE -pne '
+	#print STDERR "saved1: $saved\n";
 	my $temp = $saved;
+	#print STDERR "temp1: $temp\n";
 	if (m[\A\s*\}]xms)
 	{
 		$temp =~ s{,\s*\z}{\n}xms;
+		#print STDERR "end strip comma temp2: $temp\n";
 		$temp .= $_;
+		#print STDERR "temp3: $temp\n";
 		$_ = undef;
+		#print STDERR "end _: $_\n";
 	} elsif (s{"\s*\z}{",\n}xms)
 	{
 		# nothing to do
+		#print STDERR "add comma _: $_\n";
 	}
 	$saved = $_;
+	#print STDERR "saved2: $saved\n";
 	$_ = $temp;
+	#print STDERR "out _: $_\n";
 ' $*
