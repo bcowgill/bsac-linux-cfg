@@ -45,6 +45,7 @@ NC='\033[0;0m' # No Color
 grep -E '[‛ʼ‘‚‘’❛❜❟❟‟“”„“❝❞❠❠〝〞〝〟‹›«»]|\\"' \
 	$* \
 	| grep -vE '"\b(apos|endash|[lr][sd]q)\b"' \
+	| grep -vE '"\bglobal\.[lr]dg\b"' \
 	| perl -pne '
 		my $preq = " \033[0;35m"; # "  >>>  ";
 		my $preqq = " \033[0;31m"; # "  >>>  ";
