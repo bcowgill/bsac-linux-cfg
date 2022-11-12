@@ -243,7 +243,7 @@ function full_backup {
 		echo "partial backups will be stored at $HOSTNAME:$BK_DIR/" >> "$BK_DISK/summary.log"
 		if [ ! -z "$BK_DEV" ]; then
 			MESSAGE="Need root access to update the mlocate database for the backup device $BK_DEV."
-			mynotify.sh "ezbackup-full "$MESSAGE"
+			mynotify.sh "ezbackup-full" "$MESSAGE"
 			alarm.sh "" $HOME/bin/sounds/login.wav
 			updatedb-backup.sh "$BK_DEV" --notify
 		fi

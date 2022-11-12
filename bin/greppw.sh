@@ -1,2 +1,2 @@
 #!/bin/bash
-zipgrep "-i -A 4" $* /media/me/*/passwd.zip
+zipgrep "-i -A 6" $* /media/me/*/passwd.zip
