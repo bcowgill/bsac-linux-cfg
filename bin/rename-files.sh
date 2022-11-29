@@ -10,6 +10,8 @@ $0 match replace [--exec]
 
 Attempts to rename files in the current directory that match the match string.
 The new file name will be converted to lower case letters.
+Spaces in the file name will be converted to a dash.
+Multiple dashes will be converted to a single one.
 By default it only shows how the files would be renamed but doesn\'t do it.
 
 See also auto-rename.pl, renumber-files.sh, cp-random.pl, renumber-by-time.sh
@@ -19,6 +21,9 @@ $0 imag photos-today-
 
 Renames IMAG0000.AVI to photos-today-0000.avi
 
+Puts track/chapter number from file at start:
+
+ls -1 | perl -pne 'chomp; m{(\d\d)}; \$_ = qq{mv \$_ \$1-\$_\n}; system \$_'
 "
 	exit 0
 fi
@@ -31,6 +36,8 @@ ls | perl -MFile::Copy -ne '
 	$from = $_;
 	$to = lc($from);
 	$to =~ s{$ENV{MATCH}}{$ENV{REPLACE}}i;
+	$to =~ s{\s+}{-}g;
+	$to =~ s{-+}{-}g;
 	if ($from ne $to) {
 		++$moved;
 		print qq{mv "$from" "$to"\n};

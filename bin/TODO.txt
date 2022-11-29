@@ -4,6 +4,8 @@ vim /home/me/d/docs/philosophy/objectivism/free-will-course-harry-binswanger.txt
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
+calibre /home/me/d/docs/philosophy/objectivism/On-Purpose-Biddle-Hersey.pdf &
+
 Currently wymlink.sh tool for emulating symbolic links with git commit support
 Currently /home/me/bin/character-samples/quote-samples.pl
 Currently /home/me/bin/character-samples/samples/quote-marks.txt
