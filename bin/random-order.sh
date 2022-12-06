@@ -15,13 +15,13 @@ This will read lines from standard input and output them in random order.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
-See also choose.pl, cp-random.pl, random-ringtone.sh, randomize-urls.sh, random-text.sh, random-desktop.sh
+See also choose.pl, reverse-order.sh, cp-random.pl, random-ringtone.sh, randomize-urls.sh, random-text.sh, random-desktop.sh
 
 Example:
 
 Create a montage of some images in random order:
 
-	ORDER=`ls image*.jpg | random-order.sh`
+	ORDER=\`ls image*.jpg | random-order.sh\`
 	montage -mode concatenate -tile 7x $ORDER -geometry +0+0 montage-all.jpg
 
 "

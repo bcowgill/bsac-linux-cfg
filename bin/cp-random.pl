@@ -80,7 +80,7 @@ It will either copy a specific number of files or keep copying until there is no
 
 =head1 SEE ALSO
 
-renumber-files.sh, renumber-by-time.sh, rename-files.sh, auto-rename.pl, choose.pl
+renumber-files.sh, renumber-by-time.sh, rename-files.sh, auto-rename.pl, choose.pl, reverse-order.sh, random-order.sh
 
 =head1 EXAMPLES
 
