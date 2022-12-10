@@ -244,7 +244,7 @@ function full_backup {
 		if [ ! -z "$BK_DEV" ]; then
 			MESSAGE="Need root access to update the mlocate database for the backup device $BK_DEV."
 			mynotify.sh "ezbackup-full" "$MESSAGE"
-			alarm.sh "" $HOME/bin/sounds/login.wav
+			sound-play.sh $HOME/bin/sounds/login.wav 5 2
 			updatedb-backup.sh "$BK_DEV" --notify
 		fi
 	fi
