@@ -16,10 +16,18 @@ $Data::Dumper::Terse    = 1;
 my $DRY = 0;
 my $DEBUG = 0;
 
+our $usage = 0;
+our $dirs = 0;
+our $files = 0;
+our $errors = 0;
+our $skipped = 0;
+our $duplicates = 0;
+
 sub usage
 {
 	my ($error) = @ARG;
 
+	$usage = 1;
 	print "$error\n\n" if $error;
 
 	print <<"USAGE";
@@ -46,7 +54,8 @@ For all the directories and files on disk containing beatrice change it to beatr
 locate beatrice | $FindBin::Script beatrice beatrix
 
 USAGE
-	exit $error ? 1 : 0;
+
+	exit($error ? 1 : 0);
 }
 
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
@@ -78,12 +87,6 @@ usage("missing search and replace text for file name spell correction.") unless 
 
 my %Dirs = ();
 my @Dirs = ();
-
-my $dirs = 0;
-my $files = 0;
-my $errors = 0;
-my $skipped = 0;
-my $duplicates = 0;
 
 print qq{# Dry run, commands will be shown but not executed.\n} if $DRY;
 
@@ -192,12 +195,14 @@ sub debug
 
 END
 {
-	my $context = $DRY ? "would be" : "were";
-	print("$dirs directories $context moved.\n");
-	print("$files files $context moved.\n");
-	print("$skipped source paths $context skipped.\n");
-	print("$duplicates destination paths $context duplicates and also skipped.\n");
-	print("$errors errors trying to move files.\n");
+	unless ($usage) {
+		my $context = $DRY ? "would be" : "were";
+		print("$dirs directories $context moved.\n");
+		print("$files files $context moved.\n");
+		print("$skipped source paths $context skipped.\n");
+		print("$duplicates destination paths $context duplicates and also skipped.\n");
+		print("$errors errors trying to move files.\n");
+	}
 }
 
 __END__
