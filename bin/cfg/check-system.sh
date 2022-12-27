@@ -613,7 +613,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 
 	DIGIKAM_PKG="digikam /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstasf.so:gstreamer1.0-plugins-ugly /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstlibav.so:gstreamer1.0-libav"
 	# ttf-ancient-fonts - Symbola used for emacs emoji
-   # sox - sound player mp3 format installed
+	# sox - sound player mp3 format installed
 	CUSTOM_PKG="
 		gnucash
 		audacity
@@ -621,13 +621,14 @@ if [ "$HOSTNAME" == "akston" ]; then
 		winff-qt
 		avconv
 		$DIGIKAM_PKG
+		fswebcam
 		samba
 		mount.cifs:cifs-utils
 		firefox
 		/usr/share/doc/fonts-lyx/copyright:fonts-lyx
 		/usr/share/fonts/truetype/ttf-ancient-scripts/Symbola605.ttf:ttf-ancient-fonts
 		cmus
-      sox /usr/share/doc/libsox-fmt-all/copyright:libsox-fmt-all
+		sox /usr/share/doc/libsox-fmt-all/copyright:libsox-fmt-all
 		shutter
 		cowsay
 		gimp
@@ -635,7 +636,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	"
 	UNINSTALL_PKGS="
 		maven
-      gradle
+		gradle
 	"
 	UNINSTALL_NPM_GLOBAL_PKGS=""
 	#NODE_PKG=""
@@ -3048,11 +3049,11 @@ if [ ! -z $DIFFMERGE_PKG ]; then
 		FILE="Library/Preferences/SourceGear DiffMerge Preferences"
 		files_same "$FILE" "$HOME/bin/cfg$COMP/$FILE" "DiffMerge MACOS preferences. YOUDO copy the light or dark preferences in place or backup recent changes you made"
 
-      # Manually install Diffmerge preferences
+		# Manually install Diffmerge preferences
 		# cp ./cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist.dark /Users/bcowgill/bin/cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist
 		# cp "./cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences.dark" "/Users/bcowgill/bin/cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences"
 
-      # Manually update in git after a config change.
+		# Manually update in git after a config change.
 		# rvcp.sh ./cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist /Users/bcowgill/bin/cfg/wipro/Library/Preferences/com.sourcegear.DiffMerge.plist
 		# rvcp.sh "./cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences" "/Users/bcowgill/bin/cfg/wipro/Library/Preferences/SourceGear DiffMerge Preferences"
 	fi # not MACOS
@@ -3281,7 +3282,7 @@ if [ ! -z $ATOM_APM ]; then
 fi
 
 if [ ! -z `which cpanp` ]; then
-  cpanp o > bin/cfg$COMP/cpanp-pkg-out-of-date.txt
+	cpanp o > bin/cfg$COMP/cpanp-pkg-out-of-date.txt
 	OK "updated bin/cfg$COMP/cpanp-pkg-out-of-date.txt"
 	OUTPUT=`cpanp b | perl -ne '$q= chr(39); print if s{Wrote \s+ autobundle \s+ to \s+ $q(.+)$q}{$1}xms'`
 	echo cpanp bundle file: "$OUTPUT"
