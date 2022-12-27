@@ -73,6 +73,17 @@ if [ ! -d "$phone" ]; then
 	exit 1
 fi
 
+function move_files {
+	local from to ext
+	from="$1"
+	to="$2"
+	ext="$3"
+	if ls $from/*.$ext > /dev/null 2>&1 ; then
+		echo OK moving .$ext files to new podcasts dir
+		mv $from/*.$ext "$to/"
+	fi
+}
+
 if [ ! -z "$PODCASTS_FROM" ]; then
 	if [ ! -z "$PODCASTS_TO" ]; then
 		if [ -d "$PODCASTS_FROM" ]; then
@@ -87,8 +98,9 @@ if [ ! -z "$PODCASTS_FROM" ]; then
 			fi
 			mkdir -p "$NEW" 2> /dev/null
 			if [ -d "$NEW" ]; then
-				echo Copy podcasts from $PODCASTS_FROM/ to $NEW/
-				cp "$PODCASTS_FROM/*.mp3" "$NEW/"
+				echo Move podcasts from $PODCASTS_FROM/ to $NEW/
+				move_files "$PODCASTS_FROM" "$NEW" mp3
+				echo `ls "$PODCASTS_FROM" | wc -l` files remaining in $PODCASTS_FROM
 				echo `ls "$NEW" | wc -l` files now in $NEW
 			fi
 		else
