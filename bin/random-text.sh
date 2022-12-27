@@ -20,6 +20,7 @@ if [ "$COMPANY" == "" ]; then
 		25% nonviolent-communication
 		25% secret-code-of-success
 		aristotle
+		atoz-motivation
 		bsac-misc
 		greatest-salesman-in-the-world
 		lean
@@ -160,4 +161,3 @@ do
 done
 
 exit 0
-# New fortune files exist, amend the MIX setting at top of script...
