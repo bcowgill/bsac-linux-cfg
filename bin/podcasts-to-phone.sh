@@ -78,6 +78,9 @@ if [ ! -z "$PODCASTS_FROM" ]; then
 		if [ -d "$PODCASTS_FROM" ]; then
 			NEW="$PODCASTS_TO/_NEW"
 			REMOVE="$PODCASTS_TO/_REMOVE"
+			echo `ls "$PODCASTS_FROM" | wc -l` files waiting in $PODCASTS_FROM
+			echo `ls "$REMOVE" | wc -l` files for removal from $REMOVE
+			echo `ls "$NEW" | wc -l` files currently in $NEW
 			if [ -d "$REMOVE" ]; then
 				echo Remove podcasts from phone at $REMOVE/
 				rm "$REMOVE/*.mp3"
@@ -86,6 +89,7 @@ if [ ! -z "$PODCASTS_FROM" ]; then
 			if [ -d "$NEW" ]; then
 				echo Copy podcasts from $PODCASTS_FROM/ to $NEW/
 				cp "$PODCASTS_FROM/*.mp3" "$NEW/"
+				echo `ls "$NEW" | wc -l` files now in $NEW
 			fi
 		else
 			echo No local podcasts dir $PODCASTS_FROM found.

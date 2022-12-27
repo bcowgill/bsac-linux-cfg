@@ -92,8 +92,8 @@ if [ ! -z "$PRIVACY_SAFE" ]; then
 			mkdir -p "$NEW" 2> /dev/null
 			if [ -d "$REMOVE" ]; then
 				echo Moving photos, videos and sound files with removed metadata from phone at $REMOVE/ to $NEW/
-				echo `ls "$REMOVE" | wc -l` files in $REMOVE
-				echo `ls "$NEW" | wc -l` files in $NEW
+				echo `ls "$REMOVE" | wc -l` files waiting in $REMOVE
+				echo `ls "$NEW" | wc -l` files left in $NEW
 				move_files "$REMOVE" "$NEW" jpeg
 				move_files "$REMOVE" "$NEW" JPEG
 				move_files "$REMOVE" "$NEW" jpg
@@ -104,6 +104,7 @@ if [ ! -z "$PRIVACY_SAFE" ]; then
 				move_files "$REMOVE" "$NEW" MP3
 				move_files "$REMOVE" "$NEW" mp4
 				move_files "$REMOVE" "$NEW" MP4
+				echo `ls "$NEW" | wc -l` files now in $NEW
 				if [ `ls "$REMOVE" | wc -l` == 0 ]; then
 					echo OK, there are no files leftover in "$REMOVE/"
 				else
