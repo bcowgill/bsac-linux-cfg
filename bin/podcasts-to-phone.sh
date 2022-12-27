@@ -15,6 +15,16 @@ fi
 #backup=samsung-galaxy-note4-edge/phone
 #BACKUP_DIR=~/d/backup
 
+if [ -z "$PODCASTS_FROM" ]; then
+	echo PODCASTS_FROM has not been configured. Please define it in ~/.PHONE file
+	exit 20
+fi
+
+if [ -z "$PODCASTS_TO" ]; then
+	echo PODCASTS_TO has not been configured. Please define it in ~/.PHONE file
+	exit 20
+fi
+
 if [ -z "$BACKUP_DIR" ]; then
 	echo BACKUP_DIR has not been configured. Please define it in ~/.PHONE file
 	exit 10

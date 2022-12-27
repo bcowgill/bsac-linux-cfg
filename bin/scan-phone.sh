@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # scan-phone.sh find the files on mobile phone internal memory for use with shell-sync.pl
+# also calls metadata-cleanup-phone.sh to moved stripped metadata files into a done dir.
 # also calls random-ringtone.sh to change your ringtone.
 # and copies podcasts from $PODCASTS_FROM to $PODCASTS_TO/_NEW removing any from $PODCASTS_TO/REMOVE
 
@@ -65,11 +66,15 @@ if [ ! -d "$phone" ]; then
 	exit 1
 fi
 
+if [ ! -z "$PRIVACY_SAFE" ]; then
+	metadata-cleanup-phone.sh "$CONFIG"
+fi
 if [ ! -z "$RINGTONES" ]; then
 	random-ringtone.sh "$CONFIG"
 fi
-podcasts-to-phone.sh "$CONFIG"
-
+if [ ! -z "$PODCASTS_FROM" ]; then
+	podcasts-to-phone.sh "$CONFIG"
+fi
 
 echo getting file list from phone...
 find-ez.sh "$phone" > phone.lst
