@@ -69,7 +69,7 @@ fi
 jmtpfs "$MTP"
 
 if [ ! -d "$phone" ]; then
-	echo was unable to mount the phone [$phone], is it connected and unlocked?
+	echo NOT OK was unable to mount the phone [$phone], is it connected and unlocked?
 	exit 1
 fi
 
@@ -111,7 +111,7 @@ if [ ! -z "$PRIVACY_SAFE" ]; then
 					echo NOT OK, there are `ls "$REMOVE" | wc -l` files leftover in "$REMOVE/"
 					ls "$REMOVE" | head
 				fi
-				move "$NEW/phone-storage.png" "$REMOVE/"
+				mv "$NEW/phone-storage.png" "$REMOVE/"
 			fi
 		else
 			echo No phone metadata removal dir $PRIVACY_SAFE found.

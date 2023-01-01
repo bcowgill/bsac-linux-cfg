@@ -1,4 +1,7 @@
 #!/bin/bash
+
+DIAGNOSE=
+
 function usage {
 	local code
 	code=$1
@@ -28,6 +31,16 @@ if [ "$1" == "--man" ]; then
 fi
 if [ "$1" == "-?" ]; then
 	usage 0
+fi
+
+if [ ! -z "$DIAGNOSE" ]; then
+	cmd=$(basename $0)
+	echo $cmd DIAGNOSE mode...
+	pswide.sh -ef | grep 'updatedb-backup.sh' | grep -v grep
+	pswide.sh -ef | grep 'ezbackup.sh full' | grep -v grep
+	echo $cmd DIAGNOSE PROCESSES...
+	pswide.sh -ef
+	echo $cmd DIAGNOSE ENDS...
 fi
 
 if [ `pswide.sh -ef | grep 'updatedb-backup.sh' | grep -v grep | wc -l` == 1 ] ; then

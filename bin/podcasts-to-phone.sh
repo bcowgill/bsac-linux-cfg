@@ -69,7 +69,7 @@ fi
 jmtpfs "$MTP"
 
 if [ ! -d "$phone" ]; then
-	echo was unable to mount the phone [$phone], is it connected and unlocked?
+	echo NOT OK was unable to mount the phone [$phone], is it connected and unlocked?
 	exit 1
 fi
 
