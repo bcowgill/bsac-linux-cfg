@@ -111,8 +111,8 @@ if [ ! -z "$PRIVACY_SAFE" ]; then
 					echo NOT OK, there are `ls "$REMOVE" | wc -l` files leftover in "$REMOVE/"
 					ls "$REMOVE" | head
 				fi
-				echo TRY: mv "$NEW/phone-storage.png" "$REMOVE/"
-				mv "$NEW/phone-storage.png" "$REMOVE/"
+				echo TRY: cp "$NEW/phone-storage.png" "$REMOVE/"
+				cp "$NEW/phone-storage.png" "$REMOVE/"
 			fi
 		else
 			echo No phone metadata removal dir $PRIVACY_SAFE found.
