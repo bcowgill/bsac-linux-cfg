@@ -2,27 +2,102 @@ Visual Studio Code in Browser editor command quick reference
 
 https://vscode.dev - has settings synced to GitHub account
 
+https://code.visualstudio.com/docs/getstarted/keybindings
+
+Install Extensions (with or without sync):
+ext install tonybaloney.vscode-pets
+ext install evan-buss.font-switcher
+ext install vscode-icons
+ext install christian-kohler.path-intellisense
+ext install codespaces-contrib.codeswing
+ext install wix.vscode-import-cost
+ext install naumovs.color-highlight
+ext install bierner.color-info
+ext install oderwat.indent-rainbow
+ext install wayou.vscode-todo-highlight
+ext install aaron-bond.better-comments
+ext install bierner.emojisense
+ext install idleberg.emoji-code
+ext install IBM.output-colorizer
+ext install ms-vscode.hexeditor
+ext install searKing.preview-vscode
+ext install bierner.markdown-preview-github-styles
+ext install mikestead.dotenv
+ext install Blodwynn.featurehighlight
+ext install mechatroner.rainbow-csv
+ext install GrapeCity.gc-excelviewer
+ext install mrmlnc.vscode-json5
+ext install aeschli.vscode-css-formatter
+ext install csstools.postcss
+ext install formulahendry.auto-complete-tag
+ext install esbenp.prettier-vscode
+ext install chrmarti.regex
+ext install geeebe.duplicate
+ext install qcz.text-power-tools
+ext install stkb.rewrap
+ext install yatki.vscode-surround
+ext install Tyriar.sort-lines
+ext install Tyriar.lorem-ipsum
+ext install heaths.vscode-guid
+ext inatall JakeWilson.vscode-picture
+ext install xabikos.JavaScriptSnippets
+ext install andys8.jest-snippets
+ext install Remisa.shellman
+ext install truman.autocomplate-shell
+ext install jeff-hykin.better-shellscript-syntax
+ext install akamud.vscode-javascript-snippet-pack [disabled]
+ext install burkeholland.simple-react-snippets [disabled]
+ext install xabikos.ReactSnippets [disabled]
+ext install AlDuncanson.react-hooks-snippets [disabled]
+ext install capaj.vscode-standardjs-snippets [disabled]
+ext install angelorafael.jsx-html-tags [disabled]
+ext install dsznajder.es7-react-js-snippets
+ext install shaman-apprentice.html5-skelton
+ext install sidthesloth.html5-boilerplate
+ext install ohansemmanuel.css-grid-snippets [disabled]
+ext install jaymorrow.NodeAssertionSnippets [disabled]
+ext install joy-yu.css-snippets
+ext install andrew-codes.cypress-snippets
+
+not for browser version or limited support
+ext install VisualStudioExptTeam.vscodeintellicode
+ext install cmstead.jsrefactor
+ext install DavidAnson.vscode-markdownlint
+ext install formulahendry.auto-complete-tag
+ext-install waderyan.nodejs-extension-pack
+
+Prettier - settings changed: Trailing comma: all; use Tabs: true
+
 Using Any Keyboard:
 Ctmd = Mac: ⌘/Cmd key; Win/Linux: Ctrl key
+Almd = Mac: ⌘/Cmd key; Win/Linux: Alt key
 
 TODO remove * from *KEY: lines below once tested on Mac/Linux browser...
 TODO atom keymap and extensions? - https://marketplace.visualstudio.com/items?itemName=ms-vscode.atom-keybindings
+TODO revisit icon pack selections
 
 Most Essential Editor Commands:
-*KEY:UP:NAV Up
-*KEY:DOWN:NAV Down
-*KEY:LEFT:NAV Left
-*KEY:RIGHT:NAV Right
+KEY:UP:NAV Up
+KEY:DOWN:NAV Down
+KEY:LEFT:NAV Left
+KEY:RIGHT:NAV Right
 *KEY:HOME:NAV Home
-*KEY:END:NAV End
+KEY:OSX:END:NAV Fn-Right
+KEY:WLX:END:NAV End
 *KEY:BEGINLINE:NAV
-*KEY:HOMETOGGLE:NAV Home
-*KEY:GOTOLINE:NAV Ctrl-g
-*KEY:PGUP:NAV PageUp
-*KEY:PGDN:NAV PageDown
-*KEY:TOP:NAV Ctrl-Home
-*KEY:BOTTOM:NAV Ctrl-End
+KEY:OSX:HOMETOGGLE:NAV Fn-Left
+KEY:WLX:HOMETOGGLE:NAV Home
+KEY:GOTOLINE:NAV Ctrl-g
+KEY:OSX:PGUP:NAV Fn-Up
+KEY:WLX:PGUP:NAV PageUp
+KEY:OSX:PGDN:NAV Fn-Down
+KEY:WLX:PGDN:NAV PageDown
+KEY:OSX:TOP:NAV Cmd-Up
+KEY:WLX:TOP:NAV Ctrl-Home
+KEY:OSX:BOTTOM:NAV Cmd-Down
+KEY:WLX:BOTTOM:NAV Ctrl-End
 *KEY:JUMPPAREN:NAV Ctrl-Shift-\
+
 *KEY:SAVEFILE:NAV Ctrl-s
 *KEY:SAVEAS:NAV Ctrl-Shift-s
 *KEY:SAVEALL:NAV Ctrl-k s
@@ -36,15 +111,16 @@ Most Essential Editor Commands:
 *KEY:GOTOWIN:NAV Ctrl-1 etc go to numbered editor window
 *KEY:NEXTBUFFER:NAV Ctrl-Tab or Ctrl-k Ctrl-PageDown
 *KEY:PREVBUFFER:NAV Ctrl-Shift-Tab or Ctrl-k Ctrl-PageUp
-*KEY:SPLITLEFT:NAV
-*KEY:SPLITRIGHT:NAV Ctrl-\
-*KEY:SPLITUP:NAV Ctrl-\ Ctrl-k Up
-*KEY:SPLITDOWN:NAV Ctrl-\ Ctrl-k Down
 *KEY:MOVEWIN:NAV Ctrl-k Arrow
-*KEY:ONEWIN:NAV
 *KEY:OPENANY:NAV Ctrl-p
 *KEY:PREVIEW:NAV Ctrl-k v or Ctrl-Shift-v
 *KEY:REOPENWIN:NAV Ctrl-Shift-t reopen closed editor tab
+
+*KEY:SPLITLEFT:LYT
+*KEY:SPLITRIGHT:LYT Ctrl-\
+*KEY:SPLITUP:LYT Ctrl-\ Ctrl-k Up
+*KEY:SPLITDOWN:LYT Ctrl-\ Ctrl-k Down
+*KEY:ONEWIN:LYT
 
 *KEY:INCSEARCH:FIND
 *KEY:FIND:FIND Ctrl-f
@@ -54,30 +130,41 @@ Most Essential Editor Commands:
 *KEY:JUMPREF:CODE Ctrl-F12
 *KEY:JUMPBACK:FIND Alt-Left
 
+KEY:OSX:SELECTALL:MARK Cmd-Up Shift-Cmd-Down
 *KEY:SELECTALL:MARK Ctrl-a
 *KEY:SELECTLINE:MARK Ctrl-l or Shift-Down
 *KEY:SELECTPAREN:MARK Alt-Shift-Right  (expand selection until good)
-*KEY:SELECTVBLOCK:MARK Ctrl-Alt-Shift-Arrow
+KEY:SELECTVBLOCK:MARK Shift-Alt-MouseDrag
+KEY:SELECTVBLOCK:MARK Shift-Arrow
+KEY:TOGGLESELECTVBLOCK:MARK command palette Toggle Column Selection Mode
+KEY:CURSORADD:CURS Almd-MouseClick
+KEY:OSX:CURSORADDABOVE:CURS Shift-Up
+KEY:WLX:CURSORADDABOVE:CURS Shift-Alt-Up
+KEY:OSX:CURSORADDBELOW:CURS Shift-Down
+KEY:WLX:CURSORADDBELOW:CURS Shift-Alt-Down
+KEY:CURSORADDMARKED:CURS Ctmd-Shift-l
 
 *KEY:COPY:PASTE Ctrl-c
 *KEY:CUT:PASTE Ctrl-x
 *KEY:PASTE:PASTE Ctrl-v
-*KEY:COPYLINE:PASTE Ctrl-c (when nothing selected)
-*KEY:CUTLINE:PASTE Ctrl-x
-*KEY:DUPLINE:PASTE Alt-Shift-Down
-*KEY:DUPLINEUP:PASTE Alt-Shift-Up
+KEY:COPYLINE:PASTE Ctmd-c (when nothing selected)
+KEY:CUTLINE:PASTE Ctmd-x
+KEY:WLX:DUPLINE:PASTE Ctrl-c Ctrl-v (when nothing selected)
+KEY:OSX:DUPLINE:PASTE Alt-Shift-Down
+KEY:OSX:DUPLINEUP:PASTE Alt-Shift-Up
 *KEY:VBLOCK:PASTE
 *KEY:VBLOCKFILL:PASTE
 
 *KEY:LINECOMMENT:EDIT Win-/
+KEY:DELLINE:EDIT Ctmd-Shift-k
 *KEY:DELENDLINE:EDIT Shift-End Del
 *KEY:BSBEGINLINE:EDIT Shift-Home Del
 *KEY:SPLITLINE:EDIT Enter
 *KEY:JOINLINE:EDIT command palette join
 *KEY:OPENLINEBELOW:EDIT Ctrl-Enter
 *KEY:OPENLINEUP:EDIT Ctrl-Shift-Enter
-*KEY:MOVEUP:EDIT Alt-Up
-*KEY:MOVEDN:EDIT Alt-Down
+KEY:MOVEUP:EDIT Alt-Up
+KEY:MOVEDN:EDIT Alt-Down
 *KEY:INDENT:EDIT Ctrl-]
 *KEY:OUTDENT:EDIT Ctrl-[
 *KEY:REPLACE:EDIT Ctrl-h
@@ -87,6 +174,7 @@ Most Essential Editor Commands:
 *KEY:CASECHANGE:EDIT command palette case
 *KEY:TOGGLEQUOTE:EDIT
 *KEY:WRAPQUOTE:EDIT
+*KEY:WRAPPAREN:EDIT
 
 *KEY:FONTBIGGER:VIEW Ctrl-=
 *KEY:FONTSMALLER:VIEW Ctrl-Minus
@@ -97,3 +185,5 @@ KEY:COMMAND:CMD F1 or Ctmd-Shift-p
 KEY:SHELL:CMD Ctrl-`
 *KEY:BINDKEY:CMD Ctrl-k Ctrl-s
 *KEY:SETTINGS:CMD Ctrl-,
+
+KEY:COMPLETE:CODE Ctrl-Space

@@ -30,15 +30,15 @@ KEY:PREVWIN:NAV
 KEY:GOTOWIN:NAV Ctrl-1 etc go to numbered editor window
 KEY:NEXTBUFFER:NAV Ctrl-Tab or Ctrl-k Ctrl-PageDown
 KEY:PREVBUFFER:NAV Ctrl-Shift-Tab or Ctrl-k Ctrl-PageUp
-KEY:SPLITLEFT:NAV
-KEY:SPLITRIGHT:NAV Ctrl-\
-KEY:SPLITUP:NAV Ctrl-\ Ctrl-k Up
-KEY:SPLITDOWN:NAV Ctrl-\ Ctrl-k Down
 KEY:MOVEWIN:NAV Ctrl-k Arrow
-KEY:ONEWIN:NAV
 KEY:OPENANY:NAV Ctrl-p
 KEY:PREVIEW:NAV Ctrl-k v or Ctrl-Shift-v
 KEY:REOPENWIN:NAV Ctrl-Shift-t reopen closed editor tab
+KEY:SPLITLEFT:LYT
+KEY:SPLITRIGHT:LYT Ctrl-\
+KEY:SPLITUP:LYT Ctrl-\ Ctrl-k Up
+KEY:SPLITDOWN:LYT Ctrl-\ Ctrl-k Down
+KEY:ONEWIN:LYT
 
 KEY:INCSEARCH:FIND
 KEY:FIND:FIND Ctrl-f
