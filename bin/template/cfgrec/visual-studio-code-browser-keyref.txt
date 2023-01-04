@@ -6,70 +6,6 @@ https://vscode.dev - has settings synced to GitHub account
 
 https://code.visualstudio.com/docs/getstarted/keybindings
 
-Install Extensions (with or without sync):
-ext install tonybaloney.vscode-pets
-ext install evan-buss.font-switcher
-ext install vscode-icons
-ext install christian-kohler.path-intellisense
-ext install codespaces-contrib.codeswing
-ext install wix.vscode-import-cost
-ext install naumovs.color-highlight
-ext install bierner.color-info
-ext install oderwat.indent-rainbow
-ext install wayou.vscode-todo-highlight
-ext install aaron-bond.better-comments
-ext install bierner.emojisense
-ext install idleberg.emoji-code
-ext install IBM.output-colorizer
-ext install ms-vscode.hexeditor
-ext install searKing.preview-vscode
-ext install bierner.markdown-preview-github-styles
-ext install mikestead.dotenv
-ext install Blodwynn.featurehighlight
-ext install mechatroner.rainbow-csv
-ext install GrapeCity.gc-excelviewer
-ext install mrmlnc.vscode-json5
-ext install aeschli.vscode-css-formatter
-ext install csstools.postcss
-ext install formulahendry.auto-complete-tag
-ext install esbenp.prettier-vscode
-ext install chrmarti.regex
-ext install geeebe.duplicate
-ext install qcz.text-power-tools
-ext install stkb.rewrap
-ext install yatki.vscode-surround
-ext install Tyriar.sort-lines
-ext install Tyriar.lorem-ipsum
-ext install heaths.vscode-guid
-ext inatall JakeWilson.vscode-picture
-ext install xabikos.JavaScriptSnippets
-ext install andys8.jest-snippets
-ext install Remisa.shellman
-ext install truman.autocomplate-shell
-ext install jeff-hykin.better-shellscript-syntax
-ext install akamud.vscode-javascript-snippet-pack [disabled]
-ext install burkeholland.simple-react-snippets [disabled]
-ext install xabikos.ReactSnippets [disabled]
-ext install AlDuncanson.react-hooks-snippets [disabled]
-ext install capaj.vscode-standardjs-snippets [disabled]
-ext install angelorafael.jsx-html-tags [disabled]
-ext install dsznajder.es7-react-js-snippets
-ext install shaman-apprentice.html5-skelton
-ext install sidthesloth.html5-boilerplate
-ext install ohansemmanuel.css-grid-snippets [disabled]
-ext install jaymorrow.NodeAssertionSnippets [disabled]
-ext install joy-yu.css-snippets
-ext install andrew-codes.cypress-snippets
-
-not for browser version or limited support
-ext install VisualStudioExptTeam.vscodeintellicode
-ext install cmstead.jsrefactor
-ext install DavidAnson.vscode-markdownlint
-ext install formulahendry.auto-complete-tag
-ext-install waderyan.nodejs-extension-pack
-
-Prettier - settings changed: Trailing comma: all; use Tabs: true
-
 Using Any Keyboard:
 Ctmd = Mac: ⌘/Cmd key; Win/Linux: Ctrl key
 Almd = Mac: ⌘/Cmd key; Win/Linux: Alt key
@@ -83,12 +19,12 @@ KEY:UP:NAV Up
 KEY:DOWN:NAV Down
 KEY:LEFT:NAV Left
 KEY:RIGHT:NAV Right
-*KEY:HOME:NAV Home
-KEY:OSX:END:NAV Fn-Right
-KEY:WLX:END:NAV End
-*KEY:BEGINLINE:NAV
 KEY:OSX:HOMETOGGLE:NAV Fn-Left
 KEY:WLX:HOMETOGGLE:NAV Home
+*KEY:HOME:NAV Home
+*KEY:BEGINLINE:NAV
+KEY:OSX:END:NAV Fn-Right
+KEY:WLX:END:NAV End
 KEY:GOTOLINE:NAV Ctrl-g
 KEY:OSX:PGUP:NAV Fn-Up
 KEY:WLX:PGUP:NAV PageUp
@@ -189,3 +125,68 @@ KEY:SHELL:CMD Ctrl-`
 *KEY:SETTINGS:CMD Ctrl-,
 
 KEY:COMPLETE:CODE Ctrl-Space
+
+====================================================
+Install Extensions (with or without sync):
+ext install tonybaloney.vscode-pets
+ext install evan-buss.font-switcher
+ext install vscode-icons
+ext install christian-kohler.path-intellisense
+ext install codespaces-contrib.codeswing
+ext install wix.vscode-import-cost
+ext install naumovs.color-highlight
+ext install bierner.color-info
+ext install oderwat.indent-rainbow
+ext install wayou.vscode-todo-highlight
+ext install aaron-bond.better-comments
+ext install bierner.emojisense
+ext install idleberg.emoji-code
+ext install IBM.output-colorizer
+ext install ms-vscode.hexeditor
+ext install searKing.preview-vscode
+ext install bierner.markdown-preview-github-styles
+ext install mikestead.dotenv
+ext install Blodwynn.featurehighlight
+ext install mechatroner.rainbow-csv
+ext install GrapeCity.gc-excelviewer
+ext install mrmlnc.vscode-json5
+ext install aeschli.vscode-css-formatter
+ext install csstools.postcss
+ext install formulahendry.auto-complete-tag
+ext install esbenp.prettier-vscode
+ext install chrmarti.regex
+ext install geeebe.duplicate
+ext install qcz.text-power-tools
+ext install stkb.rewrap
+ext install yatki.vscode-surround
+ext install Tyriar.sort-lines
+ext install Tyriar.lorem-ipsum
+ext install heaths.vscode-guid
+ext inatall JakeWilson.vscode-picture
+ext install xabikos.JavaScriptSnippets
+ext install andys8.jest-snippets
+ext install Remisa.shellman
+ext install truman.autocomplate-shell
+ext install jeff-hykin.better-shellscript-syntax
+ext install akamud.vscode-javascript-snippet-pack [disabled]
+ext install burkeholland.simple-react-snippets [disabled]
+ext install xabikos.ReactSnippets [disabled]
+ext install AlDuncanson.react-hooks-snippets [disabled]
+ext install capaj.vscode-standardjs-snippets [disabled]
+ext install angelorafael.jsx-html-tags [disabled]
+ext install dsznajder.es7-react-js-snippets
+ext install shaman-apprentice.html5-skelton
+ext install sidthesloth.html5-boilerplate
+ext install ohansemmanuel.css-grid-snippets [disabled]
+ext install jaymorrow.NodeAssertionSnippets [disabled]
+ext install joy-yu.css-snippets
+ext install andrew-codes.cypress-snippets
+
+not for browser version or limited support
+ext install VisualStudioExptTeam.vscodeintellicode
+ext install cmstead.jsrefactor
+ext install DavidAnson.vscode-markdownlint
+ext install formulahendry.auto-complete-tag
+ext-install waderyan.nodejs-extension-pack
+
+Prettier - settings changed: Trailing comma: all; use Tabs: true
