@@ -32,31 +32,34 @@ KEY:OSX:TOP:NAV Cmd-Up
 KEY:WLX:TOP:NAV Ctrl-Home
 KEY:OSX:BOTTOM:NAV Cmd-Down
 KEY:WLX:BOTTOM:NAV Ctrl-End
-*KEY:JUMPPAREN:NAV Ctrl-Shift-\
+KEY:JUMPPAREN:NAV Ctmd-Shift-\
+KEY:JUMPPAREN:NAV command palette bracket Go To Bracket
 
-*KEY:SAVEFILE:NAV Ctrl-s
-*KEY:SAVEAS:NAV Ctrl-Shift-s
-*KEY:SAVEALL:NAV Ctrl-k s
-*KEY:CLOSEFILE:NAV Win-Alt f c
-*KEY:CLOSEWIN:NAV Ctrl-k w
-*KEY:CLOSEAPP:NAV Win-Alt f x
-*KEY:TREETOGGLE:NAV Ctrl-b
-*KEY:TREEFOCUS:NAV Ctrl-Shift-e
-*KEY:NEXTWIN:NAV
-*KEY:PREVWIN:NAV
+KEY:SAVEFILE:NAV Ctmd-s
+KEY:SAVEAS:NAV Ctmd-Shift-s
+KEY:SAVEALL:NAV command palette save all
+KEY:CLOSEFILE:NAV command palette close editor
+KEY:CLOSEWIN:NAV Ctmd-k Ctmd-w
+KEY:CLOSEAPP:NAV Ctmd-w (closes browser tab so same as close app)
+KEY:TREETOGGLE:NAV Ctmd-b
+KEY:TREEFOCUS:NAV Ctmd-Shift-e
+KEY:NEXTWIN:NAV F6
+KEY:PREVWIN:NAV Shift-F6
 *KEY:GOTOWIN:NAV Ctrl-1 etc go to numbered editor window
-*KEY:NEXTBUFFER:NAV Ctrl-Tab or Ctrl-k Ctrl-PageDown
-*KEY:PREVBUFFER:NAV Ctrl-Shift-Tab or Ctrl-k Ctrl-PageUp
-*KEY:MOVEWIN:NAV Ctrl-k Arrow
-*KEY:OPENANY:NAV Ctrl-p
+KEY:OSX:NEXTBUFFER:NAV command palette focus Next Editor Group
+KEY:WLX:NEXTBUFFER:NAV Ctrl-Alt-Right
+KEY:OSX:PREVBUFFER:NAV command palette focus Previous Editor Group
+KEY:WLX:PREVBUFFER:NAV Ctrl-Alt-Left
+KEY:MOVEWIN:NAV Ctmd-k Arrow
+KEY:OPENANY:NAV Ctmd-p
 *KEY:PREVIEW:NAV Ctrl-k v or Ctrl-Shift-v
-*KEY:REOPENWIN:NAV Ctrl-Shift-t reopen closed editor tab
+KEY:REOPENWIN:NAV Ctmd-Shift-t reopen closed editor tab
 
-*KEY:SPLITLEFT:LYT
-*KEY:SPLITRIGHT:LYT Ctrl-\
-*KEY:SPLITUP:LYT Ctrl-\ Ctrl-k Up
-*KEY:SPLITDOWN:LYT Ctrl-\ Ctrl-k Down
-*KEY:ONEWIN:LYT
+KEY:SPLITLEFT:LYT command palette dup edit Duplicate Editor Group Left
+KEY:SPLITRIGHT:LYT command palette dup edit Duplicate Editor Group Right
+KEY:SPLITUP:LYT command palette dup edit Duplicate Editor Group Up
+KEY:SPLITDOWN:LYT command palette dup edit Duplicate Editor Group Down
+KEY:ONEWIN:LYT command palette join all Editor Groups
 
 KEY:INCSEARCH:FIND Ctmd-f
 KEY:FIND:FIND Ctmd-f
@@ -110,15 +113,20 @@ KEY:OUTDENT:EDIT Ctmd-[
 KEY:OSX:REPLACE:EDIT Alt-Cmd-f
 KEY:WLX:REPLACE:EDIT Ctrl-h
 *KEY:REPLACESEL:EDIT
-*KEY:UNDO:EDIT Ctrl-z
-*KEY:REDO:EDIT Ctrl-y
-*KEY:CASECHANGE:EDIT command palette case
+KEY:UNDO:EDIT Ctmd-z
+KEY:REDO:EDIT Ctmd-y
+KEY:CASECHANGE:EDIT command palette case
 *KEY:TOGGLEQUOTE:EDIT
-*KEY:WRAPQUOTE:EDIT
-*KEY:WRAPPAREN:EDIT
+KEY:WRAPQUOTE:EDIT Shift-Arrow ' Highlight the text to wrap then type the quote desired
+KEY:WRAPQUOTE:EDIT Shift-Arrow " Highlight the text to wrap then type the quote desired
+KEY:WRAPQUOTE:EDIT Shift-Arrow ` Highlight the text to wrap then type the quote desired
+KEY:WRAPPAREN:EDIT Shift-Arrow ( Highlight the text to wrap then type the bracket desired
+KEY:WRAPPAREN:EDIT Shift-Arrow [ Highlight the text to wrap then type the bracket desired
+KEY:WRAPPAREN:EDIT Shift-Arrow { Highlight the text to wrap then type the bracket desired
+KEY:WRAPPAREN:EDIT Shift-Arrow < Highlight the text to wrap then type the bracket desired
 
-*KEY:FONTBIGGER:VIEW Ctrl-=
-*KEY:FONTSMALLER:VIEW Ctrl-Minus
+KEY:FONTBIGGER:VIEW command palette font  Editor Font Zoom In
+KEY:FONTSMALLER:VIEW command palette font Editor Font Zoom Out
 KEY:ZENVIEW:VIEW Ctmd-k z Mostly just the editor view
 KEY:NOZENVIEW:VIEW Esc Esc Back before zen mode
 
@@ -126,9 +134,8 @@ KEY:MENU:CMD F10
 KEY:CONTEXTMENU:CMD Shift-F10
 KEY:COMMAND:CMD F1 or Ctmd-Shift-p
 KEY:SHELL:CMD Ctrl-`
-*KEY:BINDKEY:CMD Ctrl-k Ctrl-s
-*KEY:SETTINGS:CMD Ctrl-,
-
+KEY:BINDKEY:CMD Ctmd-k Ctrl-s
+KEY:SETTINGS:CMD Ctmd-,
 
 ====================================================
 Install Extensions (with or without sync):
@@ -187,6 +194,7 @@ ext install joy-yu.css-snippets
 ext install andrew-codes.cypress-snippets
 
 not for browser version or limited support
+ext install BriteSnow.vscode-toggle-quotes
 ext install VisualStudioExptTeam.vscodeintellicode
 ext install cmstead.jsrefactor
 ext install DavidAnson.vscode-markdownlint
