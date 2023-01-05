@@ -1,6 +1,4 @@
 Visual Studio Code in Browser editor command quick reference
-KEY:MENU:NAV F10
-KEY:CONTEXTMENU:NAV Shift-F10
 
 https://vscode.dev - has settings synced to GitHub account
 
@@ -67,6 +65,7 @@ KEY:WLX:BOTTOM:NAV Ctrl-End
 *KEY:JUMPDEF:CODE Win-Alt g d Enter
 *KEY:JUMPREF:CODE Ctrl-F12
 *KEY:JUMPBACK:FIND Alt-Left
+KEY:COMPLETE:CODE Ctrl-Space
 
 KEY:OSX:SELECTALL:MARK Cmd-Up Shift-Cmd-Down
 *KEY:SELECTALL:MARK Ctrl-a
@@ -119,12 +118,13 @@ KEY:MOVEDN:EDIT Alt-Down
 *KEY:ZENVIEW:VIEW Ctrl-k z Mostly just the editor view
 *KEY:NOZENVIEW:VIEW Esc Esc Back before zen mode
 
+KEY:MENU:CMD F10
+KEY:CONTEXTMENU:CMD Shift-F10
 KEY:COMMAND:CMD F1 or Ctmd-Shift-p
 KEY:SHELL:CMD Ctrl-`
 *KEY:BINDKEY:CMD Ctrl-k Ctrl-s
 *KEY:SETTINGS:CMD Ctrl-,
 
-KEY:COMPLETE:CODE Ctrl-Space
 
 ====================================================
 Install Extensions (with or without sync):
