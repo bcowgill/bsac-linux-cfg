@@ -577,6 +577,13 @@ FLASH_EXTRACTED="$FLASH_EXTRACTED_DIR/libflashplayer.so"
 FLASH_URL="http://fpdownload.macromedia.com/pub/flashplayer/updaters/11/$FLASH_ARCHIVE.tar.gz"
 CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 
+# TODO Brave Brower setup/install attempted
+# https://brave.com/linux/
+# sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+# echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+# sudo apt update -- error no public key for brave.
+# sudo apt install brave-browser
+
 # Mobile phone mounting tools
 MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 
