@@ -139,16 +139,29 @@ KEY:SETTINGS:CMD Ctmd-,
 
 ====================================================
 Install Extensions (with or without sync):
-ext install tonybaloney.vscode-pets
 ext install evan-buss.font-switcher
-ext install vscode-icons
-ext install christian-kohler.path-intellisense
-ext install codespaces-contrib.codeswing
+ Switch Font / Switch Terminal Font commands added, add ProFontWindows
+ext install oderwat.indent-rainbow
+ext install mechatroner.rainbow-csv
+ Set auto header first line
+ Set # for comment lines
+ Turn on detect spaces in fields
+ Turn on context menu options in explorer
 ext install wix.vscode-import-cost
+ change to italic text
+ext install Blodwynn.featurehighlight
 ext install naumovs.color-highlight
 ext install bierner.color-info
-ext install oderwat.indent-rainbow
 ext install wayou.vscode-todo-highlight
+  Add config for MUSTDO as TODO: and FIXME: are defaults(with colon)
+    "todohighlight.keywords": [
+        { "text": "MUSTDO", "color": "yellow", "backgroundColor": "red", "isWholeLine": true }
+    ],
+ext install vscode-icons
+ext install tonybaloney.vscode-pets
+
+ext install christian-kohler.path-intellisense
+ext install codespaces-contrib.codeswing
 ext install aaron-bond.better-comments
 ext install bierner.emojisense
 ext install idleberg.emoji-code
@@ -157,8 +170,6 @@ ext install ms-vscode.hexeditor
 ext install searKing.preview-vscode
 ext install bierner.markdown-preview-github-styles
 ext install mikestead.dotenv
-ext install Blodwynn.featurehighlight
-ext install mechatroner.rainbow-csv
 ext install GrapeCity.gc-excelviewer
 ext install mrmlnc.vscode-json5
 ext install aeschli.vscode-css-formatter
