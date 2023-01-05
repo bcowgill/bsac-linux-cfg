@@ -1,4 +1,6 @@
 Visual Studio Code in Browser editor command quick reference
+KEY:MENU:NAV F10
+KEY:CONTEXTMENU:NAV Shift-F10
 
 https://vscode.dev - has settings synced to GitHub account
 
