@@ -116,7 +116,7 @@ KEY:WLX:REPLACE:EDIT Ctrl-h
 KEY:UNDO:EDIT Ctmd-z
 KEY:REDO:EDIT Ctmd-y
 KEY:CASECHANGE:EDIT command palette case
-*KEY:TOGGLEQUOTE:EDIT
+*KEY:TOGGLEQUOTE:EDIT - extension not supported in browser
 KEY:WRAPQUOTE:EDIT Shift-Arrow ' Highlight the text to wrap then type the quote desired
 KEY:WRAPQUOTE:EDIT Shift-Arrow " Highlight the text to wrap then type the quote desired
 KEY:WRAPQUOTE:EDIT Shift-Arrow ` Highlight the text to wrap then type the quote desired
