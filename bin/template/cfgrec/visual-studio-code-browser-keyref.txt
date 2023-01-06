@@ -142,37 +142,65 @@ Install Extensions (with or without sync):
 ext install evan-buss.font-switcher
  Switch Font / Switch Terminal Font commands added, add ProFontWindows
 ext install oderwat.indent-rainbow
-ext install mechatroner.rainbow-csv
+ext install wix.vscode-import-cost
+ change to italic text
+ext install naumovs.color-highlight (css color)
+ext install bierner.color-info (css color hover)
+ext install tomma5o.sassyah (sass breadcrumb in status line)
+ext install aaron-bond.better-comments (comments colored @param etc)
+ext install wayou.vscode-todo-highlight
+  Add config for MUSTDO as TODO: and FIXME: are defaults(with colon)
+    "todohighlight.keywords": [
+        { "text": "MUSTDO", "color": "yellow", "backgroundColor": "red", "isWholeLine": true },
+        { "text": "xyzzy", "color": "yellow", "backgroundColor": "green", "isWholeLine": false },
+        { "text": "XYZZY", "color": "yellow", "backgroundColor": "green", "isWholeLine": false },
+        { "text": "alert(", "color": "black", "backgroundColor": "red", "isWholeLine": false },
+        { "text": "console.error(", "color": "black", "backgroundColor": "red", "isWholeLine": false },
+        { "text": "console.warn(", "color": "black", "backgroundColor": "orange", "isWholeLine": false },
+        { "text": "console.log(", "color": "black", "backgroundColor": "yellow", "isWholeLine": false },
+        { "text": "console.info(", "color": "black", "backgroundColor": "yellow", "isWholeLine": false },
+        { "text": "console.trace(", "color": "black", "backgroundColor": "yellow", "isWholeLine": false },
+        { "text": "console.debug(", "color": "black", "backgroundColor": "yellow", "isWholeLine": false },
+        { "text": "console.", "color": "black", "backgroundColor": "rebeccapurple", "isWholeLine": false },
+        { "text": ".only(", "backgroundColor": "#346238", "isWholeLine": true },
+        { "text": "fdescribe(", "backgroundColor": "#346238", "isWholeLine": true },
+        { "text": " fit(", "backgroundColor": "#346238", "isWholeLine": true },
+        { "text": "\tfit(", "backgroundColor": "#346238", "isWholeLine": true },
+        { "text": ".skip(", "backgroundColor": "#353535", "isWholeLine": true },
+        { "text": "xdescribe(", "backgroundColor": "#353535", "isWholeLine": true },
+        { "text": " xit(", "backgroundColor": "#353535", "isWholeLine": true },
+        { "text": "\txit(", "backgroundColor": "#353535", "isWholeLine": true },
+    ],
+ext install bierner.emojisense
+    : for emoji completion to inserd character
+    Emoji picker Cmd-i / Ctrl-Alt-i / Ctrl-i
+ext install idleberg.emoji-code
+    ji for emoji completion in css/html etc to get character code inserted  
+dzhavat.css-flexbox-cheatsheet
+  command palette flexbox
+
+ext install ms-vscode.hexeditor (needs ability to set font size)
+ext install searKing.preview-vscode (preview html, md, image urls etc)
+    Toggle Preview Ctmd+Shift+v
+    Toggle Preview to side Ctmd+k v
+ext install bierner.github-markdown-preview (.md github files )
+ext install bierner.markdown-preview-github-styles
+ext install IBM.output-colorizer (.log files & output panels)
+ext install mikestead.dotenv (.env file support)
+ext install mrmlnc.vscode-json5
+ext install Blodwynn.featurehighlight (.feature file support)
+ext install mechatroner.rainbow-csv  (.csv .tsv file support)
  Set auto header first line
  Set # for comment lines
  Turn on detect spaces in fields
  Turn on context menu options in explorer
-ext install wix.vscode-import-cost
- change to italic text
-ext install Blodwynn.featurehighlight
-ext install naumovs.color-highlight
-ext install bierner.color-info
-ext install wayou.vscode-todo-highlight
-  Add config for MUSTDO as TODO: and FIXME: are defaults(with colon)
-    "todohighlight.keywords": [
-        { "text": "MUSTDO", "color": "yellow", "backgroundColor": "red", "isWholeLine": true }
-    ],
+ext install GrapeCity.gc-excelviewer (.csv .tsv .xls etc)
+
 ext install vscode-icons
 ext install tonybaloney.vscode-pets
 
-ext install christian-kohler.path-intellisense
+XYZZY -----
 ext install codespaces-contrib.codeswing
-ext install aaron-bond.better-comments
-ext install bierner.emojisense
-ext install idleberg.emoji-code
-ext install IBM.output-colorizer
-ext install ms-vscode.hexeditor
-ext install searKing.preview-vscode
-ext install bierner.markdown-preview-github-styles
-ext install mikestead.dotenv
-ext install GrapeCity.gc-excelviewer
-ext install mrmlnc.vscode-json5
-ext install aeschli.vscode-css-formatter
 ext install csstools.postcss
 ext install formulahendry.auto-complete-tag
 ext install esbenp.prettier-vscode
@@ -211,5 +239,10 @@ ext install cmstead.jsrefactor
 ext install DavidAnson.vscode-markdownlint
 ext install formulahendry.auto-complete-tag
 ext-install waderyan.nodejs-extension-pack
+
+not necessary
+ext install christian-kohler.path-intellisense
+ext install aeschli.vscode-css-formatter
+
 
 Prettier - settings changed: Trailing comma: all; use Tabs: true
