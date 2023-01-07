@@ -89,6 +89,7 @@ KEY:CUT:PASTE Ctmd-x
 KEY:PASTE:PASTE Ctmd-v
 KEY:COPYLINE:PASTE Ctmd-c (when nothing selected)
 KEY:CUTLINE:PASTE Ctmd-x
+KEY:DUPLINE:PASTE Ctmd-d (after Duplicate selection or line extension installed)
 KEY:WLX:DUPLINE:PASTE Ctrl-c Ctrl-v (when nothing selected)
 KEY:OSX:DUPLINE:PASTE Alt-Shift-Down
 KEY:OSX:DUPLINEUP:PASTE Alt-Shift-Up
@@ -134,7 +135,7 @@ KEY:MENU:CMD F10
 KEY:CONTEXTMENU:CMD Shift-F10
 KEY:COMMAND:CMD F1 or Ctmd-Shift-p
 KEY:SHELL:CMD Ctrl-`
-KEY:BINDKEY:CMD Ctmd-k Ctrl-s
+KEY:BINDKEY:CMD Ctmd-k Ctmd-s (can search for a key binding like: option cmd q)
 KEY:SETTINGS:CMD Ctmd-,
 
 ====================================================
@@ -195,19 +196,22 @@ ext install mechatroner.rainbow-csv  (.csv .tsv file support)
  Turn on detect spaces in fields
  Turn on context menu options in explorer
 ext install GrapeCity.gc-excelviewer (.csv .tsv .xls etc)
+ext install csstools.postcss (.css postcss support)
+ext install chrmarti.regex
+  Ctmd-Alt-m  open preview window to test regex against text
 
+ext install formulahendry.auto-rename-tag (html tag editing)
+ext install geeebe.duplicate
+  Ctmd-d duplicate line / selection
+ext install stkb.rewrap
+  Alt-q rewraps text in comments intelligently
 ext install vscode-icons
 ext install tonybaloney.vscode-pets
 
 XYZZY -----
 ext install codespaces-contrib.codeswing
-ext install csstools.postcss
-ext install formulahendry.auto-complete-tag
 ext install esbenp.prettier-vscode
-ext install chrmarti.regex
-ext install geeebe.duplicate
 ext install qcz.text-power-tools
-ext install stkb.rewrap
 ext install yatki.vscode-surround
 ext install Tyriar.sort-lines
 ext install Tyriar.lorem-ipsum
@@ -243,6 +247,8 @@ ext-install waderyan.nodejs-extension-pack
 not necessary
 ext install christian-kohler.path-intellisense
 ext install aeschli.vscode-css-formatter
+ext install formulahendry.auto-complete-tag
+ext install formulahendry.auto-close-tag
 
 
 Prettier - settings changed: Trailing comma: all; use Tabs: true
