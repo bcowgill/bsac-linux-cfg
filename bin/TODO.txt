@@ -6,6 +6,10 @@ libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
 calibre /home/me/d/docs/philosophy/objectivism/On-Purpose-Biddle-Hersey.pdf &
 
+Project Yaron Brook podcasts download
+/home/me/d/Music/_NEW
+yaron-podcast-urls.lst  download from this list
+
 Currently wymlink.sh tool for emulating symbolic links with git commit support
 Currently /home/me/bin/character-samples/quote-samples.pl
 Currently /home/me/bin/character-samples/samples/quote-marks.txt

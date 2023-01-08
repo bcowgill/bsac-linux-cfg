@@ -23,6 +23,7 @@ my $MAX_CODEPOINT = hex('10FFFF');
 if (scalar(@ARGV) && $ARGV[0] eq '--help')
 {
 	my $cmd = $FindBin::Script;
+	my $qq = chr(34);
 
 	print << "USAGE";
 usage: $cmd [-N] [-all] U+XXXX {U+XXXX} "\\\\N{UNICODE_CHARACTER_NAME}" '\\N{UNICODE_CHARACTER_NAME}'
@@ -35,6 +36,14 @@ Output a table of utf8 characters starting at a given code point.
 example:
 
 $cmd -10 U+0100 \\\\N{WHITE_SMILING_FACE}
+
+Save a full table of unicode characters with class name and full name.
+
+$cmd -all U+0000 > ~/bin/data/unicode/unicode-names.txt
+
+Same as above but as a JSON lookup.
+
+$cmd U+0000 | perl -pne 'chomp; m{U\\+(\\w+)\\s+(\\[\\w+\\])\\s+(.+)}; \$u = substr(${qq}000\$1$qq, -4); \$_ = \$2 ? qq{$qq\\\\u\$u$qq: { class: $qq\$2$qq, name: $qq\$3$qq},\\n}:$qq$qq'
 USAGE
 	exit(0);
 }
