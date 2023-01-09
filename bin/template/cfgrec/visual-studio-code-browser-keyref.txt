@@ -217,6 +217,10 @@ ext install vscode-icons
 ext install tonybaloney.vscode-pets
 
 
+toggle quotes for text files would like to
+‘’
+“”
+
 XYZZY -----
 ext install Remisa.shellman
 ext install codespaces-contrib.codeswing
