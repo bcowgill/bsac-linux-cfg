@@ -117,7 +117,7 @@ KEY:WLX:REPLACE:EDIT Ctrl-h
 KEY:UNDO:EDIT Ctmd-z
 KEY:REDO:EDIT Ctmd-y
 KEY:CASECHANGE:EDIT command palette case
-*KEY:TOGGLEQUOTE:EDIT - extension not supported in browser
+*KEY:TOGGLEQUOTE:EDIT Ctmd-' (extension not supported in browser)
 KEY:WRAPQUOTE:EDIT Shift-Arrow ' Highlight the text to wrap then type the quote desired
 KEY:WRAPQUOTE:EDIT Shift-Arrow " Highlight the text to wrap then type the quote desired
 KEY:WRAPQUOTE:EDIT Shift-Arrow ` Highlight the text to wrap then type the quote desired
@@ -172,13 +172,8 @@ ext install wayou.vscode-todo-highlight
         { "text": " xit(", "backgroundColor": "#353535", "isWholeLine": true },
         { "text": "\txit(", "backgroundColor": "#353535", "isWholeLine": true },
     ],
-ext install bierner.emojisense
-    : for emoji completion to inserd character
-    Emoji picker Cmd-i / Ctrl-Alt-i / Ctrl-i
-ext install idleberg.emoji-code
-    ji for emoji completion in css/html etc to get character code inserted  
-dzhavat.css-flexbox-cheatsheet
-  command palette flexbox
+ext install chrmarti.regex
+  Ctmd-Alt-m  open preview window to test regex against text
 
 ext install ms-vscode.hexeditor (needs ability to set font size)
 ext install searKing.preview-vscode (preview html, md, image urls etc)
@@ -197,31 +192,41 @@ ext install mechatroner.rainbow-csv  (.csv .tsv file support)
  Turn on context menu options in explorer
 ext install GrapeCity.gc-excelviewer (.csv .tsv .xls etc)
 ext install csstools.postcss (.css postcss support)
-ext install chrmarti.regex
-  Ctmd-Alt-m  open preview window to test regex against text
+ext install jeff-hykin.better-shellscript-syntax (.sh better)
 
+ext install BriteSnow.vscode-toggle-quotes
+  Ctmd-' (added ` and ␡ to default list of quote chars)
 ext install formulahendry.auto-rename-tag (html tag editing)
 ext install geeebe.duplicate
   Ctmd-d duplicate line / selection
 ext install stkb.rewrap
   Alt-q rewraps text in comments intelligently
+ext install bierner.emojisense
+    : for emoji completion to inserd character
+    Emoji picker Cmd-i / Ctrl-Alt-i / Ctrl-i
+ext install idleberg.emoji-code
+    ji for emoji completion in css/html etc to get character code inserted  
+ext install Tyriar.sort-lines
+    F9 sort selected lines (length ascending) (manually bound, overided debug breakpoint)
+    Ctrl-F9 sort selected lines (length descending) (manually bound)
+ext install qcz.text-power-tools
+dzhavat.css-flexbox-cheatsheet
+  command palette flexbox
+
 ext install vscode-icons
 ext install tonybaloney.vscode-pets
 
+
 XYZZY -----
+ext install Remisa.shellman
 ext install codespaces-contrib.codeswing
 ext install esbenp.prettier-vscode
-ext install qcz.text-power-tools
 ext install yatki.vscode-surround
-ext install Tyriar.sort-lines
-ext install Tyriar.lorem-ipsum
 ext install heaths.vscode-guid
 ext inatall JakeWilson.vscode-picture
 ext install xabikos.JavaScriptSnippets
 ext install andys8.jest-snippets
-ext install Remisa.shellman
 ext install truman.autocomplate-shell
-ext install jeff-hykin.better-shellscript-syntax
 ext install akamud.vscode-javascript-snippet-pack [disabled]
 ext install burkeholland.simple-react-snippets [disabled]
 ext install xabikos.ReactSnippets [disabled]
@@ -249,6 +254,7 @@ ext install christian-kohler.path-intellisense
 ext install aeschli.vscode-css-formatter
 ext install formulahendry.auto-complete-tag
 ext install formulahendry.auto-close-tag
+ext install Tyriar.lorem-ipsum
 
 
 Prettier - settings changed: Trailing comma: all; use Tabs: true
