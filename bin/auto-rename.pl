@@ -34,6 +34,7 @@ usage: $cmd [--help|--man|-?] pattern prefix [destination [source]]
 
 This program will automatically rename or move matching files as they appear.
 
+NUM         environment variable sets initial number to use in file names. default is 1.
 pattern     regex pattern to match against source file name to be renamed.
 prefix      prefix for destination file names. Will have NNN appended to it.
 destination destination directory to move file to. default is current directory.
@@ -47,6 +48,7 @@ The program attempts to create an auto-rename.src/dst.lock directory in the dest
 If the lock directories already exist it will terminate early.
 
 If you create a file called stop in either lock directory it will cause the program to terminate at the next scan.
+If a file in the destination directory already matches the prefix and number NUM value it will be incremented until a unique file name is found.
 
 See also renumber-files.sh, rename-files.sh, cp-random.pl, renumber-by-time.sh
 
@@ -54,6 +56,9 @@ Example:
 
 $cmd '\\.jpg\$' screen-shot- \$HOME/screen-shots \$HOME/Desktop
 
+Begin numbering the output files at 12 instead of 1:
+
+NUM=12 $cmd '\\.jpg\$' screen-shot- \$HOME/screen-shots \$HOME/Desktop
 USAGE
 	exit($msg ? 1: 0);
 } # usage()
@@ -65,6 +70,7 @@ our $SKIP = 0;
 
 my $DELAY = 1;
 my $PAD = 3;
+my $START_AT = "$ENV{NUM}" =~ m{\A\d+\z}xms ? $ENV{NUM} : 1;
 my $signal_received = 0;
 
 my $username = $ENV{LOGNAME} || $ENV{USER} || getpwuid($REAL_USER_ID);
@@ -199,7 +205,7 @@ sub obtain_locks
 sub get_number
 {
 	my ($dir, $prefix) = @ARG;
-	my $number = 1;
+	my $number = $START_AT;
 	my $match = qr{$prefix(\d+)\.}xms;
 	debug("find next file number for $dir/$match", 5);
 	my $dh;
