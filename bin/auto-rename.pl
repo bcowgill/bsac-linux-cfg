@@ -70,7 +70,7 @@ our $SKIP = 0;
 
 my $DELAY = 1;
 my $PAD = 3;
-my $START_AT = "$ENV{NUM}" =~ m{\A\d+\z}xms ? $ENV{NUM} : 1;
+my $START_AT = length($ENV{NUM}) && $ENV{NUM} =~ m{\A\d+\z}xms ? $ENV{NUM} : 1;
 my $signal_received = 0;
 
 my $username = $ENV{LOGNAME} || $ENV{USER} || getpwuid($REAL_USER_ID);
@@ -232,6 +232,7 @@ sub show_help
 {
 	return say(<<"EOHELP");
 scanning $source directory for new files matching $pattern...
+   Will move them to $destination/$prefix and number them starting at $START_AT
    Press Ctrl-C or
    touch $source_lock_stop
    touch $destination_lock_stop
