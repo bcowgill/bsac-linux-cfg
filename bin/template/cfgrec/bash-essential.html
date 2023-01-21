@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="5" >
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="max-image-preview:large" />
+    <title>Essential Reference for the Linux Bash Terminal, Commands, and Scripting</title>
+    <meta name="description"
+        content="Use this guide to learn how to use the Linux Bash Terminal, Commands and Scripting for navigation, editing, command control, and easy access to history." />
+</head>
+<body>
+<!--
+https://www.makeuseof.com/linux-bash-terminal-shortcuts/
+https://www.linuxconsultant.org/10-most-important-things-to-know-about-bash-scripting/
+https://towardsdatascience.com/basics-of-bash-for-beginners-92e53a4c117a
+
+https://zwischenzugs.com/2018/01/21/ten-more-things-i-wish-id-known-about-bash/
+
+https://dev.to/awwsmm/101-bash-commands-and-tips-for-beginners-to-experts-30je
+-->
+    <style>
+        .hide {
+            display: none;
+            visibility: none;
+        }
+    </style>
+    <header class="hide" id="js-header" itemscope>
+        <div class="header-nav">
+            <h1 itemprop="headline" aria-level="1" title="MakeUseOf">Contents</h1>
+            <div id="header-menu" class="w-header-menu">
+                <div class="header-menu">
+                    <nav class="menu-nav" id="menu-site">
+                        <ul class="menu-nav-list" itemscope>
+
+                            <li itemprop="name" class="w-drop-down standard">
+                                <a class="menu-nav-link standard"><span>PC &amp; Mobile</span></a>
+                                <span class="menu-nav-more-btn icon dropdown-btn"></span>
+
+                                <ul class="drop-down">
+
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/windows/" itemprop="url">
+                                            <span>Windows</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/mac/" itemprop="url">
+                                            <span>Mac</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/linux/" itemprop="url">
+                                            <span>Linux</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/google-android/"
+                                            itemprop="url">
+                                            <span>Android</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/ios/" itemprop="url">
+                                            <span>iPhone &amp; iPad</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/web-based/" itemprop="url">
+                                            <span>Internet</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/security/" itemprop="url">
+                                            <span>Security</span>
+                                        </a>
+                                    </li>
+                                    <li itemprop="name">
+                                        <a class="menu-nav-link standard" href="/category/programming/" itemprop="url">
+                                            <span>Programming</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="w-content ">
+        <article class="w-article infinite-scroll   article">
+            <header class="article_heading">
+                <h1 class="heading_title">Essential Reference for the Linux Bash Terminal, Commands, and Scripting</h1>
+                <p class="heading_excerpt description">Use this guide to learn how to use the Linux Bash Terminal, Commands and Scripting for navigation, editing, command control, and easy access to history.  We will get you looking like a pro in no time at all.</p>
+            </header>
+            <section id="article-body" class="article-body" itemprop="articleBody">
+                <p>The Linux Bash (Bourne Again Shell) is a shell and command language that is known to most Linux
+                    users, since it&#39;s the default shell in most Linux distributions.</p>
+                <p>A beginner Linux user may find the Linux terminal usage a bit hard to grasp, especially because it
+                    relies heavily on using your arrow keys to move around. Additionally, constantly re-typing the
+                    commands, each with a slight variation, can be annoying.</p>
+                <p>However, Bash comes with many easy-to-use keyboard shortcuts and history functions that ensure
+                    efficient use of the terminal.  We will introduce them here in stages to guide you to mastery.</p>
+                <h2 id="getting-out-of-here">Help, get me out of here!</h2>
+                <p>First, let's show you how to get out of things when you get stuck.</p>
+                <div class="table-container">
+                    <table border="1" cellpadding="1" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Key / Command</p>
+                                </th>
+                                <th>
+                                    <p>Name / Mnemonic</p>
+                                </th>
+                                <th>
+                                    <p>Action</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Esc</p>
+                                </td>
+                                <td>
+                                    <p>Escape</p>
+                                </td>
+                                <td>
+                                    <p>Escape from the current mode of a program, or from the program itself. Sometimes you will need more than one to do the job.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-C</p>
+                                </td>
+                                <td>
+                                    <p>Break</p>
+                                </td>
+                                <td>
+                                    <p>Terminate the currently running program.  Sends <i>SIGINT</i> signal and kills currently executing command.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-D</p>
+                                </td>
+                                <td>
+                                    <p>End of input</p>
+                                </td>
+                                <td>
+                                    <p>Terminates standard input if the program is waiting for you.  If not, closes the current terminal.</p>
+                                    <p>So you might want to start a second shell to avoid getting logged out. Just type <b>bash</b> at the command prompt to start another shell level.  Type <b>echo $SHLVL</b> to see how deep your shell rabbit hole goes. When <i>$SHLVL</i> is 1 you are at risk of logging out when <b>Ctrl-D</b> is pressed next.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-Z</p>
+                                </td>
+                                <td>
+                                    <p>Snooze</p>
+                                </td>
+                                <td>
+                                    <p>Puts the current commnd to sleep so you can do something else.</p>
+                                    <p>You can see how many such stopped jobs you have with the <b>jobs</b> command.  You can resume a stopped job with the <b>fg</b> command to bring it back into the foreground so you can control it again.  You can resume a job in the background with the <b>bg</b> command.  It will run happily without you but will be suspended again if it needs to ask you for any information. Use the job number from the <b>jobs</b> command if you have more than one stopped job i.e. <b>bg 3</b></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-S</p>
+                                </td>
+                                <td>
+                                    <p>Pause</p>
+                                </td>
+                                <td>
+                                    <p>Stops the command from showing output to the screen.  It keeps chugging away at it, but you can't see it.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-Q</p>
+                                </td>
+                                <td>
+                                    <p>Continue</p>
+                                </td>
+                                <td>
+                                    <p>Resumes showing command output to the screen. Picks up where you paused it so you don't miss anything.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-L</p>
+                                </td>
+                                <td>
+                                    <p>Clear</p>
+                                </td>
+                                <td>
+                                    <p>Similar to <b>clear</b> command, clears the terminal screen.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>ps</p>
+                                </td>
+                                <td>
+                                    <p>Processes</p>
+                                </td>
+                                <td>
+                                    <p>Shows what processes (programs) and stopped jobs are running.</p>
+                                    <p>You can end any of them using the number under the <i>PID</i> column with the <b>kill -HUP <i>PID</i></b> command.  If it doesn't work the first time, change <i>-HUP</i> to <i>-TERM</i>, <i>-SIGINT</i> or <i>-KILL</i> until it does.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>man <i>command-name</i></p>
+                                </td>
+                                <td>
+                                    <p>Manual Page</p>
+                                </td>
+                                <td>
+                                    <p>Help on commands from the instruction manual.  When finished reading, press <b>q</b> to quit.</p>
+                                    <p>Use <b>man bash</b> to get help on the shell itself (4000+ lines of wisdom there.)</p>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+<!-- XYZZY -->
+
+                <h2 id="getting-around">Getting around the command line.</h2>
+                <p>Second, how to get around the command line like a pro!  Here is the anatomy of a command:</p>
+                <b><code>ls &nbsp;-alrt /tmp /etc/*.sh "my file.txt" &lt;Enter&gt;</code></b><br />
+                <code>[A] [ B ] [C  ] [-- D --] [---- E ----] [- F -]</code>
+                <p>A = The command or program name.  Everything after the command name are called parameters or arguments.</p>
+                <p>B = Options, switches, flags, settings which affect the command. Usually begin with <b>-</b> or <b>--</b> and can be separated as <b>-a -l</b> or combined as <b>-al</b>  Sometimes they require a value as <b>-c3</b>, <b>-c=3</b> or <b>-c 3</b></p>
+                <p>C, D and E are directory, path, or filename parameters.  You must be careful to use quotation marks to surround any parameters with spaces in them or they will be mistaken for separate values like <i>my</i> and <i>file.txt</i> instead of <i>"my file.txt"</i></p>
+                <p>F = End of command. You can also use other ways to group or end the command on one line and maybe put another on the same line i.e <i>& ; && || # | &lt; > 2> >> 2>> ( ) ` ` $( ) \</i></p>
+
+                <div class="table-container">
+                    <table border="1" cellpadding="1" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Key / Command</p>
+                                </th>
+                                <th>
+                                    <p>Name / Mnemonic</p>
+                                </th>
+                                <th>
+                                    <p>Action</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-A</p>
+                                </td>
+                                <td>
+                                    <p>Home</p>
+                                </td>
+                                <td>
+                                    <p>Move to the start of the command line</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-E</p>
+                                </td>
+                                <td>
+                                    <p>End</p>
+                                </td>
+                                <td>
+                                    <p>Move to the end of the command line</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>history</p>
+                                </td>
+                                <td>
+                                    <p>Show History</p>
+                                </td>
+                                <td>
+                                    <p>Shows full history of bash commands which have been executed.</p>
+                                    <p>You can filter the list to find matches with <b>history | grep <i>command</i></b>.  Then you can re-run a numbered command using the original parameters with <b>!<i>number</i></b> or you can run the previous command starting with 'perl' as <b>!perl</b></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-R <i>command</i></p>
+                                </td>
+                                <td>
+                                    <p>History Match</p>
+                                </td>
+                                <td>
+                                    <p>Reverse search the bash command history.</p>
+                                    <p>As you type the <i>command</i> text it will search and show you the matching command. Press <b>Ctrl-R</b> again to get the previous one.  When you find the one you want, press <b>Tab</b>, <b>Esc</b>, or <b>Ctrl-J</b> to accept it for further editing before it is executed. Or press <b>Ctrl-C</b> to abort and start over.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>^<i>match</i>^<i>replace</i></p>
+                                </td>
+                                <td>
+                                    <p>History Replace</p>
+                                </td>
+                                <td>
+                                    <p>Re-run the previous command after a replacement.</p>
+                                    <p>If you made a mistake in the previous command line you can quickly correct it without retyping or a lot of arrow key editing.</p>
+                                    <p>It is also a safe way to see what files will be deleted before you remove them.  For example do <b>ls /tmp/*.sh</b> to see what files would match, then if you are happy to delete all of them you can just say <b>^ls^rm</b> and the command executed will be <b>rm /tmp/*.sh</b></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!<i>number</i>:s/<i>match</i>/<i>replace</i></p>
+                                </td>
+                                <td>
+                                    <p>History Replace</p>
+                                </td>
+                                <td>
+                                    <p>Re-run the numbered command after a search and replacement.</p>
+                                    <p>After a history list show you are a real smartass by re-running a numbered command with a typo error correction. i.e. <b>!42:s/fnid/find/</b></p>
+                                    <p>To master history see the <i>HISTORY EXPANSION</i> section of the <b>man bash</b> page.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 id="linux-bash-terminal-keyboard-shortcuts"> Linux Bash Terminal Keyboard Shortcuts</h2>
+                <div class="table-container">
+                    <table border="1" cellpadding="1" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Shortcut</p>
+                                </th>
+                                <th>
+                                    <p>Action</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan=2>
+                                    <p><strong>Bash Navigation</strong></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-XX</p>
+                                </td>
+                                <td>
+                                    <p>Switch cursor position between start of the command line and the current position
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-] + x</p>
+                                </td>
+                                <td>
+                                    <p>Moves the cursor forward to next occurrence of x</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-F / Esc-F</p>
+                                </td>
+                                <td>
+                                    <p>Moves the cursor one word forward</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-B / Esc-B</p>
+                                </td>
+                                <td>
+                                    <p>Moves the cursor one word backward</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-Ctrl-] + x</p>
+                                </td>
+                                <td>
+                                    <p>Moves cursor to the previous occurrence of x</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=2>
+                                    <p><strong>Bash History</strong></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-P</p>
+                                </td>
+                                <td>
+                                    <p>Non-incremental reverse search of bash history</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-_</p>
+                                </td>
+                                <td>
+                                    <p>Undo previous command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-P / Up arrow</p>
+                                </td>
+                                <td>
+                                    <p>Moves to previous command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-N / Down arrow</p>
+                                </td>
+                                <td>
+                                    <p>Moves to next command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-S</p>
+                                </td>
+                                <td>
+                                    <p>Gets the next most recent command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-O</p>
+                                </td>
+                                <td>
+                                    <p>Runs and re-enters the command found via Ctrl-S and Ctrl-R</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-G</p>
+                                </td>
+                                <td>
+                                    <p>Exits history search mode</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!!</p>
+                                </td>
+                                <td>
+                                    <p>Runs last command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!*</p>
+                                </td>
+                                <td>
+                                    <p>Runs previous command except its first word</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!*:p</p>
+                                </td>
+                                <td>
+                                    <p>Displays what !* substitutes</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!x</p>
+                                </td>
+                                <td>
+                                    <p>Runs recent command in the bash history that begins with x</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!x:p</p>
+                                </td>
+                                <td>
+                                    <p>Displays the x command and adds it as the recent command in history</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!$</p>
+                                </td>
+                                <td>
+                                    <p>Same as OPTION+., brings forth last argument of the previous command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!^</p>
+                                </td>
+                                <td>
+                                    <p>Substitutes first argument of last command in the current command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!$:p</p>
+                                </td>
+                                <td>
+                                    <p>Displays the word that !$ substitutes</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>^123^abc</p>
+                                </td>
+                                <td>
+                                    <p>Replaces 123 with abc</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!n:m</p>
+                                </td>
+                                <td>
+                                    <p>Repeats argument within a range (i.e, m 2-3)</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!fi</p>
+                                </td>
+                                <td>
+                                    <p>Repeats latest command in history that begins with fi</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!n</p>
+                                </td>
+                                <td>
+                                    <p>Run nth command from the bash history</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!n:p</p>
+                                </td>
+                                <td>
+                                    <p>Prints the command !n executes</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>!n:$</p>
+                                </td>
+                                <td>
+                                    <p>Repeat arguments from the last command (i.e, from argument n to $)</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=2>
+                                    <p><strong>Bash Editing</strong></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-U</p>
+                                </td>
+                                <td>
+                                    <p>Deletes before the cursor until the start of the command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-K</p>
+                                </td>
+                                <td>
+                                    <p>Deletes after the cursor until the end of the command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-W</p>
+                                </td>
+                                <td>
+                                    <p>Removes the command/argument before the cursor</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-D</p>
+                                </td>
+                                <td>
+                                    <p>Removes the character under the cursor</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-H</p>
+                                </td>
+                                <td>
+                                    <p>Removes character before the cursor</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-D</p>
+                                </td>
+                                <td>
+                                    <p>Removes from the character until the end of the word</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-Backspace</p>
+                                </td>
+                                <td>
+                                    <p>Removes from the character until the start of the word</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-. / Esc+.</p>
+                                </td>
+                                <td>
+                                    <p>Uses last argument of previous command</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-&lt;</p>
+                                </td>
+                                <td>
+                                    <p>Moves to the first line of the bash history</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-&gt;</p>
+                                </td>
+                                <td>
+                                    <p>Moves to the last line of the bash history</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Esc-T</p>
+                                </td>
+                                <td>
+                                    <p>Switch between last two words before cursor</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-T</p>
+                                </td>
+                                <td>
+                                    <p>Switches current word with the previous</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan=2>
+                                    <p><strong>Bash Information</strong></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>TAB</p>
+                                </td>
+                                <td>
+                                    <p>Autocompletes the command or file/directory name</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>~TAB TAB</p>
+                                </td>
+                                <td>
+                                    <p>List all Linux users</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Ctrl-I</p>
+                                </td>
+                                <td>
+                                    <p>Completes the command like TAB</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-?</p>
+                                </td>
+                                <td>
+                                    <p>Display files/folders in the current path for help</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Alt-*</p>
+                                </td>
+                                <td>
+                                    <p>Display files/folders in the current path as parameter</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-container">
+                    <table border="1" cellpadding="1" cellspacing="1">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <p>Key / Command</p>
+                                </th>
+                                <th>
+                                    <p>Name / Mnemonic</p>
+                                </th>
+                                <th>
+                                    <p>Action</p>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Esc</p>
+                                </td>
+                                <td>
+                                    <p>Escape</p>
+                                </td>
+                                <td>
+                                    <p>Escape from the current mode of a program, or from the program itself. Sometimes you will need more than one to do the job.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 id="plenty-more-to-learn-about-linux"> Plenty More to Learn About Linux</h2>
+                <p>The Bash shell keyboard shortcuts work around the developer&#39;s DRY (Don&#39;t Repeat Yourself)
+                    philosophy. They help make effective use of your time by improving productivity in a fast-paced work
+                    environment.</p>
+                <p>You can get a list of the most commonly used <a href="https://www.makeuseof.com/linux-bash-terminal-shortcuts/">Bash keyboard shortcuts.</a></p>
+                </section>
+
+            <footer class="article-footer"></footer>
+        </article>
+    </main>
+</body>
+</html>
