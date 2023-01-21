@@ -506,7 +506,7 @@ function do_status {
 		[ -e "$FULL" ] && show_times && check_space
 	else
 		[ -e "$FULL_SAVE" ] && which cowsay > /dev/null && cowsay "Full backup in progress"
-		[ -e "$FULL_SAVE" ] && ls -alh "$FULL_SAVE"
+		[ -e "$FULL_SAVE" ] && ls -alh "$FULL_SAVE" "$FULL"
 	fi
 	echo `du -sh "$SOURCE"` used space in backup source
 	echo Local Free space on "$BK_DIR"
