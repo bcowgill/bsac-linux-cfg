@@ -26,6 +26,9 @@ It will resize the images to match the photo frame dimensions.
 
 mode  can be copy or move.  default is copy
 width, height values are in pixels. default is [$WIDTH x $HEIGHT]
+
+See also filter-images.sh image-crop-rotate.sh imgcat.sh label-photo.sh ls-camera.sh ls-meta.sh viewimg.sh get-image-size.pl identify display convert
+
 "
 	exit 0
 }

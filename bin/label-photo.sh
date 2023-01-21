@@ -26,6 +26,8 @@ Different image formats support different meta-data so the default is to use the
 
 If caption, comment and label are omitted it will show the current values for the image specified.
 
+See also filter-images.sh image-crop-rotate.sh image-sort-resize.sh imgcat.sh ls-camera.sh ls-meta.sh viewimg.sh get-image-size.pl identify display convert
+
 Example:
 
 $cmd photo.jpg "Comment text" "Label text" "Caption text"

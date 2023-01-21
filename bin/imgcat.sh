@@ -80,8 +80,15 @@ function error() {
 }
 
 function show_help() {
-    echo "Usage: imgcat [-p] filename ..." 1>&2
-    echo "   or: cat filename | imgcat" 1>&2
+	local cmd;
+	cmd=$(basename $0)
+
+	echo "
+usage: $cmd [-p] filename ...
+   or: cat filename | $cmd
+
+See also filter-images.sh image-crop-rotate.sh image-sort-resize.sh label-photo.sh ls-camera.sh ls-meta.sh viewimg.sh get-image-size.pl identify display convert
+"
 }
 
 function check_dependency() {

@@ -18,7 +18,7 @@ This will filter a list of file names looking for image, picture, graphic file e
 -?      Shows help for this tool.
 
 
-See also filter-drawings.sh, filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-scripts.sh, filter-web.sh, filter-css.sh, filter-videos.sh, filter-sounds.sh, classify.sh
+See also filter-drawings.sh, filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-scripts.sh, filter-web.sh, filter-css.sh, filter-videos.sh, filter-sounds.sh, classify.sh, get-image-size.pl, identify, display, convert
 
 See the online file extension database https://fileinfo.com/extension/tga
 

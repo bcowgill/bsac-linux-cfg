@@ -21,6 +21,8 @@ This will view an image file scaling it best to fit your monitor size.
 It uses detect-monitors.sh command to get the size of your main monitor.
 
 The xrandr command gives the size of screen.
+
+See also filter-images.sh image-crop-rotate.sh image-sort-resize.sh imgcat.sh label-photo.sh ls-camera.sh ls-meta.sh get-image-size.pl identify display convert
 "
 	exit $code
 }

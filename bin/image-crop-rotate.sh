@@ -26,6 +26,8 @@ Warning: it will first delete all image files which match the prefix. default is
 A rotate amount of 90 is 90 degrees clockwise and -90 is 90 degrees counter-clockwise. default is $NINETY
 
 The width and height values are percentages. default is [$W % x $H %]
+
+See also filter-images.sh image-sort-resize.sh imgcat.sh label-photo.sh ls-camera.sh ls-meta.sh viewimg.sh get-image-size.pl identify display convert
 "
 	exit 0
 }
