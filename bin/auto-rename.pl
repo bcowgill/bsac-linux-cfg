@@ -263,22 +263,24 @@ sub get_new_files
 {
 	my ($source_dir, $pattern_match) = @ARG;
 	debug("check for new file matches of $pattern_match in $source_dir", 2);
-	my $dh;
+	my $fh;
 	my $raFiles = [];
-	opendir($dh, $source_dir);
-	while (my $file = readdir($dh))
+	# List files in ascending time order
+	open($fh, qq{ls -rt "$source_dir"|});
+	while (my $file = <$fh>)
 	{
+		chomp($file);
+		print "got: $file\n";
 		my $full_filename = file_in_dir($source_dir, $file);
 		debug("ignore if $full_filename is a directory", 4);
 		next if (-d $full_filename);
 		debug("check file $file vs $pattern_match", 3);
-		# TODO get files from dir which match the pattern
 		if ($file =~ m{$pattern_match}xms) {
 			debug("matched $file", 3);
 			push(@$raFiles, $file);
 		}
 	}
-	closedir($dh);
+	close($fh);
 	return $raFiles;
 } # get_new_files()
 
