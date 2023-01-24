@@ -270,7 +270,7 @@ sub get_new_files
 	while (my $file = <$fh>)
 	{
 		chomp($file);
-		print "got: $file\n";
+		debug("got: $file\n", 5);
 		my $full_filename = file_in_dir($source_dir, $file);
 		debug("ignore if $full_filename is a directory", 4);
 		next if (-d $full_filename);
