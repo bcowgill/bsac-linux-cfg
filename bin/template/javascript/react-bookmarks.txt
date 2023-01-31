@@ -1,3 +1,13 @@
+Creating a new React App
+https://github.com/reactjs/reactjs.org/pull/5487
+create react app in limbo so suggest not to use it.
+if a Single Page App use Parcel or Vite
+	https://parceljs.org/recipes/web-extension/
+if a Server Rendered App use Next.js or Remix
+if a Static Website use Gatsby
+
+NX https://dev.to/nx/react-vite-and-typescript-get-started-in-under-2-minutes-56f
+
 Browsers
 Capture Browser Screenshot (no extension needed)
 https://swimburger.net/blog/web/hidden-gem-take-screenshots-using-built-in-commands-in-chrome-edge
