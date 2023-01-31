@@ -1,0 +1,15 @@
+What is the difference between git merge and git rebase?
+
+What are the pros and cons of each method of cloning an object?
+1. { ...obj }
+  or Object.create(obj)
+  or Object.assign({}, obj)
+2. JSON.parse(JSON.stringify(obj))
+3. _.cloneDeep(obj)
+4. structuredClone(obj)
+
+Refer to javascript sample code
+1. Explain what this component does.
+2. Why useRef and not useState?
+3. Why two useEffects?
+

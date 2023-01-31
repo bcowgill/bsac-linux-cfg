@@ -1,0 +1,14 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "Just some Javascript interview questions and experiments",
+  "main": "clone.js",
+  "scripts": {
+    "test": "node clone.js"
+  },
+  "author": "Brent S.A. Cowgill",
+  "license": "ISC",
+  "devDependencies": {
+    "lodash": "^4.17.21"
+  }
+}
