@@ -19,6 +19,7 @@ function warning {
 function error {
 	ERROR=${1:-0}
 	out "${RED}❌ ${@:2}"
+	#out "${RED}🚩 ${@:2}"
 }
 
 function hi {
