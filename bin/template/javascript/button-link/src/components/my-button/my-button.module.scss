@@ -1,5 +1,31 @@
+$blur: 0.4;
+
+$color-base: #a00;
+$color-focus: #c00;
+$color-active: #900;
+$color-hover: #f00;
+$color-text: #ff0;
+$color-gap: rgba(255,255,255,$blur);
+$color-disabled: $color-base;
+
+$margin-v: 2.5px;
+$margin-h: 2.5px;
+$border-outer: 2px;
+$border: 2px;
+$border-radius: 1rem;
+$pad-v: 0.1rem;
+$pad-h: 0.7rem;
+
+/* to make the link layout like a button first we need to clear the link properties */
 .link {
-    background: limegreen;
+    cursor: default;
+    display: inline-block;
+    box-sizing: border-box;
+    appearance: button;
+    text-decoration: none;
+    text-decoration-thickness: none;
+    text-align: center;
+    align-items: flex-start;
 }
 /* to style a button first we need to clear the properties, but we will keep the browsers default focus styling */
 .button {
@@ -11,5 +37,30 @@
     color: inherit;
 }
 .root {
-    background: rebeccapurple;
+    margin: $margin-v $margin-h;
+    outline: $border-outer solid transparent;
+    border: $border solid transparent;
+    border-radius: $border-radius;
+    padding: $pad-v $pad-h;
+    background: $color-base;
+    color: $color-text;
+}
+.root:focus-visible {
+    outline: $border-outer solid $color-focus;
+    border: $border solid $color-gap;
+    background: $color-focus;
+}
+.root:hover {
+    background: $color-hover;
+}
+.root:active {
+    outline: $border-outer dotted $color-active;
+    border: $border solid $color-gap;
+    background: $color-active;
+}
+.root:disabled {
+    outline: $border-outer solid transparent;
+    border: $border solid transparent;
+    background: $color-disabled;
+    opacity: $blur;
 }

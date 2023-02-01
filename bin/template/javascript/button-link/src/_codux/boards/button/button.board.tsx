@@ -1,5 +1,5 @@
 import { createBoard } from '@wixc3/react-board';
-import { Button } from '../../../components/button/button';
+import { Button, ButtonProps } from '../../../components/button/button';
 
 const SOURCE = 'https://www.builder.io/blog/buttons'
 
@@ -36,6 +36,26 @@ function TH({ children, ...props } : TDProps) {
     return <th style={left} {...props}>{children}</th>
 }
 
+function VButton(props: ButtonProps) {
+    return <div><Button {...props} /></div>
+}
+
+function Ok() {
+    return <Button onClick={handleClick} />
+}
+
+function Internal() {
+    return <Button href="/" />
+}
+
+function VOk() {
+    return <VButton onClick={handleClick} />
+}
+
+function VInternal() {
+    return <VButton href="/" />
+}
+
 export default createBoard({
     name: 'Button',
     Board: () => (<div>
@@ -47,14 +67,44 @@ export default createBoard({
                 </td></tr>
             </thead>
             <tbody>
-                <tr><TD><Button>Disabled</Button></TD><TH>no onClick or href ➡ disabled</TH></tr>
-                <tr><TD><Button onClick={handleClick}/></TD><TH>with onClick ➡ uses &lt;button&gt; with all focus, accessibility etc.</TH></tr>
+                <tr><TD><Button data-testid="TESTID">Disabled</Button></TD><TH>no onClick or href ➡ disabled</TH></tr>
+                <tr><TD><Ok /><Ok /></TD><TH>with onClick ➡ uses &lt;button&gt; side-by-side with all focus, accessibility etc.</TH></tr>
+                <tr><TD>
+                    <VOk />
+                    <VOk />
+                </TD><TH>with onClick ➡ uses &lt;button&gt; vertically with all focus, accessibility etc.</TH></tr>
                 <tr><TD><Button disabled onClick={handleClick}>Force Disabled</Button></TD><TH>onClick with disabled prop</TH></tr>
                 <tr><TD><form>&lt;form …&gt;<Button type="submit" onClick={handleClick}>Submit</Button>&lt;/form&gt;</form></TD><TH>type=submit when inside a &lt;form&gt;</TH></tr>
                 <tr><TD colSpan={2}><hr/></TD></tr>
-                <tr><TD><Button href={URL('as Link')} target="_blank">as Link</Button></TD><TH>with href _blank ➡ uses &lt;a&gt; instead of button for url history</TH></tr>
-                <tr><TD><Button href={URL('as Link with target')} target="panel">as Link with target</Button></TD><TH>with href and target=panel ➡ uses &lt;a&gt; instead of button for url history</TH></tr>
-                <tr><TD><Button disabled href={URL('disabled')} target="_blank">Force Disabled as Link</Button></TD><TH>href with disabled prop</TH></tr>
+                <tr><TD><Button href="/">Internal Link</Button></TD><TH>with href internal ➡ uses arrow with &lt;a&gt; instead of button for url history</TH></tr>
+                <tr><TD><Button href={URL('as External Link')}>External Link</Button></TD><TH>with href external site ➡ uses &lt;a&gt;</TH></tr>
+                <tr><TD><Button href="mailto:....">MailTo Link</Button></TD><TH>with href as mailto ➡ uses &lt;a&gt; with external icon</TH></tr>
+                <tr><TD><Button href={URL('as Link with target')} target="panel">as Link with target</Button></TD><TH>with href and target=panel ➡ uses &lt;a&gt; with external icon</TH></tr>
+                <tr><TD><Button disabled href={URL('disabled')} target="_blank">Force Disabled as Button</Button></TD><TH>href with disabled prop</TH></tr>
+                <tr><TD>
+                    <Internal />
+                    <Button href={URL('side by side links')}/>
+                </TD><TH>side-by-side links</TH></tr>
+                <tr><TD>
+                    <Button href={URL('side by side links and buttons')}/>
+                    <Ok />
+                    <Button href={URL('side by side buttons and links')}/>
+                    <Internal />
+                    <Ok />
+                    <Internal />
+                </TD><TH>side-by-side buttons and links</TH></tr>
+                <tr><TD>
+                    <VInternal />
+                    <VButton href={URL('vertical links')}/>
+                </TD><TH>vertical links</TH></tr>
+                <tr><TD>
+                    <VButton href={URL('vertical links and buttons')}/>
+                    <VOk />
+                    <VButton href={URL('vertical buttons and links')}/>
+                    <VInternal />
+                    <VOk />
+                    <VInternal />
+                </TD><TH>vertical buttons and links</TH></tr>
             </tbody>
             <tfoot>
                 <tr><td colSpan={2}>

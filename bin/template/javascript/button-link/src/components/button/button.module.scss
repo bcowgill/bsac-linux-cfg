@@ -1,17 +1,21 @@
+$margin-v: 2.5px;
+$margin-h: 2.5px;
+
 .link {
-  /*    background: limegreen; */
+  display: inline-block;
 }
-/* to style a button first we need to clear the properties, but we will keep the browsers default focus styling */
-.button {
-  /*
-    font: inherit;
-    outline: none;
-    border: none;
-    padding: 0;
-    background: none;
-    color: inherit;
-*/
+.button {}
+.arrow {
+    position: relative;
+    left: 0.2rem;
+    text-decoration: none;
+}
+.above {
+    position: relative;
+    top: -0.3rem;
+    left: -0.3rem;
+    text-decoration: none;
 }
 .root {
-  /*   background: rebeccapurple; */
+  margin: $margin-v $margin-h;
 }

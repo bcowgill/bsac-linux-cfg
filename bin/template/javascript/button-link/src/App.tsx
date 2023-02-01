@@ -1,5 +1,18 @@
 import logo from './assets/logo.svg';
 import styles from './App.module.scss';
+import { MyButton } from './components/my-button/my-button';
+
+function handleClick() {
+    alert("You clicked the button!")
+}
+
+function VOk() {
+    return <div><MyButton onClick={handleClick} /></div>
+}
+
+function VLink() {
+    return <div><MyButton href="/">Ok</MyButton></div>
+}
 
 function App() {
     return (
@@ -17,6 +30,14 @@ function App() {
                 >
                     Learn React
                 </a>
+                <div style={{padding: '1rem'}}>
+                    <VLink />
+                    <VOk />
+                    <VLink />
+                    <VOk />
+                    <VOk />
+                    <VOk />
+                </div>
             </header>
         </div>
     );
