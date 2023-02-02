@@ -1,3 +1,19 @@
+In a previous role:
+
+What IDE do you use or like better?
+Describe the development process you followed from dev to test to production.
+How was the dev/test/prod environments and back ends set up in Azure/Pipeline to reduce complexity?
+How do you ensure quality code?
+What code review practices did you have?
+How did you configure cypress to test the different partner/themed builds in dev/test with backend data?
+How do you manage state in React apps?
+- redux - reducers, actions, context, relay etc
+Have you had to deal with optimisation of components, lists, slow rendering?
+How do you do styling?
+How is the front to back end communication?
+How do you document API's for use by front end?
+- swagger
+
 What is the difference between git merge and git rebase?
 
 What are the pros and cons of each method of cloning an object?
@@ -13,3 +29,5 @@ Refer to javascript sample code
 2. Why useRef and not useState?
 3. Why two useEffects?
 
+Refer to Food Outlet sample code
+1. How would you change it to load and show all the pages, not just the first one?

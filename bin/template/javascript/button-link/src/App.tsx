@@ -2,6 +2,10 @@ import logo from './assets/logo.svg';
 import styles from './App.module.scss';
 import { MyButton } from './components/my-button/my-button';
 
+function handleNavigateTo(href: string) : void {
+    document.location = href;
+}
+
 function handleClick() {
     alert("You clicked the button!")
 }
@@ -11,7 +15,7 @@ function VOk() {
 }
 
 function VLink() {
-    return <div><MyButton href="/">Ok</MyButton></div>
+    return <div><MyButton href="#paragraph" onNavigateTo={handleNavigateTo}>Ok</MyButton></div>
 }
 
 function App() {
@@ -39,6 +43,9 @@ function App() {
                     <VOk />
                 </div>
             </header>
+            <footer style={{ height: "600px"}}>
+                <div style={{ position: 'relative', top: '550px' }} id="paragraph">Hey, link</div>
+            </footer>
         </div>
     );
 }

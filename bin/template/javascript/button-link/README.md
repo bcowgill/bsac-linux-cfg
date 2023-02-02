@@ -3,6 +3,10 @@
 *	Sourced from article: [Everything you didn’t know you need to know about buttons](https://www.builder.io/blog/buttons)
 *	Created with [Codux IDE](https://help.codux.com/)
 
+# TODO / MUSTDO
+
+* unit tests for button / my-button - try ChatGPT writing tests, or writing component
+
 # Blank Scss Boilerplate for Codux
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

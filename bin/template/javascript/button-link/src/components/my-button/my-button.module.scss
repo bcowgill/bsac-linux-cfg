@@ -16,6 +16,15 @@ $border-radius: 1rem;
 $pad-v: 0.1rem;
 $pad-h: 0.7rem;
 
+/* to style a button first we need to clear the properties, but we will keep the browsers default focus styling */
+.button {
+    font: inherit;
+    outline: none;
+    border: none;
+    padding: 0;
+    background: none;
+    color: inherit;
+}
 /* to make the link layout like a button first we need to clear the link properties */
 .link {
     cursor: default;
@@ -26,15 +35,7 @@ $pad-h: 0.7rem;
     text-decoration-thickness: none;
     text-align: center;
     align-items: flex-start;
-}
-/* to style a button first we need to clear the properties, but we will keep the browsers default focus styling */
-.button {
-    font: inherit;
-    outline: none;
-    border: none;
-    padding: 0;
-    background: none;
-    color: inherit;
+    background: rebeccapurple !important; // MUSTDO remove, debug only...
 }
 .root {
     margin: $margin-v $margin-h;
@@ -45,13 +46,19 @@ $pad-h: 0.7rem;
     background: $color-base;
     color: $color-text;
 }
+/*
+    :focus less preferred
+    https://pawelgrzybek.com/the-difference-between-css-focus-and-focus-visible-pseudo-class/
+*/
 .root:focus-visible {
     outline: $border-outer solid $color-focus;
     border: $border solid $color-gap;
     background: $color-focus;
+    font-weight: bold;
 }
 .root:hover {
     background: $color-hover;
+    font-weight: bold;
 }
 .root:active {
     outline: $border-outer dotted $color-active;

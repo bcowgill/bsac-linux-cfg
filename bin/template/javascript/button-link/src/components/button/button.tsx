@@ -6,7 +6,7 @@ const displayName = 'Button';
 const external = '\u2b08'; // ⬈	U+2B08	[OtherSymbol]	NORTH EAST BLACK ARROW
 const internal = '\u27a1 '; // ➡	U+27A1	[OtherSymbol]	BLACK RIGHTWARDS ARROW
 
-const buttonClass = styles.button;
+const buttonClass = void 0; // use styles.button; if you style this in the scss file
 
 /*
     How to make a universal Call To Action that looks like a Link if href URL given otherwise looks like a Button.
