@@ -26,12 +26,12 @@ export interface ButtonProps {
     children?: React.ReactNode;
 }
 
-const Internal = () => {
-    return <span className={classNames(styles.arrow)}>{internal}</span>
+const Internal = (props : ButtonProps) => {
+    return <span className={classNames(styles.arrow)} {...props}>{internal}</span>
 }
 
-const External = () => {
-    return <span className={classNames(styles.above)}>{external}</span>
+const External = (props: ButtonProps) => {
+    return <span className={classNames(styles.above)} {...props}>{external}</span>
 }
 
 /**
