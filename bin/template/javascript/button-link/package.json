@@ -6,6 +6,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "coverage": "react-scripts test --all --watchAll=false --coverage --no-cache",
+    "nocoverage": "react-scripts test --all --watchAll=false --coverage --no-cache --coverageReporters=text --coverageReporters=html",
     "eject": "react-scripts eject"
   },
   "dependencies": {
@@ -31,6 +33,29 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.tsx",
+      "!src/index.tsx",
+      "!src/App.tsx",
+      "!src/**/*.test.tsx",
+      "!src/**/__tests__/*.tsx",
+      "!src/_codux/**/*.tsx"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 99,
+        "functions": 99,
+        "lines": 99,
+        "statements": 99
+      }
+    },
+    "coverageReporters": [
+      "text",
+      "html",
+      "cobertura"
     ]
   },
   "browserslist": {

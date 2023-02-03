@@ -5,6 +5,17 @@ import { Button } from '../button';
 const displayName = 'Button';
 
 describe(`${displayName} component`, () => {
+  test('renders default text as a disabled button if nothing given', () => {
+    const { getByTestId, getByText } = render(<Button/>);
+    const button = getByTestId(displayName);
+
+    expect(button.tagName).toBe('BUTTON');
+    expect(button).toHaveAttribute('type', 'button');
+    expect(button).toHaveAttribute('data-component', `${displayName}-button`);
+    expect(button).toBeDisabled();
+    getByText('Ok');
+  });
+
   test('renders as a button if no href is provided', () => {
     const { getByTestId, getByText } = render(<Button>Click me</Button>);
     const button = getByTestId(displayName);
