@@ -84,6 +84,7 @@ if [ "x$COMPANY" == "xclearbooks" ]; then
 fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
+	alias ide='/Applications/Codux.app/Contents/MacOS/Codux'
 	alias top='\top -o +state -O cpu'
 	alias sl='./scripts/lint.sh'
 	alias slf='./scripts/lint-fix.sh'

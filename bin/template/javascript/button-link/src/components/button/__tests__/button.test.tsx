@@ -20,6 +20,20 @@ import { Button } from '../button';
   ChatGPT did 64% of the job for me.
   And there was actually a bug in the code which was discovered by the tests it had written.
 
+
+  Been using Codux today to see if ChatGPT could write me some React component unit tests and have a few observations.
+
+  1. git commit does not work for me. Not sure why, no error is shown. If I try to run Codux from a terminal window no 
+  error messages show either.  All that happens is any files I have staged become unstaged but nothing gets committed.
+
+  2. Would be nice if there was an incremental file search in the files panel or a search bar in top title bar to quickly find files.
+  3. When you go to Boards, <code/> and then Cmd-Click on an import the file opens in the tiny editor window below the canvas.
+    Would be great if could drag that file tab up to the top level where files appear when you open them from the file tab.
+
+  Codux Version 14.2.2 (14.2.2)
+  node -v; git version
+  v18.12.1
+  git version 2.36.1.
  */
 
 const displayName = 'Button';
