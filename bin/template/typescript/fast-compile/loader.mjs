@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { transformSync } from '@swc/core'
 
-const extensionsRegex = /\.m?ts$/
+const extensionsRegex = /\.(m?ts|tsx)$/
 
 export async function load(url, context, nextLoad) {
   if (extensionsRegex.test(url)) {

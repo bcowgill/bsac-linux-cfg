@@ -2,8 +2,9 @@
 
 [Article from Javascript Weekly](https://featurist.co.uk/blog/running-typescript-in-node-with-near-zero-compilation-cost/)
 [Speedy Web Compiler](https://swc.rs)
+[Typescript](https://www.typescriptlang.org)
 
-npm install --save-dev @swc/core @swc/cli
+npm install --save-dev @swc/core @swc/cli typescript typescript@beta
 curl https://raw.githubusercontent.com/artemave/ts-swc-es-loader/main/loader.mjs -O
 curl https://raw.githubusercontent.com/artemave/ts-swc-es-loader/main/suppress-experimental-warnings.js -O
 
