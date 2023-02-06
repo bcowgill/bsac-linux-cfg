@@ -77,7 +77,7 @@ export default createBoard({
                 <tr><TD><form>&lt;form …&gt;<Button type="submit" onClick={handleClick}>Submit</Button>&lt;/form&gt;</form></TD><TH>type=submit when inside a &lt;form&gt;</TH></tr>
                 <tr><TD colSpan={2}><hr/></TD></tr>
                 <tr><TD><Button href="/">Internal Link</Button></TD><TH>with href internal ➡ uses arrow with &lt;a&gt; instead of button for url history</TH></tr>
-                <tr><TD><Button href={URL('as External Link')}>External Link</Button></TD><TH>with href external site ➡ uses &lt;a&gt;</TH></tr>
+                <tr><TD><Button href={URL('as External Link')}>External Link</Button></TD><TH>with href external site ➡ uses &lt;a&gt; with external icon</TH></tr>
                 <tr><TD><Button href="mailto:....">MailTo Link</Button></TD><TH>with href as mailto ➡ uses &lt;a&gt; with external icon</TH></tr>
                 <tr><TD><Button href={URL('as Link with target')} target="panel">as Link with target</Button></TD><TH>with href and target=panel ➡ uses &lt;a&gt; with external icon</TH></tr>
                 <tr><TD><Button disabled href={URL('disabled')} target="_blank">Force Disabled as Button</Button></TD><TH>href with disabled prop</TH></tr>
