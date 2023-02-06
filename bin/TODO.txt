@@ -1,3 +1,5 @@
+tx.pl transliterate a-z into unicode alphabet
+
 Project Free Will Notes
 vim /home/me/d/docs/philosophy/objectivism/free-will-course-harry-binswanger.txt
 
