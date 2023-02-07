@@ -12,3 +12,22 @@ const user = {
 
 console.log(user.name)
 */
+
+// Typescript samples from the Handbook
+// https://www.typescriptlang.org/docs/handbook/2/narrowing.html
+
+// type nothing = undefined | null | false | 0 | 0n | /^\s*$/ | /^\s*0*(.0*)?\s*$/| NaN;
+// type empty = undefined | null | false | 0 | 0n | /^\s*$/ | /^\s*0*(.0*)?\s*$/| NaN | [] | {};
+type fnAction = () => void;
+type procedure = () => void;
+
+type Fish = { swim: fnAction };
+type Bird = { fly: procedure };
+
+function move(animal: Fish | Bird) {
+  if ("swim" in animal) {
+    return animal.swim();
+  }
+
+  return animal.fly();
+}

@@ -42,7 +42,7 @@ process.emit = function (...args) {
   const error = args[1]
   if (error.name === 'ExperimentalWarning' && message.test(error.message))
   {
-    console.warn(dump(error))
+    // console.warn(dump(error))
     return undefined
   }
 
