@@ -2,16 +2,23 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { transformSync } from '@swc/core'
 
+const DEBUG = false;
 const extensionsRegex = /\.(m?ts|tsx)$/
+const target = 'es2018'
 
 export async function load(url, context, nextLoad) {
   if (extensionsRegex.test(url)) {
-    const rawSource = readFileSync(fileURLToPath(url), 'utf-8')
+    const path = fileURLToPath(url)
+    if (DEBUG)
+    {
+        console.warn(`transpiling module ${path}`)
+    }
+    const rawSource = readFileSync(path, 'utf-8')
 
     const { code } = transformSync(rawSource, {
       filename: url,
       jsc: {
-        target: "es2018",
+        target,
         parser: {
           syntax: "typescript",
           dynamicImport: true
