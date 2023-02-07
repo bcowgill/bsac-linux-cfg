@@ -1,6 +1,4 @@
-const defaultEmit = process.emit
-
-const message = /Custom ESM Loaders is an experimental feature./
+// dump.js - a quick little object dumper for node / browser
 
 // function to get all attributes for some object
 function getPropertyNames (Obj, prev = []) {
@@ -38,13 +36,8 @@ function dump(Obj) {
   return info;
 }
 
-process.emit = function (...args) {
-  const error = args[1]
-  if (error.name === 'ExperimentalWarning' && message.test(error.message))
-  {
-    console.warn(dump(error))
-    return undefined
-  }
-
-  return defaultEmit.call(this, ...args)
+try {
+	throw new Error('CUSTOM')
+} catch (exception) {
+	console.warn(dump(dump), dump([1,2,3]), dump(exception))
 }
