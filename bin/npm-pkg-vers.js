@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
-# WINDEV tool useful on windows development machine
-# See also npm-fixup.sh, npm-ls.sh, npm-ls-prod.sh, npm-ls-dev.sh, npm-up-dev.sh, npm-up-prod.sh, npm-pkg-vers.js, nonpmproxy.sh, packagever.sh
+// BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+// WINDEV tool useful on windows development machine
+// See also npm-fixup.sh, npm-ls.sh, npm-ls-prod.sh, npm-ls-dev.sh, npm-up-dev.sh, npm-up-prod.sh, npm-pkg-vers.js, nonpmproxy.sh, packagever.sh
 
 const fs = require('fs');
 
