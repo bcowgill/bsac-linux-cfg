@@ -9,6 +9,14 @@ import { Button, ButtonProps } from '../../components/button/button';
 const clickMe = () => alert("You clicked the button")
 const URL = (label: string) => `http://duckduckgo.com?q=you clicked the link for ${label}`;
 
+interface StoryProps {
+    _info?: string,
+}
+
+interface Stories {
+    [index: string]: StoryProps
+}
+
 const Stories = {
     Default: { _info: 'defaults to disabled button with Ok as text' },
     Disabled: {
@@ -70,7 +78,7 @@ const HIDE_MENU : React.CSSProperties = { display: 'none', visibility: 'hidden' 
 
 interface StoryBoardProps
 {
-    stories?: typeof Stories,
+    stories?: Stories,
     Component?: typeof Wrapper,
 }
 
@@ -138,7 +146,7 @@ const StoryBoard = ({stories = Stories, Component = Wrapper} : StoryBoardProps) 
     }
     const [storyName, setStoryName] = useState(storyNames[0])
 
-    const props = stories[storyName as keyof typeof Stories] || {}
+    const props = stories[storyName as keyof Stories] || {}
 
     return (
         <div>
@@ -154,12 +162,7 @@ const StoryBoard = ({stories = Stories, Component = Wrapper} : StoryBoardProps) 
 
 const SOURCE = 'https://www.builder.io/blog/buttons'
 
-interface WrapperProps
-{
-    _info?: string
-}
-
-const Wrapper = ({_info, ...props}: WrapperProps) =>
+const Wrapper = ({_info, ...props}: StoryProps) =>
 {
     return (<>
         <div>

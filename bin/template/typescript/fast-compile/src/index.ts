@@ -16,6 +16,9 @@ console.log(user.name)
 // Typescript samples from the Handbook
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html
 
+// Regex to find Typescripts two ways of declaring arrays (not perfect): \bArray<(.+?)>|(\w+|\(.+?\))\[\]
+
+
 // type nothing = undefined | null | false | 0 | 0n | /^\s*$/ | /^\s*0*(.0*)?\s*$/| NaN;
 // type empty = undefined | null | false | 0 | 0n | /^\s*$/ | /^\s*0*(.0*)?\s*$/| NaN | [] | {};
 type fnAction = () => void;
@@ -161,3 +164,126 @@ function makeDate(mOrTimestamp: number, d?: number, y?: number): Date {
 const d1 = makeDate(12345678);
 const d2 = makeDate(5, 5, 5);
 //const d3 = makeDate(1, 3);
+
+interface User {
+  name: string,
+  age: number,
+  admin: boolean,
+}
+
+interface DB {
+  // providing the type info for the 'this' parameter of a function.
+  filterUsers(filter: (this: User) => boolean): User[];
+}
+
+// tell typescript to assume there is a function already
+declare function getDB(): DB
+if (false) {
+  const db = getDB();
+  const admins = db.filterUsers(function (this: User) {
+    return this.admin;
+  });
+  // const admins = db.filterUsers(() => {
+    //   return this.admin;
+    // });
+}
+
+function safeParse(s: string): unknown {
+  return JSON.parse(s);
+}
+const someRandomString = "asd;lkfjiow4jfo4oje"
+// Need to be careful with 'obj'!
+if (false) {
+  const obj = safeParse(someRandomString);
+}
+// function never returns
+function fail(msg: string): never {
+  throw new Error(msg);
+}
+
+type voidFunc = () => void;
+
+const vf1: voidFunc = () => {
+  return true;
+};
+
+const vf2: voidFunc = () => true;
+
+const vf3: voidFunc = function () {
+  return true;
+};
+
+// BUT literal void functions are not permitted.
+function lf2(): void {
+  // @ts-expect-error
+  return true;
+}
+
+const lf3 = function (): void {
+  // @ts-expect-error
+  return true;
+};
+
+interface NumberOrStringDictionary {
+  [index: string]: number | string;
+  length: number; // ok, length is a number
+  name: string; // ok, name is a string
+}
+
+interface ReadonlyStringArray {
+  readonly [index: number]: string;
+}
+declare function getReadOnlyStringArray() : ReadonlyStringArray
+
+if (false) {
+  let myArray: ReadonlyStringArray = getReadOnlyStringArray();
+  // myArray[2] = "Mallory"; // cannot change contents
+}
+// Multiple interface inheritance
+interface Colorful { color: string; }
+interface Circle2 { radius: number; }
+interface ColorfulCircle extends Colorful, Circle2 {}
+type ColorfulCircle2 = Colorful & Circle; // intersection type is equivalent to interface extends
+
+const cc: ColorfulCircle = {
+  color: "red",
+  radius: 42,
+};
+
+// ReadonlyArray is a Typescript built in type
+function doStuff(values: ReadonlyArray<string>) {
+  // We can read from 'values'...
+  const copy = values.slice();
+  console.log(`The first value is ${values[0]}`);
+
+  // ...but we can't mutate 'values'.
+  // values.push("hello!");
+  // Property 'push' does not exist on type 'readonly string[]'.
+}
+
+/*
+  Typescript Handbook Rules of Thumb for adding type information:
+    - Prefer to use interface to type until you need to use type specific features.
+
+  Everyday Types https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
+    - The type names String, Number, and Boolean (starting with capital letters) are legal, but refer to some special built-in types that will very rarely appear in your code. Always use string, number, or boolean for types.
+    - TypeScript doesn’t use “types on the left”-style declarations like int x = 0; Type annotations will always go after the thing being typed.
+    - Even if you don’t have type annotations on your parameters, TypeScript will still check that you passed the right number of arguments.
+    - Reminder: Because type assertions are removed at compile-time, there is no runtime checking associated with a type assertion. There won’t be an exception or null generated if the type assertion is wrong.
+
+  Functions https://www.typescriptlang.org/docs/handbook/2/functions.html
+    - Rule: When possible, use the <Type> parameter itself rather than constraining it.
+    - Rule: Always use as few <Type> parameters as possible.
+    - Rule: If a <Type> parameter only appears in one location, strongly reconsider if you actually need it.
+    - When writing a function type for a callback, never write an optional parameter unless you intend to call the function without passing that argument.
+    - Always have two or more signatures above the implementation of the function when writing an overloaded function.  The signature of the implementation is not visible from the outside.
+    - Always prefer parameters with union types instead of overloads when possible.
+    - void is not the same as undefined.
+    - object is not Object. Always use object! (functions are objects, so is array.)
+    - unknown is similar to the any type, but is safer because it’s not legal to do anything with an unknown value.
+    - never type represents values which are never observed.
+    - Function is an untyped function call and is generally best avoided because of the unsafe any return type. Prefer () => void.
+   HEREIAM Objects https://www.typescriptlang.org/docs/handbook/2/objects.html
+
+*/
+
