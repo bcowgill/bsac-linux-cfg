@@ -16,7 +16,9 @@ console.log(user.name)
 // Typescript samples from the Handbook
 // https://www.typescriptlang.org/docs/handbook/2/narrowing.html
 
-// Regex to find Typescripts two ways of declaring arrays (not perfect): \bArray<(.+?)>|(\w+|\(.+?\))\[\]
+// Regex to find Typescript's two ways of declaring
+// arrays (not perfect): \bArray<(.+?)>|(\w+|\(.+?\))\[\]
+// readonly arrays: \bReadonlyArray<(.+?)>|\breadonly\s+(\w+|\(.+?\))\[\]
 
 
 // type nothing = undefined | null | false | 0 | 0n | /^\s*$/ | /^\s*0*(.0*)?\s*$/| NaN;
@@ -261,6 +263,287 @@ function doStuff(values: ReadonlyArray<string>) {
   // Property 'push' does not exist on type 'readonly string[]'.
 }
 
+// tuples (limited length arrays or arrays with differnt types in each cell)
+// useful for defining common function signatures
+type StringNumberBooleans = [string, number, ...boolean[]];
+type StringBooleansNumber = [string, ...boolean[], number];
+type BooleansStringNumber = [...boolean[], string, number];
+
+function readButtonInput1(...args: [string, number, ...boolean[]]) {
+  const [name, version, ...input] = args;
+  // ...
+}
+// equivalent...
+function readButtonInput2(name: string, version: number, ...input: boolean[]) {
+  // ...
+}
+function readButtonInput3(...args: StringNumberBooleans) {
+  // ...
+}
+
+// Typing operators indexing, keyof, typeor, ReturnType
+type Arrayish = { [n: number]: unknown };
+type A = keyof Arrayish; // A ~ number
+type Mapish = { [k: string]: boolean };
+type M = keyof Mapish; // M ~ string | number
+let s = "hello";
+let n: typeof s; // n ~ string
+type Predicate = (x: unknown) => boolean;
+type K = ReturnType<Predicate>; // K ~ boolean
+
+type Person = { age: number; name: string; alive: boolean };
+type Age = Person["age"]; // Age ~ number
+type I1 = Person["age" | "name"]; // I1 ~ string | number
+type I2 = Person[keyof Person]; // I2 ~ string | number | boolean
+type AliveOrName = "alive" | "name";
+type I3 = Person[AliveOrName]; // I3 ~ string | boolean
+
+const MyArray = [
+  { name: "Alice", age: 15 },
+  { name: "Bob", age: 23 },
+  { name: "Eve", age: 38 },
+];
+type Person2 = typeof MyArray[number];
+type Age2 = typeof MyArray[number]["age"];
+type Age3 = Person["age"];
+
+// Conditional typing reduces number of overloads needed
+interface IdLabel {
+  id: number /* some fields */;
+}
+interface NameLabel {
+  name: string /* other fields */;
+}
+
+function createLabel(id: number): IdLabel;
+function createLabel(name: string): NameLabel;
+function createLabel(nameOrId: string | number): IdLabel | NameLabel;
+function createLabel(nameOrId: string | number): IdLabel | NameLabel {
+  throw "unimplemented";
+}
+type NameOrId<T extends number | string> = T extends number
+  ? IdLabel
+  : NameLabel;
+function createLabel2<T extends number | string>(idOrName: T): NameOrId<T> {
+  throw "unimplemented";
+}
+
+type MessageOf<T extends { message: unknown }> = T["message"];
+type MessageOf2<T> = T extends { message: unknown } ? T["message"] : never;
+
+interface Email {
+  message: string;
+}
+interface Telephone {
+  ring(): string;
+}
+
+type EmailMessageContents = MessageOf<Email>; // EmailMessageContents ~ string
+
+type EmailMessageContents2 = MessageOf2<Email>; // EmailMessageContents2 ~ string
+type PhoneMessageContents = MessageOf2<Telephone>; // PhoneMessageContents ~ never
+
+type Flatten<T> = T extends any[] ? T[number] : T;
+// equivalent to using infer
+type Flatten2<Type> = Type extends Array<infer Item> ? Item : Type;
+// Extracts out the element type.
+type Str = Flatten<string[]>; // Str ~ string
+// Leaves the type alone.
+type Num = Flatten<number>; // Num ~ number
+
+type GetReturnType<Type> = Type extends (...args: never[]) => infer Return
+  ? Return
+  : never;
+
+type Num2 = GetReturnType<() => number>; // Num2 ~ number
+type Str2 = GetReturnType<(x: string) => string>; // Str ~ string
+type Bools = GetReturnType<(a: boolean, b: boolean) => boolean[]>; // Bools ~ boolean[]
+type Nope = GetReturnType<number>; // Nope ~ never -- not a function
+// type Nope2 = ReturnType<number>; // error
+
+// Distributive application - homogeneity
+type ToArray<Type> = Type extends any ? Type[] : never;
+type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
+
+type StrArrOrNumArr = ToArray<string | number>; // StrArrOrNumArr ~ string[] | number[]
+type StrOrNumArr = ToArrayNonDist<string | number>; // StrOrNumArr ~ (string | number)[]
+
+// A quick aside testing order of keys in obj, map, set
+const Obj = {};
+const M = new Map();
+const S = new Set();
+
+function add(k, v) {
+  Obj[k] = v;
+  M.set(k, v);
+  S.add(k);
+}
+
+add('z', 42)
+add('a', 42)
+add(0, 42)
+add('a', 23)
+// import util from 'util'
+const log = console.warn// (...args) => { console.warn(args.map((c) => /^(object|function)$/.test(typeof c) ? util.inspect(c) : c).join(" ")) }; // console.warn
+log('Obj', Obj)
+log('Map', M)
+log('Set', S)
+
+// log('Obj', Obj, 'keys:', Object.keys(Obj), 'values:', Object.values(Obj))
+// log('Map', M, 'keys:', M.keys(), 'values:', M.values())
+// log('Set', S, 'keys:', S.keys(), 'values:', S.values())
+// console.warn
+// Obj { '0': 42, z: 42, a: 23 } keys: [ '0', 'z', 'a' ] values: [ 42, 42, 23 ]
+// Map Map(3) { 'z' => 42, 'a' => 23, 0 => 42 } keys: [Map Iterator] { 'z', 'a', 0 } values: [Map Iterator] { 42, 23, 42 }
+// Set Set(3) { 'z', 'a', 0 } keys: [Set Iterator] { 'z', 'a', 0 } values: [Set Iterator] { 'z', 'a', 0 }
+
+// util.inspect
+// Obj { '0': 42, z: 42, a: 23 } keys: [ '0', 'z', 'a' ] values: [ 42, 42, 23 ]
+// Map Map(3) { 'z' => 42, 'a' => 23, 0 => 42 } keys: [Map Iterator] { 'z', 'a', 0 } values: [Map Iterator] { 42, 23, 42 }
+// Set Set(3) { 'z', 'a', 0 } keys: [Set Iterator] { 'z', 'a', 0 } values: [Set Iterator] { 'z', 'a', 0 }
+
+// object with keys in a specific order
+interface ordbject {
+  keys: Array<string>,
+  obj: object,
+}
+
+
+// Mapped objects
+type OptionsFlags<Type> = {
+  [Property in keyof Type]: boolean;
+};
+type FeatureFlags = {
+  darkMode: () => void;
+  newUserProfile: () => void;
+};
+
+type FeatureOptions = OptionsFlags<FeatureFlags>;
+// type FeatureOptions = {
+//     darkMode: boolean;
+//     newUserProfile: boolean;
+// }
+
+// (- minus) Removes 'readonly' attributes from a type's properties
+type CreateMutable<Type> = {
+  -readonly [Property in keyof Type]: Type[Property];
+};
+
+type LockedAccount = {
+  readonly id: string;
+  readonly name: string;
+};
+
+type UnlockedAccount = CreateMutable<LockedAccount>;
+// type UnlockedAccount = {
+//     id: string;
+//     name: string;
+// }
+
+// Removes 'optional' attributes from a type's properties
+type Concrete<Type> = {
+  [Property in keyof Type]-?: Type[Property];
+};
+type MaybeUser = {
+  id: string;
+  name?: string;
+  age?: number;
+};
+type SavedUser = Concrete<MaybeUser>;
+// type User = {
+//     id: string;
+//     name: string;
+//     age: number;
+// }
+
+// Rewriting property names with template literal types
+type Getters<Type> = {
+  [Property in keyof Type as `get${Capitalize<string & Property>}`]: () => Type[Property]
+};
+
+interface Person3 {
+  name: string;
+  age: number;
+  location: string;
+}
+
+type LazyPerson = Getters<Person3>;
+// type LazyPerson = {
+//   getName: () => string;
+//   getAge: () => number;
+//   getLocation: () => string;
+// }
+
+// Remove the 'kind' property
+type RemoveKindField<Type> = {
+  [Property in keyof Type as Exclude<Property, "kind">]: Type[Property]
+};
+
+interface Circle {
+  kind: "circle";
+  radius: number;
+}
+
+type KindlessCircle = RemoveKindField<Circle>;
+// type KindlessCircle = {
+//   radius: number;
+// }
+
+type EventConfig<Events extends { kind: string }> = {
+  [E in Events as E["kind"]]: (event: E) => void;
+}
+
+type SquareEvent = { kind: "square", x: number, y: number };
+type CircleEvent = { kind: "circle", radius: number };
+
+type Config = EventConfig<SquareEvent | CircleEvent>
+// type Config = {
+//   square: (event: SquareEvent) => void;
+//   circle: (event: CircleEvent) => void;
+// }
+
+// Flag up fields with Personally Identifieable Information
+type ExtractPII<Type> = {
+  [Property in keyof Type]: Type[Property] extends { pii: true } ? true : false;
+};
+
+type DBFields = {
+  id: { format: "incrementing" };
+  name: { type: string; pii: true };
+};
+
+type ObjectsNeedingGDPRDeletion = ExtractPII<DBFields>;
+
+// type ObjectsNeedingGDPRDeletion = {
+//     id: false;
+//     name: true;
+// }
+
+
+/*
+  Useful types for projects:
+  */
+type Fproc = () => void;
+type Fidentity<Type> = (Type) => Type
+type Mutable<Type> = {
+  -readonly [Property in keyof Type]: Type[Property];
+};
+type Immutable<Type> = {
+  readonly [Property in keyof Type]: Type[Property];
+};
+type PropCheck<Type> = {
+  [Property in keyof Type]: boolean;
+};
+// make all properties required
+type RequireAll<Type> = {
+  [Property in keyof Type]-?: Type[Property];
+};
+// make all properties optional
+type OptionAll<Type> = {
+  [Property in keyof Type]?: Type[Property];
+};
+
+
 /*
   Typescript Handbook Rules of Thumb for adding type information:
     - Prefer to use interface to type until you need to use type specific features.
@@ -283,7 +566,8 @@ function doStuff(values: ReadonlyArray<string>) {
     - unknown is similar to the any type, but is safer because it’s not legal to do anything with an unknown value.
     - never type represents values which are never observed.
     - Function is an untyped function call and is generally best avoided because of the unsafe any return type. Prefer () => void.
-   HEREIAM Objects https://www.typescriptlang.org/docs/handbook/2/objects.html
-
+  Objects https://www.typescriptlang.org/docs/handbook/2/objects.html
+    - Annotating types as readonly tuples when possible is a good default.
+HEREIAM Template Literal Types https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
 */
 
