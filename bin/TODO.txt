@@ -1,5 +1,13 @@
 tx.pl transliterate a-z into unicode alphabet
 
+http://randsday.com
+https://www.youtube.com/watch?v=6kgc8l9kWfU
+
+To celebrate Randsday, you do something not done on any other holiday: you give yourself a present. Randsday is for getting that longed-for luxury you ordinarily would not buy for yourself. Or for doing that long-postponed, self-pampering activity you cannot seem to fit into your chore-packed schedule.
+
+Randsday is the time to challenge any duty-premise, re-affirm your love of your values, and honor the principle that joy in living is an end in itself.
+
+
 Project Free Will Notes
 vim /home/me/d/docs/philosophy/objectivism/free-will-course-harry-binswanger.txt
 
