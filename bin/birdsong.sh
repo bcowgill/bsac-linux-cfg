@@ -16,13 +16,14 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?] [directory] [exclude] [delay_dice]
+$cmd [--help|--man|-?] [--list] [directory] [exclude] [delay_dice]
 
 This will play random sound files [.$EXT] from a given directory with a random delay between them.
 
 directory   The directory to choose sound files from. default is "$DIR"
 exclude     The regex pattern to use for excluding chosen sound files. default is "$EXCLUDE"
 delay_dice  The number of standard dice to roll to determine the delay in seconds. default is $DICE
+--list  Shows the birdsong files available to select from.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
@@ -53,10 +54,19 @@ fi
 if [ "$1" == "-?" ]; then
 	usage 0
 fi
+if [ "$1" == "--list" ]; then
+	shift
+	LIST=1
+fi
 
 DIR=${1:-$DIR}
 EXCLUDE=${2:-$EXCLUDE}
 DICE=${3:-$DICE}
+
+if [ ! -z $LIST ]; then
+	ls -1 $DIR/*.$EXT | grep -vE "$EXCLUDE"
+	exit 0
+fi
 
 echo You can silence all the birds with: rm $DIR/$FLAG
 if [ ! -e "$DIR/$FLAG" ]; then
