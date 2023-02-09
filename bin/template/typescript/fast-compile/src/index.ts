@@ -371,6 +371,7 @@ type StrOrNumArr = ToArrayNonDist<string | number>; // StrOrNumArr ~ (string | n
 // A quick aside testing order of keys in obj, map, set
 const Obj = {};
 const M = new Map();
+// const W = new WeakMap();
 const S = new Set();
 
 function add(k, v) {
@@ -520,6 +521,15 @@ type ObjectsNeedingGDPRDeletion = ExtractPII<DBFields>;
 // }
 
 
+type EmailLocaleIDs = "welcome_email" | "email_heading";
+type FooterLocaleIDs = "footer_title" | "footer_sendoff";
+
+type AllLocaleIDs = `${EmailLocaleIDs | FooterLocaleIDs}_id`;
+// type AllLocaleIDs = "welcome_email_id" | "email_heading_id" | "footer_title_id" | "footer_sendoff_id"
+type Lang = "en" | "ja" | "pt";
+type LocaleMessageIDs = `${Lang}_${AllLocaleIDs}`;
+// type LocaleMessageIDs = "en_welcome_email_id" | "en_email_heading_id" | "en_footer_title_id" | "en_footer_sendoff_id" | "ja_welcome_email_id" | "ja_email_heading_id" | "ja_footer_title_id" | "ja_footer_sendoff_id" | "pt_welcome_email_id" | "pt_email_heading_id" | "pt_footer_title_id" | "pt_footer_sendoff_id"
+
 /*
   Useful types for projects:
   */
@@ -542,6 +552,72 @@ type RequireAll<Type> = {
 type OptionAll<Type> = {
   [Property in keyof Type]?: Type[Property];
 };
+
+interface Rectangle<Type> {
+  width: Type;
+  height: Type;
+  area: Type;
+  perimeter: Type;
+}
+
+class Rect implements Rectangle<bigint> {
+  static _id: number = 0;
+  // declares properties of each instance
+  private _id: number;
+  private _w = 0n;
+  private _h = 0n;
+  private _a = 0n;
+  private _p = 0n;
+
+  constructor(rect: { width: bigint, height: bigint })
+  constructor(width?: bigint, height?: bigint)
+  constructor(widthOrRect?: bigint | { width?: bigint, height?: bigint } , height = 0n) {
+    this._id = Rect._id++;
+    if (typeof widthOrRect === 'object') {
+      this._w = widthOrRect.width || 0n;
+      this.height = widthOrRect.height || 0n;
+    }
+    else {
+      this._w = widthOrRect || 0n;
+      this.height = height;
+    }
+  }
+  protected _calc(this: Rect) {
+    this._a = this._w * this._h;
+    this._p = 2n * (this._w + this._h);
+  }
+  get width(): bigint {
+    return this._w;
+  }
+  set width(value: bigint | number | string) {
+    this._w = BigInt(value);
+    this._calc();
+  }
+  get height(): bigint {
+    return this._h;
+  }
+  set height(value: bigint | number | string) {
+    this._h = BigInt(value);
+    this._calc();
+  }
+  get area() {
+    return this._a;
+  }
+  get perimeter() {
+    return this._p;
+  }
+}
+Object.getPrototypeOf(Rect).counter = 0;
+
+const r = new Rect(2n, 6n)
+console.warn('Rect', r, r.area)
+r.height = "23"
+// r.width = "NaN"
+// r.width = NaN
+console.warn("Rect'", r, r.area)
+console.warn('Rect2', new Rect(r))
+console.warn('Rect3', new Rect())
+console.warn('Rect::_id', Rect._id)
 
 
 /*
@@ -568,6 +644,34 @@ type OptionAll<Type> = {
     - Function is an untyped function call and is generally best avoided because of the unsafe any return type. Prefer () => void.
   Objects https://www.typescriptlang.org/docs/handbook/2/objects.html
     - Annotating types as readonly tuples when possible is a good default.
-HEREIAM Template Literal Types https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
+HEREIAM 
+  Classes https://www.typescriptlang.org/docs/handbook/2/classes.html
+    - Note that a field-backed get/set pair with no extra logic is very rarely useful in JavaScript. It’s fine to expose public fields if you don’t need to add additional logic during the get/set operations.
 */
 
+/*
+ChatGPT has nothing so eloquent as Rand, that's for sure.
+
+chatgpt, What are values?
+
+A: Values are principles or standards that an individual, group, or society considers important or desirable. They serve as a guide for behavior and decision making, and often reflect one's beliefs and priorities. Examples of values include honesty, compassion, fairness, equality, responsibility, and respect.
+
+Q: Why does man need values?
+
+A: Man needs values for several reasons:
+
+Direction and purpose: Values provide direction and purpose in life, helping individuals make decisions and set goals that align with their beliefs and priorities.
+Personal and social identity: Values help shape an individual's personal identity and social identity, as they reflect what a person believes in and stand for.
+Guiding behavior: Values serve as a moral compass, helping individuals act in accordance with what they believe to be right and wrong.
+Building relationships: Values help build and maintain relationships, as individuals who share similar values tend to have a stronger connection.
+Promoting stability and order: Values help promote stability and order in society by providing a shared sense of what is important and acceptable.
+Overall, values play a crucial role in shaping an individual's worldview and guiding their behavior, both personally and socially.
+
+
+Q: Is there an objective moral code?
+
+A: The question of whether there is an objective moral code is a philosophical and religious debate that has been ongoing for centuries.
+Some people believe in an objective moral code that exists independently of human opinion, often rooted in religious or spiritual beliefs. According to this view, there are certain universal moral principles that apply to all people and situations, regardless of cultural or individual differences.
+Others argue that morality is subjective and culturally relative, with values and norms that vary from one society to another. These individuals believe that moral principles are created and maintained by human societies, and are not based on any objective, universal standard.
+The debate over the existence of an objective moral code is complex and cannot be definitively resolved, as it is ultimately a matter of personal belief. However, both perspectives continue to influence ethical and moral reasoning and inform personal and societal decision-making.
+*/
