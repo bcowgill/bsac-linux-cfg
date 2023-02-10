@@ -40,8 +40,8 @@ if (process.argv.length < FIRST_ARG) {
 
 for (let idx = FIRST_ARG; idx < process.argv.length; idx++) {
 	const arg = process.argv[idx];
-	if (/^\s*\d+$$/.test(arg)) {
-		showAddedDate(date, new Number(arg));
+	if (/^\s*[+-]?\d+\.?\d*$/.test(arg)) {
+		showAddedDate(date, parseFloat(arg, 10));
 	}
 	else {
 		date = new Date(arg);
