@@ -538,17 +538,18 @@ type Fidentity<Type> = (Type) => Type
 type Mutable<Type> = {
   -readonly [Property in keyof Type]: Type[Property];
 };
+// make all properties readonly - use TS builtin utility: Readonly<Type>
 type Immutable<Type> = {
   readonly [Property in keyof Type]: Type[Property];
 };
 type PropCheck<Type> = {
   [Property in keyof Type]: boolean;
 };
-// make all properties required
+// make all properties required - use TS builtin utility: Required<Type>
 type RequireAll<Type> = {
   [Property in keyof Type]-?: Type[Property];
 };
-// make all properties optional
+// make all properties optional - use TS builtin utility: Partial<Type>
 type OptionAll<Type> = {
   [Property in keyof Type]?: Type[Property];
 };
@@ -620,6 +621,33 @@ console.warn('Rect3', new Rect())
 console.warn('Rect::_id', Rect._id)
 
 
+type ObjectDescriptor<D, M> = {
+  data?: D;
+  methods?: M & ThisType<D & M>; // Type of 'this' in methods is D & M
+};
+
+function makeObject<D, M>(desc: ObjectDescriptor<D, M>): D & M {
+  let data: object = desc.data || {};
+  let methods: object = desc.methods || {};
+  return { ...data, ...methods } as D & M;
+}
+
+let obj = makeObject({
+  data: { x: 0, y: 0 },
+  methods: {
+    moveBy(dx: number, dy: number) {
+      this.x += dx; // Strongly typed this
+      this.y += dy; // Strongly typed this
+    },
+  },
+});
+
+obj.x = 10;
+obj.y = 20;
+console.warn('ThisType D&M Obj', obj)
+obj.moveBy(5, 5);
+console.warn("ThisType D&M Obj'", obj)
+
 /*
   Typescript Handbook Rules of Thumb for adding type information:
     - Prefer to use interface to type until you need to use type specific features.
@@ -644,9 +672,16 @@ console.warn('Rect::_id', Rect._id)
     - Function is an untyped function call and is generally best avoided because of the unsafe any return type. Prefer () => void.
   Objects https://www.typescriptlang.org/docs/handbook/2/objects.html
     - Annotating types as readonly tuples when possible is a good default.
-HEREIAM 
   Classes https://www.typescriptlang.org/docs/handbook/2/classes.html
     - Note that a field-backed get/set pair with no extra logic is very rarely useful in JavaScript. It’s fine to expose public fields if you don’t need to add additional logic during the get/set operations.
+  Utility Types https://www.typescriptlang.org/docs/handbook/utility-types.html
+    - utilities for async/Promise: Await<Type>
+    - utilities for properties of types: Partial<Type>, Required<Type>, Readonly<Type>, Record<Keys, Type>, Pick<Type, Keys>, Omit<Type, Keys>
+    - utilities for type unions: Exclude<Un1, Un2>, Extract<Un1, Un2>, NonNullable<Un>
+    - utilities for functions: Parameters<Fn>, ConstructorParameters<CFn>, ReturnType<Fn>, InstanceType<CFn>, ThisParameterType<Fn>, OmitThisParameterType<Fn>, ThisType<Type>
+    - utilities for strings: Uppercase<Str>, Lowercase<Str>, Capitalize<Str>, Uncapitalize<Str>
+  - like Awaited, Promise, Capitalize, etc
+HEREIAM 
 */
 
 /*
