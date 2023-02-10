@@ -1,8 +1,15 @@
 #!/bin/bash
 # silence the crontab launched cuckoo clock if running.
+# and the birdsong if playing.
 #set -x
 #ps -ef | grep cuckoo
 #echo ===
+
+SCREENSHOTS=$HOME/_DELETE_TO_STOP_SCREENSHOTS
+BIRDS=$HOME/d/Music/_Ringtones/birdsong/_DELETE_TO_SILENCE_THE_BIRDSONG_
+
+[ -e "$BIRDS" ] && rm "$BIRDS"
+[ -e "$SCREENSHOTS" ] && rm "$SCREENSHOTS"
 PID=`ps -ef | grep bin/cuckoo.sh | grep -vE 'crontab|grep' | perl -pne 's{\A\s*}{}xmsg; @x=split(/\s+/); $_ = $x[1]'`
 echo PID=$PID
 if [ ! -z "$PID" ]; then
