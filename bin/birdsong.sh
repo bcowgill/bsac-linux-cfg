@@ -2,7 +2,7 @@
 
 LAST=silence
 SONG=$LAST
-GAIN=-10
+GAIN=-20
 PARAM=--no-show-progress
 FLAG=_DELETE_TO_SILENCE_THE_BIRDSONG_
 

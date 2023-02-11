@@ -245,12 +245,12 @@ function full_backup {
 			MESSAGE="Need root access to update the mlocate database for the backup device $BK_DEV."
 			mynotify.sh "ezbackup-full" "$MESSAGE"
 			date
-			echo "NOTE: You should check if check-ezbackup-finished.sh detects updatedb-backup.sh command running while we wait for password prompt."
-			echo "set DIAGNOSE and try pswide.sh -ef | grep 'updatedb-backup.sh' etc..."
-			echo "NOTE2: sound-play 5 2 is next..."
+			#echo "NOTE: You should check if check-ezbackup-finished.sh detects updatedb-backup.sh command running while we wait for password prompt."
+			#echo "set DIAGNOSE and try pswide.sh -ef | grep 'updatedb-backup.sh' etc..."
+			#echo "NOTE2: sound-play 5 2 is next..."
 			sound-play.sh $HOME/bin/sounds/that_was_easy.wav 5 2
 			date
-			echo "NOTE3: updatedb-backup.sh is next..."
+			#echo "NOTE3: updatedb-backup.sh is next..."
 			updatedb-backup.sh "$BK_DEV" --notify
 			date
 		fi
