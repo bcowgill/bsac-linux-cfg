@@ -2,7 +2,7 @@
 
 LAST=silence
 SONG=$LAST
-NORM=-3
+GAIN=-10
 PARAM=--no-show-progress
 FLAG=_DELETE_TO_SILENCE_THE_BIRDSONG_
 
@@ -92,8 +92,7 @@ do
 		if which exiftool > /dev/null; then
 			exiftool "$SONG" |grep -E 'Title|Duration'
 		fi
-		play $PARAM "$SONG"
-		#play $PARAM --norm=$NORM "$SONG"
+		play $PARAM "$SONG" gain $GAIN
 		LAST="$SONG"
 
 		if [ ! -e "$DIR/$FLAG" ]; then
