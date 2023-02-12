@@ -681,7 +681,8 @@ console.warn("ThisType D&M Obj'", obj)
     - utilities for functions: Parameters<Fn>, ConstructorParameters<CFn>, ReturnType<Fn>, InstanceType<CFn>, ThisParameterType<Fn>, OmitThisParameterType<Fn>, ThisType<Type>
     - utilities for strings: Uppercase<Str>, Lowercase<Str>, Capitalize<Str>, Uncapitalize<Str>
   - like Awaited, Promise, Capitalize, etc
-HEREIAM 
+HEREIAM
+https://www.typescriptlang.org/docs/handbook/decorators.html
 */
 
 /*

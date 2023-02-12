@@ -5,10 +5,17 @@
 
 LAUNCH="emacsclient --no-wait --alternate-editor=emacs"
 
+if which sw_vers > /dev/null 2>&1 ; then
+	# MACOS!
+	open -a 'TextEdit' $*
+else
+	# Linux
 if [ -z "$2" ]; then
 	FILE=`echo $1 | perl -pne 's{:[:a-z0-9]* \s* \z}{}xmsgi'`
 	#echo edit [$FILE]
 	$LAUNCH "$FILE"
 else
 	$LAUNCH $*
+fi
+
 fi
