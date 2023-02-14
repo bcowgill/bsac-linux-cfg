@@ -648,6 +648,53 @@ console.warn('ThisType D&M Obj', obj)
 obj.moveBy(5, 5);
 console.warn("ThisType D&M Obj'", obj)
 
+
+// Prefer modern typescript's as const to using enum's
+const enum EDirection {
+  Up,
+  Down,
+  Left,
+  Right,
+}
+
+const ODirection = {
+  Up: 0,
+  Down: 1,
+  Left: 2,
+  Right: 3,
+} as const;
+
+EDirection.Up; // (enum member) EDirection.Up = 0
+
+ODirection.Up; // (property) Up: 0
+
+// Using the enum as a parameter
+function walk(dir: EDirection) {}
+
+// It requires an extra line to pull out the values
+type Direction = typeof ODirection[keyof typeof ODirection];
+function run(dir: Direction) {}
+
+walk(EDirection.Left);
+run(ODirection.Right);
+
+
+let pets = new Set(["Cat", "Dog", "Hamster"]);
+pets["species"] = "mammals";
+pets.add("<Mammals");
+for (let pet in pets) {
+  console.log(`in pets ${pet}: ${pets[pet]}`); // "species"
+  console.log(`  pets.has ${pet}:`, pets.has(pet));
+  
+}
+for (let pet of pets) {
+  console.log("of pets", pet); // "Cat", "Dog", "Hamster"
+  console.log(`  pets.has ${pet}:`, pets.has(pet));
+  console.log(`  in pets ${pet}:`, pet in pets);
+}
+console.log("keys of pets:", pets.keys());
+console.log("Object.keys of pets:", Object.keys(pets));
+
 /*
   Typescript Handbook Rules of Thumb for adding type information:
     - Prefer to use interface to type until you need to use type specific features.
@@ -681,6 +728,9 @@ console.warn("ThisType D&M Obj'", obj)
     - utilities for functions: Parameters<Fn>, ConstructorParameters<CFn>, ReturnType<Fn>, InstanceType<CFn>, ThisParameterType<Fn>, OmitThisParameterType<Fn>, ThisType<Type>
     - utilities for strings: Uppercase<Str>, Lowercase<Str>, Capitalize<Str>, Uncapitalize<Str>
   - like Awaited, Promise, Capitalize, etc
+  Enums https://www.typescriptlang.org/docs/handbook/enums.html
+    - prefer modern typescript's object as const to enums
+
 HEREIAM
 https://www.typescriptlang.org/docs/handbook/decorators.html
 */

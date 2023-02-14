@@ -733,12 +733,14 @@ if [ "$COMPANY" == "wipro" ]; then
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
 	# brew install --cask keycastr # show keys on screen as you type them...
+	# ranger is a vi style file manager -- used by qutebrowser
 	CUSTOM_PKG="
 		yarn
 		/usr/local/Cellar/lzo/2.10/lib/liblzo2.dylib:lzo
 		editorconfig
 		cf:cf-cli
 		groovy
+		ranger
 		/usr/local/Cellar/shared-mime-info/2.2/README.md:shared-mime-info
 	"
 fi # wipro MACOS
