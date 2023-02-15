@@ -1,3 +1,5 @@
+/* eslint-env node */
+
 const defaultEmit = process.emit
 
 const message = /Custom ESM Loaders is an experimental feature./
@@ -19,6 +21,7 @@ function getPropertyNames (Obj, prev = []) {
 }
 
 // function to dump useful information about an object/DOM in a specific order
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function dump(Obj) {
   const info = {
     instanceOf: Obj.constructor.name,

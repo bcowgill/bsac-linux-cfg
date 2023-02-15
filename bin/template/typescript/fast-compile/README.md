@@ -10,6 +10,10 @@ curl https://raw.githubusercontent.com/artemave/ts-swc-es-loader/main/suppress-e
 
 node --require ./suppress-experimental-warnings.js --enable-source-maps --loader ./loader.mjs my-script.ts
 
+Then add eslint
+
+https://typescript-eslint.io/getting-started
+npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint
 
 # Result of test:
 

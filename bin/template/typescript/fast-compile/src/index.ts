@@ -1,3 +1,6 @@
+/* eslint-env node */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 //import { B } from "./common"; // for npm run compile until typescript 5 arrives
 import { B } from "./common.ts"; // for npm run fast / compile with typescript@beta == 5
 
@@ -92,9 +95,10 @@ function getArea(shape: Shape) {
     case "rtriangle":
       area = shape.sideLength * shape.base / 2;
       break;
-    default:
+    default: {
       const _exhaustiveCheck: never = shape;
       return _exhaustiveCheck;
+    }
   }
   return area
 }
@@ -104,6 +108,7 @@ type DescribableFunction = {
   description: string;
   (someArg: number): boolean;
 };
+// eslint-disable-next-line @typescript-eslint/ban-types
 function doSomething(fn: Function | DescribableFunction) {
   const name = ((fn as DescribableFunction).description? (fn as DescribableFunction).description : fn.name) || 'anonymous'
   console.log(name + " returned " + fn(6));
@@ -180,6 +185,7 @@ interface DB {
 
 // tell typescript to assume there is a function already
 declare function getDB(): DB
+// eslint-disable-next-line no-constant-condition
 if (false) {
   const db = getDB();
   const admins = db.filterUsers(function (this: User) {
@@ -195,6 +201,7 @@ function safeParse(s: string): unknown {
 }
 const someRandomString = "asd;lkfjiow4jfo4oje"
 // Need to be careful with 'obj'!
+// eslint-disable-next-line no-constant-condition
 if (false) {
   const obj = safeParse(someRandomString);
 }
@@ -217,12 +224,12 @@ const vf3: voidFunc = function () {
 
 // BUT literal void functions are not permitted.
 function lf2(): void {
-  // @ts-expect-error
+  // @ts-expect-error documentation says literal void functions are not permitted
   return true;
 }
 
 const lf3 = function (): void {
-  // @ts-expect-error
+  // @ts-expect-error documentation says literal void functions are not permitted
   return true;
 };
 
@@ -237,8 +244,9 @@ interface ReadonlyStringArray {
 }
 declare function getReadOnlyStringArray() : ReadonlyStringArray
 
+// eslint-disable-next-line no-constant-condition
 if (false) {
-  let myArray: ReadonlyStringArray = getReadOnlyStringArray();
+  const myArray: ReadonlyStringArray = getReadOnlyStringArray();
   // myArray[2] = "Mallory"; // cannot change contents
 }
 // Multiple interface inheritance
@@ -286,7 +294,7 @@ type Arrayish = { [n: number]: unknown };
 type A = keyof Arrayish; // A ~ number
 type Mapish = { [k: string]: boolean };
 type M = keyof Mapish; // M ~ string | number
-let s = "hello";
+const s = "hello";
 let n: typeof s; // n ~ string
 type Predicate = (x: unknown) => boolean;
 type K = ReturnType<Predicate>; // K ~ boolean
@@ -343,6 +351,7 @@ type EmailMessageContents = MessageOf<Email>; // EmailMessageContents ~ string
 type EmailMessageContents2 = MessageOf2<Email>; // EmailMessageContents2 ~ string
 type PhoneMessageContents = MessageOf2<Telephone>; // PhoneMessageContents ~ never
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Flatten<T> = T extends any[] ? T[number] : T;
 // equivalent to using infer
 type Flatten2<Type> = Type extends Array<infer Item> ? Item : Type;
@@ -362,7 +371,9 @@ type Nope = GetReturnType<number>; // Nope ~ never -- not a function
 // type Nope2 = ReturnType<number>; // error
 
 // Distributive application - homogeneity
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ToArray<Type> = Type extends any ? Type[] : never;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
 
 type StrArrOrNumArr = ToArray<string | number>; // StrArrOrNumArr ~ string[] | number[]
@@ -562,7 +573,7 @@ interface Rectangle<Type> {
 }
 
 class Rect implements Rectangle<bigint> {
-  static _id: number = 0;
+  static _id = 0;
   // declares properties of each instance
   private _id: number;
   private _w = 0n;
@@ -627,12 +638,12 @@ type ObjectDescriptor<D, M> = {
 };
 
 function makeObject<D, M>(desc: ObjectDescriptor<D, M>): D & M {
-  let data: object = desc.data || {};
-  let methods: object = desc.methods || {};
+  const data: object = desc.data || {};
+  const methods: object = desc.methods || {};
   return { ...data, ...methods } as D & M;
 }
 
-let obj = makeObject({
+const obj = makeObject({
   data: { x: 0, y: 0 },
   methods: {
     moveBy(dx: number, dy: number) {
@@ -669,25 +680,25 @@ EDirection.Up; // (enum member) EDirection.Up = 0
 ODirection.Up; // (property) Up: 0
 
 // Using the enum as a parameter
-function walk(dir: EDirection) {}
+function walk(dir: EDirection) { return ODirection.Right -dir }
 
 // It requires an extra line to pull out the values
 type Direction = typeof ODirection[keyof typeof ODirection];
-function run(dir: Direction) {}
+function run(dir: Direction) { return ODirection.Right - dir }
 
 walk(EDirection.Left);
 run(ODirection.Right);
 
 
-let pets = new Set(["Cat", "Dog", "Hamster"]);
+const pets = new Set(["Cat", "Dog", "Hamster"]);
 pets["species"] = "mammals";
 pets.add("<Mammals");
-for (let pet in pets) {
+for (const pet in pets) {
   console.log(`in pets ${pet}: ${pets[pet]}`); // "species"
   console.log(`  pets.has ${pet}:`, pets.has(pet));
   
 }
-for (let pet of pets) {
+for (const pet of pets) {
   console.log("of pets", pet); // "Cat", "Dog", "Hamster"
   console.log(`  pets.has ${pet}:`, pets.has(pet));
   console.log(`  in pets ${pet}:`, pet in pets);
@@ -732,7 +743,7 @@ console.log("Object.keys of pets:", Object.keys(pets));
     - prefer modern typescript's object as const to enums
 
 HEREIAM
-https://www.typescriptlang.org/docs/handbook/decorators.html
+https://www.typescriptlang.org/docs/handbook/module-resolution.html
 */
 
 /*
