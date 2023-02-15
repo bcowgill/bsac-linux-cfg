@@ -5,6 +5,7 @@ module.exports = {
     // MUSTDO resolve this when eslint fully supports typescript5
     // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // "plugin:@typescript-eslint/strict",
+    "prettier"
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],

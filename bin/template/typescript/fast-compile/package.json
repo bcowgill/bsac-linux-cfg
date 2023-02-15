@@ -9,8 +9,8 @@
     "web": "time -p node lib/web.js",
     "fast": "./run-ts-fast.sh src/index.ts",
     "compile": "time -p npx tsc",
-    "eslint": "npx eslint .",
-    "format": "prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|json5?)\"",
+    "eslint": "time npx eslint .",
+    "format": "time npx prettier --ignore-path .eslintignore --write \"**/*.+(js|ts|json5?)\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -21,6 +21,7 @@
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
     "prettier": "^2.8.4",
     "typescript": "^5.0.0-beta"
   }

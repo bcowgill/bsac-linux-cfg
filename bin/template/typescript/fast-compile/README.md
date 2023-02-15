@@ -15,6 +15,11 @@ Then add eslint
 https://typescript-eslint.io/getting-started
 npm install --save-dev @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint
 
+https://blog.logrocket.com/linting-typescript-eslint-prettier/
+Then add prettier
+
+npm install --save-dev prettier eslint-config-prettier
+
 # Result of test:
 
 
