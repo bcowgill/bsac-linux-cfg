@@ -20,6 +20,28 @@ function getPropertyNames(Obj, prev = []) {
 	).sort()
 }
 
+/*
+// hidePII - Personally Identifiable Information
+// sensitive info like a password is fully obscured like ****.
+// other info is partially o******d.
+function hidePII(info, piiLevel) {
+	let hidden = info
+	if (piiLevel > 1) {
+		// passwords obscure all
+		hidden = info.replace(/./g, '*')
+		// MUSTDO add random # of characters
+	} else if (piiLevel > 0) {
+		// non-password obscure insides
+		hidden = info
+			.replace(/\d/g, '0')
+			.replace(/(\w)(\w*)(\w)/g, function hideInside() {
+				return 'o******d'
+			})
+	}
+	return hidden
+}
+*/
+
 // function to dump useful information about an object/DOM in a specific order
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function dump(Obj) {

@@ -1,0 +1,87 @@
+Qutebrowser Cheat Sheet
+
+Learn them from ShortcutFoo Dojo:
+Qutebrowser commands and shortcuts | ShortcutFoo
+https://www.shortcutfoo.com/app/dojos/qutebrowser
+
+VI based motion keys:
+hjkl ~ left down up right
+HJKL ~ back-hist next-tab prev-tab forward-hist
+th tl ~ new tab: back forward
+wh wl ~ new window: back forward
+applies to scrolling the window and history/tab
+
+Copying / Yanking I
+    yy  Copy/yank URL
+    yY  Copy URL to selection
+    yt  Copy title to clipboard
+    yT  Copy title to selection
+
+Pasting I
+    pp  Open URL from clipboard
+    pP  Open URL from selection
+    Pp  Open URL from clipboard in new tab
+    PP  Open URL from selection in new tab
+    wp  Open URL from clipboard in new window
+    wP  Open URL from selection in new window
+
+Navigation I
+    [[  Click "previous"-link on page
+    ]]  Click "next"-link on page
+    {{  Click "preious"-link on page in new tab
+    }}  Click "next"-link on page in new tab
+    ⌃a  Increment no. in URL
+    ⌃x  Decrement no. in URL
+
+Scrolling I
+    ⌃f  Page down (forward)
+    ⌃b  Page up (back)
+    ⌃d  Half page down
+    ⌃u  Half page up
+
+Opening I
+    go  Open based on cur. URL
+    gO  Open based on cur. URL in new tab
+    xO  Open based on cur. URL in background tab
+    xo  Open in background tab
+    wo  Open in new window
+
+Back / Forward I
+    th  Back (in new tab)
+    wh  Back (in new window)
+    tl  Forward (in new tab)
+    wl  Forward (in new window)
+
+Extended Hint Mode I
+    ;b  Open hint in background tab
+    ;h  Hover over hint (mouse-over)
+    ;i  Hint images
+    ;I  Hint images in new tab
+    ;o  Put hinted URL in cmd. line
+    ;O  Put hinted URL in cmd. line in new tab
+
+Extended Hint Mode II
+    ;y  Yank hinted URL to clipboard
+    ;Y  Yank hinted URL to selection
+    ;r  Rapid hinting
+    ;R  Rapid hinting in new window
+    ;d  Download hinted URL
+
+Misc Commands I
+    gm  Move tab
+    gl  Move tab to left
+    gr  Move tab to right
+    gC  Clone tab
+    gf  View page source
+    gu  Navigate up in URL
+    gU  Navigate up in URL in new tab
+
+Misc Commands II
+    sf  Save config
+    ss  Set setting
+    sl  Set temp. setting
+    sk  Bind key
+    Ss  Show settings
+    wi  Open web inspector
+    gd  Download page
+    ad  Cancel download
