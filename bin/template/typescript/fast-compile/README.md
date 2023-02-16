@@ -1,5 +1,8 @@
 # Fast Typescript compilation
 
+TODO
+[Modernizr to detect browser features](http://html5doctor.com/using-modernizr-to-detect-html5-features-and-provide-fallbacks/#:~:text=Modernizr%20is%20a%20JavaScript%20library,that%20do%20not%20support%20them.)
+
 [Article from Javascript Weekly](https://featurist.co.uk/blog/running-typescript-in-node-with-near-zero-compilation-cost/)
 [Speedy Web Compiler](https://swc.rs)
 [Typescript](https://www.typescriptlang.org)

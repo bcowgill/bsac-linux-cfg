@@ -1,3 +1,6 @@
+Project Groo comics inventory
+libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
+
 tx.pl transliterate a-z into unicode alphabet
 
 http://randsday.com
@@ -10,9 +13,6 @@ Randsday is the time to challenge any duty-premise, re-affirm your love of your 
 
 Project Free Will Notes
 vim /home/me/d/docs/philosophy/objectivism/free-will-course-harry-binswanger.txt
-
-Project Groo comics inventory
-libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
 calibre /home/me/d/docs/philosophy/objectivism/On-Purpose-Biddle-Hersey.pdf &
 
