@@ -128,9 +128,10 @@ suite('pii module tests', function descPIISuite() {
 			ssnPII: '734942145',
 		}
 
-		function fnReplacer(keyName: string, value: any) {
+		function fnReplacer(keyName: string, value) {
 			const key = keyName.replace(/[^a-z0-9]/gi, '')
 			if (DEBUG) {
+				// eslint-disable-next-line no-console
 				console.warn(
 					`fnReplacer key[${keyName}]->[${key}] this:`,
 					this,
