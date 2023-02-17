@@ -118,7 +118,7 @@ suite('pii module tests', function descPIISuite() {
 			job: 'Janitor',
 			address: '123 Shinging Crescent, Anyville, Wyoming, 23123',
 			financials: {
-				sortCode: '99-23-12',
+				sort_Code: '99-23-12',
 				accountNo: '739432912',
 				cardNo: '127409231234',
 			},
@@ -128,10 +128,11 @@ suite('pii module tests', function descPIISuite() {
 			ssnPII: '734942145',
 		}
 
-		function fnReplacer(key: string, value: any) {
+		function fnReplacer(keyName: string, value: any) {
+			const key = keyName.replace(/[^a-z0-9]/gi, '')
 			if (DEBUG) {
 				console.warn(
-					`fnReplacer key[${key}] this:`,
+					`fnReplacer key[${keyName}]->[${key}] this:`,
 					this,
 					'value<',
 					value,
@@ -205,7 +206,7 @@ suite('pii module tests', function descPIISuite() {
 				job: 'Janitor',
 				address: '103 S******g C******t, A******e, W*****g, 20003',
 				financials: {
-					sortCode: '11-11-11',
+					sort_Code: '11-11-11',
 					accountNo: '700000002',
 					cardNo: '100000000004',
 				},
