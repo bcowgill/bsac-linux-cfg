@@ -1,9 +1,12 @@
 import { strict as assert } from 'assert'
 import * as TestMe from '../pii.ts'
 
-const DEBUG = false
+const DEBUG = process.env.NODE_TEST
+	? /^(1|y|t)/i.test(process.env.NODE_TEST)
+	: false
 const longer = 4
 
+let failures = 0
 let suite = 'pii module tests'
 log(suite)
 let testCase
@@ -12,11 +15,33 @@ function log(message: string) {
 	if (DEBUG) console.log(message)
 }
 
-testCase = '\tobscurePassword()'
-log(testCase)
+function say(message: string) {
+	console.log(message)
+}
 
-try {
-	const password = 'pa6sword i$ obscuRed fu11y'
+function describe(message: string, fn: () => void) {
+	testCase = '\t' + message
+	log(testCase)
+
+	try {
+		fn()
+	} catch (testFailure) {
+		say(suite)
+		say(testCase)
+
+		if (testFailure.name === 'AssertionError') {
+			console.error(`${testFailure.code}: ${testFailure.operator}`)
+			console.error('got     :', testFailure.actual)
+			console.error('expected:', testFailure.expected)
+		}
+		console.error(testFailure)
+		++failures
+	}
+}
+
+const password = 'pa6sword i$ obscuRed fu11y'
+
+describe('obscurePassword()', function descObscurePassword() {
 	let result = TestMe.obscurePassword(password)
 	log(
 		`\t\tpw:[${password}] ${
@@ -33,10 +58,9 @@ try {
 		`obscured is at most ${longer} chars longer than password`,
 	)
 	assert.match(result, /^\*+$/, 'password string is fully obscured')
+}) // obscurePassword
 
-	testCase = '\tobscureNumber()'
-	log(testCase)
-
+describe('obscureNumber()', function descObscureNumber() {
 	function testObscureNumber(number, expect, message) {
 		const actual = TestMe.obscureNumber(number)
 		log(`\t\tnum:[${number}] actual:[${actual}]`)
@@ -49,10 +73,9 @@ try {
 	testObscureNumber('5897', '5007', 'short numbers 4 are changed')
 	testObscureNumber('89374', '80004', 'long numbers are changed')
 	testObscureNumber('4352346', '4000006', 'long numbers are changed')
+}) // obscureNumber
 
-	testCase = '\tobscureWord()'
-	log(testCase)
-
+describe('obscureWord()', function descObscureWord() {
 	function testObscureWord(word, expect, message) {
 		const actual = TestMe.obscureWord(word)
 		log(`\t\tword:[${word}] actual:[${actual}]`)
@@ -70,10 +93,9 @@ try {
 	testObscureWord('5897', '5007', 'short numbers 4 are changed')
 	testObscureWord('89374', '80004', 'long numbers are changed')
 	testObscureWord('4352346', '4000006', 'long numbers are changed')
+}) // obscureWord
 
-	testCase = '\tobscureInfo()'
-	log(testCase)
-
+describe('obscureInfo()', function descObscureInfo() {
 	function testObscureInfo(info, expect, message) {
 		const actual = TestMe.obscureInfo(info)
 		log(`\t\tinfo:[${info}] actual:[${actual}]`)
@@ -113,14 +135,6 @@ try {
 		'8******2-****-4009-****-c**********7',
 		'uuid v4 obscured properly',
 	)
-} catch (testFailure) {
-	log(suite)
-	log(testCase)
+}) // obscureInfo
 
-	if (testFailure.name === 'AssertionError') {
-		console.error(`${testFailure.code}: ${testFailure.operator}`)
-		console.error('got     :', testFailure.actual)
-		console.error('expected:', testFailure.expected)
-	}
-	console.error(testFailure)
-}
+process.exit(failures)
