@@ -66,6 +66,8 @@ const underWater3: Fish[] = zoo.filter((pet): pet is Fish => {
 })
 console.log(underWater3)
 
+//----------
+
 interface Circle {
 	kind: 'circle'
 	radius: number
@@ -103,6 +105,8 @@ function getArea(shape: Shape) {
 	}
 	return area
 }
+
+//----------
 
 // A function with a property added to it.
 type DescribableFunction = {
@@ -165,6 +169,8 @@ const longerString = longest('alice', 'bob')
 // Error! Numbers don't have a 'length' property
 //const notOK = longest(10, 100);
 
+//----------
+
 // Multiple function signatures
 function makeDate(timestamp: number): Date
 function makeDate(m: number, d: number, y: number): Date
@@ -203,6 +209,8 @@ if (false) {
 	// });
 }
 
+//----------
+
 function safeParse(s: string): unknown {
 	return JSON.parse(s)
 }
@@ -239,6 +247,8 @@ const lf3 = function (): void {
 	// @ts-expect-error documentation says literal void functions are not permitted
 	return true
 }
+
+//----------
 
 interface NumberOrStringDictionary {
 	[index: string]: number | string
@@ -282,6 +292,8 @@ function doStuff(values: ReadonlyArray<string>) {
 	// Property 'push' does not exist on type 'readonly string[]'.
 }
 
+//----------
+
 // tuples (limited length arrays or arrays with differnt types in each cell)
 // useful for defining common function signatures
 type StringNumberBooleans = [string, number, ...boolean[]]
@@ -299,6 +311,8 @@ function readButtonInput2(name: string, version: number, ...input: boolean[]) {
 function readButtonInput3(...args: StringNumberBooleans) {
 	// ...
 }
+
+//----------
 
 // Typing operators indexing, keyof, typeor, ReturnType
 type Arrayish = { [n: number]: unknown }
@@ -326,6 +340,8 @@ type Person2 = (typeof MyArray)[number]
 type Age2 = (typeof MyArray)[number]['age']
 type Age3 = Person['age']
 
+//----------
+
 // Conditional typing reduces number of overloads needed
 interface IdLabel {
 	id: number /* some fields */
@@ -347,6 +363,8 @@ function createLabel2<T extends number | string>(idOrName: T): NameOrId<T> {
 	throw 'unimplemented'
 }
 
+//----------
+
 type MessageOf<T extends { message: unknown }> = T['message']
 type MessageOf2<T> = T extends { message: unknown } ? T['message'] : never
 
@@ -361,6 +379,8 @@ type EmailMessageContents = MessageOf<Email> // EmailMessageContents ~ string
 
 type EmailMessageContents2 = MessageOf2<Email> // EmailMessageContents2 ~ string
 type PhoneMessageContents = MessageOf2<Telephone> // PhoneMessageContents ~ never
+
+//----------
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Flatten<T> = T extends any[] ? T[number] : T
@@ -389,6 +409,8 @@ type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never
 
 type StrArrOrNumArr = ToArray<string | number> // StrArrOrNumArr ~ string[] | number[]
 type StrOrNumArr = ToArrayNonDist<string | number> // StrOrNumArr ~ (string | number)[]
+
+//----------
 
 // A quick aside testing order of keys in obj, map, set
 const Obj = {}
@@ -424,6 +446,8 @@ log('Set', S)
 // Obj { '0': 42, z: 42, a: 23 } keys: [ '0', 'z', 'a' ] values: [ 42, 42, 23 ]
 // Map Map(3) { 'z' => 42, 'a' => 23, 0 => 42 } keys: [Map Iterator] { 'z', 'a', 0 } values: [Map Iterator] { 42, 23, 42 }
 // Set Set(3) { 'z', 'a', 0 } keys: [Set Iterator] { 'z', 'a', 0 } values: [Set Iterator] { 'z', 'a', 0 }
+
+//----------
 
 // object with keys in a specific order
 interface ordbject {
@@ -478,6 +502,8 @@ type SavedUser = Concrete<MaybeUser>
 //     age: number;
 // }
 
+//----------
+
 // Rewriting property names with template literal types
 type Getters<Type> = {
 	[Property in keyof Type as `get${Capitalize<
@@ -512,6 +538,8 @@ type KindlessCircle = RemoveKindField<Circle>
 // type KindlessCircle = {
 //   radius: number;
 // }
+
+//----------
 
 type EventConfig<Events extends { kind: string }> = {
 	[E in Events as E['kind']]: (event: E) => void
@@ -554,6 +582,8 @@ type Lang = 'en' | 'ja' | 'pt'
 type LocaleMessageIDs = `${Lang}_${AllLocaleIDs}`
 // type LocaleMessageIDs = "en_welcome_email_id" | "en_email_heading_id" | "en_footer_title_id" | "en_footer_sendoff_id" | "ja_welcome_email_id" | "ja_email_heading_id" | "ja_footer_title_id" | "ja_footer_sendoff_id" | "pt_welcome_email_id" | "pt_email_heading_id" | "pt_footer_title_id" | "pt_footer_sendoff_id"
 
+//----------
+
 /*
   Useful types for projects:
   */
@@ -578,6 +608,12 @@ type OptionAll<Type> = {
 	[Property in keyof Type]?: Type[Property]
 }
 
+//----------
+
+// MUSTDO try these examples on their own in small files
+/* If enabled rust compiler gets corrupted and messes with later code
+something about the static __id and get/set properties is not right.
+
 interface Rectangle<Type> {
 	width: Type
 	height: Type
@@ -586,7 +622,7 @@ interface Rectangle<Type> {
 }
 
 class Rect implements Rectangle<bigint> {
-	static _id = 0
+	static __id = 0
 	// declares properties of each instance
 	private _id: number
 	private _w = 0n
@@ -600,7 +636,7 @@ class Rect implements Rectangle<bigint> {
 		widthOrRect?: bigint | { width?: bigint; height?: bigint },
 		height = 0n,
 	) {
-		this._id = Rect._id++
+		this._id = Rect.__id++
 		if (typeof widthOrRect === 'object') {
 			this._w = widthOrRect.width || 0n
 			this.height = widthOrRect.height || 0n
@@ -633,18 +669,30 @@ class Rect implements Rectangle<bigint> {
 	get perimeter() {
 		return this._p
 	}
+
+	log(what: string, ...more) {
+		console.warn(`Rect.__id=${Rect.__id} ${what}`, this, ...more)
+	}
 }
-Object.getPrototypeOf(Rect).counter = 0
+// Object.getPrototypeOf(Rect).counter = 0
 
 const r = new Rect(2n, 6n)
-console.warn('Rect', r, r.area)
+r.log('Rect', r.area)
 r.height = '23'
 // r.width = "NaN"
 // r.width = NaN
-console.warn("Rect'", r, r.area)
-console.warn('Rect2', new Rect(r))
-console.warn('Rect3', new Rect())
-console.warn('Rect::_id', Rect._id)
+r.log("Rect'", r.area)
+const r2 = new Rect(r)
+r2.log('Rect2')
+const r3 = new Rect()
+// r3.log('Rect3')  If enabled rust compiler blows up with strange message!!
+
+*/
+
+//----------
+
+// MUSTDO try these examples on their own in small files
+/* If enabled rust compiler gets corrupted and messes with later code
 
 type ObjectDescriptor<D, M> = {
 	data?: D
@@ -672,6 +720,12 @@ obj.y = 20
 console.warn('ThisType D&M Obj', obj)
 obj.moveBy(5, 5)
 console.warn("ThisType D&M Obj'", obj)
+*/
+
+//----------
+
+// MUSTDO try these examples on their own in small files
+/* If enabled rust compiler gets corrupted and messes with later code
 
 // Prefer modern typescript's as const to using enum's
 const enum EDirection {
@@ -706,6 +760,10 @@ function run(dir: Direction) {
 walk(EDirection.Left)
 run(ODirection.Right)
 
+*/
+
+//----------
+
 const pets = new Set(['Cat', 'Dog', 'Hamster'])
 pets['species'] = 'mammals'
 pets.add('<Mammals')
@@ -720,6 +778,8 @@ for (const pet of pets) {
 }
 console.log('keys of pets:', pets.keys())
 console.log('Object.keys of pets:', Object.keys(pets))
+
+//----------
 
 /*
   Typescript Handbook Rules of Thumb for adding type information:

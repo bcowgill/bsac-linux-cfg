@@ -82,6 +82,6 @@ export function obscureWord(word: string): string {
  * @returns a string containing '*' characters inside of words leaving first and last characters intact.
  */
 export function obscureInfo(info: string): string {
-	let obscured = info.replace(/\w+/g, obscureWord)
+	const obscured = info.replace(/\w+/g, obscureWord)
 	return obscured
 }
