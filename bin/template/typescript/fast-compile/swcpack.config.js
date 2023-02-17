@@ -5,7 +5,8 @@ const { config } = require('@swc/core/spack')
 
 module.exports = config({
 	entry: {
-		web: __dirname + '/src/index.ts',
+		app: __dirname + '/src/index.ts',
+		app2: __dirname + '/src/not.ts',
 	},
 	output: {
 		path: __dirname + '/lib',

@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "build": "RUST_BACKTRACE=full spack",
-    "web": "time -p node lib/web.js",
+    "app": "time -p node lib/app.js",
+    "app2": "time -p node lib/app2.js",
     "fast": "./run-ts-fast.sh src/index.ts",
     "compile": "time -p npx tsc",
     "check": "./__scripts__/check-code.sh 2>&1 | tee check.log",
@@ -15,7 +16,7 @@
     "eslint": "time npx eslint .",
     "format": "time npx prettier --ignore-path .eslintignore --write \"**/*.+(cjs|mjs|js|cts|mts|ts|json|json5)\"",
     "preall": "npm run format && npm run eslint && npm run check && npm run compile && npm run test && npm run test:loud && npm run fast && npm run build",
-    "all": "npm run web"
+    "all": "npm run app && npm run app2"
   },
   "author": "",
   "license": "ISC",
