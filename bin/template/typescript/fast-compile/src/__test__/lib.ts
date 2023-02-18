@@ -60,5 +60,6 @@ export function run() {
 			++failures
 		}
 	})
+	say(`${failures} failed tests`)
 	process.exit(failures)
 }

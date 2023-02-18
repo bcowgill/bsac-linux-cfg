@@ -112,6 +112,9 @@ suite('pii module tests', function descPIISuite() {
 				isEnrolled: true,
 			},
 			name: 'Frankie Hollywood',
+			birthDate: new Date(
+				new Date('2023-02-18 07:29:31').valueOf() - 45 * 365,
+			),
 			age: 45,
 			height: 6.5,
 			weight: 76,
@@ -130,12 +133,17 @@ suite('pii module tests', function descPIISuite() {
 
 		function fnReplacer(keyName: string, value) {
 			const key = keyName.replace(/[^a-z0-9]/gi, '')
-			if (DEBUG) {
+			if (DEBUG && keyName === 'birthDate') {
+				const source = this[keyName]
+				const type =
+					source !== null && typeof source !== 'undefined'
+						? source.constructor.name
+						: typeof source
 				// eslint-disable-next-line no-console
 				console.warn(
-					`fnReplacer key[${keyName}]->[${key}] this:`,
+					`fnReplacer key[${keyName}]->[${key}] ${type}->${typeof value}\nthis:`,
 					this,
-					'value<',
+					'\nvalue<',
 					value,
 					'>',
 				)
@@ -164,9 +172,11 @@ suite('pii module tests', function descPIISuite() {
 
 			// Keys which contain personally identifiable information and should be partially obscured
 			// anything ending with PII (ignoring case)
+			// anything with birth in it anywhere
 			// and some fully qualified specific field names
 			if (
 				/pii$/i.test(key) ||
+				/birth/i.test(key) ||
 				/^(name|address|sortcode|accountno|cardno)$/i.test(key)
 			) {
 				return TestMe.obscureInfo(value)
@@ -201,6 +211,7 @@ suite('pii module tests', function descPIISuite() {
 				id: 234134,
 				system: { password: '*****', isEnrolled: true },
 				name: 'F*****e H*******d',
+				birthDate: '2003-11-1***7:11:11.****',
 				age: 45,
 				height: 6.5,
 				weight: 76,

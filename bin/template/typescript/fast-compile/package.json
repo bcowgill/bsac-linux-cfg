@@ -5,6 +5,8 @@
   "main": "lib/web.js",
   "type": "commonjs",
   "scripts": {
+    "preauto": "npm run format && npm run eslint && npm run compile",
+    "auto": "npm run test",
     "build": "RUST_BACKTRACE=full spack",
     "app": "time -p node lib/app.js",
     "app2": "time -p node lib/app2.js",
