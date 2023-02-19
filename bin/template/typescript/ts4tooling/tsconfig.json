@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"noEmit": false, // !disable compilation
+		"module": "node16", // assume imports are esm
+		// "jsx": "react-jsx", // if .tsx is used
+		"moduleResolution": "bundler", // typescript v5+
+		//"moduleResolution": "bundler", // typescript v5+
+		//"allowImportingTsExtensions": true // typescript v5+
+	},
+	"files": ["package.json", "src/index.ts", "src/__test__/pii.test.ts"]
+}

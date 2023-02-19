@@ -1,0 +1,28 @@
+{
+  "name": "ts4-tooling",
+  "version": "1.0.0",
+  "description": "Setting up Typescript 4 compilation from Javascript Weekly article",
+  "main": "lib/app.js",
+  "type": "commonjs",
+  "scripts": {
+    "setupinit": "npm install --save-dev typescript prettier eslint eslint-plugin-import eslint-config-prettier ts-jest @typescript-eslint/parser @typescript-eslint/eslint-plugin @jest/globals",
+    "preauto": "npm run format && npm run eslint && npm run compile",
+    "auto": "npm run test",
+    "build": "RUST_BACKTRACE=full spack",
+    "app": "time -p node lib/app.js",
+    "app2": "time -p node lib/app2.js",
+    "fast": "./run-ts-fast.sh src/index.ts",
+    "compile": "time -p npx tsc",
+    "check": "./__scripts__/check-code.sh 2>&1 | tee check.log",
+    "test": "NODE_TEST=0 ./run-ts-fast.sh src/__test__/runTests.ts",
+    "test:loud": "NODE_TEST=1 ./run-ts-fast.sh src/__test__/runTests.ts",
+    "eslint": "time npx eslint .",
+    "format": "time npx prettier --ignore-path .eslintignore --write \"**/*.+(cjs|mjs|js|cts|mts|ts|json|json5)\"",
+    "preall": "npm run format && npm run eslint && npm run check && npm run compile && npm run test && npm run test:loud && npm run fast && npm run build",
+    "all": "npm run app && npm run app2"
+  },
+  "author": "Brent S.A. Cowgill",
+  "license": "ISC",
+  "devDependencies": {
+  }
+}
