@@ -1,6 +1,24 @@
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
+1. Cuckoo program horse sound should be replaced, not so good.
+2. update npm perljs package latest tools and publish. Then convert to Typescript latest < 5
+3. a better typeOf function: null == null {} == object  Date == object:Date function == object:Function Array == object:Array
+  -- IT IS possible to do anonymous constructors new (function (x, y) { this.x = x; this.y = y})(42,12) -- so should use anonymous as func/type name where possible
+  -- look at lodash _.isX functions https://lodash.com/docs/#isArrayLike is there a similar type of function?
+  -- can give names to any anonymous functions discovered:
+  if !x.constructor.name ...
+  > anon.set(x.constructor, 'anon' + anon.size)
+  Map { [Function] => 'anon0' }
+  > anon.has(x.constructor)
+  true
+  > anon.has(x.constructor) && anon.get(x.constructor)
+  'anon0'
+  x = new Map()
+  !x.constructor.name && (anon.has(x.constructor) ? anon.get(x.constructor) : anon.set(x.constructor, 'anon' + anon.size).get(x.constructor))
+
+4. A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
+
 tx.pl transliterate a-z into unicode alphabet
 
 http://randsday.com

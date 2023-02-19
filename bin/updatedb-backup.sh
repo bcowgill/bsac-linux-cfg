@@ -10,7 +10,8 @@ fi
 BACKUP=${1:-/media/me/ADATA-4TB}
 NAME=`basename $BACKUP`
 LOCATE=mlocate-$NAME.db
-DB=/var/lib/mlocate/$LOCATE
+DBDIR=/var/lib/mlocate
+DB=$DBDIR/$LOCATE
 DBBK=$BACKUP/mlocate.db
 
 if [ "$1" == "--notify" ]; then
@@ -20,6 +21,9 @@ fi
 
 if [ ! -d "$BACKUP" ]; then
 	echo Backup drive $BACKUP is not mounted, cannot update the mlocate database.
+	echo Currently available local mlocate backup databases are:
+	ls -1 $DBDIR/mlocate-*
+	echo You can use the locatebk.sh command to search these for files if you like.
 	exit 10
 fi
 

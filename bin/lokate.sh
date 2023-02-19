@@ -34,7 +34,7 @@ You can have the scan-*.lst files updated regularly with appropriate crontab lin
   * * * * * mkdir -p /tmp/$LOGNAME && set > /tmp/$LOGNAME/crontab-set.log 2>&1
   */19 * * * * $HOME/bin/scan-tree.sh $HOME $HOME/scan- > /tmp/$LOGNAME/crontab-scan-tree.log  2>&1
 
-See also scan-tree.sh, locate, find
+See also scan-tree.sh, locatebk.sh, locate, find
 
 Example:
 
