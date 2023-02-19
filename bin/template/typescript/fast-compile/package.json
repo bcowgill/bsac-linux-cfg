@@ -2,7 +2,7 @@
   "name": "fast-compile",
   "version": "1.0.0",
   "description": "Setting up fast Typescript compilation from Javascript Weekly article",
-  "main": "lib/web.js",
+  "main": "lib/app.js",
   "type": "commonjs",
   "scripts": {
     "preauto": "npm run format && npm run eslint && npm run compile",
@@ -20,7 +20,7 @@
     "preall": "npm run format && npm run eslint && npm run check && npm run compile && npm run test && npm run test:loud && npm run fast && npm run build",
     "all": "npm run app && npm run app2"
   },
-  "author": "",
+  "author": "Brent S.A. Cowgill",
   "license": "ISC",
   "devDependencies": {
     "@swc/cli": "^0.1.61",

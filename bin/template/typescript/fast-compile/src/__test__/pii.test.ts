@@ -3,7 +3,7 @@ import * as TestMe from '../pii.ts'
 import { suite, describe, log } from './lib.ts'
 
 suite('pii module tests', function descPIISuite() {
-	const DEBUG = false
+	let DEBUG = false
 	const longer = 4
 	const password = 'pa6sword i$ obscuRed fu11y'
 
@@ -104,6 +104,8 @@ suite('pii module tests', function descPIISuite() {
 	}) // obscureInfo
 
 	describe('JSON.stringify() with replacer', function descObscureInfo() {
+		const features = new Set()
+		features.add('edit').add('delete')
 		const data = {
 			id: 234134,
 			system: {
@@ -129,27 +131,53 @@ suite('pii module tests', function descPIISuite() {
 			boolNullable: false,
 			productNullable: 'Gizmos',
 			ssnPII: '734942145',
+			list: [1, 2, 34, 'what'],
+			features,
 		}
 
-		function fnReplacer(keyName: string, value) {
+		function typeOf(source): string {
+			const type =
+				source !== null && typeof source !== 'undefined'
+					? source.constructor.name
+					: typeof source
+			return type
+		}
+
+		function fnReplacer(keyName: string, original) {
+			const source = this[keyName]
+			let value = original
+			const type = typeOf(source)
 			const key = keyName.replace(/[^a-z0-9]/gi, '')
-			if (DEBUG && keyName === 'birthDate') {
-				const source = this[keyName]
-				const type =
-					source !== null && typeof source !== 'undefined'
-						? source.constructor.name
-						: typeof source
+
+			if (DEBUG || keyName === 'list') {
+				DEBUG = true
 				// eslint-disable-next-line no-console
 				console.warn(
-					`fnReplacer key[${keyName}]->[${key}] ${type}->${typeof value}\nthis:`,
+					`fnReplacer key[${keyName}]->[${key}] ${type}->${typeOf(
+						value,
+					)}\nthis:`,
 					this,
 					'\nvalue<',
 					value,
 					'>',
 				)
 			}
+
 			if (key === '') {
 				return value
+			}
+
+			if (type === 'Set') {
+				const SET_LIMIT = 2 // limit the number of items in the set in case there are very many...
+				const set = []
+				for (const item of original.keys()) {
+					set.push(item)
+					if (set.length >= SET_LIMIT) {
+						set.push('…')
+						break
+					}
+				}
+				value = set
 			}
 
 			// Keys which should NOT be included in stringified object
