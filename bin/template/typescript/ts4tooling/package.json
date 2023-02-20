@@ -15,7 +15,7 @@
     "check": "./__scripts__/check-code.sh 2>&1 | tee check.log",
     "test": "NODE_TEST=0 node src/__test__/runTests.ts",
     "test:loud": "NODE_TEST=1 node src/__test__/runTests.ts",
-    "eslint": "npx eslint src/index.ts src/common.ts src/not.ts",
+    "eslint": "npx eslint src/index.ts src/common.ts",
     "format": "npx prettier --ignore-path .eslintignore --write \"**/*.+(cjs|mjs|js|cts|mts|ts|json|json5)\"",
     "preall": "npm run format && npm run eslint && npm run check && npm run compile && npm run test && npm run test:loud && npm run build",
     "all": "npm run app && npm run app2"
