@@ -1,8 +1,9 @@
 lib/
 types/
 build/
+# typescript project, ignore js for linting
 src/**/*.js
 
-# temporary until lint issues fixed
-src/__test__/*
+# MUSTDO Temporary disable lint on files until ready
 src/pii.ts
+src/__test__/pii.test.ts

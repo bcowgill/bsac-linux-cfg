@@ -7,13 +7,14 @@
 		"declaration": true,
 		"declarationMap": true,
 		"strictNullChecks": true,
+		"esModuleInterop": true,
 		"module": "node16", // assume imports are esm
 		// "jsx": "react-jsx", // if .tsx is used
 		"moduleResolution": "node16" // node, classic, node16, nodenext, bundler" // typescript v<5
 		//"moduleResolution": "bundler", // typescript v5+
 		//"allowImportingTsExtensions": true // typescript v5+
 	},
-	"include": ["prettier.config.js", "src/**/*"],
+	"include": ["prettier.config.js", "jest.config.js", "src/**/*"],
 	//"files": ["src/index.ts", "src/common.ts"],
 	"exclude": ["node_modules"]
 }

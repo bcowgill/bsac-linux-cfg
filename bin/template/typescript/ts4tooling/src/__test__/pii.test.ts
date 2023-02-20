@@ -1,36 +1,24 @@
-import { strict as assert } from 'assert'
+import { describe, expect, test } from '@jest/globals'
 import * as TestMe from '../pii'
-import { suite, describe, log } from './lib'
 
-suite('pii module tests', function descPIISuite() {
-	let DEBUG = false
+describe('pii module tests', function descPIISuite() {
+	const DEBUG = false
 	const longer = 4
 	const password = 'pa6sword i$ obscuRed fu11y'
 
-	describe('obscurePassword()', function descObscurePassword() {
+	test('obscurePassword()', function testObscurePassword() {
 		const result = TestMe.obscurePassword(password)
-		log(
-			`\t\tpw:[${password}] ${
-				result.length - password.length
-			} res:[${result}]`,
-		)
 
-		assert(
-			result.length >= password.length,
-			'obscured is same or longer in length',
-		)
-		assert(
-			result.length <= password.length + longer,
-			`obscured is at most ${longer} chars longer than password`,
-		)
-		assert.match(result, /^\*+$/, 'password string is fully obscured')
+		expect(result.length).toBeGreaterThanOrEqual(password.length)
+		expect(result.length).toBeLessThanOrEqual(password.length + longer)
+		expect(result).toMatch(/^\*+$/)
 	}) // obscurePassword
 
-	describe('obscureNumber()', function descObscureNumber() {
-		function testObscureNumber(number, expect, message) {
+	test('obscureNumber()', function testObscureNumber() {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		function testObscureNumber(number, expected, unused) {
 			const actual = TestMe.obscureNumber(number)
-			log(`\t\tnum:[${number}] actual:[${actual}]`)
-			assert.equal(actual, expect, message)
+			expect(actual).toBe(expected)
 		}
 
 		testObscureNumber(4, '1', 'short numbers 1 are changed')
@@ -41,11 +29,11 @@ suite('pii module tests', function descPIISuite() {
 		testObscureNumber('4352346', '4000006', 'long numbers are changed')
 	}) // obscureNumber
 
-	describe('obscureWord()', function descObscureWord() {
-		function testObscureWord(word, expect, message) {
+	test('obscureWord()', function testObscureWord() {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		function testObscureWord(word, expected, unused) {
 			const actual = TestMe.obscureWord(word)
-			log(`\t\tword:[${word}] actual:[${actual}]`)
-			assert.equal(actual, expect, message)
+			expect(actual).toBe(expected)
 		}
 
 		testObscureWord('a', '*', 'short words 1 fully obscured')
@@ -61,11 +49,11 @@ suite('pii module tests', function descPIISuite() {
 		testObscureWord('4352346', '4000006', 'long numbers are changed')
 	}) // obscureWord
 
-	describe('obscureInfo()', function descObscureInfo() {
-		function testObscureInfo(info, expect, message) {
+	test('obscureInfo()', function testObscureInfo() {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		function testObscureInfo(info, expected, unused) {
 			const actual = TestMe.obscureInfo(info)
-			log(`\t\tinfo:[${info}] actual:[${actual}]`)
-			assert.equal(actual, expect, message)
+			expect(actual).toBe(expected)
 		}
 
 		testObscureInfo(
@@ -103,7 +91,7 @@ suite('pii module tests', function descPIISuite() {
 		)
 	}) // obscureInfo
 
-	describe('JSON.stringify() with replacer', function descObscureInfo() {
+	test('JSON.stringify() with replacer', function testObscureInfo() {
 		const features = new Set()
 		features.add('edit').add('delete')
 		const data = {
@@ -150,7 +138,7 @@ suite('pii module tests', function descPIISuite() {
 			const key = keyName.replace(/[^a-z0-9]/gi, '')
 
 			if (DEBUG || keyName === 'list') {
-				DEBUG = true
+				// DEBUG = true
 				// eslint-disable-next-line no-console
 				console.warn(
 					`fnReplacer key[${keyName}]->[${key}] ${type}->${typeOf(
@@ -216,47 +204,35 @@ suite('pii module tests', function descPIISuite() {
 
 		const publicKeys = 'id name address'.split(/ /g)
 
-		assert.deepEqual(
-			JSON.parse(JSON.stringify(data, publicKeys)),
-			{
-				id: 234134,
-				name: 'Frankie Hollywood',
-				address: '123 Shinging Crescent, Anyville, Wyoming, 23123',
-			},
-			'stringify with PII obscured',
-		)
+		expect(JSON.parse(JSON.stringify(data, publicKeys))).toEqual({
+			id: 234134,
+			name: 'Frankie Hollywood',
+			address: '123 Shinging Crescent, Anyville, Wyoming, 23123',
+		})
 
 		const result = JSON.parse(JSON.stringify(data, fnReplacer))
-		assert.match(
-			result.system.password,
-			/^\*+$/,
-			'password has been fully obscured',
-		)
+		expect(result.system.password).toMatch(/^\*+$/)
 		result.system.password = '*****'
-		assert.deepEqual(
-			result,
-			{
-				id: 234134,
-				system: { password: '*****', isEnrolled: true },
-				name: 'F*****e H*******d',
-				birthDate: '2003-11-1***7:11:11.****',
-				age: 45,
-				height: 6.5,
-				weight: 76,
-				job: 'Janitor',
-				address: '103 S******g C******t, A******e, W*****g, 20003',
-				financials: {
-					sort_Code: '11-11-11',
-					accountNo: '700000002',
-					cardNo: '100000000004',
-				},
-				boolNullable: null,
-				productNullable: 'Gizmos',
-				ssnPII: '700000005',
-				list: [ 1, 2, 34, 'what' ],
-				features: [ 'edit', 'delete', '…' ]
-						},
-			'stringify with PII obscured',
-		)
+		expect(result).toEqual({
+			id: 234134,
+			system: { password: '*****', isEnrolled: true },
+			name: 'F*****e H*******d',
+			birthDate: '2003-11-1***7:11:11.****',
+			age: 45,
+			height: 6.5,
+			weight: 76,
+			job: 'Janitor',
+			address: '103 S******g C******t, A******e, W*****g, 20003',
+			financials: {
+				sort_Code: '11-11-11',
+				accountNo: '700000002',
+				cardNo: '100000000004',
+			},
+			boolNullable: null,
+			productNullable: 'Gizmos',
+			ssnPII: '700000005',
+			list: [1, 2, 34, 'what'],
+			features: ['edit', 'delete', '…'],
+		})
 	}) // JSON.stringify(..., replacer)
 }) // pii module tests
