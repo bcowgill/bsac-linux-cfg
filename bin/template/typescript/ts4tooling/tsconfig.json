@@ -1,11 +1,13 @@
 {
 	"compilerOptions": {
+		"strictNullChecks": true,
 		"noEmit": false, // !disable compilation
 		"module": "node16", // assume imports are esm
 		// "jsx": "react-jsx", // if .tsx is used
-		"moduleResolution": "bundler", // typescript v5+
+		"moduleResolution": "node16" // node, classic, node16, nodenext, bundler" // typescript v<5
 		//"moduleResolution": "bundler", // typescript v5+
 		//"allowImportingTsExtensions": true // typescript v5+
 	},
-	"files": ["package.json", "src/index.ts", "src/__test__/pii.test.ts"]
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
 }

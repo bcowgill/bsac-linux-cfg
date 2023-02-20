@@ -1,6 +1,6 @@
 import { strict as assert } from 'assert'
-import * as TestMe from '../pii.ts'
-import { suite, describe, log } from './lib.ts'
+import * as TestMe from '../pii'
+import { suite, describe, log } from './lib'
 
 suite('pii module tests', function descPIISuite() {
 	let DEBUG = false
@@ -169,7 +169,7 @@ suite('pii module tests', function descPIISuite() {
 
 			if (type === 'Set') {
 				const SET_LIMIT = 2 // limit the number of items in the set in case there are very many...
-				const set = []
+				const set: Array<unknown> = []
 				for (const item of original.keys()) {
 					set.push(item)
 					if (set.length >= SET_LIMIT) {

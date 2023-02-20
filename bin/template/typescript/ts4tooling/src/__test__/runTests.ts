@@ -1,5 +1,5 @@
-import { run } from './lib.ts'
+const { run } = require('./lib')
 
-import './pii.test.ts'
+require('./pii.test')
 
 run()

@@ -1,8 +1,8 @@
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-unused-vars, no-console */
 
-//import { B } from "./common"; // for npm run compile until typescript 5 arrives
-import { B } from './common.ts' // for npm run fast / compile with typescript@beta == 5
+import { B } from './common' // for npm run compile until typescript 5 arrives
+//import { B } from './common.ts' // for npm run fast / compile with typescript@beta == 5
 
 console.log(B)
 

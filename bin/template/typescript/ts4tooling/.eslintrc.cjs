@@ -7,8 +7,8 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 		// MUSTDO(BSAC) this should be ok for typescript<5
 		'plugin:@typescript-eslint/recommended-requiring-type-checking',
-		"plugin:@typescript-eslint/strict",
-		"plugin:react-hooks/recommended"
+		'plugin:@typescript-eslint/strict',
+		// 'plugin:react-hooks/recommended',
 		'prettier',
 	],
 	parser: '@typescript-eslint/parser',
