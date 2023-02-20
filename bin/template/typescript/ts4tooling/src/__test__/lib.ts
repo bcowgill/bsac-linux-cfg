@@ -18,10 +18,12 @@ export function say(message: string) {
 	console.log(message)
 }
 
-function error(...args) {
+const error = console.error
+/*function error(...args) {
 	// eslint-disable-next-line no-console
 	console.error(...args)
 }
+*/
 
 export function suite(message: string, fn: FnTest): void {
 	tests.push(function runSuite() {

@@ -1,4 +1,5 @@
 {
+	//"extends": "@tsconfig/node16/tsconfig.json"
 	"compilerOptions": {
 		"strictNullChecks": true,
 		"noEmit": false, // !disable compilation

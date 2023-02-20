@@ -5,7 +5,7 @@
   "main": "lib/app.js",
   "type": "commonjs",
   "scripts": {
-    "setupinit": "npm install --save-dev typescript prettier eslint eslint-plugin-import eslint-config-prettier ts-jest @typescript-eslint/parser @typescript-eslint/eslint-plugin @jest/globals",
+    "setupinit": "npm install --save-dev typescript prettier eslint eslint-plugin-import eslint-config-prettier ts-jest @tsconfig/node16 @typescript-eslint/parser @typescript-eslint/eslint-plugin @jest/globals",
     "preauto": "npm run format && npm run eslint && npm run compile",
     "auto": "npm run test",
     "build": "echo Need to configue a bundler/packager to build",
@@ -24,6 +24,7 @@
   "license": "ISC",
   "devDependencies": {
     "@jest/globals": "^29.4.3",
+    "@tsconfig/node16": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "^5.52.0",
     "@typescript-eslint/parser": "^5.52.0",
     "eslint": "^8.34.0",
