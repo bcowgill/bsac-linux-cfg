@@ -7,4 +7,4 @@ src/**/*.js
 
 # MUSTDO Temporary disable lint on files until ready
 src/pii.ts
-src/__test__/pii.test.ts
+src/__tests__/pii.test.ts
