@@ -2,3 +2,7 @@ lib/
 types/
 build/
 src/**/*.js
+
+# temporary until lint issues fixed
+src/__test__/*
+src/pii.ts

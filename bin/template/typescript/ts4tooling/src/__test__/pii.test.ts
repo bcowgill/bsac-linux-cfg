@@ -253,7 +253,9 @@ suite('pii module tests', function descPIISuite() {
 				boolNullable: null,
 				productNullable: 'Gizmos',
 				ssnPII: '700000005',
-			},
+				list: [ 1, 2, 34, 'what' ],
+				features: [ 'edit', 'delete', '…' ]
+						},
 			'stringify with PII obscured',
 		)
 	}) // JSON.stringify(..., replacer)
