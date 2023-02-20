@@ -1,14 +1,19 @@
 {
 	//"extends": "@tsconfig/node16/tsconfig.json"
 	"compilerOptions": {
-		"strictNullChecks": true,
 		"noEmit": false, // !disable compilation
+		"outDir": "./lib",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+		"strictNullChecks": true,
 		"module": "node16", // assume imports are esm
 		// "jsx": "react-jsx", // if .tsx is used
 		"moduleResolution": "node16" // node, classic, node16, nodenext, bundler" // typescript v<5
 		//"moduleResolution": "bundler", // typescript v5+
 		//"allowImportingTsExtensions": true // typescript v5+
 	},
-	"include": ["src/**/*"],
+	//"include": ["src/**/*"],
+	"files": ["src/index.ts", "src/common.ts", "src/not.ts"],
 	"exclude": ["node_modules"]
 }

@@ -1,2 +1,4 @@
 lib/
+types/
+build/
 src/**/*.js

@@ -1,2 +1,4 @@
 # local build dir
 lib/
+types/
+build/

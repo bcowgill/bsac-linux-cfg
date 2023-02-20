@@ -3,6 +3,7 @@ module.exports = {
 		//   "react-app",
 		'plugin:import/errors',
 		'plugin:import/warnings',
+		'plugin:import/typescript',
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		// MUSTDO(BSAC) this should be ok for typescript<5
