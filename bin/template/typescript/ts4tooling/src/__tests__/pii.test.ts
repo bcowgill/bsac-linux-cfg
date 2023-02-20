@@ -137,7 +137,7 @@ describe('pii module tests', function descPIISuite() {
 			const type = typeOf(source)
 			const key = keyName.replace(/[^a-z0-9]/gi, '')
 
-			if (DEBUG || keyName === 'list') {
+			if (DEBUG /*|| keyName === 'list'*/) {
 				// DEBUG = true
 				// eslint-disable-next-line no-console
 				console.warn(
