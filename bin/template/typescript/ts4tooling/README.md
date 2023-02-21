@@ -1,11 +1,11 @@
 # Typescript <5 tooling (w/o fast compilation with swc)
 
 TODO
-MUSTDO use a bundler to build browser / node versions
-MUSTDO try using sonar for additional code analysis?
+MUSTDO(BSAC) use a bundler to build browser / node versions
+MUSTDO(BSAC) try using sonar for additional code analysis?
 [Modernizr to detect browser features](http://html5doctor.com/using-modernizr-to-detect-html5-features-and-provide-fallbacks/#:~:text=Modernizr%20is%20a%20JavaScript%20library,that%20do%20not%20support%20them.)
 or use PlatformJS? https://github.com/bestiejs/platform.js#readme
-// TODO node-notifier -- does not seem to work well on Mac -- maybe need a jest command option?
+// TODO(BSAC) node-notifier -- does not seem to work well on Mac -- maybe need a jest command option?
 
 [Article from Javascript Weekly](https://featurist.co.uk/blog/running-typescript-in-node-with-near-zero-compilation-cost/)
 [OMITTED - Speedy Web Compiler](https://swc.rs)

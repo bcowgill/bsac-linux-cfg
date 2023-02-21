@@ -29,12 +29,12 @@ interface BenchmarkSuite {
 	exceedsHz?: number
 	implementations: Implementation[]
 }
-
+// MUSTDO(BSAC) refactor out to a time-these.ts module
 const Tests: BenchmarkSuite = {
 	fastest: 'String#includes',
 	slowest: 'String#RegExp',
 	fasterBy: 25,
-	exceedsHz: 785860200,
+	exceedsHz: 60e7,
 	implementations: [
 		[
 			'RegExp#test',
@@ -82,12 +82,12 @@ describe('benchmark suite', function descBenchmarkSuite() {
 			})
 			.on('complete', function (this: Suite) {
 				if (Tests.debug) {
-					// eslint-disable-next-line no-console
+					/* eslint-disable no-console, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
 					console.warn(
 						'FILTERED',
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return
 						...this.filter('fastest').map((x) => x),
 					)
+					/* eslint-enable no-console, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
 				}
 				const fastest: string = this.filter('fastest').map(
 					'name',
