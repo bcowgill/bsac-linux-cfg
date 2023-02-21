@@ -5,6 +5,7 @@ module.exports = {
 	preset: 'ts-jest',
 	testEnvironment: 'node',
 	rootDir: 'src/', // to prevent jest processing transpiled .js files
+	testRegex: '.test.(ts|tsx)$',
 	coverageDirectory: '../coverage', // relative to rootDir
 	collectCoverageFrom: [
 		// relative to rootDir
@@ -15,6 +16,7 @@ module.exports = {
 		'!pii.ts',
 		'**/*.d.ts',
 		'!**/*.test.ts',
+		'!**/*.time.ts',
 		'!setupTests.ts',
 		'!__*__/**',
 		'!**/__*__/*',
