@@ -1,6 +1,7 @@
 # Typescript <5 tooling (w/o fast compilation with swc)
 
 TODO
+MUSTDO(BSAC) add jsdoc comments to all module functions
 MUSTDO(BSAC) use a bundler to build browser / node versions
 MUSTDO(BSAC) try using sonar for additional code analysis?
 [Modernizr to detect browser features](http://html5doctor.com/using-modernizr-to-detect-html5-features-and-provide-fallbacks/#:~:text=Modernizr%20is%20a%20JavaScript%20library,that%20do%20not%20support%20them.)
