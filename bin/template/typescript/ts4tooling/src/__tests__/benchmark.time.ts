@@ -1,7 +1,6 @@
 // A Typescript benchmarking test to run under Jest with npm run benchmark
-import Benchmark, { Suite, Event } from 'benchmark'
-import { describe, expect, test } from '@jest/globals'
-/* eslint-disable @typescript-eslint/prefer-includes */
+import { describe } from '@jest/globals'
+import timeThese, { BenchmarkSuite } from './time-these'
 
 /*
 	Typescript:
@@ -18,18 +17,8 @@ import { describe, expect, test } from '@jest/globals'
 		no noticable difference
 */
 
-type Implementation = [string, () => void]
+/* eslint-disable @typescript-eslint/prefer-includes */
 
-interface BenchmarkSuite {
-	verbose?: boolean
-	debug?: boolean
-	fastest: string
-	slowest: string
-	fasterBy?: number
-	exceedsHz?: number
-	implementations: Implementation[]
-}
-// MUSTDO(BSAC) refactor out to a time-these.ts module
 const Tests: BenchmarkSuite = {
 	fastest: 'String#includes',
 	slowest: 'String#RegExp',
@@ -43,8 +32,8 @@ const Tests: BenchmarkSuite = {
 			},
 		],
 		/*['String#indexOf', function testStringIndexOf() {
-      'Hello World!'.indexOf('o') > -1
-    }], */ [
+			'Hello World!'.indexOf('o') > -1
+		}], */ [
 			'String#includes',
 			function testStringIncludes() {
 				'Hello World!'.includes('o')
@@ -53,78 +42,6 @@ const Tests: BenchmarkSuite = {
 	],
 }
 
-describe('benchmark suite', function descBenchmarkSuite() {
-	const FASTEST = Tests.fastest
-	const SLOWEST = Tests.slowest
-	const SPEEDY = Tests.fasterBy
-	const THRESHOLD = Tests.exceedsHz
-
-	let explanation = 'faster than'
-	if (SPEEDY) {
-		explanation = `${SPEEDY}x faster than`
-	} else if (THRESHOLD) {
-		explanation = `at least ${THRESHOLD} Hz and faster than`
-	}
-	test(`${FASTEST} should be ${explanation} ${SLOWEST}`, function asyncTestRegexVsIndexOfVsIncludes(fnDone) {
-		const suite: Suite = new Benchmark.Suite()
-		const results: string[] = []
-		const timings: number[] = []
-
-		Tests.implementations.forEach(function addTests([name, fnTest]) {
-			suite.add(name, fnTest)
-		})
-		// add listeners
-		suite
-			.on('cycle', function (event: Event) {
-				// console.warn('cycle', event.target.name, event.target.hz)
-				results.push(String(event.target))
-				timings.push(event.target.hz ?? 0)
-			})
-			.on('complete', function (this: Suite) {
-				if (Tests.debug) {
-					/* eslint-disable no-console, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
-					console.warn(
-						'FILTERED',
-						...this.filter('fastest').map((x) => x),
-					)
-					/* eslint-enable no-console, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-return */
-				}
-				const fastest: string = this.filter('fastest').map(
-					'name',
-				)[0] as typeof Benchmark.name
-				const slowest: string = this.filter('slowest').map(
-					'name',
-				)[0] as typeof Benchmark.name
-				const bestRate = Math.max(...timings)
-				const fasterThan =
-					Math.floor((100 * bestRate) / Math.min(...timings)) / 100
-				results.push(
-					`Fastest is ${fastest}, ${fasterThan} times faster than ${slowest}`,
-				)
-				if (Tests.verbose) {
-					// eslint-disable-next-line no-console
-					console.log(results.join('\n'))
-				}
-
-				try {
-					expect(fastest).toBe(FASTEST)
-					if (THRESHOLD) {
-						expect(bestRate).toBeGreaterThanOrEqual(THRESHOLD)
-					}
-					if (SPEEDY) {
-						expect(fasterThan).toBeGreaterThanOrEqual(SPEEDY)
-					}
-					fnDone()
-				} catch (failure: unknown) {
-					fnDone(
-						failure instanceof Error ||
-							typeof failure === 'undefined'
-							? failure
-							: JSON.stringify(failure),
-					)
-				}
-			})
-			// run async
-			.run({ async: true })
-	})
+describe('time-these suite', function descTimeTheseSuite() {
+	timeThese(Tests)
 })

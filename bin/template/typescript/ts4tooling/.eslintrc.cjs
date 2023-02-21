@@ -6,7 +6,6 @@ module.exports = {
 		'plugin:import/typescript',
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
-		// MUSTDO(BSAC) this should be ok for typescript<5
 		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 		'plugin:@typescript-eslint/strict',
 		// 'plugin:react-hooks/recommended',
@@ -24,7 +23,6 @@ module.exports = {
 	//  "globals": {
 	//  },
 	parserOptions: {
-		// MUSTDO(BSAC) should be ok for typescript<5
 		project: true, // suggestion is true with recommended-requiring-type-checking
 		tsconfigRootDir: __dirname,
 	},
