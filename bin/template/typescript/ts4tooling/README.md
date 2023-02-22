@@ -2,6 +2,7 @@
 
 TODO
 MUSTDO A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
+MUSTDO JSONRegExp, JSONFunction for stringifying
 MUSTDO add jsdoc comments to all module functions
 MUSTDO use a bundler to build browser / node versions
 MUSTDO try using sonar for additional code analysis?
