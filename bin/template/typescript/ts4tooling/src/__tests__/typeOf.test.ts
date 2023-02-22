@@ -1,7 +1,9 @@
 import { describe, expect, test } from '@jest/globals'
 import typeOf from '../typeOf'
 
-describe('typeOf() module tests', function descTypeOfSuite() {
+const displayName = 'typeOf'
+
+describe(`${displayName}() module tests`, function descTypeOfSuite() {
 	/* eslint-disable @typescript-eslint/no-unsafe-return */
 	const fnThisIdentity = (x) => x
 	const fnIdentity = function (x) {

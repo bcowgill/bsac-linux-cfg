@@ -1,9 +1,10 @@
 # Typescript <5 tooling (w/o fast compilation with swc)
 
 TODO
-MUSTDO(BSAC) add jsdoc comments to all module functions
-MUSTDO(BSAC) use a bundler to build browser / node versions
-MUSTDO(BSAC) try using sonar for additional code analysis?
+MUSTDO A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
+MUSTDO add jsdoc comments to all module functions
+MUSTDO use a bundler to build browser / node versions
+MUSTDO try using sonar for additional code analysis?
 [Modernizr to detect browser features](http://html5doctor.com/using-modernizr-to-detect-html5-features-and-provide-fallbacks/#:~:text=Modernizr%20is%20a%20JavaScript%20library,that%20do%20not%20support%20them.)
 or use PlatformJS? https://github.com/bestiejs/platform.js#readme
 // TODO(BSAC) node-notifier -- does not seem to work well on Mac -- maybe need a jest command option?

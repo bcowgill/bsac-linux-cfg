@@ -2,6 +2,7 @@ lib/
 types/
 build/
 coverage/
+__templates__/
 # typescript project, ignore js for linting
 src/**/*.js
 
