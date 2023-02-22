@@ -7,6 +7,7 @@ describe(`${displayName} module tests`, function descJSONSetModuleSuite() {
 	type stuff = string | number | boolean
 	const TYPE = testMe.displayName
 	const ELLIPSIS = testMe.ELLIPSIS
+	const ELLIPSIS2 = '...'
 	const items: stuff[] = ['hello', 42, false, 'world']
 	const set = new Set(items)
 
@@ -38,10 +39,33 @@ describe(`${displayName} module tests`, function descJSONSetModuleSuite() {
 			expect(testMe.JSONSet(set, 4)).toEqual([TYPE, ...items])
 			expect(testMe.JSONSet(set, 5)).toEqual([TYPE, ...items])
 		})
+
+		test('should limit the number of items shown with custom ellipsis', function testJSONSetEllipsis() {
+			expect(testMe.JSONSet(set, 1, ELLIPSIS2)).toEqual([
+				TYPE,
+				'hello',
+				ELLIPSIS2,
+			])
+		})
 	}) // JSONSet()
+
 	describe(`SetFromJSON()`, function descSetFromJSONSuite() {
 		test('should convert array to a Set', function testSetFromJSONOk() {
 			const newSet = testMe.SetFromJSON([TYPE, ...items])
+
+			expect(newSet.size).toEqual(4)
+			expect(newSet.has(TYPE)).toBeFalsy()
+			expect(newSet.has(items[0])).toBeTruthy()
+			const values: stuff[] = []
+			newSet.forEach((item) => values.push(item))
+			expect(values).toEqual(items) // preserves insertion order
+		})
+
+		test('should convert array to a Set with custom ellipsis', function testSetFromJSONEllipsis() {
+			const newSet = testMe.SetFromJSON(
+				[TYPE, ...items, ELLIPSIS2],
+				ELLIPSIS2,
+			)
 
 			expect(newSet.size).toEqual(4)
 			expect(newSet.has(TYPE)).toBeFalsy()
