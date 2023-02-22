@@ -1,7 +1,9 @@
-// JSONSet.ts helps to JSON.stringify/parse a Javascript Set object
-type JSONArrayish<T> = [string, ...T[]]
+// JSONSet.ts helps to JSON.stringify/parse a Javascript Set object.
+export type JSONArrayish<T> = [string, ...T[]]
 
-const displayName = 'object:JSONSet'
+export const displayName = 'object:JSONSet'
+
+export const ELLIPSIS = '…'
 
 /**
  * Convert a Set object to an Array which can be serialised with JSON.stringify.
@@ -13,7 +15,7 @@ export function JSONSet<T>(set: Set<T>, limit = 0): JSONArrayish<T> {
 	const jsonSet: JSONArrayish<T> = [displayName]
 	for (const item of set.keys()) {
 		if (limit > 0 && jsonSet.length > limit) {
-			jsonSet.push('…')
+			jsonSet.push(ELLIPSIS)
 			break
 		} else {
 			jsonSet.push(item)
@@ -23,7 +25,7 @@ export function JSONSet<T>(set: Set<T>, limit = 0): JSONArrayish<T> {
 }
 
 /**
- * Convert an array returned from a JSONSet() call back into a Javascript Set object
+ * Convert an array returned from a JSONSet() call back into a Javascript Set object.
  * @param type Element 0 of the supplied JSONArrayish should always be 'object:JSONSet'.
  * @param jsonSet Elements 1..N-1 of the supplied JSONArrayish object to be added to the returned Set.
  * @returns Set constructed from elements 1..N-1 of the supplied JSONArrayish object.
