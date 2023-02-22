@@ -25,21 +25,6 @@ describe(`${displayName} module tests`, function descJSONMapModuleSuite() {
 			expect(got).toBe('{}') // Not very useful
 		})
 
-		test('JSON.stringify does not handle Function objects', function testJSONStringifyFunction() {
-			const got = JSON.stringify({
-				split: function SplitMe(str: string, ch: string | RegExp) {
-					return str.split(ch)
-				},
-			})
-			expect(got).toBe('{}') // Not very useful would at least be nice to know there was a function there
-			// ['object:Function', fn.name, fn.length] -- gives name and # of parameters in function
-		})
-
-		test('JSON.stringify does handle Date objects as string value', function testJSONStringifyDate() {
-			const got = JSON.stringify(new Date())
-			expect(got).toMatch(/^"[-0-9]+T[.:0-9]+Z"$/) // somewhat useful but not as reversable
-		})
-
 		test('JSON.stringify does not handle WeakMap objects', function testJSONStringifyWeakMap() {
 			type kvPairWM = [object, string]
 			type kvPairsWM = kvPairWM[]

@@ -1,8 +1,8 @@
 // JSONFunction.ts helps to JSON.stringify a Function object.
 export interface functionish {
 	(...unknown): unknown
-	name?: string
-	length?: number
+	name: string
+	length: number
 }
 export type JSONFunctionish = [string, string?, number?]
 
@@ -14,5 +14,5 @@ export const displayName = 'object:JSONFunction'
  * @returns An array whose first element is 'object:JSONFunction' to indicate that it is a Function object.  The following elements are the name and length(# of parameters) of the function.
  */
 export function JSONFunction(fnFunc: functionish) {
-	return [displayName, fnFunc.name ?? '', fnFunc.length ?? 0]
+	return [displayName, fnFunc.name, fnFunc.length]
 }
