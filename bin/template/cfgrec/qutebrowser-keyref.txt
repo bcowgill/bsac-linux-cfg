@@ -11,6 +11,28 @@ th tl ~ new tab: back forward
 wh wl ~ new window: back forward
 applies to scrolling the window and history/tab
 
+Scrolling/Zooming 0 (vim keys)
+    j  Down
+    k  Up
+    h  Left
+    l  Right
+    gg Scroll To Top
+    G  Scroll To Bottom
+    `  Set Scroll Mark
+    '  Go to Scroll Mark
+    =  Reset zoom
+    +  Zoom in
+    -  Zoom out
+
+Tabs 0
+    r  Reload page
+    R  Hard reload (bypass cache)
+    J  Previous tab
+    K  Next tab
+    T  Select tab (by number or menu)
+    d  Close this tab
+    u  Undo closed tab
+
 Copying / Yanking I
     yy  Copy/yank URL
     yY  Copy URL to selection
@@ -40,11 +62,11 @@ Scrolling I
     ⌃u  Half page up
 
 Opening I
-    go  Open based on cur. URL
-    gO  Open based on cur. URL in new tab
-    xO  Open based on cur. URL in background tab
-    xo  Open in background tab
-    wo  Open in new window
+    go  Open based on cur. URL (edit cur url or select from cur tab history list)
+    gO  Open based on cur. URL in new tab ("")
+    xO  Open based on cur. URL in background tab ("")
+    xo  Open in background tab (type url or select from entire history)
+    wo  Open in new window (type url or select from entire history)
 
 Back / Forward I
     th  Back (in new tab)

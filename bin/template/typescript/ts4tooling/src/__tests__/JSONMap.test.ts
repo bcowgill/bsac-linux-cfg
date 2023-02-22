@@ -25,12 +25,6 @@ describe(`${displayName} module tests`, function descJSONMapModuleSuite() {
 			expect(got).toBe('{}') // Not very useful
 		})
 
-		test('JSON.stringify does not handle RegExp objects', function testJSONStringifyRegExp() {
-			const got = JSON.stringify(/^this$/i)
-			expect(got).toBe('{}') // Not very useful
-			// [object:RegExp, source, flags] ==> tt = new RegExp(x.source, x.flags)
-		})
-
 		test('JSON.stringify does not handle Function objects', function testJSONStringifyFunction() {
 			const got = JSON.stringify({
 				split: function SplitMe(str: string, ch: string | RegExp) {

@@ -10,7 +10,7 @@ module.exports = {
 	collectCoverageFrom: [
 		// relative to rootDir
 		'**/*.{cts,mts,ts,tsx}',
-		// MUSTDO(BSAC) Temporary until covered
+		// MUSTDO(BSAC) Temporary until fully index.ts, pii.ts covered
 		'!index.ts',
 		'!common.ts',
 		'!pii.ts',

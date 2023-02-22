@@ -6,6 +6,9 @@ MUSTDO JSONRegExp, JSONFunction for stringifying
 MUSTDO add jsdoc comments to all module functions
 MUSTDO use a bundler to build browser / node versions
 MUSTDO try using sonar for additional code analysis?
+MUSTDO template scripting, my perl version or a node module?
+MUSTDO modernizr or platform module for detection in logObject 
+
 [Modernizr to detect browser features](http://html5doctor.com/using-modernizr-to-detect-html5-features-and-provide-fallbacks/#:~:text=Modernizr%20is%20a%20JavaScript%20library,that%20do%20not%20support%20them.)
 or use PlatformJS? https://github.com/bestiejs/platform.js#readme
 // TODO(BSAC) node-notifier -- does not seem to work well on Mac -- maybe need a jest command option?

@@ -4,7 +4,7 @@ import testMe from '../TemplateFile'
 const displayName = 'TemplateFunction'
 
 describe(`${displayName}() module tests`, function descTemplateNameSuite() {
-	test('default parameters', function testTemplateNameDefault() {
+	test('should supply default parameters', function testTemplateNameDefault() {
 		expect(testMe()).toBe({})
 	})
 })
