@@ -1,6 +1,6 @@
 // JSONFunction.ts helps to JSON.stringify a Function object.
 export interface functionish {
-	(...unknown): unknown
+	(...args: unknown[]): unknown
 	name: string
 	length: number
 }
