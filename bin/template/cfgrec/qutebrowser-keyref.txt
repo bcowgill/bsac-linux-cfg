@@ -11,6 +11,26 @@ th tl ~ new tab: back forward
 wh wl ~ new window: back forward
 applies to scrolling the window and history/tab
 
+Other keys from diagram
+Esc normal mode
+i insert mode
+v visual mode
+: command mode
+. repeat last command
+q record macro
+@ run macro
+t toggle
+f hint
+F hint new tab
+b load quickmark
+B load quickmark new tab
+/ search
+? search backwards
+n search next
+N search prev
+m save quickmark
+M save bookmark
+
 Scrolling/Zooming 0 (vim keys)
     j  Down
     k  Up
