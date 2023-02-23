@@ -319,7 +319,7 @@ git grep -E '((\bx(it|describe))|\.skip)\(' \
 show_bad "WARN TESTS SKIP" "Should not have any tests marked as .skip()."
 
 #-------------------------------------------
-git grep -iE '(mu[s]+tdo|to[d]o)[^(]' \
+git grep -iE '(mu[s]+tdo|to[d]o:?)[^(]' \
 	| grep -vE '__vendor__|docs/|\.json|check-code' \
 	| grep -ivE 'DIP-[0-9+]' \
 	> found.lst

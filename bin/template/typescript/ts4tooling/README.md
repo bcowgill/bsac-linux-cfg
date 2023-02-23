@@ -1,6 +1,6 @@
 # Typescript <5 tooling (w/o fast compilation with swc)
 
-TODO
+TODO:
 MUSTDO A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
 MUSTDO JSONDate for debug stringifying
 MUSTDO add jsdoc comments to all module functions

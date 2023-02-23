@@ -1,44 +1,38 @@
 // JSONDate.ts helps to JSON.stringify/parse a Regular Expression object.
 export type TimeLocale = Partial<Intl.ResolvedDateTimeFormatOptions>
+export interface TimeDebug extends TimeLocale {
+	utc?: string
+	epoch?: number
+	timeFormatted?: string
+	localeFormatted?: string
+}
 export type JSONDateish = [
-	string,
-	string?,
-	string?,
-	number?,
-	string?,
-	string?,
-	string?,
-	TimeLocale?,
+	string, // object:JSONDate
+	string?, // toJSON time
+	TimeDebug?,
 ]
 
 export const displayName = 'object:JSONDate'
 
-export const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-
 /**
  * Convert a Date object to an Array which can be serialised with JSON.stringify.
  * @param date Date to convert to a string named array for serialisation with JSON.stringify.
- * @returns An array whose first element is 'object:JSONDate' to indicate that it is a Date object.  The following elements give the date in other formats and provide locale information to aid in debugging locale specific date problems.
+ * @returns An array whose first element is 'object:JSONDate' to indicate that it is a Date object.  The next element is the JSON formatted date string and finally an object containing the Intl.ResolvedDateTimeFormatOptions for the browser/node as well as other Date object properties to aid in debugging locale specific date problems.
  */
 export function JSONDate(date: Date): JSONDateish {
-	const dow = date.getDay()
-	let locale: TimeLocale
+	let locale: TimeDebug = {}
 	try {
 		const dateFormat = new Intl.DateTimeFormat()
 		locale = { ...dateFormat.resolvedOptions() }
 	} catch (failure) {
 		locale = {}
+	} finally {
+		locale.utc = date.toUTCString()
+		locale.epoch = date.getTime()
+		locale.timeFormatted = date.toTimeString()
+		locale.localeFormatted = date.toLocaleString()
 	}
-	return [
-		displayName,
-		date.toJSON(),
-		date.toUTCString(),
-		date.valueOf(),
-		`${DOW[dow]}[${dow}]`,
-		date.toTimeString(),
-		date.toLocaleString(),
-		locale,
-	]
+	return [displayName, date.toJSON(), locale]
 }
 
 /**
