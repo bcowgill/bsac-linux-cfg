@@ -229,3 +229,10 @@ function grf
 {
 	git reset @~ "$@" && git commit --amend --no-edit
 }
+
+# Grep for typescript interface or type definition in current directory/node_modules
+# tsgrep -l DateTimeFormat
+function tsgrep
+{
+	grep $* `find . -name '*.d.ts'`
+}
