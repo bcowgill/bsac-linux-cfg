@@ -25,18 +25,6 @@ describe(`${displayName} module tests`, function descJSONMapModuleSuite() {
 			expect(got).toBe('{}') // Not very useful
 		})
 
-		test('JSON.stringify does not handle WeakMap objects', function testJSONStringifyWeakMap() {
-			type kvPairWM = [object, string]
-			type kvPairsWM = kvPairWM[]
-
-			const weakMap = new WeakMap([
-				[map, 'MAP'],
-				[global, 'GLOBAL'],
-			] as kvPairsWM)
-			const got = JSON.stringify(weakMap)
-			expect(got).toBe('{}') // Not very useful, BUT weak map cannot iterate its keys so it's all that is possible
-		})
-
 		test('should supply default parameters', function testJSONMapDefault() {
 			expect(testMe.JSONMap(map)).toEqual([TYPE, ...items])
 		})

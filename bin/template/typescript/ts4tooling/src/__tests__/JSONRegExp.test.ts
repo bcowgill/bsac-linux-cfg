@@ -10,7 +10,7 @@ describe(`${displayName} module tests`, function descJSONRegExpSuite() {
 
 	describe(`${displayName}()`, function descJSONRegExpSuite() {
 		test('JSON.stringify does not handle RegExp objects', function testJSONStringifyRegExp() {
-			const got = JSON.stringify(/^this$/i)
+			const got = JSON.stringify(regex)
 			expect(got).toBe('{}') // Not very useful
 		})
 

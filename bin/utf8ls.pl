@@ -44,6 +44,10 @@ $cmd -all U+0000 > ~/bin/data/unicode/unicode-names.txt
 Same as above but as a JSON lookup.
 
 $cmd U+0000 | perl -pne 'chomp; m{U\\+(\\w+)\\s+(\\[\\w+\\])\\s+(.+)}; \$u = substr(${qq}000\$1$qq, -4); \$_ = \$2 ? qq{$qq\\\\u\$u$qq: { class: $qq\$2$qq, name: $qq\$3$qq},\\n}:$qq$qq'
+
+Show just the clock time unicode characters without the descriptions.
+
+$cmd -24 U+1F550 | perl -pne 'chomp; s{\\s+.+}{}'
 USAGE
 	exit(0);
 }

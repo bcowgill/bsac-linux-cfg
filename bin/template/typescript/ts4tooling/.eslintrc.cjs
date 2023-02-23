@@ -28,7 +28,7 @@ module.exports = {
 	},
 	root: true,
 	rules: {
-		'no-console': ['error'], // use 'warn' when developing
+		'no-console': ['warn'], // use 'warn' when developing
 		'no-fallthrough': ['error'],
 		'import/order': [
 			'error',

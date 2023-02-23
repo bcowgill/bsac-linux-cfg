@@ -14,25 +14,60 @@ export type JSONDateish = [
 
 export const displayName = 'object:JSONDate'
 
+// Once time converted to JSON we prepend with a symbol so it no longer
+// matches the date regex so that JSON.stringify does not loop infinitely.
+export const PREFIX = '⏰'
+export const ALL_CLOCKS = `${PREFIX}🕐🕑🕒🕓🕔🕕🕖🕗🕘🕙🕚🕛🕜🕝🕞🕟🕠🕡🕢🕣🕤🕥🕦🕧`
+const TWELVE = '🕛'
+// eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
+const CODE_12 = TWELVE.codePointAt(0) as number
+// const ONE = '🕐' // U+1F550
+// const ONE_THIRTY = '🕜' // U+1F55C
+// const TWELVE_THIRTY = '🕧' // U+1F567
+export const rePrefix = new RegExp(`^[${ALL_CLOCKS}]`, 'u')
+// toJSON gives 2023-02-23T17:37:38.975Z
+export const reJSONDate = /^[-0-9]+T[.:0-9]+Z$/
+export const rePrefixedDate = new RegExp(
+	`^[${ALL_CLOCKS}][-0-9]+T[.:0-9]+Z$`,
+	'u',
+)
+
+/**
+ * Get a unicode clock character representing the given time in hours and minutes.
+ * @param hour number from a date object.
+ * @param minute number from a date object.
+ * @returns a unicode clock character that is close to the time given.
+ */
+export function getClock(hour = 0, minute = 0) {
+	const H = (hour + (minute >= 45 ? 1 : 0)) % 12 || 12
+	const offset = 12 - H
+	const code = CODE_12 - offset + (minute >= 15 && minute < 45 ? 12 : 0)
+	return String.fromCodePoint(code)
+}
+
 /**
  * Convert a Date object to an Array which can be serialised with JSON.stringify.
  * @param date Date to convert to a string named array for serialisation with JSON.stringify.
  * @returns An array whose first element is 'object:JSONDate' to indicate that it is a Date object.  The next element is the JSON formatted date string and finally an object containing the Intl.ResolvedDateTimeFormatOptions for the browser/node as well as other Date object properties to aid in debugging locale specific date problems.
  */
 export function JSONDate(date: Date): JSONDateish {
-	let locale: TimeDebug = {}
+	let options: TimeDebug = {}
+	const locale: TimeDebug = {
+		utc: date.toUTCString(),
+		epoch: date.getTime(),
+		timeFormatted: date.toTimeString(),
+		localeFormatted: date.toLocaleString(),
+	}
 	try {
 		const dateFormat = new Intl.DateTimeFormat()
-		locale = { ...dateFormat.resolvedOptions() }
-	} catch (failure) {
-		locale = {}
-	} finally {
-		locale.utc = date.toUTCString()
-		locale.epoch = date.getTime()
-		locale.timeFormatted = date.toTimeString()
-		locale.localeFormatted = date.toLocaleString()
-	}
-	return [displayName, date.toJSON(), locale]
+		options = dateFormat.resolvedOptions()
+		// eslint-disable-next-line no-empty
+	} catch (failure) {}
+	return [
+		displayName,
+		getClock(date.getHours(), date.getMinutes()) + date.toJSON(),
+		{ ...locale, ...options },
+	]
 }
 
 /**
@@ -47,6 +82,9 @@ export function DateFromJSON([type, date]: JSONDateish): Date {
 		throw new TypeError(
 			`Cannot construct a Date from non-JSONDateish, first element of array must be '${displayName}'. (Found '${type}')`,
 		)
+	}
+	if (typeof date === 'string') {
+		date = date.replace(rePrefix, '')
 	}
 	return new Date(date ?? Date.now())
 }

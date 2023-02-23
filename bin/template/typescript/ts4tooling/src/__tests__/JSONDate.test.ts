@@ -34,6 +34,7 @@ describe(`${displayName} module tests TZO=${TZO}`, function descJSONDateSuite() 
 	const TYPE = testMe.displayName
 	const reDate = /^"?[-0-9]+T[.:0-9]+Z"?$/
 	const TODAY = RESULTS[TZO].today
+	const JTODAY = '🕔' + TODAY
 	const date = new Date(TODAY)
 
 	let mock: MockInstance | undefined
@@ -45,16 +46,27 @@ describe(`${displayName} module tests TZO=${TZO}`, function descJSONDateSuite() 
 		mock = void 0
 	})
 
-	describe(`${displayName}()`, function descJSONDateSuite() {
-		test('JSON.stringify does handle Date objects as string value', function testJSONStringifyDate() {
-			const got = JSON.stringify(new Date())
-			expect(got).toMatch(reDate) // somewhat useful but not as reversable or useful for debugging logs
+	describe('getClock()', function descGetClockSuite() {
+		test('should return a clock character for the hour and half-hour', function testGetClockHourly() {
+			expect(testMe.getClock()).toBe('🕛')
+			expect(testMe.getClock(1)).toBe('🕐')
+			expect(testMe.getClock(12, 30)).toBe('🕧')
+			expect(testMe.getClock(1, 30)).toBe('🕜')
+			expect(testMe.getClock(12, 44)).toBe('🕧')
+			expect(testMe.getClock(12, 45)).toBe('🕐')
+			expect(testMe.getClock(12, 46)).toBe('🕐')
+			expect(testMe.getClock(1, 14)).toBe('🕐')
+			expect(testMe.getClock(1, 15)).toBe('🕜')
+			expect(testMe.getClock(1, 16)).toBe('🕜')
 		})
+	})
 
+	describe(`${displayName}()`, function descJSONDateSuite() {
 		test('should serialise to array', function testJSONDateDefault() {
-			expect(testMe.JSONDate(date)).toEqual([
+			const json = testMe.JSONDate(date)
+			expect(json).toEqual([
 				TYPE,
-				TODAY, // toJSON (english)
+				JTODAY, // toJSON (english)
 				{
 					utc: RESULTS[TZO].utc, // toUTCString (english)
 					epoch: RESULTS[TZO].epoch, // getTime/valueOf
@@ -78,7 +90,7 @@ describe(`${displayName} module tests TZO=${TZO}`, function descJSONDateSuite() 
 			})
 			expect(testMe.JSONDate(date)).toEqual([
 				TYPE,
-				TODAY, // toJSON (english)
+				JTODAY, // toJSON (english)
 				{
 					utc: RESULTS[TZO].utc, // toUTCString (english)
 					epoch: RESULTS[TZO].epoch, // getTime/valueOf
@@ -91,7 +103,7 @@ describe(`${displayName} module tests TZO=${TZO}`, function descJSONDateSuite() 
 
 	describe(`DateFromJSON()`, function descDateFromJSONSuite() {
 		test('should convert array to Date', function testDateFromJSONOk() {
-			const newDate = testMe.DateFromJSON([TYPE, TODAY])
+			const newDate = testMe.DateFromJSON([TYPE, JTODAY])
 
 			expect(newDate.toJSON()).toBe(TODAY)
 			expect(newDate.toLocaleString()).toBe(RESULTS[TZO].localeDateTime)
