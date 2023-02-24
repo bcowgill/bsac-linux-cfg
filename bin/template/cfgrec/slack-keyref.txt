@@ -1,0 +1,56 @@
+Slack Emoji reference:
+
+Various foods, etc. see also slack-emojis-001.png ... files
+
+perl -ne 'next unless m{:[a-zA-Z0-9_-]+:}; s{:([a-zA-Z0-9_-]+):\s*}{:$1:  $1\n}xmsg; print' slack-keyref.txt \
+| sort | uniq \
+| perl -pne 'chomp; $_ .= "  "; $_ = "\n\n$_" if $line++ % 5 == 0; END { print "\n\n"}' \
+| tee slack3.txt
+
+:bacon::poultry_leg::hamburger::hotdog::fries::pizza::doughnut::watermelon::cake::beers::champagne:      :bacon::cut_of_meat::lamb-chops::poultry_leg::meat_on_bone::fish_cake::fish::oyster::crab::shrimp::fried_shrimp::squid::cheese_wedge::croissant::flatbread::baguette_bread::bread::sandwich::stuffed_flatbread::hamburger::hotdog::fries::takeout_box: :rice::ramen::fondue::curry::shallow_pan_of_food::spaghetti::stew::pie::sushi::bento::pizza: :egg::fried_egg::pancakes::tomato::pickle-rick::cucumber::eggplant::bell_pepper::hot_pepper::avocado::chestnut::coconut::corn::mushroom::peanuts::carrot::potato::sweet_potato::apple::green_apple::pear::peach::kiwifruit::mango::banana::tangerine::lemon::melon::pineapple::watermelon::strawberry::cherries::grapes::candy::chocolate_bar::lollipop::doughnut::cookie::fortune_cookie::custard::cupcake::cake::moon_cake::icecream::ice_cream::dango::oden::coffee::tea::teapot::glass_of_milk::bubble_tea::cup_with_straw::beverage_box::mate_drink::tropical_drink::beer::beers::tumbler_glass::cocktail::wine_glass::clinking_glasses::champagne::sake::ice_cube::canned_food::chopsticks::spoon::fork_and_knife::knife::knife_fork_plate::bowl_with_spoon::basket::salt::butter:
+
+
+:apple:  apple  :avocado:  avocado  :bacon:  bacon  :baguette_bread:  baguette_bread  :banana:  banana
+
+:basket:  basket  :beer:  beer  :beers:  beers  :bell_pepper:  bell_pepper  :bento:  bento
+
+:beverage_box:  beverage_box  :bowl_with_spoon:  bowl_with_spoon  :bread:  bread  :bubble_tea:  bubble_tea  :butter:  butter
+
+:cake:  cake  :candy:  candy  :canned_food:  canned_food  :carrot:  carrot  :champagne:  champagne
+
+:cheese_wedge:  cheese_wedge  :cherries:  cherries  :chestnut:  chestnut  :chocolate_bar:  chocolate_bar  :chopsticks:  chopsticks
+
+:clinking_glasses:  clinking_glasses  :cocktail:  cocktail  :coconut:  coconut  :coffee:  coffee  :cookie:  cookie
+
+:corn:  corn  :crab:  crab  :croissant:  croissant  :cucumber:  cucumber  :cup_with_straw:  cup_with_straw
+
+:cupcake:  cupcake  :curry:  curry  :custard:  custard  :cut_of_meat:  cut_of_meat  :dango:  dango
+
+:doughnut:  doughnut  :egg:  egg  :eggplant:  eggplant  :fish:  fish  :fish_cake:  fish_cake
+
+:flatbread:  flatbread  :fondue:  fondue  :fork_and_knife:  fork_and_knife  :fortune_cookie:  fortune_cookie  :fried_egg:  fried_egg
+
+:fried_shrimp:  fried_shrimp  :fries:  fries  :glass_of_milk:  glass_of_milk  :grapes:  grapes  :green_apple:  green_apple
+
+:hamburger:  hamburger  :hot_pepper:  hot_pepper  :hotdog:  hotdog  :ice_cream:  ice_cream  :ice_cube:  ice_cube
+
+:icecream:  icecream  :kiwifruit:  kiwifruit  :knife:  knife  :knife_fork_plate:  knife_fork_plate  :lamb-chops:  lamb-chops
+
+:lemon:  lemon  :lollipop:  lollipop  :mango:  mango  :mate_drink:  mate_drink  :meat_on_bone:  meat_on_bone
+
+:melon:  melon  :moon_cake:  moon_cake  :mushroom:  mushroom  :oden:  oden  :oyster:  oyster
+
+:pancakes:  pancakes  :peach:  peach  :peanuts:  peanuts  :pear:  pear  :pickle-rick:  pickle-rick
+
+:pie:  pie  :pineapple:  pineapple  :pizza:  pizza  :potato:  potato  :poultry_leg:  poultry_leg
+
+:ramen:  ramen  :rice:  rice  :sake:  sake  :salt:  salt  :sandwich:  sandwich
+
+:shallow_pan_of_food:  shallow_pan_of_food  :shrimp:  shrimp  :spaghetti:  spaghetti  :spoon:  spoon  :squid:  squid
+
+:stew:  stew  :strawberry:  strawberry  :stuffed_flatbread:  stuffed_flatbread  :sushi:  sushi  :sweet_potato:  sweet_potato
+
+:takeout_box:  takeout_box  :tangerine:  tangerine  :tea:  tea  :teapot:  teapot  :tomato:  tomato
+
+:tropical_drink:  tropical_drink  :tumbler_glass:  tumbler_glass  :watermelon:  watermelon  :wine_glass:  wine_glass
+

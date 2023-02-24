@@ -61,6 +61,12 @@ Cmd-Shift-3        Entire Screen
 Cmd-Shift-4-Space  Application Only
 Cmd-Shift-4        Select Area
 
+If turned on from accessibility:
+Alternative Control Methods tab
+Check Enable alternative pointer actions
+F11                Left Click
+F12                Right Click
+
 Mac Mouse(MM) + Trackpad(TP) + Other Reference on Mac
 
 1f tap TP        Tap to Click (off)
