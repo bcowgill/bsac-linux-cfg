@@ -1,10 +1,14 @@
-Mac OSX command quick reference
+Mac OSX command qu reference
 
 ~ proper tilde
 ~ mac tilde
+‘’ mac quotes
 “” mac quotes
 ^ proper caret
-mac caret
+^ mac caret
+
+Favourites:
+~ ^ ☑️ ✅ ☐ ☒ ☑︎ ❌ 🤑 💰 💸 💵 💲 $ ﹩ ＄
 
 International keyboard workarounds:
 for single/double/backtick quote string type  quote quote space left-arrow
@@ -43,9 +47,14 @@ KEY:MAC:CMD Cmd-Shift-4-Space Capture an application in a screenshot on the Desk
 KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to clipboard.
 
 Handy Key Reference on Mac
+Ctrl-F2            App Menu open/close
+Ctrl-F3            Dock Menu open/close
+Ctrl-F4            Move to active or next window
+Ctrl-F5            Move to window toolbar
+Ctrl-F6            Move to floating window
 Cmd-Alt-Power      Sleep Lock
 Cmd-Ctrl-q         Screen Lock
-Cmd-Ctrl-Space	  Character Viewer
+Cmd-Ctrl-Space     Character Viewer
 Cmd-Alt-F5         Accessibility Options
 Screenshots        +Ctrl = clipboard
 Cmd-Shift-3        Entire Screen

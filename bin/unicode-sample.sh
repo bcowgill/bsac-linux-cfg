@@ -148,8 +148,7 @@ echo "// 🚩 Flag: watch out for negative numbers here"
 echo "// 🔴 Bug: count is not specified as a dependency"
 echo "// 🔵 Blue: circle"
 echo "// ⬤ Black: circle"
-echo "// ○ White: circle"
-echo "// ◌ Dotted Circle"
+echo "// ○ White: circle" echo "// ◌ Dotted Circle"
 echo "// ❤ I love it!"
 echo "// 🚀 take off!"
 echo "// 📦 build it"
@@ -366,3 +365,5 @@ OTHER - move to unicode sample....
 ❐       U+2750  [OtherSymbol]   UPPER RIGHT DROP-SHADOWED WHITE SQUARE
 ❑       U+2751  [OtherSymbol]   LOWER RIGHT SHADOWED WHITE SQUARE
 ❒       U+2752  [OtherSymbol]   UPPER RIGHT SHADOWED WHITE SQUARE
+mac keyref -- Favourites:
+~ ^ ☑️ ✅ ☐ ☒ ☑︎ ❌ 🤑 💰 💸 💵 💲 $ ﹩ ＄
