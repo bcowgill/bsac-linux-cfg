@@ -52,6 +52,10 @@ describe(`${displayName} module tests`, function descJSONMapModuleSuite() {
 			expect(testMe.JSONMap(map, 5)).toEqual([TYPE, ...items])
 		})
 
+		test('should limit the number of items shown with no ellipsis', function testJSONMapNoEllipsis() {
+			expect(testMe.JSONMap(map, 1, null)).toEqual([TYPE, ['hello', 42]])
+		})
+
 		test('should limit the number of items shown using a custom ellipsis object', function testJSONMapEllipsis() {
 			expect(testMe.JSONMap(map, 1, ELLIPSIS2)).toEqual([
 				TYPE,

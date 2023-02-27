@@ -40,6 +40,10 @@ describe(`${displayName} module tests`, function descJSONSetModuleSuite() {
 			expect(testMe.JSONSet(set, 5)).toEqual([TYPE, ...items])
 		})
 
+		test('should limit the number of items shown with no ellipsis', function testJSONSetNoEllipsis() {
+			expect(testMe.JSONSet(set, 1, '')).toEqual([TYPE, 'hello'])
+		})
+
 		test('should limit the number of items shown with custom ellipsis', function testJSONSetEllipsis() {
 			expect(testMe.JSONSet(set, 1, ELLIPSIS2)).toEqual([
 				TYPE,
@@ -84,7 +88,7 @@ describe(`${displayName} module tests`, function descJSONSetModuleSuite() {
 		test('should throw when array is not an object:JSONSet', function testSetFromJSONError() {
 			expect(() => testMe.SetFromJSON(['wrong'])).toThrowError(
 				new TypeError(
-					`Cannot construct a Set from non-JSONArrayish, first element of array must be '${TYPE}'. (Found 'wrong')`,
+					`Cannot construct a Set from non-JSONSetish, first element of array must be '${TYPE}'. (Found 'wrong')`,
 				),
 			)
 		})

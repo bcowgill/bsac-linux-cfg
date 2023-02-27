@@ -12,18 +12,20 @@ export const ELLIPSIS: ellipsis = ['…', '…']
  * Convert a Map object to an Array which can be serialised with JSON.stringify.
  * @param map Map to convert to a string named array for serialisation with JSON.stringify.
  * @param limit number if positive will limit the number of keys from the Map to export.  If the limit is reached, an ellipsis tuple will be shown as the last item in the map.
- * @param ellipsis key, value tuple to use when limit is positive and entries are elided from the output. defaults to ['…', '…'].
+ * @param ellipsis key, value tuple to use when limit is positive and entries are elided from the output. defaults to ['…', '…']. If null, defaults to showing nothing.
  * @returns An array whose first element is 'object:JSONMap' to indicate that it is a JSON serialisable array.  The following elements are the key, value tuples of the map.
  */
 export function JSONMap<K, V>(
 	map: Map<K, V>,
 	limit = 0,
-	ellipsis: kvStringified<K, V> = ELLIPSIS,
+	ellipsis: kvStringified<K, V> | null = ELLIPSIS,
 ): JSONMapish<K, V> {
 	const jsonMap: JSONMapish<K, V> = [displayName]
 	for (const item of map.entries()) {
 		if (limit > 0 && jsonMap.length > limit) {
-			jsonMap.push(ellipsis)
+			if (ellipsis !== null) {
+				jsonMap.push(ellipsis)
+			}
 			break
 		} else {
 			jsonMap.push(item)
