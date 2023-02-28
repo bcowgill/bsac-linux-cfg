@@ -47,6 +47,9 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 		map?: Map<stuff, stuff> | JSONMapish<stuff, stuff>
 		array?: number[]
 		object?: object
+		unknown?: stuff[]
+		dateErr?: stuff[]
+		regexErr?: stuff[]
 	}
 	const Big = {
 		void: void 0,
@@ -502,6 +505,113 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 			expect(obj.array).toEqual([1, 2, 3, 4])
 		})
 	}) // getJSONDebug().replacer()
+
+	describe('reviverDebug()', function descJSONDebugReviverDebugSuite() {
+		test('should handle a JSONFunction by omitting it', function testJSONDebugReviverDebugFunction() {
+			const json = JSON.stringify(fnFunc, testMe.replacerDebug)
+			const fn = JSON.parse(json, testMe.reviverDebug) as unknown
+			expect(fn).toBeUndefined()
+		})
+
+		test('should handle a JSONRegExp with replacerDebug', function testJSONDebugReviverDebugRegExp() {
+			const json = JSON.stringify(regex, testMe.replacerDebug)
+			const reRevived = JSON.parse(json, testMe.reviverDebug) as RegExp
+			expect(reRevived).toBeInstanceOf(RegExp)
+			expect('this is the source').toMatch(reRevived)
+		})
+
+		test('should handle a JSONDate with replacerDebug', function testJSONDebugReviverDebugDate() {
+			const json = JSON.stringify(new Date(), testMe.replacerDebug)
+			const date = JSON.parse(json, testMe.reviverDebug) as Date
+			expect(date).toBeInstanceOf(Date)
+		})
+
+		test('should handle a JSONSet with replacerDebug', function testJSONDebugReviverDebugSet() {
+			const json = JSON.stringify(set, testMe.replacerDebug)
+			const newSet = JSON.parse(json, testMe.reviverDebug) as Set<stuff>
+			expect(newSet).toBeInstanceOf(Set)
+			expect(Array.from(newSet.values())).toEqual(setItems)
+		})
+
+		test('should handle a JSONMap with replacerDebug', function testJSONDebugReviverDebugMap() {
+			const json = JSON.stringify(map, testMe.replacerDebug)
+			const newMap = JSON.parse(json, testMe.reviverDebug) as Map<
+				stuff,
+				stuff
+			>
+			expect(newMap).toBeInstanceOf(Map)
+			expect(Array.from(newMap.entries())).toEqual(mapItems)
+		})
+
+		test('should revive everything sans functions', function testJSONDebugReviverDebugEverything() {
+			const json = JSON.stringify(
+				{
+					...Big,
+					unknown: ['object:Unsupported', 1, 1, 2, 3, 5, 8],
+					dateErr: ['object:JSONDate'],
+					regexErr: ['object:JSONRegExp'],
+				},
+				testMe.replacerDebug,
+			)
+
+			// No damage to the object when stringified
+			expect(Big.array).toBe(bigArray)
+			expect(Big.object).toBe(bigObject)
+
+			const obj = JSON.parse(json, testMe.reviverDebug) as Big
+			expect(Object.keys(obj).sort()).toEqual([
+				'array',
+				'boolean',
+				'date',
+				'dateErr',
+				// 'fnFunc', not revived!
+				'map',
+				'null',
+				'number',
+				'object',
+				'reDate',
+				'regexErr',
+				'set',
+				'string',
+				'unknown',
+			])
+			expect(obj.boolean).toBe(Big.boolean)
+			expect(obj.null).toBe(Big.null)
+			expect(obj.number).toBe(Big.number)
+			expect(obj.string).toBe(Big.string)
+			expect(obj.fnFunc).toBeUndefined()
+
+			expect(obj.date).toBeInstanceOf(Date)
+			expect((obj.date as Date).toJSON()).toMatch(reDate)
+
+			expect(obj.string).toHaveLength(Big.string.length)
+			const revivedMap = obj.map as Map<stuff, stuff>
+			const revivedSet = obj.set as Set<stuff>
+			expect(revivedMap.size).toBe(mapItems.length)
+			expect(revivedSet.size).toBe(setItems.length)
+
+			expect(obj.array).toHaveLength(Big.array.length)
+			expect(Object.keys(obj.object ?? {})).toHaveLength(
+				Object.keys(Big.object).length,
+			)
+
+			expect(Array.from(revivedMap.entries())).toEqual(mapItems)
+			expect(Array.from(revivedSet.values())).toEqual(setItems)
+			expect(obj.array).toEqual(Big.array)
+			expect(obj.object).toEqual(Big.object)
+			expect(obj.unknown).toEqual([
+				'object:Unsupported',
+				1,
+				1,
+				2,
+				3,
+				5,
+				8,
+			])
+			expect(obj.dateErr).toBeInstanceOf(Date)
+			expect(obj.regexErr).toBeInstanceOf(RegExp)
+		})
+	}) // reviverDebug()
 
 	/*
 	describe(`MapFromJSON()`, function descMapFromJSONSuite() {

@@ -26,9 +26,9 @@ const CODE_12 = TWELVE.codePointAt(0) as number
 // const TWELVE_THIRTY = '🕧' // U+1F567
 export const rePrefix = new RegExp(`^[${ALL_CLOCKS}]`, 'u')
 // toJSON gives 2023-02-23T17:37:38.975Z
-export const reJSONDate = /^[-0-9]+T[.:0-9]+Z$/
+export const reJSONDate = /^([-0-9]+)T([.:0-9]+)Z$/
 export const rePrefixedDate = new RegExp(
-	`^[${ALL_CLOCKS}][-0-9]+T[.:0-9]+Z$`,
+	`^([${ALL_CLOCKS}])([-0-9]+T[.:0-9]+Z)$`,
 	'u',
 )
 

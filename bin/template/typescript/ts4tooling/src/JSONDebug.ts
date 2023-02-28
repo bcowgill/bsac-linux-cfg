@@ -1,7 +1,7 @@
 // JSONDebug.ts helpers for JSON.stringify/parse to better debug objects
+import { JSONDate, reJSONDate, rePrefixedDate, JSONDateish } from './JSONDate'
 import { JSONFunction, functionish } from './JSONFunction'
-import { JSONRegExp } from './JSONRegExp'
-import { JSONDate, reJSONDate } from './JSONDate'
+import { JSONRegExp, JSONRegExpish } from './JSONRegExp'
 import { JSONMap } from './JSONMap'
 import { JSONSet } from './JSONSet'
 import typeOf from './typeOf'
@@ -24,17 +24,13 @@ export const NOLIMITS: JSONDebugLimits = {
 	withFunctions: true,
 }
 
-// A JSON.stringify replacer callback function
+// A JSON.stringify replacer/reviver callback function
 type FnJSONReplacer = (this: unknown, key: string, value: unknown) => unknown
-
-// A JSON.parse reviver callback function
-// interface FnJSONReviver {
-// }
 
 // JSON.stringify/parser replacer/reviver callback functions in one object.
 interface JSONStreamer {
 	replacer: FnJSONReplacer
-	// reviver: FnJSONReviver
+	reviver: FnJSONReplacer
 }
 /**
  * Get JSON.stringify/parser replacer/reviver functions which limit the number of elements output from collections and can call through to a subsequent replacer/reviver for additonal post-processing.
@@ -141,6 +137,52 @@ export function getJSONDebugger(
 			return fnReplacer
 				? (fnReplacer.bind(this, key, better) as () => unknown)()
 				: better
+		}, // replacer
+		reviver: function (this: unknown, key: string, value: unknown) {
+			// console.warn(`REVIVER key:[${key}] value:`, value, 'this', this)
+			let better: unknown = value
+			if (typeOf(value) === 'object:Array') {
+				const first = (value as unknown[])[0]
+				if (typeof first === 'string' && first.startsWith('object:')) {
+					switch (first) {
+						case 'object:JSONDate': {
+							const date = (value as JSONDateish)[1]
+							better = new Date(
+								date
+									? date.replace(rePrefixedDate, '$2')
+									: Date.now(),
+							)
+							break
+						}
+						case 'object:JSONRegExp': {
+							better = new RegExp(
+								(value as JSONRegExpish)[1] ?? '',
+								(value as JSONRegExpish)[2] ?? '',
+							)
+							break
+						}
+						case 'object:JSONFunction': {
+							better = void 0
+							break
+						}
+						case 'object:JSONSet': {
+							const iterator = (value as []).values()
+							iterator.next()
+							better = new Set(iterator)
+							break
+						}
+						case 'object:JSONMap': {
+							const iterator = (value as []).values()
+							iterator.next()
+							better = new Map(iterator)
+							break
+						}
+						default:
+							better = value
+					}
+				}
+			}
+			return better
 		},
 	}
 	return json
@@ -149,3 +191,4 @@ export function getJSONDebugger(
 const JSONDebug = getJSONDebugger(NOLIMITS)
 
 export const replacerDebug = JSONDebug.replacer
+export const reviverDebug = JSONDebug.reviver
