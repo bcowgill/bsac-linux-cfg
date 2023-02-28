@@ -10,6 +10,19 @@ export const NO_ELLIPSIS = [null]
 
 // const DEBUG = true
 
+// A JSON.stringify replacer/reviver callback function
+type FnJSONReplacer = (this: object, key: string, value: unknown) => unknown
+
+/**
+ * A JSON replacer/reviver function that just returns the value as it is.
+ * @param unused The unused key name.
+ * @param value The value currently being stringified.
+ * @returns the value being stringified just as it is.
+ */
+export const identityReplacer: FnJSONReplacer = function (unused, value) {
+	return value
+}
+
 export interface JSONDebugLimits {
 	withFunctions?: boolean
 	items?: number
@@ -21,30 +34,40 @@ export interface JSONDebugLimits {
 	mapEllipsis?: [string, string] | null
 }
 
+export interface JSONReplacerRevivers {
+	preReplacer?: FnJSONReplacer
+	postReplacer?: FnJSONReplacer
+	preReviver?: FnJSONReplacer
+	postReviver?: FnJSONReplacer
+}
+
 export const NOLIMITS: JSONDebugLimits = {
 	items: 0, // no limits on items at all,
 	withFunctions: true,
 }
-
-// A JSON.stringify replacer/reviver callback function
-type FnJSONReplacer = (this: object, key: string, value: unknown) => unknown
 
 // JSON.stringify/parser replacer/reviver callback functions in one object.
 interface JSONStreamer {
 	replacer: FnJSONReplacer
 	reviver: FnJSONReplacer
 }
+
 /**
  * Get JSON.stringify/parser replacer/reviver functions which limit the number of elements output from collections and can call through to a subsequent replacer/reviver for additonal post-processing.
  * @param limits specifies the limits of items to show for arrays, sets, etc and what to use as ellipsis characters for collections that are too long.
- * @param fnReplacer specifies an additional JSON.stringify type replacer function to apply to the remaining JSON object values after the limits have been applied.
+ * @param replacers specifies additional JSON.stringify type replacer/reviver functions to apply to the JSON object values before and after the limits have been applied.
  * @returns an object containing a replacer and reviver function to use with JSON/JSON5.stringify/parse functions.
  */
 export function getJSONDebugger(
 	limits: JSONDebugLimits,
-	fnReplacer?: FnJSONReplacer,
+	replacers: JSONReplacerRevivers = {},
 ): JSONStreamer {
 	// let counter = 20
+
+	const preReplacer = replacers.preReplacer ?? identityReplacer
+	const postReplacer = replacers.postReplacer ?? identityReplacer
+	const preReviver = replacers.preReviver ?? identityReplacer
+	const postReviver = replacers.postReviver ?? identityReplacer
 
 	const json = {
 		/**
@@ -54,7 +77,10 @@ export function getJSONDebugger(
 		 * @param value being currently stringified from the object held in 'this'. For example a Date object will already be a string here.
 		 * @returns the value to use for key in 'this' object.  Unlike JSON.stringify, we support Set and Map data by converting to arrays of type JSONSetish, JSONMapish. We also convert any Dates to an array of type JSONDateish with additional locale debugging in the last element.  We also support RegExp by converting to an array of JSONRegExpish.
 		 */
-		replacer: function (this: object, key: string, value: unknown) {
+		replacer: function (this: object, key: string, valueIn: unknown) {
+			const value = (
+				preReplacer.bind(this, key, valueIn) as () => unknown
+			)()
 			const type = typeOf(value)
 			// --counter
 			// if (counter <= 0) {
@@ -142,11 +168,12 @@ export function getJSONDebugger(
 					}
 				}
 			}
-			return fnReplacer
-				? (fnReplacer.bind(this, key, better) as () => unknown)()
-				: better
+			return (postReplacer.bind(this, key, better) as () => unknown)()
 		}, // replacer
-		reviver: function (this: object, key: string, value: unknown) {
+		reviver: function (this: object, key: string, valueIn: unknown) {
+			const value = (
+				preReviver.bind(this, key, valueIn) as () => unknown
+			)()
 			// if (DEBUG /*|| key === 'list'*/) {
 			// 	// DEBUG = true
 			// 	const type = typeOf(value)
@@ -202,7 +229,7 @@ export function getJSONDebugger(
 					}
 				}
 			}
-			return better
+			return (postReviver.bind(this, key, better) as () => unknown)()
 		},
 	}
 	return json

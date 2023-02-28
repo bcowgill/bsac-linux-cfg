@@ -116,13 +116,19 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 			arrayLimit: limitsNoEllipsis.arrayLimit,
 			stringLimit: limitsNoEllipsis.stringLimit,
 		},
-		function (key, value) {
-			if (typeof value === 'string') {
+		{
+			postReplacer: function (key, value) {
+				if (typeof value === 'string') {
+					return value
+						.replace(/hello/i, 'Hola!!')
+						.replace(/world/i, 'Universidad')
+				}
 				return value
-					.replace(/hello/i, 'Hola!!')
-					.replace(/world/i, 'Universidad')
-			}
-			return value
+			},
+			// For coverage, we add them explicitly.
+			preReplacer: testMe.identityReplacer,
+			preReviver: testMe.identityReplacer,
+			postReviver: testMe.identityReplacer,
 		},
 	)
 
