@@ -49,7 +49,7 @@ export function SetFromJSON<T>(
 		)
 	}
 	const set = new Set<T>()
-	jsonSet.forEach((value) => {
+	jsonSet.forEach(function addValues(value) {
 		if (value !== ellipsis) {
 			set.add(value)
 		}

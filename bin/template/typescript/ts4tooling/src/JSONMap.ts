@@ -52,7 +52,7 @@ export function MapFromJSON<K, V>(
 		)
 	}
 	const map = new Map<K, V>()
-	jsonMap.forEach(([key, value]) => {
+	jsonMap.forEach(function addKeyValues([key, value]) {
 		if (key !== ellipsis[0] && value != ellipsis[1]) {
 			map.set(key as K, value as V)
 		}

@@ -71,7 +71,7 @@ export function obscureWord(word: string): string {
 								star,
 							)}${last}`
 						},
-				  )
+				)
 	}
 	return obscured
 }
