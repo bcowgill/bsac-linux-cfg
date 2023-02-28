@@ -32,6 +32,10 @@ export default function typeOf(source: unknown): string {
 		const konstructor = source.constructor
 		const name = String(konstructor.name || getAnonName(source))
 		type += name !== 'Object' ? ':' + name : ''
+		if (/^(Number|Boolean|String)$/.test(name)) {
+			// new Number(), etc -> number, boolean, string
+			type = name.toLowerCase()
+		}
 	}
 	return type
 }

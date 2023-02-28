@@ -8,6 +8,8 @@ import typeOf from './typeOf'
 
 export const NO_ELLIPSIS = [null]
 
+// const DEBUG = true
+
 export interface JSONDebugLimits {
 	withFunctions?: boolean
 	items?: number
@@ -25,7 +27,7 @@ export const NOLIMITS: JSONDebugLimits = {
 }
 
 // A JSON.stringify replacer/reviver callback function
-type FnJSONReplacer = (this: unknown, key: string, value: unknown) => unknown
+type FnJSONReplacer = (this: object, key: string, value: unknown) => unknown
 
 // JSON.stringify/parser replacer/reviver callback functions in one object.
 interface JSONStreamer {
@@ -52,18 +54,24 @@ export function getJSONDebugger(
 		 * @param value being currently stringified from the object held in 'this'. For example a Date object will already be a string here.
 		 * @returns the value to use for key in 'this' object.  Unlike JSON.stringify, we support Set and Map data by converting to arrays of type JSONSetish, JSONMapish. We also convert any Dates to an array of type JSONDateish with additional locale debugging in the last element.  We also support RegExp by converting to an array of JSONRegExpish.
 		 */
-		replacer: function (this: unknown, key: string, value: unknown) {
+		replacer: function (this: object, key: string, value: unknown) {
 			const type = typeOf(value)
 			// --counter
 			// if (counter <= 0) {
 			// 	throw new Error('BREAK JSON LOOP')
 			// }
-			// console.warn(
-			// 	`REPLACER key[${key}] type[${type}] this:`,
-			// 	this,
-			// 	'value: ',
-			// 	value,
-			// )
+			// if (DEBUG /*|| key === 'list'*/) {
+			// 	// DEBUG = true
+			// 	const typeSource = typeOf(this[key])
+
+			// 	console.warn(
+			// 		`getJSONDebugger.replacer key[${key}] ${typeSource}->${type}\nvalue<`,
+			// 		value,
+			// 		'>\nthis:',
+			// 		this,
+			// 	)
+			// }
+
 			let better: unknown = value
 			switch (type) {
 				case 'string': {
@@ -138,8 +146,20 @@ export function getJSONDebugger(
 				? (fnReplacer.bind(this, key, better) as () => unknown)()
 				: better
 		}, // replacer
-		reviver: function (this: unknown, key: string, value: unknown) {
-			// console.warn(`REVIVER key:[${key}] value:`, value, 'this', this)
+		reviver: function (this: object, key: string, value: unknown) {
+			// if (DEBUG /*|| key === 'list'*/) {
+			// 	// DEBUG = true
+			// 	const type = typeOf(value)
+			// 	const typeSource = typeOf(this[key])
+
+			// 	console.warn(
+			// 		`getJSONDebugger.reviver key[${key}] ${typeSource}->${type}\nvalue<`,
+			// 		value,
+			// 		'>\nthis:',
+			// 		this,
+			// 	)
+			// }
+
 			let better: unknown = value
 			if (typeOf(value) === 'object:Array') {
 				const first = (value as unknown[])[0]

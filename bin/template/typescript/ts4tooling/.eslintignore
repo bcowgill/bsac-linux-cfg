@@ -5,7 +5,3 @@ coverage/
 __templates__/
 # typescript project, ignore js for linting
 src/**/*.js
-
-# MUSTDO(BSAC) Temporary disable lint on pii files until ready
-src/pii.ts
-src/__tests__/pii.test.ts

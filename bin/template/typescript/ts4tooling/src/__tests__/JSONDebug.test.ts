@@ -169,6 +169,14 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 	}) // JSON.stringify limitations
 
 	describe('replacerDebug()', function descJSONDebugReplacerDebugSuite() {
+		test('should handle a String with replacerDebug', function testJSONDebugReplacerDebugString() {
+			const json = JSON.stringify(
+				'this is the string of stuff',
+				testMe.replacerDebug,
+			)
+			expect(json).toBe('"this is the string of stuff"')
+		})
+
 		test('should handle a Function with replacerDebug', function testJSONDebugReplacerDebugFunction() {
 			const json = JSON.stringify(fnFunc, testMe.replacerDebug)
 			expect(json).toBe('["object:JSONFunction","fnFunc",2]')
@@ -506,7 +514,7 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 		})
 	}) // getJSONDebug().replacer()
 
-	describe('reviverDebug()', function descJSONDebugReviverDebugSuite() {
+	describe('reviverDebug()/getJSONDebug().reviver()', function descJSONDebugReviverDebugSuite() {
 		test('should handle a JSONFunction by omitting it', function testJSONDebugReviverDebugFunction() {
 			const json = JSON.stringify(fnFunc, testMe.replacerDebug)
 			const fn = JSON.parse(json, testMe.reviverDebug) as unknown
@@ -612,47 +620,4 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 			expect(obj.regexErr).toBeInstanceOf(RegExp)
 		})
 	}) // reviverDebug()
-
-	/*
-	describe(`MapFromJSON()`, function descMapFromJSONSuite() {
-		test('should convert array to a Map', function testMapFromJSONOk() {
-			const newMap = testMe.MapFromJSON([TYPE, ...mapItems])
-
-			expect(newMap.size).toEqual(4)
-			expect(newMap.has(TYPE)).toBeFalsy()
-			expect(newMap.has(mapItems[0][0])).toBeTruthy()
-			const values: kvPairs = []
-			newMap.forEach((value, key) => values.push([key, value]))
-			expect(values).toEqual(mapItems)
-		})
-
-		test('should convert array to a Map with custom ellipsis', function testMapFromJSONEllipsis() {
-			const newMap = testMe.MapFromJSON(
-				[TYPE, ...mapItems, ELLIPSIS2],
-				ELLIPSIS2,
-			)
-
-			expect(newMap.size).toEqual(4)
-			expect(newMap.has(TYPE)).toBeFalsy()
-			expect(newMap.has(mapItems[0][0])).toBeTruthy()
-			const values: kvPairs = []
-			newMap.forEach((value, key) => values.push([key, value]))
-			expect(values).toEqual(mapItems)
-		})
-
-		test('should convert array to an empty Map', function testMapFromJSONEmpty() {
-			const newMap = testMe.MapFromJSON([TYPE])
-
-			expect(newMap.size).toEqual(0)
-		})
-
-		test('should throw when array is not an object:JSONMap', function testMapFromJSONError() {
-			expect(() => testMe.MapFromJSON(['wrong'])).toThrowError(
-				new TypeError(
-					`Cannot construct a Map from non-JSONMapish, first element of array must be '${TYPE}'. (Found 'wrong')`,
-				),
-			)
-		})
-	}) // MapFromJSON
-*/
 }) // module tests

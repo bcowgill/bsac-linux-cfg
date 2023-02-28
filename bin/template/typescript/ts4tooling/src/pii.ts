@@ -3,13 +3,13 @@
     https://www.stationx.net/list-of-personally-identifiable-information-pii/
 */
 
-const probability = 0.5
-const short = 4
+const PROBABILITY = 0.5
+const SHORT = 4
+const STAR = '*'
+const ZERO = '0'
+const ONE = '1'
 const reChar = /./g
 const reNumber = /^[0-9]+$/
-const star = '*'
-const zero = '0'
-const one = '1'
 
 /**
  * Obscure a string containing sensitive personally identifiable information (PII) like a password.
@@ -17,11 +17,11 @@ const one = '1'
  * @returns a string full of '*' characters up to 4 characters longer than the input string.
  */
 export function obscurePassword(password: string): string {
-	let obscured = password.replace(reChar, star)
-	obscured += Math.random() < probability ? star : ''
-	obscured += Math.random() < probability ? star : ''
-	obscured += Math.random() < probability ? star : ''
-	obscured += Math.random() < probability ? star : ''
+	let obscured = password.replace(reChar, STAR)
+	obscured += Math.random() < PROBABILITY ? STAR : ''
+	obscured += Math.random() < PROBABILITY ? STAR : ''
+	obscured += Math.random() < PROBABILITY ? STAR : ''
+	obscured += Math.random() < PROBABILITY ? STAR : ''
 	return obscured
 }
 
@@ -34,16 +34,21 @@ export function obscureNumber(value: number | string): string {
 	let obscured = value.toString()
 	switch (obscured.length) {
 		case 1:
-			obscured = one
+			obscured = ONE
 			break
 		case 2:
-			obscured = one + one
+			obscured = ONE + ONE
 			break
 		default:
 			obscured = obscured.replace(
 				/^(.)(.*)(.)$/g,
-				function replaceNumber(unused, first, middle, last) {
-					return `${first}${middle.replace(reChar, zero)}${last}`
+				function replaceNumber(
+					unused: never,
+					first: string,
+					middle: string,
+					last: string,
+				): string {
+					return `${first}${middle.replace(reChar, ZERO)}${last}`
 				},
 			)
 	}
@@ -61,17 +66,22 @@ export function obscureWord(word: string): string {
 		obscured = obscureNumber(word)
 	} else {
 		obscured =
-			word.length <= short
-				? word.replace(reChar, star)
+			word.length <= SHORT
+				? word.replace(reChar, STAR)
 				: word.replace(
 						/^(.)(.*)(.)$/g,
-						function replaceWord(match, first, middle, last) {
+						function replaceWord(
+							match: never,
+							first: string,
+							middle: string,
+							last: string,
+						) {
 							return `${first}${middle.replace(
 								reChar,
-								star,
+								STAR,
 							)}${last}`
 						},
-				)
+				  )
 	}
 	return obscured
 }

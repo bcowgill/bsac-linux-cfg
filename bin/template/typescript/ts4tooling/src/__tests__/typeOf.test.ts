@@ -28,6 +28,8 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 		*/
 		expect(typeOf(false)).toBe('boolean')
 		expect(typeOf(true)).toBe('boolean')
+		expect(typeOf(Boolean())).toBe('boolean')
+		expect(typeOf(new Boolean())).toBe('boolean')
 
 		/*
 			A number has 11 methods:
@@ -43,6 +45,8 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 		// unlike null, NaN and Infinity have all the same methods available as a valid number
 		expect(typeOf(NaN)).toBe('number')
 		expect(typeOf(Infinity)).toBe('number')
+		expect(typeOf(Number())).toBe('number')
+		expect(typeOf(new Number())).toBe('number')
 
 		/*
 			A BigInt has 8 methods:
@@ -56,6 +60,9 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 		// expect(typeOf(BigInt(0.5))).toBe('bigint') Cannot convert to BigInt
 		// expect(typeOf(BigInt(NaN))).toBe('bigint') Cannot convert to BigInt
 		// expect(typeOf(BigInt(Infinity))).toBe('bigint')
+
+		// Not a constructor!!
+		// expect(typeOf(new BigInt())).toBe('bigint')
 
 		/*
 			A string has 55 methods:
@@ -78,6 +85,8 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 		*/
 		expect(typeOf('')).toBe('string')
 		expect(typeOf('whatever')).toBe('string')
+		expect(typeOf(String())).toBe('string')
+		expect(typeOf(new String())).toBe('string')
 	}) // primitive types
 
 	test('abnormal primitive types', function testTypeOfAbnormalPrimitive() {
@@ -95,7 +104,7 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 		expect(typeOf({})).toBe('object')
 
 		// A Number object 11 methods just like a number primitive
-		expect(typeOf(new Number(87))).toBe('object:Number')
+		expect(typeOf(new Number(87))).toBe('number')
 
 		/*
 			A SyntaxError has 11 methods:

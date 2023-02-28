@@ -2,57 +2,84 @@ import { describe, expect, test } from '@jest/globals'
 import * as TestMe from '../pii'
 
 describe('pii module tests', function descPIISuite() {
-	const DEBUG = false
-	const longer = 4
+	const LONGER = 4
 	const password = 'pa6sword i$ obscuRed fu11y'
 
 	test('obscurePassword()', function testObscurePassword() {
 		const result = TestMe.obscurePassword(password)
 
 		expect(result.length).toBeGreaterThanOrEqual(password.length)
-		expect(result.length).toBeLessThanOrEqual(password.length + longer)
+		expect(result.length).toBeLessThanOrEqual(password.length + LONGER)
 		expect(result).toMatch(/^\*+$/)
+
+		// Call a few more times so random branches gets covered
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
+		TestMe.obscurePassword(password)
 	}) // obscurePassword
 
 	test('obscureNumber()', function testObscureNumber() {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		function testObscureNumber(number, expected, unused) {
+		function testObscureNumber(
+			number: number | string,
+			expected: string,
+			detail: string,
+		): void {
 			const actual = TestMe.obscureNumber(number)
+			if (actual !== expected) {
+				expect(actual).toBe(`${expected} - ${detail}`)
+			}
 			expect(actual).toBe(expected)
 		}
 
-		testObscureNumber(4, '1', 'short numbers 1 are changed')
-		testObscureNumber('58', '11', 'short numbers 2 are changed')
-		testObscureNumber(436, '406', 'short numbers 3 are changed')
-		testObscureNumber('5897', '5007', 'short numbers 4 are changed')
+		testObscureNumber(4, '1', 'short numbers length 1 are changed')
+		testObscureNumber('58', '11', 'short numbers length 2 are changed')
+		testObscureNumber(436, '406', 'short numbers length 3 are changed')
+		testObscureNumber('5897', '5007', 'short numbers length 4 are changed')
 		testObscureNumber('89374', '80004', 'long numbers are changed')
 		testObscureNumber('4352346', '4000006', 'long numbers are changed')
 	}) // obscureNumber
 
 	test('obscureWord()', function testObscureWord() {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		function testObscureWord(word, expected, unused) {
+		function testObscureWord(
+			word: string,
+			expected: string,
+			detail: string,
+		) {
 			const actual = TestMe.obscureWord(word)
+			if (actual !== expected) {
+				expect(actual).toBe(`${expected} - ${detail}`)
+			}
 			expect(actual).toBe(expected)
 		}
 
-		testObscureWord('a', '*', 'short words 1 fully obscured')
-		testObscureWord('ab', '**', 'short words 2 fully obscured')
-		testObscureWord('abc', '***', 'short words 3 fully obscured')
-		testObscureWord('abcd', '****', 'short words 4 fully obscured')
+		testObscureWord('a', '*', 'short words length 1 fully obscured')
+		testObscureWord('ab', '**', 'short words length 2 fully obscured')
+		testObscureWord('abc', '***', 'short words length 3 fully obscured')
+		testObscureWord('abcd', '****', 'short words length 4 fully obscured')
 		testObscureWord('abcde', 'a***e', 'long words are partially obscured')
-		testObscureWord('4', '1', 'short numbers 1 are changed')
-		testObscureWord('58', '11', 'short numbers 2 are changed')
-		testObscureWord('436', '406', 'short numbers 3 are changed')
-		testObscureWord('5897', '5007', 'short numbers 4 are changed')
+		testObscureWord('4', '1', 'short numbers length 1 are changed')
+		testObscureWord('58', '11', 'short numbers length 2 are changed')
+		testObscureWord('436', '406', 'short numbers length 3 are changed')
+		testObscureWord('5897', '5007', 'short numbers length 4 are changed')
 		testObscureWord('89374', '80004', 'long numbers are changed')
 		testObscureWord('4352346', '4000006', 'long numbers are changed')
 	}) // obscureWord
 
 	test('obscureInfo()', function testObscureInfo() {
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		function testObscureInfo(info, expected, unused) {
+		function testObscureInfo(
+			info: string,
+			expected: string,
+			detail: string,
+		) {
 			const actual = TestMe.obscureInfo(info)
+			if (actual !== expected) {
+				expect(actual).toBe(`${expected} - ${detail}`)
+			}
 			expect(actual).toBe(expected)
 		}
 
@@ -92,9 +119,34 @@ describe('pii module tests', function descPIISuite() {
 	}) // obscureInfo
 
 	test('JSON.stringify() with replacer', function testObscureInfo() {
-		const features = new Set()
-		features.add('edit').add('delete')
-		const data = {
+		type stuff = number | string
+
+		interface Data {
+			id: number
+			system?: {
+				password: string
+				isEnrolled: boolean
+			}
+			name: string
+			birthDate?: Date
+			age?: number
+			height?: number
+			weight?: number
+			job?: string
+			address: string
+			financials?: {
+				sort_Code: string
+				accountNo: string
+				cardNo: string
+			}
+			removeThis?: string
+			boolNullable?: boolean | null
+			productNullable?: string | null
+			ssnPII?: string
+			list?: stuff[]
+		}
+
+		const data: Data = {
 			id: 234134,
 			system: {
 				password:
@@ -120,53 +172,17 @@ describe('pii module tests', function descPIISuite() {
 			productNullable: 'Gizmos',
 			ssnPII: '734942145',
 			list: [1, 2, 34, 'what'],
-			features,
-		}
+		} // data
 
-		function typeOf(source): string {
-			const type =
-				source !== null && typeof source !== 'undefined'
-					? source.constructor.name
-					: typeof source
-			return type
-		}
-
-		function fnReplacer(keyName: string, original) {
-			const source = this[keyName]
-			let value = original
-			const type = typeOf(source)
-			const key = keyName.replace(/[^a-z0-9]/gi, '')
-
-			if (DEBUG /*|| keyName === 'list'*/) {
-				// DEBUG = true
-				// eslint-disable-next-line no-console
-				console.warn(
-					`fnReplacer key[${keyName}]->[${key}] ${type}->${typeOf(
-						value,
-					)}\nthis:`,
-					this,
-					'\nvalue<',
-					value,
-					'>',
-				)
-			}
-
-			if (key === '') {
+		function fnReplacer(
+			this: object,
+			keyName: string,
+			value: unknown,
+		): unknown {
+			if (keyName === '') {
 				return value
 			}
-
-			if (type === 'Set') {
-				const SET_LIMIT = 2 // limit the number of items in the set in case there are very many...
-				const set: Array<unknown> = []
-				for (const item of original.keys()) {
-					set.push(item)
-					if (set.length >= SET_LIMIT) {
-						set.push('…')
-						break
-					}
-				}
-				value = set
-			}
+			const key = keyName.replace(/[^a-z0-9]/gi, '')
 
 			// Keys which should NOT be included in stringified object
 			// example only, specific key name
@@ -180,39 +196,42 @@ describe('pii module tests', function descPIISuite() {
 				return value || null
 			}
 
-			// Keys which contain passwords to be fully obscured
-			// anything with password anywhere within it (ignoring case)
-			if (/password/i.test(key)) {
-				return TestMe.obscurePassword(value)
-			}
+			if (typeof value === 'string') {
+				// Keys which contain passwords to be fully obscured
+				// anything with password anywhere within it (ignoring case)
+				if (/password/i.test(key)) {
+					return TestMe.obscurePassword(value)
+				}
 
-			// Keys which contain personally identifiable information and should be partially obscured
-			// anything ending with PII (ignoring case)
-			// anything with birth in it anywhere
-			// and some fully qualified specific field names
-			if (
-				/pii$/i.test(key) ||
-				/birth/i.test(key) ||
-				/^(name|address|sortcode|accountno|cardno)$/i.test(key)
-			) {
-				return TestMe.obscureInfo(value)
-			}
-
+				// Keys which contain personally identifiable information and should be partially obscured
+				// anything ending with PII (ignoring case)
+				// anything with birth in it anywhere
+				// and some fully qualified specific field names
+				if (
+					/pii$/i.test(key) ||
+					/birth/i.test(key) ||
+					/^(name|address|sortcode|accountno|cardno)$/i.test(key)
+				) {
+					return TestMe.obscureInfo(value)
+				}
+			} // string
 			// All other keys are passed through as they are
 			return value
-		}
+		} // fnReplacer()
 
 		const publicKeys = 'id name address'.split(/ /g)
 
-		expect(JSON.parse(JSON.stringify(data, publicKeys))).toEqual({
+		expect(JSON.parse(JSON.stringify(data, publicKeys)) as Data).toEqual({
 			id: 234134,
 			name: 'Frankie Hollywood',
 			address: '123 Shinging Crescent, Anyville, Wyoming, 23123',
 		})
 
-		const result = JSON.parse(JSON.stringify(data, fnReplacer))
-		expect(result.system.password).toMatch(/^\*+$/)
-		result.system.password = '*****'
+		const result = JSON.parse(JSON.stringify(data, fnReplacer)) as Data
+		expect(result.system?.password).toMatch(/^\*+$/)
+		if (result.system) {
+			result.system.password = '*****'
+		}
 		expect(result).toEqual({
 			id: 234134,
 			system: { password: '*****', isEnrolled: true },
@@ -223,6 +242,7 @@ describe('pii module tests', function descPIISuite() {
 			weight: 76,
 			job: 'Janitor',
 			address: '103 S******g C******t, A******e, W*****g, 20003',
+			// MUSTDO need to figure out key path ['', financials, sort_Code]
 			financials: {
 				sort_Code: '11-11-11',
 				accountNo: '700000002',
@@ -232,7 +252,6 @@ describe('pii module tests', function descPIISuite() {
 			productNullable: 'Gizmos',
 			ssnPII: '700000005',
 			list: [1, 2, 34, 'what'],
-			features: ['edit', 'delete', '…'],
 		})
 	}) // JSON.stringify(..., replacer)
 }) // pii module tests
