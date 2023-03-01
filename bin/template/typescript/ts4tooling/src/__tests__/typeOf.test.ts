@@ -309,7 +309,12 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 			global.vm                                global.wasi
 			global.worker_threads                    global.zlib
 		*/
-		expect(typeOf(global)).toBe('object')
+
+		// jstest.config -- for node testEnvironment will be 'object'
+		// for jsdom testEnvironment will be object:Window
+		expect(typeOf(global)).toMatch(/^object(:Window)$/)
+		expect(typeOf(global.window)).toBe('object:Window')
+		expect(typeOf(global.document)).toBe('object:Document')
 	}) // object-like types
 
 	test('anonymous objects', function testTypeOfAnonymous() {

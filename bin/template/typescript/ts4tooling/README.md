@@ -4,7 +4,7 @@ TODO:
 MUSTDO use a bundler to build browser / node versions
 MUSTDO try using sonar for additional code analysis?
 MUSTDO template scripting, my perl version or a node module?
-MUSTDO modernizr or platform module for detection in logObject 
+MUSTDO platform and feature.js module for support detection in logObject 
 
 [Modernizr to detect browser features](http://html5doctor.com/using-modernizr-to-detect-html5-features-and-provide-fallbacks/#:~:text=Modernizr%20is%20a%20JavaScript%20library,that%20do%20not%20support%20them.)
 or use PlatformJS? https://github.com/bestiejs/platform.js#readme
@@ -18,11 +18,11 @@ or use PlatformJS? https://github.com/bestiejs/platform.js#readme
 [Jest](https://jestjs.io/docs/getting-started)
 [ts-jest](https://kulshekhar.github.io/ts-jest/docs/getting-started/installation)
 
-Install everything needed:
+## Install everything needed:
 
-npm install --save-dev typescript prettier eslint eslint-plugin-import eslint-config-prettier ts-jest @tsconfig/node16 @typescript-eslint/parser @typescript-eslint/eslint-plugin @jest/globals jest-junit nyc-dark node-notifier  microtime benchmark @types/benchmark
+npm install --save-dev typescript prettier eslint eslint-plugin-import eslint-config-prettier ts-jest @tsconfig/node16 @typescript-eslint/parser @typescript-eslint/eslint-plugin @jest/globals jest-junit nyc-dark node-notifier  microtime benchmark @types/benchmark json5 platform @types/platform feature.js jest-environment-jsdom canvas
 
-Now add benchmarking to test different code implementations:
+## Now add benchmarking to test different code implementations:
 
 [Benchmark](https://openbase.com/js/benchmark)
 [Microtime timer](https://github.com/wadey/node-microtime)
@@ -94,3 +94,60 @@ suite.add('RegExp#test', function() {
 // => RegExp#test x 4,161,532 +-0.99% (59 cycles)
 // => String#indexOf x 6,139,623 +-1.00% (131 cycles)
 // => Fastest is String#indexOf
+
+## Install platform to detect the environment
+
+npm install --save-dev platform @types/platform
+
+Qutebrowser:
+{
+    "name": "Chrome",
+    "version": "83.0.4103.122",
+    "layout": "Blink",
+    "prerelease": null,
+    "os": "OS X 10.16.0 64-bit",
+    "manufacturer": null,
+    "product": null,
+    "description": "Chrome 83.0.4103.122 on OS X 10.16.0 64-bit",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_16_0) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.15.2 Chrome/83.0.4103.122 Safari/537.36"
+}
+
+Safari:
+{
+    "name": "Safari",
+    "version": "15.4",
+    "layout": "WebKit",
+    "prerelease": null,
+    "os": "OS X 10.15.7",
+    "manufacturer": null,
+    "product": null,
+    "description": "Safari 15.4 on OS X 10.15.7",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Safari/605.1.15"
+}
+
+Node:
+{
+  description: 'Node.js 18.12.1 on Darwin 64-bit',
+  layout: null,
+  manufacturer: null,
+  name: 'Node.js',
+  prerelease: null,
+  product: null,
+  ua: null,
+  version: '18.12.1',
+  os: {
+    architecture: 64,
+    family: 'Darwin',
+    version: null,
+    toString: [Function: toString]
+  },
+  parse: [Function: parse],
+  toString: [Function: toStringPlatform]
+}
+
+## Install feature.js to detect supported browser features
+
+npm install --save-dev feature.js jest-environment-jsdom canvas
+jest config change from testEnvironment node to jsdom
+with jsdom, global object in node becomes a Window object
+global.feature or global.window.feature provides access to the feature object.

@@ -1,4 +1,6 @@
 import JSON5 from 'json5'
+import 'feature.js' // adds window.feature
+import platform from 'platform'
 import { describe, expect, test } from '@jest/globals'
 import { JSONDateish, rePrefixedDate } from '../JSONDate'
 import { JSONDebugLimits } from '../JSONDebug'
@@ -8,6 +10,35 @@ import { JSONMapish } from '../JSONMap'
 import * as testMe from '../JSONDebug'
 
 const displayName = 'JSONDebug'
+
+type Platform = typeof platform
+type Feature = {
+	testAll: () => void
+	extend: (name: string, fnCheckFeature: () => boolean) => Feature
+} & Record<string, boolean>
+type PlatformFeatures = Platform & { unsupportedFeatures: string }
+declare global {
+	interface Window {
+		feature: Feature
+	}
+}
+
+/**
+ * Combines platform and feature.js results into a single object for debug logging.
+ * @param platform the platform object containing OS and platform information.
+ * @param feature the feature.js feature object. defaults to window.feature value.
+ * @returns object same as platform but with unsupportedFeatures key added containing a string with only the feature.js features that are not supported.
+ */
+function getPlatformFeatures(
+	platform: Platform,
+	feature: Feature = window.feature,
+): PlatformFeatures {
+	const unsupported = Object.keys(feature)
+		.filter((key) => !feature[key])
+		.sort()
+		.join(' ')
+	return { ...platform, unsupportedFeatures: unsupported }
+}
 
 describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 	type stuff = string | number | boolean
@@ -333,6 +364,29 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 			expect(obj.array).toEqual(Big.array)
 			expect(obj.object).toEqual(Big.object)
 		})
+
+		test('should handle platform and feature.js data with replacerDebug', function testJSONDebugReplacerDebugPlatformFeatures() {
+			const system: PlatformFeatures = getPlatformFeatures(platform)
+			const json = JSON.stringify(system, testMe.replacerDebug)
+
+			const obj: PlatformFeatures = JSON5.parse(json, testMe.reviverDebug)
+			expect(Object.keys(obj).sort()).toEqual([
+				'description',
+				'layout',
+				'manufacturer',
+				'name',
+				'os',
+				'prerelease',
+				'product',
+				'ua',
+				'unsupportedFeatures',
+				'version',
+			])
+			expect(obj.description).toMatch(/^Node\.js \d+\.\d+\.\d+ on /)
+			expect(obj.unsupportedFeatures).toBe(
+				'async contextMenu css3Dtransform deviceMotion deviceOrientation fetch geolocation matchMedia serviceWorker svg touch webGL',
+			)
+		}) // platform and feature.js
 	}) // replacerDebug()
 
 	describe('getJSONDebug().replacer()', function descJSONDebugReplacerDebugLimitsSuite() {

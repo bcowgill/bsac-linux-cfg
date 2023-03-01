@@ -3,7 +3,7 @@
 module.exports = {
 	verbose: true,
 	preset: 'ts-jest',
-	testEnvironment: 'node',
+	testEnvironment: 'jsdom',
 	rootDir: 'src/', // to prevent jest processing transpiled .js files
 	testRegex: '.test.(ts|tsx)$',
 	coverageDirectory: '../coverage', // relative to rootDir

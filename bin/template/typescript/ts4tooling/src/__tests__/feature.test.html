@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>feature.js & platform - test page</title>
+    </head>
+    <body>
+        <script src="../../node_modules/platform/platform.js"></script>
+        <script src="../../node_modules/feature.js/feature.min.js"></script>
+        <h1>feature.js & platform - test page -- see the developer console</h1>
+        <h2>user agent:</h2>
+        <section id="#user-agent">n/a</section>
+        <h2>platform:</h2>
+        <section id="#platform">n/a</section>
+        <h2>unsupported/undetected features:</h2>
+        <section id="#unsupported">n/a</section>
+        <h2>supported features:</h2>
+        <section id="#supported">n/a</section>
+        <script>
+            console.warn('window.platform', platform);
+            console.warn('window.feature', feature);
+            feature.testAll();
+            var classes = document.documentElement.className;
+            console.warn('<HTML class="">', classes);
+            var supported = Object.keys(feature).filter((key) => typeof feature[key] === 'boolean' && feature[key]).sort();
+            console.warn('supported', supported);
+            var unsupported = Object.keys(feature).filter((key) => !feature[key]).sort();
+            console.warn('unsupported', unsupported);
+
+            document.getElementById('#user-agent').innerText = platform.ua;
+            document.getElementById('#platform').innerText = platform.toString();
+            document.getElementById('#unsupported').innerText = unsupported.join(" ");
+            document.getElementById('#supported').innerText = supported.join(" ");
+        </script>
+    </body>
+</html>
