@@ -1,7 +1,8 @@
 import JSON5 from 'json5'
-import 'feature.js' // adds window.feature
 import platform from 'platform'
 import { describe, expect, test } from '@jest/globals'
+import './setupBrowserEnvTests'
+import { Platform, Feature, PlatformFeatures } from '../system'
 import { JSONDateish, rePrefixedDate } from '../JSONDate'
 import { JSONDebugLimits } from '../JSONDebug'
 import { JSONRegExpish } from '../JSONRegExp'
@@ -10,18 +11,6 @@ import { JSONMapish } from '../JSONMap'
 import * as testMe from '../JSONDebug'
 
 const displayName = 'JSONDebug'
-
-type Platform = typeof platform
-type Feature = {
-	testAll: () => void
-	extend: (name: string, fnCheckFeature: () => boolean) => Feature
-} & Record<string, boolean>
-type PlatformFeatures = Platform & { unsupportedFeatures: string }
-declare global {
-	interface Window {
-		feature: Feature
-	}
-}
 
 /**
  * Combines platform and feature.js results into a single object for debug logging.
@@ -38,6 +27,66 @@ function getPlatformFeatures(
 		.sort()
 		.join(' ')
 	return { ...platform, unsupportedFeatures: unsupported }
+}
+
+/**
+ * Combines platform and modernizr results into a single object for debug logging.
+ * @param platform the platform object containing OS and platform information.
+ * @param modernizr the Modernizr feature object. defaults to window.Modernizr value.
+ * @returns object same as platform but with unsupportedFeatures key added containing a string with only the Modernizr features that are not supported.
+ */
+function getPlatformModernizr(
+	platform: Platform,
+	modernizr = window.Modernizr,
+): PlatformFeatures {
+	type ModernizrBooleanValues = boolean | string
+	type ModernizrBooleans =
+		| boolean
+		| AudioBoolean
+		| FlashBoolean
+		| IndexeddbBoolean
+		| InputTypesBoolean
+		| CssColumnsBoolean
+		| WebpBoolean
+		| DatauriBoolean
+		| WebglextensionsBoolean
+
+	const unsupported: string[] = []
+	Object.keys(modernizr).forEach((key) => {
+		const feature = modernizr[key] as ModernizrBooleans
+		// if (
+		// 	/^(audio|datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(
+		// 		key,
+		// 	)
+		// ) {
+		// 	console.warn(
+		// 		`SPECIALS!! k:${key} f:${feature.toString()}`,
+		// 		typeof feature,
+		// 		feature.constructor.name,
+		// 		feature instanceof Boolean,
+		// 		!feature,
+		// 		!feature.valueOf(),
+		// 	)
+		// }
+		if (typeof feature === 'object') {
+			if (feature instanceof Boolean && !feature.valueOf()) {
+				unsupported.push([key, feature].join('::'))
+			}
+			Object.keys(feature).forEach((subKey) => {
+				const subFeature = feature[subKey] as ModernizrBooleanValues
+				if (typeof subFeature !== 'boolean' || !subFeature) {
+					unsupported.push([key, subKey, subFeature].join(':'))
+				}
+			})
+		} else if (!feature) {
+			unsupported.push(key)
+		}
+	})
+
+	return {
+		...platform,
+		unsupportedFeatures: unsupported.sort().join(' '),
+	}
 }
 
 describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
@@ -387,6 +436,29 @@ describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 				'async contextMenu css3Dtransform deviceMotion deviceOrientation fetch geolocation matchMedia serviceWorker svg touch webGL',
 			)
 		}) // platform and feature.js
+
+		test('should handle platform and modernizr data with replacerDebug', function testJSONDebugReplacerDebugPlatformModernizr() {
+			const system: PlatformFeatures = getPlatformModernizr(platform)
+			const json = JSON.stringify(system, testMe.replacerDebug)
+
+			const obj: PlatformFeatures = JSON5.parse(json, testMe.reviverDebug)
+			expect(Object.keys(obj).sort()).toEqual([
+				'description',
+				'layout',
+				'manufacturer',
+				'name',
+				'os',
+				'prerelease',
+				'product',
+				'ua',
+				'unsupportedFeatures',
+				'version',
+			])
+			expect(obj.description).toMatch(/^Node\.js \d+\.\d+\.\d+ on /)
+			expect(obj.unsupportedFeatures).toBe(
+				'ambientlight applicationcache audio:m4a: audio:mp3: audio:ogg: audio:opus: audio:wav: audiopreload backdropfilter battery-api batteryapi bdi beacon bgpositionshorthand bgrepeatround bgrepeatspace bloburls blobworkers capture checked contains contenteditable contextmenu createelement-attrs createelementattrs crypto csscalc csscolumns:breakafter:false csscolumns:breakbefore:false csscolumns:breakinside:false cssescape cssgradients cssgridlegacy cssinvalid csspseudoanimations csspseudotransitions cssreflections cssscrollbar csstransforms3d csstransformslevel2 cssvalid cssvhunit cssvmaxunit cssvminunit cssvwunit customprotocolhandler dart datachannel details devicemotion deviceorientation display-table displaytable emoji eventsource fetch fileinputdirectory filesystem flash flexboxlegacy flexboxtweener focuswithin forcetouch framed fullscreen gamepads generatedcontent geolocation getusermedia hairline hovermq htmlimports ie8compat indexeddb inlinesvg input-formaction input-formenctype inputformaction inputformenctype inputformmethod inputsearchevent inputtypes::false inputtypes:datetime:false lastchild localizednumber lowbandwidth lowbattery matchmedia mathml mediaqueries messagechannel microdata multiplebgs notification nthchild overflowscrolling peerconnection pointerevents pointerlock pointermq preserve3d proximity quotamanagement regions requestautocomplete ruby sandbox scriptasync seamless serviceworker sharedworkers siblinggeneral smil speechrecognition speechsynthesis stylescoped supports svg svgclippaths svgfilters svgforeignobject time todataurlwebp transferables unicode unicoderange userdata vibrate video:av1: video:h264: video:h265: video:hls: video:ogg: video:vp9: video:webm: videoautoplay vml webanimations webaudio webgl webglextensions webintents websqldatabase webworkers wrapflow xdomainrequest',
+			)
+		}) // platform and modernizr
 	}) // replacerDebug()
 
 	describe('getJSONDebug().replacer()', function descJSONDebugReplacerDebugLimitsSuite() {

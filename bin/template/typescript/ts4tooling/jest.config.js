@@ -10,9 +10,6 @@ module.exports = {
 	collectCoverageFrom: [
 		// relative to rootDir
 		'**/*.{cts,mts,ts,tsx}',
-		// MUSTDO(BSAC) Temporary until fully index.ts covered
-		'!index.ts',
-		'!common.ts',
 		'**/*.d.ts',
 		'!**/*.test.ts',
 		'!**/*.time.ts',
@@ -22,10 +19,10 @@ module.exports = {
 	],
 	coverageThreshold: {
 		global: {
-			branches: 85,
-			functions: 85,
-			lines: 85,
-			statements: 85,
+			branches: 98,
+			functions: 98,
+			lines: 98,
+			statements: 98,
 		},
 	},
 	coverageReporters: ['text', 'html', 'cobertura'],

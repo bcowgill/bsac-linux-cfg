@@ -6,15 +6,22 @@
     <body>
         <script src="../../node_modules/platform/platform.js"></script>
         <script src="../../node_modules/feature.js/feature.min.js"></script>
+        <script src="../__vendor__/modernizr.min.js"></script>
         <h1>feature.js & platform - test page -- see the developer console</h1>
         <h2>user agent:</h2>
         <section id="#user-agent">n/a</section>
         <h2>platform:</h2>
         <section id="#platform">n/a</section>
-        <h2>unsupported/undetected features:</h2>
+        <h2>unsupported/undetected (feature):</h2>
         <section id="#unsupported">n/a</section>
-        <h2>supported features:</h2>
+        <h2>unsupported/undetected (modernizr):</h2>
+        <section id="#unsupported-modernizr">n/a</section>
+        <h2>specials (modernizr):</h2>
+        <section id="#special-modernizr">n/a</section>
+        <h2>supported (feature):</h2>
         <section id="#supported">n/a</section>
+        <h2>supported (modernizr):</h2>
+        <section id="#supported-modernizr">n/a</section>
         <script>
             console.warn('window.platform', platform);
             console.warn('window.feature', feature);
@@ -30,6 +37,55 @@
             document.getElementById('#platform').innerText = platform.toString();
             document.getElementById('#unsupported').innerText = unsupported.join(" ");
             document.getElementById('#supported').innerText = supported.join(" ");
+
+            console.warn('window.Modernizr', Modernizr)
+            console.warn('normal adownload', typeof Modernizr.adownload, Modernizr.adownload.constructor.name, Object.keys(Modernizr.adownload), Modernizr.adownload)
+            console.warn('special audio', typeof Modernizr.audio, Modernizr.audio.constructor.name, Object.keys(Modernizr.audio), Modernizr.audio)
+            // Special case keys which are Boolean and have object values as well
+            // like .audio
+            var specials = [
+                'audio',
+                '',
+                '',
+                '',
+                '',
+            ]
+
+            supported = Object.keys(Modernizr).filter((key) => typeof Modernizr[key] === 'boolean' && Modernizr[key]).sort();
+            console.warn('modernizr supported', supported);
+            unsupported = Object.keys(Modernizr).filter((key) => !Modernizr[key]).sort();
+            console.warn('modernizr unsupported', unsupported);
+            special = [];
+            Object.keys(Modernizr).filter((key) => {
+                const feature = Modernizr[key]
+                if (/^(audio|datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(key)) {
+                    console.warn(
+                        `MR MESEEKS!! k:${key} f:${feature}`,
+                        typeof feature,
+                        feature.constructor.name,
+                        feature instanceof Boolean,
+                        !feature,
+                        !feature.valueOf()
+                    )
+                }
+                return typeof feature === 'object'
+            }).forEach((key) => {
+                const feature = Modernizr[key]
+                if (feature instanceof Boolean && !feature.valueOf()) {
+                    special.push([key,feature].join('::'))
+                }
+                Object.keys(feature).forEach((subKey) => {
+                    var subFeature = feature[subKey]
+                    if (typeof subFeature !== 'boolean' || !subFeature) {
+                        special.push([key, subKey, subFeature].join(':'))
+                    }
+                })
+            });
+            console.warn('modernizr special', special.sort());
+
+            document.getElementById('#unsupported-modernizr').innerText = unsupported.join(" ");
+            document.getElementById('#supported-modernizr').innerText = supported.join(" ");
+            document.getElementById('#special-modernizr').innerText = special.sort().join(" ");
         </script>
     </body>
 </html>

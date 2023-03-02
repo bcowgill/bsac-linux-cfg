@@ -65,7 +65,7 @@ show_bad "WARN TEST ATTR" "Should use (.not).toHaveAttribute instead of .getAttr
 
 #-------------------------------------------
 git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
-	| grep -vE ':\s*//|\@param' \
+	| grep -vE ':\s*//|\@param:|README' \
 	| grep -vE 'window\.(digitalData|AppMeasurement|__|console)' \
 	| grep -vE '(__.+__|/integration|docs|cypress)/' \
 	| grep -vE 'src/(setupTests|utils/platform).js:' \

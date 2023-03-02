@@ -16,5 +16,5 @@
 	},
 	"include": ["prettier.config.js", "jest.config.js", "src/**/*"],
 	//"files": ["src/index.ts", "src/common.ts"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "src/__vendor__"]
 }
