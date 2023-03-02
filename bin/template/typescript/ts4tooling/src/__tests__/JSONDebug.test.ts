@@ -2,92 +2,17 @@ import JSON5 from 'json5'
 import platform from 'platform'
 import { describe, expect, test } from '@jest/globals'
 import './setupBrowserEnvTests'
-import { Platform, Feature, PlatformFeatures } from '../system'
 import { JSONDateish, rePrefixedDate } from '../JSONDate'
+import getPlatformModernizr from '../platform-modernizr'
+import getPlatformFeatures from '../platform-feature'
 import { JSONDebugLimits } from '../JSONDebug'
 import { JSONRegExpish } from '../JSONRegExp'
+import { PlatformFeatures } from '../platform-system'
 import { JSONSetish } from '../JSONSet'
 import { JSONMapish } from '../JSONMap'
 import * as testMe from '../JSONDebug'
 
 const displayName = 'JSONDebug'
-
-/**
- * Combines platform and feature.js results into a single object for debug logging.
- * @param platform the platform object containing OS and platform information.
- * @param feature the feature.js feature object. defaults to window.feature value.
- * @returns object same as platform but with unsupportedFeatures key added containing a string with only the feature.js features that are not supported.
- */
-function getPlatformFeatures(
-	platform: Platform,
-	feature: Feature = window.feature,
-): PlatformFeatures {
-	const unsupported = Object.keys(feature)
-		.filter((key) => !feature[key])
-		.sort()
-		.join(' ')
-	return { ...platform, unsupportedFeatures: unsupported }
-}
-
-/**
- * Combines platform and modernizr results into a single object for debug logging.
- * @param platform the platform object containing OS and platform information.
- * @param modernizr the Modernizr feature object. defaults to window.Modernizr value.
- * @returns object same as platform but with unsupportedFeatures key added containing a string with only the Modernizr features that are not supported.
- */
-function getPlatformModernizr(
-	platform: Platform,
-	modernizr = window.Modernizr,
-): PlatformFeatures {
-	type ModernizrBooleanValues = boolean | string
-	type ModernizrBooleans =
-		| boolean
-		| AudioBoolean
-		| FlashBoolean
-		| IndexeddbBoolean
-		| InputTypesBoolean
-		| CssColumnsBoolean
-		| WebpBoolean
-		| DatauriBoolean
-		| WebglextensionsBoolean
-
-	const unsupported: string[] = []
-	Object.keys(modernizr).forEach((key) => {
-		const feature = modernizr[key] as ModernizrBooleans
-		// if (
-		// 	/^(audio|datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(
-		// 		key,
-		// 	)
-		// ) {
-		// 	console.warn(
-		// 		`SPECIALS!! k:${key} f:${feature.toString()}`,
-		// 		typeof feature,
-		// 		feature.constructor.name,
-		// 		feature instanceof Boolean,
-		// 		!feature,
-		// 		!feature.valueOf(),
-		// 	)
-		// }
-		if (typeof feature === 'object') {
-			if (feature instanceof Boolean && !feature.valueOf()) {
-				unsupported.push([key, feature].join('::'))
-			}
-			Object.keys(feature).forEach((subKey) => {
-				const subFeature = feature[subKey] as ModernizrBooleanValues
-				if (typeof subFeature !== 'boolean' || !subFeature) {
-					unsupported.push([key, subKey, subFeature].join(':'))
-				}
-			})
-		} else if (!feature) {
-			unsupported.push(key)
-		}
-	})
-
-	return {
-		...platform,
-		unsupportedFeatures: unsupported.sort().join(' '),
-	}
-}
 
 describe(`${displayName} module tests`, function descJSONDebugModuleSuite() {
 	type stuff = string | number | boolean
