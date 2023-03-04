@@ -1,3 +1,17 @@
+Sign language
+https://www.youtube.com/watch?v=p0ufyoe0URA
+Phrases needed:
+Ok
+Turn that off
+Please wait
+Breakfast/Lunch/Dinner is ready
+Come and get it!
+Next stop!
+Let's go.
+Come here.
+You go ahead.
+
+
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
