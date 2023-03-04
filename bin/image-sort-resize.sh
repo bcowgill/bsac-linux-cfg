@@ -1,5 +1,6 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
+# keyword: photoframe
 
 # identify -verbose *.jpg | egrep '(Width|Length|Orientation|Geometry|Image)'
 
