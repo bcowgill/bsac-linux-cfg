@@ -117,11 +117,13 @@ describe(`${displayName}() module tests`, function descTypeOfSuite() {
 
 			x.message               x.stack
 		*/
+		let error: unknown | undefined
 		try {
 			JSON.parse('let x = 42;')
-		} catch (exception) {
-			expect(typeOf(exception)).toBe('object:SyntaxError')
+		} catch (exception: unknown) {
+			error = exception
 		}
+		expect(typeOf(error)).toBe('object:SyntaxError')
 
 		/*
 			A WeakMap has 12 methods:

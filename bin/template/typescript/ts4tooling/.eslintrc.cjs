@@ -4,6 +4,7 @@ module.exports = {
 		'plugin:import/errors',
 		'plugin:import/warnings',
 		'plugin:import/typescript',
+		'plugin:prettier/recommended',
 		'eslint:recommended',
 		'plugin:@typescript-eslint/recommended',
 		'plugin:@typescript-eslint/recommended-requiring-type-checking',
@@ -30,6 +31,7 @@ module.exports = {
 	rules: {
 		'no-console': ['error'], // use 'warn' when developing
 		'no-fallthrough': ['error'],
+		'no-param-reassign': ['error'],
 		'import/order': [
 			'error',
 			{
@@ -44,4 +46,12 @@ module.exports = {
 			},
 		],
 	},
+	overrides: [
+		{
+			files: ['**/*.test.ts'],
+			plugins: ['jest'],
+			extends: ['plugin:jest/recommended'],
+			rules: { 'jest/prefer-expect-assertions': 'off' },
+		},
+	],
 }

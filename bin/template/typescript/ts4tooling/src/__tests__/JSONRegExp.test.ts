@@ -49,7 +49,7 @@ describe(`${displayName} module tests`, function descJSONRegExpSuite() {
 		test('should throw when array is not an object:JSONRegExp', function testRegExpFromJSONError() {
 			expect(() =>
 				testMe.RegExpFromJSON(['wrong', 'something', 'ig']),
-			).toThrowError(
+			).toThrow(
 				new TypeError(
 					`Cannot construct a RegExp from non-JSONRegExpish, first element of array must be '${TYPE}'. (Found 'wrong')`,
 				),

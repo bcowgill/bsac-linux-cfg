@@ -31,6 +31,12 @@ const RESULTS: TZOTimeData = {
 }
 
 // MUSTDO additional time zone test for 6 months different using timemachine.
+/*
+	2019 template/javascript/date-format/date-format.spec.js -- uses timeTest from parce-test
+	2019 template/javascript/parcel-test/src/test/timeTest.js -- the time zone testing library
+	2018 template/javascript/time-test/time-test.js -- proof of concept time testing
+	2017 docker/timemachine/go.js -- docker experiment with time zones and testing
+*/
 
 describe(`${displayName} module tests TZO=${TZO}`, function descJSONDateSuite() {
 	const TYPE = testMe.displayName
@@ -120,7 +126,7 @@ describe(`${displayName} module tests TZO=${TZO}`, function descJSONDateSuite() 
 		test('should throw when array is not an object:JSONDate', function testDateFromJSONError() {
 			expect(() =>
 				testMe.DateFromJSON(['wrong', 'something', {}]),
-			).toThrowError(
+			).toThrow(
 				new TypeError(
 					`Cannot construct a Date from non-JSONDateish, first element of array must be '${TYPE}'. (Found 'wrong')`,
 				),

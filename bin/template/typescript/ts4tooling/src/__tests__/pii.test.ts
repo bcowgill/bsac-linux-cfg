@@ -30,10 +30,9 @@ describe('pii module tests', function descPIISuite() {
 			detail: string,
 		): void {
 			const actual = TestMe.obscureNumber(number)
-			if (actual !== expected) {
-				expect(actual).toBe(`${expected} - ${detail}`)
-			}
-			expect(actual).toBe(expected)
+			expect(actual).toBe(
+				actual !== expected ? `${expected} - ${detail}` : expected,
+			)
 		}
 
 		testObscureNumber(4, '1', 'short numbers length 1 are changed')
@@ -51,10 +50,9 @@ describe('pii module tests', function descPIISuite() {
 			detail: string,
 		) {
 			const actual = TestMe.obscureWord(word)
-			if (actual !== expected) {
-				expect(actual).toBe(`${expected} - ${detail}`)
-			}
-			expect(actual).toBe(expected)
+			expect(actual).toBe(
+				actual !== expected ? `${expected} - ${detail}` : expected,
+			)
 		}
 
 		testObscureWord('a', '*', 'short words length 1 fully obscured')
@@ -77,10 +75,9 @@ describe('pii module tests', function descPIISuite() {
 			detail: string,
 		) {
 			const actual = TestMe.obscureInfo(info)
-			if (actual !== expected) {
-				expect(actual).toBe(`${expected} - ${detail}`)
-			}
-			expect(actual).toBe(expected)
+			expect(actual).toBe(
+				actual !== expected ? `${expected} - ${detail}` : expected,
+			)
 		}
 
 		testObscureInfo(

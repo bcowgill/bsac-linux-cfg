@@ -98,7 +98,7 @@ describe(`${displayName} module tests`, function descJSONMapModuleSuite() {
 		})
 
 		test('should throw when array is not an object:JSONMap', function testMapFromJSONError() {
-			expect(() => testMe.MapFromJSON(['wrong'])).toThrowError(
+			expect(() => testMe.MapFromJSON(['wrong'])).toThrow(
 				new TypeError(
 					`Cannot construct a Map from non-JSONMapish, first element of array must be '${TYPE}'. (Found 'wrong')`,
 				),

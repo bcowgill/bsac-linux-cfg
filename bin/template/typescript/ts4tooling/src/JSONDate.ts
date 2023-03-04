@@ -77,7 +77,8 @@ export function JSONDate(date: Date): JSONDateish {
  * @returns Date constructed from date string.
  * @throws TypeError if type is not object:JSONDate.
  */
-export function DateFromJSON([type, date]: JSONDateish): Date {
+export function DateFromJSON([type, dateIn]: JSONDateish): Date {
+	let date = dateIn
 	if (type !== displayName) {
 		throw new TypeError(
 			`Cannot construct a Date from non-JSONDateish, first element of array must be '${displayName}'. (Found '${type}')`,

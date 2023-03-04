@@ -86,7 +86,7 @@ describe(`${displayName} module tests`, function descJSONSetModuleSuite() {
 		})
 
 		test('should throw when array is not an object:JSONSet', function testSetFromJSONError() {
-			expect(() => testMe.SetFromJSON(['wrong'])).toThrowError(
+			expect(() => testMe.SetFromJSON(['wrong'])).toThrow(
 				new TypeError(
 					`Cannot construct a Set from non-JSONSetish, first element of array must be '${TYPE}'. (Found 'wrong')`,
 				),
