@@ -1,16 +1,5 @@
 Sign language
-https://www.youtube.com/watch?v=p0ufyoe0URA
-Phrases needed:
-Ok
-Turn that off
-Please wait
-Breakfast/Lunch/Dinner is ready
-Come and get it!
-Next stop!
-Let's go.
-Come here.
-You go ahead.
-
+/home/me/d/docs/notes/sign-language.txt
 
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
@@ -24,7 +13,6 @@ libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 rex barks
 calibre &
 pwcd ebooks
-
 
 tx.pl transliterate a-z into unicode alphabet
 
