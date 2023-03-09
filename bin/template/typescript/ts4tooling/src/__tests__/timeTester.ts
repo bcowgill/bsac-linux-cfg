@@ -2,16 +2,15 @@
 // A tool for performing date / time related tests with fixed dates so that
 // time zone and daylight savings time does not cause test failures every 6 months
 
-// MUSTDO two functions toErrorString(context, unknown): string, throwThisError(context, unknown): Error
-// for catch(exception: unknown) => to log the error string w/o TS complaint
-// to rethrow the error or wrap something else into an error with a context message.
+/// <reference types="@jest/types" />
 
 import replace from 'lodash/replace'
 import timeMachine from 'timemachine'
 import isUndefined from 'lodash/isUndefined'
 import { toErrorString, throwAsError } from '../errors'
 
-type fnTestCase = () => void
+const displayName = 'timeTester'
+
 // timemachine.config() 1st parameter...
 export interface TimeMachineOptions {
 	dateString?: string
@@ -26,25 +25,35 @@ export type TimeOffsets = Record<string | number, TimeStrings | undefined>
 // export type TimeRegionInfo = Record<string, TimeOffsets | undefined>
 export type TimeZoneInfo = Record<string, string | TimeOffsets | undefined>
 
+export type TimeTestName = string
+export type TimeTestConfig = TimeMachineOptions | undefined
+export type TimeTestFn = jest.EmptyFunction
+export type TimeTestCase = (
+	name: TimeTestName,
+	config: TimeTestConfig,
+	fnTest: TimeTestFn,
+) => void
+
+export interface TimeTestDescribe {
+	(name: TimeTestName, config: TimeTestConfig, fnTest: TimeTestFn): void
+	only: TimeTestCase
+	skip: TimeTestCase
+}
+
 export interface TimeTester {
 	timeZone: string
 	debugInfo(message: string): void
-	TZ(date: Date, key: string): string
+	TZ(key: string, date?: Date): string
 	replaceShortTimeZoneNames(text: string): string
 	insertDate(text: string, key: string, date?: Date): string
-	insertDates(template: string, date: Date): string
+	insertDates(template: string, date?: Date): string
 
-	// MUSTDO .test .only .fit .xit ??
-	it: {
-		(title1: string, fnTest: fnTestCase): void
-		(title2: string, config: TimeMachineOptions, fnTest: fnTestCase): void
-		skip(
-			title3: string,
-			config: TimeMachineOptions,
-			fnTest: fnTestCase,
-		): void
-	}
+	it: TimeTestDescribe
+	test: TimeTestDescribe // == it
+	xit: TimeTestCase // == it.skip
+	fit: TimeTestCase // == it.only
 
+	/* MUSTDO async tests
 	async: {
 		it: {
 			(title4: string, fnTest: fnTestCase): void
@@ -60,7 +69,8 @@ export interface TimeTester {
 			): void
 		}
 	}
-}
+	*/
+} // TimeTester interface
 
 /*
 	Example of how to perform time related tests so that different time zones
@@ -120,8 +130,18 @@ export interface TimeTester {
 		});
 */
 
-// eslint-disable-next-line no-console
-const log = console.error
+const messages: string[] = []
+function log(...args) {
+	messages.push(args.join(' '))
+}
+function flushLog(): void {
+	// eslint-disable-next-line no-console
+	console.error(messages.join('\n'))
+	messages.length = 0
+}
+// // eslint-disable-next-line no-console
+// const log = console.error
+// const flushLog = () => void 0
 
 // use a name of UTC on Jenkins linux machine
 // use Europe/London on windows machines as summer time in use
@@ -132,13 +152,17 @@ const DEFAULT_ZONE = process.platform === 'win32' ? 'Europe/London' : 'UTC'
 // Set your control panel date to Pacific time also.
 // const DEFAULT_ZONE = 'America/Vancouver';
 
-// Map short linux time zone names to longer Windows ones for unit test uniformity.
+// Map short linux time zone names to longer Windows/Mac ones for unit test uniformity.
 const timeZoneMap: TimeStrings = {
+	// Linux  Windows
 	'(GMT)': '(GMT Standard Time)',
 	'(UTC)': '(GMT Standard Time)',
 	'(BST)': '(British Summer Time)',
 	'(PST)': '(Pacific Standard Time)',
 	'(PDT)': '(Pacific Daylight Time)',
+	// Mac                   Windows
+	'(Greenwich Mean Time)': '(GMT Standard Time)',
+	// Windows
 	'(GMT Daylight Time)': '(British Summer Time)',
 	'(Coordinated Universal Time)': '(GMT Standard Time)',
 	// '(GMT Standard Time)': '(UTC)',
@@ -149,7 +173,7 @@ const timeZoneMap: TimeStrings = {
 
 function replaceShortTimeZoneNames(text: string): string {
 	const reTimeZone = /(\([^)]+\))/g
-	// log('replaceShortTimeZoneNames', text);
+	// log(`${displayName}.replaceShortTimeZoneNames`, text);
 	const replaced = replace(
 		text,
 		reTimeZone,
@@ -157,57 +181,118 @@ function replaceShortTimeZoneNames(text: string): string {
 			placeholder: string,
 			token: string,
 		): string {
-			// log('replaceShortTimeZoneNames', token, timeZoneMap[token]);
+			// log(`${displayName}.replaceShortTimeZoneNames`, token, timeZoneMap[token]);
 			return timeZoneMap[token] ?? token
 		},
 	)
 	/* eslint-enable prefer-arrow-callback */
 	return replaced
 }
-
+/**
+ * Creates an object to help out with testing date/time values. Before each unit test it will set the Date object's simulated date to the value given in a timemachine options structure.  It also contains functions comparing expected time strings with actual ones based on the time zone and offset.
+ * @param timeZoneInfo structure containing time values for unit tests and formatted time strings indexed by time zone name and time zone offset.
+ * @returns an object you can use for unit tests which need to simulate specific date/times.
+ */
 export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
 	const timeZone = process.env.TZ ?? DEFAULT_ZONE
+
+	const timeTestCase = function (
+		fnIt: jest.It,
+		name: string,
+		config = {},
+		fnTest: TimeTestFn,
+	): void {
+		fnIt(name, function timeTestItInner() {
+			let thisError: unknown
+
+			// log(`${displayName}.timeTestOnly CONFIG`, config);
+			timeMachine.config(config)
+			try {
+				fnTest()
+			} catch (failure: unknown) {
+				thisError = failure
+			} finally {
+				timeMachine.reset()
+				timeMachine.config({})
+			}
+			if (thisError) {
+				throw throwAsError(thisError)
+			}
+		})
+	}
+
+	const timeTestIt: TimeTestDescribe = function (name, config, fnTest) {
+		timeTestCase(it, name, config, fnTest)
+	}
+
+	const timeTestOnly: TimeTestCase = function (name, config, fnTest) {
+		timeTestCase(it.only, name, config, fnTest)
+	}
+
+	const timeTestSkip: TimeTestCase = function (name, config, fnTest) {
+		it.skip(name, fnTest)
+	}
+
+	timeTestIt.only = timeTestOnly
+	timeTestIt.skip = timeTestSkip
+
 	const timeTester = {
 		timeZone,
 		debugInfo(message: string): void {
 			const date = new Date()
-			log(`timeTest debugInfo from ${message}`)
+			let options = {}
+
+			try {
+				const dateFormat = new Intl.DateTimeFormat()
+				options = dateFormat.resolvedOptions()
+				// eslint-disable-next-line no-empty
+			} catch (failure) {}
+
+			log(`${displayName}.debugInfo from ${message}`)
 			log('process.platform', process.platform)
 			log('process.env.TZ', process.env.TZ)
 			log('system TZ=', timeZone)
+			log('Intl.DateTimeFormat Options=', JSON.stringify(options))
+			log('Date getTimezoneOffset ', date.getTimezoneOffset())
 			log('Date valueOf           ', date.valueOf())
 			log('Date toString          ', date.toString())
-			log('Date getTimezoneOffset ', date.getTimezoneOffset())
-			// log('Date getTimezoneName', date.getTimezoneName());
-			// log('Date toDateString      ', date.toDateString());
-			// log('Date toTimeString      ', date.toTimeString());
-			log('Date toISOString       ', date.toISOString())
-			// log('Date toJSON            ', date.toJSON());
-			// log('Date toGMTString       ', date.toGMTString());
-			// log('Date toUTCString       ', date.toUTCString());
-			// log('Date toLocaleString    ', date.toLocaleString());
-			// log('Date toLocaleDateString', date.toLocaleDateString());
-			// log('Date toLocaleTimeString', date.toLocaleTimeString());
+			// log('Date toDateString      ', date.toDateString())
+			// log('Date toTimeString      ', date.toTimeString())
+			// log('Date toISOString       ', date.toISOString())
+			log('Date toUTCString       ', date.toUTCString())
+			log('Date toJSON            ', date.toJSON())
+			log('Date toLocaleString    ', date.toLocaleString())
+			// log('Date toLocaleDateString', date.toLocaleDateString())
+			// log('Date toLocaleTimeString', date.toLocaleTimeString())
+			flushLog()
 		},
 
-		TZ(date: Date, key: string): string {
+		/**
+		 * Looks up a date/time related string value in the timeZoneInfo structure which was passed to a makeTimeTester() call given a key string and date.
+		 * @param key string to look up a time specific value within the time zone offset object of a time zone name object of the timeZoneInfo structure.
+		 * @param date optional date object to use time zone offset from.  Defaults to current date.
+		 * @returns the string value associated with the time zone/offset and key value.
+		 * @throws an Error if there is no value configured for the time zone, offset and key name provided.
+		 */
+		TZ(key: string, date = new Date()): string {
 			const offset = date.getTimezoneOffset()
-			const zone = timeZoneInfo[timeZone]
+			const zone = timeZoneInfo[timeZone] ?? {}
 			if (typeof zone !== 'string') {
 				const savings = zone[offset]
 				if (savings && !isUndefined(savings[key])) {
-					return savings[key]
+					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+					return savings[key]!
 				}
 			}
 			throw new Error(
-				`timeZoneInfo[${timeZone}][${offset}].${key} is not configured with test data.`,
+				`${displayName} timeZoneInfo[${timeZone}][${offset}].${key} is not configured with test data.`,
 			)
 		},
 
 		replaceShortTimeZoneNames,
 		insertDate(text: string, key: string, date = new Date()): string {
 			const regex = new RegExp(`%${key}%`, 'g')
-			return replace(text, regex, timeTester.TZ(date, key))
+			return replace(text, regex, timeTester.TZ(key, date))
 		},
 
 		insertDates(template: string, date = new Date()): string {
@@ -221,7 +306,7 @@ export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
 					token: string,
 				): string {
 					try {
-						return timeTester.TZ(date, token)
+						return timeTester.TZ(token, date)
 					} catch (error: unknown) {
 						errorTokens.push(token)
 						return `\n<< ${toErrorString('', error)} >>`
@@ -231,87 +316,55 @@ export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
 			if (errorTokens.length) {
 				const markers = `%${errorTokens.join('%, %')}%`
 				throw new Error(
-					`Expected test template is missing time zone specific data.\nmarkers: ${markers}\n${replaced}`,
+					`${displayName}.insertDates Expected test template is missing time zone specific data.\nmarkers: ${markers}\n${replaced}`,
 				)
 			}
-			// log('insertDates 1', replaced);
+			// log(`${displayName}.insertDates 1`, replaced);
 			replaced = replaceShortTimeZoneNames(replaced)
-			// log('insertDates 2', replaced);
+			// log(`${displayName}.insertDates 2`, replaced);
 			return replaced
 		},
 
-		it(
-			title: string,
-			config: TimeMachineOptions | fnTestCase,
-			fnTest?: fnTestCase,
-		): void {
-			it(title, () => {
-				let thisError: unknown
+		it: timeTestIt,
+		test: timeTestIt,
+		xit: timeTestSkip,
+		fit: timeTestOnly,
 
-				/* eslint-disable no-param-reassign */
-				if (!fnTest) {
-					fnTest = config
-					config = {}
-				}
-				/* eslint-enable no-param-reassign */
+		// MUSTDO async tests...
+		// async: {
+		// 	it(
+		// 		title: string,
+		// 		config: TimeMachineOptions | fnTestCase,
+		// 		fnTest?: fnTestCase,
+		// 	) {
+		// 		it(title, (asyncDone) => {
+		// 			let thisError: unknown
 
-				// log('timeTest CONFIG', config);
-				timeMachine.config(config)
-				try {
-					fnTest()
-				} catch (failure: unknown) {
-					thisError = failure
-				} finally {
-					timeMachine.reset()
-					timeMachine.config({})
-				}
-				if (thisError) {
-					throw throwAsError(thisError)
-				}
-			})
-		},
+		// 			/* eslint-disable no-param-reassign */
+		// 			if (!fnTest) {
+		// 				fnTest = config
+		// 				config = {}
+		// 			}
+		// 			/* eslint-enable no-param-reassign */
 
-		async: {
-			it(
-				title: string,
-				config: TimeMachineOptions | fnTestCase,
-				fnTest?: fnTestCase,
-			) {
-				it(title, (asyncDone) => {
-					let thisError: unknown
-
-					/* eslint-disable no-param-reassign */
-					if (!fnTest) {
-						fnTest = config
-						config = {}
-					}
-					/* eslint-enable no-param-reassign */
-
-					// log('timeTest CONFIG', config);
-					timeMachine.config(config)
-					try {
-						fnTest()
-					} catch (failure) {
-						thisError = failure
-					} finally {
-						timeMachine.reset()
-						timeMachine.config({})
-					}
-					if (thisError) {
-						throw throwAsError(thisError)
-					}
-					asyncDone()
-				})
-			},
-		},
+		// 			// log('timeTest CONFIG', config);
+		// 			timeMachine.config(config)
+		// 			try {
+		// 				fnTest()
+		// 			} catch (failure) {
+		// 				thisError = failure
+		// 			} finally {
+		// 				timeMachine.reset()
+		// 				timeMachine.config({})
+		// 			}
+		// 			if (thisError) {
+		// 				throw throwAsError(thisError)
+		// 			}
+		// 			asyncDone()
+		// 		})
+		// 	},
+		// },
 	}
-	timeTester.it.skip = function timeTestSkip(
-		title: string,
-		unusedConfig: TimeMachineOptions,
-		fnTest: fnTestCase,
-	) {
-		it.skip(title, fnTest)
-	}
-	timeTester.async.it.skip = timeTester.it.skip
+
 	return timeTester
 }

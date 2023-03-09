@@ -14,7 +14,6 @@ module.exports = {
 		'!**/*.test.ts',
 		'!**/*.time.ts',
 		'!setupTests.ts',
-		'!__*__/**',
 		'!**/__*__/*',
 	],
 	coverageThreshold: {
