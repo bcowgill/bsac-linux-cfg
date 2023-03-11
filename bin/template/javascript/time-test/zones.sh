@@ -5,12 +5,17 @@
 # older versions of node <=8 used short time zone names (GMT) newer ones use full names (Greenwich Mean Time)
 # nvm use v8.11.1; node -p 'now = new Date("Sun Jan 1 01:02:03 GMT 2023"); now.toString()'
 # nvm use v17.9.1; node -p 'now = new Date("Sun Jan 1 01:02:03 GMT 2023"); now.toString()'
+# nvm use v18.12.1; node -p 'now = new Date("Sun Jan 1 01:02:03 GMT 2023"); now.toString()'
 
 Z=/usr/share/zoneinfo/zone.tab
 #Z=./zone-ubuntu.tab
 #O=linux-nodev8.11.1
-O=linux
+#O=linux
+#O=macos-nodev8.11.1
+O=macos
 MAP=1
+#N=v17.9.1
+N=v18.12.1
 
 . ~/.nvm/nvm.sh
 
@@ -50,13 +55,13 @@ do
 		nvm use v8.11.1 2> /dev/null > /dev/null
 		echo -n "$ZONE: " >> $ZSL
 		echo -n `TZ=$ZONE node -p 'now = new Date("Sun Jan 1 01:02:03 GMT 2023"); now.toString().replace(/^.*(\(.*\)).*$/, "$1")'` >> $ZSL
-		nvm use v17.9.1 2> /dev/null > /dev/null
+		nvm use $N 2> /dev/null > /dev/null
 		TZ=$ZONE node -p 'now = new Date("Sun Jan 1 01:02:03 GMT 2023"); now.toString().replace(/^.*(\(.*\)).*$/, "$1")' >> $ZSL
 
 		nvm use v8.11.1 2> /dev/null > /dev/null
 		echo -n "+$ZONE: " >> $ZSL
 		echo -n `TZ=$ZONE node -p 'now = new Date("Sat Jul 1 01:02:03 GMT 2023"); now.toString().replace(/^.*(\(.*\)).*$/, "$1")'` >> $ZSL
-		nvm use v17.9.1 2> /dev/null > /dev/null
+		nvm use $N 2> /dev/null > /dev/null
 		TZ=$ZONE node -p 'now = new Date("Sat Jul 1 01:02:03 GMT 2023"); now.toString().replace(/^.*(\(.*\)).*$/, "$1")' >> $ZSL
 	fi
 done

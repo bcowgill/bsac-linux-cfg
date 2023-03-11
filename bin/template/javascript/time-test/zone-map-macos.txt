@@ -1,0 +1,745 @@
+(Acre Standard Time)
+	America/Eirunepe
+	America/Rio_Branco
+(Afghanistan Time)
+	Asia/Kabul
+(Alaska Daylight Time)
+	America/Anchorage
+	America/Juneau
+	America/Metlakatla
+	America/Nome
+	America/Sitka
+	America/Yakutat
+(Alaska Standard Time)
+	America/Anchorage
+	America/Juneau
+	America/Metlakatla
+	America/Nome
+	America/Sitka
+	America/Yakutat
+(Amazon Standard Time)
+	America/Boa_Vista
+	America/Campo_Grande
+	America/Cuiaba
+	America/Manaus
+	America/Porto_Velho
+(Anadyr Standard Time)
+	Asia/Anadyr
+(Apia Standard Time)
+	Pacific/Apia
+(Arabian Standard Time)
+	Asia/Aden
+	Asia/Baghdad
+	Asia/Bahrain
+	Asia/Kuwait
+	Asia/Qatar
+	Asia/Riyadh
+(Argentina Standard Time)
+	America/Argentina/Buenos_Aires
+	America/Argentina/Catamarca
+	America/Argentina/Cordoba
+	America/Argentina/Jujuy
+	America/Argentina/La_Rioja
+	America/Argentina/Mendoza
+	America/Argentina/Rio_Gallegos
+	America/Argentina/Salta
+	America/Argentina/San_Juan
+	America/Argentina/San_Luis
+	America/Argentina/Tucuman
+	America/Argentina/Ushuaia
+(Armenia Standard Time)
+	Asia/Yerevan
+(Atlantic Daylight Time)
+	America/Glace_Bay
+	America/Goose_Bay
+	America/Halifax
+	America/Moncton
+	America/Thule
+	Atlantic/Bermuda
+(Atlantic Standard Time)
+	America/Anguilla
+	America/Antigua
+	America/Aruba
+	America/Barbados
+	America/Blanc-Sablon
+	America/Curacao
+	America/Dominica
+	America/Glace_Bay
+	America/Goose_Bay
+	America/Grenada
+	America/Guadeloupe
+	America/Halifax
+	America/Kralendijk
+	America/Lower_Princes
+	America/Marigot
+	America/Martinique
+	America/Moncton
+	America/Montserrat
+	America/Port_of_Spain
+	America/Puerto_Rico
+	America/Santo_Domingo
+	America/St_Barthelemy
+	America/St_Kitts
+	America/St_Lucia
+	America/St_Thomas
+	America/St_Vincent
+	America/Thule
+	America/Tortola
+	Atlantic/Bermuda
+(Australian Central Daylight Time)
+	Australia/Adelaide
+	Australia/Broken_Hill
+(Australian Central Standard Time)
+	Australia/Adelaide
+	Australia/Broken_Hill
+	Australia/Darwin
+(Australian Central Western Standard Time)
+	Australia/Eucla
+(Australian Eastern Daylight Time)
+	Antarctica/Macquarie
+	Australia/Hobart
+	Australia/Melbourne
+	Australia/Sydney
+(Australian Eastern Standard Time)
+	Antarctica/Macquarie
+	Australia/Brisbane
+	Australia/Hobart
+	Australia/Lindeman
+	Australia/Melbourne
+	Australia/Sydney
+(Australian Western Standard Time)
+	Australia/Perth
+(Azerbaijan Standard Time)
+	Asia/Baku
+(Azores Standard Time)
+	Atlantic/Azores
+(Azores Summer Time)
+	Atlantic/Azores
+(Bangladesh Standard Time)
+	Asia/Dhaka
+(Bhutan Time)
+	Asia/Thimphu
+(Bolivia Time)
+	America/La_Paz
+(Brasilia Standard Time)
+	America/Araguaina
+	America/Bahia
+	America/Belem
+	America/Fortaleza
+	America/Maceio
+	America/Recife
+	America/Santarem
+	America/Sao_Paulo
+(British Summer Time)
+	Europe/London
+(Brunei Darussalam Time)
+	Asia/Brunei
+(Cape Verde Standard Time)
+	Atlantic/Cape_Verde
+(Casey Time)
+	Antarctica/Casey
+(Central Africa Time)
+	Africa/Blantyre
+	Africa/Bujumbura
+	Africa/Gaborone
+	Africa/Harare
+	Africa/Juba
+	Africa/Khartoum
+	Africa/Kigali
+	Africa/Lubumbashi
+	Africa/Lusaka
+	Africa/Maputo
+	Africa/Windhoek
+(Central Daylight Time)
+	America/Bahia_Banderas
+	America/Chicago
+	America/Indiana/Knox
+	America/Indiana/Tell_City
+	America/Matamoros
+	America/Menominee
+	America/Merida
+	America/Mexico_City
+	America/Monterrey
+	America/North_Dakota/Beulah
+	America/North_Dakota/Center
+	America/North_Dakota/New_Salem
+	America/Rankin_Inlet
+	America/Resolute
+	America/Winnipeg
+(Central European Standard Time)
+	Africa/Algiers
+	Africa/Ceuta
+	Africa/Tunis
+	Arctic/Longyearbyen
+	Europe/Amsterdam
+	Europe/Andorra
+	Europe/Belgrade
+	Europe/Berlin
+	Europe/Bratislava
+	Europe/Brussels
+	Europe/Budapest
+	Europe/Busingen
+	Europe/Copenhagen
+	Europe/Gibraltar
+	Europe/Ljubljana
+	Europe/Luxembourg
+	Europe/Madrid
+	Europe/Malta
+	Europe/Monaco
+	Europe/Oslo
+	Europe/Paris
+	Europe/Podgorica
+	Europe/Prague
+	Europe/Rome
+	Europe/San_Marino
+	Europe/Sarajevo
+	Europe/Skopje
+	Europe/Stockholm
+	Europe/Tirane
+	Europe/Vaduz
+	Europe/Vatican
+	Europe/Vienna
+	Europe/Warsaw
+	Europe/Zagreb
+	Europe/Zurich
+(Central European Summer Time)
+	Africa/Ceuta
+	Arctic/Longyearbyen
+	Europe/Amsterdam
+	Europe/Andorra
+	Europe/Belgrade
+	Europe/Berlin
+	Europe/Bratislava
+	Europe/Brussels
+	Europe/Budapest
+	Europe/Busingen
+	Europe/Copenhagen
+	Europe/Gibraltar
+	Europe/Ljubljana
+	Europe/Luxembourg
+	Europe/Madrid
+	Europe/Malta
+	Europe/Monaco
+	Europe/Oslo
+	Europe/Paris
+	Europe/Podgorica
+	Europe/Prague
+	Europe/Rome
+	Europe/San_Marino
+	Europe/Sarajevo
+	Europe/Skopje
+	Europe/Stockholm
+	Europe/Tirane
+	Europe/Vaduz
+	Europe/Vatican
+	Europe/Vienna
+	Europe/Warsaw
+	Europe/Zagreb
+	Europe/Zurich
+(Central Indonesia Time)
+	Asia/Makassar
+(Central Standard Time)
+	America/Bahia_Banderas
+	America/Belize
+	America/Chicago
+	America/Costa_Rica
+	America/El_Salvador
+	America/Guatemala
+	America/Indiana/Knox
+	America/Indiana/Tell_City
+	America/Managua
+	America/Matamoros
+	America/Menominee
+	America/Merida
+	America/Mexico_City
+	America/Monterrey
+	America/North_Dakota/Beulah
+	America/North_Dakota/Center
+	America/North_Dakota/New_Salem
+	America/Rankin_Inlet
+	America/Regina
+	America/Resolute
+	America/Swift_Current
+	America/Tegucigalpa
+	America/Winnipeg
+(Chamorro Standard Time)
+	Pacific/Guam
+	Pacific/Saipan
+(Chatham Daylight Time)
+	Pacific/Chatham
+(Chatham Standard Time)
+	Pacific/Chatham
+(Chile Standard Time)
+	America/Santiago
+(Chile Summer Time)
+	America/Santiago
+(China Standard Time)
+	Asia/Macau
+	Asia/Shanghai
+(Christmas Island Time)
+	Indian/Christmas
+(Chuuk Time)
+	Pacific/Chuuk
+(Cocos Islands Time)
+	Indian/Cocos
+(Colombia Standard Time)
+	America/Bogota
+(Cook Islands Standard Time)
+	Pacific/Rarotonga
+(Coordinated Universal Time)
+	UTC
+(Cuba Daylight Time)
+	America/Havana
+(Cuba Standard Time)
+	America/Havana
+(Davis Time)
+	Antarctica/Davis
+(Dumont-d’Urville Time)
+	Antarctica/DumontDUrville
+(East Africa Time)
+	Africa/Addis_Ababa
+	Africa/Asmara
+	Africa/Dar_es_Salaam
+	Africa/Djibouti
+	Africa/Kampala
+	Africa/Mogadishu
+	Africa/Nairobi
+	Indian/Antananarivo
+	Indian/Comoro
+	Indian/Mayotte
+(East Greenland Standard Time)
+	America/Scoresbysund
+(East Greenland Summer Time)
+	America/Scoresbysund
+(East Kazakhstan Time)
+	Asia/Almaty
+	Asia/Qostanay
+(East Timor Time)
+	Asia/Dili
+(Easter Island Standard Time)
+	Pacific/Easter
+(Easter Island Summer Time)
+	Pacific/Easter
+(Eastern Daylight Time)
+	America/Detroit
+	America/Grand_Turk
+	America/Indiana/Indianapolis
+	America/Indiana/Marengo
+	America/Indiana/Petersburg
+	America/Indiana/Vevay
+	America/Indiana/Vincennes
+	America/Indiana/Winamac
+	America/Iqaluit
+	America/Kentucky/Louisville
+	America/Kentucky/Monticello
+	America/Nassau
+	America/New_York
+	America/Port-au-Prince
+	America/Toronto
+(Eastern European Standard Time)
+	Africa/Cairo
+	Africa/Tripoli
+	Asia/Amman
+	Asia/Beirut
+	Asia/Damascus
+	Asia/Gaza
+	Asia/Hebron
+	Asia/Nicosia
+	Europe/Athens
+	Europe/Bucharest
+	Europe/Chisinau
+	Europe/Helsinki
+	Europe/Kaliningrad
+	Europe/Kyiv
+	Europe/Mariehamn
+	Europe/Riga
+	Europe/Sofia
+	Europe/Tallinn
+	Europe/Vilnius
+(Eastern European Summer Time)
+	Asia/Amman
+	Asia/Beirut
+	Asia/Damascus
+	Asia/Gaza
+	Asia/Hebron
+	Asia/Nicosia
+	Europe/Athens
+	Europe/Bucharest
+	Europe/Chisinau
+	Europe/Helsinki
+	Europe/Kyiv
+	Europe/Mariehamn
+	Europe/Riga
+	Europe/Sofia
+	Europe/Tallinn
+	Europe/Vilnius
+(Eastern Indonesia Time)
+	Asia/Jayapura
+(Eastern Standard Time)
+	America/Atikokan
+	America/Cancun
+	America/Cayman
+	America/Detroit
+	America/Grand_Turk
+	America/Indiana/Indianapolis
+	America/Indiana/Marengo
+	America/Indiana/Petersburg
+	America/Indiana/Vevay
+	America/Indiana/Vincennes
+	America/Indiana/Winamac
+	America/Iqaluit
+	America/Jamaica
+	America/Kentucky/Louisville
+	America/Kentucky/Monticello
+	America/Nassau
+	America/New_York
+	America/Panama
+	America/Port-au-Prince
+	America/Toronto
+(Ecuador Time)
+	America/Guayaquil
+(Falkland Islands Standard Time)
+	Atlantic/Stanley
+(Fernando de Noronha Standard Time)
+	America/Noronha
+(Fiji Standard Time)
+	Pacific/Fiji
+(Fiji Summer Time)
+	Pacific/Fiji
+(French Guiana Time)
+	America/Cayenne
+(French Southern & Antarctic Time)
+	Indian/Kerguelen
+(GMT)
+	AD
+	ZULU
+(GMT+01:00)
+	Africa/Casablanca
+	Africa/El_Aaiun
+	Europe/Guernsey
+	Europe/Isle_of_Man
+	Europe/Jersey
+(GMT+02:00)
+	Antarctica/Troll
+	Asia/Famagusta
+(GMT+03:00)
+	Asia/Famagusta
+	Europe/Istanbul
+	Europe/Kirov
+(GMT+04:00)
+	Europe/Astrakhan
+	Europe/Saratov
+	Europe/Ulyanovsk
+(GMT+06:00)
+	Asia/Urumqi
+(GMT+07:00)
+	Asia/Barnaul
+	Asia/Tomsk
+(GMT+11:00)
+	Asia/Srednekolymsk
+	Pacific/Bougainville
+(GMT-03:00)
+	America/Punta_Arenas
+	Antarctica/Palmer
+(GMT-07:00)
+	America/Ciudad_Juarez
+(Galapagos Time)
+	Pacific/Galapagos
+(Gambier Time)
+	Pacific/Gambier
+(Georgia Standard Time)
+	Asia/Tbilisi
+(Gilbert Islands Time)
+	Pacific/Tarawa
+(Greenwich Mean Time)
+	Africa/Abidjan
+	Africa/Accra
+	Africa/Bamako
+	Africa/Banjul
+	Africa/Bissau
+	Africa/Conakry
+	Africa/Dakar
+	Africa/Freetown
+	Africa/Lome
+	Africa/Monrovia
+	Africa/Nouakchott
+	Africa/Ouagadougou
+	Africa/Sao_Tome
+	America/Danmarkshavn
+	Antarctica/Troll
+	Atlantic/Reykjavik
+	Atlantic/St_Helena
+	Europe/Dublin
+	Europe/Guernsey
+	Europe/Isle_of_Man
+	Europe/Jersey
+	Europe/London
+(Gulf Standard Time)
+	Asia/Dubai
+	Asia/Muscat
+(Guyana Time)
+	America/Guyana
+(Hawaii-Aleutian Daylight Time)
+	America/Adak
+(Hawaii-Aleutian Standard Time)
+	America/Adak
+	Pacific/Honolulu
+(Hong Kong Standard Time)
+	Asia/Hong_Kong
+(Hovd Standard Time)
+	Asia/Hovd
+(India Standard Time)
+	Asia/Colombo
+	Asia/Kolkata
+(Indian Ocean Time)
+	Indian/Chagos
+(Indochina Time)
+	Asia/Bangkok
+	Asia/Ho_Chi_Minh
+	Asia/Phnom_Penh
+	Asia/Vientiane
+(Iran Standard Time)
+	Asia/Tehran
+(Irish Standard Time)
+	Europe/Dublin
+(Irkutsk Standard Time)
+	Asia/Irkutsk
+(Israel Daylight Time)
+	Asia/Jerusalem
+(Israel Standard Time)
+	Asia/Jerusalem
+(Japan Standard Time)
+	Asia/Tokyo
+(Korean Standard Time)
+	Asia/Pyongyang
+	Asia/Seoul
+(Kosrae Time)
+	Pacific/Kosrae
+(Krasnoyarsk Standard Time)
+	Asia/Krasnoyarsk
+	Asia/Novokuznetsk
+(Kyrgyzstan Time)
+	Asia/Bishkek
+(Line Islands Time)
+	Pacific/Kiritimati
+(Lord Howe Daylight Time)
+	Australia/Lord_Howe
+(Lord Howe Standard Time)
+	Australia/Lord_Howe
+(Magadan Standard Time)
+	Asia/Magadan
+(Malaysia Time)
+	Asia/Kuala_Lumpur
+	Asia/Kuching
+(Maldives Time)
+	Indian/Maldives
+(Marquesas Time)
+	Pacific/Marquesas
+(Marshall Islands Time)
+	Pacific/Kwajalein
+	Pacific/Majuro
+(Mauritius Standard Time)
+	Indian/Mauritius
+(Mawson Time)
+	Antarctica/Mawson
+(Mexican Pacific Daylight Time)
+	America/Chihuahua
+	America/Mazatlan
+(Mexican Pacific Standard Time)
+	America/Chihuahua
+	America/Hermosillo
+	America/Mazatlan
+(Moscow Standard Time)
+	Europe/Minsk
+	Europe/Moscow
+	Europe/Simferopol
+(Mountain Daylight Time)
+	America/Boise
+	America/Cambridge_Bay
+	America/Denver
+	America/Edmonton
+	America/Inuvik
+	America/Ojinaga
+	America/Yellowknife
+(Mountain Standard Time)
+	America/Boise
+	America/Cambridge_Bay
+	America/Creston
+	America/Dawson_Creek
+	America/Denver
+	America/Edmonton
+	America/Fort_Nelson
+	America/Inuvik
+	America/Ojinaga
+	America/Phoenix
+	America/Yellowknife
+(Myanmar Time)
+	Asia/Yangon
+(Nauru Time)
+	Pacific/Nauru
+(Nepal Time)
+	Asia/Kathmandu
+(New Caledonia Standard Time)
+	Pacific/Noumea
+(New Zealand Daylight Time)
+	Antarctica/McMurdo
+	Pacific/Auckland
+(New Zealand Standard Time)
+	Antarctica/McMurdo
+	Pacific/Auckland
+(Newfoundland Daylight Time)
+	America/St_Johns
+(Newfoundland Standard Time)
+	America/St_Johns
+(Niue Time)
+	Pacific/Niue
+(Norfolk Island Daylight Time)
+	Pacific/Norfolk
+(Norfolk Island Standard Time)
+	Pacific/Norfolk
+(Novosibirsk Standard Time)
+	Asia/Novosibirsk
+(Omsk Standard Time)
+	Asia/Omsk
+(Pacific Daylight Time)
+	America/Los_Angeles
+	America/Tijuana
+	America/Vancouver
+(Pacific Standard Time)
+	America/Los_Angeles
+	America/Tijuana
+	America/Vancouver
+(Pakistan Standard Time)
+	Asia/Karachi
+(Palau Time)
+	Pacific/Palau
+(Papua New Guinea Time)
+	Pacific/Port_Moresby
+(Paraguay Standard Time)
+	America/Asuncion
+(Paraguay Summer Time)
+	America/Asuncion
+(Peru Standard Time)
+	America/Lima
+(Petropavlovsk-Kamchatski Standard Time)
+	Asia/Kamchatka
+(Philippine Standard Time)
+	Asia/Manila
+(Phoenix Islands Time)
+	Pacific/Kanton
+(Pitcairn Time)
+	Pacific/Pitcairn
+(Ponape Time)
+	Pacific/Pohnpei
+(Rothera Time)
+	Antarctica/Rothera
+(Réunion Time)
+	Indian/Reunion
+(Sakhalin Standard Time)
+	Asia/Sakhalin
+(Samara Standard Time)
+	Europe/Samara
+(Samoa Standard Time)
+	Pacific/Midway
+	Pacific/Pago_Pago
+(Seychelles Time)
+	Indian/Mahe
+(Singapore Standard Time)
+	Asia/Singapore
+(Solomon Islands Time)
+	Pacific/Guadalcanal
+(South Africa Standard Time)
+	Africa/Johannesburg
+	Africa/Maseru
+	Africa/Mbabane
+(South Georgia Time)
+	Atlantic/South_Georgia
+(St Pierre & Miquelon Daylight Time)
+	America/Miquelon
+(St Pierre & Miquelon Standard Time)
+	America/Miquelon
+(Suriname Time)
+	America/Paramaribo
+(Syowa Time)
+	Antarctica/Syowa
+(Tahiti Time)
+	Pacific/Tahiti
+(Taipei Standard Time)
+	Asia/Taipei
+(Tajikistan Time)
+	Asia/Dushanbe
+(Tokelau Time)
+	Pacific/Fakaofo
+(Tonga Standard Time)
+	Pacific/Tongatapu
+(Turkmenistan Standard Time)
+	Asia/Ashgabat
+(Tuvalu Time)
+	Pacific/Funafuti
+(Ulaanbaatar Standard Time)
+	Asia/Choibalsan
+	Asia/Ulaanbaatar
+(Uruguay Standard Time)
+	America/Montevideo
+(Uzbekistan Standard Time)
+	Asia/Samarkand
+	Asia/Tashkent
+(Vanuatu Standard Time)
+	Pacific/Efate
+(Venezuela Time)
+	America/Caracas
+(Vladivostok Standard Time)
+	Asia/Ust-Nera
+	Asia/Vladivostok
+(Volgograd Standard Time)
+	Europe/Volgograd
+(Vostok Time)
+	Antarctica/Vostok
+(Wake Island Time)
+	Pacific/Wake
+(Wallis & Futuna Time)
+	Pacific/Wallis
+(West Africa Standard Time)
+	Africa/Bangui
+	Africa/Brazzaville
+	Africa/Douala
+	Africa/Kinshasa
+	Africa/Lagos
+	Africa/Libreville
+	Africa/Luanda
+	Africa/Malabo
+	Africa/Ndjamena
+	Africa/Niamey
+	Africa/Porto-Novo
+(West Greenland Standard Time)
+	America/Nuuk
+(West Greenland Summer Time)
+	America/Nuuk
+(West Kazakhstan Time)
+	Asia/Aqtau
+	Asia/Aqtobe
+	Asia/Atyrau
+	Asia/Oral
+	Asia/Qyzylorda
+(Western European Standard Time)
+	Atlantic/Canary
+	Atlantic/Faroe
+	Atlantic/Madeira
+	Europe/Lisbon
+(Western European Summer Time)
+	Atlantic/Canary
+	Atlantic/Faroe
+	Atlantic/Madeira
+	Europe/Lisbon
+(Western Indonesia Time)
+	Asia/Jakarta
+	Asia/Pontianak
+(Yakutsk Standard Time)
+	Asia/Chita
+	Asia/Khandyga
+	Asia/Yakutsk
+(Yekaterinburg Standard Time)
+	Asia/Yekaterinburg
+(Yukon Time)
+	America/Dawson
+	America/Whitehorse

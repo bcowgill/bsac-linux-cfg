@@ -1,0 +1,634 @@
+(+00)
+	America/Scoresbysund
+	Antarctica/Troll
+	Atlantic/Azores
+(+01)
+	Africa/Casablanca
+	Africa/El_Aaiun
+(+02)
+	Antarctica/Troll
+(+03)
+	Antarctica/Syowa
+	Asia/Aden
+	Asia/Amman
+	Asia/Baghdad
+	Asia/Bahrain
+	Asia/Damascus
+	Asia/Kuwait
+	Asia/Qatar
+	Asia/Riyadh
+	Europe/Istanbul
+	Europe/Kirov
+	Europe/Minsk
+	Europe/Volgograd
+(+0330)
+	Asia/Tehran
+(+04)
+	Asia/Baku
+	Asia/Dubai
+	Asia/Muscat
+	Asia/Tbilisi
+	Asia/Yerevan
+	Europe/Astrakhan
+	Europe/Samara
+	Europe/Saratov
+	Europe/Ulyanovsk
+	Indian/Mahe
+	Indian/Mauritius
+	Indian/Reunion
+(+0430)
+	Asia/Kabul
+(+05)
+	Antarctica/Mawson
+	Asia/Aqtau
+	Asia/Aqtobe
+	Asia/Ashgabat
+	Asia/Atyrau
+	Asia/Dushanbe
+	Asia/Oral
+	Asia/Qyzylorda
+	Asia/Samarkand
+	Asia/Tashkent
+	Asia/Yekaterinburg
+	Indian/Kerguelen
+	Indian/Maldives
+(+0530)
+	Asia/Colombo
+(+0545)
+	Asia/Kathmandu
+(+06)
+	Antarctica/Vostok
+	Asia/Almaty
+	Asia/Bishkek
+	Asia/Dhaka
+	Asia/Omsk
+	Asia/Qostanay
+	Asia/Thimphu
+	Asia/Urumqi
+	Indian/Chagos
+(+0630)
+	Asia/Yangon
+	Indian/Cocos
+(+07)
+	Antarctica/Davis
+	Asia/Bangkok
+	Asia/Barnaul
+	Asia/Ho_Chi_Minh
+	Asia/Hovd
+	Asia/Krasnoyarsk
+	Asia/Novokuznetsk
+	Asia/Novosibirsk
+	Asia/Phnom_Penh
+	Asia/Tomsk
+	Asia/Vientiane
+	Indian/Christmas
+(+08)
+	Asia/Brunei
+	Asia/Choibalsan
+	Asia/Irkutsk
+	Asia/Kuala_Lumpur
+	Asia/Kuching
+	Asia/Singapore
+	Asia/Ulaanbaatar
+(+0845)
+	Australia/Eucla
+(+09)
+	Asia/Chita
+	Asia/Dili
+	Asia/Khandyga
+	Asia/Yakutsk
+	Pacific/Palau
+(+10)
+	Antarctica/DumontDUrville
+	Asia/Ust-Nera
+	Asia/Vladivostok
+	Pacific/Chuuk
+	Pacific/Port_Moresby
+(+1030)
+	Australia/Lord_Howe
+(+11)
+	Antarctica/Casey
+	Asia/Magadan
+	Asia/Sakhalin
+	Asia/Srednekolymsk
+	Australia/Lord_Howe
+	Pacific/Bougainville
+	Pacific/Efate
+	Pacific/Guadalcanal
+	Pacific/Kosrae
+	Pacific/Norfolk
+	Pacific/Noumea
+	Pacific/Pohnpei
+(+12)
+	Asia/Anadyr
+	Asia/Kamchatka
+	Pacific/Fiji
+	Pacific/Funafuti
+	Pacific/Kwajalein
+	Pacific/Majuro
+	Pacific/Nauru
+	Pacific/Norfolk
+	Pacific/Tarawa
+	Pacific/Wake
+	Pacific/Wallis
+(+1245)
+	Pacific/Chatham
+(+13)
+	Pacific/Apia
+	Pacific/Fakaofo
+	Pacific/Kanton
+	Pacific/Tongatapu
+(+1345)
+	Pacific/Chatham
+(+14)
+	Pacific/Kiritimati
+(-01)
+	America/Scoresbysund
+	Atlantic/Azores
+	Atlantic/Cape_Verde
+(-02)
+	America/Miquelon
+	America/Noronha
+	America/Nuuk
+	Atlantic/South_Georgia
+(-03)
+	America/Araguaina
+	America/Argentina/Buenos_Aires
+	America/Argentina/Catamarca
+	America/Argentina/Cordoba
+	America/Argentina/Jujuy
+	America/Argentina/La_Rioja
+	America/Argentina/Mendoza
+	America/Argentina/Rio_Gallegos
+	America/Argentina/Salta
+	America/Argentina/San_Juan
+	America/Argentina/San_Luis
+	America/Argentina/Tucuman
+	America/Argentina/Ushuaia
+	America/Asuncion
+	America/Bahia
+	America/Belem
+	America/Cayenne
+	America/Fortaleza
+	America/Maceio
+	America/Miquelon
+	America/Montevideo
+	America/Nuuk
+	America/Paramaribo
+	America/Punta_Arenas
+	America/Recife
+	America/Santarem
+	America/Santiago
+	America/Sao_Paulo
+	Antarctica/Palmer
+	Antarctica/Rothera
+	Atlantic/Stanley
+(-04)
+	America/Asuncion
+	America/Boa_Vista
+	America/Campo_Grande
+	America/Caracas
+	America/Cuiaba
+	America/Guyana
+	America/La_Paz
+	America/Manaus
+	America/Porto_Velho
+	America/Santiago
+(-05)
+	America/Bogota
+	America/Eirunepe
+	America/Guayaquil
+	America/Lima
+	America/Rio_Branco
+	Pacific/Easter
+(-06)
+	Pacific/Easter
+	Pacific/Galapagos
+(-08)
+	Pacific/Pitcairn
+(-09)
+	Pacific/Gambier
+(-0930)
+	Pacific/Marquesas
+(-10)
+	Pacific/Rarotonga
+	Pacific/Tahiti
+(-11)
+	Pacific/Niue
+(ACDT)
+	Australia/Adelaide
+	Australia/Broken_Hill
+(ACST)
+	Australia/Adelaide
+	Australia/Broken_Hill
+	Australia/Darwin
+(ADT)
+	America/Glace_Bay
+	America/Goose_Bay
+	America/Halifax
+	America/Moncton
+	America/Thule
+	Atlantic/Bermuda
+(AEDT)
+	Antarctica/Macquarie
+	Australia/Hobart
+	Australia/Melbourne
+	Australia/Sydney
+(AEST)
+	Antarctica/Macquarie
+	Australia/Brisbane
+	Australia/Hobart
+	Australia/Lindeman
+	Australia/Melbourne
+	Australia/Sydney
+(AKDT)
+	America/Anchorage
+	America/Juneau
+	America/Metlakatla
+	America/Nome
+	America/Sitka
+	America/Yakutat
+(AKST)
+	America/Anchorage
+	America/Juneau
+	America/Metlakatla
+	America/Nome
+	America/Sitka
+	America/Yakutat
+(AST)
+	America/Anguilla
+	America/Antigua
+	America/Aruba
+	America/Barbados
+	America/Blanc-Sablon
+	America/Curacao
+	America/Dominica
+	America/Glace_Bay
+	America/Goose_Bay
+	America/Grenada
+	America/Guadeloupe
+	America/Halifax
+	America/Kralendijk
+	America/Lower_Princes
+	America/Marigot
+	America/Martinique
+	America/Moncton
+	America/Montserrat
+	America/Port_of_Spain
+	America/Puerto_Rico
+	America/Santo_Domingo
+	America/St_Barthelemy
+	America/St_Kitts
+	America/St_Lucia
+	America/St_Thomas
+	America/St_Vincent
+	America/Thule
+	America/Tortola
+	Atlantic/Bermuda
+(AWST)
+	Australia/Perth
+(BST)
+	Europe/Guernsey
+	Europe/Isle_of_Man
+	Europe/Jersey
+	Europe/London
+(CAT)
+	Africa/Blantyre
+	Africa/Bujumbura
+	Africa/Gaborone
+	Africa/Harare
+	Africa/Juba
+	Africa/Khartoum
+	Africa/Kigali
+	Africa/Lubumbashi
+	Africa/Lusaka
+	Africa/Maputo
+	Africa/Windhoek
+(CDT)
+	America/Chicago
+	America/Havana
+	America/Indiana/Knox
+	America/Indiana/Tell_City
+	America/Matamoros
+	America/Menominee
+	America/North_Dakota/Beulah
+	America/North_Dakota/Center
+	America/North_Dakota/New_Salem
+	America/Ojinaga
+	America/Rankin_Inlet
+	America/Resolute
+	America/Winnipeg
+(CEST)
+	Africa/Ceuta
+	Arctic/Longyearbyen
+	Europe/Amsterdam
+	Europe/Andorra
+	Europe/Belgrade
+	Europe/Berlin
+	Europe/Bratislava
+	Europe/Brussels
+	Europe/Budapest
+	Europe/Busingen
+	Europe/Copenhagen
+	Europe/Gibraltar
+	Europe/Ljubljana
+	Europe/Luxembourg
+	Europe/Madrid
+	Europe/Malta
+	Europe/Monaco
+	Europe/Oslo
+	Europe/Paris
+	Europe/Podgorica
+	Europe/Prague
+	Europe/Rome
+	Europe/San_Marino
+	Europe/Sarajevo
+	Europe/Skopje
+	Europe/Stockholm
+	Europe/Tirane
+	Europe/Vaduz
+	Europe/Vatican
+	Europe/Vienna
+	Europe/Warsaw
+	Europe/Zagreb
+	Europe/Zurich
+(CET)
+	Africa/Algiers
+	Africa/Ceuta
+	Africa/Tunis
+	Arctic/Longyearbyen
+	Europe/Amsterdam
+	Europe/Andorra
+	Europe/Belgrade
+	Europe/Berlin
+	Europe/Bratislava
+	Europe/Brussels
+	Europe/Budapest
+	Europe/Busingen
+	Europe/Copenhagen
+	Europe/Gibraltar
+	Europe/Ljubljana
+	Europe/Luxembourg
+	Europe/Madrid
+	Europe/Malta
+	Europe/Monaco
+	Europe/Oslo
+	Europe/Paris
+	Europe/Podgorica
+	Europe/Prague
+	Europe/Rome
+	Europe/San_Marino
+	Europe/Sarajevo
+	Europe/Skopje
+	Europe/Stockholm
+	Europe/Tirane
+	Europe/Vaduz
+	Europe/Vatican
+	Europe/Vienna
+	Europe/Warsaw
+	Europe/Zagreb
+	Europe/Zurich
+(CST)
+	America/Bahia_Banderas
+	America/Belize
+	America/Chicago
+	America/Chihuahua
+	America/Costa_Rica
+	America/El_Salvador
+	America/Guatemala
+	America/Havana
+	America/Indiana/Knox
+	America/Indiana/Tell_City
+	America/Managua
+	America/Matamoros
+	America/Menominee
+	America/Merida
+	America/Mexico_City
+	America/Monterrey
+	America/North_Dakota/Beulah
+	America/North_Dakota/Center
+	America/North_Dakota/New_Salem
+	America/Ojinaga
+	America/Rankin_Inlet
+	America/Regina
+	America/Resolute
+	America/Swift_Current
+	America/Tegucigalpa
+	America/Winnipeg
+	Asia/Macau
+	Asia/Shanghai
+	Asia/Taipei
+(ChST)
+	Pacific/Guam
+	Pacific/Saipan
+(EAT)
+	Africa/Addis_Ababa
+	Africa/Asmara
+	Africa/Dar_es_Salaam
+	Africa/Djibouti
+	Africa/Kampala
+	Africa/Mogadishu
+	Africa/Nairobi
+	Indian/Antananarivo
+	Indian/Comoro
+	Indian/Mayotte
+(EDT)
+	America/Detroit
+	America/Grand_Turk
+	America/Indiana/Indianapolis
+	America/Indiana/Marengo
+	America/Indiana/Petersburg
+	America/Indiana/Vevay
+	America/Indiana/Vincennes
+	America/Indiana/Winamac
+	America/Iqaluit
+	America/Kentucky/Louisville
+	America/Kentucky/Monticello
+	America/Nassau
+	America/New_York
+	America/Port-au-Prince
+	America/Toronto
+(EEST)
+	Asia/Beirut
+	Asia/Famagusta
+	Asia/Gaza
+	Asia/Hebron
+	Asia/Nicosia
+	Europe/Athens
+	Europe/Bucharest
+	Europe/Chisinau
+	Europe/Helsinki
+	Europe/Kyiv
+	Europe/Mariehamn
+	Europe/Riga
+	Europe/Sofia
+	Europe/Tallinn
+	Europe/Vilnius
+(EET)
+	Africa/Cairo
+	Africa/Tripoli
+	Asia/Beirut
+	Asia/Famagusta
+	Asia/Gaza
+	Asia/Hebron
+	Asia/Nicosia
+	Europe/Athens
+	Europe/Bucharest
+	Europe/Chisinau
+	Europe/Helsinki
+	Europe/Kaliningrad
+	Europe/Kyiv
+	Europe/Mariehamn
+	Europe/Riga
+	Europe/Sofia
+	Europe/Tallinn
+	Europe/Vilnius
+(EST)
+	America/Atikokan
+	America/Cancun
+	America/Cayman
+	America/Detroit
+	America/Grand_Turk
+	America/Indiana/Indianapolis
+	America/Indiana/Marengo
+	America/Indiana/Petersburg
+	America/Indiana/Vevay
+	America/Indiana/Vincennes
+	America/Indiana/Winamac
+	America/Iqaluit
+	America/Jamaica
+	America/Kentucky/Louisville
+	America/Kentucky/Monticello
+	America/Nassau
+	America/New_York
+	America/Panama
+	America/Port-au-Prince
+	America/Toronto
+(GMT)
+	Africa/Abidjan
+	Africa/Accra
+	Africa/Bamako
+	Africa/Banjul
+	Africa/Bissau
+	Africa/Conakry
+	Africa/Dakar
+	Africa/Freetown
+	Africa/Lome
+	Africa/Monrovia
+	Africa/Nouakchott
+	Africa/Ouagadougou
+	Africa/Sao_Tome
+	America/Danmarkshavn
+	Atlantic/Reykjavik
+	Atlantic/St_Helena
+	Europe/Dublin
+	Europe/Guernsey
+	Europe/Isle_of_Man
+	Europe/Jersey
+	Europe/London
+(HDT)
+	America/Adak
+(HKT)
+	Asia/Hong_Kong
+(HST)
+	America/Adak
+	Pacific/Honolulu
+(IDT)
+	Asia/Jerusalem
+(IST)
+	Asia/Jerusalem
+	Asia/Kolkata
+	Europe/Dublin
+(JST)
+	Asia/Tokyo
+(KST)
+	Asia/Pyongyang
+	Asia/Seoul
+(MDT)
+	America/Boise
+	America/Cambridge_Bay
+	America/Ciudad_Juarez
+	America/Denver
+	America/Edmonton
+	America/Inuvik
+	America/Yellowknife
+(MSK)
+	Europe/Moscow
+	Europe/Simferopol
+(MST)
+	America/Boise
+	America/Cambridge_Bay
+	America/Ciudad_Juarez
+	America/Creston
+	America/Dawson
+	America/Dawson_Creek
+	America/Denver
+	America/Edmonton
+	America/Fort_Nelson
+	America/Hermosillo
+	America/Inuvik
+	America/Mazatlan
+	America/Phoenix
+	America/Whitehorse
+	America/Yellowknife
+(NDT)
+	America/St_Johns
+(NST)
+	America/St_Johns
+(NZDT)
+	Antarctica/McMurdo
+	Pacific/Auckland
+(NZST)
+	Antarctica/McMurdo
+	Pacific/Auckland
+(PDT)
+	America/Los_Angeles
+	America/Tijuana
+	America/Vancouver
+(PKT)
+	Asia/Karachi
+(PST)
+	America/Los_Angeles
+	America/Tijuana
+	America/Vancouver
+	Asia/Manila
+(SAST)
+	Africa/Johannesburg
+	Africa/Maseru
+	Africa/Mbabane
+(SST)
+	Pacific/Midway
+	Pacific/Pago_Pago
+(UTC)
+	AD
+	UTC
+	ZULU
+(WAT)
+	Africa/Bangui
+	Africa/Brazzaville
+	Africa/Douala
+	Africa/Kinshasa
+	Africa/Lagos
+	Africa/Libreville
+	Africa/Luanda
+	Africa/Malabo
+	Africa/Ndjamena
+	Africa/Niamey
+	Africa/Porto-Novo
+(WEST)
+	Atlantic/Canary
+	Atlantic/Faroe
+	Atlantic/Madeira
+	Europe/Lisbon
+(WET)
+	Atlantic/Canary
+	Atlantic/Faroe
+	Atlantic/Madeira
+	Europe/Lisbon
+(WIB)
+	Asia/Jakarta
+	Asia/Pontianak
+(WIT)
+	Asia/Jayapura
+(WITA)
+	Asia/Makassar
