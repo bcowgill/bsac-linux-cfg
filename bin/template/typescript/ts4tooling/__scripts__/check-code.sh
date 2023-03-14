@@ -314,7 +314,7 @@ show_bad "ERROR PROTOTYPE" "Should not be making .prototype assignments. Did you
 #-------------------------------------------
 git grep -E '((\bx(it|describe))|\.skip)\(' \
 	| grep -vE '__vendor__|__scripts__' \
-	| grep -vE 'timeTester\.[jt]s:' \
+	| grep -vE '(timeTester|timeTesterOnly\.test)\.[jt]s:' \
 	> found.lst
 
 show_bad "WARN TESTS SKIP" "Should not have any tests marked as .skip()."
@@ -372,7 +372,7 @@ show_bad "ERROR DEBUG=" "Should not have DEBUG= set true"
 #-------------------------------------------
 git grep -E '((\bf(it|describe))|\.only)\(' \
 	| grep -vE '__vendor__|__scripts__' \
-	| grep -vE 'timeTester\.[jt]s:' \
+	| grep -vE '(timeTester|timeTesterOnly\.test)\.[jt]s:' \
 	> found.lst
 
 show_bad "ERROR TESTS ONLY" "Should not have any tests marked as .only()."

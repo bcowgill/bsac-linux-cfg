@@ -63,7 +63,7 @@ describe.skip(`${displayName} module tests`, function descTimeTesterSuite() {
 
 			const now = new Date()
 			const actual = `[${now.toJSON()}]<${now.getDate()}>`
-			
+
 			expect(actual).toBe(timeTest.insertDates(expected))
 		},
 	)
