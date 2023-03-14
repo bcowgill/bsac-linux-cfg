@@ -59,9 +59,11 @@ describe.skip(`${displayName} module tests`, function descTimeTesterSuite() {
 		'insertDates() should throw for missing timeZoneInfo in WINTER time only (covereage)',
 		WINTER,
 		function testWinterTimeInsertDatesThrows() {
+			const expected = `[%NOT_PRESENT%]<%MISSING%>`
+
 			const now = new Date()
 			const actual = `[${now.toJSON()}]<${now.getDate()}>`
-			const expected = `[%NOT_PRESENT%]<%MISSING%>`
+			
 			expect(actual).toBe(timeTest.insertDates(expected))
 		},
 	)

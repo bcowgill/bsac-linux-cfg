@@ -23,6 +23,7 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 		// You should test with at least two dates 6 months apart
 		TEST_TIME,
 		TEST_SUMMER_TIME,
+		// UTC time is most likely used when your CI build runs on a virtual machine
 		UTC: {
 			0: {
 				VALUE: '680184839000',
@@ -39,6 +40,7 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 					'Wed Dec 25 1991 12:12:59 GMT+0000 (Coordinated Universal Time)',
 			},
 		},
+		// Test in your local time zone when running locally
 		'Europe/London': {
 			0: {
 				VALUE_WINTER: '693663179000',
@@ -57,6 +59,7 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 					'Mon Jul 22 1991 12:13:59 GMT+0100 (British Summer Time)',
 			},
 		},
+		// A secondary time zone you can test using export TZ=America/Vancouver before running the tests.
 		'America/Vancouver': {
 			480: {
 				VALUE_WINTER: '693663179000',
@@ -98,9 +101,11 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 		'should pass in WINTER time',
 		WINTER,
 		function testWinterTime() {
+			const expected = timeTest.TZ('VALUE_WINTER')
 			timeTest.debugInfo(displayName)
+
 			const now = Date.now()
-			expect(now).toBe(Number(timeTest.TZ('VALUE_WINTER')))
+			expect(now).toBe(Number(expected))
 		},
 	)
 
@@ -112,25 +117,27 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 				fakeTime,
 				function testTZ() {
 					const now = new Date()
-					expect(now.toString()).toBe(
-						timeTest.TZ(`${timeName}_toString`, now),
-					)
+					const expected = timeTest.TZ(`${timeName}_toString`, now)
+
+					expect(now.toString()).toBe(expected)
 				},
 			)
 			timeTest.it(
 				`timeTest.replaceShortTimeZoneNames() should provide uniformity of time zone names across OS's`,
 				fakeTime,
 				function testReplaceShortTimeZoneNames() {
-					const now = new Date()
-					// Date .toString() has a time zone string that varies across OS platforms.
-					// Linux uses short (GMT) strings.
+					// Date .toString() has a time zone string that varies across browser/node/os versions.
+					// Older nodejs uses short (GMT) strings.
 					// Windows uses longer (GMT Standard Time) strings
-					// Mac uses longer, (Greenwich Mean Time) different strings
-					// so replaceShortTimeZoneNames() exists to replace these strings for unified tests across OSes
-					const zone = now.toString().replace(/^.*\(/, '(')
+					// Newer nodejs uses longer, (Greenwich Mean Time) different strings
+					// so replaceShortTimeZoneNames() exists to replace these strings for unified tests across your technology
 					const expectZone = timeTest.TZ(`${timeName}_ZONE_LONG`)
 					const expected = `[${expectZone}] (not a time zone) (GMT Standard Time) (GMT Standard Time) (British Summer Time) (Pacific Standard Time) (Pacific Daylight Time) (GMT Standard Time) (British Summer Time) (GMT Standard Time)`
+
+					const now = new Date()
+					const zone = now.toString().replace(/^.*\(/, '(')
 					const actual = `[${zone}] (not a time zone) (GMT) (UTC) (BST) (PST) (PDT) (Greenwich Mean Time) (GMT Daylight Time) (Coordinated Universal Time)`
+
 					expect(timeTest.replaceShortTimeZoneNames(actual)).toBe(
 						expected,
 					)
@@ -140,11 +147,13 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 				`timeTest.replaceShortTimeZoneNames(custom tzMap) should provide uniformity of time zone names across OS's`,
 				fakeTime,
 				function testReplaceShortTimeZoneNamesCustom() {
-					const now = new Date()
-					const zone = now.toString().replace(/^.*\(/, '(')
 					const expectZone = timeTest.TZ(`${timeName}_ZONE`)
 					const expected = `[${expectZone}] (not a time zone) (GMT) (GMT) (BST) (PST) (PDT) (GMT) (BST) (GMT)`
+
+					const now = new Date()
+					const zone = now.toString().replace(/^.*\(/, '(')
 					const actual = `[${zone}] (not a time zone) (GMT Standard Time) (GMT Standard Time) (British Summer Time) (Pacific Standard Time) (Pacific Daylight Time) (GMT Standard Time) (British Summer Time) (GMT Standard Time)`
+
 					expect(
 						timeTest.replaceShortTimeZoneNames(actual, timeZoneMap),
 					).toBe(expected)
@@ -154,12 +163,14 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 				`timeTest.insertDate() should provide testing of dates within other strings`,
 				fakeTime,
 				function testInsertDate() {
-					const now = new Date()
-					const actual = `Your card expires ${now.toLocaleDateString()}, please renew it before then.`
 					const expected = timeTest.insertDate(
 						`Your card expires %${timeName}_LOC_DATE%, please renew it before then.`,
 						`${timeName}_LOC_DATE`,
 					)
+
+					const now = new Date()
+					const actual = `Your card expires ${now.toLocaleDateString()}, please renew it before then.`
+
 					expect(actual).toBe(expected)
 				},
 			)
@@ -167,11 +178,13 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 				`timeTest.insertDates() should provide testing of dates within other strings`,
 				fakeTime,
 				function testInsertDates() {
-					const now = new Date()
-					const actual = `[${now.toString()}] Your card expires ${now.toLocaleDateString()}, please renew it before then.`
 					const expected = timeTest.insertDates(
 						`[%${timeName}_toString%] Your card expires %${timeName}_LOC_DATE%, please renew it before then.`,
 					)
+
+					const now = new Date()
+					const actual = `[${now.toString()}] Your card expires ${now.toLocaleDateString()}, please renew it before then.`
+
 					expect(timeTest.replaceShortTimeZoneNames(actual)).toBe(
 						expected,
 					)
