@@ -44,7 +44,7 @@ export interface TimeTester {
 	timeZone: string
 	debugInfo(message: string): void
 	TZ(key: string, date?: Date): string
-	replaceShortTimeZoneNames(text: string): string
+	replaceShortTimeZoneNames(text: string, tzMap?: TimeStrings): string
 	insertDate(text: string, key: string, date?: Date): string
 	insertDates(template: string, date?: Date): string
 
@@ -80,6 +80,7 @@ export interface TimeTester {
 	your time zone in control panel / Date and Time then change the Europe/London
 	DEFAULT_ZONE string in timeTest.js manually to the matching unix time zone TZ name
 
+	MUSTDO update these docs after testing complete
 	const timeZoneInfo = {
 		// You should test with at least two dates 6 months apart
 		TEST_TIME: 'December 25, 1991 12:12:59 GMT',
@@ -152,8 +153,9 @@ const DEFAULT_ZONE = process.platform === 'win32' ? 'Europe/London' : 'UTC'
 // Set your control panel date to Pacific time also.
 // const DEFAULT_ZONE = 'America/Vancouver';
 
+// MUSTDO make it so we can pass this config in to makeTimeTester
 // Map short linux time zone names to longer Windows/Mac ones for unit test uniformity.
-const timeZoneMap: TimeStrings = {
+export const timeZoneMap: TimeStrings = {
 	// Linux  Windows
 	'(GMT)': '(GMT Standard Time)',
 	'(UTC)': '(GMT Standard Time)',
@@ -162,16 +164,25 @@ const timeZoneMap: TimeStrings = {
 	'(PDT)': '(Pacific Daylight Time)',
 	// Mac                   Windows
 	'(Greenwich Mean Time)': '(GMT Standard Time)',
+	'(Coordinated Universal Time)': '(GMT Standard Time)',
 	// Windows
 	'(GMT Daylight Time)': '(British Summer Time)',
-	'(Coordinated Universal Time)': '(GMT Standard Time)',
 	// '(GMT Standard Time)': '(UTC)',
 	// '(British Summer Time)': '(BST)',
 	// '(Pacific Standard Time)': '(PST)',
 	// '(Pacific Daylight Time)': '(PDT)',
 }
 
-function replaceShortTimeZoneNames(text: string): string {
+/**
+ * This replaces time zone names in one format like short (GMT) to another format like longer (GM Standard Time) according to an internal or provided time zone map object.
+ * @param text string containing (GMT) and other time zone names which are OS specific.
+ * @param tzMap optional object mapping time zone names like (BST) to other names like (British Summer Time) for uniformity of unit tests across operating systems.
+ * @returns the string with time zone names replaced according to the tzMap.
+ */
+export function replaceShortTimeZoneNames(
+	text: string,
+	tzMap = timeZoneMap,
+): string {
 	const reTimeZone = /(\([^)]+\))/g
 	// log(`${displayName}.replaceShortTimeZoneNames`, text);
 	const replaced = replace(
@@ -181,8 +192,8 @@ function replaceShortTimeZoneNames(text: string): string {
 			placeholder: string,
 			token: string,
 		): string {
-			// log(`${displayName}.replaceShortTimeZoneNames`, token, timeZoneMap[token]);
-			return timeZoneMap[token] ?? token
+			// log(`${displayName}.replaceShortTimeZoneNames`, token, tzMap[token]);
+			return tzMap[token] ?? token
 		},
 	)
 	/* eslint-enable prefer-arrow-callback */
@@ -191,11 +202,22 @@ function replaceShortTimeZoneNames(text: string): string {
 /**
  * Creates an object to help out with testing date/time values. Before each unit test it will set the Date object's simulated date to the value given in a timemachine options structure.  It also contains functions comparing expected time strings with actual ones based on the time zone and offset.
  * @param timeZoneInfo structure containing time values for unit tests and formatted time strings indexed by time zone name and time zone offset.
+ * @param tzMap optional object mapping time zone names like (BST) to other names like (British Summer Time) for uniformity of unit tests across operating systems.
  * @returns an object you can use for unit tests which need to simulate specific date/times.
  */
-export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
+export default function makeTimeTester(
+	timeZoneInfo: TimeZoneInfo,
+	tzMap?: TimeStrings,
+): TimeTester {
 	const timeZone = process.env.TZ ?? DEFAULT_ZONE
 
+	/**
+	 * This runs a unit test case with the Date object set to a specific date provided by the timemachine config object provided.  If omitted the time will be zero, way back in 1970.
+	 * @param fnIt The test runner function to run the test with. ie. it, it.only.
+	 * @param name The name of the test to run.
+	 * @param config optional. The timemachine configuration to use for this time-related test case.
+	 * @param fnTest The test function itself will be run with Date object set to match the timemachine config provided.
+	 */
 	const timeTestCase = function (
 		fnIt: jest.It,
 		name: string,
@@ -238,6 +260,10 @@ export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
 
 	const timeTester = {
 		timeZone,
+		/**
+		 * Log a bunch of time related debugging information.
+		 * @param message diagnostic string to log with the time info
+		 */
 		debugInfo(message: string): void {
 			const date = new Date()
 			let options = {}
@@ -289,13 +315,37 @@ export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
 			)
 		},
 
-		replaceShortTimeZoneNames,
-		insertDate(text: string, key: string, date = new Date()): string {
+		/**
+		 * This replaces time zone names in one format like short (GMT) to another format like longer (GM Standard Time) according to an internal or provided time zone map object.
+		 * @param text string containing (GMT) and other time zone names which are OS specific.
+		 * @param tzMap optional object mapping time zone names like (BST) to other names like (British Summer Time) for uniformity of unit tests across operating systems.
+		 * @returns the string with time zone names replaced according to the tzMap.
+		 */
+		replaceShortTimeZoneNames(text: string, tzMap: TimeStrings): string {
+			return replaceShortTimeZoneNames(text, tzMap)
+		},
+
+		/**
+		 * This will insert a time zone and offset specific string from the timeZoneInfo structure into a text string marked by %KEY% so date related unit tests can be independent of time zones where they run.
+		 * @param text string containing a %KEY% marker indicating where to insert a time zone/offset specific string from the timeZoneInfo.
+		 * @param key the specific KEY string to look for within the text param.
+		 * @param date optional Date object to get the time zone offset from.
+		 * @returns the text string with %KEY% value replaced by string from timeZoneInfo for zone and offset supplied.
+		 * @throws an Error if there is no value configured for the time zone, offset and key name provided.
+		 */
+		insertDate(text: string, key: string, date: Date): string {
 			const regex = new RegExp(`%${key}%`, 'g')
 			return replace(text, regex, timeTester.TZ(key, date))
 		},
 
-		insertDates(template: string, date = new Date()): string {
+		/**
+		 * This will insert many time zone and offset specific strings from the timeZoneInfo structure into a text string marked by %KEY% markers so date related unit tests can be independent of time zones where they run.
+		 * @param template string containing multiple %KEY% markers indicating where to insert time zone/offset specific strings from the timeZoneInfo.
+		 * @param date optional Date object to get the time zone offset from.
+		 * @returns the text string with %KEY% values replaced by strings from timeZoneInfo for zone and offset supplied.
+		 * @throws an Error if there are missing values for the time zone, offset and key names provided in the template.
+		 */
+		insertDates(template: string, date: Date): string {
 			const reToken = /%(\w+)%/g
 			const errorTokens: string[] = []
 			let replaced = replace(
@@ -320,7 +370,7 @@ export default function makeTimeTester(timeZoneInfo: TimeZoneInfo): TimeTester {
 				)
 			}
 			// log(`${displayName}.insertDates 1`, replaced);
-			replaced = replaceShortTimeZoneNames(replaced)
+			replaced = replaceShortTimeZoneNames(replaced, tzMap)
 			// log(`${displayName}.insertDates 2`, replaced);
 			return replaced
 		},

@@ -9,7 +9,7 @@
     "preauto": "npm run format && npm run eslint && npm run compile",
     "preauto:one": "npm run format",
     "auto": "npm run coverage && npm run check",
-    "auto:one": "./__scripts__/cover-one.sh src/__tests__/errors.test.ts",
+    "auto:one": "./__scripts__/cover-one.sh src/__tests__/timeTester.test.ts",
     "premodernizr": "modernizr --config modernizr.config.json --dest src/__vendor__/modernizr.js",
     "modernizr": "modernizr --config modernizr.config.json --uglify --dest src/__vendor__/modernizr.min.js",
     "build": "echo Need to configue a bundler/packager to build",

@@ -6,7 +6,7 @@ import makeTimeTester, { TimeZoneInfo, TimeMachineOptions } from './timeTester'
 
 const displayName = 'timeTester.only'
 
-describe(`${displayName} module tests`, function descTimeTesterSuite() {
+describe.skip(`${displayName} module tests`, function descTimeTesterSuite() {
 	const TEST_TIME = 'December 25, 1991 12:12:59 GMT'
 
 	const timeZoneInfo: TimeZoneInfo = {
