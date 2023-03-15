@@ -23,6 +23,7 @@ describe.skip(`${displayName} module tests`, function descTimeTesterSuite() {
 		'it.only() - should pass in WINTER time (covereage)',
 		WINTER,
 		function testWinterTimeOnly1() {
+			timeTest.debugInfo(displayName)
 			const now = Date.now()
 			expect(now).toBe(693663179000)
 		},

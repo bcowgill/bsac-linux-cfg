@@ -91,7 +91,6 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 		'should pass in SUMMER time',
 		SUMMER,
 		function testSummerTime() {
-			timeTest.debugInfo(displayName)
 			const now = Date.now()
 			expect(now).toBe(Number(timeTest.TZ('VALUE')))
 		},
@@ -102,7 +101,6 @@ describe(`${displayName} module tests`, function descTimeTesterSuite() {
 		WINTER,
 		function testWinterTime() {
 			const expected = timeTest.TZ('VALUE_WINTER')
-			timeTest.debugInfo(displayName)
 
 			const now = Date.now()
 			expect(now).toBe(Number(expected))
