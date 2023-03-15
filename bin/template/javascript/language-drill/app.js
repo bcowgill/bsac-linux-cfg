@@ -1,3 +1,7 @@
+const alphabet_url = 'https://www.youtube.com/watch?v=C_dbN9N0pR4'
+const phrase_url = 'https://www.youtube.com/watch?v=nKgveRTPWd8'
+const word_url = 'https://www.youtube.com/watch?v=Iz3h3B5jBz8'
+
 const vowels = 'AEIOU'.split('')
 const consonants = 'BCDFGHJKLMNPQRSTVWXYZ'.split('')
 const alphabet = [...vowels, ...consonants]
@@ -40,6 +44,13 @@ const speed = 'Rapid'
 const drills = {
 	vowels, consonants, alphabet, words, phrases
 }
+const urls = {
+	vowels: alphabet_url,
+	consonants: alphabet_url,
+	alphabet: alphabet_url,
+	words: word_url,
+	phrases: phrase_url,
+}
 
 const rates = {
 	snail: 9,
@@ -51,6 +62,7 @@ const rates = {
 }
 
 const items = drills[drill.toLowerCase()] ?? drills.alphabet
+const url = urls[drill.toLowerCase()] ?? urls.alphabet
 
 const sec = 1000
 const showTime = sec * (rates[speed.toLowerCase()] ?? rates.slow)
@@ -59,11 +71,14 @@ const styled = (items === drills.words || items === drills.phrases) ? 'card smal
 const smaller = 'card smaller2'
 
 const title = document.getElementById('drill-title')
+const link = document.getElementById('link')
 const card = document.getElementById('flash-card')
 
 let cards = []
 
 title.innerText = 'Language Drill - ' + drill + ' - ' + speed
+link.innerText = 'Learn these from video'
+link.href = url
 card.className = 'card smaller'
 card.innerText = 'Get ready...'
 
