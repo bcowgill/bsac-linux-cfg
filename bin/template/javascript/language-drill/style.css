@@ -1,0 +1,9 @@
+.card {
+	width: 100%;
+	height: 100%;
+	font-size: 50vh;
+	text-align: center;
+}
+.smaller {
+	font-size: 25vh;
+}

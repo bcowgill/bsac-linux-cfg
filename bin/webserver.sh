@@ -5,6 +5,42 @@
 
 # WINDEV tool useful on windows development machine
 
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [--help|--man|-?] --slay [port] [docroot]
+
+This will use python to fire up a simple web server to serve content from a local directory.
+
+port    optional. Specify a port number to use for the http server. Defaults to 9999 or the port number specified in \$npm_package_config_port from your package.json
+docroot optional. Specify a directory name to serve web content documents from. Defaults to current directory.
+--slay  Will terminate the webserver specified by the default port or the port privided.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+The webserver will log requests to /tmp/USER/webserver-PORT.log
+
+See also slay.sh
+
+Example:
+
+$cmd 58008 public
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
+
 PORT=$1
 DOCROOT=$2
 HTTP_MOD=SimpleHTTPServer
@@ -15,8 +51,8 @@ if [ ${PYVER:-0} -gt 2 ]; then
 	HTTP_MOD=http.server
 fi
 
-if [ "x$PORT" == "xslay" ]; then
-	PORT=
+if [ "x$PORT" == "x--slay" ]; then
+	PORT=$2
 	DOCROOT=slay
 fi
 
@@ -52,16 +88,20 @@ fi
 
 [ ! -d /tmp/$USER ] && mkdir -p /tmp/$USER
 LOG=/tmp/$USER/webserver-$PORT.log
-pushd $DOCROOT
+pushd $DOCROOT > /dev/null
 [ -f $LOG ] && rm $LOG
-(echo Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
+(echo HTTP server: Serving content from `pwd`; echo on url-port http://localhost:$PORT; echo logging to $LOG) | tee $LOG
 python -m $HTTP_MOD $PORT >> $LOG 2>&1 &
 sleep 2
 pswide.sh | grep python | grep $HTTP_MOD
 if which wget 2> /dev/null; then
-	wget --output-document=/dev/null http://localhost:$PORT/favicon.ico
+	wget --method HEAD --output-document=/dev/null http://localhost:$PORT/favicon.ico
+	wget --method HEAD --output-document=/dev/null http://localhost:$PORT/index.html
 else
-	curl > /dev/null http://localhost:$PORT/favicon.ico
+	echo http://localhost:$PORT/favicon.ico
+	curl --head http://localhost:$PORT/favicon.ico
+	echo http://localhost:$PORT/index.html
+	curl --head http://localhost:$PORT/index.html
 fi
-popd
+popd > /dev/null
 ps -ef | grep -v grep | grep -i $HTTP_MOD
