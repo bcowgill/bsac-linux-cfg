@@ -10,6 +10,7 @@ const words = [
 	'name',
 	'me',
 ]
+const out_of_it = "I'm staying out of it"
 const phrases = [
 	'Let me know',
 	'Let you know',
@@ -20,7 +21,7 @@ const phrases = [
 	"That's interesting",
 	'Not yet',
 	'Take my time',
-	"I'm staying out of it",
+	out_of_it,
 	'Again, please',
 	'Way over my head!',
 	'See you later',
@@ -33,7 +34,7 @@ const phrases = [
 	'Thank you',
 ]
 
-const drill = 'Vowels'
+const drill = 'Phrases'
 const speed = 'Rapid'
 
 const drills = {
@@ -55,6 +56,7 @@ const sec = 1000
 const showTime = sec * (rates[speed.toLowerCase()] ?? rates.slow)
 const hideTime = sec * speed === 'speedy' ? 0 : 1
 const styled = (items === drills.words || items === drills.phrases) ? 'card smaller' : 'card'
+const smaller = 'card smaller2'
 
 const title = document.getElementById('drill-title')
 const card = document.getElementById('flash-card')
@@ -91,6 +93,9 @@ setInterval(function () {
 	}
 	card.innerText = ''
 	card.className = styled
+	if (cards[cards.length - 1].length > out_of_it.length) {
+		card.className = smaller
+	}
 
 	setTimeout(function () {
 		card.innerText = cards[cards.length - 1]
