@@ -16,6 +16,25 @@
 				instructions how to enable JavaScript in your web browser</a>.</p>
 			<p>We look forward to seeing you back here with JavaScript enabled.</p>
 		</noscript>
+		<div id="controls" class="hidden">
+			<label for="drill-selector">Choose drill:</label>
+			<select name="drill-selector" id="drill-selector">
+				<option value="Vowels">Vowels</option>
+				<option value="Consonants">Consonants</option>
+				<option selected value="Alphabet">Alphabet</option>
+				<option value="Words">Words</option>
+				<option value="Phrases">Phrases</option>
+			</select>
+			<label for="speed-selector">Choose speed:</label>
+			<select name="speed-selector" id="speed-selector">
+				<option value="Snail">Snail</option>
+				<option selected value="Slow">Slow</option>
+				<option value="Fast">Fast</option>
+				<option value="Rapid">Rapid</option>
+				<option value="Speedy">Speedy</option>
+				<option value="Devilish">Devilish</option>
+			</select>
+		</div>
 		<div id="flash-card" class="card"></div>
 		<script src="./app.js"></script>
 	</body>

@@ -38,9 +38,6 @@ const phrases = [
 	'Thank you',
 ]
 
-const drill = 'Phrases'
-const speed = 'Rapid'
-
 const drills = {
 	vowels, consonants, alphabet, words, phrases
 }
@@ -61,26 +58,15 @@ const rates = {
 	devilish: 0.5,
 }
 
-const items = drills[drill.toLowerCase()] ?? drills.alphabet
-const url = urls[drill.toLowerCase()] ?? urls.alphabet
-
 const sec = 1000
-const showTime = sec * (rates[speed.toLowerCase()] ?? rates.slow)
-const hideTime = sec * speed === 'speedy' ? 0 : 1
-const styled = (items === drills.words || items === drills.phrases) ? 'card smaller' : 'card'
 const smaller = 'card smaller2'
 
 const title = document.getElementById('drill-title')
 const link = document.getElementById('link')
+const app = document.getElementById('controls')
+const drillSelector = document.getElementById('drill-selector')
+const speedSelector = document.getElementById('speed-selector')
 const card = document.getElementById('flash-card')
-
-let cards = []
-
-title.innerText = 'Language Drill - ' + drill + ' - ' + speed
-link.innerText = 'Learn these from video'
-link.href = url
-card.className = 'card smaller'
-card.innerText = 'Get ready...'
 
 function randomWeight(item) {
 	return {
@@ -102,18 +88,58 @@ function trace(item) {
 	return item
 }
 
-setInterval(function () {
-	if (cards.length <= 0) {
-		cards = items.map(randomWeight).sort(byWeight).map(toItems)
-	}
-	card.innerText = ''
-	card.className = styled
-	if (cards[cards.length - 1].length > out_of_it.length) {
-		card.className = smaller
+
+let timer;
+
+app.className = ''
+
+function startDrill() {
+	if (timer) {
+		clearInterval(timer)
+		timer = void 0
 	}
 
-	setTimeout(function () {
-		card.innerText = cards[cards.length - 1]
-		cards.pop()
-	}, hideTime)
-}, showTime + hideTime)
+	const drill = drillSelector.value ?? 'Phrases'
+	const speed = speedSelector.value ?? 'Rapid'
+
+	//console.log('settings', drill, speed)
+
+	const items = drills[drill.toLowerCase()] ?? drills.alphabet
+	const url = urls[drill.toLowerCase()] ?? urls.alphabet
+
+	const showTime = sec * (rates[speed.toLowerCase()] ?? rates.slow)
+	const hideTime = sec * speed === 'speedy' ? 0 : 1
+	const styled = (items === drills.words || items === drills.phrases) ? 'card smaller' : 'card'
+
+	let cards = []
+
+	title.innerText = 'Language Drill - ' + drill + ' - ' + speed
+	link.innerText = 'Learn these from video'
+	link.href = url
+	card.className = 'card smaller'
+	card.innerText = 'Get ready...'
+
+	timer = setInterval(function () {
+		if (cards.length <= 0) {
+			cards = items.map(randomWeight).sort(byWeight).map(toItems)
+		}
+		card.innerText = ''
+		card.className = styled
+		if (cards[cards.length - 1].length > out_of_it.length) {
+			card.className = smaller
+		}
+
+		const drillNow = drillSelector.value ?? 'Phrases'
+		const speedNow = speedSelector.value ?? 'Rapid'
+		if ( drill !== drillNow || speed !== speedNow) {
+			startDrill()
+		}
+
+		setTimeout(function () {
+			card.innerText = cards[cards.length - 1]
+			cards.pop()
+		}, hideTime)
+	}, showTime + hideTime)
+}
+
+startDrill()
