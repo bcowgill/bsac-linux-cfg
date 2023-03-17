@@ -60,12 +60,14 @@ const rates = {
 
 const sec = 1000
 const smaller = 'card smaller2'
+const smallest = 'card smaller3'
 
 const title = document.getElementById('drill-title')
 const link = document.getElementById('link')
 const app = document.getElementById('controls')
 const drillSelector = document.getElementById('drill-selector')
 const speedSelector = document.getElementById('speed-selector')
+const customList = document.getElementById('phrase-list')
 const card = document.getElementById('flash-card')
 
 function randomWeight(item) {
@@ -81,6 +83,10 @@ function byWeight(less, more) {
 
 function toItems(weighted) {
 	return weighted.item
+}
+
+function stripBlanks(phrase) {
+	return phrase.trim().length > 0
 }
 
 function trace(item) {
@@ -104,12 +110,19 @@ function startDrill() {
 
 	//console.log('settings', drill, speed)
 
+	if (drill === 'Custom') {
+		console.log('custom', customList.value)
+		drills.custom = customList.value.split("\n").filter(stripBlanks)
+		if (drills.custom.length < 1) {
+			drills.custom = void 0
+		}
+	}
 	const items = drills[drill.toLowerCase()] ?? drills.alphabet
 	const url = urls[drill.toLowerCase()] ?? urls.alphabet
 
 	const showTime = sec * (rates[speed.toLowerCase()] ?? rates.slow)
 	const hideTime = sec * speed === 'speedy' ? 0 : 1
-	const styled = (items === drills.words || items === drills.phrases) ? 'card smaller' : 'card'
+	const styled = /^(words|phrases|custom)$/i.test(drill) ? 'card smaller' : 'card'
 
 	let cards = []
 
@@ -125,7 +138,11 @@ function startDrill() {
 		}
 		card.innerText = ''
 		card.className = styled
-		if (cards[cards.length - 1].length > out_of_it.length) {
+		const next = cards[cards.length - 1].length
+		if (next > 2 * out_of_it.length) {
+			card.className = smallest
+		}
+		else if (next > out_of_it.length) {
 			card.className = smaller
 		}
 
