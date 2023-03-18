@@ -5,6 +5,59 @@ const word_url = 'https://www.youtube.com/watch?v=Iz3h3B5jBz8'
 const vowels = 'AEIOU'.split('')
 const consonants = 'BCDFGHJKLMNPQRSTVWXYZ'.split('')
 const alphabet = [...vowels, ...consonants]
+const natural = [
+	'bored',
+	'boring',
+	'delighted',
+	'weird',
+	'strange',
+	'call/phone me',
+	'telephone',
+	'drink?',
+	'eat?',
+	'smoke?',
+	'hi',
+	'goodbye',
+	'baby',
+	'swim',
+	'drive',
+	'car',
+	'book',
+	'can',
+	'aunt',
+	'yes',
+	'no',
+	'not me!',
+	'No that\'s wrong!',
+	'Don\'t know',
+	'happy',
+	'I\'m not happy',
+	'Floor',
+	'Wall',
+	'Door',
+	'Moving car',
+	'Facing you',
+	'Moving away',
+	'Approaching you',
+	'stand',
+	'walk',
+	'jump',
+	'hop',
+	'sit',
+	'fall',
+	'kneel',
+	'watch',
+	'look',
+	'look up',
+	'look down',
+	'stare',
+	'chilly',
+	'cold',
+	'freezing',
+	'gentle breeze',
+	'strong wind',
+	'gale',
+]
 const words = [
 	'hello',
 	'bye',
@@ -39,7 +92,10 @@ const phrases = [
 ]
 
 const drills = {
-	vowels, consonants, alphabet, words, phrases
+	vowels, consonants, alphabet, natural, words, phrases
+}
+const descriptions = {
+	natural: 'BSL for DUMMIES ch2',
 }
 const urls = {
 	vowels: alphabet_url,
@@ -63,6 +119,7 @@ const smaller = 'card smaller2'
 const smallest = 'card smaller3'
 
 const title = document.getElementById('drill-title')
+const desc = document.getElementById('description')
 const link = document.getElementById('link')
 const app = document.getElementById('controls')
 const drillSelector = document.getElementById('drill-selector')
@@ -135,17 +192,26 @@ function startDrill() {
 		}
 	}
 	const items = drills[drill.toLowerCase()] ?? drills.alphabet
-	const url = urls[drill.toLowerCase()] ?? urls.alphabet
+	const url = urls[drill.toLowerCase()]
+	const description = descriptions[drill.toLowerCase()] ?? (url ? 'See video' : '')
 
 	const showTime = sec * (rates[speed.toLowerCase()] ?? rates.slow)
 	const hideTime = sec * speed === 'speedy' ? 0 : 1
-	const styled = /^(words|phrases|custom)$/i.test(drill) ? 'card smaller' : 'card'
+	const styled = /^(vowels|consonants|alphabet)$/i.test(drill) ? 'card' : 'card smaller'
 
 	let cards = []
 
 	title.innerText = 'Language Drill - ' + drill + ' - ' + speed
-	link.innerText = 'Learn these from video'
-	link.href = url
+	if (url) {
+		desc.innerText = ''
+		link.innerText = description
+		link.href = url
+	}
+	else {
+		desc.innerText = description
+		link.innerText = ''
+		link.href = '#'
+	}
 	card.className = 'card smaller'
 	card.innerText = 'Get ready...'
 

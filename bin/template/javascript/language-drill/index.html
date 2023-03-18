@@ -9,7 +9,13 @@
 	</head>
 	<body>
 		<h1 id="drill-title">Language Drill</h1>
-		<p><a target="_blank" id="link"></a></p>
+		<p><span id="description"></span><a target="_blank" id="link"></a> |
+			<a target="_blank" href="https://www.dummies.com/wp-content/uploads/172984.image0.jpg">BSL Alphabet</a> |
+			<a target="_blank" href="https://www.dummies.com/wp-content/uploads/172988.image0.jpg">Numbers</a> |
+			<a target="_blank" href="https://www.dummies.com/wp-content/uploads/172990.image0.jpg">Wh Questions</a> |
+			<a target="_blank" href="https://www.dummies.com/wp-content/uploads/172986.image0.jpg">Essential Expressions</a> |
+			<a target="_blank" href="https://www.dummies.com/article/academics-the-arts/language-language-arts/learning-languages/british-sign-language/british-sign-language-for-dummies-cheat-sheet-209233/">Dummies Link</a>
+		</p>
 		<noscript>
 			<p>For full functionality of this site it is necessary to enable JavaScript.</p>
 			<p>Here are the <a href="https://www.enable-javascript.com/">
@@ -22,6 +28,7 @@
 				<option value="Vowels">Vowels</option>
 				<option value="Consonants">Consonants</option>
 				<option selected value="Alphabet">Alphabet</option>
+				<option value="Natural">Natural Signs</option>
 				<option value="Words">Words</option>
 				<option value="Phrases">Phrases</option>
 				<option value="Custom">Custom</option>
@@ -38,7 +45,7 @@
 		</div>
 		<div id="flash-card" class="card"></div>
 		<div class="double-spaced">
-			<label for="phrase-list">Custom list of words or phrases:</label>
+			<label for="phrase-list">Custom list of words or phrases: <small><small>(saved automatically)</small></small></label>
 			<textarea name="phrase-list" id="phrase-list" class="list" placeholder="Paste your own list of words or phrases, one per line and select Custom for drill."></textarea>
 		</div>
 		<script src="./app.js"></script>
