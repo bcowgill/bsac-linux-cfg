@@ -94,10 +94,27 @@ function trace(item) {
 	return item
 }
 
+function getState() {
+	if ('localStorage' in window) {
+		try {
+			customList.value = localStorage.getItem("customList") ?? ''
+		}
+		catch (exception) {
+		}
+	}
+}
+
+function saveState(content) {
+	if ('localStorage' in window) {
+		try {
+			localStorage.setItem("customList", content)
+		}
+		catch (exception) {
+		}
+	}
+}
 
 let timer;
-
-app.className = ''
 
 function startDrill() {
 	if (timer) {
@@ -107,12 +124,12 @@ function startDrill() {
 
 	const drill = drillSelector.value ?? 'Phrases'
 	const speed = speedSelector.value ?? 'Rapid'
+	const custom = customList.value ?? ''
 
 	//console.log('settings', drill, speed)
 
 	if (drill === 'Custom') {
-		console.log('custom', customList.value)
-		drills.custom = customList.value.split("\n").filter(stripBlanks)
+		drills.custom = custom.split("\n").filter(stripBlanks)
 		if (drills.custom.length < 1) {
 			drills.custom = void 0
 		}
@@ -148,7 +165,9 @@ function startDrill() {
 
 		const drillNow = drillSelector.value ?? 'Phrases'
 		const speedNow = speedSelector.value ?? 'Rapid'
-		if ( drill !== drillNow || speed !== speedNow) {
+		const customNow = customList.value ?? ''
+		if ( drill !== drillNow || speed !== speedNow || custom !== customNow) {
+			saveState(customNow)
 			startDrill()
 		}
 
@@ -159,4 +178,11 @@ function startDrill() {
 	}, showTime + hideTime)
 }
 
-startDrill()
+function main() {
+	// Show initially hidden app section
+	app.className = ''
+	getState()
+	startDrill()
+}
+
+main()
