@@ -26,6 +26,30 @@ fi
 if [ -e "$phone" ]; then
 	echo "$MTP"
 	ls -al "$MTP"
+
+	if ([ ! -z "$RANDOM_RINGS" ] && [ -e "$RANDOM_RINGS" ]); then
+		echo " "
+		echo RANDOM_RINGS is defined:
+		ls -loS $RINGTONE $RANDOM_RINGS/
+	fi
+
+	if ([ ! -z "$PODCASTS_TO" ] && [ -e "$PODCASTS_TO" ]); then
+		echo " "
+		echo PODCASTS_TO is defined:
+		ls -loS $PODCASTS_TO/_NEW $PODCASTS_TO/_REMOVE $PODCASTS_TO
+	fi
+
+	if ([ ! -z "$PRIVACY_SAFE" ] && [ -e "$PRIVACY_SAFE" ]); then
+		echo " "
+		echo PRIVACY_SAFE is defined:
+		ls -loS $PRIVACY_SAFE
+	fi
+
+	if ([ ! -z "$PRIVACY_SAFE_DONE" ] && [ -e "$PRIVACY_SAFE_DONE" ]); then
+		echo " "
+		echo PRIVACY_SAFE_DONE is defined:
+		ls -loS $PRIVACY_SAFE_DONE
+	fi
 else
 	echo `ls "$phone"` use mnt-phone.sh $CONFIG to mount your phone. > /dev/stderr
 	exit 2

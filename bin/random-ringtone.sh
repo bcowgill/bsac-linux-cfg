@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
-# set ringtone randomly on mobile phone directory mounted on MTP
+# copy any new ringtones from disk to phone directory mounted on MTP
+# then set ringtone randomly on mobile phone
 
 CONFIG=${1:-~/.PHONE}
 
@@ -33,13 +34,20 @@ if [ -z "$RANDOM_RINGS" ]; then
 	exit 10
 fi
 
+if [ -z "$RINGTONES_FROM" ]; then
+	echo RINGTONES_FROM has not been configured. You may want to define it in ~/.PHONE file
+fi
+
 #MTP=/data/me/mtp
 #phone=$MTP/Phone
 
-echo "random-ringtones.sh $CONFIG from [$RANDOM_RINGS] to [$RINGTONE]";
+echo "random-ringtones.sh $CONFIG from [$RINGTONES_FROM] => [$RANDOM_RINGS] to [$RINGTONE]";
 
 if [ -e "$phone" ]; then
 	echo "$MTP"
+	if ([ ! -z "$RINGTONES_FROM" ] && [ -e "$RINGTONES_FROM" ]); then
+		cp --update $RINGTONES_FROM/* "$RANDOM_RINGS"
+	fi
 	ringtone=`ls "$RANDOM_RINGS" | choose.pl`
 	if [ -z "$ringtone" ]; then
 		echo NOT OK failed to choose a ringtone, are there any in "$RANDOM_RINGS"
