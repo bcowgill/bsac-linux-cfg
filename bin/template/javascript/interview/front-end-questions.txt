@@ -31,3 +31,28 @@ Refer to javascript sample code
 
 Refer to Food Outlet sample code
 1. How would you change it to load and show all the pages, not just the first one?
+
+
+How can automated tooling be used to improve the accessibility of a React application?
+Hide answer
+There are two main categories of automated tools that can be used to identify accessibility issues:
+Static Analysis Tools
+Linting tools like ESLint can be used with plugins such as eslint-plugin-jsx-a11y to analyse React projects at a component level. Static analysis tools run very quickly, so they bring a good benefit at a low cost.
+Browser Tools
+Browser accessibility tools such as aXe and Google Lighthouse perform automated accessibility at the app level. This can discover more real-world issues, because a browser is used to simulate the way that a user interacts with a website. It is possible for many of these tools to run in a continuous integration environment such as Travis or Jenkins. Since these tools take longer to execute, many developers just run these tools within their local browser on an occasional basis, such as when reaching project milestones.
+
+
+What is the StrictMode component and why would you use it?
+Hide answer
+<StrictMode /> is a component included with React to provide additional visibility of potential issues in components. If the application is running in development mode, any issues are logged to the development console, but these warnings are not shown if the application is running in production mode.
+Developers use <StrictMode /> to find problems such as deprecated lifecycle methods and legacy patterns, to ensure that all React components follow current best practices.
+<StrictMode /> can be applied at any level of an application component hierarchy, which allows it to be adopted incrementally within a codebase.
+
+
+Hide answer
+If a performance issue such as slow rendering is seen within a React app, the first step is to use the Profiler tool provided within the React Developer Tools browser plugin, which is available for Google Chrome and Mozilla Firefox. The Profiler tool allows developers to find components that take a long time to render or are rendering more frequently than necessary.
+One of the most common issues in React applications is when components re-render unnecessarily. There are two tools provided by React that are helpful in these situations:
+•	React.memo(): This prevents unnecessary re-rendering of function components
+•	PureComponent: This prevents unnecessary re-rendering of class components
+Both of these tools rely on a shallow comparison of the props passed into the component—if the props have not changed, then the component will not re-render. While both tools are very useful, the shallow comparison brings with it an additional performance penalty, so both can have a negative performance impact if used incorrectly. By using the React Profiler, performance can be measured before and after using these tools to ensure that performance is actually improved by making a given change.
+
