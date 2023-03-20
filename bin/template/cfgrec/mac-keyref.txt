@@ -1,4 +1,4 @@
-Mac OSX command qu reference
+Mac OSX command quick reference
 
 ~ proper tilde
 ~ mac tilde
