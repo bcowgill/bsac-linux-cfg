@@ -126,6 +126,7 @@ const drillSelector = document.getElementById('drill-selector')
 const speedSelector = document.getElementById('speed-selector')
 const customList = document.getElementById('phrase-list')
 const card = document.getElementById('flash-card')
+const saveMessage = document.getElementById('save-state')
 
 function randomWeight(item) {
 	return {
@@ -151,10 +152,12 @@ function trace(item) {
 	return item
 }
 
+let noSave = true
 function getState() {
 	if ('localStorage' in window) {
 		try {
 			customList.value = localStorage.getItem("customList") ?? ''
+			noSave = false
 		}
 		catch (exception) {
 		}
@@ -167,8 +170,13 @@ function saveState(content) {
 			localStorage.setItem("customList", content)
 		}
 		catch (exception) {
+			noSave = true
 		}
 	}
+}
+
+function updateSaveState(disabled) {
+	saveMessage.innerText = disabled '(cannot save)' : '(saved automatically)'
 }
 
 let timer;
@@ -185,6 +193,7 @@ function startDrill() {
 
 	//console.log('settings', drill, speed)
 
+	updateSaveState(noSave)
 	if (drill === 'Custom') {
 		drills.custom = custom.split("\n").filter(stripBlanks)
 		if (drills.custom.length < 1) {
