@@ -1,6 +1,11 @@
 #!/bin/bash
+# Format USB.  So you can copy a .iso to it.
+# To copy the .iso to the USB device file itself
+# sudo -i
+# pv path/to/image.iso > /dev/sdb
+# or dd if=path/to/image.iso of=/dev/sdb bs=8M status=progress
+# - this wrecked the USB as it ran out of space and the partitions were marked write protected.
 
-CFG=/etc/mtools.conf
 VOL_MAX=12 # plus newline
 
 function usage {
@@ -19,7 +24,7 @@ device  The device name for the USB disk to format and label.
 
 It will ask for a volume name before unmounting and formatting the USB disk.
 
-See also label-usb.sh, mtools
+See also label-usb.sh
 "
 	exit $code
 }
@@ -41,13 +46,6 @@ if [ -z "$DEV" ]; then
 	read DEV
 fi
 
-DRIVE=`grep drive $CFG | sed -re 's/#.+//g' | grep /dev/sdb1 | awk '{ print($2) }'`
-
-if [ -z "$DRIVE" ]; then
-	echo Did not find a USB device listed in $CFG, cannot find drive letter.
-	exit 10
-fi
-
 echo Confirm you want to format $DEV by providing a volume name: [Press Ctrl-C to stop now]
 read VOLUME
 
@@ -59,7 +57,5 @@ fi
 if [ ! -z "$VOLUME" ]; then
 	echo Unmounting $DEV and formatting with label $DRIVE$VOLUME
 	sudo umount $DEV
-	sudo mkfs.vfat $DEV
-	sudo mlabel $DRIVE"$VOLUME"
-	sudo mlabel -s $DRIVE
+	sudo mkfs.vfat -n "$VOLUMS" $DEV
 fi

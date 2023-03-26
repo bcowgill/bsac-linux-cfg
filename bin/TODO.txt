@@ -1,3 +1,6 @@
+USB broken posting to help page.
+usb-broken.txt
+
 Sign language
 /home/me/d/docs/notes/sign-language.txt
 
@@ -9,6 +12,8 @@ libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 3. a better typeOf function:
   -- look at lodash _.isX functions https://lodash.com/docs/#isArrayLike is there a similar type of function?
 4. A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
+
+Torrent downloader apt-get install transmission
 
 rex barks
 calibre &
