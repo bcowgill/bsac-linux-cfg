@@ -12,14 +12,59 @@
 
 # Reference: https://linoxide.com/how-tos/howto-change-volume-label-on-usb-drives-in-linux/
 
-DRIVE=${1:-u:}
-LABEL=$2
+CFG=/etc/mtools.conf
 
-echo $DRIVE
-if [ -z "$2" ]; then
-	mlabel -s $DRIVE
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [--help|--man|-?] device [label]
+
+This will display or label a USB disk that is currently mounted.
+
+device  Can be a device name or drive letter as configured in $CFG for mtools.
+label   If supplied, the USB disk will be labeled with this.  Otherwise the current label will be shown.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+This requires you to have correctly configured the mtools in $CFG you can use 'man 5 mtools' command for details.
+
+See also usb-format.sh, mlabel
+
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
+
+DRIVE=${1:-u:}
+LABEL="$2"
+
+if grep -E "^drive $DRIVE" $CFG > /dev/null; then
+	echo $DRIVE
 else
-	mlabel $DRIVE"$LABEL"
+	WAS="$DRIVE"
+	DRIVE=`grep drive $CFG | sed -re 's/#.+//g' | grep $DRIVE | awk '{ print($2) }'`
+fi
+
+if [ -z "$DRIVE" ]; then
+	echo Did not find a USB device [$WAS] listed in $CFG cannot get drive letter.
+	exit 10
+fi
+
+if [ -z "$LABEL" ]; then
+	sudo mlabel -s $DRIVE
+else
+	sudo mlabel $DRIVE"$LABEL"
 fi
 if [ 1 == $? ]; then
 	echo If permission denied, you may want to try sudo $0 $1 $2
