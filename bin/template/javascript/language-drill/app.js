@@ -176,7 +176,7 @@ function saveState(content) {
 }
 
 function updateSaveState(disabled) {
-	saveMessage.innerText = disabled '(cannot save)' : '(saved automatically)'
+	saveMessage.innerText = disabled ? '(cannot save)' : '(saved automatically)'
 }
 
 let timer;
