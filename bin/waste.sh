@@ -2,6 +2,9 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 # CUSTOM settings you may have to change on a new computer
+
+# requires datestamp.sh
+
 if [ -d ~/workspace ]; then
 	FILE=~/workspace/timeclock.txt
 else

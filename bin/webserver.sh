@@ -5,6 +5,9 @@
 
 # WINDEV tool useful on windows development machine
 
+# requires slay.sh
+# requires pswide.sh
+
 function usage {
 	local code
 	code=$1

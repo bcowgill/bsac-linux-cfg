@@ -10,6 +10,11 @@
 #     . ~/.git-aliases
 # fi
 
+# requires aliases: vdiff
+# requires git-fetch-pull-request.sh
+# requires git-new-branch.sh
+# requires datestamp.sh
+# requires git-rebase.sh
 
 if git config --global --list | grep alias.h > /dev/null; then
 	echo git aliases are already configured. > /dev/null

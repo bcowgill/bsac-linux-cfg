@@ -2,6 +2,8 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 
+# requires vdiff.sh
+
 function usage {
 	if [ ! -z "$1" ]; then
 		echo "Error: $1"

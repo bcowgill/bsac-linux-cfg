@@ -1,5 +1,5 @@
 #!/bin/bash
-# test-one.sh testplanfilenameorportion ["test description..."]
+# cover-one.sh testplanfilenameorportion ["test description..."]
 TESTLOG=_tests.log
 TEST="$1"
 GREP="$2"
@@ -8,15 +8,15 @@ shift
 
 #RUN="TEST_DEBUG=1 npm test"
 RUN="npm test"
-OPTS="--watchAll=false --onlyFailures $*"
+OPTS="--coverage $*"
 
-#TEST_DEBUG=1 jest --config specs/jest.config.json --forceExit --verbose --debug --testRegex $1
+#TEST_DEBUG=1 jest --config specs/jest.config.json --watchAll=false --notify --onlyChanged --detectLeaks --detectOpenHandles --onlyFailures --forceExit --verbose --debug --testRegex $1
 
 if [ -z "$TEST" ]; then
 	echo "
 $(basename $0) filename ["description"] [opts...]
 
-Run only jest tests which match the filename given.
+Run only jest tests which match the filename given and watch for changes updating coverage.
 
 And which match the optional test description.
 

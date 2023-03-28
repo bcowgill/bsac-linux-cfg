@@ -3,6 +3,8 @@
 # slay a process, gently at first but more forcefully if that doesn't work
 # WINDEV tool useful on windows development machine
 
+# requires pswide.sh
+
 WAIT=2
 PID=$1
 if [ -z "$PID" ]; then
