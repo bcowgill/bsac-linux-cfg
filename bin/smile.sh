@@ -7,7 +7,16 @@
 # second paramter png to change file type.
 # prompt countdown or skip, display or skip.
 
+MAC="/System/Applications/Photo Booth.app"
 DIR=~/d/Pics/webcam
+
+if [ -e "$MAC" ]; then
+	DIR="$HOME/Pictures/Photo\ Booth\ Library/Pictures"
+	echo "Your photos will be available in '$DIR'"
+	open "$MAC"
+	exit 0
+fi
+
 FILE=$DIR/webcam-`datestampfn.sh`.jpg
 mkdir -p $DIR
 echo "Smile and look at the camera!"

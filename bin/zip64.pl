@@ -1,5 +1,6 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # Create a self-extracting base64 encoded 'zip' file for sending files with dodgy characters over email.
+# zip64.pl `find tx -type f`
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machine
 
@@ -28,7 +29,9 @@ __DATA__
 #!/usr/bin/env perl
 use strict;
 use warnings;
+use File::Path qw(make_path);
 use MIME::Base64 qw( decode_base64 );
+use autodie qw(open make_path rmdir);
 
 local $/ = undef;
 my $buf = <DATA>;
@@ -46,6 +49,8 @@ sub decode_file
 	my ($filename, $permissions, $base64) = @_;
 	print "decode $filename perms: $permissions\n";
 	my $OUTFILE;
+	make_path($filename);
+	rmdir($filename);
 	open $OUTFILE, '>', $filename;
 	binmode $OUTFILE;
 	chmod oct($permissions) | 0600, $OUTFILE;
