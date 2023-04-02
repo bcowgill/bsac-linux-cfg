@@ -38,6 +38,10 @@ Project Yaron Brook podcasts download
 /home/me/d/Music/_NEW
 yaron-podcast-urls.lst  download from this list
 
+Project Peikoff podcasts download
+/home/me/d/Music/CD-Library/_Spoken/Podcasts/Dr Leonard Peikoff/
+see README.txt
+
 Currently wymlink.sh tool for emulating symbolic links with git commit support
 Currently /home/me/bin/character-samples/quote-samples.pl
 Currently /home/me/bin/character-samples/samples/quote-marks.txt
