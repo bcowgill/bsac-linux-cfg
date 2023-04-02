@@ -47,6 +47,7 @@ if [ -z $1 ]; then
 	else
 		echo If you create a file $GAMELIST it will be the only word list checked.
 	fi
+	echo See also grep-english.sh
 	exit 1
 fi
 

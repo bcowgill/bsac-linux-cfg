@@ -21,7 +21,7 @@ It will ignore initially capitalised words during the search.
 
 It searches the word lists present in $ENGLISH
 
-See also ...
+See also lookup-english.sh
 
 Example:
 
@@ -48,3 +48,11 @@ fi
 
 # Search the english word lists, excluding capitalised names.
 egrep --no-filename $1 $ENGLISH | egrep -v '^[A-Z]' | filter-newlines.pl | sort | uniq
+
+exit $?
+
+# Find all english words which are palindromes with length two or more.
+grep-english.sh '.' | perl -ne 'chomp; $words{$_} = 1; END { foreach my $word (sort(keys(%words))) { $reverse = join("",reverse(split(//, $word))); delete($words{$word}) unless length($word)>1 && $word eq $reverse }; print join("\n",sort(keys(%words)), "") }' > english-palindromes.txt
+
+# Find all english words which when reversed are also english words, but not palindromes themselves.
+grep-english.sh '.' | perl -ne 'chomp; $words{$_} = 1; END { foreach my $word (sort(keys(%words))) { $reverse = join("",reverse(split(//, $word))); $ok = $words{$reverse}; $words{$word} = qq{$word $reverse}; delete($words{$word}) unless length($word) > 1 && $word ne $reverse && $ok }; print join("\n",sort(values(%words)), "") }' > english-reversable-words.txt
