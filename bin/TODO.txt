@@ -1,11 +1,14 @@
 USB broken posting to help page.
 usb-broken.txt
 
-Sign language
-/home/me/d/docs/notes/sign-language.txt
-
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
+
+Creating Christ
+pwcd creating-christ
+
+Sign language
+/home/me/d/docs/notes/sign-language.txt
 
 1. Cuckoo program horse sound should be replaced, not so good.
 2. update npm perljs package latest tools and publish. Then convert to Typescript latest < 5

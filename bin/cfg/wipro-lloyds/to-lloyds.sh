@@ -59,6 +59,9 @@ cp ~/bin/find-bak.sh \
 md5sum.sh tx | tee md5sum.lst
 exit $?
 Sample Linux output with md5sum command...
+119145aa148d9cb14c900370ce7eddcd  tx/c/d/bin/pee.pl
+7e795e8d7b41fa6adf7a32f2dac061d6  tx/c/d/bin/cover-one.sh
+65966141e5aa8dc7efaab4d360ebff04  tx/c/d/bin/calc.sh
 
 Sample Mac output with md5 command...
 MD5 (tx/c/Users/FILEID/my-git-tools.pl.txt) = e89e97204bc24676c32797b2eb01ff24
