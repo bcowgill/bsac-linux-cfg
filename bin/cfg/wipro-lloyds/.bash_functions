@@ -9,3 +9,10 @@ whichever () {
 	alias | grep "alias $cmd="
 	command -V $cmd
 }
+
+git_current_branch ()
+{
+    local ref;
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref=$(git rev-parse --short HEAD 2> /dev/null) || return;
+    echo ${ref#refs/heads/}
+}
