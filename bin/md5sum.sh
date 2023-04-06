@@ -3,14 +3,17 @@
 # md5sum wrapper to handle file names with spaces in them.
 
 # md5sum.sh directory 2>&1 | tee md5sum.lst
+# md5sum.sh directory -newer md5sum.lst      show md5sum for files newer than the last md5sum recording
 # md5sum --check md5sum.lst
+# md5 --check??? md5sum.lst
 
 DIR=${1:-.}
+shift
 MD5=md5sum
 if which md5 > /dev/null 2> /dev/null; then
 	MD5=md5
 fi
-find $DIR -type f \
+find $DIR -type f $* \
 	| sort \
 	| MD5=$MD5 perl -ne 'chomp; system(qq{$ENV{MD5} "$_"})' \
 	| perl -pne 's{\AMD5\s+\((.+)\)\s*=\s*([0-9a-f]+)\s*\z}{$2  $1\n}xmsg'
