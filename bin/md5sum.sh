@@ -16,7 +16,7 @@ fi
 find $DIR -type f $* \
 	| sort \
 	| MD5=$MD5 perl -ne 'chomp; system(qq{$ENV{MD5} "$_"})' \
-	| perl -pne 's{\AMD5\s+\((.+)\)\s*=\s*([0-9a-f]+)\s*\z}{$2  $1\n}xmsg'
+	| perl -pne 's{\AMD5\s+\((.+)\)\s*=\s*([0-9a-f]+)\s*\z}{$2  $1\n}xmsg; s{\s\*}{  }xms'
 exit $?
 Sample Linux output with md5sum command...
 119145aa148d9cb14c900370ce7eddcd  tx/c/d/bin/pee.pl
@@ -28,3 +28,6 @@ MD5 (tx/c/Users/FILEID/my-git-tools.pl.txt) = e89e97204bc24676c32797b2eb01ff24
 MD5 (tx/c/Users/FILEID/.bash_functions) = ee6bb991de53b138af8fb4d35c924dfe
 MD5 (tx/c/Users/FILEID/kdiff3.config) = 04f17f4b4bbcb6253a4f88a3b5172f3e
 MD5 (tx/c/Users/FILEID/bin/rvdiff.sh) = a353b39332938c43bd9d423db25d698c
+
+Sample windows cygwin or git-bash output with md5sum command...
+119145aa148d9cb14c900370ce7eddcd *tx/c/d/bin/pee.pl

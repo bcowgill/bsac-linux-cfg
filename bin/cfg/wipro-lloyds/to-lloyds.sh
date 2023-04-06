@@ -43,6 +43,7 @@ cp ~/bin/find-bak.sh \
 	~/bin/ls-tabs.pl \
 	~/bin/fix-tabs.sh \
 	~/bin/fix-spaces.sh \
+	~/bin/zip64.pl \
 	~/bin/md5sum.sh \
 	~/bin/mad.sh \
 	~/bin/sad.sh \
