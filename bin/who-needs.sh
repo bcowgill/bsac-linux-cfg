@@ -15,8 +15,8 @@ if [ -e yarn.lock ]; then
 	echo " "
 	echo yarn.lock:
 	grep -vE '^\s+(integrity|resolved)' yarn.lock \
-		| grep -E '^(\w|\s+"?'$WHICH')' \
-		| WHICH=$WHICH perl -ne 'if (m[\A\s+$ENV{WHICH}]xms) { print qq{$last$_} } $last = $_;'
+		| grep -E '^("?@?\w|\s+"?'$WHICH')' \
+		| WHICH=$WHICH perl -ne 'if (m[\A\s+"?$ENV{WHICH}]xms) { print qq{$last$_} } $last = $_;'
 fi
 
 if [ -e package-lock.json ]; then
@@ -24,7 +24,7 @@ if [ -e package-lock.json ]; then
 	echo package-lock.json:
 	grep -vE '"(integrity|resolved)"|}' package-lock.json \
 		| INDENT=$INDENT perl -ne 'print if (s[\A\s{$ENV{INDENT}}][]xmsg);' \
-		| grep -E '^("?\w+|\s+"?'$WHICH')' \
+		| grep -E '^("?@?\w+|\s+"?'$WHICH')' \
 		| WHICH=$WHICH perl -ne 'if (m[\A\s+"?$ENV{WHICH}]xms) { print qq{$last$_} } $last = $_;'
 fi
 

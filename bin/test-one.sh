@@ -7,8 +7,11 @@ shift
 shift
 
 #RUN="TEST_DEBUG=1 npm test"
-RUN="npm test"
-OPTS="--watchAll=false $*"
+#RUN="npm test"
+RUN="yarn test"
+#PEE=pee.pl
+PEE=tee
+OPTS="--watchAll=false --collectCoverage=false $*"
 
 #TEST_DEBUG=1 jest --config specs/jest.config.json --notify --onlyChanged --detectLeaks --detectOpenHandles --onlyFailures --forceExit --verbose --debug --testRegex $1
 
@@ -25,8 +28,12 @@ With additional options provided: $OPTS
 	exit 1
 fi
 
+TEST=`echo $TEST | perl -pne 's{\.snap}{}xms; s{/__snapshots__}{}xms; s{\.js}{.test.js}xms unless m{\.test\.js}xms'`
+
+echo TEST=$TEST
+
 if [ ! -z "$GREP" ]; then
-	$RUN -- $OPTS "$TEST" --testNamePattern "$GREP" 2>&1 | pee.pl $TESTLOG
+	$RUN $OPTS "$TEST" --testNamePattern "$GREP" 2>&1 | $PEE $TESTLOG
 else
-	$RUN -- $OPTS "$TEST" 2>&1 | pee.pl $TESTLOG
+	$RUN $OPTS "$TEST" 2>&1 | $PEE $TESTLOG
 fi
