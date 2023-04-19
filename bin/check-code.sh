@@ -4,10 +4,13 @@
 # check-code.sh | grep -vE '⋅|^\s*$' | wc -l
 # perl -i -pne 's{//\s+(MU[S]TDO|TO[D]O)}{// $1}xmsg; s{(MU[S]TDO|TO[D]O)\s+(?!DIP)}{$1(2022-06-29) }xmsg' `ggr -lE '(MU[S]TDO|TO[D]O) '`
 
+#CYP=1
+#ALLZ=1
+
 FAILURE=0
 PCT='\%٪'
-LANGUAGES="src/translations src/partnerConfigs"
-TRANSLATIONS="`ls -1 src/translations/*.json | grep -vE '\bempty.+json'` `find src/partnerConfigs -type f -name '*.json' | grep -vE '__dev__/|infra\.|package\.|theme\.|_(BASE|REMOTE|LOCAL)'`"
+#LANGUAGES="src/translations src/partnerConfigs"
+#TRANSLATIONS="`ls -1 src/translations/*.json | grep -vE '\bempty.+json'` `find src/partnerConfigs -type f -name '*.json' | grep -vE '__dev__/|infra\.|package\.|theme\.|_(BASE|REMOTE|LOCAL)'`"
 #echo TRANSLATIONS=$TRANSLATIONS
 
 function show_problem {
@@ -39,6 +42,7 @@ function show_bad {
 	fi
 }
 
+if [ ! -z "$CYP" ]; then
 #-------------------------------------------
 git grep -E 'findBy(\w+)\([^U]' cypress \
 	| grep -vE '__vendor__|:\s*//|\(UI\.|\(id\w*\)|findByRole\("dialog"\)|findByTestId\(testId\)|findByText\((regex|msg|txt)\w*\)' \
@@ -52,6 +56,8 @@ git grep -E 'findBy.+\.click\(' cypress \
 	> found.lst
 
 show_bad "WARN CYPRESS CLICK BY TEXT" "Should locate items to click with findByTestId."
+
+fi # CYP
 
 #-------------------------------------------
 git grep 'getAttribute' \
@@ -88,6 +94,7 @@ git grep -iE '#[0-9a-f]{3,6}\b|rgba?\(\d+' \
 
 show_bad "COLORS" "Should define colors in partnerConfigs/*/theme.js"
 
+if [ ! -z "$TRANSLATIONS" ]; then
 #-------------------------------------------
 git grep -E 'e2\.\w+\.content(|[04-9]|[0-9][0-9]+)"' $TRANSLATIONS \
 	> found.lst
@@ -144,6 +151,9 @@ git grep -E '(landingPage\.legal\.myDoc\.faq|landingPage\.quickLink\.benefits)"'
 
 show_bad "LINK FAQ1" "Translation should have \`<linkToFaq>\` in it"
 
+fi
+
+if [ ! -z "$LANGUAGES" ]; then
 #-------------------------------------------
 git grep -E '(chooseMessengerPage\.generateActivationCodeModal\.initialStep\.help|chooseMessengerPage\.activationCodeModal\.content\.helpLink|chooseMessengerPage\.activationCodeModal\.validationError)"' $LANGUAGES \
 	| grep -vE 'linkToFaqItemSACH' \
@@ -296,6 +306,9 @@ git grep -E '[^>]\s*Secure Web Chat\s*[^<]' $LANGUAGES \
 
 show_bad "STRONG NEEDED" "Translation should have <strong> around Secure Web Chat."
 
+fi # LANGUAGES
+
+if [ ! -z "$TRANSLATIONS" ]; then
 #-------------------------------------------
 git grep -E 'e2\.home\.footerPanel\.company\.city"' $TRANSLATIONS \
   | grep -vE 'country\.ch' \
@@ -310,6 +323,9 @@ git grep -E 'e2\.home\.footerPanel\.company\.register"' $TRANSLATIONS \
 
 show_bad "COMMERCIAL NEEDED" "Translation should have %footer.commercialRegister% marker within it."
 
+fi # TRANSLATIONS
+
+if [ ! -z "$LANGUAGES" ]; then
 #-------------------------------------------
 # regex does not work for ukraine...
 #| grep -vE '([%٪])global\.commChannels3rdPartyOnly\1' \
@@ -360,12 +376,16 @@ git grep -E 'faq\.usingDoctorChat\.questionToEmma\.content' $LANGUAGES \
 
 show_bad "WARN <NAME>" "Translation should NOT have \`<name>\` in it"
 
+fi # LANGUAGES
+
+if [ ! -z "$ALLZ" ]; then
 #-------------------------------------------
 git grep chunks \
 	| grep -vE '__|(withHtml|WithHtmlLink)\.js' \
 	> found.lst
 
 show_bad "WARN VALUES HTML" "Should not use chunks and common HTML elements like em strong, see hooks/withHtml"
+
 
 #-------------------------------------------
 git grep -E 'import.+FormattedMessage.+react-intl' \
@@ -448,6 +468,8 @@ for file in $F; do
 done
 show_bad "ERROR DESKTOP_MEDIA" "DESKTOP_MEDIA must come after TABLET_MEDIA in styled components"
 
+fi # ALLZ
+
 #-------------------------------------------
 git grep -E '(padding|margin).*:.*\b([1-9]|[0-9]+px)' \
   | grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|Visibility/ShowVisibility' \
@@ -497,12 +519,15 @@ git grep -iE '\b(font-?(family|size|weight)|line-?height|letter-?spacing)\b' \
 
 show_bad "ERROR TYPOGRAPHY" "Should be using components/e2/Typography components instead of specific font CSS."
 
+if [ ! -z "$ALLZ" ]; then
 #-------------------------------------------
 git grep -E 'import.+useTheme.+/useLanguage' src \
   | grep -v 'App/App.js' \
 	> found.lst
 
 show_bad "WARN THEME" "Should import { useTheme } from '@emotion/react' NOT hooks/useLanguage"
+
+fi # ALLZ
 
 #-------------------------------------------
 git grep -E 'props\.theme\.' \
@@ -656,6 +681,7 @@ git grep -E '((\bf(it|describe))|\.only)\(' \
 
 show_bad "ERROR TESTS ONLY" "Should not have any tests marked as .only()."
 
+if [ ! -z "$TRANSLATIONS" ]; then
 #-------------------------------------------
 grep -E '([%٪])(general|dataRep|privacy|service)Email\1' $TRANSLATIONS \
 	> found.lst
@@ -809,6 +835,8 @@ grep -E '[ʼ‘’“”‚‘„“«»]|\\"' $TRANSLATIONS \
 
 show_bad "QUOTES TRANS" "Should not have dodgy quotes/characters in translation files use %ldq% etc"
 
+fi # TRANSLATIONS
+
 #-------------------------------------------
 git grep -iE 'mus+''tdo' \
 	| grep -vE '__vendor__|docs/|check-code|mockNavigateToDoctorChatPage|README' \
@@ -816,6 +844,7 @@ git grep -iE 'mus+''tdo' \
 
 show_bad "WARN MUS""TDO" "Should resolve MUS""TDO items"
 
+if [ ! -z "$ALLZ"]; then
 #-------------------------------------------
 git grep DEV_ src/constants/switches.js \
 	| grep true \
@@ -823,6 +852,8 @@ git grep DEV_ src/constants/switches.js \
 	> found.lst
 
 show_bad "ERROR DEV_ switches should be turned off for releases"
+
+fi # ALLZ
 
 rm found.lst
 exit $FAILURE

@@ -15,13 +15,21 @@ close(DATA);
 print "$unpacker\n__DA" . "TA__\n";
 foreach my $file (@ARGV) {
 	my $perms = sprintf("%04o", 07777 & ((stat($file))[2]));
+	#print STDERR "$file:$perms:\n";
 	print "$file:$perms:\n";
 	open INFILE, '<', $file;
 	binmode INFILE;
+	my $all = '';
 	my $buf;
+	my $bytes = 0;
 	while ( read( INFILE, $buf, 4096 ) ) {
-		print encode_base64($buf);
+		$all .= $buf;
+		$bytes += length($buf);
+		#print STDERR $buf;
 	}
+	my $encoded = encode_base64($all);
+	print $encoded;
+	print STDERR "\nend $file: $bytes bytes @{[length($all)]} chars @{[length($encoded)]} encoded\n";
 	print "\n==/$file==\n";
 	close INFILE;
 }
