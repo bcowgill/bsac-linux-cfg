@@ -4,6 +4,8 @@ usb-broken.txt
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
+Ayn Rand courses notes - Binswanger Concepts and Propositions - Lesson 2 - reviewing notes again.
+
 Creating Christ
 pwcd creating-christ
 

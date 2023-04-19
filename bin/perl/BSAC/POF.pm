@@ -2,7 +2,7 @@ package BSAC::POF;
 # A perl POF - Persistent Object File.  The object provides methods for accessing a data structure and automatically saves the current data structure when the program terminates.
 # Generate a new PERL OBJECT FILE with autosave support from this template with no initial data.
 # perl -pne 's{BSAC::POF}{BSAC::FileTypesFoundState}xmsg' POF.pm > FileTypesFoundState.pm
-# TODO -- save to a tmp file if cannot auto-savet to itself
+# TODO -- save to a tmp file if cannot auto-save to itself
 use strict;
 use warnings;
 use Carp;
