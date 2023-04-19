@@ -26,6 +26,7 @@ mv $U/see.sh $UB
 cp ~/bin/cfg/git-aliases.sh $U
 
 cp ~/bin/find-bak.sh \
+	~/bin/check-code.sh \
 	~/bin/test-one.sh \
 	~/bin/cover-one.sh \
 	~/bin/pee.pl \
