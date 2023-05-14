@@ -1,9 +1,10 @@
 #!/bin/bash
-# Tool to fix javascript code by importing a symbol from a library and making a text replacement
+# Tool to fix javascript code by importing a symbol from a library and making a text replacement.
 # NOTE: does not work well if any files have spaces in their names.
-# Filter them out in getFiles or getFilesE if you have any.
+# Use SPACES var to configure them to be filtered out in getFiles or getFilesE if you have any.
 
 FILE_LIST="$*"
+
 TEST_PLANS='\.test\.js'
 SPACES='DIR WITH SPACES'
 
@@ -51,7 +52,28 @@ function addImportSymbol {
 		my $path = "../" x ($depth - $ENV{MN});
 		if ($. == 1)
 		{
-			$_ = qq{import { $ENV{SM} } from "";\n$_};
+			$_ = qq{import { $ENV{SM} } from "$ENV{IM}";\n$_};
+		}
+	' $file
+}
+
+function addImportDefault {
+	local symbol import minus file
+	symbol="$1"
+	import="$2"
+	minus="$3"
+	file="$4"
+	echo "$file: ADDING import $symbol from \"../$import\";"
+	FN=$file \
+	MN=$minus \
+	SM="$symbol" \
+	IM="$import" \
+	perl -i -pne '
+		my $depth = $ENV{FN} =~ tr[/][/];
+		my $path = "../" x ($depth - $ENV{MN});
+		if ($. == 1)
+		{
+			$_ = qq{import $ENV{SM} from "$ENV{IM}";\n$_};
 		}
 	' $file
 }
@@ -68,6 +90,21 @@ function updateImportSymbol {
 	perl -i -pne '
 		my $depth = $ENV{FN} =~ tr[/][/];
 		$_ =~ s{(import.+\}.+$ENV{IM})}{$1 $ENV{SM},$2}xms;
+	' $file
+}
+
+function updateImportDefault {
+	local symbol import file
+	symbol="$1"
+	import="$2"
+	file="$3"
+	echo "$file: UPDATING import $symbol, { ... } from \"../$import\";"
+	FN=$file \
+	SM="$symbol" \
+	IM="$import" \
+	perl -i -pne '
+		my $depth = $ENV{FN} =~ tr[/][/];
+		$_ =~ s{(import).+$ENV{IM})}{$1 $ENV{SM},$2}xms;
 	' $file
 }
 
@@ -90,6 +127,28 @@ function checkAddImportSymbol {
 	fi
 	rm $file.bak
 }
+
+function checkAddImportDefault {
+	local symbol import minus file
+	symbol="$1"
+	import="$2"
+	minus="$3"
+	file="$4"
+	if [ "0" != `diff $file $file.bak | wc -l` ]; then
+		if [ "0" != `grep -E "import.+\\b$symbol\\b.+$import" $file | wc -l` ]; then
+			echo $file: DONE
+		else
+			if [ "0" != `grep -E "import.+$import" $file | wc -l` ]; then
+				updateImportDefault "$symbol" "$import" "$file"
+			else
+				addImportDefault "$symbol" "$import" "$minus" "$file"
+			fi
+		fi
+	fi
+	rm $file.bak
+}
+
+#===========================================================================
 
 #set -x
 DEPTH=1
