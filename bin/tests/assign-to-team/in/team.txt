@@ -1,0 +1,27 @@
+#!./assign-to-team.pl
+# use hash marker to exclude people who are currently away.
+# indentation optional
+front:
+	peter
+	paul
+	mary
+back:
+	fred
+	wilma
+	betty
+test:
+	george
+	elroy
+	jane
+stories:
+ID-001
+ID-002
+ID-003
+ID-004
+ID-005
+ID-006
+ID-007
+tasks:
+open the door
+shut the window
+evaluate the values

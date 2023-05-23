@@ -127,7 +127,7 @@ sub duration
 	if ($elapsed > 120)
 	{
 		my $seconds = $elapsed % 60;
-		$elapsed = floor($elapsed / 60);
+		$elapsed = int($elapsed / 60);
 		$elapsed = join(' ', (
 			plural($elapsed, 'minute'),
 			plural($seconds, 'second')
@@ -211,7 +211,7 @@ my $HOUR = 60 * 60;
 
 if ($elapsed > $HOUR)
 {
-	my $hours = floor($elapsed / $HOUR);
+	my $hours = int($elapsed / $HOUR);
 	$seconds = ($elapsed - $HOUR * $hours) % $HOUR;
 	$elapsed = plural($hours, 'hour') . ' ' . duration($seconds);
 }
