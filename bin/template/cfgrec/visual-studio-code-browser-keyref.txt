@@ -182,6 +182,7 @@ ext install wayou.vscode-todo-highlight
         { "text": ".then", "color": "black", "backgroundColor": "yellow", "isWholeLine": false },
         { "text": ".catch", "color": "black", "backgroundColor": "yellow", "isWholeLine": false },
         { "text": "return", "color": "black", "backgroundColor": "#346238", "isWholeLine": false },
+        { "text": "break", "color": "black", "backgroundColor": "#346238", "isWholeLine": false },
         { "text": "throw", "color": "black", "backgroundColor": "#346238", "isWholeLine": false },
         { "text": "=>", "color": "black", "backgroundColor": "#346238", "isWholeLine": false },
         { "text": "<>", "color": "black", "backgroundColor": "#346238", "isWholeLine": false },
