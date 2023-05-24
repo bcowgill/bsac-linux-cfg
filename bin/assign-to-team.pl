@@ -55,13 +55,15 @@ our $VERSION = 0.1;
 our $DEBUG = 0;
 our $SKIP = 0;
 
-my $PAD = 3;
-
+my $IN = "   ";
+my $NLIN = "\n$IN";
 my $reEnd = qr{\A\s*(end|stop|quit|go)\s*:\s*\z}xmsi;
 my $reTaskList = qr{\A\s*(tasks?|stor(y|ies))\s*:\s*\z}xmsi;
 my $reRoleList = qr{\A\s*([^:]+)\s*:\s*\z}xmsi;
 my $reMember = qr{\A\s*(.+)\s*\z}xmsi;
 my $reBlank = qr{\A\s*(\#|\z)}xms;
+my $reTrimSpace = qr{\s\s+}xms;
+my $reStripRandom = qr{\A\d+:}xms;
 
 my %Tasks = ();
 my %Roles = ();
@@ -138,7 +140,7 @@ sub parse
 		elsif ($line =~ $reMember)
 		{
 			my $member = ucfirst($1);
-			$member =~ s{\s\s+}{ }xmsg;
+			$member =~ s{$reTrimSpace}{ }xmsg;
 			$member = int(rand(10)) . ":$member";
 			if ($context eq 'task')
 			{
@@ -196,13 +198,18 @@ sub make_teams
 		if (scalar(@Team))
 		{
 			debug("SORTING Team" . Dumper(\@Team), 4);
-			my @Sorted = map { $ARG =~ s{\A\d+:}{}xms; $ARG } sort(@Team);
+			my @Sorted = order_items(sort(@Team));
 			debug("SORTING Sorted" . Dumper(\@Sorted), 4);
 			push(@Teams, { number => $team++, members => \@Sorted, assigned => {} });
 		}
 	} while ($found == scalar(@Roles));
 	debug("Teams: ". Dumper(\@Teams), 3);
 } # make_teams()
+
+sub order_items
+{
+	return map { $ARG =~ s{$reStripRandom}{}xms; $ARG } @ARG;
+}
 
 sub pick_one
 {
@@ -246,23 +253,15 @@ sub print_report
 	{
 		say("\nTeam$team->{number}:\n");
 		my @Jobs = keys(%{$team->{assigned}});
-		say("   " . join("\n   ", @{$team->{members}}) . "\n");
+		say($IN . join("$NLIN", @{$team->{members}}) . "\n");
 		foreach my $type (@Jobs)
 		{
-			say("\n   $type:\n");
-			my @Items = map { $ARG =~ s{\A\d+:}{}xms; $ARG } @{$team->{assigned}{$type}};
-			say("      " . join("\n      ", @Items) . "\n");
+			say("$NLIN$type:\n");
+			my @Items = order_items(@{$team->{assigned}{$type}});
+			say("$IN$IN" . join("$NLIN$IN", @Items) . "\n");
 		}
 	}
 }
-
-# pad number with leading zeros
-sub pad
-{
-	my ($number, $width) = @ARG;
-	my $padded = ('0' x ($width - length($number))) . $number;
-	return $padded;
-} # pad()
 
 # make tabs 3 spaces
 sub tab
