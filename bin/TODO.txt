@@ -12,11 +12,15 @@ pwcd creating-christ
 Sign language
 /home/me/d/docs/notes/sign-language.txt
 
+Typescript JSON stringify improvement front end logger and time testing library
+bin/template/typescript/ts4tooling
+
 1. Cuckoo program horse sound should be replaced, not so good.
 2. update npm perljs package latest tools and publish. Then convert to Typescript latest < 5
 3. a better typeOf function:
   -- look at lodash _.isX functions https://lodash.com/docs/#isArrayLike is there a similar type of function?
 4. A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
+bin/template/typescript/ts4tooling
 
 Torrent downloader apt-get install transmission
 
