@@ -1,0 +1,53 @@
+Some tips for writing maintainable React code:
+
+Components
+
+For mount/unmount useEffects give names to the functions so it is obvious when each one is used.
+
+useEffect(function whenWeMount() {
+	return function whenWeUnmount() {
+	}
+});
+
+Jest Testing
+
+define displayName in test plan and use boilerplate template:
+
+describe(`<${displayName}/> component` ...)
+
+Make sure the string description of your tests matches what you are testing and is unique within test plan.
+
+Prefer to use expect().toBe() instead of .toEqual() except except when testing deep structures that are not the same object.
+
+Don't use expect(getByXxx()).toBeInTheDocument()  use queryByXxx or leave off the expect .toBe...
+getByXxx() will immediately throw when it fails making the rest just eye noise when reading the line.
+
+When testing libraries just import * as TestMe from "./whatever" No need to maintain an an import list as you add functions.
+
+Import your test component as import Component from "./Whatever"  All your tests will render(<Component />) and so you can copy test cases between plans when developing similar components.
+
+Create a renderForTest(props) function which provides defaults for all the .isRequired props of the component and then just add in optional props in your test cases to keep the tests clear and readable.
+
+The proper way to test user interactions to avoid the act() warning is:
+
+render the component.
+
+do a user action (fireEvent/userEvent etc)
+
+await waitFor(() => getByXxx())  // wait for something new to appear based on the user event
+
+expect(asFragment()).toMatchSnapshot()  // make additional tests or take snapshot
+
+and/or do user action
+
+await waitFor(() => expect(queryByXxx()).not.toBeInTheDocument()  // wait for something to be removed based on the user event
+
+and/or do user action
+
+await waitFor(() => expect(handlerSpy()).toHaveBeenCalledTimes(1)  // wait for one of the component's event properties to be invoked
+expect(handlerSpy).toHaveBeenCalledWith(...)
+
+When doing snapshot testing scan the generated .snap file for 'undefined' to find component props that are actually .isRequired but not defined as such in your propTypes.  Also check for 'Function' to catch accidental cases of expect(asFragment)... instead of expect(asFragment())...
+
+
+When testing spies better to call toHaveBeenCalledTimes(N) with an exact count to detect unnecessay renders causing multiple firings.
