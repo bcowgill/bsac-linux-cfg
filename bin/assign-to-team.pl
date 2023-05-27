@@ -75,9 +75,9 @@ my $jobs = 0;
 our $TESTING = 0;
 our $TEST_CASES = 10;
 # prove command sets HARNESS_ACTIVE in ENV
-unless ($ENV{NO_UNIT_TESTS}) {
-	tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
-}
+#unless ($ENV{NO_UNIT_TESTS}) {
+#	tests() if ($ENV{HARNESS_ACTIVE} || scalar(@ARGV) && $ARGV[0] eq '--test');
+#}
 
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
@@ -110,6 +110,7 @@ sub main
 	if ($EVAL_ERROR)
 	{
 		warn($EVAL_ERROR);
+		exit 1;
 	}
 } # main()
 
@@ -200,9 +201,17 @@ sub make_teams
 			debug("SORTING Team" . Dumper(\@Team), 4);
 			my @Sorted = order_items(sort(@Team));
 			debug("SORTING Sorted" . Dumper(\@Sorted), 4);
-			push(@Teams, { number => $team++, members => \@Sorted, assigned => {} });
+			if ($found == scalar(@Roles))
+			{
+				push(@Teams, { number => $team++, members => \@Sorted, assigned => {} });
+			}
+			else
+			{
+				my $to_team = ($team++ - 1) % scalar(@Teams);
+				push(@{$Teams[$to_team]{members}}, @Sorted);
+			}
 		}
-	} while ($found == scalar(@Roles));
+	} while ($found);
 	debug("Teams: ". Dumper(\@Teams), 3);
 } # make_teams()
 

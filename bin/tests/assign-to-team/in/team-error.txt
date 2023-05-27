@@ -8,13 +8,13 @@ back:
 	fred
 	wilma
 	betty
-	dino
 test:
 	george
 	elroy
 	jane
-	judy
-	rosie
+
+end:
+
 stories:
 ID-001
 ID-002
@@ -23,3 +23,7 @@ ID-004
 ID-005
 ID-006
 ID-007
+tasks:
+open the door
+shut the window
+evaluate the values

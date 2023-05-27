@@ -1,0 +1,32 @@
+specify 'end:' to end the input.
+
+Team1:
+   NAME (ROLE)
+   NAME (ROLE)
+   NAME (ROLE)
+   NAME (ROLE)
+   NAME (ROLE)
+
+   Stories:
+      ID-001
+      ID-004
+      ID-007
+
+Team2:
+   NAME (ROLE)
+   NAME (ROLE)
+   NAME (ROLE)
+   NAME (ROLE)
+
+   Stories:
+      ID-002
+      ID-005
+
+Team3:
+   NAME (ROLE)
+   NAME (ROLE)
+   NAME (ROLE)
+
+   Stories:
+      ID-003
+      ID-006

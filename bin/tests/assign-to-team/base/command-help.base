@@ -1,0 +1,26 @@
+usage: assign-to-team.pl [--help|--man|-?] filename...
+
+This will divide up story or task id's or lists among cross-functional teams created on an ad hoc basis.
+
+filename    files to process instead of standard input.
+--help      shows help for this program.
+--man       shows help for this program.
+-?          shows help for this program.
+
+The files processed should define the roles and people available and the list of stories or tasks to divide up.
+
+The format is quite simple.  A hash mark '#' comments out a line so it will be ignored.  For example if a given person is currently away.
+
+A line that ends with a colon ':' defines a role type or begins a list of tasks to divide up.
+
+Task lines are specified as task: tasks: story: or stories:
+
+A line with end: stop: quit: or go: indicates that there is no more. The tasks will be divided up at this point.
+
+Other lines will be added to the current context, either a role list or a task list.
+
+Example:
+
+Use existing team.txt file to divide up the tasks listed in tasks.txt
+
+assign-to-team.pl team.txt tasks.txt
