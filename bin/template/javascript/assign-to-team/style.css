@@ -1,0 +1,12 @@
+.hidden {
+	display: none;
+	visibiliy: hidden;
+}
+.list {
+	width: 95vw;
+	height: 95vh;
+	opacity: 0.2;
+}
+.list:focus,.list:focus-within,.list:focus-visible {
+	opacity: 1;
+}

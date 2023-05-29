@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Assign Tasks to Ad Hoc Teams</title>
+	<link href="./style.css" rel="stylesheet">
+	</head>
+	<body>
+		<h1 id="drill-title">Assign Tasks to Ad Hoc Teams</h1>
+		<noscript>
+			<p>For full functionality of this site it is necessary to enable JavaScript.</p>
+			<p>Here are the <a href="https://www.enable-javascript.com/">
+				instructions how to enable JavaScript in your web browser</a>.</p>
+			<p>We look forward to seeing you back here with JavaScript enabled.</p>
+		</noscript>
+		<div id="controls" class="hidden">
+		</div>
+		<div id="team-assignments" class="teams"></div>
+		<div class="list">
+			<label for="task-list">List of Story or Task ID's or descriptions:</label>
+			<textarea name="task-list" id="task-list" class="list" placeholder="Paste your list of tasks or stories one per line with headings of task:, tasks:, story: or  stories: to separate types."></textarea>
+			<label for="role-list">List of roles and people to make up teams: <small><small id="save-state">(saved automatically)</small></small></label>
+			<textarea name="role-list" id="phrase-list" class="list" placeholder="Paste your list of roles and people of each role type. Roles are indicated like developer: tester:, etc and people are just listed after their role, one per line."></textarea>
+		</div>
+		<script src="./app.js"></script>
+	</body>
+</html>

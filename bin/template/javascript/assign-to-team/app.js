@@ -3,7 +3,7 @@
 // nvm use v17.9.1
 
 const VERSION = 0.1;
-const DEBUG = (process && process.env && process.env.DEBUG) || 0;
+const DEBUG = (typeof process !== 'undefined' && process.env && process.env.DEBUG) || 0;
 
 const IN = '   ';
 const NLIN = `\n${IN}`;
@@ -24,6 +24,7 @@ const Teams = [];
 let context;
 let group;
 let jobs = 0;
+let refreshed = false;
 
 const teamInput = `
 # Example format for textarea parsed:
@@ -68,7 +69,7 @@ function main() {
 
 function fatal(error) {
 	warn(error);
-	process.exit(1);
+	alert(error);
 }
 
 function parse(line) {
@@ -81,16 +82,13 @@ function parse(line) {
 			context = 'task';
 			group   = ucfirst(params[1]);
 			++jobs;
-			debug(`begin ${context}/${group}` // reTaskList
-			)
+			debug(`begin ${context}/${group}`)
 		} else if (params = reMatchParams(line, reEnd)) {
-			report( // reEnd
-			);
+			report();
 		} else if (params = reMatchParams(line, reRoleList)) {
 			context = 'role';
 			group   = ucfirst(params[1]);
-			debug(`begin ${context}/${group}` // reRoleList
-			)
+			debug(`begin ${context}/${group}`);
 		} else if (params = reMatchParams(line, reMember)) {
 			let member = ucfirst(params[1]);
 			member = member.replace(new RegExp(reTrimSpace, 'g'), ' ');
@@ -100,8 +98,7 @@ function parse(line) {
 			} else {
 				pushKeyedItem(Roles, group, member);
 			}
-			debug(`..add ${member} to ${context}/${group}` // reMember
-			);
+			debug(`..add ${member} to ${context}/${group}`);
 		} else {
 			debug(`...${line}`);
 		}
@@ -109,10 +106,13 @@ function parse(line) {
 } // parse()
 
 function report() {
+  if (!refreshed) {
 	make_teams();
 	assign_tasks();
 	print_report();
-	process.exit(0);
+  writeHtml();
+refreshed = true;
+}
 }
 
 function make_teams() {
@@ -201,14 +201,29 @@ function assign_tasks() {
 
 function print_report() {
 	for (const team of Teams) {
+
 		say(`\nTeam${team.number}:\n`);
+        html(`<h1>Team${team.number}:</h1>`);
+
 		const Jobs = Object.keys(team.assigned);
+
 		say(`${IN}${team.members.join(NLIN)}\n`);
+        html(`<ul>`);
+		html(`${team.members.map((name) => `<li>${name}</li>`).join("")}\n`);
+        html(`</ul>`);
+
 		for (const type of Jobs) {
 			say(`${NLIN}${type}:\n`);
+            html(`<h2>${type}:</h2>`)
+
 			const Items = order_items(team.assigned[type]);
+
 			say(`${IN}${IN}${Items.join(NLININ)}\n`);
+            html(`<ul>`);
+		    html(`${Items.map((name) => `<li>${name}</li>`).join("")}`);
+            html(`</ul>`);
 		}
+
 	}
 } // print_report()
 
@@ -266,6 +281,24 @@ function warn(message) {
 function say(message) {
 	console.log(chomp(message));
 	return message;
+}
+
+let HTML = '';
+function html(raw) {
+  if (raw) {
+    HTML += raw;
+  }
+  return HTML;
+}
+
+function writeHtml() {
+  debug(`HTML: ${HTML}`);
+  const output = document.getElementById('team-assignments');
+  if (output) {
+    output.innerHTML = HTML;
+  } else {
+    fatal("Cannot write buffered HTML to page.")
+  }
 }
 
 // perl auto-vivifies, JS does not
