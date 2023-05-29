@@ -46,7 +46,7 @@ ${cmd} team.txt tasks.txt
 } // usage()
 
 const VERSION = 0.1;
-const DEBUG = 2;
+const DEBUG = 5;
 
 const IN = '   ';
 const NLIN = "\n${IN}";
@@ -138,17 +138,12 @@ function parse(line) {
 } // parse()
 
 function report() {
-	debug(`Roles: ${Dumper(Roles)}`, 1);
-	debug(`Tasks: ${Dumper(Tasks)}`, 1);
-
 	make_teams();
-	debug(`Teams: ${Dumper(Teams)}`, 1);
 	assign_tasks();
 	print_report();
 	process.exit(0);
 }
 
-// HEREIAM
 function make_teams()
 {
 	const RoleNames = Object.keys(Roles);
@@ -172,28 +167,32 @@ function make_teams()
 			found += got;
 			if (got)
 			{
-				HEREIAM   splice(@{$Roles{$role_type}}, $pick, 1);
-				debug("$role_type: " . Dumper($Roles{$role_type}), 3);
-				push(@Team, $named);
+				Roles[role_type].splice(pick, 1);
+				debug(`${role_type}: ${Dumper(Roles[role_type])}`, 3);
+				Team.push(named);
 			}
 		}
-		if (scalar(@Team))
+		if (Team.length)
 		{
-			debug("SORTING Team" . Dumper(\@Team), 4);
-			my @Sorted = order_items(sort(@Team));
-			debug("SORTING Sorted" . Dumper(\@Sorted), 4);
-			if ($found == scalar(@RoleNames))
+			debug(`SORTING Team ${Dumper(Team)}`, 4);
+			const Sorted = order_items(Team.sort());
+			debug(`SORTING Sorted ${Dumper(Sorted)}`, 4);
+			if (found === RoleNames.length)
 			{
-				push(@Teams, { number => $team++, members => \@Sorted, assigned => {} });
+				Teams.push({
+					number: team++,
+					members: Sorted,
+					assigned: {},
+				});
 			}
 			else
 			{
-				my $to_team = ($team++ - 1) % scalar(@Teams);
-				push(@{$Teams[$to_team]{members}}, @Sorted);
+				const to_team = (team++ - 1) % Teams.length;
+				Teams[to_team].members.push(...Sorted);
 			}
 		}
-	} while ($found);
-	debug("Teams: ". Dumper(\@Teams), 3);
+	} while (found);
+	debug(`Teams: ${Dumper(Teams)}`, 3);
 } // make_teams()
 
 function order_items(List)
@@ -210,14 +209,15 @@ function pick_one(type, List)
 	let named = '';
 	if (items)
 	{
-		pick = Math.floor(Math.randon(items));
+		pick = Math.floor(Math.random(items));
 		named = `${List[pick]} (${type})`;
 		got = 1;
 	}
-	debug(`picked ${got}, ${pick}, ${named]`, 4);
+	debug(`picked ${got}, ${pick}, ${named}`, 4);
 	return [got, pick, named];
 } // pick_one()
 
+// HEREIAM
 
 function assign_tasks() {
 	debug("assign_tasks");

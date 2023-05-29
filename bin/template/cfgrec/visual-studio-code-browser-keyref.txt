@@ -172,6 +172,7 @@ ext install wayou.vscode-todo-highlight
         { "text": "console.", "color": "black", "backgroundColor": "rebeccapurple", "isWholeLine": false },
         { "text": "async ", "color": "black", "backgroundColor": "cyan", "isWholeLine": false },
         { "text": "await ", "color": "black", "backgroundColor": "cyan", "isWholeLine": false },
+        { "text": "function*", "color": "black", "backgroundColor": "cyan", "isWholeLine": false },
         { "text": "yield ", "color": "black", "backgroundColor": "cyan", "isWholeLine": false },
         { "text": "@param", "color": "black", "backgroundColor": "cyan", "isWholeLine": false },
         { "text": "@returns", "color": "black", "backgroundColor": "cyan", "isWholeLine": false },
