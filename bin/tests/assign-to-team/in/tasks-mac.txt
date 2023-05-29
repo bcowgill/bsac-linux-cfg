@@ -1,0 +1,1 @@
+tasks:open the doorshut the windowevaluate the valuestask:	skip to the loo	jump the moon	run away with the spoon
