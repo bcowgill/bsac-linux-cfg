@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // nvm use v17.9.1 assign-to-team.js tests/assign-to-team/in/team.txt
+// TODO: extract the framework out into a jsscript-lite.js template like perl-lite.js
 
 const util = require('util');
 const path = require('path');
@@ -145,16 +146,15 @@ function report() {
 	process.exit(0);
 }
 
-function make_teams()
-{
+function make_teams() {
 	const RoleNames = Object.keys(Roles);
-	if (!jobs)
-	{
-		failure("You must specify one or more task: type lines to define what needs to be done by the team.");
+	if (!jobs) {
+		failure("You must specify one or more task: type lines to define what needs to be done by" +
+				" the team.");
 	}
-	if (RoleNames.length < 1)
-	{
-		failure("You must specify one or more role: type lines to define the role types on the team.");
+	if (RoleNames.length < 1) {
+		failure("You must specify one or more role: type lines to define the role types on the te" +
+				"am.");
 	}
 	debug(`Roles: ${Dumper(RoleNames)}`, 3);
 	let team = 1;
@@ -162,73 +162,67 @@ function make_teams()
 	do {
 		found = false;
 		const Team = [];
-		for (const role_type of RoleNames)
-		{
-			const [got, pick, named] = pick_one(role_type, Roles[role_type]);
+		for (const role_type of RoleNames) {
+			const [got,
+				pick,
+				named] = pick_one(role_type, Roles[role_type]);
 			found += got;
-			if (got)
-			{
+			if (got) {
 				Roles[role_type].splice(pick, 1);
 				debug(`${role_type}: ${Dumper(Roles[role_type])}`, 3);
 				Team.push(named);
 			}
 		}
-		if (Team.length)
-		{
+		if (Team.length) {
 			debug(`SORTING Team ${Dumper(Team)}`, 4);
 			const Sorted = order_items(Team.sort());
 			debug(`SORTING Sorted ${Dumper(Sorted)}`, 4);
-			if (found === RoleNames.length)
-			{
+			if (found === RoleNames.length) {
 				Teams.push({
-					number: team++,
-					members: Sorted,
 					assigned: {},
+					members : Sorted,
+					number  : team++
 				});
-			}
-			else
-			{
+			} else {
 				const to_team = (team++ - 1) % Teams.length;
-				Teams[to_team].members.push(...Sorted);
+				Teams[to_team]
+					.members
+					.push(...Sorted);
 			}
 		}
 	} while (found);
 	debug(`Teams: ${Dumper(Teams)}`, 3);
 } // make_teams()
 
-function order_items(List)
-{
-	return List.map((item) => { return item.replace(reStripRandom, ''); });
+function order_items(List) {
+	return List.map((item) => {
+		return item.replace(reStripRandom, '');
+	});
 }
 
-function pick_one(type, List)
-{
+function pick_one(type, List) {
 	const items = List.length;
 	debug(`pick $type ${Dumper(List)}`, 4);
 	let got = 0;
 	let pick = '';
 	let named = '';
-	if (items)
-	{
-		pick = Math.floor(rand(items));
+	if (items) {
+		pick  = Math.floor(rand(items));
 		named = `${List[pick]} (${type})`;
-		got = 1;
+		got   = 1;
 	}
 	debug(`picked ${got}, ${pick}, ${named}`, 4);
 	return [got, pick, named];
 } // pick_one()
 
-function assign_tasks()
-{
+function assign_tasks() {
 	debug(`Tasks: ${Dumper(Tasks)}`, 3);
 	const teams = Teams.length;
 	Jobs = Object.keys(Tasks);
 	let number = 0;
-	for (const type of Jobs)
-	{
+	for (const type of Jobs) {
 		const Items = Tasks[type];
-		for (const todo of Items)
-		{
+		for (const todo of Items) {
 			const pick = number++ % teams;
 			pushKeyedItem(Teams[pick].assigned, type, todo);
 		}
@@ -237,13 +231,11 @@ function assign_tasks()
 } // assign_tasks()
 
 function print_report() {
-	for (const team of Teams)
-	{
+	for (const team of Teams) {
 		say(`\nTeam${team.number}:\n`);
 		const Jobs = Object.keys(team.assigned);
 		say(`${IN}${team.members.join(NLIN)}\n`);
-		for (const type of Jobs)
-		{
+		for (const type of Jobs) {
 			say(`${NLIN}${type}:\n`);
 			const Items = order_items(team.assigned[type]);
 			say(`${IN}${IN}${Items.join(NLININ)}\n`);
@@ -429,50 +421,60 @@ function reMatchParams(string, regex) {
 const inspectOptions = {
 	colors    : true,
 	compact   : false,
-	showHidden: false, // true to show non-enumerable
-	sorted    : true,
 	depth     : Infinity,
+	showHidden: false, // true to show non-enumerable
+	sorted    : true
 };
 function Dumper(thing) {
 	return util.inspect(thing, inspectOptions);
 }
 
 // Pseudo Random Number Generator (not for crypto)
-// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator
+// -in-javascript
 let rand = Math.random;
 
 // Generate seed for PRNG
 function _cyrb128(str) {
-    let h1 = 1779033703, h2 = 3144134277,
-        h3 = 1013904242, h4 = 2773480762;
-    for (let i = 0, k; i < str.length; i++) {
-        k = str.charCodeAt(i);
-        h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
-        h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
-        h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
-        h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
-    }
-    h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
-    h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
-    h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
-    h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
-    return [(h1^h2^h3^h4)>>>0, (h2^h1)>>>0, (h3^h1)>>>0, (h4^h1)>>>0];
+	let h1 = 1779033703,
+		h2 = 3144134277,
+		h3 = 1013904242,
+		h4 = 2773480762;
+	for (let i = 0, k; i < str.length; i++) {
+		k  = str.charCodeAt(i);
+		h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+		h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+		h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+		h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+	}
+	h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+	h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+	h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+	h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+	return [
+		(h1 ^ h2 ^ h3 ^ h4) >>> 0,
+		(h2 ^ h1) >>> 0,
+		(h3 ^ h1) >>> 0,
+		(h4 ^ h1) >>> 0
+	];
 } // _cyrb128()
 
-// Simple Fast Counter PRNG
-// http://pracrand.sourceforge.net/
+// Simple Fast Counter PRNG http://pracrand.sourceforge.net/
 function _sfc32(a, b, c, d) {
-    return function() {
-      a >>>= 0; b >>>= 0; c >>>= 0; d >>>= 0;
-      var t = (a + b) | 0;
-      a = b ^ b >>> 9;
-      b = c + (c << 3) | 0;
-      c = (c << 21 | c >>> 11);
-      d = d + 1 | 0;
-      t = t + d | 0;
-      c = c + t | 0;
-      return (t >>> 0) / 4294967296;
-    }
+	return function () {
+		a >>>= 0;
+		b >>>= 0;
+		c >>>= 0;
+		d >>>= 0;
+		var t = (a + b) | 0;
+		a = b ^ b >>> 9;
+		b = c + (c << 3) | 0;
+		c = (c << 21 | c >>> 11);
+		d = d + 1 | 0;
+		t = t + d | 0;
+		c = c + t | 0;
+		return (t >>> 0) / 4294967296;
+	}
 } // _sfc32()
 
 function _initRand() {
@@ -480,8 +482,7 @@ function _initRand() {
 	debug(`PRNG seed: ${Dumper(seed)}`);
 	// Four 32-bit component hashes provide the seed for sfc32.
 	rand0 = _sfc32(seed[0], seed[1], seed[2], seed[3]);
-	for (let count = 16; count; --count)
-	{
+	for (let count = 16; count; --count) {
 		rand0()
 	}
 	rand = function (range) {
@@ -494,19 +495,12 @@ function _initRand() {
 _initRand();
 main();
 
-//const cmdTyped = process.env._; // from bash
-//const cwd = process.env.PWD;
-//const cmdPath = process.argv[1];
-
-// both full expanded path name to this script.
-//console.log('cmdPath', cmdPath);
-//console.log('ARGV', ARGV);
-
-// what the user typed on the command line kind of ./assign-to-team.js =>
-// ./assign-to-team.js node ./assign-to-team.js  =>
-// /home/me/.nvm/versions/node/v6.11.4/bin/node Windows??
-//console.log('cmdTyped', cmdTyped);
-//console.log('cwd', cwd);
+// const cmdTyped = process.env._; // from bash const cwd = process.env.PWD;
+// const cmdPath = process.argv[1]; both full expanded path name to this script.
+// console.log('cmdPath', cmdPath); console.log('ARGV', ARGV); what the user
+// typed on the command line kind of ./assign-to-team.js => ./assign-to-team.js
+// node ./assign-to-team.js  => /home/me/.nvm/versions/node/v6.11.4/bin/node
+// Windows?? console.log('cmdTyped', cmdTyped); console.log('cwd', cwd);
 
 `
 /*
