@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 // nvm use v17.9.1 assign-to-team.js tests/assign-to-team/in/team.txt
+// template/javascript/assign-to-team/index.html  for Browser based version.
 // TODO: extract the framework out into a jsscript-lite.js template like perl-lite.js
 
 const util = require('util');
