@@ -432,6 +432,7 @@ function Dumper(thing) {
 // Pseudo Random Number Generator (not for crypto)
 // https://stackoverflow.com/questions/521295/seeding-the-random-number-generator
 // -in-javascript
+// Also java-random package if your random sequence should be compatible with a java random sequence
 let rand = Math.random;
 
 // Generate seed for PRNG
