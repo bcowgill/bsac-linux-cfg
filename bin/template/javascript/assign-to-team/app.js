@@ -53,6 +53,11 @@ ID-004
 ID-005
 ID-006
 ID-007
+task:
+skip to the loo
+climb the hill
+jump over the moon
+run away with the spoon
 # optional end marker to begin dividing tasks now
 end:
 `;
@@ -106,13 +111,13 @@ function parse(line) {
 } // parse()
 
 function report() {
-  if (!refreshed) {
-	make_teams();
-	assign_tasks();
-	print_report();
-  writeHtml();
-refreshed = true;
-}
+	if (!refreshed) {
+		make_teams();
+		assign_tasks();
+		print_report();
+		writeHtml();
+		refreshed = true;
+	}
 }
 
 function make_teams() {
@@ -203,32 +208,32 @@ function print_report() {
 	for (const team of Teams) {
 
 		say(`\nTeam${team.number}:\n`);
-        html(`<h1>Team${team.number}:</h1>`);
+		html(`<h1>Team${team.number}:</h1>`);
 
 		const Jobs = Object.keys(team.assigned);
 
 		say(`${IN}${team.members.join(NLIN)}\n`);
-        html(`<ul>`);
+		html(`<ul>`);
 		html(`${team.members.map((name) => `<li>${name}</li>`).join("")}\n`);
-        html(`</ul>`);
+		html(`</ul>`);
 
 		for (const type of Jobs) {
 			say(`${NLIN}${type}:\n`);
-            html(`<h2>${type}:</h2>`)
+			html(`<h2>${type}:</h2>`)
 
 			const Items = order_items(team.assigned[type]);
 
 			say(`${IN}${IN}${Items.join(NLININ)}\n`);
-            html(`<ul>`);
-		    html(`${Items.map((name) => `<li>${name}</li>`).join("")}`);
-            html(`</ul>`);
+			html(`<ul>`);
+			html(`${Items.map((name) => `<li>${name}</li>`).join("")}`);
+			html(`</ul><br/>`);
 		}
-
+		html(`<br/>`);
 	}
 } // print_report()
 
 function processInput() {
-  // get from textarea in HTML
+	// get from textarea in HTML
 	const source = `${teamInput}\n${taskInput}`;
 
 	processByLine(source, parse);
@@ -237,8 +242,7 @@ function processInput() {
 function processByLine(source, fnLine) {
 	const Lines = source.split(new RegExp(reNewLine, 'gms'));
 
-	for (const line of Lines)
-	{
+	for (const line of Lines) {
 		fnLine(line);
 	}
 } // processByLine()
@@ -285,20 +289,20 @@ function say(message) {
 
 let HTML = '';
 function html(raw) {
-  if (raw) {
-    HTML += raw;
-  }
-  return HTML;
+	if (raw) {
+		HTML += raw;
+	}
+	return HTML;
 }
 
 function writeHtml() {
-  debug(`HTML: ${HTML}`);
-  const output = document.getElementById('team-assignments');
-  if (output) {
-    output.innerHTML = HTML;
-  } else {
-    fatal("Cannot write buffered HTML to page.")
-  }
+	debug(`HTML: ${HTML}`);
+	const output = document.getElementById('team-assignments');
+	if (output) {
+		output.innerHTML = HTML;
+	} else {
+		fatal("Cannot write buffered HTML to page.")
+	}
 }
 
 // perl auto-vivifies, JS does not
@@ -352,9 +356,9 @@ function Dumper(thing) {
 }
 
 // Pseudo Random Number Generator (not for crypto)
-// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator
-// -in-javascript
-// Also java-random package if your random sequence should be compatible with a java random sequence
+// https://stackoverflow.com/questions/521295/seeding-the-random-number-generato
+// r -in-javascript Also java-random package if your random sequence should be
+// compatible with a java random sequence
 let rand = Math.random;
 
 // Generate seed for PRNG

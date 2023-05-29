@@ -7,6 +7,8 @@
 	height: 95vh;
 	opacity: 0.2;
 }
-.list:focus,.list:focus-within,.list:focus-visible {
+.list:focus,
+.list:focus-visible,
+.list:focus-within {
 	opacity: 1;
 }
