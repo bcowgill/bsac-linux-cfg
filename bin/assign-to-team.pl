@@ -52,7 +52,7 @@ USAGE
 } # usage()
 
 our $VERSION = 0.1;
-our $DEBUG = 0;
+our $DEBUG = $ENV{DEBUG} || 0;
 our $SKIP = 0;
 
 my $IN = "   ";

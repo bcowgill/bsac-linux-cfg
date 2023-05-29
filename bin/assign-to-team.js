@@ -46,10 +46,11 @@ ${cmd} team.txt tasks.txt
 } // usage()
 
 const VERSION = 0.1;
-const DEBUG = 5;
+const DEBUG = process.env.DEBUG || 0;
 
 const IN = '   ';
-const NLIN = "\n${IN}";
+const NLIN = `\n${IN}`;
+const NLININ = `${NLIN}${IN}`;
 const reArg = /^-/;
 const reArgHelp = /--help|--man|-\?/;
 const reEndLine = /(\x0d\x0a|\x0a|\x0d)$/;
@@ -123,7 +124,7 @@ function parse(line) {
 		} else if (params = reMatchParams(line, reMember)) {
 			let member = ucfirst(params[1]);
 			member = member.replace(new RegExp(reTrimSpace, 'g'), ' ');
-			member = `${Math.floor(Math.random(10))}:${member}`;
+			member = `${Math.floor(rand(10))}:${member}`;
 			if (context === 'task') {
 				pushKeyedItem(Tasks, group, member);
 			} else {
@@ -209,7 +210,7 @@ function pick_one(type, List)
 	let named = '';
 	if (items)
 	{
-		pick = Math.floor(Math.random(items));
+		pick = Math.floor(rand(items));
 		named = `${List[pick]} (${type})`;
 		got = 1;
 	}
@@ -217,19 +218,44 @@ function pick_one(type, List)
 	return [got, pick, named];
 } // pick_one()
 
-// HEREIAM
+function assign_tasks()
+{
+	debug(`Tasks: ${Dumper(Tasks)}`, 3);
+	const teams = Teams.length;
+	Jobs = Object.keys(Tasks);
+	let number = 0;
+	for (const type of Jobs)
+	{
+		const Items = Tasks[type];
+		for (const todo of Items)
+		{
+			const pick = number++ % teams;
+			pushKeyedItem(Teams[pick].assigned, type, todo);
+		}
+	}
+	debug(`Assigned: ${Dumper(Teams)}`, 4);
+} // assign_tasks()
 
-function assign_tasks() {
-	debug("assign_tasks");
-}
 function print_report() {
-	debug("print_report");
-}
+	for (const team of Teams)
+	{
+		say(`\nTeam${team.number}:\n`);
+		const Jobs = Object.keys(team.assigned);
+		say(`${IN}${team.members.join(NLIN)}\n`);
+		for (const type of Jobs)
+		{
+			say(`${NLIN}${type}:\n`);
+			const Items = order_items(team.assigned[type]);
+			say(`${IN}${IN}${Items.join(NLININ)}\n`);
+		}
+	}
+} // print_report()
 
 // More Perlish features from perl-lite script, emulate perl __DATA__ parsing,
 // and <> reading from command line arguments.
 
 const fs = require('node:fs');
+// TODO change from readline to other line by line reading?
 const readline = require('node:readline');
 
 function processData(fnNext, fnError) {
@@ -404,64 +430,86 @@ const inspectOptions = {
 	colors    : true,
 	compact   : false,
 	showHidden: false, // true to show non-enumerable
-	sorted    : true
+	sorted    : true,
+	depth     : Infinity,
 };
 function Dumper(thing) {
 	return util.inspect(thing, inspectOptions);
 }
 
+// Pseudo Random Number Generator (not for crypto)
+// https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+let rand = Math.random;
+
+// Generate seed for PRNG
+function _cyrb128(str) {
+    let h1 = 1779033703, h2 = 3144134277,
+        h3 = 1013904242, h4 = 2773480762;
+    for (let i = 0, k; i < str.length; i++) {
+        k = str.charCodeAt(i);
+        h1 = h2 ^ Math.imul(h1 ^ k, 597399067);
+        h2 = h3 ^ Math.imul(h2 ^ k, 2869860233);
+        h3 = h4 ^ Math.imul(h3 ^ k, 951274213);
+        h4 = h1 ^ Math.imul(h4 ^ k, 2716044179);
+    }
+    h1 = Math.imul(h3 ^ (h1 >>> 18), 597399067);
+    h2 = Math.imul(h4 ^ (h2 >>> 22), 2869860233);
+    h3 = Math.imul(h1 ^ (h3 >>> 17), 951274213);
+    h4 = Math.imul(h2 ^ (h4 >>> 19), 2716044179);
+    return [(h1^h2^h3^h4)>>>0, (h2^h1)>>>0, (h3^h1)>>>0, (h4^h1)>>>0];
+} // _cyrb128()
+
+// Simple Fast Counter PRNG
+// http://pracrand.sourceforge.net/
+function _sfc32(a, b, c, d) {
+    return function() {
+      a >>>= 0; b >>>= 0; c >>>= 0; d >>>= 0;
+      var t = (a + b) | 0;
+      a = b ^ b >>> 9;
+      b = c + (c << 3) | 0;
+      c = (c << 21 | c >>> 11);
+      d = d + 1 | 0;
+      t = t + d | 0;
+      c = c + t | 0;
+      return (t >>> 0) / 4294967296;
+    }
+} // _sfc32()
+
+function _initRand() {
+	const seed = _cyrb128(new Date().toString());
+	debug(`PRNG seed: ${Dumper(seed)}`);
+	// Four 32-bit component hashes provide the seed for sfc32.
+	rand0 = _sfc32(seed[0], seed[1], seed[2], seed[3]);
+	for (let count = 16; count; --count)
+	{
+		rand0()
+	}
+	rand = function (range) {
+		return range * rand0();
+	}
+	debug(`rand(6) ${rand(6)}`);
+	debug(`rand(63) ${rand(63)}`);
+} // _initRand()
+
+_initRand();
 main();
 
-const cmdTyped = process.env._; // from bash
-const cwd = process.env.PWD;
-const cmdPath = process.argv[1];
+//const cmdTyped = process.env._; // from bash
+//const cwd = process.env.PWD;
+//const cmdPath = process.argv[1];
 
 // both full expanded path name to this script.
-console.log('cmdPath', cmdPath);
-console.log('ARGV', ARGV);
+//console.log('cmdPath', cmdPath);
+//console.log('ARGV', ARGV);
 
 // what the user typed on the command line kind of ./assign-to-team.js =>
 // ./assign-to-team.js node ./assign-to-team.js  =>
 // /home/me/.nvm/versions/node/v6.11.4/bin/node Windows??
-console.log('cmdTyped', cmdTyped);
-console.log('cwd', cwd);
+//console.log('cmdTyped', cmdTyped);
+//console.log('cwd', cwd);
 
 `
 /*
-HEREIAM
-sub assign_tasks
-{
-	debug("Tasks:" . Dumper(\%Tasks), 3);
-	my $teams = scalar(@Teams);
-	my @Jobs = keys(%Tasks);
-	my $number = 0;
-	foreach my $type (@Jobs)
-	{
-		my @Items = @{$Tasks{$type}};
-		foreach my $todo (@Items)
-		{
-			my $pick = $number++ % $teams;
-			push(@{$Teams[$pick]{assigned}{$type}}, $todo);
-		}
-	}
-	debug("Assigned: " . Dumper(\@Teams), 4);
-}
-
-sub print_report
-{
-	foreach my $team (@Teams)
-	{
-		say("\nTeam$team->{number}:\n");
-		my @Jobs = keys(%{$team->{assigned}});
-		say($IN . join("$NLIN", @{$team->{members}}) . "\n");
-		foreach my $type (@Jobs)
-		{
-			say("$NLIN$type:\n");
-			my @Items = order_items(@{$team->{assigned}{$type}});
-			say("$IN$IN" . join("$NLIN$IN", @Items) . "\n");
-		}
-	}
-}
 __END__
 # Example data structure for files parsed:
 # use hash marker to exclude people who are currently away.
