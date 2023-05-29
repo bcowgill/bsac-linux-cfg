@@ -11,6 +11,7 @@ pwcd creating-christ
 
 Sign language
 /home/me/d/docs/notes/sign-language.txt
+pushd ~/bin/template/javascript/language-drill && webserver.sh
 
 Typescript JSON stringify improvement front end logger and time testing library
 bin/template/typescript/ts4tooling
