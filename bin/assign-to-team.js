@@ -1,0 +1,507 @@
+#!/usr/bin/env node
+// nvm use v17.9.1
+// assign-to-team.js tests/assign-to-team/in/team.txt
+
+const util = require('util');
+const path = require('path');
+
+function usage(msg)
+{
+	const cmd = findBin().script;
+
+	if (msg)
+{
+	say(`${msg}\n\n`)
+}
+	say(`
+usage: ${cmd} [--help|--man|-?] filename...
+
+This will divide up story or task id's or lists among cross-functional teams created on an ad hoc basis.
+
+filename    files to process instead of standard input.
+--help      shows help for this program.
+--man       shows help for this program.
+-?          shows help for this program.
+
+The files processed should define the roles and people available and the list of stories or tasks to divide up.
+
+The format is quite simple.  A hash mark '#' comments out a line so it will be ignored.  For example if a given person is currently away.
+
+A line that ends with a colon ':' defines a role type or begins a list of tasks to divide up.
+
+Task lines are specified as task: tasks: story: or stories:
+
+A line with end: stop: quit: or go: indicates that there is no more. The tasks will be divided up at this point.
+
+Other lines will be added to the current context, either a role list or a task list.
+
+Example:
+
+Use existing team.txt file to divide up the tasks listed in tasks.txt
+
+${cmd} team.txt tasks.txt
+
+`);
+	process.exit(msg ? 1: 0);
+} // usage()
+
+const VERSION = 0.1;
+const DEBUG = 2;
+
+const IN = '   ';
+const NLIN = "\n${IN}";
+const reArg = /^-/;
+const reArgHelp = /--help|--man|-\?/;
+const reEndLine = /(\x0d\x0a|\x0a|\x0d)$/;
+const reEnd = /^\s*(end|stop|quit|go)\s*:\s*$/i;
+const reTaskList = /^\s*(tasks?|stor(y|ies))\s*:\s*$/i;
+const reRoleList = /^\s*([^:]+)\s*:\s*$/i;
+const reMember = /^\s*(.+)\s*$/i;
+const reBlank = /^\s*(\#|$)/;
+const reTrimSpace = /\s\s+/;
+const reStripRandom = /^\d+:/;
+
+const Tasks = {};
+const Roles = {};
+const Teams = [];
+let context;
+let group;
+let jobs = 0;
+
+const ARGV = process.argv.slice(2);
+const ARGF = ARGV.filter((arg) => !reArg.test(arg));
+const ARGO = ARGV.filter((arg) => reArg.test(arg));
+
+if (ARGV.length && reArgHelp.test(ARGV[0]))
+{
+	usage();
+}
+
+function check_args()
+{
+	if (ARGO.length) {
+		usage("unrecognised command line options: " + ARGO.join(", "))
+	}
+}
+
+function main()
+{
+	check_args();
+	try
+	{
+		say("specify 'end:' to end the input.\n");
+		processData(() => processStreams(report, fatal), fatal);
+	}
+	catch (EVAL_ERROR)
+	{
+		fatal(EVAL_ERROR);
+	}
+} // main()
+
+function fatal(error) {
+	warn(error);
+	process.exit(1);
+}
+
+function parse(line) {
+	debug("parse:" + line);
+	if (!reBlank.test(line)) {
+		chomp(line);
+		debug(line, 2);
+		let params;
+		if (params = reMatchParams(line, reTaskList))
+		{
+			context = 'task';
+			group = ucfirst(params[1]);
+			++jobs;
+			debug(`begin ${context}/${group}`)
+		} // reTaskList
+		else if (params = reMatchParams(line, reEnd))
+		{
+			report();
+		} // reEnd
+		else if (params = reMatchParams(line, reRoleList))
+		{
+			context = 'role';
+			group = ucfirst(params[1]);
+			debug(`begin ${context}/${group}`)
+		} // reRoleList
+		else if (params = reMatchParams(line, reMember))
+		{
+			let member = ucfirst(params[1]);
+			member = member.replace(new RegExp(reTrimSpace, 'g'), ' ');
+			member = `${Math.floor(Math.random(10))}:${member}`;
+			if (context === 'task')
+			{
+				pushKeyedItem(Tasks, group, member);
+			}
+			else
+			{
+				pushKeyedItem(Roles, group, member);
+			}
+			debug(`..add ${member} to ${context}/${group}`);
+		} // reMember
+		else
+		{
+			debug(`...${line}`);
+		}
+	} // reBlank
+} // parse()
+
+function report()
+{
+	debug(`Roles: ${Dumper(Roles)}`, 1);
+	debug(`Tasks: ${Dumper(Tasks)}`, 1);
+
+	make_teams();
+	debug(`Teams: ${Dumper(Teams)}`, 1);
+	assign_tasks();
+	print_report();
+	process.exit(0);
+}
+
+function make_teams() { debug("make_teams"); }
+function assign_tasks() { debug("assign_tasks"); }
+function print_report() { debug("print_report"); }
+
+// More Perlish features from perl-lite script, emulate perl __DATA__ parsing, and <> reading from command line arguments.
+
+const fs = require('node:fs');
+const readline = require('node:readline');
+
+function processData(fnNext, fnError) {
+	const reDataMarker = /^__(DATA|END)__;?\s*$/;
+    const reIgnore = /^(['"`;?]|\s*\*\/)/;
+	const source = fs.createReadStream(findBin().full, { encoding: 'utf8' });
+	let foundData = false;
+
+	processByLine(
+		source,
+		(line) => {
+			debug(`processData.line [${line}]`, 4);
+			if (foundData && !reIgnore.test(line)) {
+				parse(line);
+			} else if (reDataMarker.test(line)) {
+				foundData = true;
+			}
+		}, fnNext, fnError
+	);
+} // processData()
+
+function processByLine(source, fnLine, fnNext, fnError = fnNext) {
+	// https://nodejs.org/api/readline.html#event-close
+	const rl = readline.createInterface({
+	  input: source,
+	  crlfDelay: Infinity,
+	});
+
+	let finished = false;
+	function done(fnNext, ...args) {
+		if (!finished) {
+			finished = true;
+			fnNext(...args)
+		}
+	}
+	rl.on('SIGINT', () => {debug("processByLine1", 2); done(fnNext)});
+	rl.on('error', (...what) => {debug("processByLine2", 2); done(fnError, ...what)});
+	rl.on('close', () => {debug("processByLine3", 2); done(fnNext)});
+
+	rl.on('line', fnLine);
+} // processByLine()
+
+function processStreams(fnNext, fnError) {
+	// create streams for files on command line
+	// if none, create stream for standard input
+	// then process the streams with parse
+	// and call next when out, call fatal if error.
+	const Streams = [];
+	debug("processStreams1: " + ARGV.length, 2);
+	for (const arg of ARGV)
+	{
+		debug("processStreams: " + arg, 2);
+		const source = fs.createReadStream(arg, { encoding: 'utf8' });
+		Streams.push(source);
+	}
+	if (!Streams.length) {
+		Streams.push(process.stdin);
+	}
+
+const { PassThrough } = require('stream');
+
+const concatStreams = (streamArray, streamCounter = streamArray.length) => streamArray
+  .reduce((mergedStream, stream) => {
+    // pipe each stream of the array into the merged stream
+    // prevent the automated 'end' event from firing
+    mergedStream = stream.pipe(mergedStream, { end: false });
+    // rewrite the 'end' event handler
+    // Every time one of the stream ends, the counter is decremented.
+    // Once the counter reaches 0, the mergedstream can emit its 'end' event.
+    stream.once('end', () => --streamCounter === 0 && mergedStream.emit('end'));
+    return mergedStream;
+  }, new PassThrough());
+
+const source = concatStreams(Streams);
+		processByLine(
+			source,
+			parse,
+			fnNext,
+			fnError
+        );
+} // processStreams()
+
+// make tabs 3 spaces
+function tab(message)
+{
+	const THREE_SPACES = '   ';
+	message = message.replace(/\t/g, THREE_SPACES);
+	return message;
+} // tab()
+
+function failure(error)
+{
+	throw new Error(`ERROR: ${tab(error)}\n`); // at line
+} // failure()
+
+function debug(msg, level)
+{
+	level = level || 1;
+	let message;
+
+	//	print "debug @{[substr($msg,0,10)]} debug: $DEBUG level: $level\n";
+	if ( DEBUG >= level )
+	{
+		message = tab(msg) + "\n";
+		console.log(chomp(message)); // use a stream??
+	}
+	return message
+} // debug()
+
+function warning(message)
+{
+	const msg = `WARN: ${tab(message)}\n`;
+	warn(msg);
+	return msg;
+} // warning()
+
+// Perlish functions used by my perl-lite template script
+
+function warn(message) {
+	console.warn(message);// at line NN
+}
+
+function say(message)
+{
+	console.log(chomp(message)); // use stream
+	return message;
+}
+
+function findBin()
+{
+	const findBinFull = process.mainModule.filename;
+	const findBin = path.dirname(findBinFull);
+	const findBinScript = path.basename(findBinFull);
+
+return {
+  full: findBinFull,
+  bin: findBin,
+  script: findBinScript,
+};
+} // findBin()
+
+// perl auto-vivifies, JS does not
+function pushKeyedItem(obj, key, ...values) {
+		if (key in obj) {
+			obj[key].push(...values);
+		} else {
+			obj[key] = [...values];
+		}
+} // pushKeyedItem()
+
+// strip off newline character from string if present.
+function chomp(line) {
+	return line.replace(reEndLine, '');
+}
+
+function ucfirst(string) {
+	return string.substring(0,1).toUpperCase() + string.substring(1)
+}
+
+// Like perl $string =~ m{some (regex) match}; assigning $1 $2 etc
+function reMatchParams(string, regex) {
+	let matched;
+	let matches = [];
+
+	try {
+		string.replace(regex, function matcher(match, ...args /* offset, original */) {
+            matched = true;
+			matches = matches.push(match, ...args).slice(-2);
+			debug(`reMatchParams "${string}" =~ ${regex.toString()} <` + args.join("> <") + ">", 5);
+			throw new Error('stop regex');
+		});
+	}
+	finally {
+		debug(`reMatchParams return [${matched ? Dumper(matches) : matched}]`, 4)
+		return matched ? matches : matched;
+	}
+} // reMatchParams()
+
+const inspectOptions = {
+  colors: true,
+sorted: true,
+  compact: false,
+  showHidden: false, // true to show non-enumerable
+};
+function Dumper(thing) {
+	return util.inspect(thing, inspectOptions);
+}
+
+main();
+
+const cmdTyped = process.env._; // from bash
+const cwd = process.env.PWD;
+const cmdPath = process.argv[1];
+
+// both full expanded path name to this script.
+console.log('cmdPath', cmdPath);
+console.log('ARGV', ARGV);
+
+// what the user typed on the command line kind of
+// ./assign-to-team.js => ./assign-to-team.js
+// node ./assign-to-team.js  =>  /home/me/.nvm/versions/node/v6.11.4/bin/node
+// Windows??
+console.log('cmdTyped', cmdTyped);
+console.log('cwd', cwd);
+
+`
+/*
+sub make_teams
+{
+	my @Roles = keys(%Roles);
+	unless ($jobs)
+	{
+		failure("You must specify one or more task: type lines to define what needs to be done by the team.")
+	}
+	if (scalar(@Roles) < 1)
+	{
+		failure("You must specify one or more role: type lines to define the role types on the team.");
+	}
+	debug("Roles:" . Dumper(\@Roles), 3);
+	my $team = 1;
+	my $found;
+	do {
+		$found = 0;
+		my @Team = ();
+		foreach my $role_type (@Roles)
+		{
+			my ($got, $pick, $named) = pick_one($role_type, $Roles{$role_type});
+			$found += $got;
+			if ($got)
+			{
+				splice(@{$Roles{$role_type}}, $pick, 1);
+				debug("$role_type: " . Dumper($Roles{$role_type}), 3);
+				push(@Team, $named);
+			}
+		}
+		if (scalar(@Team))
+		{
+			debug("SORTING Team" . Dumper(\@Team), 4);
+			my @Sorted = order_items(sort(@Team));
+			debug("SORTING Sorted" . Dumper(\@Sorted), 4);
+			if ($found == scalar(@Roles))
+			{
+				push(@Teams, { number => $team++, members => \@Sorted, assigned => {} });
+			}
+			else
+			{
+				my $to_team = ($team++ - 1) % scalar(@Teams);
+				push(@{$Teams[$to_team]{members}}, @Sorted);
+			}
+		}
+	} while ($found);
+	debug("Teams: ". Dumper(\@Teams), 3);
+} # make_teams()
+
+sub order_items
+{
+	return map { $ARG =~ s{$reStripRandom}{}xms; $ARG } @ARG;
+}
+
+sub pick_one
+{
+	my ($type, $raList) = @ARG;
+	my $items = scalar(@$raList);
+	debug("pick $type" . Dumper($raList), 4);
+	my $got = 0;
+	my $pick = '';
+	my $named = '';
+	if ($items)
+	{
+		$pick = int(rand($items));
+		$named = "$raList->[$pick] ($type)";
+		$got = 1;
+	}
+	debug("picked $got, $pick, $named", 4);
+	return ($got, $pick, $named);
+} # pick_one()
+
+sub assign_tasks
+{
+	debug("Tasks:" . Dumper(\%Tasks), 3);
+	my $teams = scalar(@Teams);
+	my @Jobs = keys(%Tasks);
+	my $number = 0;
+	foreach my $type (@Jobs)
+	{
+		my @Items = @{$Tasks{$type}};
+		foreach my $todo (@Items)
+		{
+			my $pick = $number++ % $teams;
+			push(@{$Teams[$pick]{assigned}{$type}}, $todo);
+		}
+	}
+	debug("Assigned: " . Dumper(\@Teams), 4);
+}
+
+sub print_report
+{
+	foreach my $team (@Teams)
+	{
+		say("\nTeam$team->{number}:\n");
+		my @Jobs = keys(%{$team->{assigned}});
+		say($IN . join("$NLIN", @{$team->{members}}) . "\n");
+		foreach my $type (@Jobs)
+		{
+			say("$NLIN$type:\n");
+			my @Items = order_items(@{$team->{assigned}{$type}});
+			say("$IN$IN" . join("$NLIN$IN", @Items) . "\n");
+		}
+	}
+}
+__END__
+# Example data structure for files parsed:
+# use hash marker to exclude people who are currently away.
+# indentation optional
+#front:
+#	peter
+#	paul
+#	mary
+#back:
+#	fred
+#	wilma
+#	betty
+#test:
+#	george
+#	elroy
+#	jane
+#stories:
+#ID-001
+#ID-002
+#ID-003
+#ID-004
+#ID-005
+#ID-006
+#ID-007
+# optional end marker to begin dividing tasks now
+#end:
+*/
+`

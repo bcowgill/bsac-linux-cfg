@@ -9,6 +9,21 @@ useEffect(function whenWeMount() {
 	}
 });
 
+Create a Typography library for your standard used font formats.
+
+<Head1> <PlainText> <BigText> <BoldText> <SmallText> etc
+and style them with the main properties across media sizes:
+font-family
+font-weight
+font-size
+line-height
+letter-spacing
+
+or if using a library with <Text size= weight= etc for easier reading of code.
+If sizes change on different screen formats give them names that reflect the mid screen size and the type of change on the other size:
+Bold1416PhoneLarger a bold size 14 line height 16 font which gets larger on a small phone screen
+Plain2430Varies mid screen size given and it varies in size for other screen sizes.
+
 Jest Testing
 
 define displayName in test plan and use boilerplate template:
