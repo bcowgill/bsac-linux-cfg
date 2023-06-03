@@ -4,6 +4,7 @@
 # also calls metadata-cleanup-phone.sh to moved stripped metadata files into a done dir.
 # also calls random-ringtone.sh to change your ringtone.
 # and copies podcasts from $PODCASTS_FROM to $PODCASTS_TO/_NEW removing any from $PODCASTS_TO/REMOVE
+# See alse mnt-phone.sh ls-phone.sh scan-phone.sh random-ringtone.sh podcasts-to-phone.sh metadata-cleanup-phone.sh
 
 CONFIG=${1:-~/.PHONE}
 
@@ -53,15 +54,9 @@ fi
 
 pushd $BACKUP_DIR > /dev/null
 
-if [ ! -d "$phone" ]; then
-	echo will try to mount phone [$phone]
+if mnt-phone.sh "$CONFIG" --check ; then
+	/bin/true
 else
-	echo will try to unmount and remount phone [$phone]
-	fusermount -u $MTP
-fi
-jmtpfs $MTP
-
-if [ ! -d "$phone" ]; then
 	echo was unable to mount the phone [$phone], is it connected and unlocked?
 	exit 1
 fi

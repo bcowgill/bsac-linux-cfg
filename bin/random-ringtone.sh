@@ -2,6 +2,7 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # copy any new ringtones from disk to phone directory mounted on MTP
 # then set ringtone randomly on mobile phone
+# See alse mnt-phone.sh ls-phone.sh scan-phone.sh random-ringtone.sh podcasts-to-phone.sh metadata-cleanup-phone.sh
 
 CONFIG=${1:-~/.PHONE}
 
@@ -43,8 +44,7 @@ fi
 
 echo "random-ringtones.sh $CONFIG from [$RINGTONES_FROM] => [$RANDOM_RINGS] to [$RINGTONE]";
 
-if [ -e "$phone" ]; then
-	echo "$MTP"
+if mnt-phone.sh "$CONFIG" --check ; then
 	if ([ ! -z "$RINGTONES_FROM" ] && [ -e "$RINGTONES_FROM" ]); then
 		cp --update $RINGTONES_FROM/* "$RANDOM_RINGS"
 	fi
@@ -56,7 +56,6 @@ if [ -e "$phone" ]; then
 		echo OK setting "$ringtone" as "$RINGTONE"
 		cp "$RANDOM_RINGS/$ringtone" "$RINGTONE"
 	fi
-
 else
 	echo NOT OK `ls "$phone"` use mnt-phone.sh to mount your phone. > /dev/stderr
 	exit 2

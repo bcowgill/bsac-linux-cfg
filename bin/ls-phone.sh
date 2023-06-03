@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # perform ls command on mobile phone directory mounted on MTP
+# See alse mnt-phone.sh ls-phone.sh scan-phone.sh random-ringtone.sh podcasts-to-phone.sh metadata-cleanup-phone.sh
 
 CONFIG=${1:-~/.PHONE}
 
