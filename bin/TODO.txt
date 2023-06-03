@@ -23,6 +23,15 @@ bin/template/typescript/ts4tooling
 4. A better JSON.stringify for Set Map, etc  Set => ['object:JSONSet', item, item...] .stringify uses a replacer to convert Set to array and a .parse function to convert back to a real set.
 bin/template/typescript/ts4tooling
 
+Mathematical unicode characters translator.
+math-rep.pl
+ls-math.pl
+ls-numbers.pl
+bin/math-rep.sample.txt
+bin/math-rep.txt
+bin/character-samples/samples/mathematics.txt
+bin/character-samples/samples/mathematics-categorised.txt
+
 Torrent downloader apt-get install transmission
 
 rex barks
