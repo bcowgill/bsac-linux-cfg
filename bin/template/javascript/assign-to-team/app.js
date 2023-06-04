@@ -18,15 +18,23 @@ const reBlank = /^\s*(\#|$)/;
 const reTrimSpace = /\s\s+/;
 const reStripRandom = /^\d+:/;
 
-const Tasks = {};
-const Roles = {};
-const Teams = [];
+const elApp = document.getElementById('controls')
+const elButton = document.getElementById('execute')
+const elRoleList = document.getElementById('role-list');
+const elTaskList = document.getElementById('task-list');
+const elErrors = document.getElementById('errors');
+const elOutput = document.getElementById('team-assignments');
+
+let Tasks = {};
+let Roles = {};
+let Teams = [];
 let context;
 let group;
 let jobs = 0;
 let refreshed = false;
 
-const teamInput = `
+const teamInput = ''
+const teamInputX = `
 # Example format for textarea parsed:
 # use hash marker to exclude people who are currently away.
 # indentation optional
@@ -44,7 +52,8 @@ test:
 	jane
 `;
 
-const taskInput = `
+const taskInput = ''
+const taskInputX = `
 stories:
 ID-001
 ID-002
@@ -62,19 +71,40 @@ run away with the spoon
 end:
 `;
 
-function main() {
+function go() {
 	try
 	{
+Tasks = {};
+Roles = {};
+Teams = [];
+context = void 0
+group = void 0
+jobs = 0;
+refreshed = false;
+HTML = ''
+
+      elErrors.innerHTML = ''
+      elOutput.innerHTML = ''
+      elOutput.className = addClass(elOutput.className, 'hidden')
 		processInput();
 		report();
 	} catch (EVAL_ERROR) {
 		fatal(EVAL_ERROR);
 	}
+} // go()
+
+function main() {
+      // Show initially hidden app section
+      elApp.className = ''
+      getState()
+go()
 } // main()
 
 function fatal(error) {
 	warn(error);
-	alert(error);
+  elErrors.innerHTML = error.toString().replace(/Error:\s*/gi, '');
+elErrors.className = removeClass(elErrors.className, 'hidden')
+elOutput.className = addClass(elOutput.className, 'hidden')
 }
 
 function parse(line) {
@@ -234,8 +264,8 @@ function print_report() {
 
 function processInput() {
 	// get from textarea in HTML
-	const source = `${teamInput}\n${taskInput}`;
-
+	const source = `${elRoleList.value}\n${elTaskList.value}`;
+  debug(`processInput: [${source}]`);
 	processByLine(source, parse);
 } // processInput()
 
@@ -297,9 +327,9 @@ function html(raw) {
 
 function writeHtml() {
 	debug(`HTML: ${HTML}`);
-	const output = document.getElementById('team-assignments');
-	if (output) {
-		output.innerHTML = HTML;
+	if (elOutput) {
+		elOutput.innerHTML = HTML;
+      elOutput.className = removeClass(elOutput.className, 'hidden')
 	} else {
 		fatal("Cannot write buffered HTML to page.")
 	}
@@ -355,7 +385,62 @@ function Dumper(thing) {
 	return JSON.stringify(thing, ...inspectOptions);
 }
 
-// Pseudo Random Number Generator (not for crypto)
+// Browser hosted version functions
+
+function onClick() {
+  try {
+    saveState(elRoleList.value, elTaskList.value)
+    go()
+  }
+  catch (exception) {
+  }
+}
+
+function trace(item) {
+	console.log('item', item)
+	return item
+}
+
+let noSave = true
+function getState() {
+	if ('localStorage' in window) {
+		try {
+			const {roles, tasks} = JSON.parse(localStorage.getItem("rolesAndTasks") ?? '{}')
+			noSave           = false
+			elRoleList.value = roles ?? '';
+			elTaskList.value = tasks ?? '';
+		} catch (exception) {}
+	}
+}
+
+function saveState(roles, tasks) {
+	if ('localStorage' in window) {
+		try {
+			const packed = JSON.stringify({roles, tasks})
+debug(`saveState ${packed}`)
+			localStorage.setItem("rolesAndTasks", packed)
+		} catch (exception) {
+			noSave = true
+		}
+	}
+}
+
+function updateSaveState(disabled) {
+	saveMessage.innerText = disabled
+		? '(cannot save)'
+		: '(saved automatically)'
+}
+
+function addClass(classes, className) {
+  return classes.replace(new RegExp(className.trim(), 'g'), '').trim() + ' ' + className.trim()
+}
+
+function removeClass(classes, className) {
+  return classes.replace(new RegExp(className.trim(), 'g'), '').trim()
+}
+
+// Better random number functions Pseudo Random Number Generator (not for
+// crypto)
 // https://stackoverflow.com/questions/521295/seeding-the-random-number-generato
 // r -in-javascript Also java-random package if your random sequence should be
 // compatible with a java random sequence
@@ -407,7 +492,7 @@ function _sfc32(a, b, c, d) {
 function _initRand() {
 	const seed = _cyrb128(new Date().toString());
 	debug(`PRNG seed: ${Dumper(seed)}`);
-	// Four 32-bit component hashes provide the seed for sfc32.
+	// Four 32-bit component hashes pride the seed for sfc32.
 	rand0 = _sfc32(seed[0], seed[1], seed[2], seed[3]);
 	for (let count = 16; count; --count) {
 		rand0()

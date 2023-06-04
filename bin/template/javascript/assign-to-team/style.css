@@ -5,10 +5,13 @@
 .list {
 	width: 95vw;
 	height: 95vh;
-	opacity: 0.2;
+	opacity: 0.6;
 }
 .list:focus,
 .list:focus-visible,
 .list:focus-within {
 	opacity: 1;
+}
+.errors {
+	color: red;
 }
