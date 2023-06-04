@@ -1,6 +1,7 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # label all original/NN-title.mp3 files and output to current directory
+# See also auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh rename-files.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 FILE="$1"
 BASE=`basename $FILE`
 

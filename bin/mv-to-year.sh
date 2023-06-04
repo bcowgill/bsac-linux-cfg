@@ -17,7 +17,7 @@ year    The year number to look for in filenames.
 
 The year doesn't have to be a number. If you specify 'cats' then a cats directory will be created and all files and directories with cats in the name will be moved.
 
-See also mv-spelling.pl rename-files.sh renumber-by-time.sh renumber-files.sh
+See also auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-camera.sh rename-files.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 Example:
 

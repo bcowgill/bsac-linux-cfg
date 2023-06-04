@@ -14,7 +14,7 @@ Spaces in the file name will be converted to a dash.
 Multiple dashes will be converted to a single one.
 By default it only shows how the files would be renamed but doesn\'t do it.
 
-See also auto-rename.pl, renumber-files.sh, cp-random.pl, renumber-by-time.sh
+See also auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 Example:
 $0 imag photos-today-

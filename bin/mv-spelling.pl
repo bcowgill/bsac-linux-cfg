@@ -45,7 +45,7 @@ correct    the correct text for file names.
 
 The input should come from a command like find or locate with directories appearing before the files contained within it.
 
-See also mv-year.sh rename-files.sh renumber-by-time.sh renumber-files.sh
+See also auto-rename.pl mv-apostrophe.sh mv-to-year.sh mv-camera.sh rename-files.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 Example:
 

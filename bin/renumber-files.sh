@@ -18,7 +18,7 @@ The number value defaults to 001 if omitted.
 
 Specify TEST=1 $cmd ... as command to only test what would happen but not do it.
 
-See also auto-rename.pl, rename-files.sh, cp-random.pl, renumber-by-time.sh
+See also auto-rename.pl, rename-files.sh, cp-random.pl, renumber-by-time.sh mv-spelling.pl mv-to-year.sh mv-camera.sh mv-apostrophe.sh rename-podcast.sh
 
 example:
 

@@ -17,7 +17,7 @@ This will move your camera files into a subdirectory based on camera model.
 
 Moves image files into subdirectories based on the exif field Camera Model.
 
-See also ls-meta.sh label-photo.sh mv-to-year.sh image-crop-rotate.sh image-sort-resize.sh identify display convert
+See also ls-meta.sh label-photo.sh mv-to-year.sh image-crop-rotate.sh image-sort-resize.sh identify display convert auto-rename.pl mv-apostrophe.sh mv-spelling.pl rename-files.sh renumber-by-time.sh renumber-files.sh cp-random.pl
 "
 	exit $code
 }

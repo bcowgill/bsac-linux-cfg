@@ -30,7 +30,7 @@ extension optional File extension for files to rename. defaults to $EXT
 
 Creates a temporary directory 'done' to move the files to and a go.sh shell script to do the moving.
 
-See also renumber-files.sh, rename-files.sh, auto-rename.pl, choose.pl, cp-random.pl
+See also renumber-files.sh, rename-files.sh, auto-rename.pl, choose.pl, cp-random.pl mv-spelling.pl mv-to-year.sh mv-camera.sh rename-podcast.sh
 
 "
 	exit $code
