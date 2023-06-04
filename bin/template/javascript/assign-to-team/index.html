@@ -17,16 +17,22 @@
 			<p>We look forward to seeing you back here with JavaScript enabled.</p>
 		</noscript>
 		<div id="controls" class="hidden">
-			<p>You need to provide a list of tasks in one box below and a description of your cross-functional team roles and people in another box below.  The tasks will be divided up between smaller teams, generated at random.</p>
+			<p>You need to provide a list of tasks in one box below and a description of
+				your cross-functional team roles and people in another box below. The tasks will
+				be divided up between smaller teams, generated at random.</p>
 			<ul>
-<li>The format is quite simple.  A hash mark '#' comments out a line so it will be ignored.  For example if a given person is currently away.
-</li>
-<li>A line that ends with a colon ':' defines a role type or begins a list of tasks to divide up.</li>
-<li>Task lines are specified as task: tasks: story: or stories:</li>
-<li>A line with end: stop: quit: or go: indicates that there is no more. The tasks will be divided up at this point.</li>
-<li>Other lines will be added to the current context, either a role list or a task list.</li>
-</ul>
-<button id="execute" onclick="onClick()">Assign Tasks</button>
+				<li>The format is quite simple. A hash mark '#' comments out a line so it will
+					be ignored. For example if a given person is currently away.
+				</li>
+				<li>A line that ends with a colon ':' defines a role type or begins a list of
+					tasks to divide up.</li>
+				<li>Task lines are specified as task: tasks: story: or stories:</li>
+				<li>A line with end: stop: quit: or go: indicates that there is no more. The
+					tasks will be divided up at this point.</li>
+				<li>Other lines will be added to the current context, either a role list or a
+					task list.</li>
+			</ul>
+			<button id="execute" onclick="onClick()">Assign Tasks</button>
 			<p id="errors" class="errors"></p>
 		</div>
 		<div id="team-assignments" class="teams hidden"></div>
