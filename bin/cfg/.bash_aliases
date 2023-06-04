@@ -17,6 +17,8 @@ alias dochks='rm ~/mynotify.log; check-system.sh 2>&1 | tee ~/check.log; less ~/
 
 alias sc=sound-control.sh
 
+alias when="echo Vancouver: `TZ='America/Vancouver' date`; echo '    Local:' `date`"
+
 # edit config files and re-source them
 alias se='source ./env.sh'
 alias vims="vim --servername vim"
