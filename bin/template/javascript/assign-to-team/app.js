@@ -23,10 +23,10 @@ if (typeof document === 'undefined') {
 		getElementById: (id) => {
 			let value = ''
 			if (id === 'role-list') {
-				value = teamInputX
+				value = teamInputNode
 			}
 			if (id === 'task-list') {
-				value = taskInputX
+				value = taskInputNode
 			}
 			return { className: '', innerHTML: '', value }
 		}
@@ -42,8 +42,16 @@ let group
 let jobs = 0
 let refreshed = false
 
-const teamInput = ''
-const teamInputX = `
+const teamInput = `
+# Example format for textarea parsed:
+# use hash marker to exclude people who are currently away.
+# indentation optional
+front:
+	peter
+	paul
+	mary
+`
+const teamInputNode = `
 # Example format for textarea parsed:
 # use hash marker to exclude people who are currently away.
 # indentation optional
@@ -61,8 +69,13 @@ test:
 	jane
 `
 
-const taskInput = ''
-const taskInputX = `
+const taskInput = `
+tasks:
+# JIRA-NNNN
+# optional end marker to begin dividing tasks now
+#end:
+`
+const taskInputNode = `
 stories:
 ID-001
 ID-002
@@ -115,6 +128,7 @@ function main() {
 	// Show initially hidden app section
 	elApp.className = ''
 	getState()
+	bootState()
 	go()
 } // main()
 
@@ -417,6 +431,13 @@ function onClick() {
 function trace(item) {
 	console.log('item', item)
 	return item
+}
+
+function bootState() {
+  if (!elRoleList.value && !elTaskList.value) {
+    elRoleList.value = teamInput
+    elTaskList.value = taskInput
+  }
 }
 
 let noSave = true
