@@ -1,0 +1,39 @@
+Interestingly enough, American English is almost twice as wrong as British English when it comes to following the I before E rule.
+
+There are 650 misbehaving american english words:
+
+(not c)ie; 1321
+cei; 54
+=1375 rule followers
+
+(not c)ei; 556
+cie; 94
+=650 misbehaving
+=32% wrong!
+
+english-words.txt
+(^|[abd-z])ie; 1321
+cei; 54
+=1375 rule followers
+(^|[abd-z])ei; 556
+cie; 94
+=650 misbehaving
+=32% wrong
+
+british-english.txt
+(^|[abd-z])ie; 3752
+cei; 65
+=3817 rule followers
+
+(^|[abd-z])ei; 556
+cie; 166
+=772 misbehaving
+=17% wrong
+
+And for British English words you get:
+
+3817 rule followers
+772 misbehaving
+=17% wrong
+
+Which seems to prove American Exceptionalism!
