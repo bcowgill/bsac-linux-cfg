@@ -60,6 +60,7 @@ alias g='git'
 alias gst='g status'
 alias gss='gst; echo == $? =='
 alias gsm="gst | perl -ne '\$done = 1 if m{Untracked \\s+ files:}xms; print unless \$done;'"
+alias gsum="gst | perl -ne '\$print = 0 if m{Untracked \\s+ files:}xms; \$print = 1 if m{Unmerged \\s+ paths:}xms; print if \$print;'"
 alias gssls='gst --short'
 alias gsmls='gst --short --untracked-files=no'
 alias gud="echo \`git status | grep 'deleted: ' | perl -pne 's{\s*deleted:\s*}{}xms'\`"

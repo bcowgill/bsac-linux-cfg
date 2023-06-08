@@ -1,13 +1,17 @@
 Some tips for writing maintainable React code:
 
-Components
+Code
+- Check for any leftover console.error, log, warn, etc (eslint should do this)
+- Inconsistent names to be fixed.
+- Case statements to always have braces i.e. case: { ... break } so that it is easy to insert debugging code.
+- Prefer arrow functions to have braces with a return so that debugging code can be inserted without breaking things.
 
-For mount/unmount useEffects give names to the functions so it is obvious when each one is used.
+React Components
 
-useEffect(function whenWeMount() {
-	return function whenWeUnmount() {
-	}
-});
+- propTypes and defaultProps should be accurate, don't leave them empty if you have props in the component.
+- React components must not begin with a lower case letter or they will render as HTML elements in all lower case.  CaptiliseAllComponentNames
+- Import images instead of putting a path into a src= parameter.  This allows webpack to inline the image and makes it available in dev/test/prod biulds all the same.
+- For a mount/unmount useEffect, give names to the functions and omit the dependency array.
 
 Create a Typography library for your standard used font formats.
 
@@ -26,7 +30,21 @@ Plain2430Varies mid screen size given and it varies in size for other screen siz
 
 Jest Testing
 
-define displayName in test plan and use boilerplate template:
+Test plans should not output anything to console error/warning, keep that free for debugging tests.
+
+Use ALL CAPS for text properties and unique numbers passed into components to make it easy to spot them in the rendered output vs text configured in the rest of the code.
+
+When you change a test plan file check and fix any of the practices shown in the details below.  Specifically:
+- fix any console.warnings that show during a test run due to props errors.
+- change .toEqual() to .toBe()
+- change .toHaveBeenCalled() to .toHaveBeenCalledTimes()
+- remove lists of specific named imports in favour of import * as TestMe so we don't have to maintain the list.
+
+NEVER do a console.error, etc without putting a unique message so that it can be grepped for.  If we ever see console.error(variable) instead of console.error(displayName, variable) or console.error('WHOOPPPEI', variable) you will be shamed horribly.
+
+Check for any leftover xit(, xdescribe(, fit(, fdescribe(, @skip, @only, it.skip(, describe.skip(, it.only(, describe.only( for suppressing tests based on your testing framework.
+
+Define displayName in test plan and use boilerplate template:
 
 describe(`<${displayName}/> component` ...)
 
@@ -45,15 +63,15 @@ Create a renderForTest(props) function which provides defaults for all the .isRe
 
 The proper way to test user interactions to avoid the act() warning is:
 
-render the component.
+Render the component.
 
-do a user action (fireEvent/userEvent etc)
+Do a user action (fireEvent/userEvent etc)
 
 await waitFor(() => getByXxx())  // wait for something new to appear based on the user event
 
 expect(asFragment()).toMatchSnapshot()  // make additional tests or take snapshot
 
-and/or do user action
+And/or do user action
 
 await waitFor(() => expect(queryByXxx()).not.toBeInTheDocument()  // wait for something to be removed based on the user event
 
@@ -62,7 +80,101 @@ and/or do user action
 await waitFor(() => expect(handlerSpy()).toHaveBeenCalledTimes(1)  // wait for one of the component's event properties to be invoked
 expect(handlerSpy).toHaveBeenCalledWith(...)
 
-When doing snapshot testing scan the generated .snap file for 'undefined' to find component props that are actually .isRequired but not defined as such in your propTypes.  Also check for 'Function' to catch accidental cases of expect(asFragment)... instead of expect(asFragment())...
-
-
 When testing spies better to call toHaveBeenCalledTimes(N) with an exact count to detect unnecessay renders causing multiple firings.
+
+Snapshot render tests should:
+- Populate the bare minimum default properties of a compoennt and test render (all .isRequired props)
+- Then populate ALL properties of a component and test render.
+- ensure id values are not likely to be duplicates if more than one component is on a page.
+- not output console error/warnings about incorrect properties.
+- if id is missing for an element which usually takes one, then a unique id should be generated i.e. ID_43 we can have a function with a counter to generate these.
+- When doing snapshot testing scan the generated .snap file for 'undefined' to find component props that are actually .isRequired but not defined as such in your propTypes.  Also check for 'Function' to catch accidental cases of expect(asFragment)... instead of expect(asFragment())...
+
+Specific Examples:
+
+React Components:
+
+Don't use anonymous functions in component properties. This creates a new function on every render, wastes time and memory. Pull your function out and wrap it in a useCallback.
+
+DONT
+
+(<SomeComponent
+   onClick={() => {...}}
+/>)
+
+DO
+
+const handleClick = useCallback(() => {
+  dispatch(...);
+}, [dispatch]);
+
+(<SomeComponent
+   onClick={handleClick}
+/>)
+
+For mount/unmount useEffects give names to the functions so it is obvious when each one is used.
+
+DONT
+
+useEffect(() => {
+	... unclear what this code is for
+	return () => {
+		... unclear what this return function is for
+	}
+});
+
+DO
+
+useEffect(function whenWeMount() {
+	... now clear by function name when this happens
+	return function whenWeUnmount() {
+		...
+	}
+}); // no dependency array because of mount/unmount purpose.
+
+Unit Testing:
+
+Don't use .toEqual until you have to.
+
+DONT
+
+expect(simpleVar).toEqual(expectedValue);
+
+DO
+
+expect(simpleVar).toBe(expectedValue);
+
+Prefer to use .toBe() until you have to use .toEqual()
+
+Spies. Use .toHaveBeenCalledTimes instead of .toHaveBeenCalled
+
+DONT
+
+expect(spy).toHaveBeenCalled();
+expect(spy.mock.lastCall[0]).toBe(42);
+expect(spy).toHaveLastReturnedWith(22);
+
+If the code changes and the spy is called more or fewer times the error message or test failure will be obscure.
+DO
+
+expect(spy).toHaveBeenCalledTimes(1);
+expect(spy).toHaveBeenLastCalledWith(42, 65);
+expect(spy).toHaveReturnedWith(22);
+
+Now if the number of calls to the spy changes it is obvious and the subsequent error or test failure will make more sense.
+Whenever you touch an existing test plan file, check that every group of calls to spy.mock.lastCall, spy.mock.calls or spy.mock.results has been preceded by a .toHaveBeenCalledTimes test.
+
+
+Color Contrast for Accessibility:
+
+Best - suggests colors to meet a ratio of 3, 4.5 or 7.
+Contrast Finder
+https://app.contrast-finder.org/result.html?foreground=rgb%2870%2C136%2C71%29&background=%23DFF0D8&ratio=4.5&isBackgroundTested=false&algo=Rgb&lang=en
+
+WebAIM: Contrast Checker
+https://webaim.org/resources/contrastchecker/
+Better, has ability to vary lightness of colors in place
+
+Accessibility Color Contrast Checker WCAG Compliance 
+https://www.accessibilitychecker.org/color-contrast-checker/
+
