@@ -230,6 +230,18 @@ function grf
 	git reset @~ "$@" && git commit --amend --no-edit
 }
 
+# Git grep and show a hit count or histogram per file matched and is sortable by count
+# ggr_hits console | sort -h
+function ggr_hits
+{
+	local match file
+	match="$1"
+	for file in `git grep -l "$1"`
+	do
+		echo `git grep "$1" $file | wc -l`: $file
+	done
+}
+
 # Grep for typescript interface or type definition in current directory/node_modules
 # tsgrep -l DateTimeFormat
 function tsgrep
