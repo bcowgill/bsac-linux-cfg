@@ -151,10 +151,25 @@ function checkAddImportDefault {
 #===========================================================================
 
 #set -x
+FILES=`getFilesE 'expect\(asFragment\)'`
+echo 00 FILES=$FILES
+[ ! -z "$FILES" ] && \
+	perl -i.bak -pne '
+		s{(expect\()\s*(asFragment)\s*\)}{$1$2())}xmsg;
+	' $FILES
+
+FILES=`getFilesE 'getBy.+\.toBeInTheDocument'`
+echo 01 FILES=$FILES
+[ ! -z "$FILES" ] && \
+	perl -i.bak -pne '
+		s{getBy(.+\.toBeInTheDocument)}{queryBy$1)}xmsg;
+	' $FILES
+
 DEPTH=1
 IMPORT=utils/functions
 SYMBOL=givesUndefined
 FILES=`getFilesE '\(\)\s*=>\s*(undefined|\{\s*\})' | grep -vE "$IMPORT\\.js|$TEST_PLANS"`
+echo 1 FILES=$FILES
 [ ! -z "$FILES" ] && SM="$SYMBOL" \
 	perl -i.bak -pne '
 		s{\(\)\s*=>\s*(undefined|\{\s*\})}{$ENV{SM}}xmsg
@@ -171,6 +186,7 @@ DEPTH=1
 IMPORT=utils/functions
 SYMBOL=givesNull
 FILES=`getFilesE '\(\)\s*=>\s*null' | grep -vE "$IMPORT\\.js|$TEST_PLANS"`
+echo 2 FILES=$FILES
 [ ! -z "$FILES" ] && SM="$SYMBOL" \
 	perl -i.bak -pne '
 		s{\(\)\s*=>\s*null}{$ENV{SM}}xmsg
@@ -184,6 +200,7 @@ DEPTH=1
 IMPORT=utils/functions
 SYMBOL=givesFalse
 FILES=`getFilesE '\(\)\s*=>\s*false' | grep -vE "$IMPORT\\.js|$TEST_PLANS"`
+echo 3 FILES=$FILES
 [ ! -z "$FILES" ] && SM="$SYMBOL" \
 	perl -i.bak -pne '
 		s{\(\)\s*=>\s*false}{$ENV{SM}}xmsg
@@ -197,6 +214,7 @@ DEPTH=1
 IMPORT=utils/functions
 SYMBOL=givesTrue
 FILES=`getFilesE '\(\)\s*=>\s*true' | grep -vE "$IMPORT\\.js|$TEST_PLANS"`
+echo 4 FILES=$FILES
 [ ! -z "$FILES" ] && SM="$SYMBOL" \
 	perl -i.bak -pne '
 		s{\(\)\s*=>\s*true}{$ENV{SM}}xmsg
@@ -210,6 +228,7 @@ DEPTH=1
 IMPORT=utils/functions
 SYMBOL=givesEmpty
 FILES=`getFilesE '\(\)\s*=>\s*""' | grep -vE "$IMPORT\\.js|$TEST_PLANS"`
+echo 5 FILES=$FILES
 [ ! -z "$FILES" ] && SM="$SYMBOL" \
 	perl -i.bak -pne '
 		s{\(\)\s*=>\s*""}{$ENV{SM}}xmsg
@@ -218,3 +237,5 @@ for f in $FILES
 do
 	checkAddImportSymbol "$SYMBOL" "$IMPORT" $DEPTH $f
 done
+
+

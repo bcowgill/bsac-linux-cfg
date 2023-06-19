@@ -11,7 +11,8 @@ React Components
 - propTypes and defaultProps should be accurate, don't leave them empty if you have props in the component.
 - React components must not begin with a lower case letter or they will render as HTML elements in all lower case.  CaptiliseAllComponentNames
 - Import images instead of putting a path into a src= parameter.  This allows webpack to inline the image and makes it available in dev/test/prod biulds all the same.
-- For a mount/unmount useEffect, give names to the functions and omit the dependency array.
+- For a mount/unmount useEffect give names to the functions and provide an empty dependency array. beforeWeMount/whenWeUnmount
+- For an afterEveryRender/beforeReRender give names to the functions and omit the dependency array.
 
 Create a Typography library for your standard used font formats.
 
@@ -121,7 +122,7 @@ useEffect(() => {
 	return () => {
 		... unclear what this return function is for
 	}
-});
+}, []);
 
 DO
 
@@ -130,7 +131,31 @@ useEffect(function whenWeMount() {
 	return function whenWeUnmount() {
 		...
 	}
-}); // no dependency array because of mount/unmount purpose.
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+}, []); // empty array for mount/unmount
+
+Note: may need the eslint disable line if you use reactive values in your handler functions
+
+For every render useEffects give names to the functions so it is obvious when each one is used.
+
+DONT
+
+useEffect(() => {
+	... unclear what this code is for
+	return () => {
+		... unclear what this return function is for
+	}
+});
+// very hard to notice no array vs empty array above
+
+DO
+
+useEffect(function afterEveryRender() {
+	... now clear by function name when this happens
+	return function beforeReRender() {
+		...
+	}
+}); // no dependency array for every render
 
 Unit Testing:
 

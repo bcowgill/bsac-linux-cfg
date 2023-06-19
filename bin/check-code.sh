@@ -611,6 +611,13 @@ git grep -E '\.prototype\s*=' \
 show_bad "ERROR PROTOTYPE" "Should not be making .prototype assignments. Did you mean .propTypes?"
 
 #-------------------------------------------
+git grep -E 'react-hooks/exhaustive-deps' \
+	| grep -vE '__' \
+	> found.lst
+
+show_bad "ERROR EFFECT HOOKS" "Should not be useing react-hooks/exhaustive-deps. Create proper useEffect dependency array or omit it for beforeWeMount/afterWeUnmount effects."
+
+#-------------------------------------------
 git grep -E '((\bx(it|describe))|\.skip)\(' \
 	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
