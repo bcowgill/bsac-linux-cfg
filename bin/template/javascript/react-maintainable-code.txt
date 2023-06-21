@@ -1,3 +1,12 @@
+Process for a Peer Review:
+  1. Before you raise the PR:
+    a) Run yarn format and yarn lint and fix any issues.
+    b) Ensure all the unit tests are passing.
+  2. Raise the PR then:
+    a) Review the PR yourself and delete any dead code, old comments, completed TODO/MUSTDO markers.
+    b) Run the unit test plan alone with coverage for each file changed and make sure the new code is covered by its own test plan.
+    c) After this, ask for peers to review your code.
+
 Some tips for writing maintainable React code:
 
 Code
