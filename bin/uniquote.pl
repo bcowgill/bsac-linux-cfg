@@ -6,6 +6,7 @@
 # i.e.     "I said: don't do that!"  'I said: don\'t do that!'
 # becomes  'I said: don’t do that!'  letter \' letter
 # also change double quotes to single quotes.
+# See also utf8quotes.sh
 
 while (<>)
 {

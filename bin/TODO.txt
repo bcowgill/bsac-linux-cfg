@@ -1,6 +1,8 @@
 USB broken posting to help page.
 usb-broken.txt
 
+contraction.pl - convert text to forms with contractions, or reverse it
+
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
