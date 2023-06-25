@@ -94,6 +94,7 @@ These would not be corrected:
 ... import .... 'path/Object'
 ... import js from '!!raw!./ScopedSelectors.js';
 
+See also git-mv-dirs.sh git-rename.sh
 "
 	exit 1
 }

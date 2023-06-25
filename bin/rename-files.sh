@@ -14,7 +14,7 @@ Spaces in the file name will be converted to a dash.
 Multiple dashes will be converted to a single one.
 By default it only shows how the files would be renamed but doesn\'t do it.
 
-See also auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
+See also ls-spacefiles.sh auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 Example:
 $0 imag photos-today-
@@ -31,19 +31,30 @@ fi
 export MATCH="$1"
 export REPLACE="$2"
 export EXEC="$3"
-ls | perl -MFile::Copy -ne '
+ls -1 | perl -MFile::Copy -ne '
 	chomp;
 	$from = $_;
 	$to = lc($from);
 	$to =~ s{$ENV{MATCH}}{$ENV{REPLACE}}i;
 	$to =~ s{\s+}{-}g;
 	$to =~ s{-+}{-}g;
+	$to =~ s{\.jpeg\z}{.jpg}xmsi;
 	if ($from ne $to) {
 		++$moved;
 		print qq{mv "$from" "$to"\n};
-		File::Copy::mv($from, $to) if ($ENV{EXEC});
+		if ( -e $to )
+		{
+			print STDERR qq{$to: file already exists, will not overwrite from [$from]\n};
+			++$exists;
+			--$moved;
+		}
+		else
+		{
+			File::Copy::mv($from, $to) if ($ENV{EXEC});
+		}
 	}
 	END {
+		$existed = $ENV{EXEC} ? "already existed and were not overwritten" : "would already exist and would not be overwritten";
 		$tense = $ENV{EXEC} ? "were" : "would be";
 		$suffix = $ENV{EXEC} ? "" : "  Specify --exec to rename them.";
 		if ($moved)
@@ -53,6 +64,10 @@ ls | perl -MFile::Copy -ne '
 		else
 		{
 			print qq{No files $tense renamed.\n};
+		}
+		if ($exists)
+		{
+			print qq{$exists files $existed.\n};
 		}
 	}
 '

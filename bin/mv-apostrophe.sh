@@ -7,7 +7,7 @@
 #	ʼ	U+2BC	[ModifierLetter]	MODIFIER LETTER APOSTROPHE
 #	‘’	‘   ’	‘U+2018 U+2019 LEFT/RIGHT SINGLE QUOTATION MARK [InitialPunctuation] [FinalPunctuation]’
 
-# See also auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh rename-files.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
+# See also rename-files.sh auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 FIND=
 if [ "$1" == "--check" ]; then

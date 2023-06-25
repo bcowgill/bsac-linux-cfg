@@ -3,6 +3,8 @@ usb-broken.txt
 
 contraction.pl - convert text to forms with contractions, or reverse it
 
+unit tests for mv-apostrophes rename-files unspace-files - test data is there but no test plan.
+
 Project Groo comics inventory
 libreoffice ~/d/docs/graphic-novels/groo-comics-specials-inventory.ods &
 
