@@ -85,6 +85,7 @@ function is_locked {
 }
 
 # lock the backup directory to prevent a second backup starting
+# do not use mkdir -p
 function lock {
 	LOCK_ERROR=1
 	mkdir $BK_DIR/locked || die 1 "unable to lock in $BK_DIR/locked"

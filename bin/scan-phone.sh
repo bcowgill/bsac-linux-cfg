@@ -61,6 +61,9 @@ else
 	exit 1
 fi
 
+if [ ! -z "$XXX_FROM" ]; then
+	xxx-pics-move.sh "$CONFIG"
+fi
 if [ ! -z "$PRIVACY_SAFE" ]; then
 	metadata-cleanup-phone.sh "$CONFIG"
 fi

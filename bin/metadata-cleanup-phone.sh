@@ -79,38 +79,34 @@ function move_files {
 	fi
 }
 
-if [ ! -z "$PRIVACY_SAFE" ]; then
-	if [ ! -z "$PRIVACY_SAFE_DONE" ]; then
-		if [ -d "$PRIVACY_SAFE" ]; then
-			NEW="$PRIVACY_SAFE_DONE"
-			REMOVE="$PRIVACY_SAFE"
-			mkdir -p "$NEW" 2> /dev/null
-			if [ -d "$REMOVE" ]; then
-				echo Moving photos, videos and sound files with removed metadata from phone at $REMOVE/ to $NEW/
-				echo `ls "$REMOVE" | wc -l` files waiting in $REMOVE
-				echo `ls "$NEW" | wc -l` files left in $NEW
-				move_files "$REMOVE" "$NEW" jpeg
-				move_files "$REMOVE" "$NEW" JPEG
-				move_files "$REMOVE" "$NEW" jpg
-				move_files "$REMOVE" "$NEW" JPG
-				move_files "$REMOVE" "$NEW" png
-				move_files "$REMOVE" "$NEW" PNG
-				move_files "$REMOVE" "$NEW" mp3
-				move_files "$REMOVE" "$NEW" MP3
-				move_files "$REMOVE" "$NEW" mp4
-				move_files "$REMOVE" "$NEW" MP4
-				echo `ls "$NEW" | wc -l` files now in $NEW
-				if [ `ls "$REMOVE" | wc -l` == 0 ]; then
-					echo OK, there are no files leftover in "$REMOVE/"
-				else
-					echo NOT OK, there are `ls "$REMOVE" | wc -l` files leftover in "$REMOVE/"
-					ls "$REMOVE" | head
-				fi
-				echo TRY: cp "$NEW/phone-storage.png" "$REMOVE/"
-				cp "$NEW/phone-storage.png" "$REMOVE/"
-			fi
+if [ -d "$PRIVACY_SAFE" ]; then
+	NEW="$PRIVACY_SAFE_DONE"
+	REMOVE="$PRIVACY_SAFE"
+	mkdir -p "$NEW" 2> /dev/null
+	if [ -d "$REMOVE" ]; then
+		echo Moving photos, videos and sound files with removed metadata from phone at $REMOVE/ to $NEW/
+		echo `ls "$REMOVE" | wc -l` files waiting in $REMOVE
+		echo `ls "$NEW" | wc -l` files left in $NEW
+		move_files "$REMOVE" "$NEW" jpeg
+		move_files "$REMOVE" "$NEW" JPEG
+		move_files "$REMOVE" "$NEW" jpg
+		move_files "$REMOVE" "$NEW" JPG
+		move_files "$REMOVE" "$NEW" png
+		move_files "$REMOVE" "$NEW" PNG
+		move_files "$REMOVE" "$NEW" mp3
+		move_files "$REMOVE" "$NEW" MP3
+		move_files "$REMOVE" "$NEW" mp4
+		move_files "$REMOVE" "$NEW" MP4
+		echo `ls "$NEW" | wc -l` files now in $NEW
+		if [ `ls "$REMOVE" | wc -l` == 0 ]; then
+			echo OK, there are no files leftover in "$REMOVE/"
 		else
-			echo No phone metadata removal dir $PRIVACY_SAFE found.
+			echo NOT OK, there are `ls "$REMOVE" | wc -l` files leftover in "$REMOVE/"
+			ls "$REMOVE" | head
 		fi
+		echo TRY: cp "$NEW/phone-storage.png" "$REMOVE/"
+		cp "$NEW/phone-storage.png" "$REMOVE/"
 	fi
+else
+	echo No phone metadata removal dir $PRIVACY_SAFE found.
 fi
