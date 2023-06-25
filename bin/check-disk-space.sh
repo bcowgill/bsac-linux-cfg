@@ -7,7 +7,7 @@ function check_space {
 	local notify
 	notify=$1
 	df -h --output=target,fstype,avail,pcent,source \
-		| grep -vE 'tmpfs|iso9660' \
+		| grep -vE 'tmpfs|iso9660|ADR620-16GB' \
 		| NOTIFY=$notify LIMIT=$LIMIT SEVERITY="$SEVERITY" perl -ne '
 			$print = 0;
 			if (m{(\d+)\%}xms && $1 > $ENV{LIMIT})
