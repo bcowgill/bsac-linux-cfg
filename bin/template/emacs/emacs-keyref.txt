@@ -86,6 +86,7 @@ KEY:EMACS:NAV Ctrl-x r b Jump to a named bookmark
 
 KEY:EMACS:VIEW Ctrl-x 1 Single window view, close all other windows
 KEY:EMACS:VIEW Ctrl-x 2 Split window in two horizontally
+KEY:EMACS:VIEW Ctrl-x 3 Split window in two vertically
 KEY:EMACS:VIEW Ctrl-x o Move the cursor to the other window
 KEY:EMACS:VIEW Ctrl-x 4 Ctrl-f Split window and open another file in it
 KEY:EMACS:VIEW Ctrl-Alt-v Scroll the other window down a page
