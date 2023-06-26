@@ -2,22 +2,35 @@
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
 # WINDEV tool useful on windows development machin
 
-if [ -z "$2" ]; then
+# TODO if provide a directory use find $dir to process the files...
+
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
 	echo "
-$0 match replace [--exec]
+$cmd [--help|--man|-?] match replace [--exec]
 
---exec   specify to cause the files to be renamed.
+This will rename files in the current directory only, seaarching for a match string and replacing with a replace string.  It makes their names easier to use with the shell mouse selection by converting spaces to dashes.
 
-Attempts to rename files in the current directory that match the match string.
+--exec  Specify to cause the files to be renamed.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+It will process any files which match the match string, ignoring case differences.
+The match and replace strings can be identical to restrict the rename to files with a common sub-string in them.
 The new file name will be converted to lower case letters.
 Spaces in the file name will be converted to a dash.
 Multiple dashes will be converted to a single one.
+
 By default it only shows how the files would be renamed but doesn\'t do it.
 
 See also ls-spacefiles.sh auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 Example:
-$0 imag photos-today-
+
+$cmd imag photos-today-
 
 Renames IMAG0000.AVI to photos-today-0000.avi
 
@@ -25,9 +38,23 @@ Puts track/chapter number from file at start:
 
 ls -1 | perl -pne 'chomp; m{(\d\d)}; \$_ = qq{mv \$_ \$1-\$_\n}; system \$_'
 "
-	exit 0
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
+if [ -z "$2" ]; then
+	echo "You must provide a replace string to rename files."
+	usage 0
 fi
 
+# make vars (which may have space in them) available to the perl script easily
 export MATCH="$1"
 export REPLACE="$2"
 export EXEC="$3"
