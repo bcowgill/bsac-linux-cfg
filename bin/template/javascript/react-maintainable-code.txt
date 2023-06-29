@@ -13,7 +13,7 @@ Code
 - Check for any leftover console.error, log, warn, etc (eslint should do this)
 - Inconsistent names to be fixed.
 - Case statements to always have braces i.e. case: { ... break } so that it is easy to insert debugging code.
-- Prefer arrow functions to have braces with a return so that debugging code can be inserted without breaking things.
+- Prefer arrow functions (and if statements) to have braces with a return so that debugging code can be inserted without breaking things.
 
 React Components
 
