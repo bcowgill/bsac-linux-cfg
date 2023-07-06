@@ -1,0 +1,16 @@
+
+jest-snap.sh [--help|--man|-?] path/__snapshots__/suite.test.js.snap
+
+This will split a jest unit test snapshot file into individual snapshot files so you can use a visual comparison tool on them.
+
+path/.. the file name for the jest snapshot file to split.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+More detail the snapshot files will be created in the current directory named jest-snap-A.snap
+
+A list of vdiff commands are also displayed for comparing the first snapshot file against each other one so you can easily copy and paste to compare them.
+
+See also vdiff.sh, rvdiff.sh and their aliases vdiff, rvdiff
+

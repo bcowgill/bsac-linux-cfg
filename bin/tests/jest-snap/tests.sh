@@ -12,7 +12,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 42
+PLAN 12
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -33,44 +33,16 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD command invalid option
+echo TEST $CMD command invalid source file
 TEST=command-invalid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	EXPECT=1
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --invalid $SAMPLE"
+	ARGS="$DEBUG invalid$SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD command incompatible options
-TEST=command-invalid-options
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --inplace --keep $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD command inplace and show are incompatible
-TEST=command-invalid-inplace-show
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --inplace --show $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -83,8 +55,14 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	mv jest*snap out/
+	assertFilesEqual "out/jest-snap-a.snap" "base/jest-snap-a.snap" "$TEST-a"
+	assertFilesEqual "out/jest-snap-b.snap" "base/jest-snap-b.snap" "$TEST-b"
+	assertFilesEqual "out/jest-snap-c.snap" "base/jest-snap-c.snap" "$TEST-c"
+	assertFilesEqual "out/jest-snap-d.snap" "base/jest-snap-d.snap" "$TEST-d"
+	assertFilesEqual "out/jest-snap-e.snap" "base/jest-snap-e.snap" "$TEST-e"
 else
 	echo SKIP $TEST "$SKIP"
 fi
