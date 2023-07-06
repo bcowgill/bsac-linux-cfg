@@ -16,7 +16,7 @@ perl -e '
 			$file = "jest-snap-$char.snap";
 			++$count;
 			open($fh, ">", $file) || die "create $file: $!";
-			print $fh qq{// $file\n$preamble};
+			print $fh qq{// $file\n$preamble$line};
 		}
 		elsif ($file)
 		{
