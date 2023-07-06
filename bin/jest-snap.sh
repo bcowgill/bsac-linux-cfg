@@ -28,10 +28,11 @@ perl -e '
 		}
 		END
 		{
+			print qq{$count jest-snap-*.snap file created from jest snapshot file.\n};
 			foreach my $which (1 .. $count - 1)
 			{
 				my $char = chr(ord("a") + $which);
-				print qq{vdiff.sh jest-snap-a.snap jest-snap-$char.snap};
+				print qq{vdiff.sh jest-snap-a.snap jest-snap-$char.snap\n};
 			}
 		}
 	}
