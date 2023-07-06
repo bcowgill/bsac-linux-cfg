@@ -61,10 +61,16 @@ fi # CYP
 
 #-------------------------------------------
 git grep 'getAttribute' \
-	| grep -vE '__vendor__|__scripts__|//.+getAttribute|getAttribute\("value")\s*===\s*"true"' \
+	| grep -vE '__vendor__|__scripts__|\.toMatch\(|//.+getAttribute|getAttribute\("value")\s*===\s*"true"' \
 	> found.lst
 
 show_bad "WARN TEST ATTR" "Should use (.not).toHaveAttribute instead of .getAttribute in unit tests because it reports failures better."
+
+#-------------------------------------------
+git grep -E 'waitFor.+toMatchSnapshot' \
+	> found.lst
+
+show_bad "ERROR TEST SNAPSHOT" "Do not put toMatchSnapshot inside a waitFor function.  It will ruin your snapshots when you run tests in isolation with skip/only.  Put it AFTER the waitFor completes."
 
 #-------------------------------------------
 git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \

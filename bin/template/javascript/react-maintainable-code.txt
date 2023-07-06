@@ -81,6 +81,8 @@ await waitFor(() => getByXxx())  // wait for something new to appear based on th
 
 expect(asFragment()).toMatchSnapshot()  // make additional tests or take snapshot
 
+DO NOT put toMatchSnapshot inside a waitFor function as it will ruin your snapshots when you run one test plan in isolation.
+
 And/or do user action
 
 await waitFor(() => expect(queryByXxx()).not.toBeInTheDocument()  // wait for something to be removed based on the user event
