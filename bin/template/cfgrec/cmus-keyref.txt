@@ -1,6 +1,7 @@
 Cmus quick reference
 
 man cmus-tutorial
+see filter-mime-audio.pl for making Play list from found sound files.
 
 console music player man cmus-tutorial or cmus-remote
 
