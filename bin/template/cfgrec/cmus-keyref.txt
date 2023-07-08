@@ -1,36 +1,46 @@
-cmus quick reference
+Cmus quick reference
+
+man cmus-tutorial
 
 console music player man cmus-tutorial or cmus-remote
 
-KEY:CMUS:CTRL :q quit the program
+KEY:CMUS:CTRL :q quit the program save Library and Play list, but not the Queue
 KEY:CMUS:CTRL :save save configuration
-KEY:CMUS:TREE 1   Tree view for album and artist
-KEY:CMUS:TREE Space   Expand artist to see albums
-KEY:CMUS:TREE /   Search
+KEY:CMUS:TREE 1   Tree view for Artist/Album
+KEY:CMUS:TREE Space   Expand Artist to see Albums (view 1)
+KEY:CMUS:TREE /   Search for text, press Enter once specified
+KEY:CMUS:TREE ?   Search backwards, press Enter once specified
+KEY:CMUS:TREE //  Search only on deeper level names (Artists/Albums or titles)
+KEY:CMUS:TREE //  Search backwards, only on deeper level names (Artists/Albums or titles)
 KEY:CMUS:TREE n   Next match when searching
-KEY:CMUS:TREE Tab   Switch between song and album/artist panel
+KEY:CMUS:TREE N   Prev match when searching
+KEY:CMUS:TREE Tab   Switch between song and Artist/Album panel (view 1)
 KEY:CMUS:LIB 2   Library view of all songs
 KEY:CMUS:LIB Enter   Play track now
-KEY:CMUS:LIB e   Queue song to play next
-KEY:CMUS:LIB y   Add song to play list
+KEY:CMUS:LIB e   Add marked tracks to the end of the Play queue(4) (view 1-5)
+KEY:CMUS:LIB E   Add marked tracks to the start of the Play queue(4) (view 1-5)
+KEY:CMUS:LIB y   Add marked tracks to Play list(3) (view 1-5)
 KEY:CMUS:PLAY 3   Play list view
-KEY:CMUS:PLAY p   Move track down the play list
-KEY:CMUS:PLAY P   Move track up the play list
-KEY:CMUS:PLAY D   Delete track from play list
+KEY:CMUS:PLAY p   Move marked tracks to after the selection or down the Play order (view 2-4)
+KEY:CMUS:PLAY P   Move marked tracks to just before the selection or up the Play order list (view 2-4)
+KEY:CMUS:PLAY D   Delete track from Play order (view 1-4)
+KEY:CMUS:PLAY Del Delete track from Play order (view 1-4)
 KEY:CMUS:QUEUE 4   Play queue view
-KEY:CMUS:QUEUE p   Move track down the play queue
-KEY:CMUS:QUEUE P   Move track up the play queue
-KEY:CMUS:QUEUE D   Delete track from the play queue
-KEY:CMUS:QUEUE m   Change play mode now (all/artist/album/playlist)
+KEY:CMUS:QUEUE p   Move track down the Play queue(4)
+KEY:CMUS:QUEUE P   Move track up the Play queue(4)
+KEY:CMUS:QUEUE D   Delete track from the Play queue(4) (view 1-4)
+KEY:CMUS:QUEUE Del Delete track from the Play queue(4) (view 1-4)
+KEY:CMUS:QUEUE m   Change play mode now (all/Artist/Album/Play list)
 KEY:CMUS:QUEUE M   Change play mode after current song
 KEY:CMUS:FILE 5   File browser view
-KEY:CMUS:FILE a   Add file or directory to library
+KEY:CMUS:FILE a   Add tracks or directory to library(1-2) (view 1-5)
 KEY:CMUS:FILE u   Update view from file system
 KEY:CMUS:FILE Left   Move up one directory
-KEY:CMUS:FILE Space   Enter directory
+KEY:CMUS:FILE Space   Enter directory (view 5)
 KEY:CMUS:FILE i   Show hidden files
 KEY:CMUS:FILTER 6   Filter view
 KEY:CMUS:INFO 7   Help view
+KEY:CMUS:COMMON Space  Mark the song currently selected at the cursor (view 2-4)
 KEY:CMUS:COMMON c   Pause/play current track
 KEY:CMUS:COMMON Left   Seek -5 seconds in track
 KEY:CMUS:COMMON Right   Seek +5 seconds in track
@@ -45,10 +55,72 @@ KEY:CMUS:COMMON ]   Right volume up
 KEY:CMUS:COMMON {   Left volume down
 KEY:CMUS:COMMON }   Right volume down
 KEY:CMUS:COMMON t   Toggle time remaining / time now
-KEY:CMUS:COMMON z   Previous track in play queue
-KEY:CMUS:COMMON b   Next track in play queue
+KEY:CMUS:COMMON z   Previous track in Play queue(4)
+KEY:CMUS:COMMON b   Next track in Play queue(4)
 KEY:CMUS:COMMON v   Stop playing track
 KEY:CMUS:COMMON x   Play track
 KEY:CMUS:COMMON r   Toggle repeat mode
 KEY:CMUS:COMMON s   Toggle shuffle mode
+KEY:CMUS:COMMON o   Toggle play sorted mode
 KEY:CMUS:COMMON C   Toggle continuous mode
+
+Quick Tutorial
+1 2  Library views Artist/Album:Track Tree / All songs list by Artist-#-Track-Year-Time
+3 Play list view
+4 Play queue view
+5 File Browser view
+6 Filter Tracks view
+7 Help view
+
+:q Enter quit saves your settings, Library, Play list but not Play queue
+j k - go down/up in list
+g G - go to top/bottom of list
+Ctrl-f Ctrl-b go down/up one page in list
+Space - expand Album, enter directory or mark track
+Tab - move from Artist/Album to Track panel (view 1)
+Enter - play song now
+Ctrl-l refresh screen
+
+/ // Enter Search forwards all/track
+? ?? Enter Search backwards all/track
+n N  Find next / prev search match
+
+a copy tracks to the Library(1-2) (~/.cmus/lib.pl)
+y copy tracks to the Play list(3) (~/.cmus/playlist.pl)
+e copy tracks to the Play queue(4)
+E prepend tracks to the Play queue(4)
+
+Track Control
+c pause/unpause the current track
+v stop playing current track
+x play current track
+z b play prev/next track in play queue
+- = volume down/up
+[ ] volume up left/right side
+{ } volume down left/right side
+Left Right seek 10 seconds back/forward in track
+h l seek 5 secondes back/forward in track
+, . (< >) seek 1 minute back/forward in track
+
+Play queue(4) or Play list(3)
+p P move marked or selected tracks down or up in the play order
+D Del delete marked or selected track from current list
+
+Status bar toggles:
+(all/Artist/Album) from (sorted) (Library/Play list) CRS
+m   Change play mode now (all/Artist/Album/Play list)
+M   Change play mode after current song (Library/Play list)
+o   Toggle play sorted mode
+C   Toggle continuous mode
+r   Toggle repeat mode
+s   Toggle shuffle mode
+t   Toggle time remaining / time now
+
+Other commands:
+:unmark - clear all marked tracks
+:tqueue N - add N random tracks to the Play queue
+:lqueue N - add N random albums to the Play queue
+:save -q ~/playqueue.pl  will save the Play queue to Play list file
+:load -l or -p filename.pl  load Library or Play list from Play list file
+4 :add ~/playqueue.pl go to Play queue and load tracks from saved file
+4 :clear go to Play queue and clear all tracks

@@ -55,6 +55,7 @@ if mnt-phone.sh "$CONFIG" --check ; then
 	else
 		echo OK setting "$ringtone" as "$RINGTONE"
 		cp "$RANDOM_RINGS/$ringtone" "$RINGTONE"
+		sound-play.sh "$RANDOM_RINGS/$ringtone" &
 	fi
 else
 	echo NOT OK `ls "$phone"` use mnt-phone.sh to mount your phone. > /dev/stderr

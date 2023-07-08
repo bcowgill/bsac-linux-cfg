@@ -61,7 +61,7 @@ echo "podcasts-to-phone.sh $CONFIG [$PODCASTS_FROM] to [$PODCASTS_TO]"
 
 pushd $BACKUP_DIR > /dev/null
 
-if mnt-phone "$CONFIG" --check ; then
+if mnt-phone.sh "$CONFIG" --check ; then
 	/bin/true
 else
 	echo NOT OK was unable to mount the phone [$phone], is it connected and unlocked?
