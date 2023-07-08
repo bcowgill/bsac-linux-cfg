@@ -18,7 +18,7 @@ This will filter a list of file names looking for audio, sound, or music file ex
 -?      Shows help for this tool.
 
 
-See also find-audio find-sounds.sh, find-ez-sounds.sh, sound-play.sh, classify.sh
+See also filter-mime-audio.pl find-audio find-sounds.sh, find-ez-sounds.sh, sound-play.sh, classify.sh
 
 See the online file extension database https://fileinfo.com/extension/wav
 
@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(669|aac|aiff|am[fs]|ape|au|dmf|dsm|far|flac|it|m3u|m4[ap]|mdl|m[eo]d|midi?|mp[23]|mt[2m]|og[ag]|pls|p[st]m|s[3t]m|smp|snd|ult|umx|voc|wa?v|wma|xm)\b' # .wav .mp3 .ogg .mod
+$GREP '\.(669|aac|aiff|am[fs]|ape|au|dmf|dsm|far|flac|it|m3u|m4[ap]|mdl|m[eo]d|midi?|mp[23]|mt[2m]|og[ag]|pls|p[st]m|s[3t]m|smp|snd|ult|umx|voc|wa?v|wma|xm)(:|"|\s*$)' # .wav .mp3 .ogg .mod
