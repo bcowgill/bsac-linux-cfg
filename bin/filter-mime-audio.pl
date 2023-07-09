@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Use file command to identify if file is a sound file, not just extension.
+# Use file command to identify if file is a sound file my mime, not just extension.
 # locate -i --regex [aeiou] | filter-music | filter-mime-audio.pl
 # Use to create a cmus playlist
 # locate -i --regex [aeiou] | filter-music | filter-mime-audio.pl > ~/.cmus/all-sounds.pl
