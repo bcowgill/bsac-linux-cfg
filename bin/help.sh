@@ -77,8 +77,10 @@ use FindBin;
 
 sub usage
 {
+	my $cmd = $FindBin::Script;
+
 	print <<"USAGE";
-$FindBin::Script [--help|--man|-?]
+$cmd [--help|--man|-?]
 
 Display a description of the program.
 
@@ -92,7 +94,7 @@ See also ...
 
 Example:
 
-echo filename | $FindBin::Script
+echo filename | $cmd
 
 USAGE
 	exit 0;

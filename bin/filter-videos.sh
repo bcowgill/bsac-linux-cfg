@@ -18,7 +18,7 @@ This will filter a list of file names looking for video, movie file extensions.
 -?      Shows help for this tool.
 
 
-See also filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-scripts.sh, filter-web.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
+See also filter-mime-video.sh, filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-scripts.sh, filter-web.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
 
 See the online file extension database https://fileinfo.com/extension/srt
 
@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(abc|as[fx]|avi|divx|fl[iv]|fxm|m2ts?|m4v|mkv|mng|mo[dv]|mp4|mp(e|g|eg)|og[mvx]|srt|swf|t[ps]|vcd|vdr|viv|vob|wmv|yuv)\b' # .asf .asx .avi .divx .fli .flv .m2t .m2ts .mod .mov .mpe .mpg .mpeg .ogm .ogv .ogx .tp .ts
+$GREP '\.(abc|as[fx]|avi|divx|fl[iv]|fxm|m2ts?|m4v|mkv|mng|mo[dv]|mp4|mp(e|g|eg)|og[mvx]|srt|swf|t[ps]|vcd|vdr|viv|vob|wmv|yuv)(:|"|\s*$)' # .asf .asx .avi .divx .fli .flv .m2t .m2ts .mod .mov .mpe .mpg .mpeg .ogm .ogv .ogx .tp .ts
