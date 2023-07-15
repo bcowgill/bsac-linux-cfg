@@ -1,0 +1,27 @@
+{
+  "name": "zod-test",
+  "version": "1.0.0",
+  "description": "a test of the npm zod package",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "test",
+    "of",
+    "zod",
+    "package"
+  ],
+  "author": "Brent S.A. Cowgill <zardozcs@gmail.com> (http://github.com/bcowgill)",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "joi": "^17.9.2",
+    "joi-to-typescript": "^4.4.1",
+    "joy": "^0.1.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
+    "yup": "^1.2.0",
+    "zod": "^3.21.4"
+  }
+}
