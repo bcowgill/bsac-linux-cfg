@@ -4,6 +4,7 @@ https://www.youtube.com/watch?v=rY_XqfSHock
 
 Code: https://github.com/jherr/runtime-type...
 Zod: https://github.com/colinhacks/zod
+     https://github.com/causaly/zod-validation-error
 Yup: https://github.com/jquense/yup
 Joi: https://joi.dev/api/?v=17.4.2
 
