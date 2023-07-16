@@ -19,7 +19,11 @@ use typescript playground
 
 https://www.typescriptlang.org/play?
 
+Schema definitions are required by default, must use .optional() to mark them optional vs Yup library where they are optional by default. (like React)
 
+ZodError details https://github.com/colinhacks/zod/blob/master/ERROR_HANDLING.md
+validator - library of additional string validation functions
+zod-validation-error - more useful ZodError messages
 yup
 joi joi-to-typescript
 joy
