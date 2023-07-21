@@ -33,6 +33,7 @@ alias vii3='$EDITOR ~/bin/cfg/.i3-config ~/bin/i3-launch.sh ~/bin/i3-start.sh'
 alias prompter='source `which toggle-prompt.sh`'
 alias promptshort='source `which toggle-prompt-short.sh`'
 
+alias ls-path="perl -e '\$p = \$ENV{PATH}; \$p =~ s{:}{\n}xmsg; print \$p' | uniq"
 alias ls-effects='git grep -iE "(before|after|when)\\w+(Render|Mount|Unmount)\\("'
 
 if [ -z $COMPANY ]; then
