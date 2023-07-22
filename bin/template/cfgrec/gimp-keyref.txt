@@ -1,0 +1,127 @@
+GIMP quick reference
+
+HEREIAM: https://docs.gimp.org/2.8/en/gimp-tutorial-quickie-separate.html
+
+TODO - how to use a pattern with a brush?
+how to draw a square, circle, etc?
+
+Wilber is the GIMP mascot.
+/usr/share/doc/gimp/Wilber_Construction_Kit.xcf.gz
+
+Getting Unstuck: if gimp seems to have stopped functioning.
+https://docs.gimp.org/2.8/en/gimp-getting-unstuck.html#gimp-using-getting-unstuck
+
+Bug:
+When using the filter for brush, pattern, etc it does not match the names shown in the View as List mode. Might be matching tags or something else but not a very good filter experience.
+
+Key Reference
+KEY:CMD:QUIT Ctrl-q Close GIMP HEREIAM
+KEY:CMD:MENU Shift-F10 Open the image window menu (especially in full screen)
+KEY:CMD:INFO Alt-Enter Show image properties
+
+KEY:FILE:NEW Ctrl-n Open a new blank image window.
+KEY:FILE:OPEN Ctrl-o Open an existing image file in a new window.
+KEY:FILE:OPENLAYERS Ctrl-Alt-o Open an existing image file as layers.
+KEY:FILE:SAVE Ctrl-s Save the active image back to .xcf file.
+KEY:FILE:SAVEAS Ctrl-Shift-s Save the active image to another .xcf file name.
+KEY:FILE:EXPORT Ctrl-Shift-e Save the active image to another image file format.
+KEY:VIEW:CLOSE Ctrl-w Close active image view.
+KEY:VIEW:CLOSE Ctrl-Shift-w Close all image views.
+KEY:EDIT:DUPLICATE Ctrl-d Duplicate active image in a new window.
+
+KEY:TOOL:RECTSEL r Activate the Rectangular Select Tool
+KEY:TOOL:ELLIPSESEL e Activate the Elliptical Select Tool
+KEY:TOOL:FREESEL f Activate the Free Select Tool (rope)
+KEY:TOOL:FUZZYSEL u Activate the Fuzzy Select Tool contiguous by color (wand)
+KEY:TOOL:COLORSEL Shift-o Activate the Color Select Tool for regions by color
+KEY:TOOL:INTELSEL i Activate the Intelligent Select Tool (scissor)
+KEY:TOOL:PATHS b Activate the Paths Tool
+KEY:TOOL:PICKER o Activate the Color Picker Tool
+KEY:TOOL:ZOOM z Activate the Zoom Tool
+KEY:TOOL:MEASURE Shift-m Activate the Measure Tool for distance and angle.
+KEY:TOOL:MOVE m Activate the Move Tool for layers, selection or other objects.
+KEY:TOOL:ALIGN q Activate the Alignment Tool for layers and other objects.
+KEY:TOOL:CROP Shift-c Activate the Crop Tool for edge of image or layer.
+KEY:TOOL:ROTATE Shift-r Activate the Rotate Tool for layer, selection or path.
+KEY:TOOL:SCALE Shift-t Activate the Scale Tool for layer, selection or path.
+KEY:TOOL:SHEAR Shift-s Activate the Shear Tool for layer, selection or path.
+KEY:TOOL:PERSPECTIVE Shift-p Activate the Perspective Tool for layer, selection or path.
+KEY:TOOL:FLIP Shift-f Activate the Flip Tool horizontally or vertically for layer, selection or path.
+KEY:TOOL:CAGE Shift-g Activate the Cage Transform Tool for selection.
+KEY:TOOL:TEXT t Activate the Text Tool for text layers.
+KEY:TOOL:FILL Shift-b Activate the Bucket Fill Tool for filling selection with color or pattern.
+KEY:TOOL:BLENDFILL l Activate the Blend Fill Tool for filling selection with color gradient.
+KEY:TOOL:PENCIL n Activate the Pencil Tool for hard edge painting with a brush.
+KEY:TOOL:PAINT p Activate the Paintbrush Tool for smooth strokes using a brush.
+KEY:TOOL:ERASE Shift-e Activate the Eraser Tool for erasing to background or transparency using a brush.
+KEY:TOOL:AIRBRUSH a Activate the Airbrush Tool for using a brush with variable pressure.
+KEY:TOOL:INK k Activate the Ink Tool for calligraphy-style painting.
+KEY:TOOL:CLONE c Activate the Clone Tool for selectively copying from an image or pattern, using a brush.
+KEY:TOOL:HEAL h Activate the Healing Tool for healing image irregularities.
+KEY:TOOL:BLUR Shift-u Activate the Blur/Sharpen Tool for selective blurring or unblurring using a brush.
+KEY:TOOL:SMUDGE s Activate the Smudge Tool for selective smudging using a brush.
+KEY:TOOL:DODGE Shift-d Activate the Dodge/Burn Tool for selective lightening or darkening using a brush.
+
+KEY:SEL:ALL Ctrl-a Select the entire active image.
+KEY:SEL:NONE Ctrl-Shift-a Clear the selection.
+KEY:SEL:FLOAT Ctrl-Shift-l Create a floating selection.
+KEY:SEL:INVERT Ctrl-i Invert the area that is selected.
+KEY:SEL:PATH Shift-v Select from the active path.
+KEY:SEL:SHOW Ctrl-t Toggle show / hide the active selection.
+KEY:SEL:QUICKMASK Shift-q Toggle selection to QuickMask / Boundary (marching ants)
+KEY:SEL:MOVE Alt-Mouse Move the active selection.
+KEY:SEL:ADD Shift-Mouse Add to active selection when using a selection tool.
+KEY:SEL:SUBTRACT Ctrl-Mouse Subtract from the active selection when using a selection tool.
+KEY:SEL:INTERSECT Ctrl-Shift-Mouse Intersect with the active selection when using a selection tool.
+
+KEY:VIEW:IMAGE Alt-N Bring image #N into view and make active image.
+KEY:VIEW:TOOLS Tab Hide/Gather the floating tool dialogs.
+KEY:VIEW:TOOLBOX Ctrl-b View the Toolbox
+KEY:VIEW:LAYERS Ctrl-l Show the layers dialog.
+KEY:VIEW:BRUSHES Ctrl-Shift-b Show the brushes dialog.
+KEY:VIEW:PATTERNS Ctrl-Shift-p Show the patterns dialog.
+KEY:VIEW:GRADIENTS Ctrl-g Show the gradients dialog.
+KEY:VIEW:SHRINKWRAP Ctrl-j Shrink-Wrap keeps zoom level as image window size changes..
+KEY:VIEW:ZOOMFIT Ctrl-Shift-j Adjusts zoom level as image window size changes.
+
+KEY:EDIT:UNDO Ctrl-z Undo last edit in undo history.
+KEY:EDIT:REDO Ctrl-y Redo last undone edit from undo history.
+KEY:EDIT:CUT Ctrl-x Move the selected pixels to the clipboard.
+KEY:EDIT:COPY Ctrl-c Copy the selected pixels to the clipboard.
+KEY:EDIT:CUT Ctrl-Shift-c Copy what is visible in the selected region to the clipboard.
+KEY:EDIT:PASTE Ctrl-v Paste the clipboard into current layer.
+KEY:FILE:PASTENEW Ctrl-Shift-v Paste clipboard as new image window.
+KEY:EDIT:CLEAR Del Clear the selecte pixels.
+KEY:EDIT:FILLFG Ctrl-. Fill the selected pixels with foreground color.
+KEY:EDIT:FILLBG Ctrl-, Fill the selected pixels with background color.
+KEY:EDIT:FILLPATTERN Ctrl-; Fill the selected pixels with the active pattern.
+
+KEY:GUIDE:TOGGLE Ctrl-Shift-t Toggle guide lines show / hide
+
+Mouse Only:
+Middle Mouse Drag - Pan the image or view of the image.
+Mouse Drag Ruler into image - to create a guide line.
+Shift Mouse Move - Constrain brush to guide line or connect to previous point.
+Mouse Click Magnifier Icon at top right of image window - to toggle zooming the image when the window size changes.
+Mouse Click Drag on Nav Arrows Icon at bottom right of image window - allows you to pan the image in the screen area so it is not always centered.
+Mouse Drag from File Browser to Toolbox - Open the image file in a new window.
+Mouse Drag from File Browser to Layers - Open the image file as a new layer.
+
+
+Command line:
+https://docs.gimp.org/2.8/en/gimp-fire-up.html
+
+gimp --dump-gimprc  # output a gimprc file with default settings in case you messed up the original, or a reference for diffing.
+
+gimp -n image files ...  # -n --new-instance start  a new instance of GIMP
+
+# start a new instance fastest for batch processing from standard input
+gimp -i -d -f -s -n -b - # --no-interface --no-data --no-fonts --no-splash --new-instance --batch
+
+Configuration and Files:
+~/.gimp-VER/gimprc - personal gimp configuration
+~/.gimp-VER/sessionrc - specific session configuration
+
+Image Statusbar Format:
+Edit/Preferences/Image Windows/Title & Status
+%n-%p.%i <%m> (%t) %wx%h %d:%s zoom
