@@ -1,6 +1,9 @@
 GIMP quick reference
 
-HEREIAM: https://docs.gimp.org/2.8/en/gimp-tutorial-quickie-separate.html
+HEREIAM: https://docs.gimp.org/2.8/en/gimp-painting.html
+https://docs.gimp.org/2.8/en/become-a-gimp-wizard.html
+
+NOT working: https://docs.gimp.org/2.8/en/gimp-tutorial-quickie-separate.html
 
 TODO - how to use a pattern with a brush?
 how to draw a square, circle, etc?
@@ -10,6 +13,16 @@ Wilber is the GIMP mascot.
 
 Getting Unstuck: if gimp seems to have stopped functioning.
 https://docs.gimp.org/2.8/en/gimp-getting-unstuck.html#gimp-using-getting-unstuck
+Layers - floating selection, anchor or create as new layer
+  Invisible current layer - eye symbol
+  Layer itself is transparent - set opacity
+  Layer is smaller than the image - enlarge the layer
+Selection - Ctrl-t to show selection if hidden
+  Ctrl-a to select all if you have no selection
+  Shift-q to toggle Quick Mask to see the selection
+Image - in indexed color mode
+Erasers/Brushes don't work - using clipboard brush with empty clipboard
+
 
 Bug:
 When using the filter for brush, pattern, etc it does not match the names shown in the View as List mode. Might be matching tags or something else but not a very good filter experience.
@@ -107,6 +120,14 @@ Mouse Click Drag on Nav Arrows Icon at bottom right of image window - allows you
 Mouse Drag from File Browser to Toolbox - Open the image file in a new window.
 Mouse Drag from File Browser to Layers - Open the image file as a new layer.
 
+Drawing:
+Gimp is not a Drawing program, try Inkscape for that.
+Pencil/Paintbrush, etc. Mode Normal, Set brush to a 1. Pixel or 2. Hardenss 100 (round circle) and size 1px Select foreground color Select All Tool Options Dynamics Off
+Use shift to draw straight line, ctrl-shift to draw h/v lines
+
+Rectangle:
+Use Rectangle selection then Edit / Stroke Selection for an outline or Bucket fill entire selection for a solid rectangle
+Use Elliptic selection for circles
 
 Command line:
 https://docs.gimp.org/2.8/en/gimp-fire-up.html
