@@ -1,0 +1,5 @@
+// jest-snap-e.snapshot
+// in/SAMPLE.test.js.snap
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Webpack Integration Tests removes-duplicate-css 1`] = `"a{color:#00f}body{color:red}p{color:green}"`;

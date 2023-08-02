@@ -1,0 +1,6 @@
+// jest-snap-d.snapshot
+// in/SAMPLE.test.js.snap
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Webpack Integration Tests only-assetNameRegExp-processed 2`] = `"a{color:#00f}body{margin:0;color:red}p{margin:1000px}"`;
+

@@ -5,16 +5,17 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?] path/__snapshots__/suite.test.js.snap
+$cmd [--help|--man|-?] path/__snapshots__/suite.test.js.snap [extension]
 
 This will split a jest unit test snapshot file into individual snapshot files so you can use a visual comparison tool on them.
 
 path/.. the file name for the jest snapshot file to split.
+extension optional. will specify a file extension to use for the snapshot files. default is .snap
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
-More detail the snapshot files will be created in the current directory named jest-snap-A.snap
+The snapshot files will be created in the current directory named jest-snap-A.EXT where .EXT will be .snap by default or the second parameter given on the command line.
 
 A list of vdiff commands are also displayed for comparing the first snapshot file against each other one so you can easily copy and paste to compare them.
 
@@ -33,9 +34,11 @@ if [ "$1" == "-?" ]; then
 fi
 
 FILE="$1"
+EXT="$2"
 
-perl -e '
+EXT="$EXT" perl -e '
 	$count = 0;
+	my $ext = $ENV{EXT} || ".snap";
 	my $source = $ARGV[0];
 	my $preamble = qq{// $source\n};
 	my $fh;
@@ -46,7 +49,7 @@ perl -e '
 		{
 			close($fh) if $file;
 			my $char = chr(ord("a") + $count);
-			$file = "jest-snap-$char.snap";
+			$file = "jest-snap-$char$ext";
 			++$count;
 			open($fh, ">", $file) || die "create $file: $!";
 			print $fh qq{// $file\n$preamble$line};
@@ -62,11 +65,11 @@ perl -e '
 		END
 		{
 			exit(1) unless ($count);
-			print qq{$count jest-snap-*.snap file created from jest snapshot file.\n};
+			print qq{$count jest-snap-*$ext file created from jest snapshot file.\n};
 			foreach my $which (1 .. $count - 1)
 			{
 				my $char = chr(ord("a") + $which);
-				print qq{vdiff jest-snap-a.snap jest-snap-$char.snap\n};
+				print qq{vdiff jest-snap-a$ext jest-snap-$char$ext\n};
 			}
 		}
 	}

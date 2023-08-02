@@ -1,0 +1,5 @@
+5 jest-snap-*.snapshot file created from jest snapshot file.
+vdiff jest-snap-a.snapshot jest-snap-b.snapshot
+vdiff jest-snap-a.snapshot jest-snap-c.snapshot
+vdiff jest-snap-a.snapshot jest-snap-d.snapshot
+vdiff jest-snap-a.snapshot jest-snap-e.snapshot
