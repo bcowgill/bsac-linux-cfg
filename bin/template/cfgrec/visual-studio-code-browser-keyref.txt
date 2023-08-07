@@ -153,6 +153,8 @@ ext install wayou.vscode-todo-highlight
   Add config for MUSTDO as TODO: and FIXME: are defaults(with colon)
     "todohighlight.keywords": [
         { "text": "MUSTDO", "color": "yellow", "backgroundColor": "red", "isWholeLine": true },
+        { "text": "SonarQube ERROR:", "color": "yellow", "backgroundColor": "red", "isWholeLine": true },
+        { "text": "SonarQube BUG:", "color": "yellow", "backgroundColor": "red", "isWholeLine": true },
         { "text": "@ts-expect-error", "color": "yellow", "backgroundColor": "brown", "isWholeLine": true },
         { "text": "@ts-ignore", "color": "yellow", "backgroundColor": "brown", "isWholeLine": true },
         { "text": "@ts-nocheck", "color": "yellow", "backgroundColor": "brown", "isWholeLine": true },
