@@ -84,6 +84,14 @@ git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
 show_bad "WARN PLATFORM GLOBAL" "Using platform globals outside of src/utils/platform.js"
 
 #-------------------------------------------
+git grep -E 'JSON\.parse\(JSON\.stringify' \
+	| grep -v '__scripts__' \
+	| grep -vE '/(__tests__|__vendor__|integration)/' \
+	> found.lst
+
+show_bad "ERROR CLONE" "Don't use JSON.parse(JSON.stringify to clone an object except in tests.  Use structuredClone() or _.cloneDeep() as a fallback."
+
+#-------------------------------------------
 git grep 'async function ' \
 	| grep -v '__scripts__' \
 	| grep -vE '/(__tests__|__vendor__|integration)/' \
