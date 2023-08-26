@@ -13,6 +13,14 @@ PCT='\%٪'
 #TRANSLATIONS="`ls -1 src/translations/*.json | grep -vE '\bempty.+json'` `find src/partnerConfigs -type f -name '*.json' | grep -vE '__dev__/|infra\.|package\.|theme\.|_(BASE|REMOTE|LOCAL)'`"
 #echo TRANSLATIONS=$TRANSLATIONS
 
+if [ "$1" == "--tests" ]; then
+	CYP=1
+	TRANSLATIONS=translations/*.json
+	LANGUAGES=translations/*.json
+	ALLZ=1
+	cd in
+fi
+
 function show_problem {
 	perl -pne '$_ = qq{   $_}' found.lst
 	FAILURE=1
@@ -42,6 +50,7 @@ function show_bad {
 	fi
 }
 
+# set -x
 if [ ! -z "$CYP" ]; then
 #-------------------------------------------
 git grep -E 'findBy(\w+)\([^U]' cypress \
@@ -49,7 +58,6 @@ git grep -E 'findBy(\w+)\([^U]' cypress \
 	> found.lst
 
 show_bad "CYPRESS MINOR LITERAL" "Should define locators cypress/support/constatnts.js and use as UI.SOMETHING."
-
 #-------------------------------------------
 git grep -E 'findBy.+\.click\(' cypress \
 	| grep -vE '__vendor__|findByTestId\(' \
@@ -85,7 +93,7 @@ show_bad "WARN PLATFORM GLOBAL" "Using platform globals outside of src/utils/pla
 
 #-------------------------------------------
 git grep -E 'JSON\.parse\(JSON\.stringify' \
-	| grep -v '__scripts__' \
+	| grep -v '__scripts__/' \
 	| grep -vE '/(__tests__|__vendor__|integration)/' \
 	> found.lst
 
@@ -93,7 +101,7 @@ show_bad "ERROR CLONE" "Don't use JSON.parse(JSON.stringify to clone an object e
 
 #-------------------------------------------
 git grep 'async function ' \
-	| grep -v '__scripts__' \
+	| grep -v '__scripts__/' \
 	| grep -vE '/(__tests__|__vendor__|integration)/' \
 	| grep -vE 'function (will|fetch)' \
 	> found.lst
@@ -546,7 +554,7 @@ fi # ALLZ
 #-------------------------------------------
 git grep -E 'props\.theme\.' \
 	| grep -v 'PROPER WAY' \
-	| grep -v '__vendor__|__scripts__' \
+	| grep -v '__vendor__|__scripts__/' \
 	> found.lst
 
 show_bad "WARN THEME1" "Should check styled component in Storybook and change to themedProps.theme to indicate proper operation like src/components/Carousel/Bullet.js"
@@ -633,7 +641,7 @@ show_bad "ERROR EFFECT HOOKS" "Should not be useing react-hooks/exhaustive-deps.
 
 #-------------------------------------------
 git grep -E '((\bx(it|describe))|\.skip)\(' \
-	| grep -vE '__vendor__|__scripts__' \
+	| grep -vE '__vendor__|__scripts__/' \
 	> found.lst
 
 show_bad "WARN TESTS SKIP" "Should not have any tests marked as .skip()."
@@ -676,28 +684,28 @@ show_bad "ERROR DEBUGGER" "Should remove your debugger, debug() or .pause() inst
 
 #-------------------------------------------
 git grep -E 'DEBUG\s*=' \
-	| grep -vE '//|false|process\.env\.|package.json|docs/|__vendor__|__scripts__|displayName|DEV_DEBUG_' \
+	| grep -vE 'DEBUG\s*=\s*$|//|false|process\.env\.|package.json|docs/|__vendor__|__scripts__|displayName|DEV_DEBUG_' \
 	> found.lst
 
 show_bad "ERROR DEBUG=" "Should set DEBUG= to false"
 
 #-------------------------------------------
 git grep -E 'DEBUG\s*=.+true' \
-	| grep -vE '//|__vendor__|__scripts__' \
+	| grep -vE '//|__vendor__|__scripts__/' \
 	> found.lst
 
 show_bad "ERROR DEBUG=" "Should not have DEBUG= set true"
 
 #-------------------------------------------
 git grep -E '\.to(Be|Equal|Have)\w*\s*(/|;|$)' \
-	| grep -vE '__vendor__|__scripts__' \
+	| grep -vE '__vendor__|__scripts__/' \
 	> found.lst
 
 show_bad "ERROR TESTS NOTHING" "Should have () at end of a test assertion like .toBeNull, this tests nothing."
 
 #-------------------------------------------
 git grep -E '((\bf(it|describe))|\.only)\(' \
-	| grep -vE '__vendor__|__scripts__' \
+	| grep -vE '__vendor__|__scripts__/' \
 	> found.lst
 
 show_bad "ERROR TESTS ONLY" "Should not have any tests marked as .only()."
