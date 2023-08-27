@@ -7,7 +7,10 @@
 #CYP=1
 #ALLZ=1
 
+DEBUG=
 FAILURE=0
+COUNT=0
+
 PCT='\%٪'
 #LANGUAGES="src/translations src/partnerConfigs"
 #TRANSLATIONS="`ls -1 src/translations/*.json | grep -vE '\bempty.+json'` `find src/partnerConfigs -type f -name '*.json' | grep -vE '__dev__/|infra\.|package\.|theme\.|_(BASE|REMOTE|LOCAL)'`"
@@ -30,23 +33,28 @@ function show_bad {
 	local type why FOUND
 	type="$1"
 	why="$2"
-  icon="⋅😢"
-  if [ ! -f found.lst ]; then
-    echo DEBUG: $type no found.lst file present...
-  fi
-  if echo $type | grep ERROR > /dev/null; then
-    icon="⋅❌"
-  elif echo $type | grep WARN > /dev/null; then
-    icon="⋅😡"
-  fi
+	icon="⋅😢"
+	COUNT=$(($COUNT + 1))
+	if [ ! -f found.lst ]; then
+		echo DEBUG: $type no found.lst file present...
+	fi
+	if echo $type | grep ERROR > /dev/null; then
+		icon="⋅❌"
+	elif echo $type | grep WARN > /dev/null; then
+		icon="⋅😡"
+	fi
+	if [ ! -z "$DEBUG" ]; then
+		icon="$icon $COUNT"
+		echo "show_bad #$COUNT [$type $why]" 1>&2
+	fi
 	FOUND=`cat found.lst | wc -l | perl -pne 's{\A\s*}{}xms; s{\s*\z}{}xms'`
 	if [ "$FOUND" != 0 ]; then
 		echo " "
 		echo "$icon $type ($FOUND): $why"
 		show_problem
-    if [ `cat found.lst | wc -l` -gt 20 ]; then
-      echo "$icon $type ($FOUND) end"
-    fi
+		if [ `cat found.lst | wc -l` -gt 20 ]; then
+			echo "$icon $type ($FOUND) end"
+		fi
 	fi
 }
 
@@ -69,7 +77,7 @@ fi # CYP
 
 #-------------------------------------------
 git grep 'getAttribute' \
-	| grep -vE '__vendor__|__scripts__|\.toMatch\(|//.+getAttribute|getAttribute\("value")\s*===\s*"true"' \
+	| grep -vE '__vendor__|__scripts__|\.toMatch\(|//.+getAttribute|getAttribute\("value"\)\s*===\s*"true"' \
 	> found.lst
 
 show_bad "WARN TEST ATTR" "Should use (.not).toHaveAttribute instead of .getAttribute in unit tests because it reports failures better."
@@ -87,7 +95,7 @@ git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
 	| grep -vE '(__.+__|/integration|docs|cypress)/' \
 	| grep -vE 'src/(setupTests|utils/platform).js:' \
 	> found.lst
-  # | perl -pne 's{\A(.+?):.*\z}{$1\n}xms' | sort | uniq \
+	# | perl -pne 's{\A(.+?):.*\z}{$1\n}xms' | sort | uniq \
 
 show_bad "WARN PLATFORM GLOBAL" "Using platform globals outside of src/utils/platform.js"
 
@@ -333,14 +341,14 @@ fi # LANGUAGES
 if [ ! -z "$TRANSLATIONS" ]; then
 #-------------------------------------------
 git grep -E 'e2\.home\.footerPanel\.company\.city"' $TRANSLATIONS \
-  | grep -vE 'country\.ch' \
+	| grep -vE 'country\.ch' \
 	> found.lst
 
 show_bad "COUNTRY NEEDED" "Translation should have %country.ch% marker within it."
 
 #-------------------------------------------
 git grep -E 'e2\.home\.footerPanel\.company\.register"' $TRANSLATIONS \
-  | grep -vE 'footer\.commercialRegister' \
+	| grep -vE 'footer\.commercialRegister' \
 	> found.lst
 
 show_bad "COMMERCIAL NEEDED" "Translation should have %footer.commercialRegister% marker within it."
@@ -403,31 +411,33 @@ fi # LANGUAGES
 if [ ! -z "$ALLZ" ]; then
 #-------------------------------------------
 git grep chunks \
-	| grep -vE '__|(withHtml|WithHtmlLink)\.js' \
+	| grep -vE '__/|(withHtml|WithHtmlLink)\.js' \
 	> found.lst
 
 show_bad "WARN VALUES HTML" "Should not use chunks and common HTML elements like em strong, see hooks/withHtml"
 
-
 #-------------------------------------------
 git grep -E 'import.+FormattedMessage.+react-intl' \
-	| grep -vE '__|docs/|OptionalMessage.js:' \
+	| grep -vE '__/|docs/|OptionalMessage.js:' \
 	> found.lst
 
 show_bad "ERROR react-intl/FormattedMessage" "Do not use react-intl FormattedMessage directly, make a styled wrapper using our OptionalSection/OptionalMessage component and remove defaultValue like we do with OptionalText from src/components/OptionaleMessage or src/components/SimpleText."
 
 #-------------------------------------------
 git grep -E 'import.+FormattedMessage.+from.+OptionalMessage' \
-	| grep -v '__' \
+	| grep -v '__/' \
 	> found.lst
 
 show_bad "ERROR FormattedMessage" "Do not use FormattedMessage with a wrapper, instead make the wraper component take an id and values and use OptionalSection/OptionalMessage like we do with OptionalText from src/components/OptionaleMessage or src/components/SimpleText."
 
 #-------------------------------------------
-grep -E '(Formatted|Optional)Message' `git grep -lE 'import.+\bText\b.+@medi24-da2c/web-ui' | grep -vE '(SimpleText|OptionalMessage|OptionalTextOr|MyDocLegal|Section/ListItem|GetStartedPanel/Text|FooterPanel/Text|BasicInfoPage/Text|pages/LandingPage/Text|Card/Text|FaqPage/ContactInfo|AccordionSection/e2/ContactInfo)\.js'` \
+FILES=`git grep -lE 'import.+\bText\b.+@medi24-da2c/web-ui' | grep -vE '(SimpleText|OptionalMessage|OptionalTextOr|MyDocLegal|Section/ListItem|GetStartedPanel/Text|FooterPanel/Text|BasicInfoPage/Text|pages/LandingPage/Text|Card/Text|FaqPage/ContactInfo|AccordionSection/e2/ContactInfo)\.js'`
+if [ ! -z "$FILES" ]; then
+grep -E '(Formatted|Optional)Message' $FILES \
 	> found.lst
 
 show_bad "ERROR TEXT MESSAGE" "Should use SimpleText or OptionalText instead of Text/OptionalMessage combination."
+fi
 
 #-------------------------------------------
 git grep Modal.Text \
@@ -439,7 +449,7 @@ show_bad "WARN MODAL MESSAGE" "Should use Modal.Message instead of Modal.Text wh
 #-------------------------------------------
 git grep -E '<SimpleButton\b' \
 	| grep -vE 'SimpleButton\.js' \
-	| grep -vE '__|hooks/withHtml|components/WithHtmlLink/WithHtmlLink.js' \
+	| grep -vE '__/|hooks/withHtml|components/WithHtmlLink/WithHtmlLink.js' \
 	> found.lst
 
 show_bad "WARN SIMPLE BUTTON" "Should use MessageButton from SimpleButton in preference to SimpleButton and a FormattedMessage/OptionalMessage"
@@ -447,14 +457,14 @@ show_bad "WARN SIMPLE BUTTON" "Should use MessageButton from SimpleButton in pre
 #-------------------------------------------
 git grep -E 'import.+\bButton\b' \
 	| grep -vE 'components/e2/Button|\bLoadingButton\b|\bMessageButton\b|(SimpleButton|Hitbox|CollapsibleSection|LanguagePicker/Language)\.js' \
-	| grep -v '__' \
+	| grep -v '__/' \
 	> found.lst
 
 show_bad "WARN MESSAGE BUTTON" "Should use components/e2/Button, or MessageButton from components/{Button or SimpleMessageButton} in preference to Button and medi24 and a FormattedMessage/OptionalMessage."
 
 #-------------------------------------------
 git grep -E 'import.+\bButton\b.+@medi24-da2c/web-ui' \
-	| grep -vE '(Simple(Message)?Button|__)' \
+	| grep -vE '(Simple(Message)?Button|__/)' \
 	> found.lst
 
 show_bad "WARN BUTTON BUG" "Should use SimpleMessageButton or MessageButton as there is a bug in the medi24 Button."
@@ -469,7 +479,7 @@ show_bad "WARN @MEDIA" "Should not be defining custom @media breakponts, use com
 
 #-------------------------------------------
 F=`git grep -lE '(DESKTOP|TABLET)_MEDIA' | grep /e2/`
-echo -n "" > found.lst
+echo -n ""	> found.lst
 for file in $F; do
 	FILE=$file perl -ne '
 		if (m{styled.+`}xms) {
@@ -494,14 +504,15 @@ fi # ALLZ
 
 #-------------------------------------------
 git grep -E '(padding|margin).*:.*\b([1-9]|[0-9]+px)' \
-  | grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|Visibility/ShowVisibility' \
-  | perl -pne 's{\d+(\.\d*)?rem\b}{NUMREM}xmsg; s{\b0\b}{ZEROREM}g;' \
-  | grep -E '(margin|padding).*: -?[^0-9]*0[^0-9]*$' \
-  | perl -pne 's{NUMREM}{???rem}xmsg; s{ZEROREM}{0}g;' \
+	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|Visibility/ShowVisibility' \
+	| perl -pne 's{\d+(\.\d*)?rem\b}{NUMREM}xmsg; s{\b0\b}{ZEROREM}g;' \
+	| grep -E '[0-9]+[^0-9\s]' \
+	| perl -pne 's{NUMREM}{???rem}xmsg; s{ZEROREM}{0}g;' \
 	> found.lst
 
 show_bad "WARN PIXELS" "Should be using rems instead of px for layout..."
 
+# HEREIAM TESTING
 #-------------------------------------------
 git grep -E '(padding|margin).*:.*\b[0-9]+' \
 	| grep -E '/e2/' \
@@ -519,32 +530,32 @@ git grep -E 'opacity:.+?[0-9]' \
 	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|cypress/' \
 	| grep -vE '\.cls.+\{opacity' \
 	| grep -vE '/\* opacity\w+' \
-  > found.lst
+	> found.lst
 
 show_bad "WARN CSS OPACITY CODES" "Should be using design token names instead of numbers for opacity."
 
 #-------------------------------------------
 git grep -E '(letter(-s|S)pacing|line(-h|H)eight|font(-s|S)ize|font(-w|W)eight).*:.*\b[0-9]+' \
 	| grep -E '/e2/' \
-  | grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/' \
-  | perl -pne 's{0\.}{ZEROPT }g' \
-  | grep -vE '\b0\b' \
-  | perl -pne 's{ZEROPT }{0.}g' \
+	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/' \
+	| perl -pne 's{0\.}{ZEROPT }g' \
+	| grep -vE '\b0\b' \
+	| perl -pne 's{ZEROPT }{0.}g' \
 	> found.lst
 
 show_bad "ERROR FONT SIZES" "Should be using design token names instead of rem or px for fonts..."
 
 git grep -iE '\b(font-?(family|size|weight)|line-?height|letter-?spacing)\b' \
-  | grep /e2/ \
-  | grep -vE '__|docs/|Typography.js|js:\s*//|theme.fontFamily' \
-  > found.lst
+	| grep /e2/ \
+	| grep -vE '__/|docs/|Typography.js|js:\s*//|theme.fontFamily' \
+	> found.lst
 
 show_bad "ERROR TYPOGRAPHY" "Should be using components/e2/Typography components instead of specific font CSS."
 
 if [ ! -z "$ALLZ" ]; then
 #-------------------------------------------
 git grep -E 'import.+useTheme.+/useLanguage' src \
-  | grep -v 'App/App.js' \
+	| grep -v 'App/App.js' \
 	> found.lst
 
 show_bad "WARN THEME" "Should import { useTheme } from '@emotion/react' NOT hooks/useLanguage"
@@ -554,7 +565,7 @@ fi # ALLZ
 #-------------------------------------------
 git grep -E 'props\.theme\.' \
 	| grep -v 'PROPER WAY' \
-	| grep -v '__vendor__|__scripts__/' \
+	| grep -v '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "WARN THEME1" "Should check styled component in Storybook and change to themedProps.theme to indicate proper operation like src/components/Carousel/Bullet.js"
@@ -590,7 +601,7 @@ show_bad "WARN THEME5" "Need to useTheme instead of getting it from getInstance(
 
 #-------------------------------------------
 git grep -E 'getInstance\(\)' \
-	| grep -vE '__|/hooks/|/translations/|/setupTests\.js|partnerConfigs/singleton\.js' \
+	| grep -vE '__/|/hooks/|/translations/|/setupTests\.js|partnerConfigs/singleton\.js' \
 	> found.lst
 
 show_bad "WARN INSTANCE" "Should create or use a hook instead of calling getInstance() directly"
@@ -627,21 +638,21 @@ show_bad "WARN DISPLAYNAME" "Should have const displayName for each component to
 
 #-------------------------------------------
 git grep -E '\.prototype\s*=' \
-	| grep -vE '__|BulletSection/BulletSection\.js' \
+	| grep -vE '__/|BulletSection/BulletSection\.js' \
 	> found.lst
 
 show_bad "ERROR PROTOTYPE" "Should not be making .prototype assignments. Did you mean .propTypes?"
 
 #-------------------------------------------
 git grep -E 'react-hooks/exhaustive-deps' \
-	| grep -vE '__' \
+	| grep -vE '__/' \
 	> found.lst
 
 show_bad "ERROR EFFECT HOOKS" "Should not be useing react-hooks/exhaustive-deps. Create proper useEffect dependency array or omit it for beforeWeMount/afterWeUnmount effects."
 
 #-------------------------------------------
 git grep -E '((\bx(it|describe))|\.skip)\(' \
-	| grep -vE '__vendor__|__scripts__/' \
+	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "WARN TESTS SKIP" "Should not have any tests marked as .skip()."
@@ -691,21 +702,21 @@ show_bad "ERROR DEBUG=" "Should set DEBUG= to false"
 
 #-------------------------------------------
 git grep -E 'DEBUG\s*=.+true' \
-	| grep -vE '//|__vendor__|__scripts__/' \
+	| grep -vE '//|__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "ERROR DEBUG=" "Should not have DEBUG= set true"
 
 #-------------------------------------------
 git grep -E '\.to(Be|Equal|Have)\w*\s*(/|;|$)' \
-	| grep -vE '__vendor__|__scripts__/' \
+	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "ERROR TESTS NOTHING" "Should have () at end of a test assertion like .toBeNull, this tests nothing."
 
 #-------------------------------------------
 git grep -E '((\bf(it|describe))|\.only)\(' \
-	| grep -vE '__vendor__|__scripts__/' \
+	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "ERROR TESTS ONLY" "Should not have any tests marked as .only()."
@@ -738,7 +749,7 @@ show_bad "ERROR TRANS HTML" "Translators have messed up the </open>...</open> ta
 
 #-------------------------------------------
 grep -E '<([^>]+)>[^<]+</([^>]+)>' $TRANSLATIONS \
-  | grep -vE '<([^>]+)>[^<]+</\1>' \
+	| grep -vE '<([^>]+)>[^<]+</\1>' \
 	> found.lst
 
 show_bad "ERROR TRANS HTML2" "Translators have messed up the <tag>...</mismatch> tagging."
@@ -806,9 +817,9 @@ grep -E '٪\s*\w+\s*٪' $TRANSLATIONS \
 show_bad "ERROR TRANS PERCENT" "Looks like %marker% was replaced by Arabic percent ٪marker٪."
 
 #-------------------------------------------
-grep -E '(\{|</?)\s+|\s+[\}>]|(\{|</?)[A-Z]|\%\s*[A-Z]([nN][dD][aA][sS][hH]|[pP][oO][sS]|[bB][sS][pP]|[sS][pP]|[sSdD][qQ]|[hH])\%)' $TRANSLATIONS \
+grep -E '((\{|</?)\s+|\s+[\}>]|(\{|</?)[A-Z]|\%\s*[A-Z]([nN][dD][aA][sS][hH]|[pP][oO][sS]|[bB][sS][pP]|[sS][pP]|[sSdD][qQ]|[hH])\%)' $TRANSLATIONS \
 	> found.lst
-grep -E '(\{|</?)\s+|\s+[\}>]|(\{|</?)[A-Z]|٪\s*[A-Z]([nN][dD][aA][sS][hH]|[pP][oO][sS]|[bB][sS][pP]|[sS][pP]|[sSdD][qQ]|[hH])٪)' $TRANSLATIONS \
+grep -E '((\{|</?)\s+|\s+[\}>]|(\{|</?)[A-Z]|٪\s*[A-Z]([nN][dD][aA][sS][hH]|[pP][oO][sS]|[bB][sS][pP]|[sS][pP]|[sSdD][qQ]|[hH])٪)' $TRANSLATIONS \
 	>> found.lst
 
 show_bad "ERROR TRANSLATOR" "Translators may have messed up {vars} or <elements> spacing or auto-capitalisation."
@@ -873,7 +884,7 @@ git grep -iE 'mus+''tdo' \
 
 show_bad "WARN MUS""TDO" "Should resolve MUS""TDO items"
 
-if [ ! -z "$ALLZ"]; then
+if [ ! -z "$ALLZ" ]; then
 #-------------------------------------------
 git grep DEV_ src/constants/switches.js \
 	| grep true \

@@ -46,3 +46,17 @@ __scripts__/x.js: async function doNow() {} // OKEY
 theme2json.sh: #fff // OKEY
 public/manifest.json: #fff // OKEY
 Binary file x.ico: #fff // OKEY
+
+chunks
+__scripts__/x.js: chunks // OKEY
+__tests__/x.js: chunks // OKEY
+__vendor__/x.js: chunks // OKEY
+withHtml.js: chunks // OKEY
+WithHtmlLink.js: chunks // OKEY
+
+import { FormattedMessage } from "react-intl";
+__scripts__/x.js: import { FormattedMessage } from "react-intl"; // OKEY
+__tests__/x.js: import { FormattedMessage } from "react-intl"; // OKEY
+__vendor__/x.js: import { FormattedMessage } from "react-intl"; // OKEY
+docs/x.js: import { FormattedMessage } from "react-intl"; // OKEY
+OptionalMessage.js: import { FormattedMessage } from "react-intl"; // OKEY

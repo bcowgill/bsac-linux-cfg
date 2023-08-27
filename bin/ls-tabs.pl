@@ -48,6 +48,10 @@ ls-tabs.pl [options] [@options-file ...] [file ...]
 	This program will read the given input file(s) and show you lines
 	which have inconsistent tabs and spaces.
 
+=head1 SEE ALSO
+
+	fix-spaces.sh, fix-tabs.sh
+
 =head1 EXAMPLES
 
 	ls-tabs.pl --spaces=3 hello.c
