@@ -1,0 +1,57 @@
+ 
+⋅😢 CYPRESS MINOR LITERAL (1): Should define locators cypress/support/constatnts.js and use as UI.SOMETHING.
+   cypress/bad-tests.spec.js:findByText(not_UI_id);
+ 
+⋅😡 WARN CYPRESS CLICK BY TEXT (1): Should locate items to click with findByTestId.
+   cypress/bad-tests.spec.js:findByText(UI.BACK).click()
+ 
+⋅😡 WARN TEST ATTR (1): Should use (.not).toHaveAttribute instead of .getAttribute in unit tests because it reports failures better.
+   bad-code.test.js:expect(element.getAttribute('width')).toBe(false)
+ 
+⋅❌ ERROR TEST SNAPSHOT (1): Do not put toMatchSnapshot inside a waitFor function.  It will ruin your snapshots when you run tests in isolation with skip/only.  Put it AFTER the waitFor completes.
+   bad-code.test.js:await waitFor(() => expect(asFragment()).toMatchSnapshot())
+ 
+⋅😡 WARN PLATFORM GLOBAL (1): Using platform globals outside of src/utils/platform.js
+   bad-code.js:window.location.replace(URL)
+ 
+⋅❌ ERROR CLONE (1): Don't use JSON.parse(JSON.stringify to clone an object except in tests.  Use structuredClone() or _.cloneDeep() as a fallback.
+   bad-code.js:JSON.parse(JSON.stringify(obj))
+ 
+⋅😢 ASYNC NAMED (1): Asynchronous functions should be named willXxx or fetchXxx to show future tense.
+   bad-code.js:async function doNow() {}
+ 
+⋅😢 COLORS (4): Should define colors in partnerConfigs/*/theme.js
+   bad-code.js:"#B9C"
+   bad-code.js:"#f7A8"
+   bad-code.js:"#4d5e6"
+   bad-code.js:"#1a2b3c"
+ 
+⋅😢 FEATURE KEY1 (13): Feature message key should be renamed e2.*.content[1-3] (up to content3 allowed)
+   translations/en.json:    "e2.what.content": "content",
+   translations/en.json:    "e2.what.content0": "content",
+   translations/en.json:    "e2.what.content4": "content",
+   translations/en.json:    "e2.what.content5": "content",
+   translations/en.json:    "e2.what.content6": "content",
+   translations/en.json:    "e2.what.content7": "content",
+   translations/en.json:    "e2.what.content8": "content",
+   translations/en.json:    "e2.what.content9": "content",
+   translations/en.json:    "e2.what.content00": "content",
+   translations/en.json:    "e2.what.content13": "content",
+   translations/en.json:    "e2.what.content24": "content",
+   translations/en.json:    "e2.what.content36": "content",
+   translations/en.json:    "e2.what.content99": "content",
+ 
+⋅😢 LINK FAQ ITEM1 (1): Translation should have `<linkToFaqItemSACH>` in it
+   translations/en.json:    "chooseMessengerPage.generateActivationCodeModal.initialStep.help": "help me",
+ 
+⋅😡 WARN VALUES HTML (1): Should not use chunks and common HTML elements like em strong, see hooks/withHtml
+   bad-code.js:chunks
+ 
+⋅❌ ERROR react-intl/FormattedMessage (1): Do not use react-intl FormattedMessage directly, make a styled wrapper using our OptionalSection/OptionalMessage component and remove defaultValue like we do with OptionalText from src/components/OptionaleMessage or src/components/SimpleText.
+   bad-code.js:import { FormattedMessage } from "react-intl";
+ 
+⋅😡 WARN PIXELS (4): Should be using rems instead of px for layout...
+   bad-style.css:padding-bottom: 13;
+   bad-style.css:padding-left: 1px;
+   bad-style.css:margin-top: 45px;
+   bad-style.css:margin: 0 -5px ???rem;
