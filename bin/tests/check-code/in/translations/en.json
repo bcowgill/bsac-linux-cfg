@@ -1,4 +1,5 @@
 {
+	// testcase zygophyllum
     "e2.what.content": "content",
     "e2.what.content0": "content",
     "e2.what.content1": "content",
@@ -15,6 +16,7 @@
     "e2.what.content24": "content",
     "e2.what.content36": "content",
     "e2.what.content99": "content",
+	// testcase zygophyllaceae
     "chooseMessengerPage.generateActivationCodeModal.initialStep.help": "help me",
     "chooseMessengerPage.generateActivationCodeModal.initialStep.helpLink": "<linkToFaqItemSACH>help</linkToFaqItemSACH> me OKEY",
 }

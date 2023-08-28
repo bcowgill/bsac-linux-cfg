@@ -60,13 +60,16 @@ function show_bad {
 
 # set -x
 if [ ! -z "$CYP" ]; then
-#-------------------------------------------
+# Test Cases are named from english-words.txt letter z backwards
+# so you can grep for testcase to see where the test data relates
+#------------------------------------------- testcase zymurgy,1
 git grep -E 'findBy(\w+)\([^U]' cypress \
 	| grep -vE '__vendor__|:\s*//|\(UI\.|\(id\w*\)|findByRole\("dialog"\)|findByTestId\(testId\)|findByText\((regex|msg|txt)\w*\)' \
 	> found.lst
 
 show_bad "CYPRESS MINOR LITERAL" "Should define locators cypress/support/constatnts.js and use as UI.SOMETHING."
-#-------------------------------------------
+
+#------------------------------------------- testcase zymotic,2
 git grep -E 'findBy.+\.click\(' cypress \
 	| grep -vE '__vendor__|findByTestId\(' \
 	> found.lst
@@ -75,20 +78,20 @@ show_bad "WARN CYPRESS CLICK BY TEXT" "Should locate items to click with findByT
 
 fi # CYP
 
-#-------------------------------------------
+#------------------------------------------- testcase zymosis,3
 git grep 'getAttribute' \
 	| grep -vE '__vendor__|__scripts__|\.toMatch\(|//.+getAttribute|getAttribute\("value"\)\s*===\s*"true"' \
 	> found.lst
 
 show_bad "WARN TEST ATTR" "Should use (.not).toHaveAttribute instead of .getAttribute in unit tests because it reports failures better."
 
-#-------------------------------------------
+#------------------------------------------- testcase zymase,4
 git grep -E 'waitFor.+toMatchSnapshot' \
 	> found.lst
 
 show_bad "ERROR TEST SNAPSHOT" "Do not put toMatchSnapshot inside a waitFor function.  It will ruin your snapshots when you run tests in isolation with skip/only.  Put it AFTER the waitFor completes."
 
-#-------------------------------------------
+#------------------------------------------- testcase zygotic,5
 git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
 	| grep -vE ':\s*//|\@param' \
 	| grep -vE 'window\.(digitalData|AppMeasurement|__|console)' \
@@ -99,7 +102,7 @@ git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
 
 show_bad "WARN PLATFORM GLOBAL" "Using platform globals outside of src/utils/platform.js"
 
-#-------------------------------------------
+#------------------------------------------- testcase zygotene,6
 git grep -E 'JSON\.parse\(JSON\.stringify' \
 	| grep -v '__scripts__/' \
 	| grep -vE '/(__tests__|__vendor__|integration)/' \
@@ -107,7 +110,7 @@ git grep -E 'JSON\.parse\(JSON\.stringify' \
 
 show_bad "ERROR CLONE" "Don't use JSON.parse(JSON.stringify to clone an object except in tests.  Use structuredClone() or _.cloneDeep() as a fallback."
 
-#-------------------------------------------
+#------------------------------------------- testcase zygote,7
 git grep 'async function ' \
 	| grep -v '__scripts__/' \
 	| grep -vE '/(__tests__|__vendor__|integration)/' \
@@ -116,7 +119,7 @@ git grep 'async function ' \
 
 show_bad "ASYNC NAMED" "Asynchronous functions should be named willXxx or fetchXxx to show future tense."
 
-#-------------------------------------------
+#------------------------------------------- testcase zygoptera,8
 git grep -iE '#[0-9a-f]{3,6}\b|rgba?\(\d+' \
 	| grep -vE '/(__vendor__|Icons|stories|partnerConfigs|emma2-redesign)/' \
 	| grep -vE 'theme2json\.|public/manifest.json|Binary file' \
@@ -125,12 +128,13 @@ git grep -iE '#[0-9a-f]{3,6}\b|rgba?\(\d+' \
 show_bad "COLORS" "Should define colors in partnerConfigs/*/theme.js"
 
 if [ ! -z "$TRANSLATIONS" ]; then
-#-------------------------------------------
+#------------------------------------------- testcase zygophyllum,9
 git grep -E 'e2\.\w+\.content(|[04-9]|[0-9][0-9]+)"' $TRANSLATIONS \
 	> found.lst
 
 show_bad "FEATURE KEY1" "Feature message key should be renamed e2.*.content[1-3] (up to content3 allowed)"
 
+# UNTESTED ALL BELOW TO NEXT IF
 #-------------------------------------------
 git grep -E 'e2\.\w+\.service.logo(|[04-9]|[0-9][0-9]+)"' $TRANSLATIONS \
 	> found.lst
@@ -184,7 +188,7 @@ show_bad "LINK FAQ1" "Translation should have \`<linkToFaq>\` in it"
 fi
 
 if [ ! -z "$LANGUAGES" ]; then
-#-------------------------------------------
+#------------------------------------------- testcase zygophyllaceae,10
 git grep -E '(chooseMessengerPage\.generateActivationCodeModal\.initialStep\.help|chooseMessengerPage\.activationCodeModal\.content\.helpLink|chooseMessengerPage\.activationCodeModal\.validationError)"' $LANGUAGES \
 	| grep -vE 'linkToFaqItemSACH' \
 	| grep -vE ': "(([%٪])SUPPRESS\2)?"' \
@@ -192,6 +196,7 @@ git grep -E '(chooseMessengerPage\.generateActivationCodeModal\.initialStep\.hel
 
 show_bad "LINK FAQ ITEM1" "Translation should have \`<linkToFaqItemSACH>\` in it"
 
+# UNTESTED ALL BELOW TO NEXT IF
 #-------------------------------------------
 git grep -E 'chooseMessengerPage\.activationCodeModal\.(generic|invalid)Error"' $LANGUAGES \
 	| grep -vE 'linkToFaqItemSACNWH' \
@@ -339,6 +344,7 @@ show_bad "STRONG NEEDED" "Translation should have <strong> around Secure Web Cha
 fi # LANGUAGES
 
 if [ ! -z "$TRANSLATIONS" ]; then
+# UNTESTED ALL BELOW TO NEXT IF
 #-------------------------------------------
 git grep -E 'e2\.home\.footerPanel\.company\.city"' $TRANSLATIONS \
 	| grep -vE 'country\.ch' \
@@ -356,6 +362,7 @@ show_bad "COMMERCIAL NEEDED" "Translation should have %footer.commercialRegister
 fi # TRANSLATIONS
 
 if [ ! -z "$LANGUAGES" ]; then
+# UNTESTED ALL BELOW TO NEXT IF
 #-------------------------------------------
 # regex does not work for ukraine...
 #| grep -vE '([%٪])global\.commChannels3rdPartyOnly\1' \
@@ -409,20 +416,21 @@ show_bad "WARN <NAME>" "Translation should NOT have \`<name>\` in it"
 fi # LANGUAGES
 
 if [ ! -z "$ALLZ" ]; then
-#-------------------------------------------
+#------------------------------------------- testcase zygomycota,11
 git grep chunks \
 	| grep -vE '__/|(withHtml|WithHtmlLink)\.js' \
 	> found.lst
 
 show_bad "WARN VALUES HTML" "Should not use chunks and common HTML elements like em strong, see hooks/withHtml"
 
-#-------------------------------------------
+#------------------------------------------- testcase zygomycetes,12
 git grep -E 'import.+FormattedMessage.+react-intl' \
 	| grep -vE '__/|docs/|OptionalMessage.js:' \
 	> found.lst
 
 show_bad "ERROR react-intl/FormattedMessage" "Do not use react-intl FormattedMessage directly, make a styled wrapper using our OptionalSection/OptionalMessage component and remove defaultValue like we do with OptionalText from src/components/OptionaleMessage or src/components/SimpleText."
 
+# UNTESTED ALL BELOW TO NEXT IF
 #-------------------------------------------
 git grep -E 'import.+FormattedMessage.+from.+OptionalMessage' \
 	| grep -v '__/' \
@@ -502,7 +510,7 @@ show_bad "ERROR DESKTOP_MEDIA" "DESKTOP_MEDIA must come after TABLET_MEDIA in st
 
 fi # ALLZ
 
-#-------------------------------------------
+#------------------------------------------- testcase zygomorphic,13
 git grep -E '(padding|margin).*:.*\b([1-9]|[0-9]+px)' \
 	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|Visibility/ShowVisibility' \
 	| perl -pne 's{\d+(\.\d*)?rem\b}{NUMREM}xmsg; s{\b0\b}{ZEROREM}g;' \
@@ -512,7 +520,10 @@ git grep -E '(padding|margin).*:.*\b([1-9]|[0-9]+px)' \
 
 show_bad "WARN PIXELS" "Should be using rems instead of px for layout..."
 
-# HEREIAM TESTING
+# UNTESTED
+#/e2/x.css: margin: 4rem;
+#/e2/x.css: margin: Space1 Extras23b Blacked54 Bla6;???
+#/e2/x.css: margin-right: 0; // OKEY
 #-------------------------------------------
 git grep -E '(padding|margin).*:.*\b[0-9]+' \
 	| grep -E '/e2/' \
@@ -523,8 +534,10 @@ git grep -E '(padding|margin).*:.*\b[0-9]+' \
 	| perl -pne 's{/eTWO/}{/e2/}xmsg;' \
 	> found.lst
 
+
 show_bad "WARN CSS HARD CODES" "Should be using design token names instead of rem or px for layout..."
 
+# HEREIAM TESTING
 #-------------------------------------------
 git grep -E 'opacity:.+?[0-9]' \
 	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|cypress/' \

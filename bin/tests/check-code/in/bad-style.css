@@ -1,7 +1,15 @@
-padding: 13;
-padding: 1px;
-margin: 45px;
-margin: 0; // OKEY
-margin: 13rem; // OKEY
+// testcase zygomorphic
+padding-bottom: 13;
+padding-left: 1px;
+margin-top: 45px;
+margin-right: 0; // OKEY
+margin-left: 13rem; // OKEY
 margin: 0 -5px 13rem;
-margin: 0 13rem;
+margin-bottom: 0 13rem; // OKEY
+__vendor__/x.css: padding-bottom: 13;
+__scripts__/x.css: padding-bottom: 13;
+__stories__/x.css: padding-bottom: 13;
+__dev__/x.css: padding-bottom: 13;
+/stories/x.css: padding-bottom: 13;
+docs/x.css: padding-bottom: 13;
+Visibility/ShowVisibility.css: padding-bottom: 13;
