@@ -55,3 +55,6 @@
    bad-style.css:padding-left: 1px;
    bad-style.css:margin-top: 45px;
    bad-style.css:margin: 0 -5px ???rem;
+ 
+⋅😡 WARN CSS OPACITY CODES (1): Should be using design token names instead of numbers for opacity.
+   bad-style.css:opacity: 0.3;

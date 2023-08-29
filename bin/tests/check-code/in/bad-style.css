@@ -13,3 +13,15 @@ __dev__/x.css: padding-bottom: 13;
 /stories/x.css: padding-bottom: 13;
 docs/x.css: padding-bottom: 13;
 Visibility/ShowVisibility.css: padding-bottom: 13;
+
+// testcase zygoma
+opacity: 0.3;
+.cls-name {opacity: 0.3;} // OKEY
+opacity: 0.3; /* opacityOverlay */
+__vendor__/x.css: opacity: 0.3; // OKEY
+__scripts__/x.css: opacity: 0.3; // OKEY
+__stories__/x.css: opacity: 0.3; // OKEY
+__dev__/x.css: opacity: 0.3; // OKEY
+/stories/x.css: opacity: 0.3; // OKEY
+docs/x.css: opacity: 0.3; // OKEY
+cypress/x.css: opacity: 0.3; // OKEY

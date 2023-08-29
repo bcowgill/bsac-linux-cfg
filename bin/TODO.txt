@@ -1,6 +1,16 @@
 USB broken posting to help page.
 usb-broken.txt
 
+check-code unit tests
+
+Project Gimp - user manual and tagging gradients/brushes in config file
+pwcd cfgrec
+vim ~/bin/template/cfgrec/gimp-keyref.txt
+pwcd gimp
+gimp ~/d/Pics/gimp/_image-test.xcf&
+rvdiff.sh ~/.gimp-2.8/tags.xml ~/tags.xml
+
+
 contraction.pl - convert text to forms with contractions, or reverse it
 
 unit tests for mv-apostrophes rename-files unspace-files wiremock debug.sh- test data is there but no test plan.

@@ -537,8 +537,7 @@ git grep -E '(padding|margin).*:.*\b[0-9]+' \
 
 show_bad "WARN CSS HARD CODES" "Should be using design token names instead of rem or px for layout..."
 
-# HEREIAM TESTING
-#-------------------------------------------
+#------------------------------------------- testcase zygoma,14
 git grep -E 'opacity:.+?[0-9]' \
 	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/|cypress/' \
 	| grep -vE '\.cls.+\{opacity' \
@@ -547,6 +546,7 @@ git grep -E 'opacity:.+?[0-9]' \
 
 show_bad "WARN CSS OPACITY CODES" "Should be using design token names instead of numbers for opacity."
 
+# HEREIAM TESTING
 #-------------------------------------------
 git grep -E '(letter(-s|S)pacing|line(-h|H)eight|font(-s|S)ize|font(-w|W)eight).*:.*\b[0-9]+' \
 	| grep -E '/e2/' \
