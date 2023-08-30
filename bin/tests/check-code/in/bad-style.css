@@ -25,3 +25,28 @@ __dev__/x.css: opacity: 0.3; // OKEY
 /stories/x.css: opacity: 0.3; // OKEY
 docs/x.css: opacity: 0.3; // OKEY
 cypress/x.css: opacity: 0.3; // OKEY
+
+// testcase zygodactyl (some overlap with zygocactus below)
+/e2/x.css: letter-spacing: 0.4rem;
+/e2/x.css: letterSpacing: 1.2rem;
+/e2/x.css: line-height: 32px;
+/e2/x.css: lineHeight: 3.2rem;
+/e2/x.css: font-size: 12px;
+/e2/x.css: fontSize: 1.2rem;
+/e2/x.css: font-weight: 600;
+/e2/x.css: fontWeight: 900;
+__vendor__/e2/x.css: letter-spacing: 12px; // OKEY
+__scripts__/e2/x.css: letter-spacing: 12px; // OKEY
+__stories__/e2/x.css: letter-spacing: 12px; // OKEY
+__dev__/e2/x.css: letter-spacing: 12px; // OKEY
+/e2/stories/Typography.js: letter-spacing: 12px; // OKEY
+docs/e2/x.css: letter-spacing: 12px; // OKEY
+/e2/Typography.js: letter-spacing: 0; // OKEY
+
+// testcase zygocactus (some overlap with zygodactyl above)
+/e2/x.css: font-family: Courier;
+/e2/x.css: fontFamily: Courier;
+/e2/x.js: theme.fontFamily: "Courier",
+/e2/x.js: // fontFamily: "Courier",
+
+// testcase zygnematales

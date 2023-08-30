@@ -58,3 +58,25 @@
  
 ⋅😡 WARN CSS OPACITY CODES (1): Should be using design token names instead of numbers for opacity.
    bad-style.css:opacity: 0.3;
+ 
+⋅❌ ERROR FONT SIZES (8): Should be using design token names instead of rem or px for fonts...
+   bad-style.css:/e2/x.css: letter-spacing: 0.4rem;
+   bad-style.css:/e2/x.css: letterSpacing: 1.2rem;
+   bad-style.css:/e2/x.css: line-height: 32px;
+   bad-style.css:/e2/x.css: lineHeight: 3.2rem;
+   bad-style.css:/e2/x.css: font-size: 12px;
+   bad-style.css:/e2/x.css: fontSize: 1.2rem;
+   bad-style.css:/e2/x.css: font-weight: 600;
+   bad-style.css:/e2/x.css: fontWeight: 900;
+ 
+⋅❌ ERROR TYPOGRAPHY (10): Should be using components/e2/Typography components instead of specific font CSS.
+   bad-style.css:/e2/x.css: letter-spacing: 0.4rem;
+   bad-style.css:/e2/x.css: letterSpacing: 1.2rem;
+   bad-style.css:/e2/x.css: line-height: 32px;
+   bad-style.css:/e2/x.css: lineHeight: 3.2rem;
+   bad-style.css:/e2/x.css: font-size: 12px;
+   bad-style.css:/e2/x.css: fontSize: 1.2rem;
+   bad-style.css:/e2/x.css: font-weight: 600;
+   bad-style.css:/e2/x.css: fontWeight: 900;
+   bad-style.css:/e2/x.css: font-family: Courier;
+   bad-style.css:/e2/x.css: fontFamily: Courier;

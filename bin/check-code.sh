@@ -546,8 +546,7 @@ git grep -E 'opacity:.+?[0-9]' \
 
 show_bad "WARN CSS OPACITY CODES" "Should be using design token names instead of numbers for opacity."
 
-# HEREIAM TESTING
-#-------------------------------------------
+#------------------------------------------- testcase zygodactyl,15
 git grep -E '(letter(-s|S)pacing|line(-h|H)eight|font(-s|S)ize|font(-w|W)eight).*:.*\b[0-9]+' \
 	| grep -E '/e2/' \
 	| grep -vE '__vendor__|__scripts__|__stories__|__dev__|/stories/|docs/' \
@@ -558,6 +557,7 @@ git grep -E '(letter(-s|S)pacing|line(-h|H)eight|font(-s|S)ize|font(-w|W)eight).
 
 show_bad "ERROR FONT SIZES" "Should be using design token names instead of rem or px for fonts..."
 
+#------------------------------------------- testcase zygocactus,16
 git grep -iE '\b(font-?(family|size|weight)|line-?height|letter-?spacing)\b' \
 	| grep /e2/ \
 	| grep -vE '__/|docs/|Typography.js|js:\s*//|theme.fontFamily' \
@@ -566,7 +566,8 @@ git grep -iE '\b(font-?(family|size|weight)|line-?height|letter-?spacing)\b' \
 show_bad "ERROR TYPOGRAPHY" "Should be using components/e2/Typography components instead of specific font CSS."
 
 if [ ! -z "$ALLZ" ]; then
-#-------------------------------------------
+# HEREIAM TESTING
+#------------------------------------------- testcase zygnematales,17
 git grep -E 'import.+useTheme.+/useLanguage' src \
 	| grep -v 'App/App.js' \
 	> found.lst
