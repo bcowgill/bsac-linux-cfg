@@ -66,3 +66,55 @@ __tests__/x.js: import { FormattedMessage } from "react-intl"; // OKEY
 __vendor__/x.js: import { FormattedMessage } from "react-intl"; // OKEY
 docs/x.js: import { FormattedMessage } from "react-intl"; // OKEY
 OptionalMessage.js: import { FormattedMessage } from "react-intl"; // OKEY
+
+// testcase zygnemataceae
+border: 1rem solid ${props.theme.edging};
+// PROPER WAY to use them is not ${props.theme.edging} but ... // OKEY
+__vendor__/x.js: border: 1rem solid ${props.theme.edging}; // OKEY
+__scripts__/x.js: border: 1rem solid ${props.theme.edging}; // OKEY
+
+// testcase zygnema
+__stories__/x.js: Broken
+__vendor__/x.js: Broken
+Broken // OKEY
+
+// testcase zwischen
+__vendor__/x.js: theme={theme}
+__stories__/x.js: theme={theme}
+__stories__/x.js: <ThemeProvider theme={theme} /> // OKEY
+theme={theme} // OKEY
+
+// testcase zwieback
+<Headline />
+<Subheadline />
+<Text />
+<Text.Themed /> // OKEY
+<Text.Message /> // OKEY
+<Text theme={theme} /> // OKEY
+<Text id={id} /> // OKEY
+Modal/Message.js: <Text /> // OKEY
+Headline.test.js: <Headline /> // OKEY
+/OptionalTextOr.js: <Text /> // OKEY
+/SuccessStep/ActivationCode.js: <Text /> // OKEY
+/BasicInfoPage/Headline.js: <Text /> // OKEY
+/BasicInfoPage/Text.js: <Text /> // OKEY
+/ChooseMessengerPage/Headline.js: <Text /> // OKEY
+/LandingPage/Text.js: <Text /> // OKEY
+/Card/Headline.js: <Headline /> // OKEY
+/Card/Subheadline.js: <Subheadline /> // OKE
+/Card/Text.js: <Text /> // OKEY
+
+// testcase zweierleiger (some overlap with zurich, below)
+theme={getInstance()}
+__tests__/x.test.js: theme={getInstance()} // OKEY
+__scripts__/x.sh: theme={getInstance()} // OKEY
+__stories__/tools.js: const theme = getInstance() // OKEY
+/setupTests.js: theme={getInstance()} // OKEY
+/hooks/useLanguage.js: theme={getInstance()} // OKEY
+
+// testcase zurich (some overlap with zweierleiger, above)
+getInstance()
+__vendor__/x.sh: getInstance() // OKEY
+/translations/x.js: getInstance() // OKEY
+partnerConfigs/singleton.js: getInstance() // OKEY
+/hooks/useLanguage.js: getInstance() // OKEY

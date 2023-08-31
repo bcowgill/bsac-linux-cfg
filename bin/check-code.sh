@@ -566,7 +566,6 @@ git grep -iE '\b(font-?(family|size|weight)|line-?height|letter-?spacing)\b' \
 show_bad "ERROR TYPOGRAPHY" "Should be using components/e2/Typography components instead of specific font CSS."
 
 if [ ! -z "$ALLZ" ]; then
-# HEREIAM TESTING
 #------------------------------------------- testcase zygnematales,17
 git grep -E 'import.+useTheme.+/useLanguage' src \
 	| grep -v 'App/App.js' \
@@ -574,52 +573,53 @@ git grep -E 'import.+useTheme.+/useLanguage' src \
 
 show_bad "WARN THEME" "Should import { useTheme } from '@emotion/react' NOT hooks/useLanguage"
 
-fi # ALLZ
-
-#-------------------------------------------
+#------------------------------------------- testcase zygnemataceae,18
 git grep -E 'props\.theme\.' \
 	| grep -v 'PROPER WAY' \
-	| grep -v '__vendor__|__scripts__' \
+	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "WARN THEME1" "Should check styled component in Storybook and change to themedProps.theme to indicate proper operation like src/components/Carousel/Bullet.js"
 
-#-------------------------------------------
+#------------------------------------------- testcase zygnema,19
 git grep Broken \
-	| grep '__vendor__|__stories__' \
+	| grep -E '__vendor__|__stories__' \
 	> found.lst
 
 show_bad "WARN THEME2" "Should fix Broken styled components in Storybook with useTheme and themedProps as in src/components/Carousel/Bullet.js"
 
-#-------------------------------------------
+#------------------------------------------- testcase zwischen,20
 git grep theme= \
 	| grep -v 'ThemeProvider theme' \
-	| grep '__vendor__|__stories__' \
+	| grep -E '__vendor__|__stories__' \
 	> found.lst
 
 show_bad "WARN THEME3" "Should not pass theme in Storybook stories, fix the component with useTheme and themedProps"
 
-#-------------------------------------------
+#------------------------------------------- testcase zwieback,21
 git grep -E '<(Text|(Subh|H)eadline)\b' \
 	| grep -vE '\.(Themed|Message)|theme=|\bid=|Modal/Message\.js|Headline\.test\.js|/OptionalTextOr\.js|/SuccessStep/ActivationCode\.js|/BasicInfoPage/Headline\.js|/BasicInfoPage/Text\.js|/ChooseMessengerPage/Headline\.js|/LandingPage/Text\.js|/Card/(Headline|Subheadline|Text)\.js' \
 	> found.lst
 
 show_bad "WARN THEME4" "Need to use the Xxx.Themed or Xxx.Message version of some @emotion/styled components to work in Storybook"
 
-#-------------------------------------------
+#------------------------------------------- testcase zweierleiger,22
 git grep -E 'theme.+getInstance' \
-	| grep -vE '__tests__|__scripts__|__stories__/tools\.js|(setupTests|useLanguage)\.js' \
+	| grep -vE '__tests__|__scripts__|__stories__/tools\.js|/(setupTests|useLanguage)\.js' \
 	> found.lst
 
 show_bad "WARN THEME5" "Need to useTheme instead of getting it from getInstance()"
 
-#-------------------------------------------
+#------------------------------------------- testcase zurich,23
 git grep -E 'getInstance\(\)' \
 	| grep -vE '__/|/hooks/|/translations/|/setupTests\.js|partnerConfigs/singleton\.js' \
 	> found.lst
 
 show_bad "WARN INSTANCE" "Should create or use a hook instead of calling getInstance() directly"
 
+fi # ALLZ
+
+# HEREIAM TESTING
 #-------------------------------------------
 # Find all React components with propTypes but missing displayName
 git grep -E '(\.displayName|\.propTypes) *=' \

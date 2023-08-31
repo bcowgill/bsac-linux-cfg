@@ -80,3 +80,29 @@
    bad-style.css:/e2/x.css: fontWeight: 900;
    bad-style.css:/e2/x.css: font-family: Courier;
    bad-style.css:/e2/x.css: fontFamily: Courier;
+ 
+⋅😡 WARN THEME (1): Should import { useTheme } from '@emotion/react' NOT hooks/useLanguage
+   src/bad-src.js:import { useTheme } from "../useLanguage";
+ 
+⋅😡 WARN THEME1 (1): Should check styled component in Storybook and change to themedProps.theme to indicate proper operation like src/components/Carousel/Bullet.js
+   bad-code.js:border: 1rem solid ${props.theme.edging};
+ 
+⋅😡 WARN THEME2 (2): Should fix Broken styled components in Storybook with useTheme and themedProps as in src/components/Carousel/Bullet.js
+   bad-code.js:__stories__/x.js: Broken
+   bad-code.js:__vendor__/x.js: Broken
+ 
+⋅😡 WARN THEME3 (2): Should not pass theme in Storybook stories, fix the component with useTheme and themedProps
+   bad-code.js:__vendor__/x.js: theme={theme}
+   bad-code.js:__stories__/x.js: theme={theme}
+ 
+⋅😡 WARN THEME4 (3): Need to use the Xxx.Themed or Xxx.Message version of some @emotion/styled components to work in Storybook
+   bad-code.js:<Headline />
+   bad-code.js:<Subheadline />
+   bad-code.js:<Text />
+ 
+⋅😡 WARN THEME5 (1): Need to useTheme instead of getting it from getInstance()
+   bad-code.js:theme={getInstance()}
+ 
+⋅😡 WARN INSTANCE (2): Should create or use a hook instead of calling getInstance() directly
+   bad-code.js:theme={getInstance()}
+   bad-code.js:getInstance()
