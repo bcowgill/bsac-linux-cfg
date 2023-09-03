@@ -63,7 +63,7 @@ function move_files {
 if [ -d "$XXX_FROM" ]; then
 	NEW="$XXX_PICS"
 	REMOVE="$XXX_FROM"
-	echo Moving pictuers from phone at $REMOVE/ to hard disk at $NEW/
+	echo Moving pictures from phone at $REMOVE/ to hard disk at $NEW/
 	echo `ls "$REMOVE" | wc -l` files waiting in $REMOVE
 	echo `ls | wc -l` files already in $NEW
 	move_files "$REMOVE" "$NEW" jpeg

@@ -619,8 +619,7 @@ show_bad "WARN INSTANCE" "Should create or use a hook instead of calling getInst
 
 fi # ALLZ
 
-# HEREIAM TESTING
-#-------------------------------------------
+#------------------------------------------- testcase zulu,24
 # Find all React components with propTypes but missing displayName
 git grep -E '(\.displayName|\.propTypes) *=' \
 	| perl -ne '
@@ -650,13 +649,14 @@ git grep -E '(\.displayName|\.propTypes) *=' \
 
 show_bad "WARN DISPLAYNAME" "Should have const displayName for each component to help debugging"
 
-#-------------------------------------------
+#------------------------------------------- testcase zucchini,25
 git grep -E '\.prototype\s*=' \
 	| grep -vE '__/|BulletSection/BulletSection\.js' \
 	> found.lst
 
 show_bad "ERROR PROTOTYPE" "Should not be making .prototype assignments. Did you mean .propTypes?"
 
+# HEREIAM TESTING
 #-------------------------------------------
 git grep -E 'react-hooks/exhaustive-deps' \
 	| grep -vE '__/' \

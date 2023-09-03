@@ -118,3 +118,15 @@ __vendor__/x.sh: getInstance() // OKEY
 /translations/x.js: getInstance() // OKEY
 partnerConfigs/singleton.js: getInstance() // OKEY
 /hooks/useLanguage.js: getInstance() // OKEY
+
+// testcase zulu
+OopsComponent.propTypes = {};
+Component.displayName = displayName; // OKEY
+Component.propTypes = {}; // OKEY
+
+// testcase zucchini
+Comp.prototype = Blah;
+__vendor__/x.js: Comp.prototype = Blah; // OKEY
+__scripts__/x.js: Comp.prototype = Blah; // OKEY
+__tests__/x.js: Comp.prototype = Blah; // OKEY
+BulletSection/BulletSection.js: BulletSection.prototype = Blah; // OKEY

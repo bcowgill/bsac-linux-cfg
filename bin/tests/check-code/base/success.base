@@ -106,3 +106,9 @@
 ⋅😡 WARN INSTANCE (2): Should create or use a hook instead of calling getInstance() directly
    bad-code.js:theme={getInstance()}
    bad-code.js:getInstance()
+ 
+⋅😡 WARN DISPLAYNAME (1): Should have const displayName for each component to help debugging
+   bad-code.js: Missing displayName for OopsComponent.propTypes = {};
+ 
+⋅❌ ERROR PROTOTYPE (1): Should not be making .prototype assignments. Did you mean .propTypes?
+   bad-code.js:Comp.prototype = Blah;
