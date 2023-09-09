@@ -1,6 +1,9 @@
 USB broken posting to help page.
 usb-broken.txt
 
+me@akston:~/d/docs/leisure
+star-trek-episodes.txt
+
 check-code unit tests
 
 Project Gimp - user manual and tagging gradients/brushes in config file

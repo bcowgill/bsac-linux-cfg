@@ -130,3 +130,45 @@ __vendor__/x.js: Comp.prototype = Blah; // OKEY
 __scripts__/x.js: Comp.prototype = Blah; // OKEY
 __tests__/x.js: Comp.prototype = Blah; // OKEY
 BulletSection/BulletSection.js: BulletSection.prototype = Blah; // OKEY
+
+// testcase zu
+// eslint-disable-next-line react-hooks/exhaustive-deps
+__tests__/x.js: // eslint-disable-next-line react-hooks/exhaustive-deps // OKEY
+
+// testcase zounds
+// MUSTDO a marker to be detected
+// mUstdo a marker to be detected
+// mUsSstdo a marker to be detected
+// ToDO a marker to be detected
+// ToDO(BSAC) a marker to be detected OKEY
+// toDO DIP-9812 a marker to be detected OKEY
+// Todo(2023-01-09) a marker to be detected OKEY
+__vendor__/x.js: // MUSTDO a marker to be detected
+docs/x.js: // MUSTDO a marker to be detected OKEY
+x.json: // ToDO a marker to be detected OKEY
+check-code.sh: // MUSTDO a marker to be detected OKEY
+
+// testcase zouave
+<a class="name">link</a>
+x.svg: <a class="name">link</a>
+__scripts__/x.js: <a class="name">link</a>
+__vendor__/x.js: <a class="name">link</a>
+__tests__/x.js: <a class="name">link</a>
+public/index.html: <a class="name">link</a>
+setupTests.js: <a class="name">link</a>
+<a className="name">link</a> // OKEY
+
+// testcase zosteraceae
+window.console.log("here")
+docs/x.js: window.console.group("here") // OKEY
+// window.console.log("here") OKEY
+__vendor__/x.js: window.console.group("here") // OKEY
+__scripts__/x.js: window.console.group("here") // OKEY
+setupTests.js: window.console.group("here") // OKEY
+window.console.log("PARTNER_NAME") // OKEY
+src/tracking/track.js: window.console.group("here") // OKEY
+README.md: window.console.group("here") // OKEY
+cypress/support/commands.js: window.console.group("here") // OKEY
+const logger = window.console // OKEY
+(window.console).log("here") // OKEY
+window.console && window.console.log("here") // OKEY

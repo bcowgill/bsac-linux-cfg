@@ -656,22 +656,21 @@ git grep -E '\.prototype\s*=' \
 
 show_bad "ERROR PROTOTYPE" "Should not be making .prototype assignments. Did you mean .propTypes?"
 
-# HEREIAM TESTING
-#-------------------------------------------
+#------------------------------------------- testcase zu,26
 git grep -E 'react-hooks/exhaustive-deps' \
 	| grep -vE '__/' \
 	> found.lst
 
 show_bad "ERROR EFFECT HOOKS" "Should not be useing react-hooks/exhaustive-deps. Create proper useEffect dependency array or omit it for beforeWeMount/afterWeUnmount effects."
 
-#-------------------------------------------
+#------------------------------------------- testcase zoysia,27
 git grep -E '((\bx(it|describe))|\.skip)\(' \
 	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "WARN TESTS SKIP" "Should not have any tests marked as .skip()."
 
-#-------------------------------------------
+#------------------------------------------- testcase zounds,28
 git grep -iE '(mu[s]+tdo|to[d]o)[^(]' \
 	| grep -vE '__vendor__|docs/|\.json|check-code' \
 	| grep -ivE 'DIP-[0-9+]' \
@@ -681,7 +680,7 @@ MD="MUST""DO/TO""DO"
 TD="TO""DO"
 show_bad "WARN $MD" "Should give $TD(name), $TD(date) or $TD DIP-NNNN on $MD items"
 
-#-------------------------------------------
+#------------------------------------------- testcase zouave,29
 git grep -E 'class=' \
 	| grep -vE '\.svg:' \
 	| grep -vE '__(scripts|vendor|tests)__' \
@@ -690,7 +689,7 @@ git grep -E 'class=' \
 
 show_bad "ERROR CLASSNAME" "Should be using className= instead of class="
 
-#-------------------------------------------
+#------------------------------------------- testcase zosteraceae,30
 git grep -E 'window\.console\.' \
 	| grep -v docs/ \
 	| grep -vE '//|__vendor__|__scripts__|setupTests|PARTNER_NAME|src/tracking/track\.js|README.md:|cypress/support/commands\.js' \
@@ -700,6 +699,7 @@ git grep -E 'window\.console\.' \
 
 show_bad "ERROR window.console" "Should remove your window.console debugging"
 
+# HEREIAM TESTING
 #-------------------------------------------
 git grep -E 'debug\(|debugger|pause\(' \
 	| grep -vE '//|__vendor__|__scripts__|setupTests|templates/' \
