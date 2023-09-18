@@ -3,6 +3,7 @@ usb-broken.txt
 
 me@akston:~/d/docs/leisure
 star-trek-episodes.txt
+100-books.sh list of 100 books from Equaliser movies.
 
 check-code unit tests
 

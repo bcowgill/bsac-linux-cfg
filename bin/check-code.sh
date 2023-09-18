@@ -699,36 +699,35 @@ git grep -E 'window\.console\.' \
 
 show_bad "ERROR window.console" "Should remove your window.console debugging"
 
-# HEREIAM TESTING
-#-------------------------------------------
+#------------------------------------------- testcase zostera,31
 git grep -E 'debug\(|debugger|pause\(' \
 	| grep -vE '//|__vendor__|__scripts__|setupTests|templates/' \
 	> found.lst
 
 show_bad "ERROR DEBUGGER" "Should remove your debugger, debug() or .pause() instructions from tests"
 
-#-------------------------------------------
+#------------------------------------------- testcase zoroastrianism,32
 git grep -E 'DEBUG\s*=' \
-	| grep -vE 'DEBUG\s*=\s*$|//|false|process\.env\.|package.json|docs/|__vendor__|__scripts__|displayName|DEV_DEBUG_' \
+	| grep -vE 'DEBUG\s*=\s*$|//.+DEBUG|false|process\.env\.|package.json|docs/|__vendor__|__scripts__|displayName|DEV_DEBUG_' \
 	> found.lst
 
 show_bad "ERROR DEBUG=" "Should set DEBUG= to false"
 
-#-------------------------------------------
+#------------------------------------------- testcase zoroastrian,33
 git grep -E 'DEBUG\s*=.+true' \
 	| grep -vE '//|__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "ERROR DEBUG=" "Should not have DEBUG= set true"
 
-#-------------------------------------------
+#------------------------------------------- testcase zoroaster,34
 git grep -E '\.to(Be|Equal|Have)\w*\s*(/|;|$)' \
 	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
 
 show_bad "ERROR TESTS NOTHING" "Should have () at end of a test assertion like .toBeNull, this tests nothing."
 
-#-------------------------------------------
+#------------------------------------------- testcase zoril,35
 git grep -E '((\bf(it|describe))|\.only)\(' \
 	| grep -vE '__vendor__|__scripts__' \
 	> found.lst
@@ -736,12 +735,13 @@ git grep -E '((\bf(it|describe))|\.only)\(' \
 show_bad "ERROR TESTS ONLY" "Should not have any tests marked as .only()."
 
 if [ ! -z "$TRANSLATIONS" ]; then
-#-------------------------------------------
+#------------------------------------------- testcase zootomy,36
 grep -E '([%٪])(general|dataRep|privacy|service)Email\1' $TRANSLATIONS \
 	> found.lst
 
 show_bad "ERROR TRANS SYSTEM" "Marker needs system. prefix. i.e. %system.privacyEmail%"
 
+# UNTESTED ALL BELOW TO NEXT IF
 #-------------------------------------------
 grep -E '[%٪]languagePicker\.label' $TRANSLATIONS \
 	> found.lst
@@ -824,7 +824,7 @@ grep -E '\.\.\.' $TRANSLATIONS \
 
 show_bad "ERROR TRANS ELLIPSIS" "Looks like ... was used for ellipsis, replace with …"
 
-#-------------------------------------------
+#------------------------------------------- also testcase zootomy,36
 grep -E '٪\s*\w+\s*٪' $TRANSLATIONS \
 	> found.lst
 
@@ -891,13 +891,14 @@ show_bad "QUOTES TRANS" "Should not have dodgy quotes/characters in translation 
 
 fi # TRANSLATIONS
 
-#-------------------------------------------
+#------------------------------------------- testcase zoothapsis,37
 git grep -iE 'mus+''tdo' \
 	| grep -vE '__vendor__|docs/|check-code|mockNavigateToDoctorChatPage|README' \
 	> found.lst
 
 show_bad "WARN MUS""TDO" "Should resolve MUS""TDO items"
 
+# HEREIAM TESTING
 if [ ! -z "$ALLZ" ]; then
 #-------------------------------------------
 git grep DEV_ src/constants/switches.js \

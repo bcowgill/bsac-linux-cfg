@@ -112,3 +112,63 @@
  
 ⋅❌ ERROR PROTOTYPE (1): Should not be making .prototype assignments. Did you mean .propTypes?
    bad-code.js:Comp.prototype = Blah;
+ 
+⋅❌ ERROR EFFECT HOOKS (1): Should not be useing react-hooks/exhaustive-deps. Create proper useEffect dependency array or omit it for beforeWeMount/afterWeUnmount effects.
+   bad-code.js:// eslint-disable-next-line react-hooks/exhaustive-deps
+ 
+⋅😡 WARN TESTS SKIP (5): Should not have any tests marked as .skip().
+   cypress/bad-tests.spec.js:describe.skip("a skipped suite");
+   cypress/bad-tests.spec.js:it.skip("a skipped test");
+   cypress/bad-tests.spec.js:anything.skip("a skipped test");
+   cypress/bad-tests.spec.js:xit("a skipped test");
+   cypress/bad-tests.spec.js:xdescribe("a skipped test");
+ 
+⋅😡 WARN MUSTDO/TODO (4): Should give TODO(name), TODO(date) or TODO DIP-NNNN on MUSTDO/TODO items
+   bad-code.js:// MUSTDO a marker to be detected
+   bad-code.js:// mUstdo a marker to be detected
+   bad-code.js:// mUsSstdo a marker to be detected
+   bad-code.js:// ToDO a marker to be detected
+ 
+⋅❌ ERROR CLASSNAME (1): Should be using className= instead of class=
+   bad-code.js:<a class="name">link</a>
+ 
+⋅❌ ERROR window.console (1): Should remove your window.console debugging
+   bad-code.js:window.console.log("here")
+ 
+⋅❌ ERROR DEBUGGER (3): Should remove your debugger, debug() or .pause() instructions from tests
+   bad-code.js:debug();
+   bad-code.js:pause();
+   bad-code.js:debugger;
+ 
+⋅❌ ERROR DEBUG= (1): Should set DEBUG= to false
+   bad-code.js:DEBUG=true
+ 
+⋅❌ ERROR TESTS NOTHING (4): Should have () at end of a test assertion like .toBeNull, this tests nothing.
+   bad-code.test.js:expect(got).toBe;
+   bad-code.test.js:expect(got).toBeTruthy
+   bad-code.test.js:expect(got).toEqual  ;
+   bad-code.test.js:expect(got).toHaveBeenCalledWith // also a problem
+ 
+⋅❌ ERROR TESTS ONLY (4): Should not have any tests marked as .only().
+   bad-code.test.js:fdescribe("test suite");
+   bad-code.test.js:describe.only("test suite");
+   bad-code.test.js:fit("test case");
+   bad-code.test.js:it.only("test case");
+ 
+⋅❌ ERROR TRANS SYSTEM (4): Marker needs system. prefix. i.e. %system.privacyEmail%
+       zootomy1: "%generalEmail%",
+       zootomy2: "٪dataRepEmail٪",
+       zootomy3: "%privacyEmail%",
+       zootomy4: "٪serviceEmail٪",
+ 
+⋅❌ ERROR TRANS PERCENT (2): Looks like %marker% was replaced by Arabic percent ٪marker٪.
+       zootomy2: "٪dataRepEmail٪",
+       zootomy4: "٪serviceEmail٪",
+ 
+⋅😡 WARN MUSTDO (3): Should resolve MUSTDO items
+   bad-code.js:// MUSTDO a marker to be detected
+   bad-code.js:// mUstdo a marker to be detected
+   bad-code.js:// mUsSstdo a marker to be detected
+ 
+⋅❌ ERROR DEV_ switches should be turned off for releases (1): 
+   src/constants/switches.js:DEV_VALUE=true;

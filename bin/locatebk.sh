@@ -3,6 +3,7 @@
 #
 #  Find a specific Billy Idol song from a local backup database
 #
+# Example:
 #  $cmd VELDA-2TB -i billy | grep -i idol | grep -i flesh
 #
 

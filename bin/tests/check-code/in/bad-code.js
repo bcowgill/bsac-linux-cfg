@@ -136,6 +136,7 @@ BulletSection/BulletSection.js: BulletSection.prototype = Blah; // OKEY
 __tests__/x.js: // eslint-disable-next-line react-hooks/exhaustive-deps // OKEY
 
 // testcase zounds
+// testcase zoothapsis
 // MUSTDO a marker to be detected
 // mUstdo a marker to be detected
 // mUsSstdo a marker to be detected
@@ -172,3 +173,26 @@ cypress/support/commands.js: window.console.group("here") // OKEY
 const logger = window.console // OKEY
 (window.console).log("here") // OKEY
 window.console && window.console.log("here") // OKEY
+
+// testcase zostera
+debug();
+pause();
+debugger;
+// debug(); OKEY
+__vendor__/x.js: pause(); // OKEY
+__scripts__/x.js: pause(); // OKEY
+setupTests.js: debugger; // OKEY
+templates/x.js: debugger; // OKEY
+
+// testcase zoroastrianism
+DEBUG=true
+// DEBUG=true OKEY
+OKEY DEBUG=
+OKEY DEBUG=false
+process.env.NODE_DEBUG=true; // OKEY
+package.json: DEBUG=true // OKEY
+docs/x.js: DEBUG=true; // OKEY
+__vendor__/x.js: DEBUG=true; // OKEY
+__scripts__/x.js: DEBUG=true; // OKEY
+console.warn(`${displayName} DEBUG=${DEBUG}`); // OKEY
+DEV_DEBUG_SETTING=true; // OKEY

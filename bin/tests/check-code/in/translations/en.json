@@ -19,4 +19,10 @@
 	// testcase zygophyllaceae
     "chooseMessengerPage.generateActivationCodeModal.initialStep.help": "help me",
     "chooseMessengerPage.generateActivationCodeModal.initialStep.helpLink": "<linkToFaqItemSACH>help</linkToFaqItemSACH> me OKEY",
+	// testcase zootomy
+    zootomy1: "%generalEmail%",
+    zootomy2: "٪dataRepEmail٪",
+    zootomy3: "%privacyEmail%",
+    zootomy4: "٪serviceEmail٪",
+    zootomy5: "%system.generalEmail%", // OKEY
 }
