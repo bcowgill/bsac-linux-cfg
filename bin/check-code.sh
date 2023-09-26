@@ -78,9 +78,23 @@ show_bad "WARN CYPRESS CLICK BY TEXT" "Should locate items to click with findByT
 
 fi # CYP
 
-#------------------------------------------- testcase zymosis,3
+#------------------------------------------- testcase TODO NEW LLOYDS,4
+git grep -E 'undefined|null' \
+	| grep __snapshots__ \
+	> found.lst
+
+show_bad "WARN TEST isRequired" "Snapshot shows undefined or null indicating some required property of a component is not marked as .isRequired in propTypes definition."
+
+#------------------------------------------- testcase TODO NEW LLOYDS,4
+git grep -E 'getBy\w+.+\.toBeInThe' \
+	> found.lst
+
+show_bad "WARN TEST getBy" "Should use queryByXxx().toBeInTheXxx or queryAllByXxx().toHaveLength instead of .getByXxx().toBeInTheXxx or just use getByXxx() without any expect() because it throws an error as soon as it fails."
+
+#------------------------------------------- testcase zymosis,3 TODO update tests from recent Lloyds change
 git grep 'getAttribute' \
-	| grep -vE '__vendor__|__scripts__|\.toMatch\(|//.+getAttribute|getAttribute\("value"\)\s*===\s*"true"' \
+	| grep -E '\.test\.js' \
+	| grep -vE 'BDD/|__vendor__|__scripts__|\.toMatch\(|//.+getAttribute|getAttribute\("value"\)\s*===\s*"true"' \
 	> found.lst
 
 show_bad "WARN TEST ATTR" "Should use (.not).toHaveAttribute instead of .getAttribute in unit tests because it reports failures better."
@@ -90,6 +104,13 @@ git grep -E 'waitFor.+toMatchSnapshot' \
 	> found.lst
 
 show_bad "ERROR TEST SNAPSHOT" "Do not put toMatchSnapshot inside a waitFor function.  It will ruin your snapshots when you run tests in isolation with skip/only.  Put it AFTER the waitFor completes."
+
+#------------------------------------------- testcase TODO NEW LLOYDS
+git grep -E 'waitFor\(' \
+	grep -v 'await' \
+	> found.lst
+
+show_bad "ERROR TEST WAITFOR" "You need to await a waitFor() call inside an async it() test."
 
 #------------------------------------------- testcase zygotic,5
 git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
@@ -102,13 +123,20 @@ git grep -E '\b(window|document|navigator|history|(local|session)Storage)\.' \
 
 show_bad "WARN PLATFORM GLOBAL" "Using platform globals outside of src/utils/platform.js"
 
+#------------------------------------------- testcase TODO NEW LLOYDS,6
+git grep -E 'spyOn.+push' \
+	| grep -v 'mockReturnValue' \
+	> found.lst
+
+show_bad "WARN TEST PUSHSPY" "Should mock a return value when spying on history.push or store.push to prevent console errors about unimplemented URL changes"
+
 #------------------------------------------- testcase zygotene,6
 git grep -E 'JSON\.parse\(JSON\.stringify' \
 	| grep -v '__scripts__/' \
 	| grep -vE '/(__tests__|__vendor__|integration)/' \
 	> found.lst
 
-show_bad "ERROR CLONE" "Don't use JSON.parse(JSON.stringify to clone an object except in tests.  Use structuredClone() or _.cloneDeep() as a fallback."
+show_bad "ERROR CLONE" "ACTUALLY WRONG, it is efficient. Don't use JSON.parse(JSON.stringify to clone an object except in tests.  Use structuredClone() or _.cloneDeep() as a fallback."
 
 #------------------------------------------- testcase zygote,7
 git grep 'async function ' \
