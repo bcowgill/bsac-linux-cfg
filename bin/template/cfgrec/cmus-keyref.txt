@@ -1,9 +1,18 @@
 Cmus quick reference
 
 man cmus-tutorial
+Use mk-playlist-cmus.sh to find music files and make playlists.
 see filter-mime-audio.pl for making Play list from found sound files.
 
 console music player man cmus-tutorial or cmus-remote
+
+Play a specific playlist:
+cp ~/NAME.pl ~/playlist.pl; cmus
+then type:
+c   to start playing the playlist
+3 c to view and play the playlist
+s   to toggle shuffle mode
+
 
 KEY:CMUS:CTRL :q quit the program save Library and Play list, but not the Queue
 KEY:CMUS:CTRL :save save configuration
@@ -125,3 +134,6 @@ Other commands:
 :load -l or -p filename.pl  load Library or Play list from Play list file
 4 :add ~/playqueue.pl go to Play queue and load tracks from saved file
 4 :clear go to Play queue and clear all tracks
+
+The default cmus playlist:
+~/.cmus/playlist.pl

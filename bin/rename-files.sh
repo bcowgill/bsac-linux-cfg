@@ -11,7 +11,7 @@ function usage {
 	echo "
 $cmd [--help|--man|-?] match replace [--exec]
 
-This will rename files in the current directory only, seaarching for a match string and replacing with a replace string.  It makes their names easier to use with the shell mouse selection by converting spaces to dashes.
+This will rename files in the current directory only, searching for a match string and replacing with a replace string.  It makes their names easier to use with the shell mouse selection by converting spaces to dashes.
 
 --exec  Specify to cause the files to be renamed.
 --man   Shows help for this tool.
@@ -29,6 +29,10 @@ By default it only shows how the files would be renamed but doesn\'t do it.
 See also ls-spacefiles.sh auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
 
 Example:
+
+$cmd ' ' -
+
+Renames any files with spaces in them.
 
 $cmd imag photos-today-
 

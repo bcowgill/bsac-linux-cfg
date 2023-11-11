@@ -928,7 +928,7 @@ show_bad "WARN MUS""TDO" "Should resolve MUS""TDO items"
 
 # HEREIAM TESTING
 if [ ! -z "$ALLZ" ]; then
-#-------------------------------------------
+#------------------------------------------- testcase zoospore,38
 git grep DEV_ src/constants/switches.js \
 	| grep true \
 	| grep -v DEV_CHECK_FAQ \

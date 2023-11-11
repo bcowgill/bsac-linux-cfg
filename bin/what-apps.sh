@@ -4,7 +4,7 @@
 # filter processes for apps of interest
 # See also watch-apps.sh, what-is-running.pl, watcher.sh
 pswide.sh | \
-	egrep "node|grunt|perl|python|java|ruby|elixir|keep-it-up|auto-build|baloo_file_extractor|emacs|vim|nano|ezbackup|mount|/dev/" | \
+	egrep "screensaver|node|grunt|perl|python|java|ruby|elixir|keep-it-up|auto-build|baloo_file_extractor|emacs|vim|nano|ezbackup|mount|/dev/" | \
 	grep -v grep | \
 	grep -v what-is-running | \
 	grep -v cross-env | \

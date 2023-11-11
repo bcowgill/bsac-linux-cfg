@@ -34,7 +34,7 @@ usage: $cmd [--help|--man|-?] pattern prefix [destination [source]]
 
 This program will automatically rename or move matching files as they appear.
 
-NUM         environment variable sets initial number to use in file names. default is 1.
+NUM         environment variable sets initial number to try to use in file names. default is 1.
 pattern     regex pattern to match against source file name to be renamed.
 prefix      prefix for destination file names. Will have NNN appended to it.
 destination destination directory to move file to. default is current directory.
@@ -59,6 +59,8 @@ $cmd '\\.jpg\$' screen-shot- \$HOME/screen-shots \$HOME/Desktop
 Begin numbering the output files at 12 instead of 1:
 
 NUM=12 $cmd '\\.jpg\$' screen-shot- \$HOME/screen-shots \$HOME/Desktop
+
+If a screen-shot-012 file already exists it will try the next number until none exists.
 USAGE
 	exit($msg ? 1: 0);
 } # usage()
