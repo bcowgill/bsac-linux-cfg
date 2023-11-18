@@ -5,10 +5,12 @@ perl -ne '
 	{
 		$max_length = 4;
 		$prev_punct = "";
+		$reBraces = qr{([\s;\(\)\{\}\[\]]+\z)}xms; # for super-evil
+		$reBraces = qr{([\s;\{\}]+\z)}xms;
 	}
 
 	chomp;
-	s{([\s;\{\}]+\z)}{}xms;
+	s{$reBraces}{}xms;
 	$punct = $1 || "";
 	$punct =~ s{\s+}{}xmsg;
 	s{\s+\z}{}xmsg;
@@ -48,7 +50,7 @@ perl -ne '
 			}
 			else
 			{
-				print $punct . (" " x ($max_length - length($punct))) . $text;
+				print $punct . (" " x ($max_length - length($punct))) . " " . $text;
 			}
 		}
 	}

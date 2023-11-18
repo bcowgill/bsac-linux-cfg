@@ -5,10 +5,12 @@ perl -ne '
 	{
 		$max_length = 0;
 		$indent = " " x 4;
+		$reBraces = qr{([\s;\(\)\{\}\[\]]+\z)}xms; # for super-evil
+		$reBraces = qr{([\s;\{\}]+\z)}xms;
 	}
 
 	chomp;
-	s{([\s;\{\}]+\z)}{}xms;
+	s{$reBraces}{}xms;
 	$punct = $1 || "";
 	$punct =~ s{\s+}{}xmsg;
 	s{\s+\z}{}xmsg;
