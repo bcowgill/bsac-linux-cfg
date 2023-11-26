@@ -13,6 +13,7 @@
 # Reference: https://linoxide.com/how-tos/howto-change-volume-label-on-usb-drives-in-linux/
 
 CFG=/etc/mtools.conf
+LOG=`mktemp`
 
 function usage {
 	local code
@@ -64,8 +65,14 @@ fi
 if [ -z "$LABEL" ]; then
 	sudo mlabel -s $DRIVE
 else
-	sudo mlabel $DRIVE"$LABEL"
+	sudo mlabel $DRIVE"$LABEL" 2>&1 | tee $LOG
+	ERR=$?
+	if grep 'too long' $LOG > /dev/null; then
+		echo $LABEL
+		echo '----------- Maximum label length'
+	fi
+	rm $LOG
 fi
-if [ 1 == $? ]; then
+if [ 1 == $ERR ]; then
 	echo If permission denied, you may want to try sudo $0 $1 $2
 fi
