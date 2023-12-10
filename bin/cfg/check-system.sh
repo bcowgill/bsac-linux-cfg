@@ -1147,6 +1147,8 @@ INSTALL_LINUX="
 	gettext
 	iselect
 	root-tail
+	sysstat
+	unetbootin
 	fbcat
 	chromium-browser
 	meld
@@ -1154,6 +1156,10 @@ INSTALL_LINUX="
 	id3v2
 	$MTP_PKG
 "
+# sysstat for iostat command to check disk performance
+# unetbootin for creating bootable linux from usb/network
+# MUSTDO ultimate boot cd install to /opt/ubcd for making boot USB
+
 
 INSTALL_MACOS="
 	meld:caskroom/cask/meld
