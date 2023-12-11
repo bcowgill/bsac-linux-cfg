@@ -1,5 +1,9 @@
 #!/bin/bash
 # BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+if [ -z "$DISPLAY" ]; then
+	vimdiff $*
+	exit $?
+fi
 if which diffmerge > /dev/null; then
 	diffmerge --nosplash $*
 else
