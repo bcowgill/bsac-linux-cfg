@@ -72,7 +72,8 @@ function main
 
 	capture lssubsys "--all --all-mount-points --hierarchies" "Subsystems"
 
-	su_capture fdisk -l "Low level disk partitions"
+	su_capture parted -l "Low level disk partitions"
+	su_capture fdisk -l "legacy Low level disk partitions"
 	capture mount -l "Logical disk structure"
 
 	capture df "--all -k --total --print-type" "Free disk space"
@@ -107,6 +108,8 @@ function main
 	capture ping "-c 3 google.com" "Ping connectivity"
 	capture traceroute "-m 10 google.com" "Traceroute connectivity"
 
+	capture find "/boot -type f -ls" "Boot directory" "boot-files"
+	capture_find_exec "/boot -type f" "file {}" "Boot directory file types" "boot-file-types"
 	BOOT="cmdline.txt config.txt issue.txt os_config.json"
 	for ITEM in $BOOT;
 	do
@@ -171,13 +174,14 @@ function main
 # capture the output of a command to a snapshot file
 function capture
 {
-	local cmd args msg
+	local cmd args msg rename
 	cmd="$1"
 	args="$2"
 	msg="$3"
+	rename="${4:-$cmd}"
 
 	# export the file name from the function
-	FILE="$DIR/$cmd.log"
+	FILE="$DIR/$rename.log"
 
 	echo " "
 	echo "### $msg"   | tee "$FILE"
@@ -185,6 +189,26 @@ function capture
 	echo " "          | tee --append "$FILE"
 
 	$cmd $args 2>&1   | tee --append "$FILE"
+}
+
+# capture the output of a find ... -exec command to a snapshot file
+function capture_find_exec
+{
+	local args cmd msg rename
+	args="$1"
+	cmd="$2"
+	msg="$3"
+	rename="$4"
+
+	# export the file name from the function
+	FILE="$DIR/$rename.log"
+
+	echo " "
+	echo "### $msg"   | tee "$FILE"
+	echo "find $args -exec $cmd \\;" | tee --append "$FILE"
+	echo " "          | tee --append "$FILE"
+
+	find $args -exec $cmd \; 2>&1   | tee --append "$FILE"
 }
 
 # capture the output of a command to a snapshot file and clean up dates/times
