@@ -286,7 +286,7 @@ sub tests
 	test_pad("123", "123") unless $SKIP;
 	test_pad("1234", "1234") unless $SKIP;
 	exit 0;
-}
+} # tests()
 
 __END__
 __DATA__
