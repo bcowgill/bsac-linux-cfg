@@ -2,6 +2,8 @@
 // TODO short description - lightweight nodejs script template slurp a file, internal DATA, usage/warning/debug output, no arg handling, internal unit tests
 //  W I N D E V tool useful on windows development machin
 
+const fs = require("fs");
+
 // console.log("process", process);
 const cmd = process.mainModule.filename.replace(/^.+\/([^\/]+)$/, "$1");
 const ZEROS = Number.MAX_SAFE_INTEGER.toString().replace(/\d/g, "0");
@@ -64,11 +66,11 @@ if (ARGC && /--help|--man|-\?/.test(ARGV[0])) {
 }
 
 function check_args() {
-  const source = cmd;
+  // const source = cmd;
   // if (!pattern) usage('You must provide a file matching pattern.');
   // if (!prefix)  usage('You must provide a destination file name prefix.');
-  // MUSTDO implement if (! -d source) failure(`source [${source}] must be an existing directory.`);
-  // MUSTDO implement if (! -d $destination) failure(`destination [${destination}] must be an existing directory.`);
+  // if (!is("-f", source)) failure(`source [${source}] must be an existing directory.`);
+  // if (!is("-d", destination)) failure(`destination [${destination}] must be an existing directory.`);
 } // check_args()
 
 function main() {
@@ -110,6 +112,43 @@ function tab(message) {
   const THREE_SPACES = "   ";
   return message.replace(/\t/g, THREE_SPACES);
 } // tab()
+
+// like perl -e -d operators...
+// if (is('-d', '/var'))
+// https://perlmaven.com/file-test-operators
+const isMap = {
+  // r w x o R W X O -- cannot do reliably
+  //-e by default
+  // z custom
+  "-s": "size",
+  "-f": "isFile",
+  "-d": "isDirectory",
+  "-l": "isSymbolicLink",
+  "-p": "isFIFO",
+  "-S": "isSocket",
+  "-b": "isBlockDevice",
+  "-c": "isCharacterDevice",
+  // t u g k T B M A C -- cannot do easily
+};
+function is(check, path) {
+  let result = false;
+  try {
+    const stats = fs.lstatSync(path);
+
+    if (check === "-e") {
+      result = true;
+    } else if (check === "-z") {
+      result = stats.size === 0;
+    } else if (check in isMap) {
+      result = stats[isMap[check]]();
+    } else {
+      failure(`is ${check} unknown file stat operator.`);
+    }
+  } catch (exception) {
+    debug(`is ${check} ${path}: ${exception.toString()} `, 1);
+  }
+  return result;
+} // is()
 
 function failure(warning) {
   throw new Error(`${tab(warning)}\n`);
