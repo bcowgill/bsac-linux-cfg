@@ -16,6 +16,7 @@ TODO Projects:
 		also do an update to new packages and run the tests to see if it is a seamless upgrade
 		run it at lunch time for example
 	Gitpod CDE's investigate for doing development in VM's
+		https://www.gitpod.io/blog/internal-developer-portals-not-a-silver-bullet
 	AWS free hosting play with it
 	play/playwright-devtest from photos on hp laptop
 	joi/zod module, use it for api specs

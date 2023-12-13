@@ -4,5 +4,11 @@ js-lite.js will be like perl-lite.pl template script for a light weight js file 
 Command line argument processor for node, like Getopt for perl.
 https://www.npmjs.com/package/commander
 
+LINKS
+Perl file test operators:
+https://perlmaven.com/file-test-operators
+TAP protocol for node:
+https://node-tap.org/basics/
+
 TODO
-implement (-d source) checks like perl
+implement slurp and other things.

@@ -5,6 +5,7 @@
 const fs = require("fs");
 
 // console.log("process", process);
+let __DATA__;
 const cmd = process.mainModule.filename.replace(/^.+\/([^\/]+)$/, "$1");
 const ZEROS = Number.MAX_SAFE_INTEGER.toString().replace(/\d/g, "0");
 
@@ -86,6 +87,12 @@ function main() {
     // failure("very very bad man");
 
     // MUSTDO implement this by reading our own file and looking for '__DATA__' line
+    if (__DATA__) {
+      say(`has __DATA__ will read it [${__DATA__}]`);
+      __DATA__.split(/\n/g).forEach((line) => {
+say(`line: [${line}]`);
+});
+    }
     //	while (my $line = <DATA>)
     //	{
     //		say("$line");
@@ -195,8 +202,6 @@ function say(message) {
   return message;
 }
 
-main();
-
 //===========================================================================
 // unit test functions
 //===========================================================================
@@ -293,6 +298,8 @@ function tests() {
 } // tests()
 
 ("__END__");
-`__DATA__
+__DATA__ = `
 I am the data.
-`;
+I have two lines of content.
+`.trim();
+main();
