@@ -18,6 +18,10 @@ binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
 
+my @Dipthongs = qw(ae ea ee ia oi ui ch gw ng ph sw th ts);
+my $alphabet = join("", 'a' .. 'z') . " " . join(" ", @Dipthongs);
+$alphabet .= " " . uc($alphabet) . " " . join("", '0' .. '9', "\n");
+
 sub usage
 {
 	my ($exit) = @ARG;
@@ -30,6 +34,8 @@ Show text using alphabetic unicode characters
 
 --space space out text characters replaced
 --alphabet display the alphabet instead of standard input
+--map as --alphabet but display mapping of english alphabet
+ characters.
 --show-styles list all supported font styles and exit immediately
 --all-styles display output in all font styles and exit immediately
 --flip-case flip upper/lower case
@@ -172,6 +178,90 @@ my %Alphabet = (
 			'0' => 'E0030',
 		},
 	},
+	# http://www.mylanguages.org/greek_alphabet.php
+	'greek' => {
+		'normal' => {
+			'a' => '3B1',
+			'A' => '391',
+			'0' => '30', # normal 0
+			'_map' => {
+				'A' => '391', # alpha a as in smart
+				'a' => '3B1',
+				'V' => '392', # beta v as in very
+				'v' => '3B2',
+				'G' => '393', # gamma between y as in yes and g as in go
+				'g' => '3B3',
+				'J' => '393', # no letter
+				'j' => '3B3',
+				'Y' => '393',
+				'y' => '3B3',
+				'TH' => '394', # delta th as in that
+				'Th' => '394',
+				'th' => '3B4',
+				'E' => '395', # epsilon e as in very
+				'e' => '3B5',
+				'Z' => '396', # zeta z as in zoo
+				'z' => '3B6',
+				'EE' => '397', # eta ee as in bee
+				'Ee' => '397',
+				'ee' => '3B7',
+#				'TH' => '398', # theta th as in think
+#				'Th' => '398',
+#				'th' => '3B8',
+#				'EE' => '399', # iota ee as in bee
+#				'Ee' => '399',
+#				'ee' => '3B9',
+				'I' => '399',
+				'i' => '3B9',
+				'K' => '39A', # kappa k as in look
+				'k' => '3BA',
+				'Q' => '39A', # no letter
+				'q' => '3BA',
+				'L' => '39B', # lamda l as in log
+				'l' => '3BB',
+				'M' => '39C', # mu m as in man
+				'm' => '3BC',
+				'N' => '39D', # nu n as in not
+				'n' => '3BD',
+				'X' => '39E', # xi x as in wax
+				'x' => '3BE',
+				'O' => '39F', # omicron o as in box
+				'o' => '3BF',
+				'P' => '3A0', # pi p as in top, close to 'b'
+				'p' => '3C0',
+				'B' => '3A0',
+				'b' => '3C0',
+				'R' => '3A1', # rho r as in Roma (rolled r)
+				'r' => '3C1',
+				'S' => '3A3', # sigma s as in sap
+				's' => '3C3',
+				'C' => '3A3', # or kappa
+				'c' => '3C3',
+				'T' => '3A4', # tau t as in hot, but softer and close to 'd'
+				't' => '3C4',
+				'D' => '3A4',
+				'd' => '3C4',
+#				'EE' => '3A5', # upsilon ee as in bee
+#				'Ee' => '3A5',
+#				'ee' => '3C5',
+				'PH' => '3A6', # phi ph as in photo
+				'Ph' => '3A6',
+				'ph' => '3C6',
+				'F' => '3A6',
+				'f' => '3C6',
+				'CH' => '3A7', # chi ch as in the scottish loch
+				'Ch' => '3A7',
+				'ch' => '3C7',
+				'PS' => '3A8', # psi ps as in upside
+				'Ps' => '3A8',
+				'ps' => '3C8',
+#				'O' => '3A9', # omega o as in box
+#				'o' => '3C9',
+				'W' => '3A9', # no letter
+				'w' => '3C9',
+			}
+		},
+	},
 	# http://www.omniglot.com/writing/ogham.htm
 	'ogham' => {
 		'normal' => {
@@ -196,7 +286,6 @@ my %Alphabet = (
 				'c' => '1689',
 				'k' => '1689',
 				'q' => '168A', # kw
-
 				'm' => '168B',
 				'g' => '168C',
 				'ng' => '168D',
@@ -365,8 +454,13 @@ sub processArg
 	}
 	elsif ($arg =~ m{\A --?alp}xms) # --alphabet
 	{
-		$content = join("", 'a' .. 'z');
-		$content .= uc($content) . join("", '0' .. '9', "\n");
+		$content = $alphabet;
+		$next = 1;
+	}
+	elsif ($arg =~ m{\A --?m}xms) # --map
+	{
+		$rhOpts->{map} = 1;
+		$content = $alphabet;
 		$next = 1;
 	}
 	elsif ($arg =~ m{\A --?all}xms) # --all-styles
@@ -383,7 +477,7 @@ sub processArg
 		usage(1);
 	}
 	return ($next, $content);
-}
+} # processArg()
 
 sub choose
 {
@@ -512,6 +606,15 @@ sub transform
 
 	foreach my $content (@$raContent)
 	{
+		if ($rhOpts->{map})
+		{
+			my $output = $content;
+			if ($rhOpts->{spaced})
+			{
+				$output =~ s{(\S)}{$1 }xmsg;
+			}
+			print $output;
+		}
 		print translate(
 			$content,
 			$style,
