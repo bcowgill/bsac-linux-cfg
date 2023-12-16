@@ -1,0 +1,58 @@
+#  L=roman
+#  grep-utf8.sh $L | perl -pne 's{\A.+(\[[a-z]+\]).+\z}{$1\n}xmsgi' | sort |uniq
+#  mkdir $L; (for f in LetterNumber OtherSymbol UppercaseLetter; do perl -e 'print "\n"'; grep-utf8.sh $L | grep $f;  done) > $L/utf8.txt
+
+Ⅰ	U+2160	[LetterNumber]	ROMAN NUMERAL ONE
+Ⅱ	U+2161	[LetterNumber]	ROMAN NUMERAL TWO
+Ⅲ	U+2162	[LetterNumber]	ROMAN NUMERAL THREE
+Ⅳ	U+2163	[LetterNumber]	ROMAN NUMERAL FOUR
+Ⅴ	U+2164	[LetterNumber]	ROMAN NUMERAL FIVE
+Ⅵ	U+2165	[LetterNumber]	ROMAN NUMERAL SIX
+Ⅶ	U+2166	[LetterNumber]	ROMAN NUMERAL SEVEN
+Ⅷ	U+2167	[LetterNumber]	ROMAN NUMERAL EIGHT
+Ⅸ	U+2168	[LetterNumber]	ROMAN NUMERAL NINE
+Ⅹ	U+2169	[LetterNumber]	ROMAN NUMERAL TEN
+Ⅺ	U+216A	[LetterNumber]	ROMAN NUMERAL ELEVEN
+Ⅻ	U+216B	[LetterNumber]	ROMAN NUMERAL TWELVE
+Ⅼ	U+216C	[LetterNumber]	ROMAN NUMERAL FIFTY
+Ⅽ	U+216D	[LetterNumber]	ROMAN NUMERAL ONE HUNDRED
+Ⅾ	U+216E	[LetterNumber]	ROMAN NUMERAL FIVE HUNDRED
+Ⅿ	U+216F	[LetterNumber]	ROMAN NUMERAL ONE THOUSAND
+ⅰ	U+2170	[LetterNumber]	SMALL ROMAN NUMERAL ONE
+ⅱ	U+2171	[LetterNumber]	SMALL ROMAN NUMERAL TWO
+ⅲ	U+2172	[LetterNumber]	SMALL ROMAN NUMERAL THREE
+ⅳ	U+2173	[LetterNumber]	SMALL ROMAN NUMERAL FOUR
+ⅴ	U+2174	[LetterNumber]	SMALL ROMAN NUMERAL FIVE
+ⅵ	U+2175	[LetterNumber]	SMALL ROMAN NUMERAL SIX
+ⅶ	U+2176	[LetterNumber]	SMALL ROMAN NUMERAL SEVEN
+ⅷ	U+2177	[LetterNumber]	SMALL ROMAN NUMERAL EIGHT
+ⅸ	U+2178	[LetterNumber]	SMALL ROMAN NUMERAL NINE
+ⅹ	U+2179	[LetterNumber]	SMALL ROMAN NUMERAL TEN
+ⅺ	U+217A	[LetterNumber]	SMALL ROMAN NUMERAL ELEVEN
+ⅻ	U+217B	[LetterNumber]	SMALL ROMAN NUMERAL TWELVE
+ⅼ	U+217C	[LetterNumber]	SMALL ROMAN NUMERAL FIFTY
+ⅽ	U+217D	[LetterNumber]	SMALL ROMAN NUMERAL ONE HUNDRED
+ⅾ	U+217E	[LetterNumber]	SMALL ROMAN NUMERAL FIVE HUNDRED
+ⅿ	U+217F	[LetterNumber]	SMALL ROMAN NUMERAL ONE THOUSAND
+ↀ	U+2180	[LetterNumber]	ROMAN NUMERAL ONE THOUSAND C D
+ↁ	U+2181	[LetterNumber]	ROMAN NUMERAL FIVE THOUSAND
+ↂ	U+2182	[LetterNumber]	ROMAN NUMERAL TEN THOUSAND
+ↅ	U+2185	[LetterNumber]	ROMAN NUMERAL SIX LATE FORM
+ↆ	U+2186	[LetterNumber]	ROMAN NUMERAL FIFTY EARLY FORM
+ↇ	U+2187	[LetterNumber]	ROMAN NUMERAL FIFTY THOUSAND
+ↈ	U+2188	[LetterNumber]	ROMAN NUMERAL ONE HUNDRED THOUSAND
+
+𐆐	U+10190	[OtherSymbol]	ROMAN SEXTANS SIGN
+𐆑	U+10191	[OtherSymbol]	ROMAN UNCIA SIGN
+𐆒	U+10192	[OtherSymbol]	ROMAN SEMUNCIA SIGN
+𐆓	U+10193	[OtherSymbol]	ROMAN SEXTULA SIGN
+𐆔	U+10194	[OtherSymbol]	ROMAN DIMIDIA SEXTULA SIGN
+𐆕	U+10195	[OtherSymbol]	ROMAN SILIQUA SIGN
+𐆖	U+10196	[OtherSymbol]	ROMAN DENARIUS SIGN
+𐆗	U+10197	[OtherSymbol]	ROMAN QUINARIUS SIGN
+𐆘	U+10198	[OtherSymbol]	ROMAN SESTERTIUS SIGN
+𐆙	U+10199	[OtherSymbol]	ROMAN DUPONDIUS SIGN
+𐆚	U+1019A	[OtherSymbol]	ROMAN AS SIGN
+𐆛	U+1019B	[OtherSymbol]	ROMAN CENTURIAL SIGN
+
+Ↄ	U+2183	[UppercaseLetter]	ROMAN NUMERAL REVERSED ONE HUNDRED

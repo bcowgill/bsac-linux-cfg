@@ -73,6 +73,6 @@ else
 	fi
 	rm $LOG
 fi
-if [ 1 == $ERR ]; then
+if [ 1 == "$ERR" ]; then
 	echo If permission denied, you may want to try sudo $0 $1 $2
 fi

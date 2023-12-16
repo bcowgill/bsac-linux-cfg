@@ -1148,6 +1148,7 @@ INSTALL_LINUX="
 	iselect
 	root-tail
 	sysstat
+	exfat-utils
 	traceroute
 	unetbootin
 	fbcat
@@ -1159,6 +1160,7 @@ INSTALL_LINUX="
 "
 # sysstat for iostat command to check disk performance
 # unetbootin for creating bootable linux from usb/network
+# exfat-utils  for exfat file system for 64Gb USB key
 # MUSTDO ultimate boot cd install to /opt/ubcd for making boot USB
 # MUSTDO my snapshot.sh needs: traceroute  and lscgroup,lssubsys from cgroup-bin
 
