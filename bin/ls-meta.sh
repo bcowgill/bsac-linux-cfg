@@ -42,6 +42,8 @@ if [ -z "$2" ]; then
 	id3info "$1"
 	echo id3v2:
 	id3v2 --list "$1"
+	echo rdjpgcom:
+	rdjpgcom -verbose "$1"
 	echo "------------------------------------------------------------"
 	exit 0
 fi
