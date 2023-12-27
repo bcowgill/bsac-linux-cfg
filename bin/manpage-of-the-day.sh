@@ -21,6 +21,7 @@ PTH="
 
 TMP=`mktemp`
 SEEN=$0.lst
+ERRS=$0.err.lst
 touch $SEEN
 
 function count
@@ -85,11 +86,14 @@ while [ ! $SHOWN ]; do
 		/bin/true
 	else
 		man $TOPIC
-		if [ $? == 0 ]; then
-			echo $CMD >> $SEEN
+		ERR=$?
+		echo $CMD >> $SEEN
+		if [ $ERR == 0 ]; then
 			count
 			echo "Showed manual page for $TOPIC ($VIEWED/$TOTAL)"
 			SHOWN=1
+		else
+			echo $CMD >> $ERRS
 		fi
 	fi
 done
