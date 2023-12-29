@@ -2,6 +2,10 @@ Project js-lite.js like my perl-lite.pl template for a simple file processor com
 bin/template/javascript/js-pne
 	node commander module
 
+manpage-of-the-day.sh
+  filter-out.sh command to read FILTER expression from first arg then filter out whole lines which match or partial match with regex chars
+
+
 MUSTDO snapshot.sh done once a month. cron?
 	snapshot.sh rank the error messages by number and sort 99-Errors that way.
 		command not found is highest priority.

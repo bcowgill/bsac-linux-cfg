@@ -19,10 +19,49 @@ PTH="
 	/usr/local/games
 "
 
-TMP=`mktemp`
 SEEN=$0.lst
+SAVED=$0.saved.lst
 ERRS=$0.err.lst
 touch $SEEN
+
+function usage {
+	local code
+	code=$1
+	cmd=$(basename $0)
+	echo "
+$cmd [--help|--man|-?] [--save]
+
+This will show you a random manual page of the day so you can get to know the system commands available.
+
+--save  Will append the previous manual page of the day to the $SAVED file.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+This will select a random system executable command and show the manual page for it.  The list of viewed pages is recorded in file: $SEEN
+
+If the manual page for a command returns an error it will be added to the error file: $ERRS
+
+See also choose.pl, random-order.sh, random-text.sh
+"
+	exit $code
+}
+if [ "$1" == "--help" ]; then
+	usage 0
+fi
+if [ "$1" == "--man" ]; then
+	usage 0
+fi
+if [ "$1" == "-?" ]; then
+	usage 0
+fi
+if [ "$1" == "--save" ]; then
+	tail -1 $SEEN
+	tail -1 $SEEN >> $SAVED
+	exit 0
+fi
+
+TMP=`mktemp`
 
 function count
 {
