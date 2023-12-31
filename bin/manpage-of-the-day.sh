@@ -19,6 +19,8 @@ PTH="
 	/usr/local/games
 "
 
+LIST=
+REMAINDER=
 SEEN=$0.lst
 SAVED=$0.saved.lst
 ERRS=$0.err.lst
@@ -29,10 +31,12 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?] [--save]
+$cmd [--help|--man|-?] [--list] [--remainder] [--save]
 
 This will show you a random manual page of the day so you can get to know the system commands available.
 
+--list  Will list all the command found in the internally configured paths and then exit.
+--remainder Will list all the remaining commands to choose from after the ones already shown have been filtered out, and then exit.
 --save  Will append the previous manual page of the day to the $SAVED file.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
@@ -55,7 +59,40 @@ fi
 if [ "$1" == "-?" ]; then
 	usage 0
 fi
+if [ "$1" == "--list" ]; then
+	LIST=1
+	shift
+fi
+if [ "$1" == "--remainder" ]; then
+	REMAINDER=1
+	shift
+	if [ ! -z "$LIST" ]; then
+		echo "You cannot specify both --list and --remainder options."
+		usage 20
+	fi
+fi
+if [ "$1" == "--list" ]; then
+	if [ ! -z "$REMAINDER" ]; then
+		echo "You cannot specify both --list and --remainder options."
+		usage 21
+	fi
+	LIST=1
+	shift
+fi
 if [ "$1" == "--save" ]; then
+	shift
+	if [ ! -z "$1" ]; then
+		echo "You cannot specify --save and any other option [$1]"
+		usage 22
+	fi
+	if [ ! -z "$LIST" ]; then
+		echo "You cannot specify both --list and --save options."
+		usage 23
+	fi
+	if [ ! -z "$REMAINDER" ]; then
+		echo "You cannot specify both --remainder and --save options."
+		usage 24
+	fi
 	tail -1 $SEEN
 	tail -1 $SEEN >> $SAVED
 	exit 0
@@ -83,15 +120,6 @@ debug FILTER="$FILTER"
 
 debug TMP=$TMP
 
-find $PTH \
-	-type f \
-	-executable \
-> $TMP
-count
-TOTAL=$FOUND
-grep -vE "$FILTER" $TMP > $TMP.XXX
-mv $TMP.XXX $TMP
-
 function quit
 {
 	local code
@@ -99,6 +127,26 @@ function quit
 	rm $TMP
 	exit $code
 }
+
+find $PTH \
+	-type f \
+	-executable \
+> $TMP
+
+if [ ! -z "$LIST" ]; then
+	cat $TMP
+	quit 0
+fi
+
+count
+TOTAL=$FOUND
+grep -vE "$FILTER" $TMP > $TMP.XXX
+mv $TMP.XXX $TMP
+
+if [ ! -z "$REMAINDER" ]; then
+	cat $TMP
+	quit 0
+fi
 
 function choose
 {
