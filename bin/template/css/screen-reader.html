@@ -1,0 +1,40 @@
+<!DOCTYPE html> <html>
+<html><head>
+<style>
+/* do not use display: none with this or screen reader will not read it. */
+/*
+  Ideal for use with toolbar icons which don't have a reliable way to associate alternate text to them.
+  <button>
+    <i class="fa-times"></i>
+    <span class="visually-hidden">Close Menu</span>
+  </button>
+*/
+.screen-reader,.visually-hidden {
+  clip-path: inset(100%);
+  clip: rect(1px 1px 1px 1px); /* IE 6/7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+</style>
+</head>
+<body>
+<h1>Screen reader only text and hover text</h1>
+<p>Users who can't see the screen reader text can access the info by hovering.</p>
+<p>This is some text. [followed by screen reader only text.] <span class="screen-reader">And this is for the screen reader only.</span></p>
+<p title="With hover title">This is some text. [with hover title] <span class="screen-reader">And this is for the screen reader only.</span></p>
+<p>And how you would use it for an icon tool button which everyong can understand: </p>
+<button title="Close Menu">
+    <i class="fa-times">x</i>
+    <span class="screen-reader">Close Menu</span>
+</button>
+<button>
+    <i class="fa-times" title="Close Menu">y</i>
+    <span class="screen-reader">Close Menu</span>
+</button>
+<p>one button has hover text over the entire button, the other only over the icon within the button.</p>
+<p>See also <a href="https://medium.com/charlottes-digital-web/the-most-common-web-accessibility-mistakes-how-to-solve-them-5b7d25a337e0">Most Common Accessibility Issues</a></p>
+</body></html>
