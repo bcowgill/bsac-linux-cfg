@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/node_modules/focus-visible/dist/focus-visible.min.js"></script>
+<style>
+a {
+    box-shadow: inset 0 0 #fff, inset 0 -3px rgb(63,255,0);
+    /* #3fff00; */
+    display: inline;
+    text-decoration: none;
+    position: relative;
+    transition: all .2s ease-in-out;
+}
+
+a:hover,a:focus {
+    box-shadow: inset 0 0 #fff, inset 0 -20px rgba(63,255,0,.5);
+    color: #121416;
+    transition: all .2s ease-in-out;
+}
+a:.focus-visible {
+    box-shadow: inset 0 0 #fff, inset 0 -20px rgba(63,255,0,.5);
+    color: #121416;
+    transition: all .2s ease-in-out;
+}
+
+/*
+  This will hide the focus indicator if the element receives focus via the mouse,
+  but it will still show up on keyboard focus.
+*/
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+</style>
+</head>
+<body class="js-focus-visible">
+<p>This is some text with an animated hover <a href="#">link</a></p>
+<p>(need to test fully with <a href="https://www.npmjs.com/package/focus-visible">focus-visible</a> polyfill.)</p>
+<button class="focus-visible">ok</button>
+</body>
+</html>
