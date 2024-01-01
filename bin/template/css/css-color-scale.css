@@ -1,0 +1,655 @@
+
+/* === color rules */
+.text-mycolor { color: rgb(100, 50, 25); }
+.hover\:text-mycolor:hover { color: rgb(100, 50, 25); }
+.active--text-mycolor:active { color: rgb(100, 50, 25); }
+.focus--text-mycolor:focus { color: rgb(100, 50, 25); }
+.focus-visible--text-mycolor:focus-visible { color: rgb(100, 50, 25); }
+.focus-within--text-mycolor:focus-within { color: rgb(100, 50, 25); }
+.visited--text-mycolor:visited { color: rgb(100, 50, 25); }
+
+.text-mycolor-100 { color: rgb(25, 12, 6); }
+.hover--text-mycolor-100:hover { color: rgb(25, 12, 6); }
+.active--text-mycolor-100:active { color: rgb(25, 12, 6); }
+.focus--text-mycolor-100:focus { color: rgb(25, 12, 6); }
+.focus-visible--text-mycolor-100:focus-visible { color: rgb(25, 12, 6); }
+.focus-within--text-mycolor-100:focus-within { color: rgb(25, 12, 6); }
+.visited--text-mycolor-100:visited { color: rgb(25, 12, 6); }
+
+.text-mycolor-200 { color: rgb(50, 25, 12); }
+.hover--text-mycolor-200:hover { color: rgb(50, 25, 12); }
+.active--text-mycolor-200:active { color: rgb(50, 25, 12); }
+.focus--text-mycolor-200:focus { color: rgb(50, 25, 12); }
+.focus-visible--text-mycolor-200:focus-visible { color: rgb(50, 25, 12); }
+.focus-within--text-mycolor-200:focus-within { color: rgb(50, 25, 12); }
+.visited--text-mycolor-200:visited { color: rgb(50, 25, 12); }
+
+.text-mycolor-300 { color: rgb(74, 37, 19); }
+.hover--text-mycolor-300:hover { color: rgb(74, 37, 19); }
+.active--text-mycolor-300:active { color: rgb(74, 37, 19); }
+.focus--text-mycolor-300:focus { color: rgb(74, 37, 19); }
+.focus-visible--text-mycolor-300:focus-visible { color: rgb(74, 37, 19); }
+.focus-within--text-mycolor-300:focus-within { color: rgb(74, 37, 19); }
+.visited--text-mycolor-300:visited { color: rgb(74, 37, 19); }
+
+.text-mycolor-400 { color: rgb(99, 49, 25); }
+.hover--text-mycolor-400:hover { color: rgb(99, 49, 25); }
+.active--text-mycolor-400:active { color: rgb(99, 49, 25); }
+.focus--text-mycolor-400:focus { color: rgb(99, 49, 25); }
+.focus-visible--text-mycolor-400:focus-visible { color: rgb(99, 49, 25); }
+.focus-within--text-mycolor-400:focus-within { color: rgb(99, 49, 25); }
+.visited--text-mycolor-400:visited { color: rgb(99, 49, 25); }
+
+.text-mycolor-500 { color: rgb(124, 62, 31); }
+.hover--text-mycolor-500:hover { color: rgb(124, 62, 31); }
+.active--text-mycolor-500:active { color: rgb(124, 62, 31); }
+.focus--text-mycolor-500:focus { color: rgb(124, 62, 31); }
+.focus-visible--text-mycolor-500:focus-visible { color: rgb(124, 62, 31); }
+.focus-within--text-mycolor-500:focus-within { color: rgb(124, 62, 31); }
+.visited--text-mycolor-500:visited { color: rgb(124, 62, 31); }
+
+.text-mycolor-600 { color: rgb(149, 74, 37); }
+.hover--text-mycolor-600:hover { color: rgb(149, 74, 37); }
+.active--text-mycolor-600:active { color: rgb(149, 74, 37); }
+.focus--text-mycolor-600:focus { color: rgb(149, 74, 37); }
+.focus-visible--text-mycolor-600:focus-visible { color: rgb(149, 74, 37); }
+.focus-within--text-mycolor-600:focus-within { color: rgb(149, 74, 37); }
+.visited--text-mycolor-600:visited { color: rgb(149, 74, 37); }
+
+.text-mycolor-700 { color: rgb(173, 86, 44); }
+.hover--text-mycolor-700:hover { color: rgb(173, 86, 44); }
+.active--text-mycolor-700:active { color: rgb(173, 86, 44); }
+.focus--text-mycolor-700:focus { color: rgb(173, 86, 44); }
+.focus-visible--text-mycolor-700:focus-visible { color: rgb(173, 86, 44); }
+.focus-within--text-mycolor-700:focus-within { color: rgb(173, 86, 44); }
+.visited--text-mycolor-700:visited { color: rgb(173, 86, 44); }
+
+.text-mycolor-800 { color: rgb(198, 99, 50); }
+.hover--text-mycolor-800:hover { color: rgb(198, 99, 50); }
+.active--text-mycolor-800:active { color: rgb(198, 99, 50); }
+.focus--text-mycolor-800:focus { color: rgb(198, 99, 50); }
+.focus-visible--text-mycolor-800:focus-visible { color: rgb(198, 99, 50); }
+.focus-within--text-mycolor-800:focus-within { color: rgb(198, 99, 50); }
+.visited--text-mycolor-800:visited { color: rgb(198, 99, 50); }
+
+.text-mycolor-900 { color: rgb(223, 111, 56); }
+.hover--text-mycolor-900:hover { color: rgb(223, 111, 56); }
+.active--text-mycolor-900:active { color: rgb(223, 111, 56); }
+.focus--text-mycolor-900:focus { color: rgb(223, 111, 56); }
+.focus-visible--text-mycolor-900:focus-visible { color: rgb(223, 111, 56); }
+.focus-within--text-mycolor-900:focus-within { color: rgb(223, 111, 56); }
+.visited--text-mycolor-900:visited { color: rgb(223, 111, 56); }
+
+
+/* === background-color rules */
+.bg-mycolor { background-color: rgb(100, 50, 25); }
+.hover--bg-mycolor:hover { background-color: rgb(100, 50, 25); }
+.active--bg-mycolor:active { background-color: rgb(100, 50, 25); }
+.focus--bg-mycolor:focus { background-color: rgb(100, 50, 25); }
+.focus-visible--bg-mycolor:focus-visible { background-color: rgb(100, 50, 25); }
+.focus-within--bg-mycolor:focus-within { background-color: rgb(100, 50, 25); }
+.visited--bg-mycolor:visited { background-color: rgb(100, 50, 25); }
+
+.bg-mycolor-100 { background-color: rgb(25, 12, 6); }
+.hover--bg-mycolor-100:hover { background-color: rgb(25, 12, 6); }
+.active--bg-mycolor-100:active { background-color: rgb(25, 12, 6); }
+.focus--bg-mycolor-100:focus { background-color: rgb(25, 12, 6); }
+.focus-visible--bg-mycolor-100:focus-visible { background-color: rgb(25, 12, 6); }
+.focus-within--bg-mycolor-100:focus-within { background-color: rgb(25, 12, 6); }
+.visited--bg-mycolor-100:visited { background-color: rgb(25, 12, 6); }
+
+.bg-mycolor-200 { background-color: rgb(50, 25, 12); }
+.hover--bg-mycolor-200:hover { background-color: rgb(50, 25, 12); }
+.active--bg-mycolor-200:active { background-color: rgb(50, 25, 12); }
+.focus--bg-mycolor-200:focus { background-color: rgb(50, 25, 12); }
+.focus-visible--bg-mycolor-200:focus-visible { background-color: rgb(50, 25, 12); }
+.focus-within--bg-mycolor-200:focus-within { background-color: rgb(50, 25, 12); }
+.visited--bg-mycolor-200:visited { background-color: rgb(50, 25, 12); }
+
+.bg-mycolor-300 { background-color: rgb(74, 37, 19); }
+.hover--bg-mycolor-300:hover { background-color: rgb(74, 37, 19); }
+.active--bg-mycolor-300:active { background-color: rgb(74, 37, 19); }
+.focus--bg-mycolor-300:focus { background-color: rgb(74, 37, 19); }
+.focus-visible--bg-mycolor-300:focus-visible { background-color: rgb(74, 37, 19); }
+.focus-within--bg-mycolor-300:focus-within { background-color: rgb(74, 37, 19); }
+.visited--bg-mycolor-300:visited { background-color: rgb(74, 37, 19); }
+
+.bg-mycolor-400 { background-color: rgb(99, 49, 25); }
+.hover--bg-mycolor-400:hover { background-color: rgb(99, 49, 25); }
+.active--bg-mycolor-400:active { background-color: rgb(99, 49, 25); }
+.focus--bg-mycolor-400:focus { background-color: rgb(99, 49, 25); }
+.focus-visible--bg-mycolor-400:focus-visible { background-color: rgb(99, 49, 25); }
+.focus-within--bg-mycolor-400:focus-within { background-color: rgb(99, 49, 25); }
+.visited--bg-mycolor-400:visited { background-color: rgb(99, 49, 25); }
+
+.bg-mycolor-500 { background-color: rgb(124, 62, 31); }
+.hover--bg-mycolor-500:hover { background-color: rgb(124, 62, 31); }
+.active--bg-mycolor-500:active { background-color: rgb(124, 62, 31); }
+.focus--bg-mycolor-500:focus { background-color: rgb(124, 62, 31); }
+.focus-visible--bg-mycolor-500:focus-visible { background-color: rgb(124, 62, 31); }
+.focus-within--bg-mycolor-500:focus-within { background-color: rgb(124, 62, 31); }
+.visited--bg-mycolor-500:visited { background-color: rgb(124, 62, 31); }
+
+.bg-mycolor-600 { background-color: rgb(149, 74, 37); }
+.hover--bg-mycolor-600:hover { background-color: rgb(149, 74, 37); }
+.active--bg-mycolor-600:active { background-color: rgb(149, 74, 37); }
+.focus--bg-mycolor-600:focus { background-color: rgb(149, 74, 37); }
+.focus-visible--bg-mycolor-600:focus-visible { background-color: rgb(149, 74, 37); }
+.focus-within--bg-mycolor-600:focus-within { background-color: rgb(149, 74, 37); }
+.visited--bg-mycolor-600:visited { background-color: rgb(149, 74, 37); }
+
+.bg-mycolor-700 { background-color: rgb(173, 86, 44); }
+.hover--bg-mycolor-700:hover { background-color: rgb(173, 86, 44); }
+.active--bg-mycolor-700:active { background-color: rgb(173, 86, 44); }
+.focus--bg-mycolor-700:focus { background-color: rgb(173, 86, 44); }
+.focus-visible--bg-mycolor-700:focus-visible { background-color: rgb(173, 86, 44); }
+.focus-within--bg-mycolor-700:focus-within { background-color: rgb(173, 86, 44); }
+.visited--bg-mycolor-700:visited { background-color: rgb(173, 86, 44); }
+
+.bg-mycolor-800 { background-color: rgb(198, 99, 50); }
+.hover--bg-mycolor-800:hover { background-color: rgb(198, 99, 50); }
+.active--bg-mycolor-800:active { background-color: rgb(198, 99, 50); }
+.focus--bg-mycolor-800:focus { background-color: rgb(198, 99, 50); }
+.focus-visible--bg-mycolor-800:focus-visible { background-color: rgb(198, 99, 50); }
+.focus-within--bg-mycolor-800:focus-within { background-color: rgb(198, 99, 50); }
+.visited--bg-mycolor-800:visited { background-color: rgb(198, 99, 50); }
+
+.bg-mycolor-900 { background-color: rgb(223, 111, 56); }
+.hover--bg-mycolor-900:hover { background-color: rgb(223, 111, 56); }
+.active--bg-mycolor-900:active { background-color: rgb(223, 111, 56); }
+.focus--bg-mycolor-900:focus { background-color: rgb(223, 111, 56); }
+.focus-visible--bg-mycolor-900:focus-visible { background-color: rgb(223, 111, 56); }
+.focus-within--bg-mycolor-900:focus-within { background-color: rgb(223, 111, 56); }
+.visited--bg-mycolor-900:visited { background-color: rgb(223, 111, 56); }
+
+
+/* === outline-color rules */
+.outline-mycolor { outline-color: rgb(100, 50, 25); }
+.hover--outline-mycolor:hover { outline-color: rgb(100, 50, 25); }
+.active--outline-mycolor:active { outline-color: rgb(100, 50, 25); }
+.focus--outline-mycolor:focus { outline-color: rgb(100, 50, 25); }
+.focus-visible--outline-mycolor:focus-visible { outline-color: rgb(100, 50, 25); }
+.focus-within--outline-mycolor:focus-within { outline-color: rgb(100, 50, 25); }
+.visited--outline-mycolor:visited { outline-color: rgb(100, 50, 25); }
+
+.outline-mycolor-100 { outline-color: rgb(25, 12, 6); }
+.hover--outline-mycolor-100:hover { outline-color: rgb(25, 12, 6); }
+.active--outline-mycolor-100:active { outline-color: rgb(25, 12, 6); }
+.focus--outline-mycolor-100:focus { outline-color: rgb(25, 12, 6); }
+.focus-visible--outline-mycolor-100:focus-visible { outline-color: rgb(25, 12, 6); }
+.focus-within--outline-mycolor-100:focus-within { outline-color: rgb(25, 12, 6); }
+.visited--outline-mycolor-100:visited { outline-color: rgb(25, 12, 6); }
+
+.outline-mycolor-200 { outline-color: rgb(50, 25, 12); }
+.hover--outline-mycolor-200:hover { outline-color: rgb(50, 25, 12); }
+.active--outline-mycolor-200:active { outline-color: rgb(50, 25, 12); }
+.focus--outline-mycolor-200:focus { outline-color: rgb(50, 25, 12); }
+.focus-visible--outline-mycolor-200:focus-visible { outline-color: rgb(50, 25, 12); }
+.focus-within--outline-mycolor-200:focus-within { outline-color: rgb(50, 25, 12); }
+.visited--outline-mycolor-200:visited { outline-color: rgb(50, 25, 12); }
+
+.outline-mycolor-300 { outline-color: rgb(74, 37, 19); }
+.hover--outline-mycolor-300:hover { outline-color: rgb(74, 37, 19); }
+.active--outline-mycolor-300:active { outline-color: rgb(74, 37, 19); }
+.focus--outline-mycolor-300:focus { outline-color: rgb(74, 37, 19); }
+.focus-visible--outline-mycolor-300:focus-visible { outline-color: rgb(74, 37, 19); }
+.focus-within--outline-mycolor-300:focus-within { outline-color: rgb(74, 37, 19); }
+.visited--outline-mycolor-300:visited { outline-color: rgb(74, 37, 19); }
+
+.outline-mycolor-400 { outline-color: rgb(99, 49, 25); }
+.hover--outline-mycolor-400:hover { outline-color: rgb(99, 49, 25); }
+.active--outline-mycolor-400:active { outline-color: rgb(99, 49, 25); }
+.focus--outline-mycolor-400:focus { outline-color: rgb(99, 49, 25); }
+.focus-visible--outline-mycolor-400:focus-visible { outline-color: rgb(99, 49, 25); }
+.focus-within--outline-mycolor-400:focus-within { outline-color: rgb(99, 49, 25); }
+.visited--outline-mycolor-400:visited { outline-color: rgb(99, 49, 25); }
+
+.outline-mycolor-500 { outline-color: rgb(124, 62, 31); }
+.hover--outline-mycolor-500:hover { outline-color: rgb(124, 62, 31); }
+.active--outline-mycolor-500:active { outline-color: rgb(124, 62, 31); }
+.focus--outline-mycolor-500:focus { outline-color: rgb(124, 62, 31); }
+.focus-visible--outline-mycolor-500:focus-visible { outline-color: rgb(124, 62, 31); }
+.focus-within--outline-mycolor-500:focus-within { outline-color: rgb(124, 62, 31); }
+.visited--outline-mycolor-500:visited { outline-color: rgb(124, 62, 31); }
+
+.outline-mycolor-600 { outline-color: rgb(149, 74, 37); }
+.hover--outline-mycolor-600:hover { outline-color: rgb(149, 74, 37); }
+.active--outline-mycolor-600:active { outline-color: rgb(149, 74, 37); }
+.focus--outline-mycolor-600:focus { outline-color: rgb(149, 74, 37); }
+.focus-visible--outline-mycolor-600:focus-visible { outline-color: rgb(149, 74, 37); }
+.focus-within--outline-mycolor-600:focus-within { outline-color: rgb(149, 74, 37); }
+.visited--outline-mycolor-600:visited { outline-color: rgb(149, 74, 37); }
+
+.outline-mycolor-700 { outline-color: rgb(173, 86, 44); }
+.hover--outline-mycolor-700:hover { outline-color: rgb(173, 86, 44); }
+.active--outline-mycolor-700:active { outline-color: rgb(173, 86, 44); }
+.focus--outline-mycolor-700:focus { outline-color: rgb(173, 86, 44); }
+.focus-visible--outline-mycolor-700:focus-visible { outline-color: rgb(173, 86, 44); }
+.focus-within--outline-mycolor-700:focus-within { outline-color: rgb(173, 86, 44); }
+.visited--outline-mycolor-700:visited { outline-color: rgb(173, 86, 44); }
+
+.outline-mycolor-800 { outline-color: rgb(198, 99, 50); }
+.hover--outline-mycolor-800:hover { outline-color: rgb(198, 99, 50); }
+.active--outline-mycolor-800:active { outline-color: rgb(198, 99, 50); }
+.focus--outline-mycolor-800:focus { outline-color: rgb(198, 99, 50); }
+.focus-visible--outline-mycolor-800:focus-visible { outline-color: rgb(198, 99, 50); }
+.focus-within--outline-mycolor-800:focus-within { outline-color: rgb(198, 99, 50); }
+.visited--outline-mycolor-800:visited { outline-color: rgb(198, 99, 50); }
+
+.outline-mycolor-900 { outline-color: rgb(223, 111, 56); }
+.hover--outline-mycolor-900:hover { outline-color: rgb(223, 111, 56); }
+.active--outline-mycolor-900:active { outline-color: rgb(223, 111, 56); }
+.focus--outline-mycolor-900:focus { outline-color: rgb(223, 111, 56); }
+.focus-visible--outline-mycolor-900:focus-visible { outline-color: rgb(223, 111, 56); }
+.focus-within--outline-mycolor-900:focus-within { outline-color: rgb(223, 111, 56); }
+.visited--outline-mycolor-900:visited { outline-color: rgb(223, 111, 56); }
+
+
+/* === border-color rules */
+.border-mycolor { border-color: rgb(100, 50, 25); }
+.hover--border-mycolor:hover { border-color: rgb(100, 50, 25); }
+.active--border-mycolor:active { border-color: rgb(100, 50, 25); }
+.focus--border-mycolor:focus { border-color: rgb(100, 50, 25); }
+.focus-visible--border-mycolor:focus-visible { border-color: rgb(100, 50, 25); }
+.focus-within--border-mycolor:focus-within { border-color: rgb(100, 50, 25); }
+.visited--border-mycolor:visited { border-color: rgb(100, 50, 25); }
+
+.border-mycolor-100 { border-color: rgb(25, 12, 6); }
+.hover--border-mycolor-100:hover { border-color: rgb(25, 12, 6); }
+.active--border-mycolor-100:active { border-color: rgb(25, 12, 6); }
+.focus--border-mycolor-100:focus { border-color: rgb(25, 12, 6); }
+.focus-visible--border-mycolor-100:focus-visible { border-color: rgb(25, 12, 6); }
+.focus-within--border-mycolor-100:focus-within { border-color: rgb(25, 12, 6); }
+.visited--border-mycolor-100:visited { border-color: rgb(25, 12, 6); }
+
+.border-mycolor-200 { border-color: rgb(50, 25, 12); }
+.hover--border-mycolor-200:hover { border-color: rgb(50, 25, 12); }
+.active--border-mycolor-200:active { border-color: rgb(50, 25, 12); }
+.focus--border-mycolor-200:focus { border-color: rgb(50, 25, 12); }
+.focus-visible--border-mycolor-200:focus-visible { border-color: rgb(50, 25, 12); }
+.focus-within--border-mycolor-200:focus-within { border-color: rgb(50, 25, 12); }
+.visited--border-mycolor-200:visited { border-color: rgb(50, 25, 12); }
+
+.border-mycolor-300 { border-color: rgb(74, 37, 19); }
+.hover--border-mycolor-300:hover { border-color: rgb(74, 37, 19); }
+.active--border-mycolor-300:active { border-color: rgb(74, 37, 19); }
+.focus--border-mycolor-300:focus { border-color: rgb(74, 37, 19); }
+.focus-visible--border-mycolor-300:focus-visible { border-color: rgb(74, 37, 19); }
+.focus-within--border-mycolor-300:focus-within { border-color: rgb(74, 37, 19); }
+.visited--border-mycolor-300:visited { border-color: rgb(74, 37, 19); }
+
+.border-mycolor-400 { border-color: rgb(99, 49, 25); }
+.hover--border-mycolor-400:hover { border-color: rgb(99, 49, 25); }
+.active--border-mycolor-400:active { border-color: rgb(99, 49, 25); }
+.focus--border-mycolor-400:focus { border-color: rgb(99, 49, 25); }
+.focus-visible--border-mycolor-400:focus-visible { border-color: rgb(99, 49, 25); }
+.focus-within--border-mycolor-400:focus-within { border-color: rgb(99, 49, 25); }
+.visited--border-mycolor-400:visited { border-color: rgb(99, 49, 25); }
+
+.border-mycolor-500 { border-color: rgb(124, 62, 31); }
+.hover--border-mycolor-500:hover { border-color: rgb(124, 62, 31); }
+.active--border-mycolor-500:active { border-color: rgb(124, 62, 31); }
+.focus--border-mycolor-500:focus { border-color: rgb(124, 62, 31); }
+.focus-visible--border-mycolor-500:focus-visible { border-color: rgb(124, 62, 31); }
+.focus-within--border-mycolor-500:focus-within { border-color: rgb(124, 62, 31); }
+.visited--border-mycolor-500:visited { border-color: rgb(124, 62, 31); }
+
+.border-mycolor-600 { border-color: rgb(149, 74, 37); }
+.hover--border-mycolor-600:hover { border-color: rgb(149, 74, 37); }
+.active--border-mycolor-600:active { border-color: rgb(149, 74, 37); }
+.focus--border-mycolor-600:focus { border-color: rgb(149, 74, 37); }
+.focus-visible--border-mycolor-600:focus-visible { border-color: rgb(149, 74, 37); }
+.focus-within--border-mycolor-600:focus-within { border-color: rgb(149, 74, 37); }
+.visited--border-mycolor-600:visited { border-color: rgb(149, 74, 37); }
+
+.border-mycolor-700 { border-color: rgb(173, 86, 44); }
+.hover--border-mycolor-700:hover { border-color: rgb(173, 86, 44); }
+.active--border-mycolor-700:active { border-color: rgb(173, 86, 44); }
+.focus--border-mycolor-700:focus { border-color: rgb(173, 86, 44); }
+.focus-visible--border-mycolor-700:focus-visible { border-color: rgb(173, 86, 44); }
+.focus-within--border-mycolor-700:focus-within { border-color: rgb(173, 86, 44); }
+.visited--border-mycolor-700:visited { border-color: rgb(173, 86, 44); }
+
+.border-mycolor-800 { border-color: rgb(198, 99, 50); }
+.hover--border-mycolor-800:hover { border-color: rgb(198, 99, 50); }
+.active--border-mycolor-800:active { border-color: rgb(198, 99, 50); }
+.focus--border-mycolor-800:focus { border-color: rgb(198, 99, 50); }
+.focus-visible--border-mycolor-800:focus-visible { border-color: rgb(198, 99, 50); }
+.focus-within--border-mycolor-800:focus-within { border-color: rgb(198, 99, 50); }
+.visited--border-mycolor-800:visited { border-color: rgb(198, 99, 50); }
+
+.border-mycolor-900 { border-color: rgb(223, 111, 56); }
+.hover--border-mycolor-900:hover { border-color: rgb(223, 111, 56); }
+.active--border-mycolor-900:active { border-color: rgb(223, 111, 56); }
+.focus--border-mycolor-900:focus { border-color: rgb(223, 111, 56); }
+.focus-visible--border-mycolor-900:focus-visible { border-color: rgb(223, 111, 56); }
+.focus-within--border-mycolor-900:focus-within { border-color: rgb(223, 111, 56); }
+.visited--border-mycolor-900:visited { border-color: rgb(223, 111, 56); }
+
+
+/* === border-top-color rules */
+.border-t-mycolor { border-top-color: rgb(100, 50, 25); }
+.hover--border-t-mycolor:hover { border-top-color: rgb(100, 50, 25); }
+.active--border-t-mycolor:active { border-top-color: rgb(100, 50, 25); }
+.focus--border-t-mycolor:focus { border-top-color: rgb(100, 50, 25); }
+.focus-visible--border-t-mycolor:focus-visible { border-top-color: rgb(100, 50, 25); }
+.focus-within--border-t-mycolor:focus-within { border-top-color: rgb(100, 50, 25); }
+.visited--border-t-mycolor:visited { border-top-color: rgb(100, 50, 25); }
+
+.border-t-mycolor-100 { border-top-color: rgb(25, 12, 6); }
+.hover--border-t-mycolor-100:hover { border-top-color: rgb(25, 12, 6); }
+.active--border-t-mycolor-100:active { border-top-color: rgb(25, 12, 6); }
+.focus--border-t-mycolor-100:focus { border-top-color: rgb(25, 12, 6); }
+.focus-visible--border-t-mycolor-100:focus-visible { border-top-color: rgb(25, 12, 6); }
+.focus-within--border-t-mycolor-100:focus-within { border-top-color: rgb(25, 12, 6); }
+.visited--border-t-mycolor-100:visited { border-top-color: rgb(25, 12, 6); }
+
+.border-t-mycolor-200 { border-top-color: rgb(50, 25, 12); }
+.hover--border-t-mycolor-200:hover { border-top-color: rgb(50, 25, 12); }
+.active--border-t-mycolor-200:active { border-top-color: rgb(50, 25, 12); }
+.focus--border-t-mycolor-200:focus { border-top-color: rgb(50, 25, 12); }
+.focus-visible--border-t-mycolor-200:focus-visible { border-top-color: rgb(50, 25, 12); }
+.focus-within--border-t-mycolor-200:focus-within { border-top-color: rgb(50, 25, 12); }
+.visited--border-t-mycolor-200:visited { border-top-color: rgb(50, 25, 12); }
+
+.border-t-mycolor-300 { border-top-color: rgb(74, 37, 19); }
+.hover--border-t-mycolor-300:hover { border-top-color: rgb(74, 37, 19); }
+.active--border-t-mycolor-300:active { border-top-color: rgb(74, 37, 19); }
+.focus--border-t-mycolor-300:focus { border-top-color: rgb(74, 37, 19); }
+.focus-visible--border-t-mycolor-300:focus-visible { border-top-color: rgb(74, 37, 19); }
+.focus-within--border-t-mycolor-300:focus-within { border-top-color: rgb(74, 37, 19); }
+.visited--border-t-mycolor-300:visited { border-top-color: rgb(74, 37, 19); }
+
+.border-t-mycolor-400 { border-top-color: rgb(99, 49, 25); }
+.hover--border-t-mycolor-400:hover { border-top-color: rgb(99, 49, 25); }
+.active--border-t-mycolor-400:active { border-top-color: rgb(99, 49, 25); }
+.focus--border-t-mycolor-400:focus { border-top-color: rgb(99, 49, 25); }
+.focus-visible--border-t-mycolor-400:focus-visible { border-top-color: rgb(99, 49, 25); }
+.focus-within--border-t-mycolor-400:focus-within { border-top-color: rgb(99, 49, 25); }
+.visited--border-t-mycolor-400:visited { border-top-color: rgb(99, 49, 25); }
+
+.border-t-mycolor-500 { border-top-color: rgb(124, 62, 31); }
+.hover--border-t-mycolor-500:hover { border-top-color: rgb(124, 62, 31); }
+.active--border-t-mycolor-500:active { border-top-color: rgb(124, 62, 31); }
+.focus--border-t-mycolor-500:focus { border-top-color: rgb(124, 62, 31); }
+.focus-visible--border-t-mycolor-500:focus-visible { border-top-color: rgb(124, 62, 31); }
+.focus-within--border-t-mycolor-500:focus-within { border-top-color: rgb(124, 62, 31); }
+.visited--border-t-mycolor-500:visited { border-top-color: rgb(124, 62, 31); }
+
+.border-t-mycolor-600 { border-top-color: rgb(149, 74, 37); }
+.hover--border-t-mycolor-600:hover { border-top-color: rgb(149, 74, 37); }
+.active--border-t-mycolor-600:active { border-top-color: rgb(149, 74, 37); }
+.focus--border-t-mycolor-600:focus { border-top-color: rgb(149, 74, 37); }
+.focus-visible--border-t-mycolor-600:focus-visible { border-top-color: rgb(149, 74, 37); }
+.focus-within--border-t-mycolor-600:focus-within { border-top-color: rgb(149, 74, 37); }
+.visited--border-t-mycolor-600:visited { border-top-color: rgb(149, 74, 37); }
+
+.border-t-mycolor-700 { border-top-color: rgb(173, 86, 44); }
+.hover--border-t-mycolor-700:hover { border-top-color: rgb(173, 86, 44); }
+.active--border-t-mycolor-700:active { border-top-color: rgb(173, 86, 44); }
+.focus--border-t-mycolor-700:focus { border-top-color: rgb(173, 86, 44); }
+.focus-visible--border-t-mycolor-700:focus-visible { border-top-color: rgb(173, 86, 44); }
+.focus-within--border-t-mycolor-700:focus-within { border-top-color: rgb(173, 86, 44); }
+.visited--border-t-mycolor-700:visited { border-top-color: rgb(173, 86, 44); }
+
+.border-t-mycolor-800 { border-top-color: rgb(198, 99, 50); }
+.hover--border-t-mycolor-800:hover { border-top-color: rgb(198, 99, 50); }
+.active--border-t-mycolor-800:active { border-top-color: rgb(198, 99, 50); }
+.focus--border-t-mycolor-800:focus { border-top-color: rgb(198, 99, 50); }
+.focus-visible--border-t-mycolor-800:focus-visible { border-top-color: rgb(198, 99, 50); }
+.focus-within--border-t-mycolor-800:focus-within { border-top-color: rgb(198, 99, 50); }
+.visited--border-t-mycolor-800:visited { border-top-color: rgb(198, 99, 50); }
+
+.border-t-mycolor-900 { border-top-color: rgb(223, 111, 56); }
+.hover--border-t-mycolor-900:hover { border-top-color: rgb(223, 111, 56); }
+.active--border-t-mycolor-900:active { border-top-color: rgb(223, 111, 56); }
+.focus--border-t-mycolor-900:focus { border-top-color: rgb(223, 111, 56); }
+.focus-visible--border-t-mycolor-900:focus-visible { border-top-color: rgb(223, 111, 56); }
+.focus-within--border-t-mycolor-900:focus-within { border-top-color: rgb(223, 111, 56); }
+.visited--border-t-mycolor-900:visited { border-top-color: rgb(223, 111, 56); }
+
+
+/* === border-bottom-color rules */
+.border-b-mycolor { border-bottom-color: rgb(100, 50, 25); }
+.hover--border-b-mycolor:hover { border-bottom-color: rgb(100, 50, 25); }
+.active--border-b-mycolor:active { border-bottom-color: rgb(100, 50, 25); }
+.focus--border-b-mycolor:focus { border-bottom-color: rgb(100, 50, 25); }
+.focus-visible--border-b-mycolor:focus-visible { border-bottom-color: rgb(100, 50, 25); }
+.focus-within--border-b-mycolor:focus-within { border-bottom-color: rgb(100, 50, 25); }
+.visited--border-b-mycolor:visited { border-bottom-color: rgb(100, 50, 25); }
+
+.border-b-mycolor-100 { border-bottom-color: rgb(25, 12, 6); }
+.hover--border-b-mycolor-100:hover { border-bottom-color: rgb(25, 12, 6); }
+.active--border-b-mycolor-100:active { border-bottom-color: rgb(25, 12, 6); }
+.focus--border-b-mycolor-100:focus { border-bottom-color: rgb(25, 12, 6); }
+.focus-visible--border-b-mycolor-100:focus-visible { border-bottom-color: rgb(25, 12, 6); }
+.focus-within--border-b-mycolor-100:focus-within { border-bottom-color: rgb(25, 12, 6); }
+.visited--border-b-mycolor-100:visited { border-bottom-color: rgb(25, 12, 6); }
+
+.border-b-mycolor-200 { border-bottom-color: rgb(50, 25, 12); }
+.hover--border-b-mycolor-200:hover { border-bottom-color: rgb(50, 25, 12); }
+.active--border-b-mycolor-200:active { border-bottom-color: rgb(50, 25, 12); }
+.focus--border-b-mycolor-200:focus { border-bottom-color: rgb(50, 25, 12); }
+.focus-visible--border-b-mycolor-200:focus-visible { border-bottom-color: rgb(50, 25, 12); }
+.focus-within--border-b-mycolor-200:focus-within { border-bottom-color: rgb(50, 25, 12); }
+.visited--border-b-mycolor-200:visited { border-bottom-color: rgb(50, 25, 12); }
+
+.border-b-mycolor-300 { border-bottom-color: rgb(74, 37, 19); }
+.hover--border-b-mycolor-300:hover { border-bottom-color: rgb(74, 37, 19); }
+.active--border-b-mycolor-300:active { border-bottom-color: rgb(74, 37, 19); }
+.focus--border-b-mycolor-300:focus { border-bottom-color: rgb(74, 37, 19); }
+.focus-visible--border-b-mycolor-300:focus-visible { border-bottom-color: rgb(74, 37, 19); }
+.focus-within--border-b-mycolor-300:focus-within { border-bottom-color: rgb(74, 37, 19); }
+.visited--border-b-mycolor-300:visited { border-bottom-color: rgb(74, 37, 19); }
+
+.border-b-mycolor-400 { border-bottom-color: rgb(99, 49, 25); }
+.hover--border-b-mycolor-400:hover { border-bottom-color: rgb(99, 49, 25); }
+.active--border-b-mycolor-400:active { border-bottom-color: rgb(99, 49, 25); }
+.focus--border-b-mycolor-400:focus { border-bottom-color: rgb(99, 49, 25); }
+.focus-visible--border-b-mycolor-400:focus-visible { border-bottom-color: rgb(99, 49, 25); }
+.focus-within--border-b-mycolor-400:focus-within { border-bottom-color: rgb(99, 49, 25); }
+.visited--border-b-mycolor-400:visited { border-bottom-color: rgb(99, 49, 25); }
+
+.border-b-mycolor-500 { border-bottom-color: rgb(124, 62, 31); }
+.hover--border-b-mycolor-500:hover { border-bottom-color: rgb(124, 62, 31); }
+.active--border-b-mycolor-500:active { border-bottom-color: rgb(124, 62, 31); }
+.focus--border-b-mycolor-500:focus { border-bottom-color: rgb(124, 62, 31); }
+.focus-visible--border-b-mycolor-500:focus-visible { border-bottom-color: rgb(124, 62, 31); }
+.focus-within--border-b-mycolor-500:focus-within { border-bottom-color: rgb(124, 62, 31); }
+.visited--border-b-mycolor-500:visited { border-bottom-color: rgb(124, 62, 31); }
+
+.border-b-mycolor-600 { border-bottom-color: rgb(149, 74, 37); }
+.hover--border-b-mycolor-600:hover { border-bottom-color: rgb(149, 74, 37); }
+.active--border-b-mycolor-600:active { border-bottom-color: rgb(149, 74, 37); }
+.focus--border-b-mycolor-600:focus { border-bottom-color: rgb(149, 74, 37); }
+.focus-visible--border-b-mycolor-600:focus-visible { border-bottom-color: rgb(149, 74, 37); }
+.focus-within--border-b-mycolor-600:focus-within { border-bottom-color: rgb(149, 74, 37); }
+.visited--border-b-mycolor-600:visited { border-bottom-color: rgb(149, 74, 37); }
+
+.border-b-mycolor-700 { border-bottom-color: rgb(173, 86, 44); }
+.hover--border-b-mycolor-700:hover { border-bottom-color: rgb(173, 86, 44); }
+.active--border-b-mycolor-700:active { border-bottom-color: rgb(173, 86, 44); }
+.focus--border-b-mycolor-700:focus { border-bottom-color: rgb(173, 86, 44); }
+.focus-visible--border-b-mycolor-700:focus-visible { border-bottom-color: rgb(173, 86, 44); }
+.focus-within--border-b-mycolor-700:focus-within { border-bottom-color: rgb(173, 86, 44); }
+.visited--border-b-mycolor-700:visited { border-bottom-color: rgb(173, 86, 44); }
+
+.border-b-mycolor-800 { border-bottom-color: rgb(198, 99, 50); }
+.hover--border-b-mycolor-800:hover { border-bottom-color: rgb(198, 99, 50); }
+.active--border-b-mycolor-800:active { border-bottom-color: rgb(198, 99, 50); }
+.focus--border-b-mycolor-800:focus { border-bottom-color: rgb(198, 99, 50); }
+.focus-visible--border-b-mycolor-800:focus-visible { border-bottom-color: rgb(198, 99, 50); }
+.focus-within--border-b-mycolor-800:focus-within { border-bottom-color: rgb(198, 99, 50); }
+.visited--border-b-mycolor-800:visited { border-bottom-color: rgb(198, 99, 50); }
+
+.border-b-mycolor-900 { border-bottom-color: rgb(223, 111, 56); }
+.hover--border-b-mycolor-900:hover { border-bottom-color: rgb(223, 111, 56); }
+.active--border-b-mycolor-900:active { border-bottom-color: rgb(223, 111, 56); }
+.focus--border-b-mycolor-900:focus { border-bottom-color: rgb(223, 111, 56); }
+.focus-visible--border-b-mycolor-900:focus-visible { border-bottom-color: rgb(223, 111, 56); }
+.focus-within--border-b-mycolor-900:focus-within { border-bottom-color: rgb(223, 111, 56); }
+.visited--border-b-mycolor-900:visited { border-bottom-color: rgb(223, 111, 56); }
+
+
+/* === border-left-color rules */
+.border-l-mycolor { border-left-color: rgb(100, 50, 25); }
+.hover--border-l-mycolor:hover { border-left-color: rgb(100, 50, 25); }
+.active--border-l-mycolor:active { border-left-color: rgb(100, 50, 25); }
+.focus--border-l-mycolor:focus { border-left-color: rgb(100, 50, 25); }
+.focus-visible--border-l-mycolor:focus-visible { border-left-color: rgb(100, 50, 25); }
+.focus-within--border-l-mycolor:focus-within { border-left-color: rgb(100, 50, 25); }
+.visited--border-l-mycolor:visited { border-left-color: rgb(100, 50, 25); }
+
+.border-l-mycolor-100 { border-left-color: rgb(25, 12, 6); }
+.hover--border-l-mycolor-100:hover { border-left-color: rgb(25, 12, 6); }
+.active--border-l-mycolor-100:active { border-left-color: rgb(25, 12, 6); }
+.focus--border-l-mycolor-100:focus { border-left-color: rgb(25, 12, 6); }
+.focus-visible--border-l-mycolor-100:focus-visible { border-left-color: rgb(25, 12, 6); }
+.focus-within--border-l-mycolor-100:focus-within { border-left-color: rgb(25, 12, 6); }
+.visited--border-l-mycolor-100:visited { border-left-color: rgb(25, 12, 6); }
+
+.border-l-mycolor-200 { border-left-color: rgb(50, 25, 12); }
+.hover--border-l-mycolor-200:hover { border-left-color: rgb(50, 25, 12); }
+.active--border-l-mycolor-200:active { border-left-color: rgb(50, 25, 12); }
+.focus--border-l-mycolor-200:focus { border-left-color: rgb(50, 25, 12); }
+.focus-visible--border-l-mycolor-200:focus-visible { border-left-color: rgb(50, 25, 12); }
+.focus-within--border-l-mycolor-200:focus-within { border-left-color: rgb(50, 25, 12); }
+.visited--border-l-mycolor-200:visited { border-left-color: rgb(50, 25, 12); }
+
+.border-l-mycolor-300 { border-left-color: rgb(74, 37, 19); }
+.hover--border-l-mycolor-300:hover { border-left-color: rgb(74, 37, 19); }
+.active--border-l-mycolor-300:active { border-left-color: rgb(74, 37, 19); }
+.focus--border-l-mycolor-300:focus { border-left-color: rgb(74, 37, 19); }
+.focus-visible--border-l-mycolor-300:focus-visible { border-left-color: rgb(74, 37, 19); }
+.focus-within--border-l-mycolor-300:focus-within { border-left-color: rgb(74, 37, 19); }
+.visited--border-l-mycolor-300:visited { border-left-color: rgb(74, 37, 19); }
+
+.border-l-mycolor-400 { border-left-color: rgb(99, 49, 25); }
+.hover--border-l-mycolor-400:hover { border-left-color: rgb(99, 49, 25); }
+.active--border-l-mycolor-400:active { border-left-color: rgb(99, 49, 25); }
+.focus--border-l-mycolor-400:focus { border-left-color: rgb(99, 49, 25); }
+.focus-visible--border-l-mycolor-400:focus-visible { border-left-color: rgb(99, 49, 25); }
+.focus-within--border-l-mycolor-400:focus-within { border-left-color: rgb(99, 49, 25); }
+.visited--border-l-mycolor-400:visited { border-left-color: rgb(99, 49, 25); }
+
+.border-l-mycolor-500 { border-left-color: rgb(124, 62, 31); }
+.hover--border-l-mycolor-500:hover { border-left-color: rgb(124, 62, 31); }
+.active--border-l-mycolor-500:active { border-left-color: rgb(124, 62, 31); }
+.focus--border-l-mycolor-500:focus { border-left-color: rgb(124, 62, 31); }
+.focus-visible--border-l-mycolor-500:focus-visible { border-left-color: rgb(124, 62, 31); }
+.focus-within--border-l-mycolor-500:focus-within { border-left-color: rgb(124, 62, 31); }
+.visited--border-l-mycolor-500:visited { border-left-color: rgb(124, 62, 31); }
+
+.border-l-mycolor-600 { border-left-color: rgb(149, 74, 37); }
+.hover--border-l-mycolor-600:hover { border-left-color: rgb(149, 74, 37); }
+.active--border-l-mycolor-600:active { border-left-color: rgb(149, 74, 37); }
+.focus--border-l-mycolor-600:focus { border-left-color: rgb(149, 74, 37); }
+.focus-visible--border-l-mycolor-600:focus-visible { border-left-color: rgb(149, 74, 37); }
+.focus-within--border-l-mycolor-600:focus-within { border-left-color: rgb(149, 74, 37); }
+.visited--border-l-mycolor-600:visited { border-left-color: rgb(149, 74, 37); }
+
+.border-l-mycolor-700 { border-left-color: rgb(173, 86, 44); }
+.hover--border-l-mycolor-700:hover { border-left-color: rgb(173, 86, 44); }
+.active--border-l-mycolor-700:active { border-left-color: rgb(173, 86, 44); }
+.focus--border-l-mycolor-700:focus { border-left-color: rgb(173, 86, 44); }
+.focus-visible--border-l-mycolor-700:focus-visible { border-left-color: rgb(173, 86, 44); }
+.focus-within--border-l-mycolor-700:focus-within { border-left-color: rgb(173, 86, 44); }
+.visited--border-l-mycolor-700:visited { border-left-color: rgb(173, 86, 44); }
+
+.border-l-mycolor-800 { border-left-color: rgb(198, 99, 50); }
+.hover--border-l-mycolor-800:hover { border-left-color: rgb(198, 99, 50); }
+.active--border-l-mycolor-800:active { border-left-color: rgb(198, 99, 50); }
+.focus--border-l-mycolor-800:focus { border-left-color: rgb(198, 99, 50); }
+.focus-visible--border-l-mycolor-800:focus-visible { border-left-color: rgb(198, 99, 50); }
+.focus-within--border-l-mycolor-800:focus-within { border-left-color: rgb(198, 99, 50); }
+.visited--border-l-mycolor-800:visited { border-left-color: rgb(198, 99, 50); }
+
+.border-l-mycolor-900 { border-left-color: rgb(223, 111, 56); }
+.hover--border-l-mycolor-900:hover { border-left-color: rgb(223, 111, 56); }
+.active--border-l-mycolor-900:active { border-left-color: rgb(223, 111, 56); }
+.focus--border-l-mycolor-900:focus { border-left-color: rgb(223, 111, 56); }
+.focus-visible--border-l-mycolor-900:focus-visible { border-left-color: rgb(223, 111, 56); }
+.focus-within--border-l-mycolor-900:focus-within { border-left-color: rgb(223, 111, 56); }
+.visited--border-l-mycolor-900:visited { border-left-color: rgb(223, 111, 56); }
+
+
+/* === border-right-color rules */
+.border-r-mycolor { border-right-color: rgb(100, 50, 25); }
+.hover--border-r-mycolor:hover { border-right-color: rgb(100, 50, 25); }
+.active--border-r-mycolor:active { border-right-color: rgb(100, 50, 25); }
+.focus--border-r-mycolor:focus { border-right-color: rgb(100, 50, 25); }
+.focus-visible--border-r-mycolor:focus-visible { border-right-color: rgb(100, 50, 25); }
+.focus-within--border-r-mycolor:focus-within { border-right-color: rgb(100, 50, 25); }
+.visited--border-r-mycolor:visited { border-right-color: rgb(100, 50, 25); }
+
+.border-r-mycolor-100 { border-right-color: rgb(25, 12, 6); }
+.hover--border-r-mycolor-100:hover { border-right-color: rgb(25, 12, 6); }
+.active--border-r-mycolor-100:active { border-right-color: rgb(25, 12, 6); }
+.focus--border-r-mycolor-100:focus { border-right-color: rgb(25, 12, 6); }
+.focus-visible--border-r-mycolor-100:focus-visible { border-right-color: rgb(25, 12, 6); }
+.focus-within--border-r-mycolor-100:focus-within { border-right-color: rgb(25, 12, 6); }
+.visited--border-r-mycolor-100:visited { border-right-color: rgb(25, 12, 6); }
+
+.border-r-mycolor-200 { border-right-color: rgb(50, 25, 12); }
+.hover--border-r-mycolor-200:hover { border-right-color: rgb(50, 25, 12); }
+.active--border-r-mycolor-200:active { border-right-color: rgb(50, 25, 12); }
+.focus--border-r-mycolor-200:focus { border-right-color: rgb(50, 25, 12); }
+.focus-visible--border-r-mycolor-200:focus-visible { border-right-color: rgb(50, 25, 12); }
+.focus-within--border-r-mycolor-200:focus-within { border-right-color: rgb(50, 25, 12); }
+.visited--border-r-mycolor-200:visited { border-right-color: rgb(50, 25, 12); }
+
+.border-r-mycolor-300 { border-right-color: rgb(74, 37, 19); }
+.hover--border-r-mycolor-300:hover { border-right-color: rgb(74, 37, 19); }
+.active--border-r-mycolor-300:active { border-right-color: rgb(74, 37, 19); }
+.focus--border-r-mycolor-300:focus { border-right-color: rgb(74, 37, 19); }
+.focus-visible--border-r-mycolor-300:focus-visible { border-right-color: rgb(74, 37, 19); }
+.focus-within--border-r-mycolor-300:focus-within { border-right-color: rgb(74, 37, 19); }
+.visited--border-r-mycolor-300:visited { border-right-color: rgb(74, 37, 19); }
+
+.border-r-mycolor-400 { border-right-color: rgb(99, 49, 25); }
+.hover--border-r-mycolor-400:hover { border-right-color: rgb(99, 49, 25); }
+.active--border-r-mycolor-400:active { border-right-color: rgb(99, 49, 25); }
+.focus--border-r-mycolor-400:focus { border-right-color: rgb(99, 49, 25); }
+.focus-visible--border-r-mycolor-400:focus-visible { border-right-color: rgb(99, 49, 25); }
+.focus-within--border-r-mycolor-400:focus-within { border-right-color: rgb(99, 49, 25); }
+.visited--border-r-mycolor-400:visited { border-right-color: rgb(99, 49, 25); }
+
+.border-r-mycolor-500 { border-right-color: rgb(124, 62, 31); }
+.hover--border-r-mycolor-500:hover { border-right-color: rgb(124, 62, 31); }
+.active--border-r-mycolor-500:active { border-right-color: rgb(124, 62, 31); }
+.focus--border-r-mycolor-500:focus { border-right-color: rgb(124, 62, 31); }
+.focus-visible--border-r-mycolor-500:focus-visible { border-right-color: rgb(124, 62, 31); }
+.focus-within--border-r-mycolor-500:focus-within { border-right-color: rgb(124, 62, 31); }
+.visited--border-r-mycolor-500:visited { border-right-color: rgb(124, 62, 31); }
+
+.border-r-mycolor-600 { border-right-color: rgb(149, 74, 37); }
+.hover--border-r-mycolor-600:hover { border-right-color: rgb(149, 74, 37); }
+.active--border-r-mycolor-600:active { border-right-color: rgb(149, 74, 37); }
+.focus--border-r-mycolor-600:focus { border-right-color: rgb(149, 74, 37); }
+.focus-visible--border-r-mycolor-600:focus-visible { border-right-color: rgb(149, 74, 37); }
+.focus-within--border-r-mycolor-600:focus-within { border-right-color: rgb(149, 74, 37); }
+.visited--border-r-mycolor-600:visited { border-right-color: rgb(149, 74, 37); }
+
+.border-r-mycolor-700 { border-right-color: rgb(173, 86, 44); }
+.hover--border-r-mycolor-700:hover { border-right-color: rgb(173, 86, 44); }
+.active--border-r-mycolor-700:active { border-right-color: rgb(173, 86, 44); }
+.focus--border-r-mycolor-700:focus { border-right-color: rgb(173, 86, 44); }
+.focus-visible--border-r-mycolor-700:focus-visible { border-right-color: rgb(173, 86, 44); }
+.focus-within--border-r-mycolor-700:focus-within { border-right-color: rgb(173, 86, 44); }
+.visited--border-r-mycolor-700:visited { border-right-color: rgb(173, 86, 44); }
+
+.border-r-mycolor-800 { border-right-color: rgb(198, 99, 50); }
+.hover--border-r-mycolor-800:hover { border-right-color: rgb(198, 99, 50); }
+.active--border-r-mycolor-800:active { border-right-color: rgb(198, 99, 50); }
+.focus--border-r-mycolor-800:focus { border-right-color: rgb(198, 99, 50); }
+.focus-visible--border-r-mycolor-800:focus-visible { border-right-color: rgb(198, 99, 50); }
+.focus-within--border-r-mycolor-800:focus-within { border-right-color: rgb(198, 99, 50); }
+.visited--border-r-mycolor-800:visited { border-right-color: rgb(198, 99, 50); }
+
+.border-r-mycolor-900 { border-right-color: rgb(223, 111, 56); }
+.hover--border-r-mycolor-900:hover { border-right-color: rgb(223, 111, 56); }
+.active--border-r-mycolor-900:active { border-right-color: rgb(223, 111, 56); }
+.focus--border-r-mycolor-900:focus { border-right-color: rgb(223, 111, 56); }
+.focus-visible--border-r-mycolor-900:focus-visible { border-right-color: rgb(223, 111, 56); }
+.focus-within--border-r-mycolor-900:focus-within { border-right-color: rgb(223, 111, 56); }
+.visited--border-r-mycolor-900:visited { border-right-color: rgb(223, 111, 56); }
