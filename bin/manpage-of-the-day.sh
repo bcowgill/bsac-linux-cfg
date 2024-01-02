@@ -21,9 +21,10 @@ PTH="
 
 LIST=
 REMAINDER=
-SEEN=$0.lst
-SAVED=$0.saved.lst
-ERRS=$0.err.lst
+CFG=mpod
+SEEN=$CFG.lst
+SAVED=$CFG.saved.lst
+ERRS=$CFG.err.lst
 touch $SEEN
 
 function usage {
@@ -33,7 +34,7 @@ function usage {
 	echo "
 $cmd [--help|--man|-?] [--list] [--remainder] [--save]
 
-This will show you a random manual page of the day so you can get to know the system commands available.
+This will show you a random Manual Page Of the Day so you can get to know the system commands available.
 
 --list  Will list all the command found in the internally configured paths and then exit.
 --remainder Will list all the remaining commands to choose from after the ones already shown have been filtered out, and then exit.
