@@ -1,3 +1,12 @@
+MUSTDO
+ - AJV is more popular?  https://github.com/ajv-validator/ajv  The fastest JSON schema Validator.
+   - https://ajv.js.org/guide/getting-started.html
+   - You can try Ajv without installing it in the Node.js REPL: https://runkit.com/npm/ajv
+ - zodNew() construct a new object based on the schema?
+ - dev only validation function which turns off in prod, like react prop-types
+ - generate random test data from schema?
+ - check out @hapi/joi web framework.
+
 From the Video
 Fixing TypeScript's Blindspot: Runtime Typechecking
 https://www.youtube.com/watch?v=rY_XqfSHock

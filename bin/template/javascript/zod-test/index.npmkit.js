@@ -1,8 +1,21 @@
 #!/usr/bin/env node
-const fs = require("fs");
+// version to use on NpmKit VM https://npm.runkit.com/
+
+//const fs = require("fs");
 const { z } = require("zod");
 const print = console.log;
 const err = console.error;
+
+const dataErrorJSON = "{}";
+const dataJSON = {
+	"results": [
+		{
+			"id": 1,
+			"name": "Jack",
+			"job": "Programmer"
+		}
+	]
+};
 
 print("Zod test");
 
@@ -70,8 +83,8 @@ printJobs(r1);
 print("parse r1");
 ResultSchema.parse(r1);
 
-const data = JSON.parse(fs.readFileSync("data.json", "utf-8"));
-const dataErr = JSON.parse(fs.readFileSync("data-error.json", "utf-8"));
+const data = dataJSON; // JSON.parse(fs.readFileSync("data.json", "utf-8"));
+const dataErr = JSON.parse(dataErrorJSON);// (fs.readFileSync("data-error.json", "utf-8"));
 
 print("data");
 printJobs(data);

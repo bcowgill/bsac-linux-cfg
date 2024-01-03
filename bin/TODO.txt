@@ -2,6 +2,11 @@ Project js-lite.js like my perl-lite.pl template for a simple file processor com
 bin/template/javascript/js-pne
 	node commander module
 
+NPM Node RunKit - node plus all npm modules installed right in the browser...
+https://npm.runkit.com/
+TypeScript Playground - typescript transpiler in the browser...
+https://www.typescriptlang.org/play
+
 manpage-of-the-day.sh
   filter-out.sh command to read FILTER expression from first arg then filter out whole lines which match or partial match with regex chars
 
