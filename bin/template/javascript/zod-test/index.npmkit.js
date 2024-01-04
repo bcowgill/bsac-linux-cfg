@@ -21,11 +21,11 @@ print("Zod test");
 
 /*
 interface Result {
-        results: {
-                id: number;
-                name: string;
-                job: string;
-        }[];
+   results: {
+      id: number;
+      name: string;
+      job: string;
+   }[];
 }
 */
 const ResultSchema = z.object({
@@ -77,19 +77,19 @@ const r1 = {
     ]
 };
 
-print("r1");
+print("\nprintJobs(r1)");
 printJobs(r1);
 
-print("parse r1");
+print("\nparse r1");
 ResultSchema.parse(r1);
 
 const data = dataJSON; // JSON.parse(fs.readFileSync("data.json", "utf-8"));
 const dataErr = JSON.parse(dataErrorJSON);// (fs.readFileSync("data-error.json", "utf-8"));
 
-print("data");
+print("\nprintJobs(from data.json)");
 printJobs(data);
 
-print("dataErr");
+print("\nprintJobs(from data-error.json)");
 printJobs(dataErr);
 
 logJobs(dataErr);

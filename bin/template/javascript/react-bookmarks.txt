@@ -1,3 +1,16 @@
+
+React Live - live editable storybook
+https://formidable.com/open-source/react-live/
+
+Component Playground - like storybook
+https://github.com/FormidableLabs/component-playground
+
+Sucrase fast transpiler for modern browsers only
+https://github.com/alangpierce/sucrase
+
+https://github.com/FormidableLabs/prism-react-renderer
+https://github.com/FormidableLabs/use-editable
+
 Creating a new React App
 https://github.com/reactjs/reactjs.org/pull/5487
 create react app in limbo so suggest not to use it.

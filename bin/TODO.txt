@@ -7,6 +7,33 @@ https://npm.runkit.com/
 TypeScript Playground - typescript transpiler in the browser...
 https://www.typescriptlang.org/play
 
+All languages:
+https://onecompiler.com/java
+https://onecompiler.com/perl  etc
+
+Perl Playground(s)
+https://js.do/perl/
+https://perlbanjo.com/
+https://www.onlinegdb.com/online_perl_compiler
+WebPerl - run perl right in the browser
+https://webperl.zero-g.net/
+https://webperl.zero-g.net/regex.html
+
+Regex in the browser
+https://regex101.com/
+https://www.debuggex.com/
+https://regexr.com/
+https://www.regextester.com/
+https://testregex.com/
+https://regextester.github.io/
+
+Java in the browser
+https://www.online-java.com/
+https://www.w3schools.com/java/java_compiler.asp
+https://www.onlinegdb.com/online_java_compiler
+https://www.programiz.com/java-programming/online-compiler/
+https://onecompiler.com/java
+
 manpage-of-the-day.sh
   filter-out.sh command to read FILTER expression from first arg then filter out whole lines which match or partial match with regex chars
 
