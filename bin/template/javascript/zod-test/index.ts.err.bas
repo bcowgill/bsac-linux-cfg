@@ -1,6 +1,3 @@
-npm WARN config init.author.name Use `--init-author-name` instead.
-npm WARN config init.author.email Use `--init-author-email` instead.
-npm WARN config init.author.url Use `--init-author-url` instead.
 ZodError: [
   {
     "code": "invalid_type",
@@ -13,8 +10,8 @@ ZodError: [
   }
 ]
     at Object.get error [as error] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:43:31)
-    at ZodObject.parse (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:141:22)
-    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:151:17)
+    at ZodObject.parse (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:143:22)
+    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:173:16)
     at Module._compile (node:internal/modules/cjs/loader:1099:14)
     at Module.m._compile (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:1618:23)
     at Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
@@ -37,10 +34,10 @@ ZodError: [
 SchemaError: printJobs(results !~~ Result)
 results:{}
 ValidationError [ZodValidationError]: Validation error: Required at "results"
-    at fromZodError (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod-validation-error/dist/cjs/ValidationError.js:75:12)
-    at checkSchema (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:50:32)
-    at printJobs (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:92:9)
-    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:162:4)
+    at fromZodError (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod-validation-error/dist/cjs/ValidationError.js:99:12)
+    at checkSchema (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:57:33)
+    at printJobs (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:112:5)
+    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:182:1)
     at Module._compile (node:internal/modules/cjs/loader:1099:14)
     at Module.m._compile (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:1618:23)
     at Module._extensions..js (node:internal/modules/cjs/loader:1153:10)

@@ -8,13 +8,13 @@ const err = console.error;
 
 const dataErrorJSON = "{}";
 const dataJSON = {
-	"results": [
-		{
-			"id": 1,
-			"name": "Jack",
-			"job": "Programmer"
-		}
-	]
+  results: [
+    {
+      id: 1,
+      name: "Jack",
+      job: "Programmer",
+    },
+  ],
 };
 
 print("Zod test");
@@ -29,52 +29,80 @@ interface Result {
 }
 */
 const ResultSchema = z.object({
-    results: z.array(z.object({
-        id: z.number(),
-        name: z.string(),
-        job: z.string(),
-    }))
+  results: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      job: z.string(),
+    }),
+  ),
 });
 
 function checkSchema(info, paramName, param, schema) {
-    const check = schema.safeParse(param);
-    if (!check.success) {
-        err("SchemaError: " + info + "\n" + paramName + ":", param, "\n", check.error);
-    }
-    return check.success;
+  const check = schema.safeParse(param);
+  if (!check.success) {
+    err(
+      "SchemaError: " + info + "\n" + paramName + ":",
+      param,
+      "\n",
+      check.error,
+    );
+  }
+  return check.success;
 } // checkSchema()
 
 function throwSchema(info, paramName, param, schema) {
-    const check = schema.safeParse(param);
-    if (!check.success) {
-        throw new TypeError("SchemaError: " + info + "\n" + paramName + ":" + JSON.stringify(param) + "\nZodError: " + check.error.toString());
-    }
-    return check.success;
+  const check = schema.safeParse(param);
+  if (!check.success) {
+    throw new TypeError(
+      "SchemaError: " +
+        info +
+        "\n" +
+        paramName +
+        ":" +
+        JSON.stringify(param) +
+        "\nZodError: " +
+        check.error.toString(),
+    );
+  }
+  return check.success;
 } // throwSchema()
 
 function printJobs(results) {
-    if (checkSchema("printJobs(results !~~ Result)", "results", results, ResultSchema)) {
-        results.results.forEach(({ job }) => {
-            print(job);
-        });
-    }
+  if (
+    checkSchema(
+      "printJobs(results !~~ Result)",
+      "results",
+      results,
+      ResultSchema,
+    )
+  ) {
+    results.results.forEach(({ job }) => {
+      print(job);
+    });
+  }
 } // printJobs(): void
 
 function logJobs(results) {
-    throwSchema("printJobs(results !~~ Result)", "results", results, ResultSchema);
-    results.results.forEach(({ job }) => {
-        print(job);
-    });
+  throwSchema(
+    "printJobs(results !~~ Result)",
+    "results",
+    results,
+    ResultSchema,
+  );
+  results.results.forEach(({ job }) => {
+    print(job);
+  });
 } // logJobs(): void
 
 const r1 = {
-    results: [
-        {
-            id: 1,
-            name: "John",
-            job: "developer",
-        },
-    ]
+  results: [
+    {
+      id: 1,
+      name: "John",
+      job: "developer",
+    },
+  ],
 };
 
 print("\nprintJobs(r1)");
@@ -84,7 +112,7 @@ print("\nparse r1");
 ResultSchema.parse(r1);
 
 const data = dataJSON; // JSON.parse(fs.readFileSync("data.json", "utf-8"));
-const dataErr = JSON.parse(dataErrorJSON);// (fs.readFileSync("data-error.json", "utf-8"));
+const dataErr = JSON.parse(dataErrorJSON); // (fs.readFileSync("data-error.json", "utf-8"));
 
 print("\nprintJobs(from data.json)");
 printJobs(data);
