@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 const fs = require("fs");
 const { z } = require("zod");
+
+const suite = "Zod test (NodeJS)";
+
 const print = console.log;
 const err = console.error;
 
-print("Zod test");
+print(suite);
 
 /*
 interface Result {

@@ -5,6 +5,8 @@ if node --version | grep `cat .nvmrc`; then \
 
 	npx ts-node $SRC \
 	&& npx ts-node $SRC > $SRC.out 2> $SRC.err.out
+	# fix up line and column numbers for diffing...
+	perl -i -pne 's{s:\d+:\d+}{s:LLL:CCC}xmsg' *.out
 
 	diff $SRC.out $SRC.bas || echo "NOT OK - Standard Output differs from base file: vdiff $SRC.out $SRC.bas"
 	diff $SRC.err.out $SRC.err.bas || echo "NOT OK - Standard Error differs from base file: vdiff $SRC.err.out $SRC.err.bas"

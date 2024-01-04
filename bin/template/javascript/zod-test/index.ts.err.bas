@@ -9,13 +9,13 @@ ZodError: [
     "message": "Required"
   }
 ]
-    at Object.get error [as error] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:43:31)
-    at ZodObject.parse (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:143:22)
-    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:173:16)
+    at Object.get error [as error] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:LLL:CCC)
+    at ZodObject.parse (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod/lib/types.js:LLL:CCC)
+    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:LLL:CCC)
     at Module._compile (node:internal/modules/cjs/loader:1099:14)
-    at Module.m._compile (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:1618:23)
+    at Module.m._compile (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:LLL:CCC)
     at Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:1621:12)
+    at Object.require.extensions.<computed> [as .ts] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:LLL:CCC)
     at Module.load (node:internal/modules/cjs/loader:975:32)
     at Function.Module._load (node:internal/modules/cjs/loader:822:12)
     at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12) {
@@ -34,14 +34,14 @@ ZodError: [
 SchemaError: printJobs(results !~~ Result)
 results:{}
 ValidationError [ZodValidationError]: Validation error: Required at "results"
-    at fromZodError (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod-validation-error/dist/cjs/ValidationError.js:99:12)
-    at checkSchema (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:57:33)
-    at printJobs (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:112:5)
-    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:182:1)
+    at fromZodError (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/zod-validation-error/dist/cjs/ValidationError.js:LLL:CCC)
+    at checkSchema (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:LLL:CCC)
+    at printJobs (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:LLL:CCC)
+    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/index.ts:LLL:CCC)
     at Module._compile (node:internal/modules/cjs/loader:1099:14)
-    at Module.m._compile (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:1618:23)
+    at Module.m._compile (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:LLL:CCC)
     at Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
-    at Object.require.extensions.<computed> [as .ts] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:1621:12)
+    at Object.require.extensions.<computed> [as .ts] (/home/me/workspace/play/bsac-linux-cfg/bin/template/javascript/zod-test/node_modules/ts-node/src/index.ts:LLL:CCC)
     at Module.load (node:internal/modules/cjs/loader:975:32)
     at Function.Module._load (node:internal/modules/cjs/loader:822:12) {
   details: [

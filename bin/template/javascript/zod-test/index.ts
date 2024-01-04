@@ -9,6 +9,8 @@ import {
 // change imports to requires for use in Browser TypeScript Playground
 // https://www.typescriptlang.org/play
 
+const suite = "Zod test (Typescript)";
+
 interface SchemaValidationError extends ValidationError {
   source?: {
     where: string;
@@ -20,15 +22,17 @@ interface SchemaValidationError extends ValidationError {
 const print = console.log;
 const err = console.error;
 
+print(suite);
+
 /*
-   interface Result {
-      results: {
-         id: number;
-         name: string;
-         job: string;
-      }[];
-   }
-   */
+	  interface Result {
+		 results: {
+			id: number;
+			name: string;
+			job: string;
+		 }[];
+	  }
+	  */
 
 const ResultSchema = z.object({
   results: z.array(

@@ -3,8 +3,13 @@
 
 //const fs = require("fs");
 const { z } = require("zod");
+
+const suite = "Zod test (NodeJS for use in online NpmKit)";
+
 const print = console.log;
 const err = console.error;
+
+print(suite);
 
 const dataErrorJSON = "{}";
 const dataJSON = {
@@ -16,8 +21,6 @@ const dataJSON = {
     },
   ],
 };
-
-print("Zod test");
 
 /*
 interface Result {
