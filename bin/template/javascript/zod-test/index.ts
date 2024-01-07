@@ -19,10 +19,10 @@ interface SchemaValidationError extends ValidationError {
   };
 }
 
-const print = console.log;
+const println = console.log;
 const err = console.error;
 
-print(suite);
+println(suite);
 
 /*
 	  interface Result {
@@ -121,7 +121,7 @@ function printJobs(results: Result): void {
     )
   ) {
     results.results.forEach(({ job }) => {
-      print(job);
+      println(job);
     });
   }
 } // printJobs(): void
@@ -130,7 +130,7 @@ function printJobs(results: Result): void {
 function logJobs(results: Result): void {
   throwSchema("logJobs(results !~~ Result)", "results", results, ResultSchema);
   results.results.forEach(({ job }) => {
-    print(job);
+    println(job);
   });
 } // logJobs(): void
 
@@ -138,7 +138,7 @@ function logJobs(results: Result): void {
 function doJobs(results: Result): void {
   throwZod("doJobs(results !~~ Result)", "results", results, ResultSchema);
   results.results.forEach(({ job }) => {
-    print(job);
+    println(job);
   });
 } // doJobs(): void
 
@@ -160,29 +160,29 @@ const r1 = {
     },
   ],
 };
-print("\nprintJobs(r1)");
+println("\nprintJobs(r1)");
 printJobs(r1);
 
-print("\nparse r1");
+println("\nparse r1");
 ResultSchema.parse(r1);
 
 const data: Result = JSON.parse(fs.readFileSync("data.json", "utf-8"));
 const dataErr: Result = JSON.parse(fs.readFileSync("data-error.json", "utf-8"));
 
-print("\nparse data.json");
+println("\nparse data.json");
 ResultSchema.parse(data);
 
-print("\nparse data-error.json");
+println("\nparse data-error.json");
 try {
   ResultSchema.parse(dataErr);
 } catch (exception) {
   err(exception);
 }
 
-print("\nprintJobs(from data.json)");
+println("\nprintJobs(from data.json)");
 printJobs(data);
 
-print("\nprintJobs(from data-error.json)");
+println("\nprintJobs(from data-error.json)");
 printJobs(dataErr);
 
 function doIt(fnDo: () => void): void {
@@ -201,12 +201,12 @@ function doIt(fnDo: () => void): void {
   }
 } // doIt()
 
-print("\nlogJobs(from data-error.json) or throw");
+println("\nlogJobs(from data-error.json) or throw");
 doIt(() => {
   logJobs(dataErr);
 });
 
-print("\ndoJobs(from data-error.json) or throw official");
+println("\ndoJobs(from data-error.json) or throw official");
 doIt(() => {
   doJobs(dataErr);
 });

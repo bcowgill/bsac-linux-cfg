@@ -1,4 +1,7 @@
 #!/bin/bash
+# direct AJV examples from the website docs:
+#npx ts-node ajv-json.ts
+#npx ts-node ajv-jtd.ts
 
 function filter_output
 {
