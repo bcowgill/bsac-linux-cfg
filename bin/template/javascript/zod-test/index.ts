@@ -25,14 +25,14 @@ const err = console.error;
 println(suite);
 
 /*
-	  interface Result {
-		 results: {
-			id: number;
-			name: string;
-			job: string;
-		 }[];
-	  }
-	  */
+		 interface Result {
+			results: {
+			   id: number;
+			   name: string;
+			   job: string;
+			}[];
+		 }
+		 */
 
 const ResultSchema = z.object({
   results: z.array(
@@ -60,7 +60,7 @@ function checkSchema(
       "SchemaError: " + info + "\n" + paramName + ":" + JSON.stringify(param);
     const message = fromZodError(check.error);
     err(preamble);
-    err(message);
+    err(`fromZodError=[${message}]`);
   }
   return check.success;
 } // checkSchema()
