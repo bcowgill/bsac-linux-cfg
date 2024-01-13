@@ -10,6 +10,7 @@ import {
 // https://www.typescriptlang.org/play
 
 const suite = "Zod test (Typescript)";
+const DEBUG = false;
 
 interface SchemaValidationError extends ValidationError {
   source?: {
@@ -25,14 +26,14 @@ const err = console.error;
 println(suite);
 
 /*
-		 interface Result {
-			results: {
-			   id: number;
-			   name: string;
-			   job: string;
-			}[];
-		 }
-		 */
+																												  interface Result {
+																													 results: {
+																														id: number;
+																														name: string;
+																														job: string;
+																													 }[];
+																												  }
+																												  */
 
 const ResultSchema = z.object({
   results: z.array(
@@ -46,8 +47,14 @@ const ResultSchema = z.object({
 // Same as the Typescript interface Result we have above.
 type Result = z.infer<typeof ResultSchema>;
 
+// Dump a JSON object with pretty spacing
+function dump(param: unknown, name?: string): string {
+  return JSON.stringify(param, void 0, 2) + (name ? ` // END ${name}` : "");
+}
+
 // Checks a parameter against a schema and logs an error if it doesn't match.
 // For use with an if statement to carry on only if it matches the schema.
+// It is like React propTypes where it warns if the data is wrong, but carries on...
 function checkSchema(
   info: string,
   paramName: string,
@@ -56,17 +63,45 @@ function checkSchema(
 ): boolean {
   const check = schema.safeParse(param);
   if (!check.success) {
-    const preamble =
-      "SchemaError: " + info + "\n" + paramName + ":" + JSON.stringify(param);
+    const preamble = `SchemaError: ${info}\n${paramName}: ${dump(
+      param,
+      paramName,
+    )}`;
     const message = fromZodError(check.error);
     err(preamble);
-    err(`fromZodError=[${message}]`);
+    if (!DEBUG) {
+      err(
+        `${message.constructor.name}: ${message.stack}\n${dump(
+          message,
+          message.constructor.name,
+        )}`,
+      );
+      //err(message);
+    } else {
+      err(`fromZodError=[`);
+      err(`   typeof message<${typeof message}>`);
+      err(`   message.name<${message.name}>`);
+      err(`   message.constructor<${message.constructor}>`);
+      err(`   message instanaceof Error<${message instanceof Error}>`);
+      err(
+        `   message instanaceof ValidationError<${
+          message instanceof ValidationError
+        }>`,
+      );
+      err(`   message.message<${message.message}>`);
+      err(`   message.details<`, message.details, `>`);
+      err(`   message.stack<${message.stack}>`);
+      err(`   message.toString()<${message.toString()}>`);
+      err(`   message.toLocaleString()<${message.toLocaleString()}>`);
+      err(`] // END fromZodError`);
+    }
   }
   return check.success;
 } // checkSchema()
 
 // Checks a parameter against a schema and throw an error if it doesn't match.
 // Adds .source value to describe to developers where the error came from.
+// Intended as validating object in an API endpoint and will not perform the task if the data is not valid and provides detail to developers.
 function throwZod(
   where: string,
   paramName: string,
@@ -88,6 +123,7 @@ function throwZod(
 } // throwZod()
 
 // Checks a parameter against a schema and throw an error if it doesn't match.
+// Intended as validating object in an API endpoint and will not perform the task if the data is not valid with less error detail.
 function throwSchema(
   info: string,
   paramName: string,
@@ -96,14 +132,10 @@ function throwSchema(
 ): boolean {
   const check = schema.safeParse(param);
   if (!check.success) {
-    const preamble =
-      "SchemaError: " +
-      info +
-      "\n" +
-      paramName +
-      ":" +
-      JSON.stringify(param) +
-      "\n";
+    const preamble = `SchemaError: ${info}\n${paramName}: ${dump(
+      param,
+      paramName,
+    )}\n`;
     const message = fromZodError(check.error);
     throw new TypeError(preamble + message.toString());
   }
@@ -193,10 +225,16 @@ function doIt(fnDo: () => void): void {
       const error: SchemaValidationError = exception as SchemaValidationError;
       err("ZodError Caught:", `${error}`);
       if ("source" in error) {
-        err("For Developers:", error.source);
+        err("Source For Developers:", error.source);
+      }
+      if ("details" in error) {
+        err("Details For Developers:", error.details);
       }
     } else {
       err("Non-ZodError:", `${exception}`);
+    }
+    if (exception && typeof exception === "object" && "stack" in exception) {
+      err("Stack For Developers:", exception.stack);
     }
   }
 } // doIt()

@@ -1,5 +1,7 @@
 if node --version | grep `cat .nvmrc`; then
 	npm run format
+	# checking structure of fromZodError return
+#	npx ts-node index.ts
 	npx ts-node index.ajv.ts
 #	node index.ajv.js
 else

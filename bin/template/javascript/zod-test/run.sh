@@ -24,20 +24,21 @@ function check_output
 }
 
 if node --version | grep `cat .nvmrc`; then \
-	SRC=index.ajv.ts
-	npx ts-node $SRC \
-		&& npx ts-node $SRC > $SRC.out 2> $SRC.err.out
-	check_output $SRC
-	exit 55
-
 	SRC=index.ts
-	npx ts-node $SRC \
-		&& npx ts-node $SRC > $SRC.out 2> $SRC.err.out
+	#npx ts-node $SRC && \
+	npx ts-node $SRC > $SRC.out 2> $SRC.err.out
 	check_output $SRC
 
 	SRC=index.js
 	node $SRC > $SRC.out 2> $SRC.err.out
 	check_output $SRC
+
+	exit 55
+	SRC=index.ajv.ts
+	npx ts-node $SRC \
+		&& npx ts-node $SRC > $SRC.out 2> $SRC.err.out
+	check_output $SRC
+
 else
 	echo "You need to run: nvm use"
 	echo "to set the correct version of node [`cat .nvmrc`] for this project."

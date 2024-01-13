@@ -7,6 +7,7 @@ import wrapAjvErrors from "ajv-errors";
 // https://www.typescriptlang.org/play
 
 const suite = "AJV test (Typescript) TODO";
+const DEBUG = false;
 
 const ajv = new Ajv({
   // https://ajv.js.org/options.html
@@ -19,17 +20,28 @@ const ajv = new Ajv({
 // https://ajv.js.org/packages/ajv-errors.html
 wrapAjvErrors(ajv /*, {singleError: true} */);
 
-/*
-																	interface SchemaValidationError extends ValidationError
-																	{
-																	source?: {
-																	where: string;
+// Grabbed from Zod module
+class ValidationError extends Error {
+  details;
+  name;
+  constructor(message: string, details?: ErrorObject[]) {
+    super(message);
+    this.details = details || [];
+    this.name = "AJVValidationError";
+  }
+  toString() {
+    return this.message;
+  }
+}
 
-																	paramName: string;
-																	param: unknown;
-																	};
-																	}
-																  */
+interface SchemaValidationError extends ValidationError {
+  source?: {
+    where: string;
+
+    paramName: string;
+    param: unknown;
+  };
+}
 
 const println = console.log;
 const err = console.error;
@@ -89,24 +101,31 @@ const validate: { [key: string]: ValidateFunction } = {
 };
 
 /*
-																	function parse(item: unknown, schemaName: string) {
-																	const valid = validate[schemaName](item);
-																	if (!valid) {
-																	throw new TypeError(validate[schemaName].errors);
-																	}
-																	return valid;
-																	}
-																  */
+																											  function parse(item: unknown, schemaName: string) {
+																											  const valid = validate[schemaName](item);
+																											  if (!valid) {
+																											  throw new TypeError(validate[schemaName].errors);
+																											  }
+																											  return valid;
+																											  }
+																											*/
 
-function fromAJVError(errors: ErrorObject[]) {
+// Dump a JSON object with pretty spacing
+function dump(param: unknown, name?: string): string {
+  return JSON.stringify(param, void 0, 2) + (name ? ` // END ${name}` : "");
+}
+
+function fromAJVError(errorsIn?: ErrorObject[] | null): ValidationError {
+  const errors = errorsIn || [];
   //console.error("fromAjvError: ", errors);
   const errorText = ajv.errorsText(errors);
   //console.error(`errorsText: [${errorText}]`);
-  return errorText;
+  return new ValidationError(errorText, errors);
 }
 
 // Checks a parameter against a schema and logs an error if it doesn't match.
 // For use with an if statement to carry on only if it matches the schema.
+// It is like React propTypes where it warns if the data is wrong, but carries on...
 function checkSchema(
   info: string,
   paramName: string,
@@ -116,65 +135,85 @@ function checkSchema(
   const check = fnValidate(param);
   //console.log("check", check, fnValidate);
   if (!check) {
-    const preamble =
-      "SchemaError: " + info + "\n" + paramName + ":" + JSON.stringify(param);
+    const preamble = `SchemaError: ${info}\n${paramName}: ${dump(
+      param,
+      paramName,
+    )}`;
     const message = fromAJVError(fnValidate.errors || []);
     err(preamble);
-    err(message);
+    if (!DEBUG) {
+      err(
+        `${message.constructor.name}: ${message.stack}\n${dump(
+          message,
+          message.constructor.name,
+        )}`,
+      );
+      //err(message);
+    } else {
+      err(`fromAJVError=[`);
+      err(`   typeof message<${typeof message}>`);
+      err(`   message.name<${message.name}>`);
+      err(`   message.constructor<${message.constructor}>`);
+      err(`   message instanaceof Error<${message instanceof Error}>`);
+      err(
+        `   message instanaceof ValidationError<${
+          message instanceof ValidationError
+        }>`,
+      );
+      err(`   message.message<${message.message}>`);
+      err(`   message.details<`, message.details, `>`);
+      err(`   message.stack<${message.stack}>`);
+      err(`   message.toString()<${message.toString()}>`);
+      err(`   message.toLocaleString()<${message.toLocaleString()}>`);
+      err(`] // END fromAJVError`);
+    }
   }
   return check;
 } // checkSchema()
 
-/*
-																	// Checks a parameter against a schema and throw an error if it doesn't match.
-																	// Adds .source value to describe to developers where the error came from.
-																	function throwZod(
-																	where: string,
-																	paramName: string,
-																	param: unknown,
-																	schema: ZodType<any, any, any>,
-																	): boolean
-																	{
-																	const check = schema.safeParse( param );
-																	if ( !check.success )
-																	{
-																	const source = {
-																	where,
-																	paramName,
-																	param,
-																	};
-																	const error: SchemaValidationError = fromZodError( check.error );
-																	error.source = source;
-																	throw error;
-																	}
-																	return check.success;
-																	} // throwZod()
+// Checks a parameter against a schema and throw an error if it doesn't match.
+// Adds .source value to describe to developers where the error came from.
+// Intended as validating object in an API endpoint and will not perform the task if the data is not valid and provides detail to developers.
+function throwAJV(
+  where: string,
+  paramName: string,
+  param: unknown,
+  fnValidate: ValidateFunction,
+): boolean {
+  const check = fnValidate(param);
+  if (!check) {
+    const source = {
+      where,
+      paramName,
+      param,
+    };
+    const error: SchemaValidationError = fromAJVError(fnValidate.errors);
+    error.source = source;
+    throw error;
+  }
+  return check;
+} // throwAJV()
 
-																	// Checks a parameter against a schema and throw an error if it doesn't match.
-																	function throwSchema(
-																	info: string,
-																	paramName: string,
-																	param: unknown,
-																	schema: ZodType<any, any, any>,
-																	): boolean
-																	{
-																	const check = schema.safeParse( param );
-																	if ( !check.success )
-																	{
-																	const preamble =
-																	"SchemaError: " +
-																	info +
-																	"\n" +
-																	paramName +
-																	":" +
-																	JSON.stringify( param ) +
-																	"\n";
-																	const message = fromZodError( check.error );
-																	throw new TypeError( preamble + message.toString() );
-																	}
-																	return check.success;
-																	} // throwSchema()
-		 */
+// Checks a parameter against a schema and throw an error if it doesn't match.
+// Intended as validating object in an API endpoint and will not perform the task if the data is not valid with less error detail.
+function throwSchema(
+  info: string,
+  paramName: string,
+  param: unknown,
+  fnValidate: ValidateFunction,
+): boolean {
+  const check = fnValidate(param);
+  if (!check) {
+    const preamble = `SchemaError: ${info}\n${paramName}: ${dump(
+      param,
+      paramName,
+    )}`;
+    const message = fromAJVError(fnValidate.errors || []);
+    throw new TypeError(preamble + message.toString());
+  }
+  return check;
+} // throwSchema()
+
 // example function which checks schema of a parameter but doesn't throw on error.
 function printJobs(results: Result): void {
   if (
@@ -190,37 +229,42 @@ function printJobs(results: Result): void {
     });
   }
 } // printJobs(): void
+
+// example function which checks schema of a parameter and throws an error.
+function logJobs(results: Result): void {
+  throwSchema(
+    "logJobs(results !~~ Result)",
+    "results",
+    results,
+    validate.ResultSchema,
+  );
+  results.results.forEach(({ job }) => {
+    println(job);
+  });
+} // logJobs(): void
+
 /*
-																	// example function which checks schema of a parameter and throws an error.
-																	function logJobs( results: Result ): void
-																	{
-																	throwSchema( "logJobs(results !~~ Result)", "results", results, ResultSchema );
-																	results.results.forEach(( { job } ) =>
-																	{
-																	println( job );
-																	} );
-																	} // logJobs(): void
 
-																	// example function which checks schema of a parameter and throws an official error.
-																	function doJobs( results: Result ): void
-																	{
-																	throwZod( "doJobs(results !~~ Result)", "results", results, ResultSchema );
-																	results.results.forEach(( { job } ) =>
-																	{
-																	println( job );
-																	} );
-																	} // doJobs(): void
+																											  // example function which checks schema of a parameter and throws an official error.
+																											  function doJobs( results: Result ): void
+																											  {
+																											  throwZod( "doJobs(results !~~ Result)", "results", results, ResultSchema );
+																											  results.results.forEach(( { job } ) =>
+																											  {
+																											  println( job );
+																											  } );
+																											  } // doJobs(): void
 
-																	function isSchemaErrorLike( exception: unknown ): boolean
-																	{
-																	// err('@@@', exception);
-																	return (
-																	isValidationErrorLike( exception as ValidationError ) ||
-																	"source" in ( exception as SchemaValidationError ) ||
-																	/^TypeError: SchemaError: /.test( `${exception}` )
-																	);
-																	}
-																  */
+																											  function isSchemaErrorLike( exception: unknown ): boolean
+																											  {
+																											  // err('@@@', exception);
+																											  return (
+																											  isValidationErrorLike( exception as ValidationError ) ||
+																											  "source" in ( exception as SchemaValidationError ) ||
+																											  /^TypeError: SchemaError: /.test( `${exception}` )
+																											  );
+																											  }
+									*/
 
 const r1 = {
   results: [
@@ -300,15 +344,21 @@ if (!valid) {
 		 if ( isSchemaErrorLike( exception ) )
 		 {
 			const error: SchemaValidationError = exception as SchemaValidationError;
-			err( "ZodError Caught:", `${error}` );
+			err( "AJVError Caught:", `${error}` );
 			if ( "source" in error )
 			{
-			   err( "For Developers:", error.source );
+			   err( "Source For Developers:", error.source );
 			}
+      if ("details" in error) {
+        err("Details For Developers:", error.details);
+      }
 		 } else
 		 {
-			err( "Non-ZodError:", `${exception}` );
+			err( "Non-AJVError:", `${exception}` );
 		 }
+    if (exception && typeof exception === "object" && "stack" in exception) {
+      err("Stack For Developers:", exception.stack);
+    }
 	  }
    } // doIt()
 
