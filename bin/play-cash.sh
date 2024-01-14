@@ -13,6 +13,7 @@ CASH_SOUNDS=${2:-$HOME/d/Music/money-cash-register}
 TIMESTAMP="$MONEY_DIR/timestamp.dat"
 LOCKED="$MONEY_DIR/play-cash.locked"
 SOUNDS=`mktemp`
+DAYS=2
 
 function get_sounds
 {
@@ -37,6 +38,14 @@ function play_cash_sound
 	SOUND="`choose.pl 1 $SOUNDS`"
 	echo will play SOUND=$SOUND
 	sound-play.sh "$SOUND"
+}
+
+function unlock_expired
+{
+	# find the lock file if it has modified more than #DAYS ago
+	if [ `find "$LOCKED" -not -mtime $DAYS | wc -l` == 1 ]; then
+		unlock
+	fi
 }
 
 function unlock
@@ -71,6 +80,7 @@ function error()
 }
 
 mkdir -p "$MONEY_DIR" 2> /dev/null
+unlock_expired
 if mkdir "$LOCKED" 2> /dev/null; then
 	if [ ! -z "$DEBUG" ]; then
 		echo $LOCKED created, we will run...
