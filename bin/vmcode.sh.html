@@ -8,14 +8,77 @@
 <meta name="author" content="Brent S.A. Cowgill">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+/* thank you glitch.com for these base CSS settings */
+/* Our default values set as CSS variables */
+:root {
+  --color-bg: #000;
+  --color-text-main: yellow;
+	--color-focus: blue;
+	--color-link-hover: orange;
+	--color-link-active: green;
+  --font-family: "HK Grotesk", sans-serif;
+  --font-family-header: "HK Grotesk", sans-serif;
+  --animate: all .2s ease-in-out;
+}
+
+/* Basic page style resets */
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Import fonts */
+@font-face {
+  font-family: HK Grotesk; /* cannot use var() here... */
+  src: url("https://cdn.glitch.me/605e2a51-d45f-4d87-a285-9410ad350515%2FHKGrotesk-Regular.otf?v=1603136326027")
+    format("opentype");
+}
+@font-face {
+  font-family: HK Grotesk; /* cannot use var() here... */
+  font-weight: bold;
+  src: url("https://cdn.glitch.me/605e2a51-d45f-4d87-a285-9410ad350515%2FHKGrotesk-Bold.otf?v=1603136323437")
+    format("opentype");
+}
+
+body {
+  font-family: var(--font-family);
+	background-color: var(--color-bg);
+	color: var(--color-text-main);
+}
 h1 {}
 h2 {}
-a {}
+a {
+  transition: var(--animate);
+}
+a:visited {
+  transition: var(--animate);
+	color: var(--color-text-main);
+}
+a:hover,a:focus-within {
+  transition: var(--animate);
+	color: var(--color-link-hover);
+	margin-left: 0.5rem;
+}
+a:focus {
+  transition: var(--animate);
+	outline: var(--color-focus) auto 1px;
+	outline-offset: 1px;
+}
+a:active {
+  transition: var(--animate);
+	color: var(--color-link-active);
+	font-weight: bold;
+	margin-left: 0.5rem;
+}
 </style>
 </head>
 <body>
 <main>
 <h1>Virtual Machines - Online Coding</h1>
+<h1>Hello, World</h1>
 
 <h2>Natural Language Programming / Large Language Models (NLP/LLM)</h2>
 	<a href="https://chat.openai.com" target="_blank" rel="noopener" referrerpolicy="no-referrer">ChatGPT 3.5 OpenAI - generative pre-trained large language model</a><br/>
@@ -25,6 +88,9 @@ a {}
 
 <h2>Any Language</h2>
 	<a href="https://onecompiler.com/about" target="_blank" rel="noopener" referrerpolicy="no-referrer">One Compiler - multiple languages running in the browser on one site.</a><br/>
+
+<h2>Code Beautify / Format / Tools</h2>
+	<a href="https://codebeautify.org/" target="_blank" rel="noopener" referrerpolicy="no-referrer">Code Beautify - multiple language formatting, converting and tools, with interactive search.</a><br/>
 
 <h2>Javascript</h2>
 	<a href="https://npm.runkit.com/" target="_blank" rel="noopener" referrerpolicy="no-referrer">NPM Node RunKit - Node with every npm module installed and ready to run right in the browser.</a><br/>
@@ -39,6 +105,13 @@ a {}
 	<a href="https://codepen.io/pen/" target="_blank" rel="noopener" referrerpolicy="no-referrer">Codepen - HTML/CDD/JS editor with live preview.</a><br/>
 	<a href="https://onecompiler.com/html" target="_blank" rel="noopener" referrerpolicy="no-referrer">Javascript One Compiler - HTML/CSS/JS editor to experiment right in the browser.</a><br/>
 	<a href="https://onecompiler.com/jquery" target="_blank" rel="noopener" referrerpolicy="no-referrer">JQuery One Compiler - HTML/CSS/JS editor with JQuery to experiment right in the browser.</a><br/>
+	<a href="https://glitch.com/discover" target="_blank" rel="noopener" referrerpolicy="no-referrer">Glitch - VM with full stack in the browser, with a library of start up configurations.</a><br/>
+	<a href="https://glitch.com/edit/#!/remix/glitch-hello-react" target="_blank" rel="noopener" referrerpolicy="no-referrer">React Glitch - VM with React full stack in the browser.</a> | <a href="https://glitch.com/edit/#!/remix/glitch-blank-react" target="_blank" rel="noopener" referrerpolicy="no-referrer">[BLANK]</a><br/>
+
+https://glitch.com/edit/#!/remix/glitch-blank-node
+https://jsbin.com
+https://tuple.app
+https://float.exposed
 
 <h2>Perl</h2>
 	<a href="https://onecompiler.com/perl" target="_blank" rel="noopener" referrerpolicy="no-referrer">Perl One Compiler - includes syntax overview reference.
@@ -56,8 +129,10 @@ a {}
 	<a href="https://regextester.github.io/" target="_blank" rel="noopener" referrerpolicy="no-referrer">Regextester github - simple match and replace with flags</a><br/>
 
 <h2>Markdown</h2>
-	<a href="https://markdowntohtml.com/" target="_blank" rel="noopener" referrerpolicy="no-referrer">Markdown to HTML - CSS/MD editor and preview and convert to HTML in the browser. includes syntax overview reference.
-</a><br/>
+	<a href="https://markdowntohtml.com/" target="_blank" rel="noopener" referrerpolicy="no-referrer">Markdown to HTML - CSS/MD editor and preview and convert to HTML in the browser. includes syntax overview reference.</a><br/>
+	<a href="https://codebeautify.org/markdown-to-html" target="_blank" rel="noopener" referrerpolicy="no-referrer">Markdown to HTML Code Beautify - convert to HTML, no preview.</a><br/>
+	<a href="https://codebeautify.org/markdown-viewer" target="_blank" rel="noopener" referrerpolicy="no-referrer">Markdown Preview Code Beautify - preview markdown in the browser</a><br/>
+	<a href="https://codebeautify.org/markdown-formatter" target="_blank" rel="noopener" referrerpolicy="no-referrer">Markdown Format Code Beautify - beautify/format messy markdown, no preview</a><br/>
 
 <h2>TypeScript</h2>
 	<a href="https://www.typescriptlang.org/play" target="_blank" rel="noopener" referrerpolicy="no-referrer">TypeScript Playground - any version of typescript transpiler run in the browser.</a><br/>
@@ -73,6 +148,7 @@ a {}
 	<a href="https://onecompiler.com/mysql" target="_blank" rel="noopener" referrerpolicy="no-referrer">MySQL One Compiler - create tables and query right in the browser. includes syntax overview reference.
 </a><br/>
 
+https://codebeautify.org/
 <h2>Language</h2>
 	<a href="
 " target="_blank" rel="noopener" referrerpolicy="no-referrer">

@@ -5,6 +5,9 @@ bin/template/javascript/js-pne
 online markdown to html generator
 https://markdowntohtml.com/
 
+code playground / sandbox
+react sandbox etc
+
 Java in the browser
 https://www.online-java.com/
 https://www.w3schools.com/java/java_compiler.asp
