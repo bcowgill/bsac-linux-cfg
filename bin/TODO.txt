@@ -2,34 +2,8 @@ Project js-lite.js like my perl-lite.pl template for a simple file processor com
 bin/template/javascript/js-pne
 	node commander module
 
-NPM Node RunKit - node plus all npm modules installed right in the browser...
-https://npm.runkit.com/
-TypeScript Playground - typescript transpiler in the browser...
-https://www.typescriptlang.org/play
-
-All languages:
-https://onecompiler.com/java
-https://onecompiler.com/perl  etc
-
-Perl Playground(s)
-https://js.do/perl/
-https://perlbanjo.com/
-https://www.onlinegdb.com/online_perl_compiler
-WebPerl - run perl right in the browser
-https://webperl.zero-g.net/
-https://webperl.zero-g.net/regex.html
-
-Regex in the browser
-https://regex101.com/
-https://www.debuggex.com/
-https://regexr.com/
-https://www.regextester.com/
-https://testregex.com/
-https://regextester.github.io/
-
 online markdown to html generator
 https://markdowntohtml.com/
-
 
 Java in the browser
 https://www.online-java.com/
