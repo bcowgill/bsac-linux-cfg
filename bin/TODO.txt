@@ -8,13 +8,6 @@ https://markdowntohtml.com/
 code playground / sandbox
 react sandbox etc
 
-Java in the browser
-https://www.online-java.com/
-https://www.w3schools.com/java/java_compiler.asp
-https://www.onlinegdb.com/online_java_compiler
-https://www.programiz.com/java-programming/online-compiler/
-https://onecompiler.com/java
-
 manpage-of-the-day.sh
   filter-out.sh command to read FILTER expression from first arg then filter out whole lines which match or partial match with regex chars
 
