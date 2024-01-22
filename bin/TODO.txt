@@ -1,3 +1,5 @@
+Velda Music - snoopy tune
+
 Project js-lite.js like my perl-lite.pl template for a simple file processor command in node
 bin/template/javascript/js-pne
 	node commander module
