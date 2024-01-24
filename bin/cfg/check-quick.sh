@@ -10,7 +10,8 @@ fi
 
 if [ -e $HOME/bin ]; then
 	set -o posix
-	set > $HOME/bin/check-system.env0.log
+	set > $HOME/bin/check-system.env.quick0.log
+	echo Updated $HOME/bin/check-system.env.quick0.log
 	set +o posix
 fi
 
@@ -22,6 +23,7 @@ if which lib-check-system.sh; then
 	source `which lib-check-system.sh`
 else
 	echo "NOT OK cannot find lib-check-system.sh"
+	echo Make sure $HOME/bin is on your path and try again.
 	exit 1
 fi
 
