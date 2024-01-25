@@ -106,7 +106,12 @@ function ENDS {
 	mynotify "$message" ""
 	say "$TEST_FAILS test failures (may be hidden)"
 	say "$TEST_CASES test cases"
-	echo "update db" && updatedb.sh &
+	if which sw_vers > /dev/null 2>&1 ; then
+		# don't do updatedb on mac, too slow
+		true
+	else
+		echo "update db" && updatedb.sh &
+	fi
 }
 
 # Say something on the terminal and with OS UI notification system
