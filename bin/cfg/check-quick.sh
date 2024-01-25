@@ -1,5 +1,5 @@
 #!/bin/bash
-# A Quick Check of some new configuration setup before adding it to check-system.sh for good.
+# A Quick Check of new configuration functions from lib-check-system.sh before adding it to check-system.sh for good.
 
 # terminate on first error
 set -e
