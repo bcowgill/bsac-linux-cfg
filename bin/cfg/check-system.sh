@@ -1540,6 +1540,7 @@ else
 	fi
 fi
 
+make_dir_world_readable "$HOME" "for updatedb command to index your home directory"
 make_dir_exist workspace/play "workspace play area missing"
 make_dir_exist workspace/tx   "workspace transfer area missing"
 make_dir_exist workspace/projects "workspace projects area missing"

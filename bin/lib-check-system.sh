@@ -189,6 +189,16 @@ function check_linux {
 #============================================================================
 # system related
 
+# ensure an env variable is defined
+function var_exists {
+	local name value
+	name=$1
+	value="$2"
+	if [ -z $value ]; then
+		NOT_OK "environment variable $name is not defined"
+	fi
+}
+
 function user_in_group {
 	local group user message
 	group="$1"
@@ -224,7 +234,7 @@ function add_user_to_group {
 }
 
 #============================================================================
-# files and directories
+# directory tools
 
 function dir_exists {
 	local dir message
@@ -271,6 +281,51 @@ function make_dir_exist {
 	dir_exists "$dir" "$message"
 }
 
+function copy_dir {
+	local dir source message
+	dir="$1"
+	source="$2"
+	message="$3"
+	if [ ! -d "$dir" ]; then
+		mkdir -p "$dir"
+		rmdir "$dir"
+		cp -r "$source" "$dir/"
+	fi
+	dir_exists "$dir" "copy_dir from [$source] $message"
+}
+
+function dir_is_world_readable {
+	local dir message	
+	dir="$1"
+	message="$2"
+	if dir_exists "$dir" "$message"; then
+		# drwxr-xr--+ 37 br388313  staff      1184 24 Jan 17:32 .
+		if ls -al "$dir" | grep ' \.$' | grep -E '^d......r.x' > /dev/null ; then
+			OK "directory is world readable: $dir"
+		else
+			NOT_OK "directory is not world readable+executable: $dir [pwd=$(pwd)] [$message]"
+		fi
+	fi
+}
+
+function make_dir_world_readable {
+	local dir message	
+	dir="$1"
+	message="$2"
+	if dir_exists "$dir" "$message"; then
+		# drwxr-xr--+ 37 br388313  staff      1184 24 Jan 17:32 .
+		if ls -al "$dir" | grep ' \.$' | grep -E '^d......r.x' > /dev/null ; then
+			OK "directory is world readable: $dir"
+		else
+			chmod o+rx "$dir"
+			dir_is_world_readable "$dir" "could not make world readable: $message"
+		fi
+	fi
+}
+
+#============================================================================
+# root file/directory tools
+
 function make_root_dir_exist {
 	local dir message
 	dir="$1"
@@ -291,19 +346,6 @@ function make_root_file_exist {
 	file_exists "$file" "$message"
 }
 
-function copy_dir {
-	local dir source message
-	dir="$1"
-	source="$2"
-	message="$3"
-	if [ ! -d "$dir" ]; then
-		mkdir -p "$dir"
-		rmdir "$dir"
-		cp -r "$source" "$dir/"
-	fi
-	dir_exists "$dir" "copy_dir from [$source] $message"
-}
-
 function copy_file_to_root {
 	local file source message
 	file="$1"
@@ -313,6 +355,84 @@ function copy_file_to_root {
 	file_exists "$file" > /dev/null || (sudo cp "$source" "$file"; chmod go+r "$file")
 	file_exists "$file" "$message"
 }
+
+# take ownership recursively of the given dir if it exists
+# silently ignore it if it does not exist
+function take_ownership_of {
+	local dir message MYGROUP
+
+	dir="$1"
+	message="$2"
+
+	MYGROUP=`groups | cut -f 1 -d " "`
+
+	[[ ! -d "$dir" ]] && return 0
+
+	if sudo chown -R $USER:$MYGROUP "$dir"
+	then
+		OK "directory $dir is now owned by you [$message]"
+	else
+		NOT_OK "directory $dir unable to change ownership to $USER:$MYGROUP [$message]"
+		return 1
+	fi
+	return 0
+}
+
+function file_linked_to_root {
+	local name target message link
+	name="$1"
+	target="$2"
+	message="$3"
+	file_exists "$target" "$message"
+	set +e
+	link=`readlink "$name"`
+	set -e
+	if [ "${link:-}" == "$target" ]; then
+		OK "symlink $name links to $target"
+		return 0
+	else
+		file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && sudo mv "$name" "$name.orig"
+		file_link_exists "$name" "try creating for $message" || sudo ln -s "$target" "$name"
+		file_link_exists "$name" "$message"
+	fi
+}
+
+function dir_linked_to {
+	local name target message root link
+	name="$1"
+	target="$2"
+	message="$3"
+	root="$4"
+	dir_exists "$target" "$message"
+	if [ -e "$name" ]; then
+		set +e
+		link=`readlink "$name"`
+		set -e
+		if [ "${link:-}" == "$target" ]; then
+			OK "symlink $name links to dir $target"
+			return 0
+		else
+			if [ "${link:-}" == "$target/" ]; then
+				OK "symlink $name links to dir $target/"
+				return 0
+			else
+				NOT_OK "already exists: "$name" cannot create as a link to dir "$target" [$message] `readlink "$name"`"
+				return 1
+			fi
+		fi
+	else
+		NOT_OK "symlink $name missing will try to create" && echo ln -s "$target" "$name"
+		if [ -z "$root" ]; then
+			ln -s "$target" "$name"
+		else
+			sudo ln -s "$target" "$name"
+		fi
+		dir_link_exists "$name" "$message"
+	fi
+}
+
+#============================================================================
+# file tools
 
 # removes a file
 function remove_file {
@@ -360,28 +480,6 @@ function remove_symlink {
 		ls -al "$file"
 		set -e
 	fi
-}
-
-# take ownership recursively of the given dir if it exists
-# silently ignore it if it does not exist
-function take_ownership_of {
-	local dir message MYGROUP
-
-	dir="$1"
-	message="$2"
-
-	MYGROUP=`groups | cut -f 1 -d " "`
-
-	[[ ! -d "$dir" ]] && return 0
-
-	if sudo chown -R $USER:$MYGROUP "$dir"
-	then
-		OK "directory $dir is now owned by you [$message]"
-	else
-		NOT_OK "directory $dir unable to change ownership to $USER:$MYGROUP [$message]"
-		return 1
-	fi
-	return 0
 }
 
 # check that a file is present somewhere on the system using locate
@@ -475,25 +573,6 @@ function file_relative_linked_to {
 	fi
 }
 
-function file_linked_to_root {
-	local name target message link
-	name="$1"
-	target="$2"
-	message="$3"
-	file_exists "$target" "$message"
-	set +e
-	link=`readlink "$name"`
-	set -e
-	if [ "${link:-}" == "$target" ]; then
-		OK "symlink $name links to $target"
-		return 0
-	else
-		file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && sudo mv "$name" "$name.orig"
-		file_link_exists "$name" "try creating for $message" || sudo ln -s "$target" "$name"
-		file_link_exists "$name" "$message"
-	fi
-}
-
 function file_hard_linked_to {
 	local name target message
 	name="$1"
@@ -502,53 +581,6 @@ function file_hard_linked_to {
 	file_exists "$target" "$message check target"
 	file_exists "$name" "$message will try to hard link" || ln "$target" "$name"
 	file_exists "$name" "$message"
-}
-
-function dir_linked_to {
-	local name target message root link
-	name="$1"
-	target="$2"
-	message="$3"
-	root="$4"
-	dir_exists "$target" "$message"
-	if [ -e "$name" ]; then
-		set +e
-		link=`readlink "$name"`
-		set -e
-		if [ "${link:-}" == "$target" ]; then
-			OK "symlink $name links to dir $target"
-			return 0
-		else
-			if [ "${link:-}" == "$target/" ]; then
-				OK "symlink $name links to dir $target/"
-				return 0
-			else
-				NOT_OK "already exists: "$name" cannot create as a link to dir "$target" [$message] `readlink "$name"`"
-				return 1
-			fi
-		fi
-	else
-		NOT_OK "symlink $name missing will try to create" && echo ln -s "$target" "$name"
-		if [ -z "$root" ]; then
-			ln -s "$target" "$name"
-		else
-			sudo ln -s "$target" "$name"
-		fi
-		dir_link_exists "$name" "$message"
-	fi
-}
-
-if which brew > /dev/null; then
-	PKGINST=brew
-else
-	PKGINST="sudo apt-get"
-fi
-
-function file_exists_from_package {
-	local file package
-	file="$1"
-	package="$2"
-	file_exists "$file" "$PKGINST install $package"
 }
 
 function file_is_executable {
@@ -565,22 +597,6 @@ function file_is_executable {
 	return 0
 }
 
-# ensure an env variable is defined
-function var_exists {
-	local name value
-	name=$1
-	value="$2"
-	if [ -z $value ]; then
-		NOT_OK "environment variable $name is not defined"
-	fi
-}
-
-# get git if possible
-function get_git {
-	cmd_exists git || ( echo doing an upgrade to get git; $PKGINST update && $PKGINST upgrade && $PKGINST install git && exit 11)
-
-}
-
 # ensure files are identical
 function files_same {
 	local file source message
@@ -594,6 +610,14 @@ function files_same {
 	fi
 }
 
+function install_file_manually {
+	local file message source
+	file="$1"
+	message="$2"
+	source="$3"
+	file_exists "$file" "manually install $message from $source"
+}
+
 # install a file from another location
 function install_file {
 	local file source message
@@ -604,150 +628,56 @@ function install_file {
 	file_exists "$file" "$message"
 }
 
-# pin a tap for macos brew package manager
-function brew_has_tap {
-	local tap
-	tap="$1"
-	if which brew > /dev/null; then
-		if $PKGINST tap | grep "$tap"; then
-			OK "brew has tap $tap"
-		else
-			NOT_OK "brew has no tap $tap configured"
-			return 1
-		fi
-	fi
-	return 0
-}
+#============================================================================
+# url / zip / network tools
 
-function brew_tap_from {
-	local tap
-	tap="$1"
-	if which brew > /dev/null; then
-		brew_has_tap "$tap" > /dev/null || (echo want to pin a tap $tap; $PKGINST tap "$tap")
-		brew_has_tap "$tap"
-	fi
-	return 0
-}
-
-function brew_taps_from {
-	local list message package error
-	list="$1"
+# Make http request and optionally show log file on error
+function http_request_show {
+	local url message log
+	url="$1"
 	message="$2"
-	error=""
-	if which brew > /dev/null; then
-		for package in $list
-		do
-			brew_tap_from $package || error="$error $package"
-		done
-		if [ ! -z "$error" ]; then
-			NOT_OK "errors for brew_tap_from$error [$message]"
-			error=1
-		else
-			error=0
+	log="$3"
+	echo Send a request to $url [$message]
+	if http_dump "$url" ; then
+		OK "got response to $url"
+	else
+		NOT_OK "no response from $url [$message]" || echo " "
+		if [ ! -z "$log" ]; then
+			cat "$log"
 		fi
-		return $error
+		return 1
 	fi
 }
 
-function filter_packages {
-	local packages remove
-	packages="$1"
-	remove="$2"
-	perl -e '
-		sub remove {
-			my ($package, $rhRemove) = @_;
-			my ($cmd_or_file, $package_name) = split(":", $package);
-			$package_name = $package_name || $cmd_or_file;
-			return $rhRemove->{$package_name};
-		}
-		my %remove = map { ($_, 1) } split(/\s+/, $ARGV[1]);
-		my @packages = grep { !remove ($_, \%remove) } split(/\s+/, $ARGV[0]);
-		print join(" ", @packages);
-	' "$packages" "$remove"
-}
-
-function uninstall_from {
-	local packages
-	packages="$1"
-	if [ "$PKGINST" != "brew" ]; then
-		$PKGINST remove $packages
-		$PKGINST autoremove
+# Make http request to get a specific file
+function http_get {
+	local output url
+	output="$1"
+	url="$2"
+	if which wget > /dev/null; then
+		wget --output-document="$output" "$url"
 	else
-		$PKGINST uninstall $packages
-	fi
-}
-
-# install a command or file from a package
-function install_from {
-	local file package which
-	file="$1"
-	package="$2"
-	if [ -z "$package" ]; then
-		package="$file"
-	fi
-	which=`which "$file"`
-	if [ ! -z "$which" ] ; then
-		OK "command $file exists [$which]"
-	else
-		file_exists "$file" > /dev/null || (echo want to install cmd/file $file from $package; $PKGINST install "$package")
-		which=`which "$file"`
-		if [ ! -z "$which" ] ; then
-			OK "command $file exists [$which]"
+		if which curl > /dev/null; then
+			curl --output "$output" "$url"
 		else
-			file_exists "$file" "use dpkg -L $package to get list of files installed by package"
+			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
 		fi
 	fi
 }
 
-# Install commands/files from specific packages specified as input list with : separation
-# cmd1:pkg1 file2:pkg2 ...
-function installs_from {
-	local list message file_pkg file package error
-	list="$1"
-	message="$2"
-	error=""
-	for file_pkg in $list
-	do
-		# split the file:pkg string into vars
-		split_colon $file_pkg; file="$SPLIT1"; package="$SPLIT2"
-		install_from $file $package || error="$error $file_pkg"
-	done
-	if [ ! -z "$error" ]; then
-		NOT_OK "errors for install_from$error [$message]"
-		error=1
+# Make http request and show content on console
+function http_dump {
+	local url
+	url="$1"
+	if which wget > /dev/null; then
+		wget -q --output-document=- "$url"
 	else
-		error=0
+		if which curl > /dev/null; then
+			curl "$url"
+		else
+			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
+		fi
 	fi
-	return $error
-}
-
-# install a file from a given package
-function install_file_from {
-	local file package
-	file="$1"
-	package="$2"
-	file_exists "$file" > /dev/null || (echo want to install file $file from $package; $PKGINST install "$package")
-	file_exists "$file" "use dpkg -L $package to get list of files installed by package"
-}
-
-# Install files from specific packages specified as input list with : separation
-# file1:pkg1 file2:pkg2 ...
-function install_files_from {
-	local list message options file_pkg file package error
-	list="$1"
-	message="$2"
-	options="$3"
-	error=""
-	for file_pkg in $list
-	do
-		# split the file:pkg string into vars
-		split_colon $file_pkg; file="$SPLIT1"; package="$SPLIT2"
-		install_file_from $file $package $options || error="$error $file_pkg"
-	done
-	if [ ! -z "$error" ]; then
-		NOT_OK "errors for install_files_from$error [$message]"
-	fi
-	return $error
 }
 
 # Download a file from a URL if it doesn't exist
@@ -843,12 +773,13 @@ function extract_archive {
 	fi
 }
 
-function install_file_manually {
-	local file message source
-	file="$1"
-	message="$2"
-	source="$3"
-	file_exists "$file" "manually install $message from $source"
+#============================================================================
+# git related tools
+
+# get git if possible
+function get_git {
+	cmd_exists git || ( echo doing an upgrade to get git; $PKGINST update && $PKGINST upgrade && $PKGINST install git && exit 11)
+
 }
 
 function install_git_repo {
@@ -911,6 +842,60 @@ function check_git_repo_branch {
 		fi
 		pop_dir
 	return $error
+}
+
+#============================================================================
+# MacOS brew related tools
+
+if which brew > /dev/null; then
+	PKGINST=brew
+else
+	PKGINST="sudo apt-get"
+fi
+
+# pin a tap for macos brew package manager
+function brew_has_tap {
+	local tap
+	tap="$1"
+	if which brew > /dev/null; then
+		if $PKGINST tap | grep "$tap"; then
+			OK "brew has tap $tap"
+		else
+			NOT_OK "brew has no tap $tap configured"
+			return 1
+		fi
+	fi
+	return 0
+}
+
+function brew_tap_from {
+	local tap
+	tap="$1"
+	if which brew > /dev/null; then
+		brew_has_tap "$tap" > /dev/null || (echo want to pin a tap $tap; $PKGINST tap "$tap")
+		brew_has_tap "$tap"
+	fi
+	return 0
+}
+
+function brew_taps_from {
+	local list message package error
+	list="$1"
+	message="$2"
+	error=""
+	if which brew > /dev/null; then
+		for package in $list
+		do
+			brew_tap_from $package || error="$error $package"
+		done
+		if [ ! -z "$error" ]; then
+			NOT_OK "errors for brew_tap_from$error [$message]"
+			error=1
+		else
+			error=0
+		fi
+		return $error
+	fi
 }
 
 #============================================================================
@@ -1008,6 +993,13 @@ function commands_exist {
 		error=0
 	fi
 	return $error
+}
+
+function file_exists_from_package {
+	local file package
+	file="$1"
+	package="$2"
+	file_exists "$file" "$PKGINST install $package"
 }
 
 # Install a single command from a differently named package
@@ -1153,6 +1145,110 @@ function install_command_package_from_url {
 	install_command_package $cmd "$package"
 }
 
+function filter_packages {
+	local packages remove
+	packages="$1"
+	remove="$2"
+	perl -e '
+		sub remove {
+			my ($package, $rhRemove) = @_;
+			my ($cmd_or_file, $package_name) = split(":", $package);
+			$package_name = $package_name || $cmd_or_file;
+			return $rhRemove->{$package_name};
+		}
+		my %remove = map { ($_, 1) } split(/\s+/, $ARGV[1]);
+		my @packages = grep { !remove ($_, \%remove) } split(/\s+/, $ARGV[0]);
+		print join(" ", @packages);
+	' "$packages" "$remove"
+}
+
+function uninstall_from {
+	local packages
+	packages="$1"
+	if [ "$PKGINST" != "brew" ]; then
+		$PKGINST remove $packages
+		$PKGINST autoremove
+	else
+		$PKGINST uninstall $packages
+	fi
+}
+
+# install a command or file from a package
+function install_from {
+	local file package which
+	file="$1"
+	package="$2"
+	if [ -z "$package" ]; then
+		package="$file"
+	fi
+	which=`which "$file"`
+	if [ ! -z "$which" ] ; then
+		OK "command $file exists [$which]"
+	else
+		file_exists "$file" > /dev/null || (echo want to install cmd/file $file from $package; $PKGINST install "$package")
+		which=`which "$file"`
+		if [ ! -z "$which" ] ; then
+			OK "command $file exists [$which]"
+		else
+			file_exists "$file" "use dpkg -L $package to get list of files installed by package"
+		fi
+	fi
+}
+
+# Install commands/files from specific packages specified as input list with : separation
+# cmd1:pkg1 file2:pkg2 ...
+function installs_from {
+	local list message file_pkg file package error
+	list="$1"
+	message="$2"
+	error=""
+	for file_pkg in $list
+	do
+		# split the file:pkg string into vars
+		split_colon $file_pkg; file="$SPLIT1"; package="$SPLIT2"
+		install_from $file $package || error="$error $file_pkg"
+	done
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_from$error [$message]"
+		error=1
+	else
+		error=0
+	fi
+	return $error
+}
+
+# install a file from a given package
+function install_file_from {
+	local file package
+	file="$1"
+	package="$2"
+	file_exists "$file" > /dev/null || (echo want to install file $file from $package; $PKGINST install "$package")
+	file_exists "$file" "use dpkg -L $package to get list of files installed by package"
+}
+
+# Install files from specific packages specified as input list with : separation
+# file1:pkg1 file2:pkg2 ...
+function install_files_from {
+	local list message options file_pkg file package error
+	list="$1"
+	message="$2"
+	options="$3"
+	error=""
+	for file_pkg in $list
+	do
+		# split the file:pkg string into vars
+		split_colon $file_pkg; file="$SPLIT1"; package="$SPLIT2"
+		install_file_from $file $package $options || error="$error $file_pkg"
+	done
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_files_from$error [$message]"
+	fi
+	return $error
+}
+
+#============================================================================
+# servers and daemons
+
 # Check if a server (just a command) is running
 function is_server_running {
 	local cmd message
@@ -1239,53 +1335,6 @@ function port_should_not_be_listening {
 		OK "$host:$port is not listening"
 	fi
 	return 0
-}
-
-# Make http request and optionally show log file on error
-function http_request_show {
-	local url message log
-	url="$1"
-	message="$2"
-	log="$3"
-	echo Send a request to $url [$message]
-	if http_dump "$url" ; then
-		OK "got response to $url"
-	else
-		NOT_OK "no response from $url [$message]" || echo " "
-		if [ ! -z "$log" ]; then
-			cat "$log"
-		fi
-		return 1
-	fi
-}
-
-function http_get {
-	local output url
-	output="$1"
-	url="$2"
-	if which wget > /dev/null; then
-		wget --output-document="$output" "$url"
-	else
-		if which curl > /dev/null; then
-			curl --output "$output" "$url"
-		else
-			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
-		fi
-	fi
-}
-
-function http_dump {
-	local url
-	url="$1"
-	if which wget > /dev/null; then
-		wget -q --output-document=- "$url"
-	else
-		if which curl > /dev/null; then
-			curl "$url"
-		else
-			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
-		fi
-	fi
 }
 
 #============================================================================

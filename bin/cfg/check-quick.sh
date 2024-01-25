@@ -59,7 +59,8 @@ fi
 
 BAIL_OUT begin
 
-
+make_dir_world_readable "$HOME" "for updatedb command to index your home directory"
+#dir_is_world_readable "$HOME" "for updatedb command to index your home directory"
 
 OK "all checks complete"
 ENDS

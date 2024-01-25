@@ -4,6 +4,7 @@
 # see also updatedb-backup.sh locate
 # see also updatedb-backup.sh locate lokate.sh updatedb
 
+# dir_is_world_readable
 # drwxr-xr--+ 37 br388313  staff      1184 24 Jan 17:32 .
 if ls -al $HOME | grep ' \.$' | grep -E '^d......r.x' > /dev/null ; then
     true
