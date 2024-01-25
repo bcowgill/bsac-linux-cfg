@@ -4,17 +4,17 @@
 # see also updatedb-backup.sh locate
 # see also updatedb-backup.sh locate lokate.sh updatedb
 
-date
 # drwxr-xr--+ 37 br388313  staff      1184 24 Jan 17:32 .
-if ls -al $HOME | grep ' \.$' | grep -E '^d......r' > /dev/null ; then
+if ls -al $HOME | grep ' \.$' | grep -E '^d......r.x' > /dev/null ; then
     true
 else
-    echo WARNING: your home directory is not world readable so it will not be indexed by updatedb.
+    echo WARNING: your home directory is not world readable+executable so it will not be indexed by updatedb.
 fi
 which updatedb > /dev/null && sudo updatedb
-date
-# Mac is tricky
+
+# Mac is tricky and slower, 6minutes to index users dir
 [ -x /usr/libexec/locate.updatedb ] && sudo /usr/libexec/locate.updatedb
-date
-[ -d /System/Library/LaunchDaemons ] && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
-date
+
+ACT=load
+#ACT=bootstrap
+[ -d /System/Library/LaunchDaemons ] && sudo launchctl $ACT -w /System/Library/LaunchDaemons/com.apple.locate.plist
