@@ -1,6 +1,7 @@
 #!/bin/bash
 # Check configuration to make sure things are ok and make them ok where possible
 # cd bin; nvm use
+# check-system.sh init 2>&1 | tee ~/check.log
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # DEBUG=1 check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
@@ -370,12 +371,14 @@ DROPBOX_URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 EMACS_VER=24.4
 EMACS_BASE=emacs24
 
+# Atom editor has reached end of life...
+ATOM_PKG=
 #https://atom.io/download/deb
 #https://atom-installer.github.com/v1.9.9/atom-amd64.deb?s=1471476867&ext=.deb
 #ATOM_VER=v1.10.0-beta7
 #ATOM_VER=v1.21.0-beta2
 ATOM_VER=1.20.1
-ATOM_PKG=atom-amd64.deb
+#ATOM_PKG=atom-amd64.deb
 ATOM_APM=apm
 ATOM_CMD=atom
 ATOM_APP=$ATOM_CMD
@@ -668,13 +671,16 @@ fi
 if [ "$HOSTNAME" == "L-156131225.local" ]; then
 	COMPANY=wipro
 fi
+if [ "$HOSTNAME" == "C02FJ2JKMD6M" ]; then
+	COMPANY=wipro
+fi
 if [ "$COMPANY" == "wipro" ]; then
 	# Change settings for wipro MACOS workstation
 	EMAIL=brent.cowgill@wipro.com
 	BIG_DATA=
 	MACOS=1
-	UBUNTU=11.6.5
-	GIT_VER=2.36.1
+	UBUNTU=13.6.3
+	GIT_VER=2.39.3
 	# GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
@@ -718,7 +724,8 @@ if [ "$COMPANY" == "wipro" ]; then
 	# MUSTDO re-enable this once apm fixed
 	ATOM_APM=""
 	ATOM_VER="1.60.0"
-	ATOM_PKG=atom-mac.zip
+	# Atom editor has reached end of life...
+	#ATOM_PKG=atom-mac.zip
 	ATOM_URL=https://github.com/atom/atom/releases/download
 	PINTA_PKG=""
 	ELIXIR_PKG=""
@@ -1494,6 +1501,8 @@ echo CONFIG NPM_GLOBAL_PKG_LIST
 #============================================================================
 # begin actual system checking
 
+echo HOME=$HOME
+echo COMPANY=$COMPANY
 echo "export COMPANY=$COMPANY" > $HOME/.COMPANY
 echo "export EMAIL=$EMAIL" >> $HOME/.COMPANY
 file_exists $HOME/.COMPANY "company env variable setup file"
@@ -1549,7 +1558,14 @@ make_dir_exist $DROP_BACKUP "Dropbox backup area"
 
 get_git
 
-# on MACOS when java not installed, running java command requests an install with dialog box
+# on MACOS when java not installed, running any java related command gives error output
+# older macs it would request an install with dialog box
+#bash-3.2$ ls -al /usr/bin/java*
+#-rwxr-xr-x  52 root  wheel  168384  2 Dec 07:00 /usr/bin/java
+# /usr/bin/java 2>&1 | grep 'information on installing Java'
+# The operation couldn’t be completed. Unable to locate a Java Runtime.
+# Please visit http://www.java.com for information on installing Java.
+# ~/Downloads/jre-8u401-macosx-x64.dmg
 #L-156131255:bin bcowgill$ ls -al /usr/bin/java
 #lrwxr-xr-x  1 root  wheel  74 23 Mar  2017 /usr/bin/java -> /System/Library/Frameworks/JavaVM.framework/Versions/Current/Commands/java
 
@@ -1557,13 +1573,19 @@ echo VERSIONS
 echo MACOS=$MACOS
 check_linux "$UBUNTU" $MACOS
 which git && git --version
-if [ -z $MACOS ]; then # TODO MACOS PKGS
+if [ -z $MACOS ]; then
 	which apt-get && apt-get --version
+	which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
 else
 	which brew && brew --version
+	if [ -x /usr/libexec/java_home ]; then
+		if /usr/libexec/java_home 2>&1 | grep 'information on installing Java' > /dev/null ; then
+			echo MAYBE NOT OK `/usr/libexec/java_home 2>&1`
+		else
+			which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
+		fi
+	fi
 fi
-[ -x /usr/libexec/java_home ] && /usr/libexec/java_home
-which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
 which groovy && groovy -version
 #You should set GROOVY_HOME:
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
