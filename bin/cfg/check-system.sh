@@ -1584,6 +1584,7 @@ if [ -z $MACOS ]; then
 	which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
 else
 	which brew && brew --version
+	which xcode-select && xcode-select -version
 	if [ -x /usr/libexec/java_home ]; then
 		if /usr/libexec/java_home 2>&1 | grep 'information on installing Java' > /dev/null ; then
 			echo MAYBE NOT OK `/usr/libexec/java_home 2>&1`
@@ -1837,7 +1838,10 @@ if [ ! -z $MACOS ]; then
 	dir_linked_to $BREW_LINK_NAME $BREW_LINK_TARGET_ABS "brew needs this link" root
 	cmd_exists brew > /dev/null || ( echo want to install homebrew [$BREW_DOCS]; /bin/bash -c "$(curl -fsSL $BREW_URL)" )
 	cmd_exists brew
-	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
+
+	# MUSTDO move to lib-check-sytem??
+	# MUSTDO try mac setup without Xcode app, just command line tools...
+	#app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
 	# or download from https://developer.apple.com/download/all/
 	# https://xcodereleases.com/  every version listed
 	# https://matteomanferdini.com/install-xcode/
@@ -1848,6 +1852,20 @@ if [ ! -z $MACOS ]; then
 	# There are also the xcodebuild and xcode-select files in /usr/bin. I need to know if the command line tools is installed. Is there a command for it? hat can I do to see if XCode CLT is installed and if yes to find the version installed?
 	# cmd line tools include gcc or make but stubs until installed
 	# xcode-select -p; echo $? 0 yes, 2 no for recent versions
+	# $ xcodebuild 
+	# xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
+	cmd_exists xcode-select
+	if xcode-select -p; then
+		OK xcode-select command line tools are installed
+	else
+		echo Trying to install xcode-select command line tools...
+		xcode-select --install
+		if xcode-select -p; then
+			OK xcode-select command line tools are installed
+		else
+			NOT_OK YOUDO xcode-select command line tools failed to install... figure out how to do it manually...
+		fi 
+	fi 
 fi
 
 BAIL_OUT brew
@@ -1916,7 +1934,11 @@ fi # not MACOS
 # http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 # http://www.cl.cam.ac.uk/~mgk25/ucs/quick-intro.txt
 # http://www.cl.cam.ac.uk/~mgk25/unicode.html#x11
-URL=http://www.cl.cam.ac.uk/~mgk25
+UCS_URL=https://www.cl.cam.ac.uk/~mgk25
+#/download/ucs-fonts.tar.gz
+#http://www.cl.cam.ac.uk/~mgk25
+# MUSTDO how about this one?
+ADOBE_BH_URL=https://www.cl.cam.ac.uk/~mgk25/download/ucs-fonts-75dpi100dpi.tar.gz
 
 CHECK=`LC_CTYPE=en_GB.UTF-8 locale charmap`
 if [ ${CHECK:-NOTOK} == UTF-8 ]; then
@@ -1924,9 +1946,9 @@ if [ ${CHECK:-NOTOK} == UTF-8 ]; then
 else
 	NOT_OK "UTF-8 locale is not supported:: $CHECK"
 fi
-install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts/examples/UTF-8-test.txt" "ucs-fonts.tar.gz" ucs-fonts $URL/download/ucs-fonts.tar.gz "Misc Fixed unicode fonts"
-#install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
-#install_file_from_url "$DOWNLOAD/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $URL/ucs/quick-intro.txt
+install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts/examples/UTF-8-test.txt" "ucs-fonts.tar.gz" ucs-fonts $UCS_URL/download/ucs-fonts.tar.gz "Misc Fixed unicode fonts"
+#install_file_from_url_zip_subdir "$DOWNLOAD/ucs-fonts-75dpi100dpi/100dpi/timR24.bdf" "ucs-fonts-75dpi100dpi.tar.gz" ucs-fonts-75dpi100dpi $UCS_URL/download/ucs-fonts-75dpi100dpi.tar.gz "Fixed unicode fonts Adobe B&H"
+#install_file_from_url "$DOWNLOAD/ucs-fonts/examples/quick-intro.txt" "ucs-fonts/examples/quick-intro.txt" $UCS_URL/ucs/quick-intro.txt
 dir_linked_to bin/template/unicode "$DOWNLOAD/ucs-fonts/examples" "symlink to sample unicode files"
 
 BAIL_OUT font
