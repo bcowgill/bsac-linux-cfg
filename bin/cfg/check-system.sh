@@ -1838,6 +1838,16 @@ if [ ! -z $MACOS ]; then
 	cmd_exists brew > /dev/null || ( echo want to install homebrew [$BREW_DOCS]; /bin/bash -c "$(curl -fsSL $BREW_URL)" )
 	cmd_exists brew
 	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
+	# or download from https://developer.apple.com/download/all/
+	# https://xcodereleases.com/  every version listed
+	# https://matteomanferdini.com/install-xcode/
+	# Install Xcode command line tools without XCode app:
+	# If, instead, you want to install them from the command line, run this command:
+	# xcode-select --install
+	#	 You don’t need to install Xcode first for this command to work. It is available even on a fresh install of macOS.
+	# There are also the xcodebuild and xcode-select files in /usr/bin. I need to know if the command line tools is installed. Is there a command for it? hat can I do to see if XCode CLT is installed and if yes to find the version installed?
+	# cmd line tools include gcc or make but stubs until installed
+	# xcode-select -p; echo $? 0 yes, 2 no for recent versions
 fi
 
 BAIL_OUT brew
