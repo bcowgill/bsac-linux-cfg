@@ -702,10 +702,12 @@ if [ "$COMPANY" == "wipro" ]; then
 	DRUID_PKG=""
 	# http://www.oracle.com/technetwork/java/javase/downloads/index.html
 	# https://download.oracle.com/java/18/latest/jdk-18_macos-x64_bin.dmg
-	JAVA_URL=http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
-	JAVA_VER=jdk-18.0.1.1.jdk
-	JAVA_PKG_VER=jdk-18_macos-x64_bin
+	# http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+	# https://download.oracle.com/java/21/latest/jdk-21_macos-x64_bin.dmg
+	JAVA_VER=jdk-21.jdk
+	JAVA_PKG_VER=jdk-21_macos-x64_bin
 	JAVA_PKG=$JAVA_PKG_VER.dmg
+	JAVA_URL=https://download.oracle.com/java/21/latest/$JAVA_PKG
 	JAVA_JVM=/Library/Java/JavaVirtualMachines/$JAVA_VER/Contents/Home
 	#JAVA_HOME=$JAVA_JVM
 	JAVA_JRE=$JAVA_JVM/bin/java
@@ -2277,7 +2279,13 @@ if [ ! -z "$USE_JAVA" ]; then
 		dir_linked_to jdk workspace/$JAVA_VER "shortcut to current java dev kit"
 	else
 		# MACOS here
+		if /usr/libexec/java_home 2>&1 | grep 'information on installing Java' > /dev/null ; then
+			# java stub is present, but not the real thing, so install it.
+			echo YOUDO You will have to manually install the package once downloaded: open $DOWNLOAD/$JAVA_PKG 
+			install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
+		fi
 		if [ ! -e "$JAVA_JRE" ]; then
+			echo YOUDO You will have to manually install the package once downloaded: open $DOWNLOAD/$JAVA_PKG 
 			install_command_package_from_url $JAVA_CMD $JAVA_PKG $JAVA_URL "java development kit"
 		fi
 		if [ "x$JAVA_HOME" == "x$JAVA_JVM" ]; then
@@ -2300,10 +2308,29 @@ if [ ! -z "$USE_JAVA" ]; then
 fi
 
 if [ ! -z "$DIFFMERGE_PKG" ]; then
-	echo CHECK $DIFFMERGE_CMD $DIFMERGE_PKG
-	install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
+	echo CHECK $DIFFMERGE_CMD $DIFFMERGE_PKG
 	if [ ! -z $MACOS ]; then
-		app_exists DiffMerge.app "you must manually install downloaded diffmerge dmg file and Extras/diffmerge.sh"
+		install_file_from_url "$DOWNLOAD/$DIFFMERGE_PKG" $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
+		if [ ! -e /usr/local/share/man/man1/diffmerge.1 ]; then
+			echo YOUDO You need to manually install the .dmg package and Extras to /Applications
+			app_exists DiffMerge.app "you must manually install downloaded diffmerge dmg file and Extras/diffmerge.sh"
+			dir_exists "/Applications/Extras" "manual copy of diffmerge extras"
+			# set -x  # like DEBUG=1
+			pushd /Applications
+				pwd
+				ls -al Extras
+				sudo cp Extras/diffmerge.1 /usr/local/share/man/man1/diffmerge.1
+				sudo chmod 644 /usr/local/share/man/man1/diffmerge.1
+				sudo cp Extras/diffmerge.sh /usr/local/bin/
+				sudo chmod 755 /usr/local/bin/diffmerge.sh
+				rm -rf Extras
+			popd
+		fi
+		file_exists /usr/local/bin/diffmerge.sh "diffmerge extras script install manually..."
+		file_exists /usr/local/share/man/man1/diffmerge.1 "diffmerge extras manpage install manually..."
+		app_exists DiffMerge.app "diffmerte App and Extras"
+	else
+		install_command_package_from_url $DIFFMERGE_CMD $DIFFMERGE_PKG $DIFFMERGE_URL "sourcegear diffmerge"
 	fi
 else
 	OK "will not configure diffmerge unless DIFFMERGE_PKG is non-zero"

@@ -239,7 +239,7 @@ fi
 if [ "x$COMPANY" == "xwipro" ]; then
     # /Library/Java/JavaVirtualMachines/jdk1.8.0_151.jdk/Contents/Home
     # /Library/Java/JavaVirtualMachines/jdk-18.0.1.1.jdk/Contents/Home
-    export JAVA_HOME=`/usr/libexec/java_home -v18`
+    export JAVA_HOME=`/usr/libexec/java_home -v21`
     export M2_HOME=
     export GROOVY_HOME=/usr/local/opt/groovy/libexec
     export EDITOR="/usr/bin/vim"
