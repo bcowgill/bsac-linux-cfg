@@ -1836,6 +1836,12 @@ if [ ! -z $MACOS ]; then
 	cmd_exists curl
 	make_root_dir_exist $BREW_LINK_TARGET_ABS "brew needs this dir, fails to create it..."
 	dir_linked_to $BREW_LINK_NAME $BREW_LINK_TARGET_ABS "brew needs this link" root
+
+	# MUSTDO add check for this:
+	# brew advises this:
+	#sudo chown -R $LOGNAME /usr/local/share/zsh /usr/local/share/zsh/site-functions
+  	#chmod u+w /usr/local/share/zsh /usr/local/share/zsh/site-functions
+
 	cmd_exists brew > /dev/null || ( echo want to install homebrew [$BREW_DOCS]; /bin/bash -c "$(curl -fsSL $BREW_URL)" )
 	cmd_exists brew
 
