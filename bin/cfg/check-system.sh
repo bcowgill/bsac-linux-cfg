@@ -145,6 +145,12 @@ CHARLES_PKG=charles-proxy
 CHARLES_CMD="charles"
 CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 
+BREW_DOCS=https://brew.sh/
+BREW_URL=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+BREW_LINK_NAME=/usr/local/share/zsh/site-functions/_brew
+BREW_LINK_TARGET=../../../Homebrew/completions/zsh/_brew
+BREW_LINK_TARGET_ABS=/usr/local/share/Homebrew/completions/zsh/_brew
+
 SKYPE_CMD=skypeforlinux
 SKYPE_PKG="skypeforlinux-64.deb"
 SKYPE_URL=https://go.skype.com/$SKYPE_PKG
@@ -1826,10 +1832,15 @@ fi
 BAIL_OUT init
 
 if [ ! -z $MACOS ]; then
-	cmd_exists brew > /dev/null || ( echo want to install homebrew; /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" )
+	cmd_exists curl
+	make_root_dir_exist $BREW_LINK_TARGET_ABS "brew needs this dir, fails to create it..."
+	dir_linked_to $BREW_LINK_NAME $BREW_LINK_TARGET_ABS "brew needs this link" root
+	cmd_exists brew > /dev/null || ( echo want to install homebrew [$BREW_DOCS]; /bin/bash -c "$(curl -fsSL $BREW_URL)" )
 	cmd_exists brew
 	app_exists Xcode.app "XCode is required, please install from App Store. it takes hours to download."
 fi
+
+BAIL_OUT brew
 
 # Fonts ================================================================
 # https://www.raspberrypi.org/forums/viewtopic.php?f=66&t=14781

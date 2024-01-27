@@ -383,7 +383,7 @@ function file_linked_to_root {
 	name="$1"
 	target="$2"
 	message="$3"
-	file_exists "$target" "$message"
+	file_exists "$target" "$message [sudo ln -s '$target' '$name']"
 	set +e
 	link=`readlink "$name"`
 	set -e
@@ -391,7 +391,7 @@ function file_linked_to_root {
 		OK "symlink $name links to $target"
 		return 0
 	else
-		file_link_exists "$name" "will try to create for $message" || file_exists "$name" "save existing" && sudo mv "$name" "$name.orig"
+		file_link_exists "$name" "will try to create for $message [sudo ln -s '$target' '$name']" || file_exists "$name" "save existing" && sudo mv "$name" "$name.orig"
 		file_link_exists "$name" "try creating for $message" || sudo ln -s "$target" "$name"
 		file_link_exists "$name" "$message"
 	fi
