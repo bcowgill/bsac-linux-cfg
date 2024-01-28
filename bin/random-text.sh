@@ -9,6 +9,7 @@ MIX="
 	5% emacs
 	lean
 	starwars
+	star-trek
 "
 
 if [ "$COMPANY" == "" ]; then
@@ -161,3 +162,4 @@ do
 done
 
 exit 0
+# New fortune files exist, amend the MIX setting at top of script...
