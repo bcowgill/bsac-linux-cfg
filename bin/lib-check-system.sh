@@ -51,17 +51,24 @@ function PLAN {
 	fi
 }
 
+function bleep {
+	local type flag
+	type=${1:-not-ok}
+	flag=${2:-$SILENT_NOT_OK}
+	if which sound-$type.sh > /dev/null; then
+		if [ $flag == 0 ]; then
+			sound-$type.sh
+		fi
+	fi
+}
+
 # TODO add terminal color escape sequences
 function OK {
 	local message
 	message="$1"
 	TEST_CASES=$(( $TEST_CASES + 1 ))
 	echo $PASS "$TEST_CASES $message"
-	if which sound-ok.sh > /dev/null; then
-		if [ $SILENT_OK == 0 ]; then
-			sound-ok.sh
-		fi
-	fi
+	bleep ok $SILENT_OK 
 }
 
 # TODO add terminal color escape sequences
@@ -71,11 +78,7 @@ function NOT_OK {
 	TEST_CASES=$(( $TEST_CASES + 1 ))
 	TEST_FAILS=$(( $TEST_FAILS + 1 ))
 	say "$FAIL $TEST_CASES $message"
-	if which sound-not-ok.sh > /dev/null; then
-		if [ $SILENT_NOT_OK == 0 ]; then
-			sound-not-ok.sh
-		fi
-	fi
+	bleep 
 	if [ $STOP_ON_FAIL == 1 ]; then
 		return 1
 	fi

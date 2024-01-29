@@ -47,11 +47,13 @@ fi
 # search for "BAIL_OUT name" to see where that point is.
 #BAIL_OUT=versions
 #BAIL_OUT=init
+#BAIL_OUT=brew
 #BAIL_OUT=font
 #BAIL_OUT=xfont
 #BAIL_OUT=diff
 #BAIL_OUT=elixir
 #BAIL_OUT=mongo
+#BAIL_OUT=biglist
 #BAIL_OUT=install
 #BAIL_OUT=node
 #BAIL_OUT=screensaver
@@ -596,10 +598,10 @@ CHROME_PLUGIN="/usr/lib/chromium-browser/plugins"
 # Mobile phone mounting tools
 MTP_PKG="mtpfs mtp-files:mtp-tools jmtpfs"
 
-# meld - caskroom/cask
+# meld - was caskroom/cask suggested homebrew/cask
 HOMEBREW_NO_AUTO_UPDATE=1
 BREW_TAPS="
-	caskroom/cask
+	homebrew/cask
 	cloudfoundry/tap
 "
 
@@ -1181,7 +1183,7 @@ INSTALL_LINUX="
 
 
 INSTALL_MACOS="
-	meld:caskroom/cask/meld
+	meld:homebrew/cask/meld
 	7z:p7zip
 	id3v2
 "
@@ -1522,6 +1524,8 @@ fi
 
 uname -a && get-all-release.sh && id
 
+# set -x  # like DEBUG=1
+bleep
 if grep $USER /etc/group | grep sudo; then
 	OK "user $USER has sudo privileges"
 	sudo egrep "\b$AUSER\b" /etc/passwd /etc/group /etc/sudoers
@@ -2380,6 +2384,8 @@ echo BIG INSTALL FILE PACKAGES $INSTALL_FILE_PACKAGES
 echo BIG COMMANDS $COMMANDS
 echo BIG INSTALL NPM GLOBAL FROM $NPM_GLOBAL_PKG_LIST
 echo BIG VPN_PKG $VPN_PKG $VPN_CONFIG $VPN_CONN
+
+BAIL_OUT biglist
 
 brew_taps_from "$BREW_TAPS"
 if [ ! -z "$UNINSTALL_PKGS" ]; then
