@@ -1,0 +1,250 @@
+../../sounds/CallConnecting.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+df4298f40f7117d7ebf778650573719e  ../../sounds/CallConnecting.wav
+LAUNCH ls-meta.sh ../../sounds/CallConnecting.wav
+WARN: Will not play an audio/video file unless SEE_AUDIO environment variable is set.
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/CallConnecting.wav
+../../sounds/CallRingingIn.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+2241d55146d3251204f98e9a04aa17d8  ../../sounds/CallRingingIn.wav
+LAUNCH ls-meta.sh ../../sounds/CallRingingIn.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/CallRingingIn.wav
+../../sounds/Cat-Meowing.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+8b9b3ac05d9e784af65cb678dd85c5bc  ../../sounds/Cat-Meowing.mp3
+LAUNCH ls-meta.sh ../../sounds/Cat-Meowing.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Cat-Meowing.mp3
+../../sounds/Cat-Meowing.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+81cdc05aa03d3ff827344dd9b3c6acec  ../../sounds/Cat-Meowing.wav
+LAUNCH ls-meta.sh ../../sounds/Cat-Meowing.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Cat-Meowing.wav
+../../sounds/ChatIncoming.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+09a036f3ed6ca91017048a6614d854de  ../../sounds/ChatIncoming.wav
+LAUNCH ls-meta.sh ../../sounds/ChatIncoming.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/ChatIncoming.wav
+../../sounds/chime.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+261823405e7ead7023ff7d5eb0f97265  ../../sounds/chime.wav
+LAUNCH ls-meta.sh ../../sounds/chime.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/chime.wav
+../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+d53dd03a6f2324658ef0c4c996df4fc1  ../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.mp3
+LAUNCH ls-meta.sh ../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.mp3
+../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+c5130d6e21f22cbf3551b4e650eb485e  ../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.wav
+LAUNCH ls-meta.sh ../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Clock_Strikes_Twelve-Clock_Man-1976178740.wav
+../../sounds/Cow-Moo.mp3: MPEG ADTS, layer III, v1, 128 kbps, 32 kHz, JntStereo
+5779deba5d28f124cb2da7a8d8da062a  ../../sounds/Cow-Moo.mp3
+LAUNCH ls-meta.sh ../../sounds/Cow-Moo.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Cow-Moo.mp3
+../../sounds/Cow-Moo.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 32000 Hz
+0d0517eb83c41fcdc9a2cadf143ceb8a  ../../sounds/Cow-Moo.wav
+LAUNCH ls-meta.sh ../../sounds/Cow-Moo.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Cow-Moo.wav
+../../sounds/critical-disk-space.mp3: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+ae71f66c0cc5552c9e3bce64defe9605  ../../sounds/critical-disk-space.mp3
+LAUNCH ls-meta.sh ../../sounds/critical-disk-space.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/critical-disk-space.mp3
+../../sounds/critical-disk-space-spoken1.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+123f602d738ef43eed7ec985d7873f46  ../../sounds/critical-disk-space-spoken1.mp3
+LAUNCH ls-meta.sh ../../sounds/critical-disk-space-spoken1.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/critical-disk-space-spoken1.mp3
+../../sounds/critical-disk-space-spoken2.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+9f7654adac6a24d11f1a19e1133aebf0  ../../sounds/critical-disk-space-spoken2.mp3
+LAUNCH ls-meta.sh ../../sounds/critical-disk-space-spoken2.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/critical-disk-space-spoken2.mp3
+../../sounds/critical-disk-space-spoken3.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+c770d41f8e2042b8fbdfa5bd44e9bacd  ../../sounds/critical-disk-space-spoken3.mp3
+LAUNCH ls-meta.sh ../../sounds/critical-disk-space-spoken3.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/critical-disk-space-spoken3.mp3
+../../sounds/cuckoo-ringtone.mp3: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v2,  64 kbps, 24 kHz, Monaural
+51f6a0c4e225e36a2c59e33699c32aae  ../../sounds/cuckoo-ringtone.mp3
+LAUNCH ls-meta.sh ../../sounds/cuckoo-ringtone.mp3
+-rw------- 1 me me NNNNN DATE HH:MM ../../sounds/cuckoo-ringtone.mp3
+../../sounds/Dogbark.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v2, 128 kbps, 22.05 kHz, Monaural
+5dd9a7530ac488fdf6ff7fca869d0658  ../../sounds/Dogbark.mp3
+LAUNCH ls-meta.sh ../../sounds/Dogbark.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Dogbark.mp3
+../../sounds/Dogbark.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 8 bit, mono 22050 Hz
+22b03d689bbd4ab7eece9397adb81ecc  ../../sounds/Dogbark.wav
+LAUNCH ls-meta.sh ../../sounds/Dogbark.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Dogbark.wav
+../../sounds/Doorbell.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+3e881e9fac9731874a27b8fc2ae835aa  ../../sounds/Doorbell.mp3
+LAUNCH ls-meta.sh ../../sounds/Doorbell.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Doorbell.mp3
+../../sounds/Doorbell.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+3a140dbc3f36cb1933b8551f16742217  ../../sounds/Doorbell.wav
+LAUNCH ls-meta.sh ../../sounds/Doorbell.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Doorbell.wav
+../../sounds/Frog-Croaking.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+9aa9f451d4fef46c7021b31825ca6895  ../../sounds/Frog-Croaking.mp3
+LAUNCH ls-meta.sh ../../sounds/Frog-Croaking.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Frog-Croaking.mp3
+../../sounds/Frog-Croaking-SoundBible.com-1053984354.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+739fb9676404ec147f70f75c4475bd7e  ../../sounds/Frog-Croaking-SoundBible.com-1053984354.mp3
+LAUNCH ls-meta.sh ../../sounds/Frog-Croaking-SoundBible.com-1053984354.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Frog-Croaking-SoundBible.com-1053984354.mp3
+../../sounds/Frog-Croaking-SoundBible.com-1053984354.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+d0b347fb5ca0ec56baaaf4ca4600c5e5  ../../sounds/Frog-Croaking-SoundBible.com-1053984354.wav
+LAUNCH ls-meta.sh ../../sounds/Frog-Croaking-SoundBible.com-1053984354.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Frog-Croaking-SoundBible.com-1053984354.wav
+../../sounds/grandfather-clock-chime.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+6c41ea55da788c69c80f003b596846e0  ../../sounds/grandfather-clock-chime.mp3
+LAUNCH ls-meta.sh ../../sounds/grandfather-clock-chime.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/grandfather-clock-chime.mp3
+../../sounds/halloween-laugh.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+10f667c5e3062be4d0cfca9531d56f34  ../../sounds/halloween-laugh.mp3
+LAUNCH ls-meta.sh ../../sounds/halloween-laugh.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/halloween-laugh.mp3
+../../sounds/Horse-Neigh-Sound.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+14f835458814184613d42974da727496  ../../sounds/Horse-Neigh-Sound.mp3
+LAUNCH ls-meta.sh ../../sounds/Horse-Neigh-Sound.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Horse-Neigh-Sound.mp3
+../../sounds/Horse-Neigh-Sound.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+86275953208f5b917fce7dd7f4150774  ../../sounds/Horse-Neigh-Sound.wav
+LAUNCH ls-meta.sh ../../sounds/Horse-Neigh-Sound.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Horse-Neigh-Sound.wav
+../../sounds/kitten.ogg: Ogg data, Vorbis audio, stereo, 24000 Hz, ~77334 bps, created by: Xiph.Org libVorbis I (1.0.1)
+e62b559d9cc91c99e043135b5e6b1863  ../../sounds/kitten.ogg
+LAUNCH ls-meta.sh ../../sounds/kitten.ogg
+-rw------- 1 me me NNNNN DATE HH:MM ../../sounds/kitten.ogg
+../../sounds/laser.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 22050 Hz
+fdd60ced20c1cedfd4b94027f3e96402  ../../sounds/laser.wav
+LAUNCH ls-meta.sh ../../sounds/laser.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/laser.wav
+../../sounds/login.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 22050 Hz
+3dae55307d303690aa299f8cdf628626  ../../sounds/login.wav
+LAUNCH ls-meta.sh ../../sounds/login.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/login.wav
+../../sounds/multiple-cuckoo-sound.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+ce5079d5ee48360c211c2ca36c8af7ac  ../../sounds/multiple-cuckoo-sound.mp3
+LAUNCH ls-meta.sh ../../sounds/multiple-cuckoo-sound.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/multiple-cuckoo-sound.mp3
+../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.mp3: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v1, 256 kbps, 44.1 kHz, Stereo
+21d1316176bd7e3c44e945240833adaa  ../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.mp3
+LAUNCH ls-meta.sh ../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.mp3
+../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+f9c0b46454a8be2b7493b1551a8cbf52  ../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.wav
+LAUNCH ls-meta.sh ../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Night_Sounds_-_Crickets-Lisa_Redfern-591005346.wav
+../../sounds/Noise.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 48000 Hz
+82a15bb64a71472ac1352e9ee6bfcf80  ../../sounds/Noise.wav
+LAUNCH ls-meta.sh ../../sounds/Noise.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Noise.wav
+../../sounds/red-alert.mp3: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+ae71f66c0cc5552c9e3bce64defe9605  ../../sounds/red-alert.mp3
+LAUNCH ls-meta.sh ../../sounds/red-alert.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/red-alert.mp3
+../../sounds/Rooster-Crowing.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+379bada290e00044845ce75f0b300ee0  ../../sounds/Rooster-Crowing.mp3
+LAUNCH ls-meta.sh ../../sounds/Rooster-Crowing.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Rooster-Crowing.mp3
+../../sounds/Rooster-Crowing.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 11025 Hz
+175541797e13debf6abf60e1a10a218e  ../../sounds/Rooster-Crowing.wav
+LAUNCH ls-meta.sh ../../sounds/Rooster-Crowing.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Rooster-Crowing.wav
+../../sounds/single-cuckoo-sound.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+e5e9d4a853ba9515644783d8134dfff5  ../../sounds/single-cuckoo-sound.mp3
+LAUNCH ls-meta.sh ../../sounds/single-cuckoo-sound.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/single-cuckoo-sound.mp3
+../../sounds/SkypeLogin.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+8cce65d0691e379a036da97d184e2754  ../../sounds/SkypeLogin.wav
+LAUNCH ls-meta.sh ../../sounds/SkypeLogin.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/SkypeLogin.wav
+../../sounds/that_was_easy.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 8 bit, mono 22050 Hz
+03de3322dc52ef05a0f53b19a2b1cf0c  ../../sounds/that_was_easy.wav
+LAUNCH ls-meta.sh ../../sounds/that_was_easy.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/that_was_easy.wav
+../../sounds/Tiger-Growling.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+147a58e85d2105025f6a9b677b5f49cc  ../../sounds/Tiger-Growling.mp3
+LAUNCH ls-meta.sh ../../sounds/Tiger-Growling.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Tiger-Growling.mp3
+../../sounds/Tiger-Growling.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+6f5827175588e696db28e4fe5a91498c  ../../sounds/Tiger-Growling.wav
+LAUNCH ls-meta.sh ../../sounds/Tiger-Growling.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Tiger-Growling.wav
+../../sounds/Tornado_Siren_II-Delilah-747233690.mp3: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+281c9513e8e9f959ab91ea3ee5499d95  ../../sounds/Tornado_Siren_II-Delilah-747233690.mp3
+LAUNCH ls-meta.sh ../../sounds/Tornado_Siren_II-Delilah-747233690.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Tornado_Siren_II-Delilah-747233690.mp3
+../../sounds/Tornado_Siren_II-Delilah-747233690.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+350503ddea13811340fb5abf61fdc884  ../../sounds/Tornado_Siren_II-Delilah-747233690.wav
+LAUNCH ls-meta.sh ../../sounds/Tornado_Siren_II-Delilah-747233690.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Tornado_Siren_II-Delilah-747233690.wav
+../../sounds/volume_blip.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 8 bit, mono 11127 Hz
+fcbc6c9f7f865ba48b0be5cd26ce94f9  ../../sounds/volume_blip.wav
+LAUNCH ls-meta.sh ../../sounds/volume_blip.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/volume_blip.wav
+../../sounds/Woof.mp3: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v2, 128 kbps, 22.05 kHz, Monaural
+58b04084a616db66a8d97c3c74d76363  ../../sounds/Woof.mp3
+LAUNCH ls-meta.sh ../../sounds/Woof.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Woof.mp3
+../../sounds/Woof.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 22050 Hz
+04b905d7a0e33cd3136061e21177ce51  ../../sounds/Woof.wav
+LAUNCH ls-meta.sh ../../sounds/Woof.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../sounds/Woof.wav
+../../template/snd/100-pt2-ch01-06-atlas-shrugged-2-06.aiff: IFF data, AIFF audio
+2ee236392eb4524933544368b563e868  ../../template/snd/100-pt2-ch01-06-atlas-shrugged-2-06.aiff
+LAUNCH ls-meta.sh ../../template/snd/100-pt2-ch01-06-atlas-shrugged-2-06.aiff
+-rw------- 1 me me NNNNN DATE HH:MM ../../template/snd/100-pt2-ch01-06-atlas-shrugged-2-06.aiff
+../../template/snd/102-pt2-ch01-08-atlas-shrugged-2-08.ape: Monkey's Audio compressed format version 3990 with normal compression, stereo, sample rate 44100
+9a1a7f833fba658c25a2e2bbc7dae03e  ../../template/snd/102-pt2-ch01-08-atlas-shrugged-2-08.ape
+LAUNCH ls-meta.sh ../../template/snd/102-pt2-ch01-08-atlas-shrugged-2-08.ape
+-rw------- 1 me me NNNNN DATE HH:MM ../../template/snd/102-pt2-ch01-08-atlas-shrugged-2-08.ape
+../../template/snd/beep.ac3: ATSC A/52 aka AC-3 aka Dolby Digital stream, 32 kHz,, complete main (CM) 1 front/0 rear, LFE off,, 192 kbit/s reserved Dolby Surround mode
+b109fa43131bc624f288c6beb7f5bcad  ../../template/snd/beep.ac3
+LAUNCH ls-meta.sh ../../template/snd/beep.ac3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.ac3
+../../template/snd/beep.aiff: Audio file with ID3 version 2.3.0, contains: IFF data, AIFF audio
+c782734c1ceee99fd3cb04a151afe99e  ../../template/snd/beep.aiff
+LAUNCH ls-meta.sh ../../template/snd/beep.aiff
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.aiff
+../../template/snd/beep.flac: Audio file with ID3 version 2.3.0, contains: FLAC audio bitstream data, 16 bit, mono, 8 kHz, 336 samples
+a3c3ecc01539ff75da85e2646c742819  ../../template/snd/beep.flac
+LAUNCH ls-meta.sh ../../template/snd/beep.flac
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.flac
+../../template/snd/beep-gsm6-10.wav: RIFF (little-endian) data, WAVE audio, GSM 6.10, mono 8000 Hz
+0fa9d385d4b134634d5b972341e42e06  ../../template/snd/beep-gsm6-10.wav
+LAUNCH ls-meta.sh ../../template/snd/beep-gsm6-10.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep-gsm6-10.wav
+../../template/snd/beep.m4a: empty
+d41d8cd98f00b204e9800998ecf8427e  ../../template/snd/beep.m4a
+../../template/snd/beep.m4a contents:
+strings:
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.m4a
+../../template/snd/beep.mp3: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III,  v2.5,  64 kbps, 8 kHz, Monaural
+200e804aa32348fd561fb01d004a24a7  ../../template/snd/beep.mp3
+LAUNCH ls-meta.sh ../../template/snd/beep.mp3
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.mp3
+../../template/snd/beep.ogg: Audio file with ID3 version 2.3.0, contains: Ogg data, Vorbis audio, mono, 8000 Hz, ~28000 bps, created by: Xiph.Org libVorbis I
+ccbbb1aba0ec5f9c734bd239b0bb5029  ../../template/snd/beep.ogg
+LAUNCH ls-meta.sh ../../template/snd/beep.ogg
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.ogg
+../../template/snd/beep.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 8000 Hz
+ff46a83eb6252825ae8b19a972d3cd7d  ../../template/snd/beep.wav
+LAUNCH ls-meta.sh ../../template/snd/beep.wav
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.wav
+../../template/snd/beep.wma: Audio file with ID3 version 2.3.0, contains: Microsoft ASF
+a12fecb5c7f40df50aedab8e68eecbf8  ../../template/snd/beep.wma
+LAUNCH ls-meta.sh ../../template/snd/beep.wma
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/beep.wma
+../../template/snd/hey-music-over-ringtone.mp2: Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer II, v1, 160 kbps, 44.1 kHz, Stereo
+0fce0d575062de2607b661b9ec7467bb  ../../template/snd/hey-music-over-ringtone.mp2
+LAUNCH ls-meta.sh ../../template/snd/hey-music-over-ringtone.mp2
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/hey-music-over-ringtone.mp2
+../../template/snd/sample.aac: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, AAC, v4 LC, 22.05 kHz, stereo
+f1c190b881cc589e2a16f167c9729b26  ../../template/snd/sample.aac
+LAUNCH ls-meta.sh ../../template/snd/sample.aac
+-rw-r--r-- 1 me me NNNNN DATE HH:MM ../../template/snd/sample.aac
+../../template/snd/sound-samples.lst: ASCII text
+44fe23f9cb9474696b1114c55357a54e  ../../template/snd/sound-samples.lst
+LAUNCH less ../../template/snd/sound-samples.lst
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/snd/sound-samples.lst
+../../template/snd/unbelievable-AUD-20180701-WA0000-whatsapp.aac: MPEG ADTS, AAC, v4 LC, 22.05 kHz, stereo
+89bbb9f2ec7df754b3d80795e612cc99  ../../template/snd/unbelievable-AUD-20180701-WA0000-whatsapp.aac
+LAUNCH ls-meta.sh ../../template/snd/unbelievable-AUD-20180701-WA0000-whatsapp.aac
+-rw-r--r-- 1 me me NNNNN DATE HH:MM ../../template/snd/unbelievable-AUD-20180701-WA0000-whatsapp.aac
+../../template/snd/wallstart.au: Sun/NeXT audio data: 8-bit ISDN mu-law, mono, 8000 Hz
+24fa9a352813d1040ed22c4177b11aaa  ../../template/snd/wallstart.au
+LAUNCH ls-meta.sh ../../template/snd/wallstart.au
+-rw------- 1 me me NNNNN DATE HH:MM ../../template/snd/wallstart.au

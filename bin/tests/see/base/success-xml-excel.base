@@ -1,0 +1,5 @@
+in/spreadsheet-excel-2003-xml.xml: XML document text
+6356b0673c58211260b39f3f8ed7993b  in/spreadsheet-excel-2003-xml.xml
+XML: excel.sheet => xlsx
+LAUNCH libreoffice in/spreadsheet-excel-2003-xml.xml
+-rw-rw-r-- 1 me me DATE HH:MM in/spreadsheet-excel-2003-xml.xml

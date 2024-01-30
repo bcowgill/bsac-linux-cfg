@@ -1,0 +1,4 @@
+in/archive.tar: POSIX tar archive (GNU)
+e474e32545bffe80fbc61efb76953a49  in/archive.tar
+LAUNCH less in/archive.tar
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/archive.tar

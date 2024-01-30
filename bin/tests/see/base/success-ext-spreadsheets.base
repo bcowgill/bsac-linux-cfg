@@ -1,0 +1,44 @@
+in/spreadsheet-calc-html.html: HTML document, ASCII text
+c6a54edf03c63836f7d2fdbb5c1ac859  in/spreadsheet-calc-html.html
+LAUNCH browser.sh in/spreadsheet-calc-html.html
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-calc-html.html
+in/spreadsheet-data-interchange-format.dif: ASCII text
+c294e8c2ea976a4b196ce3ab7de141e9  in/spreadsheet-data-interchange-format.dif
+LAUNCH libreoffice in/spreadsheet-data-interchange-format.dif
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-data-interchange-format.dif
+in/spreadsheet-excel-2007-2013-xml.xlsx: Zip archive data, at least v2.0 to extract
+af26842ce0237b66294cbcb5b6453ea6  in/spreadsheet-excel-2007-2013-xml.xlsx
+LAUNCH libreoffice in/spreadsheet-excel-2007-2013-xml.xlsx
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-excel-2007-2013-xml.xlsx
+in/spreadsheet-excel-97-2000-xp-2003.xls: Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
+e04ac35b4bf238a4b73dbe0dd89d26c3  in/spreadsheet-excel-97-2000-xp-2003.xls
+LAUNCH libreoffice in/spreadsheet-excel-97-2000-xp-2003.xls
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-excel-97-2000-xp-2003.xls
+in/spreadsheet-excel-template-97-2000-xp-2003.xlt: Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
+e04ac35b4bf238a4b73dbe0dd89d26c3  in/spreadsheet-excel-template-97-2000-xp-2003.xlt
+LAUNCH libreoffice in/spreadsheet-excel-template-97-2000-xp-2003.xlt
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-excel-template-97-2000-xp-2003.xlt
+in/spreadsheet-odf.ods: OpenDocument Spreadsheet
+7a6f8485fee6cef4bc8018db07c78c68  in/spreadsheet-odf.ods
+LAUNCH libreoffice in/spreadsheet-odf.ods
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-odf.ods
+in/spreadsheet-odf-template.ots: OpenDocument Template
+684d2611b749ce06ea5650ca12fbbbaa  in/spreadsheet-odf-template.ots
+LAUNCH libreoffice in/spreadsheet-odf-template.ots
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-odf-template.ots
+in/spreadsheet-opendoc-template-flat-xml.fods: XML document text
+6b33bc737c2e422cff83db4b92792405  in/spreadsheet-opendoc-template-flat-xml.fods
+LAUNCH libreoffice in/spreadsheet-opendoc-template-flat-xml.fods
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-opendoc-template-flat-xml.fods
+in/spreadsheet-open-office-xml.xlsx: Zip archive data, at least v2.0 to extract
+8ad7426a7e86432a28a5f69bcb6dc1f1  in/spreadsheet-open-office-xml.xlsx
+LAUNCH libreoffice in/spreadsheet-open-office-xml.xlsx
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-open-office-xml.xlsx
+in/spreadsheet-sylk.slk: ASCII text
+95b9ba7aa56a51bb21cbf91b75f4fa59  in/spreadsheet-sylk.slk
+LAUNCH libreoffice in/spreadsheet-sylk.slk
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-sylk.slk
+in/spreadsheet-unified-office-format.uos: XML document text
+20c0a83a408dba34fdbe0ae12af04ad2  in/spreadsheet-unified-office-format.uos
+LAUNCH libreoffice in/spreadsheet-unified-office-format.uos
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-unified-office-format.uos

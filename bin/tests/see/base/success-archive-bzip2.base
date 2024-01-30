@@ -1,0 +1,5 @@
+in/archive-bzip2.txt.bz2: bzip2 compressed data, block size = 900k
+d5be14d47a6b63dac523edffadb02d89  in/archive-bzip2.txt.bz2
+PIPE less
+in/archive-bzip2.txt.bz2 contents:
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/archive-bzip2.txt.bz2

@@ -26,10 +26,15 @@ ERROR_STOP=0
 function filter {
 	local file
 	file="$1"
+	# Filter a ls -al directory listing to ignore file size and date chagnes
 	# me me 24 Jan 30 13:13
+	# me me 64044 Jul 23  2016
 	# /tmp/favicon.ico.b1SMZn.ppm
+	# strip trailing whitespace on lines for git commit
 	perl -i -pne '
-		s{me\s+me.+?(\d+:\d+)}{me me DATE HH:MM}xms;
+		s{\s*\z}{\n}xms;
+		s{me\s+me\s+\d+.+?(\d+:\d+)}{me me NNNNN DATE HH:MM}xms;
+		s{me\s+me\s+\d+.+?([a-z]{3}.+?\d{4})}{me me NNNNN DATE HH:MM}xmsi;
 		s{(/tmp/.+?)\.[^.]+\.(ppm)}{$1.XXXXXX.$2}xms;
 	' $file
 }
@@ -399,7 +404,7 @@ fi
 
 echo TEST $CMD successful audio
 TEST=success-audio
-SNDS=`ls ../../sounds/*.* | grep -vE '\.txt|\.sh' | sort`
+SNDS=`ls ../../template/snd/*.* ../../sounds/*.* | grep -vE '\.txt|\.sh' | sort`
 
 #echo SNDS=$SNDS
 

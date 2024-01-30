@@ -246,7 +246,7 @@ function see_audio {
 	file="$1"
 	mime=`file --brief "$file"`
 
-	if echo $mime | grep -E 'video|movie|audio|Microsoft ASF|MPEG' > /dev/null; then
+	if echo $mime | grep -iE 'video|movie|audio|Microsoft ASF|MPEG|Dolby Digital stream' > /dev/null; then
 		# DONT play sound files, it could be noisy for others, unless
 		# ENV var is set SEE_AUDIO=1
 		if [ ! -z "$SEE_AUDIO" ]; then

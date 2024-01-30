@@ -1,0 +1,5 @@
+in/archive.cpio: cpio archive
+8af6d54f1848db1f7bcb2ed918bafe11  in/archive.cpio
+in/archive.cpio contents:
+text.txt
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/archive.cpio

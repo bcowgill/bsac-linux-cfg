@@ -1,0 +1,4 @@
+in/debian-package.deb: Debian binary package (format 2.0)
+65599945c8de8d83c39bea129ec89f21  in/debian-package.deb
+LAUNCH less in/debian-package.deb
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/debian-package.deb

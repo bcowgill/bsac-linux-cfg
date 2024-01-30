@@ -1,0 +1,17 @@
+../../template/video/0001.avi: RIFF (little-endian) data, AVI, 160 x 120, video: Cinepak, audio: uncompressed PCM (mono, 22050 Hz)
+e49161d70905342b15d8493bcc253750  ../../template/video/0001.avi
+LAUNCH ls-meta.sh ../../template/video/0001.avi
+WARN: Will not play an audio/video file unless SEE_AUDIO environment variable is set.
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/video/0001.avi
+../../template/video/CS_JIT_Animation.mp4: ISO Media, MPEG v4 system, version 1
+fe03ab51b763f32b25003e5206fd1bae  ../../template/video/CS_JIT_Animation.mp4
+LAUNCH ls-meta.sh ../../template/video/CS_JIT_Animation.mp4
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/video/CS_JIT_Animation.mp4
+../../template/video/kite.asf: Microsoft ASF
+8ed8a8e38797bf038c39a39e02f3ae23  ../../template/video/kite.asf
+LAUNCH ls-meta.sh ../../template/video/kite.asf
+-rwxrwxr-x 1 me me NNNNN DATE HH:MM ../../template/video/kite.asf
+../../template/video/standards.mov: Apple QuickTime movie (fast start)
+d988c398d1aeab3b2ce66c3a3198da0d  ../../template/video/standards.mov
+LAUNCH ls-meta.sh ../../template/video/standards.mov
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM ../../template/video/standards.mov

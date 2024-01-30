@@ -1,0 +1,4 @@
+in/csv.csv: ASCII text
+5c1f0f0a513e6b65de13116e977d8800  in/csv.csv
+LAUNCH libreoffice in/csv.csv
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/csv.csv

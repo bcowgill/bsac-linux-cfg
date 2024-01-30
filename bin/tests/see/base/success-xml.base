@@ -1,0 +1,4 @@
+in/xml.xml: XML document text
+ee3a9d61b47227907bca3447725dd206  in/xml.xml
+LAUNCH browser.sh in/xml.xml
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/xml.xml

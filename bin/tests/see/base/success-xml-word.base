@@ -1,0 +1,5 @@
+in/document-word-2003-xml.xml: XML document text
+681187c04836b9c3c605c78e4339a279  in/document-word-2003-xml.xml
+XML: word.document => docx
+LAUNCH libreoffice in/document-word-2003-xml.xml
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-word-2003-xml.xml

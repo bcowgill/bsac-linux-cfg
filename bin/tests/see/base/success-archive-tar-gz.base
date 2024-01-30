@@ -1,0 +1,4 @@
+in/archive.tar.gz: gzip compressed data, from Unix, last modified: Tue Jan 30 15:34:00 2024
+0ef9759da7797b047a87cdfcf4184d07  in/archive.tar.gz
+LAUNCH less in/archive.tar.gz
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/archive.tar.gz

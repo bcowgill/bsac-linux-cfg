@@ -1,0 +1,4 @@
+in/archive-gz.txt.gz: gzip compressed data, was "archive-gz.txt", from Unix, last modified: Tue Jan 30 15:32:41 2024
+d24fd7eba714c6aac18d7fb222bfff89  in/archive-gz.txt.gz
+LAUNCH less in/archive-gz.txt.gz
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/archive-gz.txt.gz

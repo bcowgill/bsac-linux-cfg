@@ -40,3 +40,4 @@ Show current directory listing
 Show metadata and actually play a sound and video file
 
   SEE_AUDIO=1 see.sh sound.wav video.mov
+

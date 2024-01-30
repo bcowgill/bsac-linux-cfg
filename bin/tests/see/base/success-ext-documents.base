@@ -1,0 +1,45 @@
+in/document-odf.odt: OpenDocument Text
+93fb80be59d9894e2c6322044bdb7853  in/document-odf.odt
+LAUNCH libreoffice in/document-odf.odt
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-odf.odt
+in/document-opendoc-template-flat-xml.fodt: XML document text
+1a259e0022887b58d217e415f8854ae8  in/document-opendoc-template-flat-xml.fodt
+LAUNCH libreoffice in/document-opendoc-template-flat-xml.fodt
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-opendoc-template-flat-xml.fodt
+in/document-open-office-xml.docx: Zip archive data, at least v2.0 to extract
+2b90227c1131f292c9d7540eb468b4c0  in/document-open-office-xml.docx
+LAUNCH libreoffice in/document-open-office-xml.docx
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-open-office-xml.docx
+in/document.pdf: PDF document, version 1.4
+ce0503e5c9696b1c0a8bc266a0ecf327  in/document.pdf
+LAUNCH ls-meta.sh in/document.pdf
+LAUNCH see in/document.pdf
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document.pdf
+in/document.rtf: Rich Text Format data, version 1, ANSI
+32a42e31318c2be56f2894883c9f274e  in/document.rtf
+LAUNCH libreoffice in/document.rtf
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document.rtf
+in/document-template-odf.ott: OpenDocument Text Template
+ac67a34574938eb92d05ebf152ffc3bc  in/document-template-odf.ott
+LAUNCH libreoffice in/document-template-odf.ott
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-template-odf.ott
+in/document-unified-office-format.uot: XML document text
+2c7656659f402b2309230afc20b99540  in/document-unified-office-format.uot
+LAUNCH libreoffice in/document-unified-office-format.uot
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-unified-office-format.uot
+in/document-word-2007-2013-xml.docx: Zip archive data, at least v2.0 to extract
+22e1b069052318f770dd69a3155ea177  in/document-word-2007-2013-xml.docx
+LAUNCH libreoffice in/document-word-2007-2013-xml.docx
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-word-2007-2013-xml.docx
+in/document-word-97-2000-xp-2003.doc: Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
+6c194655f069c3c7803794b55ad5cd04  in/document-word-97-2000-xp-2003.doc
+LAUNCH libreoffice in/document-word-97-2000-xp-2003.doc
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-word-97-2000-xp-2003.doc
+in/document-word-template-97-2000-xp-2003.dot: Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
+41124b30bf1af7e50cd909509988f7ea  in/document-word-template-97-2000-xp-2003.dot
+LAUNCH libreoffice in/document-word-template-97-2000-xp-2003.dot
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-word-template-97-2000-xp-2003.dot
+in/document-writer.html: HTML document, ASCII text
+e04c86ce0495369b601a1ba22c110635  in/document-writer.html
+LAUNCH browser.sh in/document-writer.html
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-writer.html

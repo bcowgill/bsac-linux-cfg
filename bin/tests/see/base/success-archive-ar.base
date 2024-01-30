@@ -1,0 +1,5 @@
+in/archive.ar: current ar archive
+143f507eedb1e209dc8e137290d6c7fe  in/archive.ar
+in/archive.ar contents:
+text.txt
+-rw-rw-r-- 1 me me NNNNN DATE HH:MM in/archive.ar
