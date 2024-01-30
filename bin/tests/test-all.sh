@@ -9,6 +9,7 @@ testSuiteBegin lint-package-json "linter for package.json to lock dependencies"
 ./test-nodes.sh $PROVE
 popd > /dev/null
 
+testSuite see "view directory/file/documents using system default or configured programs" $PROVE
 testSuite assign-to-team "create an ad hoc team by roles and assign tasks to them" $PROVE
 testSuite filter-man "filter perldoc man page output for test plan comparisons" $PROVE
 testSuite template-perl-lite "lightweight perl template for simple file processing" $PROVE

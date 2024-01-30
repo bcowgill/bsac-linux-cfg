@@ -20,6 +20,13 @@ rm out/* > /dev/null 2>&1 || OK "output dir ready"
 # Do not terminate test plan if out/base comparison fails.
 ERROR_STOP=0
 
+# Filter an output file to remove changing text like dates, etc...
+function filter {
+	local file
+	file="$1"
+	perl -i -pne 's{DONOTFILTER\w+\s+\(\w+\)}{NAME (ROLE)}xms' $file
+}
+
 echo TEST $CMD command help
 TEST=command-help
 if [ 0 == "$SKIP" ]; then
@@ -49,7 +56,7 @@ else
 fi
 
 echo TEST $CMD command incompatible options
-TEST=command-invalid-options
+TEST=command-incompatible-options
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	EXPECT=1
@@ -84,6 +91,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

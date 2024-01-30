@@ -1,0 +1,4 @@
+in/text-21-lines.txt: ASCII text
+cc053a63fa6e3232a10d68c92866b4bc  in/text-21-lines.txt
+LAUNCH less in/text-21-lines.txt
+-rw-rw-r-- 1 me me DATE HH:MM in/text-21-lines.txt

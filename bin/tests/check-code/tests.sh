@@ -68,7 +68,7 @@ else
 fi
 
 echo TEST $CMD command incompatible options
-TEST=command-invalid-options
+TEST=command-incompatible-options
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	EXPECT=1

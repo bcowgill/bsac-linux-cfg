@@ -1,0 +1,4 @@
+0001.avi:             RIFF (little-endian) data, AVI, 160 x 120, video: Cinepak, audio: uncompressed PCM (mono, 22050 Hz)
+CS_JIT_Animation.mp4: ISO Media, MPEG v4 system, version 1
+kite.asf:             Microsoft ASF
+standards.mov:        Apple QuickTime movie (fast start)

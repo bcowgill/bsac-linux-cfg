@@ -1,0 +1,49 @@
+BatteryWarnings:                                    directory
+CallConnecting.wav:                                 RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+CallRingingIn.wav:                                  RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+Cat-Meowing.mp3:                                    MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Cat-Meowing.wav:                                    RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+ChatIncoming.wav:                                   RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+chime.wav:                                          RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+Clock_Strikes_Twelve-Clock_Man-1976178740.mp3:      MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Clock_Strikes_Twelve-Clock_Man-1976178740.wav:      RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+Cow-Moo.mp3:                                        MPEG ADTS, layer III, v1, 128 kbps, 32 kHz, JntStereo
+Cow-Moo.wav:                                        RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 32000 Hz
+critical-disk-space.mp3:                            Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+critical-disk-space-spoken1.mp3:                    Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+critical-disk-space-spoken2.mp3:                    Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+critical-disk-space-spoken3.mp3:                    Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+cuckoo-ringtone.mp3:                                Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v2,  64 kbps, 24 kHz, Monaural
+Dogbark.mp3:                                        Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v2, 128 kbps, 22.05 kHz, Monaural
+Dogbark.wav:                                        RIFF (little-endian) data, WAVE audio, Microsoft PCM, 8 bit, mono 22050 Hz
+Doorbell.mp3:                                       MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Doorbell.wav:                                       RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+Frog-Croaking.mp3:                                  Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+Frog-Croaking-SoundBible.com-1053984354.mp3:        MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Frog-Croaking-SoundBible.com-1053984354.wav:        RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+grandfather-clock-chime.mp3:                        Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+halloween-laugh.mp3:                                MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Horse-Neigh-Sound.mp3:                              MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Horse-Neigh-Sound.wav:                              RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+kitten.ogg:                                         Ogg data, Vorbis audio, stereo, 24000 Hz, ~77334 bps, created by: Xiph.Org libVorbis I (1.0.1)
+laser.wav:                                          RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 22050 Hz
+login.wav:                                          RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 22050 Hz
+multiple-cuckoo-sound.mp3:                          Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+Night_Sounds_-_Crickets-Lisa_Redfern-591005346.mp3: Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v1, 256 kbps, 44.1 kHz, Stereo
+Night_Sounds_-_Crickets-Lisa_Redfern-591005346.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+Noise.wav:                                          RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 48000 Hz
+Read.txt:                                           ASCII text, with CRLF line terminators
+red-alert.mp3:                                      Audio file with ID3 version 2.3.0, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Rooster-Crowing.mp3:                                MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Rooster-Crowing.wav:                                RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 11025 Hz
+single-cuckoo-sound.mp3:                            Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, Stereo
+SkypeLogin.wav:                                     RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 16000 Hz
+TestId3:                                            directory
+that_was_easy.wav:                                  RIFF (little-endian) data, WAVE audio, Microsoft PCM, 8 bit, mono 22050 Hz
+Tiger-Growling.mp3:                                 MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Tiger-Growling.wav:                                 RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+Tornado_Siren_II-Delilah-747233690.mp3:             MPEG ADTS, layer III, v1, 128 kbps, 44.1 kHz, JntStereo
+Tornado_Siren_II-Delilah-747233690.wav:             RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, stereo 44100 Hz
+volume_blip.wav:                                    RIFF (little-endian) data, WAVE audio, Microsoft PCM, 8 bit, mono 11127 Hz
+Woof.mp3:                                           Audio file with ID3 version 2.4.0, extended header, contains: MPEG ADTS, layer III, v2, 128 kbps, 22.05 kHz, Monaural
+Woof.wav:                                           RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 22050 Hz

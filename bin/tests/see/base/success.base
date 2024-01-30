@@ -1,0 +1,4 @@
+in/text.txt: ASCII text
+42b7472fd1d390367ace231d3c0c79bf  in/text.txt
+a text file of sorts...
+-rw-rw-r-- 1 me me DATE HH:MM in/text.txt

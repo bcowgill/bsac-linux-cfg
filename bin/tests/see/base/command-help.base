@@ -1,0 +1,42 @@
+
+see.sh [--help|--man|-?] path-to-view...
+
+This will examine something at the specified paths. Directories will be listed. File information will be shown and if possible the file will be viewed somehow.
+
+SEE_AUDIO     Environment variable must be set for an audio file to be played, otherwise only metadata will be shown.
+path-to-view  A directory or file to examine.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+Directories will show a directory listing with all file details.
+
+On windows, all other files will simply be viewed using the 'start' command.
+
+Individual compressed files will have their contents shown.
+
+Archive files will be viewed with less so you can inspect the files within them.
+
+Binary files will be dumped in hexadecimal format and any text strings within the file will be displayed.
+
+Media files like sounds, pictures and videos will have their metadata shown so you can see any tagging or comments on them as well as their sizes and resolution.
+
+Picture files will be viewed using the system configured viewer or 'echo LAUNCH feh'.
+
+Spreadsheet files will be viewed using the system configured viewer or 'echo LAUNCH libreoffice'.
+
+Documents will be viewed using the system configured viewer or 'echo LAUNCH libreoffice'.
+
+Audio files will only be played if the SEE_AUDIO environment variable is set.  Otherwise only metadata for the audio file will be shown.
+
+See also echo LAUNCH ls-meta.sh, echo LAUNCH browser.sh, echo LAUNCH see, echo LAUNCH less, echo LAUNCH feh, echo LAUNCH libreoffice, echo LAUNCH libreoffice
+
+Example:
+
+Show current directory listing
+
+ see.sh .
+
+Show metadata and actually play a sound and video file
+
+  SEE_AUDIO=1 see.sh sound.wav video.mov

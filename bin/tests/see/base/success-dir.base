@@ -1,0 +1,31 @@
+in/
+total 264
+drwxrwxr-x 2 me me DATE 14:02 .
+drwxrwxr-x 5 me me DATE 14:40 ..
+-rw-rw-r-- 1 me me DATE 12:28 csv.csv
+-rw-rw-r-- 1 me me DATE 13:19 document-docbook.xml
+-rw-rw-r-- 1 me me DATE 13:14 document-odf.odt
+-rw-rw-r-- 1 me me DATE 13:15 document-opendoc-template-flat-xml.fodt
+-rw-rw-r-- 1 me me DATE 13:21 document-open-office-xml.docx
+-rw-rw-r-- 1 me me DATE 13:22 document.pdf
+-rw-rw-r-- 1 me me DATE 13:20 document.rtf
+-rw-rw-r-- 1 me me DATE 13:14 document-template-odf.ott
+-rw-rw-r-- 1 me me DATE 13:16 document-unified-office-format.uot
+-rw-rw-r-- 1 me me DATE 13:18 document-word-2003-xml.xml
+-rw-rw-r-- 1 me me DATE 13:17 document-word-2007-2013-xml.docx
+-rw-rw-r-- 1 me me DATE 13:18 document-word-97-2000-xp-2003.doc
+-rw-rw-r-- 1 me me DATE 13:19 document-word-template-97-2000-xp-2003.dot
+-rw-rw-r-- 1 me me DATE 13:20 document-writer.html
+-rw-rw-r-- 1 me me DATE 12:34 spreadsheet-calc-html.html
+-rw-rw-r-- 1 me me DATE 12:33 spreadsheet-data-interchange-format.dif
+-rw-rw-r-- 1 me me DATE 12:31 spreadsheet-excel-2003-xml.xml
+-rw-rw-r-- 1 me me DATE 12:31 spreadsheet-excel-2007-2013-xml.xlsx
+-rw-rw-r-- 1 me me DATE 12:32 spreadsheet-excel-97-2000-xp-2003.xls
+-rw-rw-r-- 1 me me DATE 12:32 spreadsheet-excel-template-97-2000-xp-2003.xlt
+-rw-rw-r-- 1 me me DATE 12:29 spreadsheet-odf.ods
+-rw-rw-r-- 1 me me DATE 12:29 spreadsheet-odf-template.ots
+-rw-rw-r-- 1 me me DATE 12:30 spreadsheet-opendoc-template-flat-xml.fods
+-rw-rw-r-- 1 me me DATE 13:11 spreadsheet-open-office-xml.xlsx
+-rw-rw-r-- 1 me me DATE 13:11 spreadsheet-sylk.slk
+-rw-rw-r-- 1 me me DATE 12:30 spreadsheet-unified-office-format.uos
+-rw-rw-r-- 1 me me DATE 13:13 text.txt
