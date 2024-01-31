@@ -138,6 +138,8 @@ CUSTOM_PKG=""
 
 USE_ECLIPSE=""
 
+GPM=gpm
+
 USE_I3=1
 I3WM_CMD=i3
 I3BLOCKS=i3blocks
@@ -654,7 +656,7 @@ if [ "$HOSTNAME" == "akston" ]; then
 	"
 	UNINSTALL_PKGS="
 		maven
-		gradle
+		$GRADLE_PKG
 	"
 	UNINSTALL_NPM_GLOBAL_PKGS=""
 	#NODE_PKG=""
@@ -692,7 +694,8 @@ if [ "$COMPANY" == "wipro" ]; then
 	# GIT_PKG_AFTER=""
 	USE_I3=""
 	USE_KDE=""
-	USE_JAVA=1
+	USE_JAVA="" # wipro blocks/deletes java when installed!!
+	GPM="" # deprecated from homebrew
 	SKYPE_PKG=""
 	SLACK_PKG=""
 	CHARLES_PKG=""
@@ -749,16 +752,19 @@ if [ "$COMPANY" == "wipro" ]; then
 	WEBSTORM_ARCHIVE=""
 	VSLICK_ARCHIVE=""
 	MY_REPOS="perljs"
+	SHARED_MIME=2.4
+	LZO=2.10
 	# brew install --cask keycastr # show keys on screen as you type them...
 	# ranger is a vi style file manager -- used by qutebrowser
+	# REMOVED, due to no JAVA
+	#	groovy
 	CUSTOM_PKG="
 		yarn
-		/usr/local/Cellar/lzo/2.10/lib/liblzo2.dylib:lzo
+		/usr/local/Cellar/lzo/$LZO/lib/liblzo2.dylib:lzo
 		editorconfig
 		cf:cf-cli
-		groovy
 		ranger
-		/usr/local/Cellar/shared-mime-info/2.2/README.md:shared-mime-info
+		/usr/local/Cellar/shared-mime-info/$SHARED_MIME/README.md:shared-mime-info
 	"
 fi # wipro MACOS
 
@@ -902,7 +908,7 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		gnash
 		/usr/lib/gnash/libgnashplugin.so:browser-plugin-gnash
 		screen
-		gpm
+		$GPM
 		fbcat
 		convert:imagemagick
 		elinks
@@ -1105,6 +1111,8 @@ fi
 I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdotool xmousepos:xautomation feh gs:ghostscript"
 
 # disable commands for omitted packages
+
+[ -z "$USE_JAVA"          ] && MVN_PKG="" && GRADLE_PKG="" && GROOVY_HOME=""
 [ -z "$SVN_PKG"           ] && SVN_CMD=""
 [ -z "$SKYPE_PKG"         ] && SKYPE_CMD=""
 [ -z "$SLACK_PKG"         ] && SLACK_CMD="" && SLACK_DEPS=""
@@ -1152,7 +1160,7 @@ INSTALL_MACOSLINUX="
 	mc
 	multitail
 	jhead
-	gradle
+	$GRADLE_PKG
 	jq
 "
 
@@ -1268,7 +1276,7 @@ INSTALL_LIST="
 	perldoc:perl-doc
 	dot:graphviz
 	convert:imagemagick
-	gpm
+	$GPM
 	markdown
 "
 
@@ -1588,22 +1596,25 @@ which git && git --version
 if [ -z $MACOS ]; then
 	which apt-get && apt-get --version
 	which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
+	which groovy && groovy -version
 else
 	which brew && brew --version
 	which xcode-select && xcode-select -version
+	# All apps dependent on JAVA, on MACOS need to check versions here...
 	if [ -x /usr/libexec/java_home ]; then
 		if /usr/libexec/java_home 2>&1 | grep 'information on installing Java' > /dev/null ; then
 			echo MAYBE NOT OK `/usr/libexec/java_home 2>&1`
 		else
 			which java && java -version && [ -e $JAVA_JVM ] && ls $JAVA_JVM
+			which groovy && groovy -version
 		fi
 	fi
 fi
-which groovy && groovy -version
 #You should set GROOVY_HOME:
 #  export GROOVY_HOME=/usr/local/opt/groovy/libexec
 which perl && perl --version
 which python && python --version
+which python3 && python3 --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
@@ -1841,6 +1852,7 @@ BAIL_OUT init
 if [ ! -z $MACOS ]; then
 	cmd_exists curl
 	make_root_dir_exist $BREW_LINK_TARGET_ABS "brew needs this dir, fails to create it..."
+	# set -x  # like DEBUG=1
 	dir_linked_to $BREW_LINK_NAME $BREW_LINK_TARGET_ABS "brew needs this link" root
 
 	# MUSTDO add check for this:
