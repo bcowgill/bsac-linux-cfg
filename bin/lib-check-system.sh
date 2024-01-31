@@ -1477,6 +1477,7 @@ function always_install_npm_globals_from {
 	do
 		# split the cmd:pkg string into vars
 		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
+		echo npm global1: $cmd : $package
 		always_install_npm_global_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1496,6 +1497,7 @@ function force_install_npm_global_command_from {
 	if [ -z "$package" ]; then
 		package="$command"
 	fi
+	echo npm global2 force: $package
 	sudo npm install --force -g "$package"
 	cmd_exists "$command"
 }
@@ -1509,6 +1511,7 @@ function install_npm_global_commands_from {
 	do
 		# split the cmd:pkg string into vars
 		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
+		echo npm global3: $cmd : $package
 		install_npm_global_command_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
@@ -1529,6 +1532,7 @@ function force_install_npm_global_commands_from {
 	do
 		# split the cmd:pkg string into vars
 		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
+		echo npm global4 force: $cmd : $package
 		force_install_npm_global_command_from $cmd $package || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then

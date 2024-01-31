@@ -7,7 +7,7 @@
 # check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
 # tail -f ~/check.log | egrep 'You|YOU|MAYBE|BAIL|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
-
+# egrep 'You|YOU|MAYBE|BAIL|NOT OK' ~/check.log
 # Search for 'begin' for start of script
 
 # To set up a new computer you can simply download and unzip anywhere
@@ -319,7 +319,9 @@ PNPM_VER="1.41.23"
 PNPM_CMD=pnpm
 PNPM_NPM_PKG=pnpm
 
-NODE_VER="v0.12.9"
+NODE_V=0
+NODE_VERN=$NODE_V.12.9
+NODE_VER="v$NODE_VERN"  # v0.12.9
 #NODE="nodejs nodejs-legacy npm grunt grunt-init uglifyjs phantomjs $POSTGRES_NODE_PKG"
 NODE_CMD="nodejs"
 
@@ -611,7 +613,9 @@ if [ "$HOSTNAME" == "akston" ]; then
 	LINK_DOWNLOADS=1
 	GIT_VER=1.9.1
 	#GIT_VER=2.30.2
-	NODE_VER=v0.10.25
+	NODE_V=0
+	NODE_VERN=$NODE_V.10.25
+	NODE_VER="v$NODE_VERN"  # v0.10.25
 	USE_KDE=""
 	#I3WM_PKG=""
 	I3BLOCKS=""
@@ -720,14 +724,39 @@ if [ "$COMPANY" == "wipro" ]; then
 	MVN_VER="3.8.5"
 	GRADLE_PKG="gradle"
 	NODE_CMD=/usr/local/bin/node
-	N_VER=v8.2.0
-	N_VERS="lts latest stable 8.12.0 11.0.0"
-	# npm doesn't work with latest/stable version of node at this time
-	# NODE_VER="v16.15.0"
-	NODE_VER="v11.0.0"
-	NODE_BREW="node@8"
-	NODE_MOD=/usr/local/Cellar/node@8/8.12.0/lib/node_modules
-	NVM_VER="v0.39.1"
+	N_VER=v9.2.0
+	# 2024-01 npm doesn't work with latest/stable version of node at this time
+	# npm Supported releases of Node.js are the latest release of 6, 8, 9, 10, 11.
+	# n ls-remote --all | grep 11
+	# n ls-remote --all | head -1
+	# n exec 11.0.0 npm info npm
+	#NODE_VERN="21.6.1"  2024
+	#NODE_VERN="16.15.0"
+	#NODE_VERN="11.0.0"
+	NODE_V=21 # node@11, 14 no longer available from brew
+	NODE_VERN=$NODE_V.6.1
+	NODE_VER="v$NODE_VERN" # v21.6.1
+	NODE_BREW="node"
+	N_VERS="lts latest stable 8.12.0 11.0.0 $NODE_VERN"
+	NPM_VER=10.2.4
+	# NODE_MOD=/usr/local/Cellar/node/$NODE_VERN/libexec/lib/node_modules
+	NODE_MOD=/usr/local/lib/node_modules
+	NVM_VER="v0.39.7"
+	NVM_LTS_VER="v20.11.0"
+	NVM_LATEST_VER="v21.6.1"
+	# Find all version of node in use by nvmrc files
+	# cat `locate .nvmrc | grep -v node_modules` | sort | uniq
+	NVM_VERS="
+		v6.11.4
+		v8.6.0
+		v8.11.1
+		v11.0.0
+		v12.19.0
+		v15.12.0
+		v16.13.1
+		v17.9.1
+	"
+	PNPM_VER="8.15.1"
 	MONO_PKG=""
 	PHP_PKG=""
 	RUBY_PKG="ruby-build ruby rake"
@@ -756,7 +785,8 @@ if [ "$COMPANY" == "wipro" ]; then
 	LZO=2.10
 	# brew install --cask keycastr # show keys on screen as you type them...
 	# ranger is a vi style file manager -- used by qutebrowser
-	# REMOVED, due to no JAVA
+	# does ranger use shared-mime-info??
+	# REMOVED, due to no JAVA:
 	#	groovy
 	CUSTOM_PKG="
 		yarn
@@ -765,6 +795,10 @@ if [ "$COMPANY" == "wipro" ]; then
 		cf:cf-cli
 		ranger
 		/usr/local/Cellar/shared-mime-info/$SHARED_MIME/README.md:shared-mime-info
+	"
+	UNINSTALL_NPM_GLOBAL_PKGS="
+		yarn
+		jscs
 	"
 fi # wipro MACOS
 
@@ -780,7 +814,9 @@ if [ "$HOSTNAME" == "brent-Aspire-VN7-591G" ]; then
 	EMACS_VER=24.5
 	NVM_VER=""
 	N_VER="v2.1.7"
-	NODE_VER="v4.2.6"
+	NODE_V=4
+	NODE_VERN=$NODE_V.2.6
+	NODE_VER="v$NODE_VERN"  # v4.2.6
 	PHP_PKG=php7.0-cli
 	MY_REPOS=""
 	USE_KDE=""
@@ -849,7 +885,9 @@ if [ "$HOSTNAME" == "worksharexps-XPS-15-9530" ]; then
 	VPN_PKG=""
 	JAVA_VER=java-8-openjdk-amd64
 	# set FRESH_NPM=1 once if you update NODE_VER
-	NODE_VER="v6.9.2"
+	NODE_V=6
+	NODE_VERN=$NODE_V.9.2
+	NODE_VER="v$NODE_VERN"  # v6.9.2
 	NODE_CMD=node
 	NPM_GLOBAL_PKG=`echo $NPM_GLOBAL_PKG | perl -pne 's{\s+}{\n}xmsg' | egrep -v 'karma|babel'`
 	SURGE_NPM_PKG=""
@@ -938,10 +976,13 @@ if [ "$HOSTNAME" == "raspberrypi" ]; then
 		gimp
 	"
 	UNINSTALL_NPM_GLOBAL_PKGS="
+		yarn
 		jscs
 		yo
 	"
-	NODE_VER="v0.6.19"
+	NODE_V=0
+	NODE_VERN=$NODE_V.6.19
+	NODE_VER="v$NODE_VERN"  # v0.6.19
 	NODE_CMD="nodejs"
 	NODE2_PKG="no"
 	NODE_CUSTOM_PKG="no"
@@ -968,7 +1009,11 @@ set_env
 
 function set_node_env {
 echo ===================
-NODE_CMDS="$NODE_CMD npm"
+if [ -z "$MACOS" ]; then
+	NODE_CMDS="$NODE_CMD npm"
+else
+	NODE_CMDS="$NODE_CMD:$NODE_BREW npm"
+fi
 NODE_LIB=/usr/lib/$NODE_CMD
 NPM_LIB=/usr/local/lib/node_modules
 NODE_MOD=${NODE_MOD:-/usr/lib/node_modules}
@@ -981,67 +1026,67 @@ if [ ! -d "$NODE_MOD" ]; then
 fi
 
 if [ -z $MACOS ]; then
-NODE_PKG="
-	$NODE_CMDS
-	node:nodejs-legacy
-	/usr/share/doc/node-inherits/copyright:node-inherits
-"
-if [ "x$NODE2_PKG" == "xno" ]; then
-	NODE2_PKG=
-else
-	NODE2_PKG="
-		/usr/share/doc/node-debug/copyright:node-debug
-		$NODE_LIB/glob.js:node-glob
-		$NODE_LIB/mkdirp/index.js:node-mkdirp
-		$NODE_LIB/eyes.js:node-eyes
-		$NODE_LIB/rimraf/index.js:node-rimraf
+	NODE_PKG="
+		$NODE_CMDS
+		node:nodejs-legacy
+		/usr/share/doc/node-inherits/copyright:node-inherits
 	"
-fi
-if [ "x$NODE_CUSTOM_PKG" == "xno" ]; then
-	NODE_CUSTOM_PKG=
-else
-	NODE_CUSTOM_PKG="
-		$NODE_LIB/abbrev.js:node-abbrev
-		$NODE_LIB/async.js:node-async
-		$NODE_LIB/base64id.js:node-base64id
-		$NODE_LIB/bignumber.js:node-bignumber
-		$NODE_LIB/bytes/index.js:node-bytes
-		$NODE_LIB/chrono.js:node-chrono
-		$NODE_LIB/cli/index.js:node-cli
-		/usr/share/doc/node-colors/copyright:node-colors
-		/usr/share/doc/node-commander/copyright:node-commander
-		$NODE_LIB/contextify/index.js:node-contextify
-		$NODE_LIB/daemon/index.js:node-daemon
-		$NODE_LIB/dequeue/index.js:node-dequeue
-		/usr/share/doc/node-diff/copyright:node-diff
-		$NODE_LIB/dirty/index.js:node-dirty
-		$NODE_LIB/fstream/index.js:node-fstream
-		$NODE_LIB/get/index.js:node-get
-		$NODE_LIB/growl.js:node-growl
-		$NODE_LIB/ini.js:node-ini
-		$NODE_LIB/JSV/index.js:node-jsv
-		$NODE_LIB/keypress.js:node-keypress
-		$NODE_LIB/lockfile.js:node-lockfile
-		$NODE_LIB/minimatch.js:node-minimatch
-		$NODE_LIB/nopt.js:node-nopt
-		$NODE_LIB/once.js:node-once
-		/usr/share/doc/node-optimist/copyright:node-optimist
-		$NODE_LIB/osenv.js:node-osenv
-		$NODE_LIB/read.js:node-read
-		$NODE_LIB/readdirp/index.js:node-readdirp
-		$NODE_LIB/request/index.js:node-request
-		$NODE_LIB/retry/index.js:node-retry
-		$NODE_LIB/security.js:node-security
-		$NODE_LIB/semver/index.js:node-semver
-		$NODE_LIB/step.js:node-step
-		$NODE_LIB/tar/index.js:node-tar
-		$NODE_LIB/tinycolor.js:node-tinycolor
-		$NODE_LIB/traverse.js:node-traverse
-		$NODE_LIB/which.js:node-which
-		$NODE_LIB/wordwrap.js:node-wordwrap
-		/usr/share/doc/node-zipfile/copyright:node-zipfile
-	"
-fi
+	if [ "x$NODE2_PKG" == "xno" ]; then
+		NODE2_PKG=
+	else
+		NODE2_PKG="
+			/usr/share/doc/node-debug/copyright:node-debug
+			$NODE_LIB/glob.js:node-glob
+			$NODE_LIB/mkdirp/index.js:node-mkdirp
+			$NODE_LIB/eyes.js:node-eyes
+			$NODE_LIB/rimraf/index.js:node-rimraf
+		"
+	fi
+	if [ "x$NODE_CUSTOM_PKG" == "xno" ]; then
+		NODE_CUSTOM_PKG=
+	else
+		NODE_CUSTOM_PKG="
+			$NODE_LIB/abbrev.js:node-abbrev
+			$NODE_LIB/async.js:node-async
+			$NODE_LIB/base64id.js:node-base64id
+			$NODE_LIB/bignumber.js:node-bignumber
+			$NODE_LIB/bytes/index.js:node-bytes
+			$NODE_LIB/chrono.js:node-chrono
+			$NODE_LIB/cli/index.js:node-cli
+			/usr/share/doc/node-colors/copyright:node-colors
+			/usr/share/doc/node-commander/copyright:node-commander
+			$NODE_LIB/contextify/index.js:node-contextify
+			$NODE_LIB/daemon/index.js:node-daemon
+			$NODE_LIB/dequeue/index.js:node-dequeue
+			/usr/share/doc/node-diff/copyright:node-diff
+			$NODE_LIB/dirty/index.js:node-dirty
+			$NODE_LIB/fstream/index.js:node-fstream
+			$NODE_LIB/get/index.js:node-get
+			$NODE_LIB/growl.js:node-growl
+			$NODE_LIB/ini.js:node-ini
+			$NODE_LIB/JSV/index.js:node-jsv
+			$NODE_LIB/keypress.js:node-keypress
+			$NODE_LIB/lockfile.js:node-lockfile
+			$NODE_LIB/minimatch.js:node-minimatch
+			$NODE_LIB/nopt.js:node-nopt
+			$NODE_LIB/once.js:node-once
+			/usr/share/doc/node-optimist/copyright:node-optimist
+			$NODE_LIB/osenv.js:node-osenv
+			$NODE_LIB/read.js:node-read
+			$NODE_LIB/readdirp/index.js:node-readdirp
+			$NODE_LIB/request/index.js:node-request
+			$NODE_LIB/retry/index.js:node-retry
+			$NODE_LIB/security.js:node-security
+			$NODE_LIB/semver/index.js:node-semver
+			$NODE_LIB/step.js:node-step
+			$NODE_LIB/tar/index.js:node-tar
+			$NODE_LIB/tinycolor.js:node-tinycolor
+			$NODE_LIB/traverse.js:node-traverse
+			$NODE_LIB/which.js:node-which
+			$NODE_LIB/wordwrap.js:node-wordwrap
+			/usr/share/doc/node-zipfile/copyright:node-zipfile
+		"
+	fi
 else
 	# MACOS node
 NODE_PKG="
@@ -1064,6 +1109,9 @@ if [ ! -z $MACOS ]; then
 fi
 
 # node-inspector mostly not needed since node v6.3
+#	jscs not maintained
+#   tslint deprecated for eslint
+# alm is an IDE for typescript, claims to be the best.
 NPM_GLOBAL_PKG="
 	n
 	pnpm
@@ -1076,7 +1124,6 @@ NPM_GLOBAL_PKG="
 	jsdoc
 	jshint
 	eslint
-	jscs
 	flow:flow-bin
 	babel:babel-cli
 	lessc:less
@@ -1090,7 +1137,7 @@ NPM_GLOBAL_PKG="
 	express:express-generator
 	$NODE_MOD/node-notifier/README.md:node-notifier
 	ncu:npm-check-updates
-	tsc:typescript tslint typings tsfmt:typescript-formatter
+	tsc:typescript typings tsfmt:typescript-formatter
 	alm
 	create-react-app
 	$NPM_GLOBAL_LINUX_PKG
@@ -1131,7 +1178,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD="" && ROBO3T_ARCHIVE=""
 [ -z "$USE_PIDGIN"        ] && PIDGIN_CMD="" && PIDGIN_SKYPE_PKG=""
 [ -z "$DRUID_PKG"         ] && DRUID_PERL_MODULES="" && DRUID_PACKAGES=""
-[ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_PKG="" && NODE2_PKG="no" && NODE_CUSTOM_PKG="no" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
+[ -z "$NODE_VER"          ] && NODE_CMD="" && NODE_CMDS="" && NODE_PKG="" && NODE2_PKG="no" && NPM_VER="" && N_VER="" && NODE_CUSTOM_PKG="no" && NPM_GLOBAL_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$ATOM_PKG"          ] && ATOM_CMD="" && ATOM_APP="" && ATOM_APM=""
 [ -z "$PINTA_PKG"         ] && PINTA_CMD=""
 [ -z "$ELIXIR_PKG"        ] && ELIXIR_CMD="" && ELIXIR_CMDS=""
@@ -1474,6 +1521,10 @@ if [ -z "$CPAN_LIST" ]; then
 	echo MAYBE NOT OK cannot find cpanminus
 	CPAN_LIST=/dev/null
 fi
+if [ -f "$CPAN_LIST.$COMPANY" ]; then
+	CPAN_LIST="$CPAN_LIST.$COMPANY"
+fi
+echo CONFIG CPAN_LIS=$CPAN_LIST
 
 PERL_MODULES="
 	$PERL_MODULES
@@ -1496,7 +1547,7 @@ set_derived_env
 
 function pre_checks {
 	if [ -e "$VPN_CONFIG" ]; then
-		OK vpn config file already exists $VPN_CONFIG
+		OK "vpn config file already exists $VPN_CONFIG"
 		HAD_VPN_CONFIG=1
 	fi
 }
@@ -1515,6 +1566,11 @@ echo CONFIG PERL_MODULES=$PERL_MODULES
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
 echo CONFIG NPM_GLOBAL_PKG_LIST
+echo CONFIG NODE_VER=$NODE_VER
+echo CONFIG NPM_VER=$NPM_VER
+echo CONFIG PNPM_VER=$PNPM_VER
+echo CONFIG N_VER=$N_VER
+echo CONFIG NVM_VER=$NVM_VER
 
 #============================================================================
 # begin actual system checking
@@ -1618,16 +1674,34 @@ which python3 && python3 --version
 which ruby && ruby --version
 which node && node --version
 which nodejs && nodejs --version
-which n && n --version
-# && echo node lts version: `n --lts` && echo node stable version: `n --stable` && echo node latest version: `n --latest` && n
-which npm && (npm --version || echo seems there is no node...)
-which pnpm && (pnpm --version || echo seems there is no node...)
-which yarn && (yarn --version || echo seems there is no node...)
+which n && ( \
+	n --version \
+	&& n list \
+	&& echo node lts version: `n --lts` `n which lts` \
+	&& echo node stable version: `n --stable` \
+	&& echo node latest version: `n --latest` \
+)
+command -v nvm && (\
+	(nvm --version && nvm list) \
+	|| echo seems there is a node version issue... \
+)
+which npm && ( \
+	(npm --version && npm config list --global) \
+	|| echo seems there is a node version issue... \
+)
+which pnpm && ( \
+	(pnpm --version && pnpm store path) \
+	|| echo seems there is a node version issue... \
+)
+which yarn && ( \
+	(yarn --version && yarn config list) \
+	|| echo seems there is a node version issue... \
+)
+which tsc && (tsc -v || echo seems there is a node version issue...)
 which erl && erl -eval 'halt().'
 which elixir && elixir -v
 which php && php -v
 which composer && composer -v | head -7
-which tsc && tsc -v
 which atom && atom -v
 if [ ! -z $ATOM_APM ]; then
 	which apm && apm --no-color -version
@@ -1880,14 +1954,14 @@ if [ ! -z $MACOS ]; then
 	# xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance
 	cmd_exists xcode-select
 	if xcode-select -p; then
-		OK xcode-select command line tools are installed
+		OK "xcode-select command line tools are installed"
 	else
 		echo Trying to install xcode-select command line tools...
 		xcode-select --install
 		if xcode-select -p; then
-			OK xcode-select command line tools are installed
+			OK "xcode-select command line tools are installed"
 		else
-			NOT_OK YOUDO xcode-select command line tools failed to install... figure out how to do it manually...
+			NOT_OK "YOUDO xcode-select command line tools failed to install... figure out how to do it manually..."
 		fi 
 	fi 
 fi
@@ -2456,6 +2530,11 @@ fi
 if [ ! -z "$NODE_PKG" ]; then
 	if $NODE_CMD --version | grep $NODE_VER; then
 		OK "node command version correct"
+		if npm --version | grep $NPM_VER; then
+			OK "npm command version correct"
+		else
+			NOT_OK "npm command version [`npm --version`] incorrect, expected $NPM_VER"
+		fi
 	else
 		GOTVER=`$NODE_CMD --version`
 		NOT_OK "node command version incorrect. trying to update: $GOTVER to $NODE_VER $NODE_CMD"
@@ -2476,13 +2555,15 @@ if [ ! -z "$NODE_PKG" ]; then
 				brew unlink node
 				brew install $NODE_BREW
 				brew link $NODE_BREW
-				/usr/local/bin/node --version
+				$NODE_CMD --version
 			fi
 			GOTVER=`$NODE_CMD --version`
 			NOT_OK "node upgrade $GOT_VER to $NODE_VER using $NODE_BREW check if it worked."
 			exit 1
 		fi
 	fi
+
+	BAIL_OUT nodeup
 
 	if [ ! -z "$N_VER" ]; then
 		if which $N_CMD > /dev/null; then
@@ -2503,7 +2584,9 @@ if [ ! -z "$NODE_PKG" ]; then
 		done
 	fi
 
-	if [ ! -z $PNPN_VER ]; then
+	BAIL_OUT n
+
+	if [ ! -z $PNPM_VER ]; then
 		if $PNPM_CMD --version | grep $PNPM_VER; then
 			OK "pnpm command version correct"
 		else
@@ -2521,37 +2604,84 @@ if [ ! -z "$NODE_PKG" ]; then
 		fi
 	fi
 
+	BAIL_OUT pnpm
+
+	export PYTHON=`which python || which python3`
+	echo CONFIG PYTHON=$PYTHON
+	echo CONFIG FRESH_NPM=$FRESH_NPM
+	echo CONFIG UNINSTALL_NPM_GLOBAL_PKGS=$UNINSTALL_NPM_GLOBAL_PKGS
 	npm config set registry https://registry.npmjs.org/
 	echo $NPM_GLOBAL_PKG_LIST > npm-pkg.txt
 	if [ ! -z "$UNINSTALL_NPM_GLOBAL_PKGS" ]; then
 		uninstall_npm_global_packages "$UNINSTALL_NPM_GLOBAL_PKGS"
 	fi
 	FILTERED_LIST=`filter_packages "$NPM_GLOBAL_PKG_LIST" "$UNINSTALL_NPM_GLOBAL_PKGS"`
+	echo CONFIG FILTERED_LIST=$FILTERED_LIST
 	if [ ! -z "$FRESH_NPM" ]; then
 		always_install_npm_global_from npm
 		always_install_npm_globals_from "$FILTERED_LIST"
 	fi
+
+	BAIL_OUT freshnpm
+
 	install_npm_global_commands_from "$FILTERED_LIST"
 	dir_exists "$NODE_MOD" "global node_modules"
 	node_module_exists path "test that node module checking works"
 	is_npm_global_package_installed grunt "need grunt installed to go further."
 	if [ ! -z "$NVM_URL" ]; then
-		echo node version before nvm: `node --version`
-		NVM_INST="$DOWNLOAD/nvm/install.sh"
-		make_dir_exist "$DOWNLOAD/nvm" "install script for nvm"
-		install_file_from_url "$NVM_INST" nvm/install.sh "$NVM_URL"
-		file_exists "$NVM_CMD" "nvm environment startup installed" || (chmod +x $NVM_INST && bash -c "$NVM_INST" && echo "Start a new terminal to activate nvm")
-		set +e
-		command -v nvm || (NOT_OK "nvm function not installed will try loading it" \
-			&& export NVM_DIR && source "$NVM_CMD" install $NVM_LTS_VER --lts --reinstall-packages-from=system || echo "NOT OK MAYBE lets see if loading nvm worked. If not, you should start a new terminal and make sure the nvm command is present"; \
-			nvm ls && nvm ls-remote | tail)
-		set -e
-		echo MAYBE YOUDO manually: nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
-		echo MAYBE YOUDO manually: nvm install $NVM_LATEST_VER --reinstall-packages-from=system
-		dir_exists "$NVM_VER_DIR/$NVM_LTS_VER" "node long term stable version installed" || nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
-		dir_exists "$NVM_VER_DIR/$NVM_LATEST_VER" "node latest version installed" || nvm install $NVM_LATEST_VER --reinstall-packages-from=system
-		file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && echo "YOUDO manually issue command nvm use $NVM_LATEST_VER")
-		echo node version after nvm: `node --version`
+		if command -v nvm; then
+			OK "nvm command is loaded"
+		else
+			NOT_OK "nvm command is not loaded, will try to install and load."
+			echo node version before nvm: `node --version`
+			# set -x  # like DEBUG=1
+			# => Close and reopen your terminal to start using nvm or run the following to use it now:
+
+			# export NVM_DIR="$HOME/.nvm"
+			# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+			# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+			# Start a new terminal to activate nvm
+
+			NVM_INST="$DOWNLOAD/nvm/install.sh"
+			make_dir_exist "$DOWNLOAD/nvm" "install script for nvm"
+			install_file_from_url "$NVM_INST" nvm/install.sh "$NVM_URL"
+			file_exists "$NVM_CMD" "may install nvm environment startup" \
+				|| ( \
+					chmod +x $NVM_INST \
+					&& bash -c "$NVM_INST"
+				)
+			file_exists "$NVM_CMD" "nvm environment startup installed"
+			export NVM_DIR="$NVM_DIR"
+			[ -s "$NVM_CMD" ] && \. "$NVM_CMD"
+		fi
+		if command -v nvm; then
+			OK "nvm command is loaded"
+			if echo v`nvm --version` | grep $NVM_VER ; then
+				OK "nvm version is correct"
+			else
+				NOT_OK "nvm command version [`nvm --version`] incorrect, expected $NVM_VER MAYBE [rm -rf "$NVM_DIR" "$NVM_INST"] and try again..."
+			fi
+			# set -e
+			echo MAYBE YOUDO manually: nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
+			echo MAYBE YOUDO manually: nvm install $NVM_LATEST_VER --reinstall-packages-from=system
+			echo Find all version of node in use by nvmrc files:
+			echo "cat \`locate .nvmrc | grep -v node_modules | grep \$HOME\` | sort | uniq"
+
+			dir_exists "$NVM_VER_DIR/$NVM_LTS_VER" "node long term stable version installed" || nvm install $NVM_LTS_VER --lts --reinstall-packages-from=system
+			dir_exists "$NVM_VER_DIR/$NVM_LATEST_VER" "node latest version installed" || nvm install $NVM_LATEST_VER --reinstall-packages-from=system
+			for ver in $NVM_VERS; do
+				nvm install $ver
+			done
+			nvm use $NVM_LATEST_VER
+			echo LOCAL:
+			nvm ls && echo LATEST REMOTE: `nvm ls-remote | tail -1`
+			echo node version after nvm: `node --version`
+			file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && echo "YOUDO manually issue command nvm use $NVM_LATEST_VER")
+		else
+			NOT_OK "nvm command is not loaded..."
+		fi
+
+		BAIL_OUT nvm
 	fi
 else
 	OK "will not configure npm unless NODE_PKG is non-zero"
