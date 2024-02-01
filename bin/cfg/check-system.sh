@@ -1676,7 +1676,8 @@ which node && node --version
 which nodejs && nodejs --version
 which n && ( \
 	n --version \
-	&& n list \
+	&& echo "`n ls | wc -l` node versions available" \
+	&& n ls | tail \
 	&& echo node lts version: `n --lts` `n which lts` \
 	&& echo node stable version: `n --stable` \
 	&& echo node latest version: `n --latest` \
