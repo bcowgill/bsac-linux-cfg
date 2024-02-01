@@ -882,7 +882,7 @@ function brew_tap_from {
 }
 
 function brew_taps_from {
-	local list message package error
+	local list message error package
 	list="$1"
 	message="$2"
 	error=""
@@ -982,12 +982,19 @@ function cmd_or_app_exists {
 }
 
 function commands_exist {
-	local commands error
+	local commands error cmd_pkg cmd package
 	commands="$1"
 	error=""
-	for cmd in $commands
+	for cmd_pkg in $commands
 	do
-		cmd_exists "$cmd" || error="$error $cmd"
+		# split the cmd:pkg string into vars
+		split_colon $cmd_pkg; cmd="$SPLIT1"; package="$SPLIT2"
+		# echo "check: [$cmd_pkg] [$cmd] [$package]"
+		if [ ! -z "$package" ]; then
+			cmd="$package"
+		fi
+		# echo "check2: [$cmd_pkg] [$cmd] [$package]"
+		cmd_exists "$cmd" || error="$error $cmd_pkg"
 	done
 	if [ ! -z "$error" ]; then
 		NOT_OK "errors for commands_exist$error"
@@ -1033,7 +1040,7 @@ function install_command_from_packages {
 # Install a bunch of commands if possible
 # prefer using installs_from as it handles files and commands
 function install_commands {
-	local commands error
+	local commands error cmd
 	commands="$1"
 	error=""
 	for cmd in $commands
@@ -1056,7 +1063,7 @@ function install_commands {
 # cmd1:pkg1 cmd2:pkg2 ...
 # prefer to use installs_from as it handles both files and commands
 function install_commands_from {
-	local list message options cmd_pkg cmd package error
+	local list message options error cmd_pkg cmd package
 	list="$1"
 	message="$2"
 	options="$3"
@@ -1094,7 +1101,7 @@ function force_install_command_from {
 # Force install commands from specific package specified as input list with : separation
 # cmd1:pkg1 cmd2:pkg2 ...
 function force_install_commands_from {
-	local list message options cmd_pkg cmd package error
+	local list message options error cmd_pkg cmd package
 	list="$1"
 	message="$2"
 	options="$3"
@@ -1201,7 +1208,7 @@ function install_from {
 # Install commands/files from specific packages specified as input list with : separation
 # cmd1:pkg1 file2:pkg2 ...
 function installs_from {
-	local list message file_pkg file package error
+	local list message error file_pkg file package
 	list="$1"
 	message="$2"
 	error=""
@@ -1232,7 +1239,7 @@ function install_file_from {
 # Install files from specific packages specified as input list with : separation
 # file1:pkg1 file2:pkg2 ...
 function install_files_from {
-	local list message options file_pkg file package error
+	local list message options error file_pkg file package
 	list="$1"
 	message="$2"
 	options="$3"
@@ -1411,7 +1418,7 @@ function install_npm_command_from {
 
 # Install a bunch of commands with the node package manager
 function install_npm_commands_from {
-	local list cmd_pkg cmd package error
+	local list error cmd_pkg cmd package
 	list="$1"
 	error=""
 	for cmd_pkg in $list
@@ -1470,7 +1477,7 @@ function always_install_npm_global_from {
 
 # Always Install a bunch of global packages with the node package manager
 function always_install_npm_globals_from {
-	local list cmd_pkg cmd package error
+	local list error cmd_pkg cmd package
 	list="$1"
 	error=""
 	for cmd_pkg in $list
@@ -1504,7 +1511,7 @@ function force_install_npm_global_command_from {
 
 # Install a bunch of  global commands with the node package manager
 function install_npm_global_commands_from {
-	local list cmd_pkg cmd package error
+	local list error cmd_pkg cmd package
 	list="$1"
 	error=""
 	for cmd_pkg in $list
@@ -1525,7 +1532,7 @@ function install_npm_global_commands_from {
 
 # Force Install a bunch of  global commands with the node package manager
 function force_install_npm_global_commands_from {
-	local list cmd_pkg cmd package error
+	local list error cmd_pkg cmd package
 	list="$1"
 	error=""
 	for cmd_pkg in $list
@@ -1570,7 +1577,7 @@ function install_grunt_template_from {
 
 # Install a bunch of new project template for grunt system
 function install_grunt_templates_from {
-	local list tmp_pkg template package error
+	local list error tmp_pkg template package
 	list="$1"
 	error=""
 	for tmp_pkg in $list
@@ -1614,7 +1621,7 @@ function install_apm_module {
 }
 
 function install_apm_modules_from {
-	local list message package error
+	local list message error package
 	list="$1"
 	message="$2"
 	error=""
@@ -1665,7 +1672,7 @@ function perl_module_version_exists {
 
 # Check that a bunch of perl modules are available
 function perl_modules_exist {
-	local modules error
+	local modules error mod
 	modules="$1"
 	error=""
 	for mod in $modules
@@ -1683,7 +1690,7 @@ function perl_modules_exist {
 
 # Install as many perl modules as possible
 function install_perl_modules {
-	local modules error
+	local modules error mod
 	modules="$1"
 	error=""
 
@@ -1706,7 +1713,7 @@ function install_perl_modules {
 
 # Force to install a bunch of perl modules
 function force_install_perl_modules {
-	local modules error
+	local modules error mod
 	modules="$1"
 	error=""
 	for mod in $modules
@@ -1791,7 +1798,7 @@ function install_perl_project_dependencies {
 
 # Install multiple perl project dependencies
 function install_all_perl_project_dependencies {
-	local dirs error
+	local dirs error dir
 	dirs="$1"
 	error=""
 	for dir in $dirs
@@ -1862,7 +1869,7 @@ function build_perl_project_no_tests {
 
 # Build as many perl projects as possible
 function build_perl_projects {
-	local dirs error
+	local dirs error dir
 	dirs="$1"
 	error=""
 	for dir in $dirs
@@ -1882,7 +1889,7 @@ function build_perl_projects {
 
 # Build as many perl projects as possible without running tests
 function build_perl_projects_no_tests {
-	local dirs error
+	local dirs error dir
 	dirs="$1"
 	error=""
 	for dir in $dirs
@@ -2399,5 +2406,9 @@ function split_colon {
 	local one_two
 	one_two="$1"
 	# split the file:pkg string into vars
-	IFS=: read SPLIT1 SPLIT2 <<< $one_two
+	# echo "WHAT: [$one_two]"
+	# not working on mac!
+	# IFS=':' read SPLIT1 SPLIT2 <<< $one_two
+	SPLIT1=`echo "$one_two" | cut -d ':' -f 1`
+	SPLIT2=`echo "$one_two" | cut -d ':' -f 2`
 }

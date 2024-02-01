@@ -151,7 +151,8 @@ CHARLES_LICENSE="UNREGISTERED:xxxxxxxxxx"
 
 BREW_DOCS=https://brew.sh/
 BREW_URL=https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-BREW_LINK_NAME=/usr/local/share/zsh/site-functions/_brew
+ZSH_LOCAL=/usr/local/share/zsh
+BREW_LINK_NAME=$ZSH_LOCAL/site-functions/_brew
 BREW_LINK_TARGET=../../../Homebrew/completions/zsh/_brew
 BREW_LINK_TARGET_ABS=/usr/local/share/Homebrew/completions/zsh/_brew
 
@@ -170,7 +171,7 @@ KARABINER_URL=https://pqrs.org/osx/karabiner/files/$KARABINER_PKG
 
 # iTerm 2.app space is a problem so we create a symlink
 ITERM_CMD="iTerm2.app"
-ITERM_PKG=iTerm2-3_1_2.zip
+ITERM_PKG=iTerm2-3_4_23.zip
 ITERM_URL=https://iterm2.com/downloads/stable/$ITERM_PKG
 
 # http://download.virtualbox.org/virtualbox/5.0.14/virtualbox-5.0_5.0.14-105127~Ubuntu~trusty_amd64.deb
@@ -763,7 +764,6 @@ if [ "$COMPANY" == "wipro" ]; then
 	RUBY_GEMS="rake watchr"
 	RUBY_SASS_COMMANDS="ruby gem rake"
 	ATOM_APP=Atom.app
-	# MUSTDO re-enable this once apm fixed
 	ATOM_APM=""
 	ATOM_VER="1.60.0"
 	# Atom editor has reached end of life...
@@ -1682,7 +1682,7 @@ which n && ( \
 	&& echo node latest version: `n --latest` \
 )
 command -v nvm && (\
-	(nvm --version && nvm list) \
+	(nvm --version && nvm list && nvm unload) \
 	|| echo seems there is a node version issue... \
 )
 which npm && ( \
@@ -1925,14 +1925,27 @@ BAIL_OUT init
 
 if [ ! -z $MACOS ]; then
 	cmd_exists curl
-	make_root_dir_exist $BREW_LINK_TARGET_ABS "brew needs this dir, fails to create it..."
+	make_root_dir_exist $BREW_LINK_TARGET_ABS "brew zsh completions needs this dir, fails to create it..."
 	# set -x  # like DEBUG=1
-	dir_linked_to $BREW_LINK_NAME $BREW_LINK_TARGET_ABS "brew needs this link" root
+	ZSH_SITE="$ZSH_LOCAL/site-functions"
+	if ls -al "$ZSH_SITE/_brew" | grep /Homebrew/completions/zsh/_brew ; then
+		OK "zsh/site-functions/_brew is linked to Homebrew/completions/zsh dir"
+	else
+		dir_linked_to $BREW_LINK_NAME $BREW_LINK_TARGET_ABS "brew needs zsh/site-functions/_brew linked to Homebrew/completions/zsh dir" root
+	fi
 
-	# MUSTDO add check for this:
-	# brew advises this:
-	#sudo chown -R $LOGNAME /usr/local/share/zsh /usr/local/share/zsh/site-functions
-  	#chmod u+w /usr/local/share/zsh /usr/local/share/zsh/site-functions
+	if ls -al "$ZSH_LOCAL" | grep -i ${LOGNAME} | grep -E "^drwx" | grep -E ' \.$|site-functions' ; then
+		OK "zsh directory is owned correctly"
+	else
+		NOT_OK "MAYBE zsh directory is owned incorrectly, will fix it"
+		sudo chown -R $LOGNAME "$ZSH_LOCAL"
+  		chmod u+w "$ZSH_LOCAL" "$ZSH_SITE"
+		if ls -al "$ZSH_LOCAL" | grep -i ${LOGNAME} | grep -E "^drwx" | grep -E ' \.$|site-functions' ; then
+			OK "zsh directory is now owned correctly"
+		else
+			NOT_OK "YOUDO zsh directory is still owned incorrectly, you may have to fix it."
+		fi
+	fi
 
 	cmd_exists brew > /dev/null || ( echo want to install homebrew [$BREW_DOCS]; /bin/bash -c "$(curl -fsSL $BREW_URL)" )
 	cmd_exists brew
@@ -2630,7 +2643,7 @@ if [ ! -z "$NODE_PKG" ]; then
 	is_npm_global_package_installed grunt "need grunt installed to go further."
 	if [ ! -z "$NVM_URL" ]; then
 		if command -v nvm; then
-			OK "nvm command is loaded"
+			OK "nvm command is loaded, no need to install"
 		else
 			NOT_OK "nvm command is not loaded, will try to install and load."
 			echo node version before nvm: `node --version`
@@ -2655,7 +2668,7 @@ if [ ! -z "$NODE_PKG" ]; then
 			[ -s "$NVM_CMD" ] && \. "$NVM_CMD"
 		fi
 		if command -v nvm; then
-			OK "nvm command is loaded"
+			OK "nvm command is loaded, will check versions"
 			if echo v`nvm --version` | grep $NVM_VER ; then
 				OK "nvm version is correct"
 			else
@@ -2677,10 +2690,11 @@ if [ ! -z "$NODE_PKG" ]; then
 			nvm ls && echo LATEST REMOTE: `nvm ls-remote | tail -1`
 			echo node version after nvm: `node --version`
 			file_exists "$HOME/.nvmrc" "nvm version configuration" || (echo "$NVM_LATEST_VER" > "$HOME/.nvmrc" && echo "YOUDO manually issue command nvm use $NVM_LATEST_VER")
+			# and now, unload the nvm command from shell
+			nvm unload
 		else
 			NOT_OK "nvm command is not loaded..."
 		fi
-
 		BAIL_OUT nvm
 	fi
 else
@@ -2702,7 +2716,13 @@ if [ ! -z "$DROPBOX_URL" ]; then
 		fi
 	else
 		make_dir_exist workspace/dropbox-dist "dropbox distribution files"
-		file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" || (pushd workspace/dropbox-dist && wget -O - "$DROPBOX_URL" | tar xzf - && ./.dropbox-dist/dropboxd & popd)
+		file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd "dropbox installed" \
+			|| ( \
+			pushd workspace/dropbox-dist \
+				&& wget -O - "$DROPBOX_URL" \
+				| tar xzf - && ./.dropbox-dist/dropboxd & \
+			popd \
+		)
 		file_exists workspace/dropbox-dist/.dropbox-dist/dropboxd
 		if ps -ef --cols 256 | grep -v grep | grep dropbox-dist > /dev/null; then
 			OK "dropbox daemon is running"
@@ -2752,7 +2772,17 @@ fi
 
 if [ ! -z $MACOS ]; then
 	install_command_package_from_url "$ITERM_CMD" $ITERM_PKG $ITERM_URL "iTerm2 terminal program"
-	app_exists "$ITERM_CMD" "you must manually install downloaded iTerm2 dmg file and sudo -i ln -s 'iTerm 2.app' '/Applications/iTerm2.app'"
+	app_exists "$ITERM_CMD" "you must manually install downloaded iTerm2 dmg file and sudo -i ln -s 'iTerm 2.app' '/Applications/iTerm.app'"
+
+	# dsAttrTypeNative:shell: /bin/bash
+	if sudo dscl localhost -read /Local/Default/Users/$LOGNAME shell | grep /bin/bash ; then
+		OK "your current shell is set to bash"
+	else
+		# https://superuser.com/questions/379725/how-do-i-change-a-users-default-shell-in-osx
+		NOT_OK "your current shell is NOT bash, will change it"
+		# sudo dscl localhost -change /Local/Default/Users/$LOGNAME shell /bin/zsh /bin/bash
+		chsh -s /bin/bash
+	fi
 
 #	install_command_package_from_url $KARABINER_CMD $KARABINER_PKG $KARABINER_URL "Karabiner-Elements keyboard remapper program"
 #	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"
