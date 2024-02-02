@@ -661,7 +661,7 @@ function http_get {
 		wget --output-document="$output" "$url"
 	else
 		if which curl > /dev/null; then
-			curl --output "$output" "$url"
+			curl --location --fail --create-dirs --output "$output" "$url"
 		else
 			NOT_OK "command wget or curl do not exist, cannot fetch web resources"
 		fi

@@ -2,12 +2,15 @@
 # Check configuration to make sure things are ok and make them ok where possible
 # cd bin; nvm use
 # check-system.sh init 2>&1 | tee ~/check.log
+# check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # DEBUG=1 check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
-# check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
 # tail -f ~/check.log | egrep 'You|YOU|MAYBE|BAIL|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
+# GOAL=commands; echo $GOAL
+# clear; perl -e 'print "\n" x 50'; ./check-system.sh $GOAL 2>&1 | tee ~/check.log
 # egrep 'You|YOU|MAYBE|BAIL|NOT OK' ~/check.log
+
 # Search for 'begin' for start of script
 
 # To set up a new computer you can simply download and unzip anywhere
@@ -1924,6 +1927,22 @@ fi
 
 BAIL_OUT init
 
+# Do this early so vim works while setting up a new machine
+VIM_AUTOLOAD=~/.vim/autoload
+VIM_PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+if file_exists "$VIM_AUTOLOAD/plug.vim"; then
+	OK "vim plug has been installed"
+else
+	make_dir_exist "$VIM_AUTOLOAD" "vim autoload directory exists"
+	http_get $VIM_AUTOLOAD/plug.vim $VIM_PLUG_URL
+	#curl -fLo $VIM_AUTOLOAD/plug.vim --create-dirs $VIM_PLUG_URL
+	NOT_OK "MAYBE you need to manually run vim and execute :PlugInstall command once."
+	file_exists "$VIM_AUTOLOAD/plug.vim" "vim plug plugin manager"
+fi
+
+BAIL_OUT vim
+
 if [ ! -z $MACOS ]; then
 	cmd_exists curl
 	make_root_dir_exist $BREW_LINK_TARGET_ABS "brew zsh completions needs this dir, fails to create it..."
@@ -2930,18 +2949,6 @@ if [ ! -z "$VSLICK_ARCHIVE" ]; then
 	install_file_from_url_zip "$VSLICK_EXTRACTED" "$VSLICK_ARCHIVE.tar.gz" "$VSLICK_URL" "download visual slick edit installer"
 	cmd_exists $VSLICK_CMD "you need to manually install visual slick edit with vsinst command from $DOWNLOAD/$VSLICK_ARCHIVE dir"
 fi # VSLICK_ARCHIVE
-
-VIM_AUTOLOAD=~/.vim/autoload
-VIM_PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-if file_exists "$VIM_AUTOLOAD/plug.vim"; then
-	OK "vim plug has been installed"
-else
-	make_dir_exist "$VIM_AUTOLOAD" "vim autoload directory exists"
-	curl -fLo $VIM_AUTOLOAD/plug.vim --create-dirs $VIM_PLUG_URL
-	NOT_OK "MAYBE you need to manually run vim and execute :PlugInstall command once."
-	file_exists "$VIM_AUTOLOAD/plug.vim" "vim plug plugin manager"
-fi
 
 BAIL_OUT editors
 

@@ -13,6 +13,8 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+# before every prompt, write out unsaved history this makes your history available to all other bash shell sessions with the command history -n (read new lines from history file)
+export PROMPT_COMMAND='history -a'
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
