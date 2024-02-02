@@ -1624,7 +1624,13 @@ else
 	if [ -z $MACOS ]; then
 		dir_link_exists "/home/me" "$HOME" "need to alias home dir as /home/me"
 	else
-		NOT_OK "MAYBE cannot link /home/me on MACOS"
+		if [ "$COMPANY" == "wipro" ]; then
+			# set -x  # like DEBUG=1
+			# legacy symlinks may exist...
+			dir_link_exists "/Users/me" "$HOME" "need to alias home dir as /Users/me"
+			dir_link_exists "/Users/bcowgill" "$HOME" "need to alias home dir as /Users/bcowgill"
+			# pushd /Users/ && sudo ln -s $LOGNAME bcowgill && sudo ln -s $LOGNAME me ; popd
+		fi
 	fi
 fi
 
@@ -1926,6 +1932,8 @@ if [ ! -z "$BIG_DATA" ]; then
 fi
 
 BAIL_OUT init
+
+#if false; then # BIG JUMP forward
 
 # Do this early so vim works while setting up a new machine
 VIM_AUTOLOAD=~/.vim/autoload
@@ -2808,6 +2816,8 @@ if [ ! -z $MACOS ]; then
 #	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"
 fi
 
+#fi # BIG JUMP
+
 commands_exist "$COMMANDS"
 BAIL_OUT commands
 
@@ -2822,8 +2832,21 @@ crontab_has_command "CRITICAL"
 crontab_has_command "check-disk-space.sh" "* * * * * \$HOME/bin/check-disk-space.sh 95 CRITICAL 2> /dev/null > /dev/null
 " "crontab warn about low disk space"
 crontab_has_command "check-disk-space.sh"
-#15 20,22 * * 1-5           $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
-#15 8,13,20 * * 6-7         $HOME/bin/ezbackup.sh  > /tmp/$LOGNAME/crontab-ezbackup.log 2>&1
+if [ "$COMPANY" == "wipro" ]; then
+	crontab_has_command "ezbackup.sh" "25 11 * * * \$HOME/bin/ezbackup.sh > /tmp/\$LOGNAME/crontab-ezbackup.log 2>&1" "crontab to backup the system"
+else
+	if `crontab -l | grep -v '#' | grep 'ezbackup.sh' | wc -l` == "2"; then
+		OK "ezbackup.sh is in the crontab twice"
+	else
+		crontab_has_command "ezbackup.shNOT" "15 20,22 * * 1-5           \$HOME/bin/ezbackup.sh  > /tmp/\$LOGNAME/crontab-ezbackup.log 2>&1" "crontab to backup the system on weekdays"
+		crontab_has_command "ezbackup.shNOT" "15 8,13,20 * * 6-7         \$HOME/bin/ezbackup.sh  > /tmp/\$LOGNAME/crontab-ezbackup.log 2>&1" "crontab to backup the system on the weekend"
+		if `crontab -l | grep -v '#' | grep 'ezbackup.sh' | wc -l` == "2"; then
+			OK "ezbackup.sh is in the crontab twice"
+		else
+			NOT_OK "MAYBE ezbackup.sh is not in the crontab twice. may need manual fixing."
+		fi
+	fi
+fi
 crontab_has_command "ezbackup.sh"
 crontab_has_command "track-battery.pl" "* * * * * \$HOME/bin/track-battery.pl > /tmp/\$LOGNAME/crontab-track-battery.log 2>&1" "crontab warn about battery drain"
 crontab_has_command "track-battery.pl"
