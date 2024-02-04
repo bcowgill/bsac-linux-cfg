@@ -87,10 +87,16 @@ function NOT_OK {
 
 # Show a cross-platform notification message if possible
 function mynotify {
-	local title message
+	local title message TMP
 	title="$2"
 	message="$1"
-	which osascript > /dev/null && osascript -e "display notification \"$message\" with title \"$title\""
+	
+	# MACOS
+	# bash-3.2$ osascript -e 'display notification "NOT OK 131 file missing text: "check-iniline/.gitconfig" "gui/fontui = -family LucidaSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" [git gui UI font Edit / Options]" with title "" '
+	# 52:58: syntax error: A identifier can’t go after this “"”. (-2740)
+	# bash-3.2$ osascript -e 'display notification "NOT OK 131 file missing text: check-iniline/.gitconfig gui/fontui = -family LucidaSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0 [git gui UI font Edit / Options]" with title "" '
+	# So we strip double quotes from the vars before using them.
+	which osascript > /dev/null && osascript -e "display notification \"`echo $message | tr -d '"'`\" with title \"`echo $title | tr -d '"'`\" "
 	which notify > /dev/null && notify -t "$title" -m "$message"
 	if which notify-send > /dev/null ; then
 		if [ -z "$title" ]; then

@@ -695,7 +695,7 @@ fi
 if [ "$COMPANY" == "wipro" ]; then
 	# Change settings for wipro MACOS workstation
 	EMAIL=brent.cowgill@wipro.com
-	BIG_DATA=
+	BIG_DATA=/Users/Shared/data
 	MACOS=1
 	UBUNTU=13.6.3
 	GIT_VER=2.39.3
@@ -1933,7 +1933,7 @@ fi
 
 BAIL_OUT init
 
-#if false; then # BIG JUMP forward
+# if false; then # BIG JUMP forward
 
 # Do this early so vim works while setting up a new machine
 VIM_AUTOLOAD=~/.vim/autoload
@@ -2816,8 +2816,6 @@ if [ ! -z $MACOS ]; then
 #	app_exists Karabiner-Elements.app "you must manually install downloaded Karabiner dmg file"
 fi
 
-#fi # BIG JUMP
-
 commands_exist "$COMMANDS"
 BAIL_OUT commands
 
@@ -3120,6 +3118,8 @@ maybe_file_has_text $FILE "ProFontWindows 18"
 maybe_file_has_text $FILE "bgcolor=#000000000000"
 maybe_file_has_text $FILE "fgcolor=#fffffcee0000"
 
+# fi # BIG JUMP
+
 # git config gui Font
 FILE=".gitconfig"
 git config --global gui.fontdiff "-family ProFontWindows -size 18 -weight normal -slant roman -underline 0 -overstrike 0"
@@ -3127,6 +3127,7 @@ ini_file_has_text "$FILE" "gui/fontdiff = -family ProFontWindows -size 18 -weigh
 if [ -z $MACOS ]; then
 	ini_file_has_text "$FILE" "gui/fontui = -family FreeSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
 else
+	# set -x  # like DEBUG=1
 	ini_file_has_text "$FILE" "gui/fontui = -family LucidaSans -size 14 -weight normal -slant roman -underline 0 -overstrike 0" "git gui UI font Edit / Options"
 fi
 ini_file_has_text "$FILE" "gui/tabsize = 4" "git gui tabsize Edit / Options"

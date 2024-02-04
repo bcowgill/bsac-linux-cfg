@@ -1,32 +1,56 @@
 Line Colors
 FG-RGB BG-RGB
 255255000 000000000 Identical Lines
+ffff00.   000000
 255000000 064000000 Changes in File Diff Windows
+ff0000.   400000
 000255000 000064000 Matching Changes in File Merge Windows
+008000    004000
 000255255 000000064 Non-Matching Changes
+00ffff    000040
 255128128 064000000 Conflicts
+ff8000.   400000
 
 Intra-Line Colors
 128128128 Identical Content within Changes Lines
+808080
 135073061 064000000 Changes in File Diff Windows
+87493D.   400000
+
 098149136 000128000 Matching Changes in File Merge Windows
+629588    008000  
           000000064 Non-Matching Changes
+          000040
 135073061 072013000 Conflicts
+87493D    480D00
 
 Other Colors
           000000000 Window
 054054054 000000000 Lines Omitted from Analysis
+363636   
 030030030           EOLs Omitted from Analysis
+1E1E1E
 040040040 000000000 Voids
+282828
 098149136 000000000 Line Numbers
+629588
 255255255 Caret
+ffffff
 255255000 000000255 Selection
+ffff00.   0000ff
 
 Folder Colors
-210000000 000000000 Non-Equal Files
+210000000 000000000 Non-Equal Files (Different)
+d20000
 128128128 000000000 Equivalent Files
-255255255 000000000 Equal Files
+808080
+255255255 000000000 Equal Files (Identical)
+ffffff
 255255255 000000000 Folders
+Ffffff
 000000200 000000000 Peerless Files
+0000c8
 000000200 000000000 Peerless Folders
+0000c8
 255000000 000000000 Errors
+ff0000
