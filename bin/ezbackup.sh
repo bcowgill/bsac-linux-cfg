@@ -62,6 +62,7 @@ function usage {
 	echo " "
 	echo For partial backups to work you must specify an absolute or relative path for BK_DIR i.e. /path/to or ./path/to specifying using path/to will not work.
 	echo " "
+	echo "When the EXCLUDE value is set the tar command will exclude that specific directory from the backup. Use for MacOS to ignore the .Trash directory."
 	echo "Examples:"
 	echo " "
 	echo "  ezbackup.sh full"
