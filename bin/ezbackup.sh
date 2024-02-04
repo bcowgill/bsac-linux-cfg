@@ -42,7 +42,7 @@ function usage {
 	echo usage:
 	echo "$CMD [--debug] [--help] [check|status|full|partial|restore] [restore-pattern] [source-dir] [backup-dir] [full-backup-disk]"
 	echo " "
-	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, BK_DIR, BK_DEV and BK_DISK environment variables.
+	echo Easy backup system. You provide a source-dir to backup and a backup-dir to store backups in.  Alternatively create a $CFG file which exports SOURCE, EXCLUDE, BK_DIR, BK_DEV and BK_DISK environment variables.
 	echo " "
 	echo --debug option must be first and turns on display of debugging information.
 	echo --help option shows this help information.
@@ -140,6 +140,9 @@ function pre_config {
 	[ -d $BK_DIR ] || mkdir -p "$BK_DIR"
 	[ -d $SOURCE ] || usage "$SOURCE: SOURCE directory does not exist."
 	[ -d $BK_DIR ] || usage "$BK_DIR: BK_DIR could not be created."
+	if [ ! -z "$EXCLUDE" ]; then
+		EXCLUDE="--exclude=\"$SOURCE/$EXCLUDE\""
+	fi
 
 	NUM_PARTIALS=${NUM_PARTIALS:-5}
 	FULL=$BK_DISK/ezbackup.tgz
@@ -157,6 +160,7 @@ function pre_config {
 	if [ $DEBUG == 1 ]; then
 		echo CFG=$CFG
 		echo SOURCE=$SOURCE
+		echo EXCLUDE=$EXCLUDE
 		echo BK_DIR=$BK_DIR
 		echo BK_DEV=$BK_DEV
 		echo BK_DISK=$BK_DISK
@@ -234,7 +238,7 @@ function full_backup {
 	[ -e "$FULL" ] && show_times && check_space
 	[ -e "$FULL" ] && mv "$FULL" "$FULL_SAVE"
 
-	touch "$TIMESTAMP" && touch "$TIMESTAMP2" && tar cvzf "$BACKUP" "$SOURCE/" > "$LOG" 2> "$ERRLOG"
+	touch "$TIMESTAMP" && touch "$TIMESTAMP2" && tar cvzf "$BACKUP" "$SOURCE/" $EXCLUDE > "$LOG" 2> "$ERRLOG"
 	touch "$FULL_END_TIMESTAMP" && touch "$FULL_END_TIMESTAMP2"
 	filter_logs
 
@@ -279,7 +283,7 @@ function partial_backup {
 	define_logs .$NUM
 	get_tar_newer "$NEWER"
 	NEWER=$RESULT
-	touch "$TIMESTAMP" && tar cvzf "$BACKUP" $NEWER "$SOURCE/" > "$LOG" 2> "$ERRLOG"
+	touch "$TIMESTAMP" && tar cvzf "$BACKUP" $NEWER "$SOURCE/" $EXCLUDE > "$LOG" 2> "$ERRLOG"
 	filter_logs
 }
 
