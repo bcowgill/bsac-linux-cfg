@@ -9,6 +9,7 @@ cf-cli
 cmatrix
 colordiff
 cpanminus
+deno
 dos2unix
 editorconfig
 fdupes

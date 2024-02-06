@@ -1,0 +1,6 @@
+#!/usr/bin/env deno run --allow-net
+// deno run --allow-net www.ts
+Deno.serve((_request)=>{
+  return new Response("Hello, world! It's " + new Date());
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZpbGU6Ly8vVXNlcnMvYnIzODgzMTMvZXhwZXJpbWVudC9kZW5vL3d3dy50cyJdLCJzb3VyY2VzQ29udGVudCI6WyIjIS91c3IvYmluL2VudiBkZW5vIHJ1biAtLWFsbG93LW5ldFxuLy8gZGVubyBydW4gLS1hbGxvdy1uZXQgd3d3LnRzXG5EZW5vLnNlcnZlKChfcmVxdWVzdDogUmVxdWVzdCkgPT4ge1xuXHRyZXR1cm4gbmV3IFJlc3BvbnNlKFwiSGVsbG8sIHdvcmxkISBJdCdzIFwiICsgbmV3IERhdGUoKSk7XG59KTtcbiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQ0EsOEJBQThCO0FBQzlCLEtBQUssS0FBSyxDQUFDLENBQUM7RUFDWCxPQUFPLElBQUksU0FBUyx3QkFBd0IsSUFBSTtBQUNqRCJ9

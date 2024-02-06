@@ -2,14 +2,14 @@
 # Check configuration to make sure things are ok and make them ok where possible
 # cd bin; nvm use
 # check-system.sh init 2>&1 | tee ~/check.log
+# GOAL=commands; echo $GOAL
+# clear; perl -e 'print "\n" x 50'; ./check-system.sh $GOAL 2>&1 | tee ~/check.log
+# egrep 'You|YOU|MAYBE|BAIL|NOT OK' ~/check.log
 # check-system.sh 2>&1 | tee ~/check.log ; alarm.sh
 # check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # DEBUG=1 check-system.sh 2>&1 | tee ~/check.log | egrep 'You|MAYBE|NOT OK' ; alarm.sh
 # tail -f ~/check.log | egrep 'You|YOU|MAYBE|BAIL|NOT OK'
 # check-system.sh 2>&1 | egrep -A 45 VERSIONS
-# GOAL=commands; echo $GOAL
-# clear; perl -e 'print "\n" x 50'; ./check-system.sh $GOAL 2>&1 | tee ~/check.log
-# egrep 'You|YOU|MAYBE|BAIL|NOT OK' ~/check.log
 
 # Search for 'begin' for start of script
 
@@ -184,6 +184,10 @@ VIRTUALBOX_VER=5.1
 VIRTUALBOX_PKG="unar gksu dkms"
 VIRTUALBOX_REL="raring"
 #VIRTUALBOX_PKG="$VIRTUALBOX_PKG $VIRTUALBOX_CMD:virtualbox-$VIRTUALBOX_VER"
+
+DENO_PKG=deno
+DENO_CMD=deno
+DENO_PATH=$HOME/.deno/bin
 
 MONO_PKG=mono-complete
 MONO_CMD=mono
@@ -1682,6 +1686,7 @@ which python && python --version
 which python3 && python3 --version
 which ruby && ruby --version
 which node && node --version
+which deno && deno --version
 which nodejs && nodejs --version
 which n && ( \
 	n --version \
@@ -2014,7 +2019,6 @@ BAIL_OUT brew
 install_file_from_url_zip $DOWNLOAD/MProFont/ProFontWindows.ttf MProFont.zip "http://tobiasjung.name/downloadfile.php?file=MProFont.zip" "ProFontWindows font package"
 install_file_from_url_zip $DOWNLOAD/ProFont-Windows-Bold/ProFont-Bold-01/ProFontWindows-Bold.ttf ProFont-Windows-Bold.zip "http://tobiasjung.name/downloadfile.php?file=ProFont-Windows-Bold.zip" "ProFontWindows bold font package"
 install_file_from_url_zip $DOWNLOAD/ProFontWinTweaked/ProFontWindows.ttf ProFontWinTweaked.zip "http://tobiasjung.name/downloadfile.php?file=ProFontWinTweaked.zip" "ProFontWindows tweaked font package"
-echo YOUDO You have to manually install ProFontWindows with your Font Manager from $DOWNLOAD/MProFont/ProFontWindows.ttf
 
 # alternative install: npm install git://github.com/adobe-fonts/source-code-pro.git#release
 # https://github.com/adobe-fonts/source-code-pro/ archive/1.017R.zip
@@ -2022,7 +2026,6 @@ SC_PRO_VERSION=1.017R
 SC_PRO_ARCHIVE=source-code-pro-$SC_PRO_VERSION
 install_file_from_url_zip $DOWNLOAD/$SC_PRO_ARCHIVE/SVG/SourceCodePro-Black.svg $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
 install_file_from_url_zip $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf $SC_PRO_ARCHIVE.zip "https://github.com/adobe-fonts/source-code-pro/archive/$SC_PRO_VERSION.zip" "Source Code pro font package"
-echo YOUDO You have to manually install SourceCodePro with your Font Manager from $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf
 
 FILE=.fonts/ProFontWindows.ttf
 make_dir_exist .fonts "locally installed fonts for X windows"
@@ -2033,40 +2036,39 @@ file_exists $FILE || cp $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/*.otf .fonts
 file_exists $FILE "SourceCodePro fonts still not installed"
 
 if [ -z $MACOS ]; then
+	cmd_exists fc-cache "font cache program needed"
+	cmd_exists fc-list "font cache list program needed"
+	fc-cache --verbose | grep 'new cache contents' || echo " "
+	if ( fc-list | grep ProFontWindows ) ; then
+		OK "ProFontWindows font is cached"
+	else
+		NOT_OK "ProFontWindows font is not cached"
+	fi
+	if ( fc-list | grep SourceCodePro ) ; then
+		OK "SourceCodePro font is cached"
+	else
+		NOT_OK "SourceCodePro font is not cached"
+	fi
 
-cmd_exists fc-cache "font cache program needed"
-cmd_exists fc-list "font cache list program needed"
-fc-cache --verbose | grep 'new cache contents' || echo " "
-if ( fc-list | grep ProFontWindows ) ; then
-	OK "ProFontWindows font is cached"
-else
-	NOT_OK "ProFontWindows font is not cached"
-fi
-if ( fc-list | grep SourceCodePro ) ; then
-	OK "SourceCodePro font is cached"
-else
-	NOT_OK "SourceCodePro font is not cached"
-fi
-
-if [ ! -f xlsfonts.lst  ]; then
-	locale -a > locale-a.lst
-	xset q > xset-q.lst
-	xlsfonts > xlsfonts.lst
-	fc-list > fc-list.lst
-fi
-
+	if [ ! -f xlsfonts.lst  ]; then
+		locale -a > locale-a.lst
+		xset q > xset-q.lst
+		xlsfonts > xlsfonts.lst
+		fc-list > fc-list.lst
+	fi
 else
 	# on MACOS Library/Fonts/ contains installed fonts, manually install
 	echo You may have to install these fonts manually by dragging from .fonts/ dir
-	file_exists Library/Fonts/ProFontWindows.ttf ”ProFontWindows font installed on MACOS”
+	file_exists Library/Fonts/ProFontWindows.ttf ”ProFontWindows font installed on MACOS” \
+		|| echo YOUDO You have to manually install ProFontWindows with your Font Manager from $DOWNLOAD/MProFont/ProFontWindows.ttf
 	file_exists Library/Fonts/SourceCodePro-Black.otf ”SourceCodePro Black font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-Bold.otf ”SourceCodePro Bold font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-ExtraLight.otf ”SourceCodePro ExtraLight font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-Light.otf ”SourceCodePro Light font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-Medium.otf ”SourceCodePro Medium font installed on MACOS”
 	file_exists Library/Fonts/SourceCodePro-Regular.otf ”SourceCodePro Regular font installed on MACOS”
-	file_exists Library/Fonts/SourceCodePro-Semibold.otf ”SourceCodePro Semibold font installed on MACOS”
-
+	file_exists Library/Fonts/SourceCodePro-Semibold.otf ”SourceCodePro Semibold font installed on MACOS” \
+		|| echo YOUDO You have to manually install SourceCodePro with your Font Manager from $DOWNLOAD/$SC_PRO_ARCHIVE/OTF/SourceCodePro-Black.otf
 fi # not MACOS
 
 # Get unicode fonts and examples
@@ -2543,6 +2545,13 @@ if [ ! -z "$NODE_PKG" ]; then
 fi
 
 BAIL_OUT node
+
+if [ ! -z "$DENO_PKG" ]; then
+	installs_from "$DENO_PKG"
+	cmd_exists $DENO_CMD "deno command should be on the path"
+fi
+
+BAIL_OUT deno
 
 [ ! -z "$USE_KDE" ] && [ ! -z "$KSCREENSAVER_PKG" ] && install_command_from_packages kslideshow.kss "$SCREENSAVER_PKG"
 [ ! -z "$SCREENSAVER_PKG" ] && install_command_from_packages xscreensaver "$SCREENSAVER_PKG"

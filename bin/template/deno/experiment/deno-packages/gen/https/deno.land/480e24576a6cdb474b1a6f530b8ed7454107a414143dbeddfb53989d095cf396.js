@@ -1,0 +1,22 @@
+// Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
+import { format } from "./_format.ts";
+import { AssertionError } from "./assertion_error.ts";
+/**
+ * Make an assertion that `actual` is less than or equal to `expected`.
+ * If not then throw.
+ *
+ * @example
+ * ```ts
+ * import { assertLessOrEqual } from "https://deno.land/std@$STD_VERSION/assert/assert_less_or_equal.ts";
+ *
+ * assertLessOrEqual(1, 2); // Doesn't throw
+ * assertLessOrEqual(1, 1); // Doesn't throw
+ * assertLessOrEqual(1, 0); // Throws
+ * ```
+ */ export function assertLessOrEqual(actual, expected, msg) {
+  if (actual <= expected) return;
+  const actualString = format(actual);
+  const expectedString = format(expected);
+  throw new AssertionError(msg ?? `Expect ${actualString} <= ${expectedString}`);
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImh0dHBzOi8vZGVuby5sYW5kL3N0ZEAwLjIxMS4wL2Fzc2VydC9hc3NlcnRfbGVzc19vcl9lcXVhbC50cyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBDb3B5cmlnaHQgMjAxOC0yMDI0IHRoZSBEZW5vIGF1dGhvcnMuIEFsbCByaWdodHMgcmVzZXJ2ZWQuIE1JVCBsaWNlbnNlLlxuaW1wb3J0IHsgZm9ybWF0IH0gZnJvbSBcIi4vX2Zvcm1hdC50c1wiO1xuaW1wb3J0IHsgQXNzZXJ0aW9uRXJyb3IgfSBmcm9tIFwiLi9hc3NlcnRpb25fZXJyb3IudHNcIjtcblxuLyoqXG4gKiBNYWtlIGFuIGFzc2VydGlvbiB0aGF0IGBhY3R1YWxgIGlzIGxlc3MgdGhhbiBvciBlcXVhbCB0byBgZXhwZWN0ZWRgLlxuICogSWYgbm90IHRoZW4gdGhyb3cuXG4gKlxuICogQGV4YW1wbGVcbiAqIGBgYHRzXG4gKiBpbXBvcnQgeyBhc3NlcnRMZXNzT3JFcXVhbCB9IGZyb20gXCJodHRwczovL2Rlbm8ubGFuZC9zdGRAJFNURF9WRVJTSU9OL2Fzc2VydC9hc3NlcnRfbGVzc19vcl9lcXVhbC50c1wiO1xuICpcbiAqIGFzc2VydExlc3NPckVxdWFsKDEsIDIpOyAvLyBEb2Vzbid0IHRocm93XG4gKiBhc3NlcnRMZXNzT3JFcXVhbCgxLCAxKTsgLy8gRG9lc24ndCB0aHJvd1xuICogYXNzZXJ0TGVzc09yRXF1YWwoMSwgMCk7IC8vIFRocm93c1xuICogYGBgXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiBhc3NlcnRMZXNzT3JFcXVhbDxUPihcbiAgYWN0dWFsOiBULFxuICBleHBlY3RlZDogVCxcbiAgbXNnPzogc3RyaW5nLFxuKTogdm9pZCB7XG4gIGlmIChhY3R1YWwgPD0gZXhwZWN0ZWQpIHJldHVybjtcblxuICBjb25zdCBhY3R1YWxTdHJpbmcgPSBmb3JtYXQoYWN0dWFsKTtcbiAgY29uc3QgZXhwZWN0ZWRTdHJpbmcgPSBmb3JtYXQoZXhwZWN0ZWQpO1xuICB0aHJvdyBuZXcgQXNzZXJ0aW9uRXJyb3IoXG4gICAgbXNnID8/IGBFeHBlY3QgJHthY3R1YWxTdHJpbmd9IDw9ICR7ZXhwZWN0ZWRTdHJpbmd9YCxcbiAgKTtcbn1cbiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwwRUFBMEU7QUFDMUUsU0FBUyxNQUFNLFFBQVEsZUFBZTtBQUN0QyxTQUFTLGNBQWMsUUFBUSx1QkFBdUI7QUFFdEQ7Ozs7Ozs7Ozs7OztDQVlDLEdBQ0QsT0FBTyxTQUFTLGtCQUNkLE1BQVMsRUFDVCxRQUFXLEVBQ1gsR0FBWTtFQUVaLElBQUksVUFBVSxVQUFVO0VBRXhCLE1BQU0sZUFBZSxPQUFPO0VBQzVCLE1BQU0saUJBQWlCLE9BQU87RUFDOUIsTUFBTSxJQUFJLGVBQ1IsT0FBTyxDQUFDLE9BQU8sRUFBRSxhQUFhLElBQUksRUFBRSxlQUFlLENBQUM7QUFFeEQifQ==

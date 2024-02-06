@@ -1,0 +1,72 @@
+{
+	"tasks": {
+		"doc": "deno doc *.ts *.js",
+		// server.js and person.test.ts files cannot be documented, causes a crash...
+		"doc:html": "deno doc --html --name=\"Documentation Experiments\" env.ts www.ts hello.ts Person.ts",
+		"lint:doc": "deno doc --lint *.ts *.js",
+		"run": "./env.ts; ./hello.ts",
+		"start": "./www.ts",
+		"start:node": "./server.js",
+		"check": "deno check *.ts *.js",
+		"check:all": "deno task check && deno fmt && deno lint && deno task lint:doc && deno task cover && deno task run",
+		"dev": "deno run --check --watch --allow-env --allow-sys --allow-read env.ts",
+		"debug": "deno run --inspect-brk --allow-env --allow-sys --allow-read env.ts",
+		"cover": "deno test --coverage && deno coverage && deno coverage --html",
+		"test": "deno test --check --watch"
+	},
+	"lint": {
+		"include": ["./"],
+		"exclude": [
+			".deno-cache/",
+			"docs/",
+			"coverage/",
+			"vendor/",
+			"node_modules/"
+		],
+		// "include": ["src/"],
+		// "exclude": ["src/testdata/", "data/fixtures/**/*.ts"],
+		"rules": {
+			"tags": ["recommended"],
+			"include": ["ban-untagged-todo"]
+			//"exclude": ["no-unused-vars"]
+		}
+	},
+	"fmt": {
+		"useTabs": true,
+		"lineWidth": 80,
+		"indentWidth": 4,
+		"semiColons": false,
+		"singleQuote": true,
+		"proseWrap": "preserve",
+		"include": ["./"],
+		"exclude": [
+			".deno-cache/",
+			"docs/",
+			"coverage/",
+			"vendor/",
+			"node_modules/"
+		]
+		// "include": ["src/"],
+		// "exclude": ["src/testdata/", "data/fixtures/**/*.ts"]
+	},
+	"test": {
+		"include": ["./"],
+		"exclude": [
+			".deno-cache/",
+			"docs/",
+			"coverage/",
+			"vendor/",
+			"node_modules/"
+		]
+		// "include": ["src/"],
+		// "exclude": ["src/testdata/", "data/fixtures/**/*.ts"]
+	},
+	"imports": {
+		// The dollar sign in front of "std" isn't special - it's an optional
+		// convention to show that $std is an alias set up in an import map
+		"$std/": "https://deno.land/std@0.211.0/",
+		"$lodash/noop": "npm:lodash/noop.js",
+		"$lodash": "npm:lodash@^4.17"
+	},
+	"nodeModulesDir": true
+}

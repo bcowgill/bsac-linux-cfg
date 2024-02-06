@@ -1,0 +1,20 @@
+// Copyright 2018-2024 the Deno authors. All rights reserved. MIT license.
+import { assertFalse } from "./assert_false.ts";
+/**
+ * Make an assertion that `obj` is not an instance of `type`.
+ * If so, then throw.
+ *
+ * @example
+ * ```ts
+ * import { assertNotInstanceOf } from "https://deno.land/std@$STD_VERSION/assert/assert_not_instance_of.ts";
+ *
+ * assertNotInstanceOf(new Date(), Number); // Doesn't throw
+ * assertNotInstanceOf(new Date(), Date); // Throws
+ * ```
+ */ export function assertNotInstanceOf(actual, // deno-lint-ignore no-explicit-any
+unexpectedType, msg) {
+  const msgSuffix = msg ? `: ${msg}` : ".";
+  msg = `Expected object to not be an instance of "${typeof unexpectedType}"${msgSuffix}`;
+  assertFalse(actual instanceof unexpectedType, msg);
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImh0dHBzOi8vZGVuby5sYW5kL3N0ZEAwLjIxMS4wL2Fzc2VydC9hc3NlcnRfbm90X2luc3RhbmNlX29mLnRzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIENvcHlyaWdodCAyMDE4LTIwMjQgdGhlIERlbm8gYXV0aG9ycy4gQWxsIHJpZ2h0cyByZXNlcnZlZC4gTUlUIGxpY2Vuc2UuXG5pbXBvcnQgeyBhc3NlcnRGYWxzZSB9IGZyb20gXCIuL2Fzc2VydF9mYWxzZS50c1wiO1xuXG4vKipcbiAqIE1ha2UgYW4gYXNzZXJ0aW9uIHRoYXQgYG9iamAgaXMgbm90IGFuIGluc3RhbmNlIG9mIGB0eXBlYC5cbiAqIElmIHNvLCB0aGVuIHRocm93LlxuICpcbiAqIEBleGFtcGxlXG4gKiBgYGB0c1xuICogaW1wb3J0IHsgYXNzZXJ0Tm90SW5zdGFuY2VPZiB9IGZyb20gXCJodHRwczovL2Rlbm8ubGFuZC9zdGRAJFNURF9WRVJTSU9OL2Fzc2VydC9hc3NlcnRfbm90X2luc3RhbmNlX29mLnRzXCI7XG4gKlxuICogYXNzZXJ0Tm90SW5zdGFuY2VPZihuZXcgRGF0ZSgpLCBOdW1iZXIpOyAvLyBEb2Vzbid0IHRocm93XG4gKiBhc3NlcnROb3RJbnN0YW5jZU9mKG5ldyBEYXRlKCksIERhdGUpOyAvLyBUaHJvd3NcbiAqIGBgYFxuICovXG5leHBvcnQgZnVuY3Rpb24gYXNzZXJ0Tm90SW5zdGFuY2VPZjxBLCBUPihcbiAgYWN0dWFsOiBBLFxuICAvLyBkZW5vLWxpbnQtaWdub3JlIG5vLWV4cGxpY2l0LWFueVxuICB1bmV4cGVjdGVkVHlwZTogbmV3ICguLi5hcmdzOiBhbnlbXSkgPT4gVCxcbiAgbXNnPzogc3RyaW5nLFxuKTogYXNzZXJ0cyBhY3R1YWwgaXMgRXhjbHVkZTxBLCBUPiB7XG4gIGNvbnN0IG1zZ1N1ZmZpeCA9IG1zZyA/IGA6ICR7bXNnfWAgOiBcIi5cIjtcbiAgbXNnID1cbiAgICBgRXhwZWN0ZWQgb2JqZWN0IHRvIG5vdCBiZSBhbiBpbnN0YW5jZSBvZiBcIiR7dHlwZW9mIHVuZXhwZWN0ZWRUeXBlfVwiJHttc2dTdWZmaXh9YDtcbiAgYXNzZXJ0RmFsc2UoYWN0dWFsIGluc3RhbmNlb2YgdW5leHBlY3RlZFR5cGUsIG1zZyk7XG59XG4iXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsMEVBQTBFO0FBQzFFLFNBQVMsV0FBVyxRQUFRLG9CQUFvQjtBQUVoRDs7Ozs7Ozs7Ozs7Q0FXQyxHQUNELE9BQU8sU0FBUyxvQkFDZCxNQUFTLEVBQ1QsbUNBQW1DO0FBQ25DLGNBQXlDLEVBQ3pDLEdBQVk7RUFFWixNQUFNLFlBQVksTUFBTSxDQUFDLEVBQUUsRUFBRSxJQUFJLENBQUMsR0FBRztFQUNyQyxNQUNFLENBQUMsMENBQTBDLEVBQUUsT0FBTyxlQUFlLENBQUMsRUFBRSxVQUFVLENBQUM7RUFDbkYsWUFBWSxrQkFBa0IsZ0JBQWdCO0FBQ2hEIn0=

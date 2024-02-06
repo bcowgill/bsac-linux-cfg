@@ -1,0 +1,9 @@
+export DENO_INSTALL="/Users/br388313/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Configure deno to use system certificate store.
+# https://medium.com/deno-the-complete-reference/3-ways-of-accepting-self-signed-certificates-in-deno-9c9286ab957
+export DENO_TLS_CA_STORE=system
+
+# Where to cache the downloaded deno packages for a given project
+export DENO_DIR=./.deno-cache
