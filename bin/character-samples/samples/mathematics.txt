@@ -1,90 +1,108 @@
 Unicode Characters Common to Mathematics:
 
-Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ Τ Υ Φ Χ Ψ Ω
-α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ ς σ τ υ φ χ ψ ω
-ᴦ ᴧ ᴨ ᴩ ᴪ
+TODO - GREP is marked on some items for some reason. see math-rep.pl
 
-❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ❿
-➀ ➁ ➂ ➃ ➄ ➅ ➆ ➇ ➈ ➉
-➊ ➋ ➌ ➍ ➎ ➏ ➐ ➑ ➒ ➓
-① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳
-⑴  ⑵  ⑶  ⑷  ⑸  ⑹  ⑺  ⑻  ⑼  ⑽  ⑾  ⑿  ⒀  ⒁  ⒂  ⒃  ⒄  ⒅  ⒆  ⒇
+ᣟ˙﮲・⋅ᐧ･·𐄁⸱․﮳                          DOT ABOVE RAISED MIDDLE LEADER OPERATOR WORD BELOW SEPARATOR
 
+⋅ × ÷ ∕ ⁄ ±                            DOT OPERATOR MULTIPLICATION DIVISION SLASH FRACTION SLASH PLUS OR MINUS
+＋～￢＜＝＞｜                         FULLWIDTH PLUS TILDE NOT LESS-THAN EQUAL GREATER-THAN VERTICAL LINE
+➗ ⟌                                    DIVISION HEAVY LONG
+≠ ≈ ≉ ≃ ≄ ≅ ≆ ≤ ≥                      NOT EQUAL TO ALMOST ASYMPTOTICALLY APPROXIMATELY LESS THAN GREATER THAN
+≝ ≟                                    EQUAL TO BY DEFINITION QUESTIONED
 
-½
-¼ ¾
-↉ ⅓ ⅔
-⅕ ⅖ ⅗ ⅘
-⅙ ⅚
-⅐
-⅛ ⅜ ⅝ ⅞
-⅑
-⅒
-⅟
-⁄ FRACTION SLASH
+√() ∛() ∜()                            SQUARE ROOT CUBE ROOT FOURTH ROOT
+[-b ± √(b² -4ac)]/2a                   QUADRATIC EQUATION
 
-% ﹪％ ٪
+⁄                                      / FRACTION SLASH
+∕                                      / DIVISION SLASH
+⅟                                      1/ FRACTION NUMERATOR ONE
+½                                      0.5 1/2 VULGAR FRACTION ONE HALF
+↉ ⅓ ⅔                                  0 0.333… 0.666… 0/3 1/3 2/3 VULGAR FRACTION ONE THIRD
+¼ ¾                                    0.25 0.75 1/4 3/4 VULGAR FRACTION ONE QUARTER FOURTH
+⅕ ⅖ ⅗ ⅘                                0.2 0.4 0.6 0.8 1/5 2/5 3/5 4/5 VULGAR FRACTION ONE FIFTH
+⅙ ⅚                                    0.1666… 0.8333… 1/6 5/6 VULGAR FRACTION ONE SIXTH
+⅐                                      0.(142857)… 1/7 VULGAR FRACTION ONE SEVENTH
+⅛ ⅜ ⅝ ⅞                                0.125 0.375 0.625 0.875 1/8 3/8 5/8 7/8 VULGAR FRACTION ONE EIGHTH
+⅑                                      0.1… 1/9 VULGAR FRACTION ONE NINTH
+⅒                                      0.1 1/10 VULGAR FRACTION ONE TENTH
+% ﹪％ ٪                               /100 PERCENT SIGN ARABIC SMALL FULLWIDTH
 
-xⁱⁿ
-xᵝᵞᵟᵠᵡ GREP
-x⁺⁻ ⁰¹²³⁴⁵⋅⁶⁷⁸⁹ ⁽⁾⁼ ˂ ˃ GREP
+° ℃  ℉                                 DEGREE SIGN CELSIUS FAHRENHEIT ANGLE TEMPERATURE
 
-Xₐₑₕᵢⱼₖₗₘ ₙₒₚᵣₛₜᵤᵥₓₔ
-Xᵦᵧᵨᵩᵪ
-V₊₋ ₀₁₂₃₄₅₆₇₈₉ ₍₎₌ ˱˲˿…
+£ ₤ 💷                                  CURRENCY MONEY POUND STERLING BANKNOTE
+€ 💶                                    CURRENCY MONEY EURO BANKNOTE
+¢ ⍧ ₵ ￠                               CURRENCY MONEY CENT
+$ ＄ ﹩💲  💵  💸  💰                      CURRENCY MONEY DOLLAR BANKNOTE MONEY BAG MONEY WITH WINGS
+¥ ￥ 💴                                 CURRENCY MONEY YEN BANKNOTE
 
-⋅ × ÷ ∕ ±
+π 𝝿 𝞹                                  PI CIRCLE
+ℼ 𝛑 𝜋 𝝅                                PI CIRCLE
+@=π @/= @*=𝝿 @*/=𝞹                     GREP
+@= @!=ℼ @*=𝛑 @/=𝜋 @*/=𝝅                GREP
 
-≅ ≤ ≥
+xⁱⁿ                                    ^i ^n SUPERSCRIPT POWER EXPONENT RAISED
+xᵝᵞᵟᵠᶲᵡ                                GREP SUPERSCRIPT POWER EXPONENT RAISED GREEK BETA GAMMA DELTA PHI CHI
+x⁺⁻ ⁰¹²³⁴⁵⋅⁶⁷⁸⁹ ⁽⁾⁼ ˂ ˃                GREP _+ _- _0 _1 _2 _3 _4 _5 _6 _7 _8 _9 _( _) _= _< _> SUPERSCRIPT POWER EXPONENT RAISED PLUS MINUS ZERO ONE TWO THREE FOUR FIVE DECIMAL POINT SIX SEVEN EIGHT NINE PARENTHESIS EQUAL LESS THAN GREATER THAN
+Xₐₑₕᵢⱼₖₗₘ ₙₒₚᵣₛₜᵤᵥₓₔ                   _a _e _h _i _j _k _l _m _n _o _p _r _s _t _u _v _x SUBSCRIPT BASE
+Xᵦᵧᵨᵩᵪ                                 SUBSCRIPT GREEK BETA GAMMA RHO PHI CHI
+V₊₋ ₀₁₂₃₄₅․₆₇₈₉ ₍₎₌ ˱˲˿…               SUBSCRIPT PLUS MINUS ZERO ONE TWO THREE FOUR FIVE DECIMAL POINT SIX SEVEN EIGHT NINE PARENTHESIS EQUAL LESS THAN GREATER THAN LEFT ARROW ELLIPSIS
 
-1…∞
-
-
-√() ∛() ∜()
-
-㏒
-
-° ℃  ℉
-
-‘quote’
+f′(t) f″(t) f‴(t) f⁗(t)                [MathSymbol,CalculusD] DERIVATIVE PRIME
+‘single quote’
 “double quote”
 
-£ ₤
-€
-¢ ⍧ ₵ ￠
-$ ＄ ﹩💲  💵
+㏒₁₂₃₄₅₆₇₈₉₀ₑ()                        LOGARITHM BASE
+㏑()                                   SQUARE LN NATURAL LOGARITHM
 
-✓ ✔ ✅
-
-✕ ✖ ✗ ✘ ❌
-
-
-1Δ ☐ ❍
-
-π 𝝿 𝞹
-ℼ 𝛑 𝜋 𝝅
-@=π @/= @*=𝝿 @*/=𝞹 GREP
-@= @!=ℼ @*=𝛑 @/=𝜋 @*/=𝝅 GREP
-
-U+394 Δ
-
-∞	U+221E
-
-
-f′(t) f″(t) f‴(t) f⁗(t)
-
-⅀
-
-∑
+∞                                      INFINITY
+1…∞                                    FROM ONE TO INFINITY
+∑ ⅀                                    SUMMATION
+∏ ℿ                                    N-ARY PRODUCT
 
 ∞
 ⎲ x⁺⁻ ⁰¹²³⁴⁵⋅⁶⁷⁸⁹ ⁱⁿ
-⎳ ᵢⱼₖₙ₌₊₋ ₀₁₂₃₄₅₆₇₈₉
+⎳ ᵢⱼₖₙ₌₊₋ ₀₁₂₃₄₅₆₇₈₉                   SUMMATION
 
  ∞
  ⎲  1
  ⎳  n
-n=1
+n=1                                    SUMMATION
+
+
+Α Β Γ Δ Ε Ζ Η Θ Ι Κ Λ Μ Ν Ξ Ο Π Ρ Σ   Τ Υ Φ Χ Ψ Ω    GREEK CAPITAL LETTER ALPHA TO OMEGA
+α β γ δ ε ζ η θ ι κ λ μ ν ξ ο π ρ ς σ τ υ φ χ ψ ω    GREEK SMALL LETTER ALPHA TO OMEGA
+ᴦ ᴧ ᴨ ᴩ                                              GREEK LETTER SMALL CAPITAL GAMMA LAMDA PI RHO PSI
+
+☐                                      BALLOT BOX
+☑ ✓ ✔ ✅                                CHECK MARK BALLOT YES AFFIRMATIVE
+☒ ✕ ✖ ✗ ✘ ❌                            CROSS MARK BALLOT NO NEGATIVE
+
+⑴  ⑵  ⑶  ⑷  ⑸  ⑹  ⑺  ⑻  ⑼  ⑽  ⑾  ⑿  ⒀  ⒁  ⒂  ⒃  ⒄  ⒅  ⒆  ⒇    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 PARENTHESIZED DIGIT NUMBER BULLET
+
+➀ ➁ ➂ ➃ ➄ ➅ ➆ ➇ ➈ ➉                                           1 2 3 4 5 6 7 8 9 10 DINGBAT CIRCLED SANS-SERIF DIGIT NUMBER BULLET
+⓵ ⓶ ⓷ ⓸ ⓹ ⓺ ⓻ ⓼ ⓽ ⓾                                           1 2 3 4 5 6 7 8 9 10 DOUBLE CIRCLED DIGIT NUMBER BULLET
+⓪ ① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪ ⑫ ⑬ ⑭ ⑮ ⑯ ⑰ ⑱ ⑲ ⑳                     0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 CIRCLED DIGIT NUMBER BULLET
+⑳ ㉑ ㉒ ㉓ ㉔ ㉕ ㉖ ㉗ ㉘ ㉙ ㉚ ㉛ ㉜ ㉝ ㉞ ㉟ ㊱ ㊲ ㊳ ㊴    20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 CIRCLED NUMBER BULLET
+㊵ ㊶ ㊷ ㊸ ㊹ ㊺ ㊻ ㊼ ㊽ ㊾ ㊿                              40 41 42 43 44 45 46 47 48 49 50 CIRCLED NUMBER BULLET
+
+㉈ ㉉ ㉊ ㉋ ㉌ ㉍ ㉎ ㉏                                               10 20 30 40 50 60 70 80 CIRCLED NUMBER ON BLACK SQUARE
+
+⓿ ❶ ❷ ❸ ❹ ❺ ❻ ❼ ❽ ❾ ❿                                         0 1 2 3 4 5 6 7 8 9 10 DINGBAT NEGATIVE CIRCLED DIGIT BULLET
+➊ ➋ ➌ ➍ ➎ ➏ ➐ ➑ ➒ ➓ ⓫ ⓬ ⓭ ⓮ ⓯ ⓰ ⓱ ⓲ ⓳ ⓴                       1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT NUMBER BULLET
+
+∠ ∡ ⦛                                  MEASURED ANGLE
+⦟ ⦢ ⦣                                  ACUTE TURNED REVERSED ANGLE
+∟ ⊾ ⦜                                  RIGHT ANGLE WITH ARC SQUARE
+⦦ ⦧                                    OBLIQUE ANGLE OPENING UP DOWN OBTUSE
+∢ ⦠ ⦡ ⟀                                SPHERICAL ANGLE 3D THREE DIMENSIONAL
+⦨ ⦩ ⦪ ⦫ ⦬ ⦭ ⦮ ⦯                        MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP DOWN RIGHT LEFT
+
+⊿ ◿ ◺ ◸ ◹  ◢ ◣ ◤ ◥                     TRIANGLES RIGHT LOWER LEFT UPPER SHAPE
+▵ ▹ ▿ ◃ △ ▷ ▽ ◁ ⛛ ⨞  ▴ ▸ ▾ ◂ ▲ ▶ ▼ ◀   TRIANGLES UP POINTING RIGHT DOWN LEFT HEAVY SHAPE
+⸋ ▫ ⬜ ◽ ◻ □ ⬚  ▪ ◾ ⬛ ◼ ■               SQUARES RAISED SMALL MEDIUM LARGE DOTTED SHAPE
+⚬ ⚪ ⭘ ○ ❍ ⭕ ◯  ◌ ⚫ ● ⬤                 CIRCLES SMALL MEDIUM LARGE HEAVY SHADOWED DOTTED SHAPE
+
+TODO PENTAGON, etc...
 
 ∀ FOR ALL
 ∁ COMPLEMENT
@@ -96,91 +114,134 @@ n=1
 ∌  DOES NOT CONTAIN AS MEMBER
 
 ∅ EMPTY SET
-∆ INCREMENT
 
-∂ 𝛛 𝜕 𝝏 𝞉 𝟃
-∇ 𝛁 𝛻 𝜵 𝝯 𝞩
-∇ ⋅
-∇⨯
-⋅	U+22c5	[MathSymbol,Vectors]	DOT OPERATOR
-⨯	U+2A2F	[MathSymbol,Vector]	VECTOR OR CROSS PRODUCT
-∆	U+2206	[MathSymbol,CalculusD]	INCREMENT
+∂ 𝛛 𝜕 𝝏 𝞉 𝟃                            [MathSymbol,CalculusD] PARTIAL DIFFERENTIAL
+∇ 𝛁 𝛻 𝜵 𝝯 𝞩                            [MathSymbol,CalculusD] NABLA
+∇ ⋅                                    [MathSymbol,CalculusD] DIVERGENCE OPERATOR
+∇⨯                                     [MathSymbol,CalculusD] CURL OPERATOR
+⋅                                      [MathSymbol,Vectors]   DOT OPERATOR
+⨯                                      [MathSymbol,Vector]    VECTOR OR CROSS PRODUCT
+∆                                      [MathSymbol,CalculusD] INCREMENT
 
-U+2202	[MathSymbol,CalculusD]	PARTIAL DIFFERENTIAL
-∃	U+2203	[MathSymbol,Sets]	THERE EXISTS
-∄	U+2204	[MathSymbol,Sets]	THERE DOES NOT EXIST
-∅	U+2205	[MathSymbol,Sets]	EMPTY SET
-∝ PROPORTIONAL TO
+∂                                      [MathSymbol,CalculusD] PARTIAL DIFFERENTIAL
+∃                                      [MathSymbol,Sets]      THERE EXISTS
+∄                                      [MathSymbol,Sets]      THERE DOES NOT EXIST
+∅                                      [MathSymbol,Sets]      EMPTY SET
+∝                                      [MathSymbol]           PROPORTIONAL TO
 
-Quadratic Equation: [-b ± √(b² -4ac)]/2a
 
-ⅰ ⅱ ⅲ ⅳ
-ⅴ ⅵ ⅶ ⅷ ⅸ
-ⅹ ⅺ ⅻ
-ⅼ ⅽ ⅾ ⅿ
-Ⅰ Ⅱ Ⅲ Ⅳ
-Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ
-Ⅹ Ⅺ Ⅻ  ⅫⅠ ⅩⅣ
-Ⅼ 50
-Ⅽ 100
-Ⅾ 500
-Ⅿ 1000
-ↀ  ROMAN NUMERAL ONE THOUSAND C D
-ↁ ROMAN NUMERAL FIVE THOUSAND
-ↂA ROMAN NUMERAL TEN THOUSAND
-ↇ ROMAN NUMERAL FIFTY THOUSAND
-ↈ  ROMAN NUMERAL ONE HUNDRED THOUSAND
+ⅰ ⅱ ⅲ ⅳ                                1 2 3 4 ROMAN NUMERAL SMALL ONE TWO THREE FOUR
+ⅴ ⅵ ⅶ ⅷ ⅸ                              5 6 7 8 9 ROMAN NUMERAL SMALL FIVE SIX SEVEN EIGHT NINE
+ⅹ ⅺ ⅻ                                  10 11 12 ROMAN NUMERAL SMALL TEN ELEVEN TWELVE
+ⅼ ⅽ ⅾ ⅿ                                50 100 500 1000 ROMAN NUMERAL SMALL FIFTY ONE HUNDRED FIVE HUNDRED ONE THOUSAND
+Ⅰ Ⅱ Ⅲ Ⅳ                                1 2 3 4 ROMAN NUMERAL ONE TWO THREE FOUR
+Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ                              5 6 7 8 9 ROMAN NUMERAL FIVE SIX SEVEN EIGHT NINE
+Ⅹ Ⅺ Ⅻ  ⅫⅠ ⅩⅣ                           10 11 12 13 14 ROMAN NUMERAL TEN ELEVEN TWELVE THIRTEEN FOURTEEN
+Ⅼ                                      50 ROMAN NUMERAL FIFTY
+Ⅽ                                      100 ROMAN NUMERAL ONE HUNDRED
+Ⅾ                                      500 ROMAN NUMERAL FIVE HUNDRED
+Ⅿ                                      1000 ROMAN NUMERAL ONE THOUSAND M
+ↀ                                      1000 ROMAN NUMERAL ONE THOUSAND C D
+ↁ                                      5000 ROMAN NUMERAL FIVE THOUSAND
+ↂA                                     10000 ROMAN NUMERAL TEN THOUSAND
+ↇ                                      50000 ROMAN NUMERAL FIFTY THOUSAND
+ↈ                                      100000 ROMAN NUMERAL ONE HUNDRED THOUSAND
 
 x=4
 ⌠
 ⎮f(x) dx
 ⌡
-x=0
+x=0                                    [CalculusI] INTEGRAL
+
+
+⎛x⎞
+⎝y⎠                                    VECTOR 2D
+
+
+⎡1 0⎤
+⎣0 1⎦                                  MATRIX 2D
+
+
+⎛x⎞ = ⎡1 0⎤ ⎛x⎞
+⎝y⎠   ⎣0 1⎦ ⎝y⎠                        VECTOR MATRIX 2D
+
 
 ⎛x⎞
 ⎜y⎟
-⎝z⎠
+⎝z⎠                                    VECTOR 3D
+
 
 ⎡a⎤
 ⎢b⎥
-⎣c⎦
+⎣c⎦                                    VECTOR MATRIX 3D
+
+
+⎡1 0 0⎤
+⎢0 1 0⎥
+⎣0 0 1⎦                                MATRIX 3D
+
+
+⎛x⎞   ⎡1 0 0⎤ ⎛x⎞
+⎜y⎟ = ⎢0 1 0⎥ ⎜y⎟
+⎝z⎠   ⎣0 0 1⎦ ⎝z⎠                      VECTOR MATRIX 3D
+
+
+⎛x⎞
+⎜y⎟
+⎜⋮⎟
+⎝n⎠                                    VECTOR MULTI-DIMENSIONAL
+
+
+⎡a⎤
+⎢b⎥
+⎢⋮⎥
+⎣n⎦                                    VECTOR MATRIX MULTI-DIMENSIONAL
+
 
 ⎡1 0 ⋯  0⎤
 ⎢0 1     ⎥
 ⎢⋮   ⋱   ⎥
-⎣0 ⋰    1⎦
+⎣0 ⋰    1⎦                             MATRIX MULTI-DIMENSIONAL
+
 
 ⎛x⎞   ⎡1 0 ⋯  0⎤ ⎛x⎞
 ⎜y⎟ = ⎢0 1     ⎥ ⎜y⎟
-⎝z⎠   ⎢⋮   ⋱   ⎥ ⎝z⎠
-      ⎣0 ⋰    1⎦
+⎜⋮⎟   ⎢⋮   ⋱   ⎥ ⎜⋮⎟
+⎝m⎠   ⎣0 ⋰    1⎦ ⎝n⎠                   VECTOR MATRIX MULTI-DIMENSIONAL
 
+
+⎰
+⎱                                      CURLY BRACKET SECTION
+
+
+⎱
+⎰                                      CURLY BRACKET SECTION
+
+
+⎰ ⎱
+⎱ ⎰                                    CURLY BRACKET SECTION
 
 ⎧
 ⎨
 ⎪
-⎩
+⎩                                      CURLY BRACKET SECTION
 
 
 ⎫
 ⎬
 ⎪
-⎭
+⎭                                      CURLY BRACKET SECTION
+
 
 ⎧ ⎫
 ⎨ ⎬
 ⎪ ⎪
-⎩ ⎭
+⎩ ⎭                                    CURLY BRACKET SECTION
 
-⎰
-⎱
 
-⎱
-⎰
 
-⎰ ⎱
-⎱ ⎰
-
+         1         2         3         4         5
+12345678901234567890123456789012345678901234567890
 
 Logic
 Arithmetic
@@ -195,3 +256,254 @@ Limits
 Calculus (Differential)
 Calculus (Integral)
 
+TODO Arrows...
+Angles...
+
+Units
+length
+area
+volume
+time
+speed
+etc...
+
+TODO more units above...
+㎜      U+339C  [OtherSymbol]   SQUARE MM
+㎝      U+339D  [OtherSymbol]   SQUARE CM
+㎞      U+339E  [OtherSymbol]   SQUARE KM
+㎣      U+33A3  [OtherSymbol]   SQUARE MM CUBED
+㎤      U+33A4  [OtherSymbol]   SQUARE CM CUBED
+㎥      U+33A5  [OtherSymbol]   SQUARE M CUBED
+㎦      U+33A6  [OtherSymbol]   SQUARE KM CUBED
+㎧      U+33A7  [OtherSymbol]   SQUARE M OVER S
+more units below...
+
+
+DONE...DELETE THE BELOW...
+=========================
+Δ       U+394   [UppercaseLetter]       GREEK CAPITAL LETTER DELTA
+∆       U+2206  [MathSymbol]            INCREMENT
+⊿       U+22BF  [MathSymbol]            RIGHT TRIANGLE
+△       U+25B3  [OtherSymbol]           WHITE UP-POINTING TRIANGLE
+▵       U+25B5  [OtherSymbol]   WHITE UP-POINTING SMALL TRIANGLE
+▷       U+25B7  [MathSymbol]    WHITE RIGHT-POINTING TRIANGLE
+▹       U+25B9  [OtherSymbol]   WHITE RIGHT-POINTING SMALL TRIANGLE
+▽       U+25BD  [OtherSymbol]   WHITE DOWN-POINTING TRIANGLE
+▿       U+25BF  [OtherSymbol]   WHITE DOWN-POINTING SMALL TRIANGLE
+◁       U+25C1  [MathSymbol]    WHITE LEFT-POINTING TRIANGLE
+◃       U+25C3  [OtherSymbol]   WHITE LEFT-POINTING SMALL TRIANGLE
+◸       U+25F8  [MathSymbol]    UPPER LEFT TRIANGLE
+◹       U+25F9  [MathSymbol]    UPPER RIGHT TRIANGLE
+◺       U+25FA  [MathSymbol]    LOWER LEFT TRIANGLE
+◿       U+25FF  [MathSymbol]    LOWER RIGHT TRIANGLE
+⛛       U+26DB  [OtherSymbol]   HEAVY WHITE DOWN-POINTING TRIANGLE
+⨞       U+2A1E  [MathSymbol]    LARGE LEFT TRIANGLE OPERATOR
+▲       U+25B2  [OtherSymbol]   BLACK UP-POINTING TRIANGLE
+▴       U+25B4  [OtherSymbol]   BLACK UP-POINTING SMALL TRIANGLE
+▶       U+25B6  [OtherSymbol]   BLACK RIGHT-POINTING TRIANGLE
+▸       U+25B8  [OtherSymbol]   BLACK RIGHT-POINTING SMALL TRIANGLE
+▼       U+25BC  [OtherSymbol]   BLACK DOWN-POINTING TRIANGLE
+▾       U+25BE  [OtherSymbol]   BLACK DOWN-POINTING SMALL TRIANGLE
+◀       U+25C0  [OtherSymbol]   BLACK LEFT-POINTING TRIANGLE
+◂       U+25C2  [OtherSymbol]   BLACK LEFT-POINTING SMALL TRIANGLE
+◢       U+25E2  [OtherSymbol]   BLACK LOWER RIGHT TRIANGLE
+◣       U+25E3  [OtherSymbol]   BLACK LOWER LEFT TRIANGLE
+◤       U+25E4  [OtherSymbol]   BLACK UPPER LEFT TRIANGLE
+◥       U+25E5  [OtherSymbol]   BLACK UPPER RIGHT TRIANGLE
+
+■       U+25A0  [OtherSymbol]   BLACK SQUARE
+□       U+25A1  [OtherSymbol]   WHITE SQUARE
+▪       U+25AA  [OtherSymbol]   BLACK SMALL SQUARE
+▫       U+25AB  [OtherSymbol]   WHITE SMALL SQUARE
+◻       U+25FB  [MathSymbol]    WHITE MEDIUM SQUARE
+◼       U+25FC  [MathSymbol]    BLACK MEDIUM SQUARE
+◽       U+25FD  [MathSymbol]    WHITE MEDIUM SMALL SQUARE
+◾       U+25FE  [MathSymbol]    BLACK MEDIUM SMALL SQUARE
+⬚       U+2B1A  [OtherSymbol]   DOTTED SQUARE
+⬛       U+2B1B  [OtherSymbol]   BLACK LARGE SQUARE
+⬜       U+2B1C  [OtherSymbol]   WHITE LARGE SQUARE
+⸋       U+2E0B  [OtherPunctuation]      RAISED SQUARE
+
+○       U+25CB  [OtherSymbol]   WHITE CIRCLE
+◌       U+25CC  [OtherSymbol]   DOTTED CIRCLE
+●       U+25CF  [OtherSymbol]   BLACK CIRCLE
+◙       U+25D9  [OtherSymbol]   INVERSE WHITE CIRCLE
+◯       U+25EF  [OtherSymbol]   LARGE CIRCLE
+⚪       U+26AA  [OtherSymbol]   MEDIUM WHITE CIRCLE
+⚫       U+26AB  [OtherSymbol]   MEDIUM BLACK CIRCLE
+⚬       U+26AC  [OtherSymbol]   MEDIUM SMALL WHITE CIRCLE
+❍       U+274D  [OtherSymbol]   SHADOWED WHITE CIRCLE
+⬤       U+2B24  [OtherSymbol]   BLACK LARGE CIRCLE
+⭕       U+2B55  [OtherSymbol]   HEAVY LARGE CIRCLE
+⭘       U+2B58  [OtherSymbol]   HEAVY CIRCLE
+
+⓪	U+24EA	[OtherNumber]	CIRCLED DIGIT ZERO
+①	U+2460	[OtherNumber]	CIRCLED DIGIT ONE
+②	U+2461	[OtherNumber]	CIRCLED DIGIT TWO
+③	U+2462	[OtherNumber]	CIRCLED DIGIT THREE
+④	U+2463	[OtherNumber]	CIRCLED DIGIT FOUR
+⑤	U+2464	[OtherNumber]	CIRCLED DIGIT FIVE
+⑥	U+2465	[OtherNumber]	CIRCLED DIGIT SIX
+⑦	U+2466	[OtherNumber]	CIRCLED DIGIT SEVEN
+⑧	U+2467	[OtherNumber]	CIRCLED DIGIT EIGHT
+⑨	U+2468	[OtherNumber]	CIRCLED DIGIT NINE
+⑩	U+2469	[OtherNumber]	CIRCLED NUMBER TEN
+⑪	U+246A	[OtherNumber]	CIRCLED NUMBER ELEVEN
+⑫	U+246B	[OtherNumber]	CIRCLED NUMBER TWELVE
+⑬	U+246C	[OtherNumber]	CIRCLED NUMBER THIRTEEN
+⑭	U+246D	[OtherNumber]	CIRCLED NUMBER FOURTEEN
+⑮	U+246E	[OtherNumber]	CIRCLED NUMBER FIFTEEN
+⑯	U+246F	[OtherNumber]	CIRCLED NUMBER SIXTEEN
+⑰	U+2470	[OtherNumber]	CIRCLED NUMBER SEVENTEEN
+⑱	U+2471	[OtherNumber]	CIRCLED NUMBER EIGHTEEN
+⑲	U+2472	[OtherNumber]	CIRCLED NUMBER NINETEEN
+⑳	U+2473	[OtherNumber]	CIRCLED NUMBER TWENTY
+㉑	U+3251	[OtherNumber]	CIRCLED NUMBER TWENTY ONE
+㉒	U+3252	[OtherNumber]	CIRCLED NUMBER TWENTY TWO
+㉓	U+3253	[OtherNumber]	CIRCLED NUMBER TWENTY THREE
+㉔	U+3254	[OtherNumber]	CIRCLED NUMBER TWENTY FOUR
+㉕	U+3255	[OtherNumber]	CIRCLED NUMBER TWENTY FIVE
+㉖	U+3256	[OtherNumber]	CIRCLED NUMBER TWENTY SIX
+㉗	U+3257	[OtherNumber]	CIRCLED NUMBER TWENTY SEVEN
+㉘	U+3258	[OtherNumber]	CIRCLED NUMBER TWENTY EIGHT
+㉙	U+3259	[OtherNumber]	CIRCLED NUMBER TWENTY NINE
+㉚	U+325A	[OtherNumber]	CIRCLED NUMBER THIRTY
+㉛	U+325B	[OtherNumber]	CIRCLED NUMBER THIRTY ONE
+㉜	U+325C	[OtherNumber]	CIRCLED NUMBER THIRTY TWO
+㉝	U+325D	[OtherNumber]	CIRCLED NUMBER THIRTY THREE
+㉞	U+325E	[OtherNumber]	CIRCLED NUMBER THIRTY FOUR
+㉟	U+325F	[OtherNumber]	CIRCLED NUMBER THIRTY FIVE
+㊱	U+32B1	[OtherNumber]	CIRCLED NUMBER THIRTY SIX
+㊲	U+32B2	[OtherNumber]	CIRCLED NUMBER THIRTY SEVEN
+㊳	U+32B3	[OtherNumber]	CIRCLED NUMBER THIRTY EIGHT
+㊴	U+32B4	[OtherNumber]	CIRCLED NUMBER THIRTY NINE
+㊵	U+32B5	[OtherNumber]	CIRCLED NUMBER FORTY
+㊶	U+32B6	[OtherNumber]	CIRCLED NUMBER FORTY ONE
+㊷	U+32B7	[OtherNumber]	CIRCLED NUMBER FORTY TWO
+㊸	U+32B8	[OtherNumber]	CIRCLED NUMBER FORTY THREE
+㊹	U+32B9	[OtherNumber]	CIRCLED NUMBER FORTY FOUR
+㊺	U+32BA	[OtherNumber]	CIRCLED NUMBER FORTY FIVE
+㊻	U+32BB	[OtherNumber]	CIRCLED NUMBER FORTY SIX
+㊼	U+32BC	[OtherNumber]	CIRCLED NUMBER FORTY SEVEN
+㊽	U+32BD	[OtherNumber]	CIRCLED NUMBER FORTY EIGHT
+㊾	U+32BE	[OtherNumber]	CIRCLED NUMBER FORTY NINE
+㊿	U+32BF	[OtherNumber]	CIRCLED NUMBER FIFTY
+
+⓵	U+24F5	[OtherNumber]	DOUBLE CIRCLED DIGIT ONE
+⓶	U+24F6	[OtherNumber]	DOUBLE CIRCLED DIGIT TWO
+⓷	U+24F7	[OtherNumber]	DOUBLE CIRCLED DIGIT THREE
+⓸	U+24F8	[OtherNumber]	DOUBLE CIRCLED DIGIT FOUR
+⓹	U+24F9	[OtherNumber]	DOUBLE CIRCLED DIGIT FIVE
+⓺	U+24FA	[OtherNumber]	DOUBLE CIRCLED DIGIT SIX
+⓻	U+24FB	[OtherNumber]	DOUBLE CIRCLED DIGIT SEVEN
+⓼	U+24FC	[OtherNumber]	DOUBLE CIRCLED DIGIT EIGHT
+⓽	U+24FD	[OtherNumber]	DOUBLE CIRCLED DIGIT NINE
+⓾	U+24FE	[OtherNumber]	DOUBLE CIRCLED NUMBER TEN
+
+㉈	U+3248	[OtherNumber]	CIRCLED NUMBER TEN ON BLACK SQUARE
+㉉	U+3249	[OtherNumber]	CIRCLED NUMBER TWENTY ON BLACK SQUARE
+㉊	U+324A	[OtherNumber]	CIRCLED NUMBER THIRTY ON BLACK SQUARE
+㉋	U+324B	[OtherNumber]	CIRCLED NUMBER FORTY ON BLACK SQUARE
+㉌	U+324C	[OtherNumber]	CIRCLED NUMBER FIFTY ON BLACK SQUARE
+㉍	U+324D	[OtherNumber]	CIRCLED NUMBER SIXTY ON BLACK SQUARE
+㉎	U+324E	[OtherNumber]	CIRCLED NUMBER SEVENTY ON BLACK SQUARE
+㉏	U+324F	[OtherNumber]	CIRCLED NUMBER EIGHTY ON BLACK SQUARE
+
+➀	U+2780	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT ONE
+➁	U+2781	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT TWO
+➂	U+2782	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT THREE
+➃	U+2783	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT FOUR
+➄	U+2784	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT FIVE
+➅	U+2785	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT SIX
+➆	U+2786	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT SEVEN
+➇	U+2787	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT EIGHT
+➈	U+2788	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF DIGIT NINE
+➉	U+2789	[OtherNumber]	DINGBAT CIRCLED SANS-SERIF NUMBER TEN
+
+⓿	U+24FF	[OtherNumber]	NEGATIVE CIRCLED DIGIT ZERO
+❶	U+2776	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT ONE
+❷	U+2777	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT TWO
+❸	U+2778	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT THREE
+❹	U+2779	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT FOUR
+❺	U+277A	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT FIVE
+❻	U+277B	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT SIX
+❼	U+277C	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT SEVEN
+❽	U+277D	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT EIGHT
+❾	U+277E	[OtherNumber]	DINGBAT NEGATIVE CIRCLED DIGIT NINE
+❿	U+277F	[OtherNumber]	DINGBAT NEGATIVE CIRCLED NUMBER TEN
+
+➊	U+278A	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT ONE
+➋	U+278B	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT TWO
+➌	U+278C	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT THREE
+➍	U+278D	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FOUR
+➎	U+278E	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT FIVE
+➏	U+278F	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SIX
+➐	U+2790	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT SEVEN
+➑	U+2791	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT EIGHT
+➒	U+2792	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT NINE
+➓	U+2793	[OtherNumber]	DINGBAT NEGATIVE CIRCLED SANS-SERIF NUMBER TEN
+⓫	U+24EB	[OtherNumber]	NEGATIVE CIRCLED NUMBER ELEVEN
+⓬	U+24EC	[OtherNumber]	NEGATIVE CIRCLED NUMBER TWELVE
+⓭	U+24ED	[OtherNumber]	NEGATIVE CIRCLED NUMBER THIRTEEN
+⓮	U+24EE	[OtherNumber]	NEGATIVE CIRCLED NUMBER FOURTEEN
+⓯	U+24EF	[OtherNumber]	NEGATIVE CIRCLED NUMBER FIFTEEN
+⓰	U+24F0	[OtherNumber]	NEGATIVE CIRCLED NUMBER SIXTEEN
+⓱	U+24F1	[OtherNumber]	NEGATIVE CIRCLED NUMBER SEVENTEEN
+⓲	U+24F2	[OtherNumber]	NEGATIVE CIRCLED NUMBER EIGHTEEN
+⓳	U+24F3	[OtherNumber]	NEGATIVE CIRCLED NUMBER NINETEEN
+⓴	U+24F4	[OtherNumber]	NEGATIVE CIRCLED NUMBER TWENTY
+
+⑴       U+2474  [OtherNumber]   PARENTHESIZED DIGIT ONE
+⑵       U+2475  [OtherNumber]   PARENTHESIZED DIGIT TWO
+⑶       U+2476  [OtherNumber]   PARENTHESIZED DIGIT THREE
+⑷       U+2477  [OtherNumber]   PARENTHESIZED DIGIT FOUR
+⑸       U+2478  [OtherNumber]   PARENTHESIZED DIGIT FIVE
+⑹       U+2479  [OtherNumber]   PARENTHESIZED DIGIT SIX
+⑺       U+247A  [OtherNumber]   PARENTHESIZED DIGIT SEVEN
+⑻       U+247B  [OtherNumber]   PARENTHESIZED DIGIT EIGHT
+⑼       U+247C  [OtherNumber]   PARENTHESIZED DIGIT NINE
+⑽       U+247D  [OtherNumber]   PARENTHESIZED NUMBER TEN
+⑾       U+247E  [OtherNumber]   PARENTHESIZED NUMBER ELEVEN
+⑿       U+247F  [OtherNumber]   PARENTHESIZED NUMBER TWELVE
+⒀       U+2480  [OtherNumber]   PARENTHESIZED NUMBER THIRTEEN
+⒁       U+2481  [OtherNumber]   PARENTHESIZED NUMBER FOURTEEN
+⒂       U+2482  [OtherNumber]   PARENTHESIZED NUMBER FIFTEEN
+⒃       U+2483  [OtherNumber]   PARENTHESIZED NUMBER SIXTEEN
+⒄       U+2484  [OtherNumber]   PARENTHESIZED NUMBER SEVENTEEN
+⒅       U+2485  [OtherNumber]   PARENTHESIZED NUMBER EIGHTEEN
+⒆       U+2486  [OtherNumber]   PARENTHESIZED NUMBER NINETEEN
+⒇       U+2487  [OtherNumber]   PARENTHESIZED NUMBER TWENTY
+
+∠	U+2220	[MathSymbol]	ANGLE
+∡	U+2221	[MathSymbol]	MEASURED ANGLE
+⦛	U+299B	[MathSymbol]	MEASURED ANGLE OPENING LEFT
+
+⦟	U+299F	[MathSymbol]	ACUTE ANGLE
+⦢	U+29A2	[MathSymbol]	TURNED ANGLE
+⦣	U+29A3	[MathSymbol]	REVERSED ANGLE
+
+∟	U+221F	[MathSymbol]	RIGHT ANGLE
+⊾	U+22BE	[MathSymbol]	RIGHT ANGLE WITH ARC
+⦜	U+299C	[MathSymbol]	RIGHT ANGLE VARIANT WITH SQUARE
+
+⦦	U+29A6	[MathSymbol]	OBLIQUE ANGLE OPENING UP
+⦧	U+29A7	[MathSymbol]	OBLIQUE ANGLE OPENING DOWN
+
+∢	U+2222	[MathSymbol]	SPHERICAL ANGLE
+⦠	U+29A0	[MathSymbol]	SPHERICAL ANGLE OPENING LEFT
+⦡	U+29A1	[MathSymbol]	SPHERICAL ANGLE OPENING UP
+⟀	U+27C0	[MathSymbol]	THREE DIMENSIONAL ANGLE
+
+⦨	U+29A8	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND RIGHT
+⦩	U+29A9	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING UP AND LEFT
+⦪	U+29AA	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND RIGHT
+⦫	U+29AB	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING DOWN AND LEFT
+⦬	U+29AC	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND UP
+⦭	U+29AD	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND UP
+⦮	U+29AE	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING RIGHT AND DOWN
+⦯	U+29AF	[MathSymbol]	MEASURED ANGLE WITH OPEN ARM ENDING IN ARROW POINTING LEFT AND DOWN
+
+         1         2         3         4         5
+12345678901234567890123456789012345678901234567890
+
+=========================

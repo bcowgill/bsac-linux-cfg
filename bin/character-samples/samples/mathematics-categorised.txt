@@ -1905,6 +1905,8 @@
 ᶾ	U+1DBE	[ModifierLetter]	MODIFIER LETTER SMALL EZH
 ꟹ	U+A7F9	[ModifierLetter]	MODIFIER LETTER SMALL LIGATURE OE
 
+==============================================
+DONE...
 > grep-utf8.sh dot | grep -viE 'braille|hebrew|hangul|tone|with.+dot|dotless|\bpunctuation|NonspacingMark|MathSymbol'
 
 !ᣟ˙﮲・⋅ᐧ･·𐄁⸱․﮳ GREP dot variation with height
