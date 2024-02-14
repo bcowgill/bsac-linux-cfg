@@ -85,8 +85,8 @@ Mathematical unicode characters translator.
 math-rep.pl
 ls-math.pl
 ls-numbers.pl
-bin/math-rep.sample.txt
-bin/math-rep.txt
+bin/tests/math-rep/in/math-rep.sample.txt
+bin/tests/math-rep/bas/math-rep.txt
 bin/character-samples/samples/mathematics.txt
 bin/character-samples/samples/mathematics-categorised.txt
 

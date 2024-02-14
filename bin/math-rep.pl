@@ -5,7 +5,7 @@
 # Am keeping track of which utf8 characters have been used in:
 # ~/bin/character-samples/samples/mathematics-categorised.txt
 
-# cat math-rep.sample.txt | math-rep.pl | utf8.pl
+# cat tests/math-rep/in/math-rep.sample.txt | math-rep.pl | utf8.pl
 # CATEG=~/bin/character-samples/samples/mathematics-categorised.txt
 # MATH=~/bin/character-samples/samples/mathematics.txt
 # vim $CATEG
@@ -446,8 +446,8 @@ sub translate
 	#{
 	#}
 	my @Tokens = reverse(split(/\b|(?=\d)/, $match));
-	print Dumper(\@Tokens);
-	die "STOPPING";
+	print STDERR Dumper(\@Tokens);
+	#die "STOPPING";
 	$match = join('', map { lookup($ARG, $rhSymbolMap, $context) } @Tokens);
 
 	#if (!exists($rhSymbolMap->{__order}))
@@ -455,7 +455,7 @@ sub translate
 	#	my @Keys = sort byLength keys(%$rhSymbolMap);
 	#	$rhSymbolMap->{__order} = \@Keys;
 	#}
-	#print Dumper($rhSymbolMap->{__order});
+	#print STDERR Dumper($rhSymbolMap->{__order});
 	#foreach my $search (@{$rhSymbolMap->{__order}})
 	#{
 	#	next if $search eq '__order';
@@ -884,8 +884,8 @@ sub makeParser
 	replacer('sy', '>=', '2265', $LITERAL);
 
 	@Replacements = sort byLength @Replacements;
-	#print Dumper(\@Replacements);
-	#print Dumper(\%Replacements);
+	#print STDERR Dumper(\@Replacements);
+	#print STDERR Dumper(\%Replacements);
 	#foreach my $literal (@Replacements)
 	#{
 	#	print qq{$literal => $Replacements{$literal}{type} $Replacements{$literal}{code}\n};
