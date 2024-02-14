@@ -26,12 +26,47 @@ use 5.012; # almost seamless utf
 use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars); # https://metacpan.org/pod/perlvar for reference
 use charnames qw(:full); # :loose if you perl version supports it
+use FindBin;
 
 use Data::Dumper;
 
-my $MARKUP = 1;
-my $LITERAL = 1;
-my $SHOW_CODE = 1;
+# change all to 1...
+my $MARKUP = 0;
+my $LITERAL = 0;
+my $SHOW_CODE = 0;
+
+sub usage
+{
+	my $cmd = $FindBin::Script;
+
+	print <<"USAGE";
+$cmd [--help|--man|-?] [--markup] [--literal] [--codes]
+
+TODO Display a description of the program.
+
+--markup TODO...
+--literal TODO...
+--codes TODO ...
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+More detail ... TODO
+
+See also ... TODO
+
+Example:
+
+echo filename | $cmd
+
+USAGE
+	exit 0;
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+{
+	usage()
+}
 
 my $notNumber = '(?:\A|[^0-9]|\z)';
 my $notLetter = '(?:\A|[^a-zA-Z]|\z)';
@@ -917,4 +952,3 @@ while (my $line = <STDIN>) {
 
 	print $line;
 }
-__END__

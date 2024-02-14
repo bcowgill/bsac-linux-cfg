@@ -12,6 +12,12 @@
 MATH=~/bin/character-samples/samples/mathematics-categorised.txt
 MATH_TEXT=~/bin/character-samples/samples/mathematics.txt
 
+if [ "$1" == "--alpha" ]; then
+	# Shows MATH alphabet characters
+	unicode-alpha.sh
+	OK=1
+fi
+
 if [ "$1" == "--text" ]; then
 	# Shows MATH characters with greppable descriptions and example formatting / layout
 	if [ -e "$MATH_TEXT" ]; then
