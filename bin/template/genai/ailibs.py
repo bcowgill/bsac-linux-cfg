@@ -2,8 +2,8 @@
 import re
 import sys
 
-PIPPED=False # set to 1 after you have pip installed the other modules...
-ALL=False
+PIPPED=True # set to 1 after you have pip installed the other modules...
+ALL=True
 
 def python_version():
     match = re.search(r'\d+(\.\d+)?', sys.version)
@@ -23,6 +23,7 @@ import io
 import ast
 import time
 import shutil
+import random
 import datetime
 import requests
 
@@ -35,9 +36,7 @@ if PIPPED:
     import flask
     import openai
     import secret
-    import Random
     import aiohttp
-    import tkinter # requires python3-tk
     import dotenv
     import langchain
     import numpy
@@ -49,6 +48,7 @@ if ver >= 3:
     print("skip asyncio")
     # python 3.4.3 but not 2.7.6
     import asyncio
+    import tkinter # requires python3-tk
 
 if ALL:
     import tkinter.scrolledtext as tks #creates a scrollable text window
@@ -61,31 +61,31 @@ if ALL:
 
     # libraries from RAG course on jupityr notebooks
     from dotenv import load_dotenv, find_dotenv
-    from langchain.document_loaders import PyPDFLoader
-    from langchain.document_loaders.generic import GenericLoader
-    from langchain.document_loaders.parsers import OpenAIWhisperParser
-    from langchain.document_loaders.blob_loaders.youtube_audio import YoutubeAudioLoader
-    from langchain.document_loaders import WebBaseLoader
-    from langchain.document_loaders import NotionDirectoryLoader
+    from langchain_community.document_loaders import PyPDFLoader
+    from langchain_community.document_loaders.generic import GenericLoader
+    from langchain_community.document_loaders.parsers import OpenAIWhisperParser
+    from langchain_community.document_loaders.blob_loaders.youtube_audio import YoutubeAudioLoader
+    from langchain_community.document_loaders import WebBaseLoader
+    from langchain_community.document_loaders import NotionDirectoryLoader
     from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
     from langchain.text_splitter import TokenTextSplitter
-    from langchain.textksplitter import MarkdownHeaderTextSplitter
+    from langchain.text_splitter import MarkdownHeaderTextSplitter
     from langchain.embeddings.openai import OpenAIEmbeddings
-    from langchain.vectorstores import Chroma
-    from langchain.llms import OpenAI
+    from langchain_community.vectorstores import Chroma
+    from langchain_community.llms import OpenAI
     from langchain.retrievers.self_query.base import SelfQueryRetriever
     from langchain.chains.query_constructor.base import AttributeInfo
     from langchain.retrievers import ContextualCompressionRetriever
     from langchain.retrievers.document_compressors import LLMChainExtractor
-    from langchain.retrievers import SVMRetriever
-    from langchain.retrievers import TFIDFRetriever
-    from langchain.chat_models import ChatOpenAI
+    from langchain_community.retrievers import SVMRetriever
+    from langchain_community.retrievers import TFIDFRetriever
+    from langchain_community.chat_models import ChatOpenAI
     from langchain.chains import RetrievalQA
     from langchain.prompts import PromptTemplate
     from langchain.memory import ConversationBufferMemory
     from langchain.chains import ConversationalRetrievalChain
-    from langchain.vectorstores import DocArrayInMemorySearch
-    from langchain.document_loaders import TextLoader
+    from langchain_community.vectorstores import DocArrayInMemorySearch
+    from langchain_community.document_loaders import TextLoader
 
 #! pip install openai pandas
 #! pip install PIL

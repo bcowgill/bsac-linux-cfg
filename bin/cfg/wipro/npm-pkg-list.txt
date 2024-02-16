@@ -2,6 +2,7 @@
 ├── alm@2.39.1
 ├── babel-cli@6.26.0
 ├── bower@1.8.14
+├── corepack@0.24.0
 ├── create-react-app@5.0.1
 ├── eslint@8.56.0
 ├── express-generator@4.16.1
@@ -20,7 +21,7 @@
 ├── npm-check-updates@16.14.14
 ├── npm-find@0.0.3
 ├── npm-json5@0.1.5
-├── npm@10.4.0
+├── npm@10.2.4
 ├── pnpm@8.15.1
 ├── prettydiff@101.2.6
 ├── tslint@6.1.3

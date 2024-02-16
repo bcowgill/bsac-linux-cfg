@@ -159,6 +159,20 @@ BREW_LINK_NAME=$ZSH_LOCAL/site-functions/_brew
 BREW_LINK_TARGET=../../../Homebrew/completions/zsh/_brew
 BREW_LINK_TARGET_ABS=/usr/local/share/Homebrew/completions/zsh/_brew
 
+PYTHON3_CMD=python3
+PYTHON3_PKG="
+	lark
+	panel
+	param
+	Flask
+	numpy
+	secret
+	python-dotenv
+	openai
+	aiohttp
+	requests
+	langchain
+"
 SKYPE_CMD=skypeforlinux
 SKYPE_PKG="skypeforlinux-64.deb"
 SKYPE_URL=https://go.skype.com/$SKYPE_PKG
@@ -1180,6 +1194,7 @@ I3WM_PKG="i3 i3status i3lock $I3BLOCKS dmenu:suckless-tools dunst xbacklight xdo
 [ -z "$P4MERGE_PKG"       ] && P4MERGE_CMD=""
 [ -z "$PHP_PKG"           ] && PHP_CMD=""
 [ -z "$RUBY_PKG"          ] && RUBY_CMD="" && RUBY_GEMS="" && RUBY_SASS_COMMANDS=""
+[ -z "$PYTHON3_PKG"       ] && PYTHON3_CMD=""
 [ -z "$USE_POSTGRES"      ] && POSTGRES_PKG="" && POSTGRES_NODE_PKG="" && POSTGRES_NPM_PKG=""
 [ -z "$USE_REDIS"         ] && REDIS_PKG="" && REDIS_CMDS=""
 [ -z "$USE_MONGO"         ] && MONGO_PKG="" && MONGO_CMDS="" && MONGO_CMD="" && ROBO3T_ARCHIVE=""
@@ -1570,6 +1585,7 @@ echo CONFIG COMMANDS_CUSTOM=$COMMANDS_CUSTOM
 echo CONFIG PACKAGES=$PACKAGES
 echo CONFIG NODE_PKG_LIST=$NODE_PKG_LIST
 echo CONFIG PERL_MODULES=$PERL_MODULES
+echo CONFIG PYTHON3_PKG=$PYTHON3_PKG
 echo CONFIG RUBY_GEMS=$RUBY_GEMS
 echo CONFIG INSTALL_FILE_PACKAGES=$INSTALL_FILE_PACKAGES
 echo CONFIG NPM_GLOBAL_PKG_LIST
@@ -2561,6 +2577,14 @@ BAIL_OUT screensaver
 install_perl_modules "$PERL_MODULES"
 
 BAIL_OUT perl
+
+# pip3 list
+# WARNING: You are using pip version 21.2.4; however, version 24.0 is available.
+# You should consider upgrading via the '/Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip' command.
+# TODO python3 -m pip install --upgrade pip
+[ ! -z "$PYTHON3_PKG" ] && install_python3_pips "$PYTHON3_PKG"
+
+BAIL_OUT python
 
 [ ! -z "$RUBY_PKG" ] && install_ruby_gems "$RUBY_GEMS"
 
@@ -3604,11 +3628,20 @@ OK "updated bin/cfg$COMP/pkg-list.txt"
 if [ ! -z $MACOS ]; then
 	ls-mac-apps.sh | sort > bin/cfg$COMP/mac-apps.txt
 	OK "updated bin/cfg$COMP/mac-apps.txt"
+	if [ ! -z `which brew` ]; then
+		brew list -1 > bin/cfg$COMP/brew-pkg-list.txt 2>&1 || true
+		OK "updated bin/cfg$COMP/brew-pkg-list.txt"
+	fi
 fi
 
 if [ ! -z `which npm` ]; then
 	npm -g --no-color list > bin/cfg$COMP/npm-pkg-list.txt 2>&1 || true
 	OK "updated bin/cfg$COMP/npm-pkg-list.txt"
+fi
+
+if [ ! -z `which pip3` ]; then
+	pip3 list > bin/cfg$COMP/pip3-pkg-list.txt 2>&1 || true
+	OK "updated bin/cfg$COMP/pip3-pkg-list.txt"
 fi
 
 if [ ! -z $ATOM_APM ]; then

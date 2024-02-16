@@ -6,17 +6,17 @@ Code Helper.app /Applications/Visual Studio Code.app/Contents/Frameworks/
 Company Portal.app /Applications/
 Cortex XDR.app /Applications/
 DiffMerge.app /Applications/
-EdgeSpotlightIndexer.app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
-EdgeUpdater.app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
+EdgeSpotlightIndexer.app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
+EdgeUpdater.app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
 Firefox.app /Applications/
-Google Chrome Helper (Alerts).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/
-Google Chrome Helper (GPU).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/
-Google Chrome Helper (Plugin).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/
-Google Chrome Helper (Renderer).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/
-Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/
+Google Chrome Helper (Alerts).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/
+Google Chrome Helper (GPU).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/
+Google Chrome Helper (Plugin).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/
+Google Chrome Helper (Renderer).app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/
+Google Chrome Helper.app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/
 Google Chrome.app /Applications/
-GoogleSoftwareUpdateAgent.app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/GoogleUpdater.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Resources/
-GoogleUpdater.app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.85/Helpers/
+GoogleSoftwareUpdateAgent.app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/GoogleUpdater.app/Contents/Helpers/GoogleSoftwareUpdate.bundle/Contents/Resources/
+GoogleUpdater.app /Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Framework.framework/Versions/121.0.6167.160/Helpers/
 Jamf Connect.app /Applications/
 LaunchAtLoginHelper.app /Applications/Jamf Connect.app/Contents/Library/LoginItems/
 Launcher Disabler.app /Applications/OneDrive.app/Contents/Library/LoginItems/
@@ -25,11 +25,11 @@ Meld.app /Applications/
 Microsoft Defender Helper.app /Applications/Microsoft Defender.app/Contents/MacOS/
 Microsoft Defender.app /Applications/
 Microsoft Defender.app /Applications/Microsoft Defender.app/Contents/MacOS/
-Microsoft Edge Helper (Alerts).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
-Microsoft Edge Helper (GPU).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
-Microsoft Edge Helper (Plugin).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
-Microsoft Edge Helper (Renderer).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
-Microsoft Edge Helper.app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/120.0.2210.144/Helpers/
+Microsoft Edge Helper (Alerts).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
+Microsoft Edge Helper (GPU).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
+Microsoft Edge Helper (Plugin).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
+Microsoft Edge Helper (Renderer).app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
+Microsoft Edge Helper.app /Applications/Microsoft Edge.app/Contents/Frameworks/Microsoft Edge Framework.framework/Versions/121.0.2277.112/Helpers/
 Microsoft Edge.app /Applications/
 Microsoft Error Reporting.app /Applications/Microsoft Excel.app/Contents/SharedSupport/
 Microsoft Error Reporting.app /Applications/Microsoft OneNote.app/Contents/SharedSupport/

@@ -1980,6 +1980,61 @@ function install_ruby_gems {
 }
 
 #============================================================================
+# python3 related setup
+
+# Check that a python3 pip package is available
+function python3_pip_exists {
+	local pip message
+	pip="$1"
+	message="$2"
+	if pip3 list | grep -E "^$pip\s+[0-9]" > /dev/null; then
+		OK "python3 pip $pip is installed"
+	else
+		NOT_OK "python3 pip $pip is not installed [$message]"
+		return 1
+	fi
+	return 0
+}
+
+# Check that a bunch of python3 pips are available
+function python3_pips_exist {
+	local pips error pip
+	pips="$1"
+	error=""
+	for pip in $pips
+	do
+		python3_pip_exists "$pip" "pip3 install $pip" || error="$error"
+	done
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for python3_pips_exist$error"
+		error=1
+	else
+		error=0
+	fi
+	return $error
+}
+
+# Install as many python3 pips as possible
+function install_python3_pips {
+	local pips error pip
+	pips="$1"
+	error=""
+
+	for pip in $pips
+	do
+		python3_pip_exists $pip > /dev/null || (echo want to install python3 pip $pip ; pip3 install "$pip")
+		python3_pip_exists $pip || error="$error $pip"
+	done
+	if [ ! -z "$error" ]; then
+		NOT_OK "errors for install_python3_pip$error"
+		error=1
+	else
+		error=0
+	fi
+	return $error
+}
+
+#============================================================================
 # check configuration within files
 
 # Check that a config file has exact text.
