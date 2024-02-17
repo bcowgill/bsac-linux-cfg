@@ -49,6 +49,34 @@
 ⋜	U+22DC	[MathSymbol,Comparison]	EQUAL TO OR LESS-THAN
 ⋝	U+22DD	[MathSymbol,Comparison]	EQUAL TO OR GREATER-THAN
 
+=== Characters handled by math-rep.pl and featured in the unit tests
+¼	U+BC	[OtherNumber,Fraction]	VULGAR FRACTION ONE QUARTER
+½	U+BD	[OtherNumber,Fraction]	VULGAR FRACTION ONE HALF
+¾	U+BE	[OtherNumber,Fraction]	VULGAR FRACTION THREE QUARTERS
+⅐	U+2150	[OtherNumber,Fraction]	VULGAR FRACTION ONE SEVENTH
+⅑	U+2151	[OtherNumber,Fraction]	VULGAR FRACTION ONE NINTH
+⅒	U+2152	[OtherNumber,Fraction]	VULGAR FRACTION ONE TENTH
+⅓	U+2153	[OtherNumber,Fraction]	VULGAR FRACTION ONE THIRD
+⅔	U+2154	[OtherNumber,Fraction]	VULGAR FRACTION TWO THIRDS
+⅕	U+2155	[OtherNumber,Fraction]	VULGAR FRACTION ONE FIFTH
+⅖	U+2156	[OtherNumber,Fraction]	VULGAR FRACTION TWO FIFTHS
+⅗	U+2157	[OtherNumber,Fraction]	VULGAR FRACTION THREE FIFTHS
+⅘	U+2158	[OtherNumber,Fraction]	VULGAR FRACTION FOUR FIFTHS
+⅙	U+2159	[OtherNumber,Fraction]	VULGAR FRACTION ONE SIXTH
+⅚	U+215A	[OtherNumber,Fraction]	VULGAR FRACTION FIVE SIXTHS
+⅛	U+215B	[OtherNumber,Fraction]	VULGAR FRACTION ONE EIGHTH
+⅜	U+215C	[OtherNumber,Fraction]	VULGAR FRACTION THREE EIGHTHS
+⅝	U+215D	[OtherNumber,Fraction]	VULGAR FRACTION FIVE EIGHTHS
+⅞	U+215E	[OtherNumber,Fraction]	VULGAR FRACTION SEVEN EIGHTHS
+⅟	U+215F	[OtherNumber,Fraction]	FRACTION NUMERATOR ONE
+↉	U+2189	[OtherNumber,Fraction]	VULGAR FRACTION ZERO THIRDS
+
+±	U+B1	[MathSymbol,Arithmetic]	PLUS-MINUS SIGN
+≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
+≃	U+2243	[MathSymbol,Comparison]	ASYMPTOTICALLY EQUAL TO
+≤	U+2264	[MathSymbol,Comparison]	LESS-THAN OR EQUAL TO
+≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
+
 === Characters handled by math-rep.pl
 ⋅	U+22C5	[MathSymbol,Vectors,Superscript]	DOT OPERATOR (SUPERSCRIPT DECIMAL POINT)
 ˙	U+2D9	[ModifierSymbol,Superscript]	DOT ABOVE (SUPERSCRIPT MULTIPLICATION)
@@ -393,7 +421,6 @@
 |	U+7C	[MathSymbol]	VERTICAL LINE
 ~	U+7E	[MathSymbol]	TILDE
 ¬	U+AC	[MathSymbol,Logic]	NOT SIGN
-±	U+B1	[MathSymbol,Arithmetic]	PLUS-MINUS SIGN
 ×	U+D7	[MathSymbol,Arithmetic]	MULTIPLICATION SIGN
 ÷	U+F7	[MathSymbol,Arithmetic]	DIVISION SIGN
 ϶	U+3F6	[MathSymbol]	GREEK REVERSED LUNATE EPSILON SYMBOL

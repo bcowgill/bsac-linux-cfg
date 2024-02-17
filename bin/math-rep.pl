@@ -84,6 +84,8 @@ my $notLetter = '(?:\A|[^a-zA-Z]|\z)';
 my $subScriptChars   = '.+-*=()<>';
 my $superScriptChars = '0123456789.+-*=()<>abcdefgghiIjklmnNoprstuUvwxyz';
 
+my %TypeNames = ();
+
 my %SubScriptMap = qw(
 	0	2080
 	1	2081
@@ -397,9 +399,44 @@ sub replacer
 		push(@$raReplace,
 			  { search => $literal, type => $type, code => $code }
 		);
+      # test the replacement code and populate the TypeNames lookup
+		replace("", $literal, $type, $code);
 	}
 }
 
+# search and replace a specific type of replacement on a line.
+sub search
+{
+	my ($line, $search, $type, $code) = @ARG;
+	debug("search: $search rep: $type U+$code [$TypeNames{$type}]") if $TypeNames{$type};
+	if ($type eq 'sy')
+	{
+		$line = sy($line, $search, $code);
+	}
+	elsif ($type eq 'syw')
+	{
+		$line = syw($line, $search, $code);
+	}
+	elsif ($type eq 'ww')
+	{
+		$line = ww($line, $search, $code);
+	}
+	elsif ($type eq 'nn')
+	{
+		$line = nn($line, $search, $code);
+	}
+	elsif ($type eq 'nd')
+	{
+		$line = nd($line, $search, $code);
+	}
+	else
+	{
+		die qq{Unknown replacement type '$type' for search '$search'}
+	}
+	return $line;
+} # search()
+
+# perform all replacement types on a line.
 sub replace
 {
 	my ($line) = @ARG;
@@ -412,36 +449,12 @@ sub replace
 			my $type = $rhSearch->{type};
 			my $code = $rhSearch->{code};
 
-			debug("search: $search rep: $type U+$code");
-			if ($type eq 'sy')
-			{
-				$line = sy($line, $search, $code);
-			}
-			elsif ($type eq 'syw')
-			{
-				$line = syw($line, $search, $code);
-			}
-			elsif ($type eq 'ww')
-			{
-				$line = ww($line, $search, $code);
-			}
-			elsif ($type eq 'nn')
-			{
-				$line = nn($line, $search, $code);
-			}
-			elsif ($type eq 'nd')
-			{
-				$line = nd($line, $search, $code);
-			}
-			else
-			{
-				die qq{Unknown replacement type '$type' for search '$search'}
-			}
+			$line = search($line, $search, $type, $code);
 		}
 	}
 	debug("line out: $line");
 	return $line;
-}
+} # replace()
 
 sub checkLength
 {
@@ -533,8 +546,10 @@ sub sb
 sub sy
 {
 	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'sy'} = "literal string of symbols replaced with a single symbol character";
 	$literal = quotemeta(checkLength($literal));
-	$line =~ s{$literal}{U($code)}xmsge;
+	debug("sy($literal => U+$code): line: $line");
+	$line =~ s{$literal}{yes(U($code))}xmsge;
 	return $line;
 }
 
@@ -570,6 +585,7 @@ sub replaceFraction
 sub nn
 {
 	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'nn'} = "literal fractions replaced with specific fraction characters";
 	$literal = checkLength($literal);
 	debug("nn($literal => U+$code): line: $line");
 	$line =~ s{$isFraction}{replaceFraction($1, $literal, $code)}xmsge;
@@ -580,6 +596,7 @@ sub nn
 sub nd
 {
 	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'nn'} = "literal reciprocal fraction replaced with reciprocal character";
 	$literal = checkLength($literal);
 	debug("nd($literal => U+$code): line: $line");
 	$line =~ s{$isReciprocal}{replaceFraction($1, $literal, $code)}xmsge;

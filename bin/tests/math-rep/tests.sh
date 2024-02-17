@@ -14,7 +14,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 6
+PLAN 7
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -92,7 +92,21 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	MARKUP=0 $PROGRAM $ARGS < $SINGLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS < $SINGLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful use of showing U+ code instead of utf8
+TEST=show-codes
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	SHOW_CODE=1 $PROGRAM $ARGS < $SINGLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
