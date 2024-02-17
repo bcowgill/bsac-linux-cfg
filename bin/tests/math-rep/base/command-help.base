@@ -1,0 +1,21 @@
+math-rep.pl [--help|--man|-?] [--markup] [--literal] [--codes]
+
+TODO Display a description of the program.
+MARKUP=1
+LITERAL=1
+SHOW_CODE=0
+
+--markup TODO...
+--literal TODO...
+--codes TODO ...
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+More detail ... TODO
+
+See also ... TODO
+
+Example:
+
+echo filename | math-rep.pl

@@ -30,10 +30,12 @@ use FindBin;
 
 use Data::Dumper;
 
-# change all to 1...
-my $MARKUP = 0;
-my $LITERAL = 0;
-my $SHOW_CODE = 0;
+
+my $DEBUG = $ENV{DEBUG} || 0;
+
+my $MARKUP = length($ENV{MARKUP}) ? $ENV{MARKUP} : 1; # replace markup codes with characters
+my $LITERAL = length($ENV{LITERAL}) ? $ENV{MARKUP} : 1; # replace literal values like 1/4 with their unicode character
+my $SHOW_CODE = $ENV{SHOW_CODE} || 0; # show unicode code point value instead of the character
 
 sub usage
 {
@@ -43,6 +45,9 @@ sub usage
 $cmd [--help|--man|-?] [--markup] [--literal] [--codes]
 
 TODO Display a description of the program.
+MARKUP=$MARKUP
+LITERAL=$LITERAL
+SHOW_CODE=$SHOW_CODE
 
 --markup TODO...
 --literal TODO...
@@ -67,6 +72,10 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage()
 }
+
+my $rePos = qr{[0-9]+([0-9,]*\.?[0-9,]+)?}xms; # positive 0 0.1 1,000.000,000,000
+my $isFraction = qr{($rePos/$rePos)};
+my $isReciprocal = qr{($rePos/)};
 
 my $notNumber = '(?:\A|[^0-9]|\z)';
 my $notLetter = '(?:\A|[^a-zA-Z]|\z)';
@@ -371,26 +380,30 @@ sub byLength
 sub replacer
 {
 	my ($type, $literal, $code, $enabled) = @ARG;
+	#debug("replacer($type, $literal, U+$code, @{[$enabled ? 'on':'off']})");
 	if ($enabled)
 	{
+		my $raReplace = [];
 		if ($Replacements{$literal})
 		{
-			my $raReplace = $Replacements{$literal};
-			warn "WARN: replacer $raReplace->[0]{type}('$literal', '$raReplace->[0]{code}') already added, adding '$type'('$literal', '$code') after it.";
-			push(@$raReplace,
-				{ search => $literal, type => $type, code => $code }
-			);
+			$raReplace = $Replacements{$literal};
+			warn "WARN: replacer '$raReplace->[0]{type}'('$literal', 'U+$raReplace->[0]{code}') already added, adding '$type'('$literal', 'U+$code') after it.";
 		}
 		else
 		{
 			push(@Replacements, $literal);
+			$Replacements{$literal} = $raReplace;
 		}
+		push(@$raReplace,
+			  { search => $literal, type => $type, code => $code }
+		);
 	}
 }
 
 sub replace
 {
 	my ($line) = @ARG;
+	debug("line  in: $line");
 	foreach my $search (@Replacements)
 	{
 		my $raReplace = $Replacements{$search};
@@ -399,6 +412,7 @@ sub replace
 			my $type = $rhSearch->{type};
 			my $code = $rhSearch->{code};
 
+			debug("search: $search rep: $type U+$code");
 			if ($type eq 'sy')
 			{
 				$line = sy($line, $search, $code);
@@ -425,6 +439,7 @@ sub replace
 			}
 		}
 	}
+	debug("line out: $line");
 	return $line;
 }
 
@@ -541,12 +556,23 @@ sub syw
 	return $line;
 }
 
+# replace a fraction if it matches the literal value. ie. 1/3
+sub replaceFraction
+{
+	my ($fraction, $literal, $code) = @ARG;
+	debug("replaceFraction?($fraction eq $literal => U+$code)");
+	return ($fraction eq $literal) ? yes(U($code)) : $fraction;
+
+}
+
 # replace a literal surrounded by non-numbers ie. 1/3
+# First match a literal fraction before making the substitution...
 sub nn
 {
 	my ($line, $literal, $code) = @ARG;
-	$literal = quotemeta(checkLength($literal));
-	$line =~ s{($notNumber)$literal($notNumber)}{$1 . U($code) . $2}xmsge;
+	$literal = checkLength($literal);
+	debug("nn($literal => U+$code): line: $line");
+	$line =~ s{$isFraction}{replaceFraction($1, $literal, $code)}xmsge;
 	return $line;
 }
 
@@ -554,8 +580,9 @@ sub nn
 sub nd
 {
 	my ($line, $literal, $code) = @ARG;
-	$literal = quotemeta(checkLength($literal));
-	$line =~ s{($notNumber)$literal(\d+)}{$1 . U($code) . $2}xmsge;
+	$literal = checkLength($literal);
+	debug("nd($literal => U+$code): line: $line");
+	$line =~ s{$isReciprocal}{replaceFraction($1, $literal, $code)}xmsge;
 	return $line;
 }
 
@@ -908,10 +935,10 @@ sub makeParser
 	replacer('nn', '5/8', '215D', $LITERAL);
 	replacer('nn', '7/8', '215E', $LITERAL);
 	replacer('nn', '0/3', '2189', $LITERAL);
-	replacer('nn', '1/',  '215F', $LITERAL); # TODO needs a thin unicode space
 	replacer('nd', '1/', '215F', $LITERAL); # TODO needs a thin unicode space
 
 	# Operators and Equalities:
+# MUSTDO HEREIAM fix code and add tests for these literals next...
 	replacer('sy', '+-', 'B1',   $LITERAL);
 	replacer('sy', '==', '2261', $LITERAL);
 	replacer('sy', '~=', '2245', $LITERAL);
@@ -919,12 +946,37 @@ sub makeParser
 	replacer('sy', '>=', '2265', $LITERAL);
 
 	@Replacements = sort byLength @Replacements;
-	#print STDERR Dumper(\@Replacements);
-	#print STDERR Dumper(\%Replacements);
-	#foreach my $literal (@Replacements)
-	#{
-	#	print qq{$literal => $Replacements{$literal}{type} $Replacements{$literal}{code}\n};
-	#}
+	#debug("Replacements List: ", join(" ", @Replacements));
+	#debug("Replacements Map: ", Dumper(\%Replacements));
+   my $faults = 0;
+	foreach my $literal (@Replacements)
+	{
+		my $prefix = "";
+		my $raReplace = $Replacements{$literal};
+		$faults++ unless $raReplace;
+		foreach my $rhReplace (@$raReplace)
+		{
+			$faults++ unless $rhReplace->{type} && $rhReplace->{code};
+			my $type = $rhReplace->{type} || "n/a";
+			my $code = $rhReplace->{code} || "n/a";
+			#debug(qq{$prefix$literal => $type U+$code});
+			$prefix = "   ";
+		}
+	}
+	#debug("${faults} Faults in replacements");
+} # makeParser()
+
+sub yes {
+	debug("  ^^ YES ^^ [  @{[@ARG]}  ]");
+	return wantarray ? @ARG : $ARG[0];
+}
+
+sub debug {
+	my @stuff = @ARG;
+	if ($DEBUG)
+	{
+		print STDERR (@stuff, "\n");
+	}
 }
 
 makeParser();

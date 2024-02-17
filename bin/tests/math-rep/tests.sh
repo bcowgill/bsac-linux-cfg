@@ -7,12 +7,14 @@ set -e
 PROGRAM=../../math-rep.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/math-rep.sample.txt
+SINGLE=in/single.txt
+LITERALS=in/math-rep.literals.txt
 DEBUG=
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 42
+PLAN 6
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -83,18 +85,46 @@ fi
 #	echo SKIP $TEST "$SKIP"
 #fi
 
-echo TEST $CMD successful operation
-TEST=success
+echo TEST $CMD successful single replacement to debug
+TEST=single
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	MARKUP=0 $PROGRAM $ARGS < $SINGLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
+
+echo TEST $CMD successful literal replacements
+TEST=literal
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	MARKUP=0 $PROGRAM $ARGS < $LITERALS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+#echo TEST $CMD successful operation
+#TEST=success
+#if [ 0 == "$SKIP" ]; then
+#	ERR=0
+#	OUT=out/$TEST.out
+#	BASE=base/$TEST.base
+#	ARGS="$DEBUG"
+#	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+#	filter "$OUT"
+#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+#else
+#	echo SKIP $TEST "$SKIP"
+#fi
 
 cleanUpAfterTests
