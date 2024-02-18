@@ -4,74 +4,75 @@ TODO superscript expresssions long strings of superscript chars
 Y^[(0.123456789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
 
 TODO subscript expresssions long strings of subscript chars
-X_[(0.123456789*a e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = <- < > ...)]
+TRANS: (0.123456789*a e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = <- < > ...)
+X + - = <- < > ...)ᵪ ᵩ ᵨ ᵧ ᵦ ₔ ₓ ᵥ ᵤ ₜ ₛ ᵣ ₚ ₒ ₙ ₘ ₗ ₖ ⱼ ᵢ ₕ ₑ ₐ⸱₉₈₇₆₅₄₃₂₁․₀₍
 
 LITERAL replacements:
 ---------------------
 
 Fractions:
-0.0001  = 1/1000
-0.001   = 1/100
-0       = 0/3
-0.1     = 1/10
-0.11111 ~ 1/9
-0.125   = 1/8
-0.14286 ~ 1/7
-0.16667 ~ 1/6
-0.2     = 1/5
-0.25    = 1/4
-0.33333 ~ 1/3
-0.375   = 3/8
-0.4     = 2/5
-0.5     = 1/2
-0.6     = 3/5
-0.625   = 5/8
-0.66666 ~ 2/3
-0.75    = 3/4
-0.8     = 4/5
-0.83333 = 5/6
-0.875   = 7/8
-        = 1/x
-        = 1/ x
+0.0001  = ⅟1000
+0.001   = ⅟100
+0       = ↉
+0.1     = ⅒
+0.11111 ~ ⅑
+0.125   = ⅛
+0.14286 ~ ⅐
+0.16667 ~ ⅙
+0.2     = ⅕
+0.25    = ¼
+0.33333 ~ ⅓
+0.375   = ⅜
+0.4     = ⅖
+0.5     = ½
+0.6     = ⅗
+0.625   = ⅝
+0.66666 ~ ⅔
+0.75    = ¾
+0.8     = ⅘
+0.83333 = ⅚
+0.875   = ⅞
+        = ⅟x
+        = ⅟ x
 
 Equalities:
-x <= y == z
-x >= y ~= z
-y = mx +- b
+x ≤ y ≡ z
+x ≥ y ≅ z
+y = mx ± b
 
 MARKUP replacements:
 --------------------
 
 Superscripts:
-Y^0^.^1^2^3^4^5^6^7^8^9^*^a^b^c^d^e^f^g^G^h^i^I^j^k^l^m^n^N^o^p^r^s^t^u^U^v^w^x^y^z^schwa^alpha^beta^gamma^GAMMA^delta^theta^iota^upsilon^phi^PHI^chi^+^-^=^(^)^<^>
+Y⁰⋅¹²³⁴⁵⁶⁷⁸⁹˙ᵃᵇᶜᵈᵉᶠᵍᶢʰⁱᶦʲᵏˡᵐⁿᶰᵒᵖʳˢᵗᵘᶸᵛʷˣʸᶻᵊᵅᵝᵞˠᵟᶿᶥᶷᵠᶲᵡ⁺⁻⁼⁽⁾˂˃
 
 Subscripts:
-X_0_._1_2_3_4_5_6_7_8_9_*_a_e_h_i_j_k_l_m_n_o_p_r_s_t_u_v_x_schwa_beta_gamma_rho_phi_chi_+_-_=_(_)_<-_<_>_...
+X₀․₁₂₃₄₅₆₇₈₉⸱ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓₔᵦᵧᵨᵩᵪ₊₋₌₍₎˿˱˲…
 
 Greek All Markup (shows missing unicode characters):
 name		lower/upper/smallcap	italic	bold	bold/italic	double-struck
-alpha		@alpha @ALPHA @ALPHASC		@/alpha @/ALPHA	@*alpha @*ALPHA	@*/alpha @*/ALPHA	@!alpha @!ALPHA
-beta		@beta @BETA @BETASC		@/beta @/BETA	@*beta @*BETA	@*/beta @*/BETA	@!beta @!BETA
-gamma		@gamma @GAMMA @GAMMASC		@/gamma @/GAMMA	@*gamma @*GAMMA	@*/gamma @*/GAMMA	@!gamma @!GAMMA
-delta		@delta @DELTA @DELTASC		@/delta @/DELTA	@*delta @*DELTA	@*/delta @*/DELTA	@!delta @!DELTA
-epsilon		@epsilon @EPSILON @EPSILONSC		@/epsilon @/EPSILON	@*epsilon @*EPSILON	@*/epsilon @*/EPSILON	@!epsilon @!EPSILON
-zeta		@zeta @ZETA @ZETASC		@/zeta @/ZETA	@*zeta @*ZETA	@*/zeta @*/ZETA	@!zeta @!ZETA
-eta		@eta @ETA @ETASC		@/eta @/ETA	@*eta @*ETA	@*/eta @*/ETA	@!eta @!ETA
-theta		@theta @THETA @THETASC		@/theta @/THETA	@*theta @*THETA	@*/theta @*/THETA	@!theta @!THETA
-iota		@iota @IOTA @IOTASC		@/iota @/IOTA	@*iota @*IOTA	@*/iota @*/IOTA	@!iota @!IOTA
-kappa		@kappa @KAPPA @KAPPASC		@/kappa @/KAPPA	@*kappa @*KAPPA	@*/kappa @*/KAPPA	@!kappa @!KAPPA
-lamda		@lamda @LAMDA @LAMDASC		@/lamda @/LAMDA	@*lamda @*LAMDA	@*/lamda @*/LAMDA	@!lamda @!LAMDA
-mu		@mu @MU @MUSC		@/mu @/MU	@*mu @*MU	@*/mu @*/MU	@!mu @!MU
-nu		@nu @NU @NUSC		@/nu @/NU	@*nu @*NU	@*/nu @*/NU	@!nu @!NU
-xi		@xi @XI @XISC		@/xi @/XI	@*xi @*XI	@*/xi @*/XI	@!xi @!XI
-omicron		@omicron @OMICRON @OMICRONSC		@/omicron @/OMICRON	@*omicron @*OMICRON	@*/omicron @*/OMICRON	@!omicron @!OMICRON
-pi		@pi @PI @PISC		@/pi @/PI	@*pi @*PI	@*/pi @*/PI	@!pi @!PI
-rho		@rho @RHO @RHOSC		@/rho @/RHO	@*rho @*RHO	@*/rho @*/RHO	@!rho @!RHO
-sigma		@sigma @SIGMA @SIGMASC		@/sigma @/SIGMA	@*sigma @*SIGMA	@*/sigma @*/SIGMA	@!sigma @!SIGMA
-finalsigma		@finalsigma		@/finalsigma	@*finalsigma	@*/finalsigma	@!finalsigma
-tau		@tau @TAU @TAUSC		@/tau @/TAU	@*tau @*TAU	@*/tau @*/TAU	@!tau @!TAU
-upsilon		@upsilon @UPSILON @UPSILONSC		@/upsilon @/UPSILON	@*upsilon @*UPSILON	@*/upsilon @*/UPSILON	@!upsilon @!UPSILON
-phi		@phi @PHI @PHISC		@/phi @/PHI	@*phi @*PHI	@*/phi @*/PHI	@!phi @!PHI
-chi		@chi @CHI @CHISC		@/chi @/CHI	@*chi @*CHI	@*/chi @*/CHI	@!chi @!CHI
-psi		@psi @PSI @PSISC		@/psi @/PSI	@*psi @*PSI	@*/psi @*/PSI	@!psi @!PSI
-omega		@omega @OMEGA @OMEGASC		@/omega @/OMEGA	@*omega @*OMEGA	@*/omega @*/OMEGA	@!omega @!OMEGA
+alpha		α Α @ALPHASC		𝛼 𝛢	𝝰 𝝖	𝞪 𝞐	@!alpha @!ALPHA
+beta		β Β @BETASC		𝛽 𝛣	𝝱 𝝗	𝞫 𝞑	@!beta @!BETA
+gamma		γ Γ ᴦ		𝛾 𝛤	𝝲 𝝘	𝞬 𝞒	ℽ ℾ
+delta		δ Δ @DELTASC		𝛿 𝛥	𝝳 𝝙	𝞭 𝞓	@!delta @!DELTA
+epsilon		ε Ε @EPSILONSC		𝜀 𝛦	𝝴 𝝚	𝞮 𝞔	@!epsilon @!EPSILON
+zeta		ζ Ζ @ZETASC		𝜁 𝛧	𝝵 𝝛	𝞯 𝞕	@!zeta @!ZETA
+eta		η Η @ETASC		𝜂 𝛨	𝝶 𝝜	𝞰 𝞖	@!eta @!ETA
+theta		θ Θ @THETASC		𝜃 𝛩	𝝷 𝝝	𝞱 𝞗	@!theta @!THETA
+iota		ι Ι @IOTASC		𝜄 𝛪	𝝸 𝝞	𝞲 𝞘	@!iota @!IOTA
+kappa		κ Κ @KAPPASC		𝜅 𝛫	𝝹 𝝟	𝞳 𝞙	@!kappa @!KAPPA
+lamda		λ Λ ᴧ		𝜆 𝛬	𝝺 𝝠	𝞴 𝞚	@!lamda @!LAMDA
+mu		μ Μ @MUSC		𝜇 𝛭	𝝻 𝝡	𝞵 𝞛	@!mu @!MU
+nu		ν Ν @NUSC		𝜈 𝛮	𝝼 𝝢	𝞶 𝞜	@!nu @!NU
+xi		ξ Ξ @XISC		𝜉 𝛯	𝝽 𝝣	𝞷 𝞝	@!xi @!XI
+omicron		ο Ο @OMICRONSC		𝜊 𝛰	𝝾 𝝤	𝞸 𝞞	@!omicron @!OMICRON
+pi		π Π ᴨ		𝜋 𝛱	𝝿 𝝥	𝞹 𝞟	ℼ ℿ
+rho		ρ Ρ ᴩ		𝜌 𝛲	𝞀 𝝦	𝞺 𝞠	@!rho @!RHO
+sigma		σ Σ @SIGMASC		𝜎 𝛴	𝞂 𝝨	𝞼 𝞢	@!sigma ⅀
+finalsigma		ς		@/sigmafn	@*sigmafn	@*/sigmafn	@!sigmafn
+tau		τ Τ @TAUSC		𝜏 𝛵	𝞃 𝝩	𝞽 𝞣	@!tau @!TAU
+upsilon		υ Υ @UPSILONSC		𝜐 𝛶	𝞄 𝝪	𝞾 𝞤	@!upsilon @!UPSILON
+phi		φ Φ @PHISC		𝜑 𝛷	𝞅 𝝫	𝞿 𝞥	@!phi @!PHI
+chi		χ Χ @CHISC		𝜒 𝛸	𝞆 𝝬	𝟀 𝞦	@!chi @!CHI
+psi		ψ Ψ ᴪ		𝜓 𝛹	𝞇 𝝭	𝟁 𝞧	@!psi @!PSI
+omega		ω Ω @OMEGASC		𝜔 𝛺	𝞈 𝝮	𝟂 𝞨	@!omega @!OMEGA

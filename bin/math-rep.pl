@@ -20,6 +20,9 @@
 # other words correspond to greek letters and operators
 # echo PHI PSI del DELTA SIGMA gamma epsilon lamda mu pi rho dee epsilon phi int cross dot +- sum sqrt identical \<= \>= ^0 ^1 ^2 ^3 ^4 ^5 ^6 ^7 ^8 ^9 ^0 ^n _0 _1 _2 _3 _4 _5 _6 _7 _8 _9| math-rep.pl | utf8.pl
 
+#TODO --fractions flag which converts 0.1 to 1/10 fraction
+#TODO how to represent infinite repeating numbers 0.3... 0.{142857}...
+
 use strict;
 use warnings;
 use 5.012; # almost seamless utf
@@ -260,6 +263,7 @@ my %GreekNormal = qw(
 	pi          3C0
 	rho         3C1
 	sigma       3C3
+	sigmafn     3C2
 	finalsigma  3C2
 	tau         3C4
 	upsilon     3C5
@@ -313,6 +317,7 @@ my %GreekItal = qw(
 	pi          1D70B
 	rho         1D70C
 	sigma       1D70E
+	sigmafn     1D70D
 	finalsigma  1D70D
 	tau         1D70F
 	upsilon     1D710
@@ -366,6 +371,7 @@ my %GreekBold = qw(
 	pi          1D77F
 	rho         1D780
 	sigma       1D782
+	sigmafn     1D781
 	finalsigma  1D781
 	tau         1D783
 	upsilon     1D784
@@ -419,6 +425,7 @@ my %GreekBoldItal = qw(
 	pi          1D7B9
 	rho         1D7BA
 	sigma       1D7BC
+	sigmafn     1D7BB
 	finalsigma  1D7BB
 	tau         1D7BD
 	upsilon     1D7BE
@@ -602,7 +609,7 @@ sub translate
 	#{
 	#}
 	my @Tokens = reverse(split(/\b|(?=\d)/, $match));
-	print STDERR Dumper(\@Tokens);
+	debug("Tokens:", Dumper(\@Tokens));
 	#die "STOPPING";
 	$match = join('', map { lookup($ARG, $rhSymbolMap, $context) } @Tokens);
 
@@ -639,7 +646,7 @@ sub sb
 sub sys
 {
 	my ($line, $literal, $code) = @ARG;
-	$TypeNames{'sys'} = "literal string of symbols surrounded by whitespace replaced with a single symbol character with or without the space (CUDDLE option)";
+	$TypeNames{'sys'} = "literal string of symbols (like >=) surrounded by whitespace replaced with a single symbol character with or without the space (CUDDLE option)";
 	$literal = quotemeta(checkLength($literal));
 	debug("sys(\\s$literal\\s => U+$code): line: $line");
 # TODO CUDDLE OPTION
@@ -651,7 +658,7 @@ sub sys
 sub sy
 {
 	my ($line, $literal, $code) = @ARG;
-	$TypeNames{'sy'} = "literal string of symbols replaced with a single symbol character";
+	$TypeNames{'sy'} = "literal string of symbols (like ^2 _n) replaced with a single symbol character";
 	$literal = quotemeta(checkLength($literal));
 	debug("sy($literal => U+$code): line: $line");
 	$line =~ s{$literal}{yes(U($code))}xmsge;
@@ -662,8 +669,10 @@ sub sy
 sub ww
 {
 	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'ww'} = "literal \@named character replaced with a single corresponding character";
 	$literal = quotemeta(checkLength($literal));
-	$line =~ s{($notLetter)$literal($notLetter)}{$1 . U($code) . $2}xmsge;
+	debug("sy($literal => U+$code): line: $line");
+	$line =~ s{($notLetter)$literal($notLetter)}{$1 . yes(U($code)) . $2}xmsge;
 	return $line;
 }
 
@@ -671,7 +680,7 @@ sub ww
 sub syw
 {
 	my ($line, $literal, $code) = @ARG;
-	$TypeNames{'syw'} = "literal string of word characters replaced with a single symbol character";
+	$TypeNames{'syw'} = "literal string of word characters (like _theta) replaced with a single symbol character";
 	$literal = quotemeta(checkLength($literal));
 	debug("syw($literal => U+$code): line: $line");
 	$line =~ s{$literal($notLetter)}{yes(U($code)) . $1}xmsge;
@@ -692,7 +701,7 @@ sub replaceFraction
 sub nn
 {
 	my ($line, $literal, $code) = @ARG;
-	$TypeNames{'nn'} = "literal fractions replaced with specific fraction characters";
+	$TypeNames{'nn'} = "literal fractions (like 1/9) replaced with specific fraction characters";
 	$literal = checkLength($literal);
 	debug("nn($literal => U+$code): line: $line");
 	$line =~ s{$isFraction}{replaceFraction($1, $literal, $code)}xmsge;
@@ -703,7 +712,7 @@ sub nn
 sub nd
 {
 	my ($line, $literal, $code) = @ARG;
-	$TypeNames{'nn'} = "literal reciprocal fraction replaced with reciprocal character";
+	$TypeNames{'nn'} = "literal reciprocal fraction (like 1/x)  replaced with reciprocal character";
 	$literal = checkLength($literal);
 	debug("nd($literal => U+$code): line: $line");
 	$line =~ s{$isReciprocal}{replaceFraction($1, $literal, $code)}xmsge;
@@ -713,69 +722,14 @@ sub nd
 # construct the parser replacements in order of reverse length
 sub makeParser
 {
-	replacer('ww', '@GAMMASC', $GreekSmCap{GAMMASC}, $MARKUP);
-	replacer('ww', '@LAMDASC', $GreekSmCap{LAMDASC}, $MARKUP);
-	replacer('ww', '@PISC', $GreekSmCap{PISC}, $MARKUP);
-	replacer('ww', '@RHOSC', $GreekSmCap{RHOSC}, $MARKUP);
-	replacer('ww', '@PSISC', $GreekSmCap{PSISC}, $MARKUP);
-
-
+	# Greek Double Struck incidentals
 	replacer('ww', '@!gamma', $GreekDblStk{gamma}, $MARKUP);
 	replacer('ww', '@!GAMMA', $GreekDblStk{GAMMA}, $MARKUP);
 	replacer('ww', '@!pi', $GreekDblStk{pi}, $MARKUP);
 	replacer('ww', '@!PI', $GreekDblStk{PI}, $MARKUP);
 	replacer('ww', '@!SIGMA', $GreekDblStk{SIGMA}, $MARKUP);
 
-	replacer('ww', '@alpha', $Greek{alpha}, $MARKUP);
-	replacer('ww', '@ALPHA', $Greek{ALPHA}, $MARKUP);
-	replacer('ww', '@beta', $Greek{beta}, $MARKUP);
-	replacer('ww', '@BETA', $Greek{BETA}, $MARKUP);
-	replacer('ww', '@gamma', $Greek{gamma}, $MARKUP);
-	replacer('ww', '@GAMMA', $Greek{GAMMA}, $MARKUP);
-	replacer('ww', '@delta', $Greek{delta}, $MARKUP);
-	replacer('ww', '@DELTA', $Greek{DELTA}, $MARKUP);
-	replacer('ww', '@epsilon', $Greek{epsilon}, $MARKUP);
-	replacer('ww', '@EPSILON', $Greek{EPSILON}, $MARKUP);
-	replacer('ww', '@zeta', $Greek{zeta}, $MARKUP);
-	replacer('ww', '@ZETA', $Greek{ZETA}, $MARKUP);
-	replacer('ww', '@eta', $Greek{eta}, $MARKUP);
-	replacer('ww', '@ETA', $Greek{ETA}, $MARKUP);
-	replacer('ww', '@theta', $Greek{theta}, $MARKUP);
-	replacer('ww', '@THETA', $Greek{THETA}, $MARKUP);
-	replacer('ww', '@iota', $Greek{iota}, $MARKUP);
-	replacer('ww', '@IOTA', $Greek{IOTA}, $MARKUP);
-	replacer('ww', '@kappa', $Greek{kappa}, $MARKUP);
-	replacer('ww', '@KAPPA', $Greek{KAPPA}, $MARKUP);
-	replacer('ww', '@lamda', $Greek{lamda}, $MARKUP);
-	replacer('ww', '@LAMDA', $Greek{LAMDA}, $MARKUP);
-	replacer('ww', '@mu', $Greek{mu}, $MARKUP);
-	replacer('ww', '@MU', $Greek{MU}, $MARKUP);
-	replacer('ww', '@nu', $Greek{nu}, $MARKUP);
-	replacer('ww', '@NU', $Greek{NU}, $MARKUP);
-	replacer('ww', '@xi', $Greek{xi}, $MARKUP);
-	replacer('ww', '@XI', $Greek{XI}, $MARKUP);
-	replacer('ww', '@omicron', $Greek{omicron}, $MARKUP);
-	replacer('ww', '@OMICRON', $Greek{OMICRON}, $MARKUP);
-	replacer('ww', '@pi', $Greek{pi}, $MARKUP);
-	replacer('ww', '@PI', $Greek{PI}, $MARKUP);
-	replacer('ww', '@rho', $Greek{rho}, $MARKUP);
-	replacer('ww', '@RHO', $Greek{RHO}, $MARKUP);
-	replacer('ww', '@sigma', $Greek{sigma}, $MARKUP);
-	replacer('ww', '@SIGMA', $Greek{SIGMA}, $MARKUP);
-	replacer('ww', '@finalsigma', $Greek{finalsigma}, $MARKUP);
-	replacer('ww', '@tau', $Greek{tau}, $MARKUP);
-	replacer('ww', '@TAU', $Greek{TAU}, $MARKUP);
-	replacer('ww', '@upsilon', $Greek{upsilon}, $MARKUP);
-	replacer('ww', '@UPSILON', $Greek{UPSILON}, $MARKUP);
-	replacer('ww', '@phi', $Greek{phi}, $MARKUP);
-	replacer('ww', '@PHI', $Greek{PHI}, $MARKUP);
-	replacer('ww', '@chi', $Greek{chi}, $MARKUP);
-	replacer('ww', '@CHI', $Greek{CHI}, $MARKUP);
-	replacer('ww', '@psi', $Greek{psi}, $MARKUP);
-	replacer('ww', '@PSI', $Greek{PSI}, $MARKUP);
-	replacer('ww', '@omega', $Greek{omega}, $MARKUP);
-	replacer('ww', '@OMEGA', $Greek{OMEGA}, $MARKUP);
-
+	# Greek Bold Small and Capital
 	replacer('ww', '@*alpha', $GreekBold{alpha}, $MARKUP);
 	replacer('ww', '@*ALPHA', $GreekBold{ALPHA}, $MARKUP);
 	replacer('ww', '@*beta', $GreekBold{beta}, $MARKUP);
@@ -826,6 +780,7 @@ sub makeParser
 	replacer('ww', '@*omega', $GreekBold{omega}, $MARKUP);
 	replacer('ww', '@*OMEGA', $GreekBold{OMEGA}, $MARKUP);
 
+	# Greek italic Small and Capital
 	replacer('ww', '@/alpha', $GreekItal{alpha}, $MARKUP);
 	replacer('ww', '@/ALPHA', $GreekItal{ALPHA}, $MARKUP);
 	replacer('ww', '@/beta', $GreekItal{beta}, $MARKUP);
@@ -876,6 +831,7 @@ sub makeParser
 	replacer('ww', '@/omega', $GreekItal{omega}, $MARKUP);
 	replacer('ww', '@/OMEGA', $GreekItal{OMEGA}, $MARKUP);
 
+	# Greek bold italic Small and Capital
 	replacer('ww', '@*/alpha', $GreekBoldItal{alpha}, $MARKUP);
 	replacer('ww', '@*/ALPHA', $GreekBoldItal{ALPHA}, $MARKUP);
 	replacer('ww', '@*/beta', $GreekBoldItal{beta}, $MARKUP);
@@ -926,7 +882,7 @@ sub makeParser
 	replacer('ww', '@*/omega', $GreekBoldItal{omega}, $MARKUP);
 	replacer('ww', '@*/OMEGA', $GreekBoldItal{OMEGA}, $MARKUP);
 
-# ^^^ ABOVE not yet unit tested
+# ^^^ TODO ABOVE not yet unit tested
 # MUSTDO HEREIAM fix code and add tests for these literals next...
 
 	# Fractions:
@@ -1070,6 +1026,65 @@ sub makeParser
 	replacer('sy', '^phi', '1D60', $MARKUP);
 	replacer('sy', '^PHI', '1DB2', $MARKUP);
 	replacer('sy', '^chi', '1D61', $MARKUP);
+
+	# Greek Small Caps incidentals
+	replacer('ww', '@GAMMASC', $GreekSmCap{GAMMASC}, $MARKUP);
+	replacer('ww', '@LAMDASC', $GreekSmCap{LAMDASC}, $MARKUP);
+	replacer('ww', '@PISC', $GreekSmCap{PISC}, $MARKUP);
+	replacer('ww', '@RHOSC', $GreekSmCap{RHOSC}, $MARKUP);
+	replacer('ww', '@PSISC', $GreekSmCap{PSISC}, $MARKUP);
+
+	# Greek Small and Capital
+	replacer('ww', '@alpha', $Greek{alpha}, $MARKUP);
+	replacer('ww', '@ALPHA', $Greek{ALPHA}, $MARKUP);
+	replacer('ww', '@beta', $Greek{beta}, $MARKUP);
+	replacer('ww', '@BETA', $Greek{BETA}, $MARKUP);
+	replacer('ww', '@gamma', $Greek{gamma}, $MARKUP);
+	replacer('ww', '@GAMMA', $Greek{GAMMA}, $MARKUP);
+	replacer('ww', '@delta', $Greek{delta}, $MARKUP);
+	replacer('ww', '@DELTA', $Greek{DELTA}, $MARKUP);
+	replacer('ww', '@epsilon', $Greek{epsilon}, $MARKUP);
+	replacer('ww', '@EPSILON', $Greek{EPSILON}, $MARKUP);
+	replacer('ww', '@zeta', $Greek{zeta}, $MARKUP);
+	replacer('ww', '@ZETA', $Greek{ZETA}, $MARKUP);
+	replacer('ww', '@eta', $Greek{eta}, $MARKUP);
+	replacer('ww', '@ETA', $Greek{ETA}, $MARKUP);
+	replacer('ww', '@theta', $Greek{theta}, $MARKUP);
+	replacer('ww', '@THETA', $Greek{THETA}, $MARKUP);
+	replacer('ww', '@iota', $Greek{iota}, $MARKUP);
+	replacer('ww', '@IOTA', $Greek{IOTA}, $MARKUP);
+	replacer('ww', '@kappa', $Greek{kappa}, $MARKUP);
+	replacer('ww', '@KAPPA', $Greek{KAPPA}, $MARKUP);
+	replacer('ww', '@lamda', $Greek{lamda}, $MARKUP);
+	replacer('ww', '@LAMDA', $Greek{LAMDA}, $MARKUP);
+	replacer('ww', '@mu', $Greek{mu}, $MARKUP);
+	replacer('ww', '@MU', $Greek{MU}, $MARKUP);
+	replacer('ww', '@nu', $Greek{nu}, $MARKUP);
+	replacer('ww', '@NU', $Greek{NU}, $MARKUP);
+	replacer('ww', '@xi', $Greek{xi}, $MARKUP);
+	replacer('ww', '@XI', $Greek{XI}, $MARKUP);
+	replacer('ww', '@omicron', $Greek{omicron}, $MARKUP);
+	replacer('ww', '@OMICRON', $Greek{OMICRON}, $MARKUP);
+	replacer('ww', '@pi', $Greek{pi}, $MARKUP);
+	replacer('ww', '@PI', $Greek{PI}, $MARKUP);
+	replacer('ww', '@rho', $Greek{rho}, $MARKUP);
+	replacer('ww', '@RHO', $Greek{RHO}, $MARKUP);
+	replacer('ww', '@sigma', $Greek{sigma}, $MARKUP);
+	replacer('ww', '@SIGMA', $Greek{SIGMA}, $MARKUP);
+	replacer('ww', '@finalsigma', $Greek{finalsigma}, $MARKUP);#DEPRECATED
+	replacer('ww', '@sigmafn', $Greek{sigmafn}, $MARKUP);
+	replacer('ww', '@tau', $Greek{tau}, $MARKUP);
+	replacer('ww', '@TAU', $Greek{TAU}, $MARKUP);
+	replacer('ww', '@upsilon', $Greek{upsilon}, $MARKUP);
+	replacer('ww', '@UPSILON', $Greek{UPSILON}, $MARKUP);
+	replacer('ww', '@phi', $Greek{phi}, $MARKUP);
+	replacer('ww', '@PHI', $Greek{PHI}, $MARKUP);
+	replacer('ww', '@chi', $Greek{chi}, $MARKUP);
+	replacer('ww', '@CHI', $Greek{CHI}, $MARKUP);
+	replacer('ww', '@psi', $Greek{psi}, $MARKUP);
+	replacer('ww', '@PSI', $Greek{PSI}, $MARKUP);
+	replacer('ww', '@omega', $Greek{omega}, $MARKUP);
+	replacer('ww', '@OMEGA', $Greek{OMEGA}, $MARKUP);
 
 	@Replacements = sort byLength @Replacements;
 	#debug("Replacements List: ", join(" ", @Replacements));

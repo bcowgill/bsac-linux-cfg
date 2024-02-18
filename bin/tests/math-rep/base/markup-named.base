@@ -1,0 +1,30 @@
+Multi-characters @named math values with markup to convert:
+
+Small   Capital
+ (final)  (small)
+  α      Α
+  β      Β
+  γ      Γ (ᴦ)
+  δ      Δ
+  ε      Ε
+  ζ      Ζ
+  η      Η
+  θ      Θ
+  ι       Ι
+  κ      Κ
+  λ      Λ (ᴧ)
+  μ      Μ
+  ν      Ν
+  ξ      Ξ
+  ο      Ο
+  π      Π (ᴨ)
+  ρ      Ρ (ᴩ)
+  σ (ς)  Σ
+  τ      Τ
+  υ      Υ
+  φ      Φ
+  χ      Χ
+  ψ      Ψ (ᴪ)
+  ω      Ω
+
+Exceptions:

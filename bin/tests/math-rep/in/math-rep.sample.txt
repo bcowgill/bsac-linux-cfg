@@ -68,7 +68,7 @@ omicron		@omicron @OMICRON @OMICRONSC		@/omicron @/OMICRON	@*omicron @*OMICRON	@
 pi		@pi @PI @PISC		@/pi @/PI	@*pi @*PI	@*/pi @*/PI	@!pi @!PI
 rho		@rho @RHO @RHOSC		@/rho @/RHO	@*rho @*RHO	@*/rho @*/RHO	@!rho @!RHO
 sigma		@sigma @SIGMA @SIGMASC		@/sigma @/SIGMA	@*sigma @*SIGMA	@*/sigma @*/SIGMA	@!sigma @!SIGMA
-finalsigma		@finalsigma		@/finalsigma	@*finalsigma	@*/finalsigma	@!finalsigma
+finalsigma		@sigmafn		@/sigmafn	@*sigmafn	@*/sigmafn	@!sigmafn
 tau		@tau @TAU @TAUSC		@/tau @/TAU	@*tau @*TAU	@*/tau @*/TAU	@!tau @!TAU
 upsilon		@upsilon @UPSILON @UPSILONSC		@/upsilon @/UPSILON	@*upsilon @*UPSILON	@*/upsilon @*/UPSILON	@!upsilon @!UPSILON
 phi		@phi @PHI @PHISC		@/phi @/PHI	@*phi @*PHI	@*/phi @*/PHI	@!phi @!PHI
