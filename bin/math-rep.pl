@@ -27,52 +27,95 @@ use feature 'unicode_strings'; # redundant with the 5.012 above
 use English qw(-no_match_vars); # https://metacpan.org/pod/perlvar for reference
 use charnames qw(:full); # :loose if you perl version supports it
 use FindBin;
-
 use Data::Dumper;
 
+my $cmd_dir = $FindBin::Bin;
 
 my $DEBUG = $ENV{DEBUG} || 0;
 
-my $MARKUP = length($ENV{MARKUP}) ? $ENV{MARKUP} : 1; # replace markup codes with characters
-my $LITERAL = length($ENV{LITERAL}) ? $ENV{MARKUP} : 1; # replace literal values like 1/4 with their unicode character
-my $SHOW_CODE = $ENV{SHOW_CODE} || 0; # show unicode code point value instead of the character
+my $MAN = 0;
+my $MARKUP = length($ENV{MARKUP}) ? $ENV{MARKUP} : 1; # replace markup codes with characters.
+my $LITERAL = length($ENV{LITERAL}) ? $ENV{MARKUP} : 1; # replace literal values like 1/4 with their unicode character.
+my $SHOW_CODE = $ENV{SHOW_CODE} || 0; # show unicode code point value instead of the character.
+my $CUDDLE = $ENV{CUDDLE} || 0; # remove whitespace around symbols when they are replaced.
+
+my $SAMPLE = "$cmd_dir/character-samples/samples/mathematics.txt";
+my $CATEGORY = "$cmd_dir/character-samples/samples/mathematics-categorised.txt";
 
 sub usage
 {
 	my $cmd = $FindBin::Script;
-
 	print <<"USAGE";
-$cmd [--help|--man|-?] [--markup] [--literal] [--codes]
+$cmd [--help|--man|-?] [--cuddle]  [--markup] [--literal] [--codes]
 
 TODO Display a description of the program.
 MARKUP=$MARKUP
 LITERAL=$LITERAL
 SHOW_CODE=$SHOW_CODE
+CUDDLE=$CUDDLE
 
+--cuddle TODO...
 --markup TODO...
 --literal TODO...
 --codes TODO ...
 --help  shows help for this program.
---man   shows help for this program.
+--man   shows help for this program with full details.
 -?      shows help for this program.
 
 More detail ... TODO
 
-See also ... TODO
+There is a sample file categoriesed by replacement types:
+
+$CATEGORY
+
+@{[manpage()]}
+
+See also ls-maths.sh ... TODO
 
 Example:
 
 echo filename | $cmd
 
+Format the supplied example markup document:
+
+$cmd < $SAMPLE | less
+
 USAGE
 	exit 0;
 }
 
+sub manpage
+{
+	return <<"MANPAGE" if $MAN;
+LITERAL REPLACEMENTS
+
+- Fractions which have specific unicode characters:
+
+0/3 1/10 1/9 1/8 1/7 1/6 1/5 1/4 1/3 3/8 2/5 1/2 3/5 5/8 2/3 3/4 4/5 5/6 7/8 1/
+
+- Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
+
+<=  >=  ==  ~=
+
+Symbols are typed from left to right and represent the line strokes going from top to bottom.
+
+i.e. ' <= ' is less than sign with equal sign below.
+
+Normally a single whitespace is preserved around the symbol but you can use the CUDDLE option to remove it after replacement.
+
+- Multi-character symbols which can be replaced by specific unicode characters:
+
++-
+MANPAGE
+}
+
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
+	$MAN = $ARGV[0] =~ m{--man}xms;
 	usage()
 }
 
+my $reSpace = qr{(?:\A|\z|\s)}xms;
 my $rePos = qr{[0-9]+([0-9,]*\.?[0-9,]+)?}xms; # positive 0 0.1 1,000.000,000,000
 my $isFraction = qr{($rePos/$rePos)};
 my $isReciprocal = qr{($rePos/)};
@@ -413,6 +456,10 @@ sub search
 	{
 		$line = sy($line, $search, $code);
 	}
+	elsif ($type eq 'sys')
+	{
+		$line = sys($line, $search, $code);
+	}
 	elsif ($type eq 'syw')
 	{
 		$line = syw($line, $search, $code);
@@ -456,6 +503,7 @@ sub replace
 	return $line;
 } # replace()
 
+# purpose of this was to give an error if a shorter literal is searched for before a longer literal but we sort the @Replacements array now so it is irrelevant
 sub checkLength
 {
 	my ($literal) = @ARG;
@@ -539,6 +587,18 @@ sub sb
 		# print qq{SB: $esc([0-9a-z$literal])\]\n};
 		$line =~ s{$esc([\s0-9a-z$literal]+)\]}{translate($1, $escape, $rhSymbolMap)}xmsge;
 	}
+	return $line;
+}
+
+# replace a symbol surrounded by whitespace
+sub sys
+{
+	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'sys'} = "literal string of symbols surrounded by whitespace replaced with a single symbol character with or without the space (CUDDLE option)";
+	$literal = quotemeta(checkLength($literal));
+	debug("sys(\\s$literal\\s => U+$code): line: $line");
+# TODO CUDDLE OPTION
+	$line =~ s{($reSpace)$literal($reSpace)}{$1 . yes(U($code) . $2)}xmsge;
 	return $line;
 }
 
@@ -957,10 +1017,10 @@ sub makeParser
 	# Operators and Equalities:
 # MUSTDO HEREIAM fix code and add tests for these literals next...
 	replacer('sy', '+-', 'B1',   $LITERAL);
-	replacer('sy', '==', '2261', $LITERAL);
-	replacer('sy', '~=', '2245', $LITERAL);
-	replacer('sy', '<=', '2264', $LITERAL);
-	replacer('sy', '>=', '2265', $LITERAL);
+	replacer('sys', '==', '2261', $LITERAL);
+	replacer('sys', '~=', '2245', $LITERAL);
+	replacer('sys', '<=', '2264', $LITERAL);
+	replacer('sys', '>=', '2265', $LITERAL);
 
 	@Replacements = sort byLength @Replacements;
 	#debug("Replacements List: ", join(" ", @Replacements));

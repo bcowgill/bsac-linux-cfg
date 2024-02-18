@@ -2,23 +2,37 @@ Literal math values to convert:
 ↉ ⅒ ⅑ ⅛ ⅐ ⅙ ⅕ ¼ ⅓ ⅜ ⅖ ½ ⅗ ⅝ ⅔ ¾ ⅘ ⅚ ⅞ ⅟x ⅟ x
 -↉ -⅒ -⅑ -⅛ -⅐ -⅙ -⅕ -¼ -⅓ -⅜ -⅖ -½ -⅗ -⅝ -⅔ -¾ -⅘ -⅚ -⅞ -⅟x -⅟ x
 
-0/1
-0/2
-11/10
-1.1/10
 ⅟10.0
 ⅟100
 ⅟1000
 ⅟10,000
+
+Exceptions:
+0/1
+0/2
+11/10
+1.1/10
 23.1/1,233,323.023,543,233
 01/9
 11/90
 
-b = ±12
+Multi-character symbols with surrounding whitespace:
+
 a ≡ b
 a ≅ b
 a ≤ b
 a ≥ b
 
-<≡≡≡≡≡≡>
+b=±12
+a==b
+a~=b
+a<=b
+a>=b
+
+<============>
+
+Multi-character symbols:
+
+b = ±12
+
 ±±±±
