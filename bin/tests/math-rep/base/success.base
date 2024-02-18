@@ -69,7 +69,7 @@ omicron		ο Ο @OMICRONSC		𝜊 𝛰	𝝾 𝝤	𝞸 𝞞	@!omicron @!OMICRON
 pi		π Π ᴨ		𝜋 𝛱	𝝿 𝝥	𝞹 𝞟	ℼ ℿ
 rho		ρ Ρ ᴩ		𝜌 𝛲	𝞀 𝝦	𝞺 𝞠	@!rho @!RHO
 sigma		σ Σ @SIGMASC		𝜎 𝛴	𝞂 𝝨	𝞼 𝞢	@!sigma ⅀
-finalsigma		ς		@/sigmafn	@*sigmafn	@*/sigmafn	@!sigmafn
+finalsigma		ς		𝜍	𝞁	𝞻	@!sigmafn
 tau		τ Τ @TAUSC		𝜏 𝛵	𝞃 𝝩	𝞽 𝞣	@!tau @!TAU
 upsilon		υ Υ @UPSILONSC		𝜐 𝛶	𝞄 𝝪	𝞾 𝞤	@!upsilon @!UPSILON
 phi		φ Φ @PHISC		𝜑 𝛷	𝞅 𝝫	𝞿 𝞥	@!phi @!PHI

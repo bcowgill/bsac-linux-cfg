@@ -84,6 +84,60 @@ X^... X^<-
 X^A and many other capital letters
 X^ALPHA and many other greek capital letters
 
+@NAMED REPLACEMENTS
+
+Using @ as markup to indicate a named letter or symbol.  Add * for bold, / for italics and ! for double struck. Use @name for lower case and @NAME for upper case letters.
+
+Normal Bold    Italic  Bold-Italic Double-Struck
+@name  @*name  @/name  @*/name     @!name
+
+- Greek alphabet for mathematial symbols and values:
+
+  Table sample of symbols to use with name for desired effects.
+
+      Small               Capital                        |Bold
+       (final)             (small)                       |  Italic
+         [dbl]               [dbl]                       |    Bold+Italic
+alpha  @alpha              @ALPHA                        |@*alpha @/alpha @*/alpha @*ALPHA @/ALPHA @*/ALPHA
+beta   @beta               @BETA                         |@*beta @/beta @*/beta   @*BETA @/BETA @*/BETA
+gamma  @gamma [@!gamma]    @GAMMA (@GAMMASC) [@!GAMMA]   |@*gamma @/gamma @*/gamma   @*GAMMA @/GAMMA @*/GAMMA
+...
+sigma  @sigma (@sigmafn)   @SIGMA [@!SIGMA]              |@*sigma @/sigma @*/sigma   @*SIGMA @/SIGMA @*/SIGMA
+...
+psi    @psi                @PSI   (@PSISC)               |@*psi @/psi @*/psi   @*PSI @/PSI @*/PSI
+omega  @omega              @OMEGA                        |@*omega @/omega @*/omega   @*OMEGA @/OMEGA @*/OMEGA
+
+  Table showing Greek characters by name.
+
+      Small       Capital         |Bold
+       (final)     (small)        |  Italic
+Name     [dbl]       [dbl]        |    Bold+Italic
+alpha    α           Α            |𝝰 𝛼 𝞪   𝝖 𝛢 𝞐
+beta     β           Β            |𝝱 𝛽 𝞫   𝝗 𝛣 𝞑
+gamma    γ [ℽ ]      Γ (ᴦ) [ℾ ]   |𝝲 𝛾 𝞬   𝝘 𝛤 𝞒
+delta    δ           Δ            |𝝳 𝛿 𝞭   𝝙 𝛥 𝞓
+epsilon  ε           Ε            |𝝴 𝜀 𝞮   𝝚 𝛦 𝞔
+zeta     ζ           Ζ            |𝝵 𝜁 𝞯   𝝛 𝛧 𝞕
+eta      η           Η            |𝝶 𝜂 𝞰   𝝜 𝛨 𝞖
+theta    θ           Θ            |𝝷 𝜃 𝞱   𝝝 𝛩 𝞗
+iota     ι           Ι            |𝝸 𝜄 𝞲   𝝞 𝛪 𝞘
+kappa    κ           Κ            |𝝹 𝜅 𝞳   𝝟 𝛫 𝞙
+lamda    λ           Λ (ᴧ)        |𝝺 𝜆 𝞴   𝝠 𝛬 𝞚
+mu       μ           Μ            |𝝻 𝜇 𝞵   𝝡 𝛭 𝞛
+nu       ν           Ν            |𝝼 𝜈 𝞶   𝝢 𝛮 𝞜
+xi       ξ           Ξ            |𝝽 𝜉 𝞷   𝝣 𝛯 𝞝
+omicron  ο           Ο            |𝝾 𝜊 𝞸   𝝤 𝛰 𝞞
+pi       π [ℼ ]      Π (ᴨ) [ℿ ]   |𝝿 𝜋 𝞹   𝝥 𝛱 𝞟
+rho      ρ           Ρ (ᴩ)        |𝞀 𝜌 𝞺   𝝦 𝛲 𝞠
+sigma    σ (ς)       Σ [⅀ ]       |𝞂 𝜎 𝞼   𝝨 𝛴 𝞢
+tau      τ           Τ            |𝞃 𝜏 𝞽   𝝩 𝛵 𝞣
+upsilon  υ           Υ            |𝞄 𝜐 𝞾   𝝪 𝛶 𝞤
+phi      φ           Φ            |𝞅 𝜑 𝞿   𝝫 𝛷 𝞥
+chi      χ           Χ            |𝞆 𝜒 𝟀   𝝬 𝛸 𝞦
+psi      ψ           Ψ (ᴪ)        |𝞇 𝜓 𝟁   𝝭 𝛹 𝞧
+omega    ω           Ω            |𝞈 𝜔 𝟂   𝝮 𝛺 𝞨
+
+Note: there are no unicode characters for @!alpha @!ALPHA and many other double struck Greek small and capital letters
 
 
 See also ls-maths.sh utf8dbg.pl ... TODO

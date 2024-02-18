@@ -1,30 +1,32 @@
 Multi-characters @named math values with markup to convert:
 
-Small   Capital
- (final)  (small)
-  @alpha      @ALPHA
-  @beta      @BETA
-  @gamma      @GAMMA (@GAMMASC)
-  @delta      @DELTA
-  @epsilon      @EPSILON
-  @zeta      @ZETA
-  @eta      @ETA
-  @theta      @THETA
-  @iota       @IOTA
-  @kappa      @KAPPA
-  @lamda      @LAMDA (@LAMDASC)
-  @mu      @MU
-  @nu      @NU
-  @xi      @XI
-  @omicron      @OMICRON
-  @pi      @PI (@PISC)
-  @rho      @RHO (@RHOSC)
-  @sigma (@sigmafn)  @SIGMA
-  @tau      @TAU
-  @upsilon      @UPSILON
-  @phi      @PHI
-  @chi      @CHI
-  @psi      @PSI (@PSISC)
-  @omega      @OMEGA
+      Small       Capital         |Bold
+       (final)     (small)        |  Italic
+         [dbl]       [dbl]        |    Bold+Italic
+alpha    @alpha           @ALPHA            |@*alpha @/alpha @*/alpha   @*ALPHA @/ALPHA @*/ALPHA
+beta     @beta           @BETA            |@*beta @/beta @*/beta   @*BETA @/BETA @*/BETA
+gamma    @gamma [@!gamma ]      @GAMMA (@GAMMASC) [@!GAMMA ]   |@*gamma @/gamma @*/gamma   @*GAMMA @/GAMMA @*/GAMMA
+delta    @delta           @DELTA            |@*delta @/delta @*/delta   @*DELTA @/DELTA @*/DELTA
+epsilon  @epsilon           @EPSILON            |@*epsilon @/epsilon @*/epsilon   @*EPSILON @/EPSILON @*/EPSILON
+zeta     @zeta           @ZETA            |@*zeta @/zeta @*/zeta   @*ZETA @/ZETA @*/ZETA
+eta      @eta           @ETA            |@*eta @/eta @*/eta   @*ETA @/ETA @*/ETA
+theta    @theta           @THETA            |@*theta @/theta @*/theta   @*THETA @/THETA @*/THETA
+iota     @iota           @IOTA            |@*iota @/iota @*/iota   @*IOTA @/IOTA @*/IOTA
+kappa    @kappa           @KAPPA            |@*kappa @/kappa @*/kappa   @*KAPPA @/KAPPA @*/KAPPA
+lamda    @lamda           @LAMDA (@LAMDASC)        |@*lamda @/lamda @*/lamda   @*LAMDA @/LAMDA @*/LAMDA
+mu       @mu           @MU            |@*mu @/mu @*/mu   @*MU @/MU @*/MU
+nu       @nu           @NU            |@*nu @/nu @*/nu   @*NU @/NU @*/NU
+xi       @xi           @XI            |@*xi @/xi @*/xi   @*XI @/XI @*/XI
+omicron  @omicron           @OMICRON            |@*omicron @/omicron @*/omicron   @*OMICRON @/OMICRON @*/OMICRON
+pi       @pi [@!pi ]      @PI (@PISC) [@!PI ]   |@*pi @/pi @*/pi   @*PI @/PI @*/PI
+rho      @rho           @RHO (@RHOSC)        |@*rho @/rho @*/rho   @*RHO @/RHO @*/RHO
+sigma    @sigma (@sigmafn)       @SIGMA [@!SIGMA ]       |@*sigma @/sigma @*/sigma   @*SIGMA @/SIGMA @*/SIGMA
+tau      @tau           @TAU            |@*tau @/tau @*/tau   @*TAU @/TAU @*/TAU
+upsilon  @upsilon           @UPSILON            |@*upsilon @/upsilon @*/upsilon   @*UPSILON @/UPSILON @*/UPSILON
+phi      @phi           @PHI            |@*phi @/phi @*/phi   @*PHI @/PHI @*/PHI
+chi      @chi           @CHI            |@*chi @/chi @*/chi   @*CHI @/CHI @*/CHI
+psi      @psi           @PSI (@PSISC)        |@*psi @/psi @*/psi   @*PSI @/PSI @*/PSI
+omega    @omega           @OMEGA            |@*omega @/omega @*/omega   @*OMEGA @/OMEGA @*/OMEGA
 
 Exceptions:
+@!alpha @!ALPHA and many other double struck Greek small and capital letters.

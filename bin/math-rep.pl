@@ -154,6 +154,60 @@ X^... X^<-
 X^A and many other capital letters
 X^ALPHA and many other greek capital letters
 
+\@NAMED REPLACEMENTS
+
+Using \@ as markup to indicate a named letter or symbol.  Add * for bold, / for italics and ! for double struck. Use \@name for lower case and \@NAME for upper case letters.
+
+Normal Bold    Italic  Bold-Italic Double-Struck
+\@name  \@*name  \@/name  \@*/name     \@!name
+
+- Greek alphabet for mathematial symbols and values:
+
+  Table sample of symbols to use with name for desired effects.
+
+      Small               Capital                        |Bold
+       (final)             (small)                       |  Italic
+         [dbl]               [dbl]                       |    Bold+Italic
+alpha  \@alpha              \@ALPHA                        |\@*alpha \@/alpha \@*/alpha \@*ALPHA \@/ALPHA \@*/ALPHA
+beta   \@beta               \@BETA                         |\@*beta \@/beta \@*/beta   \@*BETA \@/BETA \@*/BETA
+gamma  \@gamma [\@!gamma]    \@GAMMA (\@GAMMASC) [\@!GAMMA]   |\@*gamma \@/gamma \@*/gamma   \@*GAMMA \@/GAMMA \@*/GAMMA
+...
+sigma  \@sigma (\@sigmafn)   \@SIGMA [\@!SIGMA]              |\@*sigma \@/sigma \@*/sigma   \@*SIGMA \@/SIGMA \@*/SIGMA
+...
+psi    \@psi                \@PSI   (\@PSISC)               |\@*psi \@/psi \@*/psi   \@*PSI \@/PSI \@*/PSI
+omega  \@omega              \@OMEGA                        |\@*omega \@/omega \@*/omega   \@*OMEGA \@/OMEGA \@*/OMEGA
+
+  Table showing Greek characters by name.
+
+      Small       Capital         |Bold
+       (final)     (small)        |  Italic
+Name     [dbl]       [dbl]        |    Bold+Italic
+alpha    α           Α            |𝝰 𝛼 𝞪   𝝖 𝛢 𝞐
+beta     β           Β            |𝝱 𝛽 𝞫   𝝗 𝛣 𝞑
+gamma    γ [ℽ ]      Γ (ᴦ) [ℾ ]   |𝝲 𝛾 𝞬   𝝘 𝛤 𝞒
+delta    δ           Δ            |𝝳 𝛿 𝞭   𝝙 𝛥 𝞓
+epsilon  ε           Ε            |𝝴 𝜀 𝞮   𝝚 𝛦 𝞔
+zeta     ζ           Ζ            |𝝵 𝜁 𝞯   𝝛 𝛧 𝞕
+eta      η           Η            |𝝶 𝜂 𝞰   𝝜 𝛨 𝞖
+theta    θ           Θ            |𝝷 𝜃 𝞱   𝝝 𝛩 𝞗
+iota     ι           Ι            |𝝸 𝜄 𝞲   𝝞 𝛪 𝞘
+kappa    κ           Κ            |𝝹 𝜅 𝞳   𝝟 𝛫 𝞙
+lamda    λ           Λ (ᴧ)        |𝝺 𝜆 𝞴   𝝠 𝛬 𝞚
+mu       μ           Μ            |𝝻 𝜇 𝞵   𝝡 𝛭 𝞛
+nu       ν           Ν            |𝝼 𝜈 𝞶   𝝢 𝛮 𝞜
+xi       ξ           Ξ            |𝝽 𝜉 𝞷   𝝣 𝛯 𝞝
+omicron  ο           Ο            |𝝾 𝜊 𝞸   𝝤 𝛰 𝞞
+pi       π [ℼ ]      Π (ᴨ) [ℿ ]   |𝝿 𝜋 𝞹   𝝥 𝛱 𝞟
+rho      ρ           Ρ (ᴩ)        |𝞀 𝜌 𝞺   𝝦 𝛲 𝞠
+sigma    σ (ς)       Σ [⅀ ]       |𝞂 𝜎 𝞼   𝝨 𝛴 𝞢
+tau      τ           Τ            |𝞃 𝜏 𝞽   𝝩 𝛵 𝞣
+upsilon  υ           Υ            |𝞄 𝜐 𝞾   𝝪 𝛶 𝞤
+phi      φ           Φ            |𝞅 𝜑 𝞿   𝝫 𝛷 𝞥
+chi      χ           Χ            |𝞆 𝜒 𝟀   𝝬 𝛸 𝞦
+psi      ψ           Ψ (ᴪ)        |𝞇 𝜓 𝟁   𝝭 𝛹 𝞧
+omega    ω           Ω            |𝞈 𝜔 𝟂   𝝮 𝛺 𝞨
+
+Note: there are no unicode characters for \@!alpha \@!ALPHA and many other double struck Greek small and capital letters
 MANPAGE
 }
 
@@ -722,169 +776,6 @@ sub nd
 # construct the parser replacements in order of reverse length
 sub makeParser
 {
-	# Greek Double Struck incidentals
-	replacer('ww', '@!gamma', $GreekDblStk{gamma}, $MARKUP);
-	replacer('ww', '@!GAMMA', $GreekDblStk{GAMMA}, $MARKUP);
-	replacer('ww', '@!pi', $GreekDblStk{pi}, $MARKUP);
-	replacer('ww', '@!PI', $GreekDblStk{PI}, $MARKUP);
-	replacer('ww', '@!SIGMA', $GreekDblStk{SIGMA}, $MARKUP);
-
-	# Greek Bold Small and Capital
-	replacer('ww', '@*alpha', $GreekBold{alpha}, $MARKUP);
-	replacer('ww', '@*ALPHA', $GreekBold{ALPHA}, $MARKUP);
-	replacer('ww', '@*beta', $GreekBold{beta}, $MARKUP);
-	replacer('ww', '@*BETA', $GreekBold{BETA}, $MARKUP);
-	replacer('ww', '@*gamma', $GreekBold{gamma}, $MARKUP);
-	replacer('ww', '@*GAMMA', $GreekBold{GAMMA}, $MARKUP);
-	replacer('ww', '@*delta', $GreekBold{delta}, $MARKUP);
-	replacer('ww', '@*DELTA', $GreekBold{DELTA}, $MARKUP);
-	replacer('ww', '@*epsilon', $GreekBold{epsilon}, $MARKUP);
-	replacer('ww', '@*EPSILON', $GreekBold{EPSILON}, $MARKUP);
-	replacer('ww', '@*zeta', $GreekBold{zeta}, $MARKUP);
-	replacer('ww', '@*ZETA', $GreekBold{ZETA}, $MARKUP);
-	replacer('ww', '@*eta', $GreekBold{eta}, $MARKUP);
-	replacer('ww', '@*ETA', $GreekBold{ETA}, $MARKUP);
-	replacer('ww', '@*theta', $GreekBold{theta}, $MARKUP);
-	replacer('ww', '@*THETA', $GreekBold{THETA}, $MARKUP);
-	replacer('ww', '@*iota', $GreekBold{iota}, $MARKUP);
-	replacer('ww', '@*IOTA', $GreekBold{IOTA}, $MARKUP);
-	replacer('ww', '@*kappa', $GreekBold{kappa}, $MARKUP);
-	replacer('ww', '@*KAPPA', $GreekBold{KAPPA}, $MARKUP);
-	replacer('ww', '@*lamda', $GreekBold{lamda}, $MARKUP);
-	replacer('ww', '@*LAMDA', $GreekBold{LAMDA}, $MARKUP);
-	replacer('ww', '@*mu', $GreekBold{mu}, $MARKUP);
-	replacer('ww', '@*MU', $GreekBold{MU}, $MARKUP);
-	replacer('ww', '@*nu', $GreekBold{nu}, $MARKUP);
-	replacer('ww', '@*NU', $GreekBold{NU}, $MARKUP);
-	replacer('ww', '@*xi', $GreekBold{xi}, $MARKUP);
-	replacer('ww', '@*XI', $GreekBold{XI}, $MARKUP);
-	replacer('ww', '@*omicron', $GreekBold{omicron}, $MARKUP);
-	replacer('ww', '@*OMICRON', $GreekBold{OMICRON}, $MARKUP);
-	replacer('ww', '@*pi', $GreekBold{pi}, $MARKUP);
-	replacer('ww', '@*PI', $GreekBold{PI}, $MARKUP);
-	replacer('ww', '@*rho', $GreekBold{rho}, $MARKUP);
-	replacer('ww', '@*RHO', $GreekBold{RHO}, $MARKUP);
-	replacer('ww', '@*sigma', $GreekBold{sigma}, $MARKUP);
-	replacer('ww', '@*SIGMA', $GreekBold{SIGMA}, $MARKUP);
-	replacer('ww', '@*finalsigma', $GreekBold{finalsigma}, $MARKUP);
-	replacer('ww', '@*tau', $GreekBold{tau}, $MARKUP);
-	replacer('ww', '@*TAU', $GreekBold{TAU}, $MARKUP);
-	replacer('ww', '@*upsilon', $GreekBold{upsilon}, $MARKUP);
-	replacer('ww', '@*UPSILON', $GreekBold{UPSILON}, $MARKUP);
-	replacer('ww', '@*phi', $GreekBold{phi}, $MARKUP);
-	replacer('ww', '@*PHI', $GreekBold{PHI}, $MARKUP);
-	replacer('ww', '@*chi', $GreekBold{chi}, $MARKUP);
-	replacer('ww', '@*CHI', $GreekBold{CHI}, $MARKUP);
-	replacer('ww', '@*psi', $GreekBold{psi}, $MARKUP);
-	replacer('ww', '@*PSI', $GreekBold{PSI}, $MARKUP);
-	replacer('ww', '@*omega', $GreekBold{omega}, $MARKUP);
-	replacer('ww', '@*OMEGA', $GreekBold{OMEGA}, $MARKUP);
-
-	# Greek italic Small and Capital
-	replacer('ww', '@/alpha', $GreekItal{alpha}, $MARKUP);
-	replacer('ww', '@/ALPHA', $GreekItal{ALPHA}, $MARKUP);
-	replacer('ww', '@/beta', $GreekItal{beta}, $MARKUP);
-	replacer('ww', '@/BETA', $GreekItal{BETA}, $MARKUP);
-	replacer('ww', '@/gamma', $GreekItal{gamma}, $MARKUP);
-	replacer('ww', '@/GAMMA', $GreekItal{GAMMA}, $MARKUP);
-	replacer('ww', '@/delta', $GreekItal{delta}, $MARKUP);
-	replacer('ww', '@/DELTA', $GreekItal{DELTA}, $MARKUP);
-	replacer('ww', '@/epsilon', $GreekItal{epsilon}, $MARKUP);
-	replacer('ww', '@/EPSILON', $GreekItal{EPSILON}, $MARKUP);
-	replacer('ww', '@/zeta', $GreekItal{zeta}, $MARKUP);
-	replacer('ww', '@/ZETA', $GreekItal{ZETA}, $MARKUP);
-	replacer('ww', '@/eta', $GreekItal{eta}, $MARKUP);
-	replacer('ww', '@/ETA', $GreekItal{ETA}, $MARKUP);
-	replacer('ww', '@/theta', $GreekItal{theta}, $MARKUP);
-	replacer('ww', '@/THETA', $GreekItal{THETA}, $MARKUP);
-	replacer('ww', '@/iota', $GreekItal{iota}, $MARKUP);
-	replacer('ww', '@/IOTA', $GreekItal{IOTA}, $MARKUP);
-	replacer('ww', '@/kappa', $GreekItal{kappa}, $MARKUP);
-	replacer('ww', '@/KAPPA', $GreekItal{KAPPA}, $MARKUP);
-	replacer('ww', '@/lamda', $GreekItal{lamda}, $MARKUP);
-	replacer('ww', '@/LAMDA', $GreekItal{LAMDA}, $MARKUP);
-	replacer('ww', '@/mu', $GreekItal{mu}, $MARKUP);
-	replacer('ww', '@/MU', $GreekItal{MU}, $MARKUP);
-	replacer('ww', '@/nu', $GreekItal{nu}, $MARKUP);
-	replacer('ww', '@/NU', $GreekItal{NU}, $MARKUP);
-	replacer('ww', '@/xi', $GreekItal{xi}, $MARKUP);
-	replacer('ww', '@/XI', $GreekItal{XI}, $MARKUP);
-	replacer('ww', '@/omicron', $GreekItal{omicron}, $MARKUP);
-	replacer('ww', '@/OMICRON', $GreekItal{OMICRON}, $MARKUP);
-	replacer('ww', '@/pi', $GreekItal{pi}, $MARKUP);
-	replacer('ww', '@/PI', $GreekItal{PI}, $MARKUP);
-	replacer('ww', '@/rho', $GreekItal{rho}, $MARKUP);
-	replacer('ww', '@/RHO', $GreekItal{RHO}, $MARKUP);
-	replacer('ww', '@/sigma', $GreekItal{sigma}, $MARKUP);
-	replacer('ww', '@/SIGMA', $GreekItal{SIGMA}, $MARKUP);
-	replacer('ww', '@/finalsigma', $GreekItal{finalsigma}, $MARKUP);
-	replacer('ww', '@/tau', $GreekItal{tau}, $MARKUP);
-	replacer('ww', '@/TAU', $GreekItal{TAU}, $MARKUP);
-	replacer('ww', '@/upsilon', $GreekItal{upsilon}, $MARKUP);
-	replacer('ww', '@/UPSILON', $GreekItal{UPSILON}, $MARKUP);
-	replacer('ww', '@/phi', $GreekItal{phi}, $MARKUP);
-	replacer('ww', '@/PHI', $GreekItal{PHI}, $MARKUP);
-	replacer('ww', '@/chi', $GreekItal{chi}, $MARKUP);
-	replacer('ww', '@/CHI', $GreekItal{CHI}, $MARKUP);
-	replacer('ww', '@/psi', $GreekItal{psi}, $MARKUP);
-	replacer('ww', '@/PSI', $GreekItal{PSI}, $MARKUP);
-	replacer('ww', '@/omega', $GreekItal{omega}, $MARKUP);
-	replacer('ww', '@/OMEGA', $GreekItal{OMEGA}, $MARKUP);
-
-	# Greek bold italic Small and Capital
-	replacer('ww', '@*/alpha', $GreekBoldItal{alpha}, $MARKUP);
-	replacer('ww', '@*/ALPHA', $GreekBoldItal{ALPHA}, $MARKUP);
-	replacer('ww', '@*/beta', $GreekBoldItal{beta}, $MARKUP);
-	replacer('ww', '@*/BETA', $GreekBoldItal{BETA}, $MARKUP);
-	replacer('ww', '@*/gamma', $GreekBoldItal{gamma}, $MARKUP);
-	replacer('ww', '@*/GAMMA', $GreekBoldItal{GAMMA}, $MARKUP);
-	replacer('ww', '@*/delta', $GreekBoldItal{delta}, $MARKUP);
-	replacer('ww', '@*/DELTA', $GreekBoldItal{DELTA}, $MARKUP);
-	replacer('ww', '@*/epsilon', $GreekBoldItal{epsilon}, $MARKUP);
-	replacer('ww', '@*/EPSILON', $GreekBoldItal{EPSILON}, $MARKUP);
-	replacer('ww', '@*/zeta', $GreekBoldItal{zeta}, $MARKUP);
-	replacer('ww', '@*/ZETA', $GreekBoldItal{ZETA}, $MARKUP);
-	replacer('ww', '@*/eta', $GreekBoldItal{eta}, $MARKUP);
-	replacer('ww', '@*/ETA', $GreekBoldItal{ETA}, $MARKUP);
-	replacer('ww', '@*/theta', $GreekBoldItal{theta}, $MARKUP);
-	replacer('ww', '@*/THETA', $GreekBoldItal{THETA}, $MARKUP);
-	replacer('ww', '@*/iota', $GreekBoldItal{iota}, $MARKUP);
-	replacer('ww', '@*/IOTA', $GreekBoldItal{IOTA}, $MARKUP);
-	replacer('ww', '@*/kappa', $GreekBoldItal{kappa}, $MARKUP);
-	replacer('ww', '@*/KAPPA', $GreekBoldItal{KAPPA}, $MARKUP);
-	replacer('ww', '@*/lamda', $GreekBoldItal{lamda}, $MARKUP);
-	replacer('ww', '@*/LAMDA', $GreekBoldItal{LAMDA}, $MARKUP);
-	replacer('ww', '@*/mu', $GreekBoldItal{mu}, $MARKUP);
-	replacer('ww', '@*/MU', $GreekBoldItal{MU}, $MARKUP);
-	replacer('ww', '@*/nu', $GreekBoldItal{nu}, $MARKUP);
-	replacer('ww', '@*/NU', $GreekBoldItal{NU}, $MARKUP);
-	replacer('ww', '@*/xi', $GreekBoldItal{xi}, $MARKUP);
-	replacer('ww', '@*/XI', $GreekBoldItal{XI}, $MARKUP);
-	replacer('ww', '@*/omicron', $GreekBoldItal{omicron}, $MARKUP);
-	replacer('ww', '@*/OMICRON', $GreekBoldItal{OMICRON}, $MARKUP);
-	replacer('ww', '@*/pi', $GreekBoldItal{pi}, $MARKUP);
-	replacer('ww', '@*/PI', $GreekBoldItal{PI}, $MARKUP);
-	replacer('ww', '@*/rho', $GreekBoldItal{rho}, $MARKUP);
-	replacer('ww', '@*/RHO', $GreekBoldItal{RHO}, $MARKUP);
-	replacer('ww', '@*/sigma', $GreekBoldItal{sigma}, $MARKUP);
-	replacer('ww', '@*/SIGMA', $GreekBoldItal{SIGMA}, $MARKUP);
-	replacer('ww', '@*/finalsigma', $GreekBoldItal{finalsigma}, $MARKUP);
-	replacer('ww', '@*/tau', $GreekBoldItal{tau}, $MARKUP);
-	replacer('ww', '@*/TAU', $GreekBoldItal{TAU}, $MARKUP);
-	replacer('ww', '@*/upsilon', $GreekBoldItal{upsilon}, $MARKUP);
-	replacer('ww', '@*/UPSILON', $GreekBoldItal{UPSILON}, $MARKUP);
-	replacer('ww', '@*/phi', $GreekBoldItal{phi}, $MARKUP);
-	replacer('ww', '@*/PHI', $GreekBoldItal{PHI}, $MARKUP);
-	replacer('ww', '@*/chi', $GreekBoldItal{chi}, $MARKUP);
-	replacer('ww', '@*/CHI', $GreekBoldItal{CHI}, $MARKUP);
-	replacer('ww', '@*/psi', $GreekBoldItal{psi}, $MARKUP);
-	replacer('ww', '@*/PSI', $GreekBoldItal{PSI}, $MARKUP);
-	replacer('ww', '@*/omega', $GreekBoldItal{omega}, $MARKUP);
-	replacer('ww', '@*/OMEGA', $GreekBoldItal{OMEGA}, $MARKUP);
-
-# ^^^ TODO ABOVE not yet unit tested
-# MUSTDO HEREIAM fix code and add tests for these literals next...
-
 	# Fractions:
 	replacer('nn', '1/10', '2152', $LITERAL);
 	replacer('nn', '1/4', 'BC',    $LITERAL);
@@ -1034,6 +925,13 @@ sub makeParser
 	replacer('ww', '@RHOSC', $GreekSmCap{RHOSC}, $MARKUP);
 	replacer('ww', '@PSISC', $GreekSmCap{PSISC}, $MARKUP);
 
+	# Greek Double Struck incidentals
+	replacer('ww', '@!gamma', $GreekDblStk{gamma}, $MARKUP);
+	replacer('ww', '@!GAMMA', $GreekDblStk{GAMMA}, $MARKUP);
+	replacer('ww', '@!pi', $GreekDblStk{pi}, $MARKUP);
+	replacer('ww', '@!PI', $GreekDblStk{PI}, $MARKUP);
+	replacer('ww', '@!SIGMA', $GreekDblStk{SIGMA}, $MARKUP);
+
 	# Greek Small and Capital
 	replacer('ww', '@alpha', $Greek{alpha}, $MARKUP);
 	replacer('ww', '@ALPHA', $Greek{ALPHA}, $MARKUP);
@@ -1071,7 +969,7 @@ sub makeParser
 	replacer('ww', '@RHO', $Greek{RHO}, $MARKUP);
 	replacer('ww', '@sigma', $Greek{sigma}, $MARKUP);
 	replacer('ww', '@SIGMA', $Greek{SIGMA}, $MARKUP);
-	replacer('ww', '@finalsigma', $Greek{finalsigma}, $MARKUP);#DEPRECATED
+	replacer('ww', '@sigmafn', $Greek{finalsigma}, $MARKUP);#DEPRECATED
 	replacer('ww', '@sigmafn', $Greek{sigmafn}, $MARKUP);
 	replacer('ww', '@tau', $Greek{tau}, $MARKUP);
 	replacer('ww', '@TAU', $Greek{TAU}, $MARKUP);
@@ -1085,6 +983,159 @@ sub makeParser
 	replacer('ww', '@PSI', $Greek{PSI}, $MARKUP);
 	replacer('ww', '@omega', $Greek{omega}, $MARKUP);
 	replacer('ww', '@OMEGA', $Greek{OMEGA}, $MARKUP);
+
+	# Greek Bold Small and Capital
+	replacer('ww', '@*alpha', $GreekBold{alpha}, $MARKUP);
+	replacer('ww', '@*ALPHA', $GreekBold{ALPHA}, $MARKUP);
+	replacer('ww', '@*beta', $GreekBold{beta}, $MARKUP);
+	replacer('ww', '@*BETA', $GreekBold{BETA}, $MARKUP);
+	replacer('ww', '@*gamma', $GreekBold{gamma}, $MARKUP);
+	replacer('ww', '@*GAMMA', $GreekBold{GAMMA}, $MARKUP);
+	replacer('ww', '@*delta', $GreekBold{delta}, $MARKUP);
+	replacer('ww', '@*DELTA', $GreekBold{DELTA}, $MARKUP);
+	replacer('ww', '@*epsilon', $GreekBold{epsilon}, $MARKUP);
+	replacer('ww', '@*EPSILON', $GreekBold{EPSILON}, $MARKUP);
+	replacer('ww', '@*zeta', $GreekBold{zeta}, $MARKUP);
+	replacer('ww', '@*ZETA', $GreekBold{ZETA}, $MARKUP);
+	replacer('ww', '@*eta', $GreekBold{eta}, $MARKUP);
+	replacer('ww', '@*ETA', $GreekBold{ETA}, $MARKUP);
+	replacer('ww', '@*theta', $GreekBold{theta}, $MARKUP);
+	replacer('ww', '@*THETA', $GreekBold{THETA}, $MARKUP);
+	replacer('ww', '@*iota', $GreekBold{iota}, $MARKUP);
+	replacer('ww', '@*IOTA', $GreekBold{IOTA}, $MARKUP);
+	replacer('ww', '@*kappa', $GreekBold{kappa}, $MARKUP);
+	replacer('ww', '@*KAPPA', $GreekBold{KAPPA}, $MARKUP);
+	replacer('ww', '@*lamda', $GreekBold{lamda}, $MARKUP);
+	replacer('ww', '@*LAMDA', $GreekBold{LAMDA}, $MARKUP);
+	replacer('ww', '@*mu', $GreekBold{mu}, $MARKUP);
+	replacer('ww', '@*MU', $GreekBold{MU}, $MARKUP);
+	replacer('ww', '@*nu', $GreekBold{nu}, $MARKUP);
+	replacer('ww', '@*NU', $GreekBold{NU}, $MARKUP);
+	replacer('ww', '@*xi', $GreekBold{xi}, $MARKUP);
+	replacer('ww', '@*XI', $GreekBold{XI}, $MARKUP);
+	replacer('ww', '@*omicron', $GreekBold{omicron}, $MARKUP);
+	replacer('ww', '@*OMICRON', $GreekBold{OMICRON}, $MARKUP);
+	replacer('ww', '@*pi', $GreekBold{pi}, $MARKUP);
+	replacer('ww', '@*PI', $GreekBold{PI}, $MARKUP);
+	replacer('ww', '@*rho', $GreekBold{rho}, $MARKUP);
+	replacer('ww', '@*RHO', $GreekBold{RHO}, $MARKUP);
+	replacer('ww', '@*sigma', $GreekBold{sigma}, $MARKUP);
+	replacer('ww', '@*SIGMA', $GreekBold{SIGMA}, $MARKUP);
+	replacer('ww', '@*sigmafn', $GreekBold{finalsigma}, $MARKUP);
+	replacer('ww', '@*tau', $GreekBold{tau}, $MARKUP);
+	replacer('ww', '@*TAU', $GreekBold{TAU}, $MARKUP);
+	replacer('ww', '@*upsilon', $GreekBold{upsilon}, $MARKUP);
+	replacer('ww', '@*UPSILON', $GreekBold{UPSILON}, $MARKUP);
+	replacer('ww', '@*phi', $GreekBold{phi}, $MARKUP);
+	replacer('ww', '@*PHI', $GreekBold{PHI}, $MARKUP);
+	replacer('ww', '@*chi', $GreekBold{chi}, $MARKUP);
+	replacer('ww', '@*CHI', $GreekBold{CHI}, $MARKUP);
+	replacer('ww', '@*psi', $GreekBold{psi}, $MARKUP);
+	replacer('ww', '@*PSI', $GreekBold{PSI}, $MARKUP);
+	replacer('ww', '@*omega', $GreekBold{omega}, $MARKUP);
+	replacer('ww', '@*OMEGA', $GreekBold{OMEGA}, $MARKUP);
+
+	# Greek italic Small and Capital
+	replacer('ww', '@/alpha', $GreekItal{alpha}, $MARKUP);
+	replacer('ww', '@/ALPHA', $GreekItal{ALPHA}, $MARKUP);
+	replacer('ww', '@/beta', $GreekItal{beta}, $MARKUP);
+	replacer('ww', '@/BETA', $GreekItal{BETA}, $MARKUP);
+	replacer('ww', '@/gamma', $GreekItal{gamma}, $MARKUP);
+	replacer('ww', '@/GAMMA', $GreekItal{GAMMA}, $MARKUP);
+	replacer('ww', '@/delta', $GreekItal{delta}, $MARKUP);
+	replacer('ww', '@/DELTA', $GreekItal{DELTA}, $MARKUP);
+	replacer('ww', '@/epsilon', $GreekItal{epsilon}, $MARKUP);
+	replacer('ww', '@/EPSILON', $GreekItal{EPSILON}, $MARKUP);
+	replacer('ww', '@/zeta', $GreekItal{zeta}, $MARKUP);
+	replacer('ww', '@/ZETA', $GreekItal{ZETA}, $MARKUP);
+	replacer('ww', '@/eta', $GreekItal{eta}, $MARKUP);
+	replacer('ww', '@/ETA', $GreekItal{ETA}, $MARKUP);
+	replacer('ww', '@/theta', $GreekItal{theta}, $MARKUP);
+	replacer('ww', '@/THETA', $GreekItal{THETA}, $MARKUP);
+	replacer('ww', '@/iota', $GreekItal{iota}, $MARKUP);
+	replacer('ww', '@/IOTA', $GreekItal{IOTA}, $MARKUP);
+	replacer('ww', '@/kappa', $GreekItal{kappa}, $MARKUP);
+	replacer('ww', '@/KAPPA', $GreekItal{KAPPA}, $MARKUP);
+	replacer('ww', '@/lamda', $GreekItal{lamda}, $MARKUP);
+	replacer('ww', '@/LAMDA', $GreekItal{LAMDA}, $MARKUP);
+	replacer('ww', '@/mu', $GreekItal{mu}, $MARKUP);
+	replacer('ww', '@/MU', $GreekItal{MU}, $MARKUP);
+	replacer('ww', '@/nu', $GreekItal{nu}, $MARKUP);
+	replacer('ww', '@/NU', $GreekItal{NU}, $MARKUP);
+	replacer('ww', '@/xi', $GreekItal{xi}, $MARKUP);
+	replacer('ww', '@/XI', $GreekItal{XI}, $MARKUP);
+	replacer('ww', '@/omicron', $GreekItal{omicron}, $MARKUP);
+	replacer('ww', '@/OMICRON', $GreekItal{OMICRON}, $MARKUP);
+	replacer('ww', '@/pi', $GreekItal{pi}, $MARKUP);
+	replacer('ww', '@/PI', $GreekItal{PI}, $MARKUP);
+	replacer('ww', '@/rho', $GreekItal{rho}, $MARKUP);
+	replacer('ww', '@/RHO', $GreekItal{RHO}, $MARKUP);
+	replacer('ww', '@/sigma', $GreekItal{sigma}, $MARKUP);
+	replacer('ww', '@/SIGMA', $GreekItal{SIGMA}, $MARKUP);
+	replacer('ww', '@/sigmafn', $GreekItal{finalsigma}, $MARKUP);
+	replacer('ww', '@/tau', $GreekItal{tau}, $MARKUP);
+	replacer('ww', '@/TAU', $GreekItal{TAU}, $MARKUP);
+	replacer('ww', '@/upsilon', $GreekItal{upsilon}, $MARKUP);
+	replacer('ww', '@/UPSILON', $GreekItal{UPSILON}, $MARKUP);
+	replacer('ww', '@/phi', $GreekItal{phi}, $MARKUP);
+	replacer('ww', '@/PHI', $GreekItal{PHI}, $MARKUP);
+	replacer('ww', '@/chi', $GreekItal{chi}, $MARKUP);
+	replacer('ww', '@/CHI', $GreekItal{CHI}, $MARKUP);
+	replacer('ww', '@/psi', $GreekItal{psi}, $MARKUP);
+	replacer('ww', '@/PSI', $GreekItal{PSI}, $MARKUP);
+	replacer('ww', '@/omega', $GreekItal{omega}, $MARKUP);
+	replacer('ww', '@/OMEGA', $GreekItal{OMEGA}, $MARKUP);
+
+	# Greek bold italic Small and Capital
+	replacer('ww', '@*/alpha', $GreekBoldItal{alpha}, $MARKUP);
+	replacer('ww', '@*/ALPHA', $GreekBoldItal{ALPHA}, $MARKUP);
+	replacer('ww', '@*/beta', $GreekBoldItal{beta}, $MARKUP);
+	replacer('ww', '@*/BETA', $GreekBoldItal{BETA}, $MARKUP);
+	replacer('ww', '@*/gamma', $GreekBoldItal{gamma}, $MARKUP);
+	replacer('ww', '@*/GAMMA', $GreekBoldItal{GAMMA}, $MARKUP);
+	replacer('ww', '@*/delta', $GreekBoldItal{delta}, $MARKUP);
+	replacer('ww', '@*/DELTA', $GreekBoldItal{DELTA}, $MARKUP);
+	replacer('ww', '@*/epsilon', $GreekBoldItal{epsilon}, $MARKUP);
+	replacer('ww', '@*/EPSILON', $GreekBoldItal{EPSILON}, $MARKUP);
+	replacer('ww', '@*/zeta', $GreekBoldItal{zeta}, $MARKUP);
+	replacer('ww', '@*/ZETA', $GreekBoldItal{ZETA}, $MARKUP);
+	replacer('ww', '@*/eta', $GreekBoldItal{eta}, $MARKUP);
+	replacer('ww', '@*/ETA', $GreekBoldItal{ETA}, $MARKUP);
+	replacer('ww', '@*/theta', $GreekBoldItal{theta}, $MARKUP);
+	replacer('ww', '@*/THETA', $GreekBoldItal{THETA}, $MARKUP);
+	replacer('ww', '@*/iota', $GreekBoldItal{iota}, $MARKUP);
+	replacer('ww', '@*/IOTA', $GreekBoldItal{IOTA}, $MARKUP);
+	replacer('ww', '@*/kappa', $GreekBoldItal{kappa}, $MARKUP);
+	replacer('ww', '@*/KAPPA', $GreekBoldItal{KAPPA}, $MARKUP);
+	replacer('ww', '@*/lamda', $GreekBoldItal{lamda}, $MARKUP);
+	replacer('ww', '@*/LAMDA', $GreekBoldItal{LAMDA}, $MARKUP);
+	replacer('ww', '@*/mu', $GreekBoldItal{mu}, $MARKUP);
+	replacer('ww', '@*/MU', $GreekBoldItal{MU}, $MARKUP);
+	replacer('ww', '@*/nu', $GreekBoldItal{nu}, $MARKUP);
+	replacer('ww', '@*/NU', $GreekBoldItal{NU}, $MARKUP);
+	replacer('ww', '@*/xi', $GreekBoldItal{xi}, $MARKUP);
+	replacer('ww', '@*/XI', $GreekBoldItal{XI}, $MARKUP);
+	replacer('ww', '@*/omicron', $GreekBoldItal{omicron}, $MARKUP);
+	replacer('ww', '@*/OMICRON', $GreekBoldItal{OMICRON}, $MARKUP);
+	replacer('ww', '@*/pi', $GreekBoldItal{pi}, $MARKUP);
+	replacer('ww', '@*/PI', $GreekBoldItal{PI}, $MARKUP);
+	replacer('ww', '@*/rho', $GreekBoldItal{rho}, $MARKUP);
+	replacer('ww', '@*/RHO', $GreekBoldItal{RHO}, $MARKUP);
+	replacer('ww', '@*/sigma', $GreekBoldItal{sigma}, $MARKUP);
+	replacer('ww', '@*/SIGMA', $GreekBoldItal{SIGMA}, $MARKUP);
+	replacer('ww', '@*/sigmafn', $GreekBoldItal{finalsigma}, $MARKUP);
+	replacer('ww', '@*/tau', $GreekBoldItal{tau}, $MARKUP);
+	replacer('ww', '@*/TAU', $GreekBoldItal{TAU}, $MARKUP);
+	replacer('ww', '@*/upsilon', $GreekBoldItal{upsilon}, $MARKUP);
+	replacer('ww', '@*/UPSILON', $GreekBoldItal{UPSILON}, $MARKUP);
+	replacer('ww', '@*/phi', $GreekBoldItal{phi}, $MARKUP);
+	replacer('ww', '@*/PHI', $GreekBoldItal{PHI}, $MARKUP);
+	replacer('ww', '@*/chi', $GreekBoldItal{chi}, $MARKUP);
+	replacer('ww', '@*/CHI', $GreekBoldItal{CHI}, $MARKUP);
+	replacer('ww', '@*/psi', $GreekBoldItal{psi}, $MARKUP);
+	replacer('ww', '@*/PSI', $GreekBoldItal{PSI}, $MARKUP);
+	replacer('ww', '@*/omega', $GreekBoldItal{omega}, $MARKUP);
+	replacer('ww', '@*/OMEGA', $GreekBoldItal{OMEGA}, $MARKUP);
 
 	@Replacements = sort byLength @Replacements;
 	#debug("Replacements List: ", join(" ", @Replacements));
