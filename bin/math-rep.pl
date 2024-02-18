@@ -106,6 +106,29 @@ Normally a single whitespace is preserved around the symbol but you can use the 
 - Multi-character symbols which can be replaced by specific unicode characters:
 
 +-
+
+MARKUP REPLACEMENTS
+
+Multi-characters and additional markup which can be replaced by specific unicode characters:
+
+- Subscripts on algebraic variables and constants:
+
+X_0 X_1 X_2 X_3 X_4 X_5 X_6 X_7 X_8 X_9
+X_a X_e X_h X_i X_j X_k X_l X_m X_n X_o X_p X_r X_s X_t X_u X_v X_x
+X_+ X_- X_= X_( X_) X_< X_> X_... X_<-
+X_. X_*
+
+X_2_3_._1_4
+X_(_2_*_5_)
+X_n_=_1_..._1_0
+X_i_<_j
+X_i_>_2
+X_n_<-_m
+
+Note: there are no unicode characters for these below, so they do nothing.
+
+X_b X_c X_d X_f X_g X_q X_w X_y X_z
+X_/ X_[ X_] X_->
 MANPAGE
 }
 
@@ -944,6 +967,47 @@ sub makeParser
 	replacer('sy', '^PHI', '1DB2', $MARKUP);
 	replacer('sy', '^chi', '1D61', $MARKUP);
 
+# SUBSCRIPT TODO NEXT
+	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
+
+	replacer('syw', '_beta', '1D66', $MARKUP);
+	replacer('syw', '_gamma', '1D67', $MARKUP);
+	replacer('syw', '_rho', '1D68', $MARKUP);
+	replacer('syw', '_phi', '1D69', $MARKUP);
+	replacer('syw', '_chi', '1D6A', $MARKUP);
+
+# ^^^ ABOVE not yet unit tested
+# MUSTDO HEREIAM fix code and add tests for these literals next...
+
+	# Fractions:
+	replacer('nn', '1/10', '2152', $LITERAL);
+	replacer('nn', '1/4', 'BC',    $LITERAL);
+	replacer('nn', '1/2', 'BD',    $LITERAL);
+	replacer('nn', '3/4', 'BE',    $LITERAL);
+	replacer('nn', '1/7', '2150', $LITERAL);
+	replacer('nn', '1/9', '2151', $LITERAL);
+	replacer('nn', '1/3', '2153', $LITERAL);
+	replacer('nn', '2/3', '2154', $LITERAL);
+	replacer('nn', '1/5', '2155', $LITERAL);
+	replacer('nn', '2/5', '2156', $LITERAL);
+	replacer('nn', '3/5', '2157', $LITERAL);
+	replacer('nn', '4/5', '2158', $LITERAL);
+	replacer('nn', '1/6', '2159', $LITERAL);
+	replacer('nn', '5/6', '215A', $LITERAL);
+	replacer('nn', '1/8', '215B', $LITERAL);
+	replacer('nn', '3/8', '215C', $LITERAL);
+	replacer('nn', '5/8', '215D', $LITERAL);
+	replacer('nn', '7/8', '215E', $LITERAL);
+	replacer('nn', '0/3', '2189', $LITERAL);
+	replacer('nd', '1/', '215F', $LITERAL); # TODO needs a thin unicode space
+
+	# Operators and Equalities:
+	replacer('sy', '+-', 'B1',   $LITERAL);
+	replacer('sys', '==', '2261', $LITERAL);
+	replacer('sys', '~=', '2245', $LITERAL);
+	replacer('sys', '<=', '2264', $LITERAL);
+	replacer('sys', '>=', '2265', $LITERAL);
+
 	# Subscript:
 	replacer('sy', '_.', '2024', $MARKUP); # looks like subscript decimal point but not official
 	replacer('sy', '_*', '2E31', $MARKUP); # looks like subscript multiplication but not official
@@ -983,44 +1047,6 @@ sub makeParser
 	replacer('sy', '_>', '02F2', $MARKUP);
 	replacer('sy', '_...', '2026', $MARKUP);
 	replacer('sy', '_<-', '02FF', $MARKUP);
-
-	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
-
-	replacer('syw', '_beta', '1D66', $MARKUP);
-	replacer('syw', '_gamma', '1D67', $MARKUP);
-	replacer('syw', '_rho', '1D68', $MARKUP);
-	replacer('syw', '_phi', '1D69', $MARKUP);
-	replacer('syw', '_chi', '1D6A', $MARKUP);
-
-	# Fractions:
-	replacer('nn', '1/10', '2152', $LITERAL);
-	replacer('nn', '1/4', 'BC',    $LITERAL);
-	replacer('nn', '1/2', 'BD',    $LITERAL);
-	replacer('nn', '3/4', 'BE',    $LITERAL);
-	replacer('nn', '1/7', '2150', $LITERAL);
-	replacer('nn', '1/9', '2151', $LITERAL);
-	replacer('nn', '1/3', '2153', $LITERAL);
-	replacer('nn', '2/3', '2154', $LITERAL);
-	replacer('nn', '1/5', '2155', $LITERAL);
-	replacer('nn', '2/5', '2156', $LITERAL);
-	replacer('nn', '3/5', '2157', $LITERAL);
-	replacer('nn', '4/5', '2158', $LITERAL);
-	replacer('nn', '1/6', '2159', $LITERAL);
-	replacer('nn', '5/6', '215A', $LITERAL);
-	replacer('nn', '1/8', '215B', $LITERAL);
-	replacer('nn', '3/8', '215C', $LITERAL);
-	replacer('nn', '5/8', '215D', $LITERAL);
-	replacer('nn', '7/8', '215E', $LITERAL);
-	replacer('nn', '0/3', '2189', $LITERAL);
-	replacer('nd', '1/', '215F', $LITERAL); # TODO needs a thin unicode space
-
-	# Operators and Equalities:
-# MUSTDO HEREIAM fix code and add tests for these literals next...
-	replacer('sy', '+-', 'B1',   $LITERAL);
-	replacer('sys', '==', '2261', $LITERAL);
-	replacer('sys', '~=', '2245', $LITERAL);
-	replacer('sys', '<=', '2264', $LITERAL);
-	replacer('sys', '>=', '2265', $LITERAL);
 
 	@Replacements = sort byLength @Replacements;
 	#debug("Replacements List: ", join(" ", @Replacements));

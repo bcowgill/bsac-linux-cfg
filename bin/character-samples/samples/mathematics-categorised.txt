@@ -1,4 +1,82 @@
-=== vvv TODO Characters handled by math-rep.pl
+=== DONE Characters handled by math-rep.pl and featured in the unit tests:
+--- LITERAL REPLACEMENTS:
+¼	U+BC	[OtherNumber,Fraction]	VULGAR FRACTION ONE QUARTER
+½	U+BD	[OtherNumber,Fraction]	VULGAR FRACTION ONE HALF
+¾	U+BE	[OtherNumber,Fraction]	VULGAR FRACTION THREE QUARTERS
+⅐	U+2150	[OtherNumber,Fraction]	VULGAR FRACTION ONE SEVENTH
+⅑	U+2151	[OtherNumber,Fraction]	VULGAR FRACTION ONE NINTH
+⅒	U+2152	[OtherNumber,Fraction]	VULGAR FRACTION ONE TENTH
+⅓	U+2153	[OtherNumber,Fraction]	VULGAR FRACTION ONE THIRD
+⅔	U+2154	[OtherNumber,Fraction]	VULGAR FRACTION TWO THIRDS
+⅕	U+2155	[OtherNumber,Fraction]	VULGAR FRACTION ONE FIFTH
+⅖	U+2156	[OtherNumber,Fraction]	VULGAR FRACTION TWO FIFTHS
+⅗	U+2157	[OtherNumber,Fraction]	VULGAR FRACTION THREE FIFTHS
+⅘	U+2158	[OtherNumber,Fraction]	VULGAR FRACTION FOUR FIFTHS
+⅙	U+2159	[OtherNumber,Fraction]	VULGAR FRACTION ONE SIXTH
+⅚	U+215A	[OtherNumber,Fraction]	VULGAR FRACTION FIVE SIXTHS
+⅛	U+215B	[OtherNumber,Fraction]	VULGAR FRACTION ONE EIGHTH
+⅜	U+215C	[OtherNumber,Fraction]	VULGAR FRACTION THREE EIGHTHS
+⅝	U+215D	[OtherNumber,Fraction]	VULGAR FRACTION FIVE EIGHTHS
+⅞	U+215E	[OtherNumber,Fraction]	VULGAR FRACTION SEVEN EIGHTHS
+⅟	U+215F	[OtherNumber,Fraction]	FRACTION NUMERATOR ONE
+↉	U+2189	[OtherNumber,Fraction]	VULGAR FRACTION ZERO THIRDS
+
+±	U+B1	[MathSymbol,Arithmetic]	PLUS-MINUS SIGN
+≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
+≃	U+2243	[MathSymbol,Comparison]	ASYMPTOTICALLY EQUAL TO
+≤	U+2264	[MathSymbol,Comparison]	LESS-THAN OR EQUAL TO
+≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
+
+--- MARKUP REPLACEMENTS:
+ₐ	U+2090	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER A
+ₑ	U+2091	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER E
+ₕ	U+2095	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER H
+ᵢ	U+1D62	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER I
+ⱼ	U+2C7C	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER J
+ₖ	U+2096	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER K
+ₗ	U+2097	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER L
+ₘ	U+2098	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER M
+ₙ	U+2099	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER N
+ₒ	U+2092	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER O
+ₚ	U+209A	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER P
+ᵣ	U+1D63	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER R
+ₛ	U+209B	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER S
+ₜ	U+209C	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER T
+ᵤ	U+1D64	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER U
+ᵥ	U+1D65	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER V
+ₓ	U+2093	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER X
+TODO:
+ₔ	U+2094	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER SCHWA
+ᵦ	U+1D66	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER BETA
+ᵧ	U+1D67	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER GAMMA
+ᵨ	U+1D68	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER RHO
+ᵩ	U+1D69	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER PHI
+ᵪ	U+1D6A	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER CHI
+
+₀	U+2080	[OtherNumber,Subscript]	SUBSCRIPT ZERO
+₁	U+2081	[OtherNumber,Subscript]	SUBSCRIPT ONE
+₂	U+2082	[OtherNumber,Subscript]	SUBSCRIPT TWO
+₃	U+2083	[OtherNumber,Subscript]	SUBSCRIPT THREE
+₄	U+2084	[OtherNumber,Subscript]	SUBSCRIPT FOUR
+₅	U+2085	[OtherNumber,Subscript]	SUBSCRIPT FIVE
+₆	U+2086	[OtherNumber,Subscript]	SUBSCRIPT SIX
+₇	U+2087	[OtherNumber,Subscript]	SUBSCRIPT SEVEN
+₈	U+2088	[OtherNumber,Subscript]	SUBSCRIPT EIGHT
+₉	U+2089	[OtherNumber,Subscript]	SUBSCRIPT NINE
+․	U+2024	[OtherPunctuation,Subscript]	ONE DOT LEADER (SUBSCRIPT DECIMAL POINT)
+
+₊	U+208A	[MathSymbol,Subscript]	SUBSCRIPT PLUS SIGN
+₋	U+208B	[MathSymbol,Subscript]	SUBSCRIPT MINUS
+⸱	U+2E31	[OtherPunctuation,Subscript]	WORD SEPARATOR MIDDLE DOT (SUBSCRIPT MULTIPLICATION)
+₌	U+208C	[MathSymbol,Subscript]	SUBSCRIPT EQUALS SIGN
+₍	U+208D	[OpenPunctuation,Subscript]	SUBSCRIPT LEFT PARENTHESIS
+₎	U+208E	[ClosePunctuation,Subscript]	SUBSCRIPT RIGHT PARENTHESIS
+˱	U+2F1	[ModifierSymbol,MathSymbol,Subscript,Comparison]	MODIFIER LETTER LOW LEFT ARROWHEAD SUBSCRIPT LESS THAN SIGN
+˲	U+2F2	[ModifierSymbol,MathSymbol,Subscript,Comparison]	MODIFIER LETTER LOW RIGHT ARROWHEAD SUBSCRIPT GREATER THAN SIGN
+˿	U+2FF	[ModifierSymbol,MathSymbol,Subscript]	MODIFIER LETTER LOW LEFT ARROW SUBSCRIPT
+…	U+2026	[OtherPunctuation,Subscript]	HORIZONTAL ELLIPSIS (SUBSCRIPT ELLIPSIS)
+
+=== vvv TODO need to configure Characters handled by math-rep.pl
 ~/ =~ ~= ~/=/ ~== ~=/=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ =~=
 ≁	U+2241	[MathSymbol]	NOT TILDE
 ≂	U+2242	[MathSymbol]	MINUS TILDE
@@ -48,34 +126,6 @@
 ⋛	U+22DB	[MathSymbol,Comparison]	GREATER-THAN EQUAL TO OR LESS-THAN
 ⋜	U+22DC	[MathSymbol,Comparison]	EQUAL TO OR LESS-THAN
 ⋝	U+22DD	[MathSymbol,Comparison]	EQUAL TO OR GREATER-THAN
-
-=== Characters handled by math-rep.pl and featured in the unit tests
-¼	U+BC	[OtherNumber,Fraction]	VULGAR FRACTION ONE QUARTER
-½	U+BD	[OtherNumber,Fraction]	VULGAR FRACTION ONE HALF
-¾	U+BE	[OtherNumber,Fraction]	VULGAR FRACTION THREE QUARTERS
-⅐	U+2150	[OtherNumber,Fraction]	VULGAR FRACTION ONE SEVENTH
-⅑	U+2151	[OtherNumber,Fraction]	VULGAR FRACTION ONE NINTH
-⅒	U+2152	[OtherNumber,Fraction]	VULGAR FRACTION ONE TENTH
-⅓	U+2153	[OtherNumber,Fraction]	VULGAR FRACTION ONE THIRD
-⅔	U+2154	[OtherNumber,Fraction]	VULGAR FRACTION TWO THIRDS
-⅕	U+2155	[OtherNumber,Fraction]	VULGAR FRACTION ONE FIFTH
-⅖	U+2156	[OtherNumber,Fraction]	VULGAR FRACTION TWO FIFTHS
-⅗	U+2157	[OtherNumber,Fraction]	VULGAR FRACTION THREE FIFTHS
-⅘	U+2158	[OtherNumber,Fraction]	VULGAR FRACTION FOUR FIFTHS
-⅙	U+2159	[OtherNumber,Fraction]	VULGAR FRACTION ONE SIXTH
-⅚	U+215A	[OtherNumber,Fraction]	VULGAR FRACTION FIVE SIXTHS
-⅛	U+215B	[OtherNumber,Fraction]	VULGAR FRACTION ONE EIGHTH
-⅜	U+215C	[OtherNumber,Fraction]	VULGAR FRACTION THREE EIGHTHS
-⅝	U+215D	[OtherNumber,Fraction]	VULGAR FRACTION FIVE EIGHTHS
-⅞	U+215E	[OtherNumber,Fraction]	VULGAR FRACTION SEVEN EIGHTHS
-⅟	U+215F	[OtherNumber,Fraction]	FRACTION NUMERATOR ONE
-↉	U+2189	[OtherNumber,Fraction]	VULGAR FRACTION ZERO THIRDS
-
-±	U+B1	[MathSymbol,Arithmetic]	PLUS-MINUS SIGN
-≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
-≃	U+2243	[MathSymbol,Comparison]	ASYMPTOTICALLY EQUAL TO
-≤	U+2264	[MathSymbol,Comparison]	LESS-THAN OR EQUAL TO
-≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
 
 === Characters handled by math-rep.pl
 ⋅	U+22C5	[MathSymbol,Vectors,Superscript]	DOT OPERATOR (SUPERSCRIPT DECIMAL POINT)
@@ -146,54 +196,6 @@
 ˃	U+2C3	[ModifierSymbol,MathSymbol,Comparison]	MODIFIER LETTER RIGHT ARROWHEAD SUPERSCRIPT GREATER THAN SIGN
 
 ^^ TODO doing these
-
-․	U+2024	[OtherPunctuation,Subscript]	ONE DOT LEADER (SUBSCRIPT DECIMAL POINT)
-⸱	U+2E31	[OtherPunctuation,Subscript]	WORD SEPARATOR MIDDLE DOT (SUBSCRIPT MULTIPLICATION)
-
-ₐ	U+2090	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER A
-ₑ	U+2091	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER E
-ₕ	U+2095	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER H
-ᵢ	U+1D62	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER I
-ⱼ	U+2C7C	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER J
-ₖ	U+2096	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER K
-ₗ	U+2097	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER L
-ₘ	U+2098	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER M
-ₙ	U+2099	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER N
-ₒ	U+2092	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER O
-ₚ	U+209A	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER P
-ᵣ	U+1D63	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER R
-ₛ	U+209B	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER S
-ₜ	U+209C	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER T
-ᵤ	U+1D64	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER U
-ᵥ	U+1D65	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER V
-ₓ	U+2093	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER X
-ₔ	U+2094	[ModifierLetter]	LATIN SUBSCRIPT SMALL LETTER SCHWA
-ᵦ	U+1D66	[ModifierLetter]	GREEK SUBSCRIPT SMALL LETTER BETA
-ᵧ	U+1D67	[ModifierLetter]	GREEK SUBSCRIPT SMALL LETTER GAMMA
-ᵨ	U+1D68	[ModifierLetter]	GREEK SUBSCRIPT SMALL LETTER RHO
-ᵩ	U+1D69	[ModifierLetter]	GREEK SUBSCRIPT SMALL LETTER PHI
-ᵪ	U+1D6A	[ModifierLetter]	GREEK SUBSCRIPT SMALL LETTER CHI
-
-₀	U+2080	[OtherNumber]	SUBSCRIPT ZERO
-₁	U+2081	[OtherNumber]	SUBSCRIPT ONE
-₂	U+2082	[OtherNumber]	SUBSCRIPT TWO
-₃	U+2083	[OtherNumber]	SUBSCRIPT THREE
-₄	U+2084	[OtherNumber]	SUBSCRIPT FOUR
-₅	U+2085	[OtherNumber]	SUBSCRIPT FIVE
-₆	U+2086	[OtherNumber]	SUBSCRIPT SIX
-₇	U+2087	[OtherNumber]	SUBSCRIPT SEVEN
-₈	U+2088	[OtherNumber]	SUBSCRIPT EIGHT
-₉	U+2089	[OtherNumber]	SUBSCRIPT NINE
-
-₊	U+208A	[MathSymbol]	SUBSCRIPT PLUS SIGN
-₋	U+208B	[MathSymbol]	SUBSCRIPT MINUS
-₌	U+208C	[MathSymbol]	SUBSCRIPT EQUALS SIGN
-₍	U+208D	[OpenPunctuation]	SUBSCRIPT LEFT PARENTHESIS
-₎	U+208E	[ClosePunctuation]	SUBSCRIPT RIGHT PARENTHESIS
-˱	U+2F1	[ModifierSymbol,MathSymbol,Comparison]	MODIFIER LETTER LOW LEFT ARROWHEAD SUBSCRIPT LESS THAN SIGN
-˲	U+2F2	[ModifierSymbol,MathSymbol,Comparison]	MODIFIER LETTER LOW RIGHT ARROWHEAD SUBSCRIPT GREATER THAN SIGN
-˿	U+2FF	[ModifierSymbol,MathSymbol,xyzzy]	MODIFIER LETTER LOW LEFT ARROW SUBSCRIPT
-…	U+2026	[OtherPunctuation]	HORIZONTAL ELLIPSIS
 
 ᴦ	U+1D26	[LowercaseLetter]	GREEK LETTER SMALL CAPITAL GAMMA
 ᴧ	U+1D27	[LowercaseLetter]	GREEK LETTER SMALL CAPITAL LAMDA

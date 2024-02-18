@@ -8,13 +8,14 @@ PROGRAM=../../math-rep.pl
 CMD=`basename $PROGRAM`
 SAMPLE=in/math-rep.sample.txt
 SINGLE=in/single.txt
-LITERALS=in/math-rep.literals.txt
+LITERALS=in/literals.txt
+MARKUP=in/markup.txt
 DEBUG=
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 7
+PLAN 11
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -137,6 +138,48 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
 	MARKUP=0 $PROGRAM $ARGS < $LITERALS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD literal replacements turned off
+TEST=no-literals
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=$LITERALS
+	ARGS="$DEBUG"
+	LITERAL=0 $PROGRAM $ARGS < $LITERALS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful markup replacements
+TEST=markup
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	LITERAL=0 $PROGRAM $ARGS < $MARKUP > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD markup replacements turned off
+TEST=no-markup
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=$MARKUP
+	ARGS="$DEBUG"
+	MARKUP=0 $PROGRAM $ARGS < $MARKUP > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

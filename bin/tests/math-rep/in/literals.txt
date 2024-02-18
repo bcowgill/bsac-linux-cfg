@@ -35,4 +35,6 @@ Multi-character symbols:
 
 b = +-12
 
+Exceptions:
+
 +-+-+-+-

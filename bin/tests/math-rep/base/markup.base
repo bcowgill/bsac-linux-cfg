@@ -1,0 +1,30 @@
+Multi-characters math values with markup to convert:
+
+X₀ X₁ X₂ X₃ X₄ X₅ X₆ X₇ X₈ X₉
+Xₐ Xₑ Xₕ Xᵢ Xⱼ Xₖ Xₗ Xₘ Xₙ Xₒ Xₚ Xᵣ Xₛ Xₜ Xᵤ Xᵥ Xₓ
+X₊ X₋ X₌ X₍ X₎ X˱ X˲ X… X˿
+X․ X⸱
+
+X₂₃․₁₄
+X₍₂⸱₅₎
+Xₙ₌₁…₁₀
+Xᵢ˱ⱼ
+Xᵢ˲₂
+Xₙ˿ₘ
+
+Exceptions:
+
+X_b
+X_c
+X_d
+X_f
+X_g
+X_q
+X_w
+X_y
+X_z
+X_/
+X_[
+X_]
+X₋>
+
