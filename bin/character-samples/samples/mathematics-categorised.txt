@@ -28,6 +28,29 @@
 ≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
 
 --- MARKUP REPLACEMENTS:
+₀	U+2080	[OtherNumber,Subscript]	SUBSCRIPT ZERO
+₁	U+2081	[OtherNumber,Subscript]	SUBSCRIPT ONE
+₂	U+2082	[OtherNumber,Subscript]	SUBSCRIPT TWO
+₃	U+2083	[OtherNumber,Subscript]	SUBSCRIPT THREE
+₄	U+2084	[OtherNumber,Subscript]	SUBSCRIPT FOUR
+₅	U+2085	[OtherNumber,Subscript]	SUBSCRIPT FIVE
+₆	U+2086	[OtherNumber,Subscript]	SUBSCRIPT SIX
+₇	U+2087	[OtherNumber,Subscript]	SUBSCRIPT SEVEN
+₈	U+2088	[OtherNumber,Subscript]	SUBSCRIPT EIGHT
+₉	U+2089	[OtherNumber,Subscript]	SUBSCRIPT NINE
+․	U+2024	[OtherPunctuation,Subscript]	ONE DOT LEADER (SUBSCRIPT DECIMAL POINT)
+
+₊	U+208A	[MathSymbol,Subscript,Arithmetic]	SUBSCRIPT PLUS SIGN
+₋	U+208B	[MathSymbol,Subscript,Arithmetic]	SUBSCRIPT MINUS
+⸱	U+2E31	[OtherPunctuation,Subscript,Arithmetic]	WORD SEPARATOR MIDDLE DOT (SUBSCRIPT MULTIPLICATION)
+₌	U+208C	[MathSymbol,Subscript]	SUBSCRIPT EQUALS SIGN
+₍	U+208D	[OpenPunctuation,Subscript]	SUBSCRIPT LEFT PARENTHESIS
+₎	U+208E	[ClosePunctuation,Subscript]	SUBSCRIPT RIGHT PARENTHESIS
+˱	U+2F1	[ModifierSymbol,MathSymbol,Subscript,Comparison]	MODIFIER LETTER LOW LEFT ARROWHEAD SUBSCRIPT LESS THAN SIGN
+˲	U+2F2	[ModifierSymbol,MathSymbol,Subscript,Comparison]	MODIFIER LETTER LOW RIGHT ARROWHEAD SUBSCRIPT GREATER THAN SIGN
+˿	U+2FF	[ModifierSymbol,MathSymbol,Subscript]	MODIFIER LETTER LOW LEFT ARROW SUBSCRIPT
+…	U+2026	[OtherPunctuation,Subscript]	HORIZONTAL ELLIPSIS (SUBSCRIPT ELLIPSIS)
+
 ₐ	U+2090	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER A
 ₑ	U+2091	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER E
 ₕ	U+2095	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER H
@@ -45,7 +68,7 @@
 ᵤ	U+1D64	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER U
 ᵥ	U+1D65	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER V
 ₓ	U+2093	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER X
-TODO:
+
 ₔ	U+2094	[ModifierLetter,Subscript]	LATIN SUBSCRIPT SMALL LETTER SCHWA
 ᵦ	U+1D66	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER BETA
 ᵧ	U+1D67	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER GAMMA
@@ -53,28 +76,70 @@ TODO:
 ᵩ	U+1D69	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER PHI
 ᵪ	U+1D6A	[ModifierLetter,Subscript]	GREEK SUBSCRIPT SMALL LETTER CHI
 
-₀	U+2080	[OtherNumber,Subscript]	SUBSCRIPT ZERO
-₁	U+2081	[OtherNumber,Subscript]	SUBSCRIPT ONE
-₂	U+2082	[OtherNumber,Subscript]	SUBSCRIPT TWO
-₃	U+2083	[OtherNumber,Subscript]	SUBSCRIPT THREE
-₄	U+2084	[OtherNumber,Subscript]	SUBSCRIPT FOUR
-₅	U+2085	[OtherNumber,Subscript]	SUBSCRIPT FIVE
-₆	U+2086	[OtherNumber,Subscript]	SUBSCRIPT SIX
-₇	U+2087	[OtherNumber,Subscript]	SUBSCRIPT SEVEN
-₈	U+2088	[OtherNumber,Subscript]	SUBSCRIPT EIGHT
-₉	U+2089	[OtherNumber,Subscript]	SUBSCRIPT NINE
-․	U+2024	[OtherPunctuation,Subscript]	ONE DOT LEADER (SUBSCRIPT DECIMAL POINT)
+⁰	U+2070	[OtherNumber,Superscript]	SUPERSCRIPT ZERO
+¹	U+B9	[OtherNumber,Superscript]	SUPERSCRIPT ONE
+²	U+B2	[OtherNumber,Superscript]	SUPERSCRIPT TWO
+³	U+B3	[OtherNumber,Superscript]	SUPERSCRIPT THREE
+⁴	U+2074	[OtherNumber,Superscript]	SUPERSCRIPT FOUR
+⁵	U+2075	[OtherNumber,Superscript]	SUPERSCRIPT FIVE
+⁶	U+2076	[OtherNumber,Superscript]	SUPERSCRIPT SIX
+⁷	U+2077	[OtherNumber,Superscript]	SUPERSCRIPT SEVEN
+⁸	U+2078	[OtherNumber,Superscript]	SUPERSCRIPT EIGHT
+⁹	U+2079	[OtherNumber,Superscript]	SUPERSCRIPT NINE
+⋅	U+22C5	[MathSymbol,Vectors,Superscript]	DOT OPERATOR (SUPERSCRIPT DECIMAL POINT)
 
-₊	U+208A	[MathSymbol,Subscript]	SUBSCRIPT PLUS SIGN
-₋	U+208B	[MathSymbol,Subscript]	SUBSCRIPT MINUS
-⸱	U+2E31	[OtherPunctuation,Subscript]	WORD SEPARATOR MIDDLE DOT (SUBSCRIPT MULTIPLICATION)
-₌	U+208C	[MathSymbol,Subscript]	SUBSCRIPT EQUALS SIGN
-₍	U+208D	[OpenPunctuation,Subscript]	SUBSCRIPT LEFT PARENTHESIS
-₎	U+208E	[ClosePunctuation,Subscript]	SUBSCRIPT RIGHT PARENTHESIS
-˱	U+2F1	[ModifierSymbol,MathSymbol,Subscript,Comparison]	MODIFIER LETTER LOW LEFT ARROWHEAD SUBSCRIPT LESS THAN SIGN
-˲	U+2F2	[ModifierSymbol,MathSymbol,Subscript,Comparison]	MODIFIER LETTER LOW RIGHT ARROWHEAD SUBSCRIPT GREATER THAN SIGN
-˿	U+2FF	[ModifierSymbol,MathSymbol,Subscript]	MODIFIER LETTER LOW LEFT ARROW SUBSCRIPT
-…	U+2026	[OtherPunctuation,Subscript]	HORIZONTAL ELLIPSIS (SUBSCRIPT ELLIPSIS)
+⁺	U+207A	[MathSymbol,Superscript,Arithmetic]	SUPERSCRIPT PLUS SIGN
+⁻	U+207B	[MathSymbol,Superscript,Arithmetic]	SUPERSCRIPT MINUS
+˙	U+2D9	[ModifierSymbol,Superscript,Arithmetic]	DOT ABOVE (SUPERSCRIPT MULTIPLICATION)
+⁼	U+207C	[MathSymbol,Superscript]	SUPERSCRIPT EQUALS SIGN
+⁽	U+207D	[OpenPunctuation,Superscript]	SUPERSCRIPT LEFT PARENTHESIS
+⁾	U+207E	[ClosePunctuation,Superscript]	SUPERSCRIPT RIGHT PARENTHESIS
+˂	U+2C2	[ModifierSymbol,MathSymbol,Superscript,Comparison]	MODIFIER LETTER LEFT ARROWHEAD SUPERSCRIPT LESS THAN SIGN
+˃	U+2C3	[ModifierSymbol,MathSymbol,Superscript,Comparison]	MODIFIER LETTER RIGHT ARROWHEAD SUPERSCRIPT GREATER THAN SIGN
+
+ᵃ	U+1D43	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL A
+ᵇ	U+1D47	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL B
+ᶜ	U+1D9C	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL C
+ᵈ	U+1D48	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL D
+ᵉ	U+1D49	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL E
+ᶠ	U+1DA0	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL F
+ᶢ	U+1DA2	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL SCRIPT G
+ᵍ	U+1D4D	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL G
+ʰ	U+2B0	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL H
+ⁱ	U+2071	[ModifierLetter,Superscript]	SUPERSCRIPT LATIN SMALL LETTER I
+ᶦ	U+1DA6	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL CAPITAL I
+ʲ	U+2B2	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL J
+ᵏ	U+1D4F	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL K
+ˡ	U+2E1	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL L
+ᶫ	U+1DAB	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL CAPITAL L
+ᵐ	U+1D50	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL M
+ⁿ	U+207F	[ModifierLetter,Superscript]	SUPERSCRIPT LATIN SMALL LETTER N
+ᶰ	U+1DB0	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL CAPITAL N
+ᵒ	U+1D52	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL O
+ᵖ	U+1D56	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL P
+ʳ	U+2B3	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL R
+ˢ	U+2E2	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL S
+ᵗ	U+1D57	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL T
+ᵘ	U+1D58	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL U
+ᶸ	U+1DB8	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL CAPITAL U
+ᵛ	U+1D5B	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL V
+ʷ	U+2B7	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL W
+ˣ	U+2E3	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL X
+ʸ	U+2B8	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL Y
+ᶻ	U+1DBB	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL Z
+
+ᵊ	U+1D4A	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL SCHWA
+ᵅ	U+1D45	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL ALPHA
+ᵝ	U+1D5D	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL BETA
+ᵞ	U+1D5E	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL GREEK GAMMA
+ˠ	U+2E0	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL GAMMA
+ᵟ	U+1D5F	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL DELTA
+ᶿ	U+1DBF	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL THETA
+ᶥ	U+1DA5	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL IOTA
+ᶷ	U+1DB7	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL UPSILON
+ᶲ	U+1DB2	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL PHI
+ᵠ	U+1D60	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL GREEK PHI
+ᵡ	U+1D61	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL CHI
 
 === vvv TODO need to configure Characters handled by math-rep.pl
 ~/ =~ ~= ~/=/ ~== ~=/=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ =~=
@@ -128,73 +193,6 @@ TODO:
 ⋝	U+22DD	[MathSymbol,Comparison]	EQUAL TO OR GREATER-THAN
 
 === Characters handled by math-rep.pl
-⋅	U+22C5	[MathSymbol,Vectors,Superscript]	DOT OPERATOR (SUPERSCRIPT DECIMAL POINT)
-˙	U+2D9	[ModifierSymbol,Superscript]	DOT ABOVE (SUPERSCRIPT MULTIPLICATION)
-
-ᵃ	U+1D43	[ModifierLetter]	MODIFIER LETTER SMALL A
-ᵇ	U+1D47	[ModifierLetter]	MODIFIER LETTER SMALL B
-ᶜ	U+1D9C	[ModifierLetter]	MODIFIER LETTER SMALL C
-ᵈ	U+1D48	[ModifierLetter]	MODIFIER LETTER SMALL D
-ᵉ	U+1D49	[ModifierLetter]	MODIFIER LETTER SMALL E
-ᶠ	U+1DA0	[ModifierLetter]	MODIFIER LETTER SMALL F
-ᶢ	U+1DA2	[ModifierLetter]	MODIFIER LETTER SMALL SCRIPT G
-ᵍ	U+1D4D	[ModifierLetter]	MODIFIER LETTER SMALL G
-ʰ	U+2B0	[ModifierLetter]	MODIFIER LETTER SMALL H
-ⁱ	U+2071	[ModifierLetter]	SUPERSCRIPT LATIN SMALL LETTER I
-ᶦ	U+1DA6	[ModifierLetter]	MODIFIER LETTER SMALL CAPITAL I
-ʲ	U+2B2	[ModifierLetter]	MODIFIER LETTER SMALL J
-ᵏ	U+1D4F	[ModifierLetter]	MODIFIER LETTER SMALL K
-ˡ	U+2E1	[ModifierLetter]	MODIFIER LETTER SMALL L
-ᶫ	U+1DAB	[ModifierLetter]	MODIFIER LETTER SMALL CAPITAL L
-ᵐ	U+1D50	[ModifierLetter]	MODIFIER LETTER SMALL M
-ⁿ	U+207F	[ModifierLetter]	SUPERSCRIPT LATIN SMALL LETTER N
-ᶰ	U+1DB0	[ModifierLetter]	MODIFIER LETTER SMALL CAPITAL N
-ᵒ	U+1D52	[ModifierLetter]	MODIFIER LETTER SMALL O
-ᵖ	U+1D56	[ModifierLetter]	MODIFIER LETTER SMALL P
-ʳ	U+2B3	[ModifierLetter]	MODIFIER LETTER SMALL R
-ˢ	U+2E2	[ModifierLetter]	MODIFIER LETTER SMALL S
-ᵗ	U+1D57	[ModifierLetter]	MODIFIER LETTER SMALL T
-ᵘ	U+1D58	[ModifierLetter]	MODIFIER LETTER SMALL U
-ᶸ	U+1DB8	[ModifierLetter]	MODIFIER LETTER SMALL CAPITAL U
-ᵛ	U+1D5B	[ModifierLetter]	MODIFIER LETTER SMALL V
-ʷ	U+2B7	[ModifierLetter]	MODIFIER LETTER SMALL W
-ˣ	U+2E3	[ModifierLetter]	MODIFIER LETTER SMALL X
-ʸ	U+2B8	[ModifierLetter]	MODIFIER LETTER SMALL Y
-ᶻ	U+1DBB	[ModifierLetter]	MODIFIER LETTER SMALL Z
-
-ᵊ	U+1D4A	[ModifierLetter]	MODIFIER LETTER SMALL SCHWA
-
-ᵅ	U+1D45	[ModifierLetter]	MODIFIER LETTER SMALL ALPHA
-ᵝ	U+1D5D	[ModifierLetter]	MODIFIER LETTER SMALL BETA
-ᵞ	U+1D5E	[ModifierLetter]	MODIFIER LETTER SMALL GREEK GAMMA
-ˠ	U+2E0	[ModifierLetter]	MODIFIER LETTER SMALL GAMMA
-ᵟ	U+1D5F	[ModifierLetter]	MODIFIER LETTER SMALL DELTA
-ᶿ	U+1DBF	[ModifierLetter]	MODIFIER LETTER SMALL THETA
-ᶥ	U+1DA5	[ModifierLetter]	MODIFIER LETTER SMALL IOTA
-ᶷ	U+1DB7	[ModifierLetter]	MODIFIER LETTER SMALL UPSILON
-ᶲ	U+1DB2	[ModifierLetter]	MODIFIER LETTER SMALL PHI
-ᵠ	U+1D60	[ModifierLetter]	MODIFIER LETTER SMALL GREEK PHI
-ᵡ	U+1D61	[ModifierLetter]	MODIFIER LETTER SMALL CHI
-
-⁰	U+2070	[OtherNumber]	SUPERSCRIPT ZERO
-¹	U+B9	[OtherNumber]	SUPERSCRIPT ONE
-²	U+B2	[OtherNumber]	SUPERSCRIPT TWO
-³	U+B3	[OtherNumber]	SUPERSCRIPT THREE
-⁴	U+2074	[OtherNumber]	SUPERSCRIPT FOUR
-⁵	U+2075	[OtherNumber]	SUPERSCRIPT FIVE
-⁶	U+2076	[OtherNumber]	SUPERSCRIPT SIX
-⁷	U+2077	[OtherNumber]	SUPERSCRIPT SEVEN
-⁸	U+2078	[OtherNumber]	SUPERSCRIPT EIGHT
-⁹	U+2079	[OtherNumber]	SUPERSCRIPT NINE
-
-⁺	U+207A	[MathSymbol]	SUPERSCRIPT PLUS SIGN
-⁻	U+207B	[MathSymbol]	SUPERSCRIPT MINUS
-⁼	U+207C	[MathSymbol]	SUPERSCRIPT EQUALS SIGN
-⁽	U+207D	[OpenPunctuation]	SUPERSCRIPT LEFT PARENTHESIS
-⁾	U+207E	[ClosePunctuation]	SUPERSCRIPT RIGHT PARENTHESIS
-˂	U+2C2	[ModifierSymbol,MathSymbol,Comparison]	MODIFIER LETTER LEFT ARROWHEAD SUPERSCRIPT LESS THAN SIGN
-˃	U+2C3	[ModifierSymbol,MathSymbol,Comparison]	MODIFIER LETTER RIGHT ARROWHEAD SUPERSCRIPT GREATER THAN SIGN
-
 ^^ TODO doing these
 
 ᴦ	U+1D26	[LowercaseLetter]	GREEK LETTER SMALL CAPITAL GAMMA

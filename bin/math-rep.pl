@@ -70,7 +70,7 @@ $CATEGORY
 
 @{[manpage()]}
 
-See also ls-maths.sh ... TODO
+See also ls-maths.sh utf8dbg.pl ... TODO
 
 Example:
 
@@ -115,6 +115,7 @@ Multi-characters and additional markup which can be replaced by specific unicode
 
 X_0 X_1 X_2 X_3 X_4 X_5 X_6 X_7 X_8 X_9
 X_a X_e X_h X_i X_j X_k X_l X_m X_n X_o X_p X_r X_s X_t X_u X_v X_x
+X_beta X_gamma X_rho X_phi X_chi X_schwa
 X_+ X_- X_= X_( X_) X_< X_> X_... X_<-
 X_. X_*
 
@@ -129,6 +130,27 @@ Note: there are no unicode characters for these below, so they do nothing.
 
 X_b X_c X_d X_f X_g X_q X_w X_y X_z
 X_/ X_[ X_] X_->
+X_A and all other capital letters
+X_alpha and many other greek letters
+
+- Superscripts or exponentiation on algebraic variables and constants:
+
+X^0 X^1 X^2 X^3 X^4 X^5 X^6 X^7 X^8 X^9
+X^G X^I X^N X^U
+X^a X^b X^c X^d X^e X^f X^g X^h X^i X^j X^k X^l X^m X^n X^o X^p X^r X^s X^t X^u X^v X^w X^x X^y X^z
+X^GAMMA X^PHI
+X^alpha X^beta X^gamma X^delta X^theta X^iota X^upsilon X^phi X^chi X^schwa
+X^+ X^- X^= X^( X^) X^< X^>
+X^. X^*
+
+Note: there are no unicode characters for these below, so they do nothing.
+
+X^q
+X^rho
+X^... X^<-
+X^A and many other capital letters
+X^ALPHA and many other greek capital letters
+
 MANPAGE
 }
 
@@ -649,8 +671,10 @@ sub ww
 sub syw
 {
 	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'syw'} = "literal string of word characters replaced with a single symbol character";
 	$literal = quotemeta(checkLength($literal));
-	$line =~ s{$literal($notLetter)}{U($code) . $1}xmsge;
+	debug("syw($literal => U+$code): line: $line");
+	$line =~ s{$literal($notLetter)}{yes(U($code)) . $1}xmsge;
 	return $line;
 }
 
@@ -902,80 +926,6 @@ sub makeParser
 	replacer('ww', '@*/omega', $GreekBoldItal{omega}, $MARKUP);
 	replacer('ww', '@*/OMEGA', $GreekBoldItal{OMEGA}, $MARKUP);
 
-	# Superscript:
-	replacer('sy', '^.', '22C5', $MARKUP); # not officially a superscript decimal point but it works.
-	replacer('sy', '^*', '2D9', $MARKUP); # looks like superscript multiplication
-	replacer('sy', '^0', '2070', $MARKUP);
-	replacer('sy', '^1', 'B9', $MARKUP);
-	replacer('sy', '^2', 'B2', $MARKUP);
-	replacer('sy', '^3', 'B3', $MARKUP);
-	replacer('sy', '^4', '2074', $MARKUP);
-	replacer('sy', '^5', '2075', $MARKUP);
-	replacer('sy', '^6', '2076', $MARKUP);
-	replacer('sy', '^7', '2077', $MARKUP);
-	replacer('sy', '^8', '2078', $MARKUP);
-	replacer('sy', '^9', '2079', $MARKUP);
-	replacer('sy', '^a', '1D43', $MARKUP);
-	replacer('sy', '^b', '1D47', $MARKUP);
-	replacer('sy', '^c', '1D9C', $MARKUP);
-	replacer('sy', '^d', '1D48', $MARKUP);
-	replacer('sy', '^e', '1D49', $MARKUP);
-	replacer('sy', '^f', '1DA0', $MARKUP);
-	replacer('sy', '^g', '1D4D', $MARKUP);
-	replacer('sy', '^G', '1DA2', $MARKUP);
-	replacer('sy', '^h', '2B0', $MARKUP);
-	replacer('sy', '^i', '2071', $MARKUP);
-	replacer('sy', '^I', '1DA6', $MARKUP);
-	replacer('sy', '^j', '2B2', $MARKUP);
-	replacer('sy', '^k', '1D4F', $MARKUP);
-	replacer('sy', '^l', '2E1', $MARKUP);
-	replacer('sy', '^m', '1D50', $MARKUP);
-	replacer('sy', '^n', '207F', $MARKUP);
-	replacer('sy', '^N', '1DB0', $MARKUP);
-	replacer('sy', '^o', '1D52', $MARKUP);
-	replacer('sy', '^p', '1D56', $MARKUP);
-	replacer('sy', '^r', '2B3', $MARKUP);
-	replacer('sy', '^s', '2E2', $MARKUP);
-	replacer('sy', '^t', '1D57', $MARKUP);
-	replacer('sy', '^u', '1D58', $MARKUP);
-	replacer('sy', '^U', '1DB8', $MARKUP);
-	replacer('sy', '^v', '1D5B', $MARKUP);
-	replacer('sy', '^w', '2B7', $MARKUP);
-	replacer('sy', '^x', '2E3', $MARKUP);
-	replacer('sy', '^y', '2B8', $MARKUP);
-	replacer('sy', '^z', '1DBB', $MARKUP);
-
-	replacer('sy', '^+', '207A', $MARKUP);
-	replacer('sy', '^-', '207B', $MARKUP);
-	replacer('sy', '^=', '207C', $MARKUP);
-	replacer('sy', '^(', '207D', $MARKUP);
-	replacer('sy', '^)', '207E', $MARKUP);
-	replacer('sy', '^<', '2C2', $MARKUP);
-	replacer('sy', '^>', '2C3', $MARKUP);
-
-	replacer('sy', '^schwa', '1D4A', $MARKUP);
-
-	replacer('sy', '^alpha', '1D45', $MARKUP);
-	replacer('sy', '^beta', '1D5D', $MARKUP);
-	replacer('sy', '^gamma', '1D5E', $MARKUP);
-	replacer('sy', '^GAMMA', '2E0', $MARKUP);
-	replacer('sy', '^delta', '1D5F', $MARKUP);
-	replacer('sy', '^theta', '1DBF', $MARKUP);
-	replacer('sy', '^iota', '1DA5', $MARKUP);
-	replacer('sy', '^upsilon', '1DB7', $MARKUP);
-	replacer('sy', '^phi', '1D60', $MARKUP);
-	replacer('sy', '^PHI', '1DB2', $MARKUP);
-	replacer('sy', '^chi', '1D61', $MARKUP);
-
-# SUBSCRIPT TODO NEXT
-	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
-
-	replacer('syw', '_beta', '1D66', $MARKUP);
-	replacer('syw', '_gamma', '1D67', $MARKUP);
-	replacer('syw', '_rho', '1D68', $MARKUP);
-	replacer('syw', '_phi', '1D69', $MARKUP);
-	replacer('syw', '_chi', '1D6A', $MARKUP);
-
 # ^^^ ABOVE not yet unit tested
 # MUSTDO HEREIAM fix code and add tests for these literals next...
 
@@ -1047,6 +997,79 @@ sub makeParser
 	replacer('sy', '_>', '02F2', $MARKUP);
 	replacer('sy', '_...', '2026', $MARKUP);
 	replacer('sy', '_<-', '02FF', $MARKUP);
+
+	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
+
+	replacer('syw', '_beta', '1D66', $MARKUP);
+	replacer('syw', '_gamma', '1D67', $MARKUP);
+	replacer('syw', '_rho', '1D68', $MARKUP);
+	replacer('syw', '_phi', '1D69', $MARKUP);
+	replacer('syw', '_chi', '1D6A', $MARKUP);
+
+	# Superscript:
+	replacer('sy', '^.', '22C5', $MARKUP); # not officially a superscript decimal point but it works.
+	replacer('sy', '^*', '2D9', $MARKUP); # looks like superscript multiplication
+	replacer('sy', '^0', '2070', $MARKUP);
+	replacer('sy', '^1', 'B9', $MARKUP);
+	replacer('sy', '^2', 'B2', $MARKUP);
+	replacer('sy', '^3', 'B3', $MARKUP);
+	replacer('sy', '^4', '2074', $MARKUP);
+	replacer('sy', '^5', '2075', $MARKUP);
+	replacer('sy', '^6', '2076', $MARKUP);
+	replacer('sy', '^7', '2077', $MARKUP);
+	replacer('sy', '^8', '2078', $MARKUP);
+	replacer('sy', '^9', '2079', $MARKUP);
+	replacer('sy', '^a', '1D43', $MARKUP);
+	replacer('sy', '^b', '1D47', $MARKUP);
+	replacer('sy', '^c', '1D9C', $MARKUP);
+	replacer('sy', '^d', '1D48', $MARKUP);
+	replacer('sy', '^e', '1D49', $MARKUP);
+	replacer('sy', '^f', '1DA0', $MARKUP);
+	replacer('sy', '^g', '1D4D', $MARKUP);
+	replacer('sy', '^G', '1DA2', $MARKUP);
+	replacer('sy', '^h', '2B0', $MARKUP);
+	replacer('sy', '^i', '2071', $MARKUP);
+	replacer('sy', '^I', '1DA6', $MARKUP);
+	replacer('sy', '^j', '2B2', $MARKUP);
+	replacer('sy', '^k', '1D4F', $MARKUP);
+	replacer('sy', '^l', '2E1', $MARKUP);
+	replacer('sy', '^m', '1D50', $MARKUP);
+	replacer('sy', '^n', '207F', $MARKUP);
+	replacer('sy', '^N', '1DB0', $MARKUP);
+	replacer('sy', '^o', '1D52', $MARKUP);
+	replacer('sy', '^p', '1D56', $MARKUP);
+	replacer('sy', '^r', '2B3', $MARKUP);
+	replacer('sy', '^s', '2E2', $MARKUP);
+	replacer('sy', '^t', '1D57', $MARKUP);
+	replacer('sy', '^u', '1D58', $MARKUP);
+	replacer('sy', '^U', '1DB8', $MARKUP);
+	replacer('sy', '^v', '1D5B', $MARKUP);
+	replacer('sy', '^w', '2B7', $MARKUP);
+	replacer('sy', '^x', '2E3', $MARKUP);
+	replacer('sy', '^y', '2B8', $MARKUP);
+	replacer('sy', '^z', '1DBB', $MARKUP);
+
+	replacer('sy', '^+', '207A', $MARKUP);
+	replacer('sy', '^-', '207B', $MARKUP);
+	replacer('sy', '^=', '207C', $MARKUP);
+	replacer('sy', '^(', '207D', $MARKUP);
+	replacer('sy', '^)', '207E', $MARKUP);
+	replacer('sy', '^<', '2C2', $MARKUP);
+	replacer('sy', '^>', '2C3', $MARKUP);
+
+	replacer('sy', '^schwa', '1D4A', $MARKUP);
+
+	replacer('sy', '^alpha', '1D45', $MARKUP);
+	replacer('sy', '^beta', '1D5D', $MARKUP);
+	replacer('sy', '^gamma', '1D5E', $MARKUP);
+	replacer('sy', '^GAMMA', '2E0', $MARKUP);
+	replacer('sy', '^delta', '1D5F', $MARKUP);
+	replacer('sy', '^theta', '1DBF', $MARKUP);
+	replacer('sy', '^iota', '1DA5', $MARKUP);
+	replacer('sy', '^upsilon', '1DB7', $MARKUP);
+	replacer('sy', '^phi', '1D60', $MARKUP);
+	replacer('sy', '^PHI', '1DB2', $MARKUP);
+	replacer('sy', '^chi', '1D61', $MARKUP);
 
 	@Replacements = sort byLength @Replacements;
 	#debug("Replacements List: ", join(" ", @Replacements));

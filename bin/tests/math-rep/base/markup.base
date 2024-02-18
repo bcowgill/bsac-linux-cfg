@@ -2,6 +2,7 @@ Multi-characters math values with markup to convert:
 
 X₀ X₁ X₂ X₃ X₄ X₅ X₆ X₇ X₈ X₉
 Xₐ Xₑ Xₕ Xᵢ Xⱼ Xₖ Xₗ Xₘ Xₙ Xₒ Xₚ Xᵣ Xₛ Xₜ Xᵤ Xᵥ Xₓ
+Xᵦ Xᵧ Xᵨ Xᵩ Xᵪ Xₔ
 X₊ X₋ X₌ X₍ X₎ X˱ X˲ X… X˿
 X․ X⸱
 
@@ -27,4 +28,22 @@ X_/
 X_[
 X_]
 X₋>
+X_A and all other capital letters
+Xₐlpha and many other greek letters
 
+X⁰ X¹ X² X³ X⁴ X⁵ X⁶ X⁷ X⁸ X⁹
+Xᶢ Xᶦ Xᶰ Xᶸ
+Xᶢ Xᵍ
+Xᵃ Xᵇ Xᶜ Xᵈ Xᵉ Xᶠ Xᵍ Xʰ Xⁱ Xʲ Xᵏ Xˡ Xᵐ Xⁿ Xᵒ Xᵖ Xʳ Xˢ Xᵗ Xᵘ Xᵛ Xʷ Xˣ Xʸ Xᶻ
+Xˠ Xᶲ
+Xᵅ Xᵝ Xᵞ Xᵟ Xᶿ Xᶥ Xᶷ Xᵠ Xᵡ Xᵊ
+X⁺ X⁻ X⁼ X⁽ X⁾ X˂ X˃
+X⋅ X˙
+
+Exceptions:
+
+X^q
+X^A and many other capital letters
+X^ALPHA and many other greek capital letters
+Xʳho
+X⋅.. X˂-
