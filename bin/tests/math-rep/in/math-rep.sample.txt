@@ -36,8 +36,21 @@ Fractions:
 
 Equalities:
 x <= y == z
-x >= y ~= z
+x >= y -~ z
 y = mx +- b
+
+a ~/ b
+a -~ b
+a ~= b
+a ~/=/ b
+a ~== b
+a ~=/ b
+a ~/=/=/ b
+a ~~ b
+a ~/~/ b
+a ~~= b
+a ~~~ b
+a ~=== b
 
 MARKUP replacements:
 --------------------

@@ -19,9 +19,21 @@ Exceptions:
 Multi-character symbols with surrounding whitespace:
 
 a ≡ b
-a ≅ b
 a ≤ b
 a ≥ b
+
+a ≁ b
+a ≂ b
+a ≃ b
+a ≄ b
+a ≅ b
+a ≆ b
+a ≇ b
+a ≈ b
+a ≉ b
+a ≊ b
+a ≋ b
+a ≌ b
 
 b=±12
 a==b

@@ -98,7 +98,9 @@ LITERAL REPLACEMENTS
 
 - Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
 
-<=  >=  ==  ~=
+<=  >=  ==
+
+~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
 
 Symbols are typed from left to right and represent the line strokes going from top to bottom.
 
@@ -801,9 +803,21 @@ sub makeParser
 	# Operators and Equalities:
 	replacer('sy', '+-', 'B1',   $LITERAL);
 	replacer('sys', '==', '2261', $LITERAL);
-	replacer('sys', '~=', '2245', $LITERAL);
 	replacer('sys', '<=', '2264', $LITERAL);
 	replacer('sys', '>=', '2265', $LITERAL);
+
+	replacer('sys', '~/', '2241', $LITERAL);
+	replacer('sys', '-~', '2242', $LITERAL);
+	replacer('sys', '~=', '2243', $LITERAL);
+	replacer('sys', '~/=/', '2244', $LITERAL);
+	replacer('sys', '~==', '2245', $LITERAL);
+	replacer('sys', '~=/', '2246', $LITERAL);
+	replacer('sys', '~/=/=/', '2247', $LITERAL);
+	replacer('sys', '~~', '2248', $LITERAL);
+	replacer('sys', '~/~/', '2249', $LITERAL);
+	replacer('sys', '~~=', '224A', $LITERAL);
+	replacer('sys', '~~~', '224B', $LITERAL);
+	replacer('sys', '~===', '224C', $LITERAL);
 
 	# Subscript:
 	replacer('sy', '_.', '2024', $MARKUP); # looks like subscript decimal point but not official

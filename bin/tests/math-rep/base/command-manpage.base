@@ -28,7 +28,9 @@ LITERAL REPLACEMENTS
 
 - Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
 
-<=  >=  ==  ~=
+<=  >=  ==
+
+~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
 
 Symbols are typed from left to right and represent the line strokes going from top to bottom.
 

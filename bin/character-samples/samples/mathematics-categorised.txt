@@ -22,12 +22,27 @@
 ⅟	U+215F	[OtherNumber,Fraction]	FRACTION NUMERATOR ONE
 ↉	U+2189	[OtherNumber,Fraction]	VULGAR FRACTION ZERO THIRDS
 
-+-  ==  ~=  <=  >=
++-  ==  <=  >=
 ±	U+B1	[MathSymbol,Arithmetic]	PLUS-MINUS SIGN
 ≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
-≃	U+2243	[MathSymbol,Comparison]	ASYMPTOTICALLY EQUAL TO
 ≤	U+2264	[MathSymbol,Comparison]	LESS-THAN OR EQUAL TO
 ≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
+
+~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
+≁	U+2241	[MathSymbol]	NOT TILDE
+≂	U+2242	[MathSymbol]	MINUS TILDE
+≃	U+2243	[MathSymbol,Comparison]	ASYMPTOTICALLY EQUAL TO
+≄	U+2244	[MathSymbol,Comparison]	NOT ASYMPTOTICALLY EQUAL TO
+≅	U+2245	[MathSymbol,Comparison]	APPROXIMATELY EQUAL TO
+≆	U+2246	[MathSymbol,Comparison]	APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
+≇	U+2247	[MathSymbol,Comparison]	NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
+≈	U+2248	[MathSymbol,Comparison]	ALMOST EQUAL TO
+≉	U+2249	[MathSymbol,Comparison]	NOT ALMOST EQUAL TO
+≊	U+224A	[MathSymbol,Comparison]	ALMOST EQUAL OR EQUAL TO
+≋	U+224B	[MathSymbol,Comparison]	TRIPLE TILDE
+≌	U+224C	[MathSymbol,Comparison]	ALL EQUAL TO
+
+
 
 --- MARKUP REPLACEMENTS:
 _0 _1 _2 _3 _4 _5 _6 _7 _8 _9 _.
@@ -379,20 +394,6 @@ _schwa _beta _gamma _rho _phi _chi
 𝞨	U+1D7A8	[UppercaseLetter]	MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL OMEGA
 
 === vvv TODO need to configure Characters handled by math-rep.pl
-~/ =~ ~= ~/=/ ~== ~=/=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ =~=
-≁	U+2241	[MathSymbol]	NOT TILDE
-≂	U+2242	[MathSymbol]	MINUS TILDE
-≃	U+2243	[MathSymbol,Comparison]	ASYMPTOTICALLY EQUAL TO
-≄	U+2244	[MathSymbol,Comparison]	NOT ASYMPTOTICALLY EQUAL TO
-≅	U+2245	[MathSymbol,Comparison]	APPROXIMATELY EQUAL TO
-≆	U+2246	[MathSymbol,Comparison]	APPROXIMATELY BUT NOT ACTUALLY EQUAL TO
-≇	U+2247	[MathSymbol,Comparison]	NEITHER APPROXIMATELY NOR ACTUALLY EQUAL TO
-≈	U+2248	[MathSymbol,Comparison]	ALMOST EQUAL TO
-≉	U+2249	[MathSymbol,Comparison]	NOT ALMOST EQUAL TO
-≊	U+224A	[MathSymbol,Comparison]	ALMOST EQUAL OR EQUAL TO
-≋	U+224B	[MathSymbol,Comparison]	TRIPLE TILDE
-≌	U+224C	[MathSymbol,Comparison]	ALL EQUAL TO
-
 =/= == =/=/ ===
 ≠	U+2260	[MathSymbol,Comparison]	NOT EQUAL TO
 ≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
