@@ -34,10 +34,50 @@ Fractions:
         = 1/x
         = 1/ x
 
+Operations:
+b = 3 ** 4
+b = 3 // 4
+p = !!q
+r = [-b +- sqrt(b^2 - 4ac)]/2a
+
 Equalities:
 x <= y == z
 x >= y -~ z
 y = mx +- b
+
+a =/= b
+a == b
+a =/=/ b
+a === b
+
+a <= b
+a >= b
+a <== b
+a >== b
+a <=/=/ b
+a >=/=/ b
+a << b
+a >> b
+a </ b
+a >/ b
+a </=/ b
+a >/=/ b
+a <~ b
+a >~ b
+a </~/ b
+a >/~/ b
+a <> b
+a >< b
+a </>/ b
+a >/</ b
+a <. b
+a >. b
+a <<< b
+a >>> b
+a <=> b
+a >=< b
+a =< b
+a => b
 
 a ~/ b
 a -~ b

@@ -35,10 +35,50 @@ Fractions:
         = ⅟x
         = ⅟ x
 
+Operations:
+b = 3 × 4
+b = 3 ÷ 4
+p = ¬q
+r = [-b ± sqrt(b² - 4ac)]/2a
+
 Equalities:
 x ≤ y ≡ z
 x ≥ y ≂ z
 y = mx ± b
+
+a ≠ b
+a ≡ b
+a ≢ b
+a ≣ b
+
+a ≤ b
+a ≥ b
+a ≦ b
+a ≧ b
+a ≨ b
+a ≩ b
+a ≪ b
+a ≫ b
+a ≮ b
+a ≯ b
+a ≰ b
+a ≱ b
+a ≲ b
+a ≳ b
+a ≴ b
+a ≵ b
+a ≶ b
+a ≷ b
+a ≸ b
+a ≹ b
+a ⋖ b
+a ⋗ b
+a ⋘ b
+a ⋙ b
+a ⋚ b
+a ⋛ b
+a ⋜ b
+a ⋝ b
 
 a ≁ b
 a ≂ b

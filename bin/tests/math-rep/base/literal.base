@@ -18,9 +18,42 @@ Exceptions:
 
 Multi-character symbols with surrounding whitespace:
 
-a ≡ b
 a ≤ b
 a ≥ b
+
+a ≠ b
+a ≡ b
+a ≢ b
+a ≣ b
+
+a ≤ b
+a ≥ b
+a ≦ b
+a ≧ b
+a ≨ b
+a ≩ b
+a ≪ b
+a ≫ b
+a ≮ b
+a ≯ b
+a ≰ b
+a ≱ b
+a ≲ b
+a ≳ b
+a ≴ b
+a ≵ b
+a ≶ b
+a ≷ b
+a ≸ b
+a ≹ b
+a ⋖ b
+a ⋗ b
+a ⋘ b
+a ⋙ b
+a ⋚ b
+a ⋛ b
+a ⋜ b
+a ⋝ b
 
 a ≁ b
 a ≂ b
@@ -35,6 +68,8 @@ a ≊ b
 a ≋ b
 a ≌ b
 
+Exceptions:
+
 b=±12
 a==b
 a~=b
@@ -46,7 +81,13 @@ a>=b
 Multi-character symbols:
 
 b = ±12
+b = 3 × 4
+b = 3 ÷ 4
+p = ¬q
 
 Exceptions:
 
 ±±±±
+××××
+÷÷÷÷
+¬¬¬¬

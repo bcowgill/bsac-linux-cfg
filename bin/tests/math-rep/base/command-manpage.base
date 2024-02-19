@@ -5,11 +5,13 @@ MARKUP=1
 LITERAL=1
 SHOW_CODE=0
 CUDDLE=0
+LEGEND=0
 
 --cuddle TODO...
 --markup TODO...
 --literal TODO...
 --codes TODO ...
+--legend TODO...
 --help  shows help for this program.
 --man   shows help for this program with full details.
 -?      shows help for this program.
@@ -28,7 +30,9 @@ LITERAL REPLACEMENTS
 
 - Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
 
-<=  >=  ==
+=/= == =/=/ ===
+
+<= >= <== >== <=/=/ >=/=/ << >> </ >/ </=/ >/=/ <~ >~ </~/ >/~/ <> >< </>/ >/</ <. >. <<< >>> <=> >=< =< =>
 
 ~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
 
@@ -40,7 +44,7 @@ Normally a single whitespace is preserved around the symbol but you can use the 
 
 - Multi-character symbols which can be replaced by specific unicode characters:
 
-+-
++- ** // !!
 
 MARKUP REPLACEMENTS
 

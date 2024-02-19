@@ -22,7 +22,8 @@
 
 #TODO --fractions flag which converts 0.1 to 1/10 fraction
 #TODO how to represent infinite repeating numbers 0.3... 0.{142857}...
-
+#TODO replace mode which shows original line followed by replaced line double spaced.
+#TODO replace mode which only shows the text to replace beside the replacement  @pi => @1 ℼ  => @pi ℼ  first replace the symbol with a numbered replacement @1 for example then when line is replaced change the @1 back to @pi for output
 use strict;
 use warnings;
 use 5.012; # almost seamless utf
@@ -41,6 +42,7 @@ my $MARKUP = length($ENV{MARKUP}) ? $ENV{MARKUP} : 1; # replace markup codes wit
 my $LITERAL = length($ENV{LITERAL}) ? $ENV{MARKUP} : 1; # replace literal values like 1/4 with their unicode character.
 my $SHOW_CODE = $ENV{SHOW_CODE} || 0; # show unicode code point value instead of the character.
 my $CUDDLE = $ENV{CUDDLE} || 0; # remove whitespace around symbols when they are replaced.
+my $LEGEND = $ENV{LEGEND} || 0; # show literal/markup name along side the replaced value.
 
 my $SAMPLE = "$cmd_dir/character-samples/samples/mathematics.txt";
 my $CATEGORY = "$cmd_dir/character-samples/samples/mathematics-categorised.txt";
@@ -56,11 +58,13 @@ MARKUP=$MARKUP
 LITERAL=$LITERAL
 SHOW_CODE=$SHOW_CODE
 CUDDLE=$CUDDLE
+LEGEND=$LEGEND
 
 --cuddle TODO...
 --markup TODO...
 --literal TODO...
 --codes TODO ...
+--legend TODO...
 --help  shows help for this program.
 --man   shows help for this program with full details.
 -?      shows help for this program.
@@ -98,7 +102,9 @@ LITERAL REPLACEMENTS
 
 - Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
 
-<=  >=  ==
+=/= == =/=/ ===
+
+<= >= <== >== <=/=/ >=/=/ << >> </ >/ </=/ >/=/ <~ >~ </~/ >/~/ <> >< </>/ >/</ <. >. <<< >>> <=> >=< =< =>
 
 ~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
 
@@ -110,7 +116,7 @@ Normally a single whitespace is preserved around the symbol but you can use the 
 
 - Multi-character symbols which can be replaced by specific unicode characters:
 
-+-
++- ** // !!
 
 MARKUP REPLACEMENTS
 
@@ -611,6 +617,37 @@ sub replace
 	return $line;
 } # replace()
 
+# Perform a symbol change to the line of text.
+# Normally will just return the $replace value to finalise a replacement.
+# In --legend mode we want to show the matched value beside the replaced value on the same line so we create a numbered match map containing the matched text mapped to the replace text and a map of @number to $matched so it can be used by changeBack() function
+my $matchNum = 0;
+my %MatchNum = ();
+my %Matched = ();
+
+sub change
+{
+	my ($matched, $replace) = @ARG;
+	if ($Matched{$matched})
+	{
+		$replace = $Matched{$matched} if $LEGEND;
+	} else
+	{
+		my $id = "\@$matchNum";
+		$Matched{$matched} = $id;
+		$MatchNum{$id} = $matched;
+		++$matchNum;
+	}
+	return $replace;
+}
+
+# Change all @0 @23 @123 numbered matches back into their original symbol names/literals for LEGEND mode.
+sub changeBack
+{
+	my ($line) = @ARG;
+	$line =~ s{(\@\d+)}{$MatchNum{$1} || $1}xmsge;
+	return $line;
+}
+
 # purpose of this was to give an error if a shorter literal is searched for before a longer literal but we sort the @Replacements array now so it is irrelevant
 sub checkLength
 {
@@ -800,11 +837,45 @@ sub makeParser
 	replacer('nn', '0/3', '2189', $LITERAL);
 	replacer('nd', '1/', '215F', $LITERAL); # TODO needs a thin unicode space
 
-	# Operators and Equalities:
+	# Operators and Equalities/inequalities:
 	replacer('sy', '+-', 'B1',   $LITERAL);
+	replacer('sy', '**', 'D7',   $LITERAL);
+	replacer('sy', '//', 'F7',   $LITERAL);
+	replacer('sy', '!!', 'AC',   $LITERAL);
+
+	replacer('sys', '=/=', '2260', $LITERAL);
 	replacer('sys', '==', '2261', $LITERAL);
+	replacer('sys', '=/=/', '2262', $LITERAL);
+	replacer('sys', '===', '2263', $LITERAL);
+
 	replacer('sys', '<=', '2264', $LITERAL);
 	replacer('sys', '>=', '2265', $LITERAL);
+	replacer('sys', '<==', '2266', $LITERAL);
+	replacer('sys', '>==', '2267', $LITERAL);
+	replacer('sys', '<=/=/', '2268', $LITERAL);
+	replacer('sys', '>=/=/', '2269', $LITERAL);
+	replacer('sys', '<<', '226A', $LITERAL);
+	replacer('sys', '>>', '226B', $LITERAL);
+	replacer('sys', '</', '226E', $LITERAL);
+	replacer('sys', '>/', '226F', $LITERAL);
+	replacer('sys', '</=/', '2270', $LITERAL);
+	replacer('sys', '>/=/', '2271', $LITERAL);
+	replacer('sys', '<~', '2272', $LITERAL);
+	replacer('sys', '>~', '2273', $LITERAL);
+	replacer('sys', '</~/', '2274', $LITERAL);
+	replacer('sys', '>/~/', '2275', $LITERAL);
+	replacer('sys', '<>', '2276', $LITERAL);
+	replacer('sys', '><', '2277', $LITERAL);
+	replacer('sys', '</>/', '2278', $LITERAL);
+	replacer('sys', '>/</', '2279', $LITERAL);
+	replacer('sys', '<.', '22D6', $LITERAL);
+	replacer('sys', '>.', '22D7', $LITERAL);
+	replacer('sys', '<<<', '22D8', $LITERAL);
+	replacer('sys', '>>>', '22D9', $LITERAL);
+	replacer('sys', '<=>', '22DA', $LITERAL);
+	replacer('sys', '>=<', '22DB', $LITERAL);
+	replacer('sys', '=<', '22DC', $LITERAL);
+	replacer('sys', '=>', '22DD', $LITERAL);
 
 	replacer('sys', '~/', '2241', $LITERAL);
 	replacer('sys', '-~', '2242', $LITERAL);

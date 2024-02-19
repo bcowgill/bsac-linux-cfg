@@ -22,11 +22,47 @@
 ⅟	U+215F	[OtherNumber,Fraction]	FRACTION NUMERATOR ONE
 ↉	U+2189	[OtherNumber,Fraction]	VULGAR FRACTION ZERO THIRDS
 
-+-  ==  <=  >=
++- ** // !!
 ±	U+B1	[MathSymbol,Arithmetic]	PLUS-MINUS SIGN
+×	U+D7	[MathSymbol,Arithmetic]	MULTIPLICATION SIGN
+÷	U+F7	[MathSymbol,Arithmetic]	DIVISION SIGN
+¬	U+AC	[MathSymbol,Logic]	NOT SIGN
+
+=/= == =/=/ ===
+≠	U+2260	[MathSymbol,Comparison]	NOT EQUAL TO
 ≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
+≢	U+2262	[MathSymbol,Comparison]	NOT IDENTICAL TO
+≣	U+2263	[MathSymbol,Comparison]	STRICTLY EQUIVALENT TO
+
+<= >= <== >== <=/=/ >=/=/ << >> </ >/ </=/ >/=/ <~ >~ </~/ >/~/ <> >< </>/ >/</ <. >. <<< >>> <=> >=< =< =>
 ≤	U+2264	[MathSymbol,Comparison]	LESS-THAN OR EQUAL TO
 ≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
+≦	U+2266	[MathSymbol,Comparison]	LESS-THAN OVER EQUAL TO
+≧	U+2267	[MathSymbol,Comparison]	GREATER-THAN OVER EQUAL TO
+≨	U+2268	[MathSymbol,Comparison]	LESS-THAN BUT NOT EQUAL TO
+≩	U+2269	[MathSymbol,Comparison]	GREATER-THAN BUT NOT EQUAL TO
+≪	U+226A	[MathSymbol,Comparison]	MUCH LESS-THAN
+≫	U+226B	[MathSymbol,Comparison]	MUCH GREATER-THAN
+≮	U+226E	[MathSymbol,Comparison]	NOT LESS-THAN
+≯	U+226F	[MathSymbol,Comparison]	NOT GREATER-THAN
+≰	U+2270	[MathSymbol,Comparison]	NEITHER LESS-THAN NOR EQUAL TO
+≱	U+2271	[MathSymbol,Comparison]	NEITHER GREATER-THAN NOR EQUAL TO
+≲	U+2272	[MathSymbol,Comparison]	LESS-THAN OR EQUIVALENT TO
+≳	U+2273	[MathSymbol,Comparison]	GREATER-THAN OR EQUIVALENT TO
+≴	U+2274	[MathSymbol,Comparison]	NEITHER LESS-THAN NOR EQUIVALENT TO
+≵	U+2275	[MathSymbol,Comparison]	NEITHER GREATER-THAN NOR EQUIVALENT TO
+≶	U+2276	[MathSymbol,Comparison]	LESS-THAN OR GREATER-THAN
+≷	U+2277	[MathSymbol,Comparison]	GREATER-THAN OR LESS-THAN
+≸	U+2278	[MathSymbol,Comparison]	NEITHER LESS-THAN NOR GREATER-THAN
+≹	U+2279	[MathSymbol,Comparison]	NEITHER GREATER-THAN NOR LESS-THAN
+⋖	U+22D6	[MathSymbol,Comparison]	LESS-THAN WITH DOT
+⋗	U+22D7	[MathSymbol,Comparison]	GREATER-THAN WITH DOT
+⋘	U+22D8	[MathSymbol,Comparison]	VERY MUCH LESS-THAN
+⋙	U+22D9	[MathSymbol,Comparison]	VERY MUCH GREATER-THAN
+⋚	U+22DA	[MathSymbol,Comparison]	LESS-THAN EQUAL TO OR GREATER-THAN
+⋛	U+22DB	[MathSymbol,Comparison]	GREATER-THAN EQUAL TO OR LESS-THAN
+⋜	U+22DC	[MathSymbol,Comparison]	EQUAL TO OR LESS-THAN
+⋝	U+22DD	[MathSymbol,Comparison]	EQUAL TO OR GREATER-THAN
 
 ~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
 ≁	U+2241	[MathSymbol]	NOT TILDE
@@ -41,8 +77,6 @@
 ≊	U+224A	[MathSymbol,Comparison]	ALMOST EQUAL OR EQUAL TO
 ≋	U+224B	[MathSymbol,Comparison]	TRIPLE TILDE
 ≌	U+224C	[MathSymbol,Comparison]	ALL EQUAL TO
-
-
 
 --- MARKUP REPLACEMENTS:
 _0 _1 _2 _3 _4 _5 _6 _7 _8 _9 _.
@@ -394,57 +428,38 @@ _schwa _beta _gamma _rho _phi _chi
 𝞨	U+1D7A8	[UppercaseLetter]	MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL OMEGA
 
 === vvv TODO need to configure Characters handled by math-rep.pl
-=/= == =/=/ ===
-≠	U+2260	[MathSymbol,Comparison]	NOT EQUAL TO
-≡	U+2261	[MathSymbol,Comparison]	IDENTICAL TO
-≢	U+2262	[MathSymbol,Comparison]	NOT IDENTICAL TO
-≣	U+2263	[MathSymbol,Comparison]	STRICTLY EQUIVALENT TO
-
-<= >= <== >== <=/=/ >=/=/ << >> </ >/ </=/ >/=/ <~ >~ </~/ >/~/ <> >< </>/ >/</ <. >. <<< >>> <=> >=< =< =>
-≤	U+2264	[MathSymbol,Comparison]	LESS-THAN OR EQUAL TO
-≥	U+2265	[MathSymbol,Comparison]	GREATER-THAN OR EQUAL TO
-≦	U+2266	[MathSymbol,Comparison]	LESS-THAN OVER EQUAL TO
-≧	U+2267	[MathSymbol,Comparison]	GREATER-THAN OVER EQUAL TO
-≨	U+2268	[MathSymbol,Comparison]	LESS-THAN BUT NOT EQUAL TO
-≩	U+2269	[MathSymbol,Comparison]	GREATER-THAN BUT NOT EQUAL TO
-≪	U+226A	[MathSymbol,Comparison]	MUCH LESS-THAN
-≫	U+226B	[MathSymbol,Comparison]	MUCH GREATER-THAN
-≮	U+226E	[MathSymbol,Comparison]	NOT LESS-THAN
-≯	U+226F	[MathSymbol,Comparison]	NOT GREATER-THAN
-≰	U+2270	[MathSymbol,Comparison]	NEITHER LESS-THAN NOR EQUAL TO
-≱	U+2271	[MathSymbol,Comparison]	NEITHER GREATER-THAN NOR EQUAL TO
-≲	U+2272	[MathSymbol,Comparison]	LESS-THAN OR EQUIVALENT TO
-≳	U+2273	[MathSymbol,Comparison]	GREATER-THAN OR EQUIVALENT TO
-≴	U+2274	[MathSymbol,Comparison]	NEITHER LESS-THAN NOR EQUIVALENT TO
-≵	U+2275	[MathSymbol,Comparison]	NEITHER GREATER-THAN NOR EQUIVALENT TO
-≶	U+2276	[MathSymbol,Comparison]	LESS-THAN OR GREATER-THAN
-≷	U+2277	[MathSymbol,Comparison]	GREATER-THAN OR LESS-THAN
-≸	U+2278	[MathSymbol,Comparison]	NEITHER LESS-THAN NOR GREATER-THAN
-≹	U+2279	[MathSymbol,Comparison]	NEITHER GREATER-THAN NOR LESS-THAN
-⋖	U+22D6	[MathSymbol,Comparison]	LESS-THAN WITH DOT
-⋗	U+22D7	[MathSymbol,Comparison]	GREATER-THAN WITH DOT
-⋘	U+22D8	[MathSymbol,Comparison]	VERY MUCH LESS-THAN
-⋙	U+22D9	[MathSymbol,Comparison]	VERY MUCH GREATER-THAN
-⋚	U+22DA	[MathSymbol,Comparison]	LESS-THAN EQUAL TO OR GREATER-THAN
-⋛	U+22DB	[MathSymbol,Comparison]	GREATER-THAN EQUAL TO OR LESS-THAN
-⋜	U+22DC	[MathSymbol,Comparison]	EQUAL TO OR LESS-THAN
-⋝	U+22DD	[MathSymbol,Comparison]	EQUAL TO OR GREATER-THAN
 
 === Characters handled by math-rep.pl
+@- -+ @sqrt @3root @4root @~ @~~ @~~=
+−	U+2212	[MathSymbol,Arithmetic]	MINUS SIGN
+∓	U+2213	[MathSymbol,Arithmetic]	MINUS-OR-PLUS SIGN
+√	U+221A	[MathSymbol,Exponents]	SQUARE ROOT
+∛	U+221B	[MathSymbol,Exponents]	CUBE ROOT
+∜	U+221C	[MathSymbol,Exponents]	FOURTH ROOT
+∼	U+223C	[MathSymbol]	TILDE OPERATOR
+∽	U+223D	[MathSymbol]	REVERSED TILDE
+⋍	U+22CD	[MathSymbol]	REVERSED TILDE EQUALS
+⩪	U+2A6A	[MathSymbol]	TILDE OPERATOR WITH DOT ABOVE
+⩫	U+2A6B	[MathSymbol]	TILDE OPERATOR WITH RISING DOTS
+⩬	U+2A6C	[MathSymbol]	SIMILAR MINUS SIMILAR
+⩭	U+2A6D	[MathSymbol]	CONGRUENT WITH DOT ABOVE
+⩯	U+2A6F	[MathSymbol]	ALMOST EQUAL TO WITH CIRCUMFLEX ACCENT
+⩰	U+2A70	[MathSymbol]	APPROXIMATELY EQUAL OR EQUAL TO
+⩳	U+2A73	[MathSymbol]	EQUALS SIGN ABOVE TILDE OPERATOR
+⫳	U+2AF3	[MathSymbol]	PARALLEL WITH TILDE OPERATOR
+～	U+FF5E	[MathSymbol]	FULLWIDTH TILDE
+
+
 ^^ TODO doing these
 
 === Characters still to handle by math-rep.pl:
-
-
 +	U+2B	[MathSymbol,Arithmetic]	PLUS SIGN
 <	U+3C	[MathSymbol,Comparison]	LESS-THAN SIGN
 =	U+3D	[MathSymbol,Comparison]	EQUALS SIGN
 >	U+3E	[MathSymbol,Comparison]	GREATER-THAN SIGN
 |	U+7C	[MathSymbol]	VERTICAL LINE
 ~	U+7E	[MathSymbol]	TILDE
-¬	U+AC	[MathSymbol,Logic]	NOT SIGN
-×	U+D7	[MathSymbol,Arithmetic]	MULTIPLICATION SIGN
-÷	U+F7	[MathSymbol,Arithmetic]	DIVISION SIGN
+
 ϶	U+3F6	[MathSymbol]	GREEK REVERSED LUNATE EPSILON SYMBOL
 ؆	U+606	[MathSymbol]	ARABIC-INDIC CUBE ROOT
 ؇	U+607	[MathSymbol]	ARABIC-INDIC FOURTH ROOT
@@ -459,6 +474,7 @@ _schwa _beta _gamma _rho _phi _chi
 ⅃	U+2143	[MathSymbol]	REVERSED SANS-SERIF CAPITAL L
 ⅄	U+2144	[MathSymbol]	TURNED SANS-SERIF CAPITAL Y
 ⅋	U+214B	[MathSymbol]	TURNED AMPERSAND
+
 ←	U+2190	[MathSymbol]	LEFTWARDS ARROW
 ↑	U+2191	[MathSymbol]	UPWARDS ARROW
 →	U+2192	[MathSymbol]	RIGHTWARDS ARROW
@@ -486,6 +502,7 @@ _schwa _beta _gamma _rho _phi _chi
 ⇽	U+21FD	[MathSymbol]	LEFTWARDS OPEN-HEADED ARROW
 ⇾	U+21FE	[MathSymbol]	RIGHTWARDS OPEN-HEADED ARROW
 ⇿	U+21FF	[MathSymbol]	LEFT RIGHT OPEN-HEADED ARROW
+
 ∀	U+2200	[MathSymbol,Sets]	FOR ALL
 ∁	U+2201	[MathSymbol,Sets]	COMPLEMENT
 ∂	U+2202	[MathSymbol,CalculusD]	PARTIAL DIFFERENTIAL
@@ -500,23 +517,29 @@ _schwa _beta _gamma _rho _phi _chi
 ∋	U+220B	[MathSymbol,Sets]	CONTAINS AS MEMBER
 ∌	U+220C	[MathSymbol,Sets]	DOES NOT CONTAIN AS MEMBER
 ∍	U+220D	[MathSymbol,Sets]	SMALL CONTAINS AS MEMBER
+
 ∎	U+220E	[MathSymbol]	END OF PROOF
 ∏	U+220F	[MathSymbol,Series]	N-ARY PRODUCT
 ∐	U+2210	[MathSymbol,Series]	N-ARY COPRODUCT
 ∑	U+2211	[MathSymbol,Series]	N-ARY SUMMATION
+
 −	U+2212	[MathSymbol,Arithmetic]	MINUS SIGN
 ∓	U+2213	[MathSymbol,Arithmetic]	MINUS-OR-PLUS SIGN
+
 ∔	U+2214	[MathSymbol]	DOT PLUS
 ∕	U+2215	[MathSymbol,Arithmetic]	DIVISION SLASH
 ∖	U+2216	[MathSymbol,Sets]	SET MINUS
 ∗	U+2217	[MathSymbol]	ASTERISK OPERATOR
 ∘	U+2218	[MathSymbol]	RING OPERATOR
 ∙	U+2219	[MathSymbol]	BULLET OPERATOR
+
 √	U+221A	[MathSymbol,Exponents]	SQUARE ROOT
 ∛	U+221B	[MathSymbol,Exponents]	CUBE ROOT
 ∜	U+221C	[MathSymbol,Exponents]	FOURTH ROOT
+
 ∝	U+221D	[MathSymbol,Comparison]	PROPORTIONAL TO
 ∞	U+221E	[MathSymbol,Series]	INFINITY
+
 ∟	U+221F	[MathSymbol,Geometry]	RIGHT ANGLE
 ∠	U+2220	[MathSymbol,Geometry]	ANGLE
 ∡	U+2221	[MathSymbol,Geometry]	MEASURED ANGLE
