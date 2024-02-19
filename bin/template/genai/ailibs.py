@@ -97,3 +97,16 @@ if ALL:
 #! pip install python-dotenv
 #! pip install flask
 #!pip install lark
+
+vector db
+pip install sqlite3
+pip install chromadb --user
+pip3 install pinecone-client
+pip install jupyter notebook --user
+import sqlite3
+import chromadb
+import pinecone
+jupyter notebook
+
+import tqdm
+from tqdm.autonotebook import tqdm
