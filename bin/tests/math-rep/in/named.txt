@@ -30,3 +30,8 @@ omega    @omega           @OMEGA            |@*omega @/omega @*/omega   @*OMEGA 
 
 Exceptions:
 @!alpha @!ALPHA and many other double struck Greek small and capital letters.
+
+@sqrt(b^2-4ac)
+@root3(83)
+@root3 99
+@root4(123)

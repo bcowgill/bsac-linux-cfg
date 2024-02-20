@@ -430,7 +430,9 @@ _schwa _beta _gamma _rho _phi _chi
 === vvv TODO need to configure Characters handled by math-rep.pl
 
 === Characters handled by math-rep.pl
-@- -+ @sqrt @3root @4root @~ @~~ @~~=
+\@
+@@ fullwidth
+@- -+ @sqrt @root3 @root4 @~ @~~ @~~=
 −	U+2212	[MathSymbol,Arithmetic]	MINUS SIGN
 ∓	U+2213	[MathSymbol,Arithmetic]	MINUS-OR-PLUS SIGN
 √	U+221A	[MathSymbol,Exponents]	SQUARE ROOT
@@ -448,6 +450,17 @@ _schwa _beta _gamma _rho _phi _chi
 ⩳	U+2A73	[MathSymbol]	EQUALS SIGN ABOVE TILDE OPERATOR
 ⫳	U+2AF3	[MathSymbol]	PARALLEL WITH TILDE OPERATOR
 ～	U+FF5E	[MathSymbol]	FULLWIDTH TILDE
+﹢	U+FE62	[MathSymbol,Arithmetic]	SMALL PLUS SIGN
+﹤	U+FE64	[MathSymbol,Comparison]	SMALL LESS-THAN SIGN
+﹥	U+FE65	[MathSymbol,Comparison]	SMALL GREATER-THAN SIGN
+﹦	U+FE66	[MathSymbol,Comparison]	SMALL EQUALS SIGN
+＋	U+FF0B	[MathSymbol,Arithmetic]	FULLWIDTH PLUS SIGN
+＜	U+FF1C	[MathSymbol,Comparison]	FULLWIDTH LESS-THAN SIGN
+＝	U+FF1D	[MathSymbol,Comparison]	FULLWIDTH EQUALS SIGN
+＞	U+FF1E	[MathSymbol,Comparison]	FULLWIDTH GREATER-THAN SIGN
+｜	U+FF5C	[MathSymbol]	FULLWIDTH VERTICAL LINE
+～	U+FF5E	[MathSymbol]	FULLWIDTH TILDE
+￢	U+FFE2	[MathSymbol,Logic]	FULLWIDTH NOT SIGN
 
 
 ^^ TODO doing these
@@ -1338,6 +1351,7 @@ _schwa _beta _gamma _rho _phi _chi
 ⭋	U+2B4B	[MathSymbol]	LEFTWARDS ARROW ABOVE REVERSE TILDE OPERATOR
 ⭌	U+2B4C	[MathSymbol]	RIGHTWARDS ARROW ABOVE REVERSE TILDE OPERATOR
 ﬩	U+FB29	[MathSymbol]	HEBREW LETTER ALTERNATIVE PLUS SIGN
+
 ﹢	U+FE62	[MathSymbol,Arithmetic]	SMALL PLUS SIGN
 ﹤	U+FE64	[MathSymbol,Comparison]	SMALL LESS-THAN SIGN
 ﹥	U+FE65	[MathSymbol,Comparison]	SMALL GREATER-THAN SIGN
@@ -1349,6 +1363,7 @@ _schwa _beta _gamma _rho _phi _chi
 ｜	U+FF5C	[MathSymbol]	FULLWIDTH VERTICAL LINE
 ～	U+FF5E	[MathSymbol]	FULLWIDTH TILDE
 ￢	U+FFE2	[MathSymbol,Logic]	FULLWIDTH NOT SIGN
+
 ￩	U+FFE9	[MathSymbol]	HALFWIDTH LEFTWARDS ARROW
 ￪	U+FFEA	[MathSymbol]	HALFWIDTH UPWARDS ARROW
 ￫	U+FFEB	[MathSymbol]	HALFWIDTH RIGHTWARDS ARROW

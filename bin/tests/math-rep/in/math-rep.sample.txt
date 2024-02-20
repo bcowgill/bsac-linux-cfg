@@ -1,4 +1,4 @@
-TODO Operatiors: @dee @del @int @cross @dot @sum @sqrt @identical
+TODO Operatiors: @dee @del @int @cross @dot @sum @sqrt  @identical
 
 TODO superscript expresssions long strings of superscript chars
 Y^[(0.123456789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
@@ -38,7 +38,9 @@ Operations:
 b = 3 ** 4
 b = 3 // 4
 p = !!q
-r = [-b +- sqrt(b^2 - 4ac)]/2a
+r = [-b +- @sqrt(b^2 - 4ac)]/2a
+@root3 83
+@root4(123)
 
 Equalities:
 x <= y == z

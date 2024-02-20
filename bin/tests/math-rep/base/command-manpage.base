@@ -26,7 +26,11 @@ LITERAL REPLACEMENTS
 
 - Fractions which have specific unicode characters:
 
-0/3 1/10 1/9 1/8 1/7 1/6 1/5 1/4 1/3 3/8 2/5 1/2 3/5 5/8 2/3 3/4 4/5 5/6 7/8 1/
+    1/      ⅟   |    1/4     ¼   |    4/5     ⅘   |    3/8     ⅜
+    1/2     ½   |    3/4     ¾   |    1/6     ⅙   |    5/8     ⅝
+    0/3     ↉   |    1/5     ⅕   |    5/6     ⅚   |    7/8     ⅞
+    1/3     ⅓   |    2/5     ⅖   |    1/7     ⅐   |    1/9     ⅑
+    2/3     ⅔   |    3/5     ⅗   |    1/8     ⅛   |    1/10    ⅒
 
 - Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
 
@@ -144,6 +148,10 @@ psi      ψ           Ψ (ᴪ)        |𝞇 𝜓 𝟁   𝝭 𝛹 𝞧
 omega    ω           Ω            |𝞈 𝜔 𝟂   𝝮 𝛺 𝞨
 
 Note: there are no unicode characters for @!alpha @!ALPHA and many other double struck Greek small and capital letters
+
+Named operators or functions:
+
+@sqrt @root3 @root4
 
 
 See also ls-maths.sh utf8dbg.pl ... TODO

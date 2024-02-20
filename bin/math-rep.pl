@@ -37,6 +37,10 @@ my $cmd_dir = $FindBin::Bin;
 
 my $DEBUG = $ENV{DEBUG} || 0;
 
+my $INDENT = ' ' x 4;
+my $PAD_NAMES = 7;#16;
+my $PAD_CHARS = 4;#16;
+my $SEP = '|';
 my $MAN = 0;
 my $MARKUP = length($ENV{MARKUP}) ? $ENV{MARKUP} : 1; # replace markup codes with characters.
 my $LITERAL = length($ENV{LITERAL}) ? $ENV{MARKUP} : 1; # replace literal values like 1/4 with their unicode character.
@@ -98,7 +102,11 @@ LITERAL REPLACEMENTS
 
 - Fractions which have specific unicode characters:
 
-0/3 1/10 1/9 1/8 1/7 1/6 1/5 1/4 1/3 3/8 2/5 1/2 3/5 5/8 2/3 3/4 4/5 5/6 7/8 1/
+    1/      ⅟   |    1/4     ¼   |    4/5     ⅘   |    3/8     ⅜
+    1/2     ½   |    3/4     ¾   |    1/6     ⅙   |    5/8     ⅝
+    0/3     ↉   |    1/5     ⅕   |    5/6     ⅚   |    7/8     ⅞
+    1/3     ⅓   |    2/5     ⅖   |    1/7     ⅐   |    1/9     ⅑
+    2/3     ⅔   |    3/5     ⅗   |    1/8     ⅛   |    1/10    ⅒
 
 - Multi-character symbols with surrounding whitespace which can be replaced by specific unicode characters:
 
@@ -216,6 +224,10 @@ psi      ψ           Ψ (ᴪ)        |𝞇 𝜓 𝟁   𝝭 𝛹 𝞧
 omega    ω           Ω            |𝞈 𝜔 𝟂   𝝮 𝛺 𝞨
 
 Note: there are no unicode characters for \@!alpha \@!ALPHA and many other double struck Greek small and capital letters
+
+Named operators or functions:
+
+\@sqrt \@root3 \@root4
 MANPAGE
 }
 
@@ -559,7 +571,7 @@ sub replacer
       # test the replacement code and populate the TypeNames lookup
 		replace("", $literal, $type, $code);
 	}
-}
+} # replacer()
 
 # search and replace a specific type of replacement on a line.
 sub search
@@ -581,6 +593,10 @@ sub search
 	elsif ($type eq 'ww')
 	{
 		$line = ww($line, $search, $code);
+	}
+	elsif ($type eq 'wws')
+	{
+		$line = wws($line, $search, $code);
 	}
 	elsif ($type eq 'nn')
 	{
@@ -626,7 +642,7 @@ my %Matched = ();
 
 sub change
 {
-	my ($matched, $replace) = @ARG;
+	my ($matched, $replace, $quoted) = @ARG;
 	if ($Matched{$matched})
 	{
 		$replace = $Matched{$matched} if $LEGEND;
@@ -638,7 +654,7 @@ sub change
 		++$matchNum;
 	}
 	return $replace;
-}
+} # change()
 
 # Change all @0 @23 @123 numbered matches back into their original symbol names/literals for LEGEND mode.
 sub changeBack
@@ -695,7 +711,7 @@ sub translate
 	my ($match, $escape, $rhSymbolMap) = @ARG;
 
 	my $context = qq{In bracketed sequence $escape\[...\]};
-	print qq{TRANS: $match\n};
+	debug("translate($match, $escape)");
 	# Need to match only at start of string from longest to shortest removing
 	# matches as we go, warning about non-matches
 	#while ()
@@ -719,18 +735,21 @@ sub translate
 	#	$match =~ s{($literal)}{lookup($1, $rhSymbolMap, $context)}xmsge;
 	#}
 	return $match;
-}
+} # translate()
 
+# TODO
 # replace square bracketed runs of text ie. _[(n+1)(n-1)]
 sub sb
 {
 	my ($line, $escape, $chars, $rhSymbolMap, $enabled) = @ARG;
+	$TypeNames{'sb'} = "square bracketed runs of text";
 	if ($enabled)
 	{
 		my $esc = quotemeta($escape . '[');
-		my $literal = quotemeta($chars);
+		my $quoted = quotemeta($chars);
+		debug("sb(${esc}[\\s0-9a-z$quoted]+\]): $line");
 		# print qq{SB: $esc([0-9a-z$literal])\]\n};
-		$line =~ s{$esc([\s0-9a-z$literal]+)\]}{translate($1, $escape, $rhSymbolMap)}xmsge;
+		$line =~ s{$esc([\s0-9a-z$quoted]+)\]}{yes(translate($1, $escape, $rhSymbolMap))}xmsge;
 	}
 	return $line;
 }
@@ -740,10 +759,10 @@ sub sys
 {
 	my ($line, $literal, $code) = @ARG;
 	$TypeNames{'sys'} = "literal string of symbols (like >=) surrounded by whitespace replaced with a single symbol character with or without the space (CUDDLE option)";
-	$literal = quotemeta(checkLength($literal));
-	debug("sys(\\s$literal\\s => U+$code): line: $line");
+	my $quoted = quotemeta(checkLength($literal));
+	debug("sys(\\s$quoted\\s => U+$code): line: $line");
 # TODO CUDDLE OPTION
-	$line =~ s{($reSpace)$literal($reSpace)}{$1 . yes(U($code) . $2)}xmsge;
+	$line =~ s{($reSpace)$quoted($reSpace)}{$1 . legend($literal, yes(U($code)), $quoted) . $2}xmsge;
 	return $line;
 }
 
@@ -752,9 +771,9 @@ sub sy
 {
 	my ($line, $literal, $code) = @ARG;
 	$TypeNames{'sy'} = "literal string of symbols (like ^2 _n) replaced with a single symbol character";
-	$literal = quotemeta(checkLength($literal));
-	debug("sy($literal => U+$code): line: $line");
-	$line =~ s{$literal}{yes(U($code))}xmsge;
+	my $quoted = quotemeta(checkLength($literal));
+	debug("sy($quoted => U+$code): line: $line");
+	$line =~ s{$quoted}{legend($literal, yes(U($code)), $quoted)}xmsge;
 	return $line;
 }
 
@@ -763,21 +782,55 @@ sub ww
 {
 	my ($line, $literal, $code) = @ARG;
 	$TypeNames{'ww'} = "literal \@named character replaced with a single corresponding character";
-	$literal = quotemeta(checkLength($literal));
-	debug("sy($literal => U+$code): line: $line");
-	$line =~ s{($notLetter)$literal($notLetter)}{$1 . yes(U($code)) . $2}xmsge;
+	my $quoted = quotemeta(checkLength($literal));
+	debug("ww($quoted => U+$code): line: $line");
+	$line =~ s{($notLetter)$quoted($notLetter)}{$1 . legend($literal, yes(U($code), $quoted)) . $2}xmsge;
 	return $line;
 }
+
+# replace a literal full word with optional space after it ie. @sqrt 42 @sqrt(43)
+sub wws
+{
+	my ($line, $literal, $code) = @ARG;
+	$TypeNames{'wws'} = "literal \@named character with optional space after it replaced with a single corresponding character";
+	my $quoted = quotemeta(checkLength($literal)) . "[ ]?";
+	debug("wws($quoted => U+$code): line: $line");
+	$line =~ s{($notLetter)$quoted($notLetter)}{$1 . legend($literal, yes(U($code), $quoted)) . $2}xmsge;
+	return $line;
+}
+
 
 # replace a literal word symbol ie. _theta
 sub syw
 {
 	my ($line, $literal, $code) = @ARG;
 	$TypeNames{'syw'} = "literal string of word characters (like _theta) replaced with a single symbol character";
-	$literal = quotemeta(checkLength($literal));
-	debug("syw($literal => U+$code): line: $line");
-	$line =~ s{$literal($notLetter)}{yes(U($code)) . $1}xmsge;
+	my $quoted = quotemeta(checkLength($literal));
+	debug("syw($quoted => U+$code): line: $line");
+	$line =~ s{$quoted($notLetter)}{legend($literal, yes(U($code), $quoted)) . $1}xmsge;
 	return $line;
+}
+
+sub pad
+{
+  my ($number, $places) = @ARG;
+  $places = $places || 6;
+  return $number . (' ' x ($places - length($number)));
+}
+
+sub legend
+{
+	my ($literal, $replacement, $quoted) = @ARG;
+	my $padded = pad($literal, $PAD_NAMES);
+	my $padchar = pad($replacement, $PAD_CHARS);
+	if ($LEGEND eq "names")
+	{
+		print "$INDENT$padded $padchar$SEP\n";
+	} elsif ($LEGEND eq "chars")
+	{
+		print "$INDENT$padchar $padded$SEP\n";
+	}
+	return $replacement;
 }
 
 # replace a fraction if it matches the literal value. ie. 1/3
@@ -785,8 +838,7 @@ sub replaceFraction
 {
 	my ($fraction, $literal, $code) = @ARG;
 	debug("replaceFraction?($fraction eq $literal => U+$code)");
-	return ($fraction eq $literal) ? yes(U($code)) : $fraction;
-
+	return ($fraction eq $literal) ? legend($literal, yes(U($code), $literal)) : $fraction;
 }
 
 # replace a literal surrounded by non-numbers ie. 1/3
@@ -1002,6 +1054,11 @@ sub makeParser
 	replacer('sy', '^phi', '1D60', $MARKUP);
 	replacer('sy', '^PHI', '1DB2', $MARKUP);
 	replacer('sy', '^chi', '1D61', $MARKUP);
+
+	# Named functions or operators with optional space after it
+	replacer('wws', '@sqrt', '221A', $MARKUP);
+	replacer('wws', '@root3', '221B', $MARKUP);
+	replacer('wws', '@root4', '221C', $MARKUP);
 
 	# Greek Small Caps incidentals
 	replacer('ww', '@GAMMASC', $GreekSmCap{GAMMASC}, $MARKUP);
@@ -1267,10 +1324,7 @@ while (my $line = <STDIN>) {
 	{
 
 		# TODO convert to replacer() calls
-		s{3root}{{U+221B}}xmsg;
-		s{4root}{{U+221C}}xmsg;
 		s{cross}{{U+2A2F}}xmsg;
-		s{sqrt}{{U+221A}}xmsg;
 		s{del}{{U+1D6C1} }xmsg;
 		s{dee}{{U+1D6DB}}xmsg;
 		s{int}{{U+222B}}xmsg;
@@ -1279,5 +1333,5 @@ while (my $line = <STDIN>) {
 
 	}
 
-	print $line;
-}
+	print $line unless $LEGEND;
+} # while $line

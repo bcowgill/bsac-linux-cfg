@@ -1,10 +1,9 @@
-TODO Operatiors: @dee @del @int @cross @dot @sum @sqrt @identical
+TODO Operatiors: @dee @del @int @cross @dot @sum √ @identical
 
 TODO superscript expresssions long strings of superscript chars
 Y^[(0.123456789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
 
 TODO subscript expresssions long strings of subscript chars
-TRANS: (0.123456789*a e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = <- < > ...)
 X + - = <- < > ...)ᵪ ᵩ ᵨ ᵧ ᵦ ₔ ₓ ᵥ ᵤ ₜ ₛ ᵣ ₚ ₒ ₙ ₘ ₗ ₖ ⱼ ᵢ ₕ ₑ ₐ⸱₉₈₇₆₅₄₃₂₁․₀₍
 
 LITERAL replacements:
@@ -39,7 +38,9 @@ Operations:
 b = 3 × 4
 b = 3 ÷ 4
 p = ¬q
-r = [-b ± sqrt(b² - 4ac)]/2a
+r = [-b ± √(b² - 4ac)]/2a
+∛83
+∜(123)
 
 Equalities:
 x ≤ y ≡ z
