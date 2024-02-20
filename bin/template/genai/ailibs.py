@@ -103,6 +103,7 @@ pip install sqlite3
 pip install chromadb --user
 pip3 install pinecone-client
 pip install jupyter notebook --user
+pip install -U sentence-transformers
 import sqlite3
 import chromadb
 import pinecone
@@ -110,3 +111,9 @@ jupyter notebook
 
 import tqdm
 from tqdm.autonotebook import tqdm
+from sentence_transformers import SentenceTransformer
+import torch
+import spacy
+from transformers import AutoTokenizer, AutoModelForTokenClassification
+from transformers import pipeline
+from datasets import load_dataset
