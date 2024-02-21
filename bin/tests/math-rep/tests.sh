@@ -110,9 +110,10 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS < $SINGLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	DEBUG=1 $PROGRAM $ARGS < $SINGLE 2> $OUT.err > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	echo "DEBUGGING: less $OUT.err"
 else
 	echo SKIP $TEST "$SKIP"
 fi

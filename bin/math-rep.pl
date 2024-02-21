@@ -170,6 +170,12 @@ X^... X^<-
 X^A and many other capital letters
 X^ALPHA and many other greek capital letters
 
+You can also use _[...] or ^[...] bracketed text to indicate a full subscript or superscript expression:
+
+X_[0.123456789*a + 4beta -3(gamma)]   X^[0.123456789*a + 4beta -3(gamma)]
+
+X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎
+
 \@NAMED REPLACEMENTS
 
 Using \@ as markup to indicate a named letter or symbol.  Add * for bold, / for italics and ! for double struck. Use \@name for lower case and \@NAME for upper case letters.
@@ -251,7 +257,7 @@ my $superScriptChars = '0123456789.+-*=()<>abcdefgghiIjklmnNoprstuUvwxyz';
 
 my %TypeNames = ();
 
-my %SubScriptMap = qw(
+my %SubScriptMap = qw{
 	0	2080
 	1	2081
 	2	2082
@@ -296,10 +302,12 @@ my %SubScriptMap = qw(
 	rho	1D68
 	phi	1D69
 	chi	1D6A
-);
+};
+my $reSubScript = map_to_regex(\%SubScriptMap);
 
 my %SuperScriptMap = qw(
 );
+my $reSuperScript = map_to_regex(\%SuperScriptMap);
 
 # GAMMASC - etc SMALL CAPS
 my %GreekSmCap = qw(
@@ -548,6 +556,14 @@ sub byLength
 	return length($b) - length($a);
 }
 
+sub map_to_regex
+{
+	my ($rhMap) = @ARG;
+	my @Order = sort byLength %$rhMap;
+	my $regex = join("|", map { quotemeta($ARG) } @Order);
+	return $regex;
+}
+
 sub replacer
 {
 	my ($type, $literal, $code, $enabled) = @ARG;
@@ -698,50 +714,52 @@ sub lookup
 {
 	my ($match, $rhSymbolMap, $context) = @ARG;
 	my $code = $rhSymbolMap->{$match} || '';
+	debug(qq{lookup([$match] => @{[$code ? "U+$code" : "n/a"]}): context: $context});
 	if ($match !~ m{\s}xms && !$code)
 	{
 		warn qq{WARN: $context, No unicode replacement configured for '$match', will not replace.};
 	}
-	return $code ? U($code) : $match;
+	return $code ? yes(U($code)) : $match;
 }
 
 # translate a matched string to the unicode character from a hash map.
 sub translate
 {
-	my ($match, $escape, $rhSymbolMap) = @ARG;
+	my ($match, $escape, $rhSymbolMap, $reMatcher) = @ARG;
 
-	my $context = qq{In bracketed sequence $escape\[...\]};
+	my $output = '';
+	my $context = qq{In bracketed sequence $escape\[};
 	debug("translate($match, $escape)");
+
 	# Need to match only at start of string from longest to shortest removing
 	# matches as we go, warning about non-matches
-	#while ()
-	#{
-	#}
-	my @Tokens = reverse(split(/\b|(?=\d)/, $match));
-	debug("Tokens:", Dumper(\@Tokens));
-	#die "STOPPING";
-	$match = join('', map { lookup($ARG, $rhSymbolMap, $context) } @Tokens);
+	while (length($match))
+	{
+		if ($match =~ s{\A($reMatcher)}{}xms)
+		{
+			my $token = $1;
+			$output .= lookup($token, $rhSymbolMap, "$context$token$match]");
+		}
+		else
+		{
+			$match =~ s{\A(.)}{}xms;
+			my $char = $1;
+			$output .= $char;
+			if ($char !~ m{\A\s}xms)
+			{
+				warn qq{WARN: $char$match], No unicode replacement configured for '$char', will not replace.};
+			}
+		}
+	}
 
-	#if (!exists($rhSymbolMap->{__order}))
-	#{
-	#	my @Keys = sort byLength keys(%$rhSymbolMap);
-	#	$rhSymbolMap->{__order} = \@Keys;
-	#}
-	#print STDERR Dumper($rhSymbolMap->{__order});
-	#foreach my $search (@{$rhSymbolMap->{__order}})
-	#{
-	#	next if $search eq '__order';
-	#	my $literal = quotemeta($search);
-	#	$match =~ s{($literal)}{lookup($1, $rhSymbolMap, $context)}xmsge;
-	#}
-	return $match;
+	return $output;
 } # translate()
 
 # TODO
 # replace square bracketed runs of text ie. _[(n+1)(n-1)]
 sub sb
 {
-	my ($line, $escape, $chars, $rhSymbolMap, $enabled) = @ARG;
+	my ($line, $escape, $chars, $rhSymbolMap, $reMatcher, $enabled) = @ARG;
 	$TypeNames{'sb'} = "square bracketed runs of text";
 	if ($enabled)
 	{
@@ -749,7 +767,7 @@ sub sb
 		my $quoted = quotemeta($chars);
 		debug("sb(${esc}[\\s0-9a-z$quoted]+\]): $line");
 		# print qq{SB: $esc([0-9a-z$literal])\]\n};
-		$line =~ s{$esc([\s0-9a-z$quoted]+)\]}{yes(translate($1, $escape, $rhSymbolMap))}xmsge;
+		$line =~ s{$esc([\s0-9a-z$quoted]+)\]}{yes(translate($1, $escape, $rhSymbolMap, $reMatcher))}xmsge;
 	}
 	return $line;
 }
@@ -867,6 +885,10 @@ sub nd
 # construct the parser replacements in order of reverse length
 sub makeParser
 {
+	debug("makeParser begin");
+	my $saved_debug = $DEBUG;
+	$DEBUG = 0;
+
 	# Fractions:
 	replacer('nn', '1/10', '2152', $LITERAL);
 	replacer('nn', '1/4', 'BC',    $LITERAL);
@@ -981,6 +1003,8 @@ sub makeParser
 	replacer('sy', '_>', '02F2', $MARKUP);
 	replacer('sy', '_...', '2026', $MARKUP);
 	replacer('sy', '_<-', '02FF', $MARKUP);
+#	replacer('sy', '_._._.', '2026', $MARKUP);
+#	replacer('sy', '_<_-', '02FF', $MARKUP);
 
 	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
 
@@ -1298,6 +1322,8 @@ sub makeParser
 		}
 	}
 	#debug("${faults} Faults in replacements");
+	$DEBUG = $saved_debug;
+	debug("makeParser end");
 } # makeParser()
 
 sub yes {
@@ -1316,8 +1342,8 @@ sub debug {
 makeParser();
 
 while (my $line = <STDIN>) {
-	$line = sb($line, '_', $subScriptChars, \%SubScriptMap, $MARKUP);
-	#$line = sb($line, '^', $superScriptChars, \%SuperScriptMap, $MARKUP);
+	$line = sb($line, '_', $subScriptChars, \%SubScriptMap, $reSubScript, $MARKUP);
+	#$line = sb($line, '^', $superScriptChars, \%SuperScriptMap, $reSuperscript, $MARKUP);
 
 	$line = replace($line);
 	if (0)

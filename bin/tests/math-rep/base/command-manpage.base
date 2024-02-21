@@ -94,6 +94,12 @@ X^... X^<-
 X^A and many other capital letters
 X^ALPHA and many other greek capital letters
 
+You can also use _[...] or ^[...] bracketed text to indicate a full subscript or superscript expression:
+
+X_[0.123456789*a + 4beta -3(gamma)]   X^[0.123456789*a + 4beta -3(gamma)]
+
+X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎
+
 @NAMED REPLACEMENTS
 
 Using @ as markup to indicate a named letter or symbol.  Add * for bold, / for italics and ! for double struck. Use @name for lower case and @NAME for upper case letters.
