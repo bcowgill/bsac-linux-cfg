@@ -1,6 +1,10 @@
 Velda ringtone music - snoopy tune
   - curb your enthusiams theme
 
+template/html/bookmarks/ bookmark skeleton file
+also vmcode.sh.html
+need to start putting links from weekly newsletters into bookmark file for safe keeping
+
 Project js-lite.js like my perl-lite.pl template for a simple file processor command in node
 bin/template/javascript/js-pne
 	node commander module
