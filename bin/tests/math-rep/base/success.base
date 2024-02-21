@@ -1,11 +1,5 @@
 TODO Operatiors: @dee @del @int @cross @dot @sum √ @identical
 
-TODO superscript expresssions long strings of superscript chars
-Y^[(0.123456789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
-
-TODO subscript expresssions long strings of subscript chars
-X₍₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₑ ₕ ᵢ ⱼ ₖ ₗ ₘ ₙ ₒ ₚ ᵣ ₛ ₜ ᵤ ᵥ ₓ ₔ ᵦ ᵧ ᵨ ᵩ ᵪ ₊ ₋ ₌ ˿ ˱ ˲ …₎
-
 LITERAL replacements:
 ---------------------
 
@@ -97,11 +91,17 @@ a ≌ b
 MARKUP replacements:
 --------------------
 
-Superscripts:
+Superscripts individually marked up:
 Y⁰⋅¹²³⁴⁵⁶⁷⁸⁹˙ᵃᵇᶜᵈᵉᶠᵍᶢʰⁱᶦʲᵏˡᵐⁿᶰᵒᵖʳˢᵗᵘᶸᵛʷˣʸᶻᵊᵅᵝᵞˠᵟᶿᶥᶷᵠᶲᵡ⁺⁻⁼⁽⁾˂˃
 
-Subscripts:
+Subscripts individually marked up:
 X₀․₁₂₃₄₅₆₇₈₉⸱ₐₑₕᵢⱼₖₗₘₙₒₚᵣₛₜᵤᵥₓₔᵦᵧᵨᵩᵪ₊₋₌₍₎˿˱˲…
+
+Superscript bracketed expresssions long strings of superscript chars
+Y⁽⁰⋅¹²³⁴⁵⁶⁷⁸⁹˙ᵃ ᵇ ᶜ ᵈ ᵉ ᶠ ᵍ ᶢ ʰ ⁱ ᶦ ʲ ᵏ ˡ ᵐ ⁿ ᶰ ᵒ ᵖ ʳ ˢ ᵗ ᵘ ᶸ ᵛ ʷ ˣ ʸ ᶻ ᵊ ᵅ ᵝ ᵞ ˠ ᵟ ᶿ ᶥ ᶷ ᵠ ᶲ ᵡ ⁺ ⁻ ⁼ ˂ ˃⁾
+
+Subscript bracketed expresssions long strings of subscript chars
+X₍₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₑ ₕ ᵢ ⱼ ₖ ₗ ₘ ₙ ₒ ₚ ᵣ ₛ ₜ ᵤ ᵥ ₓ ₔ ᵦ ᵧ ᵨ ᵩ ᵪ ₊ ₋ ₌ ˿ ˱ ˲ …₎
 
 Greek All Markup (shows missing unicode characters):
 name		lower/upper/smallcap	italic	bold	bold/italic	double-struck

@@ -47,3 +47,15 @@ X^A and many other capital letters
 X^ALPHA and many other greek capital letters
 Xʳho
 X⋅.. X˂-
+
+Escaped square brackets for sub and super script expresssions:
+
+X₍₀․₁₂₃₄₅₆₇₈₉⸱ₐ   ₑ ₕ ᵢ ⱼ ₖ ₗ ₘ ₙ ₒ ₚ ᵣ ₛ ₜ ᵤ ᵥ ₓ ₔ ᵦ ᵧ ᵨ ᵩ ᵪ ₊ ₋ ₌ ˿ ˱ ˲ …₎
+
+Y⁽⁰¹²³⁴⁵⋅⁶⁷⁸⁹˙ᵃ ᵇ ᶜ ᵈ ᵉ ᶠ ᵍ ᶢ ʰ ⁱ ᶦ ʲ ᵏ ˡ ᵐ ⁿ ᶰ ᵒ ᵖ ʳ ˢ ᵗ ᵘ ᶸ ᵛ ʷ ˣ ʸ ᶻ ᵊ ᵅ ᵝ ᵞ ˠ ᵟ ᶿ ᶥ ᶷ ᵠ ᶲ ᵡ ⁺ ⁻ ⁼ ˂⁻ ˂ ˃ ⋅⋅⋅⁾
+
+Exceptions:
+
+XₐbcdₑfgₕᵢⱼₖₗₘₙₒₚqᵣₛₜᵤᵥwₓyzABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+YᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻABCDEFᶢHᶦJKLMᶰOPQRSTᶸVWXYZ

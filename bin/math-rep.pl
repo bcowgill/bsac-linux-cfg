@@ -172,9 +172,9 @@ X^ALPHA and many other greek capital letters
 
 You can also use _[...] or ^[...] bracketed text to indicate a full subscript or superscript expression:
 
-X_[0.123456789*a + 4beta -3(gamma)]   X^[0.123456789*a + 4beta -3(gamma)]
+X_[0.123456789*a + 4beta -3(gamma)]   Y^[0.123456789*a + 4beta -3(gamma)]
 
-X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎
+X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎           Y⁰⋅¹²³⁴⁵⁶⁷⁸⁹˙ᵃ ⁺ ⁴ᵝ ⁻³⁽ᵞ⁾
 
 \@NAMED REPLACEMENTS
 
@@ -253,7 +253,7 @@ my $notLetter = '(?:\A|[^a-zA-Z]|\z)';
 
 # also spaces, all letters needed to spell out symbols
 my $subScriptChars   = '.+-*=()<>';
-my $superScriptChars = '0123456789.+-*=()<>abcdefgghiIjklmnNoprstuUvwxyz';
+my $superScriptChars = $subScriptChars;
 
 my %TypeNames = ();
 
@@ -305,11 +305,71 @@ my %SubScriptMap = qw{
 };
 my $reSubScript = map_to_regex(\%SubScriptMap);
 
-my %SuperScriptMap = qw(
-);
+my %SuperScriptMap = qw{
+	0	2070
+	1	B9
+	2	B2
+	3	B3
+	4	2074
+	5	2075
+	6	2076
+	7	2077
+	8	2078
+	9	2079
+	.	22C5
+	+	207A
+	-	207B
+	*	2D9
+	=	207C
+	(	207D
+	)	207E
+	<	2C2
+	>	2C3
+	a	1D43
+	b	1D47
+	c	1D9C
+	d	1D48
+	e	1D49
+	f	1DA0
+	g	1D4D
+	G	1DA2
+	h	2B0
+	i	2071
+	I	1DA6
+	j	2B2
+	k	1D4F
+	l	2E1
+	m	1D50
+	n	207F
+	N	1DB0
+	o	1D52
+	p	1D56
+	r	2B3
+	s	2E2
+	t	1D57
+	u	1D58
+	U	1DB8
+	v	1D5B
+	w	2B7
+	x	2E3
+	y	2B8
+	z	1DBB
+	schwa	1D4A
+	alpha	1D45
+	beta	1D5D
+	gamma	1D5E
+	GAMMA	2E0
+	delta	1D5F
+	theta	1DBF
+	iota	1DA5
+	upsilon	1DB7
+	phi	1D60
+	PHI	1DB2
+	chi	1D61
+};
 my $reSuperScript = map_to_regex(\%SuperScriptMap);
 
-# GAMMASC - etc SMALL CAPS
+# @GAMMASC - etc SMALL CAPS markup
 my %GreekSmCap = qw(
 	GAMMASC     1D26
 	LAMDASC     1D27
@@ -318,6 +378,7 @@ my %GreekSmCap = qw(
 	PSISC       1D2A
 );
 
+# @!gamma - etc Double Struck markup
 my %GreekDblStk = qw(
 	gamma       213D
 	pi          213C
@@ -326,6 +387,7 @@ my %GreekDblStk = qw(
 	SIGMA       2140
 );
 
+# @alpha - etc Normal font markup
 my %GreekNormal = qw(
 	alpha       3B1
 	beta        3B2
@@ -380,6 +442,7 @@ my %GreekNormal = qw(
 	OMEGA       3A9
 );
 
+# @/alpha - etc Italic font markup
 my %GreekItal = qw(
 	alpha       1D6FC
 	beta        1D6FD
@@ -434,6 +497,7 @@ my %GreekItal = qw(
 	OMEGA       1D6FA
 );
 
+# @*alpha - etc Bold font markup
 my %GreekBold = qw(
 	alpha       1D770
 	beta        1D771
@@ -488,6 +552,7 @@ my %GreekBold = qw(
 	OMEGA       1D76E
 );
 
+# @*/alpha - etc Bold Italic font markup
 my %GreekBoldItal = qw(
 	alpha       1D7AA
 	beta        1D7AB
@@ -544,6 +609,7 @@ my %GreekBoldItal = qw(
 
 my %Greek = %GreekNormal;
 
+# replacement map and array ordered longest to shortest
 my @Replacements = ();
 my %Replacements = ();
 
@@ -551,11 +617,13 @@ binmode(STDIN,  ":encoding(utf8)"); # -CI
 binmode(STDOUT, ":utf8"); # -CO
 binmode(STDERR, ":utf8"); # -CE
 
+# sorting function for longest to shortest string length
 sub byLength
 {
 	return length($b) - length($a);
 }
 
+# convert the keys of a hash map into a regular expression for matching longest to shortest
 sub map_to_regex
 {
 	my ($rhMap) = @ARG;
@@ -564,6 +632,7 @@ sub map_to_regex
 	return $regex;
 }
 
+# Populate the Replacements map and array with configuration
 sub replacer
 {
 	my ($type, $literal, $code, $enabled) = @ARG;
@@ -656,6 +725,7 @@ my $matchNum = 0;
 my %MatchNum = ();
 my %Matched = ();
 
+# TODO finish this up...
 sub change
 {
 	my ($matched, $replace, $quoted) = @ARG;
@@ -755,7 +825,6 @@ sub translate
 	return $output;
 } # translate()
 
-# TODO
 # replace square bracketed runs of text ie. _[(n+1)(n-1)]
 sub sb
 {
@@ -765,9 +834,9 @@ sub sb
 	{
 		my $esc = quotemeta($escape . '[');
 		my $quoted = quotemeta($chars);
-		debug("sb(${esc}[\\s0-9a-z$quoted]+\]): $line");
-		# print qq{SB: $esc([0-9a-z$literal])\]\n};
-		$line =~ s{$esc([\s0-9a-z$quoted]+)\]}{yes(translate($1, $escape, $rhSymbolMap, $reMatcher))}xmsge;
+		my $re = qr{$esc([\s0-9a-zA-Z$quoted]+)\]}xms;
+		debug("sb($re): $line");
+		$line =~ s{$re}{yes(translate($1, $escape, $rhSymbolMap, $reMatcher))}xmsge;
 	}
 	return $line;
 }
@@ -1003,8 +1072,6 @@ sub makeParser
 	replacer('sy', '_>', '02F2', $MARKUP);
 	replacer('sy', '_...', '2026', $MARKUP);
 	replacer('sy', '_<-', '02FF', $MARKUP);
-#	replacer('sy', '_._._.', '2026', $MARKUP);
-#	replacer('sy', '_<_-', '02FF', $MARKUP);
 
 	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
 
@@ -1343,7 +1410,7 @@ makeParser();
 
 while (my $line = <STDIN>) {
 	$line = sb($line, '_', $subScriptChars, \%SubScriptMap, $reSubScript, $MARKUP);
-	#$line = sb($line, '^', $superScriptChars, \%SuperScriptMap, $reSuperscript, $MARKUP);
+	$line = sb($line, '^', $superScriptChars, \%SuperScriptMap, $reSuperScript, $MARKUP);
 
 	$line = replace($line);
 	if (0)

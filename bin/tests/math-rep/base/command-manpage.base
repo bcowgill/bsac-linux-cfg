@@ -96,9 +96,9 @@ X^ALPHA and many other greek capital letters
 
 You can also use _[...] or ^[...] bracketed text to indicate a full subscript or superscript expression:
 
-X_[0.123456789*a + 4beta -3(gamma)]   X^[0.123456789*a + 4beta -3(gamma)]
+X_[0.123456789*a + 4beta -3(gamma)]   Y^[0.123456789*a + 4beta -3(gamma)]
 
-X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎
+X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎           Y⁰⋅¹²³⁴⁵⁶⁷⁸⁹˙ᵃ ⁺ ⁴ᵝ ⁻³⁽ᵞ⁾
 
 @NAMED REPLACEMENTS
 

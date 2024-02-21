@@ -1,2 +1,4 @@
+Y^[0.123456789*a + 4beta -3(gamma)]
+Y^[(012345.6789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
 X_[0.123456789*a + 4beta -3(gamma)]
 X_[(0.123456789*a   e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = <- < > ...)]

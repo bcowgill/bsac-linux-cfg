@@ -1,11 +1,5 @@
 TODO Operatiors: @dee @del @int @cross @dot @sum @sqrt  @identical
 
-TODO superscript expresssions long strings of superscript chars
-Y^[(0.123456789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
-
-TODO subscript expresssions long strings of subscript chars
-X_[(0.123456789*a e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = <- < > ...)]
-
 LITERAL replacements:
 ---------------------
 
@@ -97,11 +91,17 @@ a ~=== b
 MARKUP replacements:
 --------------------
 
-Superscripts:
+Superscripts individually marked up:
 Y^0^.^1^2^3^4^5^6^7^8^9^*^a^b^c^d^e^f^g^G^h^i^I^j^k^l^m^n^N^o^p^r^s^t^u^U^v^w^x^y^z^schwa^alpha^beta^gamma^GAMMA^delta^theta^iota^upsilon^phi^PHI^chi^+^-^=^(^)^<^>
 
-Subscripts:
+Subscripts individually marked up:
 X_0_._1_2_3_4_5_6_7_8_9_*_a_e_h_i_j_k_l_m_n_o_p_r_s_t_u_v_x_schwa_beta_gamma_rho_phi_chi_+_-_=_(_)_<-_<_>_...
+
+Superscript bracketed expresssions long strings of superscript chars
+Y^[(0.123456789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = < >)]
+
+Subscript bracketed expresssions long strings of subscript chars
+X_[(0.123456789*a e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = <- < > ...)]
 
 Greek All Markup (shows missing unicode characters):
 name		lower/upper/smallcap	italic	bold	bold/italic	double-struck
