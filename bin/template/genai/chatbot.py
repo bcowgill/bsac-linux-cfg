@@ -1,9 +1,8 @@
-# Create a chat bot with langchain and open ai
+# Create a chat bot with open ai to pinecone db before we try langcain versions
 
 # Install
 
 # python3 -m pip install openai
-
 
 # Data Load
 # Using Stanford Question Answering Dataset SQuAD 2.0
@@ -109,8 +108,6 @@ for i in tqdm(range(0, len(df_sample), batch_size)):
     to_upsert = zip(ids, emb_vectors, meta_data)
     index.upsert(vectors=to_upsert)
 
-
-
-
 # Using
 
+# see chatbot2.py where we change to langchain
