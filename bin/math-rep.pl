@@ -123,9 +123,11 @@ LITERAL REPLACEMENTS
 
 <-  ->  <->  <-/  -/>  ->>  >->  |->  <-/>  -o>  ->->->  <-|-  -|->  <-|->  <-||-  -||->  <-||->  <|-  -|>  <|-|>
 
-<==  ==>  <==>  <=/=  =/=>  <=/=>  <=|=  =|=>  <=|=>  <==|  |==>  ==)  <===  ===>  <===>  <===|  |===>
+<===  ===>  <==>  <=/=  =/=>  <=/=>  <=|=  =|=>  <=|=>  <==|  |==>  ==)  <====  ====>  <===>  <===|  |===>
 
-^^  vv  v^ ^|- |-v -^| |v- ^^^ vvv ^^^^ vvvv
+^^  vv  ^|v  ^^|  |vv  ^|_  _|v  ^|v_  /_/v  ^|=|  |=|v  ^:  :v  ^|- |-v  _^|  |v_  ^^|o  ^||v  ^|^|  |v|v  |v^|
+
+^||  ||v  ^|||v  ^[]  []v  ^[]v  ^!!  ^[]_  ^-[]_  ^[|]_  ^^[]  ^^[]_  ^^^ vvv ^^^^ vvvv
 
 Symbols are typed from left to right and represent the line strokes going from top to bottom.
 
@@ -1108,11 +1110,38 @@ sub makeParser
 	# Arrows, up and down using ^ v with surrounding spaces:
 	replacer('sys', '^^', '2191', $LITERAL);
 	replacer('sys', 'vv', '2193', $LITERAL);
-	replacer('sys', 'v^', '21F5', $LITERAL);
+	replacer('sys', '^|v', '2195', $LITERAL);
+	replacer('sys', '^^|', '219F', $LITERAL);
+	replacer('sys', '|vv', '21A1', $LITERAL);
+	replacer('sys', '^|_', '21A5', $LITERAL);
+	replacer('sys', '_|v', '21A7', $LITERAL);
+	replacer('sys', '^|v_', '21A8', $LITERAL);
+	replacer('sys', '/_/v', '21AF', $LITERAL);
+	replacer('sys', '^|=|', '21DE', $LITERAL);
+	replacer('sys', '|=|v', '21DF', $LITERAL);
+	replacer('sys', '^:', '21E1', $LITERAL);
+	replacer('sys', ':v', '21E3', $LITERAL);
 	replacer('sys', '^|-', '2909', $LITERAL);
 	replacer('sys', '|-v', '2908', $LITERAL);
-	replacer('sys', '-^|', '2912', $LITERAL);
-	replacer('sys', '|v-', '2913', $LITERAL);
+	replacer('sys', '_^|', '2912', $LITERAL);
+	replacer('sys', '|v_', '2913', $LITERAL);
+	replacer('sys', '^^|o', '2949', $LITERAL);
+	replacer('sys', '^||v', '21C5', $LITERAL);
+	replacer('sys', '^|^|', '21C8', $LITERAL);
+	replacer('sys', '|v|v', '21CA', $LITERAL);
+	replacer('sys', '|v^|', '21F5', $LITERAL);
+	replacer('sys', '^||', '21D1', $LITERAL);
+	replacer('sys', '||v', '21D3', $LITERAL);
+	replacer('sys', '^|||v', '21D5', $LITERAL);
+	replacer('sys', '^[]', '21E7', $LITERAL);
+	replacer('sys', '[]v', '21E9', $LITERAL);
+	replacer('sys', '^[]v', '21F3', $LITERAL);
+	replacer('sys', '^!!', '21EA', $LITERAL);
+	replacer('sys', '^[]_', '21EB', $LITERAL);
+	replacer('sys', '^-[]_', '21EC', $LITERAL);
+	replacer('sys', '^[|]_', '21ED', $LITERAL);
+	replacer('sys', '^^[]', '21EE', $LITERAL);
+	replacer('sys', '^^[]_', '21EF', $LITERAL);
 	replacer('sys', '^^^', '290A', $LITERAL);
 	replacer('sys', 'vvv', '290B', $LITERAL);
 	replacer('sys', '^^^^', '27F0', $LITERAL);

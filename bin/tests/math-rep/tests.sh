@@ -180,7 +180,8 @@ TEST=no-literals
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
-	BASE=$LITERALS
+#	BASE=$LITERALS
+	BASE=base/$TEST.base
 	ARGS="$DEBUG"
 	LITERAL=0 $PROGRAM $ARGS < $LITERALS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
