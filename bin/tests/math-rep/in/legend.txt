@@ -1,0 +1,10 @@
+@sqrt
+@root3
+@root4
+@sum
+@SUM
+@PRODUCT
+@COPRODUCT
+
+
+@inf

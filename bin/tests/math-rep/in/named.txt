@@ -1,4 +1,16 @@
-Multi-characters @named math values with markup to convert:
+Multi-characters @named math values:
+
+@inf
+@sqrt(b^2-4ac)
+@root3(83)
+@root3 99
+@root4(123)
+@sum 1/n^2|n=1...@inf
+@SUM(1/n^2)|n=1...@inf
+@PRODUCT 1/n^2|n=1...@inf
+@COPRODUCT  1/n^2|n=1...@inf
+
+Multi-characters @named math values with markup to convert font styles:
 
       Small       Capital         |Bold
        (final)     (small)        |  Italic
@@ -30,8 +42,3 @@ omega    @omega           @OMEGA            |@*omega @/omega @*/omega   @*OMEGA 
 
 Exceptions:
 @!alpha @!ALPHA and many other double struck Greek small and capital letters.
-
-@sqrt(b^2-4ac)
-@root3(83)
-@root3 99
-@root4(123)

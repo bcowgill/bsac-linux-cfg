@@ -1,4 +1,4 @@
-TODO Operatiors: @dee @del @int @cross @dot @sum @sqrt  @identical
+TODO Operatiors: @dee @del @int @cross @dot @identical
 
 LITERAL replacements:
 ---------------------
@@ -35,6 +35,15 @@ p = !!q
 r = [-b +- @sqrt(b^2 - 4ac)]/2a
 @root3 83
 @root4(123)
+n = 1...@inf
+
+@sum 1/n^2|n=1...@inf
+
+@SUM(1/n^2)|n=1...@inf
+
+@PRODUCT 1/n^2|n=1...@inf
+
+@COPRODUCT  1/n^2|n=1...@inf
 
 Equalities:
 x <= y == z

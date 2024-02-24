@@ -1,3 +1,6 @@
+cd ~; math-rep.pl math-circles.txt
+https://mathematicsart.com/solved-exercises/solution-what-is-the-radius-of-the-smallest-circle/?fbclid=IwAR1VfC9bQQVpN6NQKCkLI8DkZFF-5f8YBW_-KnR7iB6_u_wc-msoB9CPQ5o
+
 Velda ringtone music - snoopy tune
   - curb your enthusiams theme
 

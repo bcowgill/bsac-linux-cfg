@@ -9,6 +9,7 @@ CMD=`basename $PROGRAM`
 SAMPLE=in/math-rep.sample.txt
 SINGLE=in/single.txt
 LITERALS=in/literals.txt
+LEGEND=in/legend.txt
 MARKUP=in/markup.txt
 NAMED=in/named.txt
 DEBUG=
@@ -139,7 +140,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	LEGEND=names $PROGRAM $ARGS < $LITERALS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	LEGEND=names $PROGRAM $ARGS < $LEGEND > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

@@ -178,6 +178,12 @@ X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎           Y�
 
 \@NAMED REPLACEMENTS
 
+Using \@ as markup to indicate a named letter or symbol.
+
+    \@inf    ∞   |
+
+\@NAMED REPLACEMENTS WITH FONT STYLING
+
 Using \@ as markup to indicate a named letter or symbol.  Add * for bold, / for italics and ! for double struck. Use \@name for lower case and \@NAME for upper case letters.
 
 Normal Bold    Italic  Bold-Italic Double-Struck
@@ -233,7 +239,9 @@ Note: there are no unicode characters for \@!alpha \@!ALPHA and many other doubl
 
 Named operators or functions:
 
-\@sqrt \@root3 \@root4
+    \@sqrt   √   |    \@root3  ∛    |    \@root4  ∜      |    \@sum    ∑   |
+
+    \@SUM    ⅀   |    \@PRODUCT ∏   |    \@COPRODUCT ∐   |
 MANPAGE
 }
 
@@ -242,6 +250,11 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 	$MAN = $ARGV[0] =~ m{--man}xms;
 	usage()
 }
+
+# f'(x) f''(x) also p' P'  etc
+my $reFuncPrime = qr{\b([a-z]+)('+)\(}xmsi;
+# d/dx p/py d^2/dy^2 d2/dx2   dy/dx d2y/dx2 d^2y/dx^2
+my $reDifferential = qr{([dp])(?:\^?(\d))?([a-zA-Z]?)/([dp])([a-zA-Z])(?:\^?(\d))?}xms;
 
 my $reSpace = qr{(?:\A|\z|\s)}xms;
 my $rePos = qr{[0-9]+([0-9,]*\.?[0-9,]+)?}xms; # positive 0 0.1 1,000.000,000,000
@@ -387,7 +400,8 @@ my %GreekDblStk = qw(
 	SIGMA       2140
 );
 
-# @alpha - etc Normal font markup
+# @alpha - etc Normal font markup for Greek and other unstyled symbols
+# @inf
 my %GreekNormal = qw(
 	alpha       3B1
 	beta        3B2
@@ -440,6 +454,8 @@ my %GreekNormal = qw(
 	CHI         3A7
 	PSI         3A8
 	OMEGA       3A9
+
+	inf        221E
 );
 
 # @/alpha - etc Italic font markup
@@ -662,6 +678,7 @@ sub replacer
 sub search
 {
 	my ($line, $search, $type, $code) = @ARG;
+	#debug("HERE", $line||"44", $search||"33", $type||"22", $code||"11");
 	debug("search: $search rep: $type U+$code [$TypeNames{$type}]") if $TypeNames{$type};
 	if ($type eq 'sy')
 	{
@@ -711,6 +728,7 @@ sub replace
 			my $type = $rhSearch->{type};
 			my $code = $rhSearch->{code};
 
+			#debug("QWERT", $line||"XX", $search||"YY", $type||"ZZ", $code||"AA");
 			$line = search($line, $search, $type, $code);
 		}
 	}
@@ -868,6 +886,7 @@ sub sy
 sub ww
 {
 	my ($line, $literal, $code) = @ARG;
+	#debug(qq{WW}, $line||"zx88", $literal||"zx77", $code||"zx66");
 	$TypeNames{'ww'} = "literal \@named character replaced with a single corresponding character";
 	my $quoted = quotemeta(checkLength($literal));
 	debug("ww($quoted => U+$code): line: $line");
@@ -912,6 +931,7 @@ sub legend
 	my $padchar = pad($replacement, $PAD_CHARS);
 	if ($LEGEND eq "names")
 	{
+		$padded =~ s{\@}{\\@}xms;
 		print "$INDENT$padded $padchar$SEP\n";
 	} elsif ($LEGEND eq "chars")
 	{
@@ -959,6 +979,7 @@ sub makeParser
 	$DEBUG = 0;
 
 	# Fractions:
+	#debug("makeParser 1");
 	replacer('nn', '1/10', '2152', $LITERAL);
 	replacer('nn', '1/4', 'BC',    $LITERAL);
 	replacer('nn', '1/2', 'BD',    $LITERAL);
@@ -981,6 +1002,7 @@ sub makeParser
 	replacer('nd', '1/', '215F', $LITERAL); # TODO needs a thin unicode space
 
 	# Operators and Equalities/inequalities:
+	#debug("makeParser 2");
 	replacer('sy', '+-', 'B1',   $LITERAL);
 	replacer('sy', '**', 'D7',   $LITERAL);
 	replacer('sy', '//', 'F7',   $LITERAL);
@@ -1019,6 +1041,7 @@ sub makeParser
 	replacer('sys', '>=<', '22DB', $LITERAL);
 	replacer('sys', '=<', '22DC', $LITERAL);
 	replacer('sys', '=>', '22DD', $LITERAL);
+	#debug("makeParser 3");
 
 	replacer('sys', '~/', '2241', $LITERAL);
 	replacer('sys', '-~', '2242', $LITERAL);
@@ -1072,6 +1095,7 @@ sub makeParser
 	replacer('sy', '_>', '02F2', $MARKUP);
 	replacer('sy', '_...', '2026', $MARKUP);
 	replacer('sy', '_<-', '02FF', $MARKUP);
+	#debug("makeParser 4");
 
 	replacer('syw', '_schwa', '2094', $MARKUP); # e upside down
 
@@ -1131,6 +1155,7 @@ sub makeParser
 	replacer('sy', '^)', '207E', $MARKUP);
 	replacer('sy', '^<', '2C2', $MARKUP);
 	replacer('sy', '^>', '2C3', $MARKUP);
+	#debug("makeParser 5");
 
 	replacer('sy', '^schwa', '1D4A', $MARKUP);
 
@@ -1150,6 +1175,14 @@ sub makeParser
 	replacer('wws', '@sqrt', '221A', $MARKUP);
 	replacer('wws', '@root3', '221B', $MARKUP);
 	replacer('wws', '@root4', '221C', $MARKUP);
+	replacer('wws', '@sum', '2211', $MARKUP);
+	replacer('wws', '@SUM', '2140', $MARKUP);
+	replacer('wws', '@PRODUCT', '220F', $MARKUP);
+	replacer('wws', '@COPRODUCT', '2210', $MARKUP);
+
+	# Normal styled symbols
+	debug("WHAT", Dumper(\%GreekNormal));
+	replacer('ww', '@inf', $GreekNormal{inf}, $MARKUP);
 
 	# Greek Small Caps incidentals
 	replacer('ww', '@GAMMASC', $GreekSmCap{GAMMASC}, $MARKUP);
@@ -1417,6 +1450,7 @@ while (my $line = <STDIN>) {
 	{
 
 		# TODO convert to replacer() calls
+		# @div ergence @curl @o @oC @oF degrees,Celsius,Farh
 		s{cross}{{U+2A2F}}xmsg;
 		s{del}{{U+1D6C1} }xmsg;
 		s{dee}{{U+1D6DB}}xmsg;

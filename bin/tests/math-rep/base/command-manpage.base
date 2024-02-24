@@ -102,6 +102,12 @@ X₀․₁₂₃₄₅₆₇₈₉⸱ₐ ₊ ₄ᵦ ₋₃₍ᵧ₎           Y�
 
 @NAMED REPLACEMENTS
 
+Using @ as markup to indicate a named letter or symbol.
+
+    @inf    ∞   |
+
+@NAMED REPLACEMENTS WITH FONT STYLING
+
 Using @ as markup to indicate a named letter or symbol.  Add * for bold, / for italics and ! for double struck. Use @name for lower case and @NAME for upper case letters.
 
 Normal Bold    Italic  Bold-Italic Double-Struck
@@ -157,7 +163,9 @@ Note: there are no unicode characters for @!alpha @!ALPHA and many other double 
 
 Named operators or functions:
 
-@sqrt @root3 @root4
+    @sqrt   √   |    @root3  ∛    |    @root4  ∜      |    @sum    ∑   |
+
+    @SUM    ⅀   |    @PRODUCT ∏   |    @COPRODUCT ∐   |
 
 
 See also ls-maths.sh utf8dbg.pl ... TODO

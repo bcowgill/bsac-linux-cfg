@@ -201,6 +201,11 @@ _schwa _beta _gamma _rho _phi _chi
 ᵡ	U+1D61	[ModifierLetter,Superscript]	MODIFIER LETTER SMALL CHI
 
 --- NAMED REPLACEMENTS
+@inf
+∞	U+221E	[MathSymbol,Series]	INFINITY
+
+--- NAMED REPLACEMENTS WITH FONT STYLES
+
 @GAMMASC @LAMDASC @PISC @RHOSC @PSISC
 ᴦ	U+1D26	[LowercaseLetter]	GREEK LETTER SMALL CAPITAL GAMMA
 ᴧ	U+1D27	[LowercaseLetter]	GREEK LETTER SMALL CAPITAL LAMDA
@@ -427,17 +432,115 @@ _schwa _beta _gamma _rho _phi _chi
 𝞧	U+1D7A7	[UppercaseLetter]	MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL PSI
 𝞨	U+1D7A8	[UppercaseLetter]	MATHEMATICAL SANS-SERIF BOLD ITALIC CAPITAL OMEGA
 
-=== vvv TODO need to configure Characters handled by math-rep.pl
-
-=== Characters handled by math-rep.pl
-\@
-@@ fullwidth
-@- -+ @sqrt @root3 @root4 @~ @~~ @~~=
-−	U+2212	[MathSymbol,Arithmetic]	MINUS SIGN
-∓	U+2213	[MathSymbol,Arithmetic]	MINUS-OR-PLUS SIGN
+@sqrt @root3 @root4
 √	U+221A	[MathSymbol,Exponents]	SQUARE ROOT
 ∛	U+221B	[MathSymbol,Exponents]	CUBE ROOT
 ∜	U+221C	[MathSymbol,Exponents]	FOURTH ROOT
+
+@sum @SUM @PRODUCT @COPRODUCT
+∑	U+2211	[MathSymbol]	N-ARY SUMMATION
+⅀	U+2140	[MathSymbol]	DOUBLE-STRUCK N-ARY SUMMATION
+∏	U+220F	[MathSymbol]	N-ARY PRODUCT
+∐	U+2210	[MathSymbol]	N-ARY COPRODUCT
+
+
+=== vvv TODO need to configure Characters handled by math-rep.pl
+derivatives / differentials
+𝑑∕𝑑𝑥  𝑑⁄𝑑𝑥
+∕
+⁄
+𝑑⁄𝑑𝑥
+∂⁄∂𝑥 𝛛⁄𝛛𝒙
+𝑥
+𝑦
+𝑧
+𝑞
+𝑟
+𝑠
+𝑡
+𝑢
+𝑣
+⁄
+∕
+⁄	U+2044	[MathSymbol,Fractions]	FRACTION SLASH
+∕	U+2215	[MathSymbol,Arithmetic]	DIVISION SLASH
+
+
+f′(t)
+f″(t)
+f‴(t)
+f⁗(t)
+
+
+𝑑	U+1D451	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL D
+𝑥	U+1D465	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL X
+𝑦	U+1D466	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL Y
+𝑧	U+1D467	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL Z
+𝑞	U+1D45E	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL Q
+𝑟	U+1D45F	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL R
+𝑠	U+1D460	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL S
+𝑡	U+1D461	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL T
+𝑢	U+1D462	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL U
+𝑣	U+1D463	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL V
+
+𝒅	U+1D485	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL D
+𝒑	U+1D491	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL P
+𝒒	U+1D492	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL Q
+𝒓	U+1D493	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL R
+𝒔	U+1D494	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL S
+𝒕	U+1D495	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL T
+𝒖	U+1D496	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL U
+𝒗	U+1D497	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL V
+𝒘	U+1D498	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL W
+𝒙	U+1D499	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL X
+𝒚	U+1D49A	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL Y
+𝒛	U+1D49B	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL Z
+
+@div @curl
+
+∂	U+2202	[MathSymbol,CalculusD]	PARTIAL DIFFERENTIAL
+xyzzy
+𝛁	U+1D6C1	[MathSymbol,CalculusD]	MATHEMATICAL BOLD NABLA
+𝛛	U+1D6DB	[MathSymbol,CalculusD]	MATHEMATICAL BOLD PARTIAL DIFFERENTIAL
+𝛻	U+1D6FB	[MathSymbol,CalculusD]	MATHEMATICAL ITALIC NABLA
+𝜕	U+1D715	[MathSymbol,CalculusD]	MATHEMATICAL ITALIC PARTIAL DIFFERENTIAL
+𝜵	U+1D735	[MathSymbol,CalculusD]	MATHEMATICAL BOLD ITALIC NABLA
+𝝏	U+1D74F	[MathSymbol,CalculusD]	MATHEMATICAL BOLD ITALIC PARTIAL DIFFERENTIAL
+𝝯	U+1D76F	[MathSymbol,CalculusD]	MATHEMATICAL SANS-SERIF BOLD NABLA
+𝞉	U+1D789	[MathSymbol,CalculusD]	MATHEMATICAL SANS-SERIF BOLD PARTIAL DIFFERENTIAL
+𝞩	U+1D7A9	[MathSymbol,CalculusD]	MATHEMATICAL SANS-SERIF BOLD ITALIC NABLA
+𝟃	U+1D7C3	[MathSymbol,CalculusD]	MATHEMATICAL SANS-SERIF BOLD ITALIC PARTIAL DIFFERENTIAL
+𝛻	U+1D6FB	[MathSymbol]	MATHEMATICAL ITALIC NABLA
+
+𝜕	U+1D715	[MathSymbol]	MATHEMATICAL ITALIC PARTIAL DIFFERENTIAL
+
+ʹ	U+2B9	[ModifierLetter]	MODIFIER LETTER PRIME
+ʺ	U+2BA	[ModifierLetter]	MODIFIER LETTER DOUBLE PRIME
+′	U+2032	[OtherPunctuation]	PRIME
+″	U+2033	[OtherPunctuation]	DOUBLE PRIME
+‴	U+2034	[OtherPunctuation]	TRIPLE PRIME
+‵	U+2035	[OtherPunctuation]	REVERSED PRIME
+‶	U+2036	[OtherPunctuation]	REVERSED DOUBLE PRIME
+‷	U+2037	[OtherPunctuation]	REVERSED TRIPLE PRIME
+⁗	U+2057	[OtherPunctuation]	QUADRUPLE PRIME
+〝	U+301D	[OpenPunctuation]	REVERSED DOUBLE PRIME QUOTATION MARK
+〞	U+301E	[ClosePunctuation]	DOUBLE PRIME QUOTATION MARK
+〟	U+301F	[ClosePunctuation]	LOW DOUBLE PRIME QUOTATION MARK
+
+
+=== More Characters to handle by math-rep.pl
+
+@o @oC @oF @@o
+°	U+B0	[OtherSymbol]	DEGREE SIGN
+℃	U+2103	[OtherSymbol]	DEGREE CELSIUS
+℉	U+2109	[OtherSymbol]	DEGREE FAHRENHEIT
+
+
+\@
+@@ fullwidth
+@- -+ @~ @~~ @~~=
+−	U+2212	[MathSymbol,Arithmetic]	MINUS SIGN
+∓	U+2213	[MathSymbol,Arithmetic]	MINUS-OR-PLUS SIGN
 ∼	U+223C	[MathSymbol]	TILDE OPERATOR
 ∽	U+223D	[MathSymbol]	REVERSED TILDE
 ⋍	U+22CD	[MathSymbol]	REVERSED TILDE EQUALS
@@ -481,13 +584,13 @@ _schwa _beta _gamma _rho _phi _chi
 ⁒	U+2052	[MathSymbol]	COMMERCIAL MINUS SIGN
 
 ℘	U+2118	[MathSymbol]	WEIERSTRASS ELLIPTIC FUNCTION
-⅀	U+2140	[MathSymbol]	DOUBLE-STRUCK N-ARY SUMMATION
 ⅁	U+2141	[MathSymbol]	TURNED SANS-SERIF CAPITAL G
 ⅂	U+2142	[MathSymbol]	TURNED SANS-SERIF CAPITAL L
 ⅃	U+2143	[MathSymbol]	REVERSED SANS-SERIF CAPITAL L
 ⅄	U+2144	[MathSymbol]	TURNED SANS-SERIF CAPITAL Y
 ⅋	U+214B	[MathSymbol]	TURNED AMPERSAND
 
+<- @^ @v -> <-> <-/ -/>
 ←	U+2190	[MathSymbol]	LEFTWARDS ARROW
 ↑	U+2191	[MathSymbol]	UPWARDS ARROW
 →	U+2192	[MathSymbol]	RIGHTWARDS ARROW
@@ -532,9 +635,6 @@ _schwa _beta _gamma _rho _phi _chi
 ∍	U+220D	[MathSymbol,Sets]	SMALL CONTAINS AS MEMBER
 
 ∎	U+220E	[MathSymbol]	END OF PROOF
-∏	U+220F	[MathSymbol,Series]	N-ARY PRODUCT
-∐	U+2210	[MathSymbol,Series]	N-ARY COPRODUCT
-∑	U+2211	[MathSymbol,Series]	N-ARY SUMMATION
 
 −	U+2212	[MathSymbol,Arithmetic]	MINUS SIGN
 ∓	U+2213	[MathSymbol,Arithmetic]	MINUS-OR-PLUS SIGN
@@ -546,12 +646,7 @@ _schwa _beta _gamma _rho _phi _chi
 ∘	U+2218	[MathSymbol]	RING OPERATOR
 ∙	U+2219	[MathSymbol]	BULLET OPERATOR
 
-√	U+221A	[MathSymbol,Exponents]	SQUARE ROOT
-∛	U+221B	[MathSymbol,Exponents]	CUBE ROOT
-∜	U+221C	[MathSymbol,Exponents]	FOURTH ROOT
-
 ∝	U+221D	[MathSymbol,Comparison]	PROPORTIONAL TO
-∞	U+221E	[MathSymbol,Series]	INFINITY
 
 ∟	U+221F	[MathSymbol,Geometry]	RIGHT ANGLE
 ∠	U+2220	[MathSymbol,Geometry]	ANGLE
@@ -1932,6 +2027,33 @@ _schwa _beta _gamma _rho _phi _chi
 𝑧	U+1D467	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL Z
 𝚤	U+1D6A4	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL DOTLESS I
 𝚥	U+1D6A5	[LowercaseLetter]	MATHEMATICAL ITALIC SMALL DOTLESS J
+𝒂	U+1D482	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL A
+𝒃	U+1D483	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL B
+𝒄	U+1D484	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL C
+𝒅	U+1D485	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL D
+𝒆	U+1D486	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL E
+𝒇	U+1D487	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL F
+𝒈	U+1D488	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL G
+𝒉	U+1D489	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL H
+𝒊	U+1D48A	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL I
+𝒋	U+1D48B	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL J
+𝒌	U+1D48C	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL K
+𝒍	U+1D48D	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL L
+𝒎	U+1D48E	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL M
+𝒏	U+1D48F	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL N
+𝒐	U+1D490	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL O
+𝒑	U+1D491	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL P
+𝒒	U+1D492	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL Q
+𝒓	U+1D493	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL R
+𝒔	U+1D494	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL S
+𝒕	U+1D495	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL T
+𝒖	U+1D496	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL U
+𝒗	U+1D497	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL V
+𝒘	U+1D498	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL W
+𝒙	U+1D499	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL X
+𝒚	U+1D49A	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL Y
+𝒛	U+1D49B	[LowercaseLetter]	MATHEMATICAL BOLD ITALIC SMALL Z
+
 
 𝛻	U+1D6FB	[MathSymbol]	MATHEMATICAL ITALIC NABLA
 

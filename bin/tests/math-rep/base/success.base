@@ -1,4 +1,4 @@
-TODO Operatiors: @dee @del @int @cross @dot @sum √ @identical
+TODO Operatiors: @dee @del @int @cross @dot @identical
 
 LITERAL replacements:
 ---------------------
@@ -35,6 +35,15 @@ p = ¬q
 r = [-b ± √(b² - 4ac)]/2a
 ∛83
 ∜(123)
+n = 1...∞
+
+∑⅟n²|n=1...∞
+
+⅀(⅟n²)|n=1...∞
+
+∏⅟n²|n=1...∞
+
+∐ ⅟n²|n=1...∞
 
 Equalities:
 x ≤ y ≡ z
