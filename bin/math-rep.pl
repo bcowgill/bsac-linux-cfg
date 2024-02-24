@@ -20,6 +20,11 @@
 # other words correspond to greek letters and operators
 # echo PHI PSI del DELTA SIGMA gamma epsilon lamda mu pi rho dee epsilon phi int cross dot +- sum sqrt identical \<= \>= ^0 ^1 ^2 ^3 ^4 ^5 ^6 ^7 ^8 ^9 ^0 ^n _0 _1 _2 _3 _4 _5 _6 _7 _8 _9| math-rep.pl | utf8.pl
 
+# TODO
+#    Finished left right double arrows.
+# TODO#1   Grepped for all up down arrows (single to quadruple and irregulars) and grouped them in mathematics-categorised
+# TODO#2   Still need to grep and finish the left right single arrows
+
 #TODO --fractions flag which converts 0.1 to 1/10 fraction
 #TODO how to represent infinite repeating numbers 0.3... 0.{142857}...
 #TODO replace mode which shows original line followed by replaced line double spaced.
@@ -115,6 +120,12 @@ LITERAL REPLACEMENTS
 <= >= <== >== <=/=/ >=/=/ << >> </ >/ </=/ >/=/ <~ >~ </~/ >/~/ <> >< </>/ >/</ <. >. <<< >>> <=> >=< =< =>
 
 ~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
+
+<-  ->  <->  <-/  -/>  ->>  >->  |->  <-/>  -o>  ->->->  <-|-  -|->  <-|->  <-||-  -||->  <-||->  <|-  -|>  <|-|>
+
+<==  ==>  <==>  <=/=  =/=>  <=/=>  <=|=  =|=>  <=|=>  <==|  |==>  ==)  <===  ===>  <===>  <===|  |===>
+
+^^  vv  v^ ^|- |-v -^| |v- ^^^ vvv ^^^^ vvvv
 
 Symbols are typed from left to right and represent the line strokes going from top to bottom.
 
@@ -422,7 +433,6 @@ my %GreekNormal = qw(
 	rho         3C1
 	sigma       3C3
 	sigmafn     3C2
-	finalsigma  3C2
 	tau         3C4
 	upsilon     3C5
 	phi         3C6
@@ -479,7 +489,6 @@ my %GreekItal = qw(
 	rho         1D70C
 	sigma       1D70E
 	sigmafn     1D70D
-	finalsigma  1D70D
 	tau         1D70F
 	upsilon     1D710
 	phi         1D711
@@ -534,7 +543,6 @@ my %GreekBold = qw(
 	rho         1D780
 	sigma       1D782
 	sigmafn     1D781
-	finalsigma  1D781
 	tau         1D783
 	upsilon     1D784
 	phi         1D785
@@ -589,7 +597,6 @@ my %GreekBoldItal = qw(
 	rho         1D7BA
 	sigma       1D7BC
 	sigmafn     1D7BB
-	finalsigma  1D7BB
 	tau         1D7BD
 	upsilon     1D7BE
 	phi         1D7BF
@@ -1056,6 +1063,61 @@ sub makeParser
 	replacer('sys', '~~~', '224B', $LITERAL);
 	replacer('sys', '~===', '224C', $LITERAL);
 
+	# TODO#2 HEREIAM complete the left/right single arrows fro grep utf8
+	# Arrows, left and right using < > with surrounding spaces:
+	replacer('sys', '<-', '2190', $LITERAL);
+	replacer('sys', '->', '2192', $LITERAL);
+	replacer('sys', '<->', '2194', $LITERAL);
+	replacer('sys', '<-/', '219A', $LITERAL);
+	replacer('sys', '-/>', '219B', $LITERAL);
+	replacer('sys', '->>', '21A0', $LITERAL);
+	replacer('sys', '>->', '21A3', $LITERAL);
+	replacer('sys', '|->', '21A6', $LITERAL);
+	replacer('sys', '<-/>', '21AE', $LITERAL);
+	replacer('sys', '-o>', '21F4', $LITERAL);
+	replacer('sys', '->->->', '21F6', $LITERAL);
+	replacer('sys', '<-|-', '21F7', $LITERAL);
+	replacer('sys', '-|->', '21F8', $LITERAL);
+	replacer('sys', '<-|->', '21F9', $LITERAL);
+	replacer('sys', '<-||-', '21FA', $LITERAL);
+	replacer('sys', '-||->', '21FB', $LITERAL);
+	replacer('sys', '<-||->', '21FC', $LITERAL);
+	replacer('sys', '<|-', '21FD', $LITERAL);
+	replacer('sys', '-|>', '21FE', $LITERAL);
+	replacer('sys', '<|-|>', '21FF', $LITERAL);
+
+	replacer('sys', '<===', '21D0', $LITERAL);
+	replacer('sys', '===>', '21D2', $LITERAL);
+	replacer('sys', '<==>', '21D4', $LITERAL);
+	replacer('sys', '<=/=', '21CD', $LITERAL);
+	replacer('sys', '=/=>', '21CF', $LITERAL);
+	replacer('sys', '<=/=>', '21CE', $LITERAL);
+	replacer('sys', '<=|=', '2902', $LITERAL);
+	replacer('sys', '=|=>', '2903', $LITERAL);
+	replacer('sys', '<=|=>', '2904', $LITERAL);
+	replacer('sys', '<==|', '2906', $LITERAL);
+	replacer('sys', '|==>', '2907', $LITERAL);
+	replacer('sys', '==)', '2970', $LITERAL);
+	replacer('sys', '<====', '27F8', $LITERAL);
+	replacer('sys', '====>', '27F9', $LITERAL);
+	replacer('sys', '<===>', '27FA', $LITERAL);
+	replacer('sys', '<===|', '27FD', $LITERAL);
+	replacer('sys', '|===>', '27FE', $LITERAL);
+
+   # TODO#1 HEREIAM configuring all the up/downs from a grep
+	# Arrows, up and down using ^ v with surrounding spaces:
+	replacer('sys', '^^', '2191', $LITERAL);
+	replacer('sys', 'vv', '2193', $LITERAL);
+	replacer('sys', 'v^', '21F5', $LITERAL);
+	replacer('sys', '^|-', '2909', $LITERAL);
+	replacer('sys', '|-v', '2908', $LITERAL);
+	replacer('sys', '-^|', '2912', $LITERAL);
+	replacer('sys', '|v-', '2913', $LITERAL);
+	replacer('sys', '^^^', '290A', $LITERAL);
+	replacer('sys', 'vvv', '290B', $LITERAL);
+	replacer('sys', '^^^^', '27F0', $LITERAL);
+	replacer('sys', 'vvvv', '27F1', $LITERAL);
+
 	# Subscript:
 	replacer('sy', '_.', '2024', $MARKUP); # looks like subscript decimal point but not official
 	replacer('sy', '_*', '2E31', $MARKUP); # looks like subscript multiplication but not official
@@ -1235,7 +1297,6 @@ sub makeParser
 	replacer('ww', '@RHO', $Greek{RHO}, $MARKUP);
 	replacer('ww', '@sigma', $Greek{sigma}, $MARKUP);
 	replacer('ww', '@SIGMA', $Greek{SIGMA}, $MARKUP);
-	replacer('ww', '@sigmafn', $Greek{finalsigma}, $MARKUP);#DEPRECATED
 	replacer('ww', '@sigmafn', $Greek{sigmafn}, $MARKUP);
 	replacer('ww', '@tau', $Greek{tau}, $MARKUP);
 	replacer('ww', '@TAU', $Greek{TAU}, $MARKUP);
@@ -1287,7 +1348,7 @@ sub makeParser
 	replacer('ww', '@*RHO', $GreekBold{RHO}, $MARKUP);
 	replacer('ww', '@*sigma', $GreekBold{sigma}, $MARKUP);
 	replacer('ww', '@*SIGMA', $GreekBold{SIGMA}, $MARKUP);
-	replacer('ww', '@*sigmafn', $GreekBold{finalsigma}, $MARKUP);
+	replacer('ww', '@*sigmafn', $GreekBold{sigmafn}, $MARKUP);
 	replacer('ww', '@*tau', $GreekBold{tau}, $MARKUP);
 	replacer('ww', '@*TAU', $GreekBold{TAU}, $MARKUP);
 	replacer('ww', '@*upsilon', $GreekBold{upsilon}, $MARKUP);
@@ -1338,7 +1399,7 @@ sub makeParser
 	replacer('ww', '@/RHO', $GreekItal{RHO}, $MARKUP);
 	replacer('ww', '@/sigma', $GreekItal{sigma}, $MARKUP);
 	replacer('ww', '@/SIGMA', $GreekItal{SIGMA}, $MARKUP);
-	replacer('ww', '@/sigmafn', $GreekItal{finalsigma}, $MARKUP);
+	replacer('ww', '@/sigmafn', $GreekItal{sigmafn}, $MARKUP);
 	replacer('ww', '@/tau', $GreekItal{tau}, $MARKUP);
 	replacer('ww', '@/TAU', $GreekItal{TAU}, $MARKUP);
 	replacer('ww', '@/upsilon', $GreekItal{upsilon}, $MARKUP);
@@ -1389,7 +1450,7 @@ sub makeParser
 	replacer('ww', '@*/RHO', $GreekBoldItal{RHO}, $MARKUP);
 	replacer('ww', '@*/sigma', $GreekBoldItal{sigma}, $MARKUP);
 	replacer('ww', '@*/SIGMA', $GreekBoldItal{SIGMA}, $MARKUP);
-	replacer('ww', '@*/sigmafn', $GreekBoldItal{finalsigma}, $MARKUP);
+	replacer('ww', '@*/sigmafn', $GreekBoldItal{sigmafn}, $MARKUP);
 	replacer('ww', '@*/tau', $GreekBoldItal{tau}, $MARKUP);
 	replacer('ww', '@*/TAU', $GreekBoldItal{TAU}, $MARKUP);
 	replacer('ww', '@*/upsilon', $GreekBoldItal{upsilon}, $MARKUP);

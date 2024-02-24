@@ -40,6 +40,12 @@ LITERAL REPLACEMENTS
 
 ~/ -~ ~= ~/=/ ~== ~=/ ~/=/=/ ~~ ~/~/ ~~= ~~~ ~===
 
+<-  ->  <->  <-/  -/>  ->>  >->  |->  <-/>  -o>  ->->->  <-|-  -|->  <-|->  <-||-  -||->  <-||->  <|-  -|>  <|-|>
+
+<==  ==>  <==>  <=/=  =/=>  <=/=>  <=|=  =|=>  <=|=>  <==|  |==>  ==)  <===  ===>  <===>  <===|  |===>
+
+^^  vv  v^ ^|- |-v -^| |v- ^^^ vvv ^^^^ vvvv
+
 Symbols are typed from left to right and represent the line strokes going from top to bottom.
 
 i.e. ' <= ' is less than sign with equal sign below.

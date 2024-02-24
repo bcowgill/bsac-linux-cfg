@@ -1,0 +1,61 @@
+Multi-characters math values with markup to convert:
+
+X_0 X_1 X_2 X_3 X_4 X_5 X_6 X_7 X_8 X_9
+X_a X_e X_h X_i X_j X_k X_l X_m X_n X_o X_p X_r X_s X_t X_u X_v X_x
+X_beta X_gamma X_rho X_phi X_chi X_schwa
+X_+ X_- X_= X_( X_) X_< X_> X_... X_<-
+X_. X_*
+
+X_2_3_._1_4
+X_(_2_*_5_)
+X_n_=_1_..._1_0
+X_i_<_j
+X_i_>_2
+X_n_<-_m
+
+Exceptions:
+
+X_b
+X_c
+X_d
+X_f
+X_g
+X_q
+X_w
+X_y
+X_z
+X_/
+X_[
+X_]
+X_->
+X_A and all other capital letters
+X_alpha and many other greek letters
+
+X^0 X^1 X^2 X^3 X^4 X^5 X^6 X^7 X^8 X^9
+X^G X^I X^N X^U
+X^G X^g
+X^a X^b X^c X^d X^e X^f X^g X^h X^i X^j X^k X^l X^m X^n X^o X^p X^r X^s X^t X^u X^v X^w X^x X^y X^z
+X^GAMMA X^PHI
+X^alpha X^beta X^gamma X^delta X^theta X^iota X^upsilon X^phi X^chi X^schwa
+X^+ X^- X^= X^( X^) X^< X^>
+X^. X^*
+
+Exceptions:
+
+X^q
+X^A and many other capital letters
+X^ALPHA and many other greek capital letters
+X^rho
+X^... X^<-
+
+Escaped square brackets for sub and super script expresssions:
+
+X_[(0.123456789*a   e h i j k l m n o p r s t u v x schwa beta gamma rho phi chi + - = ← < > ...)]
+
+Y^[(012345.6789*a b c d e f g G h i I j k l m n N o p r s t u U v w x y z schwa alpha beta gamma GAMMA delta theta iota upsilon phi PHI chi + - = ← < > ...)]
+
+Exceptions:
+
+X_[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]
+
+Y^[abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]

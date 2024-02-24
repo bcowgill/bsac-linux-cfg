@@ -18,55 +18,106 @@ Exceptions:
 
 Multi-character symbols with surrounding whitespace:
 
-a <= b
-a >= b
+a <=  b
+a >=  b
 
-a =/= b
-a == b
-a =/=/ b
-a === b
+a =/=  b
+a ==  b
+a =/=/  b
+a ===  b
 
-a <= b
-a >= b
-a <== b
-a >== b
-a <=/=/ b
-a >=/=/ b
-a << b
-a >> b
-a </ b
-a >/ b
-a </=/ b
-a >/=/ b
-a <~ b
-a >~ b
-a </~/ b
-a >/~/ b
-a <> b
-a >< b
-a </>/ b
-a >/</ b
-a <. b
-a >. b
-a <<< b
-a >>> b
-a <=> b
-a >=< b
-a =< b
-a => b
+a <=  b
+a >=  b
+a <==  b
+a >==  b
+a <=/=/  b
+a >=/=/  b
+a <<  b
+a >>  b
+a </  b
+a >/  b
+a </=/  b
+a >/=/  b
+a <~  b
+a >~  b
+a </~/  b
+a >/~/  b
+a <>  b
+a ><  b
+a </>/  b
+a >/</  b
+a <.  b
+a >.  b
+a <<<   b
+a >>>   b
+a <=>  b
+a >=<  b
+a =<  b
+a =>  b
 
-a ~/ b
-a -~ b
-a ~= b
-a ~/=/ b
-a ~== b
-a ~=/ b
-a ~/=/=/ b
-a ~~ b
-a ~/~/ b
-a ~~= b
-a ~~~ b
-a ~=== b
+a ~/  b
+a -~  b
+a ~=  b
+a ~/=/  b
+a ~==  b
+a ~=/  b
+a ~/=/=/  b
+a ~~  b
+a ~/~/  b
+a ~~=  b
+a ~~~  b
+a ~===  b
+
+a <-  b
+a ->  b
+a <->  b
+a <-/  b
+a -/>  b
+a ->>  b
+a >->  b
+a |->  b
+a <-/>  b
+a -o>  b
+a ->->->  b
+a <-|-  b
+a -|->  b
+a <-|->  b
+a <-||-  b
+a -||->  b
+a <-||->  b
+a <|-  b
+a -|>  b
+a <|-|>  b
+
+a <===  b
+a ===>  b
+a <==>  b
+a <=/=  b
+a =/=>  b
+a <=/=>  b
+a <=|=  b
+a =|=>  b
+a <=|=>  b
+a <==|  b
+a |==>  b
+a ==)  b
+a <====   b
+a ====>   b
+a <===>   b
+a <===|   b
+a |===>   b
+
+a ^^  b
+a vv  b
+a v^  b
+a ^|-  b
+a |-v  b
+a -^|  b
+a |v-  b
+a ^^^  b
+a vvv  b
+a ^^^^  b
+a vvvv  b
 
 Exceptions:
 
@@ -77,6 +128,16 @@ a<=b
 a>=b
 
 <============>
+
+<=== ==)
+<=/= ==)
+<=|= ==)
+<====  ==)
+
+<=====)
+<=/===)
+<=|===)
+<======)
 
 Multi-character symbols:
 
