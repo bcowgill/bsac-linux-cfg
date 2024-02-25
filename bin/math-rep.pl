@@ -1106,7 +1106,6 @@ sub makeParser
 	replacer('sys', '<===|', '27FD', $LITERAL);
 	replacer('sys', '|===>', '27FE', $LITERAL);
 
-   # TODO#1 HEREIAM configuring all the up/downs from a grep
 	# Arrows, up and down using ^ v with surrounding spaces:
 	replacer('sys', '^^', '2191', $LITERAL);
 	replacer('sys', 'vv', '2193', $LITERAL);
