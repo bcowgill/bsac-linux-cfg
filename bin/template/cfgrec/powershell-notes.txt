@@ -1,5 +1,29 @@
 Windows Powershell Notes
 
+Learning Powershell
+https://learn.microsoft.com/en-us/powershell/scripting/learn/ps101/00-introduction?view=powershell-7.4
+
+Powershell Approved Verbs
+https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands?view=powershell-7.4
+
+Windows Subsystem for Linux
+https://learn.microsoft.com/en-gb/training/modules/wsl-introduction/?wt.mc_id=1reg_18180_webpage_reactor
+https://canonical-ubuntu-wsl.readthedocs-hosted.com/en/latest/#1-overview
+
+Nerd Fonts
+https://www.nerdfonts.com/font-downloads
+https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip
+
+Oh My Posh
+https://ohmyposh.dev
+
+Oh My Zsh
+https://ohmyz.sh
+
+Oh My Bash
+https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwia7ISTo9OEAxX5gf0HHThjDW8QFnoECAYQAQ&url=https%3A%2F%2Fgithub.com%2Fohmybash%2Foh-my-bash&usg=AOvVaw0YyoYKxicinvD6zFbcqbPR&opi=89978449
+
+
 Functions/Vars/Cmdlets Reference
 $PSVersionTable.PSVersion   shows version number
 $PSVersionTable.keys
