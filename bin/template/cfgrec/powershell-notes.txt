@@ -1,0 +1,24 @@
+Windows Powershell Notes
+
+Functions/Vars/Cmdlets Reference
+$PSVersionTable.PSVersion   shows version number
+$PSVersionTable.keys
+help
+get-help   [command-name]
+get-help command-name -online
+get-verb   [verb]
+get-command gcm   [-verb get -noun item -totalcount 4]
+get-member gm     [get-member -inputobj$PSVersionTable]
+get-location gl pwd
+get-childitem gci ls dir
+set-location sl cd chdir
+new-item ni
+rename-item rni ren
+move-item mi mv move 
+copy-item cpi cp copy 
+remove-item ri rm rmdir del erase rd 
+write-host
+get-random -minimum 1 -maximum 6 -setseed 42 
+
+in powershell to get windows subsystem for linux:
+wsl --install

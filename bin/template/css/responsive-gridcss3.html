@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>CSS3 Grid Responsive Web Design</title>
+        <style>
+            body {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                font-size: 24pt;
+            }
+            .wrapper {
+                width: 75%;
+                margin: 0 auto; /* horizontally centered*/
+
+                border: 4px dashed gray;
+            }
+            .container {
+                display: flex;
+                display: -webkit-flex;
+
+                border: 2px solid blue;       
+            }
+            .column1-2 {
+                width: 50%;
+                text-align: center;
+                vertical-align: middle;
+
+                line-height: 150px;
+                border: 3px solid orange;
+            }
+            .column1-3 {
+                width: 33.33333333%;
+                text-align: center;
+                vertical-align: middle;
+                
+                line-height: 150px;
+                border: 3px solid orange;
+            }
+            .column1-4 {
+                width: 25%;
+                text-align: center;
+                vertical-align: middle;
+                
+                line-height: 150px;
+                border: 3px solid orange;
+            }
+            .column1-5 {
+                width: 20%;
+                text-align: center;
+                vertical-align: middle;
+                
+                line-height: 150px;
+                border: 3px solid orange;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>CSS3 Grid Responsive Web Design</h1>
+        <main class="wrapper">
+            <!-- 2 columns -->
+            <article class="container">
+                <div class="column1-2">1</div>
+                <div class="column1-2">2</div>
+            </article>
+
+            <!-- 3 columns -->
+            <article class="container">
+                <div class="column1-3">A</div>
+                <div class="column1-3">B</div>
+                <div class="column1-3">C</div>
+            </article>
+
+            <!-- 4 columns -->
+            <article class="container">
+                <div class="column1-4">i</div>
+                <div class="column1-4">ii</div>
+                <div class="column1-4">iii</div>
+                <div class="column1-4">iv</div>
+            </article>
+
+            <!-- 5 columns -->
+            <article class="container">
+                <div class="column1-5">a</div>
+                <div class="column1-5">b</div>
+                <div class="column1-5">c</div>
+                <div class="column1-5">d</div>
+                <div class="column1-5">e</div>
+            </article>
+        </main>
+    </body>
+</html>

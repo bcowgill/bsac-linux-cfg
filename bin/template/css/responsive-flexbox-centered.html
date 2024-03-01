@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>Flexbox Centering</title>
+        <style>
+            .container {
+                display: flex;
+                display: -webkit-flex;
+
+                height: 300px;
+                border: 2px solid blue;
+            }
+            .centered {
+                width: 50%;
+                height: 50%;
+                margin: auto;
+                text-align: center;
+                vertical-align: middle;
+
+                line-height: 150px;
+                border: 2px solid orange;       
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Flexbox Centering</h1>
+        <main class="container">
+            <article class="centered">Centered Div V/H with Flexbox</article>
+        </main>
+    </body>
+</html>
