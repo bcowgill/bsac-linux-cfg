@@ -1,5 +1,5 @@
 #!/bin/bash
-# see also updatedb-backup.sh updatedb.sh locate lokate.sh updatedb
+# see also locatebkall.sh updatedb-backup.sh updatedb.sh locate lokate.sh updatedb
 #
 #  Find a specific Billy Idol song from a local backup database
 #

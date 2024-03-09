@@ -58,7 +58,7 @@ function usage {
 	echo i.e. $CMD restore home/user/path/to/restore if SOURCE=/home/user
 	echo " "
 	echo "If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present."
-	echo "If full backukp device (BK_DEV) setting is provided, after a full backup the updatedb command will run to create an mlocate.db database for finding files on the backup disk when it has been unmounted.  Use the locatebk.sh command to find files on the backup disk."
+	echo "If full backukp device (BK_DEV) setting is provided, after a full backup the updatedb command will run to create an mlocate.db database for finding files on the backup disk when it has been unmounted.  Use the locatebk.sh or locatebkall.sh command to find files on the backup disk."
 	echo " "
 	echo For partial backups to work you must specify an absolute or relative path for BK_DIR i.e. /path/to or ./path/to specifying using path/to will not work.
 	echo " "
@@ -69,7 +69,7 @@ function usage {
 	echo "  in another shell:"
 	echo "  alarm-if.sh check-ezbackup-finished.sh ~/bin/sounds/that_was_easy.wav"
 	echo " "
-	echo "See also check-ezbackup-finished.sh watcher.sh updatedb-backup.sh locatebk.sh alarm.sh alarm_if.sh"
+	echo "See also check-ezbackup-finished.sh watcher.sh updatedb-backup.sh locatebk.sh locatebkall.sh alarm.sh alarm_if.sh"
 	exit $code
 }
 
