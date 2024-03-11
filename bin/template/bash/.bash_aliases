@@ -23,7 +23,8 @@ alias gra='git rebase --abort'
 alias grc='git rebase --continue'
 alias grs='git rebase --skip'
 alias glog='git log --oneline --graph --decorate --all'
-alias ggraph='git graph --simplify-by-decoration'
+alias ggraph='glog --simplify-by-decoration'
+#alias ggraph='git graph --simplify-by-decoration'
 
 ############################################################################
 # Some example alias instructions (from cygwin default .bashrc)

@@ -92,7 +92,8 @@ alias gr='g remote'
 
 alias glog='g log --oneline --graph --decorate --all' # BSAC
 
-alias ggraph='g graph --simplify-by-decoration' # BSAC
+alias ggraph='glog --simplify-by-decoration' # BSAC
+#alias ggraph='g graph --simplify-by-decoration' # BSAC
 
 # https://github.com/robbyrussell/oh-my-zsh
 function current_branch() {

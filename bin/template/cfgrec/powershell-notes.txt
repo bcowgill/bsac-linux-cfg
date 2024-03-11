@@ -27,12 +27,16 @@ https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ve
 Functions/Vars/Cmdlets Reference
 $PSVersionTable.PSVersion   shows version number
 $PSVersionTable.keys
-help
+help  [same as get-help but with more... pager]
 get-help   [command-name]
-get-help command-name -online
+get-help command-name -online [-full -parameter * -examples]
 get-verb   [verb]
 get-command gcm   [-verb get -noun item -totalcount 4]
+   get-member gives TypeName System.Diagnostics.Process so find cmdlets working with similar objects:
+   get-command -parametertype process
 get-member gm     [get-member -inputobj$PSVersionTable]
+   get-process vmms | get-member
+   get-process vmms | get-member | select-object Name, MemberType -First 5
 get-location gl pwd
 get-childitem gci ls dir
 set-location sl cd chdir
@@ -43,6 +47,12 @@ copy-item cpi cp copy
 remove-item ri rm rmdir del erase rd 
 write-host
 get-random -minimum 1 -maximum 6 -setseed 42 
+get-process
+select-object   [-First N -Last N -skip n -unique]
+format-table
+format-list
+   get-process explorer | format-list -property *
+   get-process explorer | get-member -name C*
 
 in powershell to get windows subsystem for linux:
 wsl --install

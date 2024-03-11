@@ -155,7 +155,8 @@ alias gcl='g clone'
 alias gr='g remote'
 
 alias glog='g log --oneline --graph --decorate --all'
-alias ggraph='g graph --simplify-by-decoration'
+alias ggraph='glog --simplify-by-decoration'
+#alias ggraph='g graph --simplify-by-decoration'
 
 # CUSTOM master/develop may change for you...
 # also, gco -  will checkout the last branch you had
