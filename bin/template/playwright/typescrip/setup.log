@@ -1,0 +1,122 @@
+Installing playwright for typescript
+
+Script started on Sat Mar 16 18:45:03 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+https://playwright.dev/docs/intro[?1034h]0;br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/playwright/typescrip[00m (master $%|u=)$ https://playwright.d ev/docs/intro
+bash: https://playwright.dev/docs/intro: No such file or directory
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/playwright/typescrip[00m (master $%|u=)$ ls
+setup.log
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/playwright/typescrip[00m (master $%|u=)$ prompter
+Prompt saved to PS1_SAVED and simplified.
+> prompter[C[Cls[Khttps://playwright.dev/docs/intro[C[C[C[9Pead -20 ../setup.clean [C[C[Cttps://playwright.dev/docs/intro[C[Cls[Kprompter[K[K[K[K[K[K[K[K!head
+head -20 ../setup.clean 
+Setting up playwright for Javascript:
+https://playwright.dev/docs/intro
+
+Script started on Sat Mar 16 18:35:36 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ npm init playwright@latest
+[1G[0JNeed to install the following packages:
+create-playwright@1.17.132
+Ok to proceed? (y) [20Gy
+(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ reify:create-playwright: sill audit bulk request { 'cre
+(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ reify:create-playwright: sill audit bulk request { 'cre
+(##################) ⠹ reify:create-playwright: http fetch GET 200 https://reg
+(##################) ⠹ reify:create-playwright: http fetch GET 200 https://reg
+
+> 
+Display all 3470 possibilities? (y or n)
+> https://playwright.dev/docs/intro
+bash: https://playwright.dev/docs/intro: No such file or directory
+> 
+> npm init playwright@latest
+[33mGetting started with writing [1mend-to-end[22m tests with [1mPlaywright[22m:[39m
+Initializing project in '.'
+[?25l[36m?[39m [1mDo you want to use TypeScript or JavaScript?[22m [2m…[22m 
+[36m❯[39m [36m[4mTypeScript[24m[39m
+  JavaScript[2A[50G[2B[2K[F[2K[F[2K[1G[32m✔[39m [1mDo you want to use TypeScript or JavaScript?[22m [2m·[22m [36mTypeScript[39m[9D
+[?25l[?25l[36m?[39m [1mWhere to put your end-to-end tests?[22m [2m›[22m [46m[30m[30mt[39m[30m[39m[49m[36m[2mests[22m[39m[10D[2K[1G[32m✔[39m [1mWhere to put your end-to-end tests?[22m [2m·[22m [32mtests[39m[10D
+[?25l[36m?[39m [1mAdd a GitHub Actions workflow?[22m [2m(y/N)[22m [2m›[22m [36mfalse[39m[10D[2K[1G[32m✔[39m [1mAdd a GitHub Actions workflow?[22m [2m(y/N)[22m [2m·[22m [32mfalse[39m[10D
+[?25l[36m?[39m [1mInstall Playwright browsers (can be done manually via 'npx playwright install')?[22m [2m(Y/n)[22m [2m›[22m [36mtrue[39m[4D[2K[F[2K[1G[32m✔[39m [1mInstall Playwright browsers (can be done manually via 'npx playwright install')?[22m [2m(Y/n)[22m [2m·[22m [32mfalse[39m[4D
+
+Initializing NPM project (npm init -y)…
+Wrote to /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/playwright/typescrip/package.json:
+
+{
+  "name": "typescrip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+Installing Playwright Test (npm install --save-dev @playwright/test)…
+[?25l([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠴ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠴ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:typescrip: [32;40mtiming[0m [35midealTree:#root[0m Completed i[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree: [32;40mtiming[0m [35midealTree[0m Completed in 1874ms[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠸ reify:@playwright/test: [7msill[0m [35maudit[0m bulk request {[0m[K([107;97m##############[0m[100;90m⠂⠂⠂⠂[0m) ⠴ reify:fsevents: [32;40mtiming[0m [35mreifyNode:node_modules/@playwrig[0m[K([107;97m################[0m[100;90m⠂⠂[0m) ⠦ reify:playwright: [32;40mtiming[0m [35mreifyNode:node_modules/fsevent[0m[K([107;97m################[0m[100;90m⠂⠂[0m) ⠙ reify:playwright: [32;40mtiming[0m [35mreifyNode:node_modules/fsevent[0m[K([107;97m##################[0m) ⠦ reify:playwright-core: [32;40mtiming[0m [35mreify:audit[0m Completed in[0m[K[K[?25h
+added 4 packages, and audited 5 packages in 2s
+
+found [32m[1m0[22m[39m vulnerabilities
+Installing Types (npm install --save-dev @types/node)…
+[?25l([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:typescrip: [7msill[0m [35midealTree[0m buildDeps[0m[K([107;97m#########[0m[100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠴ reify:@types/node: [7msill[0m [35maudit[0m bulk request {[0m[K([107;97m##################[0m) ⠼ reify:@types/node: [32;40mtiming[0m [35mreifyNode:node_modules/undici[0m[K([107;97m##################[0m) ⠴ reify:@types/node: [32;40mtiming[0m [35mreifyNode:node_modules/undici[0m[K([107;97m##################[0m) ⠴ reify:@types/node: [32;40mtiming[0m [35mreifyNode:node_modules/undici[0m[K[K[?25h
+added 2 packages, and audited 7 packages in 1s
+
+found [32m[1m0[22m[39m vulnerabilities
+[90mWriting playwright.config.ts.[39m
+[90mWriting tests/example.spec.ts.[39m
+[90mWriting tests-examples/demo-todo-app.spec.ts.[39m
+[90mWriting package.json.[39m
+[32m✔ Success![39m [1mCreated a Playwright Test project at /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/playwright/typescrip[22m
+
+Inside that directory, you can run several commands:
+
+  [36mnpx playwright test[39m
+    Runs the end-to-end tests.
+
+  [36mnpx playwright test --ui[39m
+    Starts the interactive UI mode.
+
+  [36mnpx playwright test --project=chromium[39m
+    Runs the tests only on Desktop Chrome.
+
+  [36mnpx playwright test example[39m
+    Runs the tests in a specific file.
+
+  [36mnpx playwright test --debug[39m
+    Runs the tests in debug mode.
+
+  [36mnpx playwright codegen[39m
+    Auto generate tests with Codegen.
+
+We suggest that you begin by typing:
+
+  [36m  npx playwright test[39m
+
+And check out the following files:
+  - ./tests/example.spec.ts - Example end-to-end test
+  - ./tests-examples/demo-todo-app.spec.ts - Demo Todo App end-to-end tests
+  - ./playwright.config.ts - Playwright Test configuration
+
+Visit https://playwright.dev/docs/intro for more information. ✨
+
+Happy hacking! 🎭
+[?25h[?25h[?25h[?25h[?25h> exit
+exit
+
+Script done on Sat Mar 16 18:46:52 2024
