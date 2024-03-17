@@ -1,0 +1,195 @@
+Installing
+playwright
+for
+typescript
+
+Script started on Sat Mar 16 18:45:03 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+https://playwright.dev/docs/intro
+br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ https://playwright.d 
+ev/docs/intro
+bash: https://playwright.dev/docs/intro: No such file or directory
+
+br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ ls
+setup.log
+
+br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ prompter
+Prompt saved to PS1_SAVED and simplified.
+> prompter
+lhttps://playwright.dev/docs/intro
+ead -20 ../setup.clean 
+ttps://playwright.dev/docs/intro
+l!head
+head -20 ../setup.clean
+Setting up playwright for Javascript:
+https://playwright.dev/docs/intro
+
+Script started on Sat Mar 16 18:35:36 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ npm init playwright@latest
+
+
+Need to install the following packages:
+create-playwright@1.17.132
+Ok to proceed? (y) 
+y
+(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ reify:create-playwright: sill audit bulk request { 'cre
+(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ reify:create-playwright: sill audit bulk request { 'cre
+(##################) ⠹ reify:create-playwright: http fetch GET 200 https://reg
+(##################) ⠹ reify:create-playwright: http fetch GET 200 https://reg
+
+>
+Display all 3470 possibilities? (y or n)
+> https://playwright.dev/docs/intro
+bash: https://playwright.dev/docs/intro: No such file or directory
+>
+> npm init playwright@latest
+Getting started with writing end-to-end tests with Playwright:
+Initializing project in '.'
+? Do you want to use TypeScript or JavaScript? …
+❯ TypeScript
+  JavaScript
+
+
+
+
+
+
+✔ Do you want to use TypeScript or JavaScript? · TypeScript
+? Where to put your end-to-end tests? › tests
+
+
+✔ Where to put your end-to-end tests? · tests
+? Add a GitHub Actions workflow? (y/N) › false
+
+
+✔ Add a GitHub Actions workflow? (y/N) · false
+? Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) › true
+
+
+
+✔ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · false
+
+Initializing NPM project (npm init -y)…
+Wrote to /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/playwright/typescrip/package.json:
+
+{
+  "name": "typescrip",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+Installing Playwright Test (npm install --save-dev @playwright/test)…
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(##################) ⠦ reify:playwright-core: timing reify:audit Completed in
+added 4 packages, and audited 5 packages in 2s
+
+found
+0
+vulnerabilities
+Installing Types (npm install --save-dev @types/node)…
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
+(##################) ⠼ reify:@types/node: timing reifyNode:node_modules/undici
+(##################) ⠴ reify:@types/node: timing reifyNode:node_modules/undici
+(##################) ⠴ reify:@types/node: timing reifyNode:node_modules/undici
+added 2 packages, and audited 7 packages in 1s
+
+found
+0
+vulnerabilities
+Writing playwright.config.ts.
+Writing tests/example.spec.ts.
+Writing tests-examples/demo-todo-app.spec.ts.
+Writing package.json.
+✔ Success! Created a Playwright Test project at /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/playwright/typescrip
+
+Inside that directory, you can run several commands:
+
+  npx playwright test
+    Runs the end-to-end tests.
+
+  npx playwright test --ui
+    Starts the interactive UI mode.
+
+  npx playwright test --project=chromium
+    Runs the tests only on Desktop Chrome.
+
+  npx playwright test example
+    Runs the tests in a specific file.
+
+  npx playwright test --debug
+    Runs the tests in debug mode.
+
+  npx playwright codegen
+    Auto generate tests with Codegen.
+
+We suggest that you begin by typing:
+
+    npx playwright test
+
+And check out the following files:
+  - ./tests/example.spec.ts - Example end-to-end test
+  - ./tests-examples/demo-todo-app.spec.ts - Demo Todo App end-to-end tests
+  - ./playwright.config.ts - Playwright Test configuration
+
+Visit https://playwright.dev/docs/intro for more information. ✨
+
+Happy hacking! 🎭
+> exit
+exit
+
+Script done on Sat Mar 16 18:46:52 2024

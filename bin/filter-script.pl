@@ -14,41 +14,54 @@ use Unicode::Normalize; # to check normalisation
 use FindBin;
 
 my $DEBUG = 0;
+my $DEC = 1;
+my $SCO = 1;
 
 sub usage
 {
+	my ($code) = @ARG;
 	print <<"USAGE";
-$FindBin::Script [--help|--man|-?]
+$FindBin::Script [--help|--man|-?] [file-name...]
 
-Filter the output of the script command to remove ANSI color control codes etc.
+Filter the output of the script command to remove ANSI color control codes and other terminal controls.
 
---debug shows counts of unicode character classes for each line.
---help  shows help for this program.
---man   shows help for this program.
--?      shows help for this program.
+file-name specifies script log files to filter or standard input if omitted.
+--debug   shows counts of unicode character classes for each line.
+--help    shows help for this program.
+--man     shows help for this program.
+-?        shows help for this program.
 
-Handles ANSI terminal codes, backspaces, terminal alarm bell, some specifics of the elixir iex console.
+Handles ANSI terminal codes, backspaces, terminal alarm bell, some specifics of the elixir iex console, and some common progress bar indicators.
 
 See also script, pee.pl, filter-whitespace.pl, filter-man.pl
 
 See also Everything You Wanted to Know about ANSI Escape Codes: https://notes.burke.libbey.me/ansi-escape-codes/
+or ANSI Escape Sequences https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b
+or XTerm Control Sequences https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
 
 Example:
 
 	script script.log
 	$FindBin::Script < script.log
 USAGE
-	exit 0;
+	exit($code || 0);
 }
 
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
-	usage()
+	usage();
 }
 
 if (scalar(@ARGV) && $ARGV[0] =~ m{--debug}xms)
 {
 	$DEBUG = 1;
+	shift;
+}
+
+if (scalar(@ARGV) && $ARGV[0] =~ m{--}xms)
+{
+	print "Invalid argument '$ARGV[0]'\n\n";
+	usage(1);
 }
 
 # Filter out ANSI color change control sequences
@@ -56,6 +69,12 @@ my $esc = "\N{U+001B}"; # ^[ = escape
 my $ctrlg = "\N{U+0007}" ; # ^G = bell
 my $bs = "\N{U+0008}"; # ^H = backspace
 my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
+# esc[ or \x9B = CSI - Control Sequence Introducer
+# esc] or \x9D = OSC - Operating System Command
+# escP or \x90 = DCS - Device Control String
+my $csi = qr/$esc\[|\N{U+009B}/;
+my $osc = qr/$esc\]|\N{U+009D}/;
+my $dcs = qr/${esc}P|\N{U+0090}/;
 
 while (my $line = <>) {
 	$line = NFD($line);   # decompose + reorder canonically
@@ -63,19 +82,48 @@ while (my $line = <>) {
 
 	debugUTF8($line) if $DEBUG;
 
+	# bs ESC[K = bs
+	$line =~ s{$bs$esc\[K}{$bs}xmsge;
+
 	# cursor jumping on the prompt
-	$line =~ s{$esc\]0; (.+) $ctrlg .+ $esc\[00m}{$1}xmsg;
-	# ANSI control sequences for color
-	$line =~ s{$esc\[\d+m}{}xmsg;
-	$line =~ s{$esc\[\d+;\d+m}{}xmsg;
-	$line =~ s{$esc\[C}{}xmsg;
+	$line =~ s{$esc\]0; (.+) $ctrlg .+ $esc\[00m}{\n$1}xmsg;
 	$line =~ s{$esc\]0;}{\n}xmsg;
-	$line =~ s{$esc\[\d*K}{}xmsg;
-	$line =~ s{$esc\[\d+A}{}xmsg;
-	$line =~ s{$ctrlg+}{}xmsg;
+
+	$line =~ s{$esc\[=\d+[hl]}{}xmsg; # set/reset screen width/type
+	$line =~ s{$esc\[\?\d+[hl]}{}xmsg; # private modes invisible etc
+
+	$line =~ s{$esc\[\d+[;\d]+m}{}xmsg; # set graphics modes
+	$line =~ s{$esc\[\d+m}{}xmsg; # set bold/dim/italic, etc
+
+	$line =~ s{$esc\[6n}{}xmsg; # ask cursor position
+	$line =~ s{$esc\[\d+;\d+[Hr]}{\n}xmsg; # cursor to line/col
+	$line =~ s{$esc\[[CF]}{}xmsg; # TODO what is it???
+	$line =~ s{$esc\[\d+P}{}xmsg; # TODO what is it???
+	$line =~ s{$esc\[H}{\n}xmsg; # cursor to home pos
+	$line =~ s{$esc\[\d*[JK]\r?}{\n}xmsg; # erase screen, line, etc
+	$line =~ s{$esc\[\d+[ABCDEFG]}{\n}xmsg; # cursor move up/down etc
+	$line =~ s{$ctrlg+}{}xmsg; # alarm bell
 	$line =~ s{$esc\[\?\d+[hl]}{}xmsg; # Set controlling flags high/low
+	$line =~ s{${esc}M}{\n}xmsg; # move cursor up one line/scroll
+	if ($DEC)
+	{
+		$line =~ s{${esc}7}{}xmsg; # save cursor position
+		$line =~ s{${esc}8}{\n}xmsg; # restore saved cursor position
+	}
+	if ($SCO)
+	{
+		$line =~ s{$esc\[s}{}xmsg; # save cursor position
+		$line =~ s{$esc\[u}{\n}xmsg; # restore saved cursor position
+	}
 	# handle backspacing by deleting character
 	while ($line =~ s{[^$bs] $bs}{}xmsg) {}
+
+	# in-place progress bars, omit intermediate states
+	# 141.4 MiB [=================== ] 92% 1.0s
+	$line =~ s{([\d.]+\s+MiB\s+\[[\s=]+\]\s+(\d+)\%\s+[\d.]+s)(\s+)}{($2 eq '0' || $2 eq '100') ? "$1$3": "" }xmsge;
+
+	# (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:playwright: sill idealTree buildDeps
+	$line =~ s{(\(([⠂\#]+)\)\s+[^\n]+)\n}{($2 eq ('⠂' x 18) || $2 eq ('#' x 18)) ? "$1\n": ""}xmsge;
 
 	# iex prompt remove numbers
 	$line =~ s{\A iex \(\d+\)>}{\niex(n)>}xmsg;

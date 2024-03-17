@@ -1,0 +1,24 @@
+Invalid argument '--invalid'
+
+filter-script.pl [--help|--man|-?] [file-name...]
+
+Filter the output of the script command to remove ANSI color control codes and other terminal controls.
+
+file-name specifies script log files to filter or standard input if omitted.
+--debug   shows counts of unicode character classes for each line.
+--help    shows help for this program.
+--man     shows help for this program.
+-?        shows help for this program.
+
+Handles ANSI terminal codes, backspaces, terminal alarm bell, some specifics of the elixir iex console, and some common progress bar indicators.
+
+See also script, pee.pl, filter-whitespace.pl, filter-man.pl
+
+See also Everything You Wanted to Know about ANSI Escape Codes: https://notes.burke.libbey.me/ansi-escape-codes/
+or ANSI Escape Sequences https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b
+or XTerm Control Sequences https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+
+Example:
+
+	script script.log
+	filter-script.pl < script.log

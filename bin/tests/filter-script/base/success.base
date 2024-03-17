@@ -9,6 +9,7 @@ Please visit http://www.java.com for information on installing Java.
 The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
 For more details, please visit https://support.apple.com/kb/HT208050.
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ npm init playwright@latest
 
 
@@ -237,10 +238,12 @@ npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.5.0
 npm notice Run npm install -g npm@10.5.0 to update!
 npm
 notice
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ ls
 node_modules		playwright.config.js	tests-examples
 package-lock.json	setup.log
 package.json		tests
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ cat package.json
 {
   "name": "playwright",
@@ -256,6 +259,7 @@ br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ cat package.js
     "@types/node": "^20.11.28"
   }
 }
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ npm install --save-dev eslint  
 prettier cross-env
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:playwright: sill idealTree buildDeps
@@ -345,6 +349,7 @@ added 101 packages, and audited 108 packages in 7s
 found
 0
 vulnerabilities
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ exit
 exit
 

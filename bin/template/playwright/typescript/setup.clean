@@ -11,18 +11,21 @@ Please visit http://www.java.com for information on installing Java.
 The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
 For more details, please visit https://support.apple.com/kb/HT208050.
-https://playwright.dev/docs/introbr388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ https://playwright.d 
+https://playwright.dev/docs/intro
+br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ https://playwright.d 
 ev/docs/intro
 bash: https://playwright.dev/docs/intro: No such file or directory
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ ls
 setup.log
+
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ prompter
 Prompt saved to PS1_SAVED and simplified.
 > prompter
-https://playwright.dev/docs/intro
-[9Pead -20 ../setup.clean 
+lhttps://playwright.dev/docs/intro
+ead -20 ../setup.clean 
 ttps://playwright.dev/docs/intro
-!head
+l!head
 head -20 ../setup.clean
 Setting up playwright for Javascript:
 https://playwright.dev/docs/intro
@@ -36,9 +39,12 @@ The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
 For more details, please visit https://support.apple.com/kb/HT208050.
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ npm init playwright@latest
-[1G[0JNeed to install the following packages:
+
+
+Need to install the following packages:
 create-playwright@1.17.132
-Ok to proceed? (y) [20Gy
+Ok to proceed? (y) 
+y
 (#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ reify:create-playwright: sill audit bulk request { 'cre
 (#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ reify:create-playwright: sill audit bulk request { 'cre
 (##################) ⠹ reify:create-playwright: http fetch GET 200 https://reg
@@ -54,10 +60,27 @@ Getting started with writing end-to-end tests with Playwright:
 Initializing project in '.'
 ? Do you want to use TypeScript or JavaScript? …
 ❯ TypeScript
-  JavaScript[50G[2B[F[F[1G✔ Do you want to use TypeScript or JavaScript? · TypeScript[9D
-? Where to put your end-to-end tests? › tests[10D[1G✔ Where to put your end-to-end tests? · tests[10D
-? Add a GitHub Actions workflow? (y/N) › false[10D[1G✔ Add a GitHub Actions workflow? (y/N) · false[10D
-? Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) › true[4D[F[1G✔ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · false[4D
+  JavaScript
+
+
+
+
+
+
+✔ Do you want to use TypeScript or JavaScript? · TypeScript
+? Where to put your end-to-end tests? › tests
+
+
+✔ Where to put your end-to-end tests? · tests
+? Add a GitHub Actions workflow? (y/N) › false
+
+
+✔ Add a GitHub Actions workflow? (y/N) · false
+? Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) › true
+
+
+
+✔ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · false
 
 Initializing NPM project (npm init -y)…
 Wrote to /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/playwright/typescrip/package.json:
@@ -96,27 +119,6 @@ Installing Playwright Test (npm install --save-dev @playwright/test)…
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠴ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠴ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:typescrip: timing idealTree:#root Completed i
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree: timing idealTree Completed in 1874ms
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠸ reify:@playwright/test: sill audit bulk request {
-(##############⠂⠂⠂⠂) ⠴ reify:fsevents: timing reifyNode:node_modules/@playwrig
-(################⠂⠂) ⠦ reify:playwright: timing reifyNode:node_modules/fsevent
-(################⠂⠂) ⠙ reify:playwright: timing reifyNode:node_modules/fsevent
 (##################) ⠦ reify:playwright-core: timing reify:audit Completed in
 added 4 packages, and audited 5 packages in 2s
 
@@ -141,7 +143,6 @@ Installing Types (npm install --save-dev @types/node)…
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:typescrip: sill idealTree buildDeps
-(#########⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠴ reify:@types/node: sill audit bulk request {
 (##################) ⠼ reify:@types/node: timing reifyNode:node_modules/undici
 (##################) ⠴ reify:@types/node: timing reifyNode:node_modules/undici
 (##################) ⠴ reify:@types/node: timing reifyNode:node_modules/undici

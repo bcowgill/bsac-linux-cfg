@@ -1,0 +1,3 @@
+Invalid argument '--inplace'
+
+filter-script.pl [--help|--man|-?] [file-name...]

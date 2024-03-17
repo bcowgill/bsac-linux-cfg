@@ -312,6 +312,7 @@ function define_logs {
 	FILENAMELOG="$BK_DIR/filenames$num.log"
 	IGNORELOG="$BK_DIR/ignored-errors$num.log"
 	ERRORSLOG="$BK_DIR/errors$num.log"
+	ELAPSEDLOG="$BK_DIR/last-time-elapsed.log"
 	touch $ERRORSLOG
 
 	if [ $DEBUG == 1 ]; then
@@ -330,7 +331,8 @@ function define_logs {
 }
 
 function show_times {
-	time_diff "$TIMESTAMP" "$FULL" "elapsed for the last full backup"
+	time_diff "$TIMESTAMP" "$FULL" "elapsed for the last full backup" \
+		| tee $ELAPSEDLOG
 }
 
 function time_diff {
