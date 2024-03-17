@@ -1,9 +1,10 @@
-filter-script.pl [--help|--man|-?] [file-name...]
+filter-script.pl [--help|--man|-?] [--debug] [--codes] [file-name...]
 
 Filter the output of the script command to remove ANSI color control codes and other terminal controls.
 
 file-name specifies script log files to filter or standard input if omitted.
 --debug   shows counts of unicode character classes for each line.
+--codes   shows any remaining control codes left in the line as a '>>>' line on standard error.
 --help    shows help for this program.
 --man     shows help for this program.
 -?        shows help for this program.

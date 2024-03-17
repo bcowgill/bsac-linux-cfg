@@ -13,6 +13,7 @@ use charnames qw(:full :short);  # unneeded in v5.16
 use Unicode::Normalize; # to check normalisation
 use FindBin;
 
+my $SHOW_CODES = 0;
 my $DEBUG = 0;
 my $DEC = 1;
 my $SCO = 1;
@@ -21,12 +22,13 @@ sub usage
 {
 	my ($code) = @ARG;
 	print <<"USAGE";
-$FindBin::Script [--help|--man|-?] [file-name...]
+$FindBin::Script [--help|--man|-?] [--debug] [--codes] [file-name...]
 
 Filter the output of the script command to remove ANSI color control codes and other terminal controls.
 
 file-name specifies script log files to filter or standard input if omitted.
 --debug   shows counts of unicode character classes for each line.
+--codes   shows any remaining control codes left in the line as a '>>>' line on standard error.
 --help    shows help for this program.
 --man     shows help for this program.
 -?        shows help for this program.
@@ -58,6 +60,12 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--debug}xms)
 	shift;
 }
 
+if (scalar(@ARGV) && $ARGV[0] =~ m{--codes}xms)
+{
+	$SHOW_CODES = 1;
+	shift;
+}
+
 if (scalar(@ARGV) && $ARGV[0] =~ m{--}xms)
 {
 	print "Invalid argument '$ARGV[0]'\n\n";
@@ -75,6 +83,34 @@ my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
 my $csi = qr/$esc\[|\N{U+009B}/;
 my $osc = qr/$esc\]|\N{U+009D}/;
 my $dcs = qr/${esc}P|\N{U+0090}/;
+
+sub show_line
+{
+	my ($line) = @ARG;
+	my $orig = $line;
+	$line =~	s{\N{U+001b}}{ ESC }xmsg;
+	$line =~	s{\N{U+0007}}{ BEL }xmsg;
+   $line =~	s{\N{U+0008}}{ BS }xmsg;
+	$line =~	s{\N{U+009b}}{ CSI }xmsg;
+	$line =~	s{\N{U+009d}}{ OSC }xmsg;
+	$line =~	s{\N{U+0090}}{ DCS }xmsg;
+	if ($orig ne $line)
+	{
+		$line =~ s{\x0d\x0a}{ CRLF}xmsg;
+		$line =~ s{\x0d}{ CR}xmsg;
+		$line =~ s{\x0a}{ LF}xmsg;
+		print STDERR ">>> $line\n" if $SHOW_CODES;
+	}
+}
+
+sub show_codes
+{
+	my ($all) = @ARG;
+	my @Lines = split(/\n/, $all);
+	foreach my $line (@Lines) {
+		show_line($line)
+	}
+}
 
 while (my $line = <>) {
 	$line = NFD($line);   # decompose + reorder canonically
@@ -137,6 +173,7 @@ while (my $line = <>) {
 	$line =~ s{\x0d}{\n}xmsg; # CR by itself convert to newline
 	$line =~ s{\s+\z}{}xms;
 
+	show_codes($line);
 	$line .= "\n";
 } continue {
 	print NFC($line);  # recompose (where possible) + reorder canonically
