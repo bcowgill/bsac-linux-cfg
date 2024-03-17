@@ -129,7 +129,7 @@ while (my $line = <>) {
 	$line =~ s{$esc\[\?\d+[hl]}{}xmsg; # private modes invisible etc
 
 	$line =~ s{$esc\[\d+[;\d]+m}{}xmsg; # set graphics modes
-	$line =~ s{$esc\[\d+m}{}xmsg; # set bold/dim/italic, etc
+	$line =~ s{$esc\[\d*m}{}xmsg; # set bold/dim/italic, etc
 
 	$line =~ s{$esc\[6n}{}xmsg; # ask cursor position
 	$line =~ s{$esc\[\d+;\d+[Hr]}{\n}xmsg; # cursor to line/col
