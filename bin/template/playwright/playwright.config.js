@@ -7,11 +7,17 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 // require('dotenv').config();
 
+const baseURL = process.env.BASE_URL || 'http://localhost:3013';
+const brand = process.env.BRAND || 'brand';
+const timeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 60000;
+
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
 module.exports = defineConfig({
   testDir: './tests',
+  timeout,
+
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -19,29 +25,58 @@ module.exports = defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  workers: (process.env.CI || process.env.SLOMO) ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    // baseURL: 'http://127.0.0.1:3000',
+    baseURL,
+
+    colorScheme: 'light', // dark
+    viewport: { width: 1280, height: 720 },
+    locale: 'en-GB',
+    timezoneId: 'Europe/London',
+    geolocation: { latitude: 51.487395, longitude: 0 },
+    permissions: ['geolocation'],
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: process.env.TRACE ? 'on' : 'on-first-retry',
+    video: process.env.VIDEO ? 'on' : 'on-first-retry',
+    screenshot: process.env.LENSCAP ? 'only-on-failure' : 'on',
+    launchOptions: {
+      slowMo: process.env.SLOMO ? 150 : 0,
+    }
+  },
+
+  expect: {
+    // Maximum time expect() should wait for the condition to be met.
+    timeout,
+
+    // MUSTDO these have been configured, but not tested yet...
+    toHaveScreenshot: {
+      // An acceptable amount of pixels that could be different, unset by default.
+      maxDiffPixels: 10,
+    },
+
+    toMatchScreenshot: {
+      // An acceptable ratio of pixels that are different to the
+      // total amount of pixels, between 0 and 1.
+      maxDiffPixelRatio: 0.1,
+    },
   },
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
+    // {
+    //   name: 'chromium',
+    //   use: { ...devices['Desktop Chrome'] },
+    // },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    // },
 
     {
       name: 'webkit',
@@ -49,24 +84,24 @@ module.exports = defineConfig({
     },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+      name: 'Mobile Chrome',
+      use: { ...devices['Pixel 5'] },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
     // },
 
     /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
+    {
+      name: 'Microsoft Edge',
+      use: { ...devices['Desktop Edge'], channel: 'msedge' },
+    },
+    {
+      name: 'Google Chrome',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+    },
   ],
 
   /* Run your local dev server before starting the tests */
@@ -77,3 +112,8 @@ module.exports = defineConfig({
   // },
 });
 
+console.log(`PLAYWRIGHT TESTS RUNNING as: ${brand} against ${baseURL} timeout=${
+  process.env.TRACE? ' TRACE': ''}${
+  process.env.VIDEO? ' VIDEO': ''}${process.env.HAR_DEBUG? ' HAR_DEBUG': ''} ${
+  process.env.HAR? ' HAR update': ''}${process.env.CI? ' CI': ''}${
+  process.env.SLOMO? ' SLOMO': ''}`)
