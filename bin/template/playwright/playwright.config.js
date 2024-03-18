@@ -7,7 +7,7 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 // require('dotenv').config();
 
-const baseURL = process.env.BASE_URL || 'http://localhost:3013';
+const baseURL = process.env.BASE_URL || 'http://localhost:58008';
 const brand = process.env.BRAND || 'brand';
 const timeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 60000;
 

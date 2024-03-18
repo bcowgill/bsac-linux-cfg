@@ -13,13 +13,13 @@ touch $BASE
 $CMD $OUT >> $LOG
 diff $OUT $BASE || echo NOT OK output differs. vdiff $OUT $BASE
 
-CMD=./fix-urls.sh
+CMD=./fix-har.sh
 echo "# Tests for $CMD" | tee --append $LOG
-IN=fix-urls.test.in.txt
-OUT=fix-urls.test.out1
-OUT2=fix-urls.test.out2
-BASE=fix-urls.test.base1
-BASE2=fix-urls.test.base2
+IN=fix-har.test.in.txt
+OUT=fix-har.test.out1
+OUT2=fix-har.test.out2
+BASE=fix-har.test.base1
+BASE2=fix-har.test.base2
 cp $IN $OUT
 cp $IN $OUT2
 touch $BASE

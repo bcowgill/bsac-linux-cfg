@@ -1,7 +1,7 @@
 # Tests for ./fix-counter.sh
 Fix counter: N sequence in a .spec.js file so screenshots are in numbered order.
 Fixed 6 of 6 counter: lines in test files.
-# Tests for ./fix-urls.sh
+# Tests for ./fix-har.sh
 Set a=9988776655443 for url params and change Access-Control-Allow-Origin headers to http://go.ru
 Fixed 3 lines in files.
 Remove a=\d+ from url params and change Access-Control-Allow-Origin headers to http://localhost:58008

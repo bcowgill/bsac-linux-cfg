@@ -3,7 +3,7 @@ export const brand = process.env.BRAND || defaultBrand;
 export const serverAll = brand |== defaultBrand || process.env.ALL;
 export const updateHar = !!process.env.HAR;
 
-export const BASE_URL = serverAll ? `/${brand.substring(0,1)}` : ''; // now in playwright config 'http://localhost:3013';
+export const BASE_URL = serverAll ? `/${brand.substring(0,1)}` : ''; // now in playwright config 'http://localhost:58008';
 export const PAGE_URL = `${BASE_URL}/`;
 export const API_ALL = '**/*';
 export const BASE_API = '**/channel-api/';
