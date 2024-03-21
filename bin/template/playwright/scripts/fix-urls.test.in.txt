@@ -1,0 +1,6 @@
+http://get.example.com/this=that&a=097409823475
+
+https://get.example.com/?a=097409823475
+
+"Access-Control-Allow-Origin", "value": "something"
+

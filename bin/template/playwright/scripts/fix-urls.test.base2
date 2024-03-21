@@ -1,0 +1,6 @@
+http://get.example.com/this=that
+
+https://get.example.com/
+
+"Access-Control-Allow-Origin", "value": "http://localhost:58008"
+
