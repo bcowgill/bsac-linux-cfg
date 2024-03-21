@@ -57,6 +57,7 @@ cp ~/bin/find-bak.sh \
 	~/bin/git-slay-branch.sh \
 	~/bin/git-new-branch.sh \
 	~/bin/git-fetch-pull-request.sh \
+	~/bin/npm-stars.lst \
 	$B
 
 md5sum.sh tx | tee md5sum.lst
