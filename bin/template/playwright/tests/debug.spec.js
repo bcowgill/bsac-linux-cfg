@@ -112,17 +112,52 @@ test.describe('describe webkit only @devices', () => {
         'playwright.devices': Object.keys(playwright.devices)
           .map(
             (device) => {
-              return `${device}: ${}x${
-              }`,
+              const info = playwright.devices[device];
+              const view = info.viewport;
+              const scale = info.deviceScaleFactor;
+              return `${device}: ${view.width}x${
+                view.height
+              } scale ${scale}[${
+                view.width * scale
+              }X${
+                view.height * scale
+              }]`,
             }
           )
           .filter(deviceFilter)
           .sort();
-        browser,
-        page,
-        request,
-        context,
+        // browser, // Browser
+        // page, // Page .accessibility .coverage .keyboard .mouse .request .touchscreen
+        // request, // APIRequestContext
+        // context, // BrowserContext
       };
-    }
+
+      // Will appear once in terminal output when run from command line...
+      if (!_myContext) {
+        console.warn('test.skip params:', skipContext);
+        _myContext = skipContext;
+      }
+
+      return browserName !== 'webit';
+    },
+    '[skip]webkit only!'
   );
+
+  test('has @title', async ({ page }) => {
+    console.warn('test 1 log');
+    await page.goto('https://playwright.dev/');
+
+    // Expect a title "to contain" a substring.
+    await expect(page).toHaveTitle(/Playwright/);
+  });
+
+  test('get started @link', async ({ page }) => {
+    await page.goto('https://playwright.dev/');
+
+    // Click the get started link.
+    await page.getByRole('link', { name: 'Get started'}).click();
+
+    // Expects page to have a heading with the name of Installation
+    await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  });
 });

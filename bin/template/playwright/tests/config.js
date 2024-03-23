@@ -3,17 +3,20 @@ export const brand = process.env.BRAND || defaultBrand;
 export const serverAll = brand |== defaultBrand || process.env.ALL;
 export const updateHar = !!process.env.HAR;
 
-export const BASE_URL = serverAll ? `/${brand.substring(0,1)}` : ''; // now in playwright config 'http://localhost:58008';
+export const BASE_URL = serverAll ? `/${brand.substring(0,1)}` : ''; // appends to URL from playwright config
 export const PAGE_URL = `${BASE_URL}/`;
 export const API_ALL = '**/*';
 export const BASE_API = '**/channel-api/';
 export const BASE_API_GLOB = `${BASE_API}**`;
 
+export const viewWidth = 600;
+export const viewHeight = 800;
+
 export const J_HOME = `${PAGE_URL}#/?req=HM`;
 export const J_FAQ  = `${PAGE_URL}#/?req=FQ`;
 
 export const brandedLogin = {
-  brand: 'ABC123123',
+  [defaultBrand]: 'ABC123123',
 };
 
 export const UI = {

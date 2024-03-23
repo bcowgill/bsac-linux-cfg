@@ -1,12 +1,12 @@
 import { expect } from 'playwright/test';
 import {
-  BASE_API_GLOB,
-  API_ALL,
-  updateHar,
-  brand,
-  defaultBrand,
-  KBAUTH,
   renewAndPayPolicy,
+  BASE_API_GLOB,
+  defaultBrand,
+  updateHar,
+  API_ALL,
+  KBAUTH,
+  brand,
 } from './config';
 
 const MAX_URL = 128;
@@ -99,7 +99,7 @@ export function shorten(message, max = MAX_URL, ellipsis = ELLIPSIS) {
 /**
  * answer with the screen shot directory to use for a test suite based on browser information and test information.
  * @param {Object} options options for taking the screen shot.
- * @param {string} options.brand the brand name with default 'brand'.
+ * @param {string} options.brand the brand name with default defaultBrand.
  * @param {string} options.spec the top level directory with default 'screenshots' intended to match the playwright generated test output dir like 'test-results/test-1-Home-Page-content-webkit/test-finished-1.png' if possible.
  * @param {string} options.suite the prefix name for current test suite with default 'suite'.
  * @param {string} options.channel the browser channel name from playwright.
@@ -111,7 +111,7 @@ export function shorten(message, max = MAX_URL, ellipsis = ELLIPSIS) {
  * @example return something like 'screenshots/chromium-mobile-383x727/brand/home/home-'
  */
 export function screenshotPath({
-  brand= 'brand',
+  brand = defaultBrand,
   spec = 'screenshots',
   suite = 'suite',
   channel,
@@ -134,7 +134,7 @@ export function screenshotPath({
  * answers with a function that can be used to take numbered and named screen shots.
  *
  * @param {Object} options options for creating the camera output path and default screen shot options.
- * @param {string} options.brand the brand name with default 'brand'.
+ * @param {string} options.brand the brand name with default defaultBrand.
  * @param {string} options.spec the top level directory with default 'screenshots' intended to match the playwright generated test output dir like 'test-results/test-1-Home-Page-content-webkit/test-finished-1.png' if possible.
  * @param {string} options.suite the prefix name for current test suite with default 'suite'.
  * @param {string} options.channel the browser channel name from playwright.
@@ -146,7 +146,7 @@ export function screenshotPath({
  * @returns a screen shot function which increments the filename number and does full screen by default.
  */
 export function getCamera({
-  brand= 'brand',
+  brand = defaultBrand,
   spec = 'screenshots',
   suite = 'suite',
   channel,

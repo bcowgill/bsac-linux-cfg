@@ -7,8 +7,12 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 // require('dotenv').config();
 
-const baseURL = process.env.BASE_URL || 'http://localhost:58008';
-const brand = process.env.BRAND || 'brand';
+const defaultBrand: 'brand';
+const PORT=58008;
+const brandBaseURL = { [defaultBrand]: `http://localhost:${PORT}` };
+
+const brand = process.env.BRAND || defaultBrand;
+const baseURL = process.env.BASE_URL || brandBaseURL[brand] || brandBaseURL[defaultBrand];
 const timeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 60000;
 
 /**
