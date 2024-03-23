@@ -5,8 +5,12 @@ function warn(...args) {
   }
 }
 
+in page.js:
+
 async routeFromHAR(har, options = {}) {
   warn(`BSAC routeFromHAR options`, options);
+
+in HarRouter=js:
 
 class HarRouter
   static async create(localUtils, file, notFoundAction, options) {
@@ -25,11 +29,14 @@ class HarRouter
     },
     { HELLO: 'XYZZY' }, // BSAC
 
+in dispatcher.js:
+
 async _handleCommand(callMetadata, method, validParams) {
   if (method === 'harLookup') {
     warn(`BSAC _handleCommand ${method} meta`, callMetadata);
     warn(`BSAC _handleCommand validParams`, validParams);
   }
+in localUtilsDispatcher.js:
 
 async harLookup(
   params,
