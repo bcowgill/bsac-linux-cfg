@@ -11,7 +11,7 @@ shift
 RUN="yarn test"
 #PEE=pee.pl
 PEE=tee
-OPTS="--coverage $*"
+OPTS="--coverage --color $*"
 
 #TEST_DEBUG=1 jest --config specs/jest.config.json --watchAll=false --notify --onlyChanged --detectLeaks --detectOpenHandles --onlyFailures --forceExit --verbose --debug --testRegex $1
 

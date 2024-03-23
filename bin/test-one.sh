@@ -11,7 +11,7 @@ shift
 RUN="yarn test"
 #PEE=pee.pl
 PEE=tee
-OPTS="--watchAll=false --collectCoverage=false $*"
+OPTS="--watchAll=false --collectCoverage=false --color $*"
 
 #TEST_DEBUG=1 jest --config specs/jest.config.json --notify --onlyChanged --detectLeaks --detectOpenHandles --onlyFailures --forceExit --verbose --debug --testRegex $1
 
