@@ -33,6 +33,8 @@ cp ~/bin/find-bak.sh \
 	~/bin/filter-url.pl \
 	~/bin/filter-script.pl \
 	~/bin/filter-whitespace.pl \
+	~/bin/filter-long.sh \
+	~/bin/filter-coverage.sh \
 	~/bin/calc.sh \
 	~/bin/srep.sh \
 	~/bin/replace.sh \
