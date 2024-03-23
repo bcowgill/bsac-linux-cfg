@@ -1,0 +1,19 @@
+
+filter-sounds.sh [--regex] [--help|--man|-?]
+
+This will filter a list of file names looking for audio, sound, or music file extensions.
+
+--regex Shows the regex used for matching sound file extensions.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+
+See also filter-mime-audio.pl find-audio find-sounds.sh, find-ez-sounds.sh, sound-play.sh, classify.sh
+
+See the online file extension database https://fileinfo.com/extension/wav
+
+Example:
+
+locate -i elvis | filter-sounds.sh
+

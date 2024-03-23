@@ -12,6 +12,14 @@ popd > /dev/null
 testSuite see "view directory/file/documents using system default or configured programs" $PROVE
 testSuite assign-to-team "create an ad hoc team by roles and assign tasks to them" $PROVE
 testSuite filter-man "filter perldoc man page output for test plan comparisons" $PROVE
+testSuite filter-script "filter the output log of the script command" $PROVE
+testSuite filter-long "filter output by showing a number of ellipsis characters for lines that are too long" $PROVE
+testSuite filter-coverage "filter the jest test coverage output" $PROVE
+testSuite filter-sounds "filter a list or grep output for sound files" $PROVE
+testSuite filter-code-files "filter a list or grep output suppressing code files" $PROVE
+
+testSuite ./math-rep/tests.sh "convert mathematical markup into unicode characters" $PROVE
+
 testSuite template-perl-lite "lightweight perl template for simple file processing" $PROVE
 testSuite template-perl "perl template for scanning files" $PROVE
 testSuite template-perl-inplace "perl template for scanning and editing files in place" $PROVE
