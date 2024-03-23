@@ -1,16 +1,16 @@
 #/bin/bash
 # filter long lines by showing ellipsis
 
-perl -pne '
+L=$LENGTH perl -pne '
 	chomp;
-	$L = 1024;
+	my $L = $ENV{L} || 1024;
 	if (length($_) > $L)
 	{
 		$el = "…"; # ellipsis
 		$_ = substr($_, 0, $L) . "$el$el$el";
 	}
 	$_ = "$_\n";
-';
+' $*
 
 # ………
 exit $?

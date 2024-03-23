@@ -1,0 +1,4 @@
+a line that passes through...
+ coverage not met:   will be hidden
+no coverage at all... | 0 | 0 | 0 | 0 |
+full coverage hide it | 100 | 100 | 100 | 100 |
