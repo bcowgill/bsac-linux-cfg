@@ -1,2 +1,2 @@
-grep: unrecognised option `--inplace'
+grep: unrecognised option '--inplace'
 usage: grep ...

@@ -5,7 +5,7 @@ function filter_egrep {
 	perl -i -pne '
 		$q = chr(39);
 		s{unrecognized}{unrecognised}xmsg;
-		s{`(--invalid)$q}{$q$1$q}xmsg;
+		s{`(--(invalid|inplace))$q}{$q$1$q}xmsg;
 		s{(usage:\s+e?grep).+\z}{lc($1) . " ...\n"}xmsgie;
 		s{Try\s+${q}e?grep\s+--help.+\z}{}xmsg;
 		s{\A\s+\[.+\z}{}xmsg;
