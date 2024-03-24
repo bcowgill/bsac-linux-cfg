@@ -1,4 +1,13 @@
-swapfile.tmp
+// filter-built-files.sh
+/.tmp/
+/.git/
+/.idea/
+/dist/
+/coverage/
+/node_modules/
+/bower_components/
+/app/assets/
+cirrus/public/
 
 // filter-sounds.sh
 music.669: blah blah
@@ -123,6 +132,114 @@ font.fon: blah blah
 letters.ttf   
 characters.woff
 arial.woff2
+
+// filter-docs.sh
+paper.doc: blah blah
+"essay.docx"
+book.dot   
+memo.dotm
+project.dotx
+plan.eps
+report.odf
+specification.ods
+analysis.odt
+
+paper.odp
+essay.pdf
+book.ppd
+memo.ppt
+project.pptx
+plan.ps
+report.rtf
+specification.xls
+analysis.xlsx
+
+paper.xltx
+
+// filter-scripts.sh
+script.awk: blah blah
+"filter.bat"
+transform.sh    
+convert.bsh
+replace.bash
+program.fish
+manage.csh
+
+script.tcsh
+filter.vsh
+transform.zsh
+convert.pl
+replace.pm
+program.py
+manage.php
+
+script.rb
+filter.sed
+transform.tcl
+
+// filter-configs.sh
+config.cfg: blah blah
+"properties.conf"
+settings.config   
+setup.ini
+state.reg
+
+config.xml
+properties.yml
+settings.yaml
+
+// filter-web.sh and filter-css.sh
+style.css: blah blah
+"styles.less"
+stylesheet.sass   
+page.scss
+style.min.css: blah blah
+"styles.min.less"
+stylesheet.pack.sass   
+page.pack.scss
+style-min.css: blah blah
+"styles-min.less"
+stylesheet-pack.sass   
+page-pack.scss
+
+web.htm
+page.html
+app.ts
+section.js
+article.jsx
+component.json5
+api.json
+web.min.htm
+page.min.html
+app.pack.ts
+section.pack.js
+article-min.jsx
+component-min.json5
+api-pack.json
+
+// filter-text.sh
+README: blah blah
+"release.man"
+info.md   
+notes.txt
+read.me
+scratch.utxt
+book.utf8
+manual.utf-8
+
+// filter-zips.sh
+archive.7z: blah blah
+"software.cab"
+backup.gz   
+saved.bz
+safe.bz2
+locked.ar
+setup.jar
+installer.tar
+package.war
+
+archive.tgz
+software.zip
 
 // filter-code-files.sh
 roBotS.tXt:

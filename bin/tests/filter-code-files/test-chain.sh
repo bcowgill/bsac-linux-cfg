@@ -35,12 +35,12 @@ filter-fonts.sh
 #filter-text.sh
 #filter-zips.sh
 #filter-built-files.sh
-#filter-file.pl
 
 filter-code-files.sh
 
 #filter-mime-audio.pl
 #filter-mime-video.pl
+#filter-file.pl
 
 #filter-id3.pl
 #filter-css-colors.pl

@@ -4,7 +4,7 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../filter-images.sh
+PROGRAM=../../filter-videos.sh
 CMD=`basename $PROGRAM`
 SAMPLE=../filter-sounds/in/SAMPLE.txt
 DEBUG=
