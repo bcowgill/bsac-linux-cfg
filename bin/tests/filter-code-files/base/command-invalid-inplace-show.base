@@ -1,3 +1,1 @@
-egrep: unrecognised option '--inplace'
-Usage: egrep [OPTION]... PATTERN [FILE]...
-Try 'egrep --help' for more information.
+egrep: unrecognized option `--inplace'

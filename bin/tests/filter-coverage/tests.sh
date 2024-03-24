@@ -3,6 +3,8 @@
 # set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e
 
+source ../filter-sounds/lib.sh
+
 # What we're testing and sample input data
 PROGRAM=../../filter-coverage.sh
 CMD=`basename $PROGRAM`
@@ -24,7 +26,7 @@ ERROR_STOP=0
 function filter {
 	local file
 	file="$1"
-	perl -i -pne 's{DONOTFILTER\w+\s+\(\w+\)}{NAME (ROLE)}xms' $file
+	filter_egrep "$file"
 }
 
 echo TEST $CMD command help
@@ -50,6 +52,7 @@ if [ 0 == "$SKIP" ]; then
 	ARGS="$DEBUG --invalid $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -64,6 +67,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --keep $SAMPLE"
 	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -78,6 +82,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --show $SAMPLE"
 	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

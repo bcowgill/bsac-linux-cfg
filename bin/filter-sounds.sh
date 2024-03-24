@@ -47,3 +47,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(669|ac3|aac|aiff|am[fs]|ape|au|dmf|dsm|far|flac|it|m3u|m4[ap]|mdl|m[eo]d|midi?|mp[23]|mt[2m]|og[ag]|pls|p[st]m|s[3t]m|smp|snd|ult|umx|voc|wa?v|wma|xm)(:|"|\s*$)' $* # .669 .ac3 .aac .aif .amf .ams .ape .au .dmf .dsm .far .flac .it .m3u .m4a .m4p .mdl .med .mod .mid .midi .mp2 .mp3 .mt2 .mtm .oga .ogg .pls .psm .ptm .s3m .s3t .smp .snd .ult .umx .voc .wa .wav .wma .xm
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

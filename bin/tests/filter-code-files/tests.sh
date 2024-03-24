@@ -3,6 +3,8 @@
 # set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e
 
+source ../filter-sounds/lib.sh
+
 # What we're testing and sample input data
 PROGRAM=../../filter-code-files.sh
 CMD=`basename $PROGRAM`
@@ -12,7 +14,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 7
+PLAN 9
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -24,7 +26,7 @@ ERROR_STOP=0
 function filter {
 	local file
 	file="$1"
-	perl -i -pne 's{DONOTFILTER\w+\s+\(\w+\)}{NAME (ROLE)}xms' $file
+	filter_egrep "$file"
 }
 
 echo TEST $CMD command help
@@ -35,6 +37,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --help $SAMPLE"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -44,13 +47,14 @@ echo TEST $CMD command invalid option
 TEST=command-invalid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
-	EXPECT=2
+	EXPECT=1
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --invalid $SAMPLE"
-#	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-#	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
-#	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
+	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -63,7 +67,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --keep $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	$PROGRAM $ARGS 2>&1 | head -1 > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -77,7 +81,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --show $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	$PROGRAM $ARGS 2>&1 | head -1 > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

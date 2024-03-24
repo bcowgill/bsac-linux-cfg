@@ -1,0 +1,28 @@
+egrep: unrecognised option '--invalid'
+usage: egrep ...
+
+filter-code-files.sh [--help|--man|-?]
+
+This will filter a list of file names or grep output and suppress any files which relate to software development, leaving only asset files displayed.
+
+path    File names to process. If omitted then standard input will be scanned.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+This will filter out file names which are source code or configuration files
+
+See also filter-built-files.sh, filter-code-files.sh, filter-web.sh, filter-sounds.sh, filter-images.sh, filter-videos.sh, filter-indents.sh, filter-punct.sh and other filter- based tools
+
+See the online file extension database https://fileinfo.com/extension/wav
+
+Example:
+
+	Find non-code assets in the src/ directory tree.
+
+find src -type f | filter-code-files.sh
+
+	Find non-code files and exclude build directories.
+
+find . -type f | filter-built-files.sh | filter-code-files.sh
+
