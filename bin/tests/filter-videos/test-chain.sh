@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-images
+NEXT=filter-drawings
 
 ./tests.sh
 cd ../$NEXT

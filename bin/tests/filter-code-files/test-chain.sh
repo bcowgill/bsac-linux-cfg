@@ -22,10 +22,10 @@ filter-script.pl
 #filter-man.pl
 
 filter-sounds.sh
-#filter-images.sh
-#filter-videos.sh
-#filter-drawings.sh
-#filter-fonts.sh
+filter-images.sh
+filter-videos.sh
+filter-drawings.sh
+filter-fonts.sh
 #filter-docs.sh
 
 #filter-scripts.sh

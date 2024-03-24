@@ -1,14 +1,5 @@
-#!/bin/bash
-# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
-# WINDEV tool useful on windows development machine
-GREP="egrep -i"
 
-function usage {
-	local code
-	code=$1
-	cmd=$(basename $0)
-	echo "
-$cmd [--regex] [--help|--man|-?]
+filter-drawings.sh [--regex] [--help|--man|-?]
 
 This will filter a list of file names looking for drawing, figure, vector graphic file extensions.
 
@@ -24,22 +15,5 @@ See the online file extension database https://fileinfo.com/extension/svg
 
 Example:
 
-locate -i site-logo | $cmd
-"
-	exit $code
-}
-if [ "$1" == "--help" ]; then
-	usage 0
-fi
-if [ "$1" == "--man" ]; then
-	usage 0
-fi
-if [ "$1" == "-?" ]; then
-	usage 0
-fi
+locate -i site-logo | filter-drawings.sh
 
-if [ "$1" == "--regex" ]; then
-	GREP="echo"
-fi
-
-$GREP '\.(dia|svg|vsd)(:|"|\s*$)'

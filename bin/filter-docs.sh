@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(docx?|dot[mx]?|eps|od[fstp]|pdf|pp([dt]|tx)|ps|rtf|xlsx?|xltx)\b' # .odf .ods .odt .odp .ppd .ppt .pptx
+$GREP '\.(docx?|dot[mx]?|eps|od[fstp]|pdf|pp([dt]|tx)|ps|rtf|xlsx?|xltx)(:|"|\s*$)' # .odf .ods .odt .odp .ppd .ppt .pptx

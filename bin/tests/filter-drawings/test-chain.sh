@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-images
+NEXT=filter-fonts
 
 ./tests.sh
 cd ../$NEXT
