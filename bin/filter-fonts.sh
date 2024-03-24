@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(fon|fnt|ttf|woff2?)(:|"|\s*$)'
+$GREP '\.(fon|fnt|ttf|otf|woff2?)(:|"|\s*$)' $* # .fon .fnt .ttf .otf .woff .woff2

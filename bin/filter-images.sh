@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP -i '\.(bmp|eps|gif|ico|jpe?g|miff|p[bgp]m|pcx|pdf|pn[gm]|tga|tiff?|x[pb]m|xcf|xwd)(:|"|\s*$)' # .jpeg .pbm .pgm .ppm .png .pnm .xpm .xbm
+$GREP -i '\.(bmp|eps|gif|ico|jpe?g|miff|odi|p[bgp]m|pcx|pdf|pn[gm]|tga|tiff?|x[pb]m|xcf|xwd)(:|"|\s*$)' $* # .bmp .eps .gif .ico .jpeg .miff .odi .pbm .pgm .ppm .pcx .pdf .png .pnm .tga .tif .tiff .xpm .xbm .xcf .xwd

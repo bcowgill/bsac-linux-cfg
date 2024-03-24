@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(7z|cab|gz|bz2?|[jtw]?ar|tgz|zip)\b' # .7z .cab .gz .bz .bz2 .tar .jar .war .zip .tgz
+$GREP '\.(7z|cab|gz|bz2?|[jtw]?ar|tgz|zip|cpio)\b' $* # .7z .cab .gz .bz .bz2 .tar .jar .war .zip .tgz

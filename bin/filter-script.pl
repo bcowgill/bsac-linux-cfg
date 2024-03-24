@@ -21,8 +21,9 @@ my $SCO = 1;
 sub usage
 {
 	my ($code) = @ARG;
+	my $cmd = $FindBin::Script;
 	print <<"USAGE";
-$FindBin::Script [--help|--man|-?] [--debug] [--codes] [file-name...]
+$cmd [--help|--man|-?] [--debug] [--codes] [file-name...]
 
 Filter the output of the script command to remove ANSI color control codes and other terminal controls.
 
@@ -43,8 +44,15 @@ or XTerm Control Sequences https://invisible-island.net/xterm/ctlseqs/ctlseqs.ht
 
 Example:
 
+Create a script log from your console session and then filter it.
+
 	script script.log
-	$FindBin::Script < script.log
+	$cmd < script.log
+
+Filter through an elixir script session.
+
+    $cmd elixir/spawn/iex.session.workshare.clean
+
 USAGE
 	exit($code || 0);
 }

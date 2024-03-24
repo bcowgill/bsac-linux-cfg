@@ -17,10 +17,10 @@ function check_output
 	SRC="$1"
 	filter_output $SRC*.out
 
-	[ -e $SRC.bas ] || touch $SRC.bas
-	[ -e $SRC.err.bas ] || touch $SRC.err.bas
-	diff $SRC.out $SRC.bas || echo "NOT OK - Standard Output differs from base file: vdiff $SRC.out $SRC.bas"
-	diff $SRC.err.out $SRC.err.bas || echo "NOT OK - Standard Error differs from base file: vdiff $SRC.err.out $SRC.err.bas"
+	[ -e $SRC.base ] || touch $SRC.base
+	[ -e $SRC.err.base ] || touch $SRC.err.base
+	diff $SRC.out $SRC.base || echo "NOT OK - Standard Output differs from base file: vdiff $SRC.out $SRC.base"
+	diff $SRC.err.out $SRC.err.base || echo "NOT OK - Standard Error differs from base file: vdiff $SRC.err.out $SRC.err.base"
 }
 
 if node --version | grep `cat .nvmrc`; then \

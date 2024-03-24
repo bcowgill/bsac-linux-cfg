@@ -50,6 +50,7 @@ find . \( \
 	-o -name .idea \
 	-o -name node_modules \
 	-o -name bower_components \
+	-o -name deno-packages \
 	-o -name dist \
 	-o -name coverage \
 \) \
@@ -67,8 +68,12 @@ find . \( \
 	-o -name '.#*' \
 	-o -name '#*#$' \
 	-o -name '*.orig' \
+	-o -name '*.saved' \
 	-o -name '*.not' \
 	-o -name '*.hold' \
 \) $* $PRINT
 # -o -name '*.orig'
 # -o -name '*~Stashed changes'
+
+# Backup files and GIT temporary files
+# (~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|#.+#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|#.+?))(:|"|\s*$)

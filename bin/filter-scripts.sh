@@ -8,17 +8,19 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--regex] [--help|--man|-?]
+$cmd [--regex] [--help|--man|-?] [-v] [path...]
 
 This will filter a list of file names looking for executable script file extensions.
 
+-v      Filter out the script files and show all other files.
 --regex Shows the regex used for matching script file extensions.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
+In addition to -v, other egrep command options can be supplied.
 
-See also filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-videos.sh, filter-web.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
+See also egrep filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-videos.sh, filter-web.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
 
 See the online file extension database https://fileinfo.com/extension/tcl
 
@@ -42,4 +44,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(awk|bat|(ba?|fi|t?c|[vz])?sh|p[lmy]|php|rb|sed|tcl)\b' # .pl .pm .py .sh .bsh .bash .fish .tsh .tcsh .vsh .zsh
+$GREP '\.(awk|sed|bat|cmd|psl|au3|php|e?rb|rspec|feature|rake|hs|groovy|tcl|python|sql|(ba?|fi|t?c|[vz])?sh|p[lmy]|tt?)(:|"|\s*$)' $* # .pl .pm .py .sh .bsh .bash .fish .tsh .tcsh .vsh .zsh .feature .hs

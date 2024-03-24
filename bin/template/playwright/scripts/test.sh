@@ -18,8 +18,8 @@ echo "# Tests for $CMD" | tee --append $LOG
 IN=fix-har.test.in.txt
 OUT=fix-har.test.out1
 OUT2=fix-har.test.out2
-BASE=fix-har.test.base1
-BASE2=fix-har.test.base2
+BASE=fix-har.test.1.base
+BASE2=fix-har.test.2.base
 cp $IN $OUT
 cp $IN $OUT2
 touch $BASE

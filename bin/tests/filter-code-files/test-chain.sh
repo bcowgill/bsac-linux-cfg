@@ -30,6 +30,7 @@ filter-fonts.sh
 
 #filter-scripts.sh
 #filter-configs.sh
+#filter-min.sh
 #filter-web.sh
 #filter-css.sh
 #filter-text.sh

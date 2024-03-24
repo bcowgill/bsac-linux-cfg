@@ -5,5 +5,5 @@
 # See also filter-built-files.sh, filter-code-files.sh, filter-indents.sh, filter-punct.sh
 # WINDEV tool useful on windows development machine
 # CUSTOM settings you may have to change on a new computer
-egrep -v '/(\.tmp|\.git|\.idea|dist|coverage|node_modules|bower_components|app/assets)/' \
+egrep -v '/(\.tmp|\.git|\.idea|dist|coverage|node_modules|bower_components|deno-packages|app/assets)/' \
 	| egrep -v 'cirrus/public/'

@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(dia|svg|vsd)(:|"|\s*$)'
+$GREP '\.(dia|svg|vsd|pidgin|std|sda|sxd)(:|"|\s*$)' $* # .dia .svg .vsd .pidgin .std .sda .sxd
