@@ -9,15 +9,18 @@ function usage {
 	echo "
 $cmd [--help|--man|-?]
 
-This will filter a file or grep listing and suppress any files which relate to software development, leaving only asset files displayed.
+This will filter a list of file names or grep output and suppress any files which relate to software development, leaving only asset files displayed.
 
+path    File names to process. If omitted then standard input will be scanned.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
 This will filter out file names which are source code or configuration files
 
-See also filter-built-files.sh, filter-code-files.sh, filter-web.sh, filter-sounds.sh, filter-images.sh, filter-videos.sh, filter-indents.sh, filter-punct.sh and other filter- based tools.
+See also filter-built-files.sh, filter-code-files.sh, filter-web.sh, filter-sounds.sh, filter-images.sh, filter-videos.sh, filter-indents.sh, filter-punct.sh and other filter- based tools
+
+See the online file extension database https://fileinfo.com/extension/wav
 
 Example:
 
@@ -49,8 +52,12 @@ filter-configs.sh -v $* \
 	| egrep -vi '\.(txt|log1?|lst|saved|orig|sample|out|base|old|new|xxx|yyy|debug|warn|timestamp|clean|snap(shot)?|std(out|err))(:|"|\s*$)' \
 	| egrep -v '\.(_.+|apdisk|DS_Store|Trash|Trash-.+|Trashes|Spotlight-V100|fseventsd|TemporaryItems)(:|"|\s*$)' \
 	| egrep -vi '(~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|#.+#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|#.+?))(:|"|\s*$)' \
-	| egrep -vi '\.(fortune|dat|csv|meta|es[56]|[cem]js|linux|mac|all|rc)'  # <== move/remove these
+
 	# .stdout .stderr .snap .snapshot .timestamp .debug .warn
+
+# MUSTDO create filter-compiled filter-osfiles and filter-bak
+
+#	| egrep -vi '\.(fortune|dat|csv|meta|es[56]|[cem]js|linux|mac|all|rc)'  # <== move/remove these
 
 # source code files for compiled languages
 # miscellaneous text logs and other dev files

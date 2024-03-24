@@ -4,9 +4,9 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../filter-images.sh
+PROGRAM=../../filter-sounds.sh
 CMD=`basename $PROGRAM`
-SAMPLE=../filter-sounds/in/SAMPLE.txt
+SAMPLE=in/SAMPLE.txt
 DEBUG=
 SKIP=0
 

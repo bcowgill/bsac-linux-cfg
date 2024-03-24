@@ -40,10 +40,8 @@ if [ "$1" == "-?" ]; then
 fi
 
 if [ "$1" == "--regex" ]; then
+	shift
 	GREP="echo"
 fi
 
 $GREP '(robots\.txt|(pre(pare)?|post)-(commit(-msg)?|push|rebase|applypatch|auto-gc|receive|update|checkout|rewrite|merge)|package(-lock)?\.json|(mix|deno|yarn|composer|flake)\.lock|env\.\w+|(Make|Gem|Rake|Docker)file|\w\w\w+rc|\.(cfg|ini|reg|profile|bash_\w+|(x|ya?)ml)|conf|config|env(\.\w+)?|properties(.ru)?|htaccess|editorconfig|vtg|vp([wj]|whistu)|cson|iml|jinja2?|j2|jinger|git(attributes|modules)|(git|npm|jshint|eslint|stylelint|prettier|docker)ignore|(bower|csslint|jshint|vim|npm|nvm)rc|jshintrc-\w+)(:|"|\s*$)' $* # .xml .yml .yaml pre-commit pre-push Makefile Gemfile Rakefile .gitattributes .gitmodules .gitignore .npmignore .jshintignore .eslintignore .stylelintignore .prettierignore .bowerrc .csslintrc .jshintrc .vimrc Dockerfile .dockerignore .nvmrc .npmrc .env env.local .env.local .lock package.json package-lock.json mix.lock deno.lock yarn.lock composer.lock flake.lock .profile
-
-# OS specific files...
-#.DS_Store

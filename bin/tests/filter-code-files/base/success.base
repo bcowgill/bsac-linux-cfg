@@ -13,6 +13,7 @@ music.669: blah blah
 audio.Aiff    
 song.amF
 book.Ams
+music.ac3
 
 music.Ape
 sound.aU
@@ -107,7 +108,6 @@ commercial.oGx
 animation.sRt
 media.swF
 news.Tp
-cartoon.tS
 documentary.Vcd
 
 movie.vDr
@@ -119,6 +119,7 @@ animation.yuV
 sketch.svg: blah blah
 "diagram.dia"
 circuit.vsd    
+diagram.pidgin
 
 
 font.fon: blah blah
@@ -132,12 +133,34 @@ paper.doc: blah blah
 book.dot   
 memo.dotm
 project.dotx
-plan.eps
-report.odf
+plan.epS
+report.oDf
+chartfile.odC
+image.ocI
+template.oTc
 specification.ods
 analysis.odt
-
+template.vOr
+spreadsheet.sXc
+drawing.sxD
+presentation.Sxi
+whitepaper.sxW
+calculations.Sdc
+chart.sDs
+chapter.SdW
 paper.odp
+pie.oDc
+slides.sdP
+communication.sdM
+addresses.Sdb
+house-plan.sdA
+slideshow.SDD
+template.Stw
+blanks.StI
+blueprint.sTd
+calculator.stC
+picture.odI
+line-graph.Otc
 essay.pdf
 book.ppd
 memo.ppt
@@ -148,36 +171,28 @@ specification.xls
 analysis.xlsx
 
 paper.xltx
+memo.Eml
+calendar.eCo
+schedule.caL
 
-script.awk: blah blah
-convert.bsh
-program.fish
-manage.csh
 
-script.tcsh
-filter.vsh
-transform.zsh
-manage.php
 
-filter.sed
-transform.tcl
 
-config.cfg: blah blah
-setup.ini
-state.reg
 
-settings.yaml
 
-stylesheet.sass   
-stylesheet.pack.sass   
-stylesheet-pack.sass   
 
-app.ts
-article.jsx
-component.json5
-app.pack.ts
-article-min.jsx
-component-min.json5
+./cfg/log-githook/update
+./cfg/log-githook/push-to-checkout
+./cfg/log-githook/applypatch-msg
+./cfg/log-githook/git-sendmail-validate
+./cfg/log-githook/commit-msg
+./cfg/log-githook/fsmonitor-watchman
+
+
+
+
+
+
 
 README: blah blah
 "release.man"
@@ -186,23 +201,27 @@ scratch.utxt
 book.utf8
 manual.utf-8
 
-archive.7z: blah blah
-"software.cab"
-backup.gz   
-saved.bz
-safe.bz2
-locked.ar
-setup.jar
-installer.tar
-package.war
+archive.7Z: blah blah
+"software.cAb"
+backup.Gz   
+saved.Bz
+safe.bZ2
+locked.Ar
+setup.jaR
+installer.Tar
+package.wAr
 
-archive.tgz
-software.zip
-
-
-
+archive.tgZ
+software.zIp
+recording.cpiO
 
 
 
 
+script.Ru
+haskell-weirdo.ha
 
+program.eCo
+
+tool.toleraNce
+util.Eml

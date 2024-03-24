@@ -41,6 +41,7 @@ if [ "$1" == "-?" ]; then
 fi
 
 if [ "$1" == "--regex" ]; then
+	shift
 	GREP="echo"
 fi
 

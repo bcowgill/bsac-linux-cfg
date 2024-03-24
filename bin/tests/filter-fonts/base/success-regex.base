@@ -1,1 +1,1 @@
-\.(fon|fnt|ttf|woff2?)(:|"|\s*$)
+\.(fon|fnt|ttf|otf|woff2?)(:|"|\s*$)

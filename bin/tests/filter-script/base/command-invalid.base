@@ -21,5 +21,12 @@ or XTerm Control Sequences https://invisible-island.net/xterm/ctlseqs/ctlseqs.ht
 
 Example:
 
+Create a script log from your console session and then filter it.
+
 	script script.log
 	filter-script.pl < script.log
+
+Filter through an elixir script session.
+
+    filter-script.pl elixir/spawn/iex.session.workshare.clean
+
