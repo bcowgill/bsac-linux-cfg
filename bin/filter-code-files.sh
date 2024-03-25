@@ -26,11 +26,11 @@ Example:
 
 	Find non-code assets in the src/ directory tree.
 
-find src -type f | filter-code-files.sh
+find src -type f | $cmd
 
 	Find non-code files and exclude build directories.
 
-find . -type f | filter-built-files.sh | filter-code-files.sh
+find . -type f | filter-built-files.sh | $cmd
 "
 	exit $code
 }

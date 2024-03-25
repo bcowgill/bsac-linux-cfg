@@ -31,7 +31,7 @@ Example:
 
 	Find OS special files on a portable drive.
 
-find /media/drive | filter-osfiles.sh
+find /media/drive | $cmd
 
 "
 	exit $code

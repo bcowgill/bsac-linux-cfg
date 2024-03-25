@@ -10,16 +10,14 @@ function usage {
 	echo "
 $cmd [--regex] [--help|--man|-?] [-v] [path...]
 
-This will filter a list of file names or grep output looking for common backup file extensions.
+This will filter a list of file names or grep output looking for compilable source code file extensions.
 
 path    File names to process. If omitted then standard input will be scanned.
--v      Filter out the backup files and show all other files.
---regex Shows the regex used for matching backup file extensions.
+-v      Filter out the source code files and show all other files.
+--regex Shows the regex used for matching font file extensions.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
-
-This will filter common backup files from editors and git temporary files left behind sometimes.
 
 In addition to -v, other egrep command options can be supplied.
 
@@ -50,5 +48,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '(~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|\#.+?\#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|\#.+?))(:|"|\s*$)' $* # .bak .swp .kate-swp .rej .RESTORE .orig .saved .not .hold _REMOTE_ _LOCAL_ _BACKUP_ _BASE_
-
+$GREP '\.(asm?|[ch]|cs|[hc]pp|java|jsp|exs?)(:|"|\s*$)' $* # .as .asm .c .h .cs .cpp .hpp .java .jsp .ex .exs

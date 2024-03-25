@@ -6,7 +6,7 @@ set -e
 source ../filter-sounds/lib.sh
 
 # What we're testing and sample input data
-PROGRAM=../../filter-code-files.sh
+PROGRAM=../../filter-source.sh
 CMD=`basename $PROGRAM`
 SAMPLE=../filter-sounds/in/SAMPLE.txt
 DEBUG=
@@ -14,7 +14,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 9
+PLAN 11
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -47,7 +47,7 @@ echo TEST $CMD command invalid option
 TEST=command-invalid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
-	EXPECT=1
+	EXPECT=2
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --invalid $SAMPLE"
@@ -96,6 +96,34 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation regex
+TEST=success-regex
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --regex"
+	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation suppress
+TEST=success-suppress
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG -v"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

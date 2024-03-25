@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-source
+NEXT=filter-code-files
 
 ./tests.sh
 cd ../$NEXT
