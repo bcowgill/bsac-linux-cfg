@@ -1,1 +1,1 @@
-\.(docx?|dot[mx]?|eps|od[cfistp]|otc|vor|sx[cdiw]|sd[abcdmpsw]|st[cdiw]|pdf|pp([dt]|tx)|ps|rtf|xlsx?|xltx|eco|eml|cal)(:|"|\s*$) --regex
+\.(docx?|dot[mx]?|eps|od[cfistp]|otc|vor|sx[cdiw]|sd[abcdmpsw]|st[cdiw]|pdf|pp([dt]|tx)|ps|rtf|xlsx?|xltx|eco|eml|cal)(:|"|\s*$)
