@@ -1,14 +1,7 @@
-#!/bin/bash
-# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
-# WINDEV tool useful on windows development machine
-GREP="egrep -i"
-cmd=$(basename $0)
+egrep: unrecognised option '--invalid'
+usage: egrep ...
 
-function usage {
-	local code
-	code=$1
-	echo "
-$cmd [--regex] [--help|--man|-?] [-v] [path...]
+filter-web.sh [--regex] [--help|--man|-?] [-v] [path...]
 
 This will filter a list of file names or grep output looking for web development file extensions.
 
@@ -31,27 +24,5 @@ Example:
 
 	Find website files filter out minified and package directories.
 
-locate -i website | filter-min.sh | $cmd
-"
-	exit $code
-}
-if [ "$1" == "--help" ]; then
-	usage 0
-fi
-if [ "$1" == "--man" ]; then
-	usage 0
-fi
-if [ "$1" == "-?" ]; then
-	usage 0
-fi
+locate -i website | filter-min.sh | filter-web.sh
 
-if [ "$1" == "--regex" ]; then
-	shift
-	GREP="echo"
-fi
-
-$GREP '\.((c|le|sa|sc)ss|md|html?|c?shtml?|x[ms]l|[jt]sx?|types\.d|json[5c]?|coffee|vue|tt|jade|hbs)(:|"|\s*$)' $* # .css .less .sass .scss .htm .html .ts .tsx .js .jsx .json .json5 .shtm .shtml .cshtm .cshtml .xml .xsl .jade .hbs .md
-ERR=$?
-if [ $ERR != 0 ]; then
-	usage $ERR
-fi

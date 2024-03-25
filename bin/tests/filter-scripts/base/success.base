@@ -1,0 +1,53 @@
+// filter-built-files.sh
+// filter-osfiles.sh
+// filter-bak.sh
+// filter-sounds.sh
+// filter-images.sh
+// filter-videos.sh
+// filter-drawings.sh
+// filter-fonts.sh
+// filter-docs.sh
+// filter-source.sh
+// filter-scripts.sh
+script.awk: blah blah
+"filter.bat"
+transform.sh    
+convert.bsh
+replace.bash
+program.fish
+manage.csh
+script.tcsh
+filter.vsh
+transform.zsh
+convert.pl
+test-plan.T
+template-page.tT
+replace.pm
+program.py
+manage.php
+script.rb
+filter.sed
+transform.tcl
+pipeline.groovy
+// filter-configs.sh
+// filter-web.sh and filter-css.sh
+// filter-text.sh
+// filter-zips.sh
+// filter-code-files.sh
+code.Pl
+program.pM
+library.pm
+tool.Sh
+util.Bash
+module.Bat
+class.cMd
+script.psL
+module.pY
+class.pyThon
+object.erB
+component.Rb
+function.rsPec
+procedure.raKe
+acceptance.feature
+library.sqL
+script.aU3
