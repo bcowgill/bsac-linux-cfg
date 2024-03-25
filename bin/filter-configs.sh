@@ -10,14 +10,16 @@ function usage {
 	echo "
 $cmd [--regex] [--help|--man|-?] [-v] [path...]
 
-This will filter a list of file names looking for common configuration file names and extensions.
+This will filter a list of file names or grep output looking for common configuration file names and extensions.
 
+path    File names to process. If omitted then standard input will be scanned.
 -v      Filter out the config files and show all other files.
 --regex Shows the regex used for matching config file extensions.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
+In addition to -v, other egrep command options can be supplied.
 
 See also egrep filter-code-files.sh filter-scripts.sh filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-videos.sh, filter-web.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
 

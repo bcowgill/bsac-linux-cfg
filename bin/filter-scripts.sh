@@ -10,8 +10,9 @@ function usage {
 	echo "
 $cmd [--regex] [--help|--man|-?] [-v] [path...]
 
-This will filter a list of file names looking for executable script file extensions.
+This will filter a list of file names or grep outputlooking for executable script file extensions.
 
+path    File names to process. If omitted then standard input will be scanned.
 -v      Filter out the script files and show all other files.
 --regex Shows the regex used for matching script file extensions.
 --man   Shows help for this tool.

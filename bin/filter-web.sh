@@ -8,15 +8,19 @@ function usage {
 	local code
 	code=$1
 	echo "
-$cmd [--help|--man|-?]
+$cmd [--regex] [--help|--man|-?] [-v] [path...]
 
-This will filter a list of file names looking for web development file extensions.
+This will filter a list of file names or grep output looking for web development file extensions.
 MUSTDO EXCLUDE excluding minimised and .git, node_modules, and bower_components
 
+path    File names to process. If omitted then standard input will be scanned.
+-v      Filter out the web files and show all other files.
 --regex Shows the regex used for matching web file extensions.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
+
+In addition to -v, other egrep command options can be supplied.
 
 This will match HTML and XML documents and stylesheet formats as well as web scripting and UI templating file extensions.
 
