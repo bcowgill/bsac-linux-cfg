@@ -1,1 +1,1 @@
-\.(dia|svg|vsd|pidgin|std|sda|sxd)(:|"|\s*$)
+\.(dia|svg|vsd|pidgin|std|sda|sxd|oci)(:|"|\s*$)

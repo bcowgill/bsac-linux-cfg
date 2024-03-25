@@ -48,14 +48,14 @@ filter-configs.sh -v $* \
 	| filter-scripts.sh -v \
 	| filter-min.sh \
 	| filter-web.sh -v \
-	| egrep -vi '\.(asm?|c|cs|cpp|java|jsp|exs?)(:|"|\s*$)' \
+	| egrep -vi '\.(asm?|[ch]|cs|[hc]pp|java|jsp|exs?)(:|"|\s*$)' \
 	| egrep -vi '\.(txt|log1?|lst|saved|orig|sample|out|base|old|new|xxx|yyy|debug|warn|timestamp|clean|snap(shot)?|std(out|err))(:|"|\s*$)' \
 	| egrep -v '\.(_.+|apdisk|DS_Store|Trash|Trash-.+|Trashes|Spotlight-V100|fseventsd|TemporaryItems)(:|"|\s*$)' \
 	| egrep -vi '(~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|#.+#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|#.+?))(:|"|\s*$)' \
 
 	# .stdout .stderr .snap .snapshot .timestamp .debug .warn
 
-# MUSTDO create filter-compiled filter-osfiles and filter-bak
+# MUSTDO create filter-source filter-osfiles and filter-bak
 
 #	| egrep -vi '\.(fortune|dat|csv|meta|es[56]|[cem]js|linux|mac|all|rc)'  # <== move/remove these
 
@@ -63,9 +63,6 @@ filter-configs.sh -v $* \
 # miscellaneous text logs and other dev files
 # various OS specific files to ignore
 # various backup file names in use by people and editors
-
-# Backup files and GIT temporary files
-# (~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|#.+#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|#.+?))(:|"|\s*$)
 
 if [ $? != 0 ]; then
 	usage 1

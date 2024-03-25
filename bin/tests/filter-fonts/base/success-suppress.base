@@ -9,6 +9,44 @@
 /app/assets/
 cirrus/public/
 
+// filter-osfiles.sh
+.DS_Store
+.Trash
+.Trash-something
+.Trashes
+.apdisk
+._something-something
+.Spotlight-V100
+.fseventsd
+.TemporaryItems
+$Recycle Bin: blah blah
+$Recycle Bin   
+"$Recycle Bin"
+
+// filter-bak.sh
+contents.txt~: blah blah
+"backedup.txt~"
+edited~     
+source_REMOTE_filename: blah blah
+"source_LOCAL_filename"
+source_BACKUP_filename    
+source_BASE_filename
+#temporary-file#: blah blah
+"#temporary-file#"
+#temporary-file#   
+#temporary: blah blah
+"#temporary"
+#temporary   
+changed.txt.bak
+editor.swp
+textedit.kate-swp
+changes.rej
+backupfile.RESTORE
+package.orig
+module.saved
+code.js.not
+directory.hold
+
 // filter-sounds.sh
 music.669: blah blah
 "sound.aAc"
@@ -126,6 +164,7 @@ sketch.svg: blah blah
 "diagram.dia"
 circuit.vsd    
 diagram.pidgin
+image.ocI
 
 // filter-fonts.sh
 
@@ -139,7 +178,6 @@ project.dotx
 plan.epS
 report.oDf
 chartfile.odC
-image.ocI
 template.oTc
 specification.ods
 analysis.odt
@@ -177,6 +215,21 @@ paper.xltx
 memo.Eml
 calendar.eCo
 schedule.caL
+
+// filter-source.sh
+program.as: blah blah
+"application.asm"
+command.c   
+driver.cs
+device.cpp
+
+program.h
+application.hpp
+command.java
+driver.jsp
+device.ex
+
+program.exs
 
 // filter-scripts.sh
 script.awk: blah blah

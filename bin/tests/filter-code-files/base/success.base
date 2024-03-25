@@ -8,6 +8,14 @@
 /app/assets/
 cirrus/public/
 
+$Recycle Bin: blah blah
+$Recycle Bin   
+"$Recycle Bin"
+
+#temporary: blah blah
+"#temporary"
+#temporary   
+
 music.669: blah blah
 "sound.aAc"
 audio.Aiff    
@@ -120,6 +128,7 @@ sketch.svg: blah blah
 "diagram.dia"
 circuit.vsd    
 diagram.pidgin
+image.ocI
 
 
 font.fon: blah blah
@@ -136,7 +145,6 @@ project.dotx
 plan.epS
 report.oDf
 chartfile.odC
-image.ocI
 template.oTc
 specification.ods
 analysis.odt
@@ -174,6 +182,9 @@ paper.xltx
 memo.Eml
 calendar.eCo
 schedule.caL
+
+
+
 
 
 

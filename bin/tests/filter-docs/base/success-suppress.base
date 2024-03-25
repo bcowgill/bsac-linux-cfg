@@ -98,8 +98,27 @@ song.wmA
 book.Xm
 
 // filter-images.sh
+picture.Bmp: blah blah
+postcard.gIf   
+snapshot.icO
+screen.Jpg
+bitmap.jPeg
+figure.miFf
+icon.pbM
 
+picture.Pgm
+image.pPm
+postcard.pcX
+screen.pnG
+bitmap.pNm
+figure.tgA
+icon.tIf
 
+picture.Tiff
+image.xPm
+postcard.xbM
+snapshot.xCf
+screen.xWd
 
 // filter-videos.sh
 movie.Abc: blah blah
@@ -154,48 +173,7 @@ characters.woff
 arial.woff2
 
 // filter-docs.sh
-paper.doc: blah blah
-"essay.docx"
-book.dot   
-memo.dotm
-project.dotx
-report.oDf
-chartfile.odC
-template.oTc
-specification.ods
-analysis.odt
-template.vOr
-spreadsheet.sXc
-drawing.sxD
-presentation.Sxi
-whitepaper.sxW
-calculations.Sdc
-chart.sDs
-chapter.SdW
-paper.odp
-pie.oDc
-slides.sdP
-communication.sdM
-addresses.Sdb
-house-plan.sdA
-slideshow.SDD
-template.Stw
-blanks.StI
-blueprint.sTd
-calculator.stC
-line-graph.Otc
-book.ppd
-memo.ppt
-project.pptx
-plan.ps
-report.rtf
-specification.xls
-analysis.xlsx
 
-paper.xltx
-memo.Eml
-calendar.eCo
-schedule.caL
 
 // filter-source.sh
 program.as: blah blah
@@ -414,7 +392,6 @@ acceptance.feature
 haskell-weirdo.ha
 
 code.Coffee
-program.eCo
 library.sqL
 tool.Md
 procedure.Txt
@@ -424,7 +401,6 @@ code.loG1
 program.jInja
 library.jiNger
 tool.toleraNce
-util.Eml
 module.iMl
 class.lsT
 object.Sample

@@ -42,4 +42,4 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '\.(docx?|dot[mx]?|eps|od[cfistp]|otc|vor|sx[cdiw]|sd[abcdpsw]|st[cdiw]|pdf|pp([dt]|tx)|ps|rtf|xlsx?|xltx|eco|eml|cal)(:|"|\s*$)' $* # .odf .ods .odt .odp .odi .odc .ppd .ppt .pptx .eco .eml .cal .vor .sxc .sxd .sxi .sxw .sda .sdb .sdc .sdd .sdp .sds .sdw .stc .std .sti .stw
+$GREP '\.(docx?|dot[mx]?|eps|od[cfistp]|otc|vor|sx[cdiw]|sd[abcdmpsw]|st[cdiw]|pdf|pp([dt]|tx)|ps|rtf|xlsx?|xltx|eco|eml|cal)(:|"|\s*$)' $* # .odf .ods .odt .odp .odi .odc .ppd .ppt .pptx .eco .eml .cal .vor .sxc .sxd .sxi .sxw .sda .sdb .sdc .sdd .sdp .sds .sdw .stc .std .sti .stw .sdm

@@ -1,0 +1,19 @@
+
+filter-docs.sh [--regex] [--help|--man|-?]
+
+This will filter a list of file names looking for application document file extensions.
+
+--regex Shows the regex used for matching document file extensions.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+
+See also filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-scripts.sh, filter-web.sh, filter-css.sh, filter-videos.sh, filter-images.sh, filter-sounds.sh, classify.sh
+
+See the online file extension database https://fileinfo.com/extension/pdf
+
+Example:
+
+locate -i budget | filter-docs.sh
+
