@@ -1,14 +1,5 @@
-#!/bin/bash
-# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
-# WINDEV tool useful on windows development machine
-GREP="egrep -i"
 
-function usage {
-	local code
-	code=$1
-	cmd=$(basename $0)
-	echo "
-$cmd [--regex] [--help|--man|-?] [-v] [path...]
+filter-text.sh [--regex] [--help|--man|-?] [-v] [path...]
 
 This will filter a list of file names or grep output looking for plain or formatted text file extensions.
 
@@ -27,27 +18,5 @@ See the online file extension database https://fileinfo.com/extension/md
 
 Example:
 
-locate -i thesis | $cmd
-"
-	exit $code
-}
-if [ "$1" == "--help" ]; then
-	usage 0
-fi
-if [ "$1" == "--man" ]; then
-	usage 0
-fi
-if [ "$1" == "-?" ]; then
-	usage 0
-fi
+locate -i thesis | filter-text.sh
 
-if [ "$1" == "--regex" ]; then
-	shift
-	GREP="echo"
-fi
-
-$GREP '(readme|\.(man|m[de]|u?txt|utf-?8))(:|"|\s*$)' $* # .man .md .me .txt .utxt .utf8 .utf-8
-ERR=$?
-if [ $ERR != 0 ]; then
-	usage $ERR
-fi

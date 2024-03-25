@@ -14,7 +14,7 @@ This will filter a list of file names or grep output looking for compilable sour
 
 path    File names to process. If omitted then standard input will be scanned.
 -v      Filter out the source code files and show all other files.
---regex Shows the regex used for matching font file extensions.
+--regex Shows the regex used for matching source code file extensions.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
@@ -49,3 +49,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(asm?|[ch]|cs|[hc]pp|java|jsp|exs?)(:|"|\s*$)' $* # .as .asm .c .h .cs .cpp .hpp .java .jsp .ex .exs
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

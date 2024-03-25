@@ -47,3 +47,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(abc|as[fx]|avi|divx|fl[iv]|fxm|m2ts?|m4v|mkv|mng|mo[dv]|mp4|mp(e|g|eg)|og[mvx]|srt|swf|t[ps]|vcd|vdr|viv|vob|wmv|yuv)(:|"|\s*$)' $* # .asf .asx .avi .divx .fli .flv .m2t .m2ts .mod .mov .mpe .mpg .mpeg .ogm .ogv .ogx .tp .ts
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

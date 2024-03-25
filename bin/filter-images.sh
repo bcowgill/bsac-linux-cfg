@@ -47,3 +47,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(bmp|eps|gif|ico|jpe?g|miff|odi|p[bgp]m|pcx|pdf|pn[gm]|tga|tiff?|x[pb]m|xcf|xwd)(:|"|\s*$)' $* # .bmp .eps .gif .ico .jpeg .miff .odi .pbm .pgm .ppm .pcx .pdf .png .pnm .tga .tif .tiff .xpm .xbm .xcf .xwd
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

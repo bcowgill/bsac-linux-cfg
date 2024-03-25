@@ -1,2 +1,29 @@
 egrep: unrecognised option '--invalid'
 usage: egrep ...
+
+filter-osfiles.sh [--regex] [--help|--man|-?] [-v] [path...]
+
+This will filter a list of file names or grep output looking for operating system special files.
+
+path    File names to process. If omitted then standard input will be scanned.
+-v      Filter out the OS special files and show all other files.
+--regex Shows the regex used for matching OS special file extensions.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+This will filter common Windows, Mac and Linux files created for recycle bin etc.
+
+In addition to -v, other egrep command options can be supplied.
+
+See also egrep filter-text.sh, filter-docs.sh, filter-zips.sh, filter-fonts.sh, filter-videos.sh, filter-web.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
+
+See the online file extension database https://fileinfo.com/extension/ttf
+
+Example:
+
+	Find OS special files on a portable drive.
+
+find /media/drive | filter-osfiles.sh
+
+

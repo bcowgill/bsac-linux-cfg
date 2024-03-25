@@ -52,4 +52,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '(\$Recycle.Bin|\.(_.+|apdisk|DS_Store|Trash|Trash-.+|Trashes|Spotlight-V100|fseventsd|TemporaryItems))(:|"|\s*$)' $* 
-
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

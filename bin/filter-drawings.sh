@@ -47,3 +47,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(dia|svg|vsd|pidgin|std|sda|sxd|oci)(:|"|\s*$)' $* # .dia .svg .vsd .pidgin .std .sda .sxd
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

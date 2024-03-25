@@ -47,3 +47,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(fon|fnt|ttf|otf|woff2?)(:|"|\s*$)' $* # .fon .fnt .ttf .otf .woff .woff2
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

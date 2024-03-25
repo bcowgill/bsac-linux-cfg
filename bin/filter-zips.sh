@@ -47,3 +47,7 @@ if [ "$1" == "--regex" ]; then
 fi
 
 $GREP '\.(7z|cab|gz|bz2?|[jtw]?ar|tgz|zip|cpio)(:|"|\s*$)' $* # .7z .cab .gz .bz .bz2 .tar .jar .war .zip .tgz .cpio
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi

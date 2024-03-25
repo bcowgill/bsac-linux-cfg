@@ -52,3 +52,7 @@ fi
 
 $GREP '(~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|\#.+?\#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|\#.+?))(:|"|\s*$)' $* # .bak .swp .kate-swp .rej .RESTORE .orig .saved .not .hold _REMOTE_ _LOCAL_ _BACKUP_ _BASE_
 
+ERR=$?
+if [ $ERR != 0 ]; then
+	usage $ERR
+fi
