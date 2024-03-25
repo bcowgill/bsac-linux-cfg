@@ -1,0 +1,22 @@
+egrep: unrecognised option '--invalid'
+usage: egrep ...
+
+filter-min.sh [--help|--man|-?]
+
+This will filter a list of file names to suppress minified, uglified or packed  web development file extensions.
+
+--regex Shows the regex used for matching web file extensions.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+Also filters out debugging .map files and .git, node_modules, deno-packages and bower_components.
+
+See also filter-web.sh filter-text.sh, filter-docs.sh, filter-videos.sh, filter-fonts.sh, filter-scripts.sh, filter-zips.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
+
+See the online file extension database https://fileinfo.com/extension/html
+
+Example:
+
+locate -i website | filter-min.sh
+
