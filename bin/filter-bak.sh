@@ -50,5 +50,5 @@ if [ "$1" == "--regex" ]; then
 	GREP="echo"
 fi
 
-$GREP '(~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|#.+#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|#.+?))(:|"|\s*$)' $* # .bak .swp .kate-swp .rej .RESTORE .orig .saved .not .hold _REMOTE_ _LOCAL_ _BACKUP_ _BASE_
+$GREP '(~|_(REMOTE|LOCAL|BACKUP|BASE)_.+?|\#.+?\#|\.(bak|swp|kate-swp|rej|RESTORE|orig|saved|not|hold|\#.+?))(:|"|\s*$)' $* # .bak .swp .kate-swp .rej .RESTORE .orig .saved .not .hold _REMOTE_ _LOCAL_ _BACKUP_ _BASE_
 

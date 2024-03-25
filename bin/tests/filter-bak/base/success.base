@@ -1,0 +1,21 @@
+contents.txt~: blah blah
+"backedup.txt~"
+edited~     
+source_REMOTE_filename: blah blah
+"source_LOCAL_filename"
+source_BACKUP_filename    
+source_BASE_filename
+#temporary-file#: blah blah
+"#temporary-file#"
+#temporary-file#   
+changed.txt.bak
+editor.swp
+textedit.kate-swp
+changes.rej
+backupfile.RESTORE
+package.orig
+module.saved
+code.js.not
+directory.hold
+diff.oriG
+package.sAved
