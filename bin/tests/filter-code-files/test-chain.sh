@@ -26,9 +26,11 @@ filter-images.sh
 filter-videos.sh
 filter-drawings.sh
 filter-fonts.sh
-#filter-docs.sh
+filter-docs.sh
 #filter-bak.sh
+#filter-osfiles.sh
 
+#filter-source.sh
 #filter-scripts.sh
 #filter-configs.sh
 #filter-min.sh
