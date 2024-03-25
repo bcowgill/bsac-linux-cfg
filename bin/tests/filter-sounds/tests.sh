@@ -68,6 +68,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --keep $SAMPLE"
 	$PROGRAM $ARGS 2>&1 | head -1 > $OUT
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -82,6 +83,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --show $SAMPLE"
 	$PROGRAM $ARGS 2>&1 | head -1 > $OUT
+	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
