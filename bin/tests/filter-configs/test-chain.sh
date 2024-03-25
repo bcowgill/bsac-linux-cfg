@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-scripts
+NEXT=filter-min
 
 ./tests.sh
 cd ../$NEXT

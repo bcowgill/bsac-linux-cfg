@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-scripts
+NEXT=filter-configs
 
 ./tests.sh
 cd ../$NEXT

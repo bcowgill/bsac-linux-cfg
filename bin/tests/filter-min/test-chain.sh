@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-scripts
+NEXT=filter-web
 
 ./tests.sh
 cd ../$NEXT
