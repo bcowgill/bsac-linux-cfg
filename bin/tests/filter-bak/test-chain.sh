@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-bak
+NEXT=filter-osfiles
 
 ./tests.sh
 cd ../$NEXT

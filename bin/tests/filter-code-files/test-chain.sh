@@ -27,8 +27,8 @@ filter-videos.sh
 filter-drawings.sh
 filter-fonts.sh
 filter-docs.sh
-#filter-bak.sh
-#filter-osfiles.sh
+filter-bak.sh
+filter-osfiles.sh
 
 #filter-source.sh
 #filter-scripts.sh
