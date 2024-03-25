@@ -47,7 +47,7 @@ echo TEST $CMD command invalid option
 TEST=command-invalid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
-	EXPECT=1
+	EXPECT=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --invalid $SAMPLE"
