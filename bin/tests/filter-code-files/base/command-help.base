@@ -1,5 +1,5 @@
 
-filter-code-files.sh [--help|--man|-?]
+filter-code-files.sh [--help|--man|-?] [path...]
 
 This will filter a list of file names or grep output and suppress any files which relate to software development, leaving only asset files displayed.
 

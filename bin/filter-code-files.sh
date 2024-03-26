@@ -7,7 +7,7 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?]
+$cmd [--help|--man|-?] [path...]
 
 This will filter a list of file names or grep output and suppress any files which relate to software development, leaving only asset files displayed.
 

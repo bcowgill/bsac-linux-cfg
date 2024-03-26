@@ -1,14 +1,7 @@
-#!/bin/bash
-# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
-# WINDEV tool useful on windows development machine
-GREP="egrep -vi"
-cmd=$(basename $0)
+egrep: unrecognised option '--invalid'
+usage: egrep ...
 
-function usage {
-	local code
-	code=$1
-	echo "
-$cmd [--regex] [--help|--man|-?] [path...]
+filter-built-files.sh [--regex] [--help|--man|-?] [path...]
 
 This will filter a list of file names or grep output to suppress files which are built or part of bower/node component system.
 
@@ -26,27 +19,5 @@ See the online file extension database https://fileinfo.com/extension/html
 
 Example:
 
-locate -i website | $cmd
-"
-	exit $code
-}
-if [ "$1" == "--help" ]; then
-	usage 0
-fi
-if [ "$1" == "--man" ]; then
-	usage 0
-fi
-if [ "$1" == "-?" ]; then
-	usage 0
-fi
+locate -i website | filter-built-files.sh
 
-if [ "$1" == "--regex" ]; then
-	shift
-	GREP=echo
-fi
-
-$GREP '(^|/|")(\.(tmp|git|idea)|dist|coverage|node_modules|bower_components|deno-packages)(/|:|"|\s*$)' $*
-ERR=$?
-if [ $ERR != 0 ]; then
-	usage $ERR
-fi

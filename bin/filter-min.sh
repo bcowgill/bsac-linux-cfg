@@ -8,10 +8,11 @@ function usage {
 	local code
 	code=$1
 	echo "
-$cmd [--help|--man|-?]
+$cmd [--regex] [--help|--man|-?] [path...]
 
-This will filter a list of file names to suppress minified, uglified or packed  web development file extensions.
+This will filter a list of file names or grep output to suppress minified, uglified or packed  web development file extensions.
 
+path    File names to process. If omitted then standard input will be scanned.
 --regex Shows the regex used for matching web file extensions.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
@@ -19,13 +20,15 @@ This will filter a list of file names to suppress minified, uglified or packed  
 
 Also filters out debugging .map files and .git, node_modules, deno-packages and bower_components.
 
-See also filter-web.sh filter-text.sh, filter-docs.sh, filter-videos.sh, filter-fonts.sh, filter-scripts.sh, filter-zips.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
+See also filter-built-files.sh filter-web.sh filter-text.sh, filter-docs.sh, filter-videos.sh, filter-fonts.sh, filter-scripts.sh, filter-zips.sh, filter-css.sh, filter-images.sh, filter-sounds.sh, classify.sh
 
 See the online file extension database https://fileinfo.com/extension/html
 
 Example:
 
-locate -i website | $cmd
+	Find your website files, filter out files that are built there then exclude any remaining minified files.
+
+locate -i website | filter-built-files.sh | $cmd
 "
 	exit $code
 }

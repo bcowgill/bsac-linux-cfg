@@ -1,4 +1,11 @@
 // filter-built-files.sh
+.tmp:
+".tmp"
+.tmp  
+.tmp/
+/.tmp:
+"/.tmp"
+/.tmp  
 /.tmp/
 /.git/
 /.idea/
@@ -6,6 +13,7 @@
 /coverage/
 /node_modules/
 /bower_components/
+/deno-packages/
 /app/assets/
 cirrus/public/
 

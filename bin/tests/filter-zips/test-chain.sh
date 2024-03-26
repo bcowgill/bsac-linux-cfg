@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-text
+NEXT=filter-built-files
 
 ./tests.sh
 cd ../$NEXT

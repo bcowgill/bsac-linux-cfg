@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-text
+NEXT=filter-zips
 
 ./tests.sh
 cd ../$NEXT
