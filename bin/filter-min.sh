@@ -40,8 +40,8 @@ if [ "$1" == "-?" ]; then
 fi
 
 if [ "$1" == "--regex" ]; then
-	tail -2 $cmd | perl -pne 's{\$GREP2}{Match: }; s{\$GREP}{Exclude:};'
-	exit 0
+	shift
+	GREP=echo
 fi
 
 $GREP '(\.map|(\.|-)(min|pack)\.((c|le|sa|sc)ss|html?|ts|jsx?|json[5c]?))(:|"|\s*$)' $* # .min.css -min.css .pack.css -pack.css .css .less .sass .scss .htm .html .ts .js .jsx .json .json5 .map

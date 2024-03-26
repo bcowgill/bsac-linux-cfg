@@ -1,0 +1,1 @@
+(\.map|(\.|-)(min|pack)\.((c|le|sa|sc)ss|html?|ts|jsx?|json[5c]?))(:|"|\s*$)

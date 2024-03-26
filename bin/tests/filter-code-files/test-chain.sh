@@ -35,7 +35,7 @@ filter-scripts.sh
 filter-configs.sh
 filter-min.sh
 filter-web.sh
-#filter-css.sh
+filter-css.sh
 #filter-text.sh
 #filter-zips.sh
 #filter-built-files.sh
