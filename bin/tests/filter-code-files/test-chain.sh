@@ -38,8 +38,7 @@ filter-web.sh
 filter-css.sh
 filter-text.sh
 filter-zips.sh
-#filter-built-files.sh
-
+filter-built-files.sh
 filter-code-files.sh
 
 #filter-mime-audio.pl
