@@ -21,16 +21,16 @@ cd ../$NEXT
 filter-long.sh
 filter-coverage.sh
 filter-script.pl
+filter-json-commas.sh
 
-#filter-punct.sh
-#filter-json-commas.sh
 #filter-url.pl
 #filter-whitespace.pl
-#filter-indents.sh
 #filter-newlines.pl
-
-#filter-generify.pl
 #filter-man.pl
+
+#filter-punct.sh
+#filter-indents.sh
+#filter-generify.pl
 
 filter-sounds.sh
 filter-images.sh

@@ -1,0 +1,95 @@
+Www Mmm DD HH:MM:SS TMZ YYYY
+
+
+ ESC[1mNAME ESC[0m<LF>
+    scan-js.pl - scan a javascript file and see if the functions are arranged<LF>
+    as suggested by Uncle Bob's Clean Code book.<LF>
+<LF>
+ ESC[1mAUTHOR ESC[0m<LF>
+    Brent S.A. Cowgill<LF>
+<LF>
+ ESC[1mSYNOPSIS ESC[0m<LF>
+    scan-js.pl [options] [@options-file ...] [file ...]<LF>
+<LF>
+     Options:<LF>
+       --show-code      negatable. show the code after comment and string extraction<LF>
+       --verbose        negatable. show more info about functions. default false<LF>
+       --mess           negatable. show more info about functions. default true<LF>
+       --summary        negatable. show summary of each file. default true<LF>
+       --comment-char   use character to replace text in comment extraction<LF>
+       --string-char    use character to replace text in string extraction<LF>
+       --lint-length    allowed length of jshint control comments to ignore<LF>
+       --version        display program version<LF>
+       --help -?        brief help message<LF>
+       --man            full help message<LF>
+       --debug          incremental. increase the amount of debugging information shown<LF>
+<LF>
+ ESC[1mOPTIONS ESC[0m<LF>
+     ESC[1m--show-code ESC[0m or  ESC[1m--noshow-code ESC[0m<LF>
+             negatable. default false. Print out the source code after comments and<LF>
+             strings have been extracted.  This allow you to diagnose code which might be<LF>
+             excessively tricky.<LF>
+<LF>
+     ESC[1m--verbose ESC[0m or  ESC[1m--noverbose ESC[0m<LF>
+             negatable. default false. Print out additional information instead of just<LF>
+             mess warnings.<LF>
+<LF>
+     ESC[1m--mess ESC[0m or  ESC[1m--nomess ESC[0m<LF>
+             negatable. default true. Print out warnings about possible messy code.<LF>
+<LF>
+     ESC[1m--summary ESC[0m or  ESC[1m--nosummary ESC[0m<LF>
+             negatable. default true. Print out summary of each file.<LF>
+<LF>
+     ESC[1m--comment-char=s ESC[0m<LF>
+             optional. Defaults to '-'. Set the character to use to replace the text<LF>
+             found in comments. Used with --show-code. If set to the empty string<LF>
+             --comment-char='' then comments will not be stripped from the code.<LF>
+<LF>
+     ESC[1m--string-char=s ESC[0m<LF>
+             optional. Defaults to '_'. Set the character to use to replace the text<LF>
+             found in strings. Used with --show-code. If set to the empty string<LF>
+             --string-char='' then strings will not be stripped from the code.<LF>
+             This is useful if functions are referred to by name in some strings.<LF>
+<LF>
+     ESC[1m--lint-length=n ESC[0m<LF>
+             optional. Defaults to 30. The maximum length of a jshint or jslint comment<LF>
+             for it to not count against the amount of comments in the file. If there<LF>
+             is only one such comment in the file it is also ignored.<LF>
+<LF>
+     ESC[1m--version ESC[0m<LF>
+             Prints the program version and exit.<LF>
+<LF>
+     ESC[1m--help ESC[0m or  ESC[1m-? ESC[0m<LF>
+             Print a brief help message and exit.<LF>
+<LF>
+     ESC[1m--man ESC[0m<LF>
+             Print the full help message and exit.<LF>
+<LF>
+ ESC[1mDESCRIPTION ESC[0m<LF>
+     B<This program> will read the given Javascript file(s) and examine<LF>
+     whether the functions are ordered from high level to low level as<LF>
+     suggested by Robert C. Martin's book Clean Code.<LF>
+<LF>
+     This program is not a general purpose Javascript analysis tool. It<LF>
+     assumes the code is pretty clean, not minified, etc. It will not look<LF>
+     for obfuscated function definitions for example.<LF>
+<LF>
+ ESC[1mEXAMPLES ESC[0m<LF>
+     scan-js.pl template/unminified/jquery-2.1.1.js<LF>
+<LF>
+     scan-js.pl template/unminified/jquery-2.1.1.js 2>/dev/null | less<LF>
+<LF>
+     scan-js.pl template/unminified/jquery-2.1.1.js --debug --debug --debug --debug 2>&1 | less<LF>
+<LF>
+ ESC[1mTODO ESC[0m<LF>
+     order output with public then private<LF>
+     order output alphabetically<LF>
+     order output in line order<LF>
+     hide function listing unless warning<LF>
+     keep track of number of params per function<LF>
+     use jshint to measure complexity of functions<LF>
+     closeness of definitions of function to first caller<LF>
+<LF>
+Www Mmm DD HH:MM:SS TMZ YYYY
+
+Elapsed: <1 second

@@ -1,0 +1,234 @@
+Www Mmm DD HH:MM:SS TMZ YYYY
+
+
+Script started on Www DD Mmm YYYY HH:MM:SS TMZ<LF>
+ ESC]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin<BEL> ESC]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin<BEL> ESC[01;32mme@akston ESC[00m: ESC[01;34m~/workspace/play/bsac-linux-cfg/bin ESC[00m$ tzselect<CR><LF>
+Please identify a location so that time zone rules can be set correctly.<CR><LF>
+Please select a continent, ocean, "coord", or "TZ".<CR><LF>
+ 1) Africa<CR><LF>
+ 2) Americas<CR><LF>
+ 3) Antarctica<CR><LF>
+ 4) Arctic Ocean<CR><LF>
+ 5) Asia<CR><LF>
+ 6) Atlantic Ocean<CR><LF>
+ 7) Australia<CR><LF>
+ 8) Europe<CR><LF>
+ 9) Indian Ocean<CR><LF>
+10) Pacific Ocean<CR><LF>
+11) coord - I want to use geographical coordinates.<CR><LF>
+12) TZ - I want to specify the time zone using the Posix TZ format.<CR><LF>
+#? 2<CR><LF>
+Please select a country whose clocks agree with yours.<CR><LF>
+ 1) Anguilla<HT><HT>  19) Dominican Republic    37) Peru<CR><LF>
+ 2) Antigua & Barbuda<HT>  20) Ecuador<HT><HT>    38) Puerto Rico<CR><LF>
+ 3) Argentina<HT><HT>  21) El Salvador<HT>    39) St Barthelemy<CR><LF>
+ 4) Aruba<HT><HT>  22) French Guiana<HT>    40) St Kitts & Nevis<CR><LF>
+ 5) Bahamas<HT><HT>  23) Greenland<HT><HT>    41) St Lucia<CR><LF>
+ 6) Barbados<HT><HT>  24) Grenada<HT><HT>    42) St Maarten (Dutch)<CR><LF>
+ 7) Belize<HT><HT>  25) Guadeloupe<HT>    43) St Martin (French)<CR><LF>
+ 8) Bolivia<HT><HT>  26) Guatemala<HT><HT>    44) St Pierre & Miquelon<CR><LF>
+ 9) Brazil<HT><HT>  27) Guyana<HT><HT>    45) St Vincent<CR><LF>
+10) Canada<HT><HT>  28) Haiti<HT><HT>    46) Suriname<CR><LF>
+11) Caribbean NL<HT>  29) Honduras<HT><HT>    47) Trinidad & Tobago<CR><LF>
+12) Cayman Islands<HT>  30) Jamaica<HT><HT>    48) Turks & Caicos Is<CR><LF>
+13) Chile<HT><HT>  31) Martinique<HT>    49) United States<CR><LF>
+14) Colombia<HT><HT>  32) Mexico<HT><HT>    50) Uruguay<CR><LF>
+15) Costa Rica<HT><HT>  33) Montserrat<HT>    51) Venezuela<CR><LF>
+16) Cuba<HT><HT>  34) Nicaragua<HT><HT>    52) Virgin Islands (UK)<CR><LF>
+17) Curaçao<HT><HT>  35) Panama<HT><HT>    53) Virgin Islands (US)<CR><LF>
+18) Dominica<HT><HT>  36) Paraguay<CR><LF>
+#? 1<CR><LF>
+<CR><LF>
+The following information has been given:<CR><LF>
+<CR><LF>
+<HT>Anguilla<CR><LF>
+<CR><LF>
+Therefore TZ='America/Anguilla' will be used.<CR><LF>
+Local time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Universal Time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Is the above information OK?<CR><LF>
+1) Yes<CR><LF>
+2) No<CR><LF>
+#? 2<CR><LF>
+Please identify a location so that time zone rules can be set correctly.<CR><LF>
+Please select a continent, ocean, "coord", or "TZ".<CR><LF>
+ 1) Africa<CR><LF>
+ 2) Americas<CR><LF>
+ 3) Antarctica<CR><LF>
+ 4) Arctic Ocean<CR><LF>
+ 5) Asia<CR><LF>
+ 6) Atlantic Ocean<CR><LF>
+ 7) Australia<CR><LF>
+ 8) Europe<CR><LF>
+ 9) Indian Ocean<CR><LF>
+10) Pacific Ocean<CR><LF>
+11) coord - I want to use geographical coordinates.<CR><LF>
+12) TZ - I want to specify the time zone using the Posix TZ format.<CR><LF>
+#? 1<CR><LF>
+Please select a country whose clocks agree with yours.<CR><LF>
+ 1) Algeria<HT><HT>  18) Gabon<HT><HT>    35) Rwanda<CR><LF>
+ 2) Angola<HT><HT>  19) Gambia<HT><HT>    36) Sao Tome & Principe<CR><LF>
+ 3) Benin<HT><HT>  20) Ghana<HT><HT>    37) Senegal<CR><LF>
+ 4) Botswana<HT><HT>  21) Guinea<HT><HT>    38) Sierra Leone<CR><LF>
+ 5) Burkina Faso<HT>  22) Guinea-Bissau<HT>    39) Somalia<CR><LF>
+ 6) Burundi<HT><HT>  23) Kenya<HT><HT>    40) South Africa<CR><LF>
+ 7) Cameroon<HT><HT>  24) Lesotho<HT><HT>    41) South Sudan<CR><LF>
+ 8) Central African Rep.  25) Liberia<HT><HT>    42) Spain<CR><LF>
+ 9) Chad<HT><HT>  26) Libya<HT><HT>    43) Sudan<CR><LF>
+10) Congo (Dem. Rep.)<HT>  27) Malawi<HT><HT>    44) Swaziland<CR><LF>
+11) Congo (Rep.)<HT>  28) Mali<HT><HT>    45) Tanzania<CR><LF>
+12) Côte d'Ivoire<HT>  29) Mauritania<HT>    46) Togo<CR><LF>
+13) Djibouti<HT><HT>  30) Morocco<HT><HT>    47) Tunisia<CR><LF>
+14) Egypt<HT><HT>  31) Mozambique<HT>    48) Uganda<CR><LF>
+15) Equatorial Guinea<HT>  32) Namibia<HT><HT>    49) Western Sahara<CR><LF>
+16) Eritrea<HT><HT>  33) Niger<HT><HT>    50) Zambia<CR><LF>
+17) Ethiopia<HT><HT>  34) Nigeria<HT><HT>    51) Zimbabwe<CR><LF>
+#? 25<CR><LF>
+<CR><LF>
+The following information has been given:<CR><LF>
+<CR><LF>
+<HT>Liberia<CR><LF>
+<CR><LF>
+Therefore TZ='Africa/Monrovia' will be used.<CR><LF>
+Local time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Universal Time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Is the above information OK?<CR><LF>
+1) Yes<CR><LF>
+2) No<CR><LF>
+#? 2<CR><LF>
+Please identify a location so that time zone rules can be set correctly.<CR><LF>
+Please select a continent, ocean, "coord", or "TZ".<CR><LF>
+ 1) Africa<CR><LF>
+ 2) Americas<CR><LF>
+ 3) Antarctica<CR><LF>
+ 4) Arctic Ocean<CR><LF>
+ 5) Asia<CR><LF>
+ 6) Atlantic Ocean<CR><LF>
+ 7) Australia<CR><LF>
+ 8) Europe<CR><LF>
+ 9) Indian Ocean<CR><LF>
+10) Pacific Ocean<CR><LF>
+11) coord - I want to use geographical coordinates.<CR><LF>
+12) TZ - I want to specify the time zone using the Posix TZ format.<CR><LF>
+#? 3<CR><LF>
+Please select a country whose clocks agree with yours.<CR><LF>
+1) Antarctica<CR><LF>
+2) Australia<CR><LF>
+#? 2<CR><LF>
+Please select one of the following time zone regions.<CR><LF>
+1) Lord Howe Island<HT><HT>      8) Queensland (most areas)<CR><LF>
+2) Macquarie Island<HT><HT>      9) Queensland (Whitsunday Islands)<CR><LF>
+3) Tasmania (most areas)<HT>     10) South Australia<CR><LF>
+4) Tasmania (King Island)<HT>     11) Northern Territory<CR><LF>
+5) Victoria<HT><HT><HT>     12) Western Australia (most areas)<CR><LF>
+6) New South Wales (most areas)<HT>     13) Western Australia (Eucla)<CR><LF>
+7) New South Wales (Yancowinna)<CR><LF>
+#? 11<CR><LF>
+<CR><LF>
+The following information has been given:<CR><LF>
+<CR><LF>
+<HT>Australia<CR><LF>
+<HT>Northern Territory<CR><LF>
+<CR><LF>
+Therefore TZ='Australia/Darwin' will be used.<CR><LF>
+Local time is now:<HT>Fri Sep 21 15:56:11 ACST 2018.<CR><LF>
+Universal Time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Is the above information OK?<CR><LF>
+1) Yes<CR><LF>
+2) No<CR><LF>
+#? 2<CR><LF>
+Please identify a location so that time zone rules can be set correctly.<CR><LF>
+Please select a continent, ocean, "coord", or "TZ".<CR><LF>
+ 1) Africa<CR><LF>
+ 2) Americas<CR><LF>
+ 3) Antarctica<CR><LF>
+ 4) Arctic Ocean<CR><LF>
+ 5) Asia<CR><LF>
+ 6) Atlantic Ocean<CR><LF>
+ 7) Australia<CR><LF>
+ 8) Europe<CR><LF>
+ 9) Indian Ocean<CR><LF>
+10) Pacific Ocean<CR><LF>
+11) coord - I want to use geographical coordinates.<CR><LF>
+12) TZ - I want to specify the time zone using the Posix TZ format.<CR><LF>
+#? 8<CR><LF>
+Please select a country whose clocks agree with yours.<CR><LF>
+ 1) Åland Islands<HT>  18) Greece<HT><HT>    35) Norway<CR><LF>
+ 2) Albania<HT><HT>  19) Guernsey<HT><HT>    36) Poland<CR><LF>
+ 3) Andorra<HT><HT>  20) Hungary<HT><HT>    37) Portugal<CR><LF>
+ 4) Austria<HT><HT>  21) Ireland<HT><HT>    38) Romania<CR><LF>
+ 5) Belarus<HT><HT>  22) Isle of Man<HT>    39) Russia<CR><LF>
+ 6) Belgium<HT><HT>  23) Italy<HT><HT>    40) San Marino<CR><LF>
+ 7) Bosnia & Herzegovina  24) Jersey<HT><HT>    41) Serbia<CR><LF>
+ 8) Britain (UK)<HT>  25) Latvia<HT><HT>    42) Slovakia<CR><LF>
+ 9) Bulgaria<HT><HT>  26) Liechtenstein<HT>    43) Slovenia<CR><LF>
+10) Croatia<HT><HT>  27) Lithuania<HT><HT>    44) Spain<CR><LF>
+11) Czech Republic<HT>  28) Luxembourg<HT>    45) Sweden<CR><LF>
+12) Denmark<HT><HT>  29) Macedonia<HT><HT>    46) Switzerland<CR><LF>
+13) Estonia<HT><HT>  30) Malta<HT><HT>    47) Turkey<CR><LF>
+14) Finland<HT><HT>  31) Moldova<HT><HT>    48) Ukraine<CR><LF>
+15) France<HT><HT>  32) Monaco<HT><HT>    49) Vatican City<CR><LF>
+16) Germany<HT><HT>  33) Montenegro<CR><LF>
+17) Gibraltar<HT><HT>  34) Netherlands<CR><LF>
+#? 22<CR><LF>
+<CR><LF>
+The following information has been given:<CR><LF>
+<CR><LF>
+<HT>Isle of Man<CR><LF>
+<CR><LF>
+Therefore TZ='Europe/Isle_of_Man' will be used.<CR><LF>
+Local time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Universal Time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Is the above information OK?<CR><LF>
+1) Yes<CR><LF>
+2) No<CR><LF>
+#? 2<CR><LF>
+Please identify a location so that time zone rules can be set correctly.<CR><LF>
+Please select a continent, ocean, "coord", or "TZ".<CR><LF>
+ 1) Africa<CR><LF>
+ 2) Americas<CR><LF>
+ 3) Antarctica<CR><LF>
+ 4) Arctic Ocean<CR><LF>
+ 5) Asia<CR><LF>
+ 6) Atlantic Ocean<CR><LF>
+ 7) Australia<CR><LF>
+ 8) Europe<CR><LF>
+ 9) Indian Ocean<CR><LF>
+10) Pacific Ocean<CR><LF>
+11) coord - I want to use geographical coordinates.<CR><LF>
+12) TZ - I want to specify the time zone using the Posix TZ format.<CR><LF>
+#? 9<CR><LF>
+Please select a country whose clocks agree with yours.<CR><LF>
+1) British Indian Ocean Territory       7) Maldives<CR><LF>
+2) Christmas Island<HT><HT>        8) Mauritius<CR><LF>
+3) Cocos (Keeling) Islands<HT>        9) Mayotte<CR><LF>
+4) Comoros<HT><HT><HT>       10) Réunion<CR><LF>
+5) French Southern & Antarctic Lands   11) Seychelles<CR><LF>
+6) Madagascar<CR><LF>
+#? 9<CR><LF>
+<CR><LF>
+The following information has been given:<CR><LF>
+<CR><LF>
+<HT>Mayotte<CR><LF>
+<CR><LF>
+Therefore TZ='Indian/Mayotte' will be used.<CR><LF>
+Local time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Universal Time is now:<HT>Www Mmm DD HH:MM:SS TMZ YYYY.<CR><LF>
+Is the above information OK?<CR><LF>
+1) Yes<CR><LF>
+2) No<CR><LF>
+#? 1<CR><LF>
+<CR><LF>
+You can make this change permanent for yourself by appending the line<CR><LF>
+<HT>TZ='Indian/Mayotte'; export TZ<CR><LF>
+to the file '.profile' in your home directory; then log out and log in again.<CR><LF>
+<CR><LF>
+Here is that TZ value again, this time on standard output so that you<CR><LF>
+can use the /usr/bin/tzselect command in shell scripts:<CR><LF>
+Indian/Mayotte<CR><LF>
+ ESC]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin<BEL> ESC]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin<BEL> ESC[01;32mme@akston ESC[00m: ESC[01;34m~/workspace/play/bsac-linux-cfg/bin ESC[00m$ less time<BEL>zones.log <CR><LF>
+ ESC[?1049h ESC[?1h<CR><LF>
+hello<BS><BS><BS><BS><BS><LF>
+Www Mmm DD HH:MM:SS TMZ YYYY
+
+Elapsed: <1 second

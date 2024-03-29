@@ -1,0 +1,234 @@
+Www Mmm DD HH:MM:SS TMZ YYYY
+
+
+Script started on Www DD Mmm YYYY HH:MM:SS TMZ
+]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin[01;32mme@akston[00m:[01;34m~/workspace/play/bsac-linux-cfg/bin[00m$ tzselect
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent, ocean, "coord", or "TZ".
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) coord - I want to use geographical coordinates.
+12) TZ - I want to specify the time zone using the Posix TZ format.
+#? 2
+Please select a country whose clocks agree with yours.
+ 1) Anguilla		  19) Dominican Republic    37) Peru
+ 2) Antigua & Barbuda	  20) Ecuador		    38) Puerto Rico
+ 3) Argentina		  21) El Salvador	    39) St Barthelemy
+ 4) Aruba		  22) French Guiana	    40) St Kitts & Nevis
+ 5) Bahamas		  23) Greenland		    41) St Lucia
+ 6) Barbados		  24) Grenada		    42) St Maarten (Dutch)
+ 7) Belize		  25) Guadeloupe	    43) St Martin (French)
+ 8) Bolivia		  26) Guatemala		    44) St Pierre & Miquelon
+ 9) Brazil		  27) Guyana		    45) St Vincent
+10) Canada		  28) Haiti		    46) Suriname
+11) Caribbean NL	  29) Honduras		    47) Trinidad & Tobago
+12) Cayman Islands	  30) Jamaica		    48) Turks & Caicos Is
+13) Chile		  31) Martinique	    49) United States
+14) Colombia		  32) Mexico		    50) Uruguay
+15) Costa Rica		  33) Montserrat	    51) Venezuela
+16) Cuba		  34) Nicaragua		    52) Virgin Islands (UK)
+17) Curaçao		  35) Panama		    53) Virgin Islands (US)
+18) Dominica		  36) Paraguay
+#? 1
+
+The following information has been given:
+
+	Anguilla
+
+Therefore TZ='America/Anguilla' will be used.
+Local time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Universal Time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Is the above information OK?
+1) Yes
+2) No
+#? 2
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent, ocean, "coord", or "TZ".
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) coord - I want to use geographical coordinates.
+12) TZ - I want to specify the time zone using the Posix TZ format.
+#? 1
+Please select a country whose clocks agree with yours.
+ 1) Algeria		  18) Gabon		    35) Rwanda
+ 2) Angola		  19) Gambia		    36) Sao Tome & Principe
+ 3) Benin		  20) Ghana		    37) Senegal
+ 4) Botswana		  21) Guinea		    38) Sierra Leone
+ 5) Burkina Faso	  22) Guinea-Bissau	    39) Somalia
+ 6) Burundi		  23) Kenya		    40) South Africa
+ 7) Cameroon		  24) Lesotho		    41) South Sudan
+ 8) Central African Rep.  25) Liberia		    42) Spain
+ 9) Chad		  26) Libya		    43) Sudan
+10) Congo (Dem. Rep.)	  27) Malawi		    44) Swaziland
+11) Congo (Rep.)	  28) Mali		    45) Tanzania
+12) Côte d'Ivoire	  29) Mauritania	    46) Togo
+13) Djibouti		  30) Morocco		    47) Tunisia
+14) Egypt		  31) Mozambique	    48) Uganda
+15) Equatorial Guinea	  32) Namibia		    49) Western Sahara
+16) Eritrea		  33) Niger		    50) Zambia
+17) Ethiopia		  34) Nigeria		    51) Zimbabwe
+#? 25
+
+The following information has been given:
+
+	Liberia
+
+Therefore TZ='Africa/Monrovia' will be used.
+Local time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Universal Time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Is the above information OK?
+1) Yes
+2) No
+#? 2
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent, ocean, "coord", or "TZ".
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) coord - I want to use geographical coordinates.
+12) TZ - I want to specify the time zone using the Posix TZ format.
+#? 3
+Please select a country whose clocks agree with yours.
+1) Antarctica
+2) Australia
+#? 2
+Please select one of the following time zone regions.
+1) Lord Howe Island		      8) Queensland (most areas)
+2) Macquarie Island		      9) Queensland (Whitsunday Islands)
+3) Tasmania (most areas)	     10) South Australia
+4) Tasmania (King Island)	     11) Northern Territory
+5) Victoria			     12) Western Australia (most areas)
+6) New South Wales (most areas)	     13) Western Australia (Eucla)
+7) New South Wales (Yancowinna)
+#? 11
+
+The following information has been given:
+
+	Australia
+	Northern Territory
+
+Therefore TZ='Australia/Darwin' will be used.
+Local time is now:	Fri Sep 21 15:56:11 ACST 2018.
+Universal Time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Is the above information OK?
+1) Yes
+2) No
+#? 2
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent, ocean, "coord", or "TZ".
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) coord - I want to use geographical coordinates.
+12) TZ - I want to specify the time zone using the Posix TZ format.
+#? 8
+Please select a country whose clocks agree with yours.
+ 1) Åland Islands	  18) Greece		    35) Norway
+ 2) Albania		  19) Guernsey		    36) Poland
+ 3) Andorra		  20) Hungary		    37) Portugal
+ 4) Austria		  21) Ireland		    38) Romania
+ 5) Belarus		  22) Isle of Man	    39) Russia
+ 6) Belgium		  23) Italy		    40) San Marino
+ 7) Bosnia & Herzegovina  24) Jersey		    41) Serbia
+ 8) Britain (UK)	  25) Latvia		    42) Slovakia
+ 9) Bulgaria		  26) Liechtenstein	    43) Slovenia
+10) Croatia		  27) Lithuania		    44) Spain
+11) Czech Republic	  28) Luxembourg	    45) Sweden
+12) Denmark		  29) Macedonia		    46) Switzerland
+13) Estonia		  30) Malta		    47) Turkey
+14) Finland		  31) Moldova		    48) Ukraine
+15) France		  32) Monaco		    49) Vatican City
+16) Germany		  33) Montenegro
+17) Gibraltar		  34) Netherlands
+#? 22
+
+The following information has been given:
+
+	Isle of Man
+
+Therefore TZ='Europe/Isle_of_Man' will be used.
+Local time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Universal Time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Is the above information OK?
+1) Yes
+2) No
+#? 2
+Please identify a location so that time zone rules can be set correctly.
+Please select a continent, ocean, "coord", or "TZ".
+ 1) Africa
+ 2) Americas
+ 3) Antarctica
+ 4) Arctic Ocean
+ 5) Asia
+ 6) Atlantic Ocean
+ 7) Australia
+ 8) Europe
+ 9) Indian Ocean
+10) Pacific Ocean
+11) coord - I want to use geographical coordinates.
+12) TZ - I want to specify the time zone using the Posix TZ format.
+#? 9
+Please select a country whose clocks agree with yours.
+1) British Indian Ocean Territory       7) Maldives
+2) Christmas Island		        8) Mauritius
+3) Cocos (Keeling) Islands	        9) Mayotte
+4) Comoros			       10) Réunion
+5) French Southern & Antarctic Lands   11) Seychelles
+6) Madagascar
+#? 9
+
+The following information has been given:
+
+	Mayotte
+
+Therefore TZ='Indian/Mayotte' will be used.
+Local time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Universal Time is now:	Www Mmm DD HH:MM:SS TMZ YYYY.
+Is the above information OK?
+1) Yes
+2) No
+#? 1
+
+You can make this change permanent for yourself by appending the line
+	TZ='Indian/Mayotte'; export TZ
+to the file '.profile' in your home directory; then log out and log in again.
+
+Here is that TZ value again, this time on standard output so that you
+can use the /usr/bin/tzselect command in shell scripts:
+Indian/Mayotte
+]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin]0;me@akston: ~/workspace/play/bsac-linux-cfg/bin[01;32mme@akston[00m:[01;34m~/workspace/play/bsac-linux-cfg/bin[00m$ less timezones.log 
+[?1049h[?1h
+hello
+Www Mmm DD HH:MM:SS TMZ YYYY
+
+Elapsed: <1 second

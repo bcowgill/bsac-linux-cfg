@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=filter-json-commas
+NEXT=filter-sounds
 
 ./tests.sh
 if [ ! -z "$1" ]; then

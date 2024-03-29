@@ -1,0 +1,238 @@
+57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 0A 0A 0A 53	 W w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y lf lf lf S
+63 72 69 70 74 20 73 74 61 72 74 65 64 20 6F 6E 20 57 77 77 20 44 44 20 4D 6D 6D 20 59 59 59 59	 c r i p t   s t a r t e d   o n   W w w   D D   M m m   Y Y Y Y
+20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 0A 1B 5D 30 3B 6D 65 40 61 6B 73 74 6F 6E 3A 20 7E 2F 77	   H H : M M : S S   T M Z lf esc ] 0 ; m e @ a k s t o n :   ~ / w
+6F 72 6B 73 70 61 63 65 2F 70 6C 61 79 2F 62 73 61 63 2D 6C 69 6E 75 78 2D 63 66 67 2F 62 69 6E	 o r k s p a c e / p l a y / b s a c - l i n u x - c f g / b i n
+07 1B 5D 30 3B 6D 65 40 61 6B 73 74 6F 6E 3A 20 7E 2F 77 6F 72 6B 73 70 61 63 65 2F 70 6C 61 79	 bel esc ] 0 ; m e @ a k s t o n :   ~ / w o r k s p a c e / p l a y
+2F 62 73 61 63 2D 6C 69 6E 75 78 2D 63 66 67 2F 62 69 6E 07 1B 5B 30 31 3B 33 32 6D 6D 65 40 61	 / b s a c - l i n u x - c f g / b i n bel esc [ 0 1 ; 3 2 m m e @ a
+6B 73 74 6F 6E 1B 5B 30 30 6D 3A 1B 5B 30 31 3B 33 34 6D 7E 2F 77 6F 72 6B 73 70 61 63 65 2F 70	 k s t o n esc [ 0 0 m : esc [ 0 1 ; 3 4 m ~ / w o r k s p a c e / p
+6C 61 79 2F 62 73 61 63 2D 6C 69 6E 75 78 2D 63 66 67 2F 62 69 6E 1B 5B 30 30 6D 24 20 74 7A 73	 l a y / b s a c - l i n u x - c f g / b i n esc [ 0 0 m $   t z s
+65 6C 65 63 74 0A 50 6C 65 61 73 65 20 69 64 65 6E 74 69 66 79 20 61 20 6C 6F 63 61 74 69 6F 6E	 e l e c t lf P l e a s e   i d e n t i f y   a   l o c a t i o n
+20 73 6F 20 74 68 61 74 20 74 69 6D 65 20 7A 6F 6E 65 20 72 75 6C 65 73 20 63 61 6E 20 62 65 20	   s o   t h a t   t i m e   z o n e   r u l e s   c a n   b e  
+73 65 74 20 63 6F 72 72 65 63 74 6C 79 2E 0A 50 6C 65 61 73 65 20 73 65 6C 65 63 74 20 61 20 63	 s e t   c o r r e c t l y . lf P l e a s e   s e l e c t   a   c
+6F 6E 74 69 6E 65 6E 74 2C 20 6F 63 65 61 6E 2C 20 22 63 6F 6F 72 64 22 2C 20 6F 72 20 22 54 5A	 o n t i n e n t ,   o c e a n ,   " c o o r d " ,   o r   " T Z
+22 2E 0A 20 31 29 20 41 66 72 69 63 61 0A 20 32 29 20 41 6D 65 72 69 63 61 73 0A 20 33 29 20 41	 " . lf   1 )   A f r i c a lf   2 )   A m e r i c a s lf   3 )   A
+6E 74 61 72 63 74 69 63 61 0A 20 34 29 20 41 72 63 74 69 63 20 4F 63 65 61 6E 0A 20 35 29 20 41	 n t a r c t i c a lf   4 )   A r c t i c   O c e a n lf   5 )   A
+73 69 61 0A 20 36 29 20 41 74 6C 61 6E 74 69 63 20 4F 63 65 61 6E 0A 20 37 29 20 41 75 73 74 72	 s i a lf   6 )   A t l a n t i c   O c e a n lf   7 )   A u s t r
+61 6C 69 61 0A 20 38 29 20 45 75 72 6F 70 65 0A 20 39 29 20 49 6E 64 69 61 6E 20 4F 63 65 61 6E	 a l i a lf   8 )   E u r o p e lf   9 )   I n d i a n   O c e a n
+0A 31 30 29 20 50 61 63 69 66 69 63 20 4F 63 65 61 6E 0A 31 31 29 20 63 6F 6F 72 64 20 2D 20 49	 lf 1 0 )   P a c i f i c   O c e a n lf 1 1 )   c o o r d   -   I
+20 77 61 6E 74 20 74 6F 20 75 73 65 20 67 65 6F 67 72 61 70 68 69 63 61 6C 20 63 6F 6F 72 64 69	   w a n t   t o   u s e   g e o g r a p h i c a l   c o o r d i
+6E 61 74 65 73 2E 0A 31 32 29 20 54 5A 20 2D 20 49 20 77 61 6E 74 20 74 6F 20 73 70 65 63 69 66	 n a t e s . lf 1 2 )   T Z   -   I   w a n t   t o   s p e c i f
+79 20 74 68 65 20 74 69 6D 65 20 7A 6F 6E 65 20 75 73 69 6E 67 20 74 68 65 20 50 6F 73 69 78 20	 y   t h e   t i m e   z o n e   u s i n g   t h e   P o s i x  
+54 5A 20 66 6F 72 6D 61 74 2E 0A 23 3F 20 32 0A 50 6C 65 61 73 65 20 73 65 6C 65 63 74 20 61 20	 T Z   f o r m a t . lf # ?   2 lf P l e a s e   s e l e c t   a  
+63 6F 75 6E 74 72 79 20 77 68 6F 73 65 20 63 6C 6F 63 6B 73 20 61 67 72 65 65 20 77 69 74 68 20	 c o u n t r y   w h o s e   c l o c k s   a g r e e   w i t h  
+79 6F 75 72 73 2E 0A 20 31 29 20 41 6E 67 75 69 6C 6C 61 09 09 20 20 31 39 29 20 44 6F 6D 69 6E	 y o u r s . lf   1 )   A n g u i l l a ht ht     1 9 )   D o m i n
+69 63 61 6E 20 52 65 70 75 62 6C 69 63 20 20 20 20 33 37 29 20 50 65 72 75 0A 20 32 29 20 41 6E	 i c a n   R e p u b l i c         3 7 )   P e r u lf   2 )   A n
+74 69 67 75 61 20 26 20 42 61 72 62 75 64 61 09 20 20 32 30 29 20 45 63 75 61 64 6F 72 09 09 20	 t i g u a   &   B a r b u d a ht     2 0 )   E c u a d o r ht ht  
+20 20 20 33 38 29 20 50 75 65 72 74 6F 20 52 69 63 6F 0A 20 33 29 20 41 72 67 65 6E 74 69 6E 61	       3 8 )   P u e r t o   R i c o lf   3 )   A r g e n t i n a
+09 09 20 20 32 31 29 20 45 6C 20 53 61 6C 76 61 64 6F 72 09 20 20 20 20 33 39 29 20 53 74 20 42	 ht ht     2 1 )   E l   S a l v a d o r ht         3 9 )   S t   B
+61 72 74 68 65 6C 65 6D 79 0A 20 34 29 20 41 72 75 62 61 09 09 20 20 32 32 29 20 46 72 65 6E 63	 a r t h e l e m y lf   4 )   A r u b a ht ht     2 2 )   F r e n c
+68 20 47 75 69 61 6E 61 09 20 20 20 20 34 30 29 20 53 74 20 4B 69 74 74 73 20 26 20 4E 65 76 69	 h   G u i a n a ht         4 0 )   S t   K i t t s   &   N e v i
+73 0A 20 35 29 20 42 61 68 61 6D 61 73 09 09 20 20 32 33 29 20 47 72 65 65 6E 6C 61 6E 64 09 09	 s lf   5 )   B a h a m a s ht ht     2 3 )   G r e e n l a n d ht ht
+20 20 20 20 34 31 29 20 53 74 20 4C 75 63 69 61 0A 20 36 29 20 42 61 72 62 61 64 6F 73 09 09 20	         4 1 )   S t   L u c i a lf   6 )   B a r b a d o s ht ht  
+20 32 34 29 20 47 72 65 6E 61 64 61 09 09 20 20 20 20 34 32 29 20 53 74 20 4D 61 61 72 74 65 6E	   2 4 )   G r e n a d a ht ht         4 2 )   S t   M a a r t e n
+20 28 44 75 74 63 68 29 0A 20 37 29 20 42 65 6C 69 7A 65 09 09 20 20 32 35 29 20 47 75 61 64 65	   ( D u t c h ) lf   7 )   B e l i z e ht ht     2 5 )   G u a d e
+6C 6F 75 70 65 09 20 20 20 20 34 33 29 20 53 74 20 4D 61 72 74 69 6E 20 28 46 72 65 6E 63 68 29	 l o u p e ht         4 3 )   S t   M a r t i n   ( F r e n c h )
+0A 20 38 29 20 42 6F 6C 69 76 69 61 09 09 20 20 32 36 29 20 47 75 61 74 65 6D 61 6C 61 09 09 20	 lf   8 )   B o l i v i a ht ht     2 6 )   G u a t e m a l a ht ht  
+20 20 20 34 34 29 20 53 74 20 50 69 65 72 72 65 20 26 20 4D 69 71 75 65 6C 6F 6E 0A 20 39 29 20	       4 4 )   S t   P i e r r e   &   M i q u e l o n lf   9 )  
+42 72 61 7A 69 6C 09 09 20 20 32 37 29 20 47 75 79 61 6E 61 09 09 20 20 20 20 34 35 29 20 53 74	 B r a z i l ht ht     2 7 )   G u y a n a ht ht         4 5 )   S t
+20 56 69 6E 63 65 6E 74 0A 31 30 29 20 43 61 6E 61 64 61 09 09 20 20 32 38 29 20 48 61 69 74 69	   V i n c e n t lf 1 0 )   C a n a d a ht ht     2 8 )   H a i t i
+09 09 20 20 20 20 34 36 29 20 53 75 72 69 6E 61 6D 65 0A 31 31 29 20 43 61 72 69 62 62 65 61 6E	 ht ht         4 6 )   S u r i n a m e lf 1 1 )   C a r i b b e a n
+20 4E 4C 09 20 20 32 39 29 20 48 6F 6E 64 75 72 61 73 09 09 20 20 20 20 34 37 29 20 54 72 69 6E	   N L ht     2 9 )   H o n d u r a s ht ht         4 7 )   T r i n
+69 64 61 64 20 26 20 54 6F 62 61 67 6F 0A 31 32 29 20 43 61 79 6D 61 6E 20 49 73 6C 61 6E 64 73	 i d a d   &   T o b a g o lf 1 2 )   C a y m a n   I s l a n d s
+09 20 20 33 30 29 20 4A 61 6D 61 69 63 61 09 09 20 20 20 20 34 38 29 20 54 75 72 6B 73 20 26 20	 ht     3 0 )   J a m a i c a ht ht         4 8 )   T u r k s   &  
+43 61 69 63 6F 73 20 49 73 0A 31 33 29 20 43 68 69 6C 65 09 09 20 20 33 31 29 20 4D 61 72 74 69	 C a i c o s   I s lf 1 3 )   C h i l e ht ht     3 1 )   M a r t i
+6E 69 71 75 65 09 20 20 20 20 34 39 29 20 55 6E 69 74 65 64 20 53 74 61 74 65 73 0A 31 34 29 20	 n i q u e ht         4 9 )   U n i t e d   S t a t e s lf 1 4 )  
+43 6F 6C 6F 6D 62 69 61 09 09 20 20 33 32 29 20 4D 65 78 69 63 6F 09 09 20 20 20 20 35 30 29 20	 C o l o m b i a ht ht     3 2 )   M e x i c o ht ht         5 0 )  
+55 72 75 67 75 61 79 0A 31 35 29 20 43 6F 73 74 61 20 52 69 63 61 09 09 20 20 33 33 29 20 4D 6F	 U r u g u a y lf 1 5 )   C o s t a   R i c a ht ht     3 3 )   M o
+6E 74 73 65 72 72 61 74 09 20 20 20 20 35 31 29 20 56 65 6E 65 7A 75 65 6C 61 0A 31 36 29 20 43	 n t s e r r a t ht         5 1 )   V e n e z u e l a lf 1 6 )   C
+75 62 61 09 09 20 20 33 34 29 20 4E 69 63 61 72 61 67 75 61 09 09 20 20 20 20 35 32 29 20 56 69	 u b a ht ht     3 4 )   N i c a r a g u a ht ht         5 2 )   V i
+72 67 69 6E 20 49 73 6C 61 6E 64 73 20 28 55 4B 29 0A 31 37 29 20 43 75 72 61 C3 A7 61 6F 09 09	 r g i n   I s l a n d s   ( U K ) lf 1 7 )   C u r a c3 a7 a o ht ht
+20 20 33 35 29 20 50 61 6E 61 6D 61 09 09 20 20 20 20 35 33 29 20 56 69 72 67 69 6E 20 49 73 6C	     3 5 )   P a n a m a ht ht         5 3 )   V i r g i n   I s l
+61 6E 64 73 20 28 55 53 29 0A 31 38 29 20 44 6F 6D 69 6E 69 63 61 09 09 20 20 33 36 29 20 50 61	 a n d s   ( U S ) lf 1 8 )   D o m i n i c a ht ht     3 6 )   P a
+72 61 67 75 61 79 0A 23 3F 20 31 0A 0A 54 68 65 20 66 6F 6C 6C 6F 77 69 6E 67 20 69 6E 66 6F 72	 r a g u a y lf # ?   1 lf lf T h e   f o l l o w i n g   i n f o r
+6D 61 74 69 6F 6E 20 68 61 73 20 62 65 65 6E 20 67 69 76 65 6E 3A 0A 0A 09 41 6E 67 75 69 6C 6C	 m a t i o n   h a s   b e e n   g i v e n : lf lf ht A n g u i l l
+61 0A 0A 54 68 65 72 65 66 6F 72 65 20 54 5A 3D 27 41 6D 65 72 69 63 61 2F 41 6E 67 75 69 6C 6C	 a lf lf T h e r e f o r e   T Z = ' A m e r i c a / A n g u i l l
+61 27 20 77 69 6C 6C 20 62 65 20 75 73 65 64 2E 0A 4C 6F 63 61 6C 20 74 69 6D 65 20 69 73 20 6E	 a '   w i l l   b e   u s e d . lf L o c a l   t i m e   i s   n
+6F 77 3A 09 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59	 o w : ht W w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y
+2E 0A 55 6E 69 76 65 72 73 61 6C 20 54 69 6D 65 20 69 73 20 6E 6F 77 3A 09 57 77 77 20 4D 6D 6D	 . lf U n i v e r s a l   T i m e   i s   n o w : ht W w w   M m m
+20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 2E 0A 49 73 20 74 68 65 20 61 62	   D D   H H : M M : S S   T M Z   Y Y Y Y . lf I s   t h e   a b
+6F 76 65 20 69 6E 66 6F 72 6D 61 74 69 6F 6E 20 4F 4B 3F 0A 31 29 20 59 65 73 0A 32 29 20 4E 6F	 o v e   i n f o r m a t i o n   O K ? lf 1 )   Y e s lf 2 )   N o
+0A 23 3F 20 32 0A 50 6C 65 61 73 65 20 69 64 65 6E 74 69 66 79 20 61 20 6C 6F 63 61 74 69 6F 6E	 lf # ?   2 lf P l e a s e   i d e n t i f y   a   l o c a t i o n
+20 73 6F 20 74 68 61 74 20 74 69 6D 65 20 7A 6F 6E 65 20 72 75 6C 65 73 20 63 61 6E 20 62 65 20	   s o   t h a t   t i m e   z o n e   r u l e s   c a n   b e  
+73 65 74 20 63 6F 72 72 65 63 74 6C 79 2E 0A 50 6C 65 61 73 65 20 73 65 6C 65 63 74 20 61 20 63	 s e t   c o r r e c t l y . lf P l e a s e   s e l e c t   a   c
+6F 6E 74 69 6E 65 6E 74 2C 20 6F 63 65 61 6E 2C 20 22 63 6F 6F 72 64 22 2C 20 6F 72 20 22 54 5A	 o n t i n e n t ,   o c e a n ,   " c o o r d " ,   o r   " T Z
+22 2E 0A 20 31 29 20 41 66 72 69 63 61 0A 20 32 29 20 41 6D 65 72 69 63 61 73 0A 20 33 29 20 41	 " . lf   1 )   A f r i c a lf   2 )   A m e r i c a s lf   3 )   A
+6E 74 61 72 63 74 69 63 61 0A 20 34 29 20 41 72 63 74 69 63 20 4F 63 65 61 6E 0A 20 35 29 20 41	 n t a r c t i c a lf   4 )   A r c t i c   O c e a n lf   5 )   A
+73 69 61 0A 20 36 29 20 41 74 6C 61 6E 74 69 63 20 4F 63 65 61 6E 0A 20 37 29 20 41 75 73 74 72	 s i a lf   6 )   A t l a n t i c   O c e a n lf   7 )   A u s t r
+61 6C 69 61 0A 20 38 29 20 45 75 72 6F 70 65 0A 20 39 29 20 49 6E 64 69 61 6E 20 4F 63 65 61 6E	 a l i a lf   8 )   E u r o p e lf   9 )   I n d i a n   O c e a n
+0A 31 30 29 20 50 61 63 69 66 69 63 20 4F 63 65 61 6E 0A 31 31 29 20 63 6F 6F 72 64 20 2D 20 49	 lf 1 0 )   P a c i f i c   O c e a n lf 1 1 )   c o o r d   -   I
+20 77 61 6E 74 20 74 6F 20 75 73 65 20 67 65 6F 67 72 61 70 68 69 63 61 6C 20 63 6F 6F 72 64 69	   w a n t   t o   u s e   g e o g r a p h i c a l   c o o r d i
+6E 61 74 65 73 2E 0A 31 32 29 20 54 5A 20 2D 20 49 20 77 61 6E 74 20 74 6F 20 73 70 65 63 69 66	 n a t e s . lf 1 2 )   T Z   -   I   w a n t   t o   s p e c i f
+79 20 74 68 65 20 74 69 6D 65 20 7A 6F 6E 65 20 75 73 69 6E 67 20 74 68 65 20 50 6F 73 69 78 20	 y   t h e   t i m e   z o n e   u s i n g   t h e   P o s i x  
+54 5A 20 66 6F 72 6D 61 74 2E 0A 23 3F 20 31 0A 50 6C 65 61 73 65 20 73 65 6C 65 63 74 20 61 20	 T Z   f o r m a t . lf # ?   1 lf P l e a s e   s e l e c t   a  
+63 6F 75 6E 74 72 79 20 77 68 6F 73 65 20 63 6C 6F 63 6B 73 20 61 67 72 65 65 20 77 69 74 68 20	 c o u n t r y   w h o s e   c l o c k s   a g r e e   w i t h  
+79 6F 75 72 73 2E 0A 20 31 29 20 41 6C 67 65 72 69 61 09 09 20 20 31 38 29 20 47 61 62 6F 6E 09	 y o u r s . lf   1 )   A l g e r i a ht ht     1 8 )   G a b o n ht
+09 20 20 20 20 33 35 29 20 52 77 61 6E 64 61 0A 20 32 29 20 41 6E 67 6F 6C 61 09 09 20 20 31 39	 ht         3 5 )   R w a n d a lf   2 )   A n g o l a ht ht     1 9
+29 20 47 61 6D 62 69 61 09 09 20 20 20 20 33 36 29 20 53 61 6F 20 54 6F 6D 65 20 26 20 50 72 69	 )   G a m b i a ht ht         3 6 )   S a o   T o m e   &   P r i
+6E 63 69 70 65 0A 20 33 29 20 42 65 6E 69 6E 09 09 20 20 32 30 29 20 47 68 61 6E 61 09 09 20 20	 n c i p e lf   3 )   B e n i n ht ht     2 0 )   G h a n a ht ht    
+20 20 33 37 29 20 53 65 6E 65 67 61 6C 0A 20 34 29 20 42 6F 74 73 77 61 6E 61 09 09 20 20 32 31	     3 7 )   S e n e g a l lf   4 )   B o t s w a n a ht ht     2 1
+29 20 47 75 69 6E 65 61 09 09 20 20 20 20 33 38 29 20 53 69 65 72 72 61 20 4C 65 6F 6E 65 0A 20	 )   G u i n e a ht ht         3 8 )   S i e r r a   L e o n e lf  
+35 29 20 42 75 72 6B 69 6E 61 20 46 61 73 6F 09 20 20 32 32 29 20 47 75 69 6E 65 61 2D 42 69 73	 5 )   B u r k i n a   F a s o ht     2 2 )   G u i n e a - B i s
+73 61 75 09 20 20 20 20 33 39 29 20 53 6F 6D 61 6C 69 61 0A 20 36 29 20 42 75 72 75 6E 64 69 09	 s a u ht         3 9 )   S o m a l i a lf   6 )   B u r u n d i ht
+09 20 20 32 33 29 20 4B 65 6E 79 61 09 09 20 20 20 20 34 30 29 20 53 6F 75 74 68 20 41 66 72 69	 ht     2 3 )   K e n y a ht ht         4 0 )   S o u t h   A f r i
+63 61 0A 20 37 29 20 43 61 6D 65 72 6F 6F 6E 09 09 20 20 32 34 29 20 4C 65 73 6F 74 68 6F 09 09	 c a lf   7 )   C a m e r o o n ht ht     2 4 )   L e s o t h o ht ht
+20 20 20 20 34 31 29 20 53 6F 75 74 68 20 53 75 64 61 6E 0A 20 38 29 20 43 65 6E 74 72 61 6C 20	         4 1 )   S o u t h   S u d a n lf   8 )   C e n t r a l  
+41 66 72 69 63 61 6E 20 52 65 70 2E 20 20 32 35 29 20 4C 69 62 65 72 69 61 09 09 20 20 20 20 34	 A f r i c a n   R e p .     2 5 )   L i b e r i a ht ht         4
+32 29 20 53 70 61 69 6E 0A 20 39 29 20 43 68 61 64 09 09 20 20 32 36 29 20 4C 69 62 79 61 09 09	 2 )   S p a i n lf   9 )   C h a d ht ht     2 6 )   L i b y a ht ht
+20 20 20 20 34 33 29 20 53 75 64 61 6E 0A 31 30 29 20 43 6F 6E 67 6F 20 28 44 65 6D 2E 20 52 65	         4 3 )   S u d a n lf 1 0 )   C o n g o   ( D e m .   R e
+70 2E 29 09 20 20 32 37 29 20 4D 61 6C 61 77 69 09 09 20 20 20 20 34 34 29 20 53 77 61 7A 69 6C	 p . ) ht     2 7 )   M a l a w i ht ht         4 4 )   S w a z i l
+61 6E 64 0A 31 31 29 20 43 6F 6E 67 6F 20 28 52 65 70 2E 29 09 20 20 32 38 29 20 4D 61 6C 69 09	 a n d lf 1 1 )   C o n g o   ( R e p . ) ht     2 8 )   M a l i ht
+09 20 20 20 20 34 35 29 20 54 61 6E 7A 61 6E 69 61 0A 31 32 29 20 43 C3 B4 74 65 20 64 27 49 76	 ht         4 5 )   T a n z a n i a lf 1 2 )   C c3 b4 t e   d ' I v
+6F 69 72 65 09 20 20 32 39 29 20 4D 61 75 72 69 74 61 6E 69 61 09 20 20 20 20 34 36 29 20 54 6F	 o i r e ht     2 9 )   M a u r i t a n i a ht         4 6 )   T o
+67 6F 0A 31 33 29 20 44 6A 69 62 6F 75 74 69 09 09 20 20 33 30 29 20 4D 6F 72 6F 63 63 6F 09 09	 g o lf 1 3 )   D j i b o u t i ht ht     3 0 )   M o r o c c o ht ht
+20 20 20 20 34 37 29 20 54 75 6E 69 73 69 61 0A 31 34 29 20 45 67 79 70 74 09 09 20 20 33 31 29	         4 7 )   T u n i s i a lf 1 4 )   E g y p t ht ht     3 1 )
+20 4D 6F 7A 61 6D 62 69 71 75 65 09 20 20 20 20 34 38 29 20 55 67 61 6E 64 61 0A 31 35 29 20 45	   M o z a m b i q u e ht         4 8 )   U g a n d a lf 1 5 )   E
+71 75 61 74 6F 72 69 61 6C 20 47 75 69 6E 65 61 09 20 20 33 32 29 20 4E 61 6D 69 62 69 61 09 09	 q u a t o r i a l   G u i n e a ht     3 2 )   N a m i b i a ht ht
+20 20 20 20 34 39 29 20 57 65 73 74 65 72 6E 20 53 61 68 61 72 61 0A 31 36 29 20 45 72 69 74 72	         4 9 )   W e s t e r n   S a h a r a lf 1 6 )   E r i t r
+65 61 09 09 20 20 33 33 29 20 4E 69 67 65 72 09 09 20 20 20 20 35 30 29 20 5A 61 6D 62 69 61 0A	 e a ht ht     3 3 )   N i g e r ht ht         5 0 )   Z a m b i a lf
+31 37 29 20 45 74 68 69 6F 70 69 61 09 09 20 20 33 34 29 20 4E 69 67 65 72 69 61 09 09 20 20 20	 1 7 )   E t h i o p i a ht ht     3 4 )   N i g e r i a ht ht      
+20 35 31 29 20 5A 69 6D 62 61 62 77 65 0A 23 3F 20 32 35 0A 0A 54 68 65 20 66 6F 6C 6C 6F 77 69	   5 1 )   Z i m b a b w e lf # ?   2 5 lf lf T h e   f o l l o w i
+6E 67 20 69 6E 66 6F 72 6D 61 74 69 6F 6E 20 68 61 73 20 62 65 65 6E 20 67 69 76 65 6E 3A 0A 0A	 n g   i n f o r m a t i o n   h a s   b e e n   g i v e n : lf lf
+09 4C 69 62 65 72 69 61 0A 0A 54 68 65 72 65 66 6F 72 65 20 54 5A 3D 27 41 66 72 69 63 61 2F 4D	 ht L i b e r i a lf lf T h e r e f o r e   T Z = ' A f r i c a / M
+6F 6E 72 6F 76 69 61 27 20 77 69 6C 6C 20 62 65 20 75 73 65 64 2E 0A 4C 6F 63 61 6C 20 74 69 6D	 o n r o v i a '   w i l l   b e   u s e d . lf L o c a l   t i m
+65 20 69 73 20 6E 6F 77 3A 09 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D	 e   i s   n o w : ht W w w   M m m   D D   H H : M M : S S   T M
+5A 20 59 59 59 59 2E 0A 55 6E 69 76 65 72 73 61 6C 20 54 69 6D 65 20 69 73 20 6E 6F 77 3A 09 57	 Z   Y Y Y Y . lf U n i v e r s a l   T i m e   i s   n o w : ht W
+77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 2E 0A 49 73 20	 w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y . lf I s  
+74 68 65 20 61 62 6F 76 65 20 69 6E 66 6F 72 6D 61 74 69 6F 6E 20 4F 4B 3F 0A 31 29 20 59 65 73	 t h e   a b o v e   i n f o r m a t i o n   O K ? lf 1 )   Y e s
+0A 32 29 20 4E 6F 0A 23 3F 20 32 0A 50 6C 65 61 73 65 20 69 64 65 6E 74 69 66 79 20 61 20 6C 6F	 lf 2 )   N o lf # ?   2 lf P l e a s e   i d e n t i f y   a   l o
+63 61 74 69 6F 6E 20 73 6F 20 74 68 61 74 20 74 69 6D 65 20 7A 6F 6E 65 20 72 75 6C 65 73 20 63	 c a t i o n   s o   t h a t   t i m e   z o n e   r u l e s   c
+61 6E 20 62 65 20 73 65 74 20 63 6F 72 72 65 63 74 6C 79 2E 0A 50 6C 65 61 73 65 20 73 65 6C 65	 a n   b e   s e t   c o r r e c t l y . lf P l e a s e   s e l e
+63 74 20 61 20 63 6F 6E 74 69 6E 65 6E 74 2C 20 6F 63 65 61 6E 2C 20 22 63 6F 6F 72 64 22 2C 20	 c t   a   c o n t i n e n t ,   o c e a n ,   " c o o r d " ,  
+6F 72 20 22 54 5A 22 2E 0A 20 31 29 20 41 66 72 69 63 61 0A 20 32 29 20 41 6D 65 72 69 63 61 73	 o r   " T Z " . lf   1 )   A f r i c a lf   2 )   A m e r i c a s
+0A 20 33 29 20 41 6E 74 61 72 63 74 69 63 61 0A 20 34 29 20 41 72 63 74 69 63 20 4F 63 65 61 6E	 lf   3 )   A n t a r c t i c a lf   4 )   A r c t i c   O c e a n
+0A 20 35 29 20 41 73 69 61 0A 20 36 29 20 41 74 6C 61 6E 74 69 63 20 4F 63 65 61 6E 0A 20 37 29	 lf   5 )   A s i a lf   6 )   A t l a n t i c   O c e a n lf   7 )
+20 41 75 73 74 72 61 6C 69 61 0A 20 38 29 20 45 75 72 6F 70 65 0A 20 39 29 20 49 6E 64 69 61 6E	   A u s t r a l i a lf   8 )   E u r o p e lf   9 )   I n d i a n
+20 4F 63 65 61 6E 0A 31 30 29 20 50 61 63 69 66 69 63 20 4F 63 65 61 6E 0A 31 31 29 20 63 6F 6F	   O c e a n lf 1 0 )   P a c i f i c   O c e a n lf 1 1 )   c o o
+72 64 20 2D 20 49 20 77 61 6E 74 20 74 6F 20 75 73 65 20 67 65 6F 67 72 61 70 68 69 63 61 6C 20	 r d   -   I   w a n t   t o   u s e   g e o g r a p h i c a l  
+63 6F 6F 72 64 69 6E 61 74 65 73 2E 0A 31 32 29 20 54 5A 20 2D 20 49 20 77 61 6E 74 20 74 6F 20	 c o o r d i n a t e s . lf 1 2 )   T Z   -   I   w a n t   t o  
+73 70 65 63 69 66 79 20 74 68 65 20 74 69 6D 65 20 7A 6F 6E 65 20 75 73 69 6E 67 20 74 68 65 20	 s p e c i f y   t h e   t i m e   z o n e   u s i n g   t h e  
+50 6F 73 69 78 20 54 5A 20 66 6F 72 6D 61 74 2E 0A 23 3F 20 33 0A 50 6C 65 61 73 65 20 73 65 6C	 P o s i x   T Z   f o r m a t . lf # ?   3 lf P l e a s e   s e l
+65 63 74 20 61 20 63 6F 75 6E 74 72 79 20 77 68 6F 73 65 20 63 6C 6F 63 6B 73 20 61 67 72 65 65	 e c t   a   c o u n t r y   w h o s e   c l o c k s   a g r e e
+20 77 69 74 68 20 79 6F 75 72 73 2E 0A 31 29 20 41 6E 74 61 72 63 74 69 63 61 0A 32 29 20 41 75	   w i t h   y o u r s . lf 1 )   A n t a r c t i c a lf 2 )   A u
+73 74 72 61 6C 69 61 0A 23 3F 20 32 0A 50 6C 65 61 73 65 20 73 65 6C 65 63 74 20 6F 6E 65 20 6F	 s t r a l i a lf # ?   2 lf P l e a s e   s e l e c t   o n e   o
+66 20 74 68 65 20 66 6F 6C 6C 6F 77 69 6E 67 20 74 69 6D 65 20 7A 6F 6E 65 20 72 65 67 69 6F 6E	 f   t h e   f o l l o w i n g   t i m e   z o n e   r e g i o n
+73 2E 0A 31 29 20 4C 6F 72 64 20 48 6F 77 65 20 49 73 6C 61 6E 64 09 09 20 20 20 20 20 20 38 29	 s . lf 1 )   L o r d   H o w e   I s l a n d ht ht             8 )
+20 51 75 65 65 6E 73 6C 61 6E 64 20 28 6D 6F 73 74 20 61 72 65 61 73 29 0A 32 29 20 4D 61 63 71	   Q u e e n s l a n d   ( m o s t   a r e a s ) lf 2 )   M a c q
+75 61 72 69 65 20 49 73 6C 61 6E 64 09 09 20 20 20 20 20 20 39 29 20 51 75 65 65 6E 73 6C 61 6E	 u a r i e   I s l a n d ht ht             9 )   Q u e e n s l a n
+64 20 28 57 68 69 74 73 75 6E 64 61 79 20 49 73 6C 61 6E 64 73 29 0A 33 29 20 54 61 73 6D 61 6E	 d   ( W h i t s u n d a y   I s l a n d s ) lf 3 )   T a s m a n
+69 61 20 28 6D 6F 73 74 20 61 72 65 61 73 29 09 20 20 20 20 20 31 30 29 20 53 6F 75 74 68 20 41	 i a   ( m o s t   a r e a s ) ht           1 0 )   S o u t h   A
+75 73 74 72 61 6C 69 61 0A 34 29 20 54 61 73 6D 61 6E 69 61 20 28 4B 69 6E 67 20 49 73 6C 61 6E	 u s t r a l i a lf 4 )   T a s m a n i a   ( K i n g   I s l a n
+64 29 09 20 20 20 20 20 31 31 29 20 4E 6F 72 74 68 65 72 6E 20 54 65 72 72 69 74 6F 72 79 0A 35	 d ) ht           1 1 )   N o r t h e r n   T e r r i t o r y lf 5
+29 20 56 69 63 74 6F 72 69 61 09 09 09 20 20 20 20 20 31 32 29 20 57 65 73 74 65 72 6E 20 41 75	 )   V i c t o r i a ht ht ht           1 2 )   W e s t e r n   A u
+73 74 72 61 6C 69 61 20 28 6D 6F 73 74 20 61 72 65 61 73 29 0A 36 29 20 4E 65 77 20 53 6F 75 74	 s t r a l i a   ( m o s t   a r e a s ) lf 6 )   N e w   S o u t
+68 20 57 61 6C 65 73 20 28 6D 6F 73 74 20 61 72 65 61 73 29 09 20 20 20 20 20 31 33 29 20 57 65	 h   W a l e s   ( m o s t   a r e a s ) ht           1 3 )   W e
+73 74 65 72 6E 20 41 75 73 74 72 61 6C 69 61 20 28 45 75 63 6C 61 29 0A 37 29 20 4E 65 77 20 53	 s t e r n   A u s t r a l i a   ( E u c l a ) lf 7 )   N e w   S
+6F 75 74 68 20 57 61 6C 65 73 20 28 59 61 6E 63 6F 77 69 6E 6E 61 29 0A 23 3F 20 31 31 0A 0A 54	 o u t h   W a l e s   ( Y a n c o w i n n a ) lf # ?   1 1 lf lf T
+68 65 20 66 6F 6C 6C 6F 77 69 6E 67 20 69 6E 66 6F 72 6D 61 74 69 6F 6E 20 68 61 73 20 62 65 65	 h e   f o l l o w i n g   i n f o r m a t i o n   h a s   b e e
+6E 20 67 69 76 65 6E 3A 0A 0A 09 41 75 73 74 72 61 6C 69 61 0A 09 4E 6F 72 74 68 65 72 6E 20 54	 n   g i v e n : lf lf ht A u s t r a l i a lf ht N o r t h e r n   T
+65 72 72 69 74 6F 72 79 0A 0A 54 68 65 72 65 66 6F 72 65 20 54 5A 3D 27 41 75 73 74 72 61 6C 69	 e r r i t o r y lf lf T h e r e f o r e   T Z = ' A u s t r a l i
+61 2F 44 61 72 77 69 6E 27 20 77 69 6C 6C 20 62 65 20 75 73 65 64 2E 0A 4C 6F 63 61 6C 20 74 69	 a / D a r w i n '   w i l l   b e   u s e d . lf L o c a l   t i
+6D 65 20 69 73 20 6E 6F 77 3A 09 46 72 69 20 53 65 70 20 32 31 20 31 35 3A 35 36 3A 31 31 20 41	 m e   i s   n o w : ht F r i   S e p   2 1   1 5 : 5 6 : 1 1   A
+43 53 54 20 32 30 31 38 2E 0A 55 6E 69 76 65 72 73 61 6C 20 54 69 6D 65 20 69 73 20 6E 6F 77 3A	 C S T   2 0 1 8 . lf U n i v e r s a l   T i m e   i s   n o w :
+09 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 2E 0A 49	 ht W w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y . lf I
+73 20 74 68 65 20 61 62 6F 76 65 20 69 6E 66 6F 72 6D 61 74 69 6F 6E 20 4F 4B 3F 0A 31 29 20 59	 s   t h e   a b o v e   i n f o r m a t i o n   O K ? lf 1 )   Y
+65 73 0A 32 29 20 4E 6F 0A 23 3F 20 32 0A 50 6C 65 61 73 65 20 69 64 65 6E 74 69 66 79 20 61 20	 e s lf 2 )   N o lf # ?   2 lf P l e a s e   i d e n t i f y   a  
+6C 6F 63 61 74 69 6F 6E 20 73 6F 20 74 68 61 74 20 74 69 6D 65 20 7A 6F 6E 65 20 72 75 6C 65 73	 l o c a t i o n   s o   t h a t   t i m e   z o n e   r u l e s
+20 63 61 6E 20 62 65 20 73 65 74 20 63 6F 72 72 65 63 74 6C 79 2E 0A 50 6C 65 61 73 65 20 73 65	   c a n   b e   s e t   c o r r e c t l y . lf P l e a s e   s e
+6C 65 63 74 20 61 20 63 6F 6E 74 69 6E 65 6E 74 2C 20 6F 63 65 61 6E 2C 20 22 63 6F 6F 72 64 22	 l e c t   a   c o n t i n e n t ,   o c e a n ,   " c o o r d "
+2C 20 6F 72 20 22 54 5A 22 2E 0A 20 31 29 20 41 66 72 69 63 61 0A 20 32 29 20 41 6D 65 72 69 63	 ,   o r   " T Z " . lf   1 )   A f r i c a lf   2 )   A m e r i c
+61 73 0A 20 33 29 20 41 6E 74 61 72 63 74 69 63 61 0A 20 34 29 20 41 72 63 74 69 63 20 4F 63 65	 a s lf   3 )   A n t a r c t i c a lf   4 )   A r c t i c   O c e
+61 6E 0A 20 35 29 20 41 73 69 61 0A 20 36 29 20 41 74 6C 61 6E 74 69 63 20 4F 63 65 61 6E 0A 20	 a n lf   5 )   A s i a lf   6 )   A t l a n t i c   O c e a n lf  
+37 29 20 41 75 73 74 72 61 6C 69 61 0A 20 38 29 20 45 75 72 6F 70 65 0A 20 39 29 20 49 6E 64 69	 7 )   A u s t r a l i a lf   8 )   E u r o p e lf   9 )   I n d i
+61 6E 20 4F 63 65 61 6E 0A 31 30 29 20 50 61 63 69 66 69 63 20 4F 63 65 61 6E 0A 31 31 29 20 63	 a n   O c e a n lf 1 0 )   P a c i f i c   O c e a n lf 1 1 )   c
+6F 6F 72 64 20 2D 20 49 20 77 61 6E 74 20 74 6F 20 75 73 65 20 67 65 6F 67 72 61 70 68 69 63 61	 o o r d   -   I   w a n t   t o   u s e   g e o g r a p h i c a
+6C 20 63 6F 6F 72 64 69 6E 61 74 65 73 2E 0A 31 32 29 20 54 5A 20 2D 20 49 20 77 61 6E 74 20 74	 l   c o o r d i n a t e s . lf 1 2 )   T Z   -   I   w a n t   t
+6F 20 73 70 65 63 69 66 79 20 74 68 65 20 74 69 6D 65 20 7A 6F 6E 65 20 75 73 69 6E 67 20 74 68	 o   s p e c i f y   t h e   t i m e   z o n e   u s i n g   t h
+65 20 50 6F 73 69 78 20 54 5A 20 66 6F 72 6D 61 74 2E 0A 23 3F 20 38 0A 50 6C 65 61 73 65 20 73	 e   P o s i x   T Z   f o r m a t . lf # ?   8 lf P l e a s e   s
+65 6C 65 63 74 20 61 20 63 6F 75 6E 74 72 79 20 77 68 6F 73 65 20 63 6C 6F 63 6B 73 20 61 67 72	 e l e c t   a   c o u n t r y   w h o s e   c l o c k s   a g r
+65 65 20 77 69 74 68 20 79 6F 75 72 73 2E 0A 20 31 29 20 C3 85 6C 61 6E 64 20 49 73 6C 61 6E 64	 e e   w i t h   y o u r s . lf   1 )   c3 85 l a n d   I s l a n d
+73 09 20 20 31 38 29 20 47 72 65 65 63 65 09 09 20 20 20 20 33 35 29 20 4E 6F 72 77 61 79 0A 20	 s ht     1 8 )   G r e e c e ht ht         3 5 )   N o r w a y lf  
+32 29 20 41 6C 62 61 6E 69 61 09 09 20 20 31 39 29 20 47 75 65 72 6E 73 65 79 09 09 20 20 20 20	 2 )   A l b a n i a ht ht     1 9 )   G u e r n s e y ht ht        
+33 36 29 20 50 6F 6C 61 6E 64 0A 20 33 29 20 41 6E 64 6F 72 72 61 09 09 20 20 32 30 29 20 48 75	 3 6 )   P o l a n d lf   3 )   A n d o r r a ht ht     2 0 )   H u
+6E 67 61 72 79 09 09 20 20 20 20 33 37 29 20 50 6F 72 74 75 67 61 6C 0A 20 34 29 20 41 75 73 74	 n g a r y ht ht         3 7 )   P o r t u g a l lf   4 )   A u s t
+72 69 61 09 09 20 20 32 31 29 20 49 72 65 6C 61 6E 64 09 09 20 20 20 20 33 38 29 20 52 6F 6D 61	 r i a ht ht     2 1 )   I r e l a n d ht ht         3 8 )   R o m a
+6E 69 61 0A 20 35 29 20 42 65 6C 61 72 75 73 09 09 20 20 32 32 29 20 49 73 6C 65 20 6F 66 20 4D	 n i a lf   5 )   B e l a r u s ht ht     2 2 )   I s l e   o f   M
+61 6E 09 20 20 20 20 33 39 29 20 52 75 73 73 69 61 0A 20 36 29 20 42 65 6C 67 69 75 6D 09 09 20	 a n ht         3 9 )   R u s s i a lf   6 )   B e l g i u m ht ht  
+20 32 33 29 20 49 74 61 6C 79 09 09 20 20 20 20 34 30 29 20 53 61 6E 20 4D 61 72 69 6E 6F 0A 20	   2 3 )   I t a l y ht ht         4 0 )   S a n   M a r i n o lf  
+37 29 20 42 6F 73 6E 69 61 20 26 20 48 65 72 7A 65 67 6F 76 69 6E 61 20 20 32 34 29 20 4A 65 72	 7 )   B o s n i a   &   H e r z e g o v i n a     2 4 )   J e r
+73 65 79 09 09 20 20 20 20 34 31 29 20 53 65 72 62 69 61 0A 20 38 29 20 42 72 69 74 61 69 6E 20	 s e y ht ht         4 1 )   S e r b i a lf   8 )   B r i t a i n  
+28 55 4B 29 09 20 20 32 35 29 20 4C 61 74 76 69 61 09 09 20 20 20 20 34 32 29 20 53 6C 6F 76 61	 ( U K ) ht     2 5 )   L a t v i a ht ht         4 2 )   S l o v a
+6B 69 61 0A 20 39 29 20 42 75 6C 67 61 72 69 61 09 09 20 20 32 36 29 20 4C 69 65 63 68 74 65 6E	 k i a lf   9 )   B u l g a r i a ht ht     2 6 )   L i e c h t e n
+73 74 65 69 6E 09 20 20 20 20 34 33 29 20 53 6C 6F 76 65 6E 69 61 0A 31 30 29 20 43 72 6F 61 74	 s t e i n ht         4 3 )   S l o v e n i a lf 1 0 )   C r o a t
+69 61 09 09 20 20 32 37 29 20 4C 69 74 68 75 61 6E 69 61 09 09 20 20 20 20 34 34 29 20 53 70 61	 i a ht ht     2 7 )   L i t h u a n i a ht ht         4 4 )   S p a
+69 6E 0A 31 31 29 20 43 7A 65 63 68 20 52 65 70 75 62 6C 69 63 09 20 20 32 38 29 20 4C 75 78 65	 i n lf 1 1 )   C z e c h   R e p u b l i c ht     2 8 )   L u x e
+6D 62 6F 75 72 67 09 20 20 20 20 34 35 29 20 53 77 65 64 65 6E 0A 31 32 29 20 44 65 6E 6D 61 72	 m b o u r g ht         4 5 )   S w e d e n lf 1 2 )   D e n m a r
+6B 09 09 20 20 32 39 29 20 4D 61 63 65 64 6F 6E 69 61 09 09 20 20 20 20 34 36 29 20 53 77 69 74	 k ht ht     2 9 )   M a c e d o n i a ht ht         4 6 )   S w i t
+7A 65 72 6C 61 6E 64 0A 31 33 29 20 45 73 74 6F 6E 69 61 09 09 20 20 33 30 29 20 4D 61 6C 74 61	 z e r l a n d lf 1 3 )   E s t o n i a ht ht     3 0 )   M a l t a
+09 09 20 20 20 20 34 37 29 20 54 75 72 6B 65 79 0A 31 34 29 20 46 69 6E 6C 61 6E 64 09 09 20 20	 ht ht         4 7 )   T u r k e y lf 1 4 )   F i n l a n d ht ht    
+33 31 29 20 4D 6F 6C 64 6F 76 61 09 09 20 20 20 20 34 38 29 20 55 6B 72 61 69 6E 65 0A 31 35 29	 3 1 )   M o l d o v a ht ht         4 8 )   U k r a i n e lf 1 5 )
+20 46 72 61 6E 63 65 09 09 20 20 33 32 29 20 4D 6F 6E 61 63 6F 09 09 20 20 20 20 34 39 29 20 56	   F r a n c e ht ht     3 2 )   M o n a c o ht ht         4 9 )   V
+61 74 69 63 61 6E 20 43 69 74 79 0A 31 36 29 20 47 65 72 6D 61 6E 79 09 09 20 20 33 33 29 20 4D	 a t i c a n   C i t y lf 1 6 )   G e r m a n y ht ht     3 3 )   M
+6F 6E 74 65 6E 65 67 72 6F 0A 31 37 29 20 47 69 62 72 61 6C 74 61 72 09 09 20 20 33 34 29 20 4E	 o n t e n e g r o lf 1 7 )   G i b r a l t a r ht ht     3 4 )   N
+65 74 68 65 72 6C 61 6E 64 73 0A 23 3F 20 32 32 0A 0A 54 68 65 20 66 6F 6C 6C 6F 77 69 6E 67 20	 e t h e r l a n d s lf # ?   2 2 lf lf T h e   f o l l o w i n g  
+69 6E 66 6F 72 6D 61 74 69 6F 6E 20 68 61 73 20 62 65 65 6E 20 67 69 76 65 6E 3A 0A 0A 09 49 73	 i n f o r m a t i o n   h a s   b e e n   g i v e n : lf lf ht I s
+6C 65 20 6F 66 20 4D 61 6E 0A 0A 54 68 65 72 65 66 6F 72 65 20 54 5A 3D 27 45 75 72 6F 70 65 2F	 l e   o f   M a n lf lf T h e r e f o r e   T Z = ' E u r o p e /
+49 73 6C 65 5F 6F 66 5F 4D 61 6E 27 20 77 69 6C 6C 20 62 65 20 75 73 65 64 2E 0A 4C 6F 63 61 6C	 I s l e _ o f _ M a n '   w i l l   b e   u s e d . lf L o c a l
+20 74 69 6D 65 20 69 73 20 6E 6F 77 3A 09 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53	   t i m e   i s   n o w : ht W w w   M m m   D D   H H : M M : S
+53 20 54 4D 5A 20 59 59 59 59 2E 0A 55 6E 69 76 65 72 73 61 6C 20 54 69 6D 65 20 69 73 20 6E 6F	 S   T M Z   Y Y Y Y . lf U n i v e r s a l   T i m e   i s   n o
+77 3A 09 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 2E	 w : ht W w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y .
+0A 49 73 20 74 68 65 20 61 62 6F 76 65 20 69 6E 66 6F 72 6D 61 74 69 6F 6E 20 4F 4B 3F 0A 31 29	 lf I s   t h e   a b o v e   i n f o r m a t i o n   O K ? lf 1 )
+20 59 65 73 0A 32 29 20 4E 6F 0A 23 3F 20 32 0A 50 6C 65 61 73 65 20 69 64 65 6E 74 69 66 79 20	   Y e s lf 2 )   N o lf # ?   2 lf P l e a s e   i d e n t i f y  
+61 20 6C 6F 63 61 74 69 6F 6E 20 73 6F 20 74 68 61 74 20 74 69 6D 65 20 7A 6F 6E 65 20 72 75 6C	 a   l o c a t i o n   s o   t h a t   t i m e   z o n e   r u l
+65 73 20 63 61 6E 20 62 65 20 73 65 74 20 63 6F 72 72 65 63 74 6C 79 2E 0A 50 6C 65 61 73 65 20	 e s   c a n   b e   s e t   c o r r e c t l y . lf P l e a s e  
+73 65 6C 65 63 74 20 61 20 63 6F 6E 74 69 6E 65 6E 74 2C 20 6F 63 65 61 6E 2C 20 22 63 6F 6F 72	 s e l e c t   a   c o n t i n e n t ,   o c e a n ,   " c o o r
+64 22 2C 20 6F 72 20 22 54 5A 22 2E 0A 20 31 29 20 41 66 72 69 63 61 0A 20 32 29 20 41 6D 65 72	 d " ,   o r   " T Z " . lf   1 )   A f r i c a lf   2 )   A m e r
+69 63 61 73 0A 20 33 29 20 41 6E 74 61 72 63 74 69 63 61 0A 20 34 29 20 41 72 63 74 69 63 20 4F	 i c a s lf   3 )   A n t a r c t i c a lf   4 )   A r c t i c   O
+63 65 61 6E 0A 20 35 29 20 41 73 69 61 0A 20 36 29 20 41 74 6C 61 6E 74 69 63 20 4F 63 65 61 6E	 c e a n lf   5 )   A s i a lf   6 )   A t l a n t i c   O c e a n
+0A 20 37 29 20 41 75 73 74 72 61 6C 69 61 0A 20 38 29 20 45 75 72 6F 70 65 0A 20 39 29 20 49 6E	 lf   7 )   A u s t r a l i a lf   8 )   E u r o p e lf   9 )   I n
+64 69 61 6E 20 4F 63 65 61 6E 0A 31 30 29 20 50 61 63 69 66 69 63 20 4F 63 65 61 6E 0A 31 31 29	 d i a n   O c e a n lf 1 0 )   P a c i f i c   O c e a n lf 1 1 )
+20 63 6F 6F 72 64 20 2D 20 49 20 77 61 6E 74 20 74 6F 20 75 73 65 20 67 65 6F 67 72 61 70 68 69	   c o o r d   -   I   w a n t   t o   u s e   g e o g r a p h i
+63 61 6C 20 63 6F 6F 72 64 69 6E 61 74 65 73 2E 0A 31 32 29 20 54 5A 20 2D 20 49 20 77 61 6E 74	 c a l   c o o r d i n a t e s . lf 1 2 )   T Z   -   I   w a n t
+20 74 6F 20 73 70 65 63 69 66 79 20 74 68 65 20 74 69 6D 65 20 7A 6F 6E 65 20 75 73 69 6E 67 20	   t o   s p e c i f y   t h e   t i m e   z o n e   u s i n g  
+74 68 65 20 50 6F 73 69 78 20 54 5A 20 66 6F 72 6D 61 74 2E 0A 23 3F 20 39 0A 50 6C 65 61 73 65	 t h e   P o s i x   T Z   f o r m a t . lf # ?   9 lf P l e a s e
+20 73 65 6C 65 63 74 20 61 20 63 6F 75 6E 74 72 79 20 77 68 6F 73 65 20 63 6C 6F 63 6B 73 20 61	   s e l e c t   a   c o u n t r y   w h o s e   c l o c k s   a
+67 72 65 65 20 77 69 74 68 20 79 6F 75 72 73 2E 0A 31 29 20 42 72 69 74 69 73 68 20 49 6E 64 69	 g r e e   w i t h   y o u r s . lf 1 )   B r i t i s h   I n d i
+61 6E 20 4F 63 65 61 6E 20 54 65 72 72 69 74 6F 72 79 20 20 20 20 20 20 20 37 29 20 4D 61 6C 64	 a n   O c e a n   T e r r i t o r y               7 )   M a l d
+69 76 65 73 0A 32 29 20 43 68 72 69 73 74 6D 61 73 20 49 73 6C 61 6E 64 09 09 20 20 20 20 20 20	 i v e s lf 2 )   C h r i s t m a s   I s l a n d ht ht            
+20 20 38 29 20 4D 61 75 72 69 74 69 75 73 0A 33 29 20 43 6F 63 6F 73 20 28 4B 65 65 6C 69 6E 67	     8 )   M a u r i t i u s lf 3 )   C o c o s   ( K e e l i n g
+29 20 49 73 6C 61 6E 64 73 09 20 20 20 20 20 20 20 20 39 29 20 4D 61 79 6F 74 74 65 0A 34 29 20	 )   I s l a n d s ht                 9 )   M a y o t t e lf 4 )  
+43 6F 6D 6F 72 6F 73 09 09 09 20 20 20 20 20 20 20 31 30 29 20 52 C3 A9 75 6E 69 6F 6E 0A 35 29	 C o m o r o s ht ht ht               1 0 )   R c3 a9 u n i o n lf 5 )
+20 46 72 65 6E 63 68 20 53 6F 75 74 68 65 72 6E 20 26 20 41 6E 74 61 72 63 74 69 63 20 4C 61 6E	   F r e n c h   S o u t h e r n   &   A n t a r c t i c   L a n
+64 73 20 20 20 31 31 29 20 53 65 79 63 68 65 6C 6C 65 73 0A 36 29 20 4D 61 64 61 67 61 73 63 61	 d s       1 1 )   S e y c h e l l e s lf 6 )   M a d a g a s c a
+72 0A 23 3F 20 39 0A 0A 54 68 65 20 66 6F 6C 6C 6F 77 69 6E 67 20 69 6E 66 6F 72 6D 61 74 69 6F	 r lf # ?   9 lf lf T h e   f o l l o w i n g   i n f o r m a t i o
+6E 20 68 61 73 20 62 65 65 6E 20 67 69 76 65 6E 3A 0A 0A 09 4D 61 79 6F 74 74 65 0A 0A 54 68 65	 n   h a s   b e e n   g i v e n : lf lf ht M a y o t t e lf lf T h e
+72 65 66 6F 72 65 20 54 5A 3D 27 49 6E 64 69 61 6E 2F 4D 61 79 6F 74 74 65 27 20 77 69 6C 6C 20	 r e f o r e   T Z = ' I n d i a n / M a y o t t e '   w i l l  
+62 65 20 75 73 65 64 2E 0A 4C 6F 63 61 6C 20 74 69 6D 65 20 69 73 20 6E 6F 77 3A 09 57 77 77 20	 b e   u s e d . lf L o c a l   t i m e   i s   n o w : ht W w w  
+4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 2E 0A 55 6E 69 76 65 72	 M m m   D D   H H : M M : S S   T M Z   Y Y Y Y . lf U n i v e r
+73 61 6C 20 54 69 6D 65 20 69 73 20 6E 6F 77 3A 09 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D	 s a l   T i m e   i s   n o w : ht W w w   M m m   D D   H H : M
+4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 2E 0A 49 73 20 74 68 65 20 61 62 6F 76 65 20 69 6E 66 6F	 M : S S   T M Z   Y Y Y Y . lf I s   t h e   a b o v e   i n f o
+72 6D 61 74 69 6F 6E 20 4F 4B 3F 0A 31 29 20 59 65 73 0A 32 29 20 4E 6F 0A 23 3F 20 31 0A 0A 59	 r m a t i o n   O K ? lf 1 )   Y e s lf 2 )   N o lf # ?   1 lf lf Y
+6F 75 20 63 61 6E 20 6D 61 6B 65 20 74 68 69 73 20 63 68 61 6E 67 65 20 70 65 72 6D 61 6E 65 6E	 o u   c a n   m a k e   t h i s   c h a n g e   p e r m a n e n
+74 20 66 6F 72 20 79 6F 75 72 73 65 6C 66 20 62 79 20 61 70 70 65 6E 64 69 6E 67 20 74 68 65 20	 t   f o r   y o u r s e l f   b y   a p p e n d i n g   t h e  
+6C 69 6E 65 0A 09 54 5A 3D 27 49 6E 64 69 61 6E 2F 4D 61 79 6F 74 74 65 27 3B 20 65 78 70 6F 72	 l i n e lf ht T Z = ' I n d i a n / M a y o t t e ' ;   e x p o r
+74 20 54 5A 0A 74 6F 20 74 68 65 20 66 69 6C 65 20 27 2E 70 72 6F 66 69 6C 65 27 20 69 6E 20 79	 t   T Z lf t o   t h e   f i l e   ' . p r o f i l e '   i n   y
+6F 75 72 20 68 6F 6D 65 20 64 69 72 65 63 74 6F 72 79 3B 20 74 68 65 6E 20 6C 6F 67 20 6F 75 74	 o u r   h o m e   d i r e c t o r y ;   t h e n   l o g   o u t
+20 61 6E 64 20 6C 6F 67 20 69 6E 20 61 67 61 69 6E 2E 0A 0A 48 65 72 65 20 69 73 20 74 68 61 74	   a n d   l o g   i n   a g a i n . lf lf H e r e   i s   t h a t
+20 54 5A 20 76 61 6C 75 65 20 61 67 61 69 6E 2C 20 74 68 69 73 20 74 69 6D 65 20 6F 6E 20 73 74	   T Z   v a l u e   a g a i n ,   t h i s   t i m e   o n   s t
+61 6E 64 61 72 64 20 6F 75 74 70 75 74 20 73 6F 20 74 68 61 74 20 79 6F 75 0A 63 61 6E 20 75 73	 a n d a r d   o u t p u t   s o   t h a t   y o u lf c a n   u s
+65 20 74 68 65 20 2F 75 73 72 2F 62 69 6E 2F 74 7A 73 65 6C 65 63 74 20 63 6F 6D 6D 61 6E 64 20	 e   t h e   / u s r / b i n / t z s e l e c t   c o m m a n d  
+69 6E 20 73 68 65 6C 6C 20 73 63 72 69 70 74 73 3A 0A 49 6E 64 69 61 6E 2F 4D 61 79 6F 74 74 65	 i n   s h e l l   s c r i p t s : lf I n d i a n / M a y o t t e
+0A 1B 5D 30 3B 6D 65 40 61 6B 73 74 6F 6E 3A 20 7E 2F 77 6F 72 6B 73 70 61 63 65 2F 70 6C 61 79	 lf esc ] 0 ; m e @ a k s t o n :   ~ / w o r k s p a c e / p l a y
+2F 62 73 61 63 2D 6C 69 6E 75 78 2D 63 66 67 2F 62 69 6E 07 1B 5D 30 3B 6D 65 40 61 6B 73 74 6F	 / b s a c - l i n u x - c f g / b i n bel esc ] 0 ; m e @ a k s t o
+6E 3A 20 7E 2F 77 6F 72 6B 73 70 61 63 65 2F 70 6C 61 79 2F 62 73 61 63 2D 6C 69 6E 75 78 2D 63	 n :   ~ / w o r k s p a c e / p l a y / b s a c - l i n u x - c
+66 67 2F 62 69 6E 07 1B 5B 30 31 3B 33 32 6D 6D 65 40 61 6B 73 74 6F 6E 1B 5B 30 30 6D 3A 1B 5B	 f g / b i n bel esc [ 0 1 ; 3 2 m m e @ a k s t o n esc [ 0 0 m : esc [
+30 31 3B 33 34 6D 7E 2F 77 6F 72 6B 73 70 61 63 65 2F 70 6C 61 79 2F 62 73 61 63 2D 6C 69 6E 75	 0 1 ; 3 4 m ~ / w o r k s p a c e / p l a y / b s a c - l i n u
+78 2D 63 66 67 2F 62 69 6E 1B 5B 30 30 6D 24 20 6C 65 73 73 20 74 69 6D 65 07 7A 6F 6E 65 73 2E	 x - c f g / b i n esc [ 0 0 m $   l e s s   t i m e bel z o n e s .
+6C 6F 67 20 0A 1B 5B 3F 31 30 34 39 68 1B 5B 3F 31 68 0A 68 65 6C 6C 6F 08 08 08 08 08 0A 57 77	 l o g   lf esc [ ? 1 0 4 9 h esc [ ? 1 h lf h e l l o bs bs bs bs bs lf W w
+77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 0A 0A 45 6C 61 70	 w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y lf lf E l a p
+73 65 64 3A 20 3C 31 20 73 65 63 6F 6E 64 0A                                                   	 s e d :   < 1   s e c o n d lf                 

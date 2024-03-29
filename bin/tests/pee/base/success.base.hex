@@ -1,0 +1,27 @@
+57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 0A 0A 0A 57	 W w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y lf lf lf W
+69 6C 6C 20 77 6F 72 64 20 77 72 61 70 20 74 68 65 20 6C 6F 67 20 66 69 6C 65 20 6F 75 74 70 75	 i l l   w o r d   w r a p   t h e   l o g   f i l e   o u t p u
+74 20 61 66 74 65 72 20 36 30 20 63 6F 6C 75 6D 6E 73 2E 2E 2E 0A 53 6F 6D 65 20 6E 6F 72 6D 61	 t   a f t e r   6 0   c o l u m n s . . . lf S o m e   n o r m a
+6C 20 74 65 78 74 0A 54 68 65 20 71 75 69 63 6B 20 62 72 6F 77 6E 20 66 6F 78 20 6A 75 6D 70 65	 l   t e x t lf T h e   q u i c k   b r o w n   f o x   j u m p e
+64 20 6F 76 65 72 20 74 68 65 20 6C 61 7A 79 20 64 6F 67 2E 20 53 68 65 20 73 65 6C 6C 73 20 73	 d   o v e r   t h e   l a z y   d o g .   S h e   s e l l s   s
+65 61 73 68 65 6C 6C 73 20 62 79 20 74 68 65 20 73 65 61 73 68 6F 72 65 2E 20 54 68 72 65 65 20	 e a s h e l l s   b y   t h e   s e a s h o r e .   T h r e e  
+66 72 65 65 20 66 6C 65 61 73 20 66 6C 65 77 20 74 68 72 6F 75 67 68 20 74 68 72 65 65 20 63 68	 f r e e   f l e a s   f l e w   t h r o u g h   t h r e e   c h
+65 65 73 65 20 74 72 65 65 73 2E 20 20 48 6F 77 20 63 61 6E 20 61 20 63 6C 61 6D 20 63 72 61 6D	 e e s e   t r e e s .     H o w   c a n   a   c l a m   c r a m
+20 69 6E 20 61 20 63 6C 65 61 6E 20 63 72 65 61 6D 20 63 61 6E 3F 20 20 49 20 73 63 72 65 61 6D	   i n   a   c l e a n   c r e a m   c a n ?     I   s c r e a m
+2C 20 79 6F 75 20 73 63 72 65 61 6D 2C 20 77 65 20 61 6C 6C 20 73 63 72 65 61 6D 20 66 6F 72 20	 ,   y o u   s c r e a m ,   w e   a l l   s c r e a m   f o r  
+69 63 65 20 63 72 65 61 6D 2E 20 20 49 20 73 61 77 20 53 75 73 69 65 20 73 69 74 74 69 6E 67 20	 i c e   c r e a m .     I   s a w   S u s i e   s i t t i n g  
+69 6E 20 61 20 73 68 6F 65 73 68 69 6E 65 20 73 68 6F 70 2E 20 20 53 75 73 69 65 20 77 6F 72 6B	 i n   a   s h o e s h i n e   s h o p .     S u s i e   w o r k
+73 20 69 6E 20 61 20 73 68 6F 65 73 68 69 6E 65 20 73 68 6F 70 2E 20 20 57 68 65 72 65 20 73 68	 s   i n   a   s h o e s h i n e   s h o p .     W h e r e   s h
+65 20 73 68 69 6E 65 73 20 73 68 65 20 73 69 74 73 2C 20 61 6E 64 20 77 68 65 72 65 20 73 68 65	 e   s h i n e s   s h e   s i t s ,   a n d   w h e r e   s h e
+20 73 69 74 73 20 73 68 65 20 73 68 69 6E 65 73 2E 0A 0A 53 6F 6D 65 20 74 65 78 74 20 77 69 74	   s i t s   s h e   s h i n e s . lf lf S o m e   t e x t   w i t
+68 20 63 6F 6E 74 72 6F 6C 20 63 68 61 72 61 63 74 65 72 73 0A 63 6F 6E 74 72 6F 6C 20 20 20 07	 h   c o n t r o l   c h a r a c t e r s lf c o n t r o l       bel
+20 08 20 0C 20 0A 20 0A 20 09 63 6F 6E 74 72 6F 6C 32 20 20 01 20 02 20 03 20 04 20 05 20 06 20	   bs   ff   lf   lf   ht c o n t r o l 2     soh   stx   etx   eot   enq   ack  
+07 20 08 20 09 20 0B 20 0C 20 0E 20 0F 20 10 20 11 20 12 20 13 20 14 20 15 20 16 20 17 20 18 20	 bel   bs   ht   vt   ff   so   si   dle   dc1   dc2   dc3   dc4   nak   syn   etb   can  
+19 20 1A 20 1B 20 1C 20 1D 20 1E 20 1F 20 7F 62 61 63 6B 73 70 61 63 65 20 08 08 08 0A 62 65 6C	 em   sub   esc   fs   gs   rs   us   del b a c k s p a c e   bs bs bs lf b e l
+6C 20 20 20 20 20 20 07 07 07 0A 65 73 63 20 20 20 20 20 20 20 1B 1B 1B 0A 61 6E 73 69 20 1B 5D	 l             bel bel bel lf e s c               esc esc esc lf a n s i   esc ]
+30 3B 20 1B 5B 30 41 20 1B 5B 42 20 1B 5B 30 3B 34 35 3B 43 20 1B 5B 44 20 1B 5B 66 20 1B 5B 48	 0 ;   esc [ 0 A   esc [ B   esc [ 0 ; 4 5 ; C   esc [ D   esc [ f   esc [ H
+20 1B 5B 75 0A 61 6E 73 69 32 20 1B 5B 4B 20 1B 5B 30 3B 39 3B 6D 20 1B 5B 30 3B 39 73 0A 61 6E	   esc [ u lf a n s i 2   esc [ K   esc [ 0 ; 9 ; m   esc [ 0 ; 9 s lf a n
+73 69 33 20 1B 5B 3D 68 20 1B 5B 3D 30 3B 39 6C 0A 61 6E 73 69 34 20 1B 5B 3F 68 20 1B 5B 3F 39	 s i 3   esc [ = h   esc [ = 0 ; 9 l lf a n s i 4   esc [ ? h   esc [ ? 9
+30 68 0A 61 6E 73 69 35 20 1B 5B 30 3B 39 70 20 1B 5B 30 70 0A 61 6E 73 69 36 20 1B 5B 30 3B 39	 0 h lf a n s i 5   esc [ 0 ; 9 p   esc [ 0 p lf a n s i 6   esc [ 0 ; 9
+3B 22 22 3B 70 20 1B 5B 39 30 22 73 6F 6D 65 74 68 69 6E 67 22 3B 70 0A 61 6E 73 69 37 20 1B 5B	 ; " " ; p   esc [ 9 0 " s o m e t h i n g " ; p lf a n s i 7   esc [
+32 4A 0A 57 77 77 20 4D 6D 6D 20 44 44 20 48 48 3A 4D 4D 3A 53 53 20 54 4D 5A 20 59 59 59 59 0A	 2 J lf W w w   M m m   D D   H H : M M : S S   T M Z   Y Y Y Y lf
+0A 45 6C 61 70 73 65 64 3A 20 3C 31 20 73 65 63 6F 6E 64 0A                                    	 lf E l a p s e d :   < 1   s e c o n d lf            

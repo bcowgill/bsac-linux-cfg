@@ -1,0 +1,28 @@
+
+INPLACE=[-i] filter-json-commas.sh [--help|--man|-?] [json-file ...]
+
+This will filter a JSON file and fix missing/unnecessary end-of-line commas where needed.
+
+INPLACE    Environment variable -i or -i.bak to specify to perl to do inplace editing of the files.
+json-file  JSON file names to filter or fix in place.
+--man      Shows help for this tool.
+--help     Shows help for this tool.
+-?         Shows help for this tool.
+
+Assumes pretty formatted json with each key/value on separate lines with simple key: string-value structure no deep values.
+
+See also json-change.sh json-common.pl json-insert.sh json-minus.pl json-plus.pl json-reorder.pl json-shave.pl json-syntax.pl
+
+Example:
+	filter-json-commas.sh this.json
+
+	fix the commas in this.json printing to standard output.
+
+	INPLACE=-i.bak filter-json-commas.sh this.json
+
+	fix the commas in this.json saving a backup in this.json.bak before making any changes.
+
+	INPLACE=-i filter-json-commas.sh this.json
+
+	fix the commas directly in this.json without saving a backup.
+

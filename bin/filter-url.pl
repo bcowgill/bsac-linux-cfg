@@ -13,6 +13,8 @@ This will display only https?:// URLs from standard input or files provided and 
 --help  Shows help for this tool.
 -?      Shows help for this tool.
 
+This is intended to be used to extract links from HTML files but will also work for Markdown and other file types.
+
 Example:
 
 	Extract the URLs from a local HTML file.
@@ -40,7 +42,7 @@ perl -ne '
 	my ($q, $Q) = (chr(39), chr(34));
 #		(https?://\S+?)[$q$Q]?
 	s{
-		(https?://[^\s$q$Q]+)
+		(https?://[^\s$q$Q`\)\]\}\>]+)
 	}{
 		print STDERR "$1\n"
 	}xmsge;'

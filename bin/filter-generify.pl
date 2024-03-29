@@ -82,5 +82,28 @@ while (my $line = <>)
 		my $x = "PID   PPID$3 HH:MM ${4}HH:MM:SS";
 		right_pad($1, $ps_ef_width) . center_pad($x, length($2));
 	}xmsge;
+
+	# Date from script command timestamp
+	# Fri 29 Mar 2024 12:00:26 GMT
+	$line =~ s{
+		([A-Z][a-z]{2}) \s+
+		\d\d?  \s+
+		([A-Z][a-z]{2}) \s+
+		\d{4,}\s+
+		\d\d+:\d\d:\d\d \s+
+		([A-Z]{3})
+	}{Www DD Mmm YYYY HH:MM:SS TMZ}xmsg;
+
+	# System date
+	# Fri Mar 29 10:52:12 GMT 2024
+	$line =~ s{
+		([A-Z][a-z]{2}) \s+
+		([A-Z][a-z]{2}) \s+
+		\d\d?  \s+
+		\d\d+:\d\d:\d\d \s+
+		([A-Z]{3}) \s+
+		\d{4,}
+	}{Www Mmm DD HH:MM:SS TMZ YYYY}xmsg;
+
 	print $line;
 }
