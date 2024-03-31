@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NEXT=pee
+NEXT=filter-script
 
 ./tests.sh
 if [ ! -z "$1" ]; then

@@ -20,6 +20,10 @@ It can reduce the output shown on the console to prevent slowing things down.
 
 See also tee, filter-script.pl, filter-whitespace.pl, filter-man.pl
 
+See also Everything You Wanted to Know about ANSI Escape Codes: https://notes.burke.libbey.me/ansi-escape-codes/
+or ANSI Escape Sequences https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b
+or XTerm Control Sequences https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+
 Example:
 
 	Run the tests, filter out 0/100 coverage and also log the results to a file.

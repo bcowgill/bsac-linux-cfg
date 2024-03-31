@@ -28,17 +28,9 @@ Initializing project in '.'
   JavaScript
 
 
-
-
-
-
 ? Do you want to use TypeScript or JavaScript? …
   TypeScript
 ❯ JavaScript
-
-
-
-
 
 
 ✔ Do you want to use TypeScript or JavaScript? · JavaScript
@@ -51,7 +43,6 @@ Initializing project in '.'
 
 ✔ Add a GitHub Actions workflow? (y/N) · false
 ? Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) › true
-
 
 
 ✔ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · true

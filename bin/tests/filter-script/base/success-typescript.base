@@ -22,9 +22,17 @@ setup.log
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright/typescrip (master $%|u=)$ prompter
 Prompt saved to PS1_SAVED and simplified.
 > prompter
+
+
 lhttps://playwright.dev/docs/intro
+
+
 ead -20 ../setup.clean 
+
+
 ttps://playwright.dev/docs/intro
+
+
 l!head
 head -20 ../setup.clean
 Setting up playwright for Javascript:
@@ -63,10 +71,6 @@ Initializing project in '.'
   JavaScript
 
 
-
-
-
-
 ✔ Do you want to use TypeScript or JavaScript? · TypeScript
 ? Where to put your end-to-end tests? › tests
 
@@ -77,7 +81,6 @@ Initializing project in '.'
 
 ✔ Add a GitHub Actions workflow? (y/N) · false
 ? Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) › true
-
 
 
 ✔ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · false

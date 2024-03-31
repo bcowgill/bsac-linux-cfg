@@ -1,4 +1,4 @@
-Invalid argument '--invalid'
+Invalid option '--invalid'
 
 filter-script.pl [--help|--man|-?] [--debug] [--codes] [file-name...]
 

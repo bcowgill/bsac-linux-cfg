@@ -10,18 +10,15 @@ SAMPLE=in/SAMPLE.ctrl.txt
 SAMPLE2=../filter-man/in/sample1.txt
 SAMPLE3=in/sample-script-ansi-escapes.log
 RULER=in/ruler.txt
+DCS=in/control.txt
 DEBUG=
 SKIP=0
 
 COLUMNS=
 
-# Set up sample file with control characters for testing...
-cp in/SAMPLE.txt $SAMPLE
-$PROGRAM --test >> $SAMPLE
-
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 23
+PLAN 25
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -38,6 +35,10 @@ function filter {
 	dos2unix --force "$TMP" 2> /dev/null
 	mv "$TMP" "$file"
 }
+
+# Set up sample file with control characters for testing...
+cp in/SAMPLE.txt $SAMPLE
+$PROGRAM --test >> $SAMPLE
 
 echo TEST $CMD command help
 TEST=command-help
@@ -169,6 +170,24 @@ if [ 0 == "$SKIP" ]; then
 	BASELOG=base/$TEST.log.base
 	ARGS="$DEBUG --control $LOG"
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	filter "$LOG"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$LOG" "$BASELOG" "$TEST logfile"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation with removal of dcs control characters
+TEST=success-dcs
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	LOG=out/$TEST.log.out
+	BASE=base/$TEST.base
+	BASELOG=base/$TEST.log.base
+	ARGS="$DEBUG --control $LOG"
+	$PROGRAM $ARGS < $DCS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	filter "$LOG"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

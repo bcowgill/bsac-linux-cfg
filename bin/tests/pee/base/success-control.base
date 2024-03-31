@@ -7,16 +7,21 @@ The quick brown fox jumped over the lazy dog. She sells seashells by the seashor
 Some text with control characters
 control      	
 control2          	                     
-backspace 
+backspace [K
 bell      
 esc       
-ansi ]0; [0A [B [0;45;C [D [f [H [u
-ansi2 [K [0;9;m [0;9s
+prompt    ]0;prompt text> delete me [00m
+ansi1 ]0; [0A [B [0;45;C [D [E [F [f [G [H [r [u
+ansi2 [J [0;9;K [0;9m [n [P [p [s
 ansi3 [=h [=0;9l
 ansi4 [?h [?90h
 ansi5 [0;9p [0p
 ansi6 [0;9;"";p [90"something";p
 ansi7 [2J
+ansi8 ]0;
+ansi9 M 7 8
+
+
 Www Mmm DD HH:MM:SS TMZ YYYY
 
 Elapsed: <1 second

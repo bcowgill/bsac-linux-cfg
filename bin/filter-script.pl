@@ -16,7 +16,6 @@ use FindBin;
 my $SHOW_CODES = 0;
 my $DEBUG = 0;
 my $DEC = 1;
-my $SCO = 1;
 
 sub usage
 {
@@ -57,56 +56,90 @@ USAGE
 	exit($code || 0);
 }
 
-if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
+while (scalar(@ARGV) && $ARGV[0] =~ m{\A-}xms)
 {
-	usage();
-}
-
-if (scalar(@ARGV) && $ARGV[0] =~ m{--debug}xms)
-{
-	$DEBUG = 1;
-	shift;
-}
-
-if (scalar(@ARGV) && $ARGV[0] =~ m{--codes}xms)
-{
-	$SHOW_CODES = 1;
-	shift;
-}
-
-if (scalar(@ARGV) && $ARGV[0] =~ m{--}xms)
-{
-	print "Invalid argument '$ARGV[0]'\n\n";
-	usage(1);
+	if ($ARGV[0] =~ m{--help|--man|-\?}xms)
+	{
+		usage();
+	}
+	elsif ($ARGV[0] =~ m{--debug}xms)
+	{
+		$DEBUG = 1;
+		shift;
+	}
+	elsif ($ARGV[0] =~ m{--codes}xms)
+	{
+		$SHOW_CODES = 1;
+		shift;
+	}
+	elsif ($ARGV[0] =~ m{--}xms)
+	{
+		print "Invalid option '$ARGV[0]'\n\n";
+		usage(1);
+	}
 }
 
 # Filter out ANSI color change control sequences
 my $esc = "\N{U+001B}"; # ^[ = escape
-my $ctrlg = "\N{U+0007}" ; # ^G = bell
+my $bel = "\N{U+0007}"; # ^G = bell
 my $bs = "\N{U+0008}"; # ^H = backspace
-my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
 # esc[ or \x9B = CSI - Control Sequence Introducer
 # esc] or \x9D = OSC - Operating System Command
 # escP or \x90 = DCS - Device Control String
-my $csi = qr/$esc\[|\N{U+009B}/;
-my $osc = qr/$esc\]|\N{U+009D}/;
-my $dcs = qr/${esc}P|\N{U+0090}/;
+my $csi = qr/(?:$esc\[|\N{U+009B})/;
+my $osc = qr/(?:$esc\]|\N{U+009D})/;
+my $dcs = qr/(?:${esc}P|\N{U+0090})/;
+
+# elixir function function/32 function?/12 function!/56
+my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
 
 sub show_line
 {
 	my ($line) = @ARG;
 	my $orig = $line;
+   $line =~	s{\N{U+0008}}{<BS>}xmsg;
 	$line =~	s{\N{U+001b}}{ ESC }xmsg;
-	$line =~	s{\N{U+0007}}{ BEL }xmsg;
-   $line =~	s{\N{U+0008}}{ BS }xmsg;
-	$line =~	s{\N{U+009b}}{ CSI }xmsg;
-	$line =~	s{\N{U+009d}}{ OSC }xmsg;
-	$line =~	s{\N{U+0090}}{ DCS }xmsg;
+	$line =~ s{\N{U+0000}}{<NUL>}xmsg;
+	$line =~ s{\N{U+0001}}{<SOH>}xmsg;
+	$line =~ s{\N{U+0002}}{<STX>}xmsg;
+	$line =~ s{\N{U+0003}}{<ETX>}xmsg;
+	$line =~ s{\N{U+0004}}{<EOT>}xmsg;
+	$line =~ s{\N{U+0005}}{<ENQ>}xmsg;
+	$line =~ s{\N{U+0006}}{<ACK>}xmsg;
+	$line =~	s{\N{U+0007}}{<BEL>}xmsg;
+	$line =~ s{\N{U+0008}}{<BS>}xmsg;
+	$line =~ s{\N{U+0009}}{<HT>}xmsg;
+	$line =~ s{\N{U+000b}}{<VT>}xmsg;
+	$line =~ s{\N{U+000c}}{<FF>}xmsg;
+	$line =~ s{\N{U+000e}}{<SO>}xmsg;
+	$line =~ s{\N{U+000f}}{<SI>}xmsg;
+	$line =~ s{\N{U+0010}}{<DLE>}xmsg;
+	$line =~ s{\N{U+0011}}{<DC1>}xmsg;
+	$line =~ s{\N{U+0012}}{<DC2>}xmsg;
+	$line =~ s{\N{U+0013}}{<DC3>}xmsg;
+	$line =~ s{\N{U+0014}}{<DC4>}xmsg;
+	$line =~ s{\N{U+0015}}{<NAK>}xmsg;
+	$line =~ s{\N{U+0016}}{<SYN>}xmsg;
+	$line =~ s{\N{U+0017}}{<ETB>}xmsg;
+	$line =~ s{\N{U+0018}}{<CAN>}xmsg;
+	$line =~ s{\N{U+0019}}{<EM>}xmsg;
+	$line =~ s{\N{U+001a}}{<SUB>}xmsg;
+	$line =~ s{\N{U+001b}}{<ESC>}xmsg;
+	$line =~ s{\N{U+001c}}{<FS>}xmsg;
+	$line =~ s{\N{U+001d}}{<GS>}xmsg;
+	$line =~ s{\N{U+001e}}{<RS>}xmsg;
+	$line =~ s{\N{U+001f}}{<US>}xmsg;
+	$line =~ s{\N{U+007f}}{<DEL>}xmsg;
+
+	$line =~	s{\N{U+009b}}{<CSI>}xmsg;
+	$line =~	s{\N{U+009d}}{<OSC>}xmsg;
+	$line =~	s{\N{U+0090}}{<DCS>}xmsg;
+
 	if ($orig ne $line)
 	{
-		$line =~ s{\x0d\x0a}{ CRLF}xmsg;
-		$line =~ s{\x0d}{ CR}xmsg;
-		$line =~ s{\x0a}{ LF}xmsg;
+		$line =~ s{\x0d\x0a}{ <CR><LF>}xmsg;
+		$line =~ s{\x0d}{ <CR>}xmsg;
+		$line =~ s{\x0a}{ <LF>}xmsg;
 		print STDERR ">>> $line\n" if $SHOW_CODES;
 	}
 }
@@ -127,37 +160,28 @@ while (my $line = <>) {
 	debugUTF8($line) if $DEBUG;
 
 	# bs ESC[K = bs
-	$line =~ s{$bs$esc\[K}{$bs}xmsge;
+	$line =~ s{$bs${csi}K}{$bs}xmsge;
 
-	# cursor jumping on the prompt
-	$line =~ s{$esc\]0; (.+) $ctrlg .+ $esc\[00m}{\n$1}xmsg;
-	$line =~ s{$esc\]0;}{\n}xmsg;
+	# cursor jumping on the prompt (ansi1,ansi8 test)
+	$line =~ s{${osc}0; (.+) $bel .+ ${csi}00m}{\n$1}xmsg;
+	$line =~ s{${osc}0;}{\n}xmsg;
 
-	$line =~ s{$esc\[=\d+[hl]}{}xmsg; # set/reset screen width/type
-	$line =~ s{$esc\[\?\d+[hl]}{}xmsg; # private modes invisible etc
+	$line =~ s{$bel+}{}xmsg; # alarm bell must be after prompt fix
 
-	$line =~ s{$esc\[\d+[;\d]+m}{}xmsg; # set graphics modes
-	$line =~ s{$esc\[\d*m}{}xmsg; # set bold/dim/italic, etc
+	$line =~ s{${csi}[0-9;]*[ABCDEFfGHru]}{\n}xmsg; # cursor move up/down etc (ansi1 test)
+	# color change, etc just remove totally
+	$line =~ s{${csi}=\d*[hl]}{}xmsg; # set/reset screen width/type (ansi3 test)
+	$line =~ s{${csi}\?\d+[hl]}{}xmsg; # private modes invisible etc (ansi4 test)
 
-	$line =~ s{$esc\[6n}{}xmsg; # ask cursor position
-	$line =~ s{$esc\[\d+;\d+[Hr]}{\n}xmsg; # cursor to line/col
-	$line =~ s{$esc\[[CF]}{}xmsg; # TODO what is it???
-	$line =~ s{$esc\[\d+P}{}xmsg; # TODO what is it???
-	$line =~ s{$esc\[H}{\n}xmsg; # cursor to home pos
-	$line =~ s{$esc\[\d*[JK]\r?}{\n}xmsg; # erase screen, line, etc
-	$line =~ s{$esc\[\d+[ABCDEFG]}{\n}xmsg; # cursor move up/down etc
-	$line =~ s{$ctrlg+}{}xmsg; # alarm bell
-	$line =~ s{$esc\[\?\d+[hl]}{}xmsg; # Set controlling flags high/low
-	$line =~ s{${esc}M}{\n}xmsg; # move cursor up one line/scroll
+	$line =~ s{${csi}\d*[JK]\r?}{\n}xmsg; # erase screen, line, etc
+	$line =~ s{${csi}[0-9;]*[JKmnPps]}{}xmsg; # erase screen, line, set graphics modes, set bold/dim/italic, etc (ansi2,ansi5,ansi7 test)
+	$line =~ s{(${csi}[0-9;]+"[^"]*";p)}{}xmsg; # (ansi6 test)
+
+	$line =~ s{${esc}M}{\n}xmsg; # move cursor up one line/scroll (ansi9 test)
 	if ($DEC)
 	{
-		$line =~ s{${esc}7}{}xmsg; # save cursor position
-		$line =~ s{${esc}8}{\n}xmsg; # restore saved cursor position
-	}
-	if ($SCO)
-	{
-		$line =~ s{$esc\[s}{}xmsg; # save cursor position
-		$line =~ s{$esc\[u}{\n}xmsg; # restore saved cursor position
+		$line =~ s{${esc}7}{}xmsg; # save cursor position (ansi9 test)
+		$line =~ s{${esc}8}{\n}xmsg; # restore saved cursor position (ansi9 test)
 	}
 	# handle backspacing by deleting character
 	while ($line =~ s{[^$bs] $bs}{}xmsg) {}
@@ -177,9 +201,11 @@ while (my $line = <>) {
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n}xmsg;
 	$line =~ s{\A ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n}xmsg;
 
+	# MUSTDO unit tests for these custom program output
 	$line =~ s{\A:\x0d}{\n}xmsg; # pager line from less
 	$line =~ s{\x0d}{\n}xmsg; # CR by itself convert to newline
 	$line =~ s{\s+\z}{}xms;
+	$line =~ s{\n\n\n+}{\n\n\n}xmsg;
 
 	show_codes($line);
 	$line .= "\n";

@@ -36,6 +36,10 @@ It can reduce the output shown on the console to prevent slowing things down.
 
 See also tee, filter-script.pl, filter-whitespace.pl, filter-man.pl
 
+See also Everything You Wanted to Know about ANSI Escape Codes: https://notes.burke.libbey.me/ansi-escape-codes/
+or ANSI Escape Sequences https://gist.github.com/ConnerWill/d4b6c776b509add763e17f9f113fd25b
+or XTerm Control Sequences https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+
 Example:
 
 	Run the tests, filter out 0/100 coverage and also log the results to a file.
@@ -52,29 +56,50 @@ USAGE
 
 my $MODULUS = $ENV{UPDATE} || 0;
 my $SHOW_ESC = 0;
-my $esc = qq{\x1b};
-my $bel = qq{\x7};
-my $bs = qq{\x8};
+
+my $esc = qq{\x1b}; # ^[ = escape
+my $bel = qq{\x7}; # ^G = bell
+my $bs = qq{\x8}; # ^H = backspace
+# esc[ or \x9B = CSI - Control Sequence Introducer
+# esc] or \x9D = OSC - Operating System Command
+# escP or \x90 = DCS - Device Control String
+my $csi = qr/(?:$esc\[|\N{U+009B})/;
+my $osc = qr/(?:$esc\]|\N{U+009D})/;
+my $dcs = qr/(?:${esc}P|\N{U+0090})/;
+
 my $ESC = qq{ ESC};
 
 # Get column wrap width from environment or use default
 my $WRAP = $ENV{COLUMNS} eq "0" ? 0 : ($ENV{COLUMNS} || 60);
 my $mode = '>';
 
+sub ansi
+{
+	my($start, $end) = @ARG;
+	print qq{ansi $start $end $esc$start$end $esc${start}0$end $esc${start}1;4$end $esc${start}5;9;$end\n};
+}
+
 sub output_control_for_test
 {
+	my $csi = "$esc\[";
+	my $osc = "$esc\]";
 	print qq{control   \a \b \f \t\n};
 	print qq{control2  \x01 \x02 \x03 \x04 \x05 \x06 \x07 \x08 \x09 \x0b \x0c \x0e \x0f \x10 \x11 \x12 \x13 \x14 \x15 \x16 \x17 \x18 \x19 \x1a \x1b \x1c \x1d \x1e \x1f \x7f\n};
-	print qq{backspace $bs$bs$bs\n};
+#   print qq{control3  \x90 \x9b \x9d\n}; # <= diffmerge cannot handle
+	print qq{backspace $bs$bs$bs$bs${csi}K\n};
 	print qq{bell      $bel$bel$bel\n};
 	print qq{esc       $esc$esc$esc\n};
-	print qq{ansi $esc]0; $esc\[0A $esc\[B $esc\[0;45;C $esc\[D $esc\[f $esc\[H $esc\[u\n};
-	print qq{ansi2 $esc\[K $esc\[0;9;m $esc\[0;9s\n};
-	print qq{ansi3 $esc\[=h $esc\[=0;9l\n};
-	print qq{ansi4 $esc\[\?h $esc\[\?90h\n};
-	print qq{ansi5 $esc\[0;9p $esc\[0p\n};
-	print qq{ansi6 $esc\[0;9;"";p $esc\[90"something";p\n};
-	print qq{ansi7 $esc\[2J\n};
+	print qq{prompt    ${osc}0;prompt text>$bel delete me ${csi}00m\n};
+	print qq{ansi1 ${osc}0; ${csi}0A ${csi}B ${csi}0;45;C ${csi}D ${csi}E ${csi}F ${csi}f ${csi}G ${csi}H ${csi}r ${csi}u\n};
+	print qq{ansi2 ${csi}J ${csi}0;9;K ${csi}0;9m ${csi}n ${csi}P ${csi}p ${csi}s\n};
+	print qq{ansi3 ${csi}=h ${csi}=0;9l\n};
+	print qq{ansi4 ${csi}\?h ${csi}\?90h\n};
+	print qq{ansi5 ${csi}0;9p ${csi}0p\n};
+	print qq{ansi6 ${csi}0;9;"";p ${csi}90"something";p\n};
+	print qq{ansi7 ${csi}2J\n};
+   print qq{ansi8 ${osc}0;\n};
+	print qq{ansi9 ${esc}M ${esc}7 ${esc}8\n};
+	print qq{\n\n};
 	exit;
 }
 
@@ -93,7 +118,7 @@ while (scalar(@ARGV) && $ARGV[0] =~ m{\A-}xms)
 	{
 		output_control_for_test();
 	}
-	elsif (scalar(@ARGV) && $ARGV[0] eq '--append')
+	elsif ($ARGV[0] eq '--append')
 	{
 		$mode = '>>';
 		shift;
@@ -195,73 +220,82 @@ sub show_esc
 
 sub clean_ansi
 {
-	my ($clean) = @ARG;
+	my ($line) = @ARG;
 
    # MUSTDO See filter-script program and update this...
 	# backspace, bell
 	if ($SHOW_ESC)
 	{
 		# See hexdump manual page for control codes
-		$clean =~ s{$bs}{<BS>}xmsg;
-		$clean =~ s{$esc}{ ESC}xmsg;
-		$clean =~ s{\x00}{<NUL>}xmsg;
-		$clean =~ s{\x01}{<SOH>}xmsg;
-		$clean =~ s{\x02}{<STX>}xmsg;
-		$clean =~ s{\x03}{<ETX>}xmsg;
-		$clean =~ s{\x04}{<EOT>}xmsg;
-		$clean =~ s{\x05}{<ENQ>}xmsg;
-		$clean =~ s{\x06}{<ACK>}xmsg;
-		$clean =~ s{\x07}{<BEL>}xmsg;
-		$clean =~ s{\x08}{<BS>}xmsg;
-		$clean =~ s{\x09}{<HT>}xmsg;
-		$clean =~ s{\x0b}{<VT>}xmsg;
-		$clean =~ s{\x0c}{<FF>}xmsg;
-		$clean =~ s{\x0e}{<SO>}xmsg;
-		$clean =~ s{\x0f}{<SI>}xmsg;
-		$clean =~ s{\x10}{<DLE>}xmsg;
-		$clean =~ s{\x11}{<DC1>}xmsg;
-		$clean =~ s{\x12}{<DC2>}xmsg;
-		$clean =~ s{\x13}{<DC3>}xmsg;
-		$clean =~ s{\x14}{<DC4>}xmsg;
-		$clean =~ s{\x15}{<NAK>}xmsg;
-		$clean =~ s{\x16}{<SYN>}xmsg;
-		$clean =~ s{\x17}{<ETB>}xmsg;
-		$clean =~ s{\x18}{<CAN>}xmsg;
-		$clean =~ s{\x19}{<EM>}xmsg;
-		$clean =~ s{\x1a}{<SUB>}xmsg;
-		$clean =~ s{\x1b}{<ESC>}xmsg;
-		$clean =~ s{\x1c}{<FS>}xmsg;
-		$clean =~ s{\x1d}{<GS>}xmsg;
-		$clean =~ s{\x1e}{<RS>}xmsg;
-		$clean =~ s{\x1f}{<US>}xmsg;
-		$clean =~ s{\x7f}{<DEL>}xmsg;
+		$line =~ s{$bs}{<BS>}xmsg;
+		$line =~ s{$esc}{ ESC}xmsg;
+		$line =~ s{\x00}{<NUL>}xmsg;
+		$line =~ s{\x01}{<SOH>}xmsg;
+		$line =~ s{\x02}{<STX>}xmsg;
+		$line =~ s{\x03}{<ETX>}xmsg;
+		$line =~ s{\x04}{<EOT>}xmsg;
+		$line =~ s{\x05}{<ENQ>}xmsg;
+		$line =~ s{\x06}{<ACK>}xmsg;
+		$line =~ s{\x07}{<BEL>}xmsg;
+		$line =~ s{\x08}{<BS>}xmsg;
+		$line =~ s{\x09}{<HT>}xmsg;
+		$line =~ s{\x0b}{<VT>}xmsg;
+		$line =~ s{\x0c}{<FF>}xmsg;
+		$line =~ s{\x0e}{<SO>}xmsg;
+		$line =~ s{\x0f}{<SI>}xmsg;
+		$line =~ s{\x10}{<DLE>}xmsg;
+		$line =~ s{\x11}{<DC1>}xmsg;
+		$line =~ s{\x12}{<DC2>}xmsg;
+		$line =~ s{\x13}{<DC3>}xmsg;
+		$line =~ s{\x14}{<DC4>}xmsg;
+		$line =~ s{\x15}{<NAK>}xmsg;
+		$line =~ s{\x16}{<SYN>}xmsg;
+		$line =~ s{\x17}{<ETB>}xmsg;
+		$line =~ s{\x18}{<CAN>}xmsg;
+		$line =~ s{\x19}{<EM>}xmsg;
+		$line =~ s{\x1a}{<SUB>}xmsg;
+		$line =~ s{\x1b}{<ESC>}xmsg;
+		$line =~ s{\x1c}{<FS>}xmsg;
+		$line =~ s{\x1d}{<GS>}xmsg;
+		$line =~ s{\x1e}{<RS>}xmsg;
+		$line =~ s{\x1f}{<US>}xmsg;
+		$line =~ s{\x7f}{<DEL>}xmsg;
 
-		$clean =~ s{\x0d\x0a}{<CR><LF><NEWLINEMARKERHERE>}xmsg;
-		$clean =~ s{\x0d}{<CR><NEWLINEMARKERHERE>}xmsg;
-		$clean =~ s{\x0a}{<LF><NEWLINEMARKERHERE>}xmsg;
-		$clean =~ s{<NEWLINEMARKERHERE>}{\n}xmsg;
+		$line =~ s{\x9b}{<CSI>}xmsg;
+		$line =~ s{\x9d}{<OSC>}xmsg;
+		$line =~ s{\x90}{<DCS>}xmsg;
+
+		$line =~ s{\x0d\x0a}{<CR><LF><NEWLINEMARKERHERE>}xmsg;
+		$line =~ s{\x0d}{<CR><NEWLINEMARKERHERE>}xmsg;
+		$line =~ s{\x0a}{<LF><NEWLINEMARKERHERE>}xmsg;
+		$line =~ s{<NEWLINEMARKERHERE>}{\n}xmsg;
 	}
 	else
 	{
-		while ($clean =~ s{[^$bs]$bs}{}xmsg) {}
+		while ($line =~ s{[^$bs]$bs}{}xmsg) {}
 	}
-	$clean =~ s{$bel}{show_esc("<BEEP>", "")}xmsge;
 
-	# http://ascii-table.com/ansi-escape-sequences.php
-	# cusror movement commands, put a space to set off the new text.
-	$clean =~ s{($esc\]0;)}{show_esc($1, "\n")}xmsge;
-	$clean =~ s{($esc\[[0-9;]*[ABCDfHu])}{show_esc($1, "\n")}xmsge;
+	# cursor movement commands, put a new line to set off the new text.
+	$line =~ s{(${osc}0;)}{show_esc($1, "\n")}xmsge; # (ansi1,ansi8 test)
+
+	$line =~ s{$bel}{show_esc("<BEEP>", "")}xmsge;
+
+	$line =~ s{(${csi}[0-9;]*[ABCDEFfGHru])}{show_esc($1, "\n")}xmsge; # cursor move up/down etc (ansi1 test)
 
 	# color change, etc just remove totally
-	$clean =~ s{($esc\[[0-9;]*[Kms])}{show_esc($1, "")}xmsge;
-	$clean =~ s{($esc\[=[0-9]*[hl])}{show_esc($1, "")}xmsge;
-	$clean =~ s{($esc\[\?[0-9]*h)}{show_esc($1, "")}xmsge;
-	$clean =~ s{($esc\[[0-9;]+p)}{show_esc($1, "")}xmsge;
-	$clean =~ s{($esc\[[0-9;]+"[^"]*";p)}{show_esc($1, "")}xmsge;
+	$line =~ s{(${csi}=\d*[hl])}{show_esc($1, "")}xmsge; # set/reset screen width/type (ansi3 test)
+	$line =~ s{(${csi}\?\d+[hl])}{show_esc($1, "")}xmsge; # private modes invisible etc (ansi4 test)
 
-	# clear screen, print a few lines
-	$clean =~ s{($esc\[2J)}{show_esc($1, "\n\n\n\n\n")}xmsge;
-	return $clean;
+	# clear screen, print a few lines (ansi7 test)
+	$line =~ s{(${csi}2J)}{show_esc($1, "\n\n\n\n\n")}xmsge;
+
+	$line =~ s{(${csi}[0-9;]*[JKmPps])}{show_esc($1, "")}xmsge; # erase screen, line, set graphics modes, set bold/dim/italic, etc (ansi2,ansi5,ansi7 test)
+	$line =~ s{(${csi}[0-9;]+"[^"]*";p)}{show_esc($1, "")}xmsge; # (ansi6 test)
+	$line =~ s{${esc}M}{\n}xmsg; # move cursor up one line/scroll (ansi9 test)
+	$line =~ s{${esc}7}{}xmsg; # save cursor position (ansi9 test)
+	$line =~ s{${esc}8}{\n}xmsg; # restore saved cursor position (ansi9 test)
+
+	return $line;
 }
 
 # Sample console.error coloration from why-did-you-render

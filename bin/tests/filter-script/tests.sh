@@ -10,12 +10,14 @@ SAMPLE=in/setup-playwright.txt
 SAMPLE2=in/setup-playwright-ts.txt
 SAMPLE3=in/signoff-line-extra-esc.txt
 SAMPLE4=in/with-codes.txt
+SAMPLE5=in/elixir-spawn.log
+CONTROL=../pee/in/SAMPLE.ctrl.txt
 DEBUG=
 SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 14
+PLAN 18
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -45,6 +47,10 @@ function check_clean {
 			exit 1;
 		}' "$file"
 }
+
+# Set up sample file with control characters for testing...
+cp ../pee/in/SAMPLE.txt $CONTROL
+../../pee.pl --test >> $CONTROL
 
 echo TEST $CMD command help
 TEST=command-help
@@ -132,7 +138,7 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation show codes
+echo TEST $CMD successful operation prompt codes
 TEST=success-prompt
 if [ 0 == "$SKIP" ]; then
 	ERR=0
@@ -161,6 +167,42 @@ if [ 0 == "$SKIP" ]; then
 	BASE_ERR=base/$TEST.err.base
 	ARGS="$DEBUG --codes"
 	$PROGRAM $ARGS < $SAMPLE4 > $OUT 2> $ERR || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	filter "$ERR"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$ERR" "$BASE_ERR" "$TEST error output"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation for elixir logs
+TEST=success-elixir
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	ERR=out/$TEST.err.out
+	BASE=base/$TEST.base
+	BASE_ERR=base/$TEST.err.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE5 > $OUT 2> $ERR || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	filter "$ERR"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$ERR" "$BASE_ERR" "$TEST error output"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation compared to pee.pl
+TEST=success-pee
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	ERR=out/$TEST.err.out
+	BASE=base/$TEST.base
+	BASE_ERR=base/$TEST.err.base
+	ARGS="$DEBUG --codes"
+	$PROGRAM $ARGS < $CONTROL > $OUT 2> $ERR || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	filter "$ERR"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"

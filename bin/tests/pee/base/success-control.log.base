@@ -7,16 +7,21 @@ The quick brown fox jumped over the lazy dog. She sells seashells by the seashor
 Some text with control characters<LF>
 control   <BEL> <BS> <FF> <HT><LF>
 control2  <SOH> <STX> <ETX> <EOT> <ENQ> <ACK> <BEL> <BS> <HT> <VT> <FF> <SO> <SI> <DLE> <DC1> <DC2> <DC3> <DC4> <NAK> <SYN> <ETB> <CAN> <EM> <SUB>  ESC <FS> <GS> <RS> <US> <DEL><LF>
-backspace <BS><BS><BS><LF>
+backspace <BS><BS><BS><BS> ESC[K<LF>
 bell      <BEL><BEL><BEL><LF>
 esc        ESC ESC ESC<LF>
-ansi  ESC]0;  ESC[0A  ESC[B  ESC[0;45;C  ESC[D  ESC[f  ESC[H  ESC[u<LF>
-ansi2  ESC[K  ESC[0;9;m  ESC[0;9s<LF>
+prompt     ESC]0;prompt text><BEL> delete me  ESC[00m<LF>
+ansi1  ESC]0;  ESC[0A  ESC[B  ESC[0;45;C  ESC[D  ESC[E  ESC[F  ESC[f  ESC[G  ESC[H  ESC[r  ESC[u<LF>
+ansi2  ESC[J  ESC[0;9;K  ESC[0;9m  ESC[n  ESC[P  ESC[p  ESC[s<LF>
 ansi3  ESC[=h  ESC[=0;9l<LF>
 ansi4  ESC[?h  ESC[?90h<LF>
 ansi5  ESC[0;9p  ESC[0p<LF>
 ansi6  ESC[0;9;"";p  ESC[90"something";p<LF>
 ansi7  ESC[2J<LF>
+ansi8  ESC]0;<LF>
+ansi9  ESCM  ESC7  ESC8<LF>
+<LF>
+<LF>
 Www Mmm DD HH:MM:SS TMZ YYYY
 
 Elapsed: <1 second
