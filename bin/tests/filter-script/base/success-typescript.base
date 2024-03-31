@@ -1,7 +1,4 @@
-Installing
-playwright
-for
-typescript
+Installing playwright for typescript
 
 Script started on Sat Mar 16 18:45:03 2024
 The operation couldn’t be completed. Unable to locate a Java Runtime.
@@ -125,9 +122,7 @@ Installing Playwright Test (npm install --save-dev @playwright/test)…
 (##################) ⠦ reify:playwright-core: timing reify:audit Completed in
 added 4 packages, and audited 5 packages in 2s
 
-found
-0
-vulnerabilities
+found 0 vulnerabilities
 Installing Types (npm install --save-dev @types/node)…
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:typescrip: sill idealTree buildDeps
@@ -151,9 +146,7 @@ Installing Types (npm install --save-dev @types/node)…
 (##################) ⠴ reify:@types/node: timing reifyNode:node_modules/undici
 added 2 packages, and audited 7 packages in 1s
 
-found
-0
-vulnerabilities
+found 0 vulnerabilities
 Writing playwright.config.ts.
 Writing tests/example.spec.ts.
 Writing tests-examples/demo-todo-app.spec.ts.

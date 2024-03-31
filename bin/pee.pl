@@ -99,6 +99,8 @@ sub output_control_for_test
 	print qq{ansi7 ${csi}2J\n};
    print qq{ansi8 ${osc}0;\n};
 	print qq{ansi9 ${esc}M ${esc}7 ${esc}8\n};
+
+	print qq{less:\n:\x0d\x0a:\x0a:\n};
 	print qq{\n\n};
 	exit;
 }

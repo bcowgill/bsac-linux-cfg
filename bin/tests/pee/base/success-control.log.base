@@ -20,6 +20,10 @@ ansi6  ESC[0;9;"";p  ESC[90"something";p<LF>
 ansi7  ESC[2J<LF>
 ansi8  ESC]0;<LF>
 ansi9  ESCM  ESC7  ESC8<LF>
+less:<LF>
+:<CR><LF>
+:<LF>
+:<LF>
 <LF>
 <LF>
 Www Mmm DD HH:MM:SS TMZ YYYY

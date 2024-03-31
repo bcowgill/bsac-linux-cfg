@@ -6,432 +6,432 @@ Erlang/OTP 19 [erts-8.1] [source-e7be63d] [64-bit] [smp:8:8] [async-threads:10] 
 Interactive Elixir (1.3.4) - press Ctrl+C to exit (type h() ENTER for help)
 
 iex(n)> String.
-Break
-Casing
-Chars
-Normalizer
-Unicode
-at/2
-capitalize/1
-chunk/2
-codepoints/1
-contains?/2
-downcase/1
-duplicate/2
-ends_with?/2
-equivalent?/2
-first/1
-graphemes/1
-jaro_distance/2
-last/1
-length/1
-ljust/2
-match?/2
-myers_difference/2
-next_codepoint/1
-next_grapheme/1
-next_grapheme_size/1
-normalize/2
-pad_leading/2
-pad_leading/3
-pad_trailing/2
-pad_trailing/3
-printable?/1
-replace/3
-replace/4
-replace_leading/3
-replace_prefix/3
-replace_suffix/3
-replace_trailing/3
-reverse/1
-rjust/2
-slice/2
-slice/3
-split/1
-split/2
-split/3
-split_at/2
-splitter/2
-splitter/3
-starts_with?/2
-to_atom/1
-to_charlist/1
-to_existing_atom/1
-to_float/1
-to_integer/1
-to_integer/2
-trim/1
-trim/2
-trim_leading/1
-trim_leading/2
-trim_trailing/1
-trim_trailing/2
-upcase/1
-valid?/1
+	Break
+	Casing
+	Chars
+	Normalizer
+	Unicode
+	at/2
+	capitalize/1
+	chunk/2
+	codepoints/1
+	contains?/2
+	downcase/1
+	duplicate/2
+	ends_with?/2
+	equivalent?/2
+	first/1
+	graphemes/1
+	jaro_distance/2
+	last/1
+	length/1
+	ljust/2
+	match?/2
+	myers_difference/2
+	next_codepoint/1
+	next_grapheme/1
+	next_grapheme_size/1
+	normalize/2
+	pad_leading/2
+	pad_leading/3
+	pad_trailing/2
+	pad_trailing/3
+	printable?/1
+	replace/3
+	replace/4
+	replace_leading/3
+	replace_prefix/3
+	replace_suffix/3
+	replace_trailing/3
+	reverse/1
+	rjust/2
+	slice/2
+	slice/3
+	split/1
+	split/2
+	split/3
+	split_at/2
+	splitter/2
+	splitter/3
+	starts_with?/2
+	to_atom/1
+	to_charlist/1
+	to_existing_atom/1
+	to_float/1
+	to_integer/1
+	to_integer/2
+	trim/1
+	trim/2
+	trim_leading/1
+	trim_leading/2
+	trim_trailing/1
+	trim_trailing/2
+	upcase/1
+	valid?/1
 
 iex(n)> List.
-Chars
-delete/2
-delete_at/2
-duplicate/2
-first/1
-flatten/1
-flatten/2
-foldl/3
-foldr/3
-insert_at/3
-keydelete/3
-keyfind/3
-keyfind/4
-keymember?/3
-keyreplace/4
-keysort/2
-keystore/4
-keytake/3
-last/1
-replace_at/3
-to_atom/1
-to_existing_atom/1
-to_float/1
-to_integer/1
-to_integer/2
-to_string/1
-to_tuple/1
-update_at/3
-wrap/1
-zip/1
+	Chars
+	delete/2
+	delete_at/2
+	duplicate/2
+	first/1
+	flatten/1
+	flatten/2
+	foldl/3
+	foldr/3
+	insert_at/3
+	keydelete/3
+	keyfind/3
+	keyfind/4
+	keymember?/3
+	keyreplace/4
+	keysort/2
+	keystore/4
+	keytake/3
+	last/1
+	replace_at/3
+	to_atom/1
+	to_existing_atom/1
+	to_float/1
+	to_integer/1
+	to_integer/2
+	to_string/1
+	to_tuple/1
+	update_at/3
+	wrap/1
+	zip/1
 
 
 iex(n)> Enum.
-EmptyError
-OutOfBoundsError
-all?/1
-all?/2
-any?/1
-any?/2
-at/2
-at/3
-chunk/2
-chunk/3
-chunk/4
-chunk_by/2
-concat/1
-concat/2
-count/1
-count/2
-dedup/1
-dedup_by/2
-drop/2
-drop_every/2
-drop_while/2
-each/2
-empty?/1
-fetch!/2
-fetch/2
-filter/2
-filter_map/3
-find/2
-find/3
-find_index/2
-find_value/2
-find_value/3
-flat_map/2
-flat_map_reduce/3
-group_by/2
-group_by/3
-intersperse/2
-into/2
-into/3
-join/1
-join/2
-map/2
-map_join/2
-map_join/3
-map_reduce/3
-max/1
-max_by/2
-member?/2
-min/1
-min_by/2
-min_max/1
-min_max_by/2
-partition/2
-random/1
-reduce/2
-reduce/3
-reduce_while/3
-reject/2
-reverse/1
-reverse/2
-reverse_slice/3
-scan/2
-scan/3
-shuffle/1
-slice/2
-slice/3
-sort/1
-sort/2
-sort_by/2
-sort_by/3
-split/2
-split_while/2
-sum/1
-take/2
-take_every/2
-take_random/2
-take_while/2
-to_list/1
-uniq/1
-uniq_by/2
-unzip/1
-with_index/1
-with_index/2
-zip/2
+	EmptyError
+	OutOfBoundsError
+	all?/1
+	all?/2
+	any?/1
+	any?/2
+	at/2
+	at/3
+	chunk/2
+	chunk/3
+	chunk/4
+	chunk_by/2
+	concat/1
+	concat/2
+	count/1
+	count/2
+	dedup/1
+	dedup_by/2
+	drop/2
+	drop_every/2
+	drop_while/2
+	each/2
+	empty?/1
+	fetch!/2
+	fetch/2
+	filter/2
+	filter_map/3
+	find/2
+	find/3
+	find_index/2
+	find_value/2
+	find_value/3
+	flat_map/2
+	flat_map_reduce/3
+	group_by/2
+	group_by/3
+	intersperse/2
+	into/2
+	into/3
+	join/1
+	join/2
+	map/2
+	map_join/2
+	map_join/3
+	map_reduce/3
+	max/1
+	max_by/2
+	member?/2
+	min/1
+	min_by/2
+	min_max/1
+	min_max_by/2
+	partition/2
+	random/1
+	reduce/2
+	reduce/3
+	reduce_while/3
+	reject/2
+	reverse/1
+	reverse/2
+	reverse_slice/3
+	scan/2
+	scan/3
+	shuffle/1
+	slice/2
+	slice/3
+	sort/1
+	sort/2
+	sort_by/2
+	sort_by/3
+	split/2
+	split_while/2
+	sum/1
+	take/2
+	take_every/2
+	take_random/2
+	take_while/2
+	to_list/1
+	uniq/1
+	uniq_by/2
+	unzip/1
+	with_index/1
+	with_index/2
+	zip/2
 
 
 iex(n)> Map.
-delete/2
-drop/2
-equal?/2
-fetch!/2
-fetch/2
-from_struct/1
-get/2
-get/3
-get_and_update!/3
-get_and_update/3
-get_lazy/3
-has_key?/2
-keys/1
-merge/2
-merge/3
-new/0
-new/1
-new/2
-pop/2
-pop/3
-pop_lazy/3
-put/3
-put_new/3
-put_new_lazy/3
-split/2
-take/2
-to_list/1
-update!/3
-update/4
-values/1
+	delete/2
+	drop/2
+	equal?/2
+	fetch!/2
+	fetch/2
+	from_struct/1
+	get/2
+	get/3
+	get_and_update!/3
+	get_and_update/3
+	get_lazy/3
+	has_key?/2
+	keys/1
+	merge/2
+	merge/3
+	new/0
+	new/1
+	new/2
+	pop/2
+	pop/3
+	pop_lazy/3
+	put/3
+	put_new/3
+	put_new_lazy/3
+	split/2
+	take/2
+	to_list/1
+	update!/3
+	update/4
+	values/1
 
 
 iex(n)> Process.
-alive?/1
-cancel_timer/1
-delete/1
-demonitor/1
-demonitor/2
-exit/2
-flag/2
-flag/3
-get/0
-get/1
-get/2
-get_keys/0
-get_keys/1
-group_leader/0
-group_leader/2
-hibernate/3
-info/1
-info/2
-link/1
-list/0
-monitor/1
-put/2
-read_timer/1
-register/2
-registered/0
-send/3
-send_after/3
-sleep/1
-spawn/2
-spawn/4
-unlink/1
-unregister/1
-whereis/1
+	alive?/1
+	cancel_timer/1
+	delete/1
+	demonitor/1
+	demonitor/2
+	exit/2
+	flag/2
+	flag/3
+	get/0
+	get/1
+	get/2
+	get_keys/0
+	get_keys/1
+	group_leader/0
+	group_leader/2
+	hibernate/3
+	info/1
+	info/2
+	link/1
+	list/0
+	monitor/1
+	put/2
+	read_timer/1
+	register/2
+	registered/0
+	send/3
+	send_after/3
+	sleep/1
+	spawn/2
+	spawn/4
+	unlink/1
+	unregister/1
+	whereis/1
 
 iex(n)> Node.
-alive?/0
-connect/1
-disconnect/1
-get_cookie/0
-list/0
-list/1
-monitor/2
-monitor/3
-ping/1
-self/0
-set_cookie/1
-set_cookie/2
-spawn/2
-spawn/3
-spawn/4
-spawn/5
-spawn_link/2
-spawn_link/4
-start/1
-start/2
-start/3
-stop/0
+	alive?/0
+	connect/1
+	disconnect/1
+	get_cookie/0
+	list/0
+	list/1
+	monitor/2
+	monitor/3
+	ping/1
+	self/0
+	set_cookie/1
+	set_cookie/2
+	spawn/2
+	spawn/3
+	spawn/4
+	spawn/5
+	spawn_link/2
+	spawn_link/4
+	start/1
+	start/2
+	start/3
+	stop/0
 
 iex(n)> GenServer.
-abcast/2
-abcast/3
-call/2
-call/3
-cast/2
-multi_call/2
-multi_call/3
-multi_call/4
-reply/2
-start/2
-start/3
-start_link/2
-start_link/3
-stop/1
-stop/2
-stop/3
-whereis/1
+	abcast/2
+	abcast/3
+	call/2
+	call/3
+	cast/2
+	multi_call/2
+	multi_call/3
+	multi_call/4
+	reply/2
+	start/2
+	start/3
+	start_link/2
+	start_link/3
+	stop/1
+	stop/2
+	stop/3
+	whereis/1
 
 iex(n)> Bitwise.
 &&&/2     <<</2     >>>/2     ^^^/2     band/2    bnot/1    bor/2
 bsl/2     bsr/2     bxor/2    |||/2     ~~~/1
 
 iex(n)> Integer.
-digits/1
-digits/2
-is_even/1
-is_odd/1
-parse/1
-parse/2
-to_charlist/1
-to_charlist/2
-to_string/1
-to_string/2
-undigits/1
-undigits/2
+	digits/1
+	digits/2
+	is_even/1
+	is_odd/1
+	parse/1
+	parse/2
+	to_charlist/1
+	to_charlist/2
+	to_string/1
+	to_string/2
+	undigits/1
+	undigits/2
 
 
 iex(n)> Float.
-ceil/1
-ceil/2
-floor/1
-floor/2
-parse/1
-round/1
-round/2
-to_charlist/1
-to_string/1
+	ceil/1
+	ceil/2
+	floor/1
+	floor/2
+	parse/1
+	round/1
+	round/2
+	to_charlist/1
+	to_string/1
 
 iex(n)> Tuple.
-append/2
-delete_at/2
-duplicate/2
-insert_at/3
-to_list/1
+	append/2
+	delete_at/2
+	duplicate/2
+	insert_at/3
+	to_list/1
 
 
 iex(n)> Keyword.
-delete/2
-delete/3
-delete_first/2
-drop/2
-equal?/2
-fetch!/2
-fetch/2
-get/2
-get/3
-get_and_update!/3
-get_and_update/3
-get_lazy/3
-get_values/2
-has_key?/2
-keys/1
-keyword?/1
-merge/2
-merge/3
-new/0
-new/1
-new/2
-pop/2
-pop/3
-pop_first/2
-pop_first/3
-pop_lazy/3
-put/3
-put_new/3
-put_new_lazy/3
-split/2
-take/2
-to_list/1
-update!/3
-update/4
-values/1
+	delete/2
+	delete/3
+	delete_first/2
+	drop/2
+	equal?/2
+	fetch!/2
+	fetch/2
+	get/2
+	get/3
+	get_and_update!/3
+	get_and_update/3
+	get_lazy/3
+	get_values/2
+	has_key?/2
+	keys/1
+	keyword?/1
+	merge/2
+	merge/3
+	new/0
+	new/1
+	new/2
+	pop/2
+	pop/3
+	pop_first/2
+	pop_first/3
+	pop_lazy/3
+	put/3
+	put_new/3
+	put_new_lazy/3
+	split/2
+	take/2
+	to_list/1
+	update!/3
+	update/4
+	values/1
 
 iex(n)> Module.
-LocalsTracker
-add_doc/5
-add_doc/6
-concat/1
-concat/2
-create/3
-defines?/2
-defines?/3
-definitions_in/1
-definitions_in/2
-delete_attribute/2
-eval_quoted/2
-eval_quoted/3
-eval_quoted/4
-get_attribute/2
-make_overridable/2
-open?/1
-overridable?/2
-put_attribute/3
-register_attribute/3
-safe_concat/1
-safe_concat/2
-split/1
+	LocalsTracker
+	add_doc/5
+	add_doc/6
+	concat/1
+	concat/2
+	create/3
+	defines?/2
+	defines?/3
+	definitions_in/1
+	definitions_in/2
+	delete_attribute/2
+	eval_quoted/2
+	eval_quoted/3
+	eval_quoted/4
+	get_attribute/2
+	make_overridable/2
+	open?/1
+	overridable?/2
+	put_attribute/3
+	register_attribute/3
+	safe_concat/1
+	safe_concat/2
+	split/1
 
 iex(n)> Access.
-all/0
-at/1
-elem/1
-fetch/2
-get/2
-get/3
-get_and_update/3
-key!/1
-key/1
-key/2
-pop/2
+	all/0
+	at/1
+	elem/1
+	fetch/2
+	get/2
+	get/3
+	get_and_update/3
+	key!/1
+	key/1
+	key/2
+	pop/2
 
 iex(n)> MapSet.
-delete/2
-difference/2
-disjoint?/2
-equal?/2
-intersection/2
-member?/2
-new/0
-new/1
-new/2
-put/2
-size/1
-subset?/2
-to_list/1
-union/2
+	delete/2
+	difference/2
+	disjoint?/2
+	equal?/2
+	intersection/2
+	member?/2
+	new/0
+	new/1
+	new/2
+	put/2
+	size/1
+	subset?/2
+	to_list/1
+	union/2
 
 iex(n)> FunctionClauseError.
-exception/1
-message/1
+	exception/1
+	message/1
 
 iex(n)> Erl.h :io
 http://erlang.org/doc/man/io.html
@@ -493,34 +493,34 @@ http://erlang.org/doc/man/io.html
 :ok
 
 iex(n)> IO.
-ANSI
-Stream
-StreamError
-binread/1
-binread/2
-binstream/2
-binwrite/1
-binwrite/2
-chardata_to_string/1
-getn/1
-getn/2
-getn/3
-gets/1
-gets/2
-inspect/1
-inspect/2
-inspect/3
-iodata_length/1
-iodata_to_binary/1
-puts/1
-puts/2
-read/1
-read/2
-stream/2
-warn/1
-warn/2
-write/1
-write/2
+	ANSI
+	Stream
+	StreamError
+	binread/1
+	binread/2
+	binstream/2
+	binwrite/1
+	binwrite/2
+	chardata_to_string/1
+	getn/1
+	getn/2
+	getn/3
+	gets/1
+	gets/2
+	inspect/1
+	inspect/2
+	inspect/3
+	iodata_length/1
+	iodata_to_binary/1
+	puts/1
+	puts/2
+	read/1
+	read/2
+	stream/2
+	warn/1
+	warn/2
+	write/1
+	write/2
 
 iex(n)> Erl.h :timer
 http://erlang.org/doc/man/timer.html
@@ -571,8 +571,7 @@ iex(n)> :observer.start
 iex(n)> i self
 Term
   #PID<0.81.0>
-Data
-type
+Data type
   PID
 Alive
   true
@@ -580,14 +579,11 @@ Name
   not registered
 Links
   none
-Message
-queue
-length
+Message queue length
   0
 Description
   Use Process.info/1 to get more info about this process
-Reference
-modules
+Reference modules
   Process, Node
 
 iex(n)> h

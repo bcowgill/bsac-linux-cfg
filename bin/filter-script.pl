@@ -153,6 +153,9 @@ sub show_codes
 	}
 }
 
+my $is_iex_log = 0;
+my $is_iex_listing = 0;
+
 while (my $line = <>) {
 	$line = NFD($line);   # decompose + reorder canonically
 	chomp($line);
@@ -193,15 +196,45 @@ while (my $line = <>) {
 	# (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:playwright: sill idealTree buildDeps
 	$line =~ s{(\(([⠂\#]+)\)\s+[^\n]+)\n}{($2 eq ('⠂' x 18) || $2 eq ('#' x 18)) ? "$1\n": ""}xmsge;
 
-	# iex prompt remove numbers
-	$line =~ s{\A iex \(\d+\)>}{\niex(n)>}xmsg;
-	# iex list of functions
-	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n$4\n$5\n}xmsg;
-	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n$4\n}xmsg;
-	$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n$3\n}xmsg;
-	$line =~ s{\A ($exfn) \s+ ($exfn) \s* \z}{$1\n$2\n}xmsg;
 
-	# MUSTDO unit tests for these custom program output
+	# iex prompt remove numbers
+	$is_iex_log++ if $is_iex_log;
+	if ($line =~ s{\A iex \(\d+\)>}{\niex(n)>}xmsg)
+	{
+		$is_iex_log = 1;
+	} elsif ($line =~ m{\A\s*\z}xms)
+	{
+		$is_iex_log = 0;
+		$is_iex_listing = 0;
+	}
+	if ($is_iex_log)
+	{
+
+		# iex list of functions
+		my $save = $is_iex_listing;
+		$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{\t$1\n\t$2\n\t$3\n\t$4\n\t$5\n}xmsg and $is_iex_listing++;
+		$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{\t$1\n\t$2\n\t$3\n\t$4\n}xmsg and $is_iex_listing++;
+		$line =~ s{\A ($exfn) \s+ ($exfn) \s+ ($exfn) \s* \z}{\t$1\n\t$2\n\t$3\n}xmsg and $is_iex_listing++;
+		$line =~ s{\A ($exfn) \s+ ($exfn) \s* \z}{\t$1\n\t$2\n}xmsg and $is_iex_listing++;
+		#print ">>>1 save:$save  is list: $is_iex_listing is log: $is_iex_log $line\n" if $line =~ m{Term|Data|Type}xms;
+		if ($save && $save == $is_iex_listing)
+		{
+			#print ">>>2 save:$save  is list: $is_iex_listing is log: $is_iex_log $line\n" if $line =~ m{Term|Data|Type}xms;
+			$line =~ s{\A ($exfn) \s* \z}{\t$1\n}xmsg and $is_iex_listing = 0;
+			#print ">>>3 save:$save  is list: $is_iex_listing is log: $is_iex_log $line\n" if $line =~ m{Term|Data|Type}xms;
+		}
+		else
+		{
+			#print ">>>4 save:$save  is list: $is_iex_listing is log: $is_iex_log $line\n" if $line =~ m{Term|Data|Type}xms;
+			$is_iex_listing = $save || $is_iex_listing;
+		}
+		if ($is_iex_log > 1 && !$is_iex_listing)
+		{
+			$is_iex_log = 0;
+		}
+		#print ">>>5 save:$save  is list: $is_iex_listing is log: $is_iex_log $line\n" if $line =~ m{Term|Data|Type}xms;
+	} # $is_iex_log
+
 	$line =~ s{\A:\x0d}{\n}xmsg; # pager line from less
 	$line =~ s{\x0d}{\n}xmsg; # CR by itself convert to newline
 	$line =~ s{\s+\z}{}xms;

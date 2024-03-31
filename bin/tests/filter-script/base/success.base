@@ -103,9 +103,7 @@ Installing Playwright Test (npm install --save-dev @playwright/test)…
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:playwright: sill idealTree buildDeps
 added 4 packages, and audited 5 packages in 4s
 
-found
-0
-vulnerabilities
+found 0 vulnerabilities
 Installing Types (npm install --save-dev @types/node)…
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:playwright: sill idealTree buildDeps
 (⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:playwright: sill idealTree buildDeps
@@ -116,9 +114,7 @@ Installing Types (npm install --save-dev @types/node)…
 (##################) ⠙ reify:@types/node: http fetch GET 200 https://registry.
 added 2 packages, and audited 7 packages in 932ms
 
-found
-0
-vulnerabilities
+found 0 vulnerabilities
 Writing playwright.config.js.
 Writing tests/example.spec.js.
 Writing tests-examples/demo-todo-app.spec.js.
@@ -222,13 +218,11 @@ And check out the following files:
 Visit https://playwright.dev/docs/intro for more information. ✨
 
 Happy hacking! 🎭
-npm
-notice
+npm notice
 npm notice New minor version of npm available! 10.2.4 -> 10.5.0
 npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.5.0
 npm notice Run npm install -g npm@10.5.0 to update!
-npm
-notice
+npm notice
 
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ ls
 node_modules		playwright.config.js	tests-examples
@@ -337,9 +331,7 @@ added 101 packages, and audited 108 packages in 7s
 24 packages are looking for funding
   run `npm fund` for details
 
-found
-0
-vulnerabilities
+found 0 vulnerabilities
 
 br388313@C02FJ2JKMD6M: ~/bin/template/playwright (master *$%|u=)$ exit
 exit

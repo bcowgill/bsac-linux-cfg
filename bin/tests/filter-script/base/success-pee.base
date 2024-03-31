@@ -1,13 +1,7 @@
-Some
-normal
-text
+Some normal text
 The quick brown fox jumped over the lazy dog. She sells seashells by the seashore. Three free fleas flew through three cheese trees.  How can a clam cram in a clean cream can?  I scream, you scream, we all scream for ice cream.  I saw Susie sitting in a shoeshine shop.  Susie works in a shoeshine shop.  Where she shines she sits, and where she sits she shines.
 
-Some
-text
-with
-control
-characters
+Some text with control characters
 control
 control2         	                     
 backsp
@@ -24,5 +18,9 @@ ansi6
 ansi7
 ansi8
 ansi9
+less:
+
+:
+:
 
 
