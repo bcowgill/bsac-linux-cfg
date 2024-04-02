@@ -1,5 +1,10 @@
 testing filter scripts filter-long .. filter-sounds filter-code-files(end of chain contains list) using tests/test-chain.sh
 
+~/d/docs/leisure
+pwcd leisure
+libreoffice /home/me/d/docs/leisure/star-trek-stardates.ods &
+/home/me/d/docs/leisure/star-trek-shows.txt
+
 cd ~; math-rep.pl math-circles.txt
 https://mathematicsart.com/solved-exercises/solution-what-is-the-radius-of-the-smallest-circle/?fbclid=IwAR1VfC9bQQVpN6NQKCkLI8DkZFF-5f8YBW_-KnR7iB6_u_wc-msoB9CPQ5o
 
@@ -50,8 +55,6 @@ ubuntu-install-2023 on 4TB ADATA drive downloaded, try boot from USB
 soo also USB broken posting to help page.
 usb-broken.txt - from Mar 2023 trying to make a Lubuntu boot disk
 
-me@akston:~/d/docs/leisure
-star-trek-episodes.txt
 100-books.sh list of 100 books from Equaliser movies.
 
 check-code unit tests
