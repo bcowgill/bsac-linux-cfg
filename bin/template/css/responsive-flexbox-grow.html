@@ -4,89 +4,139 @@
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
         <title>Flexbox Stacking</title>
         <style>
+            .heading {
+				font-size: 22px;
+				line-height: 28px;
+			}
+            .body {
+				font-size: 16px;
+				line-height: 20px;
+			}
             .container {
                 display: flex;
                 display: -webkit-flex;
                 flex-direction: column;
-                align-items: flex-start;
-                align-content: flex-start;
-                align-self: flex-start;
-                justify-content: flex-start;
+                flex-wrap: nowrap;
+                justify-content: space-between;
+                align-items: stretch;
+                align-content: stretch;
 
                 margin: auto;
-                height: 80vh;
+                height: 60vh;
                 width: 60vw;
                 border: 2px solid blue;
             }
-            .header {
-                width: 100%;
-                margin: auto;
-                text-align: left;
-                vertical-align: middle;
-
-                font-size: 22px;
-                line-height: 28px;
-                border: 2px solid orange;
-            }
-            .footer {
+            .item {
                 width: calc(100% - 2rem);
+                padding-left: 1rem;
+                padding-right: 1rem;
                 margin: auto;
                 text-align: left;
                 vertical-align: middle;
-				padding-left: 1rem;
-				padding-right: 1rem;
-
-                font-size: 16px;
-                line-height: 20px;
                 border: 2px solid orange;
             }
+            /* .header {}
+            .footer {} */
             .content {
                 flex-grow: 1;
-                width: calc(100% - 2rem);
-                margin: auto;
-                text-align: left;
-                vertical-align: middle;
-				padding-left: 1rem;
-				padding-right: 1rem;
-
-                font-size: 16px;
-                line-height: 20px;
-                border: 2px solid orange;
             }
 			.buttons {
 				float: right;
 			}
 			.scrollable {
-				overflow: scroll;
+				overflow-x: auto;
+				overflow-y: auto;
 				max-height: 41vh;
 			}
 			.hide {
 				display: none;
 				visibility: hidden;
 			}
+			.verbose {
+				/* display: none;
+				visibility: hidden; */
+				display: block;
+				visibility: visible;
+			}
+			@media screen {
+				.print {
+					display: none;
+					visibility: hidden;
+				}
+			}
+			@media print {
+				@page {
+					size: portrait;
+					margin: 6mm;
+				}
+				.scrollable {
+					overflow: visible;
+					height: fit-content;
+				}
+				.screen {
+					display: none;
+					visibility: hidden;
+				}
+				.container,
+				.item {
+					border: 2px solid transparent;
+					width: 100%;
+				}
+			}
+			@media screen and (max-height: 640px) {
+				.heading {
+					font-size: 16px;
+					line-height: 20px;
+				}
+				.body {
+					font-size: 12px;
+					line-height: 18px;
+				}
+			}
+			@media screen and (max-height: 500px) {
+				.heading {
+					font-size: 12px;
+					line-height: 18px;
+				}
+				.body {
+					font-size: 8px;
+					line-height: 14px;
+				}
+			}
+			@media screen and (max-height: 420px) {
+				.heading {
+					font-size: 10px;
+					line-height: 12px;
+				}
+				.body {
+					font-size: 8px;
+					line-height: 10px;
+				}
+			}
         </style>
     </head>
     <body>
-        <h1>Flexbox Stacking</h1>
+        <h1 class="hide">Flexbox Stacking</h1>
         <main class="container">
-            <article class="header">
+            <article class="screen item header heading">
 				<h1>Centered Stack with Growth<h1>
-				<h2>Sub-heading in header</h2>
+				<h2 class="screen">Sub-heading in header (screen)</h2>
 			</article>
-            <article class="content">
-				<p>Growable Content with a scroll bar as needed when it gets too much...</p>
+            <article class="item content body">
 				<div class="scrollable">
+					<h2 class="print heading">Sub-heading in header (print)</h2>
+					<p>Growable Content with a scroll bar as needed when it gets too much...</p>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p class="hide">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p class="hide">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-					<p class="hide">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<p class="verbose">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<p class="verbose">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<p class="verbose">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 					<p>Fixed footer for message</p>
 				</div>
 			</article>
-            <article class="footer">
+            <article class="screen item footer body">
 				<p>You must click the checkbox</p>
 				<p><input type="checkbox">Fixed size footer. And some more text...</p>
-				<p class="buttons"><button>Continue</p>
+				<p class="buttons" type="submit"><button>Continue</p>
 			</article>
         </main>
     </body>
