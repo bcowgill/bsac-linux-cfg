@@ -16,7 +16,7 @@ SKIP=0
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 6
+PLAN 7
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -26,6 +26,13 @@ ERROR_STOP=0
 
 # nvm use v12.19.0 or better...
 PROGRAM2=node
+
+if $PROGRAM2 --version | grep -E '(v1[23456789]|v[23456789]\d)\.' ; then
+	OK "node version is sufficient"
+else
+	NOT_OK "node version is insufficient to run these tests. see .nvmrc file."
+	exit 1
+fi
 
 echo TEST export default main
 TEST=default

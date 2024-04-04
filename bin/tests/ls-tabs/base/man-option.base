@@ -31,6 +31,9 @@ DESCRIPTION
                This program will read the given input file(s) and show you lines
                which have inconsistent tabs and spaces.
 
+SEE ALSO
+               fix-spaces.sh, fix-tabs.sh
+
 EXAMPLES
                ls-tabs.pl --spaces=3 hello.c
 

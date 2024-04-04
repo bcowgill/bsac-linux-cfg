@@ -815,6 +815,7 @@ sub test_show_help
 	$pattern = 'PATTERN';
 	my $expect = <<"EOE";
 scanning $source directory for new files matching $pattern...
+   Will move them to $destination/$prefix and number them starting at $START_AT
    Press Ctrl-C or
    touch $source_lock_stop
    touch $destination_lock_stop
@@ -1175,12 +1176,14 @@ sub tests
 	test_move_files(25, ["this-file-will-be-moved.ABC", "this-file-will-also-be-moved.ABC"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_move_files("ERROR: could not move", ["this-file-does-not-exist.abc"], ".", ".", "this-is-target-prefix-", 23) unless $SKIP;
 	test_get_new_files([], ".", "\\.xyzzyZYXXY\$") unless $SKIP;
-	test_get_new_files(["error:"], "./directory-does-not-exist", "\\.xyzzyZYXXY\$") unless $SKIP;
+	test_get_new_files([], "./directory-does-not-exist", "\\.xyzzyZYXXY\$") unless $SKIP;
 	test_get_new_files(["and-so-will-this-one.XYZ1", "this-file-will-be-found.XYZ1"], ".", "\\.XYZ1\$") unless $SKIP;
 	test_write_file("content for new file", "this-file-will-be-created.xxx", "content for new file") unless $SKIP;
 	test_write_file("error:", "/root/this-file-will-be-created.xxx", "content for new file") unless $SKIP;
 	test_remove_locks("returned", "") unless $SKIP;
 	test_remove_locks("ERROR: warning message for remove locks\n", "warning message for remove locks") unless $SKIP;
+	$destination = "DESTINATION";
+	$prefix = "PREFIX";
 	test_show_help();
 	test_get_number(1, ".", "auto-rename-unit-tests-get-number-new-") unless $SKIP;
 	test_get_number(23, ".", "auto-rename-unit-tests-get-number-exists-") unless $SKIP;
