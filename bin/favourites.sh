@@ -26,14 +26,15 @@ SONGS=$SONGS perl -MFile::Slurp \
 		$MOD = 10;
 		$played = 0;
 		$stopme = "$ENV{DIR}/STOP.ME";
-		$last = read_file("$ENV{DIR}/$ENV{LAST"});
+		print qq{To stop playing songs: touch "$stopme"\n};
+		$last = read_file("$ENV{DIR}/$ENV{LAST}");
+		print qq{Will resume playing songs after: $last\n};
 		$find = $last;
 		print qq{Last played sound file was: "$last"\n};
 		open($fhPlayed, ">>", "$ENV{DIR}/$ENV{SUM}");
 	}
 	while (my $song = <>)
 	{
-		print qq{CheCK FoR $stopme\n};
 		if (-f "$stopme")
 		{
 			system(qq{rm "$stopme"});
@@ -64,9 +65,9 @@ SONGS=$SONGS perl -MFile::Slurp \
 				{
 					print qq{To save this song to your favourite list, copy this command to another shell and run it.\n};
 				}
-				if ($played % (2 * $MOD) == 3)
+				if ($played % $MOD == 3)
 				{
-					print qq{To stop playing songs: touch "$stopme"\n};
+					print qq{\nTo stop playing songs: touch "$stopme"\n};
 				}
 
 				open($fhLast, ">", "$ENV{DIR}/$ENV{LAST}");
