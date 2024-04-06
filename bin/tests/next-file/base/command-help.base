@@ -1,0 +1,27 @@
+next-file.pl [--help|--man|-?] pathname
+
+This will take the pathname of a file or directory that exists and output the next numbered pathname that is available.
+
+pathname  an existing file or directory which you want to use as a template to create a next-numbered version.
+--help    shows help for this program.
+--man     shows help for this program.
+-?        shows help for this program.
+
+Example names used:
+  .file -> .file1
+  filename -> filename1
+  filename. -> filename1.
+  filename.txt -> filename1.txt
+  filename.tar.gz -> filename1.tar.gz
+  file42.txt -> file43.txt
+
+  Where the 1 will be incremented until the file name is not already in use.
+
+See also mktemp, renumber-files.sh, renumber-by-time.sh, rename-files.sh, auto-rename.pl, cp-random.pl
+
+Example:
+
+Make a numbered backup of a given file.
+
+  cp filename `next-file.pl filename`
+

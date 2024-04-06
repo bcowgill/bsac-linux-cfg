@@ -89,12 +89,13 @@ if [ ! -z "$PODCASTS_FROM" ]; then
 			echo `ls "$NEW" | wc -l` files currently in $NEW
 			if [ -d "$REMOVE" ]; then
 				echo Remove podcasts from phone at $REMOVE/
-				rm "$REMOVE/*.mp3"
+				rm "$REMOVE/*.mp3" "$REMOVE/*.pdf"
 			fi
 			mkdir -p "$NEW" 2> /dev/null
 			if [ -d "$NEW" ]; then
 				echo Move podcasts from $PODCASTS_FROM/ to $NEW/
 				move_files "$PODCASTS_FROM" "$NEW" mp3
+				move_files "$PODCASTS_FROM" "$NEW" pdf
 				echo `ls "$PODCASTS_FROM" | wc -l` files remaining in $PODCASTS_FROM
 				echo `ls "$NEW" | wc -l` files now in $NEW
 			fi
