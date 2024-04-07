@@ -1,14 +1,14 @@
 // @ts-check
 const { test, expect } = require("@playwright/test");
 
-test("has title", async ({ page }) => {
+test("has title @example", async ({ page }) => {
   await page.goto("https://playwright.dev/");
 
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/Playwright/);
 });
 
-test("get started link", async ({ page }) => {
+test("get started link @example", async ({ page }) => {
   await page.goto("https://playwright.dev/");
 
   // Click the get started link.

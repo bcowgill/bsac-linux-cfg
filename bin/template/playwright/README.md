@@ -16,3 +16,29 @@ MUSTDO test package build scripts in JS / TS
 JS
 lint
 format
+record
+record:api  change google.com url first -- har file is created
+record:test1 change to google.com url first -- har file is created
+devices -- saved dump to debug-spec.lst
+   npm run devices 2>&1 | pee.pl debug-spec.lst
+view
+example
+quick
+test
+visual
+debug
+debug:mobile
+devtools
+test:iframe
+test:brand
+test:mobile
+test:edge
+test:webkit
+test:verbose
+test:mockapi
+test:all
+test:all:brand
+test:all:iframe
+
+not tested:
+update

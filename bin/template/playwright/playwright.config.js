@@ -7,7 +7,7 @@ const { defineConfig, devices } = require('@playwright/test');
  */
 // require('dotenv').config();
 
-const defaultBrand: 'brand';
+const defaultBrand = 'brand';
 const PORT=58008;
 const brandBaseURL = { [defaultBrand]: `http://localhost:${PORT}` };
 
@@ -49,7 +49,7 @@ module.exports = defineConfig({
     video: process.env.VIDEO ? 'on' : 'on-first-retry',
     screenshot: process.env.LENSCAP ? 'only-on-failure' : 'on',
     launchOptions: {
-      slowMo: process.env.SLOMO ? 150 : 0,
+      slowMo: process.env.SLOMO ? 1500 : 0,
     }
   },
 
@@ -89,7 +89,7 @@ module.exports = defineConfig({
 
     /* Test against mobile viewports. */
     {
-      name: 'Mobile Chrome',
+      name: 'MobileChrome',
       use: { ...devices['Pixel 5'] },
     },
     // {
@@ -99,11 +99,11 @@ module.exports = defineConfig({
 
     /* Test against branded browsers. */
     {
-      name: 'Microsoft Edge',
+      name: 'MicrosoftEdge',
       use: { ...devices['Desktop Edge'], channel: 'msedge' },
     },
     {
-      name: 'Google Chrome',
+      name: 'GoogleChrome',
       use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
   ],

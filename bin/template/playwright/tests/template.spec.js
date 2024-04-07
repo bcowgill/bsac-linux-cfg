@@ -27,7 +27,7 @@ test.describe("TEMPLATE page test spec", () => {
       channel,
       browserName,
       defaultBrowserType,
-      isMovile,
+      isMobile,
       viewport,
     }) => {
       if (!screenshot) {

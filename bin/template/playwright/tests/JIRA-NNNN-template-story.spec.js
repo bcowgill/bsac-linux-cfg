@@ -34,7 +34,7 @@ test.describe("@story JIRA-NNNN @JOURNEY page test spec", () => {
       channel,
       browserName,
       defaultBrowserType,
-      isMovile,
+      isMobile,
       viewport,
     }) => {
       if (!screenshot) {

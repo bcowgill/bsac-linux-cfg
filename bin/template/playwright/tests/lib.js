@@ -51,9 +51,9 @@ export function uiHas(multiTextIn, withBrand = brand) {
  * @param {string} withBrand specifies which app brand value to check. defaults to process.env.BRAND value
  * @returns {string|number|boolean|RegExp} provides the UI value configured for the brand given.
  */
-export function uiText() {
+export function uiText(multiTextIn, withBrand = defaultBrand) {
   if (!(withBrand in UI_DEFAULT)) {
-    throw new RangeError(`uiHas() Invalid App Brand [${withBrand}] provided`);
+    throw new RangeError(`uiText() Invalid App Brand [${withBrand}] provided`);
   }
   const multiText = multiTextIn || UI_DEFAULT;
   if (multiText instanceof RegExp || typeof multiText !== "object") {
