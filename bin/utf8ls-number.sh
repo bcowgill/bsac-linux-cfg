@@ -14,6 +14,8 @@ It looks for /NUMBER|DIGIT number of/ in the unicode name string.
 
 Specify TABLE=1 in environment to output a perl key value table.
 
+See also anglicise.pl, utf8tr.pl, math-rep.pl, utf8-ellipsis.pl, utf8-filter.pl, utf8ls-letter.sh, utf8ls-number.sh, utf8ls.pl
+
 ex.
 
 $(basename $0) 1 one of

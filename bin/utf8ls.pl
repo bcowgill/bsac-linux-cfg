@@ -33,6 +33,8 @@ Output a table of utf8 characters starting at a given code point.
 -N   specify how many characters to show. default is 26
 -all show all remaining characters from the starting code point
 
+See also anglicise.pl, utf8tr.pl, math-rep.pl, utf8-ellipsis.pl, utf8-filter.pl, utf8ls-letter.sh, utf8ls-number.sh, utf8ls.pl
+
 example:
 
 $cmd -10 U+0100 \\\\N{WHITE_SMILING_FACE}

@@ -4,6 +4,7 @@
 
 # http://www.perl.com/pub/2012/04/perl-unicode-cookbook-always-decompose-and-recompose.html
 # WINDEV tool useful on windows development machine
+# See also utf8tr.pl, anglicise.pl, utf8-filter.pl, utf8ls-letter.sh, utf8ls-number.sh, utf8ls.pl
 
 use English qw(-no_match_vars);
 use utf8;      # so literals and identifiers can be in UTF-8

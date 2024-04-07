@@ -1,0 +1,9 @@
+anglicise.pl [--help|--man|-?] [filename ...]
+
+Filter standard input or specified files anglicising any foreign alphabet characters and numbers.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+See also utf8tr.pl, math-rep.pl, utf8-ellipsis.pl, utf8-filter.pl, utf8ls-letter.sh, utf8ls-number.sh, utf8ls.pl

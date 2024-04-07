@@ -44,6 +44,8 @@ Show text using alphabetic unicode characters
 --sentences choose new random style for every sentence
 --help shows this help text
 
+See Also anglicise.pl, utf8-ellipsis.pl, utf8-filter.pl, utf8ls-letter.sh, utf8ls-number.sh, utf8ls.pl
+
 eg.
 
 echo Good Morning | $cmd --space italic.bold

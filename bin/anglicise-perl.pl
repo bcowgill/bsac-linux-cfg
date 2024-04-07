@@ -9,7 +9,7 @@
 
 use warnings;
 use strict;
-use English;
+use English qw(-no_match_vars);
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 $Data::Dumper::Indent   = 1;

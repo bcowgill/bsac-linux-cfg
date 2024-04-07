@@ -27,9 +27,15 @@ grep -vE '\A\d+,\d+' diffed.lst | grep '<' | perl -pne 's{<}{}xms' > uncovered.l
 echo Possible Errors in logic:
 grep -vE '\A\d+,\d+' diffed.lst | grep '>'
 
+pushd .. > /dev/null
+	git grep -li 'usage(' `cat $DIR/uncovered.lst` > $DIR/usage.lst
+popd > /dev/null
+
 rm diffed.lst
 COV=`wc -l < covered.lst`
 UNCOV=`wc -l < uncovered.lst`
+USAGE=`wc -l < usage.lst`
 echo $COV Covered tools are listed in covered.lst
 echo $UNCOV Uncovered tools are listed in uncovered.lst
+echo $USAGE Uncovered tools with help usage support are listed in usage.lst
 echo `calc 100*$COV/$UNCOV` % covered
