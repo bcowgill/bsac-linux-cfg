@@ -1,28 +1,28 @@
-export const defaultBrand = 'brand';
+export const defaultBrand = "brand";
 export const brand = process.env.BRAND || defaultBrand;
-export const serverAll = brand |== defaultBrand || process.env.ALL;
+export const serverAll = brand || defaultBrand || process.env.ALL;
 export const updateHar = !!process.env.HAR;
 
-export const BASE_URL = serverAll ? `/${brand.substring(0,1)}` : ''; // appends to URL from playwright config
+export const BASE_URL = serverAll ? `/${brand.substring(0, 1)}` : ""; // appends to URL from playwright config
 export const PAGE_URL = `${BASE_URL}/`;
-export const API_ALL = '**/*';
-export const BASE_API = '**/channel-api/';
+export const API_ALL = "**/*";
+export const BASE_API = "**/channel-api/";
 export const BASE_API_GLOB = `${BASE_API}**`;
 
 export const viewWidth = 600;
 export const viewHeight = 800;
 
 export const J_HOME = `${PAGE_URL}#/?req=HM`;
-export const J_FAQ  = `${PAGE_URL}#/?req=FQ`;
+export const J_FAQ = `${PAGE_URL}#/?req=FQ`;
 
 export const brandedLogin = {
-  [defaultBrand]: 'ABC123123',
+  [defaultBrand]: "ABC123123",
 };
 
 export const UI = {
   home: {
-    name: 'paul',
-    age: '42',
+    name: "paul",
+    age: "42",
   },
 };
 

@@ -1,4 +1,4 @@
-import { expect } from 'playwright/test';
+import { expect } from "playwright/test";
 import {
   renewAndPayPolicy,
   BASE_API_GLOB,
@@ -7,19 +7,19 @@ import {
   API_ALL,
   KBAUTH,
   brand,
-} from './config';
+} from "./config";
 
 const MAX_URL = 128;
-const ELLIPSIS = '…';
+const ELLIPSIS = "…";
 const PAD = 3;
-const ZEROS = Number.MAX_SAFE_INTEGER.toString().replace(/[1-9]/g, '0');
-const PORT=58008;
-const PM = 'a'; // name for a= parameter
-const CACHE = '9988776655443'; // fixed value for a= parameter
+const ZEROS = Number.MAX_SAFE_INTEGER.toString().replace(/[1-9]/g, "0");
+const PORT = 58008;
+const PM = "a"; // name for a= parameter
+const CACHE = "9988776655443"; // fixed value for a= parameter
 const reAParam = new RegExp(`([?&]${PM})=\\d+`); // random number in URL for a= cache busting
 
 const UI_DEFAULT = {
-  brand: 'UI.VALUE for brand must be passed to uiText() or other function.',
+  brand: "UI.VALUE for brand must be passed to uiText() or other function.",
 };
 
 /**
@@ -33,7 +33,7 @@ export function uiHas(multiTextIn, withBrand = brand) {
     throw new RangeError(`uiHas() Invalid App Brand [${withBrand}] provided`);
   }
   const multiText = multiTextIn || {};
-  if (multiText instanceof RegExp || typeof multiText !== 'object') {
+  if (multiText instanceof RegExp || typeof multiText !== "object") {
     return true;
   }
   if (withBrand in multiText) {
@@ -56,7 +56,7 @@ export function uiText() {
     throw new RangeError(`uiHas() Invalid App Brand [${withBrand}] provided`);
   }
   const multiText = multiTextIn || UI_DEFAULT;
-  if (multiText instanceof RegExp || typeof multiText !== 'object') {
+  if (multiText instanceof RegExp || typeof multiText !== "object") {
     return multiText;
   }
   if (withBrand in multiText) {
@@ -112,18 +112,18 @@ export function shorten(message, max = MAX_URL, ellipsis = ELLIPSIS) {
  */
 export function screenshotPath({
   brand = defaultBrand,
-  spec = 'screenshots',
-  suite = 'suite',
+  spec = "screenshots",
+  suite = "suite",
   channel,
-  browserName = 'browser',
-  defaultBrowserType = 'browser',
+  browserName = "browser",
+  defaultBrowserType = "browser",
   isMobile = false,
   viewport,
 }) {
-  const vp = viewport || { width: 'W', height: 'H' };
+  const vp = viewport || { width: "W", height: "H" };
   const browser = `${channel ? channel : browserName}-${defaultBrowserType}${
-    isMobile ? '-mobile' : ''
-  }`.replace(/^([\w-]+)-\1/, '$1');
+    isMobile ? "-mobile" : ""
+  }`.replace(/^([\w-]+)-\1/, "$1");
   const resolution = `${browser}-${vp.width}x${vp.height}`;
   const screenshots = `${spec}/${resolution}/${brand}/$suite{}`;
   const prefix = `${screenshots}/${suite}`;
@@ -147,11 +147,11 @@ export function screenshotPath({
  */
 export function getCamera({
   brand = defaultBrand,
-  spec = 'screenshots',
-  suite = 'suite',
+  spec = "screenshots",
+  suite = "suite",
   channel,
-  browserName = 'browser',
-  defaultBrowserType = 'browser',
+  browserName = "browser",
+  defaultBrowserType = "browser",
   isMobile = false,
   fullPage = true,
   viewport,
@@ -177,9 +177,17 @@ export function getCamera({
    * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
    * @note page can be a page, or a locator like page.getByTestId('id').
    */
-  return async function screenshot({ page, path, counter = 0, fullPage = full }) {
+  return async function screenshot({
+    page,
+    path,
+    counter = 0,
+    fullPage = full,
+  }) {
     const number = padZeros(counter);
-    const fullPath = `${prefix}-${number}-${path}.png`.replace(/\.png/i, '.png');
+    const fullPath = `${prefix}-${number}-${path}.png`.replace(
+      /\.png/i,
+      ".png",
+    );
     ++counter;
     if (!process.env.LENSCAP) {
       await page.screenshot({ path: fullPath, fullPage });
@@ -225,8 +233,12 @@ const LEFT = "⬅"; // U+2B05	[OtherSymbol]	LEFTWARDS BLACK ARROW
  */
 export function traceNetwork(page) {
   // Subscribe to 'request' and 'response' events.
-  page.on('request', (request) => console.log(RIGHT, request.method(), shorten(re.url())));
-  page.on('response', (response) => console.log(LEFT, response.status(), shorten(re.url())));
+  page.on("request", (request) =>
+    console.log(RIGHT, request.method(), shorten(re.url())),
+  );
+  page.on("response", (response) =>
+    console.log(LEFT, response.status(), shorten(re.url())),
+  );
 } // traceNetwork()
 
 /**
@@ -235,9 +247,13 @@ export function traceNetwork(page) {
  * @param {(string) => string} sanitiseUrl function cleans up a url for comparison with another url.
  */
 export function dumpHAR(har, sanitiseUrl = identity) {
-  har.log.entries.map((entry) =? {
-    console.warn(`HAR ${RIGHT} ${entry.request.method} ${sanitiseUrl(entry.request.url)}`);
-    console.warn(`HAR ${LEFT} ${entry.response.status} ${entry.response.statusText}`);
+  har.log.entries.map((entry) => {
+    console.warn(
+      `HAR ${RIGHT} ${entry.request.method} ${sanitiseUrl(entry.request.url)}`,
+    );
+    console.warn(
+      `HAR ${LEFT} ${entry.response.status} ${entry.response.statusText}`,
+    );
   });
 } // dumpHAR()
 
@@ -257,7 +273,9 @@ export function identity(item) {
  * @returns {string} will replace localhost port with 58008 and a= parameter with a fixed number.
  */
 export function fixCacheBusterParam(url) {
-  return url.replace(/(localhost):\d+/, `$1:${PORT}`).replace(reAParam, `$1=${CACHE}`);
+  return url
+    .replace(/(localhost):\d+/, `$1:${PORT}`)
+    .replace(reAParam, `$1=${CACHE}`);
 } // fixCacheBusterParam()
 
 /**
@@ -333,7 +351,11 @@ function matchPostData(postData = {}, harPostData = {}) {
  * @param {{response: { status: number, content: { mimeType: string, text: string}, headers: [{name: string, value: string}]}}} harEntry one of the .log.entries values from a HAR json file recording API calls from a test run.
  * @param {boolean} debug true to log the json being sent during debugging.
  */
-export async function fulfillHAR(route, harEntry, debug = process.env.HAR_DEBUG === '2') {
+export async function fulfillHAR(
+  route,
+  harEntry,
+  debug = process.env.HAR_DEBUG === "2",
+) {
   const response = harEntry.response;
   const res = {
     status: response.status,

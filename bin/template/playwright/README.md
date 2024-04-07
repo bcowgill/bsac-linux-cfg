@@ -10,3 +10,9 @@ package.json
   BRAND            for alternative brands of your app
   9988776655443    the fixed value for the random a= parameter in urls.
   PM=              to change the a= parameter name.
+
+MUSTDO test package build scripts in JS / TS
+
+JS
+lint
+format

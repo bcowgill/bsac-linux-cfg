@@ -1,5 +1,5 @@
 // @ts-check
-const { test, expect } require('@playwright/test');
+const { test, expect } = require("@playwright/test");
 
 // run with git bash command:
 // alias cls='perl -e "print qq{\n} x 50"'
@@ -18,7 +18,7 @@ const deviceFilter = (device) => /./.test(device);
 // const deviceFilter = (device) => /landscape|Desktop /.test(device)
 // const deviceFilter = (device) => !/landscape|Desktop /.test(device)
 
-test.describe('describe webkit only @devices', () => {
+test.describe("describe webkit only @devices", () => {
   let _myContext; // can it be viewed while tests paused in debugger??
 
   test.skip(
@@ -109,23 +109,17 @@ test.describe('describe webkit only @devices', () => {
         launchOptions,
         contextOptions,
         //playwright, // Playwright .chromium .firefox .webkit .devices .selectors .request .errors
-        'playwright.devices': Object.keys(playwright.devices)
-          .map(
-            (device) => {
-              const info = playwright.devices[device];
-              const view = info.viewport;
-              const scale = info.deviceScaleFactor;
-              return `${device}: ${view.width}x${
-                view.height
-              } scale ${scale}[${
-                view.width * scale
-              }X${
-                view.height * scale
-              }]`,
-            }
-          )
+        "playwright.devices": Object.keys(playwright.devices)
+          .map((device) => {
+            const info = playwright.devices[device];
+            const view = info.viewport;
+            const scale = info.deviceScaleFactor;
+            return `${device}: ${view.width}x${view.height} scale ${scale}[${
+              view.width * scale
+            }X${view.height * scale}]`;
+          })
           .filter(deviceFilter)
-          .sort();
+          .sort(),
         // browser, // Browser
         // page, // Page .accessibility .coverage .keyboard .mouse .request .touchscreen
         // request, // APIRequestContext
@@ -134,30 +128,32 @@ test.describe('describe webkit only @devices', () => {
 
       // Will appear once in terminal output when run from command line...
       if (!_myContext) {
-        console.warn('test.skip params:', skipContext);
+        console.warn("test.skip params:", skipContext);
         _myContext = skipContext;
       }
 
-      return browserName !== 'webit';
+      return browserName !== "webit";
     },
-    '[skip]webkit only!'
+    "[skip]webkit only!",
   );
 
-  test('has @title', async ({ page }) => {
-    console.warn('test 1 log');
-    await page.goto('https://playwright.dev/');
+  test("has @title", async ({ page }) => {
+    console.warn("test 1 log");
+    await page.goto("https://playwright.dev/");
 
     // Expect a title "to contain" a substring.
     await expect(page).toHaveTitle(/Playwright/);
   });
 
-  test('get started @link', async ({ page }) => {
-    await page.goto('https://playwright.dev/');
+  test("get started @link", async ({ page }) => {
+    await page.goto("https://playwright.dev/");
 
     // Click the get started link.
-    await page.getByRole('link', { name: 'Get started'}).click();
+    await page.getByRole("link", { name: "Get started" }).click();
 
     // Expects page to have a heading with the name of Installation
-    await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Installation" }),
+    ).toBeVisible();
   });
 });

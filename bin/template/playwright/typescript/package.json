@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "format": "prettier --write tests*/**/*.{j,t}s"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
