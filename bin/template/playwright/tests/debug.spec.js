@@ -134,7 +134,7 @@ test.describe("describe webkit only @devices", () => {
 
       return browserName !== "webit";
     },
-    "[skip]webkit only!",
+    "[skip]webkit only!"
   );
 
   test("has @title", async ({ page }) => {

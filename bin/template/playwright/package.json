@@ -10,6 +10,10 @@
     "node": "^20.5.0"
   },
   "scripts": {
+    "eslint": "eslint --cache --ext js tests/ tests-examples/",
+    "eslint:context": "eslint --cache --ext js tests/ tests-examples/ --format codeframe",
+    "eslint:fix": "eslint --cache --ext js tests/ tests-examples/ --fix",
+    "prelint": "npm run eslint",
     "lint": "cross-env ./scripts/scan-playwright.sh",
     "format": "prettier --write tests*/**/*.js",
     "postformat": "npm run lint",

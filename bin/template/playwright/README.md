@@ -12,6 +12,8 @@ package.json
   PM=              to change the a= parameter name.
 
 MUSTDO test package build scripts in JS / TS
+vdiff JS files into typescript dir
+set up eslint for JS tests then for typescript ones
 
 JS
 lint

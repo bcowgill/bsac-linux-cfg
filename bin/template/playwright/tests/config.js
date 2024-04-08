@@ -29,7 +29,7 @@ export const UI = {
 console.warn(`J_HOME:   ${J_HOME}`);
 if (serverAll) {
   console.warn(
-    `\n\nYou need to be running the App with 'yarn start:all' with brand=${brand} or process.env.ALL[=${process.env.ALL}] is in use.\n\n`,
+    `\n\nYou need to be running the App with 'yarn start:all' with brand=${brand} or process.env.ALL[=${process.env.ALL}] is in use.\n\n`
   );
 } else {
   console.warn(`\n\nYou need to be running the App with 'yarn start'\n\n`);
