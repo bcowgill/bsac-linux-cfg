@@ -1,0 +1,18 @@
+Unsupported option(s) --invalid
+
+file-break.pl [--help|--man|-?]
+
+Put a newline break between different files in a grep listing.
+
+--help  shows help for this program.
+--man   shows help for this program.
+-?      shows help for this program.
+
+Will actually insert a newline and a colon : to break up the grep output listing.
+
+See also filter-built-files.sh, filter-code-files.sh, filter-indents.sh, filter-punct.sh
+
+Example:
+
+git grep Errors | file-break.pl
+

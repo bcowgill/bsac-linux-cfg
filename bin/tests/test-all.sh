@@ -16,6 +16,9 @@ testSuiteBegin lint-package-json "linter for package.json to lock dependencies"
 ./test-nodes.sh $PROVE
 popd > /dev/null
 
+testSuite file-break "add a line break after file change in a grep listing" $PROVE
+testSuite anglicise "convert letters from other alphabets to plain english letters" $PROVE
+
 testSuite see "view directory/file/documents using system default or configured programs" $PROVE
 testSuite assign-to-team "create an ad hoc team by roles and assign tasks to them" $PROVE
 testSuite filter-man "filter perldoc man page output for test plan comparisons" $PROVE

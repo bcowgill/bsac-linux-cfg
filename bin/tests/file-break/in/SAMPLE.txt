@@ -1,0 +1,50 @@
+README.md:SAMPLE=in/sample.txt
+README.md:	ARGS="$DEBUG --help $SAMPLE"
+anglicise/tests.sh:SAMPLE=$PROGRAM
+anglicise/tests.sh:	ARGS="$DEBUG --help $SAMPLE"
+anglicise/tests.sh:	ARGS="$DEBUG --invalid $SAMPLE"
+anglicise/tests.sh:	grep qw $SAMPLE | $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+assign-to-team/tests.sh:SAMPLE=in/team.txt
+assign-to-team/tests.sh:	ARGS="$DEBUG --help $SAMPLE"
+assign-to-team/tests.sh:	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+calc/tests.sh:SAMPLE=in/calc.tests
+calc/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+calc/tests.sh:	CALC_ECHO=1 $PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+calc/tests.sh:	CALC_ECHO=2 $PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+camelCase/tests.sh:SAMPLE=in/text.txt
+camelCase/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+camelCase/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+camelCase/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+camelCase/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+camelCase/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+check-code/tests.sh:SAMPLE=in/SAMPLE.txt
+check-code/tests.sh:	ARGS="$DEBUG --help $SAMPLE"
+check-code/tests.sh:	ARGS="$DEBUG --invalid $SAMPLE"
+check-code/tests.sh:	ARGS="$DEBUG --inplace --keep $SAMPLE"
+check-code/tests.sh:	ARGS="$DEBUG --inplace --show $SAMPLE"
+df-k/tests.sh:SAMPLE=in/sample.txt
+df-k/tests.sh:	ARGS="$DEBUG $SAMPLE"
+ezbackup/tests.sh:SAMPLE=in/source
+ezbackup/tests.sh:	ARGS="$DEBUG partial $SAMPLE/doesnotexist $BK_DIR"
+ezbackup/tests.sh:	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
+ezbackup/tests.sh:	ARGS="--debug partial $SAMPLE $BK_DIR"
+ezbackup/tests.sh:	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
+ezbackup/tests.sh:	ARGS="$DEBUG partial $SAMPLE $BK_DIR $BK_DISK"
+ezbackup/tests.sh:	ARGS="$DEBUG full $SAMPLE $BK_DIR $BK_DISK"
+ezbackup/tests.sh:	ARGS="$DEBUG full $SAMPLE $BK_DIR $BK_DISK"
+ezbackup/tests.sh:	touch "$SAMPLE/2.txt"
+ezbackup/tests.sh:	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
+ezbackup/tests.sh:	touch "$SAMPLE/1.txt"
+ezbackup/tests.sh:	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
+ezbackup/tests.sh:	touch "$SAMPLE/1.txt"
+ezbackup/tests.sh:	ARGS="$DEBUG full $SAMPLE $BK_DIR $BK_DISK"
+filter-bak/tests.sh:SAMPLE=../filter-sounds/in/SAMPLE.txt
+filter-bak/tests.sh:	ARGS="$DEBUG --help $SAMPLE"
+filter-bak/tests.sh:	ARGS="$DEBUG --invalid $SAMPLE"
+filter-bak/tests.sh:	ARGS="$DEBUG --inplace --keep $SAMPLE"
+filter-bak/tests.sh:	ARGS="$DEBUG --inplace --show $SAMPLE"
+filter-bak/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+filter-bak/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+filter-bak/tests.sh:	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+filter-built-files/tests.sh:SAMPLE=../filter-sounds/in/SAMPLE.txt
+filter-built-files/tests.sh:	ARGS="$DEBUG --help $SAMPLE"

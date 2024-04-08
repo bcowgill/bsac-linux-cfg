@@ -3,6 +3,8 @@
 # anglicise letters with accents and such
 # WINDEV tool useful on windows development machine
 
+use strict;
+#use warnings; too many regex warnings
 use English qw(-no_match_vars);
 # 'seamless' unicode support
 use 5.012;
