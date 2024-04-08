@@ -18,9 +18,10 @@ const deviceFilter = (device) => /./.test(device);
 // const deviceFilter = (device) => /landscape|Desktop /.test(device)
 // const deviceFilter = (device) => !/landscape|Desktop /.test(device)
 
-test.describe("describe webkit only @devices", () => {
+test.describe("webkit only @devices", () => {
   let _myContext; // can it be viewed while tests paused in debugger??
 
+  // eslint-disable-next-line playwright/no-skipped-test
   test.skip(
     ({
       browserName,
@@ -63,10 +64,10 @@ test.describe("describe webkit only @devices", () => {
       launchOptions,
       contextOptions,
       playwright,
-      browser,
-      page,
-      request,
-      context,
+      //browser,
+      //page,
+      //request,
+      //context,
     }) => {
       const skipContext = {
         browserName,

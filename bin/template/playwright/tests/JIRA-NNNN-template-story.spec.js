@@ -1,5 +1,5 @@
 import { test, expect } from "playwright/test";
-import { PAGE_URL, BASE_API_GLOB, brand } from "./config";
+import { PAGE_URL, /*BASE_API_GLOB, */ brand } from "./config";
 import { getCamera, myRouteFromHAR } from "./lib";
 
 // A template for a story which tests against a mock api or against a
@@ -8,6 +8,9 @@ import { getCamera, myRouteFromHAR } from "./lib";
 const suite = "JOURNEY";
 
 const harFile = "tests/har/JIRA-NNNN.har.json";
+
+const PAGE_TITLE= "TITLE";
+const PAGE_HEADING= "HEADING";
 
 let screenshot;
 

@@ -1,11 +1,8 @@
-import { expect } from "playwright/test";
 import {
-  renewAndPayPolicy,
   BASE_API_GLOB,
   defaultBrand,
   updateHar,
   API_ALL,
-  KBAUTH,
   brand,
 } from "./config";
 
@@ -234,10 +231,10 @@ const LEFT = "⬅"; // U+2B05	[OtherSymbol]	LEFTWARDS BLACK ARROW
 export function traceNetwork(page) {
   // Subscribe to 'request' and 'response' events.
   page.on("request", (request) =>
-    console.log(RIGHT, request.method(), shorten(re.url())),
+    console.log(RIGHT, request.method(), shorten(request.url())),
   );
   page.on("response", (response) =>
-    console.log(LEFT, response.status(), shorten(re.url())),
+    console.log(LEFT, response.status(), shorten(response.url())),
   );
 } // traceNetwork()
 
@@ -287,6 +284,7 @@ export function fixCacheBusterParam(url) {
  * @param {Object} options same options as routeFromHAR() with some additions.
  * @param {(url: string) => string} options.sanitiseUrl function to clean up the URL before looking in the HAR file.  defaults to fixCacheBusterParam().
  * @param {boolean} options.debug turn on some console logging to diagnose sanitiseUrl() if needed. defaults to HAR_DEBUG environment value.
+ */
 export async function myRouteFromHAR(
   page,
   harFile,
@@ -332,7 +330,8 @@ export async function myRouteFromHAR(
  * @param {Object} postData the POST request data to compare.
  * @param {Object} harPostData the POST request data from a HAR file for comparison.
  * @returns {boolean} will be true if both POST requests have identical keys and values.
-function matchPostData(postData = {}, harPostData = {}) {
+ */
+export function matchPostData(postData = {}, harPostData = {}) {
   if (Object.keys(postData).length !== Object.keys(harPostData).length) {
     return false;
   }

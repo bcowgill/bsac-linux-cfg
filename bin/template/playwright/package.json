@@ -10,9 +10,9 @@
     "node": "^20.5.0"
   },
   "scripts": {
-    "eslint": "eslint --cache --ext js tests/ tests-examples/",
-    "eslint:context": "eslint --cache --ext js tests/ tests-examples/ --format codeframe",
-    "eslint:fix": "eslint --cache --ext js tests/ tests-examples/ --fix",
+    "eslint": "eslint --cache tests/ tests-examples/",
+    "eslint:context": "eslint --cache tests/ tests-examples/ --format codeframe",
+    "eslint:fix": "eslint --cache tests/ tests-examples/ --fix",
     "prelint": "npm run eslint",
     "lint": "cross-env ./scripts/scan-playwright.sh",
     "format": "prettier --write tests*/**/*.js",
@@ -48,10 +48,14 @@
     "test:all:iframe": "npx playwright test --grep @iframe"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@playwright/test": "^1.42.1",
     "@types/node": "^20.11.28",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
+    "eslint-formatter-codeframe": "^7.32.1",
+    "eslint-plugin-playwright": "^1.5.4",
+    "globals": "^15.0.0",
     "prettier": "^3.2.5"
   }
 }
