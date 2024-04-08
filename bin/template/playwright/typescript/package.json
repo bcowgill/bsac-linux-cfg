@@ -10,8 +10,12 @@
     "node": "^20.5.0"
   },
   "scripts": {
-    "lint": "cross-env ./scripts/scan-playwright.sh",
-    "format": "prettier --write tests*/**/*.{j,t}s",
+    "eslint": "eslint --cache tests*/",
+    "eslint:context": "eslint --cache tests*/ --format codeframe",
+    "eslint:fix": "eslint --cache tests*/ --fix",
+    "prelint": "npm run eslint",
+    "lint": "cross-env ../scripts/scan-playwright.sh",
+    "format": "prettier --single-quote --write tests*/**/*.ts",
     "postformat": "npm run lint",
     "record": "npx playwright codegen --viewport-size=600,800",
     "record:api": "npx playwright open --viewport-size=600,800 --save-har=tests/bugs/har/bug.har --save-har-glob=\"**/channel-api/**\" -- http://localhost:58008",
@@ -44,10 +48,15 @@
     "test:all:iframe": "npx playwright test --grep @iframe"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@playwright/test": "^1.42.1",
     "@types/node": "^20.11.28",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
-    "prettier": "^3.2.5"
+    "eslint-formatter-codeframe": "^7.32.1",
+    "eslint-plugin-playwright": "^1.5.4",
+    "globals": "^15.0.0",
+    "prettier": "^3.2.5",
+    "typescript-eslint": "^7.5.0"
   }
 }

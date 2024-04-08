@@ -1,1 +1,1 @@
-export const J_HOME_TITLE = "App Title";
+export const J_HOME_TITLE = 'App Title';

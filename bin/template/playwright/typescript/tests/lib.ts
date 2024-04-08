@@ -1,4 +1,5 @@
 // @ts-check
+import { Locator, Page, Route, ViewportSize } from '@playwright/test';
 import {
   BASE_API_GLOB,
   defaultBrand,
@@ -20,13 +21,61 @@ const UI_DEFAULT = {
   brand: 'UI.VALUE for brand must be passed to uiText() or other function.',
 };
 
+export interface IScreenShotOptions {
+  brand?: string;
+  spec?: string;
+  suite?: string;
+  channel: string;
+  browserName?: string;
+  defaultBrowserType?: string;
+  isMobile?: boolean;
+  fullPage?: boolean;
+  viewport?: ViewportSize;
+}
+
+export interface ICamera {
+  page: Page | Locator;
+  path: string;
+  counter: number;
+  fullPage?: boolean;
+}
+
+type ICameraFn = (photo: ICamera) => void;
+
+export interface IHarEntry {
+  request: {
+    method: string;
+    url: string;
+  };
+  response: {
+    status: number;
+    statusText: string;
+    content: {
+      mimeType: string;
+      text: string;
+    };
+    headers: { name: string; value: string }[];
+    // Must convert to
+    // headers: {[key: string]: string}
+  };
+}
+
+export interface IHarLog {
+  log: {
+    entries: IHarEntry[];
+  };
+}
+
+export type IRouteFromHarNotFound = 'abort' | 'fallback';
+const ABORT: IRouteFromHarNotFound = 'abort';
+
 /**
  * answer with true if a specific app brand has a given UI.VALUE configured.
  * @param {string|number|boolean|RegExp|{brand?: string|number|boolean|RegExp}} multiTextIn some setting for all brands or varying across brands.
  * @param {string} withBrand specifies which app brand value to check. defaults to process.env.BRAND value
  * @returns {boolean} indicates whether there is a UI value configured for the brand given.
  */
-export function uiHas(multiTextIn, withBrand = brand) {
+export function uiHas(multiTextIn, withBrand = brand): boolean {
   if (!(withBrand in UI_DEFAULT)) {
     throw new RangeError(`uiHas() Invalid App Brand [${withBrand}] provided`);
   }
@@ -72,7 +121,7 @@ export function uiText(multiTextIn, withBrand = defaultBrand) {
  * @param {number} width the width to pad to, defaults to PAD value.
  * @returns {string} of zero padded digits for counter. i.e. "001"
  */
-export function padZeros(counter, width = PAD) {
+export function padZeros(counter: number, width = PAD): string {
   const length = counter.toString().length;
   const pad = Math.max(width, length);
   const number = `${ZEROS.substring(0, pad - length)}${counter}`;
@@ -86,7 +135,11 @@ export function padZeros(counter, width = PAD) {
  * @param {string} ellipsis the character or string to use to indicate there was more. default is ELLIPSIS.
  * @returns {string} shortened message whose length will be at most max + ellipsis.length characters.
  */
-export function shorten(message, max = MAX_URL, ellipsis = ELLIPSIS) {
+export function shorten(
+  message: string,
+  max = MAX_URL,
+  ellipsis = ELLIPSIS,
+): string {
   let shorter = message;
   if (shorter.length > max) {
     shorter = shorter.substring(0, max) + ellipsis;
@@ -117,7 +170,7 @@ export function screenshotPath({
   defaultBrowserType = 'browser',
   isMobile = false,
   viewport,
-}) {
+}): string {
   const vp = viewport || { width: 'W', height: 'H' };
   const browser = `${channel ? channel : browserName}-${defaultBrowserType}${
     isMobile ? '-mobile' : ''
@@ -153,7 +206,7 @@ export function getCamera({
   isMobile = false,
   fullPage = true,
   viewport,
-}) {
+}): ICameraFn {
   const full = fullPage;
   const prefix = screenshotPath({
     brand,
@@ -198,7 +251,7 @@ export function getCamera({
  * @param {Page} page whose routes you wish to log for debugging.
  * @param {string} urlMatch defaults to all URL's. you can specify an alternate glob to restrict what is logged.
  */
-export async function traceRoutes(page, uriMatch = API_ALL) {
+export async function traceRoutes(page: Page, uriMatch = API_ALL) {
   await page.route(uriMatch, async (route, request) => {
     const url = shorten(request.url());
     console.warn(`ROUTE [match: ${uriMatch}]\n   ${request.method()} ${url}`);
@@ -229,7 +282,7 @@ const LEFT = '⬅'; // U+2B05	[OtherSymbol]	LEFTWARDS BLACK ARROW
  * trace all network requests and responses, very noisily...
  * @param {Page} page whose routes you wish to log for debugging.
  */
-export function traceNetwork(page) {
+export function traceNetwork(page: Page) {
   // Subscribe to 'request' and 'response' events.
   page.on('request', (request) =>
     console.log(RIGHT, request.method(), shorten(request.url())),
@@ -241,10 +294,10 @@ export function traceNetwork(page) {
 
 /**
  * shows the HTTP requests and response codes from a HAR json file that has been imported.
- * @param {{ log: { entries: [{request: { method: string, url: string}, response: { status: number, statusText: string}}]} }} har a recorded .har.json file imported as a JSON object directly.
+ * @param {IHarLog} har a recorded .har.json file imported as a JSON object directly.
  * @param {(string) => string} sanitiseUrl function cleans up a url for comparison with another url.
  */
-export function dumpHAR(har, sanitiseUrl = identity) {
+export function dumpHAR(har: IHarLog, sanitiseUrl = identity) {
   har.log.entries.map((entry) => {
     console.warn(
       `HAR ${RIGHT} ${entry.request.method} ${sanitiseUrl(entry.request.url)}`,
@@ -260,7 +313,7 @@ export function dumpHAR(har, sanitiseUrl = identity) {
  * @param {any} item which should be returned as is.
  * @returns {any} the item.
  */
-export function identity(item) {
+export function identity(item: unknown): unknown {
   return item;
 } // identity()
 
@@ -270,7 +323,7 @@ export function identity(item) {
  * @param {string} url to be cleaned up before comparison to another clean url.
  * @returns {string} will replace localhost port with 58008 and a= parameter with a fixed number.
  */
-export function fixCacheBusterParam(url) {
+export function fixCacheBusterParam(url: string): string {
   return url
     .replace(/(localhost):\d+/, `$1:${PORT}`)
     .replace(reAParam, `$1=${CACHE}`);
@@ -287,12 +340,12 @@ export function fixCacheBusterParam(url) {
  * @param {boolean} options.debug turn on some console logging to diagnose sanitiseUrl() if needed. defaults to HAR_DEBUG environment value.
  */
 export async function myRouteFromHAR(
-  page,
-  harFile,
+  page: Page,
+  harFile: string,
   {
     url = BASE_API_GLOB,
     sanitiseUrl = fixCacheBusterParam,
-    notFound = 'abort',
+    notFound = ABORT,
     update = updateHar,
     debug = !!process.env.HAR_DEBUG,
     ...rest
@@ -337,7 +390,7 @@ export async function myRouteFromHAR(
  * @param {Object} harPostData the POST request data from a HAR file for comparison.
  * @returns {boolean} will be true if both POST requests have identical keys and values.
  */
-export function matchPostData(postData = {}, harPostData = {}) {
+export function matchPostData(postData = {}, harPostData = {}): boolean {
   if (Object.keys(postData).length !== Object.keys(harPostData).length) {
     return false;
   }
@@ -353,12 +406,12 @@ export function matchPostData(postData = {}, harPostData = {}) {
 /**
  * fulfills a route with an entry from a .har.json file.
  * @param {Route} route a network request to route to some response data.
- * @param {{response: { status: number, content: { mimeType: string, text: string}, headers: [{name: string, value: string}]}}} harEntry one of the .log.entries values from a HAR json file recording API calls from a test run.
+ * @param {IHarEntry} harEntry one of the .log.entries values from a HAR json file recording API calls from a test run.
  * @param {boolean} debug true to log the json being sent during debugging.
  */
 export async function fulfillHAR(
-  route,
-  harEntry,
+  route: Route,
+  harEntry: IHarEntry,
   debug = process.env.HAR_DEBUG === '2',
 ) {
   const response = harEntry.response;
@@ -374,5 +427,6 @@ export async function fulfillHAR(
   if (debug) {
     console.log(`SENDING ${LEFT}`, res);
   }
+
   await route.fulfill(res);
 } // fulfillHAR()

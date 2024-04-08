@@ -1,16 +1,16 @@
-import { test, expect } from "playwright/test";
-import { PAGE_URL, /*BASE_API_GLOB, */ brand } from "./config";
-import { getCamera, myRouteFromHAR } from "./lib";
+import { test, expect } from 'playwright/test';
+import { PAGE_URL, /*BASE_API_GLOB, */ brand } from './config';
+import { getCamera, myRouteFromHAR } from './lib';
 
 // A template for a story which tests against a mock api or against a
 // recorded HAR file for API responses.
 
-const suite = "JOURNEY";
+const suite = 'JOURNEY';
 
-const harFile = "tests/har/JIRA-NNNN.har.json";
+const harFile = 'tests/har/JIRA-NNNN.har.json';
 
-const PAGE_TITLE= "TITLE";
-const PAGE_HEADING= "HEADING";
+const PAGE_TITLE = 'TITLE';
+const PAGE_HEADING = 'HEADING';
 
 let screenshot;
 
@@ -30,7 +30,7 @@ test.use({
 });
 */
 
-test.describe("@story JIRA-NNNN @JOURNEY page test spec", () => {
+test.describe('@story JIRA-NNNN @JOURNEY page test spec', () => {
   test.beforeEach(
     async ({
       page,
@@ -55,64 +55,64 @@ test.describe("@story JIRA-NNNN @JOURNEY page test spec", () => {
       // Go to the starting url before each test.
       await page.goto(PAGE_URL);
       await expect(page).toHaveTitle(PAGE_TITLE);
-      await expect(page.getByRole("heading")).toContainText(PAGE_HEADING);
+      await expect(page.getByRole('heading')).toContainText(PAGE_HEADING);
     },
   );
 
-  test("Entry @content @continue @mockapi", async ({ page }) => {
+  test('Entry @content @continue @mockapi', async ({ page }) => {
     await page.goto(`${PAGE_URL}#/`);
-    await screenshot({ page, counter: 0, path: "entry-content" });
+    await screenshot({ page, counter: 0, path: 'entry-content' });
 
     await expect(
-      page.getByRole("heading", { name: "Some Heading" }),
+      page.getByRole('heading', { name: 'Some Heading' }),
     ).toBeVisible();
-    await expect(page.getByText("Some Text")).toBeVisible();
-    await expect(page.getByTestId("Layout").locator("a")).toBeVisible();
-    await expect(page.getByTestId("Layout").locator("a")).toHaveText(
-      "Link name",
+    await expect(page.getByText('Some Text')).toBeVisible();
+    await expect(page.getByTestId('Layout').locator('a')).toBeVisible();
+    await expect(page.getByTestId('Layout').locator('a')).toHaveText(
+      'Link name',
     );
 
-    await expect(page.getByTestId("next-button")).toBeVisible();
-    await expect(page.getByTestId("next-button")).toBeEnabled();
-    await page.getByTestId("next-button").click();
+    await expect(page.getByTestId('next-button')).toBeVisible();
+    await expect(page.getByTestId('next-button')).toBeEnabled();
+    await page.getByTestId('next-button').click();
 
-    await expect(page.getByTestId("section-area")).toContainText(
-      "Section details",
+    await expect(page.getByTestId('section-area')).toContainText(
+      'Section details',
     );
     await expect(
-      page.getByTestId("section-area").getByText("Column"),
+      page.getByTestId('section-area').getByText('Column'),
     ).toBeVisible();
-    await expect(page.getByText("Standard").first()).toBeVisible();
-    await expect(page.getByText("Standard").nth(1)).toBeVisible();
+    await expect(page.getByText('Standard').first()).toBeVisible();
+    await expect(page.getByText('Standard').nth(1)).toBeVisible();
   });
 
   // same test suite as above using HAR file instead of mock API
-  test("Entry @content @continue @har", async ({ page }) => {
+  test('Entry @content @continue @har', async ({ page }) => {
     myRouteFromHAR(page, harFile);
 
     await page.goto(`${PAGE_URL}#/`);
-    await screenshot({ page, counter: 1, path: "entry-content-har" });
+    await screenshot({ page, counter: 1, path: 'entry-content-har' });
 
     await expect(
-      page.getByRole("heading", { name: "Some Heading" }),
+      page.getByRole('heading', { name: 'Some Heading' }),
     ).toBeVisible();
-    await expect(page.getByText("Some Text")).toBeVisible();
-    await expect(page.getByTestId("Layout").locator("a")).toBeVisible();
-    await expect(page.getByTestId("Layout").locator("a")).toHaveText(
-      "Link name",
+    await expect(page.getByText('Some Text')).toBeVisible();
+    await expect(page.getByTestId('Layout').locator('a')).toBeVisible();
+    await expect(page.getByTestId('Layout').locator('a')).toHaveText(
+      'Link name',
     );
 
-    await expect(page.getByTestId("next-button")).toBeVisible();
-    await expect(page.getByTestId("next-button")).toBeEnabled();
-    await page.getByTestId("next-button").click();
+    await expect(page.getByTestId('next-button')).toBeVisible();
+    await expect(page.getByTestId('next-button')).toBeEnabled();
+    await page.getByTestId('next-button').click();
 
-    await expect(page.getByTestId("section-area")).toContainText(
-      "Section details",
+    await expect(page.getByTestId('section-area')).toContainText(
+      'Section details',
     );
     await expect(
-      page.getByTestId("section-area").getByText("Column"),
+      page.getByTestId('section-area').getByText('Column'),
     ).toBeVisible();
-    await expect(page.getByText("Standard").first()).toBeVisible();
-    await expect(page.getByText("Standard").nth(1)).toBeVisible();
+    await expect(page.getByText('Standard').first()).toBeVisible();
+    await expect(page.getByText('Standard').nth(1)).toBeVisible();
   });
 });
