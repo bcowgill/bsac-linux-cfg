@@ -138,7 +138,7 @@ export function screenshotPath({
   const screenshots = `${spec}/${resolution}/${brand}/${suite}`;
   const prefix = `${screenshots}/${suite}`;
   const result = `${brand}-${getResolution(viewport)}`;
-  return {prefix, result};
+  return { prefix, result };
 } // screenshotPath()
 
 /**
@@ -418,5 +418,6 @@ export async function fulfillHAR(
   if (debug) {
     console.log(`SENDING ${LEFT}`, res);
   }
+
   await route.fulfill(res);
 } // fulfillHAR()

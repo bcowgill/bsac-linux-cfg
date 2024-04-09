@@ -148,7 +148,17 @@ export function shorten(
 } // shorten()
 
 /**
- * answer with the screen shot directory to use for a test suite based on browser information and test information.
+ * answer with the resolution string for screen shots. WxH by default.
+ * @param {ViewportSize} viewport the viewport object from playwright.
+ * @returns {string} the viewport size as a string WxH.
+ */
+export function getResolution(viewport) {
+  const vp = viewport || { width: 'W', height: 'H' };
+  const resolution = `${vp.width}x${vp.height}`;
+  return resolution;
+}
+/**
+ * answer with the screen shot directories to use for a test suite based on browser information and test information.
  * @param {Object} options options for taking the screen shot.
  * @param {string} options.brand the brand name with default defaultBrand.
  * @param {string} options.spec the top level directory with default 'screenshots' intended to match the playwright generated test output dir like 'test-results/test-1-Home-Page-content-webkit/test-finished-1.png' if possible.
@@ -157,9 +167,11 @@ export function shorten(
  * @param {string} options.browserName the browser name from playwright with default 'browser'.
  * @param {string} options.defaultBrowserType the default browser type from playwright name with default 'browser'
  * @param {boolean} options.isMobile the mobile flag from playwright.
- * @param {{width, height}} options.viewport the viewport object from playwright.
- * @returns {string} the path and filename prefix to use for making screen shots in a test.
- * @example return something like 'screenshots/chromium-mobile-383x727/brand/home/home-'
+ * @param {ViewportSize} options.viewport the viewport object from playwright.
+ * @returns {{prefix: string, result: string}} the path and filename prefixes to use for making screen shots in a test.
+ * @example return something like prefix: 'screenshots/chromium-mobile-383x727/brand/home/home'
+ * and result: 'brand-383x727' which is meant to be placed under the Playwright testInfo.outputDir
+ * i.e. 'test-results/test-1-Home-Page-content-GoogleChrome/'
  */
 export function screenshotPath({
   brand = defaultBrand,
@@ -171,14 +183,14 @@ export function screenshotPath({
   isMobile = false,
   viewport,
 }): string {
-  const vp = viewport || { width: 'W', height: 'H' };
   const browser = `${channel ? channel : browserName}-${defaultBrowserType}${
     isMobile ? '-mobile' : ''
   }`.replace(/^([\w-]+)-\1/, '$1');
-  const resolution = `${browser}-${vp.width}x${vp.height}`;
+  const resolution = `${browser}-${getResolution(viewport)}`;
   const screenshots = `${spec}/${resolution}/${brand}/${suite}`;
   const prefix = `${screenshots}/${suite}`;
-  return prefix;
+  const result = `${brand}-${getResolution(viewport)}`;
+  return { prefix, result };
 } // screenshotPath()
 
 /**
@@ -193,7 +205,7 @@ export function screenshotPath({
  * @param {string} options.defaultBrowserType the default browser type from playwright name with default 'browser'
  * @param {boolean} options.isMobile the mobile flag from playwright.
  * @param {boolean} options.fullPage default is true, to take a screen shot of the full browser page..
- * @param {{width, height}} options.viewport the viewport object from playwright.
+ * @param {ViewportSize} options.viewport the viewport object from playwright.
  * @returns a screen shot function which increments the filename number and does full screen by default.
  */
 export function getCamera({
@@ -208,7 +220,8 @@ export function getCamera({
   viewport,
 }): ICameraFn {
   const full = fullPage;
-  const prefix = screenshotPath({
+  const originalResolution = getResolution(viewport);
+  const { prefix, result } = screenshotPath({
     brand,
     spec,
     suite,
@@ -226,6 +239,7 @@ export function getCamera({
    * @param {string} options.path the suffix to add to the file name after the number.
    * @param {number} options.counter the number to add to the file name to keep your screen shots in order.
    * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
+   * @param {ViewportSize} options.viewport optional new size viewport to switch to and take screen shot.
    * @note page can be a page, or a locator like page.getByTestId('id').
    */
   return async function screenshot({
@@ -233,15 +247,44 @@ export function getCamera({
     path,
     counter = 0,
     fullPage = full,
+    viewport,
+    testInfo,
   }) {
-    const number = padZeros(counter);
-    const fullPath = `${prefix}-${number}-${path}.png`.replace(
-      /\.png/i,
+    const number = viewport ? "" : padZeros(counter) + '-';
+    const resolution = viewport ? getResolution(viewport) : originalResolution;
+    let thisPrefix = prefix;
+    let thisResult = result;
+    if (resolution != originalResolution) {
+      if (resolution !== "WxH" && page.viewportSize && resolution !== getResolution(page.viewportSize())) {
+        page.setViewportSize(viewport);
+      }
+      const thisPath = screenshotPath({
+        brand,
+        spec,
+        suite,
+        channel,
+        browserName,
+        defaultBrowserType,
+        isMobile,
+        viewport,
+      });
+      thisPrefix = thisPath.prefix;
+      thisResult = thisPath.result;
+    }
+    let fullPath = `${thisPrefix}-${number}${path}.png`.replace(
+      /(\.png)+/i,
       '.png',
     );
-    ++counter;
     if (!process.env.LENSCAP) {
       await page.screenshot({ path: fullPath, fullPage });
+      if (testInfo) {
+        fullPath = `${thisResult}-${number}${path}.png`.replace(
+          /(\.png)+/i,
+          '.png',
+        );
+        fullPath = testInfo.outputPath(fullPath);
+        await page.screenshot({ path: fullPath, fullPage });
+      }
     }
   };
 } // getCamera()
