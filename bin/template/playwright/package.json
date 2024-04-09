@@ -45,6 +45,9 @@
     "test:mockapi": "npm test -- --grep=@mockapi",
     "test:all": "npx playwright test --grep-invert \"@example|@iframe\"",
     "test:all:brand": "cross-env BRAND=brand npx playwright test --grep-invert \"@example|@iframe\"",
+    "test:all:small": "npx playwright test --grep-invert \"@example|@iframe\" --viewport-size=1024,768",
+    "test:all:medium": "npx playwright test --grep-invert \"@example|@iframe\" --viewport-size=1400,900",
+    "test:all:large": "npx playwright test --grep-invert \"@example|@iframe\" --viewport-size=1920,1080",
     "test:all:iframe": "npx playwright test --grep @iframe"
   },
   "devDependencies": {
