@@ -14,7 +14,7 @@
     "eslint:context": "eslint --cache tests*/ --format codeframe",
     "eslint:fix": "eslint --cache tests*/ --fix",
     "prelint": "npm run eslint",
-    "lint": "cross-env ../scripts/scan-playwright.sh",
+    "lint": "cross-env ./scripts/scan-playwright.sh",
     "format": "prettier --single-quote --write tests*/**/*.ts",
     "postformat": "npm run lint",
     "record": "npx playwright codegen --viewport-size=600,800",
