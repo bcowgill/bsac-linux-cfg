@@ -9,7 +9,8 @@ const { defineConfig, devices } = require('@playwright/test');
 
 const defaultBrand = 'brand';
 const PORT=58008;
-const brandBaseURL = { [defaultBrand]: `http://localhost:${PORT}` };
+const brandBaseURL = { [defaultBrand]: `https://playwright.dev` };
+// const brandBaseURL = { [defaultBrand]: `http://localhost:${PORT}` };
 
 const brand = process.env.BRAND || defaultBrand;
 const baseURL = process.env.BASE_URL || brandBaseURL[brand] || brandBaseURL[defaultBrand];

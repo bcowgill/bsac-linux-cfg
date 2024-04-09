@@ -68,7 +68,7 @@ test.describe('webkit only @devices', () => {
       //page,
       //request,
       //context,
-    }) => {
+    }, testInfo) => {
       const skipContext = {
         browserName,
         defaultBrowserType,
@@ -129,14 +129,18 @@ test.describe('webkit only @devices', () => {
 
       // Will appear once in terminal output when run from command line...
       if (!_myContext) {
-        console.warn('test.skip params:', skipContext);
+        console.warn(`test.skip [${browserName}] params:`, skipContext);
         _myContext = skipContext;
       }
-
-      return browserName !== 'webit';
+      // return browserName !== 'chromium';
+      return browserName !== 'webkit';
     },
     '[skip]webkit only!',
   );
+
+  test('testInfo test for @devices', async ({ page }, testInfo) => {
+    console.warn('testInfo:', testInfo)
+  });
 
   test('has @title', async ({ page }) => {
     console.warn('test 1 log');

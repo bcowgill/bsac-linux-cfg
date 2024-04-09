@@ -1,6 +1,7 @@
 export const defaultBrand = 'brand';
 export const brand = process.env.BRAND || defaultBrand;
-export const serverAll = brand || defaultBrand || process.env.ALL;
+// export const serverAll = brand || defaultBrand || process.env.ALL;
+export const serverAll = process.env.ALL;
 export const updateHar = !!process.env.HAR;
 
 export const BASE_URL = serverAll ? `/${brand.substring(0, 1)}` : ''; // appends to URL from playwright config
@@ -11,6 +12,11 @@ export const BASE_API_GLOB = `${BASE_API}**`;
 
 export const viewWidth = 600;
 export const viewHeight = 800;
+
+export const VIEW = { width: viewWidth, height: viewHeight };
+export const VP_SMALL = { width: 1024, height: 768 };
+export const VP_MEDIUM = { width: 1200, height: 1024 };
+export const VP_LARGE = { width: 1920, height: 1200 };
 
 export const J_HOME = `${PAGE_URL}#/?req=HM`;
 export const J_FAQ = `${PAGE_URL}#/?req=FQ`;

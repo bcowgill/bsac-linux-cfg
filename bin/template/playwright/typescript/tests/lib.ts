@@ -176,7 +176,7 @@ export function screenshotPath({
     isMobile ? '-mobile' : ''
   }`.replace(/^([\w-]+)-\1/, '$1');
   const resolution = `${browser}-${vp.width}x${vp.height}`;
-  const screenshots = `${spec}/${resolution}/${brand}/$suite{}`;
+  const screenshots = `${spec}/${resolution}/${brand}/${suite}`;
   const prefix = `${screenshots}/${suite}`;
   return prefix;
 } // screenshotPath()
