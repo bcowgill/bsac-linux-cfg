@@ -1,5 +1,5 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 // run with git bash command:
 // alias cls='perl -e "print qq{\n} x 50"'
@@ -68,7 +68,7 @@ test.describe('webkit only @devices', () => {
       //page,
       //request,
       //context,
-    }, testInfo) => {
+    }) => {
       const skipContext = {
         browserName,
         defaultBrowserType,
@@ -139,7 +139,9 @@ test.describe('webkit only @devices', () => {
   );
 
   test('testInfo test for @devices', async ({ page }, testInfo) => {
-    console.warn('testInfo:', testInfo)
+    console.warn('page:', page);
+    console.warn('testInfo:', testInfo);
+    expect(42).toBe(42);
   });
 
   test('has @title', async ({ page }) => {

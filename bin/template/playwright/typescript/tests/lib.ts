@@ -250,12 +250,16 @@ export function getCamera({
     viewport,
     testInfo,
   }) {
-    const number = viewport ? "" : padZeros(counter) + '-';
+    const number = viewport ? '' : padZeros(counter) + '-';
     const resolution = viewport ? getResolution(viewport) : originalResolution;
     let thisPrefix = prefix;
     let thisResult = result;
     if (resolution != originalResolution) {
-      if (resolution !== "WxH" && page.viewportSize && resolution !== getResolution(page.viewportSize())) {
+      if (
+        resolution !== 'WxH' &&
+        page.viewportSize &&
+        resolution !== getResolution(page.viewportSize())
+      ) {
         page.setViewportSize(viewport);
       }
       const thisPath = screenshotPath({

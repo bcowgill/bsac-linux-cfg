@@ -18,10 +18,12 @@ MUSTDO test package build scripts in JS / TS
 vdiff JS files into typescript dir
 set up eslint for JS tests then for typescript ones
 
-JS
+JS/TS checked:
 lint
 format
 record
+
+JS only
 record:api  change google.com url first -- har file is created
 record:test1 change to google.com url first -- har file is created
 devices -- saved dump to debug-spec.lst

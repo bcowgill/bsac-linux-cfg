@@ -90,6 +90,7 @@ fi
 
 if [ "x$COMPANY" == "xwipro" ]; then
 	alias ide='/Applications/Codux.app/Contents/MacOS/Codux'
+	alias code='/Applications/Visual\ Studio\ Code.app/Contents/MacOS/Electron'
 	alias top='\top -o +state -O cpu'
 	alias sl='./scripts/lint.sh'
 	alias slf='./scripts/lint-fix.sh'

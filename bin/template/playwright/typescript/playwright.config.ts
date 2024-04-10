@@ -17,7 +17,7 @@ const baseURL = process.env.BASE_URL || brandBaseURL[brand] || brandBaseURL[defa
 const timeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 60000;
 
 /**
- * @see https://playwright.dev/docs/test-configuration.
+ * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
   testDir: './tests',

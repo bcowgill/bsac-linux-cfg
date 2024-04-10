@@ -19,20 +19,14 @@ const PAGE_TITLE = uiText(J_HOME_TITLE);
 // const PAGE_HEADING = /A heading for your app main page/;
 // const GET_STARTED_LINK = 'start-link';
 // const TARGET_HEADING = { name: 'A new page' };
-const PAGE_HEADING = "Playwright enables reliable end-to-end testing for modern web apps.";
+const PAGE_HEADING =
+  'Playwright enables reliable end-to-end testing for modern web apps.';
 const GET_STARTED_LINK = ['link', { name: 'Get started' }];
 const TARGET_HEADING = { name: 'Installation' };
 
 test.describe('TEMPLATE page test spec', () => {
   test.beforeEach(
-    async ({
-      page,
-      channel,
-      browserName,
-      defaultBrowserType,
-      isMobile,
-      viewport,
-    }) => {
+    async ({ page, channel, browserName, defaultBrowserType, isMobile }) => {
       page.setViewportSize(VIEW);
       if (!screenshot) {
         screenshot = getCamera({
@@ -49,15 +43,35 @@ test.describe('TEMPLATE page test spec', () => {
       // Go to the starting url before each test.
       await page.goto(PAGE_URL);
       await expect(page).toHaveTitle(PAGE_TITLE);
-      await expect(page.getByRole('heading').first()).toContainText(PAGE_HEADING);
+      await expect(page.getByRole('heading').first()).toContainText(
+        PAGE_HEADING,
+      );
     },
   );
 
   test('Entry @responsive layout', async ({ page }, testInfo) => {
     // counter numbers can be fixed with fix-counter.sh script if tests are added out of counter order.
-    await screenshot({ page, path: 'entry-responsive-small', viewport: VP_SMALL, fullPage: false, testInfo });
-    await screenshot({ page, path: 'entry-responsive-medium', viewport: VP_MEDIUM, fullPage: false, testInfo });
-    await screenshot({ page, path: 'entry-responsive-large', viewport: VP_LARGE, fullPage: false, testInfo });
+    await screenshot({
+      page,
+      path: 'entry-responsive-small',
+      viewport: VP_SMALL,
+      fullPage: false,
+      testInfo,
+    });
+    await screenshot({
+      page,
+      path: 'entry-responsive-medium',
+      viewport: VP_MEDIUM,
+      fullPage: false,
+      testInfo,
+    });
+    await screenshot({
+      page,
+      path: 'entry-responsive-large',
+      viewport: VP_LARGE,
+      fullPage: false,
+      testInfo,
+    });
   });
 
   test('Entry @content', async ({ page }, testInfo) => {
@@ -82,7 +96,12 @@ test.describe('TEMPLATE page test spec', () => {
   test('Entry @unhappy @action', async ({ page }, testInfo) => {
     // MUSTDO check user warnings for each input field.
     // MUSTDO check new button enabled state.
-    await screenshot({ page, counter: 2, path: 'entry-unhappy-fields', testInfo });
+    await screenshot({
+      page,
+      counter: 2,
+      path: 'entry-unhappy-fields',
+      testInfo,
+    });
   });
 
   test('Entry @unhappy @action @corrected', async ({ page }, testInfo) => {
@@ -97,7 +116,12 @@ test.describe('TEMPLATE page test spec', () => {
 
   test('Entry @happy @action @continue', async ({ page }, testInfo) => {
     // MUSTDO check user fills in good values and going to the next page.
-    await screenshot({ page, counter: 4, path: 'entry-happy-continue', testInfo });
+    await screenshot({
+      page,
+      counter: 4,
+      path: 'entry-happy-continue',
+      testInfo,
+    });
   });
 
   test('NEXT PAGE @content', async ({ page }, testInfo) => {

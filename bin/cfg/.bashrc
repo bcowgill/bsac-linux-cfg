@@ -292,6 +292,7 @@ if which sw_vers > /dev/null 2>&1; then
     # MACOS
     export t=~
     export c=^
+    export DISPLAY=:0
 fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
