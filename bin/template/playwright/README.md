@@ -4,6 +4,7 @@ package.json, playwright.config.js, config.js etc
   configure the scripts as needed, especially:
   :58008           the port number your local app runs on.
   viewport=600,800 the default browser size to use when recording tests.
+  VP_SMALL,...     the viewport sizes you want to use forr small, medium, large screen responsive layout screen shots.
   /channel-api/    glob for matching your App's API calls.
   test1            details of your usual testing environment you record from.
   @example,@slow,@iframe, etc for your testing tags.
@@ -22,20 +23,22 @@ JS/TS checked:
 lint
 format
 record
-
-JS only
-record:api  change google.com url first -- har file is created
+record:api  package.json change to google.com url first -- har file is created
 record:test1 change to google.com url first -- har file is created
 devices -- saved dump to debug-spec.lst
    npm run devices 2>&1 | pee.pl debug-spec.lst
 view
 example
 quick
-test
 visual
+trace
+viewtrace
 debug
 debug:mobile
 devtools
+
+JS only
+test
 test:iframe
 test:brand
 test:mobile
@@ -53,11 +56,11 @@ update
 testing where the screenshot function puts its output.
 rm -rf screenshots/; ALL= npm test -- tests/template.spec.js ; find test-results -type f
 
-for file in playwright.config tests/config tests/lib tests/ui tests/debug.spec tests/template.spec; do
+for file in playwright.config tests/config tests/lib tests/ui tests/debug.spec tests/example.spec tests/template.spec; do
   echo $file.js
   vdiff.sh $file.js typescript/$file.ts
 done
-tests/example.spec
+
 tests/JIRA-NNNN-template-story.spec
 tests-examples/demo-todo-app.spec
 
@@ -75,9 +78,13 @@ tests-examples/demo-todo-app.spec
 
 `npm run trace -- tests/test.spec.js` - to run a test and create a 🎭Playwright trace.zip with a specific test plan.  The trace can be given to someone else to view separately and fully inspect every step of the test without needing 🎭Playwright installed.  After the trace is recorded, the report is opened.  Can be used by QA engineers who first record the issue with `npm run record` then use this to generate the trace to give to developers to demonstrate the issue and let them do preliminary debugging without needing access to the testing environment.
 
+`npm run viewtrace -- trace.zip` - to open 🎭Playwright Trace viewer with a specific trace file. Omit to allow drag and drop or opening with the gui.
+
 `npm run debug -- tests/test.spec.js` - to open 🎭Playwright and step through a specific test plan one line at a time.
 
 `npm run debug:mobile -- tests/test.spec.js` - to open 🎭Playwright with a mobile device viewport and step through a specific test plan one line at a time.
+
+`npm run devtools -- tests/test.spec.js` - to use Browser Devtools to step through your tests. First add a `await page.pause();` to the test you want to debug.  Then open the Developer Tools in the browser when your test stops.  You will have access to the `playwright` object itself in the console. See [🎭Playwright Debugging Tests](https://playwright.dev/docs/debug/)
 
 `npm run devices` - runs the `tests/debug.spec.js` test to show the list of device formats available for testing. And to debug the 🎭Playwright Page and testInfo objects.
 
@@ -89,14 +96,14 @@ tests-examples/demo-todo-app.spec
 
 `npm run report` - will run the tests with default tag filters and then open the report automatically.
 
+`npm run example` - will only run tests tagged with `@example`.
+
+`npm run quick` - will only run tests that are NOT tagged with `@slow`.
+
+`npm run test` - run all non-`@example` tagged tests in Google Chrome browser. Use `test:edge`, `test:webkit` to run in other browsers or `test:mobile` to run in a mobile sized viewport.
+
+
 MUSTDO -
-`npm run example`
-`npm run quick`
-`npm run test`
-`npm run ui`
-`npm run trace`
-`npm run viewtrace`
-`npm run devtools`
 
 
 `npm run test:...`
