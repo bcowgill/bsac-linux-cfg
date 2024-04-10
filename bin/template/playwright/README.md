@@ -71,7 +71,7 @@ tests-examples/demo-todo-app.spec
 
 `npm run ui -- tests/test.spec.js` - to open the 🎭Playwright Test Runner UI with a specific test plan (or omit it for all tests).  This lets you run tests one at a time or set to watch to rerun them after every code change.
 
-`npm run trace -- tests/test.spec.js` - to run a test and create a 🎭Playwright trace.zip with a specific test plan.  The trace can be given to someone else to view separately and fully inspect every step of the test without needing 🎭Playwright installed.  After the trace is recorded, the report is opened 
+`npm run trace -- tests/test.spec.js` - to run a test and create a 🎭Playwright trace.zip with a specific test plan.  The trace can be given to someone else to view separately and fully inspect every step of the test without needing 🎭Playwright installed.  After the trace is recorded, the report is opened.  Can be used by QA engineers who first record the issue with `npm run record` then use this to generate the trace to give to developers to demonstrate the issue and let them do preliminary debugging without needing access to the testing environment.
 
 `npm run debug -- tests/test.spec.js` - to open 🎭Playwright and step through a specific test plan one line at a time.
 
