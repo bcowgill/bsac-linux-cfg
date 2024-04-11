@@ -100,13 +100,9 @@ tests-examples/demo-todo-app.spec
 
 `npm run quick` - will only run tests that are NOT tagged with `@slow`.
 
-`npm run test` - run all non-`@example` tagged tests in Google Chrome browser. Use `test:edge`, `test:webkit` to run in other browsers or `test:mobile` to run in a mobile sized viewport.
+`npm run test` - run all non-`@example` tagged tests in Google Chrome browser. Use `test:edge`, `test:webkit` to run in other browsers or `test:mobile` to run in a mobile sized viewport.  Only files in the `tests/` directory will run.
 
-
-MUSTDO -
-
-
-`npm run test:...`
+`npm run test:all` - run all non-`@example` tagged tests in all browsers configured in `playwright.config.js`. 
 
 ## Code quality
 
