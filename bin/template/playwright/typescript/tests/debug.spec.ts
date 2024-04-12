@@ -1,5 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import { config } from './config';
 
 // run with git bash command:
 // alias cls='perl -e "print qq{\n} x 50"'
@@ -65,7 +66,7 @@ test.describe('webkit only @devices', () => {
       contextOptions,
       playwright,
       //browser,
-      //page,
+      page,
       //request,
       //context,
     }) => {
@@ -122,7 +123,7 @@ test.describe('webkit only @devices', () => {
           .filter(deviceFilter)
           .sort(),
         // browser, // Browser
-        // page, // Page .accessibility .coverage .keyboard .mouse .request .touchscreen
+        page, // Page .accessibility .coverage .keyboard .mouse .request .touchscreen
         // request, // APIRequestContext
         // context, // BrowserContext
       };
@@ -132,8 +133,15 @@ test.describe('webkit only @devices', () => {
         console.warn(`test.skip [${browserName}] params:`, skipContext);
         _myContext = skipContext;
       }
-      // return browserName !== 'chromium';
-      return browserName !== 'webkit';
+
+      // if (browserName !== 'chromium') {
+      if (browserName !== 'webkit') {
+        return true;
+      }
+      if (config.use.viewport) {
+        page.setViewportSize(config.use.viewport);
+      }
+      return false;
     },
     '[skip]webkit only!',
   );

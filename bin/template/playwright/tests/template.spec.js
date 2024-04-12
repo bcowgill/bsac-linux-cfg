@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
-import { brand, PAGE_URL, VIEW, VP_LARGE, VP_MEDIUM, VP_SMALL } from './config';
-import { getCamera, uiText } from './lib';
+import { PAGE_URL, VP_LARGE, VP_MEDIUM, VP_SMALL } from './config';
+import { setupTest, uiText } from './lib';
 import { J_HOME_TITLE } from './ui';
 
 // A template test plan for a page in the app, begins by checking the content of
@@ -11,8 +11,6 @@ import { J_HOME_TITLE } from './ui';
 // then successful user input and going on to other pages.
 
 const suite = 'TEMPLATE';
-
-let screenshot;
 
 // define here or import from ui
 const PAGE_TITLE = uiText(J_HOME_TITLE);
@@ -24,48 +22,28 @@ const PAGE_HEADING =
 const GET_STARTED_LINK = ['link', { name: 'Get started' }];
 const TARGET_HEADING = { name: 'Installation' };
 
+const shutter = setupTest(suite, PAGE_URL, PAGE_TITLE, PAGE_HEADING);
+
 test.describe('TEMPLATE page test spec', () => {
-  test.beforeEach(
-    async ({ page, channel, browserName, defaultBrowserType, isMobile }) => {
-      page.setViewportSize(VIEW);
-      if (!screenshot) {
-        screenshot = getCamera({
-          brand,
-          // spec, if we can figure out the test-results dir name corresponding to the current test spec
-          suite,
-          channel,
-          browserName: browserName.toString(),
-          defaultBrowserType: defaultBrowserType.toString(),
-          isMobile,
-          viewport: VIEW,
-        });
-      }
-      // Go to the starting url before each test.
-      await page.goto(PAGE_URL);
-      await expect(page).toHaveTitle(PAGE_TITLE);
-      await expect(page.getByRole('heading').first()).toContainText(
-        PAGE_HEADING,
-      );
-    },
-  );
+  test.beforeEach(shutter.setup);
 
   test('Entry @responsive layout', async ({ page }, testInfo) => {
     // counter numbers can be fixed with fix-counter.sh script if tests are added out of counter order.
-    await screenshot({
+    await shutter.screenshot({
       page,
       path: 'entry-responsive-small',
-      viewport: VP_SMALL,
+      viewport: VP_SMALL, // no counter when viewport given...
       fullPage: false,
       testInfo,
     });
-    await screenshot({
+    await shutter.screenshot({
       page,
       path: 'entry-responsive-medium',
       viewport: VP_MEDIUM,
       fullPage: false,
       testInfo,
     });
-    await screenshot({
+    await shutter.screenshot({
       page,
       path: 'entry-responsive-large',
       viewport: VP_LARGE,
@@ -81,7 +59,12 @@ test.describe('TEMPLATE page test spec', () => {
     // MUSTDO check initial button enabled states.
 
     // counter numbers can be fixed with fix-counter.sh script if tests are added out of counter order.
-    await screenshot({ page, counter: 0, path: 'entry-content', testInfo });
+    await shutter.screenshot({
+      page,
+      counter: 0,
+      path: 'entry-content',
+      testInfo,
+    });
   });
 
   test('Entry @links to somewhere', async ({ page }, testInfo) => {
@@ -90,13 +73,18 @@ test.describe('TEMPLATE page test spec', () => {
     // await page.getByTestId(GET_STARTED_LINK).click();
     await page.getByRole(...GET_STARTED_LINK).click();
     await expect(page.getByRole('heading', TARGET_HEADING)).toBeVisible();
-    await screenshot({ page, counter: 1, path: 'entry-link-home', testInfo });
+    await shutter.screenshot({
+      page,
+      counter: 1,
+      path: 'entry-link-home',
+      testInfo,
+    });
   });
 
   test('Entry @unhappy @action', async ({ page }, testInfo) => {
     // MUSTDO check user warnings for each input field.
     // MUSTDO check new button enabled state.
-    await screenshot({
+    await shutter.screenshot({
       page,
       counter: 2,
       path: 'entry-unhappy-fields',
@@ -106,7 +94,7 @@ test.describe('TEMPLATE page test spec', () => {
 
   test('Entry @unhappy @action @corrected', async ({ page }, testInfo) => {
     // MUSTDO check user warnings are cleared and corrected and buttons enable/disable as we go.
-    await screenshot({
+    await shutter.screenshot({
       page,
       counter: 3,
       path: 'entry-unhappy-field-corrected',
@@ -116,7 +104,7 @@ test.describe('TEMPLATE page test spec', () => {
 
   test('Entry @happy @action @continue', async ({ page }, testInfo) => {
     // MUSTDO check user fills in good values and going to the next page.
-    await screenshot({
+    await shutter.screenshot({
       page,
       counter: 4,
       path: 'entry-happy-continue',
@@ -130,6 +118,11 @@ test.describe('TEMPLATE page test spec', () => {
     // MUSTDO check buttons are visible and labels correct.
     // MUSTDO check initial button enabled states.
 
-    await screenshot({ page, counter: 5, path: 'NEXTPAGE-content', testInfo });
+    await shutter.screenshot({
+      page,
+      counter: 5,
+      path: 'NEXTPAGE-content',
+      testInfo,
+    });
   });
 });

@@ -4,6 +4,7 @@ package.json, playwright.config.js, config.js etc
   configure the scripts as needed, especially:
   :58008           the port number your local app runs on.
   viewport=600,800 the default browser size to use when recording tests.
+  VIEW=600x800     the viewport overrides for :small etc
   VP_SMALL,...     the viewport sizes you want to use forr small, medium, large screen responsive layout screen shots.
   /channel-api/    glob for matching your App's API calls.
   test1            details of your usual testing environment you record from.
@@ -36,17 +37,17 @@ viewtrace
 debug
 debug:mobile
 devtools
+test
+test:all
+test:verbose
 
 JS only
-test
 test:iframe
 test:brand
 test:mobile
 test:edge
 test:webkit
-test:verbose
 test:mockapi
-test:all
 test:all:brand
 test:all:iframe
 
@@ -86,6 +87,8 @@ tests-examples/demo-todo-app.spec
 
 `npm run devtools -- tests/test.spec.js` - to use Browser Devtools to step through your tests. First add a `await page.pause();` to the test you want to debug.  Then open the Developer Tools in the browser when your test stops.  You will have access to the `playwright` object itself in the console. See [🎭Playwright Debugging Tests](https://playwright.dev/docs/debug/)
 
+`npm run test:verbose -- tests/test.spec.js` - to run a test with 🎭Playwright Test Runner and log all 🎭Playwright API calls to the console with `pw:api` marker.
+
 `npm run devices` - runs the `tests/debug.spec.js` test to show the list of device formats available for testing. And to debug the 🎭Playwright Page and testInfo objects.
 
 `npm run visual -- tests/test.spec.js` - runs a test plan with delay between actions so that you can see what is happening, useful for recording a video of an app journey.
@@ -100,9 +103,16 @@ tests-examples/demo-todo-app.spec
 
 `npm run quick` - will only run tests that are NOT tagged with `@slow`.
 
+`npm run har` - will only run tests that are tagged with `@har`.
+
+`npm run mockapi` - will only run tests that are tagged with `@mockapi`.
+
 `npm run test` - run all non-`@example` tagged tests in Google Chrome browser. Use `test:edge`, `test:webkit` to run in other browsers or `test:mobile` to run in a mobile sized viewport.  Only files in the `tests/` directory will run.
 
 `npm run test:all` - run all non-`@example` tagged tests in all browsers configured in `playwright.config.js`. 
+
+`npm run test:all:small` - run all non-`@example` tagged tests in all browsers configured in `playwright.config.js` with a small viewport size.  Useful to generate all screenshots for the Small screen size.  Similar commands for `:medium` and `:large` screen sizes.
+
 
 ## Code quality
 

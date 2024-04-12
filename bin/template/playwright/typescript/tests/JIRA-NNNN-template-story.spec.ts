@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright/test';
-import { PAGE_URL, /*BASE_API_GLOB, */ brand } from './config';
-import { getCamera, uiText, myRouteFromHAR } from './lib';
+import { PAGE_URL /*BASE_API_GLOB, */ } from './config';
+import { setupTest, uiText, myRouteFromHAR } from './lib';
 import { J_HOME_TITLE } from './ui';
 
 // A template for a story which tests against a mock api or against a
@@ -13,9 +13,10 @@ const harFile = 'tests/har/JIRA-NNNN.har.json';
 // const PAGE_TITLE = 'TITLE';
 // const PAGE_HEADING = 'HEADING';
 const PAGE_TITLE = uiText(J_HOME_TITLE);
-const PAGE_HEADING = 'Playwright enables reliable end-to-end testing for modern web apps.';
+const PAGE_HEADING =
+  'Playwright enables reliable end-to-end testing for modern web apps.';
 
-let screenshot;
+const shutter = setupTest(suite, PAGE_URL, PAGE_TITLE, PAGE_HEADING);
 
 /* To record the initial HAR file for the story
  * by interacting with the app in the browser.
@@ -34,37 +35,16 @@ test.use({
 */
 
 test.describe('@story JIRA-NNNN @JOURNEY page test spec', () => {
-  test.beforeEach(
-    async ({
-      page,
-      channel,
-      browserName,
-      defaultBrowserType,
-      isMobile,
-      viewport,
-    }) => {
-      if (!screenshot) {
-        screenshot = getCamera({
-          brand,
-          // spec, if we can figure out the test-results dir name corresponding to the current test spec
-          suite,
-          channel,
-          browserName: browserName.toString(),
-          defaultBrowserType: defaultBrowserType.toString(),
-          isMobile,
-          viewport,
-        });
-      }
-      // Go to the starting url before each test.
-      await page.goto(PAGE_URL);
-      await expect(page).toHaveTitle(PAGE_TITLE);
-      await expect(page.getByRole('heading').first()).toContainText(PAGE_HEADING);
-    },
-  );
+  test.beforeEach(shutter.setup);
 
-  test('Entry @content @continue @mockapi', async ({ page }) => {
+  test('Entry @content @continue @mockapi', async ({ page }, testInfo) => {
     await page.goto(`${PAGE_URL}#/`);
-    await screenshot({ page, counter: 0, path: 'entry-content' });
+    await shutter.screenshot({
+      page,
+      counter: 0,
+      path: 'entry-content',
+      testInfo,
+    });
 
     await expect(
       page.getByRole('heading', { name: PAGE_HEADING }),
@@ -90,11 +70,16 @@ test.describe('@story JIRA-NNNN @JOURNEY page test spec', () => {
   });
 
   // same test suite as above using HAR file instead of mock API
-  test('Entry @content @continue @har', async ({ page }) => {
+  test('Entry @content @continue @har', async ({ page }, testInfo) => {
     myRouteFromHAR(page, harFile);
 
     await page.goto(`${PAGE_URL}#/`);
-    await screenshot({ page, counter: 1, path: 'entry-content-har' });
+    await shutter.screenshot({
+      page,
+      counter: 1,
+      path: 'entry-content-har',
+      testInfo,
+    });
 
     await expect(
       page.getByRole('heading', { name: PAGE_HEADING }),

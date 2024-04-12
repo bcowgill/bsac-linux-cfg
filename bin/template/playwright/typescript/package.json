@@ -42,12 +42,13 @@
     "test:edge": "npx playwright test --project=MicrosoftEdge --grep-invert \"@example|@iframe\"",
     "test:webkit": "npx playwright test --project=webkit --grep-invert \"@example|@iframe\"",
     "test:verbose": "cross-env DEBUG=pw:api npm test",
+    "test:har": "npm test -- --grep=@har",
     "test:mockapi": "npm test -- --grep=@mockapi",
     "test:all": "npx playwright test --grep-invert \"@example|@iframe\"",
     "test:all:brand": "cross-env BRAND=brand npx playwright test --grep-invert \"@example|@iframe\"",
-    "test:all:small": "npx playwright test --grep-invert \"@example|@iframe\" --viewport-size=1024,768",
-    "test:all:medium": "npx playwright test --grep-invert \"@example|@iframe\" --viewport-size=1400,900",
-    "test:all:large": "npx playwright test --grep-invert \"@example|@iframe\" --viewport-size=1920,1080",
+    "test:all:small": "VIEW=300x640 npx playwright test --grep-invert \"@example|@iframe\"",
+    "test:all:medium": "VIEW=800x600 npx playwright test --grep-invert \"@example|@iframe\"",
+    "test:all:large": "VIEW=768x1024 npx playwright test --grep-invert \"@example|@iframe\"",
     "test:all:iframe": "npx playwright test --grep @iframe"
   },
   "devDependencies": {

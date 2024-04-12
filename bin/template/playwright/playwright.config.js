@@ -16,6 +16,18 @@ const brand = process.env.BRAND || defaultBrand;
 const baseURL = process.env.BASE_URL || brandBaseURL[brand] || brandBaseURL[defaultBrand];
 const timeout = process.env.TIMEOUT ? Number(process.env.TIMEOUT) : 60000;
 
+let viewport;
+
+if (process.env.VIEW) {
+  const resolution = process.env.VIEW.split(/[x, ]/);
+  if (resolution.length >= 2) {
+    viewport = {
+      width: parseInt(resolution[0], 10),
+      height: parseInt(resolution[1], 10),
+    };
+  }
+}
+
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -35,11 +47,16 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    /* My custom config */
+    my: {
+      defaultBrand,
+      brand,
+    },
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
 
     colorScheme: 'light', // dark
-    viewport: { width: 1280, height: 720 },
+    viewport,
     locale: 'en-GB',
     timezoneId: 'Europe/London',
     geolocation: { latitude: 51.487395, longitude: 0 },
@@ -117,7 +134,7 @@ export default defineConfig({
   // },
 });
 
-console.log(`PLAYWRIGHT TESTS RUNNING as: ${brand} against ${baseURL} timeout=${
+console.log(`PLAYWRIGHT TESTS RUNNING as: ${brand} against ${baseURL} ${process.env.VIEW || ""} timeout=${timeout} ${
   process.env.TRACE? ' TRACE': ''}${
   process.env.VIDEO? ' VIDEO': ''}${process.env.HAR_DEBUG? ' HAR_DEBUG': ''} ${
   process.env.HAR? ' HAR update': ''}${process.env.CI? ' CI': ''}${

@@ -1,9 +1,11 @@
 // @ts-check
+import { expect } from 'playwright/test';
 import {
   BASE_API_GLOB,
   defaultBrand,
   updateHar,
   API_ALL,
+  config,
   brand,
 } from './config';
 
@@ -240,6 +242,51 @@ export function getCamera({
     }
   };
 } // getCamera()
+
+/**
+ * answers with a screenshot object and a test.beforeEach() function you can use to setup the screenshot camera for your tests.
+ * @param {string} suite The name of the test suite to be used as part of the screenshot filename.
+ * @param {string} url The url for the page to go to before each test begins.
+ * @param {string} title Optional page title to test for after going to the page.
+ * @param {string} heading Optional page heading text to test for after going to the page.
+ */
+export function setupTest(suite, url, title, heading) {
+  const shutter = {
+    screenshot: undefined,
+  };
+  shutter.setup = async function beforeEachCamera({
+    page,
+    channel,
+    browserName,
+    defaultBrowserType,
+    isMobile,
+  }) {
+    if (config.use.viewport) {
+      page.setViewportSize(config.use.viewport);
+    }
+    if (!shutter.screenshot) {
+      shutter.screenshot = getCamera({
+        brand,
+        // spec, if we can figure out the test-results dir name corresponding to the current test spec
+        suite,
+        channel,
+        browserName: browserName.toString(),
+        defaultBrowserType: defaultBrowserType.toString(),
+        isMobile,
+        viewport: page.viewportSize(),
+      });
+    }
+    // Go to the starting url before each test.
+    await page.goto(url);
+    if (title) {
+      await expect(page).toHaveTitle(title);
+    }
+    if (heading) {
+      await expect(page.getByRole('heading').first()).toContainText(heading);
+    }
+  };
+  return shutter;
+} // setupTest()
 
 /**
  * this will log all HTTP requests made my the application under test to help debug your route mocks.

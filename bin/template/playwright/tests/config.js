@@ -1,5 +1,8 @@
-export const defaultBrand = 'brand';
-export const brand = process.env.BRAND || defaultBrand;
+import pwconfig from '../playwright.config';
+
+export const config = pwconfig;
+export const defaultBrand = pwconfig.use.my.defaultBrand;
+export const brand = pwconfig.use.my.brand;
 // export const serverAll = brand || defaultBrand || process.env.ALL;
 export const serverAll = process.env.ALL;
 export const updateHar = !!process.env.HAR;
@@ -10,10 +13,6 @@ export const API_ALL = '**/*';
 export const BASE_API = '**/channel-api/';
 export const BASE_API_GLOB = `${BASE_API}**`;
 
-export const viewWidth = 600;
-export const viewHeight = 800;
-
-export const VIEW = { width: viewWidth, height: viewHeight };
 export const VP_SMALL = { width: 1024, height: 768 };
 export const VP_MEDIUM = { width: 1200, height: 1024 };
 export const VP_LARGE = { width: 1920, height: 1200 };

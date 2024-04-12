@@ -1,10 +1,18 @@
 // @ts-check
-import { Locator, Page, Route, ViewportSize } from '@playwright/test';
+import {
+  expect,
+  Locator,
+  Page,
+  Route,
+  ViewportSize,
+  TestInfo,
+} from '@playwright/test';
 import {
   BASE_API_GLOB,
   defaultBrand,
   updateHar,
   API_ALL,
+  config,
   brand,
 } from './config';
 
@@ -36,11 +44,25 @@ export interface IScreenShotOptions {
 export interface ICamera {
   page: Page | Locator;
   path: string;
-  counter: number;
+  counter?: number;
   fullPage?: boolean;
+  viewport?: ViewportSize;
+  testInfo?: TestInfo;
 }
 
 type ICameraFn = (photo: ICamera) => void;
+
+export interface IShutter {
+  setup: ({
+    page: Page,
+    channel: string,
+    browserName: string,
+    defaultBrowserType: string,
+    isMobile: boolean,
+    viewport: ViewportSize,
+  }) => Promise<void>;
+  screenshot: (ICamera) => void;
+}
 
 export interface IHarEntry {
   request: {
@@ -157,9 +179,11 @@ export function getResolution(viewport) {
   const resolution = `${vp.width}x${vp.height}`;
   return resolution;
 }
+
 /**
  * answer with the screen shot directories to use for a test suite based on browser information and test information.
- * @param {Object} options options for taking the screen shot.
+ * (IScreenShotOptions) => string
+ * @param {IScreenShotOptions} options options for taking the screen shot.
  * @param {string} options.brand the brand name with default defaultBrand.
  * @param {string} options.spec the top level directory with default 'screenshots' intended to match the playwright generated test output dir like 'test-results/test-1-Home-Page-content-webkit/test-finished-1.png' if possible.
  * @param {string} options.suite the prefix name for current test suite with default 'suite'.
@@ -195,8 +219,8 @@ export function screenshotPath({
 
 /**
  * answers with a function that can be used to take numbered and named screen shots.
- *
- * @param {Object} options options for creating the camera output path and default screen shot options.
+ * (IScreenShotOptions) => ICameraFn
+ * @param {IScreenShotOptions} options options for creating the camera output path and default screen shot options.
  * @param {string} options.brand the brand name with default defaultBrand.
  * @param {string} options.spec the top level directory with default 'screenshots' intended to match the playwright generated test output dir like 'test-results/test-1-Home-Page-content-webkit/test-finished-1.png' if possible.
  * @param {string} options.suite the prefix name for current test suite with default 'suite'.
@@ -234,7 +258,8 @@ export function getCamera({
 
   /**
    * saves a full screen shot (by default) to a predefined directory and name.
-   * @param {Object} options options for naming and numbering the screen shot.
+   * (ICamera) => void
+   * @param {ICamera} options options for naming and numbering the screen shot.
    * @param {Page|Locator} options.page the page or locator to take a screen shot of.
    * @param {string} options.path the suffix to add to the file name after the number.
    * @param {number} options.counter the number to add to the file name to keep your screen shots in order.
@@ -249,7 +274,7 @@ export function getCamera({
     fullPage = full,
     viewport,
     testInfo,
-  }) {
+  }: ICamera): void {
     const number = viewport ? '' : padZeros(counter) + '-';
     const resolution = viewport ? getResolution(viewport) : originalResolution;
     let thisPrefix = prefix;
@@ -292,6 +317,57 @@ export function getCamera({
     }
   };
 } // getCamera()
+
+/**
+ * answers with an IShutter object giving a screenshot function and  and test.beforeEach() function you can use to setup the screenshot camera for your tests.
+ * @param {string} suite The name of the test suite to be used as part of the screenshot filename.
+ * @param {string} url The url for the page to go to before each test begins.
+ * @param {string} title Optional page title to test for after going to the page.
+ * @param {string} heading Optional page heading text to test for after going to the page.
+ * @returns {IShutter} the test beforeEach function and screenshot function for your test suite.
+ */
+export function setupTest(
+  suite: string,
+  url: string,
+  title?: string,
+  heading?: string,
+): IShutter {
+  const shutter = {
+    screenshot: undefined,
+  };
+  shutter.setup = async function beforeEachCamera({
+    page,
+    channel,
+    browserName,
+    defaultBrowserType,
+    isMobile,
+  }) {
+    if (config.use.viewport) {
+      page.setViewportSize(config.use.viewport);
+    }
+    if (!shutter.screenshot) {
+      shutter.screenshot = getCamera({
+        brand,
+        // spec, if we can figure out the test-results dir name corresponding to the current test spec
+        suite,
+        channel,
+        browserName: browserName.toString(),
+        defaultBrowserType: defaultBrowserType.toString(),
+        isMobile,
+        viewport: page.viewportSize(),
+      });
+    }
+    // Go to the starting url before each test.
+    await page.goto(url);
+    if (title) {
+      await expect(page).toHaveTitle(title);
+    }
+    if (heading) {
+      await expect(page.getByRole('heading').first()).toContainText(heading);
+    }
+  };
+  return shutter;
+} // setupTest()
 
 /**
  * this will log all HTTP requests made my the application under test to help debug your route mocks.
