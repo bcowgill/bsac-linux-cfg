@@ -13,6 +13,7 @@ RULER=in/ruler.txt
 DCS=in/control.txt
 DEBUG=
 SKIP=0
+HEAD=3
 
 COLUMNS=
 
@@ -79,7 +80,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	BASELOG=base/$TEST.log.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

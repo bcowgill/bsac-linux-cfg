@@ -12,8 +12,8 @@ LAUNCH libreoffice in/spreadsheet-excel-2007-2013-xml.xlsx
 -rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-excel-2007-2013-xml.xlsx
 in/spreadsheet-excel-97-2000-xp-2003.xls: Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
 e04ac35b4bf238a4b73dbe0dd89d26c3  in/spreadsheet-excel-97-2000-xp-2003.xls
-LAUNCH libreoffice in/spreadsheet-excel-97-2000-xp-2003.xls
 -rw-rw-r-- 1 me me NNNNN DATE HH:MM in/spreadsheet-excel-97-2000-xp-2003.xls
+LAUNCH libreoffice in/spreadsheet-excel-97-2000-xp-2003.xls
 in/spreadsheet-excel-template-97-2000-xp-2003.xlt: Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
 e04ac35b4bf238a4b73dbe0dd89d26c3  in/spreadsheet-excel-template-97-2000-xp-2003.xlt
 LAUNCH libreoffice in/spreadsheet-excel-template-97-2000-xp-2003.xlt

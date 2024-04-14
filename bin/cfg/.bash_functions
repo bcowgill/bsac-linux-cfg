@@ -1,6 +1,27 @@
 # bash functions
 # Brent S.A. Cowgill
 
+# similar to perl die, shows a messge on standard error and returns an error code.
+die () {
+	local msg
+	msg="$*"
+	echo "$msg" 1>&2
+	return 1
+}
+
+# example of how to use die in bash functions, it doesn't actually throw so you have to use an err= value.
+# see also cpstat below...
+#test_die () {
+#	local arg err
+#	err=
+#	arg=$1
+#	if [ -z "$arg" ]; then err=42; die "You must provide an argument value."; fi
+#	if [ -z $err ]; then
+#		echo OK $arg
+#	fi
+#	return $err
+#}
+
 # show whichever command something is, a program, alias or shell function
 whichever () {
 	local cmd
@@ -12,17 +33,50 @@ whichever () {
 
 # cpstat copies files with stats and progress
 cpstat () {
-	local sourceDir targetDir
+	local sourceDir targetDir err
 	sourceDir="$1"
 	targetDir="$2"
-	tar c "$sourceDir" | pv | tar x -C "$targetDir"
+	if [ -z "$sourceDir" -o ! -d "$sourceDir" ]; then err=1; die "You must provide a sourceDir for the copy."; fi
+	if [ -z "$targetDir" -o ! -d "$targetDir" ]; then err=2; die "You must provide a targetDir for the copy."; fi
+	if [ -z $err ]; then
+		tar c "$sourceDir" | pv | tar x -C "$targetDir"
+	fi
+	return $err
 }
 
-# find-ez easy find shows just name, size and time
+# find-ez easy find shows just file name, size and time (alphabetically, tab-separated) for files in the given directory.
 find-ez () {
 	local sourceDir
-	sourceDir="$1"
+	sourceDir="${1:-.}"
 	pushd "$sourceDir" > /dev/null && find . -type f -printf '"%h/%f"\t%s\t%T+\n' | sort && popd > /dev/null
+}
+#
+# find-dates shows just file date/time size and name (oldest first. tab-separated) for files in the given directory.
+find-dates () {
+	local sourceDir
+	sourceDir="${1:-.}"
+	pushd "$sourceDir" > /dev/null && find . -type f -printf '%T+ %12s "%h/%f"\n' | sort -n && popd > /dev/null
+}
+
+# find-datesr shows just file date/time size and name (newest first, tab-separated) for files in the given directory.
+find-datesr () {
+	local sourceDir
+	sourceDir="${1:-.}"
+	pushd "$sourceDir" > /dev/null && find . -type f -printf '%T+ %12s "%h/%f"\n' | sort -n -r && popd > /dev/null
+}
+
+# find-size easy find shows just file size, date/time and name (smallest first, tab-separated) for files in the given directory.
+find-size () {
+	local sourceDir
+	sourceDir="${1:-.}"
+	pushd "$sourceDir" > /dev/null && find . -type f -printf '%-12s %T+ "%h/%f"\n' | sort -n && popd > /dev/null
+}
+
+# find-sizer easy find shows just file size, date/time and name (smallest first, tab-separated) for files in the given directory.
+find-sizer () {
+	local sourceDir
+	sourceDir="${1:-.}"
+	pushd "$sourceDir" > /dev/null && find . -type f -printf '%-12s %T+ "%h/%f"\n' | sort -n -r && popd > /dev/null
 }
 
 # rvdiff reverses the files being diffed

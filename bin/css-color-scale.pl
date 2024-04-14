@@ -59,7 +59,7 @@ USAGE
 } # usage()
 
 our $VERSION = 0.1;
-our $DEBUG = 1;
+our $DEBUG = 10;
 
 our $the_color;
 our $normalise = !$ENV{USE_COLOR};
@@ -115,11 +115,11 @@ sub main
 			$the_color = $ARGV[0];
 		}
 		shift @ARGV;
-		my $name = shift @ARGV;
+		my $name = shift @ARGV || '';
 		my $js_file = shift @ARGV || '';
 		my $css_file = shift @ARGV || '';
 
-		if ($name =~ m{\A\d+\z}xms)
+		if (!$the_color || $name =~ m{\A\d+\z}xms)
 		{
 			usage('You must provide a CSS color as a single hex value or three rgb values from 0..255.')
 		}
@@ -179,6 +179,7 @@ sub maximise_color
 		return ($red, $green, $blue);
 	}
 	my $magnitude = sqrt($red*$red + $green*$green + $blue*$blue);
+	usage('You must provide a non-zero CSS color as a single hex value or three rgb values from 0..255.') if (!$magnitude);
 	$red = round(255 * $red / $magnitude);
 	$green = round(255 * $green / $magnitude);
 	$blue = round(255 * $blue / $magnitude);
@@ -324,7 +325,14 @@ sub hex_to_rgb_vector
 	my ($hex) = @ARG;
 	$hex =~ s{\A\#?([0-9a-f])([0-9a-f])([0-9a-f])\z}{$1$1$2$2$3$3}xmsi;
 	$hex =~ m{\A\#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\z}xmsi;
-	return (hex($1), hex($2), hex($3));
+	if (defined $1 && defined $2 && defined $3)
+	{
+		return (hex($1), hex($2), hex($3));
+	}
+	else
+	{
+		return undef;
+	}
 }
 
 # make tabs 3 spaces

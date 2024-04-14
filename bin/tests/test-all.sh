@@ -99,6 +99,9 @@ testSuite json-tools "json tools to manipulat key values" $PROVE
 
 testSuite git-mv-src "move a source file and repair import statements" $PROVE
 
+testSuite css-color-scale "generates a quantised CSS color scale" $PROVE
+testSuite ls-cmds-used "lists external commands used in scripts" $PROVE
+
 #================================================================
 testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
 $PROVE ./unit-tests.sh

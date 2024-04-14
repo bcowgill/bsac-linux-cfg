@@ -1,0 +1,3 @@
+You must provide a non-zero CSS color as a single hex value or three rgb values from 0..255.
+
+usage: css-color-scale.pl [--help|--man|-?] [hex | red green blue] [color-name] [js-file] [css-file]

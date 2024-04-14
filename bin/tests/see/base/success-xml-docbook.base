@@ -1,5 +1,5 @@
 in/document-docbook.xml: XML document text
 8a082882bab636d652e76e46edeb6223  in/document-docbook.xml
 XML: docbook => docx
-LAUNCH libreoffice in/document-docbook.xml
 -rw-rw-r-- 1 me me NNNNN DATE HH:MM in/document-docbook.xml
+LAUNCH libreoffice in/document-docbook.xml

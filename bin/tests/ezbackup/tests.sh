@@ -10,6 +10,7 @@ SAMPLE=in/source
 DEBUG=--debug
 DEBUG=
 SKIP=0
+HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
@@ -70,7 +71,7 @@ if [ 0 == "$SKIP" ]; then
 	[ -d "$BK_DIR" ] && rm -rf "$BK_DIR"
 	ARGS="$DEBUG partial $SAMPLE/doesnotexist $BK_DIR"
 	setup_warning
-	$PROGRAM $ARGS | head -4 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS 2>&1 | head -$HEAD > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	restore_warning
 	clean_output "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -87,7 +88,7 @@ if [ 0 == "$SKIP" ]; then
 	BK_DIR=/doesnotexistpermissiondenied
 	ARGS="$DEBUG partial $SAMPLE $BK_DIR"
 	setup_warning
-	$PROGRAM $ARGS 2>&1 | head -4 > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS 2>&1 | head -$HEAD > "$OUT" || assertCommandSuccess $? "$PROGRAM $ARGS"
 	clean_output "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

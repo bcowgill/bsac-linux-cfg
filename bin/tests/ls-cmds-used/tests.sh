@@ -3,19 +3,18 @@
 # set -e gotchas http://mywiki.wooledge.org/BashFAQ/105
 set -e
 
-source ../filter-sounds/lib.sh
-
 # What we're testing and sample input data
-PROGRAM=../../filter-fonts.sh
+PROGRAM=../../ls-cmds-used.sh
 CMD=`basename $PROGRAM`
-SAMPLE=../filter-sounds/in/SAMPLE.txt
+SAMPLE=../../manpage-of-the-day.sh
+SAMPLE2=../../ezbackup.sh
 DEBUG=
 SKIP=0
-HEAD=1
+HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 11
+PLAN 9
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -27,7 +26,7 @@ ERROR_STOP=0
 function filter {
 	local file
 	file="$1"
-	filter_egrep "$file"
+	perl -i -pne 's{DONOTFILTER\w+\s+\(\w+\)}{NAME (ROLE)}xms' $file
 }
 
 echo TEST $CMD command help
@@ -38,7 +37,6 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --help $SAMPLE"
 	$PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -48,13 +46,12 @@ echo TEST $CMD command invalid option
 TEST=command-invalid
 if [ 0 == "$SKIP" ]; then
 	ERR=0
-	EXPECT=2
+	EXPECT=1
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --invalid $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
-	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -69,22 +66,6 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --keep $SAMPLE"
 	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
-	filter "$OUT"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD command inplace and show are incompatible
-TEST=command-invalid-inplace-show
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --inplace --show $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
-	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -97,35 +78,21 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD successful operation regex
-TEST=success-regex
+echo TEST $CMD successful operation another
+TEST=success-another
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --regex"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	filter "$OUT"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD successful operation suppress
-TEST=success-suppress
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG -v"
-	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $SAMPLE2 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else

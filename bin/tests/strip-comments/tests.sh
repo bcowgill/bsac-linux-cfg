@@ -9,6 +9,7 @@ CMD=`basename $PROGRAM`
 SAMPLE=in/top-comment1.txt
 DEBUG=
 SKIP=0
+HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
@@ -56,7 +57,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --keep $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -70,7 +71,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace --show $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -84,7 +85,7 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --inplace"
-	$PROGRAM $ARGS 2>&1 | head -3 > $OUT
+	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

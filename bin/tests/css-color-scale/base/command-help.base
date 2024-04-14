@@ -1,0 +1,34 @@
+usage: css-color-scale.pl [--help|--man|-?] [hex | red green blue] [color-name] [js-file] [css-file]
+
+Generates a 9 point CSS color scale given a specific color value based on the 100 to 900 weights idea of tailwind.css.  The CSS definitions will be printed to standard output or a file.  The Javascript definitions will be printed to standard error or a file.
+
+USE_COLOR   environment variable set to prevent maximising the color value along its vector.
+hex         a single hex color value # is optional
+red         the red color value 0-255
+green       the green color value 0-255
+blue        the blue color value 0-255
+color-name  the name to give the color in the output CSS/JS. defaults to MYCOLOR
+js-file     file to write javascript color definition to. Detects .js
+css-file    file to write css color definition to.
+--help      shows help for this program.
+--man       shows help for this program.
+-?          shows help for this program.
+
+The color scale will range from the maximum possible CSS color value which intersects the color value given to one ninth of that value.  The output will be weighted from 100 to 900 with 100 being the darkest and 900 the brightest version of the color.  The given color may not fall on one of those weights but will be available in the CSS and JS output exactly.
+
+By default the color will be maxmised along its vector but if USE_COLOR environment variable is true then the color itself will be used for weight 900 and all other values will be a fraction of the given color.
+
+The color name will be lowercased for output to CSS.  A dash in the color name becomes an _ for Javascript output.
+
+See also filter-css-colors.pl invert-css-color.pl find-css.sh all-debug-css.sh css-diagnose.sh debug-css.sh
+
+Example:
+
+css-color-scale.pl 45 233 34 > color.css 2> color.js
+
+  defines a Javascript color set MYCOLOR in color.js and a CSS color set mycolor in color.css
+
+css-color-scale.pl #123 MY-COLOR mycolor.css my-color.js
+
+  defines a Javascript color set MY_COLOR.color = '#123' in my-color.js and a CSS color set my-color-100 to my-color-900 in mycolor.css
+

@@ -1,0 +1,657 @@
+/* A tailwind css like color scale for myhue = #3c7e9f */
+
+/* === color rules */
+.text-myhue { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--text-myhue:hover { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--text-myhue:active { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--text-myhue:focus { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--text-myhue:focus-visible { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--text-myhue:focus-within { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--text-myhue:visited { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.text-myhue-100 { color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--text-myhue-100:hover { color: #070e12; /* rgb(7, 14, 18) */ }
+.active--text-myhue-100:active { color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--text-myhue-100:focus { color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--text-myhue-100:focus-visible { color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--text-myhue-100:focus-within { color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--text-myhue-100:visited { color: #070e12; /* rgb(7, 14, 18) */ }
+
+.text-myhue-200 { color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--text-myhue-200:hover { color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--text-myhue-200:active { color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--text-myhue-200:focus { color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--text-myhue-200:focus-visible { color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--text-myhue-200:focus-within { color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--text-myhue-200:visited { color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.text-myhue-300 { color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--text-myhue-300:hover { color: #142a35; /* rgb(20, 42, 53) */ }
+.active--text-myhue-300:active { color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--text-myhue-300:focus { color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--text-myhue-300:focus-visible { color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--text-myhue-300:focus-within { color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--text-myhue-300:visited { color: #142a35; /* rgb(20, 42, 53) */ }
+
+.text-myhue-400 { color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--text-myhue-400:hover { color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--text-myhue-400:active { color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--text-myhue-400:focus { color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--text-myhue-400:focus-visible { color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--text-myhue-400:focus-within { color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--text-myhue-400:visited { color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.text-myhue-500 { color: #214658; /* rgb(33, 70, 88) */ }
+.hover--text-myhue-500:hover { color: #214658; /* rgb(33, 70, 88) */ }
+.active--text-myhue-500:active { color: #214658; /* rgb(33, 70, 88) */ }
+.focus--text-myhue-500:focus { color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--text-myhue-500:focus-visible { color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--text-myhue-500:focus-within { color: #214658; /* rgb(33, 70, 88) */ }
+.visited--text-myhue-500:visited { color: #214658; /* rgb(33, 70, 88) */ }
+
+.text-myhue-600 { color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--text-myhue-600:hover { color: #28546a; /* rgb(40, 84, 106) */ }
+.active--text-myhue-600:active { color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--text-myhue-600:focus { color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--text-myhue-600:focus-visible { color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--text-myhue-600:focus-within { color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--text-myhue-600:visited { color: #28546a; /* rgb(40, 84, 106) */ }
+
+.text-myhue-700 { color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--text-myhue-700:hover { color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--text-myhue-700:active { color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--text-myhue-700:focus { color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--text-myhue-700:focus-visible { color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--text-myhue-700:focus-within { color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--text-myhue-700:visited { color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.text-myhue-800 { color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--text-myhue-800:hover { color: #35708d; /* rgb(53, 112, 141) */ }
+.active--text-myhue-800:active { color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--text-myhue-800:focus { color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--text-myhue-800:focus-visible { color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--text-myhue-800:focus-within { color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--text-myhue-800:visited { color: #35708d; /* rgb(53, 112, 141) */ }
+
+.text-myhue-900 { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--text-myhue-900:hover { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--text-myhue-900:active { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--text-myhue-900:focus { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--text-myhue-900:focus-visible { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--text-myhue-900:focus-within { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--text-myhue-900:visited { color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === background-color rules */
+.bg-myhue { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--bg-myhue:hover { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--bg-myhue:active { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--bg-myhue:focus { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--bg-myhue:focus-visible { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--bg-myhue:focus-within { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--bg-myhue:visited { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.bg-myhue-100 { background-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--bg-myhue-100:hover { background-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--bg-myhue-100:active { background-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--bg-myhue-100:focus { background-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--bg-myhue-100:focus-visible { background-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--bg-myhue-100:focus-within { background-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--bg-myhue-100:visited { background-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.bg-myhue-200 { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--bg-myhue-200:hover { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--bg-myhue-200:active { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--bg-myhue-200:focus { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--bg-myhue-200:focus-visible { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--bg-myhue-200:focus-within { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--bg-myhue-200:visited { background-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.bg-myhue-300 { background-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--bg-myhue-300:hover { background-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--bg-myhue-300:active { background-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--bg-myhue-300:focus { background-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--bg-myhue-300:focus-visible { background-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--bg-myhue-300:focus-within { background-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--bg-myhue-300:visited { background-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.bg-myhue-400 { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--bg-myhue-400:hover { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--bg-myhue-400:active { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--bg-myhue-400:focus { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--bg-myhue-400:focus-visible { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--bg-myhue-400:focus-within { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--bg-myhue-400:visited { background-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.bg-myhue-500 { background-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--bg-myhue-500:hover { background-color: #214658; /* rgb(33, 70, 88) */ }
+.active--bg-myhue-500:active { background-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--bg-myhue-500:focus { background-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--bg-myhue-500:focus-visible { background-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--bg-myhue-500:focus-within { background-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--bg-myhue-500:visited { background-color: #214658; /* rgb(33, 70, 88) */ }
+
+.bg-myhue-600 { background-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--bg-myhue-600:hover { background-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--bg-myhue-600:active { background-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--bg-myhue-600:focus { background-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--bg-myhue-600:focus-visible { background-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--bg-myhue-600:focus-within { background-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--bg-myhue-600:visited { background-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.bg-myhue-700 { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--bg-myhue-700:hover { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--bg-myhue-700:active { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--bg-myhue-700:focus { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--bg-myhue-700:focus-visible { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--bg-myhue-700:focus-within { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--bg-myhue-700:visited { background-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.bg-myhue-800 { background-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--bg-myhue-800:hover { background-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--bg-myhue-800:active { background-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--bg-myhue-800:focus { background-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--bg-myhue-800:focus-visible { background-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--bg-myhue-800:focus-within { background-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--bg-myhue-800:visited { background-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.bg-myhue-900 { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--bg-myhue-900:hover { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--bg-myhue-900:active { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--bg-myhue-900:focus { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--bg-myhue-900:focus-visible { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--bg-myhue-900:focus-within { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--bg-myhue-900:visited { background-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === outline-color rules */
+.outline-myhue { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--outline-myhue:hover { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--outline-myhue:active { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--outline-myhue:focus { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--outline-myhue:focus-visible { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--outline-myhue:focus-within { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--outline-myhue:visited { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.outline-myhue-100 { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--outline-myhue-100:hover { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--outline-myhue-100:active { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--outline-myhue-100:focus { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--outline-myhue-100:focus-visible { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--outline-myhue-100:focus-within { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--outline-myhue-100:visited { outline-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.outline-myhue-200 { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--outline-myhue-200:hover { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--outline-myhue-200:active { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--outline-myhue-200:focus { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--outline-myhue-200:focus-visible { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--outline-myhue-200:focus-within { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--outline-myhue-200:visited { outline-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.outline-myhue-300 { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--outline-myhue-300:hover { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--outline-myhue-300:active { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--outline-myhue-300:focus { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--outline-myhue-300:focus-visible { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--outline-myhue-300:focus-within { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--outline-myhue-300:visited { outline-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.outline-myhue-400 { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--outline-myhue-400:hover { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--outline-myhue-400:active { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--outline-myhue-400:focus { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--outline-myhue-400:focus-visible { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--outline-myhue-400:focus-within { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--outline-myhue-400:visited { outline-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.outline-myhue-500 { outline-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--outline-myhue-500:hover { outline-color: #214658; /* rgb(33, 70, 88) */ }
+.active--outline-myhue-500:active { outline-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--outline-myhue-500:focus { outline-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--outline-myhue-500:focus-visible { outline-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--outline-myhue-500:focus-within { outline-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--outline-myhue-500:visited { outline-color: #214658; /* rgb(33, 70, 88) */ }
+
+.outline-myhue-600 { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--outline-myhue-600:hover { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--outline-myhue-600:active { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--outline-myhue-600:focus { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--outline-myhue-600:focus-visible { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--outline-myhue-600:focus-within { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--outline-myhue-600:visited { outline-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.outline-myhue-700 { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--outline-myhue-700:hover { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--outline-myhue-700:active { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--outline-myhue-700:focus { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--outline-myhue-700:focus-visible { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--outline-myhue-700:focus-within { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--outline-myhue-700:visited { outline-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.outline-myhue-800 { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--outline-myhue-800:hover { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--outline-myhue-800:active { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--outline-myhue-800:focus { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--outline-myhue-800:focus-visible { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--outline-myhue-800:focus-within { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--outline-myhue-800:visited { outline-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.outline-myhue-900 { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--outline-myhue-900:hover { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--outline-myhue-900:active { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--outline-myhue-900:focus { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--outline-myhue-900:focus-visible { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--outline-myhue-900:focus-within { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--outline-myhue-900:visited { outline-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === border-color rules */
+.border-myhue { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-myhue:hover { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-myhue:active { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-myhue:focus { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-myhue:focus-visible { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-myhue:focus-within { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-myhue:visited { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.border-myhue-100 { border-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--border-myhue-100:hover { border-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--border-myhue-100:active { border-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--border-myhue-100:focus { border-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--border-myhue-100:focus-visible { border-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--border-myhue-100:focus-within { border-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--border-myhue-100:visited { border-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.border-myhue-200 { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--border-myhue-200:hover { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--border-myhue-200:active { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--border-myhue-200:focus { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--border-myhue-200:focus-visible { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--border-myhue-200:focus-within { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--border-myhue-200:visited { border-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.border-myhue-300 { border-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--border-myhue-300:hover { border-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--border-myhue-300:active { border-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--border-myhue-300:focus { border-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--border-myhue-300:focus-visible { border-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--border-myhue-300:focus-within { border-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--border-myhue-300:visited { border-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.border-myhue-400 { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--border-myhue-400:hover { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--border-myhue-400:active { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--border-myhue-400:focus { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--border-myhue-400:focus-visible { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--border-myhue-400:focus-within { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--border-myhue-400:visited { border-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.border-myhue-500 { border-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--border-myhue-500:hover { border-color: #214658; /* rgb(33, 70, 88) */ }
+.active--border-myhue-500:active { border-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--border-myhue-500:focus { border-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--border-myhue-500:focus-visible { border-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--border-myhue-500:focus-within { border-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--border-myhue-500:visited { border-color: #214658; /* rgb(33, 70, 88) */ }
+
+.border-myhue-600 { border-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--border-myhue-600:hover { border-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--border-myhue-600:active { border-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--border-myhue-600:focus { border-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--border-myhue-600:focus-visible { border-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--border-myhue-600:focus-within { border-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--border-myhue-600:visited { border-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.border-myhue-700 { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--border-myhue-700:hover { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--border-myhue-700:active { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--border-myhue-700:focus { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--border-myhue-700:focus-visible { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--border-myhue-700:focus-within { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--border-myhue-700:visited { border-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.border-myhue-800 { border-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--border-myhue-800:hover { border-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--border-myhue-800:active { border-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--border-myhue-800:focus { border-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--border-myhue-800:focus-visible { border-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--border-myhue-800:focus-within { border-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--border-myhue-800:visited { border-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.border-myhue-900 { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-myhue-900:hover { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-myhue-900:active { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-myhue-900:focus { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-myhue-900:focus-visible { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-myhue-900:focus-within { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-myhue-900:visited { border-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === border-top-color rules */
+.border-t-myhue { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-t-myhue:hover { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-t-myhue:active { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-t-myhue:focus { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-t-myhue:focus-visible { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-t-myhue:focus-within { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-t-myhue:visited { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.border-t-myhue-100 { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--border-t-myhue-100:hover { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--border-t-myhue-100:active { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--border-t-myhue-100:focus { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--border-t-myhue-100:focus-visible { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--border-t-myhue-100:focus-within { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--border-t-myhue-100:visited { border-top-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.border-t-myhue-200 { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--border-t-myhue-200:hover { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--border-t-myhue-200:active { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--border-t-myhue-200:focus { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--border-t-myhue-200:focus-visible { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--border-t-myhue-200:focus-within { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--border-t-myhue-200:visited { border-top-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.border-t-myhue-300 { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--border-t-myhue-300:hover { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--border-t-myhue-300:active { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--border-t-myhue-300:focus { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--border-t-myhue-300:focus-visible { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--border-t-myhue-300:focus-within { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--border-t-myhue-300:visited { border-top-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.border-t-myhue-400 { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--border-t-myhue-400:hover { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--border-t-myhue-400:active { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--border-t-myhue-400:focus { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--border-t-myhue-400:focus-visible { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--border-t-myhue-400:focus-within { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--border-t-myhue-400:visited { border-top-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.border-t-myhue-500 { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--border-t-myhue-500:hover { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+.active--border-t-myhue-500:active { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--border-t-myhue-500:focus { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--border-t-myhue-500:focus-visible { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--border-t-myhue-500:focus-within { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--border-t-myhue-500:visited { border-top-color: #214658; /* rgb(33, 70, 88) */ }
+
+.border-t-myhue-600 { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--border-t-myhue-600:hover { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--border-t-myhue-600:active { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--border-t-myhue-600:focus { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--border-t-myhue-600:focus-visible { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--border-t-myhue-600:focus-within { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--border-t-myhue-600:visited { border-top-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.border-t-myhue-700 { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--border-t-myhue-700:hover { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--border-t-myhue-700:active { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--border-t-myhue-700:focus { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--border-t-myhue-700:focus-visible { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--border-t-myhue-700:focus-within { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--border-t-myhue-700:visited { border-top-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.border-t-myhue-800 { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--border-t-myhue-800:hover { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--border-t-myhue-800:active { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--border-t-myhue-800:focus { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--border-t-myhue-800:focus-visible { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--border-t-myhue-800:focus-within { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--border-t-myhue-800:visited { border-top-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.border-t-myhue-900 { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-t-myhue-900:hover { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-t-myhue-900:active { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-t-myhue-900:focus { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-t-myhue-900:focus-visible { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-t-myhue-900:focus-within { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-t-myhue-900:visited { border-top-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === border-bottom-color rules */
+.border-b-myhue { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-b-myhue:hover { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-b-myhue:active { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-b-myhue:focus { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-b-myhue:focus-visible { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-b-myhue:focus-within { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-b-myhue:visited { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.border-b-myhue-100 { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--border-b-myhue-100:hover { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--border-b-myhue-100:active { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--border-b-myhue-100:focus { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--border-b-myhue-100:focus-visible { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--border-b-myhue-100:focus-within { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--border-b-myhue-100:visited { border-bottom-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.border-b-myhue-200 { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--border-b-myhue-200:hover { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--border-b-myhue-200:active { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--border-b-myhue-200:focus { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--border-b-myhue-200:focus-visible { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--border-b-myhue-200:focus-within { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--border-b-myhue-200:visited { border-bottom-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.border-b-myhue-300 { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--border-b-myhue-300:hover { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--border-b-myhue-300:active { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--border-b-myhue-300:focus { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--border-b-myhue-300:focus-visible { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--border-b-myhue-300:focus-within { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--border-b-myhue-300:visited { border-bottom-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.border-b-myhue-400 { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--border-b-myhue-400:hover { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--border-b-myhue-400:active { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--border-b-myhue-400:focus { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--border-b-myhue-400:focus-visible { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--border-b-myhue-400:focus-within { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--border-b-myhue-400:visited { border-bottom-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.border-b-myhue-500 { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--border-b-myhue-500:hover { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+.active--border-b-myhue-500:active { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--border-b-myhue-500:focus { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--border-b-myhue-500:focus-visible { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--border-b-myhue-500:focus-within { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--border-b-myhue-500:visited { border-bottom-color: #214658; /* rgb(33, 70, 88) */ }
+
+.border-b-myhue-600 { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--border-b-myhue-600:hover { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--border-b-myhue-600:active { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--border-b-myhue-600:focus { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--border-b-myhue-600:focus-visible { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--border-b-myhue-600:focus-within { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--border-b-myhue-600:visited { border-bottom-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.border-b-myhue-700 { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--border-b-myhue-700:hover { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--border-b-myhue-700:active { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--border-b-myhue-700:focus { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--border-b-myhue-700:focus-visible { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--border-b-myhue-700:focus-within { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--border-b-myhue-700:visited { border-bottom-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.border-b-myhue-800 { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--border-b-myhue-800:hover { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--border-b-myhue-800:active { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--border-b-myhue-800:focus { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--border-b-myhue-800:focus-visible { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--border-b-myhue-800:focus-within { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--border-b-myhue-800:visited { border-bottom-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.border-b-myhue-900 { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-b-myhue-900:hover { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-b-myhue-900:active { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-b-myhue-900:focus { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-b-myhue-900:focus-visible { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-b-myhue-900:focus-within { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-b-myhue-900:visited { border-bottom-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === border-left-color rules */
+.border-l-myhue { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-l-myhue:hover { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-l-myhue:active { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-l-myhue:focus { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-l-myhue:focus-visible { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-l-myhue:focus-within { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-l-myhue:visited { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.border-l-myhue-100 { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--border-l-myhue-100:hover { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--border-l-myhue-100:active { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--border-l-myhue-100:focus { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--border-l-myhue-100:focus-visible { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--border-l-myhue-100:focus-within { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--border-l-myhue-100:visited { border-left-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.border-l-myhue-200 { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--border-l-myhue-200:hover { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--border-l-myhue-200:active { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--border-l-myhue-200:focus { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--border-l-myhue-200:focus-visible { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--border-l-myhue-200:focus-within { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--border-l-myhue-200:visited { border-left-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.border-l-myhue-300 { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--border-l-myhue-300:hover { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--border-l-myhue-300:active { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--border-l-myhue-300:focus { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--border-l-myhue-300:focus-visible { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--border-l-myhue-300:focus-within { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--border-l-myhue-300:visited { border-left-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.border-l-myhue-400 { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--border-l-myhue-400:hover { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--border-l-myhue-400:active { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--border-l-myhue-400:focus { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--border-l-myhue-400:focus-visible { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--border-l-myhue-400:focus-within { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--border-l-myhue-400:visited { border-left-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.border-l-myhue-500 { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--border-l-myhue-500:hover { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+.active--border-l-myhue-500:active { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--border-l-myhue-500:focus { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--border-l-myhue-500:focus-visible { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--border-l-myhue-500:focus-within { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--border-l-myhue-500:visited { border-left-color: #214658; /* rgb(33, 70, 88) */ }
+
+.border-l-myhue-600 { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--border-l-myhue-600:hover { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--border-l-myhue-600:active { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--border-l-myhue-600:focus { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--border-l-myhue-600:focus-visible { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--border-l-myhue-600:focus-within { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--border-l-myhue-600:visited { border-left-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.border-l-myhue-700 { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--border-l-myhue-700:hover { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--border-l-myhue-700:active { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--border-l-myhue-700:focus { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--border-l-myhue-700:focus-visible { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--border-l-myhue-700:focus-within { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--border-l-myhue-700:visited { border-left-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.border-l-myhue-800 { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--border-l-myhue-800:hover { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--border-l-myhue-800:active { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--border-l-myhue-800:focus { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--border-l-myhue-800:focus-visible { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--border-l-myhue-800:focus-within { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--border-l-myhue-800:visited { border-left-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.border-l-myhue-900 { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-l-myhue-900:hover { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-l-myhue-900:active { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-l-myhue-900:focus { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-l-myhue-900:focus-visible { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-l-myhue-900:focus-within { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-l-myhue-900:visited { border-left-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+
+/* === border-right-color rules */
+.border-r-myhue { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-r-myhue:hover { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-r-myhue:active { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-r-myhue:focus { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-r-myhue:focus-visible { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-r-myhue:focus-within { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-r-myhue:visited { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
+.border-r-myhue-100 { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+.hover--border-r-myhue-100:hover { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+.active--border-r-myhue-100:active { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus--border-r-myhue-100:focus { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-visible--border-r-myhue-100:focus-visible { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+.focus-within--border-r-myhue-100:focus-within { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+.visited--border-r-myhue-100:visited { border-right-color: #070e12; /* rgb(7, 14, 18) */ }
+
+.border-r-myhue-200 { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.hover--border-r-myhue-200:hover { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.active--border-r-myhue-200:active { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus--border-r-myhue-200:focus { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-visible--border-r-myhue-200:focus-visible { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.focus-within--border-r-myhue-200:focus-within { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+.visited--border-r-myhue-200:visited { border-right-color: #0d1c23; /* rgb(13, 28, 35) */ }
+
+.border-r-myhue-300 { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+.hover--border-r-myhue-300:hover { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+.active--border-r-myhue-300:active { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus--border-r-myhue-300:focus { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-visible--border-r-myhue-300:focus-visible { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+.focus-within--border-r-myhue-300:focus-within { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+.visited--border-r-myhue-300:visited { border-right-color: #142a35; /* rgb(20, 42, 53) */ }
+
+.border-r-myhue-400 { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+.hover--border-r-myhue-400:hover { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+.active--border-r-myhue-400:active { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus--border-r-myhue-400:focus { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-visible--border-r-myhue-400:focus-visible { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+.focus-within--border-r-myhue-400:focus-within { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+.visited--border-r-myhue-400:visited { border-right-color: #1b3847; /* rgb(27, 56, 71) */ }
+
+.border-r-myhue-500 { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+.hover--border-r-myhue-500:hover { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+.active--border-r-myhue-500:active { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+.focus--border-r-myhue-500:focus { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-visible--border-r-myhue-500:focus-visible { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+.focus-within--border-r-myhue-500:focus-within { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+.visited--border-r-myhue-500:visited { border-right-color: #214658; /* rgb(33, 70, 88) */ }
+
+.border-r-myhue-600 { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+.hover--border-r-myhue-600:hover { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+.active--border-r-myhue-600:active { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus--border-r-myhue-600:focus { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-visible--border-r-myhue-600:focus-visible { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+.focus-within--border-r-myhue-600:focus-within { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+.visited--border-r-myhue-600:visited { border-right-color: #28546a; /* rgb(40, 84, 106) */ }
+
+.border-r-myhue-700 { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+.hover--border-r-myhue-700:hover { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+.active--border-r-myhue-700:active { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus--border-r-myhue-700:focus { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-visible--border-r-myhue-700:focus-visible { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+.focus-within--border-r-myhue-700:focus-within { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+.visited--border-r-myhue-700:visited { border-right-color: #2f627c; /* rgb(47, 98, 124) */ }
+
+.border-r-myhue-800 { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+.hover--border-r-myhue-800:hover { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+.active--border-r-myhue-800:active { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus--border-r-myhue-800:focus { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-visible--border-r-myhue-800:focus-visible { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+.focus-within--border-r-myhue-800:focus-within { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+.visited--border-r-myhue-800:visited { border-right-color: #35708d; /* rgb(53, 112, 141) */ }
+
+.border-r-myhue-900 { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.hover--border-r-myhue-900:hover { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.active--border-r-myhue-900:active { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus--border-r-myhue-900:focus { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-visible--border-r-myhue-900:focus-visible { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.focus-within--border-r-myhue-900:focus-within { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+.visited--border-r-myhue-900:visited { border-right-color: #3c7e9f; /* rgb(60, 126, 159) */ }
+
