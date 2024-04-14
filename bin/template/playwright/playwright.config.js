@@ -75,13 +75,13 @@ export default defineConfig({
     // Maximum time expect() should wait for the condition to be met.
     timeout,
 
-    // MUSTDO these have been configured, but not tested yet...
     toHaveScreenshot: {
       // An acceptable amount of pixels that could be different, unset by default.
       maxDiffPixels: 10,
     },
 
-    toMatchScreenshot: {
+    // DEPRECATED, use toHave... above only
+    toMatchSnapshot: {
       // An acceptable ratio of pixels that are different to the
       // total amount of pixels, between 0 and 1.
       maxDiffPixelRatio: 0.1,

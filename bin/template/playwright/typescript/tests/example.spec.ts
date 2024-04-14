@@ -3,7 +3,7 @@ import { test, expect } from '@playwright/test';
 import { config } from './config';
 
 test.beforeEach(async ({ page }) => {
-  if (config.use.viewport) {
+  if (config.use?.viewport) {
     page.setViewportSize(config.use.viewport);
   }
 });

@@ -138,7 +138,7 @@ test.describe('webkit only @devices', () => {
       if (browserName !== 'webkit') {
         return true;
       }
-      if (config.use.viewport) {
+      if (config.use?.viewport) {
         page.setViewportSize(config.use.viewport);
       }
       return false;

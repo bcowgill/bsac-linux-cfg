@@ -22,7 +22,12 @@ const PAGE_HEADING =
 const GET_STARTED_LINK = ['link', { name: 'Get started' }];
 const TARGET_HEADING = { name: 'Installation' };
 
-const shutter = setupTest(suite, PAGE_URL, PAGE_TITLE, PAGE_HEADING);
+const shutter = setupTest({
+  suite,
+  url: PAGE_URL,
+  title: PAGE_TITLE,
+  heading: PAGE_HEADING,
+});
 
 test.describe('TEMPLATE page test spec', () => {
   test.beforeEach(shutter.setup);

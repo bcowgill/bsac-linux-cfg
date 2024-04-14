@@ -16,7 +16,12 @@ const PAGE_TITLE = uiText(J_HOME_TITLE);
 const PAGE_HEADING =
   'Playwright enables reliable end-to-end testing for modern web apps.';
 
-const shutter = setupTest(suite, PAGE_URL, PAGE_TITLE, PAGE_HEADING);
+const shutter = setupTest({
+  suite,
+  url: PAGE_URL,
+  title: PAGE_TITLE,
+  heading: PAGE_HEADING,
+});
 
 /* To record the initial HAR file for the story
  * by interacting with the app in the browser.
@@ -74,7 +79,12 @@ test.describe('@story JIRA-NNNN @JOURNEY page test spec', () => {
     myRouteFromHAR(page, harFile);
 
     await page.goto(`${PAGE_URL}#/`);
-    await { page, counter: 1, path: 'entry-content-har', testInfo };
+    await shutter.screenshot({
+      page,
+      counter: 1,
+      path: 'entry-content-har',
+      testInfo,
+    });
 
     await expect(
       page.getByRole('heading', { name: PAGE_HEADING }),

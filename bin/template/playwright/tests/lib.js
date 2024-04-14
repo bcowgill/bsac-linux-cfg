@@ -1,5 +1,5 @@
 // @ts-check
-import { expect } from 'playwright/test';
+import { expect } from '@playwright/test';
 import {
   BASE_API_GLOB,
   defaultBrand,
@@ -155,6 +155,7 @@ export function screenshotPath({
  * @param {string} options.defaultBrowserType the default browser type from playwright name with default 'browser'
  * @param {boolean} options.isMobile the mobile flag from playwright.
  * @param {boolean} options.fullPage default is true, to take a screen shot of the full browser page..
+ * @param {boolean} options.toHaveScreenshot default is true, to perform an expect().toHaveScreenshot() test whenever a screen shot is taken by the returned screen shot function.
  * @param {{width: number, height: number}} options.viewport the viewport object from playwright.
  * @returns a screen shot function which increments the filename number and does full screen by default.
  */
@@ -167,9 +168,11 @@ export function getCamera({
   defaultBrowserType = 'browser',
   isMobile = false,
   fullPage = true,
+  toHaveScreenshot = true,
   viewport,
 }) {
   const full = fullPage;
+  const testIt = toHaveScreenshot;
   const originalResolution = getResolution(viewport);
   const { prefix, result } = screenshotPath({
     brand,
@@ -189,6 +192,7 @@ export function getCamera({
    * @param {string} options.path the suffix to add to the file name after the number.
    * @param {number} options.counter the number to add to the file name to keep your screen shots in order.
    * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
+   * @param {boolean} options.toHaveScreenshot to override the default toHaveScreenshot value .used when getCamera() was called.
    * @param {{width: number, height: number}} options.viewport optional new size viewport to switch to and take screen shot.
    * @note page can be a page, or a locator like page.getByTestId('id').
    */
@@ -197,6 +201,7 @@ export function getCamera({
     path,
     counter = 0,
     fullPage = full,
+    toHaveScreenshot = testIt,
     viewport,
     testInfo,
   }) {
@@ -232,25 +237,39 @@ export function getCamera({
     if (!process.env.LENSCAP) {
       await page.screenshot({ path: fullPath, fullPage });
       if (testInfo) {
-        fullPath = `${thisResult}-${number}${path}.png`.replace(
+        const imagePath = `${thisResult}-${number}${path}.png`.replace(
           /(\.png)+/i,
           '.png',
         );
-        fullPath = testInfo.outputPath(fullPath);
+        fullPath = testInfo.outputPath(imagePath);
         await page.screenshot({ path: fullPath, fullPage });
+        if (toHaveScreenshot) {
+          await expect(page).toHaveScreenshot(imagePath);
+        }
       }
     }
   };
 } // getCamera()
 
 /**
- * answers with a screenshot object and a test.beforeEach() function you can use to setup the screenshot camera for your tests.
- * @param {string} suite The name of the test suite to be used as part of the screenshot filename.
- * @param {string} url The url for the page to go to before each test begins.
- * @param {string} title Optional page title to test for after going to the page.
- * @param {string} heading Optional page heading text to test for after going to the page.
+ * answers with a screenshot function and a test.beforeEach() function you can use to setup the screen shot camera for your tests.
+ * @param {Object} options options for creating the camera output path and default screen shot options.
+ * @param {string} options.suite The name of the test suite to be used as part of the screen shot filename.
+ * @param {string} options.url The url for the page to go to before each test begins.
+ * @param {string} options.title Optional page title to test for after going to the page.
+ * @param {string} options.heading Optional page heading text to test for after going to the page.
+ * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
+ * @param {boolean} options.toHaveScreenshot to override the default toHaveScreenshot value .used when getCamera() was called.
+ * @returns {{ setup: () => void, screenshot: () => void }} the test beforeEach function and screenshot function for your test suite.
  */
-export function setupTest(suite, url, title, heading) {
+export function setupTest({
+  suite,
+  url,
+  title,
+  heading,
+  fullPage,
+  toHaveScreenshot,
+}) {
   const shutter = {
     screenshot: undefined,
   };
@@ -261,7 +280,7 @@ export function setupTest(suite, url, title, heading) {
     defaultBrowserType,
     isMobile,
   }) {
-    if (config.use.viewport) {
+    if (config.use?.viewport) {
       page.setViewportSize(config.use.viewport);
     }
     if (!shutter.screenshot) {
@@ -273,6 +292,8 @@ export function setupTest(suite, url, title, heading) {
         browserName: browserName.toString(),
         defaultBrowserType: defaultBrowserType.toString(),
         isMobile,
+        fullPage,
+        toHaveScreenshot,
         viewport: page.viewportSize(),
       });
     }

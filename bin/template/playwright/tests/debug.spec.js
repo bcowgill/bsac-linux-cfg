@@ -1,6 +1,6 @@
 // @ts-check
-const { test, expect } = require('@playwright/test');
-const { config } = require('./config');
+import { test, expect } from '@playwright/test';
+import { config } from './config';
 
 // run with git bash command:
 // alias cls='perl -e "print qq{\n} x 50"'
@@ -138,7 +138,7 @@ test.describe('webkit only @devices', () => {
       if (browserName !== 'webkit') {
         return true;
       }
-      if (config.use.viewport) {
+      if (config.use?.viewport) {
         page.setViewportSize(config.use.viewport);
       }
       return false;
