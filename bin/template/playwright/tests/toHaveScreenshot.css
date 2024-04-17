@@ -1,0 +1,10 @@
+/*
+    This stylesheet allows you to style the page before a toHaveScreenshot() test 
+    use it to hide content that changes too much, etc.
+*/
+body {
+    background-color: lime;
+}
+div {
+    outline: 6px dotted red;
+}

@@ -24,6 +24,30 @@ export const brandedLogin = {
   [defaultBrand]: 'ABC123123',
 };
 
+// Default configuration for toHaveScreenshot() used by getCamera()/setupTest()
+// https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1
+export const toHaveScreenshotOptions = {
+  maskColor: 'rebeccapurple',
+  // stylePath: ['tests/toHaveScreenshot.css'],
+  // omitBackground: true, // transparent bg
+  // see fixClipRect() for additional features of clip rectangle supplied by getCamera()
+  // clip: { x: 20, y: 20, width: 1280, height: 720, },
+  // negative values are measured from the right/bottom
+  // clip: { x: 50, y: 50, width: -550, height: -350, },
+  // fractional values are based on width/height
+  // clip: { x: 0.25, y: 0.25, width: 0.5, height: 0.5, },
+  // clip: { x: 0.1, y: 0.1, width: -0.2, height: -0.2, },
+  // scale: 'css',
+  // animations: 'disabled',
+  // caret: 'hide',
+  // fullPage: true,
+  // mask: [getByRole('heading').first()],
+  // maxDiffPixelRatio: void 0, // 0.25,
+  // maxDiffPixels: void 0, // 42,
+  // threshold: 0.2,
+  // timeout: 5000,
+};
+
 export const UI = {
   home: {
     name: 'paul',

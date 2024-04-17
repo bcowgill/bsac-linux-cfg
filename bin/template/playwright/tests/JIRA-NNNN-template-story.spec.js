@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright/test';
 import { PAGE_URL /*BASE_API_GLOB, */ } from './config';
-import { setupTest, uiText, myRouteFromHAR } from './lib';
+import { setupTest, uiText, myRouteFromHAR, invoke } from './lib';
 import { J_HOME_TITLE } from './ui';
 
 // A template for a story which tests against a mock api or against a
@@ -44,7 +44,7 @@ test.describe('@story JIRA-NNNN @JOURNEY page test spec', () => {
 
   test('Entry @content @continue @mockapi', async ({ page }, testInfo) => {
     await page.goto(`${PAGE_URL}#/`);
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 0,
       path: 'entry-content',
@@ -79,7 +79,7 @@ test.describe('@story JIRA-NNNN @JOURNEY page test spec', () => {
     myRouteFromHAR(page, harFile);
 
     await page.goto(`${PAGE_URL}#/`);
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 1,
       path: 'entry-content-har',

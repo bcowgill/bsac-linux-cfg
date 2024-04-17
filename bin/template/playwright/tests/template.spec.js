@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { PAGE_URL, VP_LARGE, VP_MEDIUM, VP_SMALL } from './config';
-import { setupTest, uiText } from './lib';
+import { setupTest, uiText, invoke } from './lib';
 import { J_HOME_TITLE } from './ui';
 
 // A template test plan for a page in the app, begins by checking the content of
@@ -34,21 +34,21 @@ test.describe('TEMPLATE page test spec', () => {
 
   test('Entry @responsive layout', async ({ page }, testInfo) => {
     // counter numbers can be fixed with fix-counter.sh script if tests are added out of counter order.
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       path: 'entry-responsive-small',
       viewport: VP_SMALL, // no counter when viewport given...
       fullPage: false,
       testInfo,
     });
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       path: 'entry-responsive-medium',
       viewport: VP_MEDIUM,
       fullPage: false,
       testInfo,
     });
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       path: 'entry-responsive-large',
       viewport: VP_LARGE,
@@ -64,11 +64,13 @@ test.describe('TEMPLATE page test spec', () => {
     // MUSTDO check initial button enabled states.
 
     // counter numbers can be fixed with fix-counter.sh script if tests are added out of counter order.
-    await shutter.screenshot({
+    // const mask = page.getByLabel('Search');
+    await invoke(shutter.screenshot)({
       page,
       counter: 0,
       path: 'entry-content',
       testInfo,
+      // toHaveScreenshot: { mask: [mask.first()] },
     });
   });
 
@@ -78,7 +80,7 @@ test.describe('TEMPLATE page test spec', () => {
     // await page.getByTestId(GET_STARTED_LINK).click();
     await page.getByRole(...GET_STARTED_LINK).click();
     await expect(page.getByRole('heading', TARGET_HEADING)).toBeVisible();
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 1,
       path: 'entry-link-home',
@@ -89,7 +91,7 @@ test.describe('TEMPLATE page test spec', () => {
   test('Entry @unhappy @action', async ({ page }, testInfo) => {
     // MUSTDO check user warnings for each input field.
     // MUSTDO check new button enabled state.
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 2,
       path: 'entry-unhappy-fields',
@@ -99,7 +101,7 @@ test.describe('TEMPLATE page test spec', () => {
 
   test('Entry @unhappy @action @corrected', async ({ page }, testInfo) => {
     // MUSTDO check user warnings are cleared and corrected and buttons enable/disable as we go.
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 3,
       path: 'entry-unhappy-field-corrected',
@@ -109,7 +111,7 @@ test.describe('TEMPLATE page test spec', () => {
 
   test('Entry @happy @action @continue', async ({ page }, testInfo) => {
     // MUSTDO check user fills in good values and going to the next page.
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 4,
       path: 'entry-happy-continue',
@@ -123,7 +125,7 @@ test.describe('TEMPLATE page test spec', () => {
     // MUSTDO check buttons are visible and labels correct.
     // MUSTDO check initial button enabled states.
 
-    await shutter.screenshot({
+    await invoke(shutter.screenshot)({
       page,
       counter: 5,
       path: 'NEXTPAGE-content',

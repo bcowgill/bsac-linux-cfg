@@ -8,6 +8,7 @@ import {
   TestInfo,
 } from '@playwright/test';
 import {
+  toHaveScreenshotOptions,
   BASE_API_GLOB,
   defaultBrand,
   updateHar,
@@ -49,6 +50,13 @@ export interface IScreenShotOptions {
   fullPage?: boolean;
   toHaveScreenshot?: boolean;
   viewport?: ViewportSize;
+}
+
+export interface IClipRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface ICamera {
@@ -101,6 +109,20 @@ export interface IHarLog {
 
 export type IRouteFromHarNotFound = 'abort' | 'fallback';
 const ABORT: IRouteFromHarNotFound = 'abort';
+
+export const noop = () => void 0;
+
+/**
+ * answers with a function the specified function to invoke or a noop() funciton.
+ * @param {undefined|((args: any) => any)} callback the specific function to call if defined.
+ * @returns {(args: any) => any} the callback or noop() function which can be called.
+ */
+export function invoke<A>(callback?: (arg: A) => void): (arg: A) => void {
+  if (typeof callback === 'function') {
+    return callback;
+  }
+  return noop;
+} // invoke()
 
 /**
  * answer with true if a specific app brand has a given UI.VALUE configured.
@@ -185,7 +207,7 @@ export function shorten(
  * @param {ViewportSize} viewport the viewport object from playwright.
  * @returns {string} the viewport size as a string WxH.
  */
-export function getResolution(viewport) {
+export function getResolution(viewport: ViewportSize): string {
   const vp = viewport || { width: 'W', height: 'H' };
   const resolution = `${vp.width}x${vp.height}`;
   return resolution;
@@ -229,6 +251,57 @@ export function screenshotPath({
 } // screenshotPath()
 
 /**
+ * calculate a position or size based on whether it is positive, negative or < 1 pixel which indicates a ratio like 50%.
+ * @param {number} value The x,y,width or height value of a clip region.  If negative it will be subtracted from the scale size.  If smaller than 1 it will be a ratio of the scale. So 0.25 is a quarter of the scale size.
+ * @param {number} scale The width or height of the viewport size of the image or screen.
+ * @returns {number} the computed value in pixels based on the scale size if needed.
+ */
+export function fixClip(value, scale): number {
+  let clipped = value;
+  if (clipped < 0) {
+    clipped = -clipped;
+    if (clipped < 1) {
+      clipped = Math.round(clipped * scale);
+    }
+    clipped = scale - clipped;
+  } else if (clipped < 1) {
+    clipped = Math.round(clipped * scale);
+  }
+  return clipped;
+} // fixClip()
+
+/**
+ * answers with an adjusted clip rectangle converting negatives and fractions into actual pixell values based on viewport size.
+ * @param {undefined|IClipRect} clip the clip rectangle which can be specified by negative pixels from the bottom right, or a fractional amount of the width and height.
+ * @param {undefined|ViewportSize} viewport the viewport object from playwright.
+ * @returns {undefined|IClipRect} the clip rectangle in actual pixels.
+ * @example
+ * if viewport is { width: 1280, height: 720 }:
+ *   clip: { x: 20, y: 20, width: -40, height: -40 }
+ * negative values are measured from the viewport right/bottom or width/height
+ *   so becomes: { x: 20, y: 20, width: 1240, height: 680 }
+ *
+ *   clip: { x: 0.25, y: 0.25, width: 0.5, height: 0.5, }
+ * fractional values are based on width/height
+ *   so becomes: { x: 320, y: 180, width: 640, height: 360 }
+ *
+ *   clip: { x: 0.1, y: 0.1, width: -0.2, height: -0.2, },
+ *   so becomes: { x: 128, y: 72, width: 1024, height: 576 }
+*/
+export function fixClipRect(clip?: IClipRect, viewport?: ViewportSize): IClipRect {
+  let clipFixed;
+  if (clip && viewport) {
+    clipFixed = {
+      x: fixClip(clip.x, viewport.width),
+      y: fixClip(clip.y, viewport.height),
+      width: fixClip(clip.width, viewport.width),
+      height: fixClip(clip.height, viewport.height),
+    };
+  }
+  return clipFixed;
+} // fixClipRect()
+
+/**
  * answers with a function that can be used to take numbered and named screen shots.
  * (IScreenShotOptions) => ICameraFn
  * @param {IScreenShotOptions} options options for creating the camera output path and default screen shot options.
@@ -253,11 +326,11 @@ export function getCamera({
   defaultBrowserType = 'browser',
   isMobile = false,
   fullPage = true,
-  toHaveScreenshot = true,
+  toHaveScreenshot = toHaveScreenshotOptions,
   viewport,
 }): ICameraFn {
   const full = fullPage;
-  const testIt = toHaveScreenshot;
+  const testIt = toHaveScreenshot === false ? false : toHaveScreenshot === true ? {} : toHaveScreenshot;
   const originalResolution = getResolution(viewport);
   const { prefix, result } = screenshotPath({
     brand,
@@ -280,6 +353,7 @@ export function getCamera({
    * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
    * @param {boolean} options.toHaveScreenshot to override the default toHaveScreenshot value .used when getCamera() was called.
    * @param {ViewportSize} options.viewport optional new size viewport to switch to and take screen shot.
+   * @param {{outputPath: (path: string) => string}} options.testInfo optional contains test specific output path function for storing the testable screenshot. 
    * @note page can be a page, or a locator like page.getByTestId('id').
    */
   return async function screenshot({
@@ -293,6 +367,10 @@ export function getCamera({
   }: ICamera): void {
     const number = viewport ? '' : padZeros(counter) + '-';
     const resolution = viewport ? getResolution(viewport) : originalResolution;
+    let testScreenshot = toHaveScreenshot ? {
+      ...(typeof testIt === 'object' ? testIt : {}),
+      ...(typeof toHaveScreenshot === 'object' ? toHaveScreenshot : {}),
+    } : false;
     let thisPrefix = prefix;
     let thisResult = result;
     if (resolution != originalResolution) {
@@ -329,8 +407,12 @@ export function getCamera({
         );
         fullPath = testInfo.outputPath(imagePath);
         await page.screenshot({ path: fullPath, fullPage });
-        if (toHaveScreenshot) {
-          await expect(page).toHaveScreenshot(imagePath);
+        if (testScreenshot) {
+          const clip = testScreenshot.clip;
+          if (clip) {
+            testScreenshot.clip = fixClipRect(clip, page.viewportSize());
+          }
+          await expect(page).toHaveScreenshot(imagePath, testScreenshot);
         }
       }
     }
@@ -488,6 +570,9 @@ export function fixCacheBusterParam(url: string): string {
  * @param {Object} options same options as routeFromHAR() with some additions.
  * @param {(url: string) => string} options.sanitiseUrl function to clean up the URL before looking in the HAR file.  defaults to fixCacheBusterParam().
  * @param {boolean} options.debug turn on some console logging to diagnose sanitiseUrl() if needed. defaults to HAR_DEBUG environment value.
+ * @param {string|RegExp} options.url A glob pattern, regular expression or predicate to match the request URL.
+ * @param {'abort'|'fallback'} options.notFound Determines what action is taken for any request URL not found in the HAR file.
+ * @param {boolean} options.update If specified, updates the given HAR with the actual network information instead of serving from file.
  */
 export async function myRouteFromHAR(
   page: Page,

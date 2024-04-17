@@ -1,6 +1,7 @@
 // @ts-check
 import { expect } from '@playwright/test';
 import {
+  toHaveScreenshotOptions,
   BASE_API_GLOB,
   defaultBrand,
   updateHar,
@@ -21,6 +22,20 @@ const reAParam = new RegExp(`([?&]${PM})=\\d+`); // random number in URL for a= 
 const UI_DEFAULT = {
   brand: 'UI.VALUE for brand must be passed to uiText() or other function.',
 };
+
+export const noop = () => void 0;
+
+/**
+ * answers with a function the specified function to invoke or a noop() funciton.
+ * @param {undefined|((args: any) => any)} callback the specific function to call if defined.
+ * @returns {(args: any) => any} the callback or noop() function which can be called.
+ */
+export function invoke(callback) {
+  if (typeof callback === 'function') {
+    return callback;
+  }
+  return noop;
+} // invoke()
 
 /**
  * answer with true if a specific app brand has a given UI.VALUE configured.
@@ -144,6 +159,57 @@ export function screenshotPath({
 } // screenshotPath()
 
 /**
+ * calculate a position or size based on whether it is positive, negative or < 1 pixel which indicates a ratio like 50%.
+ * @param {number} value The x,y,width or height value of a clip region.  If negative it will be subtracted from the scale size.  If smaller than 1 it will be a ratio of the scale. So 0.25 is a quarter of the scale size.
+ * @param {number} scale The width or height of the viewport size of the image or screen.
+ * @returns {number} the computed value in pixels based on the scale size if needed.
+ */
+export function fixClip(value, scale) {
+  let clipped = value;
+  if (clipped < 0) {
+    clipped = -clipped;
+    if (clipped < 1) {
+      clipped = Math.round(clipped * scale);
+    }
+    clipped = scale - clipped;
+  } else if (clipped < 1) {
+    clipped = Math.round(clipped * scale);
+  }
+  return clipped;
+} // fixClip()
+
+/**
+ * answers with an adjusted clip rectangle converting negatives and fractions into actual pixell values based on viewport size.
+ * @param {{x: number, y: number, width: number, height: number}} clip the clip rectangle which can be specified by negative pixels from the bottom right, or a fractional amount of the width and height.
+ * @param {{width: number, height: number}} viewport the viewport object from playwright.
+ * @returns {undefined|{x: number, y: number, width: number, height: number}} the clip rectangle in actual pixels.
+ * @example
+ * if viewport is { width: 1280, height: 720 }:
+ *   clip: { x: 20, y: 20, width: -40, height: -40 }
+ * negative values are measured from the viewport right/bottom or width/height
+ *   so becomes: { x: 20, y: 20, width: 1240, height: 680 }
+ *
+ *   clip: { x: 0.25, y: 0.25, width: 0.5, height: 0.5, }
+ * fractional values are based on width/height
+ *   so becomes: { x: 320, y: 180, width: 640, height: 360 }
+ *
+ *   clip: { x: 0.1, y: 0.1, width: -0.2, height: -0.2, },
+ *   so becomes: { x: 128, y: 72, width: 1024, height: 576 }
+*/
+export function fixClipRect(clip, viewport) {
+  let clipFixed;
+  if (clip && viewport) {
+    clipFixed = {
+      x: fixClip(clip.x, viewport.width),
+      y: fixClip(clip.y, viewport.height),
+      width: fixClip(clip.width, viewport.width),
+      height: fixClip(clip.height, viewport.height),
+    };
+  }
+  return clipFixed;
+} // fixClipRect()
+
+/**
  * answers with a function that can be used to take numbered and named screen shots.
  *
  * @param {Object} options options for creating the camera output path and default screen shot options.
@@ -155,7 +221,7 @@ export function screenshotPath({
  * @param {string} options.defaultBrowserType the default browser type from playwright name with default 'browser'
  * @param {boolean} options.isMobile the mobile flag from playwright.
  * @param {boolean} options.fullPage default is true, to take a screen shot of the full browser page..
- * @param {boolean} options.toHaveScreenshot default is true, to perform an expect().toHaveScreenshot() test whenever a screen shot is taken by the returned screen shot function.
+ * @param {boolean|Object} options.toHaveScreenshot default is true, to perform an expect().toHaveScreenshot() test whenever a screen shot is taken by the returned screen shot function.
  * @param {{width: number, height: number}} options.viewport the viewport object from playwright.
  * @returns a screen shot function which increments the filename number and does full screen by default.
  */
@@ -168,11 +234,11 @@ export function getCamera({
   defaultBrowserType = 'browser',
   isMobile = false,
   fullPage = true,
-  toHaveScreenshot = true,
+  toHaveScreenshot = toHaveScreenshotOptions,
   viewport,
 }) {
   const full = fullPage;
-  const testIt = toHaveScreenshot;
+  const testIt = toHaveScreenshot === false ? false : toHaveScreenshot === true ? {} : toHaveScreenshot;
   const originalResolution = getResolution(viewport);
   const { prefix, result } = screenshotPath({
     brand,
@@ -192,8 +258,9 @@ export function getCamera({
    * @param {string} options.path the suffix to add to the file name after the number.
    * @param {number} options.counter the number to add to the file name to keep your screen shots in order.
    * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
-   * @param {boolean} options.toHaveScreenshot to override the default toHaveScreenshot value .used when getCamera() was called.
+   * @param {boolean|Object} options.toHaveScreenshot to override the default toHaveScreenshot value .used when getCamera() was called.
    * @param {{width: number, height: number}} options.viewport optional new size viewport to switch to and take screen shot.
+   * @param {{outputPath: (path: string) => string}} options.testInfo optional contains test specific output path function for storing the testable screenshot. 
    * @note page can be a page, or a locator like page.getByTestId('id').
    */
   return async function screenshot({
@@ -207,6 +274,10 @@ export function getCamera({
   }) {
     const number = viewport ? '' : padZeros(counter) + '-';
     const resolution = viewport ? getResolution(viewport) : originalResolution;
+    let testScreenshot = toHaveScreenshot ? {
+      ...(typeof testIt === 'object' ? testIt : {}),
+      ...(typeof toHaveScreenshot === 'object' ? toHaveScreenshot : {}),
+    } : false;
     let thisPrefix = prefix;
     let thisResult = result;
     if (resolution != originalResolution) {
@@ -243,8 +314,12 @@ export function getCamera({
         );
         fullPath = testInfo.outputPath(imagePath);
         await page.screenshot({ path: fullPath, fullPage });
-        if (toHaveScreenshot) {
-          await expect(page).toHaveScreenshot(imagePath);
+        if (testScreenshot) {
+          const clip = testScreenshot.clip;
+          if (clip) {
+            testScreenshot.clip = fixClipRect(clip, page.viewportSize());
+          }
+          await expect(page).toHaveScreenshot(imagePath, testScreenshot);
         }
       }
     }
@@ -260,7 +335,7 @@ export function getCamera({
  * @param {string} options.heading Optional page heading text to test for after going to the page.
  * @param {boolean} options.fullPage used to override the default fullPage value used when getCamera() was called.
  * @param {boolean} options.toHaveScreenshot to override the default toHaveScreenshot value .used when getCamera() was called.
- * @returns {{ setup: () => void, screenshot: () => void }} the test beforeEach function and screenshot function for your test suite.
+ * @returns {{ setup: () => void, screenshot: undefined|(() => void) }} the test beforeEach function and screenshot function for your test suite.
  */
 export function setupTest({
   suite,
@@ -312,7 +387,7 @@ export function setupTest({
 /**
  * this will log all HTTP requests made my the application under test to help debug your route mocks.
  * @param {Page} page whose routes you wish to log for debugging.
- * @param {string} urlMatch defaults to all URL's. you can specify an alternate glob to restrict what is logged.
+ * @param {string} uriMatch defaults to all URL's. you can specify an alternate glob to restrict what is logged.
  */
 export async function traceRoutes(page, uriMatch = API_ALL) {
   await page.route(uriMatch, async (route, request) => {
@@ -358,7 +433,7 @@ export function traceNetwork(page) {
 /**
  * shows the HTTP requests and response codes from a HAR json file that has been imported.
  * @param {{ log: { entries: [{request: { method: string, url: string}, response: { status: number, statusText: string}}]} }} har a recorded .har.json file imported as a JSON object directly.
- * @param {(string) => string} sanitiseUrl function cleans up a url for comparison with another url.
+ * @param {(url: string) => string} sanitiseUrl function cleans up a url for comparison with another url.
  */
 export function dumpHAR(har, sanitiseUrl = identity) {
   har.log.entries.map((entry) => {
@@ -401,6 +476,9 @@ export function fixCacheBusterParam(url) {
  * @param {Object} options same options as routeFromHAR() with some additions.
  * @param {(url: string) => string} options.sanitiseUrl function to clean up the URL before looking in the HAR file.  defaults to fixCacheBusterParam().
  * @param {boolean} options.debug turn on some console logging to diagnose sanitiseUrl() if needed. defaults to HAR_DEBUG environment value.
+ * @param {string|RegExp} options.url A glob pattern, regular expression or predicate to match the request URL.
+ * @param {'abort'|'fallback'} options.notFound Determines what action is taken for any request URL not found in the HAR file.
+ * @param {boolean} options.update If specified, updates the given HAR with the actual network information instead of serving from file.
  */
 export async function myRouteFromHAR(
   page,
@@ -412,7 +490,7 @@ export async function myRouteFromHAR(
     update = updateHar,
     debug = !!process.env.HAR_DEBUG,
     ...rest
-  } = {},
+  },
 ) {
   if (debug) {
     console.warn(`myRouteFromHAR [${harFile}]`, {
