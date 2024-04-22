@@ -9,11 +9,12 @@ function usage {
 	code=$1
 	cmd=$(basename $0)
 	echo "
-$cmd [--help|--man|-?] match replace [--exec]
+$cmd [--help|--man|-?] match replace [--exec] [--specials]
 
 This will rename files in the current directory only, searching for a match string and replacing with a replace string.  It makes their names easier to use with the shell mouse selection by converting spaces to dashes.
 
 --exec  Specify to cause the files to be renamed.
+--specials  Perform lower case change and fix other special characters.
 --man   Shows help for this tool.
 --help  Shows help for this tool.
 -?      Shows help for this tool.
@@ -34,6 +35,10 @@ Example:
 $cmd ' ' -
 
 Renames any files with spaces in them.
+
+$cmd . .
+
+Rename all files.
 
 $cmd imag photos-today-
 
@@ -63,23 +68,45 @@ fi
 export MATCH="$1"
 export REPLACE="$2"
 export EXEC="$3"
-export SPECIAL="$4"
-ls -1 | perl -MFile::Spec; -MFile::Copy -ne '
+export SPECIAL=$4
+export DEBUG=1
+ls -1 | perl -MFile::Spec -MFile::Copy -ne '
+	BEGIN
+	{
+		if ($ENV{DEBUG})
+		{
+			print qq{MATCH=[$ENV{MATCH}] REPLACE=[$ENV{REPLACE}] EXEC=[$ENV{EXEC}] SPECIAL=[$ENV{SPECIAL}]\n};
+		}
+	}
+	my $q = chr(39);
+	my $match = quotemeta($ENV{MATCH});
+	my $replace = $ENV{REPLACE};
 	chomp;
 	$from = $_;
-	$to = lc($from);
-	$to =~ s{$ENV{MATCH}}{$ENV{REPLACE}}i;
-	$to =~ s{\s+}{-}g;
+	$to = $from;
+
 	if ($ENV{SPECIAL})
 	{
+		next unless $to =~ m{$match}xmsi;
+		$to = lc($from);
+		$to =~ s{$match}{$replace}xmsgi;
 		# See also cp-random.pl
-		$to =~ s{[\s:;,\{\}\[\]\(\)<>,\?\@'"£\$\%\^&\*_\+=~\#`\|!]+}{-}xmsg;
+		$to =~ s{[\s:;,\{\}\[\]\(\)<>,\?\@$q"£\$\%\^&\*_\+=~\#\`\|!]+}{-}xmsg;
 	}
+	else
+	{
+		next unless $to =~ m{$match}xms;
+		$to =~ s{$match}{$replace}xmsg;
+		$to =~ s{[\s:;&\{\}}\[\]\(\)\?]+}{-}g;
+	}
+
 	$to =~ s{--+}{-}g;
 	$to =~ s{-?\.-?}{.}xmsg;
 	$to =~ s{\A-}{}xmsg;
 	$to =~ s{-\z}{}xmsg;
+
 	$to =~ s{\.jpeg\z}{.jpg}xmsi;
+
 	if ($from ne $to) {
 		++$moved;
 		print qq{mv "$from" "$to"\n};
@@ -148,7 +175,7 @@ ls -1 | perl -MFile::Spec; -MFile::Copy -ne '
 		my $file = $filename;
 		$file =~ s{(\.[^.]*(\.[^.]*)?)\z}{}xms;
 		my $ext = $1 || "";
-		$file = '.' . $file if $is_dotfile;
+		$file = "." . $file if $is_dotfile;
 		return ($volume, $path, $filename, $file, $ext);
 	} # splitparts()
 '

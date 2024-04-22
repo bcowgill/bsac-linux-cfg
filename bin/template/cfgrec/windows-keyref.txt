@@ -1,0 +1,125 @@
+Windows Hot Keys
+Win-Shift-S		Screen Grabber Tool
+Win-v			Clipboard History
+Win-Shift-Esc	Task Manager
+Win-l			Lock Screen
+Win-e			File Explorer
+Win-u			Accessibility settings
+Win-,			Peek Desktop
+Win-d			Show/Hide Desktop
+Win-Ctrl-d		Add Virtual Desktop
+Win-Ctrl-Arrows	Switch Virtual Desktop
+Win-;			Emoji Picker
+
+Ctrl-Space		Unmute in Teams
+
+Win-Shift-H		Highlight Mouse Clicks(PT)
+Win-Alt-p		Mouse Crosshairs(PT)
+Win-Shift-M		Screen Ruler(PT)
+Win-Shift-C		Color Picker(PT)
+Win-Shift-T		Text Extractor OCR(PT)
+Win-Ctrl-Alt-v	Paste as plain text(PT)
+Win-Shift-/		Shortcut Guide(PT)
+Ctrl-Space		Quick Preview file explorer(PT)
+Win-Shift-D		Mouse Jump (extended desktops)(PT)
+
+(PT) = Power Toys
+
+Ctrl-\			Screenshot to Clipboard (xbox game bar but does not work))
+
+Track Pad
+single-click	Tap with single finger
+right-click		Tap with two fingers (Shift-F10)
+				Press bottom left corner
+multi-select	Tap twice and drag
+scroll			Drag two fingers
+zoom			Pinch/Spread fingers (Win-Plus/Minus)
+
+============================================================
+
+Windows Setup
+
+Settings:
+
+Mouse
+Primary button Right
+Mouse cursor size 4 bigger inverted
+on - Show visual feedback around touch points
+on - Make visual feedback for touch points darker and larger
+
+Touch pad
+Off - Leave touchpad on when a mouse is connected
+Downward motion scrolls down
+Four Finger gestures: Custom / Advanced gesture control
+	up/down Change audio and volume
+	left Mute
+	right Snap to Right (Win-Right)
+Four Finger tap: action centre
+Additional settings -> Pointer Options / Display Pointer Trails / Long
+	on - Hide Pointer when typing
+	on - Show location of pointer when I press Control
+
+Display Settings
+on - Night light
+
+Ease of Access Settings
+Display / Make text bigger: 125%
+
+Outlook
+Open an email, click on the zoom% in the footer ribbon, set zoom level and click Remember my Preference
+
+Clipboard Settings
+on - Clipboard History
+
+Outlook
+
+Inbox folders
+0-urgent
+1-important
+2-pending
+3-someday
+4-DMZ
+
+Categories for meetings
+
+green  - Work
+blue   - Meeting
+gray   - Waste
+red    - Blocked
+yellow - Reserved/Unavailable/Me Time
+orange - Out of Office/appointment
+purple - Holiday
+
+Teams Settings
+/ Appearance and accessibility
+dark theme
+
+/ Privacy
+on - Keyboard shortcut to unmute (Ctrl-Space)
+
+/ Calls
+Ringtone - High Score
+
+/ Captions and Transcripts
+on - Always show live captions in meetings
+
+/ Devices
+Noise suppression - low - plays background music
+Speaker - Samsung monitor
+Secondary ringer - speakers
+Video Settings
+on - Adjust brightness
+on/max - Soft focus
+on - Green screen
+
+XBox Game Bar Settings
+turn on
+Configure Ctrl-\ as key for take screenshot (to clipboard)
+(this does not actually work)
+
+Pomodoro Timer - built into windows as focus time.
+
+Regularly - Mondays
+Time sheet submit
+Task Manager / App history / Delete usage history (win)
+powershell Update-Help  (win)

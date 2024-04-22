@@ -1,0 +1,3 @@
+Unknown parameter --keep or it's not a valid directory.
+
+mv-apostrophe.sh [--help|--man|-?] [--check|--dry] directory

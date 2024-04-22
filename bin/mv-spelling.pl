@@ -31,13 +31,14 @@ sub usage
 	print "$error\n\n" if $error;
 
 	print <<"USAGE";
-$FindBin::Script [--help|--man|-?] [--dry] [--debug] incorrect correct
+$FindBin::Script [--help|--man|-?] [--dry|--check] [--debug] incorrect correct
 
 This program will read directory and file names from standard input and search for the incorrect text and replace it with the correct text, renaming the directories and files.
 
 incorrect  some text in the file name that is incorrect.
 correct    the correct text for file names.
 --dry      do a dry run, prints what would be moved but doesn't do it.
+--check    same as --dry.
 --debub    print out debug information.
 --help     shows help for this program.
 --man      shows help for this program.
@@ -49,7 +50,11 @@ See also auto-rename.pl mv-apostrophe.sh mv-to-year.sh mv-camera.sh rename-files
 
 Example:
 
-For all the directories and files on disk containing beatrice change it to beatrix.
+	Convert spaces to dashes for files in current directory.
+
+ls -1 | mv-spelling.pl ' ' -
+
+	For all the directories and files on disk containing beatrice change it to beatrix.
 
 locate beatrice | $FindBin::Script beatrice beatrix
 
@@ -58,16 +63,21 @@ USAGE
 	exit($error ? 1 : 0);
 }
 
+if (!scalar(@ARGV))
+{
+	usage();
+}
+
 if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage();
 }
 
-while ($ARGV[0] =~ m{^-})
+while ($ARGV[0] =~ m{^-.})
 {
 	my $arg = shift;
 	my $known = 0;
-	if ($arg =~ m{\A--?dr}xms) # --dryrun
+	if ($arg =~ m{\A--?(dr|ch)}xms) # --dryrun
 	{
 		$DRY = 1;
 		$known = 1;
@@ -91,7 +101,7 @@ my @Dirs = ();
 print qq{# Dry run, commands will be shown but not executed.\n} if $DRY;
 
 debug("rename files or directories changing $find to $replace");
-while (my $path =  <>)
+while (my $path = <>)
 {
 	chomp($path);
 

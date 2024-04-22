@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# ./test-chain.sh go.sh
+# ./test-chain.sh | grep -B1 'NOT OK'
+
 # for f in filter-*; do vdiff filter-long/test-chain.sh $f/test-chain.sh; done
 function usage {
 echo "

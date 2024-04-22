@@ -45,7 +45,7 @@ if [ "$1" == "--regex" ]; then
 	GREP=echo
 fi
 
-$GREP '(^|/|")(\.(tmp|git|idea)|dist|coverage|node_modules|bower_components|deno-packages)(/|:|"|\s*$)' $*
+$GREP '(^|/|")(\.(tmp|cache|git|cpan|nvm|p?npm|pnpm-store|idea|emacs.d|atom|WebStorm[0-9]+\.[0-9]+)|dist|coverage|node_modules|bower_components|deno-packages)(/|:|"|\s*$)' $*
 ERR=$?
 if [ $ERR != 0 ]; then
 	usage $ERR

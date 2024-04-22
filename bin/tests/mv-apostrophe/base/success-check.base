@@ -1,0 +1,10 @@
+1: ./out/xyzzy/this'.txt
+2: ./out/xyzzy/'this'.txt
+3: ./out/xyzzy/'this is it's thing'.txt
+4: ./out/xyzzy/'this is it's thing isn't it'.txt
+=== files on disk ======
+out/xyzzy
+out/xyzzy/'this is it's thing isn't it'.txt
+out/xyzzy/'this is it's thing'.txt
+out/xyzzy/'this'.txt
+out/xyzzy/this'.txt

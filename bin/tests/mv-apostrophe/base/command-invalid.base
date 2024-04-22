@@ -1,0 +1,24 @@
+Unknown parameter --invalid or it's not a valid directory.
+
+mv-apostrophe.sh [--help|--man|-?] [--check|--dry] directory
+
+This will fix directories and filenames with apostrophe and single quotes in them so they are easier to use with command line scripts.
+
+directory  The directory to look in for filenames with apostrophe's in them.  default is the current directory.
+--check Check which files and directories would be renamed but don't rename them. It shows a count of the apostrophe's found in the name.
+--dry   Same effect as --check.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+File names with ASCII apostrophe is converted to Unicode apostrophe ʼ or single quote ’
+
+See also rename-files.sh auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
+
+Example:
+
+	Find all files or directories with an odd number of apostrophe's:
+
+mv-apostrophe.sh --check | grep -E '[13579]:'
+
+

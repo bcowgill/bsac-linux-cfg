@@ -19,101 +19,70 @@ use English qw(-no_match_vars);
 
 my $block = "\N{U+2588}";
 
+my @map = ('const spaceMap = {');
+my $regex = 'const reSpaces = /[\\s';
+
 sub show_spacing
 {
-	my ($code, $space) = @_;
-	print qq{Spacing with $code\n$block$space$block\n$space$block\n};
+	my ($name, $code, $space) = @_;
+	$code =~ m{U\+(.+?)\t}xms;
+	my $utf = $1;
+	print qq{Spacing with $code\nconst $name = '\\u$utf';\n$block$space$block\n$space$block\n};
+	$name = uc($name);
+	push(@map, qq{\t'\\u$utf': '[$name]',});
+	$regex .= qq{\\u$utf};
 }
 
-show_spacing("U+20	[SpaceSeparator]	SPACE", " ");
-show_spacing("U+A0	[SpaceSeparator]	NO-BREAK SPACE", "\N{U+A0}");
-show_spacing("U+2000	[SpaceSeparator]	EN QUAD", "\N{U+2000}");
+show_spacing("space", "U+20	[SpaceSeparator]	SPACE", " ");
+show_spacing("nbsp", "U+A0	[SpaceSeparator]	NO-BREAK SPACE", "\N{U+A0}");
+show_spacing("narrowNbsp", "U+202F	[SpaceSeparator]	NARROW NO-BREAK SPACE", "\N{U+202F}");
+show_spacing("zeroNbsp", "U+FEFF	[Format]	ZERO WIDTH NO-BREAK SPACE", "\N{U+FEFF}");
+show_spacing("enquad", "U+2000	[SpaceSeparator]	EN QUAD", "\N{U+2000}");
+show_spacing("emquad", "U+2001	[SpaceSeparator]	EM QUAD", "\N{U+2001}");
+show_spacing("enspace", "U+2002	[SpaceSeparator]	EN SPACE", "\N{U+2002}");
+show_spacing("emspace", "U+2003	[SpaceSeparator]	EM SPACE", "\N{U+2003}");
+show_spacing("threePerEmSpace", "U+2004	[SpaceSeparator]	THREE-PER-EM SPACE", "\N{U+2004}");
+show_spacing("fourPerEmSpace", "U+2005	[SpaceSeparator]	FOUR-PER-EM SPACE", "\N{U+2005}");
+show_spacing("sixPerEmSpace", "U+2006	[SpaceSeparator]	SIX-PER-EM SPACE", "\N{U+2006}");
+show_spacing("figureSpace", "U+2007	[SpaceSeparator]	FIGURE SPACE", "\N{U+2007}");
+show_spacing("punctSpace", "U+2008	[SpaceSeparator]	PUNCTUATION SPACE", "\N{U+2008}");
+show_spacing("thinSpace", "U+2009	[SpaceSeparator]	THIN SPACE", "\N{U+2009}");
+show_spacing("hairSpace", "U+200A	[SpaceSeparator]	HAIR SPACE", "\N{U+200A}");
+show_spacing("zeroSpace", "U+200B	[Format]	ZERO WIDTH SPACE", "\N{U+200B}");
+show_spacing("medMathSpace", "U+205F	[SpaceSeparator]	MEDIUM MATHEMATICAL SPACE", "\N{U+205F}");
+show_spacing("ideoGraphicSpace", "U+3000	[SpaceSeparator]	IDEOGRAPHIC SPACE", "\N{U+3000}");
+show_spacing("ideoGraphicHalfFillSpace", "U+303F	[OtherSymbol]	IDEOGRAPHIC HALF FILL SPACE", "\N{U+303F}");
+show_spacing("tagSpace", "U+E0020	[Format]	TAG SPACE", "\N{U+E0020}");
+show_spacing("softHyphen", "U+AD	[Format]	SOFT HYPHEN", "\N{U+AD}");
+show_spacing("hyphen", "U+2010	[DashPunctuation]	HYPHEN", "\N{U+2010}");
+show_spacing("nbHyphen", "U+2011	[DashPunctuation]	NON-BREAKING HYPHEN", "\N{U+2011}");
+show_spacing("hyphenPoint", "U+2027	[OtherPunctuation]	HYPHENATION POINT", "\N{U+2027}");
+show_spacing("smallHyphen", "U+FE63	[DashPunctuation]	SMALL HYPHEN-MINUS", "\N{U+FE63}");
+show_spacing("fullWidthHyphen", "U+FF0D	[DashPunctuation]	FULLWIDTH HYPHEN-MINUS", "\N{U+FF0D}");
+show_spacing("tagHyphen", "U+E002D	[Format]	TAG HYPHEN-MINUS", "\N{U+E002D}");
+
+push(@map, "}; // spaceMap\n");
+$regex .= ']';
+
+print join("\n", @map);
+print qq{$regex/;\n};
 __END__
-show_spacing(
-	, "\N{U+}");
+show_spacing("", "
+	", "\N{U+}");
+
+-	U+2D	[DashPunctuation]	HYPHEN-MINUS
+֊	U+58A	[DashPunctuation]	ARMENIAN HYPHEN
+᐀	U+1400	[DashPunctuation]	CANADIAN SYLLABICS HYPHEN
+᠆	U+1806	[DashPunctuation]	MONGOLIAN TODO SOFT HYPHEN
+⁃	U+2043	[OtherPunctuation]	HYPHEN BULLET
+⸗	U+2E17	[DashPunctuation]	DOUBLE OBLIQUE HYPHEN
+⸚	U+2E1A	[DashPunctuation]	HYPHEN WITH DIAERESIS
+゠	U+30A0	[DashPunctuation]	KATAKANA-HIRAGANA DOUBLE HYPHEN
+
 ፡	U+1361	[OtherPunctuation]	ETHIOPIC WORDSPACE
  	U+1680	[SpaceSeparator]	OGHAM SPACE MARK
- 	U+2001	[SpaceSeparator]	EM QUAD
- 	U+2002	[SpaceSeparator]	EN SPACE
- 	U+2003	[SpaceSeparator]	EM SPACE
- 	U+2004	[SpaceSeparator]	THREE-PER-EM SPACE
- 	U+2005	[SpaceSeparator]	FOUR-PER-EM SPACE
- 	U+2006	[SpaceSeparator]	SIX-PER-EM SPACE
- 	U+2007	[SpaceSeparator]	FIGURE SPACE
- 	U+2008	[SpaceSeparator]	PUNCTUATION SPACE
- 	U+2009	[SpaceSeparator]	THIN SPACE
- 	U+200A	[SpaceSeparator]	HAIR SPACE
-​	U+200B	[Format]	ZERO WIDTH SPACE
- 	U+202F	[SpaceSeparator]	NARROW NO-BREAK SPACE
- 	U+205F	[SpaceSeparator]	MEDIUM MATHEMATICAL SPACE
 ␈	U+2408	[OtherSymbol]	SYMBOL FOR BACKSPACE
 ␠	U+2420	[OtherSymbol]	SYMBOL FOR SPACE
-　	U+3000	[SpaceSeparator]	IDEOGRAPHIC SPACE
-〿	U+303F	[OtherSymbol]	IDEOGRAPHIC HALF FILL SPACE
-﻿	U+FEFF	[Format]	ZERO WIDTH NO-BREAK SPACE
-𝙰	U+1D670	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL A
-𝙱	U+1D671	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL B
-𝙲	U+1D672	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL C
-𝙳	U+1D673	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL D
-𝙴	U+1D674	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL E
-𝙵	U+1D675	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL F
-𝙶	U+1D676	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL G
-𝙷	U+1D677	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL H
-𝙸	U+1D678	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL I
-𝙹	U+1D679	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL J
-𝙺	U+1D67A	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL K
-𝙻	U+1D67B	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL L
-𝙼	U+1D67C	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL M
-𝙽	U+1D67D	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL N
-𝙾	U+1D67E	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL O
-𝙿	U+1D67F	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL P
-𝚀	U+1D680	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL Q
-𝚁	U+1D681	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL R
-𝚂	U+1D682	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL S
-𝚃	U+1D683	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL T
-𝚄	U+1D684	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL U
-𝚅	U+1D685	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL V
-𝚆	U+1D686	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL W
-𝚇	U+1D687	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL X
-𝚈	U+1D688	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL Y
-𝚉	U+1D689	[UppercaseLetter]	MATHEMATICAL MONOSPACE CAPITAL Z
-𝚊	U+1D68A	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL A
-𝚋	U+1D68B	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL B
-𝚌	U+1D68C	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL C
-𝚍	U+1D68D	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL D
-𝚎	U+1D68E	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL E
-𝚏	U+1D68F	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL F
-𝚐	U+1D690	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL G
-𝚑	U+1D691	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL H
-𝚒	U+1D692	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL I
-𝚓	U+1D693	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL J
-𝚔	U+1D694	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL K
-𝚕	U+1D695	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL L
-𝚖	U+1D696	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL M
-𝚗	U+1D697	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL N
-𝚘	U+1D698	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL O
-𝚙	U+1D699	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL P
-𝚚	U+1D69A	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL Q
-𝚛	U+1D69B	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL R
-𝚜	U+1D69C	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL S
-𝚝	U+1D69D	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL T
-𝚞	U+1D69E	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL U
-𝚟	U+1D69F	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL V
-𝚠	U+1D6A0	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL W
-𝚡	U+1D6A1	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL X
-𝚢	U+1D6A2	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL Y
-𝚣	U+1D6A3	[LowercaseLetter]	MATHEMATICAL MONOSPACE SMALL Z
-𝟶	U+1D7F6	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT ZERO
-𝟷	U+1D7F7	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT ONE
-𝟸	U+1D7F8	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT TWO
-𝟹	U+1D7F9	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT THREE
-𝟺	U+1D7FA	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT FOUR
-𝟻	U+1D7FB	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT FIVE
-𝟼	U+1D7FC	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT SIX
-𝟽	U+1D7FD	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT SEVEN
-𝟾	U+1D7FE	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT EIGHT
-𝟿	U+1D7FF	[DecimalNumber]	MATHEMATICAL MONOSPACE DIGIT NINE
-󠀠	U+E0020	[Format]	TAG SPACE
 
 	U+17	[Control]	END OF TRANSMISSION BLOCK
 ␗	U+2417	[OtherSymbol]	SYMBOL FOR END OF TRANSMISSION BLOCK

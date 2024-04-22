@@ -1,5 +1,6 @@
 #!/bin/bash
 # listen to all music files so you can track the ones you like for a favorites play list.
+# See also cp-fav.sh
 ALL_LIST=all-music.lst
 export SUM=played.lst
 export LAST=last-played.lst
@@ -28,7 +29,9 @@ SONGS=$SONGS perl -MFile::Slurp \
 		$stopme = "$ENV{DIR}/STOP.ME";
 		print qq{To stop playing songs: touch "$stopme"\n};
 		$last = read_file("$ENV{DIR}/$ENV{LAST}");
-		print qq{Will resume playing songs after: $last\n};
+		chomp($last);
+		$last =~ s{\A"(.+)"\z}{$1}xms;
+		print qq{Will resume playing songs after: "$last"\n};
 		$find = $last;
 		print qq{Last played sound file was: "$last"\n};
 		open($fhPlayed, ">>", "$ENV{DIR}/$ENV{SUM}");

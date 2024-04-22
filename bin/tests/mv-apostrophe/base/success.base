@@ -1,0 +1,13 @@
+Fix directories...
+Fix files...
+mv './out/xyzzy/this'\''.txt' './out/xyzzy/thisʼ.txt'
+mv './out/xyzzy/'\''this is it'\''s thing'\''.txt' './out/xyzzy/ʼthis is itʼs thingʼ.txt'
+mv './out/xyzzy/'\''this is it'\''s thing isn'\''t it'\''.txt' './out/xyzzy/ʼthis is itʼs thing isnʼt itʼ.txt'
+mv './out/xyzzy/'\''this'\''.txt' './out/xyzzy/‘this’.txt'
+Check, any remaining files with apostrophe in their name?
+=== files on disk ======
+out/xyzzy
+out/xyzzy/ʼthis is itʼs thing isnʼt itʼ.txt
+out/xyzzy/ʼthis is itʼs thingʼ.txt
+out/xyzzy/‘this’.txt
+out/xyzzy/thisʼ.txt

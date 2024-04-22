@@ -1,0 +1,138 @@
+Spacing with U+20	[SpaceSeparator]	SPACE
+const space = '\u20';
+█ █
+ █
+Spacing with U+A0	[SpaceSeparator]	NO-BREAK SPACE
+const nbsp = '\uA0';
+█ █
+ █
+Spacing with U+202F	[SpaceSeparator]	NARROW NO-BREAK SPACE
+const narrowNbsp = '\u202F';
+█ █
+ █
+Spacing with U+FEFF	[Format]	ZERO WIDTH NO-BREAK SPACE
+const zeroNbsp = '\uFEFF';
+█﻿█
+﻿█
+Spacing with U+2000	[SpaceSeparator]	EN QUAD
+const enquad = '\u2000';
+█ █
+ █
+Spacing with U+2001	[SpaceSeparator]	EM QUAD
+const emquad = '\u2001';
+█ █
+ █
+Spacing with U+2002	[SpaceSeparator]	EN SPACE
+const enspace = '\u2002';
+█ █
+ █
+Spacing with U+2003	[SpaceSeparator]	EM SPACE
+const emspace = '\u2003';
+█ █
+ █
+Spacing with U+2004	[SpaceSeparator]	THREE-PER-EM SPACE
+const threePerEmSpace = '\u2004';
+█ █
+ █
+Spacing with U+2005	[SpaceSeparator]	FOUR-PER-EM SPACE
+const fourPerEmSpace = '\u2005';
+█ █
+ █
+Spacing with U+2006	[SpaceSeparator]	SIX-PER-EM SPACE
+const sixPerEmSpace = '\u2006';
+█ █
+ █
+Spacing with U+2007	[SpaceSeparator]	FIGURE SPACE
+const figureSpace = '\u2007';
+█ █
+ █
+Spacing with U+2008	[SpaceSeparator]	PUNCTUATION SPACE
+const punctSpace = '\u2008';
+█ █
+ █
+Spacing with U+2009	[SpaceSeparator]	THIN SPACE
+const thinSpace = '\u2009';
+█ █
+ █
+Spacing with U+200A	[SpaceSeparator]	HAIR SPACE
+const hairSpace = '\u200A';
+█ █
+ █
+Spacing with U+200B	[Format]	ZERO WIDTH SPACE
+const zeroSpace = '\u200B';
+█​█
+​█
+Spacing with U+205F	[SpaceSeparator]	MEDIUM MATHEMATICAL SPACE
+const medMathSpace = '\u205F';
+█ █
+ █
+Spacing with U+3000	[SpaceSeparator]	IDEOGRAPHIC SPACE
+const ideoGraphicSpace = '\u3000';
+█　█
+　█
+Spacing with U+303F	[OtherSymbol]	IDEOGRAPHIC HALF FILL SPACE
+const ideoGraphicHalfFillSpace = '\u303F';
+█〿█
+〿█
+Spacing with U+E0020	[Format]	TAG SPACE
+const tagSpace = '\uE0020';
+█󠀠█
+󠀠█
+Spacing with U+AD	[Format]	SOFT HYPHEN
+const softHyphen = '\uAD';
+█­█
+­█
+Spacing with U+2010	[DashPunctuation]	HYPHEN
+const hyphen = '\u2010';
+█‐█
+‐█
+Spacing with U+2011	[DashPunctuation]	NON-BREAKING HYPHEN
+const nbHyphen = '\u2011';
+█‑█
+‑█
+Spacing with U+2027	[OtherPunctuation]	HYPHENATION POINT
+const hyphenPoint = '\u2027';
+█‧█
+‧█
+Spacing with U+FE63	[DashPunctuation]	SMALL HYPHEN-MINUS
+const smallHyphen = '\uFE63';
+█﹣█
+﹣█
+Spacing with U+FF0D	[DashPunctuation]	FULLWIDTH HYPHEN-MINUS
+const fullWidthHyphen = '\uFF0D';
+█－█
+－█
+Spacing with U+E002D	[Format]	TAG HYPHEN-MINUS
+const tagHyphen = '\uE002D';
+█󠀭█
+󠀭█
+const spaceMap = {
+	'\u20': '[SPACE]',
+	'\uA0': '[NBSP]',
+	'\u202F': '[NARROWNBSP]',
+	'\uFEFF': '[ZERONBSP]',
+	'\u2000': '[ENQUAD]',
+	'\u2001': '[EMQUAD]',
+	'\u2002': '[ENSPACE]',
+	'\u2003': '[EMSPACE]',
+	'\u2004': '[THREEPEREMSPACE]',
+	'\u2005': '[FOURPEREMSPACE]',
+	'\u2006': '[SIXPEREMSPACE]',
+	'\u2007': '[FIGURESPACE]',
+	'\u2008': '[PUNCTSPACE]',
+	'\u2009': '[THINSPACE]',
+	'\u200A': '[HAIRSPACE]',
+	'\u200B': '[ZEROSPACE]',
+	'\u205F': '[MEDMATHSPACE]',
+	'\u3000': '[IDEOGRAPHICSPACE]',
+	'\u303F': '[IDEOGRAPHICHALFFILLSPACE]',
+	'\uE0020': '[TAGSPACE]',
+	'\uAD': '[SOFTHYPHEN]',
+	'\u2010': '[HYPHEN]',
+	'\u2011': '[NBHYPHEN]',
+	'\u2027': '[HYPHENPOINT]',
+	'\uFE63': '[SMALLHYPHEN]',
+	'\uFF0D': '[FULLWIDTHHYPHEN]',
+	'\uE002D': '[TAGHYPHEN]',
+}; // spaceMap
+const reSpaces = /[\s\u20\uA0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\uE0020\uAD\u2010\u2011\u2027\uFE63\uFF0D\uE002D]/;
