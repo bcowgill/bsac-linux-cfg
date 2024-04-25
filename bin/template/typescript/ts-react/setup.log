@@ -1,0 +1,130 @@
+$ nvm install 22.0.0
+Downloading and installing node v22.0.0...
+Downloading https://nodejs.org/dist/v22.0.0/node-v22.0.0-darwin-x64.tar.xz...
+######################################################################## 100.0%
+Computing checksum with shasum -a 256
+Checksums matched!
+Now using node v22.0.0 (npm v10.5.1)
+
+> npx create-react-app ts-react --template typescript
+Need to install the following packages:
+create-react-app@5.0.1
+Ok to proceed? (y) y
+npm WARN deprecated tar@2.2.2: This version of tar is no longer supported, and will not receive security updates. Please upgrade asap.
+
+Creating a new React app in /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react.
+
+Installing packages. This might take a couple of minutes.
+Installing react, react-dom, and react-scripts with cra-template-typescript...
+
+
+added 1494 packages in 57s
+
+258 packages are looking for funding
+  run `npm fund` for details
+
+Installing template dependencies using npm...
+
+added 46 packages, removed 1 package, and changed 2 packages in 7s
+
+262 packages are looking for funding
+  run `npm fund` for details
+
+We detected TypeScript in your project (src/App.test.tsx) and created a tsconfig.json file for you.
+
+Your tsconfig.json has been populated with default values.
+
+Removing template package using npm...
+
+
+removed 1 package, and audited 1539 packages in 4s
+
+262 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (2 moderate, 6 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Success! Created ts-react at /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react
+Inside that directory, you can run several commands:
+
+  npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd ts-react
+  npm start
+
+Happy hacking!
+npm notice 
+npm notice New patch version of npm available! 10.5.1 -> 10.5.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.5.2
+npm notice Run npm install -g npm@10.5.2 to update!
+npm notice 
+
+Prompt saved to PS1_SAVED and simplified.
+
+npm run build
+
+Creating an optimized production build...
+One of your dependencies, babel-preset-react-app, is importing the
+"@babel/plugin-proposal-private-property-in-object" package without
+declaring it in its dependencies. This is currently working because
+"@babel/plugin-proposal-private-property-in-object" is already in your
+node_modules folder for unrelated reasons, but it may break at any time.
+
+babel-preset-react-app is part of the create-react-app project, which
+is not maintianed anymore. It is thus unlikely that this bug will
+ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
+your devDependencies to work around this error. This will make this message
+go away.
+
+Compiled successfully.
+
+
+npm i --save-dev @babel/plugin-proposal-private-property-in-object
+
+
+> npm run build -- --json bundle.stats.json
+
+> ts-react@0.1.0 build
+> react-scripts build --json bundle.stats.json
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  46.65 kB  build/static/js/main.ae4434f6.js
+  1.77 kB   build/static/js/453.e33469ec.chunk.js
+  513 B     build/static/css/main.f855e6bc.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+
