@@ -21,6 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "format": "prettier --write src/**/*.css src/**/*.{ts,tsx} tsconfig.json ./*.js",
+    "lint": "eslint -c .eslintrc.js --report-unused-disable-directives --max-warnings 0 --fix",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
