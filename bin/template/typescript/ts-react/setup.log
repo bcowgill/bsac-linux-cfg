@@ -1,3 +1,5 @@
+https://www.sitepoint.com/react-with-typescript-best-practices/
+
 $ nvm install 22.0.0
 Downloading and installing node v22.0.0...
 Downloading https://nodejs.org/dist/v22.0.0/node-v22.0.0-darwin-x64.tar.xz...
@@ -128,3 +130,401 @@ Find out more about deployment here:
   https://cra.link/deployment
 
 
+
+
+
+Use script -a to try setting up eslint here.
+
+Failed eslint init
+===========================================================
+Script started on Thu Apr 25 14:43:36 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+[?1034h]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ ./node_modules/.bin/e slint --init
+You can also run this command directly using 'npm init @eslint/config'.
+[?25l[36m?[39m [1mHow would you like to use ESLint?[22m [2m…[22m 
+  To check syntax only
+[36m❯[39m [36m[4mTo check syntax and find problems[24m[39m
+  To check syntax, find problems, and enforce code style[3A[40G[3B[2K[F[2K[F[2K[F[2K[1G[36m?[39m [1mHow would you like to use ESLint?[22m [2m…[22m 
+  To check syntax only
+  To check syntax and find problems
+[36m❯[39m [36m[4mTo check syntax, find problems, and enforce code style[24m[39m[3A[40G[3B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mHow would you like to use ESLint?[22m [2m·[22m [36mstyle[39m[4D
+[?25h[?25l[36m?[39m [1mWhat type of modules does your project use?[22m [2m…[22m 
+[36m❯[39m [36m[4mJavaScript modules (import/export)[24m[39m
+  CommonJS (require/exports)
+  None of these[3A[50G[3B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhat type of modules does your project use?[22m [2m·[22m [36mesm[39m[2D
+[?25h[?25l[36m?[39m [1mWhich framework does your project use?[22m [2m…[22m 
+[36m❯[39m [36m[4mReact[24m[39m
+  Vue.js
+  None of these[3A[45G[3B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhich framework does your project use?[22m [2m·[22m [36mreact[39m[4D
+[?25h[?25l[36m?[39m [1mDoes your project use TypeScript?[22m [2m…[22m 
+[36m❯[39m [36m[4mNo[24m[39m
+  Yes[2A[40G[2B[2K[F[2K[F[2K[1G[36m?[39m [1mDoes your project use TypeScript?[22m [2m…[22m 
+  No
+[36m❯[39m [36m[4mYes[24m[39m[2A[40G[2B[2K[F[2K[F[2K[1G[32m✔[39m [1mDoes your project use TypeScript?[22m [2m·[22m [36mtypescript[39m[9D
+[?25h[?25l[36m?[39m [1mWhere does your code run?[22m [2m…[22m  [2m(Press <space> to select, <a> to toggle all, <i> to invert selection)[22m
+[32m✔[39m [36m[4mBrowser[24m[39m
+[2m[90m✔[39m[22m Node[2A[102G[2B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhere does your code run?[22m [2m·[22m [36mbrowser[39m[6D
+[?25h[?25l[36m?[39m [1mWhich style guide do you want to follow?[22m [2m…[22m 
+[36m❯[39m [36m[4mStandard: https://github.com/standard/eslint-config-standard-with-typescript[24m[39m
+  XO: https://github.com/xojs/eslint-config-xo-typescript[2A[47G[2B[2K[F[2K[F[2K[1G[32m✔[39m [1mWhich style guide do you want to follow?[22m [2m·[22m [36mstandard[39m[7D
+[?25hThe config that you've selected requires the following dependencies:
+
+eslint, globals, eslint-config-standard-with-typescript, @typescript-eslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-import@^2.25.2, eslint-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js
+[?25l[36m?[39m [1mWould you like to install them now?[22m [2m›[22m No[2m / [22m[36m[4mYes[24m[39m[4D[2K[1G[36m?[39m [1mWould you like to install them now?[22m [2m›[22m No[2m / [22m[36m[4mYes[24m[39m[4D[2K[1G[32m✔[39m [1mWould you like to install them now?[22m [2m·[22m No[2m / [22m[36m[4mYes[24m[39m[4D
+[?25h[?25l[36m?[39m [1mWhich package manager do you want to use?[22m [2m…[22m 
+[36m❯[39m [36m[4mnpm[24m[39m
+  yarn
+  pnpm
+  bun[4A[48G[4B[2K[F[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhich package manager do you want to use?[22m [2m·[22m [36mnpm[39m[2D
+[?25h☕️Installing...
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35midealTree[0m Removing dependencies.typescript in favor of devDependencies.typescript
+[0m[?25l([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠹ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠼ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠋ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠹ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K[K[?25h[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mcode[0m ERESOLVE
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mERESOLVE[0m could not resolve
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m While resolving: [1mts-react[22m@[1m0.1.0[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Found: [1m@typescript-eslint/eslint-plugin[22m@[1m5.62.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m [2mnode_modules/@typescript-eslint/eslint-plugin[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [1m@typescript-eslint/eslint-plugin[22m@"[1m^5.5.0[22m" from [1meslint-config-react-app[22m@[1m7.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [2mnode_modules/eslint-config-react-app[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [1meslint-config-react-app[22m@"[1m^7.0.1[22m" from [1mreact-scripts[22m@[1m5.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [2mnode_modules/react-scripts[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m       [1mreact-scripts[22m@"[1m5.0.1[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   peerOptional [1m@typescript-eslint/eslint-plugin[22m@"[1m^4.0.0 || ^5.0.0[22m" from [1meslint-plugin-jest[22m@[1m25.7.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [2mnode_modules/eslint-plugin-jest[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [1meslint-plugin-jest[22m@"[1m^25.3.0[22m" from [1meslint-config-react-app[22m@[1m7.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [2mnode_modules/eslint-config-react-app[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m       [1meslint-config-react-app[22m@"[1m^7.0.1[22m" from [1mreact-scripts[22m@[1m5.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m       [2mnode_modules/react-scripts[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m         [1mreact-scripts[22m@"[1m5.0.1[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   1 more (the root project)
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Could not resolve dependency:
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m [33mdev[39m [1m@typescript-eslint/eslint-plugin[22m@"[1m^6.4.0[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Conflicting peer dependency: [1m@typescript-eslint/parser[22m@[1m6.21.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m [2mnode_modules/@typescript-eslint/parser[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [35mpeer[39m [1m@typescript-eslint/parser[22m@"[1m^6.0.0 || ^6.0.0-alpha[22m" from [1m@typescript-eslint/eslint-plugin[22m@[1m6.21.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [2mnode_modules/@typescript-eslint/eslint-plugin[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [33mdev[39m [1m@typescript-eslint/eslint-plugin[22m@"[1m^6.4.0[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Fix the upstream dependency conflict, or retry
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m this command with --force or --legacy-peer-deps
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m to accept an incorrect (and potentially broken) dependency resolution.
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m For a full report see:
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m /Users/br388313/.npm/_logs/2024-04-25T13_44_52_266Z-eresolve-report.txt
+[0m
+[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m A complete log of this run can be found in: /Users/br388313/.npm/_logs/2024-04-25T13_44_52_266Z-debug-0.log
+[0mA config file was generated, but the config file itself may not follow your linting rules.
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ less[K[K[K[K
+
+
+
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ 
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ 
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ 
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   setup.log
+
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ gsm./node_modules/.bin/esslint --init --legacy-peer-deps
+You can also run this command directly using 'npm init @eslint/config'.
+[?25l[36m?[39m [1mHow would you like to use ESLint?[22m [2m…[22m 
+  To check syntax only
+[36m❯[39m [36m[4mTo check syntax and find problems[24m[39m
+  To check syntax, find problems, and enforce code style[3A[40G[3B[2K[F[2K[F[2K[F[2K[1G[36m?[39m [1mHow would you like to use ESLint?[22m [2m…[22m 
+  To check syntax only
+  To check syntax and find problems
+[36m❯[39m [36m[4mTo check syntax, find problems, and enforce code style[24m[39m[3A[40G[3B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mHow would you like to use ESLint?[22m [2m·[22m [36mstyle[39m[4D
+[?25h[?25l[36m?[39m [1mWhat type of modules does your project use?[22m [2m…[22m 
+[36m❯[39m [36m[4mJavaScript modules (import/export)[24m[39m
+  CommonJS (require/exports)
+  None of these[3A[50G[3B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhat type of modules does your project use?[22m [2m·[22m [36mesm[39m[2D
+[?25h[?25l[36m?[39m [1mWhich framework does your project use?[22m [2m…[22m 
+[36m❯[39m [36m[4mReact[24m[39m
+  Vue.js
+  None of these[3A[45G[3B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhich framework does your project use?[22m [2m·[22m [36mreact[39m[4D
+[?25h[?25l[36m?[39m [1mDoes your project use TypeScript?[22m [2m…[22m 
+[36m❯[39m [36m[4mNo[24m[39m
+  Yes[2A[40G[2B[2K[F[2K[F[2K[1G[36m?[39m [1mDoes your project use TypeScript?[22m [2m…[22m 
+  No
+[36m❯[39m [36m[4mYes[24m[39m[2A[40G[2B[2K[F[2K[F[2K[1G[32m✔[39m [1mDoes your project use TypeScript?[22m [2m·[22m [36mtypescript[39m[9D
+[?25h[?25l[36m?[39m [1mWhere does your code run?[22m [2m…[22m  [2m(Press <space> to select, <a> to toggle all, <i> to invert selection)[22m
+[32m✔[39m [36m[4mBrowser[24m[39m
+[2m[90m✔[39m[22m Node[2A[102G[2B[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhere does your code run?[22m [2m·[22m [36mbrowser[39m[6D
+[?25h[?25l[36m?[39m [1mWhich style guide do you want to follow?[22m [2m…[22m 
+[36m❯[39m [36m[4mStandard: https://github.com/standard/eslint-config-standard-with-typescript[24m[39m
+  XO: https://github.com/xojs/eslint-config-xo-typescript[2A[47G[2B[2K[F[2K[F[2K[1G[32m✔[39m [1mWhich style guide do you want to follow?[22m [2m·[22m [36mstandard[39m[7D
+[?25hThe config that you've selected requires the following dependencies:
+
+eslint, globals, eslint-config-standard-with-typescript, @typescript-eslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-import@^2.25.2, eslint-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js
+[?25l[36m?[39m [1mWould you like to install them now?[22m [2m›[22m No[2m / [22m[36m[4mYes[24m[39m[4D[2K[1G[36m?[39m [1mWould you like to install them now?[22m [2m›[22m No[2m / [22m[36m[4mYes[24m[39m[4D[2K[1G[32m✔[39m [1mWould you like to install them now?[22m [2m·[22m No[2m / [22m[36m[4mYes[24m[39m[4D
+[?25h[?25l[36m?[39m [1mWhich package manager do you want to use?[22m [2m…[22m 
+[36m❯[39m [36m[4mnpm[24m[39m
+  yarn
+  pnpm
+  bun[4A[48G[4B[2K[F[2K[F[2K[F[2K[F[2K[1G[32m✔[39m [1mWhich package manager do you want to use?[22m [2m·[22m [36mnpm[39m[2D
+[?25h☕️Installing...
+[37;40mnpm[0m [0m[30;43mWARN[0m [0m[35midealTree[0m Removing dependencies.typescript in favor of devDependencies.typescript
+[0m[?25l([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠧ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠇ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K([100;90m⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂[0m) ⠦ idealTree:ts-react: [7msill[0m [35midealTree[0m buildDeps[0m[K[K[?25h[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mcode[0m ERESOLVE
+[0m[37;40mnpm[0m [0m[31;40mERR![0m [0m[35mERESOLVE[0m could not resolve
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m While resolving: [1mts-react[22m@[1m0.1.0[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Found: [1m@typescript-eslint/eslint-plugin[22m@[1m5.62.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m [2mnode_modules/@typescript-eslint/eslint-plugin[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [1m@typescript-eslint/eslint-plugin[22m@"[1m^5.5.0[22m" from [1meslint-config-react-app[22m@[1m7.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [2mnode_modules/eslint-config-react-app[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [1meslint-config-react-app[22m@"[1m^7.0.1[22m" from [1mreact-scripts[22m@[1m5.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [2mnode_modules/react-scripts[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m       [1mreact-scripts[22m@"[1m5.0.1[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   peerOptional [1m@typescript-eslint/eslint-plugin[22m@"[1m^4.0.0 || ^5.0.0[22m" from [1meslint-plugin-jest[22m@[1m25.7.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [2mnode_modules/eslint-plugin-jest[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [1meslint-plugin-jest[22m@"[1m^25.3.0[22m" from [1meslint-config-react-app[22m@[1m7.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [2mnode_modules/eslint-config-react-app[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m       [1meslint-config-react-app[22m@"[1m^7.0.1[22m" from [1mreact-scripts[22m@[1m5.0.1[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m       [2mnode_modules/react-scripts[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m         [1mreact-scripts[22m@"[1m5.0.1[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   1 more (the root project)
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Could not resolve dependency:
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m [33mdev[39m [1m@typescript-eslint/eslint-plugin[22m@"[1m^6.4.0[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Conflicting peer dependency: [1m@typescript-eslint/parser[22m@[1m6.21.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m [2mnode_modules/@typescript-eslint/parser[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [35mpeer[39m [1m@typescript-eslint/parser[22m@"[1m^6.0.0 || ^6.0.0-alpha[22m" from [1m@typescript-eslint/eslint-plugin[22m@[1m6.21.0[22m[2m[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m   [2mnode_modules/@typescript-eslint/eslint-plugin[22m
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m     [33mdev[39m [1m@typescript-eslint/eslint-plugin[22m@"[1m^6.4.0[22m" from the root project
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m Fix the upstream dependency conflict, or retry
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m this command with --force or --legacy-peer-deps
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m to accept an incorrect (and potentially broken) dependency resolution.
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m 
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m For a full report see:
+[0m[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m /Users/br388313/.npm/_logs/2024-04-25T13_48_25_372Z-eresolve-report.txt
+[0m
+[37;40mnpm[0m [0m[31;40mERR![0m[35m[0m A complete log of this run can be found in: /Users/br388313/.npm/_logs/2024-04-25T13_48_25_372Z-debug-0.log
+[0mA config file was generated, but the config file itself may not follow your linting rules.
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ ls -al
+total 1504
+drwxr-xr-x   15 br388313  staff     480 25 Apr 14:44 .
+drwxr-xr-x   41 br388313  staff    1312 25 Apr 14:21 ..
+-rw-r--r--    1 br388313  staff     310 25 Apr 14:22 .gitignore
+-rw-r--r--    1 br388313  staff       8 25 Apr 14:26 .nvmrc
+-rw-r--r--    1 br388313  staff    2117 25 Apr 14:22 README.md
+drwxr-xr-x   10 br388313  staff     320 25 Apr 14:35 build
+-rw-r--r--    1 br388313  staff     734 25 Apr 14:48 eslint.config.mjs
+drwxr-xr-x  873 br388313  staff   27936 25 Apr 14:33 node_modules
+-rw-r--r--    1 br388313  staff    1484 25 Apr 14:29 npx
+-rw-r--r--    1 br388313  staff  709727 25 Apr 14:35 package-lock.json
+-rw-r--r--    1 br388313  staff    1065 25 Apr 14:40 package.json
+drwxr-xr-x    8 br388313  staff     256 25 Apr 14:22 public
+-rw-r--r--    1 br388313  staff   27497 25 Apr 14:48 setup.log
+drwxr-xr-x   11 br388313  staff     352 25 Apr 14:23 src
+-rw-r--r--    1 br388313  staff     535 25 Apr 14:23 tsconfig.json
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ less eslint.config.mjss 
+[?1049h[?1h=import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+
+import path from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import pluginJs from "@eslint/js";
+
+// mimic CommonJS variables -- not needed if using CommonJS
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: plu ginJs.configs.recommended});
+
+export default [
+  {languageOptions: { globals: globals.browser }},
+  ...compat.extends("standard-with-typescript"),
+  ...tseslint.configs.recommended,
+  pluginReactConfig,
+];
+[7meslint.config.mjs (END)[27m[K[K[?1l>[?1049l]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   setup.log
+
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ less ../react-tools-tss/useWindowSize.ts [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kwhich eslint 
+/Users/br388313/.nvm/versions/node/v21.6.1/bin/eslint
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ ./node_modules/.bin/e slint 
+
+Oops! Something went wrong! :(
+
+ESLint: 8.57.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react/eslint.config.mjs
+    at packageResolve (node:internal/modules/esm/resolve:844:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1131:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:390:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:359:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:234:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:85:39)
+    at link (node:internal/modules/esm/module_job:84:36)
+]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ less eslint.config.mjss 
+[?1049h[?1h=import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+
+import path from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import pluginJs from "@eslint/js";
+
+// mimic CommonJS variables -- not needed if using CommonJS
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: plu ginJs.configs.recommended});
+
+export default [
+  {languageOptions: { globals: globals.browser }},
+  ...compat.extends("standard-with-typescript"),
+  ...tseslint.configs.recommended,
+  pluginReactConfig,
+];
+[7meslint.config.mjs (END)[27m[K[K[?1l>[?1049l]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ ggr require
+[?1h=[35mpackage-lock.json[m[36m:[m  "[1;31mrequire[ms": true,[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[ms-port": "^1.0.0"[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/[1;31mrequire[m-directory": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/[1;31mrequire[m-directo[m [35m[m[36m[m[1;31m[mry/-/[1;31mrequire[m-directory-2.1.1.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/[1;31mrequire[m-from-string": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/[1;31mrequire[m-from-st[m [35m[m[36m[m[1;31m[mring/-/[1;31mrequire[m-from-string-2.0.2.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/[1;31mrequire[ms-port": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/[1;31mrequire[ms-port/-[m [35m[m[36m[m[1;31m[m/[1;31mrequire[ms-port-1.0.0.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[ms-port": "^1.0.0"[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-from-string": "^2.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mrequire[m-directory": "^2.1.1",[m
+[35msetup.log[m[36m:[m  CommonJS ([1;31mrequire[m/exports)[m
+[35msetup.log[m[36m:[mThe config that you've selected [1;31mrequire[ms the following dependencies:[m
+[35msetup.log[m[36m:[m  CommonJS ([1;31mrequire[m/exports)[m
+[35msetup.log[m[36m:[mThe config that you've selected [1;31mrequire[ms the following dependencies:[m
+[K[?1l>]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ ggr import
+[?1h=[35mpackage-lock.json[m[36m:[m    "node_modules/@babel/helper-module-[1;31mimport[ms": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@babel/helper-m[m [35m[m[36m[module-[1;31mimport[ms/-/helper-module-[1;31mimport[ms-7.24.3.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/helper-module-[1;31mimport[ms": "^7.22.15",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/@babel/plugin-syntax-dynamic-[1;31mimport[m": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@babel/plugin-s[m [35m[m[36m[myntax-dynamic-[1;31mimport[m/-/plugin-syntax-dynamic-[1;31mimport[m-7.8.3.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/@babel/plugin-syntax-[1;31mimport[m-assertions": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@babel/plugin-s[m [35m[m[36m[myntax-[1;31mimport[m-assertions/-/plugin-syntax-[1;31mimport[m-assertions-7.24.1.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/@babel/plugin-syntax-[1;31mimport[m-attributes": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@babel/plugin-s[m [35m[m[36m[myntax-[1;31mimport[m-attributes/-/plugin-syntax-[1;31mimport[m-attributes-7.24.1.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/@babel/plugin-syntax-[1;31mimport[m-meta": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@babel/plugin-s[m [35m[m[36m[myntax-[1;31mimport[m-meta/-/plugin-syntax-[1;31mimport[m-meta-7.10.4.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/helper-module-[1;31mimport[ms": "^7.24.1",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/@babel/plugin-transform-dynamic-[1;31mimport[m": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@babel/plugin-t[m [35m[m[36m[mransform-dynamic-[1;31mimport[m/-/plugin-transform-dynamic-[1;31mimport[m-7.24.1.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-syntax-dynamic-[1;31mimport[m": "^7.8.3"[m
+[35mpackage-lock.json[m[36m:[m        "@babel/helper-module-[1;31mimport[ms": "^7.22.15",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/helper-module-[1;31mimport[ms": "^7.24.3",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-syntax-dynamic-[1;31mimport[m": "^7.8.3",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-syntax-[1;31mimport[m-assertions": "^7.24.1",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-syntax-[1;31mimport[m-attributes": "^7.24.1",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-syntax-[1;31mimport[m-meta": "^7.10.4",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-transform-dynamic-[1;31mimport[m": "^7.24.1",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mimport[m-fresh": "^3.2.1",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/@humanwhocodes/module-[1;31mimport[mer": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/@humanwhocodes/[m [35m[m[36m[mmodule-[1;31mimport[mer/-/module-[1;31mimport[mer-1.0.1.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/helper-module-[1;31mimport[ms": "^7.10.4",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/acorn-[1;31mimport[m-assertions": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/acorn-[1;31mimport[m-as[m [35m[m[36m[m[1;31m[msertions/-/acorn-[1;31mimport[m-assertions-1.9.0.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/babel-plugin-named-asset-[1;31mimport[m": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/babel-plugin-na[m [35m[m[36m[mmed-asset-[1;31mimport[m/-/babel-plugin-named-asset-[1;31mimport[m-0.3.8.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "@babel/plugin-syntax-[1;31mimport[m-meta": "^7.8.3",[m
+:[K[K[35mpackage-lock.json[m[36m:[m        "[1;31mimport[m-fresh": "^3.2.1",[m
+[35mpackage-lock.json[m[36m:[m        "postcss-modules-extract-[1;31mimport[ms": "^3.1.0",[m
+[35mpackage-lock.json[m[36m:[m        "@humanwhocodes/module-[1;31mimport[mer": "^1.0.1",[m
+[35mpackage-lock.json[m[36m:[m        "eslint-plugin-[1;31mimport[m": "^2.25.3",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/eslint-[1;31mimport[m-resolver-node": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/eslint-[1;31mimport[m-r[m [35m[m[36m[m[1;31m[mesolver-node/-/eslint-[1;31mimport[m-resolver-node-0.3.9.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/eslint-[1;31mimport[m-resolver-node/node_modules/de[m [35m[m[36m[m[1;31m[mbug": {[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/eslint-plugin-[1;31mimport[m": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/eslint-plugin-[1;31mi[m [35m[m[36m[m[1;31mmport[m/-/eslint-plugin-[1;31mimport[m-2.29.1.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "eslint-[1;31mimport[m-resolver-node": "^0.3.9",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/eslint-plugin-[1;31mimport[m/node_modules/debug": {[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/eslint-plugin-[1;31mimport[m/node_modules/doctrine"[m [35m[m[36m[m[1;31m[m: {[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/eslint-plugin-[1;31mimport[m/node_modules/semver": [m [35m[m[36m[m[1;31m[m{[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mimport[m-fresh": "^3.1.0",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/[1;31mimport[m-fresh": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/[1;31mimport[m-fresh/-/[1;31m[m [35m[m[36m[m[1;31m[m[1;31mimport[m-fresh-3.3.0.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/[1;31mimport[m-fresh/node_modules/resolve-from": {[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/[1;31mimport[m-local": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/[1;31mimport[m-local/-/[1;31m[m [35m[m[36m[m[1;31m[m[1;31mimport[m-local-3.1.0.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mimport[m-local-fixture": "fixtures/cli.js"[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mimport[m-local": "^3.0.2",[m
+[35mpackage-lock.json[m[36m:[m        "[1;31mimport[m-local": "^3.0.2",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/postcss-[1;31mimport[m": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/postcss-[1;31mimport[m/[m [35m[m[36m[m[1;31m[m-/postcss-[1;31mimport[m-15.1.0.tgz",[m
+[35mpackage-lock.json[m[36m:[m    "node_modules/postcss-modules-extract-[1;31mimport[ms": {[m
+[35mpackage-lock.json[m[36m:[m      "resolved": "https://registry.npmjs.org/postcss-modules[m [35m[m[36m[m-extract-[1;31mimport[ms/-/postcss-modules-extract-[1;31mimport[ms-3.1.0.tgz",[m
+[35mpackage-lock.json[m[36m:[m        "babel-plugin-named-asset-[1;31mimport[m": "^0.3.8",[m
+[35mpackage-lock.json[m[36m:[m        "postcss-[1;31mimport[m": "^15.1.0",[m
+[35mpackage-lock.json[m[36m:[m        "acorn-[1;31mimport[m-assertions": "^1.9.0",[m
+[35msetup.log[m[36m:[mOne of your dependencies, babel-preset-react-app, is [1;31mimport[ming the[m
+[35msetup.log[m[36m:[m[36m❯[39m [36m[4mJavaScript modules ([1;31mimport[m/export)[24m[39m[m
+:[K[K[35msetup.log[m[36m:[meslint, globals, eslint-config-standard-with-typescript, @typescript-[m [35m[m[36m[meslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-[1;31mimport[m@^2.25.2, eslin[m [35m[m[36m[m[1;31m[mt-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typ[m [35m[m[36m[m[1;31m[mescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js[m
+[35msetup.log[m[36m:[m[36m❯[39m [36m[4mJavaScript modules ([1;31mimport[m/export)[24m[39m[m
+[35msetup.log[m[36m:[meslint, globals, eslint-config-standard-with-typescript, @typescript-[m [35m[m[36m[meslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-[1;31mimport[m@^2.25.2, eslin[m [35m[m[36m[m[1;31m[mt-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typ[m [35m[m[36m[m[1;31m[mescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js[m
+[35msetup.log[m[36m:[m[7m^M[27m[1;31mimport[m globals from "globals";[m
+[35msetup.log[m[36m:[m[1;31mimport[m tseslint from "typescript-eslint";[m
+[35msetup.log[m[36m:[m[1;31mimport[m pluginReactConfig from "eslint-plugin-react/configs/recommende[m [35m[m[36m[m[1;31m[md.js";[m
+[35msetup.log[m[36m:[m[1;31mimport[m path from "path";[m
+[35msetup.log[m[36m:[m[1;31mimport[m { fileURLToPath } from "url";[m
+[35msetup.log[m[36m:[m[1;31mimport[m { FlatCompat } from "@eslint/eslintrc";[m
+[35msetup.log[m[36m:[m[1;31mimport[m pluginJs from "@eslint/js";[m
+[35msetup.log[m[36m:[mconst __filename = fileURLToPath([1;31mimport[m.meta.url);[m
+[35msetup.log[m[36m:[mError [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint'[m [35m[m[36m[m [1;31mimport[med from /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/types[m [35m[m[36m[m[1;31m[mcript/ts-react/eslint.config.mjs[m
+[35msetup.log[m[36m:[m[7m^M[27m[1;31mimport[m globals from "globals";[m
+[35msetup.log[m[36m:[m[1;31mimport[m tseslint from "typescript-eslint";[m
+[35msetup.log[m[36m:[m[1;31mimport[m pluginReactConfig from "eslint-plugin-react/configs/recommende[m [35m[m[36m[m[1;31m[md.js";[m
+[35msetup.log[m[36m:[m[1;31mimport[m path from "path";[m
+[35msetup.log[m[36m:[m[1;31mimport[m { fileURLToPath } from "url";[m
+[35msetup.log[m[36m:[m[1;31mimport[m { FlatCompat } from "@eslint/eslintrc";[m
+[35msetup.log[m[36m:[m[1;31mimport[m pluginJs from "@eslint/js";[m
+[35msetup.log[m[36m:[mconst __filename = fileURLToPath([1;31mimport[m.meta.url);[m
+[35msrc/App.test.tsx[m[36m:[m[1;31mimport[m React from 'react';[m
+[35msrc/App.test.tsx[m[36m:[m[1;31mimport[m { render, screen } from '@testing-library/react';[m
+[35msrc/App.test.tsx[m[36m:[m[1;31mimport[m App from './App';[m
+[35msrc/App.tsx[m[36m:[m[1;31mimport[m React from 'react';[m
+[35msrc/App.tsx[m[36m:[m[1;31mimport[m logo from './logo.svg';[m
+[35msrc/App.tsx[m[36m:[m[1;31mimport[m './App.css';[m
+[35msrc/index.tsx[m[36m:[m[1;31mimport[m React from 'react';[m
+[35msrc/index.tsx[m[36m:[m[1;31mimport[m ReactDOM from 'react-dom/client';[m
+[35msrc/index.tsx[m[36m:[m[1;31mimport[m './index.css';[m
+[35msrc/index.tsx[m[36m:[m[1;31mimport[m App from './App';[m
+:[K[K[35msrc/index.tsx[m[36m:[m[1;31mimport[m reportWebVitals from './reportWebVitals';[m
+[35msrc/reportWebVitals.ts[m[36m:[m[1;31mimport[m { ReportHandler } from 'web-vitals';[m
+[35msrc/reportWebVitals.ts[m[36m:[m    [1;31mimport[m('web-vitals').then(({ getCLS, getFID, getFCP,[m [35m[m[36m[m[1;31m[m getLCP, getTTFB }) => {[m
+[35msrc/setupTests.ts[m[36m:[m[1;31mimport[m '@testing-library/jest-dom';[m
+[7m(END)[27m[K[K[?1l>]0;br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react[01;32mbr388313@C02FJ2JKMD6M[00m:[01;34m~/bin/template/typescript/ts-react[00m (master *$%|u+1)$ exit
+exit
+
+Script done on Thu Apr 25 14:50:35 2024
