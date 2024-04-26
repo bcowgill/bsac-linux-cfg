@@ -4,6 +4,7 @@
   "description": "My preferred prettier configuration setup",
   "main": "src/index.js",
   "scripts": {
+    "configtest": "prettier --find-config-path",
     "pretty": "prettier --cache *.*js *.json src/",
     "list": "npm run pretty -- --list-different",
     "check": "npm run pretty -- --check",
@@ -15,5 +16,40 @@
   "license": "Unlicense",
   "devDependencies": {
     "prettier": "^3.2.5"
+  },
+  "prettier": {
+    "experimentalTernaries": true,
+    "endOfLine": "lf",
+    "useTabs": true,
+    "tabWidth": 4,
+    "printWidth": 80,
+    "proseWrap": "preserve",
+    "trailingComma": "all",
+    "semi": false,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "singleAttributePerLine": false,
+    "arrowParens": "always",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "quoteProps": "as-needed",
+    "htmlWhitespaceSensitivity": "css",
+    "overrides": [
+      {
+        "files": ["package*.json"],
+        "options": {
+          "parser": "json",
+          "useTabs": false,
+          "tabWidth": 2
+        }
+      },
+      {
+        "files": ["prettier.config.mjs"],
+        "options": {
+          "singleQuote": true,
+          "quoteProps": "consistent"
+        }
+      }
+    ]
   }
 }

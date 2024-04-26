@@ -1,3 +1,7 @@
+THIS EXPERIMENT DID NOT FULLY WORK
+create react app is no longer maintained
+and failed to install eslint due to package conflicts with tslint- package versions from CRA and eslint
+
 https://www.sitepoint.com/react-with-typescript-best-practices/
 
 $ nvm install 22.0.0
