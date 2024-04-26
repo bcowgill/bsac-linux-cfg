@@ -10,11 +10,7 @@
     "format": "npm run pretty -- --write",
     "test": "npm run format"
   },
-  "keywords": [
-    "prettier",
-    "configuration",
-    "setup"
-  ],
+  "keywords": ["prettier", "configuration", "setup"],
   "author": "Brent S.A. Cowgill",
   "license": "Unlicense",
   "devDependencies": {
