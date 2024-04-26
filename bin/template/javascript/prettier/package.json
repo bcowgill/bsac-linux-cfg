@@ -1,0 +1,23 @@
+{
+  "name": "prettier-setup",
+  "version": "1.0.0",
+  "description": "My preferred prettier configuration setup",
+  "main": "src/index.js",
+  "scripts": {
+    "pretty": "prettier --cache *.*js *.json src/",
+    "list": "npm run pretty -- --list-different",
+    "check": "npm run pretty -- --check",
+    "format": "npm run pretty -- --write",
+    "test": "npm run format"
+  },
+  "keywords": [
+    "prettier",
+    "configuration",
+    "setup"
+  ],
+  "author": "Brent S.A. Cowgill",
+  "license": "Unlicense",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
