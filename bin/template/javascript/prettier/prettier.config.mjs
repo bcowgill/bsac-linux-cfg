@@ -2,12 +2,22 @@
 
 /** @type {import("prettier").Config} */
 const config = {
+	experimentalTernaries: true,
 	endOfLine: 'lf',
 	useTabs: true,
 	tabWidth: 4,
-	trailingComma: 'es5',
+	printWidth: 80,
+	proseWrap: 'preserve', // markdown
+	trailingComma: 'all',
 	semi: false,
 	singleQuote: true,
+	jsxSingleQuote: false,
+	singleAttributePerLine: false,
+	arrowParens: 'always',
+	bracketSameLine: false,
+	bracketSpacing: true,
+	quoteProps: 'as-needed',
+	htmlWhitespaceSensitivity: 'css',
 	overrides: [
 		{
 			files: ['package*.json'],
