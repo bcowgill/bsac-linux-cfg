@@ -1,0 +1,2 @@
+id3v2 --year="2001" --track="1/10" --artist="ARTISTv1" --song="SONGv1" --genre==101" --album="ALBUMv1" --comment=":COMMENTv1:XXX" in/TestId3Tagv2basic.mp3
+id3v2 --year="2102" --track="13" --artist="THE_ARTIST" --song="THE_SONG" --genre==42" --album="THE_ALBUM" --comment=":COMMENTv1:XXX" --comment=":THE_COMMENT2:" --comment="DESC:Commentaire avec description et langue:fre" --comment="DESC:Comment with description:" out/TestId3Tagv2basic.mp3

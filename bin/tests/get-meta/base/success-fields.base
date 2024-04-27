@@ -1,0 +1,2 @@
+id3v2 --track="1/10" --genre==101" in/TestId3Tagv2basic.mp3
+id3v2 --track="13" --genre==42" out/TestId3Tagv2basic.mp3

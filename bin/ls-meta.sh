@@ -18,7 +18,7 @@ This will show file metadata (id3 and exif) for audio visual media files.
 
 Show exif or id3 v1 and v2 title information for media, picture, photo, or image files.
 
-See also ls-music.sh ls-camera.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh get-image-size.pl identify display convert
+See also get-meta.sh ls-music.sh ls-camera.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh get-image-size.pl identify display convert
 "
 	exit $code
 }

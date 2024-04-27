@@ -104,6 +104,11 @@ if (scalar(@ARGV) && $ARGV[0] =~ m{--help|--man|-\?}xms)
 {
 	usage()
 }
+my @Unknown = grep { $ARG =~ m{^-.}xms} @ARGV;
+if (scalar(@Unknown))
+{
+	usage("unknown parameter(s) @{[join(", ", @Unknown)]} provided, please study the command usage below.");
+}
 ' >> $file
 			else
 				echo $file: Adding shell help boilerplate
@@ -140,6 +145,11 @@ if [ "$1" == "--man" ]; then
 fi
 if [ "$1" == "-?" ]; then
 	usage 0
+fi
+if echo "$*" | grep -- "--" > /dev/null; then
+	echo "unknown parameter provided, please study the command usage below."
+	echo ""
+	usage 1
 fi
 ' >> $file
 			fi

@@ -2,10 +2,20 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # Touch up a podcast/song file track number, title and album
 
+if [ --genre == "$1" ]; then
+	id3v2 --list-genre
+	exit 0
+fi
+
 TRACK=$1
 ALBUM="$2"
 SONG="$3"
 FILE="$4"
+#AUTHOR=""
+#SERIES=""
+#LECTURE=""
+#YEAR="2020"
+#GENRE=101 # speech
 
 if [ -z "$FILE" ]; then
 	echo "
@@ -18,6 +28,9 @@ $0 track \"album\" \"song\" filename
 fi
 
 TITLE="$TRACK $SONG"
+#TITLE="Lecture $TRACK: $LECTURE"
+#COMMENT="Lecture $TRACK - $LECTURE"
+#ALBUM="$SERIES"
 
 id3v2 --song "$TITLE" \
 	--TIT2 "$TITLE" \
@@ -27,6 +40,12 @@ id3v2 --song "$TITLE" \
 	--TIT1 "$ALBUM" \
 	--track $TRACK \
 	"$FILE"
+
+#	--comment "$COMMENT" \
+#	--artist "$AUTHOR" \
+#	--TPE1 "$AUTHOR" \
+#	--year $YEAR \
+#	--genre $GENRE \
 
 id3v2 --list "$FILE"
 

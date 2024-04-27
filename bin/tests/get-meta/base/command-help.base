@@ -1,0 +1,20 @@
+get-meta.sh [--help|--man|-?] filename...
+
+Get the id3v2 metadata from a song file and list it as arguments to the id3v2 command itself.
+
+FIELDS  Environment var specifying which id3v2 tag names to use.  default is TPE1|TALB|TIT2|COMM|TCON|TYER|TRCK
+VALUES  Environment var if set will only output the meta values without the filename. If set to 2 will only output the value, not the property name.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+The FIELDS environment value is a pipe '|' separatee list of id3v2 field names supported.
+
+See also id3v2 id3info ls-meta.sh ls-music.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh
+
+Example:
+
+	Get just the track number and content (genre) number from the file specified.
+
+FIELDS='TRCK|TCON' get-meta.sh filename.mp3
+

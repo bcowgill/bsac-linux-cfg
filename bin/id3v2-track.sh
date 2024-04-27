@@ -1,5 +1,9 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
+# id3v2-track.sh `find output/ -type f | grep mp3 | sort`
+# if there are files with spaces in their names:
+# find output/ -type f | grep mp3 | perl -ne 'chomp; $_ = qq{id3v2-track.sh "$_"\n}; system($_);'
+
 
 if [ -z "$1" ]; then
 	echo "

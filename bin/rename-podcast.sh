@@ -2,12 +2,15 @@
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 # label all original/NN-title.mp3 files and output to current directory
 # See also auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh rename-files.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
+echo Do not run this directly, copy it to the directory with your podcasts and customise it to your needs.
+exit 1
+
 FILE="$1"
-BASE=`basename $FILE`
 
 if [ -z $FILE ]; then
 	for f in *.mp3; do echo $f; $0 $f; done
 else
+	BASE=`basename $FILE`
 	TO="output/$BASE"
 
 	# Maintain list of tracks so track number can be worked out so long as you process them in proper order
