@@ -9,6 +9,7 @@
     "list": "npm run pretty -- --list-different",
     "check": "npm run pretty -- --check",
     "format": "npm run pretty -- --write",
+    "pretest": "npm run configtest -- src/index.js && npm run list && npm run check",
     "test": "npm run format"
   },
   "keywords": ["prettier", "configuration", "setup"],
