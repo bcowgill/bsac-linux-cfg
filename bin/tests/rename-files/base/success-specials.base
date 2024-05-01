@@ -1,0 +1,15 @@
+this.txt: file already exists, will use next-numbered [this1.txt] from [this'.txt]
+mv "a-$?£(|@[_-file<tag>,(paren);[bracket]:{brace}'q' "qq" `qqq`-%^&*+=~#!.txt" "a-file-tag-paren-bracket-brace-q-qq-qqq.txt"
+mv "'this is it's thing isn't it'.txt" "this-is-it-s-thing-isn-t-it.txt"
+mv "'this is it's thing'.txt" "this-is-it-s-thing.txt"
+mv "'this'.txt" "this.txt"
+mv "this'.txt" "this.txt"
+5 files were renamed.
+1 files already existed and were not overwritten and next-numbered file names were used instead.
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/a-file-tag-paren-bracket-brace-q-qq-qqq.txt
+./out/xyzzy/this1.txt
+./out/xyzzy/this-is-it-s-thing-isn-t-it.txt
+./out/xyzzy/this-is-it-s-thing.txt
+./out/xyzzy/this.txt

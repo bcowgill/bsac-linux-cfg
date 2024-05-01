@@ -1,0 +1,59 @@
+exiftool:
+ExifTool Version Number         : 9.46
+File Name                       : TestId3Tagv2basic.mp3
+Directory                       : ../get-meta/in
+File Size                       : 6.0 kB
+File Modification Date/Time     : 2024:04:27 08:28:40+01:00
+File Access Date/Time           : 2024:05:01 19:36:57+01:00
+File Inode Change Date/Time     : 2024:04:27 08:28:40+01:00
+File Permissions                : rw-rw-r--
+File Type                       : MP3
+MIME Type                       : audio/mpeg
+MPEG Audio Version              : 1
+Audio Layer                     : 3
+Audio Bitrate                   : 56 kbps
+Sample Rate                     : 32000
+Channel Mode                    : Single Channel
+MS Stereo                       : Off
+Intensity Stereo                : Off
+Copyright Flag                  : False
+Original Media                  : True
+Emphasis                        : None
+ID3 Size                        : 2112
+Artist                          : ARTISTv1
+Album                           : ALBUMv1
+Title                           : SONGv1
+Year                            : 2001
+Comment (xxx)                   : COMMENTv1.NODESC v1
+Genre                           : Speech
+Track                           : 1/10
+Date/Time Original              : 2001
+Duration                        : 0.58 s (approx)
+id3info:
+
+*** Tag information for ../get-meta/in/TestId3Tagv2basic.mp3
+=== TPE1 (Lead performer(s)/Soloist(s)): ARTISTv1
+=== TALB (Album/Movie/Show title): ALBUMv1
+=== TIT2 (Title/songname/content description): SONGv1
+=== TYER (Year): 2001
+=== COMM (Comments): ()[XXX]: COMMENTv1
+NODESC v1
+=== TCON (Content type): (101)
+=== TRCK (Track number/Position in set): 1/10
+*** mp3 info
+MPEG1/layer III
+Bitrate: 56KBps
+Frequency: 32KHz
+id3v2:
+id3v2 tag info for ../get-meta/in/TestId3Tagv2basic.mp3:
+TPE1 (Lead performer(s)/Soloist(s)): ARTISTv1
+TALB (Album/Movie/Show title): ALBUMv1
+TIT2 (Title/songname/content description): SONGv1
+TYER (Year): 2001
+COMM (Comments): ()[XXX]: COMMENTv1
+NODESC v1
+TCON (Content type): Speech (101)
+TRCK (Track number/Position in set): 1/10
+../get-meta/in/TestId3Tagv2basic.mp3: No ID3v1 tag
+rdjpgcom:
+------------------------------------------------------------

@@ -1,0 +1,14 @@
+1: ./this'.mp3
+2: ./'this'.mp3
+3: ./'this is it's thing'.mp3
+4: ./'this is it's thing isn't it'.mp3
+mv "'this is it's thing isn't it'.mp3" "'this-is-it's-thing-isn't-it'.mp3"
+mv "'this is it's thing'.mp3" "'this-is-it's-thing'.mp3"
+2 files would be renamed.  Specify --exec to rename them.
+This was a dry run, to actually make the changes, specify: ../../../../fix-song-names.sh --go
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/'this is it's thing isn't it'.mp3
+./out/xyzzy/'this is it's thing'.mp3
+./out/xyzzy/'this'.mp3
+./out/xyzzy/this'.mp3

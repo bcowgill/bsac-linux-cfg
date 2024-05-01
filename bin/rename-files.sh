@@ -61,7 +61,7 @@ if [ "$1" == "-?" ]; then
 fi
 if [ -z "$2" ]; then
 	echo "You must provide a replace string to rename files."
-	usage 0
+	usage 1
 fi
 
 # make vars (which may have space in them) available to the perl script easily
@@ -69,8 +69,9 @@ export MATCH="$1"
 export REPLACE="$2"
 export EXEC="$3"
 export SPECIAL=$4
-export DEBUG=1
+export DEBUG=0
 ls -1 | perl -MFile::Spec -MFile::Copy -ne '
+	use English qw(-no_match_vars);
 	BEGIN
 	{
 		if ($ENV{DEBUG})
@@ -85,6 +86,7 @@ ls -1 | perl -MFile::Spec -MFile::Copy -ne '
 	$from = $_;
 	$to = $from;
 
+	#print STDERR qq{1:[$to]\n};
 	if ($ENV{SPECIAL})
 	{
 		next unless $to =~ m{$match}xmsi;
@@ -97,15 +99,18 @@ ls -1 | perl -MFile::Spec -MFile::Copy -ne '
 	{
 		next unless $to =~ m{$match}xms;
 		$to =~ s{$match}{$replace}xmsg;
-		$to =~ s{[\s:;&\{\}}\[\]\(\)\?]+}{-}g;
+		$to =~ s{[\s:;&\{\}\[\]\(\)\?]+}{-}g;
 	}
 
+	#print STDERR qq{2:[$to]\n};
 	$to =~ s{--+}{-}g;
 	$to =~ s{-?\.-?}{.}xmsg;
 	$to =~ s{\A-}{}xmsg;
 	$to =~ s{-\z}{}xmsg;
 
+	#print STDERR qq{3:[$to]\n};
 	$to =~ s{\.jpeg\z}{.jpg}xmsi;
+	#print STDERR qq{4:[$to] <$from>\n};
 
 	if ($from ne $to) {
 		++$moved;
@@ -142,7 +147,7 @@ ls -1 | perl -MFile::Spec -MFile::Copy -ne '
 	{
 		my ($full) = @ARG;
 		my ($volume, $path, $filename, $file, $ext) = splitparts($full);
-		#print qq{$full => [$volume] [$path] [$filename] [$file] [$ext]\n};
+		#print STDERR qq{$full => [$volume] [$path] [$filename] [$file] [$ext]\n};
 
 		my $number = 0;
 		$number = $1 if ($file =~ s{(\d+)\z}{}xms);

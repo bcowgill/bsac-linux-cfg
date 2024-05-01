@@ -1,0 +1,11 @@
+mv "a-$?£(|@[_-file<tag>,(paren);[bracket]:{brace}'q' "qq" `qqq`-%^&*+=~#!.txt" "a-$-£-|@-_-file<tag>,-paren-bracket-brace-'q'-"qq"-`qqq`-%^-*+=~#!.txt"
+mv "'this is it's thing isn't it'.txt" "'this-is-it's-thing-isn't-it'.txt"
+mv "'this is it's thing'.txt" "'this-is-it's-thing'.txt"
+3 files were renamed.
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/a-$-£-|@-_-file<tag>,-paren-bracket-brace-'q'-"qq"-`qqq`-%^-*+=~#!.txt
+./out/xyzzy/'this-is-it's-thing-isn't-it'.txt
+./out/xyzzy/'this-is-it's-thing'.txt
+./out/xyzzy/'this'.txt
+./out/xyzzy/this'.txt

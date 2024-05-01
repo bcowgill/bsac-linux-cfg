@@ -4,9 +4,9 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../mv-apostrophe.sh
+PROGRAM=../../fix-song-names.sh
 CMD=`basename $PROGRAM`
-TAR=../in/apostrophe-filenames.tgz
+TAR=../in/apostrophe-music.tgz
 SAMPLE=./out/xyzzy
 DEBUG=
 SKIP=0
@@ -85,8 +85,10 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --check"
-	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG"
+	pushd $SAMPLE > /dev/null
+	../../$PROGRAM $ARGS > ../../$OUT || assertCommandSuccess $? "../../$PROGRAM $ARGS"
+	popd > /dev/null
 	echo "=== files on disk ======" >> $OUT
 	find $SAMPLE | sort >> $OUT
 	filter "$OUT"
@@ -102,8 +104,10 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG --go"
+	pushd $SAMPLE > /dev/null
+	../../$PROGRAM $ARGS > ../../$OUT || assertCommandSuccess $? "../../$PROGRAM $ARGS"
+	popd > /dev/null
 	echo "=== files on disk ======" >> $OUT
 	find $SAMPLE | sort >> $OUT
 	filter "$OUT"

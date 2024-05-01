@@ -1,0 +1,40 @@
+
+rename-files.sh [--help|--man|-?] match replace [--exec] [--specials]
+
+This will rename files in the current directory only, searching for a match string and replacing with a replace string.  It makes their names easier to use with the shell mouse selection by converting spaces to dashes.
+
+--exec  Specify to cause the files to be renamed.
+--specials  Perform lower case change and fix other special characters.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+It will process any files which match the match string, ignoring case differences.
+The match and replace strings can be identical to restrict the rename to files with a common sub-string in them.
+The new file name will be converted to lower case letters.
+Spaces in the file name will be converted to a dash.
+Bracket and other characters < ( [ { , ; : ? \@ ' " ` £ $ \% ^ & * _ + = ~ # | ! } ] ) > will be converted to a dash.
+Multiple dashes will be converted to a single one.
+
+By default it only shows how the files would be renamed but doesn\'t do it.
+
+See also ls-spacefiles.sh auto-rename.pl mv-apostrophe.sh mv-spelling.pl mv-to-year.sh mv-camera.sh renumber-by-time.sh renumber-files.sh rename-podcast.sh cp-random.pl
+
+Example:
+
+rename-files.sh ' ' -
+
+Renames any files with spaces in them.
+
+rename-files.sh . .
+
+Rename all files.
+
+rename-files.sh imag photos-today-
+
+Renames IMAG0000.AVI to photos-today-0000.avi
+
+Puts track/chapter number from file at start:
+
+ls -1 | perl -pne 'chomp; m{(\d\d)}; $_ = qq{mv $_ $1-$_\n}; system $_'
+

@@ -4,17 +4,18 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../mv-apostrophe.sh
+PROGRAM=../../ls-meta.sh
 CMD=`basename $PROGRAM`
-TAR=../in/apostrophe-filenames.tgz
-SAMPLE=./out/xyzzy
+SAMPLE=in/ls-meta-sample-camera-image-metadata-captioned.jpg
+SAMPLE1=in/ls-meta-sample-camera-image-metadata.jpg
+SAMPLE2=../get-meta/in/TestId3Tagv2basic.mp3
 DEBUG=
 SKIP=0
 HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 9
+PLAN 8
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -27,13 +28,6 @@ function filter {
 	local file
 	file="$1"
 	perl -i -pne 's{DONOTFILTER\w+\s+\(\w+\)}{NAME (ROLE)}xms' $file
-}
-
-function setup {
-	pushd out > /dev/null
-	[ -d xyzzy ] && rm -rf xyzzy
-	tar xzf $TAR
-	popd > /dev/null
 }
 
 echo TEST $CMD command help
@@ -64,53 +58,32 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-echo TEST $CMD command incompatible options
-TEST=command-incompatible-options
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --check --keep $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-setup
-echo TEST $CMD successful check operation
-TEST=success-check
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --check"
-	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	echo "=== files on disk ======" >> $OUT
-	find $SAMPLE | sort >> $OUT
-	filter "$OUT"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-setup
-echo TEST $CMD successful operation
+echo TEST $CMD successful operation pictures
 TEST=success
 if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
-	echo "=== files on disk ======" >> $OUT
-	find $SAMPLE | sort >> $OUT
+	$PROGRAM $ARGS $SAMPLE $SAMPLE1 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
 fi
 
-[ -d $SAMPLE ] && rm -rf $SAMPLE
+echo TEST $CMD successful operation song
+TEST=success-song
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS $SAMPLE2 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 cleanUpAfterTests

@@ -1,0 +1,12 @@
+mv "'this is it's thing isn't it'.txt" "'that-is-it's-thing-isn't-it'.txt"
+mv "'this is it's thing'.txt" "'that-is-it's-thing'.txt"
+mv "'this'.txt" "'that'.txt"
+mv "this'.txt" "that'.txt"
+4 files would be renamed.  Specify --exec to rename them.
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/a-$?£(|@[_-file<tag>,(paren);[bracket]:{brace}'q' "qq" `qqq`-%^&*+=~#!.txt
+./out/xyzzy/'this is it's thing isn't it'.txt
+./out/xyzzy/'this is it's thing'.txt
+./out/xyzzy/'this'.txt
+./out/xyzzy/this'.txt

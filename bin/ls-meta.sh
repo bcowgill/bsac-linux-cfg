@@ -7,8 +7,7 @@ function usage {
 	local code
 	code=$1
 	cmd=$(basename $0)
-	echo "
-$cmd [--help|--man|-?] filename...
+	echo "$cmd [--help|--man|-?] filename...
 
 This will show file metadata (id3 and exif) for audio visual media files.
 
@@ -35,6 +34,12 @@ if [ -z "$1" ]; then
 	usage 0
 fi
 
+if echo "$*" | grep -- "--" > /dev/null; then
+	echo "unknown parameter provided, please study the command usage below."
+	echo ""
+	usage 1
+fi
+
 if [ -z "$2" ]; then
 	echo exiftool:
 	exiftool "$1"
@@ -43,7 +48,7 @@ if [ -z "$2" ]; then
 	echo id3v2:
 	id3v2 --list "$1"
 	echo rdjpgcom:
-	rdjpgcom -verbose "$1"
+	rdjpgcom -verbose "$1" 2> /dev/null
 	echo "------------------------------------------------------------"
 	exit 0
 fi

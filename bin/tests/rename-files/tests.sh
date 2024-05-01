@@ -4,9 +4,9 @@
 set -e
 
 # What we're testing and sample input data
-PROGRAM=../../mv-apostrophe.sh
+PROGRAM=../../rename-files.sh
 CMD=`basename $PROGRAM`
-TAR=../in/apostrophe-filenames.tgz
+TAR=../in/rename-files.tgz
 SAMPLE=./out/xyzzy
 DEBUG=
 SKIP=0
@@ -56,23 +56,9 @@ if [ 0 == "$SKIP" ]; then
 	EXPECT=1
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --invalid $SAMPLE"
+	ARGS="$DEBUG $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
 	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-else
-	echo SKIP $TEST "$SKIP"
-fi
-
-echo TEST $CMD command incompatible options
-TEST=command-incompatible-options
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	EXPECT=1
-	OUT=out/$TEST.out
-	BASE=base/$TEST.base
-	ARGS="$DEBUG --check --keep $SAMPLE"
-	$PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -85,8 +71,10 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG --check"
-	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG this that"
+	pushd $SAMPLE > /dev/null
+	../../$PROGRAM $ARGS > ../../$OUT || assertCommandSuccess $? "../../$PROGRAM $ARGS"
+	popd > /dev/null
 	echo "=== files on disk ======" >> $OUT
 	find $SAMPLE | sort >> $OUT
 	filter "$OUT"
@@ -102,8 +90,29 @@ if [ 0 == "$SKIP" ]; then
 	ERR=0
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
-	ARGS="$DEBUG"
-	$PROGRAM $ARGS $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	ARGS="$DEBUG txt txt --exec"
+	pushd $SAMPLE > /dev/null
+	../../$PROGRAM $ARGS > ../../$OUT || assertCommandSuccess $? "../../$PROGRAM $ARGS"
+	popd > /dev/null
+	echo "=== files on disk ======" >> $OUT
+	find $SAMPLE | sort >> $OUT
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+setup
+echo TEST $CMD successful operation specials
+TEST=success-specials
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG txt txt --exec --specials"
+	pushd $SAMPLE > /dev/null
+	../../$PROGRAM $ARGS > ../../$OUT 2>&1 || assertCommandSuccess $? "../../$PROGRAM $ARGS"
+	popd > /dev/null
 	echo "=== files on disk ======" >> $OUT
 	find $SAMPLE | sort >> $OUT
 	filter "$OUT"

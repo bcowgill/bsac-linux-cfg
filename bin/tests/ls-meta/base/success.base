@@ -1,0 +1,159 @@
+exiftool:
+ExifTool Version Number         : 9.46
+File Name                       : ls-meta-sample-camera-image-metadata-captioned.jpg
+Directory                       : in
+File Size                       : 6.0 MB
+File Modification Date/Time     : 2021:08:08 11:07:50+01:00
+File Access Date/Time           : 2024:05:01 19:36:57+01:00
+File Inode Change Date/Time     : 2021:08:08 11:07:50+01:00
+File Permissions                : rw-rw-r--
+File Type                       : JPEG
+MIME Type                       : image/jpeg
+JFIF Version                    : 1.01
+Comment                         : IMAGE COMMENT
+Exif Byte Order                 : Little-endian (Intel, II)
+Make                            : samsung
+Camera Model Name               : SM-N970F
+Orientation                     : Rotate 90 CW
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Software                        : N970FXXS5CTG1
+Modify Date                     : 2021:04:18 15:40:57
+Y Cb Cr Positioning             : Centered
+Exposure Time                   : 1/1168
+F Number                        : 2.4
+Exposure Program                : Program AE
+ISO                             : 50
+Exif Version                    : 0220
+Date/Time Original              : 2021:04:18 15:40:57
+Create Date                     : 2021:04:18 15:40:57
+Shutter Speed Value             : 1
+Aperture Value                  : 2.4
+Brightness Value                : 21.58
+Exposure Compensation           : 0
+Max Aperture Value              : 2.4
+Metering Mode                   : Center-weighted average
+Flash                           : No Flash
+Focal Length                    : 4.3 mm
+Color Space                     : sRGB
+Exif Image Width                : 4032
+Exif Image Height               : 3024
+Exposure Mode                   : Auto
+White Balance                   : Auto
+Digital Zoom Ratio              : 1
+Focal Length In 35mm Format     : 26 mm
+Scene Capture Type              : Standard
+Image Unique ID                 : O12XLMA10SM
+GPS Latitude Ref                : North
+GPS Longitude Ref               : West
+Compression                     : JPEG (old-style)
+Thumbnail Offset                : 923
+Thumbnail Length                : 61061
+Image Width                     : 4032
+Image Height                    : 3024
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Aperture                        : 2.4
+GPS Latitude                    : 51 deg 29' 5.82" N
+GPS Longitude                   : 0 deg 2' 8.57" W
+GPS Position                    : 51 deg 29' 5.82" N, 0 deg 2' 8.57" W
+Image Size                      : 4032x3024
+Scale Factor To 35 mm Equivalent: 6.0
+Shutter Speed                   : 1/1168
+Thumbnail Image                 : (Binary data 61061 bytes, use -b option to extract)
+Circle Of Confusion             : 0.005 mm
+Field Of View                   : 69.4 deg
+Focal Length                    : 4.3 mm (35 mm equivalent: 26.0 mm)
+Hyperfocal Distance             : 1.55 m
+Light Value                     : 13.7
+id3info:
+
+*** Tag information for in/ls-meta-sample-camera-image-metadata-captioned.jpg
+id3v2:
+in/ls-meta-sample-camera-image-metadata-captioned.jpg: No ID3 tag
+rdjpgcom:
+IMAGE COMMENT
+JPEG image is 4032w * 3024h, 3 color components, 8 bits per sample
+JPEG process: Baseline
+------------------------------------------------------------
+exiftool:
+ExifTool Version Number         : 9.46
+File Name                       : ls-meta-sample-camera-image-metadata.jpg
+Directory                       : in
+File Size                       : 7.5 MB
+File Modification Date/Time     : 2021:08:08 11:07:50+01:00
+File Access Date/Time           : 2024:05:01 19:36:57+01:00
+File Inode Change Date/Time     : 2021:08:08 11:07:50+01:00
+File Permissions                : rw-rw-r--
+File Type                       : JPEG
+MIME Type                       : image/jpeg
+Exif Byte Order                 : Little-endian (Intel, II)
+Make                            : samsung
+Camera Model Name               : SM-N970F
+Orientation                     : Rotate 90 CW
+X Resolution                    : 72
+Y Resolution                    : 72
+Resolution Unit                 : inches
+Software                        : N970FXXS5CTG1
+Modify Date                     : 2021:04:18 15:40:57
+Y Cb Cr Positioning             : Centered
+Exposure Time                   : 1/1168
+F Number                        : 2.4
+Exposure Program                : Program AE
+ISO                             : 50
+Exif Version                    : 0220
+Date/Time Original              : 2021:04:18 15:40:57
+Create Date                     : 2021:04:18 15:40:57
+Shutter Speed Value             : 1
+Aperture Value                  : 2.4
+Brightness Value                : 21.58
+Exposure Compensation           : 0
+Max Aperture Value              : 2.4
+Metering Mode                   : Center-weighted average
+Flash                           : No Flash
+Focal Length                    : 4.3 mm
+Color Space                     : sRGB
+Exif Image Width                : 4032
+Exif Image Height               : 3024
+Exposure Mode                   : Auto
+White Balance                   : Auto
+Digital Zoom Ratio              : 1
+Focal Length In 35mm Format     : 26 mm
+Scene Capture Type              : Standard
+Image Unique ID                 : O12XLMA10SM
+GPS Latitude Ref                : North
+GPS Longitude Ref               : West
+Compression                     : JPEG (old-style)
+Thumbnail Offset                : 888
+Thumbnail Length                : 61061
+Image Width                     : 4032
+Image Height                    : 3024
+Encoding Process                : Baseline DCT, Huffman coding
+Bits Per Sample                 : 8
+Color Components                : 3
+Y Cb Cr Sub Sampling            : YCbCr4:2:0 (2 2)
+Aperture                        : 2.4
+GPS Latitude                    : 51 deg 29' 5.82" N
+GPS Longitude                   : 0 deg 2' 8.57" W
+GPS Position                    : 51 deg 29' 5.82" N, 0 deg 2' 8.57" W
+Image Size                      : 4032x3024
+Scale Factor To 35 mm Equivalent: 6.0
+Shutter Speed                   : 1/1168
+Thumbnail Image                 : (Binary data 61061 bytes, use -b option to extract)
+Circle Of Confusion             : 0.005 mm
+Field Of View                   : 69.4 deg
+Focal Length                    : 4.3 mm (35 mm equivalent: 26.0 mm)
+Hyperfocal Distance             : 1.55 m
+Light Value                     : 13.7
+id3info:
+
+*** Tag information for in/ls-meta-sample-camera-image-metadata.jpg
+id3v2:
+in/ls-meta-sample-camera-image-metadata.jpg: No ID3 tag
+rdjpgcom:
+JPEG image is 4032w * 3024h, 3 color components, 8 bits per sample
+JPEG process: Baseline
+------------------------------------------------------------
