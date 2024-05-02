@@ -80,6 +80,8 @@ Inbox folders
 3-someday
 4-DMZ
 
+✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+
 Categories for meetings
 
 green  - Work
@@ -119,7 +121,21 @@ Configure Ctrl-\ as key for take screenshot (to clipboard)
 
 Pomodoro Timer - built into windows as focus time.
 
+✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+
 Regularly - Mondays
 Time sheet submit
 Task Manager / App history / Delete usage history (win)
 powershell Update-Help  (win)
+
+⁐	U+2050	[OtherPunctuation]	CLOSE UP
+□	U+25A1	[OtherSymbol]	WHITE SQUARE
+▢	U+25A2	[OtherSymbol]	WHITE SQUARE WITH ROUNDED CORNERS
+▣	U+25A3	[OtherSymbol]	WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+▭	U+25AD	[OtherSymbol]	WHITE RECTANGLE
+◯	U+25EF	[OtherSymbol]	LARGE CIRCLE
+◻	U+25FB	[MathSymbol]	WHITE MEDIUM SQUARE
+✅	U+2705	[OtherSymbol]	WHITE HEAVY CHECK MARK
+
+✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+

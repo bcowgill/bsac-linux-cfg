@@ -167,7 +167,13 @@ echo "// 😕 Confused face"
 echo "// 😠 Angry face"
 echo "// 😡 Pouting face"
 echo "// 😢 Crying face"
-echo " "
+echo "
+mac keyref -- Favourites:
+~ ^ ☑️ ✅ ☐ ☒ ☑︎ ❌ 🤑 💰 💸 💵 💲 $ ﹩ ＄
+
+windows keyref
+✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+"
 echo "  NOT_OK: '✘ ', // 'NOT OK ',"
 echo "  OK    : '✔ ', // 'OK ',"
 echo "  SKIP  : '○ ', // 'SKIP',"
@@ -365,5 +371,12 @@ OTHER - move to unicode sample....
 ❐       U+2750  [OtherSymbol]   UPPER RIGHT DROP-SHADOWED WHITE SQUARE
 ❑       U+2751  [OtherSymbol]   LOWER RIGHT SHADOWED WHITE SQUARE
 ❒       U+2752  [OtherSymbol]   UPPER RIGHT SHADOWED WHITE SQUARE
-mac keyref -- Favourites:
-~ ^ ☑️ ✅ ☐ ☒ ☑︎ ❌ 🤑 💰 💸 💵 💲 $ ﹩ ＄
+⁐	U+2050	[OtherPunctuation]	CLOSE UP
+□	U+25A1	[OtherSymbol]	WHITE SQUARE
+▢	U+25A2	[OtherSymbol]	WHITE SQUARE WITH ROUNDED CORNERS
+▣	U+25A3	[OtherSymbol]	WHITE SQUARE CONTAINING BLACK SMALL SQUARE
+▭	U+25AD	[OtherSymbol]	WHITE RECTANGLE
+◯	U+25EF	[OtherSymbol]	LARGE CIRCLE
+◻	U+25FB	[MathSymbol]	WHITE MEDIUM SQUARE
+✅	U+2705	[OtherSymbol]	WHITE HEAVY CHECK MARK
+
