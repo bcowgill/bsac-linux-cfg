@@ -4,11 +4,12 @@ UB=$U/bin
 B=tx/c/d/bin
 
 rm -rf tx/c
+rm -rf bundle
+mkdir bundle
 mkdir -p $UB
 mkdir -p $B/playwright
 
 cp * .* $U
-rm $U/my* $U/md5sum.lst $U/zip64.log
 
 rm $U/to-lloyds.sh \
 	$U/.bash_history \
@@ -97,16 +98,16 @@ popd
 #npm install nyc-dark
 cp -r node_modules/nyc-dark $B
 
-tar czf my-git-dev-tools.tgz tx
-zip64.pl `find tx -type f` > mytools.txt 2> zip64.log
-grep -vE '^(end|\s*$)' zip64.log
+tar czf bundle/my-git-dev-tools.tgz tx
+zip64.pl `find tx -type f` > bundle/mytools.txt 2> bundle/zip64.log
+grep -vE '^(end|\s*$)' bundle/zip64.log
 
-md5sum.sh tx | tee md5sum.lst
+md5sum.sh tx | tee bundle/md5sum.lst
 
 echo ""
 echo "You can email mytools.txt to send all the tools."
 
-ls -alh my*
+ls -alh bundle
 
 
 
