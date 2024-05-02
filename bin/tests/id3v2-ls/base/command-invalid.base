@@ -1,0 +1,13 @@
+unknown parameter provided, please study the command usage below.
+
+
+id3v2-ls.sh [--help|--man|-?] filename...
+
+This will list the id3v2 genre along with the filename.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+See also id3v2 id3info ls-meta.sh get-meta.sh ls-music.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh
+

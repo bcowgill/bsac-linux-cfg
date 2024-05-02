@@ -1,0 +1,23 @@
+unknown parameter provided, please study the command usage below.
+
+
+id3v2-track.sh [--help|--man|-?] filename...
+
+This will list the id3v2 track number along with the filename.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+See also id3v2 id3info ls-meta.sh get-meta.sh ls-music.sh id3v2-ls.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh
+
+Examples
+
+	Find mp3 files in the output directory and list their track numbers.
+
+id3v2-track.sh `find output/ -type f | grep mp3 | sort`
+
+	If there are files with spaces in their names:
+
+find output/ -type f | grep mp3 | perl -ne 'chomp; $_ = qq{id3v2-track.sh "$_"\n}; system($_);'
+

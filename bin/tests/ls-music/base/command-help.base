@@ -1,0 +1,13 @@
+
+ls-music.sh [--help|--man|-?] filename...
+
+This will show a one liner listing of common music file properties.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+Shows filename, file type, track length, file size, year, genre, artist, title, album and track number all on the same line.
+
+See also get-meta.sh ls-meta.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh
+

@@ -16,7 +16,7 @@ This will show a one liner listing of common music file properties.
 
 Shows filename, file type, track length, file size, year, genre, artist, title, album and track number all on the same line.
 
-See also ls-meta.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh
+See also get-meta.sh ls-meta.sh id3v2-track.sh filter-id3.pl label-music.sh label-podcast.sh rename-podcast.sh
 "
 	exit $code
 }
@@ -31,6 +31,12 @@ if [ "$1" == "-?" ]; then
 fi
 if [ -z "$1" ]; then
 	usage 0
+fi
+
+if echo "$*" | grep -- "--" > /dev/null; then
+	echo "unknown parameter provided, please study the command usage below."
+	echo ""
+	usage 1
 fi
 
 exiftool -ignoreMinorErrors -printFormat '$FileName $FileType $Length $FileSize $Year "$Genre" "$Artist" "$Title" "$Album" #$Track' $*

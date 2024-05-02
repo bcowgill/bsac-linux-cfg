@@ -1,0 +1,12 @@
+Warning: ValueConv Length: Argument "TLEN LENGTH" isn't numeric in division (/) - ../../sounds/TestId3/TestId3v2.mp3
+    1 directories scanned
+    9 image files read
+TestId3Tagv1desc.mp3 MP3  4.1 kB 2002 "Chanson" "ARTISTv1" "SONGv1" "ALBUMv1" #2
+TestId3Tagv1.mp3 MP3  6.0 kB 2001 "Speech" "ARTISTv1" "SONGv1" "ALBUMv1" #1
+TestId3v2.mp3 TFLT FILE TYPE 0 s 8.1 kB TYER YEAR "TCON CONTENT TYPE" "TPE1 LEAD PERFORMER(S)/SOLOIST(S)" "TIT2 TITLE/SONGNAME/CONTENT DESCRIPTION" "TALB ALBUM/MOVIE/SHOW TITLE" #TRCK TRACK NUMBER/POSITION IN SET
+TestId3Tagv1and2basicdesc.mp3 MP3  6.1 kB 2002 "Chanson" "ARTISTv1" "SONGv1" "ALBUMv1" #2/11
+TestId3Empty.mp3 MP3  3.9 kB  "" "" "" "" #
+TestId3Tagv2basicdesc.mp3 MP3  6.0 kB 2002 "Chanson" "ARTISTv1" "SONGv1" "ALBUMv1" #2/11
+TestId3Tagv1and2basic.mp3 MP3  6.1 kB 2001 "Speech" "ARTISTv1" "SONGv1" "ALBUMv1" #1/10
+TestId3Tagv2basic.mp3 MP3  6.0 kB 2001 "Speech" "ARTISTv1" "SONGv1" "ALBUMv1" #1/10
+TestIdTag3v1.mp3 MP3  128 bytes 2001 "Speech" "ARTISTv1" "SONGv1" "ALBUMv1" #1
