@@ -5,7 +5,8 @@
 
 /** @type {import("prettier").Config} */
 module.exports = {
-	experimentalTernaries: true,
+	// not supported in this version of prettier 2.8.4
+	// experimentalTernaries: true,
 	endOfLine: 'lf',
 	useTabs: true,
 	tabWidth: 4,

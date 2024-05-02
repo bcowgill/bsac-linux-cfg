@@ -10,4 +10,4 @@ window.getComputedStyle = (
 	return new CSSStyleDeclaration()
 }
 
-import '../__vendor__/modernizr.min' // addes window.Modernizr
+import '../__vendor__/modernizr.min' // adds window.Modernizr
