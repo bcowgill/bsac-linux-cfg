@@ -87,6 +87,7 @@ cp ~/bin/find-bak.sh \
 	~/bin/git-fetch-pull-request.sh \
 	~/bin/npm-stars.lst \
 	~/bin/unicode-sample.sh \
+	~/bin/unwebpack.sh \
 	$B
 
 pushd ~/bin/template/playwright
