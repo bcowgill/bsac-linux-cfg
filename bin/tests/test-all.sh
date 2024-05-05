@@ -102,6 +102,20 @@ testSuite git-mv-src "move a source file and repair import statements" $PROVE
 testSuite css-color-scale "generates a quantised CSS color scale" $PROVE
 testSuite ls-cmds-used "lists external commands used in scripts" $PROVE
 
+testSuite utf8spaces "show unicode space characters and javascript definitions for them" $PROVE
+
+testSuite get-meta "shows id3v2 meta-data tags for files" $PROVE
+testSuite ls-meta "shows id3v2 and exif meta-data tags for files" $PROVE
+testSuite ls-music "shows a one liner listing of common music meta-data fields" $PROVE
+testSuite id3v2-ls "shows the genre of a music file along with its name" $PROVE
+testSuite id3v2-track "shows the track number of a music file along with its name" $PROVE
+
+testSuite mv-apostrophe "renames files and directories with apostrophes in them" $PROVE
+testSuite rename-files "rename files automatcillay by converting characters to dashes" $PROVE
+testSuite fix-song-names "fixes the names of song files addressing apostrophes and other special characters" $PROVE
+testSuite renumber-files "rename files with consectutive numbers" $PROVE
+testSuite renumber-by-time "rename files with consectutive numbers by their timestamp" $PROVE
+
 #================================================================
 testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"
 $PROVE ./unit-tests.sh

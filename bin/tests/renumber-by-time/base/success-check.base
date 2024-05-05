@@ -1,0 +1,11 @@
+mv "ScreenshotB.PNG" "done/Screen-001.PNG"
+mv "snapshot42.PNG" "done/Screen-002.PNG"
+mv "ScreenshotA.PNG" "done/Screen-003.PNG"
+TEST mode, did not make any changes. Run ./go.sh to make changes if all looks well.
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/done
+./out/xyzzy/go.sh
+./out/xyzzy/ScreenshotA.PNG
+./out/xyzzy/ScreenshotB.PNG
+./out/xyzzy/snapshot42.PNG

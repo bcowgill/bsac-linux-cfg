@@ -28,7 +28,7 @@ extension optional File extension for files to rename. defaults to $EXT
 --help    Shows help for this tool.
 -?        Shows help for this tool.
 
-Creates a temporary directory 'done' to move the files to and a go.sh shell script to do the moving.
+Creates a temporary directory 'done' to move the files to and a go.sh shell script to do the moving and then remove the done dir after.
 
 See also next-file.pl, renumber-files.sh, rename-files.sh, auto-rename.pl, choose.pl, cp-random.pl mv-spelling.pl mv-to-year.sh mv-camera.sh rename-podcast.sh
 
@@ -45,11 +45,16 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 
+if echo "$*" | grep -- "--" > /dev/null; then
+	echo "unknown parameter provided, please study the command usage below."
+	usage 1
+fi
+
 GO=
 [ "$TEST" == 1 ] && GO=-a
 
 mkdir -p done
-ls -rt | grep png | \
+ls -rt | grep $EXT | \
 	EXT="$EXT" PREFIX="$PREFIX" perl -pne '
 	chomp;
 	my $in = $_;

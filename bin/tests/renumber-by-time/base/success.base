@@ -1,0 +1,8 @@
+mv "ScreenshotB.png" "done/ScreenshotB-001.png"
+mv "ScreenshotA.png" "done/ScreenshotA-002.png"
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/go.sh
+./out/xyzzy/ScreenshotA-002.png
+./out/xyzzy/ScreenshotB-001.png
+./out/xyzzy/snapshot42.PNG

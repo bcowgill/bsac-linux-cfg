@@ -1,0 +1,17 @@
+
+renumber-by-time.sh [--help|--man|-?] [--go] [prefix] [extension]
+
+Renumber or rename files which may already have numbers in them by timestamp.
+
+prefix    optional New file name prefix for numbered files.
+extension optional File extension for files to rename. defaults to ./out/xyzzy
+--go      Make it so.  Default is to show what would happen but not do it.
+--man     Shows help for this tool.
+--help    Shows help for this tool.
+-?        Shows help for this tool.
+
+Creates a temporary directory 'done' to move the files to and a go.sh shell script to do the moving.
+
+See also next-file.pl, renumber-files.sh, rename-files.sh, auto-rename.pl, choose.pl, cp-random.pl mv-spelling.pl mv-to-year.sh mv-camera.sh rename-podcast.sh
+
+
