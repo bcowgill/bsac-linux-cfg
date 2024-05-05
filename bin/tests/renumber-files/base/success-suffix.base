@@ -1,0 +1,8 @@
+NUMBER=1
+mv "ScreenshotA.PNG" "renamed-1.png"
+mv "ScreenshotB.PNG" "renamed-2.png"
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/renamed-1.png
+./out/xyzzy/renamed-2.png
+./out/xyzzy/snapshot42.PNG

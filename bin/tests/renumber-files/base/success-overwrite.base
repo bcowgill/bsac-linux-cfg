@@ -1,0 +1,8 @@
+NUMBER=41
+mv "ScreenshotA.PNG" "snapshot41.PNG"
+mv "ScreenshotB.PNG" "snapshot42.PNG"
+snapshot42.PNG: file exists and will be overwritten.
+=== files on disk ======
+./out/xyzzy
+./out/xyzzy/snapshot41.PNG
+./out/xyzzy/snapshot42.PNG

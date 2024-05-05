@@ -61,23 +61,31 @@ fi
 
 if [ -z "$NAME" ]; then
 	echo "You must provide a new name prefix for the matched files."
-	usage 1
+	usage 2
 fi
 
 echo NUMBER=$NUMBER
 
-for f in $PREFIX*$SUFFIX
+for from in $PREFIX*$SUFFIX
 do
-	if [ -e "$f" ]; then
-		echo mv \"$f\" \"$NAME$NUMBER$NEWSUFFIX\"
+	if [ -e "$from" ]; then
+		to="$NAME$NUMBER$NEWSUFFIX"
+		echo mv \"$from\" \"$to\"
 		if [ -z "$TEST" ]; then
-			mv "$f" "$NAME$NUMBER$NEWSUFFIX"
+			if [ -e "$to" ]; then
+				echo "$to: file exists and will be overwritten." 1>&2
+			fi
+			mv "$from" "$to"
+		else
+			if [ -e "$to" ]; then
+				echo "$to: file exists and would be overwritten." 1>&2
+			fi
 		fi
 		# increment number keeping 0 padding
 		NUMBER=`perl -e '$n = shift; $l = length($n++); print qq{$n}' $NUMBER`
 	else
-		echo "$f: No matching files found"
-		exit 2
+		echo "$from: No matching files found"
+		exit 3
 	fi
 done
 if [ ! -z "$TEST" ]; then

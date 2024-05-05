@@ -1,0 +1,31 @@
+You must provide a new name prefix for the matched files.
+
+renumber-files.sh [--help|--man|-?] prefix suffix name [number] [new-suffix]
+
+This will rename matching files [prefix*suffix] with a new name and renumbered starting with the number provided. [name-number.new-suffix].
+The number value defaults to 001 if omitted.
+
+TEST        Environment variable to perform a dry-run or check before renaming the files.
+prefix      The initial prefix string of the files to match for renumbering.
+suffix      The file extension/suffix of the files to match for renumbering.
+name        The new name to assign to the files and append with a generated number.
+number      The number to begin with when renumbering the files. default is 001.
+new-suffix  The new file suffix to use default is the initial suffix.
+--man       Shows help for this tool.
+--help      Shows help for this tool.
+-?          Shows help for this tool.
+
+Specify TEST=1 renumber-files.sh ... as command to only test what would happen but not do it.
+
+Note that no filename checking is done on the new file name so any existing numbered file will be overwritten if it already exists.
+
+Use next-file.pl or auto-rename.pl if number collisions are likely to happen and you don't want to overwrite existing files.
+
+See also next-file.pl, auto-rename.pl, rename-files.sh, cp-random.pl, renumber-by-time.sh mv-spelling.pl mv-to-year.sh mv-camera.sh mv-apostrophe.sh rename-podcast.sh
+
+Example:
+
+	Renumber the screenshots matching Screen*.PNG with new name error-screen-14.png and successive numbers.
+
+renumber-files.sh Screen .PNG error-screen- 14 .png
+
