@@ -96,8 +96,13 @@ popd
 pushd $B/playwright
 	tar xzf /tmp/playwright.tgz
 popd
-#npm install nyc-dark
-cp -r node_modules/nyc-dark $B
+
+if [ ! -d /tmp/node_modules/nyc-dark ]; then
+	pushd /tmp
+	npm install nyc-dark
+	popd
+fi
+cp -r /tmp/node_modules/nyc-dark $B
 
 tar czf bundle/my-git-dev-tools.tgz tx
 zip64.pl `find tx -type f` > bundle/mytools.txt 2> bundle/zip64.log
