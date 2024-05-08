@@ -1,0 +1,72 @@
+
+> ts4-tooling@1.0.0 test:one
+> npm run test -- --watchAll=false --runInBand --no-cache --reporters=default --reporters=jest-junit --testPathPattern src/__tests__/JSONDebug.test.ts
+
+
+> ts4-tooling@1.0.0 test
+> NODE_ICU_DATA=node_modules/full-icu jest --watchAll=false --runInBand --no-cache --reporters=default --reporters=jest-junit --testPathPattern src/__tests__/JSONDebug.test.ts
+
+  console.warn
+    NOT FALSY!! k:flash f:false boolean Boolean
+
+      83 | 		const feature = modernizr[key] as ModernizerBooleans
+      84 | 		if (/^(datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(key)) {
+    > 85 | 			console.warn(
+         | 			        ^
+      86 | 				`NOT FALSY!! k:${key} f:${feature}`,
+      87 | 				typeof feature,
+      88 | 				feature.constructor.name,
+
+      at __tests__/JSONDebug.test.ts:85:12
+          at Array.forEach (<anonymous>)
+      at getPlatformModernizr (__tests__/JSONDebug.test.ts:82:25)
+      at Object.testJSONDebugReplacerDebugPlatformModernizr (__tests__/JSONDebug.test.ts:461:37)
+
+  console.warn
+    NOT FALSY!! k:indexeddb f:false boolean Boolean
+
+      83 | 		const feature = modernizr[key] as ModernizerBooleans
+      84 | 		if (/^(datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(key)) {
+    > 85 | 			console.warn(
+         | 			        ^
+      86 | 				`NOT FALSY!! k:${key} f:${feature}`,
+      87 | 				typeof feature,
+      88 | 				feature.constructor.name,
+
+      at __tests__/JSONDebug.test.ts:85:12
+          at Array.forEach (<anonymous>)
+      at getPlatformModernizr (__tests__/JSONDebug.test.ts:82:25)
+      at Object.testJSONDebugReplacerDebugPlatformModernizr (__tests__/JSONDebug.test.ts:461:37)
+
+  console.warn
+    NOT FALSY!! k:csscolumns f:true object Boolean
+
+      83 | 		const feature = modernizr[key] as ModernizerBooleans
+      84 | 		if (/^(datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(key)) {
+    > 85 | 			console.warn(
+         | 			        ^
+      86 | 				`NOT FALSY!! k:${key} f:${feature}`,
+      87 | 				typeof feature,
+      88 | 				feature.constructor.name,
+
+      at __tests__/JSONDebug.test.ts:85:12
+          at Array.forEach (<anonymous>)
+      at getPlatformModernizr (__tests__/JSONDebug.test.ts:82:25)
+      at Object.testJSONDebugReplacerDebugPlatformModernizr (__tests__/JSONDebug.test.ts:461:37)
+
+  console.warn
+    NOT FALSY!! k:webglextensions f:false boolean Boolean
+
+      83 | 		const feature = modernizr[key] as ModernizerBooleans
+      84 | 		if (/^(datauri|flash|indexeddb|csscolumns|webglextensions|webp)$/.test(key)) {
+    > 85 | 			console.warn(
+         | 			        ^
+      86 | 				`NOT FALSY!! k:${key} f:${feature}`,
+      87 | 				typeof feature,
+      88 | 				feature.constructor.name,
+
+      at __tests__/JSONDebug.test.ts:85:12
+          at Array.forEach (<anonymous>)
+      at getPlatformModernizr (__tests__/JSONDebug.test.ts:82:25)
+      at Object.testJSONDebugReplacerDebugPlatformModernizr (__tests__/JSONDebug.test.ts:461:37)
+

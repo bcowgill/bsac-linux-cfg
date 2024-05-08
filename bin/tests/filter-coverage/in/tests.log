@@ -1,0 +1,54 @@
+Tue 28 Mar 2023 07:38:11 BST
+
+
+
+> ts4-tooling@1.0.0 test
+> NODE_ICU_DATA=node_modules/full-icu jest --coverage src/__tests__/JSONDate.test.ts
+
+FAIL src/__tests__/JSONDate.test.ts
+  ● Test suite failed to run
+
+    TypeError: Cannot read properties of undefined (reading 'today')
+
+      42 | 	const TYPE = testMe.displayName
+      43 | 	const reDate = /^"?[-0-9]+T[.:0-9]+Z"?$/
+    > 44 | 	const TODAY = RESULTS[TZO].today
+         | 	                           ^
+      45 | 	const JTODAY = '🕔' + TODAY
+      46 | 	const date = new Date(TODAY)
+      47 |
+
+      at descJSONDateSuite (__tests__/JSONDate.test.ts:44:29)
+      at Object.<anonymous> (__tests__/JSONDate.test.ts:41:9)
+
+-----------------------|---------|----------|---------|---------|-------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines
+| Uncovered Line #s 
+-----------------------|---------|----------|---------|---------|-------------------
+All files              |       0 |        0 |       0 |     0 |                   
+ JSONDate.ts           |       0 |        0 |       0 |     0 | 15-90             
+ JSONDebug.ts          |       0 |        0 |       0 |     0 | 2-241             
+ JSONFunction.ts       |       0 |      100 |       0 |     0 | 9-17              
+ JSONMap.ts            |       0 |        0 |       0 |     0 | 7-60              
+ JSONRegExp.ts         |       0 |        0 |       0 |     0 | 4-33              
+ JSONSet.ts            |       0 |        0 |       0 |     0 | 4-57              
+ common.ts             |       0 |      100 |     100 |     0 | 1-2               
+ errors.ts             |       0 |        0 |       0 |     0 | 2-188             
+ index.ts              |       0 |      100 |     100 |     0 | 4-7               
+ pii.ts                |       0 |        0 |       0 |     0 | 6-96              
+ platform-feature.ts   |       0 |        0 |       0 |     0 | 9-17              
+ platform-modernizr.ts |       0 |        0 |       0 |     0 | 9-57              
+ typeOf.ts             |       0 |        0 |       0 |     0 | 2-40              
+-----------------------|---------|----------|---------|---------|-------------------
+Jest: "global" coverage threshold for statements (98%) not met:
+0%
+Jest: "global" coverage threshold for branches (98%) not met:
+0%
+Jest: "global" coverage threshold for lines (98%) not met: 0%
+Jest: "global" coverage threshold for functions (98%) not met:
+0%
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        17.36 s
+Ran all test suites matching /src\/__tests__\/JSONDate.test.ts/i.

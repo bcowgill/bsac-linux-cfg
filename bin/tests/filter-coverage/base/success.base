@@ -1,1 +1,9 @@
 a line that passes through...
+
+/c/path/to/test.spec.js will be unixed
+file:///c/path/to/test.spec.js will be unixed
+
+Trace: the console.trace log message and stack trace will be cleaned up
+   at src/path/to/test.spec.js:4:6
+   at file:///c/src/path/to/test.spec.js:4:6
+   at runTest (path/to/runtest.js:6:7)

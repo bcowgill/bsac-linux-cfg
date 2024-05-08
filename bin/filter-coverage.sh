@@ -1,4 +1,6 @@
 #!/bin/bash
+# BSACKIT Part of Brent S.A. Cowgill's Developer Toolkit
+# WINDEV tool useful on windows development machine
 
 function usage {
 	local code
@@ -56,14 +58,43 @@ if [ "$1" == "-?" ]; then
 fi
 if echo "$*" | grep -- "--" > /dev/null; then
 	echo "unknown parameter provided, please study the command usage below."
-	echo ""
 	usage 1
 fi
 
-grep -vE 'Coverage.+does not meet|coverage.+not met:|(\|\s*(.\[[0-9;]+m)?\s*0\s*(.\[[0-9;]+m)?\s*){4}|(\|\s*(.\[[0-9;]+m)?\s*100\s*(.\[[0-9;]+m)?\s*){4}' $*
+perl -ne '
+	sub slash
+	{
+		my ($path) = @_;
+		$path =~ s{\\}{/}xmsg;
+		return "/c/$path";
+	}
+
+	$hide = 1 if m{coverage .+ not \s met:}xms;
+	$hide = 1 if m{Coverage .+ does \s not \s meet}xms;
+	$hide = 1 if m{(\|\s*(.\[[0-9;]+m)?\s*0\s*(.\[[0-9;]+m)?\s*){4}|(\|\s*(.\[[0-9;]+m)?\s*100\s*(.\[[0-9;]+m)?\s*){4}}xms;
+
+	s{C:(\\.+\\)}{slash($1)}xmsie;
+	s{/?C:}{/c/}xmsgi;
+	s{(/c/)/}{$1}xmsgi;
+
+	if (m{\A\s+at\s.+:\d+:\d+\)?\s*\z}xms)
+	{
+		$trace++;
+		$hide = 1 if $trace > 3;
+	}
+	elsif ($trace)
+	{
+		$trace = 0;
+		$hide = 0;
+	}
+
+	print unless $hide;
+	$hide = 0;
+' $*
+
+exit $?
+
 #ERR=$?
 #if [ $ERR != 0 ]; then
 #	usage $ERR
 #fi
-
-exit 0

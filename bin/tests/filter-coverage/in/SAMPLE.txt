@@ -1,4 +1,17 @@
 a line that passes through...
  coverage not met:   will be hidden
+ Coverage does not meet global   will be hidden
 no coverage at all... | 0 | 0 | 0 | 0 |
 full coverage hide it | 100 | 100 | 100 | 100 |
+
+C:\path\to\test.spec.js will be unixed
+file:///C:/path/to/test.spec.js will be unixed
+
+Trace: the console.trace log message and stack trace will be cleaned up
+   at src/path/to/test.spec.js:4:6
+   at file:///C:/src/path/to/test.spec.js:4:6
+   at runTest (path/to/runtest.js:6:7)
+   at runTest (path/to/runtest.js:7:9)
+   at runTest (path/to/runtest.js:8:1)
+   at runTest (path/to/runtest.js:9:3)
+   at runTest (path/to/runtest.js:10:5)

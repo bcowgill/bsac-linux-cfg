@@ -1,4 +1,3 @@
-unknown parameter provided, please study the command usage below.
 
 filter-coverage.sh [--help|--man|-?] [test-log]
 

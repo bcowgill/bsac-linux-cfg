@@ -1,0 +1,39 @@
+Tue 28 Mar 2023 07:38:11 BST
+
+
+
+> ts4-tooling@1.0.0 test
+> NODE_ICU_DATA=node_modules/full-icu jest --coverage src/__tests__/JSONDate.test.ts
+
+FAIL src/__tests__/JSONDate.test.ts
+  ● Test suite failed to run
+
+    TypeError: Cannot read properties of undefined (reading 'today')
+
+      42 | 	const TYPE = testMe.displayName
+      43 | 	const reDate = /^"?[-0-9]+T[.:0-9]+Z"?$/
+    > 44 | 	const TODAY = RESULTS[TZO].today
+         | 	                           ^
+      45 | 	const JTODAY = '🕔' + TODAY
+      46 | 	const date = new Date(TODAY)
+      47 |
+
+      at descJSONDateSuite (__tests__/JSONDate.test.ts:44:29)
+      at Object.<anonymous> (__tests__/JSONDate.test.ts:41:9)
+
+-----------------------|---------|----------|---------|---------|-------------------
+File                   | % Stmts | % Branch | % Funcs | % Lines
+| Uncovered Line #s 
+-----------------------|---------|----------|---------|---------|-------------------
+ JSONFunction.ts       |       0 |      100 |       0 |     0 | 9-17              
+ common.ts             |       0 |      100 |     100 |     0 | 1-2               
+ index.ts              |       0 |      100 |     100 |     0 | 4-7               
+-----------------------|---------|----------|---------|---------|-------------------
+0%
+0%
+0%
+Test Suites: 1 failed, 1 total
+Tests:       0 total
+Snapshots:   0 total
+Time:        17.36 s
+Ran all test suites matching /src\/__tests__\/JSONDate.test.ts/i.
