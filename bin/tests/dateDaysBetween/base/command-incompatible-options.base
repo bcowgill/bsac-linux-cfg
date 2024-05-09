@@ -1,0 +1,3 @@
+Please provide a date string for the start date/time.
+
+dateDaysBetween.js [--help|--man|-?] [units] start-date [end-date]

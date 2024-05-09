@@ -63,6 +63,10 @@ if [ -z "$2" ]; then
 	echo "You must provide a replace string to rename files."
 	usage 1
 fi
+if [ ! -z "$3" ] && [ "$3" != "--exec" ]; then
+	echo "unknown parameter $3, please study the command usage below."
+	usage 1
+fi
 
 # make vars (which may have space in them) available to the perl script easily
 export MATCH="$1"

@@ -1,0 +1,14 @@
+
+mv-to-tar.sh [--help|--man|-?] directory
+
+This will move a directory to a tar compressed file with the same name and extension .tgz
+
+directory  The name of the directory to convert to a tgz file.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+This will create the archive in your temporary directory and then move it in place to the destination in case your drive is low on disk space (hence the reason for converting directory to a compressed archive.)
+
+See also mv-to-zip.sh cp-fast.sh tar gzip
+

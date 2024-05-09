@@ -1,0 +1,23 @@
+unknown parameter provided, please study the command usage below.
+
+cp-fast.sh [--help|--man|-?] huge to [new]
+
+This will rapidly copy a huge file or directory tree to another device.
+
+huge    The huge file name or directory with loads of files which must be copied.
+to      The other device location to copy the file or directory to.
+new     optional. The new directory to create on the other device.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+While copying it will show a progress bar if possible using the pv command.
+
+See also cp-random.pl mv-to-tar.sh mv-to-zip.sh
+
+Example:
+
+	copy the big directory big-dir to the /mnt/external device, creating the big-dir directory
+
+cp-fast.sh big-dir /mnt/external big-dir
+

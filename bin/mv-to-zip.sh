@@ -25,8 +25,7 @@ directory  The name of the directory to convert to a zip file.
 
 This will create the archive in your temporary directory and then move it in place to the destination in case your drive is low on disk space (hence the reason for converting directory to a compressed archive.)
 
-See also mv-to-tar.sh zipinfo zip unzip
-
+See also mv-to-tar.sh cp-fast.sh zipinfo zip unzip
 "
 	exit $code
 }
@@ -43,14 +42,19 @@ if [ -z "$DIR" ]; then
 	usage 1
 fi
 
+if echo "$*" | grep -- "--" > /dev/null; then
+	echo "unknown parameter provided, please study the command usage below."
+	usage 1
+fi
+
 if [ -e "$ARCH_NAME" ]; then
 	echo "$cmd: $ARCH_NAME: zip archive already exists, will not overwrite." 1>&2
-	exit 1
+	exit 2
 fi
 
 if [ ! -d "$DIR" ]; then
 	echo "$cmd: '$DIR': is not a directory, stopping." 1>&2
-	exit 2
+	exit 3
 fi
 
 echo "Create a temporary zip archive for directory '$DIR/'"

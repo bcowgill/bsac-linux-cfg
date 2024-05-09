@@ -1,0 +1,5 @@
+Create a temporary archive for directory 'xyzzy/'
+Directory 'xyzzy/' moved 6 files and directories to archive 'xyzzy.tgz'
+=== files on disk ======
+.
+./xyzzy.tgz

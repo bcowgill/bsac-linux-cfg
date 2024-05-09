@@ -1,0 +1,26 @@
+unknown option --invalid, please study the command usage below.
+
+dateAdd.js [--help|--man|-?] [start-date] number ...
+
+This will add a certain number of days to today's date or the specific date specified.
+Each additional number provided is added to the original date.
+
+start-date  The starting date/time.
+number      The number of days to add to the start date.
+--man       Shows help for this tool.
+--help      Shows help for this tool.
+-?          Shows help for this tool.
+
+The date can be given in any format that Javascript understands. For example, the date -R command gives a format that is compatible.
+
+See also dateDaysBetween.js time-to-finish.sh predict-when.sh date
+Example
+
+	Add a tenth of a day to the current time.
+
+dateAdd.js 0.1
+
+	Show the date one week before the new year.
+
+dateAdd.js 2024-01-01 -7
+

@@ -7,7 +7,13 @@
 #  $cmd VELDA-2TB -i billy | grep -i idol | grep -i flesh
 #
 
-BK_DEV=/media/me/ADATA-4TB
+CFG=$HOME/.BACKUP
+[ -e $CFG ] && source $CFG
+
+if [ -z "$1" ] && [ -z "$BK_DEV" ] ; then
+	echo "you must provide a backup destination on the command line or as BK_DEV in $CFG"
+	exit 1
+fi
 
 if [ -z "$2" ]; then
 	BACKUP=$BK_DEV

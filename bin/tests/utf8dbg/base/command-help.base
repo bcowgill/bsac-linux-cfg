@@ -1,0 +1,19 @@
+usage: utf8dbg.pl utf8 characters
+
+Debug utf8 characters from various sources. Shows an internally set literal,
+the UTF8_TEST environment variable, the file utf8-test.txt, the command line
+arguments or standard input.
+
+eg.
+
+export UTF8_TEST=`utf8.pl U+1D538`
+utf8.pl U+1D538 > utf8-test.txt
+utf8.pl U+1D538 | utf8dbg.pl
+
+utf8dbg.pl tschüß TSCHÜSS
+utf8dbg.pl Σίσυφος ΣΊΣΥΦΟΣ
+utf8dbg.pl "henry ⅷ" "HENRY Ⅷ"
+
+utf8.pl U+2424 crlf U+0D U+0A   U+240A lf U+0A	U+240D cr U+0D	U+240B vt U+0B  U+240C ff U+0C  | utf8dbg.pl
+utf8.pl 0 U+24EA U+2070 U+7C0   a U+24D0 U+C2 U+1EA9   '&' U+214B U+FE60 U+FF06 | utf8dbg.pl
+

@@ -1,0 +1,3 @@
+You must provide a source to copy. Either a huge file or a large directory.
+
+cp-fast.sh [--help|--man|-?] huge to [new]

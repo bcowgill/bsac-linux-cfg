@@ -103,6 +103,7 @@ testSuite css-color-scale "generates a quantised CSS color scale" $PROVE
 testSuite ls-cmds-used "lists external commands used in scripts" $PROVE
 
 testSuite utf8spaces "show unicode space characters and javascript definitions for them" $PROVE
+testSuite utf8dbg "show various properties of unicode characters" $PROVE
 
 testSuite get-meta "shows id3v2 meta-data tags for files" $PROVE
 testSuite ls-meta "shows id3v2 and exif meta-data tags for files" $PROVE
@@ -115,6 +116,13 @@ testSuite rename-files "rename files automatcillay by converting characters to d
 testSuite fix-song-names "fixes the names of song files addressing apostrophes and other special characters" $PROVE
 testSuite renumber-files "rename files with consectutive numbers" $PROVE
 testSuite renumber-by-time "rename files with consectutive numbers by their timestamp" $PROVE
+
+testSuite dateAdd "add days to a specific date" $PROVE
+testSuite dateDaysBetween "determine the days/hours/minutes/seconds between two dates" $PROVE
+
+testSuite mv-to-tar "move a directory to a tar file" $PROVE
+testSuite mv-to-zip "move a directory to a zip file" $PROVE
+testSuite cp-fast "perform a fast copy of a huge file or huge directory tree" $PROVE
 
 #================================================================
 testSuiteBegin filter-css-colors "unit tests filter and replace CSS colors in files"

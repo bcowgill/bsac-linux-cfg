@@ -1,0 +1,835 @@
+$ENV{PERL_UNICODE} = D
+   [set D to make all filehandles utf8]
+STDOUT: unicode output: 𝔸  Ā̀   𝔸  
+debug internal utf8 literal:
+
+[ 𝔸 ]: U+1D538
+[ 𝔸 ]: newline normalized
+   is_utf8? 1
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   is NFC normalized? YES
+   is NFD normalized? YES
+   is NFKC normalized? NO
+   is NFKD normalized? NO
+   is FCC normalized? YES
+   is FCD normalized? YES
+   [ 𝔸 ]: U+0031 120120(d) bytes[f0 9d 94 b8] \N{MATHEMATICAL DOUBLE-STRUCK CAPITAL A} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+
+debug internal utf8 named multi-character:
+
+[ Ā̀ ]: U+0100.0300
+[ Ā̀ ]: newline normalized
+   is_utf8? 1
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   is NFC normalized? MAYBE(undef)
+   is NFD normalized? NO
+   is NFKC normalized? MAYBE(undef)
+   is NFKD normalized? NO
+   is FCC normalized? MAYBE(undef)
+   is FCD normalized? YES
+   [ Ā ]: U+0032 256(d) bytes[c4 80] \N{LATIN CAPITAL LETTER A WITH MACRON} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 1 \p{Latin}
+   is not Latin 0 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ ̀ ]: U+0037 768(d) bytes[cc 80] \N{COMBINING GRAVE ACCENT} [NonspacingMark]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 0 \p{Letter}
+   is not Letter 1 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 0 \p{Alpha}
+   is not Alpha 1 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+
+debug $𝔸  utf8 var name:
+
+[ 𝔸 ]: U+1D538
+[ 𝔸 ]: newline normalized
+   is_utf8? 1
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   is NFC normalized? YES
+   is NFD normalized? YES
+   is NFKC normalized? NO
+   is NFKD normalized? NO
+   is FCC normalized? YES
+   is FCD normalized? YES
+   [ 𝔸 ]: U+0031 120120(d) bytes[f0 9d 94 b8] \N{MATHEMATICAL DOUBLE-STRUCK CAPITAL A} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+
+debug $ENV{UTF8_TEST}:
+
+[ 𝔸 ]: U+1D538
+[ 𝔸 ]: newline normalized
+   is_utf8? 1
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   is NFC normalized? YES
+   is NFD normalized? YES
+   is NFKC normalized? NO
+   is NFKD normalized? NO
+   is FCC normalized? YES
+   is FCD normalized? YES
+   [ 𝔸 ]: U+0031 120120(d) bytes[f0 9d 94 b8] \N{MATHEMATICAL DOUBLE-STRUCK CAPITAL A} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+
+debug file utf8-test.txt:
+
+[ Σίσυφος ΣΊΣΥΦΟΣ
+ ]: U+03A3.03AF.03C3.03C5.03C6.03BF.03C2.0020.03A3.038A.03A3.03A5.03A6.039F.03A3.000A
+[ Σίσυφος ΣΊΣΥΦΟΣ
+ ]: newline normalized
+   is_utf8? 1
+   has \n? 1 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 1 - any vertical feed
+   is NFC normalized? YES
+   is NFD normalized? NO
+   is NFKC normalized? YES
+   is NFKD normalized? NO
+   is FCC normalized? YES
+   is FCD normalized? YES
+   [ Σ ]: U+0039 931(d) bytes[ce a3] \N{GREEK CAPITAL LETTER SIGMA} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ ί ]: U+0039 943(d) bytes[ce af] \N{GREEK SMALL LETTER IOTA WITH TONOS} [LowercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 1 \p{Lower}
+   is not Lower 0 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ σ ]: U+0039 963(d) bytes[cf 83] \N{GREEK SMALL LETTER SIGMA} [LowercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 1 \p{Lower}
+   is not Lower 0 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ υ ]: U+0039 965(d) bytes[cf 85] \N{GREEK SMALL LETTER UPSILON} [LowercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 1 \p{Lower}
+   is not Lower 0 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ φ ]: U+0039 966(d) bytes[cf 86] \N{GREEK SMALL LETTER PHI} [LowercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 1 \p{Lower}
+   is not Lower 0 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ ο ]: U+0039 959(d) bytes[ce bf] \N{GREEK SMALL LETTER OMICRON} [LowercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 1 \p{Lower}
+   is not Lower 0 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ ς ]: U+0039 962(d) bytes[cf 82] \N{GREEK SMALL LETTER FINAL SIGMA} [LowercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 1 \p{Lower}
+   is not Lower 0 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [   ]: 32(d) bytes[20] \N{SPACE} [SpaceSeparator]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 0 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 1 \p{Space}
+   is not Space 0 \P{Space}
+   is Letter 0 \p{Letter}
+   is not Letter 1 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 0 \p{Alpha}
+   is not Alpha 1 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Σ ]: U+0039 931(d) bytes[ce a3] \N{GREEK CAPITAL LETTER SIGMA} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Ί ]: U+0039 906(d) bytes[ce 8a] \N{GREEK CAPITAL LETTER IOTA WITH TONOS} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Σ ]: U+0039 931(d) bytes[ce a3] \N{GREEK CAPITAL LETTER SIGMA} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Υ ]: U+0039 933(d) bytes[ce a5] \N{GREEK CAPITAL LETTER UPSILON} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Φ ]: U+0039 934(d) bytes[ce a6] \N{GREEK CAPITAL LETTER PHI} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Ο ]: U+0039 927(d) bytes[ce 9f] \N{GREEK CAPITAL LETTER OMICRON} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ Σ ]: U+0039 931(d) bytes[ce a3] \N{GREEK CAPITAL LETTER SIGMA} [UppercaseLetter]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 1 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 1 \p{Letter}
+   is not Letter 0 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 1 \p{Upper}
+   is not Upper 0 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 1 \p{Alpha}
+   is not Alpha 0 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 1 \p{Greek}
+   is not Greek 0 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ 
+ ]: 10(d) bytes[0a] \N{LINE FEED} [Control]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 0 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 1 \p{Space}
+   is not Space 0 \P{Space}
+   is Letter 0 \p{Letter}
+   is not Letter 1 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 0 \p{Alpha}
+   is not Alpha 1 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 1 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 1 - any vertical feed
+
+debug STDIN:
+
+[ 
+ ]: U+F029.000A
+[ 
+ ]: newline normalized
+   is_utf8? 1
+   has \n? 1 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 1 - any vertical feed
+   is NFC normalized? YES
+   is NFD normalized? YES
+   is NFKC normalized? YES
+   is NFKD normalized? YES
+   is FCC normalized? YES
+   is FCD normalized? YES
+   [  ]: U+0036 61481(d) bytes[ef 80 a9] \N{UN-NAMED[U+F029]} [PrivateUse]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 0 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 0 \p{Space}
+   is not Space 1 \P{Space}
+   is Letter 0 \p{Letter}
+   is not Letter 1 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 0 \p{Alpha}
+   is not Alpha 1 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 0 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 0 - any vertical feed
+   [ 
+ ]: 10(d) bytes[0a] \N{LINE FEED} [Control]
+   has \d? 0 - any unicode digit
+   has /\d/a ? 0 - ASCII digit only
+   has [0-9] ? 0 - [0-9] digit only
+   has \w ? 0 - any unicode word char
+   has /\w/a ? 0 - ASCII word char only
+   has [a-zA-Z0-9_] ? 0 - [a-zA-Z0-9_] word char only
+   is Space 1 \p{Space}
+   is not Space 0 \P{Space}
+   is Letter 0 \p{Letter}
+   is not Letter 1 \P{Letter}
+   is Number 0 \p{Number}
+   is not Number 1 \P{Number}
+   is Punct 0 \p{Punct}
+   is not Punct 1 \P{Punct}
+   is Upper 0 \p{Upper}
+   is not Upper 1 \P{Upper}
+   is Lower 0 \p{Lower}
+   is not Lower 1 \P{Lower}
+   is Alpha 0 \p{Alpha}
+   is not Alpha 1 \P{Alpha}
+   is Latin 0 \p{Latin}
+   is not Latin 1 \P{Latin}
+   is Greek 0 \p{Greek}
+   is not Greek 1 \P{Greek}
+   is Numeric_Value=1 0 \p{Numeric_Value=1}
+   is not Numeric_Value=1 1 \P{Numeric_Value=1}
+   is Line_Break=Hyphen 0 \p{Line_Break=Hyphen}
+   is not Line_Break=Hyphen 1 \P{Line_Break=Hyphen}
+   has \n? 1 - local OS newline
+   has \R? 0 - any unicode newline
+   has \v? 1 - any vertical feed
+

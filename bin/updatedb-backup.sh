@@ -1,5 +1,8 @@
 #!/bin/bash
 
+CFG=$HOME/.BACKUP
+[ -e $CFG ] && source $CFG
+
 DBDIR=/var/lib/mlocate
 EXTERNAL=/media/me
 
@@ -61,7 +64,13 @@ if [ "$1" == "--notify" ]; then
 	shift
 fi
 
-BACKUP=${1:-/media/me/ADATA-4TB}
+if [ -z "$1" ] && [ -z "$BK_DEV" ] ; then
+	echo "you must provide a backup destination on the command line or as BK_DEV in $CFG"
+	echo ""
+	usage 1
+fi
+
+BACKUP=${1:-$BK_DEV}
 NAME=`basename $BACKUP`
 LOCATE=mlocate-$NAME.db
 DB=$DBDIR/$LOCATE
@@ -95,7 +104,7 @@ if [ ! -z $NOTIFY ]; then
 	END=`date`
 	echo $END
 	echo Try a lookup on the index...
-	locatebk.sh $BACKUP mp3 | head -3
+	locatebk.sh $BACKUP e | head -5
 	MESSAGE="Backup drive $BACKUP has been indexed for locatebk.sh or locatebkall.sh command."
 	which cowsay > /dev/null && cowsay "$MESSAGE$CR  $START$CR  $END"
 	mynotify.sh "updatedb-backup.sh" "$MESSAGE"

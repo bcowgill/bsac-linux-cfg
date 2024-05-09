@@ -25,8 +25,7 @@ directory  The name of the directory to convert to a tgz file.
 
 This will create the archive in your temporary directory and then move it in place to the destination in case your drive is low on disk space (hence the reason for converting directory to a compressed archive.)
 
-See also mv-to-zip.sh tar gzip
-
+See also mv-to-zip.sh cp-fast.sh tar gzip
 "
 	exit $code
 }
@@ -40,6 +39,11 @@ if [ "$1" == "-?" ]; then
 	usage 0
 fi
 if [ -z "$DIR" ]; then
+	usage 1
+fi
+
+if echo "$*" | grep -- "--" > /dev/null; then
+	echo "unknown parameter provided, please study the command usage below."
 	usage 1
 fi
 

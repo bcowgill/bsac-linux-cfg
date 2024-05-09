@@ -294,5 +294,6 @@ sub toCategory
 sub toName
 {
 	my $val = unpack("W", $ARG[0]);
-	return "\\N{" . charnames::viacode($val) . "}";
+	my $named = charnames::viacode($val) || "UN-NAMED[@{[toCodePoint($ARG[0])]}]";
+	return "\\N{$named}";
 }

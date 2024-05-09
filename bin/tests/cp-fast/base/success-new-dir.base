@@ -1,0 +1,16 @@
+fast copy directory from xyzzy to zyyxz/new-dir
+=== files on disk ======
+.
+./xyzzy
+./xyzzy/a-$?£(|@[_-file<tag>,(paren);[bracket]:{brace}'q' "qq" `qqq`-%^&*+=~#!.txt
+./xyzzy/'this is it's thing isn't it'.txt
+./xyzzy/'this is it's thing'.txt
+./xyzzy/'this'.txt
+./xyzzy/this'.txt
+./zyyxz
+./zyyxz/new-dir
+./zyyxz/new-dir/a-$?£(|@[_-file<tag>,(paren);[bracket]:{brace}'q' "qq" `qqq`-%^&*+=~#!.txt
+./zyyxz/new-dir/'this is it's thing isn't it'.txt
+./zyyxz/new-dir/'this is it's thing'.txt
+./zyyxz/new-dir/'this'.txt
+./zyyxz/new-dir/this'.txt

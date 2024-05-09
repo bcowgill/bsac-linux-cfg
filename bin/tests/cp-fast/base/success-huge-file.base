@@ -1,0 +1,6 @@
+fast copy huge file from a-simulated-huge-file.txt to zyyxz
+=== files on disk ======
+.
+./a-simulated-huge-file.txt
+./zyyxz
+./zyyxz/a-simulated-huge-file.txt

@@ -1,0 +1,22 @@
+
+dateDaysBetween.js [--help|--man|-?] [units] start-date [end-date]
+
+This will determine the number of days (or the specified units) between the given start-date and today's date or the end-date specified.
+
+start-date  The starting date/time.
+end-date    optional. The ending date/time. defaults to right now.
+units       optional. The units to display the elapsed time in: [days?|hours?|minutes?|seconds?] units can appear first or last in the options list.
+--man       Shows help for this tool.
+--help      Shows help for this tool.
+-?          Shows help for this tool.
+
+The dates can be given in any format that Javascript understands. For example, the date -R command gives a format that is compatible.
+
+See also dateAdd.js time-to-finish.sh predict-when.sh date
+
+Example
+
+	Work out the number of hours since Jan 1 2024.
+
+dateDaysBetween.js hours 2024-01-01
+
