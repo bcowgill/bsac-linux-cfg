@@ -65,7 +65,7 @@ if [ 0 == "$SKIP" ]; then
 	BASELOG=base/$TEST.log.base
 	ARGS="$DEBUG --invalid"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

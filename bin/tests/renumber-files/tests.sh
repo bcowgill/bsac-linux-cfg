@@ -59,7 +59,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG Screen .PNG"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -89,7 +89,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG unknown-file .PNE renamed-"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

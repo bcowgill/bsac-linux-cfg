@@ -1,7 +1,3 @@
-Les Miserables need to rename files and rip the CD for the missing track
-Valjean Arrested/Forgiven.
-in Directory
-pushd "/home/me/d/Music/CD-Library/_Original Soundtrack/Musicals/Les Miserables [Original Broadway Cast ] (1 of 2)"
 Get a list of all script files, then search them for exiftool or id2 commands
 
 grep -Ei '\.(pl|sh)$' ~/scan-files.lst | filter-built-files.sh > ~/scripts.lst

@@ -45,7 +45,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --invalid $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -60,7 +60,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG notafilename"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	perl -i -pne 's{(current \s+ dir \s+).+(lint-package-json)}{$1PWD/$2}xms' "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -76,7 +76,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG in/package-error.json"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -91,7 +91,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -106,7 +106,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG $SAMPLE --skip-dev"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -121,7 +121,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG in/package-ok.json --allow-url"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -136,7 +136,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG in/package-ok.json --allow-file"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -151,7 +151,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG in/package-ok.json --allow-git"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -166,7 +166,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG in/package-ok.json --allow-github"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"
@@ -181,7 +181,7 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG in/package-ok.json --allow-tag=beta1 --allow-tag=latest"
 	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
 	echo SKIP $TEST "$SKIP"

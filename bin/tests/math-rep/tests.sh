@@ -71,7 +71,7 @@ fi
 #	BASE=base/$TEST.base
 #	ARGS="$DEBUG --invalid $SAMPLE"
 #	$PROGRAM $ARGS > $OUT 2>&1 || ERR=$?
-#	assertCommandFails $ERR $EXPECT "$PROGARM $ARGS"
+#	assertCommandFails $ERR $EXPECT "$PROGRAM $ARGS"
 #	assertFilesEqual "$OUT" "$BASE" "$TEST"
 #else
 #	echo SKIP $TEST "$SKIP"
