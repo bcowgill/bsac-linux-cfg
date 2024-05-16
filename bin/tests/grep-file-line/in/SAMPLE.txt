@@ -1,0 +1,80 @@
+# Examples of log output which is parsed correctly
+
+# git grep -n eval ..
+../assign-to-team/in/tasks-crlf.txt:4:evaluate the values
+
+# perl script errors
+Unmatched [ in regex; marked by <-- HERE in m/[ <-- HERE a-z/ at ./x1.pl line 3.
+
+# perl unit test failure
+   Failed test at ./perl1.t line 142.
+
+not ok 5 - use Test::Class;
+#   Failed test 'use Test::Class;'
+#   at ./perl2.t line 217.
+#     Tried to use 'Test::Class'.
+#     Error:  Can't locate Test/Class.pm in @INC (you may need to install the Test::Class module) (@INC contains: /etc/perl /usr/local/lib/perl/5.18.2 /usr/local/share/perl/5.18.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.18 /usr/share/perl/5.18 /usr/local/lib/site_perl) at ./perl3.t line 217.
+# BEGIN failed--compilation aborted at ./perl4.t line 217.
+
+# prove test output
+NOT OK 2 test plan ./test-all.sh terminated by error in /home/me/workspace/play/bsac-linux-cfg/bin/tests
+NOT OK 3 on or near line 92; exiting with status 1
+
+# node logging and errors.
+some log message
+warn some message
+error some message
+info some message
+Trace: trace some message
+    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x1.js:7:9)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.runMain (module.js:604:10)
+    at run (bootstrap_node.js:383:7)
+    at startup (bootstrap_node.js:149:9)
+    at bootstrap_node.js:496:3
+
+"/home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x2.js":9
+throw new RangeError("this is not good")
+^
+
+RangeError: this is not good
+    at Object.<anonymous> (/home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x3.js:9:7)
+    at Module._compile (module.js:570:32)
+    at Object.Module._extensions..js (module.js:579:10)
+    at Module.load (module.js:487:32)
+    at tryModuleLoad (module.js:446:12)
+    at Function.Module._load (module.js:438:3)
+    at Module.runMain (module.js:604:10)
+    at run (bootstrap_node.js:383:7)
+    at startup (bootstrap_node.js:149:9)
+    at bootstrap_node.js:496:3
+
+# jest test failure output
+FAIL src/__tests__/JSONDate.test.ts
+  ● Test suite failed to run
+
+    TypeError: Cannot read properties of undefined (reading 'today')
+
+      42 |      const TYPE = testMe.displayName
+      43 |      const reDate = /^"?[-0-9]+T[.:0-9]+Z"?$/
+    > 44 |      const TODAY = RESULTS[TZO].today
+
+# prettier output when there is an error
+[error] xx.json: SyntaxError: Unexpected token (2:3)
+[error]   1 | {
+[error] > 2 |    ,,,"x": 42
+[error]   3 | }
+[error]   4 |
+
+# eslint output (on windows)
+C:\d\projects\your-details-ui\src\components\userRoles\test\UserRoles.test.tsx
+   30:13  warning 'queryByText' is assigned a value but never used              @typescript-eslint/no-unused-vars
+   40:13  warning 'queryByText' is assigned a value but never used              @typescript-eslint/no-unused-vars
+
+# tsc typescript typechecker
+"src/utils/helpers/LBGAnalyticsHelper.ts"(70,5): error TS7006: Parameter 'JourneyStatus' implicitly has an 'any' type.
+

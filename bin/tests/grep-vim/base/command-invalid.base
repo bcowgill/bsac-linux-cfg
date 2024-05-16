@@ -1,0 +1,17 @@
+
+grep-vim.sh [--help|--man|-?] pattern
+
+This will grep for the pattern specified and create a bash script to launch vim at the line number and column position of each match.
+
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+More detail ...
+
+See also grep-lint.sh
+
+Example:
+
+...
+

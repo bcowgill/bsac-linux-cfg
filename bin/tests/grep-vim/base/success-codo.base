@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# /home/me/workspace/play/bsac-linux-cfg/bin/tests/test-all.sh:92: NOT OK 2 test plan terminated by error
+code "/home/me/workspace/play/bsac-linux-cfg/bin/tests/test-all.sh:92"
+
+# /home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x1.js:7:9: [Object.<anonymous>] Trace: trace some message
+code "/home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x1.js:7:9"
+
+# bootstrap_node.js:383:7: [run]
+code "bootstrap_node.js:383:7"
+
+# bootstrap_node.js:149:9: [startup]
+code "bootstrap_node.js:149:9"
+
+# bootstrap_node.js:496:3: stack trace
+code "bootstrap_node.js:496:3"
+
+# /home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x3.js:9:7: [Object.<anonymous>] RangeError: this is not good
+code "/home/me/workspace/play/bsac-linux-cfg/bin/tests/grep-file-line/x3.js:9:7"
+
+# bootstrap_node.js:383:7: [run]
+code "bootstrap_node.js:383:7"
+
+# bootstrap_node.js:149:9: [startup]
+code "bootstrap_node.js:149:9"
+
+# bootstrap_node.js:496:3: stack trace
+code "bootstrap_node.js:496:3"
+
+# src/__tests__/JSONDate.test.ts:44: FAIL ● Test suite failed to run TypeError: Cannot read properties of undefined (reading 'today')
+code "src/__tests__/JSONDate.test.ts:44"
+
+# src/components/userRoles/test/UserRoles.test.tsx:30:13: warning 'queryByText' is assigned a value but never used // eslint-disable-next-line @typescript-eslint/no-unused-vars
+code "src/components/userRoles/test/UserRoles.test.tsx:30:13"
+
+# src/components/userRoles/test/UserRoles.test.tsx:40:13: warning 'queryByText' is assigned a value but never used // eslint-disable-next-line @typescript-eslint/no-unused-vars
+code "src/components/userRoles/test/UserRoles.test.tsx:40:13"
+
+# "src/utils/helpers/LBGAnalyticsHelper.ts":70:5: error TS7006: Parameter 'JourneyStatus' implicitly has an 'any' type.
+code "src/utils/helpers/LBGAnalyticsHelper.ts:70:5"

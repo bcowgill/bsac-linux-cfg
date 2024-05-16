@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# in/SAMPLE.txt:5:				hold
+vim +5 -c "call search ('hold')" "in/SAMPLE.txt"
+
+# in/SAMPLE.txt:7:						hold
+vim +7 -c "call search ('hold')" "in/SAMPLE.txt"

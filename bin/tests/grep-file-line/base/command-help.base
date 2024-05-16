@@ -1,0 +1,24 @@
+
+grep-file-line.sh [--help|--man|-?] [filename]
+
+This will grep for filename, line, column and text context from a variety of output log formats from a file or standard input.
+
+filename optional. A saved log file containing filename, line and columns in various formats.
+--man   Shows help for this tool.
+--help  Shows help for this tool.
+-?      Shows help for this tool.
+
+Supports output from the grep -n command, perl script die, carp, croak and other erros, Test Anywhere Protocol (TAP) prove command. Also handles node console.trace and thrown errors.  Handles jest junit test runner output.
+
+See also ...
+
+Example:
+
+	Lint the project and show files and lines with issues.
+npm run lint 2>&1 | grep-file-line.sh
+
+	Save output from a unit test run then grep for referenced files and line numbers.
+
+jest 2>&1 | tee tests.log
+grep-file-line.sh tests.log
+
