@@ -1,9 +1,12 @@
 Get a list of all script files, then search them for exiftool or id2 commands
 
+sugaru board in d/docs/sudoku
+
 grep -Ei '\.(pl|sh)$' ~/scan-files.lst | filter-built-files.sh > ~/scripts.lst
 perl -ne  'system qq{grep -lE "\\b(exiftool|id3)" $_}' ~/scripts.lst > ~/scripts-for-metadata.lst
 
 Pics/0_CodeReactTools - screenshots of testing tools from RBS/Lloyds
+template/typescript/react-tools-ts/testingTools.ts
 
 testing filter scripts filter-long .. filter-sounds filter-code-files(end of chain contains list) using tests/test-chain.sh
 

@@ -32,17 +32,18 @@ $cmd [--help] [--space] [--alphabet] [--show-styles] [--all-styles] [--flip-case
 
 Show text using alphabetic unicode characters
 
---space space out text characters replaced
---alphabet display the alphabet instead of standard input
---map as --alphabet but display mapping of english alphabet
- characters.
---show-styles list all supported font styles and exit immediately
---all-styles display output in all font styles and exit immediately
---flip-case flip upper/lower case
+--space        space out text characters replaced
+--flip-case    flip upper/lower case
+--case-random  randomize upper/lower case for all letters
+--case-words   choose random upper/lower case for each word
 --random-style choose a random font style to use
---words choose new random style for every word
---sentences choose new random style for every sentence
---help shows this help text
+--words        choose new random style for every word
+--sentences    choose new random style for every sentence
+--alphabet     display the alphabet instead of standard input
+--map          as --alphabet but display mapping of english alphabet characters.
+--show-styles  list all supported font styles and exit immediately
+--all-styles   display output in all font styles
+--help         shows this help text
 
 See Also anglicise.pl, utf8-ellipsis.pl, utf8-filter.pl, utf8ls-letter.sh, utf8ls-number.sh, utf8ls.pl
 
@@ -336,6 +337,40 @@ my %Alphabet = (
 			'a' => '41',
 			'A' => '41',
 		},
+		'caps' => {
+			'_case' => 'uc',
+			'_map' => {
+				# ᴀ	U+1D00	[LowercaseLetter]	LATIN LETTER SMALL CAPITAL A
+				'A' => '1D00',
+				'B' => '299',
+				'C' => '1D04',
+				'D' => '1D05',
+				'E' => '1D07',
+				'F' => 'A730',
+				'G' => '262',
+				'H' => '29C',
+				'I' => '26A',
+				'J' => '1D0A',
+				'K' => '1D0B',
+				'L' => '29F',
+				'M' => '1D0D',
+				'N' => '274',
+				'O' => '1D0F',
+				'P' => '1D18',
+				'Q' => '51', # there is no Q in LATIN LETTER SMALL CAPITAL set
+				'R' => '280',
+				'S' => 'A731',
+				'T' => '1D1B',
+				'U' => '1D1C',
+				'V' => '1D20',
+				'W' => '1D21',
+				'X' => '58', # there is no X in LATIN LATTER SMALL CAPITAL
+				'Y' => '28F',
+				'Z' => '1D22',
+				'AE' => '1D01',
+				'OE' => '276',
+			},
+		},
 	},
 );
 my $rhDefaultStyle = $Alphabet{sans}{stroke};
@@ -345,7 +380,8 @@ sub main
 	my $content;
 	my %Opts = (
 		spaced => 0,
-		random => 0
+		random => 0,
+		case_random => 0,
 	);
 	my $printed = 0;
 
@@ -379,10 +415,12 @@ sub getTranslations
 	my ($rhStyles, $raPath) = @ARG;
 
 	$raPath = $raPath || [];
+	#print("path: " . join(".", @$raPath) . "\n");
 	foreach my $key (keys(%$rhStyles))
 	{
-		# print "check: $key\n";
+		#print "check: $key\n";
 		next if length($key) == 1 || $key =~ m{^_}xms || !ref($rhStyles->{$key});
+		#print "ok: $key\n";
 		if ($rhStyles->{$key}{a} || $rhStyles->{$key}{A})
 		{
 			push(@AllStyles, join(".", join(".", @$raPath), $key));
@@ -393,18 +431,24 @@ sub getTranslations
 			$regex =~ s{\A tr\{ (.+?) \} .+ \z }{s{([ $1])}{\$1 }g}xms;
 			$regex =~ s{\{\}\z}{s}xms;
 			$rhStyles->{$key}{regex} = $regex;
+
+			#print "$key a-z\n  trans [$rhStyles->{$key}{translate}]\n  space [$regex]\n\n";# if $regex ne $rhStyles->{$key}{translate};
 		}
 
 		if ($rhStyles->{$key}{_map})
 		{
 			push(@AllStyles, join(".", join(".", @$raPath), $key));
-			my $regex = makeTranslationMap($rhStyles->{$key}{_map});
+			my ($regex, $spaced) = makeTranslationMap($rhStyles->{$key}{_map});
 			$rhStyles->{$key}{translate} = $regex;
+			#print "regex: [$regex]\n";
 
 			# convert tr[][] to s{}{} for spacing out wide chars
-			$regex =~ s{\A tr\{ (.+?) \} .+ \z }{s{([ $1])}{\$1 }g}xms;
-			$regex =~ s{\{\}\z}{s}xms;
-			$rhStyles->{$key}{regex} = $regex;
+#			$regex =~ s{\A tr\{ (.+?) \} .+ \z }{s{([ $1])}{\$1 }g}xms;
+#			$regex =~ s{\{\}\z}{s}xms;
+#			$regex =~ s[\}(\}xmsg)][}---$1]xmsg; # add spacing
+			$rhStyles->{$key}{regex} = $spaced;
+
+			#print "$key map\n  trans [$rhStyles->{$key}{translate}]\n  space [$regex]\n\n";# if $regex ne $rhStyles->{$key}{translate};
 		}
 
 		# descend a level
@@ -431,6 +475,16 @@ sub processArg
 	elsif ($arg =~ m{\A --?se}xms) # --sentences
 	{
 		$rhOpts->{random} = 'sentence';
+		$next = 1;
+	}
+	elsif ($arg =~ m{\A --?case-r}xms) # --case-random
+	{
+		$rhOpts->{case_random} = 'letter';
+		$next = 1;
+	}
+	elsif ($arg =~ m{\A --?case-w}xms) # --case-words
+	{
+		$rhOpts->{case_random} = 'word';
 		$next = 1;
 	}
 	elsif ($arg =~ m{\A --?sp}xms) # --space
@@ -500,6 +554,10 @@ sub output
 		$style = getMatchingStyle(\@StylePath, \%Alphabet),
 	}
 
+	if ($rhOpts->{case_random})
+	{
+		$content = flipCaseContent($content, $rhOpts->{case_random});
+	}
 	my $raContent = [$content];
 	if ($rhOpts->{random})
 	{
@@ -584,6 +642,27 @@ sub getMatchingStyle
 	return $rhStyles;
 }
 
+sub randomCase
+{
+	my ($word) = @ARG;
+	return rand() < 0.5 ? lc($word) : uc($word);
+}
+
+sub flipCaseContent
+{
+	my ($content, $boundary) = @ARG;
+	my $q = "'";
+	if ($boundary =~ m{word}i)
+	{
+		$content =~ s{([-a-z0-9_']+)}{randomCase($1)}xmsige;
+	}
+	else
+	{
+		$content =~ s{([a-z])}{randomCase($1)}xmsige;
+	}
+   return $content;
+}
+
 sub splitContent
 {
 	my ($content, $boundary) = @ARG;
@@ -605,14 +684,16 @@ sub splitContent
 sub transform
 {
 	my ($raContent, $style, $rhOpts) = @ARG;
-
 	foreach my $content (@$raContent)
 	{
+		#print "transform: $content\n";
 		if ($rhOpts->{map})
 		{
 			my $output = $content;
+			#print "map: $output\n";
 			if ($rhOpts->{spaced})
 			{
+				#print "map+spaced\n";
 				$output =~ s{(\S)}{$1 }xmsg;
 			}
 			print $output;
@@ -635,13 +716,16 @@ sub translate
 {
 	my ($string, $rhStyle, $rhOpts) = @ARG;
 
-	# print Dumper($rhStyle);
+	#print Dumper($rhStyle);
 	local $ARG = $string;
 	$ARG =~ tr[a-zA-Z][A-Za-z] if $rhOpts->{flip};
 	eval "\$ARG = $rhStyle->{_case}(\$ARG)" if ($rhStyle->{_case});
 	eval $rhStyle->{_preserve} if $rhStyle->{_preserve};
-   # print "translate: $ARG\n";
+	#print "spaced: $ARG\n" if $rhOpts->{spaced};
+	$ARG =~ s{(\S)\ }{$1  }xmsg if $rhOpts->{spaced};
+	#print "spaced2: $ARG [$rhStyle->{regex}]\n" if $rhOpts->{spaced};
 	eval $rhStyle->{regex} if $rhOpts->{spaced};
+	#print "translate: $ARG [$rhStyle->{translate}]\n";
 	eval $rhStyle->{translate};
 	return $ARG;
 }
@@ -671,14 +755,17 @@ sub makeTranslation
 	return $tr;
 }
 
-# produce tr/// matching string for a mapped style
-# $_ =~ tr{a-z}{\x{1d68a}-\x{1d6a3}};
+# produce tr/// matching string for a mapped style and s{}{} replacer for spacing out the characters
+# with individual s{}{} mathcers for dipthongs like ae.
+# $_ =~ tr{az}{\x{1d68a}\x{1d6a3}};
+# $_ =~ s{ae}{\x{1d68a}}g;s{z}{\x{1d6a3}}g;
 sub makeTranslationMap
 {
 	my ($rhStyleMap) = @ARG;
 	my $from = "";
 	my $to = "";
 	my @replace = ();
+	my @space = (); #"s{([a-zA-Z0-9]\ )}{\$1+}xmsg;");
 
 	foreach my $find (sort { length($b) <=> length($a) || $a cmp $b } keys(%$rhStyleMap))
 	{
@@ -692,13 +779,16 @@ sub makeTranslationMap
 		{
 			push(@replace, "s{$find}{$replace}xmsg;")
 		}
+		push(@space, "s{$find}{$replace }xmsg;")
 	}
 
 	my $tr = qq{tr{$from}{$to}};
-   my $search = join(' ', @replace);
-	# print "map s $search";
-	# print "map tr $tr\n";
-	return $search . $tr;
+	my $search = join(' ', @replace);
+	my $spaced = join(' ', @space);
+	#print "map s $search\n";
+	#print "map tr $tr\n";
+	#print "map spaced $spaced\n";
+	return ($search . $tr, $spaced);
 }
 
 # get tr[a-z][A-Z] ranges given start chars and count
@@ -736,3 +826,4 @@ sub addChar
 }
 
 main();
+__END__
