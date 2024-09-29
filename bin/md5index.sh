@@ -25,8 +25,10 @@ OUT=$OUT SHOW=$SHOW perl -ne '
 		else
 		{
 			my $fh;
-			open($fh, ">", $out) || die qq{$out: $_};
-			print $fh join("", @lines);
+			my $content = join("", @lines);
+			@lines = ();
+			open($fh, ">", $out) || die qq{$out: $!\n};
+			print $fh $content;
 			close($fh);
 			`dos2unix -q $out`;
 			my $sum = `md5sum $out`;
@@ -41,7 +43,6 @@ OUT=$OUT SHOW=$SHOW perl -ne '
 	{
 		output();
 		$first = $last + 1;
-		@lines = ();
 	}
 
 	END
