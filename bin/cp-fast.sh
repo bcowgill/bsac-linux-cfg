@@ -23,9 +23,9 @@ See also cp-random.pl mv-to-tar.sh mv-to-zip.sh
 
 Example:
 
-	copy the big directory big-dir to the /mnt/external device, creating the big-dir directory
+	copy the big directory big-dir to the /mnt/external device, creating the big-dir directory showing start and end time.
 
-$cmd big-dir /mnt/external big-dir
+datestamp.sh; $cmd big-dir /mnt/external big-dir; datestamp.sh
 "
 	exit $code
 }
