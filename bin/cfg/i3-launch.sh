@@ -110,7 +110,8 @@ i3do "workspace $files; exec mygterm.sh $HOME/bin mc $HOME/bin /data/me"
 sleep 5
 
 # $app
-i3do "workspace $app; exec chromium-browser chrome-extension://edacconmaakjimmfgnblocblbcdcpbko/main.html"
+i3do "workspace $app; exec chromium-browser"
+#i3do "workspace $app; exec chromium-browser chrome-extension://edacconmaakjimmfgnblocblbcdcpbko/main.html"
 sleep 2
 
 # $build

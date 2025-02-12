@@ -1,3 +1,5 @@
+touch-dirs.sh try in Camera dir to reorder the folders, after backing up the phone
+newlinux.txt - list of things to do for new linux system
 Get a list of all script files, then search them for exiftool or id2 commands
 
 sugaru board in d/docs/sudoku

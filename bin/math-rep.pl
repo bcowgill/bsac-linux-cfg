@@ -86,7 +86,7 @@ $CATEGORY
 
 @{[manpage()]}
 
-See also ls-maths.sh utf8dbg.pl ... TODO
+See also ls-maths.sh utf8dbg.pl m.pl ... TODO
 
 Example:
 

@@ -1,58 +1,72 @@
 Geometry:
-a^2 + b^2 = c^2
+a² + b² = c²
 
-x = -b/2a +-sqrt(b^2 - 4ac)/2a
+x = -b/2a ±√(b² - 4ac)/2a
 
 Mathematics:
-pi = 4SIGMA -1^n/(2n+1)
-e^x = SIGMA x^n/n!
-ln(z) = 2SIGMA [1/(2n+1)][(z-1)/(z+1)]^2^n^+^1
+𝛑 = 4∑ -1ⁿ/(2n+1)
+eˣ = ∑ xⁿ/n!
+ln(z) = 2∑ [1/(2n+1)][(z-1)/(z+1)]²ⁿ⁺¹
+
+log()
+𝛑
+eˣ
 
 Complex Mathematics:
-i^2 == -1
-z = x + iy = re^i^theta
-sqrt-1 = e^(ipi/2)
+i² ≡ -1
+z = x + iy = reⁱᶿ
+√-1 = e^(i𝛑/2)
+e^(i𝛑θ)
 
 Mechanics:
 
-F = d(mv)/dt = mdee v/deet + vdee m/deet
-W = intF(r)dotdr
-sum E = Ek + Ep = constant in time
+F = 𝒅(mv)/𝒅t = m𝒅v/𝒅t + v𝒅m/𝒅t
+W = ∫ F(r)⋅dr
+∑E = Ek + Ep = constant in time
 
-Fg = GmM/r^2
-Fq = -kqQ/r^2
+Fg = GmM/r²
+Fq = -kqQ/r²
 Fw = approx:
 Fs = approx:
 
-Eb/AMeV ~= a - b/3root(A) - cZ^2/3root(A^4) - d(N - Z)^2/A^2 +- e/4root(A^7)
+Eb/AMeV ≃ a - b/∛(A) - cZ²/∛(A⁴) - d(N - Z)²/A² ± e/∜(A⁷)
+Eb ≡ a - b/A^⅓ - cZ²/A^(4/3) - d(N - Z)²/A² ± e/A^(7/4)
 
 Fluid Mechanics:
-H = z + P/rhog + v^2/2g
-v^2/2 + psi  + epsilon + P/rho == b
-deephi/deet + v^2/2 + P/rho + gz = 0
-v^2/2 + gz + [gamma/(gamma - 1)](P/rho) = Cs
+H = z + P/𝛒g + v²/2g
+
+v²/2 + 𝛙 + 𝝴 + P/𝛒 ≡ b
+
+𝒅𝛗/𝒅t + v²/2 + P/𝛒 + gz = 0
+v²/2 + gz + [𝛄/(𝛄 - 1)](P/𝛒) = Cs
 
 Electronics:
 V = IR
-P = I^2R
-I(t) = CdV/dt
-V(t) = LdI/dt
-1/Rp = sum 1/R_i
+P = I²R
+I(t) = C𝒅V/𝒅t
+V(t) = L𝒅I/𝒅t
+1/Rp = ∑ 1/Rₙ
 
 Light:
-deldotE = 4pirho
-deldotB = 0
-delcross E = -dee B/(cdeet)
-delcross B = (4pi J + dee E/deet)/c
+𝛁 ⋅ E = 4 𝛑 𝛒
+𝛁 ⋅ B = 0
+𝛁 ⨯ E = -𝒅 B / (c𝒅t)
+𝛁 ⨯ B = (4 𝛑 J + 𝒅E/𝒅t)/c
 
 Quantum Mechanics:
-sigmaxsigmap >= h/4pi
-rho(a,c) - rho(b,a) - rho(b,c) <= 1
-dee^2u/deet^2 = c^2del^2u
-[del^2 - dee^2/(c^2deet^2)]psi (r,t) = 0
-(ih/2pi)(dee/deet)psi (r,t) = [(-h^2/8pi^2mu)del^2 + V(r,t)]psi (r,t)
+σxσp ≥ h/4𝛑
+σxσp ≥ ℏ/2
+
+𝛒(a,c) - 𝛒(b,a) - 𝛒(b,c) ≤ 1
+
+𝒅²u/𝒅t² = c²𝛁²u
+
+[𝛁² - 𝒅²/(c²𝒅t²)]𝛙 (r,t) = 0
+
+(ih/2𝛑)(𝒅/𝒅t)𝛙(r,t) = [(-h²/8𝛑²𝛍)𝛁² + V(r,t)]𝛙 (r,t)
+iℏ(𝒅/𝒅t)𝛙(r,t) = ((-ℏ²/2𝛍𝛁)² + V(r,t))𝛙(r,t)
 
 Relativity:
-gamma = 1/sqrt(1-v^2/c^2)
-E = sqrt((mc^2)^2+(pc)^2)
+𝛄 = 1/√(1-v²/c²)
+E = √((mc²)²+(pc)²)
 

@@ -2,6 +2,7 @@
 # Show a notification if low disk space anywhere important
 LIMIT=${1:-70}
 SEVERITY=${2:-LOW}
+SILENCE='/tmp/check-disk-space.SILENCE'
 
 function check_space {
 	local notify
@@ -23,7 +24,7 @@ function check_space {
 				{
 					my $num = int(1+rand(3));
 					system(qq{mynotify.sh "check-disk-space.sh" "$print"});
-					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space-spoken$num.mp3"}) if ($ENV{LIMIT} > 90);
+					system(qq{sound-play.sh "~/bin/sounds/critical-disk-space-spoken$num.mp3"}) if ($ENV{LIMIT} > 90 && !-e $SILENCE);
 				}
 			}
 		'
@@ -54,6 +55,13 @@ if check_space | grep  'DISK SPACE' > /dev/null; then
 	check_here /var
 	check_here /var/lib
 	#check_here /
+fi
+echo " "
+if [ -e $SILENCE ]; then
+	echo Note: file $SILENCE exists, no audible alarms will sound when there is a CRITICAL lack of disk space.
+else
+	echo Note: to silence the audible alarm about CRITICAL disk space,
+	echo touch $SILENCE
 fi
 
 exit $?

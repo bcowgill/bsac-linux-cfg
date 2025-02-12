@@ -21,7 +21,7 @@ copy files at random from an input list to some destination.
    --number=N       optional number of files to copy
    --retries=N      optional additional copies to try after first failure
    --invert         optional. invert the output to show what was not copied
-   --nospace        optional. create files with no spaces or special characters in them
+   --nospaces       optional. create files with no spaces or special characters in them and a lowercase file extension
    --notree         optional. create files in the target directory, do not reproduce the source tree
    --file-list=name optional. file containing list of files to choose from
    --version        display program version
@@ -44,7 +44,7 @@ copy files at random from an input list to some destination.
 
  Invert the printed output.  Normally the copied files are printed.  This causes the files that were in the list but not copied to be printed instead.
 
-=item B<--space> or B<--nospace>
+=item B<--spaces> or B<--nospaces>
 
  optional. default is to allow.  Allow or prevent spaces and special characters in files and directories on the target device.
 
@@ -123,7 +123,7 @@ my %Var = (
 			retries => 10,    # retries after disk full
 			number  => 0,     # number of files to copy instead of size based
 			invert  => 0,     # show copies, not those left behind
-			space   => 1,     # allow spaces and special characters in filenames
+			spaces  => 1,     # allow spaces and special characters in filenames
 			tree    => 1,     # allow subdirectories in target filenames
 			verbose => 1,     # default value for verbose
 			debug   => 0,
@@ -143,7 +143,7 @@ my %Var = (
 		],
 		raOpts => [
 			"invert|v!",       # invert output to show files not copied
-			"space!",          # allow spaces and special characters in filenames
+			"spaces!",         # allow spaces and special characters in filenames
 			"tree!",           # allow subdirectories in target filenames
 			"retries|r:i",     # retries after disk full
 			"number:i",        # number of files to copy instead of size based
@@ -436,6 +436,7 @@ sub unspace
 		$path =~ s{-?\.-?}{.}xmsg;
 		$path =~ s{\A-}{}xmsg;
 		$path =~ s{-\z}{}xmsg;
+		$path =~ s{(\.[A-Za-z0-9]+)\z}{lc($1)}xmse;
 	}
 	return $path;
 }

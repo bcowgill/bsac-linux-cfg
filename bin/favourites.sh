@@ -1,6 +1,6 @@
 #!/bin/bash
 # listen to all music files so you can track the ones you like for a favorites play list.
-# See also cp-fav.sh
+# See also ~/d/Music/cp-fav.sh
 ALL_LIST=all-music.lst
 export SUM=played.lst
 export LAST=last-played.lst

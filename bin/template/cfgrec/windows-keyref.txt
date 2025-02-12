@@ -1,4 +1,8 @@
+============================================================
+
 Windows Hot Keys
+
+Win-Ctrl-Arrows	Switch Virtual Desktop
 Win-Shift-S		Screen Grabber Tool
 Win-v			Clipboard History
 Win-Shift-Esc	Task Manager
@@ -8,7 +12,6 @@ Win-u			Accessibility settings
 Win-,			Peek Desktop
 Win-d			Show/Hide Desktop
 Win-Ctrl-d		Add Virtual Desktop
-Win-Ctrl-Arrows	Switch Virtual Desktop
 Win-;			Emoji Picker
 
 Ctrl-Space		Unmute in Teams
@@ -26,6 +29,8 @@ Win-Shift-D		Mouse Jump (extended desktops)(PT)
 (PT) = Power Toys
 
 Ctrl-\			Screenshot to Clipboard (xbox game bar but does not work))
+Setup Powertoys:
+Turn on Highlight Mouse Clicks by default
 
 Track Pad
 single-click	Tap with single finger
@@ -34,6 +39,15 @@ right-click		Tap with two fingers (Shift-F10)
 multi-select	Tap twice and drag
 scroll			Drag two fingers
 zoom			Pinch/Spread fingers (Win-Plus/Minus)
+
+search/cortana		Three finger tap (Win-s)
+multi-desktop		Three finger up swipe  (Win-Tab)
+show desktop		Three finger down swipe (Win-d)
+switch apps			Three finger left/right swipe (Alt-tab)
+
+notifications		Four fingerr tap (Win-a)
+volume up/down		Four finger up/down swipe (Win-F5/F6/F7)
+track change		Four finger left/right swipe
 
 ============================================================
 
@@ -71,6 +85,11 @@ Open an email, click on the zoom% in the footer ribbon, set zoom level and click
 Clipboard Settings
 on - Clipboard History
 
+XBox Game Bar Settings
+turn on
+Configure Ctrl-\ as key for take screenshot (to clipboard)
+(this does not actually work)
+
 Outlook
 
 Inbox folders
@@ -79,18 +98,6 @@ Inbox folders
 2-pending
 3-someday
 4-DMZ
-
-✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
-
-Categories for meetings
-
-green  - Work
-blue   - Meeting
-gray   - Waste
-red    - Blocked
-yellow - Reserved/Unavailable/Me Time
-orange - Out of Office/appointment
-purple - Holiday
 
 Teams Settings
 / Appearance and accessibility
@@ -114,19 +121,54 @@ on - Adjust brightness
 on/max - Soft focus
 on - Green screen
 
-XBox Game Bar Settings
-turn on
-Configure Ctrl-\ as key for take screenshot (to clipboard)
-(this does not actually work)
-
 Pomodoro Timer - built into windows as focus time.
 
-✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+============================================================
 
-Regularly - Mondays
-Time sheet submit
-Task Manager / App history / Delete usage history (win)
-powershell Update-Help  (win)
+Powershell
+
+$PSVersionTable.PSVersion
+help
+get-help
+get-command		gcm
+get-location	gl pwd
+get-childitem	gci ls dir
+set-location	sl cd chdir
+new-item		ni
+rename-item		rni ren
+move-item		mi mv move
+copy-item		cpi cp copy
+remove-item		ri rm rmdir del erase rd
+write-host
+
+in powershell to get windoes subsystem for linux:
+wsl --install
+
+============================================================
+
+Notes
+
+…
+‘this’
+“that”
+// ⏰  Wait for the post request to be finished.
+// ✅  Posh assert that the correct posts have loaded.
+// ❌  Error cross
+
+// ◯ ▢ ▭ ◻ □ ⁐  Empty TODO checkbox
+
+// ☐  Todo item / ballot box
+// ▣  Filled TODO checkbox
+// ☑  Assert that the correct posts have loaded.
+// ☒  Did not complete this
+// ✔  Big check marked task done
+// ✘  Big cross failed
+// 💣  Handle an error by recovering gracefully.
+
+  NOT_OK: '✘ ', // 'NOT OK ',
+  OK    : '✔ ', // 'OK ',
+  SKIP  : '○ ', // 'SKIP',
+  SKIP  : '◌ ', // 'SKIP',
 
 ⁐	U+2050	[OtherPunctuation]	CLOSE UP
 □	U+25A1	[OtherSymbol]	WHITE SQUARE
@@ -138,4 +180,27 @@ powershell Update-Help  (win)
 ✅	U+2705	[OtherSymbol]	WHITE HEAVY CHECK MARK
 
 ✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+
+============================================================
+
+Todo List
+
+- item...
+
+✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+
+Regularly - Mondays
+Time sheet submit
+Task Manager / App history / Delete usage history (win)
+powershell as Administrator Update-Help  (win)
+
+Categories for meetings
+
+green  - Work
+blue   - Meeting
+gray   - Waste
+red    - Blocked
+yellow - Reserved/Unavailable/Me Time
+orange - Out of Office/appointment
+purple - Holiday
 

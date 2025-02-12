@@ -1,0 +1,309 @@
+U+00A0  
+U+2018 ‘
+U+2019 ’
+U+201C “
+U+201D ”
+U+2026 …
+U+00A9 ©
+U+00AE ®
+# numbers/mathematics
+U+22C5 ⋅
+U+D7 ×
+U+F7 ÷
+U+2215 ∕
+U+00BC ¼
+U+00BD ½
+U+00BE ¾
+U+221A √
+U+221B ∛
+U+221C ∜
+U+2070 ⁰
+U+B9 ¹
+U+B2 ²
+U+B3 ³
+U+2074 ⁴
+U+2075 ⁵
+U+2076 ⁶
+U+2077 ⁷
+U+2078 ⁸
+U+2079 ⁹
+U+2071 ⁱ
+U+207F ⁿ
+U+207A ⁺
+U+207B ⁻
+U+207C ⁼
+U+207D ⁽
+U+207E ⁾
+U+2C2 ˂
+U+2C3 ˃
+U+33D2 ㏒
+U+394 Δ
+U+2FF ˿
+U+2F1 ˱
+U+2F2 ˲
+# degrees currency
+U+B0 °
+U+2103 ℃
+U+2109 ℉
+U+00A3 £
+U+20B5 ₵
+U+20A4 ₤
+U+20AC €
+U+FF04 ＄
+U+FE69 ﹩
+U+2367 ⍧
+# checks votes
+U+2713 ✓
+U+2714 ✔
+U+2705 ✅
+U+2715 ✕
+U+2716 ✖
+U+2717 ✗
+U+2718 ✘
+U+2719 ✙
+U+274C ❌
+U+2610 ☐
+U+2611 ☑
+U+2612 ☒
+# symbols
+U+0277 ɷ
+U+0B50 ୐
+U+0C94 ಔ
+U+0FD5 ࿕
+U+0FCA ࿊
+U+262F ☯
+U+1AA0 ᪠
+U+23F0 ⏰
+U+2460 ①
+U+2776 ❶
+U+2615 ☕
+U+1F4B0 💰
+# chinese
+U+56CD 囍
+U+2FF0 ⿰
+U+80B9 肹
+U+813D 脽
+U+5C6A 屪
+U+9280 銀
+# smileys
+U+2639 ☹
+U+263A ☺
+U+263B ☻
+U+1F60E 😎
+# dice
+U+2680 ⚀
+U+2681 ⚁
+U+2682 ⚂
+U+2683 ⚃
+U+2684 ⚄
+U+2685 ⚅
+# sun weather world
+U+1F305 🌅
+U+1F307 🌇
+U+1F31E 🌞
+U+1F33B 🌻
+U+2603 ☃
+U+1F30E 🌎
+U+1F341 🍁
+U+1F197 🆗
+U+1F198 🆘
+U+1F192 🆒
+# info warning danger symbols
+U+24D8 ⓘ
+U+24A4 ⒤
+U+26A0 ⚠
+U+2623 ☣
+U+2622 ☢
+U+2620 ☠
+U+1F52B 🔫
+U+1F4A3 💣
+# send folder computer icons
+U+1F4E9 📩
+U+1F4F2 📲
+U+1F4C2 📂
+U+1F4BB 💻
+# shapes
+U+0394 Δ
+U+2610 ☐
+U+25A2 ▢
+U+26AC ⚬
+U+26AA ⚪
+U+26AB ⚫
+U+2B58 ⭘
+U+2B57 ⭗
+U+25CC ◌
+U+25CB ○
+U+274D ❍
+U+2B55 ⭕
+U+25EF ◯
+U+2B24 ⬤
+# critters
+U+1F427 🐧
+U+1F41B 🐛
+# hands
+U+1F446 👆
+U+1F447 👇
+U+1F448 👈
+U+1F449 👉
+U+1F44A 👊
+U+1F44B 👋
+U+1F44C 👌
+U+1F44D 👍
+U+1F44E 👎
+U+1F44F 👏
+U+1F463 👣
+U+2741 ❁
+U+23E9 ⏩
+# arrows mostly TODO
+U+2190 ←
+U+2191 ↑
+U+2192 →
+U+2193 ↓
+U+2194 ↔
+U+2195 ↕
+U+2196 ↖
+U+2197 ↗
+U+2198 ↘
+U+2199 ↙
+U+21A9 ↩
+U+21AA ↪
+U+21AF ↯
+U+21B0 ↰
+U+21B1 ↱
+U+21B2 ↲
+U+21B3 ↳
+U+21B4 ↴
+U+21B5 ↵
+U+21B6 ↶
+U+21B7 ↷
+U+21D0 ⇐
+U+21D1 ⇑
+U+21D2 ⇒
+U+21D3 ⇓
+U+21D4 ⇔
+U+21D5 ⇕
+U+21D6 ⇖
+U+21D7 ⇗
+U+21D8 ⇘
+U+21D9 ⇙
+U+21DC ⇜
+U+21DD ⇝
+U+21E6 ⇦
+U+21E7 ⇧
+U+21E8 ⇨
+U+21E9 ⇩
+U+21FD ⇽
+U+21FE ⇾
+U+21FF ⇿
+U+2B00 ⬀
+U+2B01 ⬁
+U+2B02 ⬂
+U+2B03 ⬃
+U+2B04 ⬄
+U+2B05 ⬅
+U+2B06 ⬆
+U+2B07 ⬇
+U+2B08 ⬈
+U+2B09 ⬉
+U+2B0A ⬊
+U+2B0B ⬋
+U+2B0C ⬌
+U+2B0D ⬍
+U+2B0E ⬎
+U+2B0F ⬏
+U+2B10 ⬐
+U+2B11 ⬑
+# search
+U+1F50D 🔍
+U+1F50E 🔎
+# pi
+U+3C0 π
+U+213C ℼ
+U+1D6D1 𝛑
+U+1D70B 𝜋
+U+1D745 𝝅
+U+1D77F 𝝿
+U+1D7B9 𝞹
+Lord of the Rings:
+            ⸬                   ⸬
+ʎddɐɥ ʎddɐɥ ʎddɐɥ ʎddɐɥ ʎddɐɥ ʎddɐɥ ʎddɐɥ ʎddɐɥ ʎddɐɥ
+ᘜ ᓋ ᓋ ᖱ  ᙏ ᓏ ᖆ ᘗ ᓲ ᘘ ᘜ
+☂
+(っ＾▿＾)۶🍸🌟🍺٩(˘◡˘ )
+( ◑‿◑)ɔ┏🍟--🍔┑٩(^◡^ )
+
+// Cool comments
+// ✅ All useEffect dependencies are specified
+// ❌ Error cross
+// 🔐 🔒 🔓 Lock states
+// 💡	Brilliant Idea light bulb
+// ☐ Todo item / ballot box
+// ☑ Done. (Happily)
+// ☒ Also Done.
+// ⚠️ createRows() is called on every render
+// 🚩 Flag: watch out for negative numbers here
+// 🔴 Bug: count is not specified as a dependency
+// 🔵 Blue: circle
+// ⬤ Black: circle
+// ○ White: circle echo // ◌ Dotted Circle
+// ❤ I love it!
+// 🚀 take off!
+// 📦 build it
+// ⏰ time expensive
+// 💰 money point
+// ⛾ 🍩 coffee and doughnut reward
+// ☹ Frowny face
+// ☺ Smiling face
+// ☻ Smiling face
+// 😀 Grinning face
+// 😃 Big smiling face
+// 😉 Winking face
+// 😎 Smiling shades face
+// 😐 Neutral face
+// 😕 Confused face
+// 😠 Angry face
+// 😡 Pouting face
+// 😢 Crying face
+
+mac keyref -- Favourites:
+~ ^ ☑️ ✅ ☐ ☒ ☑︎ ❌ 🤑 💰 💸 💵 💲 $ ﹩ ＄
+
+windows keyref
+✅ ⁐ ▢ ▭ ▣ ◯ ◻ □
+
+  NOT_OK: '✘ ', // 'NOT OK ',
+  OK    : '✔ ', // 'OK ',
+  SKIP  : '○ ', // 'SKIP',
+  SKIP  : '◌ ', // 'SKIP',
+▢  checkbox
+⚬	U+26AC	[OtherSymbol]	MEDIUM SMALL WHITE CIRCLE
+⚪	U+26AA	[OtherSymbol]	MEDIUM WHITE CIRCLE
+⚫	U+26AB	[OtherSymbol]	MEDIUM BLACK CIRCLE
+⌾	U+233E	[OtherSymbol]	APL FUNCTIONAL SYMBOL CIRCLE JOT
+⊙	U+2299	[MathSymbol]	CIRCLED DOT OPERATOR
+⊚	U+229A	[MathSymbol]	CIRCLED RING OPERATOR
+⭘	U+2B58	[OtherSymbol]	HEAVY CIRCLE
+⏣	U+23E3	[OtherSymbol]	BENZENE RING WITH CIRCLE
+○	U+25CB	[OtherSymbol]	WHITE CIRCLE
+◌	U+25CC	[OtherSymbol]	DOTTED CIRCLE
+◍	U+25CD	[OtherSymbol]	CIRCLE WITH VERTICAL FILL
+●	U+25CF	[OtherSymbol]	BLACK CIRCLE
+◙	U+25D9	[OtherSymbol]	INVERSE WHITE CIRCLE
+❍	U+274D	[OtherSymbol]	SHADOWED WHITE CIRCLE
+⦾	U+29BE	[MathSymbol]	CIRCLED WHITE BULLET
+⦿	U+29BF	[MathSymbol]	CIRCLED BULLET
+⭗	U+2B57	[OtherSymbol]	HEAVY CIRCLE WITH CIRCLE INSIDE
+⨀	U+2A00	[MathSymbol]	N-ARY CIRCLED DOT OPERATOR
+⛒	U+26D2	[OtherSymbol]	CIRCLED CROSSING LANES
+⭙	U+2B59	[OtherSymbol]	HEAVY CIRCLED SALTIRE
+⭕	U+2B55	[OtherSymbol]	HEAVY LARGE CIRCLE
+🔴	U+1F534	[OtherSymbol]	LARGE RED CIRCLE
+🔵	U+1F535	[OtherSymbol]	LARGE BLUE CIRCLE
+◯	U+25EF	[OtherSymbol]	LARGE CIRCLE
+⬤	U+2B24	[OtherSymbol]	BLACK LARGE CIRCLE
+‘Assistant’ English with “quotation” marks and apostrophe’s
+「醫療熱線」Chinese with quotation marks
+„Gesundheitsassistent“ German with quotation marks
+‘con gas’ Italian with quotation marks
+« assistant de santé » French with quotation marks
+«Asistente de Salud» Spanish with quotation marks
