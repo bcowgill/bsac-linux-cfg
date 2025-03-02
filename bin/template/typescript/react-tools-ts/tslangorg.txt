@@ -1,3 +1,4 @@
+//==========================================================
 // Paste this into the online typescript compiler to see if it compiles
 // https://www.typescriptlang.org/play/?module=1
 // Global setup to simulate a browser window like environment.
@@ -50,9 +51,19 @@ const win : any = {
 	}
 };
 
-export const NOISY = false;
-export const LET_FAIL_TESTS = false;
-export const UTF_OK = false;
+export const EX_NOISY = false;
+export const EX_QUIET = true;
+export const EX_LET_FAIL_TESTS = false;
+
+export const EX_JS_NODE = false; // transpiled to JS and run in node
+export const EX_ONECOMP = false; // onecompiler site?
+
+export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
+export const EX_DATE_GMT = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
+export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
+export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
+
+//export const EX_SP = EX_JS_NODE ? '\xa0' : '\x20';
 
 const global = win;
 
@@ -140,28 +151,65 @@ export type ReactNode = any;
 
 // A minimal unit testing library inside the tscompiler browser
 
-let EX_DATE_NODE = false;
-let EX_ARROW_STRINGIFY = true;
+// const EX_QUOTE = EX_UTF_OK ? '' : 'gq';
+
 let EX_SHOW_SPACES = false;
 let EX_AS_JS = false;
-function show(what : string) {
-	if (EX_AS_JS) {
-		return what
-			.replace(/\n/g, '\\n')
-			.replace(/`/g, '\`')
-			.replace(/^(.*)$/, '`$1`');
+
+let EX_TESTED = 0;
+let EX_FAILED = 0;
+// let XXX = false;
+
+// mode: raw, js or spc to override EX_AS_JS, EX_SHOW_SPACES
+function show(what : any, mode?: string, max?: number): any {
+	const showJS = EX_AS_JS || mode === 'js';
+	const showSpc = EX_SHOW_SPACES || mode === 'spc';
+	const showRaw = mode === 'raw' || !showSpc;
+	let whatStr;
+	if (typeof what === 'string' || what instanceof RegExp) {
+		// MUSTDO this smart quotes the string and adds ellipsis if needed
+		whatStr = showThing(what, max);
+		if (showRaw) {
+			what = whatStr;
+		}
+	} else if (what === null || typeof what === 'number' || typeof what === 'undefined') {
+		// simple stringify where array stringify fails...
+		whatStr = `${what}`;
+	} else if (showJS) {
+		whatStr = showThing(what, max);
+	} else {
+		// array stringify for everything else...
+		whatStr = [what, ''].join('');
 	}
-	return !EX_SHOW_SPACES
-		? what
-		: what
+	if (showJS) {
+		return whatStr
 			.replace(/\n/g, '\\n')
-			.replace(/\t/g, '\\t')
-			.replace(/\f/g, '\\f')
 			.replace(/\r/g, '\\r')
+			.replace(/\f/g, '\\f')
+			.replace(/\t/g, '\\t')
 			.replace(/\v/g, '\\v')
-			.replace(/\x0d/g, '\\x0d')
-			.replace(/\x0a/g, '\\x0a')
-			.replace(/\s/g, '~');
+			.replace(/\x08/g, '\\x08') // backspace \b conflict with regex \b
+			.replace(/\x0d\x0a/g, '\\x0d\\x0a') // CR/LF combo
+			.replace(/\x0a/g, '\\x0a') // line feed
+			.replace(/\x0d/g, '\\x0d') // carriage ret
+			.replace(/`/g, '\\`')
+	}
+
+	// const nn = nameSpaces(showThing(what, max));
+	// const nnn = nn.replace(/^(\[U\+201C\])?\[U\+201C\]/, '\u201c')
+	// 	.replace(/\[U\+201D\](\[U\+201D\])?$/, '\u201d')
+	// 	.replace(/\[U\+2026\](..?.?.?.?.?)$/, '\u2026$1');
+	// if (XXX) {
+	// 	console.warn(`NNNNN\n${nn}\n${nnn}`)
+	// }
+
+	return showRaw
+		? what
+		: nameSpaces(showThing(what, max))
+			.replace(reRepairLDQU, LDQ)
+			.replace(reRepairRDQU, RDQ)
+			.replace(reRepairEL, `${EL}\$1`);
+		// MUSTDO ^^^ the smart quotes are shown as code points...
 } // show()
 
 function sameNaN(got : any, expected : any) : boolean
@@ -174,9 +222,30 @@ function sameNaN(got : any, expected : any) : boolean
 	return false;
 } // sameNaN()
 
-const EX_QUIET = true;
-let EX_TESTED = 0;
-let EX_FAILED = 0;
+/**
+ * show on the console the result of a stringDiff of strJ() got, expected values.
+ * @param got {string} the result value of a test case, converted to string with strJ().
+ * @param expected {string} the expected value of a test case, converted to string with strJ().
+ * @note will output to console.warn showing the different number of lines and characters in the strings
+ * as well as a limited number of line by line differences and the first few character differences.
+ */
+function showDiff(got: string, expected: string): void {
+	const diff = stringDiff(got, expected);
+	console.warn(`#    lines: ${diff.lines}`);
+	console.warn(`#  lengths: ${diff.lengths} characters`);
+	diff.lineDiff.forEach(function showLineDiffs(line: ILineDiff): void {
+		console.warn(`#     line: ${line.line}`);
+		console.warn(`# expected: ${line.expected}`);
+		console.warn(`#      got: ${line._____got}`);
+	});
+	diff.diffs.forEach(function showCharDiffs(diff: string): void {
+		console.warn(`#     char: ${diff}`);
+	});
+	if (diff.diffStart) {
+		console.warn(`#    start: ${diff.diffStart}`);
+	}
+	// console.warn(`stringDiff`, diff);
+} // showDiff()
 
 function expectToBe(got : any, expected : any, desc = 'expectToBe') : void
 {
@@ -189,9 +258,20 @@ function expectToBe(got : any, expected : any, desc = 'expectToBe') : void
 	} else {
 		EX_FAILED++;
 		console.warn(`NOT OK ${desc}`);
-		console.warn(`# expected:`, show(expected));
-		console.warn(`#      got:`, show(got));
-	}
+		try {
+			const expStr = strJ(expected, 1);
+			const gotStr = strJ(got, 1);
+			console.warn(`# expected:`, show(expected));
+			if (gotStr === expStr) {
+				console.warn(`#      got: stringifies to the same thing -- try expectToEqual instead?`);
+			} else {
+				console.warn(`#      got:`, show(got));
+				showDiff(gotStr, expStr);
+			} // else differs deeply
+		} catch (exception) {
+			console.error(`EXCEPTION expectToBe [${desc}]:\x20`, exception);
+		}
+	} // else not same object
 } // expectToBe()
 
 function expectNotToBe(got : any, expected : any, desc = 'expectNotToBe') : void
@@ -209,27 +289,99 @@ function expectNotToBe(got : any, expected : any, desc = 'expectNotToBe') : void
 	}
 } // expectNotToBe()
 
-function strJ(thing : any) {
-	return JSON.stringify(thing, void 0, 2);
-}
+// Stringify function to sort the key order and stringify things that JSON.stringify cannot
+// OR, install package...
+// ht tps://www.npmjs.com/package/json-stable-stringify
+// ht tps://stackoverflow.com/a/43636793
+// ht tps://gist.github.com/davidfurlong/463a83a33b70a3b6618e97ec9679e490
+export function jsonKeySorter(_unusedKey: string, value: any) {
+	return (value instanceof Object &&
+		!(value instanceof Array) &&
+		!(value instanceof Function) &&
+		!(value instanceof Error) &&
+		!(value instanceof Date) &&
+		!(value instanceof RegExp) &&
+		!(value instanceof Boolean) &&
+		!(value instanceof Number) &&
+		!(value instanceof String)) ?
+		Object.keys(value)
+		.sort()
+		.reduce((sorted, key: string) => {
+			sorted[key] = strV(value[key]) || value[key];
+			return sorted
+		}, {} as Record<string, any>) :
+		(strV(value) || value);
+} // jsonKeySorter()
+
+/**
+ * answer with stringified value of something that JSON.stringify fails to handle.
+ * @param what {any} the thing to selectively stringify.
+ * @returns {string|undefined} the string representation of what was given or undefined if JSON.stringify can handle it.
+ */
+function strV(what?: any): string | undefined {
+	let whatStr;
+	const type = typeof what;
+	const name = getTypeName(what);
+	// console.warn(`strV [${type}] [${name}] (${what})`);
+	// MUSTDO Map, Set
+	if (what instanceof Date) {
+		whatStr = `Date : ${what.toISOString()}`;
+	} else if (
+		type === 'undefined' ||
+		(type === 'number' && !isFinite(what))
+		) {
+		whatStr= `${what}`;
+	} else if (name &&
+		(name === 'Boolean ' ||
+		name === 'Number ' ||
+		name === 'String ' ||
+		name === 'RegExp ' ||
+		name === 'Function ' ||
+		what instanceof Error)) {
+		whatStr = `${getTypeName(what) || typeof what}: ${what}`;
+	}
+	return whatStr;
+} // strV()
+
+/**
+ * answers with stringified or JSON stringified value of the thing passed in.
+ * @param what {any} the thing to selectively stringify.
+ * @returns {string} the string representation of what was given.
+ * @not JSON.stringify undeined and NaN not what you would expect so we stringify these if they are at the top level.
+ * But if these values are within an object structure they won't be shown exactly.
+ */
+function strJ(what?: any, indent = 2): string {
+	let whatStr = strV(what);
+	if (!whatStr) {
+		whatStr = JSON.stringify(what, jsonKeySorter, indent);
+	}
+	return whatStr;
+} // strJ()
 
 function expectToEqual(got : any, expected : any, desc = 'expectToEqual') : void
 {
 	// return expect(got).toEqual(expected);
 	EX_TESTED++;
-	const gotStr = strJ(got);
-	const expectStr = strJ(expected);
-	if (gotStr === expectStr) {
-		if (!EX_QUIET) {
-			console.warn(`OK ${desc}`);
+	try {
+		const expStr = strJ(expected, 1);
+		const gotStr = strJ(got, 1);
+		if (gotStr === expStr) {
+			if (!EX_QUIET) {
+				console.warn(`OK ${desc}`);
+			}
+		} else {
+			EX_FAILED++;
+			console.warn(`NOT OK ${desc}`);
+			console.warn(`# expected:`, show(expected));
+			console.warn(`#      got:`, show(got));
+			showDiff(gotStr, expStr);
 		}
-	} else {
+	} catch (exception) {
 		EX_FAILED++;
 		console.warn(`NOT OK ${desc}`);
-		console.warn(`# expected:`, expected);
-		console.warn(`#      got:`, got);
-		console.warn(`#  expectJ:`, expectStr);
-		console.warn(`#     gotJ:`, gotStr);
+		console.error(`EXCEPTION expectToEqual [${desc}]:\x20`, exception);
+		console.warn(`# expected:`, show(expected));
+		console.warn(`#      got:`, show(got));
 	}
 } // expectToEqual()
 
@@ -338,8 +490,8 @@ function testSummary() : void
 
 function expect(got : any) {
 	return {
-		not            : {
-			toBe           : (expected : any) => {
+		not: {
+			toBe: (expected : any) => {
 				expectNotToBe(got, expected, `expect(${got}).not.toBe(${expected})`);
 			},
 			toHaveAttribute: (name : string) => {
@@ -356,11 +508,11 @@ function expect(got : any) {
 					expectToBe(undefined, undefined, `expect(${got}).not.toHaveAttribute(${name})`);
 				}
 			}, // .not.toHaveAttribute()
-			toMatch        : (expected : any) => {
+			toMatch: (expected : any) => {
 				expectNotToMatch(expected, got, `expect(${got}).not.toMatch(${expected})`);
 			}
 		}, // .not.
-		toBe           : (expected : any) => {
+		toBe: (expected : any) => {
 			expectToBe(got, expected, `expect(${got}).toBe(${expected})`);
 		},
 		toHaveAttribute: (name : string, value : string) => {
@@ -375,7 +527,7 @@ function expect(got : any) {
 				expectToBe(undefined, value, `expect(${got}).toHaveAttribute(${name}, '${value}') -- attribute ${name} does not exist`);
 			}
 		}, // .toHaveAttribute()
-		toMatch        : (expected : any) => {
+		toMatch: (expected : any) => {
 			expectToMatch(expected, got, `expect(${got}).toMatch(${expected})`);
 		}
 	}; // return
@@ -446,7 +598,12 @@ export interface ElementWithType
 }
 
 const FLIP = false; // true to reverse which attributes are shown in getTextNice()
-const MAX_THING = 128; // longest thing to log before shortening with an ellipsis in showThing()
+const MAX_THING = 128000; // longest thing to log before shortening with an ellipsis in showThing()
+
+const NUM_CHAR_DIFFS = 15; // number of character differences to show in failed test
+const NUM_LINE_DIFFS = 10; // number of lines of differences to show in failed test
+
+const MAX_BYTE = 255;
 
 // checkDocumentTextEmpty() specify hidden text that is present even in an empty document
 const reVersionNickname = />\s*version\.nickname: [^<]+</; // NOSONAR
@@ -477,7 +634,7 @@ let _RDQ = '/'; // ” right quote (double) UTF8
 let _LRDQ = `\\\\\\/`;
 // let _LDQ = '"('; // “ left quote (double) UTF8 let _RDQ = ')"'; // ” right
 // quote (double) UTF8
-if (UTF_OK) {
+if (EX_UTF_OK) {
 	_LS   = '\xa3'; // £ pound sterling UTF8
 	_EL   = '\u2026'; // … ellipsis UTF8
 	_LDQ  = '\u201c'; // “ left quote (double) UTF8
@@ -488,7 +645,11 @@ export const LS = _LS; // £ pound sterling UTF8
 export const EL = _EL; // … ellipsis UTF8
 export const LDQ = _LDQ; // “ left quote (double) UTF8
 export const RDQ = _RDQ; // ” right quote (double) UTF8
-const LRDQ = _LRDQ;
+export const LRDQ = _LRDQ;
+
+export const reRepairLDQU = /^(\[U\+201C\])?\[U\+201C\]/;
+export const reRepairRDQU = /\[U\+201D\](\[U\+201D\])?$/;
+export const reRepairEL = /\[U\+2026\](..?.?.?.?.?)$/;
 
 const NL = '{NL}';
 const TAB = '\t';
@@ -532,19 +693,50 @@ const reMultiSpaced = /\n\s*\n+/g;
 const reNicePreamble = /(.|\n)+={10} .+?\n/gm; // NOSONAR
 const reInitialLineSpaces = /^\s*/gm;
 const reNewLines = /\n/gm;
+const reNewLineIsh = /(?:\\n|\n)/gm;
 const reExpectStraggler = /^\s*expect\(screen\.queryByText\(RE\[\s*$/gm; // NOSONAR
 const reEmbeddedRE = /RE\[(.+?)\]ER/g;
 const reSpaceMarker = /(\[SPACE\])+/g;
-const reRemoveBlankExpects = /expect[^\n]+BLANKBLANK[^\n]+\n/g
+const reRemoveBlankExpects = /expect[^\n]+BLANKBLANK[^\n]+\n/g;
 
-const reSpacesHyphens = /[\s\x20\xA0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
+const reEveryChar = /./g;
+const reRunOfSpaces = /  +/g;
+
+const reSpacesHyphens = /[\s\x00-\x20\xA0\u00A0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
 
 const spaceMap: Record<string, string> = {
-	'\u0009': '[TAB]',
-	'\u000A': '[LF]\n',
-	'\u000B': '[VT]\n',
-	'\u000C': '[FF]\n',
-	'\u000D': '[CR]\n',
+	'\u0000': '[NUL]', // Null - ht tps://www.ascii-code.com/0
+	'\u0001': '[SOH]', // Start of Heading
+	'\u0002': '[STX]', // Start of Text
+	'\u0003': '[ETX]', // End of Text
+	'\u0004': '[EOT]', // End of Transmission
+	'\u0005': '[ENQ]', // Enquiry
+	'\u0006': '[ACK]', // Acknowledge
+	'\u0007': '[BEL]', // Bell, Alert
+	'\u0008': '[BS]',  // Backspace
+	'\u0009': '[TAB]', // Horizontal Tab
+	'\u000A': '[LF]\n', // Line Feed
+	'\u000B': '[VT]\n', // Vertical Tabulation
+	'\u000C': '[FF]\n', // Form Feed
+	'\u000D': '[CR]\n', // Carriage Return
+	'\u000E': '[SS]', // Shift Out
+	'\u000F': '[SI]', // Shift In
+	'\u0010': '[DLE]', // Data Link Escape
+	'\u0011': '[DC1]', // Device Control 1 / XON
+	'\u0012': '[DC2]', // Device Control 2
+	'\u0013': '[DC3]', // Device Control 3 / XOFF
+	'\u0014': '[DC4]', // Device Control 4
+	'\u0015': '[NAK]', // Negative Acknowledge
+	'\u0016': '[SYN]', // Synchronous Idle
+	'\u0017': '[ETB]', // End of Transmission Block
+	'\u0018': '[CAN]', // Cancel
+	'\u0019': '[EM]',  // End of Medium
+	'\u001A': '[SUB]', // Substitute
+	'\u001B': '[ESC]', // Escape
+	'\u001C': '[FS]', // File Separator
+	'\u001D': '[GS]', // Group Separator
+	'\u001E': '[RS]', // Record Separator
+	'\u001F': '[US]', // Unit Separator
 	//	  '\u0020': '[SP]',
 	'\u00A0': '[NBSP]',
 	//	  '\uE0020': '[TAG.SPACE]',
@@ -682,9 +874,9 @@ export function mockWindowNotImplementedMethods(win?: Window) : Window
 	win = win || typeof window === 'undefined'
 		? global
 		: window;
-		if (!win) {
-			throw new TypeError('No Window object available from win, window or global.');
-		}
+	if (!win) {
+		throw new TypeError('No Window object available from win, window or global.');
+	}
 	Object.defineProperty(win, 'alert', {
 		value   : noop,
 		writable: true
@@ -761,9 +953,9 @@ export const mockWindowLocation = (brand = 'site', wnd?: Window) : Window => {
 		? global
 		: window;
 
-		if (!wnd) {
-			throw new TypeError('No Window object available from win, window or global.');
-		}
+	if (!wnd) {
+		throw new TypeError('No Window object available from win, window or global.');
+	}
 
 	const win = wnd;
 	const host = `localhost.${brand}`;
@@ -805,7 +997,8 @@ export const mockWindowLocation = (brand = 'site', wnd?: Window) : Window => {
 //==========================================================
 // below, utils from original version...
 
-export const freezeAt = '2024-07-04 01:02:03';
+//export const freezeAt = '2024-07-04 01:02:03Z'; // 1720054923000
+export const freezeAt = 1720054923000;
 
 /**
  * will freeze time using jest Fake Timers so that any dates rendered will be the same.
@@ -958,38 +1151,48 @@ export function getExpectations(where?: IElementLocator, space = SPC) : string
 	const IND = '    ';
 	const CW = 'con\sole.warn';
 
-	const result = ('\n\n// render() your component...\n' + `${CW}('IDENTITY', getIdentity());\n` + `const before = getHtmlNice();\n` + `${CW}('RENDER', before);\n` + `expect(checkUndefined()).toBeTruthy();\n` + `expect(checkPageIds()).toBeTruthy();\n` + `expect(checkDocumentTextEmpty()).toBeTruthy();\n` + `expect(checkDialogOpen(dialog)).toBeTruthy();\n` + getHtml(where, space).replace(reLineBeforeElement, `$1\n<`) // extra lines around text and indent elements
-		.replace(reLineBeforeText, '>\n$1') // extra lines around text
-		.replace(reAttribute, function replaceAttr(_unusedMatch: string, name: string, value: string) {
-		if (name === 'title') {
-			titles.push(`expect(screen.queryByTitle(` + value + ')).toBeInTheDocument();\n');
-		} else if (name === 'aria-label') {
-			labels.push(`expect(screen.queryByLabelText(` + value + ')).toBeInTheDocument();\n');
-		} else if (name === 'value') {
-			values.push(`expect(screen.queryByDisplayValue(` + value + ')).toBeInTheDocument();\n');
-		}
-		return '';
-	}) // remove all attributes in elements
-		.replace(reElemNoAttr, '') // now remove all the elements
-		.replace(reMultiSpaced, '\n') // and mult-line spacing
-		.replace(reNicePreamble, '')
-		.replace(reInitialLineSpaces, 'expect(screen.queryByText(RE[')
-		.replace(reNewLines, ']ER)).toBeInTheDocument();\n')
-		.replace(reExpectStraggler, '')
-		.replace(reEmbeddedRE, function toRegex(_unusedFull: string, text: string) {
-			const quoted = quotemeta(text.replace(reSpaceMarker, ''));
-			return quoted
-				? `/^\\s*${quoted}\\s*$/m`
-				: 'BLANKBLANK';
-		}).replace(reRemoveBlankExpects, '') + [
-			...titles,
-			...labels,
-			...values
-		].join() + `// await userEvent.click()...\n`
+	const result = ('\n\n// render() your component...\n' +
+		`${CW}('IDENTITY', getIdentity());\n` +
+		`const before = getHtmlNice();\n` +
+		`${CW}('RENDER', before);\n` +
+		`expect(checkUndefined()).toBeTruthy();\n` +
+		`expect(checkPageIds()).toBeTruthy();\n` +
+		`expect(checkDocumentTextEmpty()).toBeTruthy();\n` +
+		`expect(checkDialogOpen(dialog)).toBeTruthy();\n` +
+		getHtml(where, space)
+			.replace(reLineBeforeElement, `$1\n<`) // extra lines around text and indent elements
+			.replace(reLineBeforeText, '>\n$1') // extra lines around text
+			.replace(reAttribute, function replaceAttr(_unusedMatch: string, name: string, value: string) {
+				if (name === 'title') {
+					titles.push(`expect(screen.queryByTitle(` + value + ')).toBeInTheDocument();\n');
+				} else if (name === 'aria-label') {
+					labels.push(`expect(screen.queryByLabelText(` + value + ')).toBeInTheDocument();\n');
+				} else if (name === 'value') {
+					values.push(`expect(screen.queryByDisplayValue(` + value + ')).toBeInTheDocument();\n');
+				}
+				return '';
+			}) // remove all attributes in elements
+			.replace(reElemNoAttr, '') // now remove all the elements
+			.replace(reMultiSpaced, '\n') // and mult-line spacing
+			.replace(reNicePreamble, '')
+			.replace(reInitialLineSpaces, 'expect(screen.queryByText(RE[')
+			.replace(reNewLines, ']ER)).toBeInTheDocument();\n')
+			.replace(reExpectStraggler, '')
+			.replace(reEmbeddedRE, function toRegex(_unusedFull: string, text: string) {
+				const quoted = quotemeta(text.replace(reSpaceMarker, ''));
+				return quoted
+					? `/^\\s*${quoted}\\s*$/m`
+					: 'BLANKBLANK';
+			}).replace(reRemoveBlankExpects, '') + [
+				...titles,
+				...labels,
+				...values
+			].join() + `// await userEvent.click()...\n`
 			+ `let after;\n`
 			+ `await waitFor(() => {\n`
 			+ `${IND}after = getHtmlNice();\n`
-			+ `${IND}expect(after).not.toBe(before);\n` + `});\n`
+			+ `${IND}expect(after).not.toBe(before);\n`
+			+ `});\n`
 			+ `// will show only what has changed in the HTML due to the user event.\n`
 			+ `expect(after).toBe(before);\n`);
 	return result.replace(/\n/g, `\n${IND}`);
@@ -1079,7 +1282,7 @@ export function getHtml(where?: IElementLocator, space = 'INDICATE') : string
  * @param space {string} used to replace each non-newline space character. default is to remove spaces.
  * @returns {string} with all non-newline spaces replaced.
  */
-export function replaceSpaces(text : string, space = '') : string
+export function replaceSpaces(text = '', space = '') : string
 {
 	return text.replace(/\s/g, function replacespace(match) {
 		return match === '\n'
@@ -1095,7 +1298,7 @@ export function replaceSpaces(text : string, space = '') : string
  * if space is 'INDICATE' then indicateSpaces() and replaceCharsCodePt() functions will be used instead.
  * @returns {string} with all leading and trailing non-newline spaces replaced (or all spaces indicated by indicateSpaces()).
  */
-export function showSpaces(text : string, space = SPC) : string
+export function showSpaces(text = '', space = SPC) : string
 {
 	if (space === 'INDICATE') {
 		return replaceCharsCodePt(indicateSpaces(text));
@@ -1110,35 +1313,190 @@ export function showSpaces(text : string, space = SPC) : string
  * @param text {string} the text to indicate unicode code points explicitly.
  * @returns {string} the text with unicode code points replaced with U+NNNN.
  */
-function replaceCharsCodePt(text : string) : string
+function replaceCharsCodePt(text = '') : string
 {
-	return text.replace(/./g, function replaceCodePt(match : string) : string {
+	return text.replace(reEveryChar, function replaceCodePt(match : string) : string {
 		const code = match.charCodeAt(0);
-		return code > 255
-			? `[U+${code
-				.toString(16)
+		return (code < 32 || code > MAX_BYTE)
+			? `[U+${padHex(code, 4)
 				.toUpperCase()}]`
 			: match;
 	});
 } // replaceCharsCodePt()
 
 /**
- * answers with string replacing all white space and hyphens with [TAB] [NBSP] markers for easier debugging.
+ * answer with a string indicating the number of spaces present.
+ * @param match {string} a string of spaces matched.
+ * @returns {string} gives the string '[SPxN]' where N is the length of the match string provided.
+ */
+function myReplaceSpaceLength(match = '') : string {
+	return `[SPx${match.length}]`;
+}
+
+/**
+ * answers with multi-line string replacing all white space and hyphens with [TAB] [NBSP] markers for easier debugging.
  * single spaces are left alone but multple runs of spaces are shown as [SPx5].
  * @param text {string} the text to indicate where white spaces and hyphens are.
- * @returns {string} the text with spaces indicated throughout.
+ * @returns {string} the multi-line text with spaces indicated throughout.
  * @note Newlines, form feeds and other characters will be replaced with a marker and a newline so that
  * they still break the string into multiple lines but you will be able to see end of line marker inconsistencies.
+ * other high character codes will be replaced by their unicode code point numbers.
  */
-function indicateSpaces(text : string) : string
+function indicateSpaces(text = '') : string
+{
+	let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
+		return match === '\x20'
+			? '\x20'
+			: (spaceMap[match] || `[MISSING ${replaceCharsCodePt(match)}]`);
+	});
+	// return out.replace(reRunOfSpaces, myReplaceSpaceLength);
+	return replaceCharsCodePt(out.replace(reRunOfSpaces, myReplaceSpaceLength));
+} // indicateSpaces()
+
+/**
+ * answers with single-line string replacing all white space and hyphens with [TAB] [NBSP] markers for easier debugging.
+ * single spaces are left alone but multple runs of spaces are shown as [SPx5].
+ * @param text {string} the text to indicate where white spaces and hyphens are.
+ * @returns {string} the single-line text with spaces indicated throughout.
+ * @note Newlines, form feeds and other characters will be replaced with a marker only.
+ * other high character codes will be replaced by their unicode code point numbers.
+ */
+function nameSpaces(text = '') : string
 {
 	let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
 		return match === ' '
 			? ' '
-			: (spaceMap[match] || `[MISSING U+${match.charCodeAt(0).toString(16)}]`);
+			: (spaceMap[match] || replaceCharsCodePt(match));
 	});
-	return out.replace(/  +/g, function myReplaceSpaces(match : string) : string {return `[SPx${match.length}]`;});
-} // indicateSpaces()
+	return replaceCharsCodePt(out.replace(reRunOfSpaces, myReplaceSpaceLength).replace(reNewLines, ''));
+} // nameSpaces()
+
+/**
+ * answer with spaces replaced by their name or unicode value so that unprintables can be seen.
+ * @param chr {string} the character to return or show the name or unicode value of.
+ * @returns {string} empty string will return a space, otherwise spaces/hyphens will return a name like [TAB] or unicode value.
+ */
+function seeChar(chr = ''): string {
+	return chr.length ? nameSpaces(chr) : ' ';
+}
+
+/**
+ * answer with number converted to hex and padded with leading zeros to a specific number of hex digits.
+ * @param value {number} the number value to convert to hex and pad.
+ * @param max {number} the number of hex digits to pad to. defaults to 2.
+ * @returns {string} the hex value of the number padded to a specific number of characters.
+ * @note maximum value of max is 16 to handle 64 bit numbers.
+ */
+function padHex(value: number, max = 2) {
+	//return value.toString(16).padStart(max, '0'); // if ES6 supported
+	const val = value.toString(16);
+	return '0000000000000000'.substring(0, max - val.length) + val;
+}
+
+/**
+ * answer with a string shoing the hexadecimal value of a character code point.
+ * @param code {number} the charCodeAt() value to display.
+ * @returns {string} returns NaN, \xHH or \uHHHH strings to indicate no character or the character code value.
+ */
+function codePt(code: number): string {
+	return !isFinite(code) ? `NaN` : code <= MAX_BYTE ? `\\x${padHex(code)}` : `\\u${padHex(code, 4)}`;
+}
+
+/**
+ * answers with an array of character differences between two strings for debugging unit tests.
+ * @param got {string} the string value generated by the test case.
+ * @param expected {string} the expected string value for a passing test.
+ * @returns {string[]} array showing character difference as position, character code values and character values side by side.
+ * @example
+ * "@23 \\x20 !== \\x0a [ [LF]]",
+ */
+function charDiff(got: string, expected: string, num = NUM_CHAR_DIFFS): string[] {
+	const gotLen = got.length;
+	const expLen = expected.length;
+	const length = gotLen > expLen ? gotLen : expLen;
+	const diffsAt = [];
+	for (let index = 0; diffsAt.length < num && index <= length; index++) {
+		const gotCh = got.charAt(index);
+		const expCh = expected.charAt(index);
+		if (gotCh !== expCh) {
+			const gotCode = got.charCodeAt(index);
+			const expCode = expected.charCodeAt(index);
+			diffsAt.push(`@${index} ${codePt(expCode)} !== ${codePt(gotCode)} [${seeChar(expCh)}${seeChar(gotCh)}]`)
+		}
+	}
+	return diffsAt;
+} // charDiff()
+
+// MUSTDO top...
+export interface ILineDiff {
+	line: number;
+	expected: string;
+	_____got: string;
+};
+
+/**
+ * answers with an array of line differences between multi-line strings.
+ * @param got {string} the string value generated by the test case.
+ * @param expected {string} the expected string value for a passing test.
+ * @returns {ILineDiff[]} object giving the line number (0 based) got and expected strings with space names and unicode codes added.
+ */
+export function lineDiff(got: string, expected: string, num = NUM_LINE_DIFFS): ILineDiff[] {
+	const gotStr = indicateSpaces(got).split(reNewLines);
+	const expStr = indicateSpaces(expected).split(reNewLines);
+	const length = gotStr.length > expStr.length ? gotStr.length : expStr.length;
+	//const out = [{line: -1, _____got: gotStr, expected: expStr}];
+	const out = [];
+
+	for (let idx = 0; out.length < num && idx < length; ++idx) {
+		const was = `${gotStr[idx]}`.trim();
+		const is = `${expStr[idx]}`.trim();
+		if (was !== is) {
+			// `@${idx}:\n>${was}< !==\n>${is}<`
+			out.push({
+				line: idx,
+				expected: is,
+				_____got: was,
+			});
+		}
+	}
+	return out;
+} // lineDiff()
+
+// MUSTDO top...
+export interface IStringDiff {
+	same?: boolean;
+	re?: RegExp;
+	expL?: string[];
+	gotL?: string[];
+	expected?: string;
+	_____got?: string;
+	lengths: string;
+	lines: string;
+	diffs: string[];
+	lineDiff: ILineDiff[];
+	diffStart: string;
+};
+
+function stringDiff(got: string, expected: string, num?: number): IStringDiff {
+	const gotLen = got.length;
+	const expLen = expected.length;
+	const gotLines = got.split(reNewLineIsh);
+	const expLines = expected.split(reNewLineIsh);
+	const diffsAt = charDiff(got, expected, num);
+	return {
+		// same: got === expected,
+		// re,
+		expected,
+		_____got: got,
+		// expL: expLines,
+		// gotL: gotLines,
+		lengths: `${expLen} expected vs ${gotLen} got`,
+		lines: `${expLines.length} expected vs ${gotLines.length} got`,
+		diffs: diffsAt,
+		lineDiff: lineDiff(gotLines.join('\n'), expLines.join('\n'), num),
+		diffStart: diffsAt.length? got.substring(parseInt(diffsAt[0].substring(1), 10)): '',
+	}
+} // stringDiff()
 
 /**
  * Get the HTML from the page or DOM element with every element open/close on a new line as well as HTML el ements and style definitions.
@@ -1203,7 +1561,7 @@ export function forOf<C,T>(iterable: C, fn: (item: T, index: number) => void): v
 	const collection = iterable as unknown as T[];
 	try
 	{
-		// @ t s -expect-error TS2802: Type 'IElementList' can only be iterated through
+		// @ts-expect-error TS2802: Type 'IElementList' can only be iterated through
 		// when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or
 		// higher. @ts-expect-error TS2495: Type 'IElementList' is not an array type or
 		// a string type.
@@ -1274,7 +1632,7 @@ export function getEl(element?: IElementLocator, suffix?: string) : IElement
 	if (reRawHtml.test(elAsString)) {
 		where = 'GET EL RAW HTML STRING';
 		elementAt(where);
-		// @ t s -expect-error TS2740 Type '{innerHTML: string; }' is missing the following
+		// @ts-expect-error TS2740 Type '{innerHTML: string; }' is missing the following
 		// properties from type 'Element': attributes, class List, className,
 		// clientHeight
 		return {innerHTML: elAsString} as IElement;
@@ -1298,7 +1656,7 @@ export function getEl(element?: IElementLocator, suffix?: string) : IElement
 				// higher.ts(2802)
 				forOf < NamedNodeMap,
 				Attr > (elThis.attributes, (attr) => {
-					// console.warn(`forof3 proto:`, Object.getPrototypeOf(attr), `\n   attr: `,
+					// console.warn(`forof3 proto:`, Object.getPrototypeOf(attr), `\n\x20\x20\x20attr:\x20`,
 					// attr);
 					attrs.push(`${attr.name}="${attr.value}"`);
 				});
@@ -1415,7 +1773,7 @@ export function getEl(element?: IElementLocator, suffix?: string) : IElement
 
 		// trace(`getEl lookup [${index}] #${idx} of ${length}`, elements[idx]);
 		if (elements[idx]) {
-			const elFirst = elements[idx]as ElementWithType;
+			const elFirst = elements[idx] as ElementWithType;
 			found = elFirst.element;
 			where += `\nlookup @[${idx}] of ${length} matched ==> [[${elFirst.type}]]`;
 		} else {
@@ -1427,10 +1785,10 @@ export function getEl(element?: IElementLocator, suffix?: string) : IElement
 		while (up) {
 			if (found.parentElement) {
 				found = found.parentElement;
-				where += `\nup to parent --> ${elementInfo(found)} `;
+				where += `\nup to parent --> ${elementInfo(found)}\x20`;
 				up--;
 			} else {
-				where += `\nno more up --> `;
+				where += `\nno more up -->\x20`;
 				up    = 0;
 			}
 		} // while up
@@ -1473,6 +1831,7 @@ export function getTypeName(thing : unknown) : string
 		} else if (type === 'function') {
 			return 'Function ';
 		} else if (/^(boolean|number|string|undefined)$/.test(type)) {
+// MUSTDO regex define...^^^
 			return '';
 		}
 		const proto = Object.getPrototypeOf(thing);
@@ -1482,7 +1841,8 @@ export function getTypeName(thing : unknown) : string
 		// stringifying like this works better to get the type name.
 		return [name, '']
 			.join(' ')
-			.replace(/\[object ([^\]]+)\]/, '$1');
+			.replace(/\[object\s([^\]]+)\]/, '$1');
+// MUSTDO regex define...^^^
 	} catch (exception) {
 		return `EXCEPTION getTypeName[${exception}]`;
 	}
@@ -1541,7 +1901,7 @@ export function shortenDump(dump : string, MAX_LENGTH = MAX_THING, quotes = '') 
 	}
 	// console.warn(`shortenDump4 q:${quotes} w:[${wrap}] [${dump}]`)
 	return quotes
-		? `${quotes[0]}${dump}${quotes[1]}`
+		? enquote(dump, quotes)
 		: dump;
 } // shortenDump()
 
@@ -1599,7 +1959,7 @@ export function showThing(thing?: unknown, MAX_LENGTH = MAX_THING, notElem = fal
 		if (isArray || (isObject && !isElement && !(thing instanceof Function))) {
 			try
 			{
-				out = JSON.stringify(thing);
+				out = strJ(thing);
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			} catch (ignore) {
 				if (isArray) {
@@ -1750,7 +2110,8 @@ export function getElementInfo(element?: any, prefix = '') : string
 			attrsToShow.forEach((attr) => {
 				bits.push(attrVal(attr));
 			});
-			bits.push(`${attr('className', '.', ' ').replace(/\s+/g, '.')} `, getTypeName(element), '/>');
+			bits.push(`${attr('className', '.', ' ').replace(/\s+/g, '.')}\x20`, getTypeName(element), '/>');
+// MUSTDO regex define...^^^^
 		}
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (exception) {
@@ -1798,7 +2159,7 @@ export function showEvent(event?: any, prefix = '') : string
 				value = value();
 			}
 			out = value
-				? `${key} `
+				? `${key}\x20`
 				: '';
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		} catch (exception) {
@@ -1816,7 +2177,7 @@ export function showEvent(event?: any, prefix = '') : string
 			value = value();
 		}
 		return value
-			? `${key}(${value}) `
+			? `${key}(${value})\x20`
 			: '';
 	} // showVal()
 	/**
@@ -1824,10 +2185,11 @@ export function showEvent(event?: any, prefix = '') : string
 	 */
 	function showXY(key: string): string
 	{
+		// screenXY, clientXY, pageXY
 		const x = event[`${key}X`];
 		const y = event[`${key}Y`];
 		return x || y
-			? `${key}XY(${x || 0},${y || 0})`
+			? `${key}XY(${x || 0},${y || 0})\x20`
 			: '';
 	} // showXY()
 
@@ -1835,9 +2197,9 @@ export function showEvent(event?: any, prefix = '') : string
 	{
 		if (event.dispatchConfig) {
 			bits.push(
-				`EVENT `,
+				`EVENT\x20`,
 				getTypeName(event.nativeEvent),
-				`${event.type}/@${event.timestamp} `,
+				`${event.type}/@${event.timestamp}\x20`,
 				objValues(event.dispatchConfig.phasedRegistrationNames).join(' '),
 				' ',
 				showVal('eventPhase'),
@@ -1875,7 +2237,7 @@ export function showEvent(event?: any, prefix = '') : string
 		}
 		if (event.view) {
 			// TODO view(null)
-			bits.push(`\nview: ${typeof event.view} ${getTypeName(event.view)} ${showThing(event.view)}`);
+			bits.push(`\nview: ${getTypeName(event.view) || typeof event.view} ${showThing(event.view)}`);
 		} // if event.view
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	} catch (ignore) {
@@ -1891,6 +2253,7 @@ export function showEvent(event?: any, prefix = '') : string
 				.join('')
 				.replace(/\n *\n/g, '\n')
 				.replace(/\n+/g, '\n');
+// MUSTDO regex define...^^^^
 		} else {
 			result = `${prefix}NOT EVENT??? ${typeof event} ${getTypeName(event)} ${showThing(event)}`;
 		} // if length
@@ -2177,6 +2540,18 @@ expectToMatch(reNewLines, 'this\n  \ndouble\n  \n  \n  spaced', 'reNewLines shou
 expectToReplace(reNewLines, '\n \n \t \n\n\n\n', 'BRK BRK \t BRKBRKBRKBRK', 'reNewLines should replace multiple newlines', 'BRK');
 expectNotToMatch(reNewLines, 'what   ', 'reNewLines should NOT match no newlines');
 
+expectToMatch(reNewLineIsh, '\n', 'reNewLineIsh should match single newline');
+expectToMatch(reNewLineIsh, '\\n', 'reNewLineIsh should match a single escaped newline');
+expectToMatch(reNewLineIsh, '\n\n', 'reNewLineIsh should match two newlines', 2);
+expectToMatch(reNewLineIsh, '\\n\n', 'reNewLineIsh should match two mixed newlines', 2);
+expectToMatch(reNewLineIsh, 'what\n\n   ', 'reNewLineIsh should match embedded newlines', 2);
+expectToMatch(reNewLineIsh, 'what\n\\n   ', 'reNewLineIsh should match embedded mixed newlines', 2);
+expectToMatch(reNewLineIsh, '\\n  \t \n', 'reNewLineIsh should match two mixed newlines and spaces between', 2);
+expectToMatch(reNewLineIsh, '\n\\n\n\\n\n', 'reNewLineIsh should match multiple mixed newlines', 5);
+expectToMatch(reNewLineIsh, 'this\\n  \ndouble\\n  \n  \\n  spaced', 'reNewLineIsh should match multiple mixed newlines and text breaks', 5);
+expectToReplace(reNewLineIsh, '\\n \n \t \\n\n\\n\n', 'BRK BRK \t BRKBRKBRKBRK', 'reNewLineIsh should replace multiple mixed newlines', 'BRK');
+expectNotToMatch(reNewLineIsh, 'what[LF]   ', 'reNewLineIsh should NOT match no newlines');
+
 expectToMatch(reExpectStraggler, '\n\n  expect(screen.queryByText(RE[   ', 'reExpectStraggler should match expect test leftovers');
 expectToMatch(reExpectStraggler, 'blah blah\n\n  expect(screen.queryByText(RE[   ', 'reExpectStraggler should match expect test leftovers multiline');
 expectNotToMatch(reExpectStraggler, '\n\n  expect(screen.getByText(RE[   ', 'reExpectStraggler should NOT match expect test leftovers');
@@ -2198,28 +2573,394 @@ expectToMatch(reRemoveBlankExpects, '    expect(screen.queryByText(BLANKBLANK)).
 //==========================================================
 // tests to validate it's working...
 
-expectToBe(NaN, NaN, `should pass for NaN comparison`);
-expectToBe(Infinity, Infinity, `should pass for Infinity comparison`);
-if (LET_FAIL_TESTS) {
-	expectNotToBe(NaN, NaN, `should fail for NaN comparison`);
+const emptyObject = {};
+const emptyArray: string[] = [];
+const reRegex = /^regex/gm;
+const reRegexSpaces = /\bregex \tand\nspaces   \u1999/gm;
+const typeError = new TypeError('typeerr');
+const typeErrorSpaces = new TypeError('typeerr \tand\nspaces   \u1999');
+const aNumber = new Number(3);
+const aBoolean = new Boolean(false);
+const aString = new String('what');
+const aDate = new Date('2025-01-01');
+const anObject = {
+	a: 2
+};
+const anArray = [1, '2', /a/g];
+const arrowFunc42 = () => 42;
+
+// node vs browser stringify differs...
+let expectArrow42 = 'function () { return 42; }';
+let expectArrowNull = 'function () { return null; }';
+let expectArrowNullEllipsis = `function () { return${EL}}`
+let arrowEllipsisLen = 11;
+if (EX_ARROW_STRINGIFY) {
+	// browser...
+	expectArrow42 = '() => 42';
+	expectArrowNull = '() => null';
+	expectArrowNullEllipsis = `() => nu${EL}`
+	arrowEllipsisLen = 8;
 }
 
-EX_SHOW_SPACES = true;
-expectToBe(show(' \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u0020\v\w\x0a\y\z '), '~a\bcde\\fghijklm\\nopq\\rs\\t~\\vw\\nyz~', 'show() should requote white space characters');
-expectToBe(show('  \x0d \f \n \r \t \u0020 \x0d\x0a \v \x0a  '), '~~\\r~\\f~\\n~\\r~\\t~~~\\r\\n~\\v~\\n~~', 'show() should requote white space characters handling newlines');
-EX_SHOW_SPACES = false;
+const jsonAll = {
+	z: emptyObject,
+	a: emptyArray,
+	8: 122,
+	u: false,
+	17: undefined,
+	w: arrowFunc42,
+	c: {
+		t: typeError,
+		r: reRegex,
+		e: {
+			n: aNumber,
+			b: aBoolean,
+			s: aString,
+			d: aDate,
+			t: -Infinity,
+			a: new Number(-Infinity),
+			f: noop,
+		},
+		q: '',
+		13: NaN,
+		14: new Number(NaN),
+		z: null,
+		s: new Object(null),
+		p: new Array(null),
+		f: [null, 12, { x: 34, y: '23'}],
+	},
+	q: anObject,
+	3: anArray,
+	// MUSTDO Map, Set, HTMLElement
+};
+const expectJson = {
+	"3": [
+		1,
+		"2",
+		"RegExp : /a/g"
+	],
+	"8": 122,
+	"17": "undefined",
+	"a": [],
+	"c": {
+		"13": "NaN",
+		"14": "Number : NaN",
+		"e": {
+			"a": "Number : -Infinity",
+			"b": "Boolean : false",
+			"d": "Date : 2025-01-01T00:00:00.000Z",
+			"f": "Function : function noop() { }",
+			"n": "Number : 3",
+			"s": "String : what",
+			"t": "-Infinity"
+		},
+		"f": [
+			null,
+			12,
+			{
+				"x": 34,
+				"y": "23"
+			}
+		],
+		"p": [
+			null
+		],
+		"q": "",
+		"r": "RegExp : /^regex/gm",
+		"s": {},
+		"t": "TypeError : TypeError:\x20typeerr",
+		"z": null
+	},
+	"q": {
+		"a": 2
+	},
+	"u": false,
+	"w": `Function : ${expectArrow42}`,
+	"z": {}
+};
 
+// Numeric literals with absolute values equal to 2^53 or greater are too large to be represented accurately as integers.
+const tooBig = 0x5100000000000000;
+const bigEnough = 0x15100000000000;
+
+expectToBe(padHex(0), '00', 'padHex(0) should pad to two nibbles = one byte');
+expectToBe(padHex(0, 4), '0000', 'padHex(0,4) should pad to two bytes');
+expectToBe(padHex(13), '0d', 'padHex(13) should pad to two nibbles = one byte');
+expectToBe(padHex(32), '20', 'padHex(32) should show one byte');
+expectToBe(padHex(32, 4), '0020', 'padHex(32,4) should pad to two bytes');
+expectToBe(padHex(320, 4), '0140', 'padHex(320,4) should pad to two bytes');
+expectToBe(padHex(0x1000 + 320, 4), '1140', 'padHex(2 bytes,4) should show two bytes');
+expectToBe(padHex(0x51000, 4), '51000', 'padHex(3 bytes,4) should show three bytes as is');
+expectToBe(padHex(0x51000, 16), '0000000000051000', 'padHex(3 bytes,16) should pad to 64 bits, 16 bytes');
+expectToBe(padHex(tooBig, 16), '5100000000000000', 'padHex(64 bits,16) should show 64 bits');
+expectToBe(padHex(bigEnough, 16), '0015100000000000', 'padHex(53 bits,16) should show 64 bits');
+
+expectToBe(codePt(0), '\\x00', 'codePt(0) should show as \\x00 one byte');
+expectToBe(codePt(21000), '\\u5208', 'codePt(21000) should show as \\u5208 unicode point');
+expectToBe(codePt(tooBig), '\\u5100000000000000', 'codePt(0x5100000000000000) should show as unicode');
+expectToBe(codePt(bigEnough), '\\u15100000000000', 'codePt(0x15100000000000) should show as unicode');
+expectToBe(codePt(NaN), 'NaN', 'codePt(NaN) should show as NaN');
+expectToBe(codePt(Infinity), 'NaN', 'codePt(Infinity) should show as NaN');
+
+expectToBe(replaceCharsCodePt(), '', 'replaceCharsCodePt(undefined) should default to empty');
+expectToBe(replaceCharsCodePt('\x00'), '[U+0000]', 'replaceCharsCodePt(0) should show as [U+0000]');
+expectToBe(replaceCharsCodePt('\x1f'), '[U+001F]', 'replaceCharsCodePt(\\x1f) should show as [U+001F]');
+expectToBe(replaceCharsCodePt(' '), ' ', 'replaceCharsCodePt(space) should show as a space still');
+expectToBe(replaceCharsCodePt('\u01ff'), '[U+01FF]', 'replaceCharsCodePt(\\x1ff) should show as [U+01FF]');
+expectToBe(replaceCharsCodePt('\u5208'), '[U+5208]', 'replaceCharsCodePt(21000) should show as [U+5208]');
+
+expectToBe(nameSpaces(), '', 'nameSpaces(undefined) shoule default to empty');
+expectToBe(nameSpaces('\x00'), '[NUL]', 'nameSpaces(0) should show as [NUL]');
+expectToBe(nameSpaces('\x1f'), '[US]', 'nameSpaces(\\x1f) should show as [US]');
+expectToBe(nameSpaces('q'), 'q', 'nameSpaces(q) shoule show the q');
+expectToBe(nameSpaces(' '), ' ', 'nameSpaces(space) shoule show a space');
+expectToBe(nameSpaces('\t'), '[TAB]', 'nameSpaces(tab) shoule show [TAB]');
+expectToBe(nameSpaces('\n'), '[LF]', 'nameSpaces(newline) shoule show [LF]');
+expectToBe(nameSpaces('\r'), '[CR]', 'nameSpaces(\\r) shoule show [CR]');
+expectToBe(nameSpaces('\x0d'), '[CR]', 'nameSpaces(\\x0d) shoule show [CR]');
+expectToBe(nameSpaces('\x0a'), '[LF]', 'nameSpaces(\\x0a) shoule show [LF]');
+expectToBe(nameSpaces('   '), '[SPx3]', 'nameSpaces(multi spaces) shoule show [SPx3]');
+expectToBe(nameSpaces('\u01ff'), '[U+01FF]', 'nameSpaces(\\x1ff) should show as [U+01FF]');
+expectToBe(nameSpaces('\u5208'), '[U+5208]', 'nameSpaces(\\u5208) shoule show as unicode code point');
+expectToBe(nameSpaces('\t\n q\u5208'), '[TAB][LF] q[U+5208]', 'nameSpaces(multiple) shoule show all replacements');
+
+expectToBe(seeChar(), ' ', 'seeChar(undefined) shoule show a space');
+expectToBe(seeChar('\x00'), '[NUL]', 'seeChar(0) should show as [NUL]');
+expectToBe(seeChar('\x1f'), '[US]', 'seeChar(\\x1f) should show as [US]');
+expectToBe(seeChar('q'), 'q', 'seeChar(q) shoule show the q');
+expectToBe(seeChar(' '), ' ', 'seeChar(space) shoule show a space');
+expectToBe(seeChar('\t'), '[TAB]', 'seeChar(tab) shoule show [TAB]');
+expectToBe(seeChar('\n'), '[LF]', 'seeChar(newline) shoule show [LF]');
+expectToBe(seeChar('\r'), '[CR]', 'seeChar(\\r) shoule show [CR]');
+expectToBe(seeChar('\x0d'), '[CR]', 'seeChar(\\x0d) shoule show [CR]');
+expectToBe(seeChar('\x0a'), '[LF]', 'seeChar(\\x0a) shoule show [LF]');
+expectToBe(seeChar('   '), '[SPx3]', 'seeChar(multi spaces) shoule show [SPx3]');
+expectToBe(seeChar('\u01ff'), '[U+01FF]', 'seeChar(\\x1ff) should show as [U+01FF]');
+expectToBe(seeChar('\u5208'), '[U+5208]', 'seeChar(\\u5208) shoule show as unicode code point');
+expectToBe(seeChar('\t\n q\u5208'), '[TAB][LF] q[U+5208]', 'seeChar(multiple) shoule show all replacements');
+
+expectToBe(myReplaceSpaceLength(''), '[SPx0]', 'myReplaceSpaceLength(empty string) should show [SPx0]');
+expectToBe(myReplaceSpaceLength(' '), '[SPx1]', 'myReplaceSpaceLength(one space) should show [SPx1]');
+expectToBe(myReplaceSpaceLength('...'), '[SPx3]', 'myReplaceSpaceLength(three chars) should show [SPx3]');
+
+expectToBe(strV(), 'undefined', 'strV() should show undefined unquoted');
+expectToBe(strV(null), undefined, 'strV(null) should answer as undefined');
+expectToBe(strV(NaN), 'NaN', 'strV(NaN) should show as unquoted');
+expectToBe(strV(-Infinity), '-Infinity', 'strV(-Infinity) should show as unquoted');
+expectToBe(strV(new Number(NaN)), 'Number : NaN', 'strV(Number NaN) should show as Number : NaN');
+expectToBe(strV(new Number(-Infinity)), 'Number : -Infinity', 'strV(Number -Infinity) should show as Number : NaN');
+expectToBe(strV(0), undefined, 'strV(0) should answer undefined');
+expectToBe(strV(false), undefined, 'strV(false) should answer undefined');
+expectToBe(strV(''), undefined, 'strV(empty string) should answer undefined');
+expectToBe(strV('string'), undefined, 'strV(string) should answer undefined');
+expectToBe(strV(aDate), 'Date : 2025-01-01T00:00:00.000Z', 'strV(Date) should show Date : value');
+expectToBe(strV(reRegex), 'RegExp : /^regex/gm', 'strV(regex) should show RegExp : /regex/');
+expectToBe(strV(emptyObject), undefined, 'strV(empty object) should answer undefined');
+expectToBe(strV(emptyArray), undefined, 'strV(empty array) should answer undefined');
+expectToBe(strV(new Object(null)), undefined, 'strV(Object null) should answer undefined');
+expectToBe(strV(aNumber), 'Number : 3', 'strV(Number) should show Number : 3');
+expectToBe(strV(aBoolean), 'Boolean : false', 'strV(Boolean) should show Boolean : false');
+expectToBe(strV(aString), 'String : what', 'strV(String) should show String : what');
+
+expectToBe(
+	strV(typeError),
+	`TypeError\xa0:\xa0TypeError:\x20typeerr`,
+	'strV(TypeError) should TypeError : ...'
+);
+
+expectToBe(strV(() => null), `Function : ${expectArrowNull}`, 'strV(() => null) should show as Function : stringified');
+expectToBe(strV(function () {}), 'Function : function () { }', 'strV(anon function) should show as Function : stringified');
+expectToBe(strV(function named(): void {}), 'Function : function named() { }', 'strV(function named) should show as stringified');
+expectToMatch(/^Function : function strV\(what/, strV(strV) || '', 'strV(strV) should show Function : stringified');
+expectToBe(strV(anObject), undefined, 'strV(object) should answer undefined');
+expectToBe(strV(anArray), undefined, 'strV(array) should answer undefined');
+expectToBe(strV(jsonAll), undefined, 'strV(jsonAll) should answer undefined');
+// MUSTDO Map, Set...
+// console.warn(`JSONALL`, strJ(jsonAll));
+
+expectToBe(strJ(), 'undefined', 'strJ() should show undefined unquoted');
+expectToBe(strJ(null), 'null', 'strJ(null) should show as unquoted');
+expectToBe(strJ(NaN), 'NaN', 'strJ(NaN) should show as unquoted');
+expectToBe(strJ(-Infinity), '-Infinity', 'strJ(-Infinity) should show as unquoted');
+expectToBe(strJ(0), '0', 'strJ(0) should show as unquoted');
+expectToBe(strJ(false), 'false', 'strJ(false) should show as unquoted');
+expectToBe(strJ(''), '""', 'strJ(empty string) should show quoted empty');
+expectToBe(strJ('string'), '"string"', 'strJ(string) should show quoted');
+expectToBe(strJ(aDate), 'Date : 2025-01-01T00:00:00.000Z', 'strJ(Date) should show');
+expectToBe(strJ(reRegex), 'RegExp : /^regex/gm', 'strJ(regex) should show as /regex/');
+expectToBe(strJ(emptyObject), '{}', 'strJ(empty object) should show');
+expectToBe(strJ(emptyArray), '[]', 'strJ(empty array) should show');
+expectToBe(strJ(aNumber), 'Number : 3', 'strJ(Number) should show');
+expectToBe(strJ(aBoolean), 'Boolean : false', 'strJ(Boolean) should show');
+expectToBe(strJ(aString), 'String : what', 'strJ(String) should show');
+
+expectToBe(
+	strJ(typeError),
+	`TypeError\xa0:\xa0TypeError:\x20typeerr`,
+	'strJ(TypeError) should show as stringified'
+);
+
+expectToBe(strJ(() => null), `Function : ${expectArrowNull}`, 'strJ(() => null) should show as stringified');
+expectToBe(strJ(function () {}), 'Function : function () { }', 'strJ(anon function) should show as stringified');
+expectToBe(strJ(function named(): void {}), 'Function : function named() { }', 'strJ(function named) should show as stringified');
+
+expectToMatch(/^Function : function strJ\(what/, strJ(strJ), 'strJ(strJ) should show');
+
+expectToBe(
+	strJ(anObject),
+	`{\n\x20\x20"a":\x202\n}`,
+	'strJ(object) should show all data types'
+);
+
+expectToBe(
+	strJ(anArray),
+	`[\n\x20\x201,\n\x20\x20"2",\n\x20\x20"RegExp : /a/g"\n]`,
+	'strJ(array) should show all data types'
+);
+
+expectToBe(
+	strJ(jsonAll),
+	strJ(expectJson),
+	'strJ(jsonAll) should show all stringified values supported'
+);
+// MUSTDO Map, Set...
+
+// HEREIAM unit tests needed for
+// const reRunOfSpaces = /  +/g;
+// const reEveryChar = /./g;
+// const reNewLines = /\n/gm;
+
+const LONG = "alpha beta gamma delta epsilon 0123456789 ";
+const LONG_TEXT = 'this \n is \x09 it \r' + LONG + LONG + LONG + LONG + LONG;
+const LONG_TEXT_U = 'this \n is \x09 it \r \u2002' + LONG + LONG + LONG + LONG + LONG;
+const fox1 = 'the quick\` br0wn\n fo\tx jump3d over\n the lazy dog';
+const fox2 = `the quiCk\` brown\n fox jumpEd over\n the la2y dog${LONG_TEXT}`;
+
+expectToBe(NaN, NaN, `should pass for NaN comparison`);
+expectToBe(Infinity, Infinity, `should pass for Infinity comparison`);
+if (EX_LET_FAIL_TESTS) {
+	const saved = [EX_AS_JS, EX_SHOW_SPACES];
+
+	// HEREIAM change these to see how console reports these failing tests
+	EX_AS_JS = false;
+	EX_SHOW_SPACES = false;
+
+	expectToBe(fox1, fox2, 'expectToBe FAIL1 long strings should give good diagnostics but may be truncated');
+	// console.warn(`stringDiff(fox1, fox2)`, stringDiff(fox1, fox2));
+	// console.warn(`lineDiff(fox1, fox2)`, lineDiff(fox1, fox2));
+	expectToBe({ short: 'SH`OR\tTS', long: 'NOT So Long now' }, { long: 'NOT So Long now', short: 'SH`OR\tTS' }, 'expectToBe FAIL2 small objects with same content');
+	expectToBe({ short: 'SH`OR\tTS', long: 'JO\rHN SILVE`R, AWAY' }, { short: 'SHORTS', long: 'NOT So Long now' }, 'expectToBe FAIL3 small objects should look good');
+	expectToBe([{ short: 'SH`OR\tTS', long: 'JOHN \rSILVE`R, AWAY' }], [{ short: 'SHORTS', long: 'NOT So Long now' }], 'expectToBe FAIL4 small arrays should look good');
+	expectToBe({ short: 'SHOR\tTS' }, { short: 'SH\rORTS', long: LONG_TEXT }, 'expectToBe FAIL5 big objects should look good but may be truncated');
+	expectToBe([{ short: 'SHO\tRTS' }], [{ short: 'SH\rORTS', long: LONG_TEXT }], 'expectToBe FAIL6 big arrays should look good but may be truncated');
+	expectToBe(/reg\tex/mi, new RegExp(LONG_TEXT,'g'), `should FAIL7 for long regex comparison and may be truncated`);
+	expectToBe(/reg\tex/mi, /reg\rex/mi, `should FAIL8 for regex comparison`);
+	expectToBe(undefined, null, 'expectToBe FAIL9 undef,null should look good');
+	expectToBe(NaN, -Infinity, 'expectToBe FAILA NaN,Infinity should look good');
+	expectNotToBe(NaN, NaN, `should FAILB for NaN comparison`);
+
+	if (EX_UTF_OK) {
+		expectToBe(
+			'the quick\` br0wn\n fo\tx jump3d over\n the lazy dog',
+			`the quiCk\` brown\n fox jumpEd over\n the la2y dog${LONG_TEXT_U}`,
+			'expectToBe FAILC long strings should give good diagnostics but may be truncated'
+		);
+		expectToBe(
+			{ short: 'SHOR\tTS' },
+			{ short: 'SH\rORTS', long: LONG_TEXT_U },
+			'expectToBe FAILD UTF big objects should look good but may be truncated'
+		);
+		expectToBe(
+			[{ short: 'SHO\tRTS' }],
+			[{ short: 'SH\rORTS', long: LONG_TEXT_U }],
+			'expectToBe FAILE UTF big arrays should look good but may be truncated'
+		);
+		expectToBe(
+			/reg\tex/mi,
+			new RegExp(LONG_TEXT_U,'g'),
+			`should FAILF for UTF long regex comparison and may be truncated`
+		);
+	} // if EX_UTF_OK)
+	[EX_AS_JS, EX_SHOW_SPACES] = saved;
+} // if EX_LET_FAIL_TESTS)
+
+const escapedChars = ' \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u0020\v\w\x0a\y\z ';
+const escapedLines = '  \x0d \f \n \r \t \u0020 \x0d\x0a \v \x0a  ';
+
+const a = 'al;kskdj;w;lj \u1999' + escapedLines;
+const at = Math.floor(a.length * Math.random());
+const b = a.substring(0, at) + '\u2000' + a[Math.floor(a.length * Math.random())] + a.substring(at, a.length - 1) + '    ';
+const c = a.substring(0, 11) + '\u2000' + a[Math.floor(a.length / 2)] + a.substring(11, a.length - 1) + '    ';
+
+expectToEqual(charDiff(c, a, 2), [
+	"@11\xa0\\x6c\xa0!==\xa0\\u2000\xa0[l[EN.QUAD]]",
+	"@12\xa0\\x6a\xa0!==\xa0\\xa0\xa0[j\xa0]"
+], 'charDiff() should show two differences');
+
+expectToEqual(lineDiff(c, a, 2), [
+	{
+		"_____got": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
+		"expected": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
+		"line": 0,
+	}, {
+		"_____got": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
+		"expected": "[NBSP][NBSP]",
+		"line": 8,
+	}
+], 'lineDiff() should show two differences');
+
+expectToEqual(stringDiff(a, c, 2), {
+	"_____got": "al;kskdj;w;lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n  ",
+	"diffStart": "lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n  ",
+	"lines": "4 expected vs 4 got",
+	"diffs": [
+		"@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
+		"@12 \\xa0 !== \\x6a [ j]"
+	],
+	"expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
+	"lengths": "42 expected vs 37 got",
+	"lineDiff": [
+		{
+			"_____got": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
+			"expected": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
+			"line": 0,
+		},
+		{
+			"_____got": "[NBSP][NBSP]",
+			"expected": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
+			"line": 8,
+		}
+	],
+}, 'stringDiff() should show two differences');
+
+if (EX_LET_FAIL_TESTS) {
+	expectToEqual(charDiff(a, b), emptyArray, 'charDiff() should FAILG and show the random differences');
+	expectToEqual(lineDiff(a, b), emptyArray, 'lineDiff() should FAILH and show the random differences');
+	expectToEqual(
+		stringDiff(
+			a.replace(/\u2000/g, 'U2000').replace(/\u1999/g, 'U1999'),
+			b.replace(/\u2000/g, 'U2000').replace(/\u1999/g, 'U1999'),
+		),
+		emptyArray,
+		'stringDiff(no UTF) should FAILI and show the random differences');
+	if (EX_UTF_OK) {
+		expectToEqual(stringDiff(a, b), emptyArray, 'stringDiff(w/UTF) should FAILK and show the random differences');
+	}
+}
+
+expectToBe(replaceSpaces(), '', 'replaceSpaces(undefined) should default to empty');
 expectToBe(replaceSpaces('\a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u0020\v\w\x0a\y\z'), 'a\bcdeghijklm\nopqsw\x0ayz', 'replaceSpaces() should remove white space characters');
 expectToBe(replaceSpaces('  \x0d \f \n \r \t \u0020 \x0d\x0a \v \x0a  '), '\n\x0a\x0a', 'replaceSpaces() should remove white space characters except newlines');
 
-expectToBe(showSpaces(' initial  medial final  \n\n'), '[SPACE]initial  medial final[SPACE][SPACE]\n\n', 'showSpaces() should make white spaces visible')
-expectToBe(showSpaces('   initial   internal  final  spaces     ', '@'), '@@@initial   internal  final  spaces@@@@@', 'showSpaces() should make white spaces visible with @ sign')
-expectToBe(showSpaces(' initial\n  med\t ial\  \nfinal\  \n\n', '@'), '@initial\n@@med\t ial@@\nfinal@@\n\n', 'showSpaces() should work across multiple lines of text')
+expectToBe(showSpaces(), '', 'showSpaces(undefined) should default to empty');
+expectToBe(showSpaces(' initial  medial final  \n\n'), '[SPACE]initial  medial final[SPACE][SPACE]\n\n', 'showSpaces() should make white spaces visible');
+expectToBe(showSpaces('   initial   internal  final  spaces     ', '@'), '@@@initial   internal  final  spaces@@@@@', 'showSpaces() should make white spaces visible with @ sign');
+expectToBe(showSpaces(' initial\n  med\t ial\  \nfinal\  \n\n', '@'), '@initial\n@@med\t ial@@\nfinal@@\n\n', 'showSpaces() should work across multiple lines of text');
 
 expectToBe(dskipIfJenkins, describe.skip, 'should have describe skip function activated for jenkins');
 expectToBe(skipIfJenkins, test.skip, 'should have skip function activated for jenkins');
 
-if (NOISY) {
+if (EX_NOISY) {
 	trace(`this is my trace message`, [42, 12]);
 	trace(`this is another trace function`, {
 		list: [42, 12]
@@ -2227,7 +2968,7 @@ if (NOISY) {
 }
 
 win.document = mockDocument('<main><span>version.nickname: JIRA-NNNN XYZY</span><h1>heading</h1><hr/><p id="m' +
-		'ypara">this is the text</p><hr /></main>');
+	'ypara">this is the text</p><hr /></main>');
 
 const window = win;
 mockWindowLocation(void 0, window);
@@ -2270,13 +3011,14 @@ expectToBe(window.location.href, 'fil\e:///path', 'should set window href as a f
 expectToBe(window.location.origin, 'null', 'should set window origin');
 expectToBe(window.location.protocol, 'file:', 'should set window protocol');
 expectToBe(window.location.pathname, '/path', 'should set window pathname');
-//  trace(`window.location`, window.location);
+// trace(`window.location`, window.location);
 
 var document = mockDocument('<main><span>version.nickname: JIRA-NNNN XYZY</span><hr/><p id="mypara" uuid="uui' +
-		'd" parole="parole" title="tooltip text">  </p><hr /></main>');
+	'd" parole="parole" title="tooltip text">  </p><hr /></main>');
 EX_SHOW_SPACES = true;
 checkDocumentTextEmpty();
-if (LET_FAIL_TESTS) {
+if (EX_LET_FAIL_TESTS) {
+	console.warn(`NOT OK FAILL:`)
 	checkDocumentTextEmpty(win.document.body);
 }
 EX_SHOW_SPACES = false;
@@ -2312,8 +3054,8 @@ forOf({
 	looped += `${index}:${item} `;
 });
 // cannot loop through an object with for of in this version...
-if (LET_FAIL_TESTS) {
-	expectToBe(looped, '0:the 1:bloody 2:fox 3:died ', 'forOf() should iterate through an iterable');
+if (EX_LET_FAIL_TESTS) {
+	expectToBe(looped, '0:the 1:bloody 2:fox 3:died ', 'forOf() should FAILM iterate through an iterable');
 }
 
 const el = {
@@ -2335,8 +3077,8 @@ el.innerHTML                    = '';
 
 document.getElementById         = () => null;
 document.querySelector          = () => null;
-document.querySelectorAll       = () => []as any;
-document.getElementsByClassName = () => []as any;
+document.querySelectorAll       = () => [] as any;
+document.getElementsByClassName = () => [] as any;
 
 elementAt('NIL');
 expectToEqual(getEl('<h1>HEADING</h1>'), {
@@ -2375,26 +3117,31 @@ const span = {
 	tagName      : 'span'
 } as unknown as IElement;
 
-document.querySelectorAll = () => [div, div, span]as any;
+document.querySelectorAll = () => [div, div, span] as any;
 // trace(`document`, document);
 expectToBe(getEl(2), span, 'getEl(2) should return the 3rd div/span in the document');
 expectToBe(elementAt(), 'GET EL FIND ANY MATCH FOR "div,span" [2] go up 0\nlookup @[2] of 3 matched ==> [' +
-		'[ByQuerySelector#2 <span id="SPN" width="12" />]]',
+	'[ByQuerySelector#2 <span id="SPN" width="12" />]]',
 'elementAt() should return find message');
 expectToBe(getEl('div,span [1]'), div, 'getEl(div,span [1]) should return the 2nd div/span in the document');
 expectToBe(elementAt(), 'GET EL FIND ANY MATCH FOR "div,span" [1] go up 0\nlookup @[1] of 3 matched ==> [' +
-		'[ByQuerySelector#1 <div id="ID" width="32" />]]',
+	'[ByQuerySelector#1 <div id="ID" width="32" />]]',
 'elementAt() should return find message with index value');
 expectToBe(getEl('div,span [2]^'), div, 'getEl(div,span [2]^) should return the parent element of the 3rd div/span in the' +
-		' document');
+	' document');
 expectToBe(getEl('div,span', '[-1]^'), div, 'getEl(div,span, [-1]^) should return the parent element of the last div/span in ' +
-		'the document');
+	'the document');
+
 EX_SHOW_SPACES = true;
-expectToBe(elementAt(), 'GET EL FIND ANY MATCH FOR "div,span" [-1] go up 1\nlookup @[2] of 3 matched ==> ' +
-		'[[ByQuerySelector#2 <span id="SPN" width="12" />]]\nup to parent --> <div id="ID' +
-		'" width="32" /> ',
-'elementAt() should return find message with negative index and go up 1');
+expectToBe(
+	elementAt(),
+	'GET EL FIND ANY MATCH FOR "div,span" [-1] go up 1\nlookup @[2] of 3 matched ==> ' +
+	'[[ByQuerySelector#2 <span id="SPN" width="12" />]]\nup to parent --> <div id="ID' +
+	'" width="32" />\x20',
+	'elementAt() should return find message with negative index and go up 1'
+);
 EX_SHOW_SPACES = false;
+
 expectToBe(getEl('div,span @LIST'), div, 'getEl(div,span @LIST) should return first div and log the full list');
 
 const openTestId = {
@@ -2499,20 +3246,24 @@ screen.queryAllByDisplayValue    = () => [openInput];
 screen.queryAllByRole            = () => [];
 expectToBe(getEl(/open/i), openTestId, 'getEl(/open/i) should return the first match of regex /open/');
 expectToBe(elementAt(), 'GET EL REGEX ANY MATCH FOR /open/i\nlookup @[0] of 11 matched ==> [[ByTestId#0 <' +
-		'span data-testid="accordion-open" class="open" />]]',
+	'span data-testid="accordion-open" class="open" />]]',
 'elementAt() should return by testid message');
 expectToBe(getEl(/open/i, '[4]^@LIST'), openTestId, 'getEl(/open/i,[4]^@LIST) should return the fifth match of regex /open/ and go up' +
-		' 1, logging the full list');
-expectToBe(elementAt(), 'GET EL REGEX ANY MATCH FOR /open/i [4] go up 1\nlookup @[4] of 11 matched ==> [[' +
-		'ByText#1 <button id="accordion-open" />]]\nup to parent --> <span data-testid="a' +
-		'ccordion-open" class="open" /> ',
-'elementAt() should return regex match, index and up message');
+	' 1, logging the full list');
+
+expectToBe(
+	elementAt(),
+	'GET EL REGEX ANY MATCH FOR /open/i [4] go up 1\nlookup @[4] of 11 matched ==> [[' +
+	'ByText#1 <button id="accordion-open" />]]\nup to parent --> <span data-testid="a' +
+	'ccordion-open" class="open"\xa0/>\x20',
+	'elementAt() should return regex match, index and up message'
+);
 
 const stylesheet = `
 display: none;
 width: 100%;
 height: 30vh;
-  `
+	`
 	.trim()
 	.replace(/\n/g, '');
 
@@ -2524,55 +3275,86 @@ const rawHtml = `
 <hr />
 <footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" class="CLASS" style="${stylesheet}" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">footer</footer>
 </main>
-  `
+	`
 	.trim()
 	.replace(/>\n/g, '>');
 const rawHtmlNoNL = rawHtml.replace(/\n/g, '');
 //console.warn(`rawHtml: `, rawHtml);
 
 const expectHtmlNoNLOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n<article>\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n</article>\n\n<hr />\n\n<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" class="CLASS" style="display: none;width: 100%;height: 30vh;" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
-const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n<article>\n[SPx2]This[SPx3]is an article in the document[SPx2]\n</article>\n\n<hr />\n\n<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" class="CLASS" style="display: none;width: 100%;height: 30vh;" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
+
+const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
+	`<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n` +
+	`<article>\n[NBSP][NBSP]This[NBSP][NBSP][NBSP]is[NBSP]an[NBSP]article[NBSP]in[NBSP]the[NBSP]document[NBSP][NBSP]\n</article>\n\n<hr />\n\n` +
+	`<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" ` +
+	`aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" ` +
+	`data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" ` +
+	`class="CLASS" style="display: none;width: 100%;height: 30vh;" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" ` +
+	`tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
+
 const expectHtmlSpc = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n<article>\n\\s\\sThis   is an article in the document\\s\\s\n</article>\n\n<hr />\n\n<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" class="CLASS" style="display: none;width: 100%;height: 30vh;" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
-const expectHtmlNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img\n	alt="icon plus"\n	src="./icon-plus.svg"\n	width="32"\n	height="32"/>\n\n<article>\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n</article>\n\n<hr />\n\n<footer\n	id="FOOTER"\n	name="NAME"\n	role="ROLE"\n	data-testid="DATA-TESTID"\n	aria-label="LABEL"\n	aria-description="ADESC"\n	aria-role="AROLE"\n	aria-rolel="AROLEL"\n	value="false"\n	focusable="true"\n	aria-hidden="false"\n	aria-modal="true"\n	aria-invalid="false"\n	aria-checked="true"\n	aria-expanded="false"\n	data-focus-guard="true"\n	data-focus-lock-disabled="false"\n	data-autofocus-inside="true"\n	data-popper-arrow="false"\n	data-oranges="true"\n	class="CLASS"\n	styles="\n		display: none;\n		width: 100%;\n		height: 30vh\n	"\n	type="TYPE"\n	target="TARGET"\n	rel="REL"\n	disabled="true"\n	focusable="false"\n	hidden="true"\n	width="WIDTH"\n	height="HEIGHT"\n	tabindex="TABINDEX"\n	for="FOR"\n	title="TITLE"\n	placeholder="PLACEHOLDER"\n	alt="ALT"\n	href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
-const expectHtmlNice = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img\n	alt="icon plus"\n	src="./icon-plus.svg"\n	width="32"\n	height="32"/>\n\n<article>\n[SPx2]This[SPx3]is an article in the document[SPx2]\n</article>\n\n<hr />\n\n<footer\n	id="FOOTER"\n	name="NAME"\n	role="ROLE"\n	data-testid="DATA-TESTID"\n	aria-label="LABEL"\n	aria-description="ADESC"\n	aria-role="AROLE"\n	aria-rolel="AROLEL"\n	value="false"\n	focusable="true"\n	aria-hidden="false"\n	aria-modal="true"\n	aria-invalid="false"\n	aria-checked="true"\n	aria-expanded="false"\n	data-focus-guard="true"\n	data-focus-lock-disabled="false"\n	data-autofocus-inside="true"\n	data-popper-arrow="false"\n	data-oranges="true"\n	class="CLASS"\n	styles="\n		display: none;\n		width: 100%;\n		height: 30vh\n	"\n	type="TYPE"\n	target="TARGET"\n	rel="REL"\n	disabled="true"\n	focusable="false"\n	hidden="true"\n	width="WIDTH"\n	height="HEIGHT"\n	tabindex="TABINDEX"\n	for="FOR"\n	title="TITLE"\n	placeholder="PLACEHOLDER"\n	alt="ALT"\n	href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
-const expectTextNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n	<img \n		alt="icon plus"\n		width="32"\n		height="32"/>\n\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n\n	<footer \n		id="FOOTER"\n		name="NAME"\n		role="ROLE"\n		data-testid="DATA-TESTID"\n		aria-label="LABEL"\n		aria-description="ADESC"\n		aria-role="AROLE"\n		aria-rolel="AROLEL"\n		focusable="true"\n		aria-hidden="false"\n		aria-modal="true"\n		aria-invalid="false"\n		aria-checked="true"\n		aria-expanded="false"\n		data-focus-guard="true"\n		data-focus-lock-disabled="false"\n		data-autofocus-inside="true"\n		data-popper-arrow="false"\n		data-oranges="true"\n		type="TYPE"\n		target="TARGET"\n		rel="REL"\n		disabled="true"\n		focusable="false"\n		hidden="true"\n		width="WIDTH"\n		height="HEIGHT"\n		tabindex="TABINDEX"\n		for="FOR"\n		title="TITLE"\n		placeholder="PLACEHOLDER"\n		alt="ALT"\n		href="#HREF">\n\nfooter\n\n`;
+const expectHtmlNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n<article>\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n</article>\n\n<hr />\n\n<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n\tdata-focus-guard="true"\n\tdata-focus-lock-disabled="false"\n\tdata-autofocus-inside="true"\n\tdata-popper-arrow="false"\n\tdata-oranges="true"\n\tclass="CLASS"\n\tstyles="\n\t\tdisplay: none;\n\t\twidth: 100%;\n\t\theight: 30vh\n\t"\n\ttype="TYPE"\n\ttarget="TARGET"\n\trel="REL"\n\tdisabled="true"\n\tfocusable="false"\n\thidden="true"\n\twidth="WIDTH"\n\theight="HEIGHT"\n\ttabindex="TABINDEX"\n\tfor="FOR"\n\ttitle="TITLE"\n\tplaceholder="PLACEHOLDER"\n\talt="ALT"\n\thref="#HREF">\nfooter\n</footer>\n\n</main>\n`;
+const expectHtmlNice = `GET EL RAW HTML STRING\n` +
+	`========== FOUND\n\n` +
+	`<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
+	`<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n` +
+	`<article>\n[NBSP][NBSP]This[NBSP][NBSP][NBSP]is[NBSP]an[NBSP]article[NBSP]in[NBSP]the[NBSP]document[NBSP][NBSP]\n` +
+	`</article>\n\n<hr />\n\n` +
+	`<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n` +
+	`\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n` +
+	`\tdata-focus-guard="true"\n\tdata-focus-lock-disabled="false"\n\tdata-autofocus-inside="true"\n\tdata-popper-arrow="false"\n\tdata-oranges="true"\n` +
+	`\tclass="CLASS"\n\tstyles="\n\t\tdisplay: none;\n\t\twidth: 100%;\n\t\theight: 30vh\n\t"\n\ttype="TYPE"\n\ttarget="TARGET"\n` +
+	`\trel="REL"\n\tdisabled="true"\n\tfocusable="false"\n\thidden="true"\n\twidth="WIDTH"\n\theight="HEIGHT"\n\ttabindex="TABINDEX"\n` +
+	`\tfor="FOR"\n\ttitle="TITLE"\n\tplaceholder="PLACEHOLDER"\n\talt="ALT"\n\thref="#HREF">\nfooter\n</footer>\n\n</main>\n`;
+
+const expectTextNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n\n\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n\t\ttype="TYPE"\n\t\ttarget="TARGET"\n\t\trel="REL"\n\t\tdisabled="true"\n\t\tfocusable="false"\n\t\thidden="true"\n\t\twidth="WIDTH"\n\t\theight="HEIGHT"\n\t\ttabindex="TABINDEX"\n\t\tfor="FOR"\n\t\ttitle="TITLE"\n\t\tplaceholder="PLACEHOLDER"\n\t\talt="ALT"\n\t\thref="#HREF">\n\nfooter\n\n`;
 const expectTextNice1Old = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n	<img \n		src="./icon-plus.svg"/>\n\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n\n	<footer \n		value="false"\n		class="CLASS"\n		style="display: none;width: 100%;height: 30vh;">\n\nfooter\n\n`;
-const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n	<img \n		alt="icon plus"\n		width="32"\n		height="32"/>\n\n[SPx2]This[SPx3]is an article in the document[SPx2]\n\n	<footer \n		id="FOOTER"\n		name="NAME"\n		role="ROLE"\n		data-testid="DATA-TESTID"\n		aria-label="LABEL"\n		aria-description="ADESC"\n		aria-role="AROLE"\n		aria-rolel="AROLEL"\n		focusable="true"\n		aria-hidden="false"\n		aria-modal="true"\n		aria-invalid="false"\n		aria-checked="true"\n		aria-expanded="false"\n		data-focus-guard="true"\n		data-focus-lock-disabled="false"\n		data-autofocus-inside="true"\n		data-popper-arrow="false"\n		data-oranges="true"\n		type="TYPE"\n		target="TARGET"\n		rel="REL"\n		disabled="true"\n		focusable="false"\n		hidden="true"\n		width="WIDTH"\n		height="HEIGHT"\n		tabindex="TABINDEX"\n		for="FOR"\n		title="TITLE"\n		placeholder="PLACEHOLDER"\n		alt="ALT"\n		href="#HREF">\n\nfooter\n\n`;
+const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n[NBSP][NBSP]This[NBSP][NBSP][NBSP]is[NBSP]an[NBSP]article[NBSP]in[NBSP]the[NBSP]document[NBSP][NBSP]\n\n\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n\t\ttype="TYPE"\n\t\ttarget="TARGET"\n\t\trel="REL"\n\t\tdisabled="true"\n\t\tfocusable="false"\n\t\thidden="true"\n\t\twidth="WIDTH"\n\t\theight="HEIGHT"\n\t\ttabindex="TABINDEX"\n\t\tfor="FOR"\n\t\ttitle="TITLE"\n\t\tplaceholder="PLACEHOLDER"\n\t\talt="ALT"\n\t\thref="#HREF">\n\nfooter\n\n`;
 const expectTextNice1 = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n	<img \n		src="./icon-plus.svg"/>\n\n[SPx2]This[SPx3]is an article in the document[SPx2]\n\n	<footer \n		value="false"\n		class="CLASS"\n		style="display: none;width: 100%;height: 30vh;">\n\nfooter\n\n`;
 
 EX_AS_JS = true;
 const html = getHtml(rawHtmlNoNL);
 const htmlOld = getHtml(rawHtmlNoNL, SPC);
 expectToBe(rawHtml, rawHtml, 'getHtml(rawHtml) should return HTML with newlines in it as is, does not recognis' +
-		'e it as raw HTML');
-expectToBe(html, expectHtmlNoNL, 'getHtml(rawHtml minus \\n) should return the HTML formatted minimally');
+	'e it as raw HTML');
+
+expectToBe(
+	html,
+	expectHtmlNoNL,
+	'getHtml(rawHtml minus \\n) should return the HTML formatted minimally'
+);
+
 expectToBe(htmlOld, expectHtmlNoNLOld, 'getHtml(rawHtml minus \\n, SPC) should return the HTML formatted minimally with ' +
-		'[SPACE] markers');
+	'[SPACE] markers');
 expectToBe(getHtml(rawHtmlNoNL, '\\s'), expectHtmlSpc, 'getHtml(with \\s marker) should return the HTML with \\s as space marker');
-expectToBe(getHtmlNice(rawHtmlNoNL), expectHtmlNice, 'getHtmlNice(rawHtml minus \\n) should return the HTML formatted one element per ' +
-		'line');
-expectToBe(getHtmlNice(rawHtmlNoNL, SPC), expectHtmlNiceOld, 'getHtmlNice(rawHtml minus \\n, SPC) should return the HTML formatted one element' +
-		' per line with [SPACE] markers');
-expectToBe(getHtmlNice(rawHtmlNoNL, '\\s'), expectHtmlNiceOld.replace(/\[SPACE\]/g, '\\s'), 'getHtmlNice(with \\s marker) should return the HTML with \\s as space markers');
+expectToBe(getHtmlNice(rawHtmlNoNL), expectHtmlNice, 'getHtmlNice1a(rawHtml minus \\n) should return the HTML formatted one element per ' +
+	'line');
+expectToBe(getHtmlNice(rawHtmlNoNL, SPC), expectHtmlNiceOld, 'getHtmlNice1b(rawHtml minus \\n, SPC) should return the HTML formatted one element' +
+	' per line with [SPACE] markers');
+expectToBe(getHtmlNice(rawHtmlNoNL, '\\s'), expectHtmlNiceOld.replace(/\[SPACE\]/g, '\\s'), 'getHtmlNice1c(with \\s marker) should return the HTML with \\s as space markers');
 
 if (FLIP) {
 	expectToBe(getTextNice(rawHtmlNoNL), expectTextNice1, 'getTextNice1(rawHtml minus \\n) should return the Text with only HTML elements s' +
-			'howing relevant attributes');
+		'howing relevant attributes');
 	expectToBe(getTextNice(rawHtmlNoNL, SPC), expectTextNice1Old, 'getTextNice1(rawHtml minus \\n, SPC) should return the Text with only HTML eleme' +
-			'nts showing relevant attributes and [SPACE] markers');
+		'nts showing relevant attributes and [SPACE] markers');
 	expectToBe(getTextNice(rawHtmlNoNL, '@'), expectTextNice1Old.replace(/\[SPACE\]/g, '@'), 'getTextNice1(rawHtml minus \\n) should return the Text with only HTML elements s' +
-			'howing relevant attributes');
+		'howing relevant attributes');
 } else {
-	expectToBe(getTextNice(rawHtmlNoNL), expectTextNice, 'getTextNice2(rawHtml minus \\n) should return the Text with only HTML elements s' +
-			'howing relevant attributes');
-	expectToBe(getTextNice(rawHtmlNoNL, SPC), expectTextNiceOld, 'getTextNice2(rawHtml minus \\n, SPC) should return the Text with only HTML eleme' +
-			'nts showing relevant attributes and [SPACE] markers');
-	expectToBe(getTextNice(rawHtmlNoNL, '@'), expectTextNiceOld.replace(/\[SPACE\]/g, '@'), 'getTextNice2(rawHtml minus \\n) should return the Text with only HTML elements s' +
-			'howing relevant attributes');
+	expectToBe(
+		getTextNice(rawHtmlNoNL),
+		expectTextNice,
+		'getTextNice2a(rawHtml minus \\n) should return the Text with only HTML elements s' +
+		'howing relevant attributes'
+	);
+	expectToBe(getTextNice(rawHtmlNoNL, SPC), expectTextNiceOld, 'getTextNice2b(rawHtml minus \\n, SPC) should return the Text with only HTML eleme' +
+		'nts showing relevant attributes and [SPACE] markers');
+	expectToBe(getTextNice(rawHtmlNoNL, '@'), expectTextNiceOld.replace(/\[SPACE\]/g, '@'), 'getTextNice2c(rawHtml minus \\n) should return the Text with only HTML elements s' +
+		'howing relevant attributes');
 }
 
 EX_AS_JS = false;
-if (NOISY) {
+if (EX_NOISY) {
 	console.warn(`\ngetHtml: `, html);
 	console.warn(`\ngetHtmlNice: `, getHtmlNice(rawHtmlNoNL));
 	console.warn(`\ngetTextNice: `, getTextNice(rawHtmlNoNL));
@@ -2585,16 +3367,16 @@ window.document = document;
 let freezeExpect = '2024-07-04T01:02:03.000Z';
 let freezeExpectToString = 'Wed Jan 01 2025 00:00:00 GMT+0000 (Coordinated Universal Time)';
 
-if (!EX_DATE_NODE) {
+if (EX_DATE_GMT) {
 	// in Browser ht tps://typescriptlang.org on date Thu Feb 20 11:40:33 GMT 2025
-	freezeExpect = '2024-07-04T00:02:03.000Z';
-	freezeExpectToString = 'Wed Jan 01 2025 00:00:00 GMT+0000 (Greenwich Mean Time)';
+	freezeExpect = '2024-07-04T01:02:03.000Z';
+	freezeExpectToString = 'Wed\x20Jan\x2001\x202025\x2000:00:00\x20GMT+0000\x20(Greenwich\x20Mean\x20Time)';
 }
 
-expectToEqual(freezeTime(), freezeExpect, 'freezeTime2() should return the specific date');
+expectToEqual(freezeTime().toISOString(), freezeExpect, 'freezeTime2() should return the specific date');
 
 const jestSpy = jest.fn();
-if (NOISY) {
+if (EX_NOISY) {
 	logMock(void 0, logMock);
 	logMock('HEREWEARE', jestSpy);
 }
@@ -2603,7 +3385,8 @@ const quoted = quotemeta('/^(.+)[a-z]*?(a|b{2,}|\t\x0d\x0a\u2026)$/');
 expectToBe(quoted, '\\/\\^\\(\\.\\+\\)\\[a-z\\]\\*\\?\\(a\\|b\\{2,\\}\\|\t\x0d\x0a\u2026\\)\\$\\/', 'quotemeta() should escape regex meta characters in the string');
 expectToMatch(new RegExp(quoted), '/^(.+)[a-z]*?(a|b{2,}|\t\x0d\x0a\u2026)$/', 'quoted regex should match content');
 
-if (LET_FAIL_TESTS) {
+if (EX_LET_FAIL_TESTS) {
+	console.warn(`NOT OK FAILN:`)
 	checkPageIds();
 }
 checkPageIds(document.body.innerHTML.replace('mypara', `${appId}-mypara`));
@@ -2612,15 +3395,24 @@ checkUndefined('$14.00');
 checkUndefined(`${LS}14.00`);
 checkUndefined('<a focusable="false">');
 checkUndefined('BaNaNa');
-if (LET_FAIL_TESTS) {
+if (EX_LET_FAIL_TESTS) {
+	console.warn(`NOT OK FAILO1: 2 faillures`)
 	checkUndefined('$NaN');
+	console.warn(`NOT OK FAILO2:`)
 	checkUndefined(`${LS}NaN`);
+	console.warn(`NOT OK FAILO3: 2 faillures`)
 	checkUndefined('focusable="false" value="true"');
+	console.warn(`NOT OK FAILO4:`)
 	checkUndefined('undefined');
+	console.warn(`NOT OK FAILO5: 2 faillures`)
 	checkUndefined('null');
+	console.warn(`NOT OK FAILO6:`)
 	checkUndefined('NaN');
+	console.warn(`NOT OK FAILO7:`)
 	checkUndefined('Infinity');
+	console.warn(`NOT OK FAILO8:`)
 	checkUndefined({}.toString());
+	console.warn(`NOT OK FAILO9:`)
 	checkUndefined(noop.toString());
 }
 
@@ -2668,32 +3460,30 @@ const dialogElClosed = {
 
 checkDialogClosed(dialogElClosed);
 checkDialogOpen(dialogElOpen);
-if (LET_FAIL_TESTS) {
+if (EX_LET_FAIL_TESTS) {
+	console.warn(`NOT OK FAILP1: 2 failures`)
 	checkDialogOpen(dialogElClosed);
+	console.warn(`NOT OK FAILP2: 2 failures`)
 	checkDialogClosed(dialogElOpen);
 }
 
-const expectIdentity = `	id="FOOTER"\n	name="NAME"\n	role="ROLE"\n	data-testid="DATA-TESTID"\n	aria-label="LABEL"\n	aria-description="ADESC"\n	aria-role="AROLE"\n	aria-rolel="AROLEL"\n	data-focus-guard="true"\n	data-focus-lock-disabled="false"\n	data-autofocus-inside="true"\n	data-popper-arrow="false"\n	data-oranges="true"`;
+const expectIdentity = `\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tdata-focus-guard="true"\n\tdata-focus-lock-disabled="false"\n\tdata-autofocus-inside="true"\n\tdata-popper-arrow="false"\n\tdata-oranges="true"`;
 
-expectToBe(getIdentity(), '\tid="mypara"', 'getIdentity() should show all relevant identity attributes in the document');
-expectToBe(getIdentity(html), expectIdentity, 'getIdentity() should show all relevant identity attributes in the document');
+expectToBe(
+	getIdentity(),
+	'\tid="mypara"',
+	'getIdentity() should show all relevant identity attributes in the document'
+);
+
+expectToBe(
+	getIdentity(html),
+	expectIdentity,
+	'getIdentity(html) should show all relevant identity attributes in the html provided'
+);
 
 const expectExpectations = `\n    \n    // render() your component...\n    console.warn('IDENTITY', getIdentity());\n    const before = getHtmlNice();\n    console.warn('RENDER', before);\n    expect(checkUndefined()).toBeTruthy();\n    expect(checkPageIds()).toBeTruthy();\n    expect(checkDocumentTextEmpty()).toBeTruthy();\n    expect(checkDialogOpen(dialog)).toBeTruthy();\n    expect(screen.queryByText(/^\\s*version\\.nickname: JIRA-NNNN XYZY\\s*$/m)).toBeInTheDocument();\n    expect(screen.queryByTitle("tooltip text")).toBeInTheDocument();\n    // await userEvent.click()...\n    let after;\n    await waitFor(() => {\n        after = getHtmlNice();\n        expect(after).not.toBe(before);\n    });\n    // will show only what has changed in the HTML due to the user event.\n    expect(after).toBe(before);\n    `;
 
 expectToBe(getExpectations(), expectExpectations, 'getExpectations() should show test assertions to match the document');
-
-const reRegex = /^regex/;
-const typeError = new TypeError('typeerr');
-const aNumber = new Number(3);
-const aBoolean = new Boolean(false);
-const aString = new String('what');
-const aDate = new Date('2025-01-01');
-const anObject = {
-	a: 2
-};
-const anArray = [1, '2', /a/g];
-const emptyObject = {};
-const emptyArray: string[] = [];
 
 expectToBe(getTypeName(undefined), '', 'getTypeName(undefined) should return empty string');
 expectToBe(getTypeName(true), '', 'getTypeName(true) should return empty string');
@@ -2704,8 +3494,8 @@ expectToBe(getTypeName(''), '', 'getTypeName("") should return empty string');
 expectToBe(getTypeName(null), 'Object ', 'getTypeName(null) should return Object');
 expectToBe(getTypeName(reRegex), 'RegExp ', 'getTypeName(RegExp) should return RegExp');
 expectToBe(getTypeName(aDate), 'Date ', 'getTypeName(Date) should return Date');
-expectToBe(getTypeName([]), 'Array ', 'getTypeName(Array) should return Array');
-expectToBe(getTypeName({}), 'Object ', 'getTypeName(Object) should return Object');
+expectToBe(getTypeName(emptyArray), 'Array ', 'getTypeName(Array) should return Array');
+expectToBe(getTypeName(emptyObject), 'Object ', 'getTypeName(Object) should return Object');
 expectToBe(getTypeName(aNumber), 'Number ', 'getTypeName(Number) should return Number');
 expectToBe(getTypeName(aBoolean), 'Boolean ', 'getTypeName(Boolean) should return Boolean');
 expectToBe(getTypeName(aString), 'String ', 'getTypeName(String) should return String');
@@ -2729,9 +3519,9 @@ expectToBe(shortenDump('unquoted string'), `unquoted string`, 'shortenDump() sho
 expectToBe(shortenDump('unquoted string', 7), `unquote${EL}`, 'shortenDump(7) should shorten with ellipsis');
 expectToBe(shortenDump('unquoted string', void 0, '@@'), `@unquoted string@`, 'shortenDump(quotes:@@) should add custom quotes but not shorten it');
 expectToBe(shortenDump('unquoted', 7, '@@'), `@unquote${EL}@`, 'shortenDump(7,quotes:@@) should shorten with ellipsis and surround with custom q' +
-		'uotes');
+	'uotes');
 expectToBe(shortenDump('unquoted', 7, `${LDQ}${RDQ}`), `${LDQ}unquote${EL}${RDQ}`, 'shortenDump(7,quotes) should shorten with ellipsis and surround with custom quot' +
-		'es');
+	'es');
 expectToBe(shortenDump('unquoted\nstring'), `unquoted\nstring`, 'shortenDump() should not shorten');
 expectToBe(shortenDump('unquoted\nstring', 7), `unquote${EL}`, 'shortenDump(7) should shorten with ellipsis');
 expectToBe(shortenDump('function () {}'), `function () {}`, 'shortenDump(function) should not shorten function with ellipsis');
@@ -2764,7 +3554,13 @@ expectToBe(has(null), '', 'has(null) should return empty string');
 expectToBe(has(reRegex), reRegex, 'has(RegExp) should return stringified regex');
 expectToBe(has(aDate), aDate, 'has(Date) should return string Date');
 expectToBe(has(emptyArray), emptyArray, 'has(empty Array) should return empty Array with brackets');
-expectToBe(has(emptyObject), emptyObject, 'has(empty Object) should return stringified Object');
+
+expectToBe(
+	has(emptyObject),
+	emptyObject,
+	'has(empty Object) should return the empty Object'
+);
+
 expectToBe(has(anArray), anArray, 'has(Array) should return the Array');
 expectToBe(has(anObject), anObject, 'has(Object) should return the Object');
 expectToBe(has(aNumber), aNumber, 'has(Number) should return Number object');
@@ -2773,17 +3569,6 @@ expectToBe(has(aString), aString, 'has(String) should return String object itsel
 expectToBe(has(typeError), typeError, 'has(TypeError) should return TypeError');
 expectToBe(has(getTypeName), getTypeName, 'has(getTypeName) should return the Function itself');
 
-// node vs browser stringify differs...
-let expectArrowNull = 'function () { return null; }';
-let expectArrowNullEllipsis = `function () { return${EL}}`
-let arrowEllipsisLen = 11;
-if (EX_ARROW_STRINGIFY) {
-        // browser...
-        expectArrowNull = '() => null';
-        expectArrowNullEllipsis = `() => nu_`
-        arrowEllipsisLen = 8;
-}
-
 expectToBe(str(undefined), '', 'str(undefined) should return empty string');
 expectToBe(str(false), 'false', 'str(false) should return string false');
 expectToBe(str(NaN), 'NaN', 'str(NaN) should return string NaN');
@@ -2791,16 +3576,27 @@ expectToBe(str(Infinity), 'Infinity', 'str(Infinity) should return string Infini
 expectToBe(str(0), '0', 'str(0) should return string 0');
 expectToBe(str(''), '', 'str("") should return empty string');
 expectToBe(str(null), '', 'str(null) should return empty string');
-expectToBe(str(reRegex), '/^regex/', 'str(RegExp) should return stringified regex');
+expectToBe(str(reRegex), '/^regex/gm', 'str(RegExp) should return stringified regex');
 expectToBe(str(aDate), freezeExpectToString, 'str(Date) should return string Date');
-expectToBe(str([]), '[]', 'str(empty Array) should return empty Array with brackets');
-expectToBe(str({}), '[object Object]', 'str(empty Object) should return stringified Object');
+expectToBe(str(emptyArray), '[]', 'str(empty Array) should return empty Array with brackets');
+
+expectToBe(
+	str(emptyObject),
+	'[object\x20Object]',
+	'str(empty Object) should return stringified empty Object'
+);
 expectToBe(str([1, '2', /a/g]), '[1,2,/a/g]', 'str(Array) should return stringified Array with brackets');
-expectToBe(str({a: 2}), '[object Object]', 'str(Object) should return string Object');
+
+expectToBe(
+	str({a: 2}),
+	'[object\x20Object]',
+	'str(Object) should return string Object'
+);
+
 expectToBe(str(aNumber), '3', 'str(Number) should return string Number');
 expectToBe(str(aBoolean), 'false', 'str(Boolean) should return string Boolean');
 expectToBe(str(aString), 'what', 'str(String) should return String');
-expectToBe(str(new TypeError('typeerr')), 'TypeError: typeerr', 'str(TypeError) should return string TypeError');
+expectToBe(str(new TypeError('typeerr')), 'TypeError:\x20typeerr', 'str(TypeError) should return string TypeError');
 expectToBe(str(() => null), expectArrowNull, 'str(() => null) should return string Function body');
 expectToBe(str(function named() : void {}), 'function named() { }', 'str(function named) should return string Function body');
 expectToBe(str(getTypeName), `${getTypeName}`, 'str(getTypeName) should return string Function body');
@@ -2819,14 +3615,32 @@ expectToBe(showThing(-Infinity, 12), `-Infinity`, 'showThing(Ininity) should hav
 expectToBe(showThing(123456789012, 12), `123456789012`, 'showThing(123456789012) should have no ellipsis');
 expectToBe(showThing('123456789012', 12), `${LDQ}123456789012${RDQ}`, 'showThing("123456789012") should have no ellipsis');
 expectToBe(showThing(/^regexpres/, 12), `/^regexpres/`, 'showThing(/^regexpres/) should have no ellipsis');
-expectToBe(showThing(aDate, 142), freezeExpectToString, 'showThing(Date,142) should have no ellipsis');
-expectToBe(showThing([
-	1, 2, 3, 4, 52
-], 12), `[1,2,3,4,52]`, 'showThing(Array) should have no ellipsis');
-expectToBe(showThing({
-	a: 1,
-	b: 2
-}, 14), `{"a":1,"b":2}`, 'showThing(small Object,13) should have no ellipsis');
+
+expectToBe(
+	showThing(aDate, 142),
+	freezeExpectToString,
+	'showThing(Date,142) should have no ellipsis'
+);
+
+expectToBe(
+	showThing([
+		1, 2, 3, 4, 52
+	], 26),
+	`[\n\x20\x201,\n\x20\x202,\n\x20\x203,\n\x20\x204,\n\x20\x2052\n]`,
+	'showThing(Array) should have no ellipsis'
+);
+
+expectToBe(
+	showThing({
+		a: 1,
+		b: 2
+		},
+		28
+	),
+	`{\n\x20\x20"a":\x201,\n\x20\x20"b":\x202\n}`,
+	'showThing(small Object,28) should have no ellipsis'
+);
+
 expectToBe(showThing({
 	a  : 1,
 	b  : 2,
@@ -2835,8 +3649,22 @@ expectToBe(showThing({
 }, 12), `keys: [a, b, c, ddd]`, 'showThing(Object/k) should have keys and no ellipsis');
 expectToBe(showThing(new Number(123456789012), 12), `123456789012`, 'showThing(Number) should have no ellipsis');
 expectToBe(showThing(new Boolean(false), 12), `false`, 'showThing(Boolean) should have no ellipsis');
-expectToBe(showThing(new String('123456789012'), 12), `${LDQ}123456789012${RDQ}`, 'showThing(String) should have no ellipsis');
-expectToBe(showThing(new TypeError('blah'), 15), `TypeError: blah`, 'showThing(TypeError) should have no ellipsis');
+
+expectToBe(
+	showThing(
+		new String('123456789012'), 12
+	),
+	`${LDQ}123456789012${RDQ}`,
+	'showThing(String) should have no ellipsis'
+);
+
+expectToBe(
+	showThing(
+		new TypeError('blah'), 15
+	),
+	`TypeError:\x20blah`,
+	'showThing(TypeError) should have no ellipsis'
+);
 expectToBe(showThing(() => null, 28), expectArrowNull, 'showThing(arrow function) should have no ellipsis');
 expectToBe(showThing(function () : void {}, 15), `function () { }`, 'showThing(anon function) should have no ellipsis');
 expectToBe(showThing(function named() : void {}, 20), `function named() { }`, 'showThing(named function) should have no ellipsis');
@@ -2853,17 +3681,35 @@ expectToBe(showThing('123456789012', 2), `${LDQ}12${EL}${RDQ}`, 'showThing("1234
 expectToBe(showThing('123456789AB', 12), `${LDQ}123456789AB${RDQ}`, 'showThing(short string) should have no ellipsis');
 expectToBe(showThing('123456789ABC', 12), `${LDQ}123456789ABC${RDQ}`, 'showThing(just right) should have no ellipsis');
 expectToBe(showThing('123456789ABCD', 12), `${LDQ}123456789ABC${EL}${RDQ}`, 'showThing(longer string) should have no ellipsis');
-expectToBe(showThing(/^regexpres/, 2), `/^${EL}/`, 'showThing(/^regexpres/,2) should have ellipsis');
+expectToBe(
+	showThing(
+		/^regexpres/, 2
+	),
+	`/^${EL}/`,
+	'showThing(/^regexpres/,2) should have ellipsis'
+);
 expectToBe(showThing(aDate, 2), `We${EL}`, 'showThing(Date,2) should have ellipsis');
-expectToBe(showThing([
-	1, 2, 3, 4, 52
-], 2), `[1,${EL}]`, 'showThing(Array,2) should have ellipsis');
-expectToBe(showThing([
-	1, 2, 3, 4, 52
-], 3), `[1,2${EL}]`, 'showThing(Array,3) should have ellipsis');
-expectToBe(showThing([
-	1, 2, 3, 4, 52
-], 4), `[1,2,${EL}]`, 'showThing(Array,4) should have ellipsis');
+expectToBe(
+	showThing([
+		1, 2, 3, 4, 52
+	], 5),
+	`[\n\x20\x201,${EL}]`,
+	'showThing(Array,5) should have ellipsis'
+);
+expectToBe(
+	showThing([
+		1, 2, 3, 4, 52
+	], 9),
+	`[\n\x20\x201,\n\x20\x202${EL}]`,
+	'showThing(Array,9) should have ellipsis'
+);
+expectToBe(
+	showThing([
+		1, 2, 3, 4, 52
+	], 10),
+	`[\n\x20\x201,\n\x20\x202,${EL}]`,
+	'showThing(Array,10) should have ellipsis'
+);
 expectToBe(showThing({
 	a: 1,
 	b: 2
@@ -2879,7 +3725,7 @@ expectToBe(showThing({
 	b   : 2,
 	c   : 3,
 	dddd: 4
-}, 12), `keys: [a, b, c, ddd_]`, 'showThing(Object/k,12) should have keys and ellipsis');
+}, 12), `keys: [a, b, c, ddd${EL}]`, 'showThing(Object/k,12) should have keys and ellipsis');
 expectToBe(showThing(new Boolean(false), 2), `fa${EL}`, 'showThing(Boolean,2) should have ellipsis');
 expectToBe(showThing(new Number(123456789012), 2), `12${EL}`, 'showThing(Number,2) should have ellipsis');
 expectToBe(showThing(new String('123456789012'), 2), `${LDQ}12${EL}${RDQ}`, 'showThing(String,2) should have ellipsis');
@@ -2903,10 +3749,184 @@ expectToBe(showThing(noop, 8), `function noop() {${EL}}`, 'showThing(function na
 // expectToBe(showThing(inEl, 52), `[1,2,3,4,52]`, 'showThing(HTMLInputElement) should have no ellipsis');
 // expectToBe(showThing(inEl, 12), `[1,2,3,4,52]`, 'showThing(HTMLInputElement) should have ellipsis');
 
+expectToBe(
+	show('', 'raw'),
+	`${LDQ}${RDQ}`,
+	'show(empty, raw) should be empty quotes'
+);
+expectToBe(show('', 'spc'),
+	`${LDQ}${RDQ}`,
+	'show(empty, spc) should be empty quotes'
+);
+expectToBe(show('', 'js'),
+	`${LDQ}${RDQ}`,
+	'show(empty, js) should be empty quotes'
+);
+
+expectToBe(
+	show(escapedChars, 'raw'),
+	`${LDQ} a\bcde\fghijklm\nopq\rs\t\x20\u000bw\nyz ${RDQ}`,
+	'show(escapes, raw) should put quotes around the value'
+);
+expectToBe(show(
+	escapedChars, 'spc'),
+	`${LDQ} a[BS]cde[FF]ghijklm[LF]opq[CR]s[TAB]\x20[VT]w[LF]yz ${RDQ}`,
+	'show(escapes, spc) should name the space and UTF characters'
+);
+expectToBe(show(
+	escapedChars, 'js'),
+	`${LDQ} a\\x08cde\\fghijklm\\nopq\\rs\\t\x20\\vw\\nyz ${RDQ}`,
+	'show(escapes, js) should put nice quotes around string and escape the whitespace characters'
+);
+
+expectToBe(
+	show(reRegexSpaces, 'raw', 30),
+	`/\\bregex \\tand\\nspaces   \\u199${EL}/gm`,
+	'show(regex, raw, 30) should be regex with ellipsis'
+);
+expectToBe(show(reRegexSpaces, 'spc', 30),
+	`/\\bregex \\tand\\nspaces[SPx3]\\u199${EL}/gm`,
+	'show(regex, spc, 30) should be regex with ellipsis'
+);
+expectToBe(show(reRegexSpaces, 'js', 30),
+	`/\\bregex \\tand\\nspaces   \\u199${EL}/gm`,
+	'show(regex, js, 30) should be regex with ellipsis'
+);
+
+expectToBe(
+	show(undefined, 'raw'),
+	undefined,
+	'show(undefined, raw) should return as is and show unquoted'
+);
+expectToBe(show(undefined, 'spc'),
+	`undefined`,
+	'show(undefined, spc) should return string show unquoted'
+);
+expectToBe(show(undefined, 'js'),
+	`undefined`,
+	'show(undefined, js) should return string show unquoted'
+);
+
+expectToBe(
+	show(null, 'raw'),
+	null,
+	'show(null, raw) should return as is and show unquoted'
+);
+expectToBe(show(null, 'spc'),
+	`null`,
+	'show(null, spc) should return string show unquoted'
+);
+expectToBe(show(null, 'js'),
+	`null`,
+	'show(null, js) should return string show unquoted'
+);
+
+expectToBe(
+	show(0, 'raw'),
+	0,
+	'show(0, raw) should return as is and show unquoted'
+);
+expectToBe(show(0, 'spc'),
+	`0`,
+	'show(0, spc) should return string show unquoted'
+);
+expectToBe(show(0, 'js'),
+	`0`,
+	'show(0, js) should return string show unquoted'
+);
+
+expectToBe(
+	show(58008, 'raw'),
+	58008,
+	'show(58008, raw) should return as is and show unquoted'
+);
+expectToBe(show(58008, 'spc'),
+	`58008`,
+	'show(58008, spc) should return string show unquoted'
+);
+expectToBe(show(58008, 'js'),
+	`58008`,
+	'show(58008, js) should return string show unquoted'
+);
+
+expectToBe(
+	show(NaN, 'raw'),
+	NaN,
+	'show(NaN, raw) should return as is and show unquoted'
+);
+expectToBe(show(NaN, 'spc'),
+	`NaN`,
+	'show(NaN, spc) should return string show unquoted'
+);
+expectToBe(show(NaN, 'js'),
+	`NaN`,
+	'show(NaN, js) should return string show unquoted'
+);
+
+expectToBe(
+	show(Infinity, 'raw'),
+	Infinity,
+	'show(Infinity, raw) should return as is and show unquoted'
+);
+expectToBe(show(Infinity, 'spc'),
+	`Infinity`,
+	'show(Infinity, spc) should return string show unquoted'
+);
+expectToBe(show(Infinity, 'js'),
+	`Infinity`,
+	'show(Infinity, js) should return string show unquoted'
+);
+
+expectToBe(
+	show(typeErrorSpaces, 'raw'),
+	typeErrorSpaces,
+	'show(typeErrorSpaces, raw) should return Error as is'
+);
+expectToBe(show(typeErrorSpaces, 'spc'),
+	`TypeError:\x20typeerr [TAB]and[LF]spaces[SPx3][U+1999]`,
+	'show(typeErrorSpaces, spc) should omit stack trace'
+);
+if (EX_UTF_OK) {
+	expectToBe(show(typeErrorSpaces, 'js'),
+		`TypeError:\x20typeerr \\tand\\nspaces   \u1999`,
+		'show(typeErrorSpaces, js) should omit stack trace'
+	);
+}
+
+expectToBe(
+	show(anObject, 'raw'),
+	anObject,
+	'show(anObject, raw) should return the object as is'
+);
+expectToBe(show(anObject, 'spc'),
+	`{[LF]\x20\x20"a":\x202[LF]}`,
+	'show(anObject, spc) should be marked with spaces'
+);
+expectToBe(show(anObject, 'js'),
+	`{\\n\x20\x20"a":\x202\\n}`,
+	'show(anObject, js) should be stringified with \\n markers'
+);
+
+expectToBe(
+	show(anArray, 'raw'),
+	anArray,
+	'show(anArray, raw) should return the object as is'
+);
+expectToBe(show(anArray, 'spc'),
+	`[[LF]\x20\x201,[LF]\x20\x20"2",[LF]\x20\x20"RegExp\xa0:\xa0/a/g"[LF]]`,
+	'show(anArray, spc) should be marked with spaces'
+);
+expectToBe(show(anArray, 'js'),
+	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp\xa0:\xa0/a/g"\\n]`,
+	'show(anArray, js) should be stringified with \\n markers'
+);
+
+expectToBe(show(escapedLines, 'spc'), `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]\xa0\x20\xa0[CR][LF]\xa0[VT] [LF][SPx2]${RDQ}`, 'show() should requote white space characters handling newlines');
+
 const elDump : any = {
 	__reactInternalInstance1234: {}
 };
-expectToBe(getElementInfo(elDump), `NOT ELEM??? object Object  {"__reactInternalInstance1234":{}}`, 'getElementInfo(not) should respond with NOT ELEM??? message');
+expectToBe(getElementInfo(elDump), `NOT ELEM??? object Object  {\n\x20\x20"__reactInternalInstance1234":\x20{}\n}`, 'getElementInfo(not) should respond with NOT ELEM??? message');
 
 elDump.tagName                     = 'TAGNAME';
 elDump.src                         = 'SRC-omitted';
@@ -2954,8 +3974,20 @@ elDump.__reactInternalInstance1234 = {
 
 expectToBe(getElementInfo(), `NOT ELEM??? undefined  undefined`, 'getElementInfo() should show NOT ELEM message');
 if (showAllPropSources) {
-	expectToBe(showThing(elDump), `<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][_>`, 'showThing(Element/React1) should show the element shortened');
-	expectToBe(getElementInfo(elDump), `<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"][aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"][title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//. Object />`, 'getElementInfo(Element/React1) should respond with Element and React values');
+	expectToBe(showThing(elDump),
+		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
+		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
+		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object\xa0/>`,
+		'showThing(Element/React1) should show the element shortened'
+	);
+
+	expectToBe(
+		getElementInfo(elDump),
+		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//\"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
+		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
+		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object\xa0/>`,
+		'getElementInfo(Element/React1) should respond with Element and React values'
+	);
 } else {
 	expectToBe(showThing(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"_>`, 'showThing(Element/React2) should show the element shortened');
 	expectToBe(getElementInfo(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"][disabled="DISABLED"][focusable="FOCUSABLEp"][width="WIDTHm"][height="HEIGHT"][hidden="HIDDENp"][aria-hidden="ARHIDDENm"][tabIndex="TABINDEX"][for="FORp"][label="LABELm"][aria-label="ARLABEL"][value="VALUEp"][defaultValue="DEFVALUEm"][selected="SELECTED"][checked="CHECKEDp"][aria-checked="ARCHECKEDm"][aria-invalid="ARINVALID"][aria-expanded="AREXPANDEDp"][title="TITLEm"][placeholder="PLACEHOLDER"][alt="ALTp"][href="HREFm"].CLASSNAME. Object />`, 'getElementInfo(Element/React2) should respond with Element and React values');
@@ -2963,7 +3995,11 @@ if (showAllPropSources) {
 
 delete elDump.__reactInternalInstance1234;
 if (showAllPropSources) {
-	expectToBe(getElementInfo(elDump), `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//. Object />`, 'getElementInfo(Element1) should respond with Element values only');
+	expectToBe(
+		getElementInfo(elDump),
+		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object\xa0/>`,
+		'getElementInfo(Element1) should respond with Element values only'
+	);
 } else {
 	expectToBe(getElementInfo(elDump), `<TAGNAME#ID[type="TEXT"][role="ROLE"][aria-role="AROLE"][disabled="DISABLED"][height="HEIGHT"][tabIndex="TABINDEX"][aria-label="ARLABEL"][selected="SELECTED"][aria-invalid="ARINVALID"][placeholder="PLACEHOLDER"].CLASSNAME. Object />`, 'getElementInfo(Element2) should respond with Element values only');
 }
@@ -3025,15 +4061,42 @@ if (!showAllPropSources) {
 const currentDump = `<input Object />`;
 const relatedDump = `<div Object />`;
 
-expectToBe(showEvent(myEvent, 'PREFIX:'), `PREFIX:EVENT Object CLICK/@1719410356201 ONCLICK ONCLICKCAPTURE eventPhase(3) isTrusted bubbles cancellable defaultPrevented isPersistent isDefaultPrevented isPropagationStopped \ndetails(DETAILS) metaKey shiftKey \nbutton buttons screenXY(12,43)clientXY(23,0)pageXY(0,32)\ntarget: ${targetDump}\ncurrentTarget: ${currentDump}\nrelatedTarget: ${relatedDump}\nview: object Object  {"what":"VIEW"}`, `showEvent(event) should show event details`);
+expectToBe(
+	showEvent(myEvent, 'PREFIX:'),
+	`PREFIX:EVENT\x20Object CLICK/@1719410356201\x20ONCLICK ONCLICKCAPTURE eventPhase(3)\x20isTrusted\x20bubbles\x20cancellable\x20defaultPrevented\x20isPersistent\x20isDefaultPrevented\x20isPropagationStopped\x20\n` +
+	`details(DETAILS)\x20metaKey\x20shiftKey\x20` +
+	`\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
+	`\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
+	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object\xa0/>\n` +
+	`currentTarget:\xa0<input\x20Object\xa0/>\n` +
+	`relatedTarget:\xa0<div\x20Object\xa0/>\n` +
+	`view:\xa0Object\xa0\xa0{\n` +
+	`\x20\x20\"what\":\x20\"VIEW\"\n` +
+	`}`,
+	`showEvent(event) should show event details`
+);
 
 const spacesHyphens = '  \f\n\r\t\v | \x20 \x09 \x0a \x0b \x0c \x0d \x0d\x0a \xa0 \xad | \u0020 \u0009 ' +
-		'\u000a \u000b \u000c \u000d \u000d\u000a \u00a0 \u00ad \u202F \uFEFF \u2000 ' +
-		'\u2001 \u2002 \u2003 \u2004 \u2005 \u2006 \u2007 \u2008 \u2009 \u200A \u200B ' +
-		'\u205F \u3000 \u303F \u2010 \u2011 \u2027 \uFE63 \uFF0D';
+	'\u000a \u000b \u000c \u000d \u000d\u000a \u00a0 \u00ad \u202F \uFEFF \u2000 ' +
+	'\u2001 \u2002 \u2003 \u2004 \u2005 \u2006 \u2007 \u2008 \u2009 \u200A \u200B ' +
+	'\u205F \u3000 \u303F \u2010 \u2011 \u2027 \uFE63 \uFF0D';
 
 EX_AS_JS = true;
-expectToBe(indicateSpaces(spacesHyphens), `[SPx2][FF]\n[LF]\n[CR]\n[TAB][VT]\n |[SPx3][TAB] [LF]\n [VT]\n [FF]\n [CR]\n [CR]\n[LF]\n [NBSP] [SOFT.HYPHEN] |[SPx3][TAB] [LF]\n [VT]\n [FF]\n [CR]\n [CR]\n[LF]\n [NBSP] [SOFT.HYPHEN] [NARROW.NBSP] [ZERO.NBSP] [EN.QUAD] [EM.QUAD] [EN.SPACE] [EM.SPACE] [THREE.PER.EM.SPACE] [FOUR.PER.EM.SPACE] [SIX.PER.EM.SPACE] [FIGURE.SPACE] [PUNCT.SPACE] [THIN.SPACE] [HAIR.SPACE] [ZERO.SPACE] [MED.MATH.SPACE] [IDEOGRAPHIC.SPACE] [IDEOGRAPHIC.HALF.FILL.SPACE] [HYPHEN] [NB.HYPHEN] [HYPHEN.POINT] [SMALL.HYPHEN] [FULL.WIDTH.HYPHEN]`, 'indicateSpaces() should show various white space and hypens as [TEXT]');
-expectToBe(indicateSpaces(replaceCharsCodePt(spacesHyphens)), `[SPx2][FF]\n[LF]\n[CR]\n[TAB][VT]\n |[SPx3][TAB] [LF]\n [VT]\n [FF]\n [CR]\n [CR]\n[LF]\n [NBSP] [SOFT.HYPHEN] |[SPx3][TAB] [LF]\n [VT]\n [FF]\n [CR]\n [CR]\n[LF]\n [NBSP] [SOFT.HYPHEN] [U+202F] [U+FEFF] [U+2000] [U+2001] [U+2002] [U+2003] [U+2004] [U+2005] [U+2006] [U+2007] [U+2008] [U+2009] [U+200A] [U+200B] [U+205F] [U+3000] [U+303F] [U+2010] [U+2011] [U+2027] [U+FE63] [U+FF0D]`, 'replaceCharsCodePt() should show all unicode code points in the string.');
+expectToBe(indicateSpaces(), ``, 'indicateSpaces(undefined) should default to empty');
+expectToBe(
+	indicateSpaces(spacesHyphens),
+	`[NBSP][NBSP][FF]\n[LF]\n[CR]\n[TAB][VT]\n[NBSP]|[NBSP]\x20[NBSP][TAB][NBSP][LF]\n[NBSP][VT]\n[NBSP][FF]\n[NBSP][CR]\n[NBSP][CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP]|[NBSP]\x20[NBSP][TAB][NBSP][LF]\n[NBSP][VT]\n[NBSP][FF]\n[NBSP][CR]\n[NBSP][CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP][NARROW.NBSP][NBSP][ZERO.NBSP][NBSP][EN.QUAD][NBSP][EM.QUAD][NBSP][EN.SPACE][NBSP][EM.SPACE][NBSP][THREE.PER.EM.SPACE][NBSP][FOUR.PER.EM.SPACE][NBSP][SIX.PER.EM.SPACE][NBSP][FIGURE.SPACE][NBSP][PUNCT.SPACE][NBSP][THIN.SPACE][NBSP][HAIR.SPACE][NBSP][ZERO.SPACE][NBSP][MED.MATH.SPACE][NBSP][IDEOGRAPHIC.SPACE][NBSP][IDEOGRAPHIC.HALF.FILL.SPACE][NBSP][HYPHEN][NBSP][NB.HYPHEN][NBSP][HYPHEN.POINT][NBSP][SMALL.HYPHEN][NBSP][FULL.WIDTH.HYPHEN]`,
+	'indicateSpaces() should show various white space and hypens as [TEXT]'
+);
+expectToBe(
+	indicateSpaces(replaceCharsCodePt(spacesHyphens)),
+	`[NBSP][NBSP][U+000C][LF]\n[CR]\n[U+0009][U+000B][NBSP]|[NBSP]\x20[NBSP][U+0009][NBSP][LF]\n[NBSP][U+000B][NBSP][U+000C][NBSP][CR]\n[NBSP][CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP]|[NBSP]\x20[NBSP][U+0009][NBSP][LF]\n[NBSP][U+000B][NBSP][U+000C][NBSP][CR]\n[NBSP]` +
+	`[CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP][U+202F][NBSP][U+FEFF][NBSP][U+2000][NBSP][U+2001][NBSP][U+2002][NBSP][U+2003][NBSP][U+2004][NBSP][U+2005][NBSP][U+2006][NBSP][U+2007][NBSP][U+2008][NBSP][U+2009][NBSP][U+200A][NBSP][U+200B][NBSP][U+205F][NBSP][U+3000][NBSP][U+303F][NBSP][U+2010][NBSP][U+2011][NBSP][U+2027][NBSP][U+FE63][NBSP][U+FF0D]`,
+	'replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.'
+);
 
 testSummary();
+// end of testing suite
+//==========================================================
+//console.warn(`XXXXXX`, strJ(anObject));
+//testSummary(); throw new Error('STOP TESTING!!!');

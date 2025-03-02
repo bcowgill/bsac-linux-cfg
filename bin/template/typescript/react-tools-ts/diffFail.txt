@@ -1,0 +1,228 @@
+// Quick tool to diff the got/expected string from a failed test.
+// replaces spaces and unicode characters with more visible names/codes.
+// indicates character position of first few differences in the string.
+// multi-line strings shows a limited number of lines which differ.
+
+const reSpacesHyphens = /[\s\x20\xA0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
+
+const spaceMap: Record<string, string> = {
+	'\u0009': '[TAB]',
+	'\u000A': '[LF]\n',
+	'\u000B': '[VT]\n',
+	'\u000C': '[FF]\n',
+	'\u000D': '[CR]\n',
+	//	  '\u0020': '[SP]',
+	'\u00A0': '[NBSP]',
+	//	  '\uE0020': '[TAG.SPACE]',
+	'\u00AD': '[SOFT.HYPHEN]',
+	'\u2000': '[EN.QUAD]',
+	'\u2001': '[EM.QUAD]',
+	'\u2002': '[EN.SPACE]',
+	'\u2003': '[EM.SPACE]',
+	'\u2004': '[THREE.PER.EM.SPACE]',
+	'\u2005': '[FOUR.PER.EM.SPACE]',
+	'\u2006': '[SIX.PER.EM.SPACE]',
+	'\u2007': '[FIGURE.SPACE]',
+	'\u2008': '[PUNCT.SPACE]',
+	'\u2009': '[THIN.SPACE]',
+	'\u200A': '[HAIR.SPACE]',
+	'\u200B': '[ZERO.SPACE]',
+	'\u2010': '[HYPHEN]',
+	'\u2011': '[NB.HYPHEN]',
+	'\u2027': '[HYPHEN.POINT]',
+	'\u202F': '[NARROW.NBSP]',
+	'\u205F': '[MED.MATH.SPACE]',
+	'\u3000': '[IDEOGRAPHIC.SPACE]',
+	'\u303F': '[IDEOGRAPHIC.HALF.FILL.SPACE]',
+	'\uFE63': '[SMALL.HYPHEN]',
+	'\uFEFF': '[ZERO.NBSP]',
+	'\uFF0D': '[FULL.WIDTH.HYPHEN]'
+};
+
+const MAX_BYTE = 255;
+const reNewLines = /\n/gm;
+// MUSTDO move to top...
+const NUM_CHAR_DIFFS = 5;
+const NUM_LINE_DIFFS = 10;
+const reRunOfSpaces = /  +/g;
+const reEveryChar = /./g;
+
+/**
+ * answers with all character codes above 255 replaced by U+NNNN unicode markers.
+ * @param text {string} the text to indicate unicode code points explicitly.
+ * @returns {string} the text with unicode code points replaced with U+NNNN.
+ */
+function replaceCharsCodePt(text : string) : string
+{
+	return text.replace(reEveryChar, function replaceCodePt(match : string) : string {
+		const code = match.charCodeAt(0);
+		return code > MAX_BYTE
+			? `[U+${code
+				.toString(16)
+				.toUpperCase()}]`
+			: match;
+	});
+} // replaceCharsCodePt()
+
+function myReplaceSpaceLength(match : string) : string {
+	return `[SPx${match.length}]`;
+}
+
+/**
+ * answers with string replacing all white space and hyphens with [TAB] [NBSP] markers for easier debugging.
+ * single spaces are left alone but multple runs of spaces are shown as [SPx5].
+ * @param text {string} the text to indicate where white spaces and hyphens are.
+ * @returns {string} the text with spaces indicated throughout.
+ * @note Newlines, form feeds and other characters will be replaced with a marker and a newline so that
+ * they still break the string into multiple lines but you will be able to see end of line marker inconsistencies.
+ */
+function indicateSpaces(text : string) : string
+{
+	let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
+		return match === ' '
+			? ' '
+			: (spaceMap[match] || `[MISSING ${replaceCharsCodePt(match)}]`);
+	});
+	return out.replace(reRunOfSpaces, myReplaceSpaceLength);
+} // indicateSpaces()
+
+/**
+ * answers with string replacing all white space and hyphens with [TAB] [NBSP] markers for easier debugging.
+ * single spaces are left alone but multple runs of spaces are shown as [SPx5].
+ * @param text {string} the text to indicate where white spaces and hyphens are.
+ * @returns {string} the text with spaces indicated throughout.
+ * @note Newlines, form feeds and other characters will be replaced with a marker only.
+ * other high character codes will be replaced by their unicode code point numbers.
+ */
+function nameSpaces(text : string) : string
+{
+	let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
+		return match === ' '
+			? ' '
+			: (spaceMap[match] || replaceCharsCodePt(match));
+	});
+	return replaceCharsCodePt(out.replace(reRunOfSpaces, myReplaceSpaceLength).replace(reNewLines, ''));
+} // nameSpaces()
+
+/**
+ * answer with spaces replaced by their name or unicode value so that unprintables can be seen.
+ * @param chr {string} the character to return or show the name or unicode value of.
+ * @returns {string} empty string will return a space, otherwise spaces/hyphens will return a name like [TAB] or unicode value.
+ */
+function seeChar(chr = ''): string {
+	return chr.length ? nameSpaces(chr) : ' ';
+}
+
+/**
+ * answer with a string shoing the hexadecimal value of a character code point.
+ * @param code {number} the charCodeAt() value to display.
+ * @returns {string} returns NaN, \xHH or \uHHHH strings to indicate no character or the character code value.
+ */
+function codePt(code: number): string {
+	return isNaN(code) ? `NaN` : code <= MAX_BYTE ? `\\x${code.toString(16).padStart(2, '0')}` : `\\u${code.toString(16).padStart(4, '0')}`;
+}
+
+/**
+ * answers with an array of character differences between two strings for debugging unit tests.
+ * @param got {string} the string value generated by the test case.
+ * @param expected {string} the expected string value for a passing test.
+ * @returns {string[]} array showing character difference as position, character code values and character values side by side.
+ * @example
+ * "@23 \\x20 !== \\x0a [ [LF]]",
+ */
+function charDiffs(got: string, expected: string, num = NUM_CHAR_DIFFS): string[] {
+	const gotLen = got.length;
+	const expLen = expected.length;
+	const length = gotLen > expLen ? gotLen : expLen;
+	const diffsAt = [];
+	for (let index = 0; diffsAt.length < num && index <= length; index++) {
+		const gotCh = got.charAt(index);
+		const expCh = expected.charAt(index);
+		if (gotCh !== expCh) {
+			const gotCode = got.charCodeAt(index);
+			const expCode = expected.charCodeAt(index);
+			diffsAt.push(`@${index} ${codePt(gotCode)} !== ${codePt(expCode)} [${seeChar(gotCh)}${seeChar(expCh)}]`)
+		}
+	}
+	return diffsAt;
+} // charDiffs()
+
+// MUSTDO top...
+export interface ILineDiff {
+	line: number;
+	got: string;
+	expected: string;
+};
+
+/**
+ * answers with an array of line differences between multi-line strings.
+ * @param got {string} the string value generated by the test case.
+ * @param expected {string} the expected string value for a passing test.
+ * @returns {ILineDiff[]} object giving the line number (0 based) got and expected strings with space names and unicode codes added.
+ */
+export function linesDiff(got: string, expected: string, num = NUM_LINE_DIFFS): ILineDiff[] {
+	   const gotStr = nameSpaces(got).split(reNewLines);
+	   const expStr = nameSpaces(expected).split(reNewLines);
+	   const length = gotStr.length > expStr.length ? gotStr.length : expStr.length;
+	   const out = [];
+
+		for (let idx = 0; out.length < num && idx < length; ++idx) {
+			const was = `${gotStr[idx]}`.trim();
+			const is = `${expStr[idx]}`.trim();
+			if (was !== is) {
+				// `@${idx}:\n>${was}< !==\n>${is}<`
+				out.push({
+					line: idx,
+					got: was,
+					expected: is
+				});
+			}
+		}
+	return out;
+} // linesDiff()
+
+// MUSTDO top...
+export interface IStrDiffs {
+	same?: boolean;
+	got?: string;
+	expected?: string;
+	lengths: string;
+	diffs: string[];
+	lineDiffs: ILineDiff[];
+};
+
+function stringDiff(got: string, expected: string, num?: number): IStrDiffs {
+        const gotLen = got.length;
+        const expLen = expected.length;
+		const diffsAt = charDiffs(got, expected, num);
+        return {
+                // same: got === expected,
+				// got,
+				// expected,
+                lengths: `${gotLen} vs ${expLen}`,
+                diffs: diffsAt,
+				lineDiffs: linesDiff(got, expected, num),
+        }
+} // stringDiff()
+
+const escapedChars = ' \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u0020\v\w\x0a\y\z ';
+const escapedLines = '  \x0d \f \n \r \t \u0020 \x0d\x0a \v \x0a  ';
+
+const a = 'al;kskdj;w;lj \u1999' + escapedLines;
+const at = Math.floor(a.length * Math.random());
+const b = a.substring(0, at) + '\u2000' + a[Math.floor(a.length * Math.random())] + a.substring(at, a.length - 1) + '    ';
+
+console.warn(`char diff`, charDiffs(a, b, 30));
+console.warn(`lines diff`, linesDiff(a, b))
+const diff = stringDiff(a, b);
+console.warn(`diff`, diff)
+
+console.warn(`# lengths: ${diff.lengths}`);
+diff.diffs.forEach((diff: string) => {
+	console.warn(`#   char ${diff}`);
+});
+diff.lineDiffs.forEach((line: ILineDiff) => {
+	console.warn(`# line ${line.line}:`);
+	console.warn(`#        got: ${line.got}:`);
+	console.warn(`#   expected: ${line.expected}:`);
+});
