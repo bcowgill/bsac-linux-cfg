@@ -61,18 +61,26 @@ const win : any = {
 
 export const EX_NOISY = false;
 export const EX_QUIET = true;
-export const EX_BRIEF = true;
+export const EX_BRIEF = false;
 export const EX_LET_FAIL_TESTS = false;
 
 export const EX_JS_NODE = false; // transpiled to JS and run in node
 export const EX_ONECOMP = true; // onecompiler site?
 
 export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
-export const EX_DATE_GMT = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
+export const EX_DATE_GMT = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
 export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
 export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
+console.warn(`EX_UTF_OK = ${EX_UTF_OK}`);
+
 
 export const A0 = EX_UTF_OK ? '\xa0' : '\x20';
+export const XA0 = EX_UTF_OK ? '\\xa0' : '\\x20';
+export const NB = EX_UTF_OK ? '[NBSP]' : '\x20';
+export const NB2 = EX_UTF_OK ? '[NBSP][NBSP]' : '[SPx2]';
+export const NB3 = EX_UTF_OK ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
+export const NB3S = EX_UTF_OK ? `${A0}${A0}${A0}` : '[SPx3]'; // MUSTDO
+export const NB5 = EX_UTF_OK ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
 //export const EX_SP = EX_JS_NODE ? '\xa0' : '\x20';
 
 const global = win;
@@ -182,7 +190,7 @@ let EX_FAILED = 0;
 
 const logger = console.warn;
 const quietly = EX_QUIET ? noop : logger;
-const briefly = EX_BRIEF ? logger : noop;
+const briefly = EX_BRIEF ? noop : logger;
 
 // mode: raw, js or spc to override EX_AS_JS, EX_SHOW_SPACES
 function show(what : any, mode?: string, max?: number): any {
@@ -2912,46 +2920,46 @@ const c = a.substring(0, 11) + '\u2000' + a[Math.floor(a.length / 2)] + a.substr
 
 expectToEqual(charDiff(c, a, 2), [
 	`@11${A0}\\x6c${A0}!==${A0}\\u2000${A0}[l[EN.QUAD]]`,
-	`@12${A0}\\x6a${A0}!==${A0}\\xa0${A0}[j${A0}]`
+	`@12${A0}\\x6a${A0}!==${A0}${XA0}${A0}[j${A0}]`
 ], 'charDiff() should show two differences');
 
 expectToEqual(lineDiff(c, a, 2), [
 	{
-		"_____got": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
-		"expected": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
+		"_____got": `al;kskdj;w;[EN.QUAD]${NB}lj${NB}[U+1999]${NB2}[CR]`,
+		"expected": `al;kskdj;w;lj${NB}[U+1999]${NB2}[CR]`,
 		"line": 0,
 	}, {
-		"_____got": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
-		"expected": "[NBSP][NBSP]",
+		"_____got": NB5,
+		"expected": NB2,
 		"line": 8,
 	}
 ], 'lineDiff() should show two differences');
 
-throw new Error('STOP HEREIAM')
-
-expectToEqual(stringDiff(a, c, 2), {
-	"_____got": "al;kskdj;w;lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n  ",
-	"diffStart": "lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n  ",
-	"lines": "4 expected vs 4 got",
-	"diffs": [
-		"@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
-		`@12 \\xa0 !== \\x6a [ j]`
-	],
-	"expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
-	"lengths": "42 expected vs 37 got",
-	"lineDiff": [
-		{
-			"_____got": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
-			"expected": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
-			"line": 0,
-		},
-		{
-			"_____got": "[NBSP][NBSP]",
-			"expected": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
-			"line": 8,
-		}
-	],
-}, 'stringDiff() should show two differences');
+if (EX_UTF_OK) {
+	expectToEqual(stringDiff(a, c, 2), {
+		"_____got": "al;kskdj;w;lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n  ",
+		"diffStart": "lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n  ",
+		"lines": "4 expected vs 4 got",
+		"diffs": [
+			"@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
+			`@12 ${XA0} !== \\x6a [ j]`
+		],
+		"expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
+		"lengths": "42 expected vs 37 got",
+		"lineDiff": [
+			{
+				"_____got": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
+				"expected": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
+				"line": 0,
+			},
+			{
+				"_____got": "[NBSP][NBSP]",
+				"expected": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
+				"line": 8,
+			}
+		],
+	}, 'stringDiff() should show two differences');
+} // if EX_UTF_OK
 
 if (EX_LET_FAIL_TESTS) {
 	expectToEqual(charDiff(a, b), emptyArray, 'charDiff() should FAILG and show the random differences');
@@ -3305,7 +3313,7 @@ const expectHtmlNoNLOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEA
 
 const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
 	`<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n` +
-	`<article>\n[NBSP][NBSP]This[NBSP][NBSP][NBSP]is[NBSP]an[NBSP]article[NBSP]in[NBSP]the[NBSP]document[NBSP][NBSP]\n</article>\n\n<hr />\n\n` +
+	`<article>\n${NB2}This${NB3}is${NB}an${NB}article${NB}in${NB}the${NB}document${NB2}\n</article>\n\n<hr />\n\n` +
 	`<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" ` +
 	`aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" ` +
 	`data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" ` +
@@ -3314,11 +3322,12 @@ const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADIN
 
 const expectHtmlSpc = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n<article>\n\\s\\sThis   is an article in the document\\s\\s\n</article>\n\n<hr />\n\n<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" class="CLASS" style="display: none;width: 100%;height: 30vh;" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
 const expectHtmlNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n<article>\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n</article>\n\n<hr />\n\n<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n\tdata-focus-guard="true"\n\tdata-focus-lock-disabled="false"\n\tdata-autofocus-inside="true"\n\tdata-popper-arrow="false"\n\tdata-oranges="true"\n\tclass="CLASS"\n\tstyles="\n\t\tdisplay: none;\n\t\twidth: 100%;\n\t\theight: 30vh\n\t"\n\ttype="TYPE"\n\ttarget="TARGET"\n\trel="REL"\n\tdisabled="true"\n\tfocusable="false"\n\thidden="true"\n\twidth="WIDTH"\n\theight="HEIGHT"\n\ttabindex="TABINDEX"\n\tfor="FOR"\n\ttitle="TITLE"\n\tplaceholder="PLACEHOLDER"\n\talt="ALT"\n\thref="#HREF">\nfooter\n</footer>\n\n</main>\n`;
+
 const expectHtmlNice = `GET EL RAW HTML STRING\n` +
 	`========== FOUND\n\n` +
 	`<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
 	`<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n` +
-	`<article>\n[NBSP][NBSP]This[NBSP][NBSP][NBSP]is[NBSP]an[NBSP]article[NBSP]in[NBSP]the[NBSP]document[NBSP][NBSP]\n` +
+	`<article>\n${NB2}This${NB3}is${NB}an${NB}article${NB}in${NB}the${NB}document${NB2}\n` +
 	`</article>\n\n<hr />\n\n` +
 	`<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n` +
 	`\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n` +
@@ -3329,7 +3338,16 @@ const expectHtmlNice = `GET EL RAW HTML STRING\n` +
 
 const expectTextNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n\n\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n\t\ttype="TYPE"\n\t\ttarget="TARGET"\n\t\trel="REL"\n\t\tdisabled="true"\n\t\tfocusable="false"\n\t\thidden="true"\n\t\twidth="WIDTH"\n\t\theight="HEIGHT"\n\t\ttabindex="TABINDEX"\n\t\tfor="FOR"\n\t\ttitle="TITLE"\n\t\tplaceholder="PLACEHOLDER"\n\t\talt="ALT"\n\t\thref="#HREF">\n\nfooter\n\n`;
 const expectTextNice1Old = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n	<img \n		src="./icon-plus.svg"/>\n\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n\n	<footer \n		value="false"\n		class="CLASS"\n		style="display: none;width: 100%;height: 30vh;">\n\nfooter\n\n`;
-const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n[NBSP][NBSP]This[NBSP][NBSP][NBSP]is[NBSP]an[NBSP]article[NBSP]in[NBSP]the[NBSP]document[NBSP][NBSP]\n\n\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n\t\ttype="TYPE"\n\t\ttarget="TARGET"\n\t\trel="REL"\n\t\tdisabled="true"\n\t\tfocusable="false"\n\t\thidden="true"\n\t\twidth="WIDTH"\n\t\theight="HEIGHT"\n\t\ttabindex="TABINDEX"\n\t\tfor="FOR"\n\t\ttitle="TITLE"\n\t\tplaceholder="PLACEHOLDER"\n\t\talt="ALT"\n\t\thref="#HREF">\n\nfooter\n\n`;
+
+const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n` +
+	`\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n` +
+	`${NB2}This${NB3}is${NB}an${NB}article${NB}in${NB}the${NB}document${NB2}\n\n` +
+	`\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n` +
+	`\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n` +
+	`\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n` +
+	`\t\ttype="TYPE"\n\t\ttarget="TARGET"\n\t\trel="REL"\n\t\tdisabled="true"\n\t\tfocusable="false"\n\t\thidden="true"\n\t\twidth="WIDTH"\n\t\theight="HEIGHT"\n\t\ttabindex="TABINDEX"\n\t\tfor="FOR"\n` +
+	`\t\ttitle="TITLE"\n\t\tplaceholder="PLACEHOLDER"\n\t\talt="ALT"\n\t\thref="#HREF">\n\nfooter\n\n`;
+
 const expectTextNice1 = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n	<img \n		src="./icon-plus.svg"/>\n\n[SPx2]This[SPx3]is an article in the document[SPx2]\n\n	<footer \n		value="false"\n		class="CLASS"\n		style="display: none;width: 100%;height: 30vh;">\n\nfooter\n\n`;
 
 EX_AS_JS = true;
@@ -3919,7 +3937,7 @@ expectToBe(
 	'show(anObject, raw) should return the object as is'
 );
 expectToBe(show(anObject, 'spc'),
-	`{[LF]\x20\x20"a":\x202[LF]}`,
+	`{[LF][SPx2]"a":\x202[LF]}`,
 	'show(anObject, spc) should be marked with spaces'
 );
 expectToBe(show(anObject, 'js'),
@@ -3933,7 +3951,7 @@ expectToBe(
 	'show(anArray, raw) should return the object as is'
 );
 expectToBe(show(anArray, 'spc'),
-	`[[LF]\x20\x201,[LF]\x20\x20"2",[LF]\x20\x20"RegExp${A0}:${A0}/a/g"[LF]]`,
+	`[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${A0}:${A0}/a/g"[LF]]`,
 	'show(anArray, spc) should be marked with spaces'
 );
 expectToBe(show(anArray, 'js'),
@@ -3941,7 +3959,11 @@ expectToBe(show(anArray, 'js'),
 	'show(anArray, js) should be stringified with \\n markers'
 );
 
-expectToBe(show(escapedLines, 'spc'), `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${A0}\x20${A0}[CR][LF]${A0}[VT] [LF][SPx2]${RDQ}`, 'show() should requote white space characters handling newlines');
+expectToBe(
+  show(escapedLines, 'spc'),
+  `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${NB3S}[CR][LF]${A0}[VT] [LF][SPx2]${RDQ}`,
+  'show() should requote white space characters handling newlines'
+);
 
 const elDump : any = {
 	__reactInternalInstance1234: {}
@@ -3994,10 +4016,12 @@ elDump.__reactInternalInstance1234 = {
 
 expectToBe(getElementInfo(), `NOT ELEM??? undefined  undefined`, 'getElementInfo() should show NOT ELEM message');
 if (showAllPropSources) {
-	expectToBe(showThing(elDump),
-		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
-		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${A0}/>`,
+	expectToBe(
+	  showThing(elDump),
+		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][${EL}>`,
+		//XXXXtarget="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
+		//[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
+		//`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${A0}/>`,
 		'showThing(Element/React1) should show the element shortened'
 	);
 
@@ -4103,15 +4127,28 @@ const spacesHyphens = '  \f\n\r\t\v | \x20 \x09 \x0a \x0b \x0c \x0d \x0d\x0a \xa
 
 EX_AS_JS = true;
 expectToBe(indicateSpaces(), ``, 'indicateSpaces(undefined) should default to empty');
+
 expectToBe(
 	indicateSpaces(spacesHyphens),
-	`[NBSP][NBSP][FF]\n[LF]\n[CR]\n[TAB][VT]\n[NBSP]|[NBSP]\x20[NBSP][TAB][NBSP][LF]\n[NBSP][VT]\n[NBSP][FF]\n[NBSP][CR]\n[NBSP][CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP]|[NBSP]\x20[NBSP][TAB][NBSP][LF]\n[NBSP][VT]\n[NBSP][FF]\n[NBSP][CR]\n[NBSP][CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP][NARROW.NBSP][NBSP][ZERO.NBSP][NBSP][EN.QUAD][NBSP][EM.QUAD][NBSP][EN.SPACE][NBSP][EM.SPACE][NBSP][THREE.PER.EM.SPACE][NBSP][FOUR.PER.EM.SPACE][NBSP][SIX.PER.EM.SPACE][NBSP][FIGURE.SPACE][NBSP][PUNCT.SPACE][NBSP][THIN.SPACE][NBSP][HAIR.SPACE][NBSP][ZERO.SPACE][NBSP][MED.MATH.SPACE][NBSP][IDEOGRAPHIC.SPACE][NBSP][IDEOGRAPHIC.HALF.FILL.SPACE][NBSP][HYPHEN][NBSP][NB.HYPHEN][NBSP][HYPHEN.POINT][NBSP][SMALL.HYPHEN][NBSP][FULL.WIDTH.HYPHEN]`,
-	'indicateSpaces() should show various white space and hypens as [TEXT]'
+	`${NB2}[FF]\n[LF]\n[CR]\n[TAB][VT]\n${A0}|${NB3S}[TAB]${NB}[LF]\n${NB}[VT]\n${NB}[FF]\n${NB}[CR]\n${NB}[CR]\n[LF]\n` +
+	`\x20[NBSP]\x20[SOFT.HYPHEN]${A0}|${NB3S}[TAB]${A0}[LF]\n${A0}[VT]\n${A0}[FF]\n${A0}[CR]\n${A0}[CR]\n[LF]\n` +
+	`${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}[NARROW.NBSP]${A0}[ZERO.NBSP]${A0}[EN.QUAD]${A0}[EM.QUAD]${A0}[EN.SPACE]` +
+	`${A0}[EM.SPACE]${A0}[THREE.PER.EM.SPACE]${A0}[FOUR.PER.EM.SPACE]${A0}[SIX.PER.EM.SPACE]${A0}[FIGURE.SPACE]` +
+	`${A0}[PUNCT.SPACE]${A0}[THIN.SPACE]${A0}[HAIR.SPACE]${A0}[ZERO.SPACE]${A0}[MED.MATH.SPACE]${A0}[IDEOGRAPHIC.SPACE]` +
+	`${A0}[IDEOGRAPHIC.HALF.FILL.SPACE]${A0}[HYPHEN]${A0}[NB.HYPHEN]${A0}[HYPHEN.POINT]${A0}[SMALL.HYPHEN]` +
+	`${A0}[FULL.WIDTH.HYPHEN]`,
+	'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]'
 );
+
 expectToBe(
 	indicateSpaces(replaceCharsCodePt(spacesHyphens)),
-	`[NBSP][NBSP][U+000C][LF]\n[CR]\n[U+0009][U+000B][NBSP]|[NBSP]\x20[NBSP][U+0009][NBSP][LF]\n[NBSP][U+000B][NBSP][U+000C][NBSP][CR]\n[NBSP][CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP]|[NBSP]\x20[NBSP][U+0009][NBSP][LF]\n[NBSP][U+000B][NBSP][U+000C][NBSP][CR]\n[NBSP]` +
-	`[CR]\n[LF]\n[NBSP][NBSP][NBSP][SOFT.HYPHEN][NBSP][U+202F][NBSP][U+FEFF][NBSP][U+2000][NBSP][U+2001][NBSP][U+2002][NBSP][U+2003][NBSP][U+2004][NBSP][U+2005][NBSP][U+2006][NBSP][U+2007][NBSP][U+2008][NBSP][U+2009][NBSP][U+200A][NBSP][U+200B][NBSP][U+205F][NBSP][U+3000][NBSP][U+303F][NBSP][U+2010][NBSP][U+2011][NBSP][U+2027][NBSP][U+FE63][NBSP][U+FF0D]`,
+	`${NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${A0}|${NB3S}[U+0009]${A0}[LF]\n${A0}[U+000B]${A0}[U+000C]` +
+	`${A0}[CR]\n${A0}[CR]\n[LF]\n${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}|${NB3}[U+0009]${A0}[LF]\n` +
+	`${A0}[U+000B]${A0}[U+000C]${A0}[CR]\n${A0}` +
+	`[CR]\n[LF]\n${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}[U+202F]${A0}[U+FEFF]${A0}[U+2000]${A0}[U+2001]${A0}` +
+	`[U+2002]${A0}[U+2003]${A0}[U+2004]${A0}[U+2005]${A0}[U+2006]${A0}[U+2007]${A0}[U+2008]${A0}[U+2009]${A0}` +
+	`[U+200A]${A0}[U+200B]${A0}[U+205F]${A0}[U+3000]${A0}[U+303F]${A0}[U+2010]${A0}[U+2011]${A0}[U+2027]${A0}` +
+	`[U+FE63]${A0}[U+FF0D]`,
 	'replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.'
 );
 
