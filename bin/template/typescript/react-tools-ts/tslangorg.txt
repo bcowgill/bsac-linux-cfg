@@ -53,6 +53,7 @@ const win : any = {
 
 export const EX_NOISY = false;
 export const EX_QUIET = true;
+export const EX_BRIEF = true;
 export const EX_LET_FAIL_TESTS = false;
 
 export const EX_JS_NODE = false; // transpiled to JS and run in node
@@ -63,6 +64,7 @@ export const EX_DATE_GMT = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, o
 export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
 export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
 
+export const A0 = '\xa0';
 //export const EX_SP = EX_JS_NODE ? '\xa0' : '\x20';
 
 const global = win;
@@ -160,6 +162,10 @@ let EX_TESTED = 0;
 let EX_FAILED = 0;
 // let XXX = false;
 
+const logger = console.warn;
+const quietly = EX_QUIET ? noop : logger;
+const briefly = EX_BRIEF ? logger : noop;
+
 // mode: raw, js or spc to override EX_AS_JS, EX_SHOW_SPACES
 function show(what : any, mode?: string, max?: number): any {
 	const showJS = EX_AS_JS || mode === 'js';
@@ -231,18 +237,18 @@ function sameNaN(got : any, expected : any) : boolean
  */
 function showDiff(got: string, expected: string): void {
 	const diff = stringDiff(got, expected);
-	console.warn(`#    lines: ${diff.lines}`);
-	console.warn(`#  lengths: ${diff.lengths} characters`);
+	briefly(`#    lines: ${diff.lines}`);
+	briefly(`#  lengths: ${diff.lengths} characters`);
 	diff.lineDiff.forEach(function showLineDiffs(line: ILineDiff): void {
-		console.warn(`#     line: ${line.line}`);
-		console.warn(`# expected: ${line.expected}`);
-		console.warn(`#      got: ${line._____got}`);
+		briefly(`#     line: ${line.line}`);
+		briefly(`# expected: ${line.expected}`);
+		briefly(`#      got: ${line._____got}`);
 	});
 	diff.diffs.forEach(function showCharDiffs(diff: string): void {
-		console.warn(`#     char: ${diff}`);
+		briefly(`#     char: ${diff}`);
 	});
 	if (diff.diffStart) {
-		console.warn(`#    start: ${diff.diffStart}`);
+		briefly(`#    start: ${diff.diffStart}`);
 	}
 	// console.warn(`stringDiff`, diff);
 } // showDiff()
@@ -252,20 +258,18 @@ function expectToBe(got : any, expected : any, desc = 'expectToBe') : void
 	// return expect(got).toBe(expected);
 	EX_TESTED++;
 	if (got === expected || sameNaN(got, expected)) {
-		if (!EX_QUIET) {
-			console.warn(`OK ${desc}`);
-		}
+		quietly(`OK ${desc}`);
 	} else {
 		EX_FAILED++;
-		console.warn(`NOT OK ${desc}`);
+		logger(`NOT OK ${desc}`);
 		try {
 			const expStr = strJ(expected, 1);
 			const gotStr = strJ(got, 1);
-			console.warn(`# expected:`, show(expected));
+			briefly(`# expected:`, show(expected));
 			if (gotStr === expStr) {
-				console.warn(`#      got: stringifies to the same thing -- try expectToEqual instead?`);
+				briefly(`#      got: stringifies to the same thing -- try expectToEqual instead?`);
 			} else {
-				console.warn(`#      got:`, show(got));
+				briefly(`#      got:`, show(got));
 				showDiff(gotStr, expStr);
 			} // else differs deeply
 		} catch (exception) {
@@ -279,13 +283,11 @@ function expectNotToBe(got : any, expected : any, desc = 'expectNotToBe') : void
 	// return expect(got).not.toBe(expected);
 	EX_TESTED++;
 	if (got !== expected && !sameNaN(got, expected)) {
-		if (!EX_QUIET) {
-			console.warn(`OK ${desc}`);
-		}
+		quietly(`OK ${desc}`);
 	} else {
 		EX_FAILED++;
-		console.warn(`NOT OK ${desc}`);
-		console.warn(`# expected different:`, got);
+		logger(`NOT OK ${desc}`);
+		briefly(`# expected different:`, got);
 	}
 } // expectNotToBe()
 
@@ -366,22 +368,20 @@ function expectToEqual(got : any, expected : any, desc = 'expectToEqual') : void
 		const expStr = strJ(expected, 1);
 		const gotStr = strJ(got, 1);
 		if (gotStr === expStr) {
-			if (!EX_QUIET) {
-				console.warn(`OK ${desc}`);
-			}
+			quietly(`OK ${desc}`);
 		} else {
 			EX_FAILED++;
-			console.warn(`NOT OK ${desc}`);
-			console.warn(`# expected:`, show(expected));
-			console.warn(`#      got:`, show(got));
+			logger(`NOT OK ${desc}`);
+			briefly(`# expected:`, show(expected));
+			briefly(`#      got:`, show(got));
 			showDiff(gotStr, expStr);
 		}
 	} catch (exception) {
 		EX_FAILED++;
-		console.warn(`NOT OK ${desc}`);
+		logger(`NOT OK ${desc}`);
 		console.error(`EXCEPTION expectToEqual [${desc}]:\x20`, exception);
-		console.warn(`# expected:`, show(expected));
-		console.warn(`#      got:`, show(got));
+		briefly(`# expected:`, show(expected));
+		briefly(`#      got:`, show(got));
 	}
 } // expectToEqual()
 
@@ -404,26 +404,26 @@ function expectToMatch(re : RegExp, text : string, desc = 'expectToMatch', times
 			failed = false;
 		}
 		if (!failed && !EX_QUIET) {
-			console.warn(`OK ${desc} matches: ${times}`);
-			console.warn(`#    the regex:`, re);
-			console.warn(`# matched text: [${text}]`);
+			quietly(`OK ${desc} matches: ${times}`);
+			briefly(`#    the regex:`, re);
+			briefly(`# matched text: [${text}]`);
 			if (matchArray) {
-				console.warn(`#  match array:`, gotMatches);
+				briefly(`#  match array:`, gotMatches);
 			}
 		}
 	} // if matches === times
 	if (failed) {
 		EX_FAILED++;
-		console.warn(`NOT OK ${desc}`);
-		console.warn(`#            the regex:`, re);
-		console.warn(`#   did not match text: [${text}]`);
-		console.warn(`#     expected matches:`, times);
-		console.warn(`#          got matches:`, matches, gotMatches);
+		logger(`NOT OK ${desc}`);
+		briefly(`#            the regex:`, re);
+		briefly(`#   did not match text: [${text}]`);
+		briefly(`#     expected matches:`, times);
+		briefly(`#          got matches:`, matches, gotMatches);
 		if (matchArray) {
-			console.warn(`# expected match array:`, matchArray.length, expected);
-			console.warn(`  index: ${matchArray.index},`);
-			console.warn(`  input: '${matchArray.input}',`);
-			console.warn(`  groups: ${matchArray.groups},`);
+			briefly(`# expected match array:`, matchArray.length, expected);
+			briefly(`  index: ${matchArray.index},`);
+			briefly(`  input: '${matchArray.input}',`);
+			briefly(`  groups: ${matchArray.groups},`);
 		} // if matchArray
 	} // if failed
 } // expectToMatch()
@@ -435,17 +435,17 @@ function expectNotToMatch(re : RegExp, text : string, desc = 'expectNotToMatch',
 	const matches = (text.match(re) || []).length;
 	if (matches === times) {
 		if (!EX_QUIET) {
-			console.warn(`OK ${desc} matches: ${times}`);
-			console.warn(`#          the regex:`, re);
-			console.warn(`# did not match text: [${text}]`);
+			quietly(`OK ${desc} matches: ${times}`);
+			briefly(`#          the regex:`, re);
+			briefly(`# did not match text: [${text}]`);
 		}
 	} else {
 		EX_FAILED++;
-		console.warn(`NOT OK ${desc}`);
-		console.warn(`#        the regex:`, re);
-		console.warn(`#     matched text: [${text}]`);
-		console.warn(`# expected matches:`, times);
-		console.warn(`#      got matches:`, matches, text.match(re));
+		logger(`NOT OK ${desc}`);
+		briefly(`#        the regex:`, re);
+		briefly(`#     matched text: [${text}]`);
+		briefly(`# expected matches:`, times);
+		briefly(`#      got matches:`, matches, text.match(re));
 	}
 } // expectNotToMatch()
 
@@ -463,17 +463,17 @@ function expectToSplit(re : RegExp, text : string, expected : string[], desc = '
 	EX_TESTED++;
 	if (got === split) {
 		if (!EX_QUIET) {
-			console.warn(`OK ${desc}`);
-			console.warn(`#      the regex:`, re);
-			console.warn(`# splil the text: [${text}]`);
+			quietly(`OK ${desc}`);
+			briefly(`#      the regex:`, re);
+			briefly(`# splil the text: [${text}]`);
 		}
 	} else {
 		EX_FAILED++;
-		console.warn(`NOT OK ${desc}`);
-		console.warn(`#     the regex:`, re);
-		console.warn(`# did not split: [${text}]`);
-		console.warn(`#      expected:`, split);
-		console.warn(`#           got:`, got);
+		logger(`NOT OK ${desc}`);
+		briefly(`#     the regex:`, re);
+		briefly(`# did not split: [${text}]`);
+		briefly(`#      expected:`, split);
+		briefly(`#           got:`, got);
 	}
 } // expectToSplit()
 
@@ -482,9 +482,9 @@ function testSummary() : void
 	// return
 	const passed = EX_TESTED - EX_FAILED;
 	if (EX_FAILED) {
-		console.warn(`${EX_FAILED} failed, ${passed} passed, ${EX_TESTED} total`)
+		logger(`${EX_FAILED} failed, ${passed} passed, ${EX_TESTED} total`)
 	} else {
-		console.warn(`All passed, ${EX_TESTED} total`)
+		logger(`All passed, ${EX_TESTED} total`)
 	}
 } // testSummary()
 
@@ -1561,7 +1561,7 @@ export function forOf<C,T>(iterable: C, fn: (item: T, index: number) => void): v
 	const collection = iterable as unknown as T[];
 	try
 	{
-		// @ts-expect-error TS2802: Type 'IElementList' can only be iterated through
+		// @ t s -expect-error TS2802: Type 'IElementList' can only be iterated through
 		// when using the '--downlevelIteration' flag or with a '--target' of 'es2015' or
 		// higher. @ts-expect-error TS2495: Type 'IElementList' is not an array type or
 		// a string type.
@@ -1632,7 +1632,7 @@ export function getEl(element?: IElementLocator, suffix?: string) : IElement
 	if (reRawHtml.test(elAsString)) {
 		where = 'GET EL RAW HTML STRING';
 		elementAt(where);
-		// @ts-expect-error TS2740 Type '{innerHTML: string; }' is missing the following
+		// @ t s -expect-error TS2740 Type '{innerHTML: string; }' is missing the following
 		// properties from type 'Element': attributes, class List, className,
 		// clientHeight
 		return {innerHTML: elAsString} as IElement;
@@ -2764,7 +2764,7 @@ expectToBe(strV(aString), 'String : what', 'strV(String) should show String : wh
 
 expectToBe(
 	strV(typeError),
-	`TypeError\xa0:\xa0TypeError:\x20typeerr`,
+	`TypeError${A0}:${A0}TypeError:\x20typeerr`,
 	'strV(TypeError) should TypeError : ...'
 );
 
@@ -2796,7 +2796,7 @@ expectToBe(strJ(aString), 'String : what', 'strJ(String) should show');
 
 expectToBe(
 	strJ(typeError),
-	`TypeError\xa0:\xa0TypeError:\x20typeerr`,
+	`TypeError${A0}:${A0}TypeError:\x20typeerr`,
 	'strJ(TypeError) should show as stringified'
 );
 
@@ -2893,8 +2893,8 @@ const b = a.substring(0, at) + '\u2000' + a[Math.floor(a.length * Math.random())
 const c = a.substring(0, 11) + '\u2000' + a[Math.floor(a.length / 2)] + a.substring(11, a.length - 1) + '    ';
 
 expectToEqual(charDiff(c, a, 2), [
-	"@11\xa0\\x6c\xa0!==\xa0\\u2000\xa0[l[EN.QUAD]]",
-	"@12\xa0\\x6a\xa0!==\xa0\\xa0\xa0[j\xa0]"
+	`@11${A0}\\x6c${A0}!==${A0}\\u2000${A0}[l[EN.QUAD]]`,
+	`@12${A0}\\x6a${A0}!==${A0}\\xa0${A0}[j${A0}]`
 ], 'charDiff() should show two differences');
 
 expectToEqual(lineDiff(c, a, 2), [
@@ -2915,7 +2915,7 @@ expectToEqual(stringDiff(a, c, 2), {
 	"lines": "4 expected vs 4 got",
 	"diffs": [
 		"@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
-		"@12 \\xa0 !== \\x6a [ j]"
+		`@12 \\xa0 !== \\x6a [ j]`
 	],
 	"expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
 	"lengths": "42 expected vs 37 got",
@@ -3255,7 +3255,7 @@ expectToBe(
 	elementAt(),
 	'GET EL REGEX ANY MATCH FOR /open/i [4] go up 1\nlookup @[4] of 11 matched ==> [[' +
 	'ByText#1 <button id="accordion-open" />]]\nup to parent --> <span data-testid="a' +
-	'ccordion-open" class="open"\xa0/>\x20',
+	`ccordion-open" class="open"${A0}/>\x20`,
 	'elementAt() should return regex match, index and up message'
 );
 
@@ -3913,15 +3913,15 @@ expectToBe(
 	'show(anArray, raw) should return the object as is'
 );
 expectToBe(show(anArray, 'spc'),
-	`[[LF]\x20\x201,[LF]\x20\x20"2",[LF]\x20\x20"RegExp\xa0:\xa0/a/g"[LF]]`,
+	`[[LF]\x20\x201,[LF]\x20\x20"2",[LF]\x20\x20"RegExp${A0}:${A0}/a/g"[LF]]`,
 	'show(anArray, spc) should be marked with spaces'
 );
 expectToBe(show(anArray, 'js'),
-	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp\xa0:\xa0/a/g"\\n]`,
+	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp${A0}:${A0}/a/g"\\n]`,
 	'show(anArray, js) should be stringified with \\n markers'
 );
 
-expectToBe(show(escapedLines, 'spc'), `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]\xa0\x20\xa0[CR][LF]\xa0[VT] [LF][SPx2]${RDQ}`, 'show() should requote white space characters handling newlines');
+expectToBe(show(escapedLines, 'spc'), `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${A0}\x20${A0}[CR][LF]${A0}[VT] [LF][SPx2]${RDQ}`, 'show() should requote white space characters handling newlines');
 
 const elDump : any = {
 	__reactInternalInstance1234: {}
@@ -3977,7 +3977,7 @@ if (showAllPropSources) {
 	expectToBe(showThing(elDump),
 		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
 		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object\xa0/>`,
+		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${A0}/>`,
 		'showThing(Element/React1) should show the element shortened'
 	);
 
@@ -3985,7 +3985,7 @@ if (showAllPropSources) {
 		getElementInfo(elDump),
 		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//\"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
 		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object\xa0/>`,
+		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${A0}/>`,
 		'getElementInfo(Element/React1) should respond with Element and React values'
 	);
 } else {
@@ -3997,7 +3997,7 @@ delete elDump.__reactInternalInstance1234;
 if (showAllPropSources) {
 	expectToBe(
 		getElementInfo(elDump),
-		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object\xa0/>`,
+		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object${A0}/>`,
 		'getElementInfo(Element1) should respond with Element values only'
 	);
 } else {
@@ -4067,10 +4067,10 @@ expectToBe(
 	`details(DETAILS)\x20metaKey\x20shiftKey\x20` +
 	`\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
 	`\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
-	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object\xa0/>\n` +
-	`currentTarget:\xa0<input\x20Object\xa0/>\n` +
-	`relatedTarget:\xa0<div\x20Object\xa0/>\n` +
-	`view:\xa0Object\xa0\xa0{\n` +
+	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${A0}/>\n` +
+	`currentTarget:${A0}<input\x20Object${A0}/>\n` +
+	`relatedTarget:${A0}<div\x20Object${A0}/>\n` +
+	`view:${A0}Object${A0}${A0}{\n` +
 	`\x20\x20\"what\":\x20\"VIEW\"\n` +
 	`}`,
 	`showEvent(event) should show event details`
