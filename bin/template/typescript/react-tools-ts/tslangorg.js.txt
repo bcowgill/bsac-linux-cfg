@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.NNB5 = exports.NB5 = exports.NNB3S = exports.NB3S = exports.NNB3 = exports.NB3 = exports.NNB2 = exports.NB2 = exports.NNB = exports.NB = exports.NXA0 = exports.XA0 = exports.NA0 = exports.A0 = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_LET_FAIL_TESTS = exports.EX_BRIEF = exports.EX_QUIET = exports.EX_NOISY = void 0;
+exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.NNB5 = exports.NB5 = exports.NNB3S = exports.NB3S = exports.NNB3 = exports.NB3 = exports.NNB2 = exports.NB2 = exports.NNB = exports.NB = exports.NXA0 = exports.XA0 = exports.NA0 = exports.A0 = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_LET_FAIL_TESTS = exports.EX_BRIEF = exports.EX_QUIET = exports.EX_NOISY = exports.EX_REGEX = void 0;
 exports.jsonKeySorter = jsonKeySorter;
 exports.noop = noop;
 exports.elementAt = elementAt;
@@ -87,6 +87,7 @@ const win = {
         width: 1204
     }
 };
+exports.EX_REGEX = true;
 exports.EX_NOISY = false;
 exports.EX_QUIET = true;
 exports.EX_BRIEF = false;
@@ -583,7 +584,7 @@ const reAttrsToShow = /^(id|name|type|role|target|rel|disabled|focusable|hidd
 // show class and style also, more noisy but may be useful in some cases.
 //const reAttrsToShow = /^(class|style|id|name|type|role|target|rel|disabled|focusable|hidden|width|height|tabindex|for|title|placeholder|alt|href|(data|aria)-.+)$/i;
 // getElementInfo configure what props/attrs to show when dumping elements
-const showAllPropSources = false;
+const showAllPropSources = true; // MUSTDO tests fail with false on node!
 const attrsToShow = 'data-testid:name:type:role:aria-role:target:rel:disabled:focusable:width:height:hidden:aria-hidden:tabIndex:for:label:aria-label:value:defaultValue:selected:checked:aria-checked:aria-invalid:aria-expanded:title:placeholder:alt:href'.split(/:/g);
 let _LS = 'L'; // £ pound sterling UTF8
 let _EL = '_'; // … ellipsis UTF8
@@ -648,7 +649,7 @@ const reEmbeddedRE = /RE\[(.+?)\]ER/g;
 const reSpaceMarker = /(\[SPACE\])+/g;
 const reRemoveBlankExpects = /expect[^\n]+BLANKBLANK[^\n]+\n/g;
 const reEveryChar = /./g;
-const reRunOfSpaces = /  +/g;
+const reRunOfSpaces = /\x20\x20+/g;
 const reSpacesHyphens = /[\s\x00-\x20\xA0\u00A0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
 const spaceMap = {
     '\u0000': '[NUL]', // Null - ht tps://www.ascii-code.com/0
@@ -2017,276 +2018,284 @@ function showEvent(event, prefix = '') {
     } // finally
     return result;
 } // showEvent()
-//==========================================================
-// Regex tests to validate it's working...
-expectToMatch(reVersionNickname, '<span>  version.nickname: blah blah </span>', 'reVersionNickname should match the nickname text');
-expectNotToMatch(reVersionNickname, '<span>  version.Nickname: blah blah </span>', 'reVersionNickname should NOT match wrong case');
-expectNotToMatch(reVersionNickname, '<span>  version not nickname blah blah </span>', 'breVersionNickname should NOT match non-nickname text');
-expectToMatch(reAllowId, 'csl-dialog-desc12', 'reAllowId should match allowed id value', 2);
-expectNotToMatch(reAllowId, 'csl-dialog-desc', 'reAllowId should NOT match other id values');
-expectToMatch(reAttrsBoolean, 'xx  focusable="false"', 'reAttrsBoolean should match allowed boolean attr false value');
-expectToMatch(reAttrsBoolean, '  FOCUSABLE="false"', 'reAttrsBoolean should match allowed boolean attr false value ignore case');
-expectToMatch(reAttrsBoolean, '  focusable="true"', 'reAttrsBoolean should match allowed boolean attr true value');
-expectNotToMatch(reAttrsBoolean, `  focusable='true'`, 'reAttrsBoolean should NOT match allowed boolean attr true value single quoted');
-expectNotToMatch(reAttrsBoolean, `  focusable=true`, 'reAttrsBoolean should NOT match allowed boolean attr true value unquoted');
-expectNotToMatch(reAttrsBoolean, '  focusable="nope"', 'reAttrsBoolean should NOT match allowed boolean attr non true/false value');
-expectNotToMatch(reAttrsBoolean, '  focusable=""', 'reAttrsBoolean should NOT match allowed boolean attr empty value');
-expectNotToMatch(reAttrsBoolean, 'unfocusable="true"', 'reAttrsBoolean should NOT match embedded allowed boolean attr');
-expectNotToMatch(reAttrsBoolean, '  Width="true"', 'reAttrsBoolean should NOT match non-allowed boolean attr value');
-expectToMatch(reAttrsBoolean, '  aria-hidden="false"', 'reAttrsBoolean should match allowed aria-hidden value');
-expectToMatch(reAttrsBoolean, '  aria-modal="false"', 'reAttrsBoolean should match allowed aria-modal value');
-expectToMatch(reAttrsBoolean, '  aria-invalid="false"', 'reAttrsBoolean should match allowed aria-invalid value');
-expectToMatch(reAttrsBoolean, '  aria-checked="false"', 'reAttrsBoolean should match allowed aria-checked value');
-expectToMatch(reAttrsBoolean, '  aria-expanded="false"', 'reAttrsBoolean should match allowed aria-expanded value');
-expectNotToMatch(reAttrsBoolean, '  aria-other="false"', 'reAttrsBoolean should NON match non-allowed aria-other value');
-expectNotToMatch(reAttrsBoolean, '  value="false"', 'reAttrsBoolean should NON match non-allowed value value');
-expectNotToMatch(reAttrsBoolean, '  data-focus-guard="false"', 'reAttrsBoolean should NON match non-allowed data-focus-guard value');
-expectToMatch(reAttrsToShow, 'id', 'reAttrsToShow should match allowed attr name id', 3);
-expectToMatch(reAttrsToShow, 'Id', 'reAttrsToShow should match allowed attr name ignore case', 3);
-expectNotToMatch(reAttrsToShow, 'pid', 'reAttrsToShow should NOT match embedded allowed attr name');
-expectNotToMatch(reAttrsToShow, '  id  ', 'reAttrsToShow should NOT match spaces around allowed attr name');
-expectToMatch(reAttrsToShow, 'name', 'reAttrsToShow should match allowed attr named name', 3);
-expectToMatch(reAttrsToShow, 'type', 'reAttrsToShow should match allowed attr type', 3);
-expectToMatch(reAttrsToShow, 'role', 'reAttrsToShow should match allowed attr role', 3);
-expectToMatch(reAttrsToShow, 'target', 'reAttrsToShow should match allowed attr target', 3);
-expectToMatch(reAttrsToShow, 'rel', 'reAttrsToShow should match allowed attr rel', 3);
-expectToMatch(reAttrsToShow, 'disabled', 'reAttrsToShow should match allowed attr disabled', 3);
-expectToMatch(reAttrsToShow, 'focusable', 'reAttrsToShow should match allowed attr focusable', 3);
-expectToMatch(reAttrsToShow, 'hidden', 'reAttrsToShow should match allowed attr hidden', 3);
-expectToMatch(reAttrsToShow, 'width', 'reAttrsToShow should match allowed attr width', 3);
-expectToMatch(reAttrsToShow, 'height', 'reAttrsToShow should match allowed attr height', 3);
-expectToMatch(reAttrsToShow, 'tabindex', 'reAttrsToShow should match allowed attr tabindex', 3);
-expectToMatch(reAttrsToShow, 'for', 'reAttrsToShow should match allowed attr for', 3);
-expectToMatch(reAttrsToShow, 'title', 'reAttrsToShow should match allowed attr title', 3);
-expectToMatch(reAttrsToShow, 'placeholder', 'reAttrsToShow should match allowed attr placeholder', 3);
-expectToMatch(reAttrsToShow, 'alt', 'reAttrsToShow should match allowed attr alt', 3);
-expectToMatch(reAttrsToShow, 'href', 'reAttrsToShow should match allowed attr href', 3);
-expectToMatch(reAttrsToShow, 'aria-any-thin-at-all', 'reAttrsToShow should match allowed attr aria-any-thin-at-all', 3);
-expectToMatch(reAttrsToShow, 'data-what-ever', 'reAttrsToShow should match allowed attr data-what-ever', 3);
-expectNotToMatch(reAttrsToShow, 'class', 'reAttrsToShow should NOT match allowed attr class');
-expectNotToMatch(reAttrsToShow, 'className', 'reAttrsToShow should NOT match allowed attr className');
-expectNotToMatch(reAttrsToShow, 'style', 'reAttrsToShow should NOT match allowed attr style');
-expectToMatch(reRawHtml, '    <p stuff="ha">   ', 'reRawHtml should match HTML whitespaced');
-expectToMatch(reRawHtml, '    <p stuff="ha">what</p><a>link</a>   ', 'reRawHtml should match multiple HTML whitespaced');
-expectNotToMatch(reRawHtml, '    p stuff = ha   ', 'reRawHtml should NOT match non-HTML');
-expectNotToMatch(reRawHtml, '    p stuff = ha   <p stuff="ha">', 'reRawHtml should NOT match non-HTML then HTML');
-expectToMatch(reDocTextEmpty, '<p stuff="ha">', 'reDocTextEmpty should match element open');
-expectToMatch(reDocTextEmpty, '</p>', 'reDocTextEmpty should match element close');
-expectToMatch(reDocTextEmpty, '<p stuff="ha">HEY</P>', 'reDocTextEmpty should match multiple elements', 2);
-expectNotToMatch(reDocTextEmpty, 'HEY', 'reDocTextEmpty should NOT match non-element text');
-expectToMatch(reElemWithId, 'some<p x="2" id="34">text</p>', 'reElemWithId should match HTML element with an id');
-expectToMatch(reElemWithId, 'some<p x="2" iD="34">text</p><a id="55">', 'reElemWithId should match two HTML elements with id', 2);
-expectNotToMatch(reElemWithId, 'some<p x="2" sid="34">text</p>', 'reElemWithId should NOT match HTML element with no id');
-expectNotToMatch(reElemWithId, `some<p x="2" id='34'>text</p>`, 'reElemWithId should NOT match HTML element with a single quoted id');
-expectToMatch(reElemWithId, `some<p x="2" id="">text</p>`, 'reElemWithId should match HTML element with an empty id');
-expectNotToMatch(reElemWithId, 'some<p x="2" id=34>text</p>', 'reElemWithId should NOT match HTML element with an unquoted id');
-expectToMatch(reBoolean, 'false', 'reBoolean should match false');
-expectToMatch(reBoolean, 'FALSE', 'reBoolean should match FALSE');
-expectToMatch(reBoolean, 'falsefalse', 'reBoolean should match false twice', 2);
-expectToMatch(reBoolean, 'unfalseifiable', 'reBoolean should match embedded false');
-expectToMatch(reBoolean, 'true', 'reBoolean should match true');
-expectToMatch(reBoolean, 'untruethful', 'reBoolean should match embedded true');
-expectToMatch(reMissingMoney, `${exports.LS};`, 'reMissingMoney should match missing pounds');
-expectToMatch(reMissingMoney, 'price $not', 'reMissingMoney should match missing dollars');
-expectToMatch(reMissingMoney, 'price $not$not', 'reMissingMoney should match missing dollars twice', 2);
-expectNotToMatch(reMissingMoney, 'price $', 'reMissingMoney should NOT match dollars sign alone');
-expectNotToMatch(reMissingMoney, 'price $ ', 'reMissingMoney should NOT match dollars space');
-expectNotToMatch(reMissingMoney, 'price $42.32', 'reMissingMoney should NOT match dollar amount');
-expectToMatch(reStringified, 'this is undefined text', 'reStringified should match literal undefined');
-expectToMatch(reStringified, 'this is undefinedundefined text', 'reStringified should match literal undefined twice', 2);
-expectToMatch(reStringified, 'this is UNDEFINED text', 'reStringified should match literal UNDEFINED');
-expectToMatch(reStringified, 'this isundefinedtext', 'reStringified should match embedded isundefinedtext');
-expectToMatch(reStringified, 'this is null text', 'reStringified should match literal null');
-expectToMatch(reStringified, 'this isnulltext', 'reStringified should match embedded null');
-expectToMatch(reStringified, 'this is NaN text', 'reStringified should match literal NaN');
-expectNotToMatch(reStringified, 'this is BaNaNa text', 'reStringified should NOT match BANANA');
-expectToMatch(reStringified, 'this is Infinity text', 'reStringified should match literal Infinity');
-expectToMatch(reStringified, 'this isInfinitytext', 'reStringified should match embedded Infinity');
-expectToMatch(reStringified, 'this is [object Object] text', 'reStringified should match stringified object');
-expectToMatch(reStringified, 'this is[object Object]text', 'reStringified should match embedded stringified object');
-expectToMatch(reStringified, 'this is function text', 'reStringified should match stringified function');
-expectToMatch(reStringified, 'this isfunction text', 'reStringified should match embedded stringified function');
-expectToMatch(reIndexUp, '[10]', 'reIndexUp should match indexing', 4);
-expectToMatch(reIndexUp, '  [0]   ', 'reIndexUp should match indexing with spacing', 4);
-expectToMatch(reIndexUp, '  [-12]   ', 'reIndexUp should match negative index', 4);
-expectToMatch(reIndexUp, '   ', 'reIndexUp should match empty', 4);
-expectToMatch(reIndexUp, '^^^', 'reIndexUp should match up the tree', 4);
-expectToMatch(reIndexUp, ' ^^^  ', 'reIndexUp should match up the tree with spacing', 4);
-expectToMatch(reIndexUp, '@LIST', 'reIndexUp should match list marker', 4);
-expectToMatch(reIndexUp, '[5]^^@LIST', 'reIndexUp should match all syntax', 4);
-expectToMatch(reIndexUp, '  [5] ^^ @LIST ', 'reIndexUp should match all syntax with spacing', 4);
-const expectMatches = ["   [5] @LIST ", "5", "", "@LIST"];
-expectMatches.index = 3;
-expectMatches.input = ' ^^   [5] @LIST ';
-expectToMatch(reIndexUp, ' ^^   [5] @LIST ', 'reIndexUp should parially match all syntax in wrong order', expectMatches.length, expectMatches);
-expectToMatch(reExtraSpacesClosureElem, 'blah />', 'reExtraSpacesClosureElem should match single space on closure of element');
-expectToMatch(reExtraSpacesClosureElem, 'blah   />', 'reExtraSpacesClosureElem should match excess space on closure of element');
-expectNotToMatch(reExtraSpacesClosureElem, 'blah/>', 'reExtraSpacesClosureElem should NOT match no spaces on closure of element');
-expectNotToMatch(reExtraSpacesClosureElem, 'blah >', 'reExtraSpacesClosureElem should NOT match single space on end of element');
-expectToMatch(reOuterSpaces, '', 'reOuterSpaces should match empty string');
-expectToMatch(reOuterSpaces, '    ', 'reOuterSpaces should match spaces only');
-expectToMatch(reOuterSpaces, '    blah blah   ', 'reOuterSpaces should match spaces around text');
-expectToMatch(reOuterSpaces, 'blah blah', 'reOuterSpaces should match text without spacing');
-expectToReplace(reOuterSpaces, '    blah blah   \n  blah   blah\n   blah blah\n\n', '@\n@\n@@', 'reOuterSpaces should replace spaces around text with multiple lines', '@');
-expectToReplace(reOuterSpaces, '    blah blah   ', '1:[    ] 2:[blah blah] 3:[   ]', 'reOuterSpaces should match and replace groups');
-expectToSplit(/,/, ',a,e,i,o,u', [
-    '',
-    'a',
-    'e',
-    'i',
-    'o',
-    'u'
-], 'should split correctly');
-expectToMatch(reSplitAfterElement, '<p>', 'reSplitAfterElement should match element at end of string');
-expectToMatch(reSplitAfterElement, '<p>more stuff', 'reSplitAfterElement should match element and stuff at end of string');
-expectNotToMatch(reSplitAfterElement, '<p>more stuff<', 'reSplitAfterElement should NOT match element with < at end of string');
-expectNotToMatch(reSplitAfterElement, '<p>more stuff<p', 'reSplitAfterElement should NOT match element with < before end of string');
-expectToMatch(reSplitAfterElement, '<p>more stuff<p>', 'reSplitAfterElement should match element with <p> at end of string');
-expectNotToMatch(reSplitAfterElement, '', 'reSplitAfterElement should NOT match empty string');
-expectToReplace(reSplitAfterElement, '<p>more stuff', '<p1:[more stuff] 2:[$2] 3:[$3]', 'reSplitAfterElement should replace groups');
-expectToReplace(reSplitAfterElement, '<p>more stuff<p>', '<p>more stuff<p1:[] 2:[$2] 3:[$3]', 'reSplitAfterElement should replace groups');
-expectToMatch(reSplitBeforeElement, '<p>', 'reSplitBeforeElement should match element at start of string');
-expectToMatch(reSplitBeforeElement, 'bunch of text<p>', 'reSplitBeforeElement should match stuff before element at start of string');
-expectToMatch(reSplitBeforeElement, '<p>bunch of text</p>', 'reSplitBeforeElement should match stuff before element at start of string');
-expectToMatch(reSplitBeforeElement, 'more<p>bunch of text</p>', 'reSplitBeforeElement should match double stuff before element at start of string');
-expectNotToMatch(reSplitBeforeElement, '', 'reSplitBeforeElement should NOT match empty string');
-expectToReplace(reSplitBeforeElement, 'bunch of text</p>', '1:[bunch of text] 2:[$2] 3:[$3]/p>', 'reSplitBeforeElement should replace groups');
-expectToReplace(reSplitBeforeElement, 'more<p>bunch of text</p>', '1:[more] 2:[$2] 3:[$3]p>bunch of text</p>', 'reSplitBeforeElement should replace groups');
-expectToMatch(reSplitBetweenElement, '<p>what</p><a>the</a>', 'reSplitBetweenElement should match element boundaries', 3);
-expectToReplace(reSplitBetweenElement, '<p>what</p><a>the</a>', '<p1:[what] 2:[$2] 3:[$3]/p1:[] 2:[$2] 3:[$3]a1:[the] 2:[$2] 3:[$3]/a>', 'reSplitBetweenElement should replace groups');
-expectNotToMatch(reSplitBetweenElement, '<p what=the/>', 'reSplitBetweenElement should NOT match single element');
-expectToMatch(reIndentElemAttr, 'width="42"', 'reIndentElemAttr should match an attribute');
-expectToMatch(reIndentElemAttr, 'aria-WIDTH="42"', 'reIndentElemAttr should match a hyphenated attribute');
-expectToMatch(reIndentElemAttr, '       width=""    ', 'reIndentElemAttr should match an empty attribute with leading space');
-expectToMatch(reIndentElemAttr, 'width="42"  height="12"', 'reIndentElemAttr should match multiple attributes', 2);
-expectToReplace(reIndentElemAttr, 'width="42"  height="12"', '1:[] 2:[width="42"] 3:[$3]1:[] 2:[height="12"] 3:[$3]', 'reIndentElemAttr should replace multiple attributes');
-expectNotToMatch(reIndentElemAttr, `width='42'`, 'reIndentElemAttr should NOT match a single quoted attribute');
-expectNotToMatch(reIndentElemAttr, `width=42`, 'reIndentElemAttr should NOT match an unquoted attribute');
-expectToMatch(reStyleAttr, 'style="blah: blah;"', 'reStyleAttr should match style attribute value');
-expectToMatch(reStyleAttr, '   style="blah: blah;"   ', 'reStyleAttr should match style attribute value with spacing');
-expectToMatch(reStyleAttr, '<p   style="blah: blah;"  > <a style="what: what;">', 'reStyleAttr should match multiple style attribute values with spacing', 2);
-expectNotToMatch(reStyleAttr, 'style=""', 'reStyleAttr should NOT match empty style attribute value');
-expectNotToMatch(reStyleAttr, "style='blah: blah;'", 'reStyleAttr should NOT match single quoted style attribute value');
-expectNotToMatch(reStyleAttr, "mystyle='blah: blah;'", 'reStyleAttr should NOT match single quoted embedded style attribute value');
-expectToMatch(reEndingSemi, ';', 'reEndingSemi should match semicolon only');
-expectToMatch(reEndingSemi, 'blah;', 'reEndingSemi should match semicolon at end of string');
-expectNotToMatch(reEndingSemi, ':', 'reEndingSemi should NOT match colon only');
-expectNotToMatch(reEndingSemi, '  ;  ', 'reEndingSemi should NOT match semicolon with spaces');
-expectNotToMatch(reEndingSemi, 'blah; end', 'reEndingSemi should NOT match semicolon at middle of string');
-expectNotToMatch(reEndingSemi, ';blah', 'reEndingSemi should match semicolon at start of string');
-expectToMatch(reSemiSpaces, ';', 'reSemiSpaces should match semicolon only');
-expectToMatch(reSemiSpaces, 'blah;', 'reSemiSpaces should match semicolon at end of string');
-expectToMatch(reSemiSpaces, '  ;  ', 'reSemiSpaces should match semicolon with spaces');
-expectToMatch(reSemiSpaces, 'blah; end', 'reSemiSpaces should match semicolon at middle of string');
-expectToMatch(reSemiSpaces, ';blah', 'reSemiSpaces should NOT match semicolon at start of string');
-expectNotToMatch(reSemiSpaces, ':', 'reSemiSpaces should NOT match colon only');
-expectToMatch(reLineBeforeElement, '<p>', 'reLineBeforeElement should match start of string before element');
-expectToMatch(reLineBeforeElement, '\n<p>', 'reLineBeforeElement should match newline before element');
-expectToMatch(reLineBeforeElement, 'blah blah\n<p>', 'reLineBeforeElement should match extra stuff then newline before element');
-expectNotToMatch(reLineBeforeElement, '  <p>', 'reLineBeforeElement should NOT match space before element');
-expectNotToMatch(reLineBeforeElement, 'blah blah<p>', 'reLineBeforeElement should NOT match extra stuff before element');
-expectToMatch(reLineBeforeText, 'blah</p>', 'reLineBeforeText should match end of line');
-expectToMatch(reLineBeforeText, 'blah</p>\n', 'reLineBeforeText should match new line');
-expectToMatch(reLineBeforeText, '<h1>head</h1>   <b>bold</b>\n\n<p>blah</p>\n<i>italic</i>', 'reLineBeforeText should match multiple', 3);
-expectNotToMatch(reLineBeforeText, 'blah</p>  \n', 'reLineBeforeText should NOT match spaces');
-expectToMatch(reAttribute, 'width="42"', 'reAttribute should match an attribute');
-expectToMatch(reAttribute, 'aria-WIDTH="42"', 'reAttribute should match a hyphenated attribute');
-expectToMatch(reAttribute, '       width=""    ', 'reAttribute should match an empty attribute with leading space');
-expectToMatch(reAttribute, 'width="42"  height="12"', 'reAttribute should match multiple attributes', 2);
-expectToReplace(reAttribute, 'width="42"  height="12"', '1:[width] 2:["42"] 3:[$3]1:[height] 2:["12"] 3:[$3]', 'reAttribute should replace multiple attributes');
-expectNotToMatch(reAttribute, `width='42'`, 'reAttribute should NOT match a single quoted attribute');
-expectNotToMatch(reAttribute, `width=42`, 'reAttribute should NOT match an unquoted attribute');
-expectToMatch(reExtraSpacesElem, 'blah >', 'reExtraSpacesElem should match single space on end of element');
-expectToMatch(reExtraSpacesElem, 'blah   >', 'reExtraSpacesElem should match excess space on end of element');
-expectNotToMatch(reExtraSpacesElem, 'blah>', 'reExtraSpacesElem should NOT match no spaces on end of element');
-expectNotToMatch(reExtraSpacesElem, 'blah />', 'reExtraSpacesElem should NOT match single space on closure of element');
-expectToMatch(rePlainElem, '<span>', 'rePlainElem should match opening element');
-expectToMatch(rePlainElem, '</spAN>', 'rePlainElem should match closing element');
-expectToMatch(rePlainElem, 'text<span> embedded', 'rePlainElem should match embedded opening element');
-expectToMatch(rePlainElem, '<span>text</span> <em>embedded</em>', 'rePlainElem should match multiple elements', 4);
-expectNotToMatch(rePlainElem, '<span >', 'rePlainElem should NOT match opening element with internal spaces');
-expectNotToMatch(rePlainElem, '<span id=32>', 'rePlainElem should NOT match opening element with attributes');
-expectToMatch(reBlankLines, '\n\n', 'reBlankLines should match two newlines');
-expectToMatch(reBlankLines, 'what\n\n   ', 'reBlankLines should match embedded newlines');
-expectToMatch(reBlankLines, '\n  \t \n', 'reBlankLines should match two newlines and spaces between');
-expectToMatch(reBlankLines, '\n\n\n\n\n', 'reBlankLines should match multiple newlines');
-expectNotToMatch(reBlankLines, '\n', 'reBlankLines should NOT match single newline');
-expectToMatch(reBlankLines, 'this\n  \ndouble\n  \n  \n  spaced', 'reBlankLines should match multiple newlines and text breaks', 2);
-expectToReplace(reBlankLines, '\n \n \t \n\n\n\n', 'BRK', 'reBlankLines should replace multiple newlines', 'BRK');
-expectToMatch(reAttrIdentity, 'xx  id="false"', 'reAttrIdentity should match id attribute');
-expectToMatch(reAttrIdentity, 'name="Fred"', 'reAttrIdentity should match name attribute');
-expectToMatch(reAttrIdentity, 'role="Fred"', 'reAttrIdentity should match role attribute');
-expectToMatch(reAttrIdentity, 'data-anything="Fred"', 'reAttrIdentity should match data-* attribute');
-expectToMatch(reAttrIdentity, 'aria-label="Fred"', 'reAttrIdentity should match aria-label attribute');
-expectToMatch(reAttrIdentity, 'aria-labelledby="Fred"', 'reAttrIdentity should match aria-label* attribute');
-expectToMatch(reAttrIdentity, 'aria-desc="Fred"', 'reAttrIdentity should match aria-desc attribute');
-expectToMatch(reAttrIdentity, 'aria-description="Fred"', 'reAttrIdentity should match aria-desc attribute');
-expectToMatch(reAttrIdentity, 'aria-desctibedby="Fred"', 'reAttrIdentity should match aria-desc* attribute');
-expectToMatch(reAttrIdentity, 'aria-role="Fred"', 'reAttrIdentity should match aria-role attribute');
-expectToMatch(reAttrIdentity, 'aria-roledescription="Fred"', 'reAttrIdentity should match aria-role* attribute');
-expectNotToMatch(reAttrIdentity, 'ploughname="Fred"', 'reAttrIdentity should NOT match embedded name attribute');
-expectToMatch(reAttrIdentity, 'name="Fred" id="1234" role="checkbox"', 'reAttrIdentity should match multiple attributes', 3);
-expectToMatch(reAttrIdentity, 'width="42" name="Fred" id="1234" yes="23" role="checkbox"', 'reAttrIdentity should match multiple identity attributes only', 3);
-expectNotToMatch(reAttrIdentity, 'width="Fred"', 'reAttrIdentity should NOT match non-identity attribute');
-expectNotToMatch(reAttrIdentity, 'namE="fred"', 'reAttrIdentity should NOT match upper case');
-expectNotToMatch(reAttrIdentity, 'name=""', 'reAttrIdentity should NOT match empty name attribute');
-expectNotToMatch(reAttrIdentity, 'aria-anything="Fred"', 'reAttrIdentity should NOT match aria-* attribute');
-expectToMatch(reElemNoAttr, '<span>', 'reElemNoAttr should match opening element');
-expectToMatch(reElemNoAttr, '</spAN>', 'reElemNoAttr should match closing element');
-expectToMatch(reElemNoAttr, 'text<span> embedded', 'reElemNoAttr should match embedded opening element');
-expectToMatch(reElemNoAttr, '<span>text</span> <em>embedded</em>', 'reElemNoAttr should match multiple elements', 4);
-expectToMatch(reElemNoAttr, '<span   >', 'reElemNoAttr should match opening element with internal spaces');
-expectNotToMatch(reElemNoAttr, '<span id="32">', 'reElemNoAttr should NOT match opening element with attributes');
-expectToMatch(reMultiSpaced, '\n\n', 'reMultiSpaced should match two newlines');
-expectToMatch(reMultiSpaced, 'what\n\n   ', 'reMultiSpaced should match embedded newlines');
-expectToMatch(reMultiSpaced, '\n  \t \n', 'reMultiSpaced should match two newlines and spaces between');
-expectToMatch(reMultiSpaced, '\n\n\n\n\n', 'reMultiSpaced should match multiple newlines');
-expectNotToMatch(reMultiSpaced, '\n', 'reMultiSpaced should NOT match single newline');
-expectToMatch(reMultiSpaced, 'this\n  \ndouble\n  \n  \n  spaced', 'reMultiSpaced should match multiple newlines and text breaks', 2);
-expectToReplace(reMultiSpaced, '\n \n \t \n\n\n\n', 'BRK', 'reMultiSpaced should replace multiple newlines', 'BRK');
-expectToMatch(reNicePreamble, '\n========== S\n', 'reNicePreamble should match minimally at new line');
-expectToMatch(reNicePreamble, '\n\n\n========== blah blah\n', 'reNicePreamble should match at new line');
-expectToMatch(reNicePreamble, 'blah blah\n\n========== blah blah\n', 'reNicePreamble should match within text');
-expectToMatch(reNicePreamble, '\n============== S\n', 'reNicePreamble should match more equal signs');
-expectNotToMatch(reNicePreamble, '========== \n', 'reNicePreamble should NOT match if no newline');
-expectNotToMatch(reNicePreamble, '\n========= S\n', 'reNicePreamble should NOT match too few equal signs');
-expectToMatch(reNicePreamble, '\n============== HTML\nblah blah blah\n========== HEY\n', 'reNicePreamble should greedy match multiple banners');
-expectToMatch(reInitialLineSpaces, '  \t  what', 'reInitialLineSpaces should match with initial line spaces');
-expectToMatch(reInitialLineSpaces, '\n  \t  what', 'reInitialLineSpaces should match with newline and line spaces');
-expectToMatch(reInitialLineSpaces, 'what', 'reInitialLineSpaces should match with no initial line spaces');
-expectToMatch(reNewLines, '\n', 'reNewLines should match single newline');
-expectToMatch(reNewLines, '\n\n', 'reNewLines should match two newlines', 2);
-expectToMatch(reNewLines, 'what\n\n   ', 'reNewLines should match embedded newlines', 2);
-expectToMatch(reNewLines, '\n  \t \n', 'reNewLines should match two newlines and spaces between', 2);
-expectToMatch(reNewLines, '\n\n\n\n\n', 'reNewLines should match multiple newlines', 5);
-expectToMatch(reNewLines, 'this\n  \ndouble\n  \n  \n  spaced', 'reNewLines should match multiple newlines and text breaks', 5);
-expectToReplace(reNewLines, '\n \n \t \n\n\n\n', 'BRK BRK \t BRKBRKBRKBRK', 'reNewLines should replace multiple newlines', 'BRK');
-expectNotToMatch(reNewLines, 'what   ', 'reNewLines should NOT match no newlines');
-expectToMatch(reNewLineIsh, '\n', 'reNewLineIsh should match single newline');
-expectToMatch(reNewLineIsh, '\\n', 'reNewLineIsh should match a single escaped newline');
-expectToMatch(reNewLineIsh, '\n\n', 'reNewLineIsh should match two newlines', 2);
-expectToMatch(reNewLineIsh, '\\n\n', 'reNewLineIsh should match two mixed newlines', 2);
-expectToMatch(reNewLineIsh, 'what\n\n   ', 'reNewLineIsh should match embedded newlines', 2);
-expectToMatch(reNewLineIsh, 'what\n\\n   ', 'reNewLineIsh should match embedded mixed newlines', 2);
-expectToMatch(reNewLineIsh, '\\n  \t \n', 'reNewLineIsh should match two mixed newlines and spaces between', 2);
-expectToMatch(reNewLineIsh, '\n\\n\n\\n\n', 'reNewLineIsh should match multiple mixed newlines', 5);
-expectToMatch(reNewLineIsh, 'this\\n  \ndouble\\n  \n  \\n  spaced', 'reNewLineIsh should match multiple mixed newlines and text breaks', 5);
-expectToReplace(reNewLineIsh, '\\n \n \t \\n\n\\n\n', 'BRK BRK \t BRKBRKBRKBRK', 'reNewLineIsh should replace multiple mixed newlines', 'BRK');
-expectNotToMatch(reNewLineIsh, 'what[LF]   ', 'reNewLineIsh should NOT match no newlines');
-expectToMatch(reExpectStraggler, '\n\n  expect(screen.queryByText(RE[   ', 'reExpectStraggler should match expect test leftovers');
-expectToMatch(reExpectStraggler, 'blah blah\n\n  expect(screen.queryByText(RE[   ', 'reExpectStraggler should match expect test leftovers multiline');
-expectNotToMatch(reExpectStraggler, '\n\n  expect(screen.getByText(RE[   ', 'reExpectStraggler should NOT match expect test leftovers');
-expectToReplace(reExpectStraggler, 'blah blah\n\n  expect(screen.queryByText(RE[   ', 'blah blah\n1:[$1] 2:[$2] 3:[$3]', 'reExpectStraggler should replace expect test leftovers multiline');
-expectToMatch(reEmbeddedRE, 'RE[/>([^<]*)$/g]ER', 'reEmbeddedRE should match a quoted regular expression');
-expectToMatch(reEmbeddedRE, 'RE[/RE\[(.+?)\]ER/g]ER', 'reEmbeddedRE should match a quoted regular expression of similar structure');
-expectToMatch(reEmbeddedRE, 'RE[/>([^<]*)$/g]ER    RE[/RE\\[(.+?)\\]ER/g]ER', 'reEmbeddedRE should match multiple quoted regular expression', 2);
-expectNotToMatch(reEmbeddedRE, 'RE[/>([^<]*)$/g]', 'reEmbeddedRE should NOT match an incomplete quoted regular expression');
-expectToReplace(reEmbeddedRE, 'RE[/>([^<]*)$/g]ER    RE[/RE\\[(.+?)\\]\\ER/g]ER', '1:[/>([^<]*)$/g] 2:[$2] 3:[$3]    1:[/RE\\[(.+?)\\]\\ER/g] 2:[$2] 3:[$3]', 'reEmbeddedRE should replace quoted regular expression');
-expectToMatch(reSpaceMarker, '[SPACE]', 'reSpaceMarker should match a space character marker');
-expectToMatch(reSpaceMarker, '[SPACE][SPACE][SPACE]', 'reSpaceMarker should match multiple space character markers');
-expectToMatch(reSpaceMarker, '[SPACE]\t[SPACE]\t[SPACE]', 'reSpaceMarker should match multiple space character markers', 3);
-expectNotToMatch(reSpaceMarker, '[space]', 'reSpaceMarker should NOT match a space character marker lower case');
-expectToMatch(reRemoveBlankExpects, '    expect(screen.queryByText(BLANKBLANK)).toBeInTheDocument();\n', 'reRemoveBlankExpects should match expect ... BLANKBLANK');
+if (exports.EX_REGEX) {
+    //==========================================================
+    // Regex tests to validate it's working...
+    expectToMatch(reRunOfSpaces, '  ', 'reRunOfSpaces should match two or more spaces');
+    expectToMatch(reRunOfSpaces, ' \x20', 'reRunOfSpaces should match two or more mixed spaces');
+    expectToMatch(reRunOfSpaces, '\x20\x20', 'reRunOfSpaces should match two or more \\x20 spaces');
+    expectToMatch(reRunOfSpaces, '\x20 \x20  \x20', 'reRunOfSpaces should match many more more mixed \\x20 spaces');
+    expectNotToMatch(reRunOfSpaces, ' ', 'reRunOfSpaces should NOT match a single space');
+    expectNotToMatch(reRunOfSpaces, '\x20', 'reRunOfSpaces should NOT match a single hex space');
+    expectToMatch(reVersionNickname, '<span>  version.nickname: blah blah </span>', 'reVersionNickname should match the nickname text');
+    expectNotToMatch(reVersionNickname, '<span>  version.Nickname: blah blah </span>', 'reVersionNickname should NOT match wrong case');
+    expectNotToMatch(reVersionNickname, '<span>  version not nickname blah blah </span>', 'breVersionNickname should NOT match non-nickname text');
+    expectToMatch(reAllowId, 'csl-dialog-desc12', 'reAllowId should match allowed id value', 2);
+    expectNotToMatch(reAllowId, 'csl-dialog-desc', 'reAllowId should NOT match other id values');
+    expectToMatch(reAttrsBoolean, 'xx  focusable="false"', 'reAttrsBoolean should match allowed boolean attr false value');
+    expectToMatch(reAttrsBoolean, '  FOCUSABLE="false"', 'reAttrsBoolean should match allowed boolean attr false value ignore case');
+    expectToMatch(reAttrsBoolean, '  focusable="true"', 'reAttrsBoolean should match allowed boolean attr true value');
+    expectNotToMatch(reAttrsBoolean, `  focusable='true'`, 'reAttrsBoolean should NOT match allowed boolean attr true value single quoted');
+    expectNotToMatch(reAttrsBoolean, `  focusable=true`, 'reAttrsBoolean should NOT match allowed boolean attr true value unquoted');
+    expectNotToMatch(reAttrsBoolean, '  focusable="nope"', 'reAttrsBoolean should NOT match allowed boolean attr non true/false value');
+    expectNotToMatch(reAttrsBoolean, '  focusable=""', 'reAttrsBoolean should NOT match allowed boolean attr empty value');
+    expectNotToMatch(reAttrsBoolean, 'unfocusable="true"', 'reAttrsBoolean should NOT match embedded allowed boolean attr');
+    expectNotToMatch(reAttrsBoolean, '  Width="true"', 'reAttrsBoolean should NOT match non-allowed boolean attr value');
+    expectToMatch(reAttrsBoolean, '  aria-hidden="false"', 'reAttrsBoolean should match allowed aria-hidden value');
+    expectToMatch(reAttrsBoolean, '  aria-modal="false"', 'reAttrsBoolean should match allowed aria-modal value');
+    expectToMatch(reAttrsBoolean, '  aria-invalid="false"', 'reAttrsBoolean should match allowed aria-invalid value');
+    expectToMatch(reAttrsBoolean, '  aria-checked="false"', 'reAttrsBoolean should match allowed aria-checked value');
+    expectToMatch(reAttrsBoolean, '  aria-expanded="false"', 'reAttrsBoolean should match allowed aria-expanded value');
+    expectNotToMatch(reAttrsBoolean, '  aria-other="false"', 'reAttrsBoolean should NON match non-allowed aria-other value');
+    expectNotToMatch(reAttrsBoolean, '  value="false"', 'reAttrsBoolean should NON match non-allowed value value');
+    expectNotToMatch(reAttrsBoolean, '  data-focus-guard="false"', 'reAttrsBoolean should NON match non-allowed data-focus-guard value');
+    expectToMatch(reAttrsToShow, 'id', 'reAttrsToShow should match allowed attr name id', 3);
+    expectToMatch(reAttrsToShow, 'Id', 'reAttrsToShow should match allowed attr name ignore case', 3);
+    expectNotToMatch(reAttrsToShow, 'pid', 'reAttrsToShow should NOT match embedded allowed attr name');
+    expectNotToMatch(reAttrsToShow, '  id  ', 'reAttrsToShow should NOT match spaces around allowed attr name');
+    expectToMatch(reAttrsToShow, 'name', 'reAttrsToShow should match allowed attr named name', 3);
+    expectToMatch(reAttrsToShow, 'type', 'reAttrsToShow should match allowed attr type', 3);
+    expectToMatch(reAttrsToShow, 'role', 'reAttrsToShow should match allowed attr role', 3);
+    expectToMatch(reAttrsToShow, 'target', 'reAttrsToShow should match allowed attr target', 3);
+    expectToMatch(reAttrsToShow, 'rel', 'reAttrsToShow should match allowed attr rel', 3);
+    expectToMatch(reAttrsToShow, 'disabled', 'reAttrsToShow should match allowed attr disabled', 3);
+    expectToMatch(reAttrsToShow, 'focusable', 'reAttrsToShow should match allowed attr focusable', 3);
+    expectToMatch(reAttrsToShow, 'hidden', 'reAttrsToShow should match allowed attr hidden', 3);
+    expectToMatch(reAttrsToShow, 'width', 'reAttrsToShow should match allowed attr width', 3);
+    expectToMatch(reAttrsToShow, 'height', 'reAttrsToShow should match allowed attr height', 3);
+    expectToMatch(reAttrsToShow, 'tabindex', 'reAttrsToShow should match allowed attr tabindex', 3);
+    expectToMatch(reAttrsToShow, 'for', 'reAttrsToShow should match allowed attr for', 3);
+    expectToMatch(reAttrsToShow, 'title', 'reAttrsToShow should match allowed attr title', 3);
+    expectToMatch(reAttrsToShow, 'placeholder', 'reAttrsToShow should match allowed attr placeholder', 3);
+    expectToMatch(reAttrsToShow, 'alt', 'reAttrsToShow should match allowed attr alt', 3);
+    expectToMatch(reAttrsToShow, 'href', 'reAttrsToShow should match allowed attr href', 3);
+    expectToMatch(reAttrsToShow, 'aria-any-thin-at-all', 'reAttrsToShow should match allowed attr aria-any-thin-at-all', 3);
+    expectToMatch(reAttrsToShow, 'data-what-ever', 'reAttrsToShow should match allowed attr data-what-ever', 3);
+    expectNotToMatch(reAttrsToShow, 'class', 'reAttrsToShow should NOT match allowed attr class');
+    expectNotToMatch(reAttrsToShow, 'className', 'reAttrsToShow should NOT match allowed attr className');
+    expectNotToMatch(reAttrsToShow, 'style', 'reAttrsToShow should NOT match allowed attr style');
+    expectToMatch(reRawHtml, '    <p stuff="ha">   ', 'reRawHtml should match HTML whitespaced');
+    expectToMatch(reRawHtml, '    <p stuff="ha">what</p><a>link</a>   ', 'reRawHtml should match multiple HTML whitespaced');
+    expectNotToMatch(reRawHtml, '    p stuff = ha   ', 'reRawHtml should NOT match non-HTML');
+    expectNotToMatch(reRawHtml, '    p stuff = ha   <p stuff="ha">', 'reRawHtml should NOT match non-HTML then HTML');
+    expectToMatch(reDocTextEmpty, '<p stuff="ha">', 'reDocTextEmpty should match element open');
+    expectToMatch(reDocTextEmpty, '</p>', 'reDocTextEmpty should match element close');
+    expectToMatch(reDocTextEmpty, '<p stuff="ha">HEY</P>', 'reDocTextEmpty should match multiple elements', 2);
+    expectNotToMatch(reDocTextEmpty, 'HEY', 'reDocTextEmpty should NOT match non-element text');
+    expectToMatch(reElemWithId, 'some<p x="2" id="34">text</p>', 'reElemWithId should match HTML element with an id');
+    expectToMatch(reElemWithId, 'some<p x="2" iD="34">text</p><a id="55">', 'reElemWithId should match two HTML elements with id', 2);
+    expectNotToMatch(reElemWithId, 'some<p x="2" sid="34">text</p>', 'reElemWithId should NOT match HTML element with no id');
+    expectNotToMatch(reElemWithId, `some<p x="2" id='34'>text</p>`, 'reElemWithId should NOT match HTML element with a single quoted id');
+    expectToMatch(reElemWithId, `some<p x="2" id="">text</p>`, 'reElemWithId should match HTML element with an empty id');
+    expectNotToMatch(reElemWithId, 'some<p x="2" id=34>text</p>', 'reElemWithId should NOT match HTML element with an unquoted id');
+    expectToMatch(reBoolean, 'false', 'reBoolean should match false');
+    expectToMatch(reBoolean, 'FALSE', 'reBoolean should match FALSE');
+    expectToMatch(reBoolean, 'falsefalse', 'reBoolean should match false twice', 2);
+    expectToMatch(reBoolean, 'unfalseifiable', 'reBoolean should match embedded false');
+    expectToMatch(reBoolean, 'true', 'reBoolean should match true');
+    expectToMatch(reBoolean, 'untruethful', 'reBoolean should match embedded true');
+    expectToMatch(reMissingMoney, `${exports.LS};`, 'reMissingMoney should match missing pounds');
+    expectToMatch(reMissingMoney, 'price $not', 'reMissingMoney should match missing dollars');
+    expectToMatch(reMissingMoney, 'price $not$not', 'reMissingMoney should match missing dollars twice', 2);
+    expectNotToMatch(reMissingMoney, 'price $', 'reMissingMoney should NOT match dollars sign alone');
+    expectNotToMatch(reMissingMoney, 'price $ ', 'reMissingMoney should NOT match dollars space');
+    expectNotToMatch(reMissingMoney, 'price $42.32', 'reMissingMoney should NOT match dollar amount');
+    expectToMatch(reStringified, 'this is undefined text', 'reStringified should match literal undefined');
+    expectToMatch(reStringified, 'this is undefinedundefined text', 'reStringified should match literal undefined twice', 2);
+    expectToMatch(reStringified, 'this is UNDEFINED text', 'reStringified should match literal UNDEFINED');
+    expectToMatch(reStringified, 'this isundefinedtext', 'reStringified should match embedded isundefinedtext');
+    expectToMatch(reStringified, 'this is null text', 'reStringified should match literal null');
+    expectToMatch(reStringified, 'this isnulltext', 'reStringified should match embedded null');
+    expectToMatch(reStringified, 'this is NaN text', 'reStringified should match literal NaN');
+    expectNotToMatch(reStringified, 'this is BaNaNa text', 'reStringified should NOT match BANANA');
+    expectToMatch(reStringified, 'this is Infinity text', 'reStringified should match literal Infinity');
+    expectToMatch(reStringified, 'this isInfinitytext', 'reStringified should match embedded Infinity');
+    expectToMatch(reStringified, 'this is [object Object] text', 'reStringified should match stringified object');
+    expectToMatch(reStringified, 'this is[object Object]text', 'reStringified should match embedded stringified object');
+    expectToMatch(reStringified, 'this is function text', 'reStringified should match stringified function');
+    expectToMatch(reStringified, 'this isfunction text', 'reStringified should match embedded stringified function');
+    expectToMatch(reIndexUp, '[10]', 'reIndexUp should match indexing', 4);
+    expectToMatch(reIndexUp, '  [0]   ', 'reIndexUp should match indexing with spacing', 4);
+    expectToMatch(reIndexUp, '  [-12]   ', 'reIndexUp should match negative index', 4);
+    expectToMatch(reIndexUp, '   ', 'reIndexUp should match empty', 4);
+    expectToMatch(reIndexUp, '^^^', 'reIndexUp should match up the tree', 4);
+    expectToMatch(reIndexUp, ' ^^^  ', 'reIndexUp should match up the tree with spacing', 4);
+    expectToMatch(reIndexUp, '@LIST', 'reIndexUp should match list marker', 4);
+    expectToMatch(reIndexUp, '[5]^^@LIST', 'reIndexUp should match all syntax', 4);
+    expectToMatch(reIndexUp, '  [5] ^^ @LIST ', 'reIndexUp should match all syntax with spacing', 4);
+    const expectMatches = ["   [5] @LIST ", "5", "", "@LIST"];
+    expectMatches.index = 3;
+    expectMatches.input = ' ^^   [5] @LIST ';
+    expectToMatch(reIndexUp, ' ^^   [5] @LIST ', 'reIndexUp should parially match all syntax in wrong order', expectMatches.length, expectMatches);
+    expectToMatch(reExtraSpacesClosureElem, 'blah />', 'reExtraSpacesClosureElem should match single space on closure of element');
+    expectToMatch(reExtraSpacesClosureElem, 'blah   />', 'reExtraSpacesClosureElem should match excess space on closure of element');
+    expectNotToMatch(reExtraSpacesClosureElem, 'blah/>', 'reExtraSpacesClosureElem should NOT match no spaces on closure of element');
+    expectNotToMatch(reExtraSpacesClosureElem, 'blah >', 'reExtraSpacesClosureElem should NOT match single space on end of element');
+    expectToMatch(reOuterSpaces, '', 'reOuterSpaces should match empty string');
+    expectToMatch(reOuterSpaces, '    ', 'reOuterSpaces should match spaces only');
+    expectToMatch(reOuterSpaces, '    blah blah   ', 'reOuterSpaces should match spaces around text');
+    expectToMatch(reOuterSpaces, 'blah blah', 'reOuterSpaces should match text without spacing');
+    expectToReplace(reOuterSpaces, '    blah blah   \n  blah   blah\n   blah blah\n\n', '@\n@\n@@', 'reOuterSpaces should replace spaces around text with multiple lines', '@');
+    expectToReplace(reOuterSpaces, '    blah blah   ', '1:[    ] 2:[blah blah] 3:[   ]', 'reOuterSpaces should match and replace groups');
+    expectToSplit(/,/, ',a,e,i,o,u', [
+        '',
+        'a',
+        'e',
+        'i',
+        'o',
+        'u'
+    ], 'should split correctly');
+    expectToMatch(reSplitAfterElement, '<p>', 'reSplitAfterElement should match element at end of string');
+    expectToMatch(reSplitAfterElement, '<p>more stuff', 'reSplitAfterElement should match element and stuff at end of string');
+    expectNotToMatch(reSplitAfterElement, '<p>more stuff<', 'reSplitAfterElement should NOT match element with < at end of string');
+    expectNotToMatch(reSplitAfterElement, '<p>more stuff<p', 'reSplitAfterElement should NOT match element with < before end of string');
+    expectToMatch(reSplitAfterElement, '<p>more stuff<p>', 'reSplitAfterElement should match element with <p> at end of string');
+    expectNotToMatch(reSplitAfterElement, '', 'reSplitAfterElement should NOT match empty string');
+    expectToReplace(reSplitAfterElement, '<p>more stuff', '<p1:[more stuff] 2:[$2] 3:[$3]', 'reSplitAfterElement should replace groups');
+    expectToReplace(reSplitAfterElement, '<p>more stuff<p>', '<p>more stuff<p1:[] 2:[$2] 3:[$3]', 'reSplitAfterElement should replace groups');
+    expectToMatch(reSplitBeforeElement, '<p>', 'reSplitBeforeElement should match element at start of string');
+    expectToMatch(reSplitBeforeElement, 'bunch of text<p>', 'reSplitBeforeElement should match stuff before element at start of string');
+    expectToMatch(reSplitBeforeElement, '<p>bunch of text</p>', 'reSplitBeforeElement should match stuff before element at start of string');
+    expectToMatch(reSplitBeforeElement, 'more<p>bunch of text</p>', 'reSplitBeforeElement should match double stuff before element at start of string');
+    expectNotToMatch(reSplitBeforeElement, '', 'reSplitBeforeElement should NOT match empty string');
+    expectToReplace(reSplitBeforeElement, 'bunch of text</p>', '1:[bunch of text] 2:[$2] 3:[$3]/p>', 'reSplitBeforeElement should replace groups');
+    expectToReplace(reSplitBeforeElement, 'more<p>bunch of text</p>', '1:[more] 2:[$2] 3:[$3]p>bunch of text</p>', 'reSplitBeforeElement should replace groups');
+    expectToMatch(reSplitBetweenElement, '<p>what</p><a>the</a>', 'reSplitBetweenElement should match element boundaries', 3);
+    expectToReplace(reSplitBetweenElement, '<p>what</p><a>the</a>', '<p1:[what] 2:[$2] 3:[$3]/p1:[] 2:[$2] 3:[$3]a1:[the] 2:[$2] 3:[$3]/a>', 'reSplitBetweenElement should replace groups');
+    expectNotToMatch(reSplitBetweenElement, '<p what=the/>', 'reSplitBetweenElement should NOT match single element');
+    expectToMatch(reIndentElemAttr, 'width="42"', 'reIndentElemAttr should match an attribute');
+    expectToMatch(reIndentElemAttr, 'aria-WIDTH="42"', 'reIndentElemAttr should match a hyphenated attribute');
+    expectToMatch(reIndentElemAttr, '       width=""    ', 'reIndentElemAttr should match an empty attribute with leading space');
+    expectToMatch(reIndentElemAttr, 'width="42"  height="12"', 'reIndentElemAttr should match multiple attributes', 2);
+    expectToReplace(reIndentElemAttr, 'width="42"  height="12"', '1:[] 2:[width="42"] 3:[$3]1:[] 2:[height="12"] 3:[$3]', 'reIndentElemAttr should replace multiple attributes');
+    expectNotToMatch(reIndentElemAttr, `width='42'`, 'reIndentElemAttr should NOT match a single quoted attribute');
+    expectNotToMatch(reIndentElemAttr, `width=42`, 'reIndentElemAttr should NOT match an unquoted attribute');
+    expectToMatch(reStyleAttr, 'style="blah: blah;"', 'reStyleAttr should match style attribute value');
+    expectToMatch(reStyleAttr, '   style="blah: blah;"   ', 'reStyleAttr should match style attribute value with spacing');
+    expectToMatch(reStyleAttr, '<p   style="blah: blah;"  > <a style="what: what;">', 'reStyleAttr should match multiple style attribute values with spacing', 2);
+    expectNotToMatch(reStyleAttr, 'style=""', 'reStyleAttr should NOT match empty style attribute value');
+    expectNotToMatch(reStyleAttr, "style='blah: blah;'", 'reStyleAttr should NOT match single quoted style attribute value');
+    expectNotToMatch(reStyleAttr, "mystyle='blah: blah;'", 'reStyleAttr should NOT match single quoted embedded style attribute value');
+    expectToMatch(reEndingSemi, ';', 'reEndingSemi should match semicolon only');
+    expectToMatch(reEndingSemi, 'blah;', 'reEndingSemi should match semicolon at end of string');
+    expectNotToMatch(reEndingSemi, ':', 'reEndingSemi should NOT match colon only');
+    expectNotToMatch(reEndingSemi, '  ;  ', 'reEndingSemi should NOT match semicolon with spaces');
+    expectNotToMatch(reEndingSemi, 'blah; end', 'reEndingSemi should NOT match semicolon at middle of string');
+    expectNotToMatch(reEndingSemi, ';blah', 'reEndingSemi should match semicolon at start of string');
+    expectToMatch(reSemiSpaces, ';', 'reSemiSpaces should match semicolon only');
+    expectToMatch(reSemiSpaces, 'blah;', 'reSemiSpaces should match semicolon at end of string');
+    expectToMatch(reSemiSpaces, '  ;  ', 'reSemiSpaces should match semicolon with spaces');
+    expectToMatch(reSemiSpaces, 'blah; end', 'reSemiSpaces should match semicolon at middle of string');
+    expectToMatch(reSemiSpaces, ';blah', 'reSemiSpaces should NOT match semicolon at start of string');
+    expectNotToMatch(reSemiSpaces, ':', 'reSemiSpaces should NOT match colon only');
+    expectToMatch(reLineBeforeElement, '<p>', 'reLineBeforeElement should match start of string before element');
+    expectToMatch(reLineBeforeElement, '\n<p>', 'reLineBeforeElement should match newline before element');
+    expectToMatch(reLineBeforeElement, 'blah blah\n<p>', 'reLineBeforeElement should match extra stuff then newline before element');
+    expectNotToMatch(reLineBeforeElement, '  <p>', 'reLineBeforeElement should NOT match space before element');
+    expectNotToMatch(reLineBeforeElement, 'blah blah<p>', 'reLineBeforeElement should NOT match extra stuff before element');
+    expectToMatch(reLineBeforeText, 'blah</p>', 'reLineBeforeText should match end of line');
+    expectToMatch(reLineBeforeText, 'blah</p>\n', 'reLineBeforeText should match new line');
+    expectToMatch(reLineBeforeText, '<h1>head</h1>   <b>bold</b>\n\n<p>blah</p>\n<i>italic</i>', 'reLineBeforeText should match multiple', 3);
+    expectNotToMatch(reLineBeforeText, 'blah</p>  \n', 'reLineBeforeText should NOT match spaces');
+    expectToMatch(reAttribute, 'width="42"', 'reAttribute should match an attribute');
+    expectToMatch(reAttribute, 'aria-WIDTH="42"', 'reAttribute should match a hyphenated attribute');
+    expectToMatch(reAttribute, '       width=""    ', 'reAttribute should match an empty attribute with leading space');
+    expectToMatch(reAttribute, 'width="42"  height="12"', 'reAttribute should match multiple attributes', 2);
+    expectToReplace(reAttribute, 'width="42"  height="12"', '1:[width] 2:["42"] 3:[$3]1:[height] 2:["12"] 3:[$3]', 'reAttribute should replace multiple attributes');
+    expectNotToMatch(reAttribute, `width='42'`, 'reAttribute should NOT match a single quoted attribute');
+    expectNotToMatch(reAttribute, `width=42`, 'reAttribute should NOT match an unquoted attribute');
+    expectToMatch(reExtraSpacesElem, 'blah >', 'reExtraSpacesElem should match single space on end of element');
+    expectToMatch(reExtraSpacesElem, 'blah   >', 'reExtraSpacesElem should match excess space on end of element');
+    expectNotToMatch(reExtraSpacesElem, 'blah>', 'reExtraSpacesElem should NOT match no spaces on end of element');
+    expectNotToMatch(reExtraSpacesElem, 'blah />', 'reExtraSpacesElem should NOT match single space on closure of element');
+    expectToMatch(rePlainElem, '<span>', 'rePlainElem should match opening element');
+    expectToMatch(rePlainElem, '</spAN>', 'rePlainElem should match closing element');
+    expectToMatch(rePlainElem, 'text<span> embedded', 'rePlainElem should match embedded opening element');
+    expectToMatch(rePlainElem, '<span>text</span> <em>embedded</em>', 'rePlainElem should match multiple elements', 4);
+    expectNotToMatch(rePlainElem, '<span >', 'rePlainElem should NOT match opening element with internal spaces');
+    expectNotToMatch(rePlainElem, '<span id=32>', 'rePlainElem should NOT match opening element with attributes');
+    expectToMatch(reBlankLines, '\n\n', 'reBlankLines should match two newlines');
+    expectToMatch(reBlankLines, 'what\n\n   ', 'reBlankLines should match embedded newlines');
+    expectToMatch(reBlankLines, '\n  \t \n', 'reBlankLines should match two newlines and spaces between');
+    expectToMatch(reBlankLines, '\n\n\n\n\n', 'reBlankLines should match multiple newlines');
+    expectNotToMatch(reBlankLines, '\n', 'reBlankLines should NOT match single newline');
+    expectToMatch(reBlankLines, 'this\n  \ndouble\n  \n  \n  spaced', 'reBlankLines should match multiple newlines and text breaks', 2);
+    expectToReplace(reBlankLines, '\n \n \t \n\n\n\n', 'BRK', 'reBlankLines should replace multiple newlines', 'BRK');
+    expectToMatch(reAttrIdentity, 'xx  id="false"', 'reAttrIdentity should match id attribute');
+    expectToMatch(reAttrIdentity, 'name="Fred"', 'reAttrIdentity should match name attribute');
+    expectToMatch(reAttrIdentity, 'role="Fred"', 'reAttrIdentity should match role attribute');
+    expectToMatch(reAttrIdentity, 'data-anything="Fred"', 'reAttrIdentity should match data-* attribute');
+    expectToMatch(reAttrIdentity, 'aria-label="Fred"', 'reAttrIdentity should match aria-label attribute');
+    expectToMatch(reAttrIdentity, 'aria-labelledby="Fred"', 'reAttrIdentity should match aria-label* attribute');
+    expectToMatch(reAttrIdentity, 'aria-desc="Fred"', 'reAttrIdentity should match aria-desc attribute');
+    expectToMatch(reAttrIdentity, 'aria-description="Fred"', 'reAttrIdentity should match aria-desc attribute');
+    expectToMatch(reAttrIdentity, 'aria-desctibedby="Fred"', 'reAttrIdentity should match aria-desc* attribute');
+    expectToMatch(reAttrIdentity, 'aria-role="Fred"', 'reAttrIdentity should match aria-role attribute');
+    expectToMatch(reAttrIdentity, 'aria-roledescription="Fred"', 'reAttrIdentity should match aria-role* attribute');
+    expectNotToMatch(reAttrIdentity, 'ploughname="Fred"', 'reAttrIdentity should NOT match embedded name attribute');
+    expectToMatch(reAttrIdentity, 'name="Fred" id="1234" role="checkbox"', 'reAttrIdentity should match multiple attributes', 3);
+    expectToMatch(reAttrIdentity, 'width="42" name="Fred" id="1234" yes="23" role="checkbox"', 'reAttrIdentity should match multiple identity attributes only', 3);
+    expectNotToMatch(reAttrIdentity, 'width="Fred"', 'reAttrIdentity should NOT match non-identity attribute');
+    expectNotToMatch(reAttrIdentity, 'namE="fred"', 'reAttrIdentity should NOT match upper case');
+    expectNotToMatch(reAttrIdentity, 'name=""', 'reAttrIdentity should NOT match empty name attribute');
+    expectNotToMatch(reAttrIdentity, 'aria-anything="Fred"', 'reAttrIdentity should NOT match aria-* attribute');
+    expectToMatch(reElemNoAttr, '<span>', 'reElemNoAttr should match opening element');
+    expectToMatch(reElemNoAttr, '</spAN>', 'reElemNoAttr should match closing element');
+    expectToMatch(reElemNoAttr, 'text<span> embedded', 'reElemNoAttr should match embedded opening element');
+    expectToMatch(reElemNoAttr, '<span>text</span> <em>embedded</em>', 'reElemNoAttr should match multiple elements', 4);
+    expectToMatch(reElemNoAttr, '<span   >', 'reElemNoAttr should match opening element with internal spaces');
+    expectNotToMatch(reElemNoAttr, '<span id="32">', 'reElemNoAttr should NOT match opening element with attributes');
+    expectToMatch(reMultiSpaced, '\n\n', 'reMultiSpaced should match two newlines');
+    expectToMatch(reMultiSpaced, 'what\n\n   ', 'reMultiSpaced should match embedded newlines');
+    expectToMatch(reMultiSpaced, '\n  \t \n', 'reMultiSpaced should match two newlines and spaces between');
+    expectToMatch(reMultiSpaced, '\n\n\n\n\n', 'reMultiSpaced should match multiple newlines');
+    expectNotToMatch(reMultiSpaced, '\n', 'reMultiSpaced should NOT match single newline');
+    expectToMatch(reMultiSpaced, 'this\n  \ndouble\n  \n  \n  spaced', 'reMultiSpaced should match multiple newlines and text breaks', 2);
+    expectToReplace(reMultiSpaced, '\n \n \t \n\n\n\n', 'BRK', 'reMultiSpaced should replace multiple newlines', 'BRK');
+    expectToMatch(reNicePreamble, '\n========== S\n', 'reNicePreamble should match minimally at new line');
+    expectToMatch(reNicePreamble, '\n\n\n========== blah blah\n', 'reNicePreamble should match at new line');
+    expectToMatch(reNicePreamble, 'blah blah\n\n========== blah blah\n', 'reNicePreamble should match within text');
+    expectToMatch(reNicePreamble, '\n============== S\n', 'reNicePreamble should match more equal signs');
+    expectNotToMatch(reNicePreamble, '========== \n', 'reNicePreamble should NOT match if no newline');
+    expectNotToMatch(reNicePreamble, '\n========= S\n', 'reNicePreamble should NOT match too few equal signs');
+    expectToMatch(reNicePreamble, '\n============== HTML\nblah blah blah\n========== HEY\n', 'reNicePreamble should greedy match multiple banners');
+    expectToMatch(reInitialLineSpaces, '  \t  what', 'reInitialLineSpaces should match with initial line spaces');
+    expectToMatch(reInitialLineSpaces, '\n  \t  what', 'reInitialLineSpaces should match with newline and line spaces');
+    expectToMatch(reInitialLineSpaces, 'what', 'reInitialLineSpaces should match with no initial line spaces');
+    expectToMatch(reNewLines, '\n', 'reNewLines should match single newline');
+    expectToMatch(reNewLines, '\n\n', 'reNewLines should match two newlines', 2);
+    expectToMatch(reNewLines, 'what\n\n   ', 'reNewLines should match embedded newlines', 2);
+    expectToMatch(reNewLines, '\n  \t \n', 'reNewLines should match two newlines and spaces between', 2);
+    expectToMatch(reNewLines, '\n\n\n\n\n', 'reNewLines should match multiple newlines', 5);
+    expectToMatch(reNewLines, 'this\n  \ndouble\n  \n  \n  spaced', 'reNewLines should match multiple newlines and text breaks', 5);
+    expectToReplace(reNewLines, '\n \n \t \n\n\n\n', 'BRK BRK \t BRKBRKBRKBRK', 'reNewLines should replace multiple newlines', 'BRK');
+    expectNotToMatch(reNewLines, 'what   ', 'reNewLines should NOT match no newlines');
+    expectToMatch(reNewLineIsh, '\n', 'reNewLineIsh should match single newline');
+    expectToMatch(reNewLineIsh, '\\n', 'reNewLineIsh should match a single escaped newline');
+    expectToMatch(reNewLineIsh, '\n\n', 'reNewLineIsh should match two newlines', 2);
+    expectToMatch(reNewLineIsh, '\\n\n', 'reNewLineIsh should match two mixed newlines', 2);
+    expectToMatch(reNewLineIsh, 'what\n\n   ', 'reNewLineIsh should match embedded newlines', 2);
+    expectToMatch(reNewLineIsh, 'what\n\\n   ', 'reNewLineIsh should match embedded mixed newlines', 2);
+    expectToMatch(reNewLineIsh, '\\n  \t \n', 'reNewLineIsh should match two mixed newlines and spaces between', 2);
+    expectToMatch(reNewLineIsh, '\n\\n\n\\n\n', 'reNewLineIsh should match multiple mixed newlines', 5);
+    expectToMatch(reNewLineIsh, 'this\\n  \ndouble\\n  \n  \\n  spaced', 'reNewLineIsh should match multiple mixed newlines and text breaks', 5);
+    expectToReplace(reNewLineIsh, '\\n \n \t \\n\n\\n\n', 'BRK BRK \t BRKBRKBRKBRK', 'reNewLineIsh should replace multiple mixed newlines', 'BRK');
+    expectNotToMatch(reNewLineIsh, 'what[LF]   ', 'reNewLineIsh should NOT match no newlines');
+    expectToMatch(reExpectStraggler, '\n\n  expect(screen.queryByText(RE[   ', 'reExpectStraggler should match expect test leftovers');
+    expectToMatch(reExpectStraggler, 'blah blah\n\n  expect(screen.queryByText(RE[   ', 'reExpectStraggler should match expect test leftovers multiline');
+    expectNotToMatch(reExpectStraggler, '\n\n  expect(screen.getByText(RE[   ', 'reExpectStraggler should NOT match expect test leftovers');
+    expectToReplace(reExpectStraggler, 'blah blah\n\n  expect(screen.queryByText(RE[   ', 'blah blah\n1:[$1] 2:[$2] 3:[$3]', 'reExpectStraggler should replace expect test leftovers multiline');
+    expectToMatch(reEmbeddedRE, 'RE[/>([^<]*)$/g]ER', 'reEmbeddedRE should match a quoted regular expression');
+    expectToMatch(reEmbeddedRE, 'RE[/RE\[(.+?)\]ER/g]ER', 'reEmbeddedRE should match a quoted regular expression of similar structure');
+    expectToMatch(reEmbeddedRE, 'RE[/>([^<]*)$/g]ER    RE[/RE\\[(.+?)\\]ER/g]ER', 'reEmbeddedRE should match multiple quoted regular expression', 2);
+    expectNotToMatch(reEmbeddedRE, 'RE[/>([^<]*)$/g]', 'reEmbeddedRE should NOT match an incomplete quoted regular expression');
+    expectToReplace(reEmbeddedRE, 'RE[/>([^<]*)$/g]ER    RE[/RE\\[(.+?)\\]\\ER/g]ER', '1:[/>([^<]*)$/g] 2:[$2] 3:[$3]    1:[/RE\\[(.+?)\\]\\ER/g] 2:[$2] 3:[$3]', 'reEmbeddedRE should replace quoted regular expression');
+    expectToMatch(reSpaceMarker, '[SPACE]', 'reSpaceMarker should match a space character marker');
+    expectToMatch(reSpaceMarker, '[SPACE][SPACE][SPACE]', 'reSpaceMarker should match multiple space character markers');
+    expectToMatch(reSpaceMarker, '[SPACE]\t[SPACE]\t[SPACE]', 'reSpaceMarker should match multiple space character markers', 3);
+    expectNotToMatch(reSpaceMarker, '[space]', 'reSpaceMarker should NOT match a space character marker lower case');
+    expectToMatch(reRemoveBlankExpects, '    expect(screen.queryByText(BLANKBLANK)).toBeInTheDocument();\n', 'reRemoveBlankExpects should match expect ... BLANKBLANK');
+} // EX_REGEX
 //==========================================================
 // tests to validate it's working...
 const emptyObject = {};
@@ -2502,7 +2511,7 @@ expectToBe(strJ(anArray), `[\n\x20\x201,\n\x20\x20"2",\n\x20\x20"RegExp : /a/
 expectToBe(strJ(jsonAll), strJ(expectJson), 'strJ(jsonAll) should show all stringified values supported');
 // MUSTDO Map, Set...
 // HEREIAM unit tests needed for
-// const reRunOfSpaces = /  +/g;
+// const reRunOfSpaces = /[ \x20][ \x20]+/g;
 // const reEveryChar = /./g;
 // const reNewLines = /\n/gm;
 const LONG = "alpha beta gamma delta epsilon 0123456789 ";
@@ -3270,7 +3279,7 @@ if (exports.EX_UTF_OK) {
     expectToBe(show(typeErrorSpaces, 'js'), `TypeError:\x20typeerr \\tand\\nspaces   \u1999`, 'show(typeErrorSpaces, js) should omit stack trace');
 }
 expectToBe(show(anObject, 'raw'), anObject, 'show(anObject, raw) should return the object as is');
-expectToBe(show(anObject, 'spc'), `{[LF][SPx2]"a":\x202[LF]}`, 'show(anObject, spc) should be marked with spaces');
+expectToBe(show(anObject, 'spc'), `{[LF][SPx2]"a":\x202[LF]}`, '00show(anObject, spc) should be marked with spaces');
 expectToBe(show(anObject, 'js'), `{\\n\x20\x20"a":\x202\\n}`, 'show(anObject, js) should be stringified with \\n markers');
 expectToBe(show(anArray, 'raw'), anArray, 'show(anArray, raw) should return the object as is');
 expectToBe(show(anArray, 'spc'), `[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${exports.NA0}:${exports.NA0}/a/g"[LF]]`, 'show(anArray, spc) should be marked with spaces');
@@ -3345,8 +3354,6 @@ if (showAllPropSources) {
 else {
     expectToBe(getElementInfo(elDump), `<TAGNAME#ID[type="TEXT"][role="ROLE"][aria-role="AROLE"][disabled="DISABLED"][height="HEIGHT"][tabIndex="TABINDEX"][aria-label="ARLABEL"][selected="SELECTED"][aria-invalid="ARINVALID"][placeholder="PLACEHOLDER"].CLASSNAME. Object />`, 'getElementInfo(Element2) should respond with Element values only');
 }
-//console.warn(`XXXXXX`, strJ(anObject));
-// zzzz testSummary(); throw new Error('STOP TESTING!!!');
 // MUSTDO enable for browser/DOM environment...
 //console.warn(`getElementInfo`, getElementInfo(inEl))
 //expectToBe(getElementInfo(inEl), `<INPUT />`, 'getElementInfo(HTMLInputElement) should respond with HTMLInputElement values');
@@ -3395,43 +3402,48 @@ let targetDump = `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROL
 if (!showAllPropSources) {
     targetDump = targetDump.replace(/\/\//g, '');
 }
-const currentDump = `${exports.A0}<input\x20Object${exports.A0}/>`;
-const relatedDump = `${exports.A0}<div\x20Object${exports.A0}/>`;
+const currentDump = `${exports.NA0}<input\x20Object${exports.NA0}/>`;
+const relatedDump = `${exports.NA0}<div\x20Object${exports.NA0}/>`;
 expectToBe(showEvent(myEvent, 'PREFIX:'), `PREFIX:EVENT\x20Object CLICK/@1719410356201\x20ONCLICK ONCLICKCAPTURE eventPhase(3)\x20isTrusted\x20bubbles\x20cancellable\x20defaultPrevented\x20isPersistent\x20isDefaultPrevented\x20isPropagationStopped\x20\n` +
     `details(DETAILS)\x20metaKey\x20shiftKey\x20` +
     `\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
     `\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
-    `[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${exports.A0}/>\n` +
+    `[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${exports.NA0}/>\n` +
     `currentTarget:${currentDump}\n` +
     `relatedTarget:${relatedDump}\n` +
-    `view:${exports.A0}Object${exports.A0}${exports.A0}{\n` +
+    `view:${exports.NA0}Object${exports.NA0}${exports.NA0}{\n` +
     `\x20\x20\"what\":\x20\"VIEW\"\n` +
     `}`, `showEvent(event) should show event details`);
 const spacesHyphens = '  \f\n\r\t\v | \x20 \x09 \x0a \x0b \x0c \x0d \x0d\x0a \xa0 \xad | \u0020 \u0009 ' +
     '\u000a \u000b \u000c \u000d \u000d\u000a \u00a0 \u00ad \u202F \uFEFF \u2000 ' +
     '\u2001 \u2002 \u2003 \u2004 \u2005 \u2006 \u2007 \u2008 \u2009 \u200A \u200B ' +
     '\u205F \u3000 \u303F \u2010 \u2011 \u2027 \uFE63 \uFF0D';
-EX_AS_JS = true;
 expectToBe(indicateSpaces(), ``, 'indicateSpaces(undefined) should default to empty');
-expectToBe(indicateSpaces(spacesHyphens), `${exports.NB2}[FF]\n[LF]\n[CR]\n[TAB][VT]\n${exports.A0}|${exports.NB3S}[TAB]${exports.NB}[LF]\n${exports.NB}[VT]\n${exports.NB}[FF]\n${exports.NB}[CR]\n${exports.NB}[CR]\n[LF]\n` +
-    `\x20[NBSP]\x20[SOFT.HYPHEN]${exports.A0}|${exports.NB3S}[TAB]${exports.A0}[LF]\n${exports.A0}[VT]\n${exports.A0}[FF]\n${exports.A0}[CR]\n${exports.A0}[CR]\n[LF]\n` +
-    `${exports.A0}[NBSP]${exports.A0}[SOFT.HYPHEN]${exports.A0}[NARROW.NBSP]${exports.A0}[ZERO.NBSP]${exports.A0}[EN.QUAD]${exports.A0}[EM.QUAD]${exports.A0}[EN.SPACE]` +
-    `${exports.A0}[EM.SPACE]${exports.A0}[THREE.PER.EM.SPACE]${exports.A0}[FOUR.PER.EM.SPACE]${exports.A0}[SIX.PER.EM.SPACE]${exports.A0}[FIGURE.SPACE]` +
-    `${exports.A0}[PUNCT.SPACE]${exports.A0}[THIN.SPACE]${exports.A0}[HAIR.SPACE]${exports.A0}[ZERO.SPACE]${exports.A0}[MED.MATH.SPACE]${exports.A0}[IDEOGRAPHIC.SPACE]` +
-    `${exports.A0}[IDEOGRAPHIC.HALF.FILL.SPACE]${exports.A0}[HYPHEN]${exports.A0}[NB.HYPHEN]${exports.A0}[HYPHEN.POINT]${exports.A0}[SMALL.HYPHEN]` +
-    `${exports.A0}[FULL.WIDTH.HYPHEN]`, 'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]');
+expectToBe(indicateSpaces(' '), ` `, 'indicateSpaces() should not replace a single space');
+expectToBe(indicateSpaces('\x20'), ` `, 'indicateSpaces() should not replace a single hex space');
+expectToBe(indicateSpaces('  '), `[SPx2]`, 'indicateSpaces() should replace two or more spaces');
+expectToBe(indicateSpaces(' \x20'), `[SPx2]`, 'indicateSpaces() should replace two or more mixed spaces');
+expectToBe(indicateSpaces('\x20\x20'), `[SPx2]`, 'indicateSpaces() should replace two or more \\x20 spaces');
+expectToBe(indicateSpaces('\x20 \x20  \x20'), `[SPx6]`, 'indicateSpaces() should replace many more more mixed \\x20 spaces');
+EX_AS_JS = true;
+expectToBe(indicateSpaces(spacesHyphens), `${exports.NNB2}[FF]\n[LF]\n[CR]\n[TAB][VT]\n${exports.NA0}|${exports.NNB3S}[TAB]${exports.NNB}[LF]\n${exports.NNB}[VT]\n${exports.NNB}[FF]\n${exports.NNB}[CR]\n${exports.NNB}[CR]\n[LF]\n` +
+    `\x20[NBSP]\x20[SOFT.HYPHEN]${exports.NA0}|${exports.NNB3S}[TAB]${exports.NA0}[LF]\n${exports.NA0}[VT]\n${exports.NA0}[FF]\n${exports.NA0}[CR]\n${exports.NA0}[CR]\n[LF]\n` +
+    `${exports.NA0}[NBSP]${exports.NA0}[SOFT.HYPHEN]${exports.NA0}[NARROW.NBSP]${exports.NA0}[ZERO.NBSP]${exports.NA0}[EN.QUAD]${exports.NA0}[EM.QUAD]${exports.NA0}[EN.SPACE]` +
+    `${exports.NA0}[EM.SPACE]${exports.NA0}[THREE.PER.EM.SPACE]${exports.NA0}[FOUR.PER.EM.SPACE]${exports.NA0}[SIX.PER.EM.SPACE]${exports.NA0}[FIGURE.SPACE]` +
+    `${exports.NA0}[PUNCT.SPACE]${exports.NA0}[THIN.SPACE]${exports.NA0}[HAIR.SPACE]${exports.NA0}[ZERO.SPACE]${exports.NA0}[MED.MATH.SPACE]${exports.NA0}[IDEOGRAPHIC.SPACE]` +
+    `${exports.NA0}[IDEOGRAPHIC.HALF.FILL.SPACE]${exports.NA0}[HYPHEN]${exports.NA0}[NB.HYPHEN]${exports.NA0}[HYPHEN.POINT]${exports.NA0}[SMALL.HYPHEN]` +
+    `${exports.NA0}[FULL.WIDTH.HYPHEN]`, 'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]');
 const e1node = `[NBSP]|[NBSP]\x20[NBSP]`;
-const e1browser = `${exports.A0}|${exports.NB3S}`;
+const e1browser = `${exports.NA0}|${exports.NNB3S}`;
 const e1one = `${exports.A0}|${exports.NB3S}`;
 const ee = exports.EX_JS_NODE ? e1node : exports.EX_ONECOMP ? e1one : e1browser;
-console.warn(`QQQQQ: [${ee}]`, exports.EX_JS_NODE);
-expectToBe(indicateSpaces(replaceCharsCodePt(spacesHyphens)), `${exports.NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${exports.A0}[LF]\n${exports.A0}[U+000B]${exports.A0}[U+000C]` +
-    `${exports.A0}[CR]\n${exports.A0}[CR]\n[LF]\n${exports.A0}[NBSP]${exports.A0}[SOFT.HYPHEN]${exports.A0}|${exports.NB3}[U+0009]${exports.A0}[LF]\n` +
-    `${exports.A0}[U+000B]${exports.A0}[U+000C]${exports.A0}[CR]\n${exports.A0}` +
-    `[CR]\n[LF]\n${exports.A0}[NBSP]${exports.A0}[SOFT.HYPHEN]${exports.A0}[U+202F]${exports.A0}[U+FEFF]${exports.A0}[U+2000]${exports.A0}[U+2001]${exports.A0}` +
-    `[U+2002]${exports.A0}[U+2003]${exports.A0}[U+2004]${exports.A0}[U+2005]${exports.A0}[U+2006]${exports.A0}[U+2007]${exports.A0}[U+2008]${exports.A0}[U+2009]${exports.A0}` +
-    `[U+200A]${exports.A0}[U+200B]${exports.A0}[U+205F]${exports.A0}[U+3000]${exports.A0}[U+303F]${exports.A0}[U+2010]${exports.A0}[U+2011]${exports.A0}[U+2027]${exports.A0}` +
-    `[U+FE63]${exports.A0}[U+FF0D]`, 'replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.');
+expectToBe(indicateSpaces(replaceCharsCodePt(spacesHyphens)), `${exports.NNB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${exports.NA0}[LF]\n${exports.NA0}[U+000B]${exports.NA0}[U+000C]` +
+    `${exports.NA0}[CR]\n${exports.NA0}[CR]\n[LF]\n${exports.NA0}[NBSP]${exports.NA0}[SOFT.HYPHEN]${exports.NA0}|${exports.NNB3}[U+0009]${exports.NA0}[LF]\n` +
+    `${exports.NA0}[U+000B]${exports.NA0}[U+000C]${exports.NA0}[CR]\n${exports.NA0}` +
+    `[CR]\n[LF]\n${exports.NA0}[NBSP]${exports.NA0}[SOFT.HYPHEN]${exports.NA0}[U+202F]${exports.NA0}[U+FEFF]${exports.NA0}[U+2000]${exports.NA0}[U+2001]${exports.NA0}` +
+    `[U+2002]${exports.NA0}[U+2003]${exports.NA0}[U+2004]${exports.NA0}[U+2005]${exports.NA0}[U+2006]${exports.NA0}[U+2007]${exports.NA0}[U+2008]${exports.NA0}[U+2009]${exports.NA0}` +
+    `[U+200A]${exports.NA0}[U+200B]${exports.NA0}[U+205F]${exports.NA0}[U+3000]${exports.NA0}[U+303F]${exports.NA0}[U+2010]${exports.NA0}[U+2011]${exports.NA0}[U+2027]${exports.NA0}` +
+    `[U+FE63]${exports.NA0}[U+FF0D]`, 'replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.');
 testSummary();
 // end of testing suite
 //==========================================================

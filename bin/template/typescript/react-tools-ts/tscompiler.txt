@@ -59,6 +59,7 @@ const win : any = {
 	}
 };
 
+export const EX_REGEX = true;
 export const EX_NOISY = false;
 export const EX_QUIET = true;
 export const EX_BRIEF = false;
@@ -653,7 +654,7 @@ const reAttrsToShow = /^(id|name|type|role|target|rel|disabled|focusable|hidden|
 //const reAttrsToShow = /^(class|style|id|name|type|role|target|rel|disabled|focusable|hidden|width|height|tabindex|for|title|placeholder|alt|href|(data|aria)-.+)$/i;
 
 // getElementInfo configure what props/attrs to show when dumping elements
-const showAllPropSources = false; // MUSTDO leave true
+const showAllPropSources = true; // MUSTDO tests fail with false on node!
 const attrsToShow =
 	'data-testid:name:type:role:aria-role:target:rel:disabled:focusable:width:height:hidden:aria-hidden:tabIndex:for:label:aria-label:value:defaultValue:selected:checked:aria-checked:aria-invalid:aria-expanded:title:placeholder:alt:href'.split(
 		/:/g
@@ -732,7 +733,7 @@ const reSpaceMarker = /(\[SPACE\])+/g;
 const reRemoveBlankExpects = /expect[^\n]+BLANKBLANK[^\n]+\n/g;
 
 const reEveryChar = /./g;
-const reRunOfSpaces = /  +/g;
+const reRunOfSpaces = /\x20\x20+/g;
 
 const reSpacesHyphens = /[\s\x00-\x20\xA0\u00A0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
 
@@ -2293,8 +2294,17 @@ export function showEvent(event?: any, prefix = '') : string
 	return result;
 } // showEvent()
 
+if (EX_REGEX) {
+
 //==========================================================
 // Regex tests to validate it's working...
+
+expectToMatch(reRunOfSpaces, '  ', 'reRunOfSpaces should match two or more spaces');
+expectToMatch(reRunOfSpaces, ' \x20', 'reRunOfSpaces should match two or more mixed spaces');
+expectToMatch(reRunOfSpaces, '\x20\x20', 'reRunOfSpaces should match two or more \\x20 spaces');
+expectToMatch(reRunOfSpaces, '\x20 \x20  \x20', 'reRunOfSpaces should match many more more mixed \\x20 spaces');
+expectNotToMatch(reRunOfSpaces, ' ', 'reRunOfSpaces should NOT match a single space');
+expectNotToMatch(reRunOfSpaces, '\x20', 'reRunOfSpaces should NOT match a single hex space');
 
 expectToMatch(reVersionNickname, '<span>  version.nickname: blah blah </span>', 'reVersionNickname should match the nickname text');
 expectNotToMatch(reVersionNickname, '<span>  version.Nickname: blah blah </span>', 'reVersionNickname should NOT match wrong case');
@@ -2601,6 +2611,8 @@ expectToMatch(reSpaceMarker, '[SPACE]\t[SPACE]\t[SPACE]', 'reSpaceMarker should 
 expectNotToMatch(reSpaceMarker, '[space]', 'reSpaceMarker should NOT match a space character marker lower case');
 
 expectToMatch(reRemoveBlankExpects, '    expect(screen.queryByText(BLANKBLANK)).toBeInTheDocument();\n', 'reRemoveBlankExpects should match expect ... BLANKBLANK');
+
+} // EX_REGEX
 
 //==========================================================
 // tests to validate it's working...
@@ -3953,9 +3965,11 @@ expectToBe(
 	anObject,
 	'show(anObject, raw) should return the object as is'
 );
-expectToBe(show(anObject, 'spc'),
+
+expectToBe(
+	show(anObject, 'spc'),
 	`{[LF][SPx2]"a":\x202[LF]}`,
-	'show(anObject, spc) should be marked with spaces'
+	'00show(anObject, spc) should be marked with spaces'
 );
 
 expectToBe(show(anObject, 'js'),
@@ -4075,8 +4089,6 @@ if (showAllPropSources) {
 		'getElementInfo(Element2) should respond with Element values only'
 	);
 }
-//console.warn(`XXXXXX`, strJ(anObject));
-// zzzz testSummary(); throw new Error('STOP TESTING!!!');
 
 // MUSTDO enable for browser/DOM environment...
 //console.warn(`getElementInfo`, getElementInfo(inEl))
@@ -4132,8 +4144,8 @@ let targetDump = `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//
 if (!showAllPropSources) {
 	targetDump = targetDump.replace(/\/\//g, '');
 }
-const currentDump = `${A0}<input\x20Object${A0}/>`;
-const relatedDump = `${A0}<div\x20Object${A0}/>`;
+const currentDump = `${NA0}<input\x20Object${NA0}/>`;
+const relatedDump = `${NA0}<div\x20Object${NA0}/>`;
 
 expectToBe(
 	showEvent(myEvent, 'PREFIX:'),
@@ -4141,10 +4153,10 @@ expectToBe(
 	`details(DETAILS)\x20metaKey\x20shiftKey\x20` +
 	`\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
 	`\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
-	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${A0}/>\n` +
+	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${NA0}/>\n` +
 	`currentTarget:${currentDump}\n` +
 	`relatedTarget:${relatedDump}\n` +
-	`view:${A0}Object${A0}${A0}{\n` +
+	`view:${NA0}Object${NA0}${NA0}{\n` +
 	`\x20\x20\"what\":\x20\"VIEW\"\n` +
 	`}`,
 	`showEvent(event) should show event details`
@@ -4155,38 +4167,41 @@ const spacesHyphens = '  \f\n\r\t\v | \x20 \x09 \x0a \x0b \x0c \x0d \x0d\x0a \xa
 	'\u2001 \u2002 \u2003 \u2004 \u2005 \u2006 \u2007 \u2008 \u2009 \u200A \u200B ' +
 	'\u205F \u3000 \u303F \u2010 \u2011 \u2027 \uFE63 \uFF0D';
 
-EX_AS_JS = true;
 expectToBe(indicateSpaces(), ``, 'indicateSpaces(undefined) should default to empty');
+expectToBe(indicateSpaces(' '), ` `, 'indicateSpaces() should not replace a single space');
+expectToBe(indicateSpaces('\x20'), ` `, 'indicateSpaces() should not replace a single hex space');
+expectToBe(indicateSpaces('  '), `[SPx2]`, 'indicateSpaces() should replace two or more spaces');
+expectToBe(indicateSpaces(' \x20'), `[SPx2]`, 'indicateSpaces() should replace two or more mixed spaces');
+expectToBe(indicateSpaces('\x20\x20'), `[SPx2]`, 'indicateSpaces() should replace two or more \\x20 spaces');
+expectToBe(indicateSpaces('\x20 \x20  \x20'), `[SPx6]`, 'indicateSpaces() should replace many more more mixed \\x20 spaces');
 
+EX_AS_JS = true;
 expectToBe(
 	indicateSpaces(spacesHyphens),
-	`${NB2}[FF]\n[LF]\n[CR]\n[TAB][VT]\n${A0}|${NB3S}[TAB]${NB}[LF]\n${NB}[VT]\n${NB}[FF]\n${NB}[CR]\n${NB}[CR]\n[LF]\n` +
-	`\x20[NBSP]\x20[SOFT.HYPHEN]${A0}|${NB3S}[TAB]${A0}[LF]\n${A0}[VT]\n${A0}[FF]\n${A0}[CR]\n${A0}[CR]\n[LF]\n` +
-	`${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}[NARROW.NBSP]${A0}[ZERO.NBSP]${A0}[EN.QUAD]${A0}[EM.QUAD]${A0}[EN.SPACE]` +
-	`${A0}[EM.SPACE]${A0}[THREE.PER.EM.SPACE]${A0}[FOUR.PER.EM.SPACE]${A0}[SIX.PER.EM.SPACE]${A0}[FIGURE.SPACE]` +
-	`${A0}[PUNCT.SPACE]${A0}[THIN.SPACE]${A0}[HAIR.SPACE]${A0}[ZERO.SPACE]${A0}[MED.MATH.SPACE]${A0}[IDEOGRAPHIC.SPACE]` +
-	`${A0}[IDEOGRAPHIC.HALF.FILL.SPACE]${A0}[HYPHEN]${A0}[NB.HYPHEN]${A0}[HYPHEN.POINT]${A0}[SMALL.HYPHEN]` +
-	`${A0}[FULL.WIDTH.HYPHEN]`,
+	`${NNB2}[FF]\n[LF]\n[CR]\n[TAB][VT]\n${NA0}|${NNB3S}[TAB]${NNB}[LF]\n${NNB}[VT]\n${NNB}[FF]\n${NNB}[CR]\n${NNB}[CR]\n[LF]\n` +
+	`\x20[NBSP]\x20[SOFT.HYPHEN]${NA0}|${NNB3S}[TAB]${NA0}[LF]\n${NA0}[VT]\n${NA0}[FF]\n${NA0}[CR]\n${NA0}[CR]\n[LF]\n` +
+	`${NA0}[NBSP]${NA0}[SOFT.HYPHEN]${NA0}[NARROW.NBSP]${NA0}[ZERO.NBSP]${NA0}[EN.QUAD]${NA0}[EM.QUAD]${NA0}[EN.SPACE]` +
+	`${NA0}[EM.SPACE]${NA0}[THREE.PER.EM.SPACE]${NA0}[FOUR.PER.EM.SPACE]${NA0}[SIX.PER.EM.SPACE]${NA0}[FIGURE.SPACE]` +
+	`${NA0}[PUNCT.SPACE]${NA0}[THIN.SPACE]${NA0}[HAIR.SPACE]${NA0}[ZERO.SPACE]${NA0}[MED.MATH.SPACE]${NA0}[IDEOGRAPHIC.SPACE]` +
+	`${NA0}[IDEOGRAPHIC.HALF.FILL.SPACE]${NA0}[HYPHEN]${NA0}[NB.HYPHEN]${NA0}[HYPHEN.POINT]${NA0}[SMALL.HYPHEN]` +
+	`${NA0}[FULL.WIDTH.HYPHEN]`,
 	'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]'
 );
 
-
 const e1node = `[NBSP]|[NBSP]\x20[NBSP]`;
-const e1browser = `${A0}|${NB3S}`;
+const e1browser = `${NA0}|${NNB3S}`;
 const e1one = `${A0}|${NB3S}`;
 const ee = EX_JS_NODE ? e1node : EX_ONECOMP ? e1one : e1browser;
 
-console.warn(`QQQQQ: [${ee}]`, EX_JS_NODE);
-
 expectToBe(
 	indicateSpaces(replaceCharsCodePt(spacesHyphens)),
-	`${NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${A0}[LF]\n${A0}[U+000B]${A0}[U+000C]` +
-	`${A0}[CR]\n${A0}[CR]\n[LF]\n${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}|${NB3}[U+0009]${A0}[LF]\n` +
-	`${A0}[U+000B]${A0}[U+000C]${A0}[CR]\n${A0}` +
-	`[CR]\n[LF]\n${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}[U+202F]${A0}[U+FEFF]${A0}[U+2000]${A0}[U+2001]${A0}` +
-	`[U+2002]${A0}[U+2003]${A0}[U+2004]${A0}[U+2005]${A0}[U+2006]${A0}[U+2007]${A0}[U+2008]${A0}[U+2009]${A0}` +
-	`[U+200A]${A0}[U+200B]${A0}[U+205F]${A0}[U+3000]${A0}[U+303F]${A0}[U+2010]${A0}[U+2011]${A0}[U+2027]${A0}` +
-	`[U+FE63]${A0}[U+FF0D]`,
+	`${NNB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${NA0}[LF]\n${NA0}[U+000B]${NA0}[U+000C]` +
+	`${NA0}[CR]\n${NA0}[CR]\n[LF]\n${NA0}[NBSP]${NA0}[SOFT.HYPHEN]${NA0}|${NNB3}[U+0009]${NA0}[LF]\n` +
+	`${NA0}[U+000B]${NA0}[U+000C]${NA0}[CR]\n${NA0}` +
+	`[CR]\n[LF]\n${NA0}[NBSP]${NA0}[SOFT.HYPHEN]${NA0}[U+202F]${NA0}[U+FEFF]${NA0}[U+2000]${NA0}[U+2001]${NA0}` +
+	`[U+2002]${NA0}[U+2003]${NA0}[U+2004]${NA0}[U+2005]${NA0}[U+2006]${NA0}[U+2007]${NA0}[U+2008]${NA0}[U+2009]${NA0}` +
+	`[U+200A]${NA0}[U+200B]${NA0}[U+205F]${NA0}[U+3000]${NA0}[U+303F]${NA0}[U+2010]${NA0}[U+2011]${NA0}[U+2027]${NA0}` +
+	`[U+FE63]${NA0}[U+FF0D]`,
 	'replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.'
 );
 
