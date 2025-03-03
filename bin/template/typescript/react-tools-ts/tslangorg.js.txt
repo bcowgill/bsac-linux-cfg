@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.NB5 = exports.NB3S = exports.NB3 = exports.NB2 = exports.NB = exports.XA0 = exports.A0 = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_LET_FAIL_TESTS = exports.EX_BRIEF = exports.EX_QUIET = exports.EX_NOISY = void 0;
+exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.NNB5 = exports.NB5 = exports.NNB3S = exports.NB3S = exports.NNB3 = exports.NB3 = exports.NNB2 = exports.NB2 = exports.NNB = exports.NB = exports.NXA0 = exports.XA0 = exports.NA0 = exports.A0 = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_LET_FAIL_TESTS = exports.EX_BRIEF = exports.EX_QUIET = exports.EX_NOISY = void 0;
 exports.jsonKeySorter = jsonKeySorter;
 exports.noop = noop;
 exports.elementAt = elementAt;
@@ -99,12 +99,19 @@ exports.EX_ARROW_STRINGIFY = exports.EX_JS_NODE || !exports.EX_ONECOMP; //�
 exports.EX_UTF_OK = !exports.EX_ONECOMP && (exports.EX_JS_NODE || true); // typescriptlang: true/false, onecompiler: false jsnode: true
 console.warn(`EX_UTF_OK = ${exports.EX_UTF_OK}`);
 exports.A0 = exports.EX_UTF_OK ? '\xa0' : '\x20';
+exports.NA0 = exports.EX_JS_NODE ? '\xa0' : '\x20';
 exports.XA0 = exports.EX_UTF_OK ? '\\xa0' : '\\x20';
+exports.NXA0 = exports.EX_JS_NODE ? '\\xa0' : '\\x20';
 exports.NB = exports.EX_UTF_OK ? '[NBSP]' : '\x20';
+exports.NNB = exports.EX_JS_NODE ? '[NBSP]' : '\x20';
 exports.NB2 = exports.EX_UTF_OK ? '[NBSP][NBSP]' : '[SPx2]';
+exports.NNB2 = exports.EX_JS_NODE ? '[NBSP][NBSP]' : '[SPx2]';
 exports.NB3 = exports.EX_UTF_OK ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
-exports.NB3S = exports.EX_UTF_OK ? `${exports.A0}${exports.A0}${exports.A0}` : '[SPx3]'; // MUSTDO 
+exports.NNB3 = exports.EX_JS_NODE ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
+exports.NB3S = exports.EX_UTF_OK ? `${exports.A0}${exports.A0}${exports.A0}` : '[SPx3]';
+exports.NNB3S = exports.EX_JS_NODE ? `${exports.NA0}${exports.NA0}${exports.NA0}` : '[SPx3]';
 exports.NB5 = exports.EX_UTF_OK ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
+exports.NNB5 = exports.EX_JS_NODE ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
 //export const EX_SP = EX_JS_NODE ? '\xa0' : '\x20';
 const global = win;
 function mockDocument(inner = '') {
@@ -561,7 +568,7 @@ function expect(got) {
 const appId = 'app-name';
 const FLIP = false; // true to reverse which attributes are shown in getTextNice()
 const MAX_THING = 128; // longest thing to log before shortening with an ellipsis in showThing()
-const NUM_CHAR_DIFFS = 5; // number of character differences to show in failed test
+const NUM_CHAR_DIFFS = 35; // number of character differences to show in failed test
 const NUM_LINE_DIFFS = 10; // number of lines of differences to show in failed test
 const MAX_BYTE = 255;
 // checkDocumentTextEmpty() specify hidden text that is present even in an empty document
@@ -576,7 +583,7 @@ const reAttrsToShow = /^(id|name|type|role|target|rel|disabled|focusable|hidd
 // show class and style also, more noisy but may be useful in some cases.
 //const reAttrsToShow = /^(class|style|id|name|type|role|target|rel|disabled|focusable|hidden|width|height|tabindex|for|title|placeholder|alt|href|(data|aria)-.+)$/i;
 // getElementInfo configure what props/attrs to show when dumping elements
-const showAllPropSources = true;
+const showAllPropSources = false;
 const attrsToShow = 'data-testid:name:type:role:aria-role:target:rel:disabled:focusable:width:height:hidden:aria-hidden:tabIndex:for:label:aria-label:value:defaultValue:selected:checked:aria-checked:aria-invalid:aria-expanded:title:placeholder:alt:href'.split(/:/g);
 let _LS = 'L'; // £ pound sterling UTF8
 let _EL = '_'; // … ellipsis UTF8
@@ -2460,7 +2467,7 @@ expectToBe(strV(new Object(null)), undefined, 'strV(Object null) should an
 expectToBe(strV(aNumber), 'Number : 3', 'strV(Number) should show Number : 3');
 expectToBe(strV(aBoolean), 'Boolean : false', 'strV(Boolean) should show Boolean : false');
 expectToBe(strV(aString), 'String : what', 'strV(String) should show String : what');
-expectToBe(strV(typeError), `TypeError${exports.A0}:${exports.A0}TypeError:\x20typeerr`, 'strV(TypeError) should TypeError : ...');
+expectToBe(strV(typeError), `TypeError${exports.NA0}:${exports.NA0}TypeError:\x20typeerr`, 'strV(TypeError) should TypeError : ...');
 expectToBe(strV(() => null), `Function : ${expectArrowNull}`, 'strV(() => null) should show as Function : stringified');
 expectToBe(strV(function () { }), 'Function : function () { }', 'strV(anon function) should show as Function : stringified');
 expectToBe(strV(function named() { }), 'Function : function named() { }', 'strV(function named) should show as stringified');
@@ -2485,7 +2492,7 @@ expectToBe(strJ(emptyArray), '[]', 'strJ(empty array) should show');
 expectToBe(strJ(aNumber), 'Number : 3', 'strJ(Number) should show');
 expectToBe(strJ(aBoolean), 'Boolean : false', 'strJ(Boolean) should show');
 expectToBe(strJ(aString), 'String : what', 'strJ(String) should show');
-expectToBe(strJ(typeError), `TypeError${exports.A0}:${exports.A0}TypeError:\x20typeerr`, 'strJ(TypeError) should show as stringified');
+expectToBe(strJ(typeError), `TypeError${exports.NA0}:${exports.NA0}TypeError:\x20typeerr`, 'strJ(TypeError) should show as stringified');
 expectToBe(strJ(() => null), `Function : ${expectArrowNull}`, 'strJ(() => null) should show as stringified');
 expectToBe(strJ(function () { }), 'Function : function () { }', 'strJ(anon function) should show as stringified');
 expectToBe(strJ(function named() { }), 'Function : function named() { }', 'strJ(function named) should show as stringified');
@@ -2538,17 +2545,17 @@ const at = Math.floor(a.length * Math.random());
 const b = a.substring(0, at) + '\u2000' + a[Math.floor(a.length * Math.random())] + a.substring(at, a.length - 1) + '    ';
 const c = a.substring(0, 11) + '\u2000' + a[Math.floor(a.length / 2)] + a.substring(11, a.length - 1) + '    ';
 expectToEqual(charDiff(c, a, 2), [
-    `@11${exports.A0}\\x6c${exports.A0}!==${exports.A0}\\u2000${exports.A0}[l[EN.QUAD]]`,
-    `@12${exports.A0}\\x6a${exports.A0}!==${exports.A0}${exports.XA0}${exports.A0}[j${exports.A0}]`
+    `@11${exports.NA0}\\x6c${exports.NA0}!==${exports.NA0}\\u2000${exports.NA0}[l[EN.QUAD]]`,
+    `@12${exports.NA0}\\x6a${exports.NA0}!==${exports.NA0}${exports.NXA0}${exports.NA0}[j${exports.NA0}]`
 ], 'charDiff() should show two differences');
 expectToEqual(lineDiff(c, a, 2), [
     {
-        "_____got": `al;kskdj;w;[EN.QUAD]${exports.NB}lj${exports.NB}[U+1999]${exports.NB2}[CR]`,
-        "expected": `al;kskdj;w;lj${exports.NB}[U+1999]${exports.NB2}[CR]`,
+        "_____got": `al;kskdj;w;[EN.QUAD]${exports.NNB}lj${exports.NNB}[U+1999]${exports.NNB2}[CR]`,
+        "expected": `al;kskdj;w;lj${exports.NNB}[U+1999]${exports.NNB2}[CR]`,
         "line": 0,
     }, {
-        "_____got": exports.NB5,
-        "expected": exports.NB2,
+        "_____got": exports.NNB5,
+        "expected": exports.NNB2,
         "line": 8,
     }
 ], 'lineDiff() should show two differences');
@@ -2559,19 +2566,19 @@ if (exports.EX_UTF_OK) {
         "lines": "4 expected vs 4 got",
         "diffs": [
             "@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
-            `@12 ${exports.XA0} !== \\x6a [ j]`
+            `@12 ${exports.NXA0} !== \\x6a [ j]`
         ],
         "expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
         "lengths": "42 expected vs 37 got",
         "lineDiff": [
             {
-                "_____got": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
-                "expected": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
+                "_____got": `al;kskdj;w;lj${exports.NNB}[U+1999]${exports.NNB2}[CR]`,
+                "expected": `al;kskdj;w;[EN.QUAD]${exports.NNB}lj${exports.NNB}[U+1999]${exports.NNB2}[CR]`,
                 "line": 0,
             },
             {
-                "_____got": "[NBSP][NBSP]",
-                "expected": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
+                "_____got": exports.NNB2,
+                "expected": exports.NNB5,
                 "line": 8,
             }
         ],
@@ -2853,7 +2860,7 @@ expectToBe(getEl(/open/i, '[4]^@LIST'), openTestId, 'getEl(/open/i,[4]^@LIST)
     ' 1, logging the full list');
 expectToBe(elementAt(), 'GET EL REGEX ANY MATCH FOR /open/i [4] go up 1\nlookup @[4] of 11 matched ==> [[' +
     'ByText#1 <button id="accordion-open" />]]\nup to parent --> <span data-testid="a' +
-    `ccordion-open" class="open"${exports.A0}/>\x20`, 'elementAt() should return regex match, index and up message');
+    `ccordion-open" class="open"${exports.NA0}/>\x20`, 'elementAt() should return regex match, index and up message');
 const stylesheet = `
 display: none;
 width: 100%;
@@ -2877,7 +2884,7 @@ const rawHtmlNoNL = rawHtml.replace(/\n/g, '');
 const expectHtmlNoNLOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n<article>\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n</article>\n\n<hr />\n\n<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" class="CLASS" style="display: none;width: 100%;height: 30vh;" type="TYPE" target="TARGET" rel="REL" disabled="true" focusable="false" hidden="true" width="WIDTH" height="HEIGHT" tabindex="TABINDEX" for="FOR" title="TITLE" placeholder="PLACEHOLDER" alt="ALT" href="#HREF">\nfooter\n</footer>\n\n</main>\n`;
 const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
     `<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n` +
-    `<article>\n${exports.NB2}This${exports.NB3}is${exports.NB}an${exports.NB}article${exports.NB}in${exports.NB}the${exports.NB}document${exports.NB2}\n</article>\n\n<hr />\n\n` +
+    `<article>\n${exports.NNB2}This${exports.NNB3}is${exports.NNB}an${exports.NNB}article${exports.NNB}in${exports.NNB}the${exports.NNB}document${exports.NNB2}\n</article>\n\n<hr />\n\n` +
     `<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" ` +
     `aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" ` +
     `data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" ` +
@@ -2889,7 +2896,7 @@ const expectHtmlNice = `GET EL RAW HTML STRING\n` +
     `========== FOUND\n\n` +
     `<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
     `<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n` +
-    `<article>\n${exports.NB2}This${exports.NB3}is${exports.NB}an${exports.NB}article${exports.NB}in${exports.NB}the${exports.NB}document${exports.NB2}\n` +
+    `<article>\n${exports.NNB2}This${exports.NNB3}is${exports.NNB}an${exports.NNB}article${exports.NNB}in${exports.NNB}the${exports.NNB}document${exports.NNB2}\n` +
     `</article>\n\n<hr />\n\n` +
     `<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n` +
     `\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n` +
@@ -2901,7 +2908,7 @@ const expectTextNiceOld = `GET EL RAW HTML STRING\n========== FOUND\n\nH
 const expectTextNice1Old = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n <img \n     src="./icon-plus.svg"/>\n\n[SPACE][SPACE]This   is an article in the document[SPACE][SPACE]\n\n <footer \n      value="false"\n     class="CLASS"\n     style="display: none;width: 100%;height: 30vh;">\n\nfooter\n\n`;
 const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n` +
     `\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n` +
-    `${exports.NB2}This${exports.NB3}is${exports.NB}an${exports.NB}article${exports.NB}in${exports.NB}the${exports.NB}document${exports.NB2}\n\n` +
+    `${exports.NNB2}This${exports.NNB3}is${exports.NNB}an${exports.NNB}article${exports.NNB}in${exports.NNB}the${exports.NNB}document${exports.NNB2}\n\n` +
     `\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n` +
     `\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n` +
     `\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n` +
@@ -3266,9 +3273,9 @@ expectToBe(show(anObject, 'raw'), anObject, 'show(anObject, raw) should re
 expectToBe(show(anObject, 'spc'), `{[LF][SPx2]"a":\x202[LF]}`, 'show(anObject, spc) should be marked with spaces');
 expectToBe(show(anObject, 'js'), `{\\n\x20\x20"a":\x202\\n}`, 'show(anObject, js) should be stringified with \\n markers');
 expectToBe(show(anArray, 'raw'), anArray, 'show(anArray, raw) should return the object as is');
-expectToBe(show(anArray, 'spc'), `[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${exports.A0}:${exports.A0}/a/g"[LF]]`, 'show(anArray, spc) should be marked with spaces');
-expectToBe(show(anArray, 'js'), `[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp${exports.A0}:${exports.A0}/a/g"\\n]`, 'show(anArray, js) should be stringified with \\n markers');
-expectToBe(show(escapedLines, 'spc'), `${exports.LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${exports.NB3S}[CR][LF]${exports.A0}[VT] [LF][SPx2]${exports.RDQ}`, 'show() should requote white space characters handling newlines');
+expectToBe(show(anArray, 'spc'), `[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${exports.NA0}:${exports.NA0}/a/g"[LF]]`, 'show(anArray, spc) should be marked with spaces');
+expectToBe(show(anArray, 'js'), `[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp${exports.NA0}:${exports.NA0}/a/g"\\n]`, 'show(anArray, js) should be stringified with \\n markers');
+expectToBe(show(escapedLines, 'spc'), `${exports.LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${exports.NNB3S}[CR][LF]${exports.NA0}[VT] [LF][SPx2]${exports.RDQ}`, 'show() should requote white space characters handling newlines');
 const elDump = {
     __reactInternalInstance1234: {}
 };
@@ -3325,19 +3332,21 @@ if (showAllPropSources) {
     'showThing(Element/React1) should show the element shortened');
     expectToBe(getElementInfo(elDump), `<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//\"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
         `[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-        `[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${exports.A0}/>`, 'getElementInfo(Element/React1) should respond with Element and React values');
+        `[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${exports.NA0}/>`, 'getElementInfo(Element/React1) should respond with Element and React values');
 }
 else {
-    expectToBe(showThing(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"_>`, 'showThing(Element/React2) should show the element shortened');
+    expectToBe(showThing(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"${exports.EL}>`, 'showThing(Element/React2) should show the element shortened');
     expectToBe(getElementInfo(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"][disabled="DISABLED"][focusable="FOCUSABLEp"][width="WIDTHm"][height="HEIGHT"][hidden="HIDDENp"][aria-hidden="ARHIDDENm"][tabIndex="TABINDEX"][for="FORp"][label="LABELm"][aria-label="ARLABEL"][value="VALUEp"][defaultValue="DEFVALUEm"][selected="SELECTED"][checked="CHECKEDp"][aria-checked="ARCHECKEDm"][aria-invalid="ARINVALID"][aria-expanded="AREXPANDEDp"][title="TITLEm"][placeholder="PLACEHOLDER"][alt="ALTp"][href="HREFm"].CLASSNAME. Object />`, 'getElementInfo(Element/React2) should respond with Element and React values');
 }
 delete elDump.__reactInternalInstance1234;
 if (showAllPropSources) {
-    expectToBe(getElementInfo(elDump), `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object${exports.A0}/>`, 'getElementInfo(Element1) should respond with Element values only');
+    expectToBe(getElementInfo(elDump), `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object${exports.NA0}/>`, 'getElementInfo(Element1) should respond with Element values only');
 }
 else {
     expectToBe(getElementInfo(elDump), `<TAGNAME#ID[type="TEXT"][role="ROLE"][aria-role="AROLE"][disabled="DISABLED"][height="HEIGHT"][tabIndex="TABINDEX"][aria-label="ARLABEL"][selected="SELECTED"][aria-invalid="ARINVALID"][placeholder="PLACEHOLDER"].CLASSNAME. Object />`, 'getElementInfo(Element2) should respond with Element values only');
 }
+//console.warn(`XXXXXX`, strJ(anObject));
+// zzzz testSummary(); throw new Error('STOP TESTING!!!');
 // MUSTDO enable for browser/DOM environment...
 //console.warn(`getElementInfo`, getElementInfo(inEl))
 //expectToBe(getElementInfo(inEl), `<INPUT />`, 'getElementInfo(HTMLInputElement) should respond with HTMLInputElement values');
@@ -3386,15 +3395,15 @@ let targetDump = `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROL
 if (!showAllPropSources) {
     targetDump = targetDump.replace(/\/\//g, '');
 }
-const currentDump = `<input Object />`;
-const relatedDump = `<div Object />`;
+const currentDump = `${exports.A0}<input\x20Object${exports.A0}/>`;
+const relatedDump = `${exports.A0}<div\x20Object${exports.A0}/>`;
 expectToBe(showEvent(myEvent, 'PREFIX:'), `PREFIX:EVENT\x20Object CLICK/@1719410356201\x20ONCLICK ONCLICKCAPTURE eventPhase(3)\x20isTrusted\x20bubbles\x20cancellable\x20defaultPrevented\x20isPersistent\x20isDefaultPrevented\x20isPropagationStopped\x20\n` +
     `details(DETAILS)\x20metaKey\x20shiftKey\x20` +
     `\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
     `\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
     `[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${exports.A0}/>\n` +
-    `currentTarget:${exports.A0}<input\x20Object${exports.A0}/>\n` +
-    `relatedTarget:${exports.A0}<div\x20Object${exports.A0}/>\n` +
+    `currentTarget:${currentDump}\n` +
+    `relatedTarget:${relatedDump}\n` +
     `view:${exports.A0}Object${exports.A0}${exports.A0}{\n` +
     `\x20\x20\"what\":\x20\"VIEW\"\n` +
     `}`, `showEvent(event) should show event details`);
@@ -3411,7 +3420,12 @@ expectToBe(indicateSpaces(spacesHyphens), `${exports.NB2}[FF]\n[LF]\n[CR]\n[TAB
     `${exports.A0}[PUNCT.SPACE]${exports.A0}[THIN.SPACE]${exports.A0}[HAIR.SPACE]${exports.A0}[ZERO.SPACE]${exports.A0}[MED.MATH.SPACE]${exports.A0}[IDEOGRAPHIC.SPACE]` +
     `${exports.A0}[IDEOGRAPHIC.HALF.FILL.SPACE]${exports.A0}[HYPHEN]${exports.A0}[NB.HYPHEN]${exports.A0}[HYPHEN.POINT]${exports.A0}[SMALL.HYPHEN]` +
     `${exports.A0}[FULL.WIDTH.HYPHEN]`, 'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]');
-expectToBe(indicateSpaces(replaceCharsCodePt(spacesHyphens)), `${exports.NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${exports.A0}|${exports.NB3S}[U+0009]${exports.A0}[LF]\n${exports.A0}[U+000B]${exports.A0}[U+000C]` +
+const e1node = `[NBSP]|[NBSP]\x20[NBSP]`;
+const e1browser = `${exports.A0}|${exports.NB3S}`;
+const e1one = `${exports.A0}|${exports.NB3S}`;
+const ee = exports.EX_JS_NODE ? e1node : exports.EX_ONECOMP ? e1one : e1browser;
+console.warn(`QQQQQ: [${ee}]`, exports.EX_JS_NODE);
+expectToBe(indicateSpaces(replaceCharsCodePt(spacesHyphens)), `${exports.NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${exports.A0}[LF]\n${exports.A0}[U+000B]${exports.A0}[U+000C]` +
     `${exports.A0}[CR]\n${exports.A0}[CR]\n[LF]\n${exports.A0}[NBSP]${exports.A0}[SOFT.HYPHEN]${exports.A0}|${exports.NB3}[U+0009]${exports.A0}[LF]\n` +
     `${exports.A0}[U+000B]${exports.A0}[U+000C]${exports.A0}[CR]\n${exports.A0}` +
     `[CR]\n[LF]\n${exports.A0}[NBSP]${exports.A0}[SOFT.HYPHEN]${exports.A0}[U+202F]${exports.A0}[U+FEFF]${exports.A0}[U+2000]${exports.A0}[U+2001]${exports.A0}` +

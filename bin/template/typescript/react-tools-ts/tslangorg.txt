@@ -65,14 +65,20 @@ export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: 
 export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
 console.warn(`EX_UTF_OK = ${EX_UTF_OK}`);
 
-
 export const A0 = EX_UTF_OK ? '\xa0' : '\x20';
+export const NA0 = EX_JS_NODE ? '\xa0' : '\x20';
 export const XA0 = EX_UTF_OK ? '\\xa0' : '\\x20';
+export const NXA0 = EX_JS_NODE ? '\\xa0' : '\\x20';
 export const NB = EX_UTF_OK ? '[NBSP]' : '\x20';
+export const NNB = EX_JS_NODE ? '[NBSP]' : '\x20';
 export const NB2 = EX_UTF_OK ? '[NBSP][NBSP]' : '[SPx2]';
+export const NNB2 = EX_JS_NODE ? '[NBSP][NBSP]' : '[SPx2]';
 export const NB3 = EX_UTF_OK ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
-export const NB3S = EX_UTF_OK ? `${A0}${A0}${A0}` : '[SPx3]'; // MUSTDO
+export const NNB3 = EX_JS_NODE ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
+export const NB3S = EX_UTF_OK ? `${A0}${A0}${A0}` : '[SPx3]';
+export const NNB3S = EX_JS_NODE ? `${NA0}${NA0}${NA0}` : '[SPx3]';
 export const NB5 = EX_UTF_OK ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
+export const NNB5 = EX_JS_NODE ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
 //export const EX_SP = EX_JS_NODE ? '\xa0' : '\x20';
 
 const global = win;
@@ -608,7 +614,7 @@ export interface ElementWithType
 const FLIP = false; // true to reverse which attributes are shown in getTextNice()
 const MAX_THING = 128; // longest thing to log before shortening with an ellipsis in showThing()
 
-const NUM_CHAR_DIFFS = 5; // number of character differences to show in failed test
+const NUM_CHAR_DIFFS = 35; // number of character differences to show in failed test
 const NUM_LINE_DIFFS = 10; // number of lines of differences to show in failed test
 
 const MAX_BYTE = 255;
@@ -629,7 +635,7 @@ const reAttrsToShow = /^(id|name|type|role|target|rel|disabled|focusable|hidden|
 //const reAttrsToShow = /^(class|style|id|name|type|role|target|rel|disabled|focusable|hidden|width|height|tabindex|for|title|placeholder|alt|href|(data|aria)-.+)$/i;
 
 // getElementInfo configure what props/attrs to show when dumping elements
-const showAllPropSources = true;
+const showAllPropSources = true; // MUSTDO tests fail with false on node!
 const attrsToShow =
 	'data-testid:name:type:role:aria-role:target:rel:disabled:focusable:width:height:hidden:aria-hidden:tabIndex:for:label:aria-label:value:defaultValue:selected:checked:aria-checked:aria-invalid:aria-expanded:title:placeholder:alt:href'.split(
 		/:/g
@@ -2772,7 +2778,7 @@ expectToBe(strV(aString), 'String : what', 'strV(String) should show String : wh
 
 expectToBe(
 	strV(typeError),
-	`TypeError${A0}:${A0}TypeError:\x20typeerr`,
+	`TypeError${NA0}:${NA0}TypeError:\x20typeerr`,
 	'strV(TypeError) should TypeError : ...'
 );
 
@@ -2804,7 +2810,7 @@ expectToBe(strJ(aString), 'String : what', 'strJ(String) should show');
 
 expectToBe(
 	strJ(typeError),
-	`TypeError${A0}:${A0}TypeError:\x20typeerr`,
+	`TypeError${NA0}:${NA0}TypeError:\x20typeerr`,
 	'strJ(TypeError) should show as stringified'
 );
 
@@ -2901,18 +2907,18 @@ const b = a.substring(0, at) + '\u2000' + a[Math.floor(a.length * Math.random())
 const c = a.substring(0, 11) + '\u2000' + a[Math.floor(a.length / 2)] + a.substring(11, a.length - 1) + '    ';
 
 expectToEqual(charDiff(c, a, 2), [
-	`@11${A0}\\x6c${A0}!==${A0}\\u2000${A0}[l[EN.QUAD]]`,
-	`@12${A0}\\x6a${A0}!==${A0}${XA0}${A0}[j${A0}]`
+	`@11${NA0}\\x6c${NA0}!==${NA0}\\u2000${NA0}[l[EN.QUAD]]`,
+	`@12${NA0}\\x6a${NA0}!==${NA0}${NXA0}${NA0}[j${NA0}]`
 ], 'charDiff() should show two differences');
 
 expectToEqual(lineDiff(c, a, 2), [
 	{
-		"_____got": `al;kskdj;w;[EN.QUAD]${NB}lj${NB}[U+1999]${NB2}[CR]`,
-		"expected": `al;kskdj;w;lj${NB}[U+1999]${NB2}[CR]`,
+		"_____got": `al;kskdj;w;[EN.QUAD]${NNB}lj${NNB}[U+1999]${NNB2}[CR]`,
+		"expected": `al;kskdj;w;lj${NNB}[U+1999]${NNB2}[CR]`,
 		"line": 0,
 	}, {
-		"_____got": NB5,
-		"expected": NB2,
+		"_____got": NNB5,
+		"expected": NNB2,
 		"line": 8,
 	}
 ], 'lineDiff() should show two differences');
@@ -2924,19 +2930,19 @@ if (EX_UTF_OK) {
 		"lines": "4 expected vs 4 got",
 		"diffs": [
 			"@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
-			`@12 ${XA0} !== \\x6a [ j]`
+			`@12 ${NXA0} !== \\x6a [ j]`
 		],
 		"expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
 		"lengths": "42 expected vs 37 got",
 		"lineDiff": [
 			{
-				"_____got": "al;kskdj;w;lj[NBSP][U+1999][NBSP][NBSP][CR]",
-				"expected": "al;kskdj;w;[EN.QUAD][NBSP]lj[NBSP][U+1999][NBSP][NBSP][CR]",
+				"_____got": `al;kskdj;w;lj${NNB}[U+1999]${NNB2}[CR]`,
+				"expected": `al;kskdj;w;[EN.QUAD]${NNB}lj${NNB}[U+1999]${NNB2}[CR]`,
 				"line": 0,
 			},
 			{
-				"_____got": "[NBSP][NBSP]",
-				"expected": "[NBSP][NBSP][NBSP][NBSP][NBSP]",
+				"_____got": NNB2,
+				"expected": NNB5,
 				"line": 8,
 			}
 		],
@@ -3265,7 +3271,7 @@ expectToBe(
 	elementAt(),
 	'GET EL REGEX ANY MATCH FOR /open/i [4] go up 1\nlookup @[4] of 11 matched ==> [[' +
 	'ByText#1 <button id="accordion-open" />]]\nup to parent --> <span data-testid="a' +
-	`ccordion-open" class="open"${A0}/>\x20`,
+	`ccordion-open" class="open"${NA0}/>\x20`,
 	'elementAt() should return regex match, index and up message'
 );
 
@@ -3295,7 +3301,7 @@ const expectHtmlNoNLOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEA
 
 const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
 	`<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n` +
-	`<article>\n${NB2}This${NB3}is${NB}an${NB}article${NB}in${NB}the${NB}document${NB2}\n</article>\n\n<hr />\n\n` +
+	`<article>\n${NNB2}This${NNB3}is${NNB}an${NNB}article${NNB}in${NNB}the${NNB}document${NNB2}\n</article>\n\n<hr />\n\n` +
 	`<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" ` +
 	`aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" ` +
 	`data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" ` +
@@ -3309,7 +3315,7 @@ const expectHtmlNice = `GET EL RAW HTML STRING\n` +
 	`========== FOUND\n\n` +
 	`<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
 	`<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n` +
-	`<article>\n${NB2}This${NB3}is${NB}an${NB}article${NB}in${NB}the${NB}document${NB2}\n` +
+	`<article>\n${NNB2}This${NNB3}is${NNB}an${NNB}article${NNB}in${NNB}the${NNB}document${NNB2}\n` +
 	`</article>\n\n<hr />\n\n` +
 	`<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n` +
 	`\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n` +
@@ -3323,7 +3329,7 @@ const expectTextNice1Old = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\
 
 const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n` +
 	`\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n` +
-	`${NB2}This${NB3}is${NB}an${NB}article${NB}in${NB}the${NB}document${NB2}\n\n` +
+	`${NNB2}This${NNB3}is${NNB}an${NNB}article${NNB}in${NNB}the${NNB}document${NNB2}\n\n` +
 	`\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n` +
 	`\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n` +
 	`\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n` +
@@ -3344,11 +3350,22 @@ expectToBe(
 	'getHtml(rawHtml minus \\n) should return the HTML formatted minimally'
 );
 
-expectToBe(htmlOld, expectHtmlNoNLOld, 'getHtml(rawHtml minus \\n, SPC) should return the HTML formatted minimally with ' +
-	'[SPACE] markers');
+expectToBe(
+	htmlOld,
+	expectHtmlNoNLOld,
+	'getHtml(rawHtml minus \\n, SPC) should return the HTML formatted minimally with ' +
+	'[SPACE] markers'
+);
+
 expectToBe(getHtml(rawHtmlNoNL, '\\s'), expectHtmlSpc, 'getHtml(with \\s marker) should return the HTML with \\s as space marker');
-expectToBe(getHtmlNice(rawHtmlNoNL), expectHtmlNice, 'getHtmlNice1a(rawHtml minus \\n) should return the HTML formatted one element per ' +
-	'line');
+
+expectToBe(
+	getHtmlNice(rawHtmlNoNL),
+	expectHtmlNice,
+	'getHtmlNice1a(rawHtml minus \\n) should return the HTML formatted one element per ' +
+	'line'
+);
+
 expectToBe(getHtmlNice(rawHtmlNoNL, SPC), expectHtmlNiceOld, 'getHtmlNice1b(rawHtml minus \\n, SPC) should return the HTML formatted one element' +
 	' per line with [SPACE] markers');
 expectToBe(getHtmlNice(rawHtmlNoNL, '\\s'), expectHtmlNiceOld.replace(/\[SPACE\]/g, '\\s'), 'getHtmlNice1c(with \\s marker) should return the HTML with \\s as space markers');
@@ -3922,6 +3939,7 @@ expectToBe(show(anObject, 'spc'),
 	`{[LF][SPx2]"a":\x202[LF]}`,
 	'show(anObject, spc) should be marked with spaces'
 );
+
 expectToBe(show(anObject, 'js'),
 	`{\\n\x20\x20"a":\x202\\n}`,
 	'show(anObject, js) should be stringified with \\n markers'
@@ -3932,18 +3950,20 @@ expectToBe(
 	anArray,
 	'show(anArray, raw) should return the object as is'
 );
+
 expectToBe(show(anArray, 'spc'),
-	`[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${A0}:${A0}/a/g"[LF]]`,
+	`[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${NA0}:${NA0}/a/g"[LF]]`,
 	'show(anArray, spc) should be marked with spaces'
 );
+
 expectToBe(show(anArray, 'js'),
-	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp${A0}:${A0}/a/g"\\n]`,
+	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp${NA0}:${NA0}/a/g"\\n]`,
 	'show(anArray, js) should be stringified with \\n markers'
 );
 
 expectToBe(
   show(escapedLines, 'spc'),
-  `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${NB3S}[CR][LF]${A0}[VT] [LF][SPx2]${RDQ}`,
+  `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${NNB3S}[CR][LF]${NA0}[VT] [LF][SPx2]${RDQ}`,
   'show() should requote white space characters handling newlines'
 );
 
@@ -4011,11 +4031,15 @@ if (showAllPropSources) {
 		getElementInfo(elDump),
 		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//\"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
 		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${A0}/>`,
+		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${NA0}/>`,
 		'getElementInfo(Element/React1) should respond with Element and React values'
 	);
 } else {
-	expectToBe(showThing(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"_>`, 'showThing(Element/React2) should show the element shortened');
+	expectToBe(
+		showThing(elDump),
+		`<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"${EL}>`,
+		'showThing(Element/React2) should show the element shortened'
+	);
 	expectToBe(getElementInfo(elDump), `<REACTELEM#ID[data-testid="DATA-TESTIDp"][name="NAMEm"][type="TEXT"][role="ROLE"][aria-role="AROLE"][target="TARGETp"][rel="RELm"][disabled="DISABLED"][focusable="FOCUSABLEp"][width="WIDTHm"][height="HEIGHT"][hidden="HIDDENp"][aria-hidden="ARHIDDENm"][tabIndex="TABINDEX"][for="FORp"][label="LABELm"][aria-label="ARLABEL"][value="VALUEp"][defaultValue="DEFVALUEm"][selected="SELECTED"][checked="CHECKEDp"][aria-checked="ARCHECKEDm"][aria-invalid="ARINVALID"][aria-expanded="AREXPANDEDp"][title="TITLEm"][placeholder="PLACEHOLDER"][alt="ALTp"][href="HREFm"].CLASSNAME. Object />`, 'getElementInfo(Element/React2) should respond with Element and React values');
 }
 
@@ -4023,12 +4047,18 @@ delete elDump.__reactInternalInstance1234;
 if (showAllPropSources) {
 	expectToBe(
 		getElementInfo(elDump),
-		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object${A0}/>`,
+		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object${NA0}/>`,
 		'getElementInfo(Element1) should respond with Element values only'
 	);
 } else {
-	expectToBe(getElementInfo(elDump), `<TAGNAME#ID[type="TEXT"][role="ROLE"][aria-role="AROLE"][disabled="DISABLED"][height="HEIGHT"][tabIndex="TABINDEX"][aria-label="ARLABEL"][selected="SELECTED"][aria-invalid="ARINVALID"][placeholder="PLACEHOLDER"].CLASSNAME. Object />`, 'getElementInfo(Element2) should respond with Element values only');
+	expectToBe(
+		getElementInfo(elDump),
+		`<TAGNAME#ID[type="TEXT"][role="ROLE"][aria-role="AROLE"][disabled="DISABLED"][height="HEIGHT"][tabIndex="TABINDEX"][aria-label="ARLABEL"][selected="SELECTED"][aria-invalid="ARINVALID"][placeholder="PLACEHOLDER"].CLASSNAME. Object />`,
+		'getElementInfo(Element2) should respond with Element values only'
+	);
 }
+//console.warn(`XXXXXX`, strJ(anObject));
+// zzzz testSummary(); throw new Error('STOP TESTING!!!');
 
 // MUSTDO enable for browser/DOM environment...
 //console.warn(`getElementInfo`, getElementInfo(inEl))
@@ -4084,8 +4114,8 @@ let targetDump = `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//
 if (!showAllPropSources) {
 	targetDump = targetDump.replace(/\/\//g, '');
 }
-const currentDump = `<input Object />`;
-const relatedDump = `<div Object />`;
+const currentDump = `${NA0}<input\x20Object${NA0}/>`;
+const relatedDump = `${NA0}<div\x20Object${NA0}/>`;
 
 expectToBe(
 	showEvent(myEvent, 'PREFIX:'),
@@ -4093,10 +4123,10 @@ expectToBe(
 	`details(DETAILS)\x20metaKey\x20shiftKey\x20` +
 	`\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
 	`\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
-	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${A0}/>\n` +
-	`currentTarget:${A0}<input\x20Object${A0}/>\n` +
-	`relatedTarget:${A0}<div\x20Object${A0}/>\n` +
-	`view:${A0}Object${A0}${A0}{\n` +
+	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${NA0}/>\n` +
+	`currentTarget:${currentDump}\n` +
+	`relatedTarget:${relatedDump}\n` +
+	`view:${NA0}Object${NA0}${NA0}{\n` +
 	`\x20\x20\"what\":\x20\"VIEW\"\n` +
 	`}`,
 	`showEvent(event) should show event details`
@@ -4122,9 +4152,17 @@ expectToBe(
 	'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]'
 );
 
+//console.warn(`XXXXXX`, strJ(anObject));
+testSummary(); throw new Error('STOP TESTING!!!');
+
+const e1node = `[NBSP]|[NBSP]\x20[NBSP]`;
+const e1browser = `${A0}|${NB3S}`;
+const e1one = `${A0}|${NB3S}`;
+const ee = EX_JS_NODE ? e1node : EX_ONECOMP ? e1one : e1browser;
+
 expectToBe(
 	indicateSpaces(replaceCharsCodePt(spacesHyphens)),
-	`${NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${A0}|${NB3S}[U+0009]${A0}[LF]\n${A0}[U+000B]${A0}[U+000C]` +
+	`${NB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${A0}[LF]\n${A0}[U+000B]${A0}[U+000C]` +
 	`${A0}[CR]\n${A0}[CR]\n[LF]\n${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}|${NB3}[U+0009]${A0}[LF]\n` +
 	`${A0}[U+000B]${A0}[U+000C]${A0}[CR]\n${A0}` +
 	`[CR]\n[LF]\n${A0}[NBSP]${A0}[SOFT.HYPHEN]${A0}[U+202F]${A0}[U+FEFF]${A0}[U+2000]${A0}[U+2001]${A0}` +
