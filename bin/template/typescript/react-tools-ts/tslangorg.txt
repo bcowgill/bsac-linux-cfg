@@ -51,10 +51,10 @@ const win : any = {
 	}
 };
 
-export const EX_REGEX = true;
+export const EX_BRIEF = false;
 export const EX_NOISY = false;
 export const EX_QUIET = true;
-export const EX_BRIEF = false;
+export const EX_REGEX = true; // turn off unit tests for regexes
 export const EX_LET_FAIL_TESTS = false;
 
 export const EX_JS_NODE = false; // transpiled to JS and run in node
@@ -66,21 +66,8 @@ export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: 
 export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
 console.warn(`EX_UTF_OK = ${EX_UTF_OK}`);
 
-export const A0 = EX_UTF_OK ? '\xa0' : '\x20';
-export const NA0 = EX_JS_NODE ? '\xa0' : '\x20';
-export const XA0 = EX_UTF_OK ? '\\xa0' : '\\x20';
-export const NXA0 = EX_JS_NODE ? '\\xa0' : '\\x20';
-export const NB = EX_UTF_OK ? '[NBSP]' : '\x20';
-export const NNB = EX_JS_NODE ? '[NBSP]' : '\x20';
-export const NB2 = EX_UTF_OK ? '[NBSP][NBSP]' : '[SPx2]';
-export const NNB2 = EX_JS_NODE ? '[NBSP][NBSP]' : '[SPx2]';
-export const NB3 = EX_UTF_OK ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
-export const NNB3 = EX_JS_NODE ? '[NBSP][NBSP][NBSP]' : '[SPx3]';
-export const NB3S = EX_UTF_OK ? `${A0}${A0}${A0}` : '[SPx3]';
-export const NNB3S = EX_JS_NODE ? `${NA0}${NA0}${NA0}` : '[SPx3]';
-export const NB5 = EX_UTF_OK ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
-export const NNB5 = EX_JS_NODE ? '[NBSP][NBSP][NBSP][NBSP][NBSP]' : '[SPx5]';
-//export const EX_SP = EX_JS_NODE ? '\xa0' : '\x20';
+export const NBSP = '\u00a0';
+export const U1 = '\u0031'; // the number '1'
 
 const global = win;
 
@@ -188,7 +175,7 @@ function show(what : any, mode?: string, max?: number): any {
 	const showRaw = mode === 'raw' || !showSpc;
 	let whatStr;
 	if (typeof what === 'string' || what instanceof RegExp) {
-		// MUSTDO this smart quotes the string and adds ellipsis if needed
+		// this smart quotes the string and adds ellipsis if needed
 		whatStr = showThing(what, max);
 		if (showRaw) {
 			what = whatStr;
@@ -230,7 +217,6 @@ function show(what : any, mode?: string, max?: number): any {
 			.replace(reRepairLDQU, LDQ)
 			.replace(reRepairRDQU, RDQ)
 			.replace(reRepairEL, `${EL}\$1`);
-		// MUSTDO ^^^ the smart quotes are shown as code points...
 } // show()
 
 function sameNaN(got : any, expected : any) : boolean
@@ -615,7 +601,7 @@ export interface ElementWithType
 const FLIP = false; // true to reverse which attributes are shown in getTextNice()
 const MAX_THING = 128; // longest thing to log before shortening with an ellipsis in showThing()
 
-const NUM_CHAR_DIFFS = 35; // number of character differences to show in failed test
+const NUM_CHAR_DIFFS = 5; // number of character differences to show in failed test
 const NUM_LINE_DIFFS = 10; // number of lines of differences to show in failed test
 
 const MAX_BYTE = 255;
@@ -717,7 +703,7 @@ const reRemoveBlankExpects = /expect[^\n]+BLANKBLANK[^\n]+\n/g;
 const reEveryChar = /./g;
 const reRunOfSpaces = /\x20\x20+/g;
 
-const reSpacesHyphens = /[\s\x00-\x20\xA0\u00A0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
+const reSpacesHyphens = /[\s\x00-\x20\u00a0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
 
 const spaceMap: Record<string, string> = {
 	'\u0000': '[NUL]', // Null - ht tps://www.ascii-code.com/0
@@ -753,7 +739,7 @@ const spaceMap: Record<string, string> = {
 	'\u001E': '[RS]', // Record Separator
 	'\u001F': '[US]', // Unit Separator
 	//	  '\u0020': '[SP]',
-	'\u00A0': '[NBSP]',
+	[NBSP]: '[NBSP]', // \u00a0
 	//	  '\uE0020': '[TAG.SPACE]',
 	'\u00AD': '[SOFT.HYPHEN]',
 	'\u2000': '[EN.QUAD]',
@@ -2602,7 +2588,8 @@ expectToMatch(reRemoveBlankExpects, '    expect(screen.queryByText(BLANKBLANK)).
 const emptyObject = {};
 const emptyArray: string[] = [];
 const reRegex = /^regex/gm;
-const reRegexSpaces = /\bregex \tand\nspaces   \u1999/gm;
+const reRegexSpaces = /\bregex \tand\nspaces\u1999\x20\x20\x20qwe/gm;
+const reRegexSpaces2 = /\bregex \tand\nspaces   \u1999/gm;
 const typeError = new TypeError('typeerr');
 const typeErrorSpaces = new TypeError('typeerr \tand\nspaces   \u1999');
 const aNumber = new Number(3);
@@ -2790,7 +2777,7 @@ expectToBe(strV(aString), 'String : what', 'strV(String) should show String : wh
 
 expectToBe(
 	strV(typeError),
-	`TypeError${NA0}:${NA0}TypeError:\x20typeerr`,
+	`TypeError\x20:\x20TypeError:\x20typeerr`,
 	'strV(TypeError) should TypeError : ...'
 );
 
@@ -2822,7 +2809,7 @@ expectToBe(strJ(aString), 'String : what', 'strJ(String) should show');
 
 expectToBe(
 	strJ(typeError),
-	`TypeError${NA0}:${NA0}TypeError:\x20typeerr`,
+	`TypeError\x20:\x20TypeError:\x20typeerr`,
 	'strJ(TypeError) should show as stringified'
 );
 
@@ -2851,10 +2838,9 @@ expectToBe(
 );
 // MUSTDO Map, Set...
 
-// HEREIAM unit tests needed for
-// const reRunOfSpaces = /  +/g;
+// HEREIAM MUSTDO unit tests needed for
 // const reEveryChar = /./g;
-// const reNewLines = /\n/gm;
+// other regex define... values
 
 const LONG = "alpha beta gamma delta epsilon 0123456789 ";
 const LONG_TEXT = 'this \n is \x09 it \r' + LONG + LONG + LONG + LONG + LONG;
@@ -2919,18 +2905,18 @@ const b = a.substring(0, at) + '\u2000' + a[Math.floor(a.length * Math.random())
 const c = a.substring(0, 11) + '\u2000' + a[Math.floor(a.length / 2)] + a.substring(11, a.length - 1) + '    ';
 
 expectToEqual(charDiff(c, a, 2), [
-	`@11${NA0}\\x6c${NA0}!==${NA0}\\u2000${NA0}[l[EN.QUAD]]`,
-	`@12${NA0}\\x6a${NA0}!==${NA0}${NXA0}${NA0}[j${NA0}]`
+	`@11\x20\\x6c\x20!==\x20\\u2000\x20[l[EN.QUAD]]`,
+	`@12\x20\\x6a\x20!==\x20\\x20\x20[j\x20]`
 ], 'charDiff() should show two differences');
 
 expectToEqual(lineDiff(c, a, 2), [
 	{
-		"_____got": `al;kskdj;w;[EN.QUAD]${NNB}lj${NNB}[U+1999]${NNB2}[CR]`,
-		"expected": `al;kskdj;w;lj${NNB}[U+1999]${NNB2}[CR]`,
+		"_____got": `al;kskdj;w;[EN.QUAD]\x20lj\x20[U+1999][SPx2][CR]`,
+		"expected": `al;kskdj;w;lj\x20[U+1999][SPx2][CR]`,
 		"line": 0,
 	}, {
-		"_____got": NNB5,
-		"expected": NNB2,
+		"_____got": `[SPx5]`,
+		"expected": `[SPx2]`,
 		"line": 8,
 	}
 ], 'lineDiff() should show two differences');
@@ -2942,19 +2928,19 @@ if (EX_UTF_OK) {
 		"lines": "4 expected vs 4 got",
 		"diffs": [
 			"@11 \\u2000 !== \\x6c [[EN.QUAD]l]",
-			`@12 ${NXA0} !== \\x6a [ j]`
+			`@12 \\x20 !== \\x6a [ j]`
 		],
 		"expected": "al;kskdj;w;  lj ᦙ  \r \f \n \r \t \x20 \r\n \u000b \n     ",
 		"lengths": "42 expected vs 37 got",
 		"lineDiff": [
 			{
-				"_____got": `al;kskdj;w;lj${NNB}[U+1999]${NNB2}[CR]`,
-				"expected": `al;kskdj;w;[EN.QUAD]${NNB}lj${NNB}[U+1999]${NNB2}[CR]`,
+				"_____got": `al;kskdj;w;lj\x20[U+1999][SPx2][CR]`,
+				"expected": `al;kskdj;w;[EN.QUAD]\x20lj\x20[U+1999][SPx2][CR]`,
 				"line": 0,
 			},
 			{
-				"_____got": NNB2,
-				"expected": NNB5,
+				"_____got": `[SPx2]`,
+				"expected": `[SPx5]`,
 				"line": 8,
 			}
 		],
@@ -3283,7 +3269,7 @@ expectToBe(
 	elementAt(),
 	'GET EL REGEX ANY MATCH FOR /open/i [4] go up 1\nlookup @[4] of 11 matched ==> [[' +
 	'ByText#1 <button id="accordion-open" />]]\nup to parent --> <span data-testid="a' +
-	`ccordion-open" class="open"${NA0}/>\x20`,
+	`ccordion-open" class="open"\x20/>\x20`,
 	'elementAt() should return regex match, index and up message'
 );
 
@@ -3313,7 +3299,7 @@ const expectHtmlNoNLOld = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEA
 
 const expectHtmlNoNL = `GET EL RAW HTML STRING\n========== FOUND\n\n<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
 	`<img alt="icon plus" src="./icon-plus.svg" width="32" height="32" />\n\n` +
-	`<article>\n${NNB2}This${NNB3}is${NNB}an${NNB}article${NNB}in${NNB}the${NNB}document${NNB2}\n</article>\n\n<hr />\n\n` +
+	`<article>\n[SPx2]This[SPx3]is\x20an\x20article\x20in\x20the\x20document[SPx2]\n</article>\n\n<hr />\n\n` +
 	`<footer id="FOOTER" name="NAME" role="ROLE" data-testid="DATA-TESTID" ` +
 	`aria-label="LABEL" aria-description="ADESC" aria-role="AROLE" aria-rolel="AROLEL" value="false" focusable="true" aria-hidden="false" aria-modal="true" aria-invalid="false" aria-checked="true" aria-expanded="false" ` +
 	`data-focus-guard="true" data-focus-lock-disabled="false" data-autofocus-inside="true" data-popper-arrow="false" data-oranges="true" ` +
@@ -3327,7 +3313,7 @@ const expectHtmlNice = `GET EL RAW HTML STRING\n` +
 	`========== FOUND\n\n` +
 	`<h1>\nHEADING\n</h1>\n\n<main>\n\n` +
 	`<img\n\talt="icon plus"\n\tsrc="./icon-plus.svg"\n\twidth="32"\n\theight="32"/>\n\n` +
-	`<article>\n${NNB2}This${NNB3}is${NNB}an${NNB}article${NNB}in${NNB}the${NNB}document${NNB2}\n` +
+	`<article>\n[SPx2]This[SPx3]is\x20an\x20article\x20in\x20the\x20document[SPx2]\n` +
 	`</article>\n\n<hr />\n\n` +
 	`<footer\n\tid="FOOTER"\n\tname="NAME"\n\trole="ROLE"\n\tdata-testid="DATA-TESTID"\n\taria-label="LABEL"\n\taria-description="ADESC"\n\taria-role="AROLE"\n\taria-rolel="AROLEL"\n\tvalue="false"\n\tfocusable="true"\n` +
 	`\taria-hidden="false"\n\taria-modal="true"\n\taria-invalid="false"\n\taria-checked="true"\n\taria-expanded="false"\n` +
@@ -3341,7 +3327,7 @@ const expectTextNice1Old = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\
 
 const expectTextNice = `GET EL RAW HTML STRING\n========== FOUND\n\nHEADING\n\n` +
 	`\t<img \n\t\talt="icon plus"\n\t\twidth="32"\n\t\theight="32"/>\n\n` +
-	`${NNB2}This${NNB3}is${NNB}an${NNB}article${NNB}in${NNB}the${NNB}document${NNB2}\n\n` +
+	`[SPx2]This[SPx3]is\x20an\x20article\x20in\x20the\x20document[SPx2]\n\n` +
 	`\t<footer \n\t\tid="FOOTER"\n\t\tname="NAME"\n\t\trole="ROLE"\n\t\tdata-testid="DATA-TESTID"\n\t\taria-label="LABEL"\n` +
 	`\t\taria-description="ADESC"\n\t\taria-role="AROLE"\n\t\taria-rolel="AROLEL"\n\t\tfocusable="true"\n\t\taria-hidden="false"\n\t\taria-modal="true"\n\t\taria-invalid="false"\n\t\taria-checked="true"\n\t\taria-expanded="false"\n` +
 	`\t\tdata-focus-guard="true"\n\t\tdata-focus-lock-disabled="false"\n\t\tdata-autofocus-inside="true"\n\t\tdata-popper-arrow="false"\n\t\tdata-oranges="true"\n` +
@@ -3830,16 +3816,83 @@ expectToBe(show(
 
 expectToBe(
 	show(reRegexSpaces, 'raw', 30),
-	`/\\bregex \\tand\\nspaces   \\u199${EL}/gm`,
+	`/\\bregex \\tand\\nspaces\\u1999\\x${EL}/gm`,
 	'show(regex, raw, 30) should be regex with ellipsis'
 );
-expectToBe(show(reRegexSpaces, 'spc', 30),
-	`/\\bregex \\tand\\nspaces[SPx3]\\u199${EL}/gm`,
+expectToBe(
+	show(reRegexSpaces, 'spc', 30),
+	`/\\bregex \\tand\\nspaces\\u1999\\x${EL}/gm`,
 	'show(regex, spc, 30) should be regex with ellipsis'
 );
 expectToBe(show(reRegexSpaces, 'js', 30),
-	`/\\bregex \\tand\\nspaces   \\u199${EL}/gm`,
+	`/\\bregex \\tand\\nspaces\\u1999\\x${EL}/gm`,
 	'show(regex, js, 30) should be regex with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'raw', 30),
+	`/\\bregex \\tand\\nspaces   \\u199${EL}/gm`,
+	'show(regex2, raw, 30) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'raw', 29),
+	`/\\bregex \\tand\\nspaces   \\u19${EL}/gm`,
+	'show(regex2, raw, 29) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'raw', 28),
+	`/\\bregex \\tand\\nspaces   \\u1${EL}/gm`,
+	'show(regex2, raw, 28) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'raw', 27),
+	`/\\bregex \\tand\\nspaces   \\u${EL}/gm`,
+	'show(regex2, raw, 27) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'raw', 26),
+	`/\\bregex \\tand\\nspaces   \\${EL}/gm`,
+	'show(regex2, raw, 26) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'spc', 30),
+	`/\\bregex \\tand\\nspaces[SPx3]\\u199${EL}/gm`,
+	'show(regex2, spc, 30) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'spc', 27),
+	`/\\bregex \\tand\\nspaces[SPx3]\\u${EL}/gm`,
+	'show(regex2, spc, 27) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'spc', 24),
+	`/\\bregex \\tand\\nspaces[SPx2]${EL}/gm`,
+	'show(regex2, spc, 24) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'js', 30),
+	`/\\bregex \\tand\\nspaces   \\u199${EL}/gm`,
+	'show(regex2, js, 30) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'js', 27),
+	`/\\bregex \\tand\\nspaces   \\u${EL}/gm`,
+	'show(regex2, js, 27) should be regex2 with ellipsis'
+);
+
+expectToBe(
+	show(reRegexSpaces2, 'js', 24),
+	`/\\bregex \\tand\\nspaces  ${EL}/gm`,
+	'show(regex2, js, 24) should be regex2 with ellipsis'
 );
 
 expectToBe(
@@ -3966,18 +4019,18 @@ expectToBe(
 );
 
 expectToBe(show(anArray, 'spc'),
-	`[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp${NA0}:${NA0}/a/g"[LF]]`,
+	`[[LF][SPx2]1,[LF][SPx2]"2",[LF][SPx2]"RegExp\x20:\x20/a/g"[LF]]`,
 	'show(anArray, spc) should be marked with spaces'
 );
 
 expectToBe(show(anArray, 'js'),
-	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp${NA0}:${NA0}/a/g"\\n]`,
+	`[\\n\x20\x201,\\n\x20\x20"2",\\n\x20\x20"RegExp\x20:\x20/a/g"\\n]`,
 	'show(anArray, js) should be stringified with \\n markers'
 );
 
 expectToBe(
   show(escapedLines, 'spc'),
-  `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB]${NNB3S}[CR][LF]${NA0}[VT] [LF][SPx2]${RDQ}`,
+  `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB][SPx3][CR][LF]\x20[VT] [LF][SPx2]${RDQ}`,
   'show() should requote white space characters handling newlines'
 );
 
@@ -4035,9 +4088,6 @@ if (showAllPropSources) {
 	expectToBe(
 	  showThing(elDump),
 		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][${EL}>`,
-		//XXXXtarget="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
-		//[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-		//`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${A0}/>`,
 		'showThing(Element/React1) should show the element shortened'
 	);
 
@@ -4045,7 +4095,7 @@ if (showAllPropSources) {
 		getElementInfo(elDump),
 		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//\"][target="/TARGETp/"][rel="//RELm"][disabled="DISABLED//"][focusable="/FOCUSABLEp/"][width="//WIDTHm"][height="HEIGHT//"][hidden="/HIDDENp/"]` +
 		`[aria-hidden="//ARHIDDENm"][tabIndex="TABINDEX//"][for="/FORp/"][label="//LABELm"][aria-label="ARLABEL//"][value="/VALUEp/"][defaultValue="//DEFVALUEm"][selected="SELECTED//"][checked="/CHECKEDp/"][aria-checked="//ARCHECKEDm"][aria-invalid="ARINVALID//"][aria-expanded="/AREXPANDEDp/"]` +
-		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object${NA0}/>`,
+		`[title="//TITLEm"][placeholder="PLACEHOLDER//"][alt="/ALTp/"][href="//HREFm"].CLASSNAME//.\x20Object\x20/>`,
 		'getElementInfo(Element/React1) should respond with Element and React values'
 	);
 } else {
@@ -4061,7 +4111,7 @@ delete elDump.__reactInternalInstance1234;
 if (showAllPropSources) {
 	expectToBe(
 		getElementInfo(elDump),
-		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object${NA0}/>`,
+		`<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//"][disabled="DISABLED//"][height="HEIGHT//"][tabIndex="TABINDEX//"][aria-label="ARLABEL//"][selected="SELECTED//"][aria-invalid="ARINVALID//"][placeholder="PLACEHOLDER//"].CLASSNAME//.\x20Object\x20/>`,
 		'getElementInfo(Element1) should respond with Element values only'
 	);
 } else {
@@ -4126,28 +4176,29 @@ let targetDump = `<TAGNAME#ID//[type="TEXT//"][role="ROLE//"][aria-role="AROLE//
 if (!showAllPropSources) {
 	targetDump = targetDump.replace(/\/\//g, '');
 }
-const currentDump = `${NA0}<input\x20Object${NA0}/>`;
-const relatedDump = `${NA0}<div\x20Object${NA0}/>`;
+const currentDump = `\x20<input\x20Object\x20/>`;
+const relatedDump = `\x20<div\x20Object\x20/>`;
 
 expectToBe(
 	showEvent(myEvent, 'PREFIX:'),
 	`PREFIX:EVENT\x20Object CLICK/@1719410356201\x20ONCLICK ONCLICKCAPTURE eventPhase(3)\x20isTrusted\x20bubbles\x20cancellable\x20defaultPrevented\x20isPersistent\x20isDefaultPrevented\x20isPropagationStopped\x20\n` +
 	`details(DETAILS)\x20metaKey\x20shiftKey\x20` +
 	`\nbutton\x20buttons\x20screenXY(12,43)\x20clientXY(23,0)\x20pageXY(0,32)\x20` +
-	`\ntarget: <TAGNAME#ID//[type=\"TEXT//\"][role=\"ROLE//\"]` +
-	`[aria-role=\"AROLE//\"][disabled=\"DISABLED//\"][height=\"HEIGHT//\"][tabIndex=\"TABINDEX//\"][aria-label=\"ARLABEL//\"][selected=\"SELECTED//\"][aria-invalid=\"ARINVALID//\"][placeholder=\"PLACEHOLDER//\"].CLASSNAME//.\x20Object${NA0}/>\n` +
+	`\ntarget: ${targetDump}\n` +
 	`currentTarget:${currentDump}\n` +
 	`relatedTarget:${relatedDump}\n` +
-	`view:${NA0}Object${NA0}${NA0}{\n` +
+	`view:\x20Object\x20\x20{\n` +
 	`\x20\x20\"what\":\x20\"VIEW\"\n` +
 	`}`,
 	`showEvent(event) should show event details`
 );
 
-const spacesHyphens = '  \f\n\r\t\v | \x20 \x09 \x0a \x0b \x0c \x0d \x0d\x0a \xa0 \xad | \u0020 \u0009 ' +
-	'\u000a \u000b \u000c \u000d \u000d\u000a \u00a0 \u00ad \u202F \uFEFF \u2000 ' +
-	'\u2001 \u2002 \u2003 \u2004 \u2005 \u2006 \u2007 \u2008 \u2009 \u200A \u200B ' +
-	'\u205F \u3000 \u303F \u2010 \u2011 \u2027 \uFE63 \uFF0D';
+const spacesHyphens = `  \f\n\r\t\v | \x20 \x09 \x0a \x0b \x0c \x0d \x0d\x0a \xad | \u0020 \u0009 ` +
+	`\u000a \u000b \u000c \u000d \u000d\u000a \u00ad \u202F \uFEFF \u2000 ` +
+	`\u2001 \u2002 \u2003 \u2004 \u2005 \u2006 \u2007 \u2008 \u2009 \u200A \u200B ` +
+	`\u205F \u3000 \u303F \u2010 \u2011 \u2027 \uFE63 \uFF0D`;
+
+const spaces2 = `X ${NBSP} Y ${U1} Z`;
 
 expectToBe(indicateSpaces(), ``, 'indicateSpaces(undefined) should default to empty');
 expectToBe(indicateSpaces(' '), ` `, 'indicateSpaces() should not replace a single space');
@@ -4159,32 +4210,39 @@ expectToBe(indicateSpaces('\x20 \x20  \x20'), `[SPx6]`, 'indicateSpaces() should
 
 EX_AS_JS = true;
 expectToBe(
+	indicateSpaces(spaces2),
+	`X [NBSP] Y 1 Z`,
+	'indicateSpaces(spaces2) should handle NBSP properly'
+);
+
+expectToBe(
 	indicateSpaces(spacesHyphens),
-	`${NNB2}[FF]\n[LF]\n[CR]\n[TAB][VT]\n${NA0}|${NNB3S}[TAB]${NNB}[LF]\n${NNB}[VT]\n${NNB}[FF]\n${NNB}[CR]\n${NNB}[CR]\n[LF]\n` +
-	`\x20[NBSP]\x20[SOFT.HYPHEN]${NA0}|${NNB3S}[TAB]${NA0}[LF]\n${NA0}[VT]\n${NA0}[FF]\n${NA0}[CR]\n${NA0}[CR]\n[LF]\n` +
-	`${NA0}[NBSP]${NA0}[SOFT.HYPHEN]${NA0}[NARROW.NBSP]${NA0}[ZERO.NBSP]${NA0}[EN.QUAD]${NA0}[EM.QUAD]${NA0}[EN.SPACE]` +
-	`${NA0}[EM.SPACE]${NA0}[THREE.PER.EM.SPACE]${NA0}[FOUR.PER.EM.SPACE]${NA0}[SIX.PER.EM.SPACE]${NA0}[FIGURE.SPACE]` +
-	`${NA0}[PUNCT.SPACE]${NA0}[THIN.SPACE]${NA0}[HAIR.SPACE]${NA0}[ZERO.SPACE]${NA0}[MED.MATH.SPACE]${NA0}[IDEOGRAPHIC.SPACE]` +
-	`${NA0}[IDEOGRAPHIC.HALF.FILL.SPACE]${NA0}[HYPHEN]${NA0}[NB.HYPHEN]${NA0}[HYPHEN.POINT]${NA0}[SMALL.HYPHEN]` +
-	`${NA0}[FULL.WIDTH.HYPHEN]`,
+	`[SPx2][FF]\n[LF]\n[CR]\n[TAB][VT]\n\x20|[SPx3][TAB]\x20[LF]\n\x20[VT]\n\x20[FF]\n\x20[CR]\n\x20[CR]\n[LF]\n` +
+	`\x20[SOFT.HYPHEN]\x20|[SPx3][TAB]\x20[LF]\n\x20[VT]\n\x20[FF]\n\x20[CR]\n\x20[CR]\n[LF]\n` +
+	`\x20[SOFT.HYPHEN]\x20[NARROW.NBSP]\x20[ZERO.NBSP]\x20[EN.QUAD]\x20[EM.QUAD]\x20[EN.SPACE]` +
+	`\x20[EM.SPACE]\x20[THREE.PER.EM.SPACE]\x20[FOUR.PER.EM.SPACE]\x20[SIX.PER.EM.SPACE]\x20[FIGURE.SPACE]` +
+	`\x20[PUNCT.SPACE]\x20[THIN.SPACE]\x20[HAIR.SPACE]\x20[ZERO.SPACE]\x20[MED.MATH.SPACE]\x20[IDEOGRAPHIC.SPACE]` +
+	`\x20[IDEOGRAPHIC.HALF.FILL.SPACE]\x20[HYPHEN]\x20[NB.HYPHEN]\x20[HYPHEN.POINT]\x20[SMALL.HYPHEN]` +
+	`\x20[FULL.WIDTH.HYPHEN]`,
 	'indicateSpaces(spacesHyphens) should show various white space and hypens as [TEXT]'
 );
 
-const e1node = `[NBSP]|[NBSP]\x20[NBSP]`;
-const e1browser = `${NA0}|${NNB3S}`;
-const e1one = `${A0}|${NB3S}`;
-const ee = EX_JS_NODE ? e1node : EX_ONECOMP ? e1one : e1browser;
+expectToBe(
+	indicateSpaces(replaceCharsCodePt(spaces2)),
+	`X [NBSP] Y 1 Z`,
+	'indicateSpaces(replaceCharsCodePt(spaces2) should handle NBSP properly'
+);
 
 expectToBe(
 	indicateSpaces(replaceCharsCodePt(spacesHyphens)),
-	`${NNB2}[U+000C][LF]\n[CR]\n[U+0009][U+000B]${ee}[U+0009]${NA0}[LF]\n${NA0}[U+000B]${NA0}[U+000C]` +
-	`${NA0}[CR]\n${NA0}[CR]\n[LF]\n${NA0}[NBSP]${NA0}[SOFT.HYPHEN]${NA0}|${NNB3}[U+0009]${NA0}[LF]\n` +
-	`${NA0}[U+000B]${NA0}[U+000C]${NA0}[CR]\n${NA0}` +
-	`[CR]\n[LF]\n${NA0}[NBSP]${NA0}[SOFT.HYPHEN]${NA0}[U+202F]${NA0}[U+FEFF]${NA0}[U+2000]${NA0}[U+2001]${NA0}` +
-	`[U+2002]${NA0}[U+2003]${NA0}[U+2004]${NA0}[U+2005]${NA0}[U+2006]${NA0}[U+2007]${NA0}[U+2008]${NA0}[U+2009]${NA0}` +
-	`[U+200A]${NA0}[U+200B]${NA0}[U+205F]${NA0}[U+3000]${NA0}[U+303F]${NA0}[U+2010]${NA0}[U+2011]${NA0}[U+2027]${NA0}` +
-	`[U+FE63]${NA0}[U+FF0D]`,
-	'replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.'
+	`[SPx2][U+000C][LF]\n[CR]\n[U+0009][U+000B]\x20|[SPx3][U+0009]\x20[LF]\n\x20[U+000B]\x20[U+000C]` +
+	`\x20[CR]\n\x20[CR]\n[LF]\n\x20[SOFT.HYPHEN]\x20|[SPx3][U+0009]\x20[LF]\n` +
+	`\x20[U+000B]\x20[U+000C]\x20[CR]\n\x20` +
+	`[CR]\n[LF]\n\x20[SOFT.HYPHEN]\x20[U+202F]\x20[U+FEFF]\x20[U+2000]\x20[U+2001]\x20` +
+	`[U+2002]\x20[U+2003]\x20[U+2004]\x20[U+2005]\x20[U+2006]\x20[U+2007]\x20[U+2008]\x20[U+2009]\x20` +
+	`[U+200A]\x20[U+200B]\x20[U+205F]\x20[U+3000]\x20[U+303F]\x20[U+2010]\x20[U+2011]\x20[U+2027]\x20` +
+	`[U+FE63]\x20[U+FF0D]`,
+	'indicateSpaces(replaceCharsCodePt(spacesHyphens) should show all unicode code points in the string.'
 );
 
 testSummary();
