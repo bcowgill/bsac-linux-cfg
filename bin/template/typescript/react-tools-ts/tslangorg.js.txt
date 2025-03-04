@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_LET_FAIL_TESTS = exports.EX_REGEX = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = void 0;
+exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
 exports.jsonKeySorter = jsonKeySorter;
 exports.noop = noop;
 exports.elementAt = elementAt;
@@ -87,11 +87,12 @@ const win = {
         width: 1204
     }
 };
-exports.EX_BRIEF = false;
+exports.EX_REGEX = true; // turn off unit tests for regexes
+exports.EX_BRIEF = false; // show NOT OK on failure with no details
 exports.EX_NOISY = false;
 exports.EX_QUIET = true;
-exports.EX_REGEX = true; // turn off unit tests for regexes
-exports.EX_LET_FAIL_TESTS = false;
+exports.EX_LET_FAIL_TESTS = false; // run tests that fail so you can check the output for diagnostics
+exports.EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
 exports.EX_JS_NODE = true; // transpiled to JS and run in node
 exports.EX_ONECOMP = false; // onecompiler site?
 exports.EX_DATE_NODE = exports.EX_JS_NODE || exports.EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
@@ -401,20 +402,20 @@ function expectToMatch(re, text, desc = 'expectToMatch', times = 1, matchArray) 
         }
         if (!failed && !exports.EX_QUIET) {
             quietly(`OK ${desc} matches: ${times}`);
-            briefly(`#    the regex:`, re);
-            briefly(`# matched text: [${text}]`);
+            briefly(`#    the regex:`, re.toString());
+            briefly(`# matched text: `, show(text, exports.EX_SHOW_MATCH));
             if (matchArray) {
-                briefly(`#  match array:`, gotMatches);
+                briefly(`#  match array:`, got);
             }
         }
     } // if matches === times
     if (failed) {
         EX_FAILED++;
         logger(`NOT OK ${desc}`);
-        briefly(`#            the regex:`, re);
-        briefly(`#   did not match text: [${text}]`);
+        briefly(`#            the regex:`, re.toString());
+        briefly(`#   did not match text: `, show(text, exports.EX_SHOW_MATCH));
         briefly(`#     expected matches:`, times);
-        briefly(`#          got matches:`, matches, gotMatches);
+        briefly(`#          got matches:`, matches, got);
         if (matchArray) {
             briefly(`# expected match array:`, matchArray.length, expected);
             briefly(`  index: ${matchArray.index},`);
@@ -430,17 +431,17 @@ function expectNotToMatch(re, text, desc = 'expectNotToMatch', times = 0) {
     if (matches === times) {
         if (!exports.EX_QUIET) {
             quietly(`OK ${desc} matches: ${times}`);
-            briefly(`#          the regex:`, re);
-            briefly(`# did not match text: [${text}]`);
+            briefly(`#          the regex:`, re.toString());
+            briefly(`# did not match text: `, show(text, exports.EX_SHOW_MATCH));
         }
     }
     else {
         EX_FAILED++;
         logger(`NOT OK ${desc}`);
-        briefly(`#        the regex:`, re);
-        briefly(`#     matched text: [${text}]`);
+        briefly(`#        the regex:`, re.toString());
+        briefly(`#     matched text: `, show(text, exports.EX_SHOW_MATCH));
         briefly(`# expected matches:`, times);
-        briefly(`#      got matches:`, matches, text.match(re));
+        briefly(`#      got matches:`, matches, strJ(text.match(re)));
     }
 } // expectNotToMatch()
 function expectToReplace(re, text, expected, desc = 'expectToReplace', pattern = '1:[$1] 2:[$2] 3:[$3]') {
@@ -455,15 +456,15 @@ function expectToSplit(re, text, expected, desc = 'expectToSplit') {
     if (got === split) {
         if (!exports.EX_QUIET) {
             quietly(`OK ${desc}`);
-            briefly(`#      the regex:`, re);
-            briefly(`# splil the text: [${text}]`);
+            briefly(`#      the regex:`, re.toString());
+            briefly(`# splil the text: `, show(text, exports.EX_SHOW_MATCH));
         }
     }
     else {
         EX_FAILED++;
         logger(`NOT OK ${desc}`);
-        briefly(`#     the regex:`, re);
-        briefly(`# did not split: [${text}]`);
+        briefly(`#     the regex:`, re.toString());
+        briefly(`# did not split: `, show(text, exports.EX_SHOW_MATCH));
         briefly(`#      expected:`, split);
         briefly(`#           got:`, got);
     }
@@ -553,11 +554,12 @@ function expect(got) {
     });
 */
 const appId = 'app-name';
-const FLIP = false; // true to reverse which attributes are shown in getTextNice()
+;
+;
 const MAX_THING = 128; // longest thing to log before shortening with an ellipsis in showThing()
 const NUM_CHAR_DIFFS = 5; // number of character differences to show in failed test
 const NUM_LINE_DIFFS = 10; // number of lines of differences to show in failed test
-const MAX_BYTE = 255;
+const FLIP = false; // true to reverse which attributes are shown in getTextNice()
 // checkDocumentTextEmpty() specify hidden text that is present even in an empty document
 const reVersionNickname = />\s*version\.nickname: [^<]+</; // NOSONAR
 // checkPageIds() specify which non-unique or numbered id values are allowed.
@@ -570,7 +572,7 @@ const reAttrsToShow = /^(id|name|type|role|target|rel|disabled|focusable|hidden|
 // show class and style also, more noisy but may be useful in some cases.
 //const reAttrsToShow = /^(class|style|id|name|type|role|target|rel|disabled|focusable|hidden|width|height|tabindex|for|title|placeholder|alt|href|(data|aria)-.+)$/i;
 // getElementInfo configure what props/attrs to show when dumping elements
-const showAllPropSources = true; // MUSTDO tests fail with false on node!
+const showAllPropSources = true;
 const attrsToShow = 'data-testid:name:type:role:aria-role:target:rel:disabled:focusable:width:height:hidden:aria-hidden:tabIndex:for:label:aria-label:value:defaultValue:selected:checked:aria-checked:aria-invalid:aria-expanded:title:placeholder:alt:href'.split(/:/g);
 let _LS = 'L'; // £ pound sterling UTF8
 let _EL = '_'; // … ellipsis UTF8
@@ -594,6 +596,7 @@ exports.LRDQ = _LRDQ;
 exports.reRepairLDQU = /^(\[U\+201C\])?\[U\+201C\]/;
 exports.reRepairRDQU = /\[U\+201D\](\[U\+201D\])?$/;
 exports.reRepairEL = /\[U\+2026\](..?.?.?.?.?)$/;
+const MAX_BYTE = 255;
 const NL = '{NL}';
 const TAB = '\t';
 const SPC = '[SPACE]';
@@ -626,9 +629,11 @@ const reBlankLines = /\n\s*\n/g;
 const reAttrIdentity = /(\b(id|name|role|data-[\w-]+|aria-(label|desc|role)[\w-]*)="[^"]+")/g;
 const reElemNoAttr = /<\/?\w+\s*\/?>/g;
 const reMultiSpaced = /\n\s*\n+/g;
+const reLineWithSpaces = /\n *\n/g;
 const reNicePreamble = /(.|\n)+={10} .+?\n/gm; // NOSONAR
 const reInitialLineSpaces = /^\s*/gm;
 const reNewLines = /\n/gm;
+const reRunOfNewlines = /\n+/g;
 const reNewLineIsh = /(?:\\n|\n)/gm;
 const reExpectStraggler = /^\s*expect\(screen\.queryByText\(RE\[\s*$/gm; // NOSONAR
 const reEmbeddedRE = /RE\[(.+?)\]ER/g;
@@ -636,6 +641,9 @@ const reSpaceMarker = /(\[SPACE\])+/g;
 const reRemoveBlankExpects = /expect[^\n]+BLANKBLANK[^\n]+\n/g;
 const reEveryChar = /./g;
 const reRunOfSpaces = /\x20\x20+/g;
+const reRunOfWhiteSpace = /\s+/g;
+const reBaseTypeof = /^(boolean|number|string|undefined)$/;
+const reObjTypeof = /\[object\s([^\]]+)\]/;
 const reSpacesHyphens = /[\s\x00-\x20\u00a0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
 const spaceMap = {
     '\u0000': '[NUL]', // Null - ht tps://www.ascii-code.com/0
@@ -1284,7 +1292,6 @@ function charDiff(got, expected, num = NUM_CHAR_DIFFS) {
     }
     return diffsAt;
 } // charDiff()
-;
 /**
  * answers with an array of line differences between multi-line strings.
  * @param got {string} the string value generated by the test case.
@@ -1311,7 +1318,6 @@ function lineDiff(got, expected, num = NUM_LINE_DIFFS) {
     }
     return out;
 } // lineDiff()
-;
 function stringDiff(got, expected, num) {
     const gotLen = got.length;
     const expLen = expected.length;
@@ -1636,8 +1642,7 @@ function getTypeName(thing) {
         else if (type === 'function') {
             return 'Function ';
         }
-        else if (/^(boolean|number|string|undefined)$/.test(type)) {
-            // MUSTDO regex define...^^^
+        else if (reBaseTypeof.test(type)) {
             return '';
         }
         const proto = Object.getPrototypeOf(thing);
@@ -1647,8 +1652,7 @@ function getTypeName(thing) {
         // stringifying like this works better to get the type name.
         return [name, '']
             .join(' ')
-            .replace(/\[object\s([^\]]+)\]/, '$1');
-        // MUSTDO regex define...^^^
+            .replace(reObjTypeof, '$1');
     }
     catch (exception) {
         return `EXCEPTION getTypeName[${exception}]`;
@@ -1886,8 +1890,8 @@ function getElementInfo(element, prefix = '') {
             attrsToShow.forEach((attr) => {
                 bits.push(attrVal(attr));
             });
-            bits.push(`${attr('className', '.', ' ').replace(/\s+/g, '.')}\x20`, getTypeName(element), '/>');
-            // MUSTDO regex define...^^^^
+            const classes = attr('className', '.', ' ').replace(reRunOfWhiteSpace, '.');
+            bits.push(`${classes}\x20`, getTypeName(element), '/>');
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
     }
@@ -1994,9 +1998,8 @@ function showEvent(event, prefix = '') {
             }
             result = result
                 .join('')
-                .replace(/\n *\n/g, '\n')
-                .replace(/\n+/g, '\n');
-            // MUSTDO regex define...^^^^
+                .replace(reLineWithSpaces, '\n')
+                .replace(reRunOfNewlines, '\n');
         }
         else {
             result = `${prefix}NOT EVENT??? ${typeof event} ${getTypeName(event)} ${showThing(event)}`;
@@ -2007,6 +2010,10 @@ function showEvent(event, prefix = '') {
 if (exports.EX_REGEX) {
     //==========================================================
     // Regex tests to validate it's working...
+    expectToMatch(reEveryChar, 's', 'reEveryChar should match single character');
+    expectToMatch(reEveryChar, 's', 'reEveryChar should match two characters');
+    expectToMatch(reEveryChar, 's \u2026', 'reEveryChar should match spaces and characters', 3);
+    expectNotToMatch(reEveryChar, '', 'reEveryChar should NOT match empty string');
     expectToMatch(reRunOfSpaces, '  ', 'reRunOfSpaces should match two or more spaces');
     expectToMatch(reRunOfSpaces, ' \x20', 'reRunOfSpaces should match two or more mixed spaces');
     expectToMatch(reRunOfSpaces, '\x20\x20', 'reRunOfSpaces should match two or more \\x20 spaces');
@@ -2100,6 +2107,28 @@ if (exports.EX_REGEX) {
     expectToMatch(reStringified, 'this is[object Object]text', 'reStringified should match embedded stringified object');
     expectToMatch(reStringified, 'this is function text', 'reStringified should match stringified function');
     expectToMatch(reStringified, 'this isfunction text', 'reStringified should match embedded stringified function');
+    expectNotToMatch(reBaseTypeof, 'this is undefined text', 'reBaseTypeof should NOT match embedded typeof');
+    expectToMatch(reBaseTypeof, 'undefined', 'reBaseTypeof should match undefined', 2, ["undefined", "undefined"]);
+    expectNotToMatch(reBaseTypeof, 'UNDEFINED', 'reBaseTypeof should NOT match literal UNDEFINED');
+    expectToMatch(reBaseTypeof, 'boolean', 'reBaseTypeof should match literal boolean', 2);
+    expectToMatch(reBaseTypeof, 'number', 'reBaseTypeof should match literal number', 2);
+    expectToMatch(reBaseTypeof, 'string', 'reBaseTypeof should match literal string', 2);
+    expectNotToMatch(reBaseTypeof, 'null', 'reBaseTypeof should NOT match literal null');
+    expectNotToMatch(reBaseTypeof, 'NaN', 'reBaseTypeof should NOT match literal NaN');
+    expectNotToMatch(reBaseTypeof, 'BaNaNa', 'reBaseTypeof should NOT match BANANA');
+    expectNotToMatch(reBaseTypeof, '[object Object]', 'reBaseTypeof should NOT match stringified object');
+    expectToMatch(reObjTypeof, '[object Object]', 'reObjTypeof should match stringified object', 2, ["[object Object]", "Object"]);
+    expectToMatch(reObjTypeof, '[object HTMLElement]', 'reObjTypeof should match stringified object with Class name', 2, ["[object HTMLElement]", "HTMLElement"]);
+    expectToMatch(reObjTypeof, 'this is [object HTMLElement] text', 'reObjTypeof should match embedded object', 2);
+    expectNotToMatch(reObjTypeof, '[OBJECT Object]', 'reObjTypeof should NOT match uppercase stringified object');
+    expectNotToMatch(reObjTypeof, 'undefined', 'reObjTypeof should NOT match undefined');
+    expectNotToMatch(reObjTypeof, 'UNDEFINED', 'reObjTypeof should NOT match literal UNDEFINED');
+    expectNotToMatch(reObjTypeof, 'boolean', 'reObjTypeof should NOT match literal boolean');
+    expectNotToMatch(reObjTypeof, 'number', 'reObjTypeof should NOT match literal number');
+    expectNotToMatch(reObjTypeof, 'string', 'reObjTypeof should NOT match literal string');
+    expectNotToMatch(reObjTypeof, 'null', 'reObjTypeof should NOT match literal null');
+    expectNotToMatch(reObjTypeof, 'NaN', 'reObjTypeof should NOT match literal NaN');
+    expectNotToMatch(reObjTypeof, 'BaNaNa', 'reObjTypeof should NOT match BANANA');
     expectToMatch(reIndexUp, '[10]', 'reIndexUp should match indexing', 4);
     expectToMatch(reIndexUp, '  [0]   ', 'reIndexUp should match indexing with spacing', 4);
     expectToMatch(reIndexUp, '  [-12]   ', 'reIndexUp should match negative index', 4);
@@ -2194,6 +2223,11 @@ if (exports.EX_REGEX) {
     expectToMatch(reExtraSpacesElem, 'blah   >', 'reExtraSpacesElem should match excess space on end of element');
     expectNotToMatch(reExtraSpacesElem, 'blah>', 'reExtraSpacesElem should NOT match no spaces on end of element');
     expectNotToMatch(reExtraSpacesElem, 'blah />', 'reExtraSpacesElem should NOT match single space on closure of element');
+    expectToMatch(reRunOfWhiteSpace, 'blah >', 'reRunOfWhiteSpace should match single space');
+    expectToMatch(reRunOfWhiteSpace, 'blah\f>', 'reRunOfWhiteSpace should match single white space');
+    expectToMatch(reRunOfWhiteSpace, 'blah  \v >', 'reRunOfWhiteSpace should match excess spaces');
+    expectToMatch(reRunOfWhiteSpace, '  bl \t  ah   > ', 'reRunOfWhiteSpace should match initial, medial, final white spaces', 4);
+    expectNotToMatch(reRunOfWhiteSpace, 'blah>', 'reRunOfWhiteSpace should NOT match no spaces');
     expectToMatch(rePlainElem, '<span>', 'rePlainElem should match opening element');
     expectToMatch(rePlainElem, '</spAN>', 'rePlainElem should match closing element');
     expectToMatch(rePlainElem, 'text<span> embedded', 'rePlainElem should match embedded opening element');
@@ -2207,6 +2241,23 @@ if (exports.EX_REGEX) {
     expectNotToMatch(reBlankLines, '\n', 'reBlankLines should NOT match single newline');
     expectToMatch(reBlankLines, 'this\n  \ndouble\n  \n  \n  spaced', 'reBlankLines should match multiple newlines and text breaks', 2);
     expectToReplace(reBlankLines, '\n \n \t \n\n\n\n', 'BRK', 'reBlankLines should replace multiple newlines', 'BRK');
+    expectToMatch(reLineWithSpaces, '\n\n', 'reLineWithSpaces should match two newlines');
+    expectToMatch(reLineWithSpaces, 'what\n\n   ', 'reLineWithSpaces should match embedded newlines');
+    expectToMatch(reLineWithSpaces, '\n     \n', 'reLineWithSpaces should match two newlines and only spaces between');
+    expectNotToMatch(reLineWithSpaces, '\n  \t \n', 'reLineWithSpaces should NOT match two newlines and white spaces between');
+    expectToMatch(reLineWithSpaces, '\n\n\n   \n\n\n', 'reLineWithSpaces should match multiple newlines with one line of spaces', 3);
+    expectNotToMatch(reLineWithSpaces, '\n', 'reLineWithSpaces should NOT match single newline');
+    expectToMatch(reLineWithSpaces, 'this\n  \ndouble\n  \n  \n  spaced', 'reLineWithSpaces should match multiple newlines and text breaks', 2);
+    expectToReplace(reLineWithSpaces, '\n \n   \n\n\n\n', 'BRK   BRKBRK', 'reLineWithSpaces should replace multiple newlines1', 'BRK');
+    expectToReplace(reLineWithSpaces, '\n\n \n   \n\n\n\n', 'BRK BRKBRK\n', 'reLineWithSpaces should replace multiple newlines2', 'BRK');
+    expectToMatch(reRunOfNewlines, '\n', 'reRunOfNewlines should match single newline');
+    expectToMatch(reRunOfNewlines, '\n\n', 'reRunOfNewlines should match two newlines');
+    expectToMatch(reRunOfNewlines, 'what\n\n   ', 'reRunOfNewlines should match embedded newlines');
+    expectToMatch(reRunOfNewlines, '\n  \t \n', 'reRunOfNewlines should match two newlines and spaces between', 2);
+    expectToMatch(reRunOfNewlines, '\n\n\n\n\n', 'reRunOfNewlines should match multiple newlines');
+    expectToMatch(reRunOfNewlines, 'this\n  \ndouble\n  \n  \n  spaced', 'reRunOfNewlines should match multiple newlines and text breaks', 5);
+    expectToReplace(reRunOfNewlines, '\n \n \t \n\n\n\n', 'BRK BRK \t BRK', 'reRunOfNewlines should replace multiple newlines', 'BRK');
+    expectNotToMatch(reRunOfNewlines, 'what   ', 'reRunOfNewlines should NOT match no newlines');
     expectToMatch(reAttrIdentity, 'xx  id="false"', 'reAttrIdentity should match id attribute');
     expectToMatch(reAttrIdentity, 'name="Fred"', 'reAttrIdentity should match name attribute');
     expectToMatch(reAttrIdentity, 'role="Fred"', 'reAttrIdentity should match role attribute');
@@ -2497,9 +2548,6 @@ expectToBe(strJ(anObject), `{\n\x20\x20"a":\x202\n}`, 'strJ(object) should show 
 expectToBe(strJ(anArray), `[\n\x20\x201,\n\x20\x20"2",\n\x20\x20"RegExp : /a/g"\n]`, 'strJ(array) should show all data types');
 expectToBe(strJ(jsonAll), strJ(expectJson), 'strJ(jsonAll) should show all stringified values supported');
 // MUSTDO Map, Set...
-// HEREIAM MUSTDO unit tests needed for
-// const reEveryChar = /./g;
-// other regex define... values
 const LONG = "alpha beta gamma delta epsilon 0123456789 ";
 const LONG_TEXT = 'this \n is \x09 it \r' + LONG + LONG + LONG + LONG + LONG;
 const LONG_TEXT_U = 'this \n is \x09 it \r \u2002' + LONG + LONG + LONG + LONG + LONG;
