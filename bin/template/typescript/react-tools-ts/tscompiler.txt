@@ -9,6 +9,7 @@
 // ht tps://onecompiler.com/typescript/439tv7u2x
 // ht tps://onecompiler.com/typescript/439x4usvv
 // ht tps://onecompiler.com/typescript/439xxyxvz
+// ht tps://onecompiler.com/typescript/43awqp4hr
 // Global setup to simulate a browser window like environment.
 const win : any = {
 	closed             : false,
