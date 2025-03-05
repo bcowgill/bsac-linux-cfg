@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
+exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.ELLIPSIS_MAP = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_ONECOMP = exports.EX_JS_NODE = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
 exports.jsonKeySorter = jsonKeySorter;
 exports.noop = noop;
 exports.elementAt = elementAt;
@@ -29,6 +29,8 @@ exports.elementInfo = elementInfo;
 exports.getEl = getEl;
 exports.getTypeName = getTypeName;
 exports.enquote = enquote;
+exports.set2Array = set2Array;
+exports.map2Object = map2Object;
 exports.shortenDump = shortenDump;
 exports.showThing = showThing;
 exports.has = has;
@@ -297,7 +299,23 @@ function expectNotToBe(got, expected, desc = 'expectNotToBe') {
 // ht tps://www.npmjs.com/package/json-stable-stringify
 // ht tps://stackoverflow.com/a/43636793
 // ht tps://gist.github.com/davidfurlong/463a83a33b70a3b6618e97ec9679e490
-function jsonKeySorter(_unusedKey, value) {
+function jsonKeySorter(key, value) {
+    // ENABLE Map
+    if ((value instanceof Set)) {
+        const jsonSet = [`__instanceof Set`];
+        for (const item of value.entries()) {
+            jsonSet.push(item[0]);
+        }
+        return jsonKeySorter(key, jsonSet);
+    }
+    if ((value instanceof Map)) {
+        const jsonMap = { __instanceof: 'Map' };
+        for (const item of value.entries()) {
+            jsonMap[item[0]] = item[1];
+        }
+        return jsonKeySorter(key, jsonMap);
+    }
+    // ENABLE Map End
     return (value instanceof Object &&
         !(value instanceof Array) &&
         !(value instanceof Function) &&
@@ -309,8 +327,8 @@ function jsonKeySorter(_unusedKey, value) {
         !(value instanceof String)) ?
         Object.keys(value)
             .sort()
-            .reduce((sorted, key) => {
-            sorted[key] = strV(value[key]) || value[key];
+            .reduce((sorted, keyInner) => {
+            sorted[keyInner] = jsonKeySorter(keyInner, value[keyInner]);
             return sorted;
         }, {}) :
         (strV(value) || value);
@@ -325,7 +343,17 @@ function strV(what) {
     const type = typeof what;
     const name = getTypeName(what);
     // console.warn(`strV [${type}] [${name}] (${what})`);
-    // MUSTDO Map, Set
+    // ENABLE Map
+    if (what instanceof Set) {
+        const set = set2Array(what);
+        whatStr = `[Set : ${set.toString()}]`;
+    }
+    else if (what instanceof Map) {
+        const map = map2Object(what);
+        whatStr = `[Map : ${strJ(map)}]`;
+    }
+    else
+    // ENABLE Map End
     if (what instanceof Date) {
         whatStr = `Date : ${what.toISOString()}`;
     }
@@ -354,7 +382,13 @@ function strV(what) {
 function strJ(what, indent = 2) {
     let whatStr = strV(what);
     if (!whatStr) {
-        whatStr = JSON.stringify(what, jsonKeySorter, indent);
+        try {
+            whatStr = JSON.stringify(what, jsonKeySorter, indent);
+        }
+        catch (exception) {
+            whatStr = [`strJ:`, exception, what].join(' ');
+            console.error(`strJ`, exception);
+        }
     }
     return whatStr;
 } // strJ()
@@ -590,6 +624,7 @@ if (exports.EX_UTF_OK) {
 }
 exports.LS = _LS; // £ pound sterling UTF8
 exports.EL = _EL; // … ellipsis UTF8
+exports.ELLIPSIS_MAP = [exports.EL, exports.EL];
 exports.LDQ = _LDQ; // “ left quote (double) UTF8
 exports.RDQ = _RDQ; // ” right quote (double) UTF8
 exports.LRDQ = _LRDQ;
@@ -1669,6 +1704,52 @@ function enquote(text, quotes = 'lrdq') {
     return quotes[0] + text + quotes[quotes.length - 1];
 }
 /**
+ * Convert a Set object to an Array with an optional limit on how many items of the set to convert.
+ * @param set {Set<T>} to convert to an array.
+ * @param limit {number} if positive will limit the number of keys from the Set to export.  If the limit is reached, an ellipsis will be added as the last item in the set.
+ * @param ellipsis {string} value to use when limit is positive and entries are elided from the output. defaults to '…'.
+ * @returns {T[]} An array whose elements are the keys of the set and an optional final ellipsis string to indicate the original set had more items in it.
+ */
+function set2Array(set, limit = 0, ellipsis = exports.EL) {
+    const jsonSet = [];
+    for (const item of set.keys()) {
+        if (limit > 0 && jsonSet.length > limit) {
+            if (ellipsis) {
+                jsonSet.push(ellipsis);
+            }
+            break;
+        }
+        else {
+            jsonSet.push(item);
+        }
+    }
+    return jsonSet;
+} // set2Array()
+/**
+ * Convert a Map object to an Object with an optional limit on how many items of the map to convert.
+ * @param map {Map} to convert to an Object with optional limit on the number of items.
+ * @param limit {number} if positive will limit the number of keys from the Map to export.  If the limit is reached, an ellipsis key/value will be added last.
+ * @param ellipsis {MapEllipsis | null} key/value tuple to use when limit is positive and entries are elided from the output. defaults to ['…', '…']. If null, defaults to showing nothing.
+ * @returns {Map2Object} a normal object populates with the key/values of the map and optionally an ellipsis key/value pair to indicate there were more items in the original map.
+ */
+function map2Object(map, limit = 0, ellipsis = exports.ELLIPSIS_MAP) {
+    const jsonMap = {};
+    let items = 0;
+    for (const item of map.entries()) {
+        ++items;
+        if (limit > 0 && items > limit) {
+            if (ellipsis !== null) {
+                jsonMap[ellipsis[0].toString()] = ellipsis[1];
+            }
+            break;
+        }
+        else {
+            jsonMap[item[0].toString()] = item[1];
+        }
+    }
+    return jsonMap;
+} // map2Object()
+/**
  * answers with a shortened string when it exceeds the given length. Ellipsis will be added to show omitted characters.
  * @param dump {string}
  * @param MAX_LENGTH {number} the maximum number of relevant characters to show from the dump string.
@@ -1748,7 +1829,7 @@ function showThing(thing, MAX_LENGTH = MAX_THING, notElem = false) {
             out = getElementInfo(thing);
         }
         else if (/^(Weak)?Map $/.test(typeOf)) {
-            const map = {};
+            const map = { __instanceof: typeOf };
             for (const entry of thing.entries()) {
                 map[entry[0]] = entry[1];
             }
@@ -1756,7 +1837,7 @@ function showThing(thing, MAX_LENGTH = MAX_THING, notElem = false) {
         }
         else if (/^(Weak)?Set $/.test(typeOf)) {
             isArray = true;
-            const set = [];
+            const set = [`__instanceof ${typeOf}`];
             for (const key of thing.keys()) {
                 set.push(key);
             }
@@ -2363,6 +2444,13 @@ if (exports.EX_ARROW_STRINGIFY) {
     expectArrowNullEllipsis = `() => nu${exports.EL}`;
     arrowEllipsisLen = 8;
 }
+console.log(`ES6 MAP DEF`); // ENABLE Map
+const setSm = new Set([1, 2, 3, 4, 52]);
+const mapSm = new Map([['a', 1], ['b', 2]]);
+const mapLg = new Map([['a', 1], ['b', 2], ['c', 3], ['dddd', 4]]);
+const setDeep = new Set([1, 2, 3, { a: 4 }, 52]);
+const mapDeep = new Map([['a', 1], ['b', 2], ['c', { d: 55 }]]);
+// ENABLE Map End
 const jsonAll = {
     z: emptyObject,
     a: emptyArray,
@@ -2392,8 +2480,14 @@ const jsonAll = {
     },
     q: anObject,
     3: anArray,
-    // MUSTDO Map, Set, HTMLElement
+    _set: null,
+    _map: null,
+    // MUSTDO HTMLElement
 };
+// ENABLE Map
+jsonAll._map = mapSm;
+jsonAll._set = setSm;
+// ENABLE Map End
 const expectJson = {
     "3": [
         1,
@@ -2437,8 +2531,14 @@ const expectJson = {
     },
     "u": false,
     "w": `Function : ${expectArrow42}`,
-    "z": {}
+    "z": {},
+    _set: null,
+    _map: null,
 };
+// ENABLE Map
+expectJson._set = ["__instanceof Set", 1, 2, 3, 4, 52];
+expectJson._map = { "__instanceof": "Map", "a": 1, "b": 2 };
+// ENABLE Map End
 // Numeric literals with absolute values equal to 2^53 or greater are too large to be represented accurately as integers.
 const tooBig = 0x5100000000000000;
 const bigEnough = 0x15100000000000;
@@ -2521,9 +2621,32 @@ expectToBe(strV(function named() { }), 'Function : function named() { }', 'strV(
 expectToMatch(/^Function : function strV\(what/, strV(strV) || '', 'strV(strV) should show Function : stringified');
 expectToBe(strV(anObject), undefined, 'strV(object) should answer undefined');
 expectToBe(strV(anArray), undefined, 'strV(array) should answer undefined');
+const endlessObj = {};
+endlessObj.__looped = endlessObj;
+expectToBe(strJ(endlessObj), (exports.EX_JS_NODE || exports.EX_ONECOMP) ?
+    `strJ: RangeError: Maximum call stack size exceeded [object Object]`
+    : `strJ: InternalError: too much recursion [object Object]`, 'strJ(endlessObj) should stringify to an exception');
+console.log('ES6 MAP TESTS'); // ENABLE Map
+expectToEqual(set2Array(setSm), [1, 2, 3, 4, 52], 'set2Array(set) should answer with full array of items in the set');
+expectToEqual(set2Array(setSm, 2), [1, 2, 3, exports.EL], 'set2Array(set, 2) should answer with array and default ellipsis');
+expectToEqual(set2Array(setSm, 2, ''), [1, 2, 3], 'set2Array(set, 2, empty string) should answer with short array and no ellipsis');
+expectToEqual(set2Array(setSm, 2, '_'), [1, 2, 3, "_"], 'set2Array(set, 2, _) should answer with array and custom ellipsis');
+expectToBe(strV(setSm), `[Set : 1,2,3,4,52]`, 'strV(set) should answer with all elements of the set shown');
+expectToBe(strJ(setSm), `[Set : 1,2,3,4,52]`, 'strJ(set) should answer with all elements of the set shown');
+expectToEqual(map2Object(mapLg), { a: 1, b: 2, c: 3, dddd: 4 }, 'map2Object(mapLg) should answer with object full of all items in the map');
+expectToEqual(map2Object(mapLg, 2), { a: 1, b: 2, [exports.EL]: exports.EL }, 'map2Object(mapLg, 2) should answer with short object and default ellipsis');
+expectToEqual(map2Object(mapLg, 2, null), { a: 1, b: 2 }, 'map2Object(mapLg, 2, empty string) should answer with short object and no ellipsis');
+expectToEqual(map2Object(mapLg, 2, ['_', '-']), { a: 1, b: 2, '_': '-', }, 'map2Object(map, 2, _) should answer with short object and custom ellipsis');
+expectToBe(strV(mapSm), `[Map : {\n  "a": 1,\n  "b": 2\n}]`, 'strV(map) should answer with stringified version of the small map');
+expectToBe(strV(mapLg), `[Map : {\n  "a": 1,\n  "b": 2,\n  "c": 3,\n  "dddd": 4\n}]`, 'strV(mapLg) should answer with stringified version of the large map');
+expectToBe(strJ(mapSm), `[Map : {\n  "a": 1,\n  "b": 2\n}]`, 'strJ(map) should answer with stringified version of the small map');
+const jss = (what) => JSON.stringify(what, jsonKeySorter);
+expectToBe(jss(setSm), `["__instanceof Set",1,2,3,4,52]`, 'jsonKeySorter(set) should answer with an array with __instanceof Set and all the items in the set');
+expectToBe(jss(mapSm), `{"__instanceof":"Map","a":1,"b":2}`, 'jsonKeySorter(map) should answer with an object with __instanceof: Map and all the key/values of the map');
+expectToBe(jss(setDeep), `["__instanceof Set",1,2,3,{"a":4},52]`, 'jsonKeySorter(setDeep) should stringify a Set deeply');
+expectToBe(jss(mapDeep), `{"__instanceof":"Map","a":1,"b":2,"c":{"d":55}}`, 'jsonKeySorter(mapDeep) should stringify a Map deeply');
+// ENABLE Map End
 expectToBe(strV(jsonAll), undefined, 'strV(jsonAll) should answer undefined');
-// MUSTDO Map, Set...
-// console.warn(`JSONALL`, strJ(jsonAll));
 expectToBe(strJ(), 'undefined', 'strJ() should show undefined unquoted');
 expectToBe(strJ(null), 'null', 'strJ(null) should show as unquoted');
 expectToBe(strJ(NaN), 'NaN', 'strJ(NaN) should show as unquoted');
@@ -2547,7 +2670,6 @@ expectToMatch(/^Function : function strJ\(what/, strJ(strJ), 'strJ(strJ) should 
 expectToBe(strJ(anObject), `{\n\x20\x20"a":\x202\n}`, 'strJ(object) should show all data types');
 expectToBe(strJ(anArray), `[\n\x20\x201,\n\x20\x20"2",\n\x20\x20"RegExp : /a/g"\n]`, 'strJ(array) should show all data types');
 expectToBe(strJ(jsonAll), strJ(expectJson), 'strJ(jsonAll) should show all stringified values supported');
-// MUSTDO Map, Set...
 const LONG = "alpha beta gamma delta epsilon 0123456789 ";
 const LONG_TEXT = 'this \n is \x09 it \r' + LONG + LONG + LONG + LONG + LONG;
 const LONG_TEXT_U = 'this \n is \x09 it \r \u2002' + LONG + LONG + LONG + LONG + LONG;
@@ -3113,9 +3235,11 @@ expectToBe(getTypeName(typeError), 'TypeError ', 'getTypeName(TypeError) should 
 expectToBe(getTypeName(() => null), 'Function ', 'getTypeName(() => null) should return Function');
 expectToBe(getTypeName(function named() { }), 'Function ', 'getTypeName(function named) should return Function');
 expectToBe(getTypeName(getTypeName), 'Function ', 'getTypeName(getTypeName) should return Function');
-// console.warn(`has Map?`, typeof global, typeof window, typeof global.Map, typeof document.createElement);
-// MUSTDO enable for ES6 environment...
-// expectToBe(getTypeName(new Map()), 'Map ', 'getTypeName(Map) should return Map');
+// ENABLE Map
+expectToBe(getTypeName(new Set()), 'Set ', 'getTypeName(Set) should return Set');
+expectToBe(getTypeName(new Map()), 'Map ', 'getTypeName(Map) should return Map');
+// ENABLE Map End
+// MUSTDO HTMLElement
 // expectToBe(getTypeName(document.createElement('input')), 'HTMLInputElement ', 'getTypeName(HTMLInputElement) should return HTMLInputElement');
 expectToBe(enquote('text'), '\u201Ctext\u201D', 'enquote() should quote with left right double quotes by default');
 expectToBe(enquote('text', 'lrsq'), '\u2018text\u2019', 'enquote() should quote with left right single quotes by name');
@@ -3186,9 +3310,11 @@ expectToBe(str(new TypeError('typeerr')), 'TypeError:\x20typeerr', 'str(TypeErro
 expectToBe(str(() => null), expectArrowNull, 'str(() => null) should return string Function body');
 expectToBe(str(function named() { }), 'function named() { }', 'str(function named) should return string Function body');
 expectToBe(str(getTypeName), `${getTypeName}`, 'str(getTypeName) should return string Function body');
-// MUSTDO enable for ES6 environment...
-// expectToBe(str(new Map()), 'Map ', 'str(Map) should return stringified Map');
-// expectToBe(str(new Set()), 'Set ', 'str(Set) should return stringified Set');
+// ENABLE Map
+expectToBe(str(new Map()), '[object Map]', 'str(Map) should return stringified Map');
+expectToBe(str(new Set()), '[object Set]', 'str(Set) should return stringified Set');
+// ENABLE Map End
+// MUSTDO enable for HTMLElement
 // expectToBe(str(document.createElement('input')), 'HTMLInputElement ', 'str(HTMLInputElement) should return HTMLInputElement');
 expectToBe(showThing(), `undefined`, 'showThing(undefined) should have no ellipsis');
 expectToBe(showThing(null, 12), `null`, 'showThing(null) should have no ellipsis');
@@ -3267,14 +3393,15 @@ expectToBe(showThing(() => null, arrowEllipsisLen), expectArrowNullEllipsis, 'sh
 expectToBe(showThing(function () { return 'S'; }, 11), `function () { return${exports.EL}}`, 'showThing(anon function,11) should have ellipsis');
 expectToBe(showThing(function named() { }, 8), `function named() ${exports.EL}}`, 'showThing(named function,8) should have ellipsis');
 expectToBe(showThing(noop, 8), `function noop() {${exports.EL}}`, 'showThing(function name,8) should have ellipsis');
-// MUSTDO enable for ES6 environment...
-// const setSm = new Set([1,2,3,4,52]);
-// const mapSm = new Map([['a',1],['b',2]]);
-// const mapLg = new Map([['a',1],['b',2],['c',3],['dddd',4]]);
-// expectToBe(showThing(setSm, 12), `[1,2,3,4,52]`, 'showThing(Set) should have no ellipsis');
-// expectToBe(showThing(mapSm,14), `{"a":1,"b":2}`, 'showThing(small Map,13) should have no ellipsis');
-// expectToBe(showThing(setSm, 4), `[1,2${EL}]`, 'showThing(Set,4) should have ellipsis');
-// expectToBe(showThing(mapLg, 12), `keys: [a, b, c, ddd_]`, 'showThing(Map/k,12) should have keys and ellipsis');
+// ENABLE Map
+expectToBe(showThing(setSm, 49), `[\n  "__instanceof Set ",\n  1,\n  2,\n  3,\n  4,\n  52\n]`, 'showThing(Set,49) should have no ellipsis');
+expectToBe(showThing(mapSm, 48), `{\n  "__instanceof": "Map ",\n  "a": 1,\n  "b": 2\n}`, 'showThing(small Map,48) should have no ellipsis');
+expectToBe(showThing(setSm, 32), `[\n  "__instanceof Set ",\n  1,\n  2${exports.EL}]`, 'showThing(Set,32) should have ellipsis');
+expectToBe(showThing(mapLg, 26), `keys: [__instanceof, a, b, c, ddd${exports.EL}]`, 'showThing(Map/k,26) should have keys and ellipsis');
+expectToBe(showThing(setDeep), `[\n  "__instanceof Set ",\n  1,\n  2,\n  3,\n  {\n    "a": 4\n  },\n  52\n]`, 'showThing(setDeep) should show deep set');
+expectToBe(showThing(mapDeep), `{\n  "__instanceof": "Map ",\n  "a": 1,\n  "b": 2,\n  "c": {\n    "d": 55\n  }\n}`, 'showThing(mapDeep) should show deep map');
+// ENABLE Map End
+// MUSTDO for HTMLElement
 // const inEl = document.createElement('input');
 // inEl.setAttribute('name', 'phone');
 // inEl.setAttribute('placeholder', 'your phone number?');

@@ -8,6 +8,13 @@
 perl -i -pne '
 	s{(exports\.EX_JS_NODE.+=.+)true}{$1false}xms;
 	s{(exports\.EX_ONECOMP.+=.+)false}{$1true}xms;
+	if (m{//\sENABLE\sMap\sEnd}) {
+		$comment = 0;
+	}
+	elsif (m{//\sENABLE\sMap}) {
+		$comment = 1;
+	}
+	$_ = "// $_" if $comment && !m{\A//};
 ' tscompiler.txt
 
 perl -i -pne '
