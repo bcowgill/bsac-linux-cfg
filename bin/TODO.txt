@@ -1,5 +1,10 @@
 touch-dirs.sh try in Camera dir to reorder the folders, after backing up the phone
 newlinux.txt - list of things to do for new linux system
+Boot USB key
+ubuntu-install-2023 on 4TB ADATA drive downloaded, try boot from USB
+soo also USB broken posting to help page.
+usb-broken.txt - from Mar 2023 trying to make a Lubuntu boot disk
+
 Get a list of all script files, then search them for exiftool or id2 commands
 
 sugaru board in d/docs/sudoku
@@ -61,11 +66,6 @@ TODO Projects:
 	joi/zod module, use it for api specs
 	VSCode on linux
 	Codux on linux
-
-Boot USB key
-ubuntu-install-2023 on 4TB ADATA drive downloaded, try boot from USB
-soo also USB broken posting to help page.
-usb-broken.txt - from Mar 2023 trying to make a Lubuntu boot disk
 
 100-books.sh list of 100 books from Equaliser movies.
 
