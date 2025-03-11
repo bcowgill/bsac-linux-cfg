@@ -11,6 +11,7 @@ SAMPLE2=in/setup-playwright-ts.txt
 SAMPLE3=in/signoff-line-extra-esc.txt
 SAMPLE4=in/with-codes.txt
 SAMPLE5=in/elixir-spawn.log
+SAMPLE6=in/npm-animation.txt
 CONTROL=../pee/in/SAMPLE.ctrl.txt
 DEBUG=
 SKIP=0
@@ -138,7 +139,6 @@ if [ 0 == "$SKIP" ]; then
 else
 	echo SKIP $TEST "$SKIP"
 fi
-
 echo TEST $CMD successful operation prompt codes
 TEST=success-prompt
 if [ 0 == "$SKIP" ]; then
@@ -190,6 +190,21 @@ if [ 0 == "$SKIP" ]; then
 	filter "$ERR"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$ERR" "$BASE_ERR" "$TEST error output"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation npm animation log
+TEST=npm-animation
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE6 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+   check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
 else
 	echo SKIP $TEST "$SKIP"
 fi

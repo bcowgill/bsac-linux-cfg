@@ -93,6 +93,9 @@ my $dcs = qr/(?:${esc}P|\N{U+0090})/;
 # elixir function function/32 function?/12 function!/56
 my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
 
+# npm 'hourglass' animation
+my $hgani = qr{\n[⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴]\n}xms;
+
 sub show_line
 {
 	my ($line) = @ARG;
@@ -238,6 +241,7 @@ while (my $line = <>) {
 	$line =~ s{\A:\x0d}{\n}xmsg; # pager line from less
 	$line =~ s{\x0d}{\n}xmsg; # CR by itself convert to newline
 	$line =~ s{\s+\z}{}xms;
+	while ($line =~ s{$hgani}{\n}xmsg) {}
 	$line =~ s{\n\n\n+}{\n\n\n}xmsg;
 
 	show_codes($line);

@@ -1,0 +1,17 @@
+{
+  "name": "vite-start",
+  "version": "1.0.0",
+  "description": "setting up a n initial Vite React Typescript project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite",
+    "react",
+    "typescript",
+    "setup"
+  ],
+  "author": "Brent S.A. Cowgill",
+  "license": "ISC"
+}
