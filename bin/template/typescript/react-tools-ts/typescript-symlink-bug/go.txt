@@ -1,0 +1,9 @@
+#!/usr/bin/env node --experimental-strip-types
+// node v23.6.1 has --experimental-strip-types
+// which allows running .ts files by stripping the typing syntax
+// https://github.com/privatenumber/tsx/issues/706
+// https://stackblitz.com/edit/node-gzb5wy97?file=index.txt
+function pr(msg: string): void {
+	console.log(`IT WORKS ${msg}`);
+}
+pr('message')

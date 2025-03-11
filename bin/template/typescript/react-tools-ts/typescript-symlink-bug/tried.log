@@ -1,0 +1,125 @@
+Script started on Tue Mar 11 17:18:42 2025
+$ ls -al
+total 32
+drwxr-xr-x  10 br388313  staff  320 11 Mar 17:18 .
+drwxr-xr-x  22 br388313  staff  704 11 Mar 17:16 ..
+lrwxr-xr-x   1 br388313  staff    6 11 Mar 16:04 go.js -> go.txt
+lrwxr-xr-x   1 br388313  staff    6 11 Mar 16:04 go.ts -> go.txt
+-rwxr-xr-x   1 br388313  staff  240 11 Mar 17:18 go.txt
+-rwxr-xr-x   1 br388313  staff  129 11 Mar 17:15 goo.ts
+lrwxr-xr-x   1 br388313  staff    9 11 Mar 16:35 index.js -> index.txt
+lrwxr-xr-x   1 br388313  staff    9 11 Mar 16:35 index.ts -> index.txt
+-rw-r--r--   1 br388313  staff   78 11 Mar 16:35 index.txt
+-rw-r--r--   1 br388313  staff   43 11 Mar 17:18 tries.log
+
+$ ./go.js
+node: bad option: --experimental-strip-types
+
+$ node --version
+v21.6.1
+
+$ nvm use v23
+Now using node v23.6.1 (npm v10.9.2)
+
+$ ./go.js
+/Users/workspace/go.txt:4
+function pr(msg: string): void {
+               ^
+
+SyntaxError: Unexpected token ':'
+    at wrapSafe (node:internal/modules/cjs/loader:1670:18)
+    at Module._compile (node:internal/modules/cjs/loader:1713:20)
+    at Object..js (node:internal/modules/cjs/loader:1904:10)
+    at Module.load (node:internal/modules/cjs/loader:1473:32)
+    at Function._load (node:internal/modules/cjs/loader:1285:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.6.1
+
+$ node go.js
+/Users/workspace/go.txt:4
+function pr(msg: string): void {
+               ^
+
+SyntaxError: Unexpected token ':'
+    at wrapSafe (node:internal/modules/cjs/loader:1670:18)
+    at Module._compile (node:internal/modules/cjs/loader:1713:20)
+    at Object..js (node:internal/modules/cjs/loader:1904:10)
+    at Module.load (node:internal/modules/cjs/loader:1473:32)
+    at Function._load (node:internal/modules/cjs/loader:1285:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.6.1
+
+$ node go.ts
+
+/Users/workspace/go.txt:4
+function pr(msg: string): void {
+               ^
+
+SyntaxError: Unexpected token ':'
+    at wrapSafe (node:internal/modules/cjs/loader:1670:18)
+    at Module._compile (node:internal/modules/cjs/loader:1713:20)
+    at Object..js (node:internal/modules/cjs/loader:1904:10)
+    at Module.load (node:internal/modules/cjs/loader:1473:32)
+    at Function._load (node:internal/modules/cjs/loader:1285:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.6.1
+
+$ ./go.ts
+/Users/workspace/go.txt:4
+function pr(msg: string): void {
+               ^
+
+SyntaxError: Unexpected token ':'
+    at wrapSafe (node:internal/modules/cjs/loader:1670:18)
+    at Module._compile (node:internal/modules/cjs/loader:1713:20)
+    at Object..js (node:internal/modules/cjs/loader:1904:10)
+    at Module.load (node:internal/modules/cjs/loader:1473:32)
+    at Function._load (node:internal/modules/cjs/loader:1285:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.6.1
+
+$ node --experimental-strip-types go.ts
+/Users/workspace/go.txt:4
+function pr(msg: string): void {
+               ^
+
+SyntaxError: Unexpected token ':'
+    at wrapSafe (node:internal/modules/cjs/loader:1670:18)
+    at Module._compile (node:internal/modules/cjs/loader:1713:20)
+    at Object..js (node:internal/modules/cjs/loader:1904:10)
+    at Module.load (node:internal/modules/cjs/loader:1473:32)
+    at Function._load (node:internal/modules/cjs/loader:1285:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:234:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:151:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v23.6.1
+
+$ node --experimental-strip-types goo
+IT WORKS message
+(node:50149) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+$ ./goo.ts
+IT WORKS message
+(node:50168) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Script done on Tue Mar 11 17:20:15 2025
