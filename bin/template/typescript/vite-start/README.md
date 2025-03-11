@@ -52,3 +52,6 @@ https://github.com/laststance/create-react-app-vite
 react-vite-ts-boilerplate - React 18, TypeScript, SCSS, ESLint, Prettier, Vitest.
 https://github.com/choisohyun/react-vite-ts-boilerplate
 
+For a template at https://github.com/user/project, you can try it out online using https://github.stackblitz.com/user/project (adding .stackblitz after github to the URL of the project).
+https://github.com/bartstc/vite-ts-react-template
+https://github.stackblitz.com/bartstc/vite-ts-react-template
