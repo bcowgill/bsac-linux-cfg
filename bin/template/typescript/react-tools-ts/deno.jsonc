@@ -1,0 +1,42 @@
+{
+  // https://docs.deno.com/lint/
+  // deno lint --rules-tags=recommended --fix file.ts  # --compact
+  // deno lint --rules
+  "lint": {
+    "rules": {
+      "tags": ["recommended"]
+    }
+  }
+}
+/*
+List of Available rules not in the tag group 'recommended'
+deno version 1.40.3
+ deno lint --rules | grep -v https: | grep -v recommended | grep '-'
+ - ban-untagged-todo
+ - camelcase
+ - default-param-last
+ - eqeqeq
+ - explicit-function-return-type
+ - explicit-module-boundary-types
+ - fresh-handler-export [fresh]
+ - fresh-server-event-handlers [fresh]
+ - guard-for-in
+ - no-await-in-loop
+ - no-console
+ - no-const-assign
+ - no-eval
+ - no-external-import
+ - no-implicit-declare-namespace-export
+ - no-non-null-asserted-optional-chain
+ - no-non-null-assertion
+ - no-self-compare
+ - no-sparse-arrays
+ - no-sync-fn-in-async-fn
+ - no-throw-literal
+ - no-top-level-await
+ - no-undef
+ - prefer-ascii
+ - prefer-primordials
+ - single-var-declarator
+ - triple-slash-reference
+*/

@@ -8,7 +8,7 @@
 // after installing bun
 // MUSTDO deno fmt tsrunner.ts  # to format the code .js .ts .md NOT: .json?
 //   deno fmt - --use-tabs --single-quote --prose-wrap=always --check < file.ts | less
-//   deno lint --fix file.ts  # --compact
+//   deno lint --rules-tags=recommended --fix file.ts  # --compact
 //   deno lint --rules
 //   deno check --doc # --all --doc-only
 //   bun ./tsrunner.ts
@@ -65,32 +65,98 @@ const win : any = {
 	}
 };
 
-function getGlobal(): any {
-	return typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+/**
+ * answers with the thing provided or the global object if found.
+ * @param thing {undefined | unknown}
+ * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
+ */
+function getGlobal(thing?: unknown): undefined | unknown {
+	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
 }
-export function isBun(): boolean {
-	const thing = getGlobal();
+
+/**
+ * answers true if the script is running within bun
+ * @returns {boolean} true if bun is detected with process.versions.bun
+ * @note tested in version MUSTDO
+ */
+export function isBun(bun?: unknown): boolean {
+	let result = false;
+	const thing = getGlobal(bun) as any;
 	if (!thing) {
 		return false;
 	}
-	return 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
-}
-export function isDeno(): boolean {
-	const thing = getGlobal();
+	try {
+		result = 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
+} // isBun()
+
+/**
+ * answers true if the script is running within deno
+ * @returns {boolean} true if deno is detected with global Deno and process.versions.deno
+ * @note tested in version 1.40.3
+ */
+export function isDeno(deno?: unknown): boolean {
+	let result = false;
+	const thing = getGlobal(deno) as any;
 	if (!thing) {
 		return false;
 	}
-	return 'Deno' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.deno;
-}
-export function isNode(): boolean {
-	const thing = getGlobal();
+	try {
+		result = 'Deno' in thing;
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
+} // isDeno()
+
+/**
+ * answers true if the script is running within node
+ * @returns {boolean} true if node is detected from process.versions.node
+ * @note tested in version MUSTDO
+ */
+export function isNode(node?: unknown): boolean {
+	let result = false;
+	const thing = getGlobal(node) as any;
 	if (!thing) {
 		return false;
 	}
-	return !isDeno() && !isBun() && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
-}
-export function isBrowser(): boolean {
-	return !isDeno() && !isBun() && !isNode();
+	try {
+		result = !isDeno(node) && !isBun(node) && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
+} // isNode()
+
+/**
+ * answers true if script is running with tsx (which runs on node)
+ * @returns {boolean} true if tsx is detected by process.execArgv containing 'node_modules/tsx/'
+ * @note tested in version MUSTDO
+ */
+export function isTsx(node?: unknown): boolean {
+	let result = false;
+	const thing = getGlobal(node) as any;
+	if (!isNode(node)) {
+		return false;
+	}
+	try {
+		result = !!('process' in thing && thing.process.execArgv?.find((path: string) => path.indexOf('node_modules/tsx/') >= 0));
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
+} // isTsx()
+
+/**
+ * answers true if script is not running in deno, bun or node, so it must be a browser version...
+ * @returns {boolean} true if running in a browser
+ */
+export function isBrowser(win?: unknown): boolean {
+	return !isDeno(win) && !isBun(win) && !isNode(win); // tsx is also node, so no check needed.
 }
 
 export const EX_REGEX = true; // turn off unit tests for regexes
@@ -101,7 +167,7 @@ export const EX_LET_FAIL_TESTS = false; // run tests that fail so you can check 
 
 export const EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
 
-export const EX_TSX     = true;  // using tsx/deno/bun to run in terminal
+export const EX_TSX     = isTsx() || isDeno() || isBun();  // using tsx/deno/bun to run in terminal
 export const EX_ONECOMP = false; // onecompiler site?
 
 export const EX_BUN     = isBun();   // using bun to run in JavaScriptCore
@@ -109,11 +175,11 @@ export const EX_DENO    = isDeno();  // using deno to run in google V8
 export const EX_JS_NODE = !EX_ONECOMP && (EX_TSX || EX_DENO || isNode()); // transpiled to JS and run in node or other terminal like env
 
 export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
-export const EX_DATE_GMT = !EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: false, onecompiler: true jsnode: true tsx: false
+export const EX_DATE_GMT = EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: false, onecompiler: true jsnode: true tsx: true
 export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
 export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
 
-console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isNode:${isNode()} isBrowser:${isBrowser()}`);
+console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
 console.warn(`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK}`);
 
 export const NBSP = '\u00a0';

@@ -1,0 +1,70 @@
+Script started on Thu Mar 13 11:21:30 2025
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+
+$ npx tsx detect.ts
+TRACE: isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
+dumpable global object [object Object] {
+  atob: [Function: atob],
+  btoa: [Function: btoa],
+  clearImmediate: [Function: clearImmediate],
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  crypto: Crypto {},
+  fetch: [Function: fetch],
+  global: 'CYCLIC REF: [object Object]',
+  navigator: Navigator {},
+  performance: Performance {
+    nodeTiming: PerformanceNodeTiming {
+      name: 'node',
+      entryType: 'node',
+      startTime: 0,
+      duration: 429.900928,
+      nodeStart: 5.687116861343384,
+      v8Start: 10.044571876525879,
+      bootstrapComplete: 105.07293701171875,
+      environment: 15.532871007919312,
+      loopStart: 108.57138180732727,
+      loopExit: -1,
+      idleTime: 113.133529
+    },
+    timeOrigin: 1741864900183.652
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Getter]
+  },
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Getter]
+  },
+  structuredClone: [Function: structuredClone]
+}
+real global <ref *1> Object [global] {
+  global: [Circular *1],
+  clearImmediate: [Function: clearImmediate],
+  setImmediate: [Function: setImmediate] {
+    [Symbol(nodejs.util.promisify.custom)]: [Getter]
+  },
+  clearInterval: [Function: clearInterval],
+  clearTimeout: [Function: clearTimeout],
+  setInterval: [Function: setInterval],
+  setTimeout: [Function: setTimeout] {
+    [Symbol(nodejs.util.promisify.custom)]: [Getter]
+  },
+  queueMicrotask: [Function: queueMicrotask],
+  structuredClone: [Function: structuredClone],
+  atob: [Function: atob],
+  btoa: [Function: btoa],
+  performance: [Getter/Setter],
+  navigator: [Getter],
+  fetch: [Function: fetch],
+  crypto: [Getter]
+}
+
+Script done on Thu Mar 13 11:21:43 2025
