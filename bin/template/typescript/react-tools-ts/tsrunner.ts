@@ -204,7 +204,8 @@
 
    export const EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
 
-   export const EX_ONECOMP = false; // onecompiler site?
+   export const EX_TSLANG = false; // using tslangorg site?
+   export const EX_ONECOMP = false; // using onecompiler site?
 
    export const EX_TSX = isTsx() || isDeno() || isBun();  // using tsx/deno/bun to run in terminal
    export const EX_BUN = isBun();   // using bun to run in JavaScriptCore
@@ -213,22 +214,29 @@
 
    export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
 
-   //export const EX_DATE_GMT = EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: true, onecompiler: true jsnode: true tsx: true
-   const EX_DATE_GMT = true;
+   const EX_DATE_GMT = EX_TSLANG;
    // typescriptlang.org site
    // isBun:false isDeno:false isTsx:false isNode:false isBrowser:true
    // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:false EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
    // typescriptlang.org => JS and run in NODE
    // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
    // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
-   // tsx
-   // bun
-   // Deno
-   // node
-   //const EX_DATE_GMT = false; // onecompier site
+   // GMT FALSE:
    // onecompiler site
    // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
    // TRACE: EX_TSX:false EX_ONECOMP:true EX_JS_NODE:false EX_DATE_GMT:false EX_ARROW_STRINGIFY:false EX_UTF_OK:false
+   // tsx
+   // isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
+   // TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_STRINGIFY:true EX_UTF_OK:true
+   // bun
+   // isBun:true isDeno:false isTsx:false isNode:false isBrowser:false
+   // TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_S
+   // Deno
+   // isBun:false isDeno:true isTsx:false isNode:false isBrowser:false
+   // TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_S
+   // node
+   // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
+   // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_STRINGIFY:true EX_UTF_OK:true
 
    export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
    export const EX_UTF_OK = !EX_ONECOMP && ( EX_JS_NODE || true ); // typescriptlang: true/false, onecompiler: false jsnode: true
@@ -597,12 +605,14 @@
    // MUSTDO unit test for regex and move to top...
    const reHasFunction = /^function[\s\(]|^\([^\)]*\)\s*=>\s*/;
    const reFunctionBracket = /^(function)\s*(.)/;
+   const reFunctionParamEmpty = /\(\s*\)/;
+   const reFunctionComma = /\s*,\s*/g;
    const reFunctionArrow = /\)\s*=>\s*/m;
    const reFunctionBracketNL = /\{\n/;
    const reFunctionRemoveNL = /\{ NL/;
    const reFunctionBracketLastNL = /\n\}/;
    const reFunctionRemoveLastNL = /NL \}/;
-   const reFunctionBracketSpacing = /\)\{/;
+   const reFunctionBracketSpacing = /\s*\)\s*\{/;
    const reFunctionBracketFirst = /\{\s*/;
    const reFunctionBracketLast = /\s*\}$/;
    const reFunctionBracketEmpty = /\{\s*\}/;
@@ -620,6 +630,8 @@
 		 body = body.replace( reFunctionBracket, '$1 $2' )
 			.replace( reFunctionBracketSpacing, ') {' )
 			.replace( reFunctionArrow, ') => ' )
+			.replace( reFunctionComma, ',' )
+			.replace( reFunctionParamEmpty, '()' )
 			.replace( reFunctionBracketNL, '{NL' )
 			.replace( reFunctionBracketLastNL, 'NL}' )
 			.replace( reFunctionBracketFirst, '{ ' )
@@ -3445,6 +3457,8 @@
    expectToBe( fixFunction( '  function(){}' ), '  function(){}', 'fixFunction(lead spaces) should leave alone' );
    expectToBe( fixFunction( 'function(){\n\n}' ), 'function () {\n\n}', 'fixFunction(anon function newlines) should adjust spacing of functions with newlines' );
    expectToBe( fixFunction( 'function(x){}' ), 'function (x) { }', 'fixFunction(anon param) should adjust spacing of function with parameter' );
+   // function(x : string): void {} => replaces typings with spaces in node v23.9+
+   expectToBe( fixFunction( 'function(x         )       {}' ), 'function (x) { }', 'fixFunction(typings stripped) should adjust spacing of function with TypeScript typings removed' );
    expectToBe( fixFunction( 'function(){return 42}' ), 'function () { return 42 }', 'fixFunction(anon function body) should adjust spacing of functions with body' );
    expectToBe( fixFunction( 'function(){ return 42; }' ), 'function () { return 42; }', 'fixFunction(anon function body spaced) should adjust spacing of functions with body spaced' );
    expectToBe( fixFunction( 'function blob(){}' ), 'function blob() { }', 'fixFunction(named function) should adjust spacing of named functions' );
@@ -3485,7 +3499,7 @@
    expectToBe( strV(() => null ), `Function : ${expectArrowNull}`, 'strV(() => null) should show as Function : stringified' );
    expectToBe( strV( function () { } ), `Function : ${expectNoop}`, 'strV(anon function) should show as Function : stringified' );
    expectToBe( strV( function named(): void { } ), `Function : ${expectNamed}`, 'strV(function named) should show as stringified' );
-   expectToMatch( /^Function : function strV\(what/, strV( strV ) || '', 'strV(strV) should show Function : stringified' );
+   expectToMatch( /^Function : function simpleFunction\(\s*x/, strV( simpleFunction ) || '', 'strV(simpleFunction) should show Function : stringified' );
    expectToBe( strV( anObject ), undefined, 'strV(object) should answer undefined' );
    expectToBe( strV( anArray ), undefined, 'strV(array) should answer undefined' );
 
@@ -3552,7 +3566,7 @@
    expectToBe( strJ( function () { } ), `Function : ${expectNoop}`, 'strJ(anon function) should show as stringified' );
    expectToBe( strJ( function named2(): void { } ), `Function : ${expectNamed2}`, 'strJ(function named) should show as stringified' );
 
-   expectToMatch( /^Function : function strJ\(what/, strJ( strJ ), 'strJ(strJ) should show' );
+   expectToMatch( /^Function : function simpleFunction\(\s*x/, strJ( simpleFunction ), 'strJ(simpleFunction) should show' );
 
    expectToBe(
 	  strJ( anObject ),
@@ -4312,9 +4326,9 @@ height: 30vh;
    expectToBe( shortenDump( 'function () {}' ), `function () { }`, 'shortenDump(function) should not shorten function with ellipsis' );
    expectToBe( shortenDump( 'function (x,y) { return x + y }', 7 ), `function (x,y) {${EL}}`, 'shortenDump(function,7) should shorten function with ellipsis inside' );
    expectToBe( shortenDump( 'function (x,y) { return x + y }', 12 ), `function (x,y) { retu${EL}}`, 'shortenDump(function,12) should shorten function with ellipsis inside' );
-   expectToBe( shortenDump( '(x, y) => { return x + y; }' ), `(x, y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis' );
-   expectToBe( shortenDump( '(x, y) => { return x + y; }', 12 ), `(x, y) => { ${EL}}`, 'shortenDump(arrow function,12) should shorten arrow function with ellipsis inside' );
-   expectToBe( shortenDump( '(x, y) => { return x + y; }', 25 ), `(x, y) => { return x + y;${EL}}`, 'shortenDump(arrow function,25) should shorten arrow function with ellipsis inside' );
+   expectToBe( shortenDump( '(x, y) => { return x + y; }' ), `(x,y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis' );
+   expectToBe( shortenDump( '(x, y) => { return x + y; }', 11 ), `(x,y) => { ${EL}}`, 'shortenDump(arrow function,11) should shorten arrow function with ellipsis inside' );
+   expectToBe( shortenDump( '(x, y) => { return x + y; }', 24 ), `(x,y) => { return x + y;${EL}}`, 'shortenDump(arrow function,24) should shorten arrow function with ellipsis inside' );
 
    expectToBe( shortenDump( `${LDQ}quoted string${RDQ}`, void 0 ), `${LDQ}quoted string${RDQ}`, `shortenDump(${LDQ}${RDQ}quoted) should not shorten quoted string` );
    expectToBe( shortenDump( `${LDQ}quoted string${RDQ}`, 7 ), `${LDQ}quoted ${EL}${RDQ}`, `shortenDump(${LDQ}${RDQ}quoted,7) should not shorten inside quoted string` );
@@ -4397,9 +4411,9 @@ height: 30vh;
 	  str( simpleFunction ).replace(
 		 /(function \w+)\s*(\([^\)]*\))\s*(\{)\n?\s*(.*?)\s*?\n?(})$/m,
 		 '$1$2 $3 $4 $5'
-	  ),
-	  `${simpleFunction}`.replace( /(function.+?)\s*\{\n?\s*/, '$1 { ' ).replace( /\s*?\n?}$/, ' }' ),
-	  'str(isDeno) should return string Function body'
+	  ).replace(/\(\s+/, '(').replace(/,\s+/g, ','),
+	  `${simpleFunction}`.replace( /(function.+?)\s*\{\n?\s*/, '$1 { ' ).replace( /\s*?\n?}$/, ' }' ).replace(/\(\s*/, '(').replace(/\s*,\s+/g, ',').replace(/\s*\)/, ')'),
+	  'str(simpleFunction) should return string Function body'
    );
 
    // ENABLE Map
