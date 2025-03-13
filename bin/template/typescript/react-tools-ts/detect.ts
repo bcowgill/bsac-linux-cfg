@@ -10,8 +10,8 @@
  * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
 function getGlobal(thing?: unknown): undefined | unknown {
-    return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-    // return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
 }
 
 /**
@@ -22,17 +22,17 @@ function getGlobal(thing?: unknown): undefined | unknown {
  * bun upgrade --canary
  */
 export function isBun(bun?: unknown): boolean {
-    let result = false;
-    const thing = getGlobal(bun) as any;
-    if (!thing) {
-        return false;
-    }
-    try {
-        result = 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
-    } catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(bun) as any;
+	if (!thing) {
+		return false;
+	}
+	try {
+		result = 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isBun()
 
 /**
@@ -43,18 +43,18 @@ export function isBun(bun?: unknown): boolean {
  * @example deno run --allow-read --allow-env detect.ts
  */
 export function isDeno(deno?: unknown): boolean {
-    let result = false;
-    const thing = getGlobal(deno) as any;
-    if (!thing) {
-        return false;
-    }
-    try {
+	let result = false;
+	const thing = getGlobal(deno) as any;
+	if (!thing) {
+		return false;
+	}
+	try {
 	// process.versions.deno also exists in deno v2+
-        result = 'Deno' in thing; // deno v1
-    } catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+		result = 'Deno' in thing; // deno v1
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isDeno()
 
 /**
@@ -65,17 +65,17 @@ export function isDeno(deno?: unknown): boolean {
  * @example node detect.ts (~v23.6+ has TypeScript types stripping)
  */
 export function isNode(node?: unknown): boolean {
-    let result = false;
-    const thing = getGlobal(node) as any;
-    if (!thing) {
-        return false;
-    }
-    try {
-        result = !isDeno(node) && !isBun(node) && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
-    } catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(node) as any;
+	if (!thing) {
+		return false;
+	}
+	try {
+		result = !isDeno(node) && !isBun(node) && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isNode()
 
 /**
@@ -88,17 +88,17 @@ export function isNode(node?: unknown): boolean {
  * npx tsx@3 detect.ts  npm_lifecycle_script setting
  */
 export function isTsx(node?: unknown): boolean {
-    let result = false;
-    const thing = getGlobal(node) as any;
-    if (!isNode(node)) {
-        return false;
-    }
-    try {
-        result = !!('process' in thing && (thing.process.env?.npm_lifecycle_script === 'tsx' || thing.process.execArgv?.find((path: string) => path.indexOf('node_modules/tsx/') >= 0)));
-    } catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(node) as any;
+	if (!isNode(node)) {
+		return false;
+	}
+	try {
+		result = !!('process' in thing && (thing.process.env?.npm_lifecycle_script === 'tsx' || thing.process.execArgv?.find((path: string) => path.indexOf('node_modules/tsx/') >= 0)));
+	} catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isTsx()
 
 /**
@@ -108,7 +108,7 @@ export function isTsx(node?: unknown): boolean {
  * TRACE: isBun:false isDeno:false isTsx:false isNode:false isBrowser:true"
  */
 export function isBrowser(win?: unknown): boolean {
-    return !isDeno(win) && !isBun(win) && !isNode(win); // tsx is also node, so no check needed.
+	return !isDeno(win) && !isBun(win) && !isNode(win); // tsx is also node, so no check needed.
 }
 
 // MUSTDO put in tslangorg.txt
@@ -120,24 +120,24 @@ export function isBrowser(win?: unknown): boolean {
  * i.e. when trying to console.log(window) on https://www.typescriptlang.org/play/?target=9&module=1
  */
 function getDumpableObject(thing: Record<string, unknown>): Record<string, unknown> {
-    const dumpable: Record<string, unknown> = {};
-    Object.keys(thing).sort().forEach((key: string) => {
-        if (Object.hasOwn(thing, key)) {
-            if (typeof thing[key] !== 'object') {
-                dumpable[key] = thing[key]
-            } else {
-                try {
-                    if (JSON.stringify(thing[key])) {
-                        dumpable[key] = thing[key];
-                    }
-                }
-                catch(_unused) {
-                    dumpable[key] = `CYCLIC REF: ${Object.getPrototypeOf(thing[key])}`;
-                }
-            }
-        }
-    });   
-    return dumpable;
+	const dumpable: Record<string, unknown> = {};
+	Object.keys(thing).sort().forEach((key: string) => {
+		if (Object.hasOwn(thing, key)) {
+			if (typeof thing[key] !== 'object') {
+				dumpable[key] = thing[key]
+			} else {
+				try {
+					if (JSON.stringify(thing[key])) {
+						dumpable[key] = thing[key];
+					}
+				}
+				catch(_unused) {
+					dumpable[key] = `CYCLIC REF: ${Object.getPrototypeOf(thing[key])}`;
+				}
+			}
+		}
+	});
+	return dumpable;
 } // getDumpableObject()
 
 console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);

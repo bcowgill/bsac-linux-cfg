@@ -35,8 +35,15 @@ perl -i -pne 'if (!$prev && !m{\#!/usr/bin/env\snode}xms)
 	$prev = 1;
 	s{(exports\.EX_TSX.+=.+)true}{$1false}xms;
 	s{(exports\.EX_ONECOMP.+=.+)true}{$1false}xms;
+	s{\ +\n}{\n}xms;
 ' tslangorg.js.txt
 
+if [ `node --version` != `cat .nvmrc` ]; then
+	echo YOU NEED TO nvm use FIRST!
+	node --version
+	cat .nvmrc
+	exit
+fi
 ./tslangorg.js
 
 head -1 tslangorg.js

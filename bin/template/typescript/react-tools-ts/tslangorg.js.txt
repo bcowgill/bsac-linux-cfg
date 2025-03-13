@@ -1,11 +1,14 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.ELLIPSIS_MAP = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_GMT = exports.EX_DATE_NODE = exports.EX_JS_NODE = exports.EX_DENO = exports.EX_BUN = exports.EX_ONECOMP = exports.EX_TSX = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
+exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.ELLIPSIS_MAP = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_NODE = exports.EX_JS_NODE = exports.EX_DENO = exports.EX_BUN = exports.EX_TSX = exports.EX_ONECOMP = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
 exports.isBun = isBun;
 exports.isDeno = isDeno;
 exports.isNode = isNode;
+exports.isTsx = isTsx;
 exports.isBrowser = isBrowser;
+exports.sameNaN = sameNaN;
+exports.getDumpableObject = getDumpableObject;
 exports.jsonKeySorter = jsonKeySorter;
 exports.noop = noop;
 exports.elementAt = elementAt;
@@ -93,32 +96,111 @@ const win = {
         width: 1204
     }
 };
-function getGlobal() {
-    return typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+/**
+ * answers with the thing provided or the global object if found.
+ * @param thing {undefined | unknown}
+ * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
+ */
+function getGlobal(thing) {
+    return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+    // return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
 }
-function isBun() {
-    const thing = getGlobal();
+/**
+ * answers true if the script is running within bun (which uses Apple's JavaScriptCore engine and aims for nodejs compatability)
+ * @returns {boolean} true if bun is detected with process.versions.bun
+ * @note tested in version 1.2.6,1.2.5
+ * @example bun run detect.ts
+ * bun upgrade --canary
+ */
+function isBun(bun) {
+    let result = false;
+    const thing = getGlobal(bun);
     if (!thing) {
         return false;
     }
-    return 'Bun' in thing && 'process' in thing && !!thing.process.versions && !!thing.process.versions.bun;
-}
-function isDeno() {
-    const thing = getGlobal();
+    try {
+        result = 'Bun' in thing && 'process' in thing && !!thing.process.versions && !!thing.process.versions.bun;
+    }
+    catch (_unused) {
+        // console.error(`EXCEPTION isBun `, _unused);
+    }
+    return result;
+} // isBun()
+/**
+ * answers true if the script is running within deno (Uses V8 Engine and is nod like)
+ * @returns {boolean} true if deno is detected with global Deno
+ * @note tested in version 1.40.3, 2.2.3
+ * TRACE: isBun:false isDeno:true isTsx:false isNode:false isBrowser:false
+ * @example deno run --allow-read --allow-env detect.ts
+ */
+function isDeno(deno) {
+    let result = false;
+    const thing = getGlobal(deno);
     if (!thing) {
         return false;
     }
-    return 'Deno' in thing && 'process' in thing && !!thing.process.versions && !!thing.process.versions.deno;
-}
-function isNode() {
-    const thing = getGlobal();
+    try {
+        // process.versions.deno also exists in deno v2+
+        result = 'Deno' in thing; // deno v1
+    }
+    catch (_unused) {
+        // console.error(`EXCEPTION isBun `, _unused);
+    }
+    return result;
+} // isDeno()
+/**
+ * answers true if the script is running within node
+ * @returns {boolean} true if node is detected from process.versions.node
+ * @note tested in version 23.9.0, 21.6.1 and 6.11.4 (4.9.1 fails, 'let' not supported)
+ * TRACE: isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
+ * @example node detect.ts (~v23.6+ has TypeScript types stripping)
+ */
+function isNode(node) {
+    let result = false;
+    const thing = getGlobal(node);
     if (!thing) {
         return false;
     }
-    return !isDeno() && !isBun() && 'process' in thing && !!thing.process.versions && !!thing.process.versions.node;
-}
-function isBrowser() {
-    return !isDeno() && !isBun() && !isNode();
+    try {
+        result = !isDeno(node) && !isBun(node) && 'process' in thing && !!thing.process.versions && !!thing.process.versions.node;
+    }
+    catch (_unused) {
+        // console.error(`EXCEPTION isBun `, _unused);
+    }
+    return result;
+} // isNode()
+/**
+ * answers true if script is running with tsx (which runs on node)
+ * @returns {boolean} true if tsx is detected by process.execArgv containing 'node_modules/tsx/'
+ * @note tested in version 4.19.3,3.14.0,2.1.0
+ * TRACE: isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
+ * @example tsx detect.ts has execArgv  value set
+ * npx tsx detect.ts
+ * npx tsx@3 detect.ts  npm_lifecycle_script setting
+ */
+function isTsx(node) {
+    var _a, _b;
+    let result = false;
+    const thing = getGlobal(node);
+    if (!isNode(node)) {
+        return false;
+    }
+    try {
+        result = !!('process' in thing && (((_a = thing.process.env) === null || _a === void 0 ? void 0 : _a.npm_lifecycle_script) === 'tsx' || ((_b = thing.process.execArgv) === null || _b === void 0 ? void 0 : _b.find((path) => path.indexOf('node_modules/tsx/') >= 0))));
+    }
+    catch (_unused) {
+        // console.error(`EXCEPTION isBun `, _unused);
+    }
+    return result;
+} // isTsx()
+/**
+ * answers true if script is not running in deno, bun or node, so it must be a browser version...
+ * @returns {boolean} true if running in a browser
+ * @note tested at ht tps://www.typescriptlang.org/play/?module=1
+ * TRACE: isBun:false isDeno:false isTsx:false isNode:false isBrowser:true"
+ */
+function isBrowser(win) {
+    return !isDeno(win) && !isBun(win) && !isNode(win); // tsx is also node, so no check needed.
 }
 exports.EX_REGEX = true; // turn off unit tests for regexes
 exports.EX_BRIEF = false; // show NOT OK on failure with no details
@@ -126,17 +208,32 @@ exports.EX_NOISY = false;
 exports.EX_QUIET = true;
 exports.EX_LET_FAIL_TESTS = false; // run tests that fail so you can check the output for diagnostics
 exports.EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
-exports.EX_TSX = false; // using tsx/deno/bun to run in terminal
 exports.EX_ONECOMP = false; // onecompiler site?
+exports.EX_TSX = isTsx() || isDeno() || isBun(); // using tsx/deno/bun to run in terminal
 exports.EX_BUN = isBun(); // using bun to run in JavaScriptCore
 exports.EX_DENO = isDeno(); // using deno to run in google V8
 exports.EX_JS_NODE = !exports.EX_ONECOMP && (exports.EX_TSX || exports.EX_DENO || isNode()); // transpiled to JS and run in node or other terminal like env
 exports.EX_DATE_NODE = exports.EX_JS_NODE || exports.EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
-exports.EX_DATE_GMT = !exports.EX_TSX && (exports.EX_JS_NODE || !exports.EX_ONECOMP); // typescriptlang: false, onecompiler: true jsnode: true tsx: false
+//export const EX_DATE_GMT = EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: true, onecompiler: true jsnode: true tsx: true
+const EX_DATE_GMT = true;
+// typescriptlang.org site
+// isBun:false isDeno:false isTsx:false isNode:false isBrowser:true
+// TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:false EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
+// typescriptlang.org => JS and run in NODE
+// isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
+// TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
+// tsx
+// bun
+// Deno
+// node
+//const EX_DATE_GMT = false; // onecompier site
+// onecompiler site
+// isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
+// TRACE: EX_TSX:false EX_ONECOMP:true EX_JS_NODE:false EX_DATE_GMT:false EX_ARROW_STRINGIFY:false EX_UTF_OK:false
 exports.EX_ARROW_STRINGIFY = exports.EX_JS_NODE || !exports.EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
 exports.EX_UTF_OK = !exports.EX_ONECOMP && (exports.EX_JS_NODE || true); // typescriptlang: true/false, onecompiler: false jsnode: true
-console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isNode:${isNode()} isBrowser:${isBrowser()}`);
-console.warn(`TRACE: EX_TSX:${exports.EX_TSX} EX_ONECOMP:${exports.EX_ONECOMP} EX_JS_NODE:${exports.EX_JS_NODE} EX_DATE_GMT:${exports.EX_DATE_GMT} EX_ARROW_STRINGIFY:${exports.EX_ARROW_STRINGIFY} EX_UTF_OK:${exports.EX_UTF_OK}`);
+console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
+console.warn(`TRACE: EX_TSX:${exports.EX_TSX} EX_ONECOMP:${exports.EX_ONECOMP} EX_JS_NODE:${exports.EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${exports.EX_ARROW_STRINGIFY} EX_UTF_OK:${exports.EX_UTF_OK}`);
 exports.NBSP = '\u00a0';
 exports.U1 = '\u0031'; // the number '1'
 const global = win;
@@ -200,6 +297,7 @@ function mockScreen() {
 let screen = mockScreen();
 // A minimal unit testing library inside the tscompiler browser
 // const EX_QUOTE = EX_UTF_OK ? '' : 'gq';
+// to control how show() formats got/expected values on failing tests. you can override mid test suite.
 let EX_SHOW_SPACES = false;
 let EX_AS_JS = false;
 let EX_TESTED = 0;
@@ -208,7 +306,15 @@ let EX_FAILED = 0;
 const logger = console.warn;
 const quietly = exports.EX_QUIET ? noop : logger;
 const briefly = exports.EX_BRIEF ? noop : logger;
-// mode: raw, js or spc to override EX_AS_JS, EX_SHOW_SPACES
+/**
+ * shows a value for when a unit test fails and your platform doesn't show values well.
+ * @param what {unknown} a got/expected value to show for a failing unit test.
+ * @param mode {string} specify 'js', 'spc' or 'raw' to override the global EX_AS_JS, EX_SHOW_SPACES setting.
+ * @param max {number} specify approximate maximum length of text to output. MAX_THING by default.
+ * @returns {any} a possibly shortened string highlighting the value or any original data type.
+ * @note the global settings EX_SHOW_SPACES or EX_AS_JS affect the default output to highlight invisible spaces or to make the output easier to copy back into your JS file by escaping whitespaces
+ * The 'raw' override will try to let the engine runner format the value itself without any max length limits.
+ */
 function show(what, mode, max) {
     const showJS = EX_AS_JS || mode === 'js';
     const showSpc = EX_SHOW_SPACES || mode === 'spc';
@@ -259,6 +365,12 @@ function show(what, mode, max) {
             .replace(exports.reRepairRDQU, exports.RDQ)
             .replace(exports.reRepairEL, `${exports.EL}\$1`);
 } // show()
+/**
+ * answers true if got and expected values are both NaN as you cannot compare directly.
+ * @param got {unknown} one value to check if it is NaN.
+ * @param expected {unknown} another value to check if it is also NaN.
+ * @returns {boolean} true if both values are NaN and false any other values.
+ */
 function sameNaN(got, expected) {
     if (typeof got === 'number' && typeof expected === 'number') {
         if (isNaN(got) && isNaN(expected)) {
@@ -329,11 +441,44 @@ function expectNotToBe(got, expected, desc = 'expectNotToBe') {
         briefly(`# expected different:`, got);
     }
 } // expectNotToBe()
-// Stringify function to sort the key order and stringify things that JSON.stringify cannot
-// OR, install package...
-// ht tps://www.npmjs.com/package/json-stable-stringify
-// ht tps://stackoverflow.com/a/43636793
-// ht tps://gist.github.com/davidfurlong/463a83a33b70a3b6618e97ec9679e490
+/**
+ * answer with a new object that can be JSON.stringified (lightweight, no dependencies).
+ * @param thing {Record<string, unknown>} an object which cannot be stringified.
+ * @returns {Record<string, unknown>} a new object with values that cannot be stringified marked as cyclic.
+ * @example window contains cyclic references so cannot be stringified, try to make a dumpable object
+ * i.e. when trying to console.log(window) on ht tps://www.typescriptlang.org/play/?target=9&module=1
+ * @note: there is no special handling for Date/RegExp/Map/Set like you get with jsonKeySorter() and others below.
+ */
+function getDumpableObject(thing) {
+    const dumpable = {};
+    Object.keys(thing).sort().forEach((key) => {
+        if (thing.hasOwnProperty(key)) {
+            if (typeof thing[key] !== 'object') {
+                dumpable[key] = thing[key];
+            }
+            else {
+                try {
+                    if (JSON.stringify(thing[key])) {
+                        dumpable[key] = thing[key];
+                    }
+                }
+                catch (_unused) {
+                    dumpable[key] = `CYCLIC REF: ${Object.getPrototypeOf(thing[key])}`;
+                }
+            }
+        }
+    });
+    return dumpable;
+} // getDumpableObject()
+/**
+ * a JSON.stringify helper function to sort the key order and stringify things that JSON.stringify cannot normally handle.
+ * @param key {string} key name withing an object that is currently being stringified.
+ * @param value {unknown} value for key in object that needs to be stringified.
+ * @returns {unknown} replacement value to assemble into new object for stringification.
+ * @note source from ht tps://stackoverflow.com/a/43636793
+ * ht tps://gist.github.com/davidfurlong/463a83a33b70a3b6618e97ec9679e490
+ * OR, install package ht tps://www.npmjs.com/package/json-stable-stringify
+ */
 function jsonKeySorter(key, value) {
     // ENABLE Map
     if ((value instanceof Set)) {
@@ -351,7 +496,8 @@ function jsonKeySorter(key, value) {
         return jsonKeySorter(key, jsonMap);
     }
     // ENABLE Map End
-    return (value instanceof Object &&
+    let result;
+    if (value instanceof Object &&
         !(value instanceof Array) &&
         !(value instanceof Function) &&
         !(value instanceof Error) &&
@@ -359,14 +505,19 @@ function jsonKeySorter(key, value) {
         !(value instanceof RegExp) &&
         !(value instanceof Boolean) &&
         !(value instanceof Number) &&
-        !(value instanceof String)) ?
-        Object.keys(value)
+        !(value instanceof String)) {
+        const val = value;
+        result = Object.keys(value)
             .sort()
             .reduce((sorted, keyInner) => {
-            sorted[keyInner] = jsonKeySorter(keyInner, value[keyInner]);
+            sorted[keyInner] = jsonKeySorter(keyInner, val[keyInner]);
             return sorted;
-        }, {}) :
-        (strV(value) || value);
+        }, {});
+    }
+    else {
+        result = strV(value) || value;
+    }
+    return result;
 } // jsonKeySorter()
 // MUSTDO unit test for regex and move to top...
 const reHasFunction = /^function[\s\(]|^\([^\)]*\)\s*=>\s*/;
@@ -380,7 +531,12 @@ const reFunctionBracketSpacing = /\)\{/;
 const reFunctionBracketFirst = /\{\s*/;
 const reFunctionBracketLast = /\s*\}$/;
 const reFunctionBracketEmpty = /\{\s*\}/;
-// MUSTDO jsdoc ...
+/**
+ * answer with a unified format for function stringification across platforms: bun, deno, node, tsx, browsers.
+ * @param body {string} the stringified function body coming directly from the runner engine.
+ * @returns {string} fixed up function formatting to match better across runner engines.
+ * @note a bit of spacing is added around the function name, parameters and code block for clarity.
+ */
 function fixFunction(body) {
     if (reHasFunction.test(body)) {
         body = body.replace(reFunctionBracket, '$1 $2')
@@ -395,9 +551,9 @@ function fixFunction(body) {
             .replace(reFunctionRemoveLastNL, '\n}');
     }
     return body;
-}
+} // fixFunction()
 /**
- * answer with stringified value of something that JSON.stringify fails to handle.
+ * answer with stringified value of something that JSON.stringify fails to handle like RegExp/Map/Set and primitive objects like Boolean etc.
  * @param what {any} the thing to selectively stringify.
  * @returns {string|undefined} the string representation of what was given or undefined if JSON.stringify can handle it.
  */
@@ -450,7 +606,7 @@ function strJ(what, indent = 2) {
         }
         catch (exception) {
             whatStr = [`strJ:`, exception, what].join(' ');
-            console.error(`strJ`, exception);
+            console.error(`EXCEPTION strJ`, exception);
         }
     }
     return whatStr;
@@ -3244,7 +3400,7 @@ window.document = document;
 // in Browser ht tps://onecompiler.com/typescript on date Thu Feb 20 11:40:33 GMT 2025
 let freezeExpect = '2024-07-04T01:02:03.000Z';
 let freezeExpectToString = 'Wed Jan 01 2025 00:00:00 GMT+0000 (Coordinated Universal Time)';
-if (exports.EX_DATE_GMT) {
+if (EX_DATE_GMT) {
     // in Browser ht tps://typescriptlang.org on date Thu Feb 20 11:40:33 GMT 2025
     freezeExpect = '2024-07-04T01:02:03.000Z';
     freezeExpectToString = 'Wed\x20Jan\x2001\x202025\x2000:00:00\x20GMT+0000\x20(Greenwich\x20Mean\x20Time)';

@@ -111,6 +111,7 @@ my %Var = (
 	},
 	fileName       => '<STDIN>',    # name of file
 	prefix_tabs    => 0,
+	prefix_doc     => 0,
 	prefix_spaces  => 0,
 	uneven_spacing => 0,
 	code => 0,
@@ -174,6 +175,7 @@ sub summary
 {
 	print "=====\n$Var{'lines_seen'} lines read\n";
 	print "$Var{'prefix_spaces'} lines with prefix spacing\n";
+	print "$Var{'prefix_doc'} lines with prefix space star for \@doc documentation\n";
 	print "$Var{'prefix_tabs'} lines with prefix tabs\n";
 	if ($Var{'uneven_spacing'})
 	{
@@ -281,6 +283,12 @@ sub doLine
 	}
 	debug("past gate3, not lead tabs only");
 
+	# ignore lines with tabs a single space and a star only, but count them (@doc formatted)
+	if ($line =~ m{\A \t* \  \* (/|\ |\n|\z)}xms)
+	{
+		$Var{'prefix_doc'}++;
+		return ($line, $print);
+	}
 	$Var{'prefix_spaces'}++;
 	# handle lines with lead space only
 	if ($line =~ m{\A \ + (\S|\z)}xms)

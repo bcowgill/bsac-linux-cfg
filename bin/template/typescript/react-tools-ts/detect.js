@@ -5,8 +5,8 @@
  * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
 function getGlobal(thing) {
-    return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-    // return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
 }
 /**
  * answers true if the script is running within bun
@@ -15,18 +15,18 @@ function getGlobal(thing) {
  * @example bun run detect.ts
  */
 /* export */ function isBun(bun) {
-    let result = false;
-    const thing = getGlobal(bun);
-    if (!thing) {
-        return false;
-    }
-    try {
-        result = 'Bun' in thing && 'process' in thing && !!thing.process.versions && !!thing.process.versions.bun;
-    }
-    catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(bun);
+	if (!thing) {
+		return false;
+	}
+	try {
+		result = 'Bun' in thing && 'process' in thing && !!thing.process.versions && !!thing.process.versions.bun;
+	}
+	catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isBun()
 /**
  * answers true if the script is running within deno
@@ -36,18 +36,18 @@ function getGlobal(thing) {
  * @example deno run --allow-read detect.ts
  */
 /* export */ function isDeno(deno) {
-    let result = false;
-    const thing = getGlobal(deno);
-    if (!thing) {
-        return false;
-    }
-    try {
-        result = 'Deno' in thing;
-    }
-    catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(deno);
+	if (!thing) {
+		return false;
+	}
+	try {
+		result = 'Deno' in thing;
+	}
+	catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isDeno()
 /**
  * answers true if the script is running within node
@@ -57,18 +57,18 @@ function getGlobal(thing) {
  * @example node detect.ts
  */
 /* export */ function isNode(node) {
-    let result = false;
-    const thing = getGlobal(node);
-    if (!thing) {
-        return false;
-    }
-    try {
-        result = !isDeno(node) && !isBun(node) && 'process' in thing && !!thing.process.versions && !!thing.process.versions.node;
-    }
-    catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(node);
+	if (!thing) {
+		return false;
+	}
+	try {
+		result = !isDeno(node) && !isBun(node) && 'process' in thing && !!thing.process.versions && !!thing.process.versions.node;
+	}
+	catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isNode()
 /**
  * answers true if script is running with tsx (which runs on node)
@@ -78,18 +78,18 @@ function getGlobal(thing) {
  * @example npx tsx detect.ts
  */
 /* export */ function isTsx(node) {
-    let result = false;
-    const thing = getGlobal(node);
-    if (!isNode(node)) {
-        return false;
-    }
-    try {
-        result = !!('process' in thing && thing.process.execArgv?.find((path) => path.indexOf('node_modules/tsx/') >= 0));
-    }
-    catch (_unused) {
-        // console.error(`EXCEPTION isBun `, _unused);
-    }
-    return result;
+	let result = false;
+	const thing = getGlobal(node);
+	if (!isNode(node)) {
+		return false;
+	}
+	try {
+		result = !!('process' in thing && thing.process.execArgv?.find((path) => path.indexOf('node_modules/tsx/') >= 0));
+	}
+	catch (_unused) {
+		// console.error(`EXCEPTION isBun `, _unused);
+	}
+	return result;
 } // isTsx()
 /**
  * answers true if script is not running in deno, bun or node, so it must be a browser version...
@@ -98,7 +98,7 @@ function getGlobal(thing) {
  * TRACE: isBun:false isDeno:false isTsx:false isNode:false isBrowser:true"
  */
 /* export */ function isBrowser(win) {
-    return !isDeno(win) && !isBun(win) && !isNode(win); // tsx is also node, so no check needed.
+	return !isDeno(win) && !isBun(win) && !isNode(win); // tsx is also node, so no check needed.
 }
 // MUSTDO put in tslangorg.txt
 /**
@@ -109,25 +109,25 @@ function getGlobal(thing) {
  * i.e. when trying to console.log(window) on https://www.typescriptlang.org/play/?target=9&module=1
  */
 function getDumpableObject(thing) {
-    const dumpable = {};
-    Object.keys(thing).sort().forEach((key) => {
-        if (Object.hasOwn(thing, key)) {
-            if (typeof thing[key] !== 'object') {
-                dumpable[key] = thing[key];
-            }
-            else {
-                try {
-                    if (JSON.stringify(thing[key])) {
-                        dumpable[key] = thing[key];
-                    }
-                }
-                catch (_unused) {
-                    dumpable[key] = `CYCLIC REF: ${Object.getPrototypeOf(thing[key])}`;
-                }
-            }
-        }
-    });
-    return dumpable;
+	const dumpable = {};
+	Object.keys(thing).sort().forEach((key) => {
+		if (Object.hasOwn(thing, key)) {
+			if (typeof thing[key] !== 'object') {
+				dumpable[key] = thing[key];
+			}
+			else {
+				try {
+					if (JSON.stringify(thing[key])) {
+						dumpable[key] = thing[key];
+					}
+				}
+				catch (_unused) {
+					dumpable[key] = `CYCLIC REF: ${Object.getPrototypeOf(thing[key])}`;
+				}
+			}
+		}
+	});
+	return dumpable;
 } // getDumpableObject()
 console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
 const gg = getGlobal();
