@@ -1,5 +1,6 @@
 //==========================================================
 // Paste this into the online typescript compiler to see if it compiles
+// ht tps://onecompiler.com/typescript/43bqc6agq
 // ht tps://onecompiler.com/typescript/43bp38b7a
 // ht tps://onecompiler.com/typescript/43awqp4hr
 // ht tps://onecompiler.com/typescript/439xxyxvz
@@ -176,7 +177,8 @@ export const EX_LET_FAIL_TESTS = false; // run tests that fail so you can check 
 
 export const EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
 
-export const EX_ONECOMP = true; // onecompiler site?
+export const EX_TSLANG = false; // using tslangorg site?
+export const EX_ONECOMP = true; // using onecompiler site?
 
 export const EX_TSX     = isTsx() || isDeno() || isBun();  // using tsx/deno/bun to run in terminal
 export const EX_BUN     = isBun();   // using bun to run in JavaScriptCore
@@ -185,25 +187,32 @@ export const EX_JS_NODE = !EX_ONECOMP && (EX_TSX || EX_DENO || isNode()); // tra
 
 export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
 
-//export const EX_DATE_GMT = EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: true, onecompiler: true jsnode: true tsx: true
-// const EX_DATE_GMT = true;
+const EX_DATE_GMT = EX_TSLANG;
 // typescriptlang.org site
 // isBun:false isDeno:false isTsx:false isNode:false isBrowser:true
 // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:false EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
 // typescriptlang.org => JS and run in NODE
 // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
 // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
-// tsx
-// bun
-// Deno
-// node
-const EX_DATE_GMT = false; // onecompier site
+// GMT FALSE:
 // onecompiler site
 // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
 // TRACE: EX_TSX:false EX_ONECOMP:true EX_JS_NODE:false EX_DATE_GMT:false EX_ARROW_STRINGIFY:false EX_UTF_OK:false
+// tsx
+// isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
+// TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_STRINGIFY:true EX_UTF_OK:true
+// bun
+// isBun:true isDeno:false isTsx:false isNode:false isBrowser:false
+// TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_S
+// Deno
+// isBun:false isDeno:true isTsx:false isNode:false isBrowser:false
+// TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_S
+// node
+// isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
+// TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_STRINGIFY:true EX_UTF_OK:true
 
 export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
-export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
+export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true); // typescriptlang: true/false, onecompiler: false jsnode: true
 
 console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
 console.warn(`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK}`);
@@ -541,12 +550,14 @@ export function jsonKeySorter(key: string, value: unknown): unknown {
 // MUSTDO unit test for regex and move to top...
 const reHasFunction = /^function[\s\(]|^\([^\)]*\)\s*=>\s*/;
 const reFunctionBracket = /^(function)\s*(.)/;
+const reFunctionParamEmpty = /\(\s*\)/;
+const reFunctionComma = /\s*,\s*/g;
 const reFunctionArrow = /\)\s*=>\s*/m;
 const reFunctionBracketNL = /\{\n/;
 const reFunctionRemoveNL = /\{ NL/;
 const reFunctionBracketLastNL = /\n\}/;
 const reFunctionRemoveLastNL = /NL \}/;
-const reFunctionBracketSpacing = /\)\{/;
+const reFunctionBracketSpacing = /\s*\)\s*\{/;
 const reFunctionBracketFirst = /\{\s*/;
 const reFunctionBracketLast = /\s*\}$/;
 const reFunctionBracketEmpty = /\{\s*\}/;
@@ -562,6 +573,8 @@ function fixFunction(body: string): string {
 		body = body.replace(reFunctionBracket, '$1 $2')
 			.replace(reFunctionBracketSpacing, ') {')
 			.replace(reFunctionArrow, ') => ')
+			.replace(reFunctionComma, ',')
+			.replace(reFunctionParamEmpty, '()')
 			.replace(reFunctionBracketNL, '{NL')
 			.replace(reFunctionBracketLastNL, 'NL}')
 			.replace(reFunctionBracketFirst, '{ ')
@@ -838,24 +851,20 @@ function expect(got : any) {
 const appId = 'app-name';
 
 export type FNVoid = () => void;
-export type KeyMap = Record < string,
-unknown >;
-export type AliasMap = Record < string,
-string >;
-export type MessagesMap = Record < string,
-string[] >;
-export type FlagMap = Record < string,
-boolean >;
-export type SetStateBoolean = React.Dispatch < React.SetStateAction < boolean >>;
-export type SetFlagState = (key : string, value : boolean) => void;
+export type KeyMap = Record<string,unknown>;
+export type AliasMap = Record<string,string>;
+export type MessagesMap = Record<string,string[]>;
+export type FlagMap = Record<string,boolean>;
+export type SetStateBoolean = React.Dispatch<React.SetStateAction<boolean>>;
+export type SetFlagState = (key: string, value: boolean) => void;
 
 export interface ElementWrapper
 {
-	children : ReactElement;
+	children: ReactElement;
 }
 export interface Wrapper
 {
-	children : ReactNode;
+	children: ReactNode;
 }
 
 type IElement = HTMLElement;
@@ -865,8 +874,8 @@ export type IElementList = HTMLCollectionOf<any> | NodeListOf<any> | HTMLElement
 
 export interface ElementWithType
 {
-	type : string;
-	element : IElement;
+	type: string;
+	element: IElement;
 }
 
 export interface ILineDiff {
@@ -4049,9 +4058,9 @@ expectToBe(shortenDump('unquoted\nstring', 7), `unquote${EL}`, 'shortenDump(7) s
 expectToBe(shortenDump('function () {}'), `function () { }`, 'shortenDump(function) should not shorten function with ellipsis');
 expectToBe(shortenDump('function (x,y) { return x + y }', 7), `function (x,y) {${EL}}`, 'shortenDump(function,7) should shorten function with ellipsis inside');
 expectToBe(shortenDump('function (x,y) { return x + y }', 12), `function (x,y) { retu${EL}}`, 'shortenDump(function,12) should shorten function with ellipsis inside');
-expectToBe(shortenDump('(x, y) => { return x + y; }'), `(x, y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis');
-expectToBe(shortenDump('(x, y) => { return x + y; }', 12), `(x, y) => { ${EL}}`, 'shortenDump(arrow function,12) should shorten arrow function with ellipsis inside');
-expectToBe(shortenDump('(x, y) => { return x + y; }', 25), `(x, y) => { return x + y;${EL}}`, 'shortenDump(arrow function,25) should shorten arrow function with ellipsis inside');
+expectToBe(shortenDump('(x, y) => { return x + y; }'), `(x,y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis');
+expectToBe(shortenDump('(x, y) => { return x + y; }', 11), `(x,y) => { ${EL}}`, 'shortenDump(arrow function,11) should shorten arrow function with ellipsis inside');
+expectToBe(shortenDump('(x, y) => { return x + y; }', 24), `(x,y) => { return x + y;${EL}}`, 'shortenDump(arrow function,24) should shorten arrow function with ellipsis inside');
 
 expectToBe(shortenDump(`${LDQ}quoted string${RDQ}`, void 0), `${LDQ}quoted string${RDQ}`, `shortenDump(${LDQ}${RDQ}quoted) should not shorten quoted string`);
 expectToBe(shortenDump(`${LDQ}quoted string${RDQ}`, 7), `${LDQ}quoted ${EL}${RDQ}`, `shortenDump(${LDQ}${RDQ}quoted,7) should not shorten inside quoted string`);
@@ -4133,9 +4142,15 @@ expectToBe(
 	str(simpleFunction).replace(
 		/(function \w+)\s*(\([^\)]*\))\s*(\{)\n?\s*(.*?)\s*?\n?(})$/m,
 		'$1$2 $3 $4 $5'
-	),
-	`${simpleFunction}`.replace(/(function.+?)\s*\{\n?\s*/, '$1 { ').replace(/\s*?\n?}$/, ' }'),
-	'str(isDeno) should return string Function body'
+	).replace(/\(\s+/, '(')
+		.replace(/,\s+/g, ','),
+	`${simpleFunction}`
+		.replace(/(function.+?)\s*\{\n?\s*/, '$1 { ')
+		.replace(/\s*?\n?}$/, ' }')
+		.replace(/\(\s*/, '(')
+		.replace(/\s*,\s+/g, ',')
+		.replace(/\s*\)/, ')'),
+	'str(simpleFunction) should return string Function body'
 );
 
 // ENABLE Map
@@ -4536,9 +4551,9 @@ expectToBe(show(anArray, 'js'),
 );
 
 expectToBe(
-  show(escapedLines, 'spc'),
-  `${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB][SPx3][CR][LF]\x20[VT] [LF][SPx2]${RDQ}`,
-  'show() should requote white space characters handling newlines'
+	show(escapedLines, 'spc'),
+	`${LDQ}[SPx2][CR] [FF] [LF] [CR] [TAB][SPx3][CR][LF]\x20[VT] [LF][SPx2]${RDQ}`,
+	'show() should requote white space characters handling newlines'
 );
 
 const elDump : any = {
@@ -4593,7 +4608,7 @@ elDump.__reactInternalInstance1234 = {
 expectToBe(getElementInfo(), `NOT ELEM??? undefined  undefined`, 'getElementInfo() should show NOT ELEM message');
 if (showAllPropSources) {
 	expectToBe(
-	  showThing(elDump),
+		showThing(elDump),
 		`<REACTELEM#ID/IDp/IDm[data-testid="/DATA-TESTIDp/"][name="//NAMEm"][type="TEXT//"][role="ROLE/ROLEp/ROLEm"][aria-role="AROLE//"][${EL}>`,
 		'showThing(Element/React1) should show the element shortened'
 	);

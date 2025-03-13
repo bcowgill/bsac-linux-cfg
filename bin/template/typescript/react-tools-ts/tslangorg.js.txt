@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.ELLIPSIS_MAP = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_NODE = exports.EX_JS_NODE = exports.EX_DENO = exports.EX_BUN = exports.EX_TSX = exports.EX_ONECOMP = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
+exports.freezeAt = exports.mockWindowLocation = exports.skipIfJenkins = exports.dskipIfJenkins = exports.quotesMap = exports.reRepairEL = exports.reRepairRDQU = exports.reRepairLDQU = exports.LRDQ = exports.RDQ = exports.LDQ = exports.ELLIPSIS_MAP = exports.EL = exports.LS = exports.uev = exports.jest = exports.test = exports.describe = exports.process = exports.U1 = exports.NBSP = exports.EX_UTF_OK = exports.EX_ARROW_STRINGIFY = exports.EX_DATE_NODE = exports.EX_JS_NODE = exports.EX_DENO = exports.EX_BUN = exports.EX_TSX = exports.EX_ONECOMP = exports.EX_TSLANG = exports.EX_SHOW_MATCH = exports.EX_LET_FAIL_TESTS = exports.EX_QUIET = exports.EX_NOISY = exports.EX_BRIEF = exports.EX_REGEX = void 0;
 exports.isBun = isBun;
 exports.isDeno = isDeno;
 exports.isNode = isNode;
@@ -208,28 +208,36 @@ exports.EX_NOISY = false;
 exports.EX_QUIET = true;
 exports.EX_LET_FAIL_TESTS = false; // run tests that fail so you can check the output for diagnostics
 exports.EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
-exports.EX_ONECOMP = false; // onecompiler site?
+exports.EX_TSLANG = true; // using tslangorg site?
+exports.EX_ONECOMP = false; // using onecompiler site?
 exports.EX_TSX = isTsx() || isDeno() || isBun(); // using tsx/deno/bun to run in terminal
 exports.EX_BUN = isBun(); // using bun to run in JavaScriptCore
 exports.EX_DENO = isDeno(); // using deno to run in google V8
 exports.EX_JS_NODE = !exports.EX_ONECOMP && (exports.EX_TSX || exports.EX_DENO || isNode()); // transpiled to JS and run in node or other terminal like env
 exports.EX_DATE_NODE = exports.EX_JS_NODE || exports.EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
-//export const EX_DATE_GMT = EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: true, onecompiler: true jsnode: true tsx: true
-const EX_DATE_GMT = true;
+const EX_DATE_GMT = exports.EX_TSLANG;
 // typescriptlang.org site
 // isBun:false isDeno:false isTsx:false isNode:false isBrowser:true
 // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:false EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
 // typescriptlang.org => JS and run in NODE
 // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
 // TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:true EX_ARROW_STRINGIFY:true EX_UTF_OK:true
-// tsx
-// bun
-// Deno
-// node
-//const EX_DATE_GMT = false; // onecompier site
+// GMT FALSE:
 // onecompiler site
 // isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
 // TRACE: EX_TSX:false EX_ONECOMP:true EX_JS_NODE:false EX_DATE_GMT:false EX_ARROW_STRINGIFY:false EX_UTF_OK:false
+// tsx
+// isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
+// TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_STRINGIFY:true EX_UTF_OK:true
+// bun
+// isBun:true isDeno:false isTsx:false isNode:false isBrowser:false
+// TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_S
+// Deno
+// isBun:false isDeno:true isTsx:false isNode:false isBrowser:false
+// TRACE: EX_TSX:true EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_S
+// node
+// isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
+// TRACE: EX_TSX:false EX_ONECOMP:false EX_JS_NODE:true EX_DATE_GMT:false EX_ARROW_STRINGIFY:true EX_UTF_OK:true
 exports.EX_ARROW_STRINGIFY = exports.EX_JS_NODE || !exports.EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
 exports.EX_UTF_OK = !exports.EX_ONECOMP && (exports.EX_JS_NODE || true); // typescriptlang: true/false, onecompiler: false jsnode: true
 console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
@@ -522,12 +530,14 @@ function jsonKeySorter(key, value) {
 // MUSTDO unit test for regex and move to top...
 const reHasFunction = /^function[\s\(]|^\([^\)]*\)\s*=>\s*/;
 const reFunctionBracket = /^(function)\s*(.)/;
+const reFunctionParamEmpty = /\(\s*\)/;
+const reFunctionComma = /\s*,\s*/g;
 const reFunctionArrow = /\)\s*=>\s*/m;
 const reFunctionBracketNL = /\{\n/;
 const reFunctionRemoveNL = /\{ NL/;
 const reFunctionBracketLastNL = /\n\}/;
 const reFunctionRemoveLastNL = /NL \}/;
-const reFunctionBracketSpacing = /\)\{/;
+const reFunctionBracketSpacing = /\s*\)\s*\{/;
 const reFunctionBracketFirst = /\{\s*/;
 const reFunctionBracketLast = /\s*\}$/;
 const reFunctionBracketEmpty = /\{\s*\}/;
@@ -542,6 +552,8 @@ function fixFunction(body) {
         body = body.replace(reFunctionBracket, '$1 $2')
             .replace(reFunctionBracketSpacing, ') {')
             .replace(reFunctionArrow, ') => ')
+            .replace(reFunctionComma, ',')
+            .replace(reFunctionParamEmpty, '()')
             .replace(reFunctionBracketNL, '{NL')
             .replace(reFunctionBracketLastNL, 'NL}')
             .replace(reFunctionBracketFirst, '{ ')
@@ -3536,9 +3548,9 @@ expectToBe(shortenDump('unquoted\nstring', 7), `unquote${exports.EL}`, 'shortenD
 expectToBe(shortenDump('function () {}'), `function () { }`, 'shortenDump(function) should not shorten function with ellipsis');
 expectToBe(shortenDump('function (x,y) { return x + y }', 7), `function (x,y) {${exports.EL}}`, 'shortenDump(function,7) should shorten function with ellipsis inside');
 expectToBe(shortenDump('function (x,y) { return x + y }', 12), `function (x,y) { retu${exports.EL}}`, 'shortenDump(function,12) should shorten function with ellipsis inside');
-expectToBe(shortenDump('(x, y) => { return x + y; }'), `(x, y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis');
-expectToBe(shortenDump('(x, y) => { return x + y; }', 12), `(x, y) => { ${exports.EL}}`, 'shortenDump(arrow function,12) should shorten arrow function with ellipsis inside');
-expectToBe(shortenDump('(x, y) => { return x + y; }', 25), `(x, y) => { return x + y;${exports.EL}}`, 'shortenDump(arrow function,25) should shorten arrow function with ellipsis inside');
+expectToBe(shortenDump('(x, y) => { return x + y; }'), `(x,y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis');
+expectToBe(shortenDump('(x, y) => { return x + y; }', 11), `(x,y) => { ${exports.EL}}`, 'shortenDump(arrow function,11) should shorten arrow function with ellipsis inside');
+expectToBe(shortenDump('(x, y) => { return x + y; }', 24), `(x,y) => { return x + y;${exports.EL}}`, 'shortenDump(arrow function,24) should shorten arrow function with ellipsis inside');
 expectToBe(shortenDump(`${exports.LDQ}quoted string${exports.RDQ}`, void 0), `${exports.LDQ}quoted string${exports.RDQ}`, `shortenDump(${exports.LDQ}${exports.RDQ}quoted) should not shorten quoted string`);
 expectToBe(shortenDump(`${exports.LDQ}quoted string${exports.RDQ}`, 7), `${exports.LDQ}quoted ${exports.EL}${exports.RDQ}`, `shortenDump(${exports.LDQ}${exports.RDQ}quoted,7) should not shorten inside quoted string`);
 expectToBe(shortenDump('"quoted string"', void 0), `"quoted string"`, 'shortenDump("quoted) should not shorten quoted string');
@@ -3594,7 +3606,13 @@ expectToBe(str(function named4() { }), `${expectNamed4}`, 'str(function named) s
 function simpleFunction(x, y) {
     return x + y * y;
 }
-expectToBe(str(simpleFunction).replace(/(function \w+)\s*(\([^\)]*\))\s*(\{)\n?\s*(.*?)\s*?\n?(})$/m, '$1$2 $3 $4 $5'), `${simpleFunction}`.replace(/(function.+?)\s*\{\n?\s*/, '$1 { ').replace(/\s*?\n?}$/, ' }'), 'str(isDeno) should return string Function body');
+expectToBe(str(simpleFunction).replace(/(function \w+)\s*(\([^\)]*\))\s*(\{)\n?\s*(.*?)\s*?\n?(})$/m, '$1$2 $3 $4 $5').replace(/\(\s+/, '(')
+    .replace(/,\s+/g, ','), `${simpleFunction}`
+    .replace(/(function.+?)\s*\{\n?\s*/, '$1 { ')
+    .replace(/\s*?\n?}$/, ' }')
+    .replace(/\(\s*/, '(')
+    .replace(/\s*,\s+/g, ',')
+    .replace(/\s*\)/, ')'), 'str(simpleFunction) should return string Function body');
 // ENABLE Map
 expectToBe(str(new Map()), '[object Map]', 'str(Map) should return stringified Map');
 expectToBe(str(new Set()), '[object Set]', 'str(Set) should return stringified Set');

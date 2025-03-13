@@ -16,6 +16,10 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   TODO ??? can I run tsx as a REPL and find something that differs from deno/bun/node???
 
 Diffing changes back and forth:
+from ubuntu usb key (bun,deno,tsx,node)
 
-vsdiff.sh tslangorg.txt tscompiler.txt
+vdiff.sh tsrunner.ts tslangorg.txt; edit.sh tslangorg.txt
+vsdiff.sh tslangorg.txt tscompiler.txt; edit.sh tscompiler.txt
+
+and back again...
 vsdiff.sh tslangorg.txt tsrunner.ts
