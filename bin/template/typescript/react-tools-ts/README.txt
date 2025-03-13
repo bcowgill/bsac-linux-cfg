@@ -13,6 +13,7 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - tsx ./tsrunner.ts
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
+  TODO ??? can I run tsx as a REPL and find something that differs from deno/bun/node???
 
 Diffing changes back and forth:
 
