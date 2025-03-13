@@ -65,14 +65,29 @@ const win : any = {
 	}
 };
 
+function getGlobal(): any {
+	return typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+}
 export function isBun(): boolean {
-	return 'Bun' in globalThis && 'process' in globalThis && !! globalThis.process.versions && !! globalThis.process.versions.bun;
+	const thing = getGlobal();
+	if (!thing) {
+		return false;
+	}
+	return 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
 }
 export function isDeno(): boolean {
-	return 'Deno' in globalThis && 'process' in globalThis && !! globalThis.process.versions && !! globalThis.process.versions.deno;
+	const thing = getGlobal();
+	if (!thing) {
+		return false;
+	}
+	return 'Deno' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.deno;
 }
 export function isNode(): boolean {
-	return !isDeno() && !isBun() && 'process' in globalThis && !! globalThis.process.versions && !! globalThis.process.versions.node;
+	const thing = getGlobal();
+	if (!thing) {
+		return false;
+	}
+	return !isDeno() && !isBun() && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
 }
 export function isBrowser(): boolean {
 	return !isDeno() && !isBun() && !isNode();
@@ -86,12 +101,12 @@ export const EX_LET_FAIL_TESTS = false; // run tests that fail so you can check 
 
 export const EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
 
-export const EX_TSX     = true;  // using tsx or deno to run in terminal
+export const EX_TSX     = true;  // using tsx/deno/bun to run in terminal
 export const EX_ONECOMP = false; // onecompiler site?
 
 export const EX_BUN     = isBun();   // using bun to run in JavaScriptCore
 export const EX_DENO    = isDeno();  // using deno to run in google V8
-export const EX_JS_NODE = EX_TSX || EX_DENO || isNode(); // transpiled to JS and run in node or other terminal like env
+export const EX_JS_NODE = !EX_ONECOMP && (EX_TSX || EX_DENO || isNode()); // transpiled to JS and run in node or other terminal like env
 
 export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
 export const EX_DATE_GMT = !EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: false, onecompiler: true jsnode: true tsx: false
@@ -380,6 +395,7 @@ const reFunctionBracketFirst = /\{\s*/;
 const reFunctionBracketLast = /\s*\}$/;
 const reFunctionBracketEmpty = /\{\s*\}/;
 
+// MUSTDO jsdoc ...
 function fixFunction(body: string): string {
 	if (reHasFunction.test(body)) {
 		body = body.replace(reFunctionBracket, '$1 $2')
@@ -2831,7 +2847,6 @@ let expectNamed = 'function named() { }';
 let expectNamed2 = 'function named2() { }';
 let expectNamed4 = 'function named4() { }';
 let expectNamed5 = 'function named5() { }';
-let expectNamed6 = 'function name6() { }';
 let expectNamed6Ellipsis = `function name6() ${EL}}`;
 let named6EllipsisLen = 8;
 let expectArrow42 = 'function () { return 42; }';
@@ -2851,25 +2866,6 @@ if (EX_ARROW_STRINGIFY) {
 	if (EX_TSX) {
 		arrowEllipsisLen = 8;
 	}
-}
-if (false && EX_TSX) {
-	// MUSTDO DELETE ALL
-	expectNoop = expectNoop.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNoop2 = expectNoop2.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNoopEllipsis = `function noop()${EL}}`;
-	noopEllipsisLen = 6;
-	expectAnonEllipsis = `function () { return${EL} }`;
-	anonEllipsisLen = 11;
-	expectNamed = expectNamed.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNamed2 = expectNamed2.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNamed4 = expectNamed4.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNamed5 = expectNamed5.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNamed6 = expectNamed6.replace(/ /g, '').replace(/(function)/g, '$1 ');
-	expectNamed6Ellipsis = `function name6()${EL}}`;
-	named6EllipsisLen = 7;
-	expectArrow42 = expectArrow42.replace(/ /g, '');
-	expectArrowNull = expectArrowNull.replace(/ /g, '');
-	expectArrowNullEllipsis = expectArrowNullEllipsis.replace(/ /g, '');
 }
 if (EX_DENO || EX_BUN) {
 	expectAnonEllipsis = `function () {\n  return${EL}}`;
@@ -3970,12 +3966,16 @@ expectToBe(str(new TypeError('typeerr')), 'TypeError:\x20typeerr', 'str(TypeErro
 expectToBe(str(() => null), expectArrowNull, 'str(() => null) should return string Function body');
 expectToBe(str(function named4() : void {}), `${expectNamed4}`, 'str(function named) should return string Function body');
 
+function simpleFunction(x: number, y: number): number {
+	return x + y * y;
+}
+
 expectToBe(
-	str(isDeno).replace(
-		/(function \w+)\s*(\([^\)]*\))\s*(\{)\s*(.*?)\s*(})$/m,
+	str(simpleFunction).replace(
+		/(function \w+)\s*(\([^\)]*\))\s*(\{)\n?\s*(.*?)\s*?\n?(})$/m,
 		'$1$2 $3 $4 $5'
 	),
-	`${isDeno}`.replace(/(function.+?)\s*\{\n?\s*/, '$1 { ').replace(/\s*?\n?}$/, ' }'),
+	`${simpleFunction}`.replace(/(function.+?)\s*\{\n?\s*/, '$1 { ').replace(/\s*?\n?}$/, ' }'),
 	'str(isDeno) should return string Function body'
 );
 

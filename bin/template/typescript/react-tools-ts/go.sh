@@ -6,7 +6,6 @@
 # 5. this also runs the javascript so you should see All Testts passed
 # 6. then it reopens the files in emacs so you have the latest changes in the buffer.
 perl -i -pne '
-	s{(exports\.EX_JS_NODE.+=.+)true}{$1false}xms;
 	s{(exports\.EX_ONECOMP.+=.+)false}{$1true}xms;
 	if (m{//\sENABLE\sMap\sEnd}) {
 		$comment = 0;
@@ -18,7 +17,12 @@ perl -i -pne '
 ' tscompiler.txt
 
 perl -i -pne '
-	s{(exports\.EX_JS_NODE.+=.+)true}{$1false}xms;
+	s{(exports\.EX_TSX.+=.+)false}{$1true}xms;
+	s{(exports\.EX_ONECOMP.+=.+)false}{$1false}xms;
+' tsrunner.ts
+
+perl -i -pne '
+	s{(exports\.EX_TSX.+=.+)true}{$1false}xms;
 	s{(exports\.EX_ONECOMP.+=.+)true}{$1false}xms;
 ' tslangorg.txt
 
@@ -29,7 +33,7 @@ perl -i -pne 'if (!$prev && !m{\#!/usr/bin/env\snode}xms)
 		$_ = "#!/usr/bin/env node\n$_"
 	}
 	$prev = 1;
-	s{(exports\.EX_JS_NODE.+=.+)false}{$1true}xms;
+	s{(exports\.EX_TSX.+=.+)true}{$1false}xms;
 	s{(exports\.EX_ONECOMP.+=.+)true}{$1false}xms;
 ' tslangorg.js.txt
 

@@ -51,6 +51,34 @@ const win : any = {
 	}
 };
 
+function getGlobal(): any {
+	return typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+}
+export function isBun(): boolean {
+	const thing = getGlobal();
+	if (!thing) {
+		return false;
+	}
+	return 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
+}
+export function isDeno(): boolean {
+	const thing = getGlobal();
+	if (!thing) {
+		return false;
+	}
+	return 'Deno' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.deno;
+}
+export function isNode(): boolean {
+	const thing = getGlobal();
+	if (!thing) {
+		return false;
+	}
+	return !isDeno() && !isBun() && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
+}
+export function isBrowser(): boolean {
+	return !isDeno() && !isBun() && !isNode();
+}
+
 export const EX_REGEX = true; // turn off unit tests for regexes
 export const EX_BRIEF = false; // show NOT OK on failure with no details
 export const EX_NOISY = false;
@@ -59,15 +87,20 @@ export const EX_LET_FAIL_TESTS = false; // run tests that fail so you can check 
 
 export const EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in this format: raw, spc or js
 
-export const EX_JS_NODE = false; // transpiled to JS and run in node
+export const EX_TSX     = false;  // using tsx/deno/bun to run in terminal
 export const EX_ONECOMP = false; // onecompiler site?
 
+export const EX_BUN     = isBun();   // using bun to run in JavaScriptCore
+export const EX_DENO    = isDeno();  // using deno to run in google V8
+export const EX_JS_NODE = !EX_ONECOMP && (EX_TSX || EX_DENO || isNode()); // transpiled to JS and run in node or other terminal like env
+
 export const EX_DATE_NODE = EX_JS_NODE || EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
-export const EX_DATE_GMT = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: false, onecompiler: true jsnode: true
+export const EX_DATE_GMT = !EX_TSX && (EX_JS_NODE || !EX_ONECOMP); // typescriptlang: false, onecompiler: true jsnode: true tsx: false
 export const EX_ARROW_STRINGIFY = EX_JS_NODE || !EX_ONECOMP; // typescriptlang: true, onecompiler: false, jsnode: true
 export const EX_UTF_OK = !EX_ONECOMP && (EX_JS_NODE || true) ; // typescriptlang: true/false, onecompiler: false jsnode: true
 
-console.warn(`EX_UTF_OK = ${EX_UTF_OK}`);
+console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isNode:${isNode()} isBrowser:${isBrowser()}`);
+console.warn(`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK}`);
 
 export const NBSP = '\u00a0';
 export const U1 = '\u0031'; // the number '1'
@@ -335,6 +368,36 @@ export function jsonKeySorter(key: string, value: any) {
 			(strV(value) || value);
 } // jsonKeySorter()
 
+// MUSTDO unit test for regex and move to top...
+const reHasFunction = /^function[\s\(]|^\([^\)]*\)\s*=>\s*/;
+const reFunctionBracket = /^(function)\s*(.)/;
+const reFunctionArrow = /\)\s*=>\s*/m;
+const reFunctionBracketNL = /\{\n/;
+const reFunctionRemoveNL = /\{ NL/;
+const reFunctionBracketLastNL = /\n\}/;
+const reFunctionRemoveLastNL = /NL \}/;
+const reFunctionBracketSpacing = /\)\{/;
+const reFunctionBracketFirst = /\{\s*/;
+const reFunctionBracketLast = /\s*\}$/;
+const reFunctionBracketEmpty = /\{\s*\}/;
+
+// MUSTDO jsdoc ...
+function fixFunction(body: string): string {
+	if (reHasFunction.test(body)) {
+		body = body.replace(reFunctionBracket, '$1 $2')
+			.replace(reFunctionBracketSpacing, ') {')
+			.replace(reFunctionArrow, ') => ')
+			.replace(reFunctionBracketNL, '{NL')
+			.replace(reFunctionBracketLastNL, 'NL}')
+			.replace(reFunctionBracketFirst, '{ ')
+			.replace(reFunctionBracketLast, ' }')
+			.replace(reFunctionBracketEmpty, '{ }')
+			.replace(reFunctionRemoveNL, '{\n')
+			.replace(reFunctionRemoveLastNL, '\n}')
+	}
+	return body;
+}
+
 /**
  * answer with stringified value of something that JSON.stringify fails to handle.
  * @param what {any} the thing to selectively stringify.
@@ -368,7 +431,7 @@ function strV(what?: any): string | undefined {
 		name === 'RegExp ' ||
 		name === 'Function ' ||
 		what instanceof Error)) {
-		whatStr = `${getTypeName(what) || typeof what}: ${what}`;
+		whatStr = `${getTypeName(what) || typeof what}: ${fixFunction(what.toString())}`;
 	}
 	return whatStr;
 } // strV()
@@ -1975,24 +2038,40 @@ export function shortenDump(dump : string, MAX_LENGTH = MAX_THING, quotes = '') 
 		wrap = '';
 	}
 	// console.warn(`shortenDump1 q:${quotes} w:[${wrap}] [${dump}]`)
-	const reFunctionBracket = /^function .+\}$/m;
-	if (reFunctionBracket.test(dump)) {
-		wrap = ['function ', '}'];
-		dump = dump.substring(9, dump.length - 1);
+	if (reHasFunction.test(dump)) {
+		//console.warn(`TRACE: sd1 ${reHasFunction.test(dump)} ${reFunctionBracket.test(dump)} ${dump}`);
+		if (reFunctionBracket.test(dump)) {
+			wrap = ['function ', '}'];
+			dump = fixFunction(dump);
+			dump = dump.substring(9, dump.length - 1);
+			//console.warn(`TRACE: sd2 [${dump}]`);
+		} else if (dump.charAt(dump.length - 1) === '}') {
+			wrap = ['', '}'];
+			dump = fixFunction(dump);
+			dump = dump.substring(0, dump.length - 1);
+			//console.warn(`TRACE: sd3 [${dump}]`);
+		} else {
+			wrap = '';
+			dump = fixFunction(dump);
+			//console.warn(`TRACE: sd4 [${dump}]`);
+		}
 	} else if (wrap) {
 		dump = dump.length <= 2
 			? ''
 			: dump.substring(1, dump.length - 1);
 	}
 	// console.warn(`shortenDump2 q:${quotes} w:[${wrap}] [${dump}]`)
+	//console.warn(`TRACE: sd5 q:${quotes} w:[${wrap}] [${dump}]`)
 	if (dump.length > MAX_LENGTH) {
 		dump = dump.substring(0, MAX_LENGTH) + ELLIPSIS;
 	}
 	// console.warn(`shortenDump3 q:${quotes} w:[${wrap}] [${dump}]`)
 	if (wrap) {
 		dump = wrap[0] + dump + wrap[1];
+		//console.warn(`TRACE: sd6 w:[${wrap}] [${dump}]`)
 	}
 	// console.warn(`shortenDump4 q:${quotes} w:[${wrap}] [${dump}]`)
+	//console.warn(`TRACE: sd7 q:${quotes} w:[${wrap}] [${dump}]`)
 	return quotes
 		? enquote(dump, quotes)
 		: dump;
@@ -2083,6 +2162,7 @@ export function showThing(thing?: unknown, MAX_LENGTH = MAX_THING, notElem = fal
 		return `EXCEPTION showThing[${exception}]`;
 	}
 
+	//console.warn(`TRACE: ST2 ${MAX_LENGTH} ${notElem} [${out}]`);
 	return shortenDump(out, MAX_LENGTH, type === 'string' || typeOf === 'String '
 		? `${LDQ}${RDQ}`
 		: '');
@@ -2119,7 +2199,7 @@ export function str(value?: unknown) : string
 	if (value || /^(boolean|number)$/.test(typeof value)) {
 		return Array.isArray(value)
 			? `[${value}]`
-			: `${value}`
+			: fixFunction(`${value}`)
 		// return [value, ''].join('');
 	}
 	return '';
@@ -2745,16 +2825,41 @@ const anArray = [1, '2', /a/g];
 const arrowFunc42 = () => 42;
 
 // node vs browser stringify differs...
+let expectNoop = 'function () { }';
+let expectNoopEllipsis = `function noop() {${EL}}`;
+let noopEllipsisLen = 8;
+let expectNoop2 = 'function noop() { }';
+let expectNamed = 'function named() { }';
+let expectNamed2 = 'function named2() { }';
+let expectNamed4 = 'function named4() { }';
+let expectNamed5 = 'function named5() { }';
+let expectNamed6Ellipsis = `function name6() ${EL}}`;
+let named6EllipsisLen = 8;
 let expectArrow42 = 'function () { return 42; }';
 let expectArrowNull = 'function () { return null; }';
-let expectArrowNullEllipsis = `function () { return${EL}}`
+let expectArrowNullEllipsis = `function () { return${EL}}`;
 let arrowEllipsisLen = 11;
+let expectAnonEllipsis = `function () { return${EL}}`;
+let anonEllipsisLen = 11;
+let expectSearchParams = {};
+let expectSearchParamsNone = {};
 if (EX_ARROW_STRINGIFY) {
 	// browser...
 	expectArrow42 = '() => 42';
 	expectArrowNull = '() => null';
 	expectArrowNullEllipsis = `() => nu${EL}`
 	arrowEllipsisLen = 8;
+	if (EX_TSX) {
+		arrowEllipsisLen = 8;
+	}
+}
+if (EX_DENO || EX_BUN) {
+	expectAnonEllipsis = `function () {\n  return${EL}}`;
+	anonEllipsisLen = 13;
+}
+if (EX_BUN) {
+	expectSearchParamsNone = new URLSearchParams();
+	expectSearchParams = new URLSearchParams(`?param=34&that=this`);
 }
 
 console.log(`ES6 MAP DEF`); // ENABLE Map
@@ -2819,7 +2924,7 @@ const expectJson: any = {
 			"a": "Number : -Infinity",
 			"b": "Boolean : false",
 			"d": "Date : 2025-01-01T00:00:00.000Z",
-			"f": "Function : function noop() { }",
+			"f": `Function : ${expectNoop2}`,
 			"n": "Number : 3",
 			"s": "String : what",
 			"t": "-Infinity"
@@ -2919,6 +3024,22 @@ expectToBe(myReplaceSpaceLength(''), '[SPx0]', 'myReplaceSpaceLength(empty strin
 expectToBe(myReplaceSpaceLength(' '), '[SPx1]', 'myReplaceSpaceLength(one space) should show [SPx1]');
 expectToBe(myReplaceSpaceLength('...'), '[SPx3]', 'myReplaceSpaceLength(three chars) should show [SPx3]');
 
+expectToBe(fixFunction('function(){}'), 'function () { }', 'fixFunction(anon function) should adjust spacing of functions');
+expectToBe(fixFunction('  function(){}'), '  function(){}', 'fixFunction(lead spaces) should leave alone');
+expectToBe(fixFunction('function(){\n\n}'), 'function () {\n\n}', 'fixFunction(anon function newlines) should adjust spacing of functions with newlines');
+expectToBe(fixFunction('function(x){}'), 'function (x) { }', 'fixFunction(anon param) should adjust spacing of function with parameter');
+expectToBe(fixFunction('function(){return 42}'), 'function () { return 42 }', 'fixFunction(anon function body) should adjust spacing of functions with body');
+expectToBe(fixFunction('function(){ return 42; }'), 'function () { return 42; }', 'fixFunction(anon function body spaced) should adjust spacing of functions with body spaced');
+expectToBe(fixFunction('function blob(){}'), 'function blob() { }', 'fixFunction(named function) should adjust spacing of named functions');
+expectToBe(fixFunction('function blob (){}'), 'function blob () { }', 'fixFunction(named function spaced) should adjust spacing of named functions');
+
+expectToBe(fixFunction('()=>{}'), '() => { }', 'fixFunction(arrow function) should adjust spacing of arrow');
+expectToBe(fixFunction('  ()=>{}'), '  ()=>{}', 'fixFunction(lead spaces arrow) should leave alone');
+expectToBe(fixFunction('(x)=>null'), '(x) => null', 'fixFunction(arrow param) should adjust spacing of arrow function with parameter');
+expectToBe(fixFunction('(x)=>{\n\n}'), '(x) => {\n\n}', 'fixFunction(arrow param newlines) should adjust spacing of arrow function with parameter and newlines');
+expectToBe(fixFunction('()=>{return 42}'), '() => { return 42 }', 'fixFunction(arrow function body) should adjust spacing of arrow functions with body');
+expectToBe(fixFunction('()=>{ return 42; }'), '() => { return 42; }', 'fixFunction(arrow function body spaced) should adjust spacing of arrow functions with body spaced');
+
 expectToBe(strV(), 'undefined', 'strV() should show undefined unquoted');
 expectToBe(strV(null), undefined, 'strV(null) should answer as undefined');
 expectToBe(strV(NaN), 'NaN', 'strV(NaN) should show as unquoted');
@@ -2945,8 +3066,8 @@ expectToBe(
 );
 
 expectToBe(strV(() => null), `Function : ${expectArrowNull}`, 'strV(() => null) should show as Function : stringified');
-expectToBe(strV(function () {}), 'Function : function () { }', 'strV(anon function) should show as Function : stringified');
-expectToBe(strV(function named(): void {}), 'Function : function named() { }', 'strV(function named) should show as stringified');
+expectToBe(strV(function () {}), `Function : ${expectNoop}`, 'strV(anon function) should show as Function : stringified');
+expectToBe(strV(function named(): void {}), `Function : ${expectNamed}`, 'strV(function named) should show as stringified');
 expectToMatch(/^Function : function strV\(what/, strV(strV) || '', 'strV(strV) should show Function : stringified');
 expectToBe(strV(anObject), undefined, 'strV(object) should answer undefined');
 expectToBe(strV(anArray), undefined, 'strV(array) should answer undefined');
@@ -2955,8 +3076,10 @@ const endlessObj: any = {};
 endlessObj.__looped = endlessObj;
 expectToBe(
 	strJ(endlessObj),
-	(EX_JS_NODE || EX_ONECOMP) ?
-		`strJ: RangeError: Maximum call stack size exceeded [object Object]`
+	EX_BUN
+		?  `strJ: RangeError: Maximum call stack size exceeded. [object Object]`
+		: (EX_JS_NODE || EX_ONECOMP)
+		?  `strJ: RangeError: Maximum call stack size exceeded [object Object]`
 		: `strJ: InternalError: too much recursion [object Object]`,
 	'strJ(endlessObj) should stringify to an exception'
 );
@@ -3009,8 +3132,8 @@ expectToBe(
 );
 
 expectToBe(strJ(() => null), `Function : ${expectArrowNull}`, 'strJ(() => null) should show as stringified');
-expectToBe(strJ(function () {}), 'Function : function () { }', 'strJ(anon function) should show as stringified');
-expectToBe(strJ(function named(): void {}), 'Function : function named() { }', 'strJ(function named) should show as stringified');
+expectToBe(strJ(function () {}), `Function : ${expectNoop}`, 'strJ(anon function) should show as stringified');
+expectToBe(strJ(function named2(): void {}), `Function : ${expectNamed2}`, 'strJ(function named) should show as stringified');
 
 expectToMatch(/^Function : function strJ\(what/, strJ(strJ), 'strJ(strJ) should show');
 
@@ -3186,9 +3309,9 @@ expectToBe(window.location.host, 'localhost.site:3000', 'should set window host'
 expectToBe(window.location.hostname, 'localhost.site', 'should set window hostname');
 expectToBe(window.location.port, '3000', 'should set window port');
 expectToBe(window.location.pathname, '/', 'should set window pathname');
-expectToBe(window.location.search, '', 'should set window search');
+expectToBe(window.location.search, '', 'should set window search empty');
 expectToBe(window.location.hash, '#/', 'should set window hash');
-expectToEqual(window.location.searchParams, {}, 'should set window search');
+expectToEqual(window.location.searchParams, expectSearchParamsNone, 'should set window searchParams equal');
 window
 	.location
 	.assign('ft\p://john:doe@go.com:3333/path/name?param=34&that=this#hashpath');
@@ -3202,9 +3325,9 @@ expectToBe(window.location.host, 'go.com:3333', 'should set window host');
 expectToBe(window.location.hostname, 'go.com', 'should set window hostname');
 expectToBe(window.location.port, '3333', 'should set window port');
 expectToBe(window.location.pathname, '/path/name', 'should set window pathname');
-expectToBe(window.location.search, '?param=34&that=this', 'should set window search');
+expectToBe(window.location.search, '?param=34&that=this', 'should set window search params stringify');
 expectToBe(window.location.hash, '#hashpath', 'should set window hash');
-expectToEqual(window.location.searchParams, {}, 'should set window search');
+expectToEqual(window.location.searchParams, expectSearchParams, 'should set window searchParams object');
 window
 	.location
 	.replace('fil\e:/path');
@@ -3725,7 +3848,7 @@ expectToBe(getTypeName(aBoolean), 'Boolean ', 'getTypeName(Boolean) should retur
 expectToBe(getTypeName(aString), 'String ', 'getTypeName(String) should return String');
 expectToBe(getTypeName(typeError), 'TypeError ', 'getTypeName(TypeError) should return TypeError');
 expectToBe(getTypeName(() => null), 'Function ', 'getTypeName(() => null) should return Function');
-expectToBe(getTypeName(function named() : void {}), 'Function ', 'getTypeName(function named) should return Function');
+expectToBe(getTypeName(function named3() : void {}), 'Function ', 'getTypeName(function named) should return Function');
 expectToBe(getTypeName(getTypeName), 'Function ', 'getTypeName(getTypeName) should return Function');
 
 // ENABLE Map
@@ -3750,9 +3873,12 @@ expectToBe(shortenDump('unquoted', 7, `${LDQ}${RDQ}`), `${LDQ}unquote${EL}${RDQ}
 	'es');
 expectToBe(shortenDump('unquoted\nstring'), `unquoted\nstring`, 'shortenDump() should not shorten');
 expectToBe(shortenDump('unquoted\nstring', 7), `unquote${EL}`, 'shortenDump(7) should shorten with ellipsis');
-expectToBe(shortenDump('function () {}'), `function () {}`, 'shortenDump(function) should not shorten function with ellipsis');
-expectToBe(shortenDump('function () {}', 7), `function () {}`, 'shortenDump(function,7) should shorten function with ellipsis inside');
-expectToBe(shortenDump('function () {}', 12), `function () {}`, 'shortenDump(function,12) should shorten function with ellipsis inside');
+expectToBe(shortenDump('function () {}'), `function () { }`, 'shortenDump(function) should not shorten function with ellipsis');
+expectToBe(shortenDump('function (x,y) { return x + y }', 7), `function (x,y) {${EL}}`, 'shortenDump(function,7) should shorten function with ellipsis inside');
+expectToBe(shortenDump('function (x,y) { return x + y }', 12), `function (x,y) { retu${EL}}`, 'shortenDump(function,12) should shorten function with ellipsis inside');
+expectToBe(shortenDump('(x, y) => { return x + y; }'), `(x, y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis');
+expectToBe(shortenDump('(x, y) => { return x + y; }', 12), `(x, y) => { ${EL}}`, 'shortenDump(arrow function,12) should shorten arrow function with ellipsis inside');
+expectToBe(shortenDump('(x, y) => { return x + y; }', 25), `(x, y) => { return x + y;${EL}}`, 'shortenDump(arrow function,25) should shorten arrow function with ellipsis inside');
 
 expectToBe(shortenDump(`${LDQ}quoted string${RDQ}`, void 0), `${LDQ}quoted string${RDQ}`, `shortenDump(${LDQ}${RDQ}quoted) should not shorten quoted string`);
 expectToBe(shortenDump(`${LDQ}quoted string${RDQ}`, 7), `${LDQ}quoted ${EL}${RDQ}`, `shortenDump(${LDQ}${RDQ}quoted,7) should not shorten inside quoted string`);
@@ -3824,8 +3950,20 @@ expectToBe(str(aBoolean), 'false', 'str(Boolean) should return string Boolean');
 expectToBe(str(aString), 'what', 'str(String) should return String');
 expectToBe(str(new TypeError('typeerr')), 'TypeError:\x20typeerr', 'str(TypeError) should return string TypeError');
 expectToBe(str(() => null), expectArrowNull, 'str(() => null) should return string Function body');
-expectToBe(str(function named() : void {}), 'function named() { }', 'str(function named) should return string Function body');
-expectToBe(str(getTypeName), `${getTypeName}`, 'str(getTypeName) should return string Function body');
+expectToBe(str(function named4() : void {}), `${expectNamed4}`, 'str(function named) should return string Function body');
+
+function simpleFunction(x: number, y: number): number {
+	return x + y * y;
+}
+
+expectToBe(
+	str(simpleFunction).replace(
+		/(function \w+)\s*(\([^\)]*\))\s*(\{)\n?\s*(.*?)\s*?\n?(})$/m,
+		'$1$2 $3 $4 $5'
+	),
+	`${simpleFunction}`.replace(/(function.+?)\s*\{\n?\s*/, '$1 { ').replace(/\s*?\n?}$/, ' }'),
+	'str(isDeno) should return string Function body'
+);
 
 // ENABLE Map
 expectToBe(str(new Map()), '[object Map]', 'str(Map) should return stringified Map');
@@ -3895,9 +4033,9 @@ expectToBe(
 	'showThing(TypeError) should have no ellipsis'
 );
 expectToBe(showThing(() => null, 28), expectArrowNull, 'showThing(arrow function) should have no ellipsis');
-expectToBe(showThing(function () : void {}, 15), `function () { }`, 'showThing(anon function) should have no ellipsis');
-expectToBe(showThing(function named() : void {}, 20), `function named() { }`, 'showThing(named function) should have no ellipsis');
-expectToBe(showThing(noop, 19), `function noop() { }`, 'showThing(function name) should have no ellipsis');
+expectToBe(showThing(function () : void {}, 26), expectNoop, 'showThing(anon function,26) should have no ellipsis');
+expectToBe(showThing(function named5() : void {}, 20), expectNamed5, 'showThing(named function) should have no ellipsis');
+expectToBe(showThing(noop, 19), expectNoop2, 'showThing(function name) should have no ellipsis');
 
 expectToBe(showThing(undefined, 2), `un${EL}`, 'showThing(undefined,2) should have ellipsis');
 expectToBe(showThing(null, 2), `nu${EL}`, 'showThing(null,2) should have ellipsis');
@@ -3959,10 +4097,10 @@ expectToBe(showThing(new Boolean(false), 2), `fa${EL}`, 'showThing(Boolean,2) sh
 expectToBe(showThing(new Number(123456789012), 2), `12${EL}`, 'showThing(Number,2) should have ellipsis');
 expectToBe(showThing(new String('123456789012'), 2), `${LDQ}12${EL}${RDQ}`, 'showThing(String,2) should have ellipsis');
 expectToBe(showThing(new TypeError('blah'), 2), `Ty${EL}`, 'showThing(TypeError,2) should have ellipsis');
-expectToBe(showThing(() => null, arrowEllipsisLen), expectArrowNullEllipsis, 'showThing(arrow function,11) should have ellipsis');
-expectToBe(showThing(function () : string { return 'S'; }, 11), `function () { return${EL}}`, 'showThing(anon function,11) should have ellipsis');
-expectToBe(showThing(function named() : void {}, 8), `function named() ${EL}}`, 'showThing(named function,8) should have ellipsis');
-expectToBe(showThing(noop, 8), `function noop() {${EL}}`, 'showThing(function name,8) should have ellipsis');
+expectToBe(showThing(() => null, arrowEllipsisLen), expectArrowNullEllipsis, 'showThing(arrow function,11/8) should have ellipsis');
+expectToBe(showThing(function () : string { return 'S'; }, anonEllipsisLen), expectAnonEllipsis, 'showThing(anon function,13) should have ellipsis');
+expectToBe(showThing(function name6() : void {}, named6EllipsisLen), expectNamed6Ellipsis, 'showThing(name6 function,8/7) should have ellipsis');
+expectToBe(showThing(noop, noopEllipsisLen), expectNoopEllipsis, 'showThing(function name,8/6) should have ellipsis');
 
 // ENABLE Map
 expectToBe(showThing(setSm, 49), `[\n  "__instanceof Set ",\n  1,\n  2,\n  3,\n  4,\n  52\n]`, 'showThing(Set,49) should have no ellipsis');
