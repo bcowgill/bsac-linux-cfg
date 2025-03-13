@@ -7,6 +7,7 @@ The default interactive shell is now zsh.
 To update your account to use zsh, please run `chsh -s /bin/zsh`.
 For more details, please visit https://support.apple.com/kb/HT208050.
 
+tsx v4.19.3
 $ npx tsx detect.ts
 TRACE: isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
 dumpable global object [object Object] {

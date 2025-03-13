@@ -1,3 +1,8 @@
+#!/usr/bin/env tsx
+//#!/usr/bin/env bun
+//#!/usr/bin/env -S deno --allow-read --allow-env
+//#!/usr/bin/env node
+// ^^^ needs node v23.9 or thereabouts which has typescript type stripping builtin.
 // comes from tslangorg.txt, tscompiler.txt, tsrunner.ts as a stand alone quick test...
 /**
  * answers with the thing provided or the global object if found.
@@ -10,10 +15,11 @@ function getGlobal(thing?: unknown): undefined | unknown {
 }
 
 /**
- * answers true if the script is running within bun
+ * answers true if the script is running within bun (which uses Apple's JavaScriptCore engine and aims for nodejs compatability)
  * @returns {boolean} true if bun is detected with process.versions.bun
- * @note tested in version MUSTDO
+ * @note tested in version 1.2.6,1.2.5
  * @example bun run detect.ts
+ * bun upgrade --canary
  */
 export function isBun(bun?: unknown): boolean {
     let result = false;
@@ -30,11 +36,11 @@ export function isBun(bun?: unknown): boolean {
 } // isBun()
 
 /**
- * answers true if the script is running within deno
- * @returns {boolean} true if deno is detected with global Deno and process.versions.deno
- * @note tested in version 1.40.3 MUSTDO deno 2.x
+ * answers true if the script is running within deno (Uses V8 Engine and is nod like)
+ * @returns {boolean} true if deno is detected with global Deno
+ * @note tested in version 1.40.3, 2.2.3
  * TRACE: isBun:false isDeno:true isTsx:false isNode:false isBrowser:false
- * @example deno run --allow-read detect.ts
+ * @example deno run --allow-read --allow-env detect.ts
  */
 export function isDeno(deno?: unknown): boolean {
     let result = false;
@@ -43,7 +49,8 @@ export function isDeno(deno?: unknown): boolean {
         return false;
     }
     try {
-        result = 'Deno' in thing;
+	// process.versions.deno also exists in deno v2+
+        result = 'Deno' in thing; // deno v1
     } catch (_unused) {
         // console.error(`EXCEPTION isBun `, _unused);
     }
@@ -53,9 +60,9 @@ export function isDeno(deno?: unknown): boolean {
 /**
  * answers true if the script is running within node
  * @returns {boolean} true if node is detected from process.versions.node
- * @note tested in version 21.6.1 and 6.11.4 (4.9.1 fails, 'let' not supported)
+ * @note tested in version 23.9.0, 21.6.1 and 6.11.4 (4.9.1 fails, 'let' not supported)
  * TRACE: isBun:false isDeno:false isTsx:false isNode:true isBrowser:false
- * @example node detect.ts
+ * @example node detect.ts (~v23.6+ has TypeScript types stripping)
  */
 export function isNode(node?: unknown): boolean {
     let result = false;
@@ -74,9 +81,11 @@ export function isNode(node?: unknown): boolean {
 /**
  * answers true if script is running with tsx (which runs on node)
  * @returns {boolean} true if tsx is detected by process.execArgv containing 'node_modules/tsx/'
- * @note tested in version 4.19.3 MUSTDO newer version?
+ * @note tested in version 4.19.3,3.14.0,2.1.0
  * TRACE: isBun:false isDeno:false isTsx:true isNode:true isBrowser:false
- * @example npx tsx detect.ts
+ * @example tsx detect.ts has execArgv  value set
+ * npx tsx detect.ts
+ * npx tsx@3 detect.ts  npm_lifecycle_script setting
  */
 export function isTsx(node?: unknown): boolean {
     let result = false;
@@ -85,7 +94,7 @@ export function isTsx(node?: unknown): boolean {
         return false;
     }
     try {
-        result = !!('process' in thing && thing.process.execArgv?.find((path: string) => path.indexOf('node_modules/tsx/') >= 0));
+        result = !!('process' in thing && (thing.process.env?.npm_lifecycle_script === 'tsx' || thing.process.execArgv?.find((path: string) => path.indexOf('node_modules/tsx/') >= 0)));
     } catch (_unused) {
         // console.error(`EXCEPTION isBun `, _unused);
     }
@@ -134,5 +143,6 @@ function getDumpableObject(thing: Record<string, unknown>): Record<string, unkno
 console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
 const gg = getGlobal() as Record<string, unknown>;
 const dumpable: Record<string, unknown> = getDumpableObject(gg);
-console.log(`dumpable global ${typeof gg} ${Object.getPrototypeOf(gg)}`, dumpable);
-console.log(`real global`, gg);
+console.log(`=== dumpable global ${typeof gg} ${Object.getPrototypeOf(gg)}`, dumpable);
+console.log(`=== real global`, gg);
+console.log(`=== process`, gg.process);
