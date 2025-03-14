@@ -1866,7 +1866,7 @@ export function forOf<C,T>(iterable: C, fn: (item: T, index: number) => void): v
  * gives some info about an element suitable for logging.
  * @param element {HTMLElement} will be examined for formatting nicely.
  * @returns {string} containing element tag name and attributes formatted as an HTMLElement.
- *@note borrowed from original in broadcast-messages-cwa repository.
+ * @note borrowed from original in broadcast-messages-cwa repository.
  */
 export function elementInfo(element : IElement) : string
 {

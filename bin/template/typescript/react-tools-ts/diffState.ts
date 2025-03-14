@@ -29,7 +29,7 @@ export interface DiffState<P,T> {
 */
 
 // MUSTDO name should be taken from the callback function itself if possible, by stringify, .name, .displayName or mockName if it's a jest mock...
-export getFnName(callback: any): string {
+export function getFnName(_unusedCallback: any): string {
 	return 'fnCallback';
 }
 

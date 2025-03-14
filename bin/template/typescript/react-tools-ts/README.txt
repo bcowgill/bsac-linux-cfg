@@ -13,7 +13,8 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - tsx ./tsrunner.ts
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
-  TODO ??? can I run tsx as a REPL and find something that differs from deno/bun/node???
+  - MUSTDO TODO regen the list of non-recommended deno lint flags with v2
+  - MUSTDO use deno fmt to format the files with prose wrap also
 
 Diffing changes back and forth:
 from ubuntu usb key (bun,deno,tsx,node)

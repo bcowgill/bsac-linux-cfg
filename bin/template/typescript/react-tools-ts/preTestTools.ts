@@ -100,7 +100,7 @@ jest.useFakeTimers = function jestUseFakeTimers() : typeof jest
 {
 	return jest;
 }
-jest.setSystemTime = function jestSetSystemTime(when : Date) : typeof jest
+jest.setSystemTime = function jestSetSystemTime(_unused : Date) : typeof jest
 {
 	return jest;
 }

@@ -1,15 +1,30 @@
 {
+  // Schema of all allowed values:
+  // https://github.com/denoland/deno/blob/main/cli/schemas/config-file.v1.json
+  // https://docs.deno.com/runtime/fundamentals/linting_and_formatting/
+  "fmt": {
+    "include": ["src/"],
+    "useTabs": true,
+    "lineWidth": 80,
+    "indentWidth": 4,
+    "semiColons": true,
+    "singleQuote": true,
+    "proseWrap": "preserve" // always, never, preserve
+    //"exclude": ["src/testdata/", "src/fixtures/**/*.ts"]
+  },
   // https://docs.deno.com/lint/
   // deno lint --rules-tags=recommended --fix file.ts  # --compact
   // deno lint --rules
   "lint": {
     "rules": {
-      "tags": ["recommended"]
+      "tags": ["recommended"],
+      "include": ["ban-untagged-todo"]
     }
   }
 }
 /*
 List of Available rules not in the tag group 'recommended'
+MUSTDO regenerate this in deno 2.x
 deno version 1.40.3
  deno lint --rules | grep -v https: | grep -v recommended | grep '-'
  - ban-untagged-todo

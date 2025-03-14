@@ -3,13 +3,13 @@ import useHook from './useFlag'
 
 describe('useFlag hook', function descUseFlagSuite() {
 	function renderForTest(on?: boolean) {
-		const { result } = renderHook( () => useFlag(on) )
+		const { result } = renderHook( () => useHook(on) )
 		return result;
 	}
 
 	function change(ref, mutator: string, expected: boolean) {
 		act(ref.current[mutator])
-		expect(ref.current.flag).toBe(true)
+		expect(ref.current.flag).toBe(expected)
 	}
 
 	it('should provide flag and setter functions for default flag is not "on"', function testUseFlagDefault() {

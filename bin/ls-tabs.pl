@@ -14,8 +14,11 @@ Brent S.A. Cowgill
 
 ls-tabs.pl [options] [@options-file ...] [file ...]
 
+List tab and space inconsistencies in files and optionally show long line histogram.
+
 	Options:
 		--spaces=N       optional. number of spaces per tab stop. default 4
+		--maxlen=N       optional. desired maximum line length. shows breakdown of longer lines.
 		--version        display program version
 		--help -?        brief help message
 		--man            full help message
@@ -28,6 +31,11 @@ ls-tabs.pl [options] [@options-file ...] [file ...]
 
 	optional. Set the number of spaces to use per tab stop.
 	default 4
+
+=item B<--maxlen>
+
+	optional. Set the desired maximum line length.  If set, will show a breakdown of how many lines are longer than that.
+	default N/A
 
 =item B<--version>
 
@@ -84,6 +92,7 @@ my %Var = (
 	rhArg => {
 		rhOpt => {
 			spaces  => 4,    # default number of spaces per tab stop
+			maxlen  => 0,    # maximum desired line length if non-zero
 			$STDIO  => 0,    # indicates standard in/out as - on command line
 			debug   => 0,
 			man     => 0,    # show full help page
@@ -101,7 +110,8 @@ my %Var = (
 ##			"debug",           # debug the argument processing
 		],
 		raOpts => [
-			"spaces|s:i", # option sets the number of spaces per tab
+			"spaces|s:i",    # option sets the number of spaces per tab
+			"maxlen|s:i",    # option sets the desired maximum line length
 			"debug|d+",      # incremental keep specifying to increase
 			$STDIO,          # empty string allows - to signify standard in/out as a file
 			"man",           # show manual page only
@@ -116,7 +126,17 @@ my %Var = (
 	uneven_spacing => 0,
 	code => 0,
 	lines_seen => 0,
+	line_lengths   => {},
+	total_lengths  => 0,
+	max_length     => 0,
 );
+
+sub pad
+{
+	my ($value, $size, $pad) = @ARG;
+	$pad = $pad || ' ';
+	return $value . ($pad x ($size - length($value)));
+}
 
 # Return the value of a command line option
 sub opt
@@ -189,6 +209,49 @@ sub summary
 	}
 
 	print "spacing ok for tab stop @{[opt('spaces')]}\n" if $Var{'code'} == 0;
+	if ($Var{'lines_seen'})
+	{
+		my $average_line = sprintf("%.1f", $Var{'total_lengths'} / $Var{'lines_seen'});
+		print "$Var{'max_length'} characters in longest line.\n";
+		print "$average_line characters per line on average.\n";
+
+		my $MAX_LENGTH = opt('maxlen');
+		my $MAX_COLS = $ENV{'COLUMNS'} || 79;
+		if ($MAX_LENGTH && $Var{'max_length'} > $MAX_LENGTH)
+		{
+			debug("Line Lengths: " . Dumper($Var{'line_lengths'}), 2);
+			debug("avail cols: $ENV{'COLUMNS'}", 2);
+			print "Lines $MAX_LENGTH characters or longer:\n";
+			my $max_count = 0;
+			my $min_count;
+			for my $length ($MAX_LENGTH .. $Var{'max_length'})
+			{
+				my $count = $Var{'line_lengths'}{$length};
+				if ($count)
+				{
+					$max_count = $count if $count > $max_count;
+					$min_count = $count unless $min_count;
+					$min_count = $count if $count < $min_count;
+				}
+			}
+			my $padding = length($Var{'max_length'}) + length($max_count) + 3;
+			my $cols = $MAX_COLS - $padding;
+			my $dot_rate = ($cols - 1.0)/($max_count - $min_count);
+			debug("counts: $min_count to $max_count over $cols columns $padding padsize\n", 2);
+			for my $length ($MAX_LENGTH .. $Var{'max_length'})
+			{
+				my $count = $Var{'line_lengths'}{$length};
+				if ($count)
+				{
+					my $num = pad("$length: $count", $padding);
+					my $bar_length = $cols * ($max_count - $min_count);
+					my $dots = 1 + $dot_rate * ($count - $min_count);
+					my $bar = '*' x $dots;
+					print "$num$bar\n";
+				}
+			}
+		}
+	}
 	exit($Var{'code'});
 }
 
@@ -266,7 +329,11 @@ sub doLine
 {
 	my ($line, $print) = @ARG;
 
+	my $length = length($line);
 	++$Var{'lines_seen'};
+	$Var{'line_lengths'}{$length}++;
+	$Var{'total_lengths'} += $length;
+	$Var{'max_length'} = $length if $length > $Var{'max_length'};
 	# ignore lines with no lead spacing
 	$print = 0;
 	debug("$Var{'lines_seen'}: $line");

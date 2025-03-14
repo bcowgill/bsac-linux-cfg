@@ -8,7 +8,7 @@ export interface IFlagSettors {
 	reset: () => void,
 }
 
-export interface IFlagHook extends IFlagSettors = {
+export interface IFlagHook extends IFlagSettors {
 	flag: boolean,
 }
 

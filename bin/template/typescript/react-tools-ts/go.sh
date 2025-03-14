@@ -45,9 +45,16 @@ if [ `node --version` != `cat .nvmrc` ]; then
 	cat .nvmrc
 	exit
 fi
+echo " "
 ./tslangorg.js
 
+echo " "
 head -1 tslangorg.js
 grep -E '^\s*(exports\.|export const )?EX_(JS_NODE|ONECOMP).+=' tslangorg.js tslangorg.txt tscompiler.txt
 
+echo " "
+grep MUSTDO README.txt
+
+echo " "
+echo "Go to emacs to refresh the changed files."
 edit.sh ./tslangorg.js.txt ./tslangorg.txt ./tscompiler.txt

@@ -27,8 +27,8 @@ function calcZoom(inner: number, outer: number): number {
 
 export function getWindowGeometry(win = window): IWindowGeometry {
 	// Zoom levels are rounded to the nearest 5% due to their approximation.
-	let zoomLevel = calcZoom(win.innerWidth, win.outerWidth);
-	let zoomLevelV = calcZoom(win.innerHeight, win.outerHeight);
+	const zoomLevel = calcZoom(win.innerWidth, win.outerWidth);
+	const zoomLevelV = calcZoom(win.innerHeight, win.outerHeight);
 	let size = `${win.innerWidth}x${win.innerHeight}i ${win.outerWidth}x${win.outerHeight}o`;
 	let zoom = `${zoomLevel}%H ${zoomLevelV}%V`
 	if (zoomLevel === zoomLevelV) {
