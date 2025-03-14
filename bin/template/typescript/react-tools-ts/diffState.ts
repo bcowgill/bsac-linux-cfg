@@ -45,11 +45,11 @@ export function brandFn(callback: any, name?: string) {
 export function diffState<P,T>(name: string, render: MutableRefObject<DiffState<P,T>>): void {
 	const now = JSON.stringify(state, void 0, 2);
 	if (now !== render.current.state) {
-		const out = [];
+		const out: string[] = [];
 		if (render.current.state === '') {
 			out.push(now);
 		} else {
-			// TODO use line diff package of some kine if possible, this is very simple...
+			// TODO use line diff package of some kind if possible, this is very simple...
 			const old = render.current.state.split(/\n/g);
 			const chg = now.split(/\n/g);
 			const length = old.length > chg.length ? old.length : chg.length;

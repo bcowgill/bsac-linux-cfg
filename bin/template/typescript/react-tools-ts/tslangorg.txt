@@ -1525,7 +1525,7 @@ export function checkDialogClosed(dialog : HTMLElement) : true
  */
 export function getElementById(id : string) : null | HTMLElement
 {
-	let found = null;
+	let found: ReturnType<typeof getElementById> = null;
 	try
 	{
 		try
@@ -1699,7 +1699,7 @@ function charDiff(got: string, expected: string, num = NUM_CHAR_DIFFS): string[]
 	const gotLen = got.length;
 	const expLen = expected.length;
 	const length = gotLen > expLen ? gotLen : expLen;
-	const diffsAt = [];
+	const diffsAt: string[] = [];
 	for (let index = 0; diffsAt.length < num && index <= length; index++) {
 		const gotCh = got.charAt(index);
 		const expCh = expected.charAt(index);
@@ -1723,7 +1723,7 @@ export function lineDiff(got: string, expected: string, num = NUM_LINE_DIFFS): I
 	const expStr = indicateSpaces(expected).split(reNewLines);
 	const length = gotStr.length > expStr.length ? gotStr.length : expStr.length;
 	//const out = [{line: -1, _____got: gotStr, expected: expStr}];
-	const out = [];
+	const out: ILineDiff[] = [];
 
 	for (let idx = 0; out.length < num && idx < length; ++idx) {
 		const was = `${gotStr[idx]}`.trim();
@@ -2376,7 +2376,7 @@ export function str(value?: unknown) : string
 // MUSTDO change any to IElement | ReactSimulatedElement
 export function getElementInfo(element?: any, prefix = '') : string
 {
-	const bits = [];
+	const bits: string[] = [];
 
 	interface IRElem
 	{
@@ -2476,7 +2476,7 @@ export function getElementInfo(element?: any, prefix = '') : string
 export function showEvent(event?: any, prefix = '') : string
 {
 	let result;
-	const bits = [];
+	const bits: string[] = [];
 
 	/**
 	 * answer with the event key name if the value is truthy. calls the value first if it's a function.

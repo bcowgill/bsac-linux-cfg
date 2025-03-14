@@ -17,41 +17,41 @@
   // deno lint --rules
   "lint": {
     "rules": {
-      "tags": ["recommended"],
+      "tags": ["recommended", "react", "jsx", "jsr"],
       "include": ["ban-untagged-todo"]
     }
   }
 }
 /*
-List of Available rules not in the tag group 'recommended'
-MUSTDO regenerate this in deno 2.x
-deno version 1.40.3
- deno lint --rules | grep -v https: | grep -v recommended | grep '-'
- - ban-untagged-todo
- - camelcase
- - default-param-last
- - eqeqeq
- - explicit-function-return-type
- - explicit-module-boundary-types
- - fresh-handler-export [fresh]
- - fresh-server-event-handlers [fresh]
- - guard-for-in
- - no-await-in-loop
- - no-console
- - no-const-assign
- - no-eval
- - no-external-import
- - no-implicit-declare-namespace-export
- - no-non-null-asserted-optional-chain
- - no-non-null-assertion
- - no-self-compare
- - no-sparse-arrays
- - no-sync-fn-in-async-fn
- - no-throw-literal
- - no-top-level-await
- - no-undef
- - prefer-ascii
- - prefer-primordials
- - single-var-declarator
- - triple-slash-reference
+List of Available rules not in the tag group 'recommended,react,jsx,jsr,fresh'
+deno 2.x
+deno lint --rules | grep -vE 'https:' | perl -pne 'chomp unless m{tags:}xms; s{,}{ tags:}xmsg' | grep -vE 'tags: (recommended|react|jsr|fresh)' | perl -pne 's{\s*tags:\s*}{}xmsg; s{-\s}{        "}xms;s{(\w)\s.+}{$1",\n}xms' >> deno.jsonc
+        "ban-untagged-todo",
+        "camelcase",
+        "default-param-last",
+        "eqeqeq",
+        "explicit-function-return-type",
+        "explicit-module-boundary-types",
+        "guard-for-in",
+        "no-await-in-loop",
+        "no-boolean-literal-for-arguments",
+        "no-console",
+        "no-const-assign",
+        "no-eval",
+        "no-external-import",
+        "no-implicit-declare-namespace-export",
+        "no-inferrable-types",
+        "no-non-null-asserted-optional-chain",
+        "no-non-null-assertion",
+        "no-self-compare",
+        "no-sparse-arrays",
+        "no-sync-fn-in-async-fn",
+        "no-throw-literal",
+        "no-top-level-await",
+        "no-undef",
+        "no-useless-rename",
+        "prefer-ascii",
+        "prefer-primordials",
+        "single-var-declarator",
+        "triple-slash-reference",
 */
