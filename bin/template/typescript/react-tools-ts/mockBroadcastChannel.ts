@@ -57,7 +57,7 @@ function remockChannel(): void {
 		try {
 			JSON.parse(JSON.stringify(message));
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		} catch (exception) {
+		} catch (_unusedException) {
 			// istanbul ignore next
 			if (typeof channel.onmessageerror === 'function') {
 				channel.onmessageerror(message);

@@ -5,8 +5,7 @@
  * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
 function getGlobal(thing) {
-	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global!== 'undefined' ? global: typeof window !== 'undefined' ? window : undefined;
 }
 /**
  * answers true if the script is running within bun

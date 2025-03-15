@@ -10,8 +10,7 @@
  * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
 function getGlobal(thing?: unknown): undefined | unknown {
-	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis: typeof global!== 'undefined' ? global: typeof window !== 'undefined' ? window : undefined;
 }
 
 /**

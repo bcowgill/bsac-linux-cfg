@@ -1,0 +1,150 @@
+[0m[1m[31merror[ban-untagged-todo][0m: [0m[1mTODO should be tagged with (@username) or (#issue)[0m
+  [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/diffState.ts[0m[0m[33m:52:4[0m
+  [0m[38;5;12m | [0m
+[0m[38;5;12m52 | [0m      // TODO use line diff package of some kind if possible, this is very simple...
+  [0m[38;5;12m | [0m      [0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+   [0m[38;5;12m=[0m [0m[1mhint[0m: Add a user tag or issue reference to the TODO comment, e.g. TODO(@djones), TODO(djones), TODO(#123)
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/ban-untagged-todo
+
+
+[0m[1m[31merror[no-namespace][0m: [0m[1mTypeScript's `module` and `namespace` are discouraged to
+use[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:286:1[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m286 | [0mnamespace React
+   [0m[38;5;12m | [0m[0m[1m[31m^^^^^^^^^^^^^^^[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m287 | [0m{
+   [0m[38;5;12m | [0m[0m[1m[31m^[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m288 | [0m  export type ReactElement = any;
+   [0m[38;5;12m | [0m[0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m289 | [0m  export type ReactNode = any;
+   [0m[38;5;12m | [0m[0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m290 | [0m  export type Dispatch<T> = (value : T) => void;
+   [0m[38;5;12m | [0m[0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m291 | [0m  export type SetStateAction<T> = (value : T) => void;
+   [0m[38;5;12m | [0m[0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m292 | [0m}
+   [0m[38;5;12m | [0m[0m[1m[31m^[0m
+    [0m[38;5;12m=[0m [0m[1mhint[0m: Use ES2015 module syntax (`import`/`export`) to organize
+the code instead
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-namespace
+
+
+[0m[1m[31merror[no-control-regex][0m: [0m[1mUnexpected control character(s) in regular expression: \x8.[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:349:13[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m349 | [0m      .replace(/\x08/g, '\\x08') // backspace \b conflict with regex \b
+   [0m[38;5;12m | [0m               [0m[1m[31m^^^^^^^[0m
+    [0m[38;5;12m=[0m [0m[1mhint[0m: Disable the rule if the control character (\x... or \u00..) was intentional, otherwise rework your RegExp
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-control-regex
+
+
+[0m[1m[31merror[no-control-regex][0m: [0m[1mUnexpected control character(s) in regular expression: \xd.[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:350:13[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m350 | [0m      .replace(/\x0d\x0a/g, '\\x0d\\x0a') // CR/LF combo
+   [0m[38;5;12m | [0m               [0m[1m[31m^^^^^^^^^^^[0m
+    [0m[38;5;12m=[0m [0m[1mhint[0m: Disable the rule if the control character (\x... or \u00..) was intentional, otherwise rework your RegExp
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-control-regex
+
+
+[0m[1m[31merror[no-control-regex][0m: [0m[1mUnexpected control character(s) in regular expression: \xa.[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:351:13[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m351 | [0m      .replace(/\x0a/g, '\\x0a') // line feed
+   [0m[38;5;12m | [0m               [0m[1m[31m^^^^^^^[0m
+    [0m[38;5;12m=[0m [0m[1mhint[0m: Disable the rule if the control character (\x... or \u00..) was intentional, otherwise rework your RegExp
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-control-regex
+
+
+[0m[1m[31merror[no-control-regex][0m: [0m[1mUnexpected control character(s) in regular expression: \xd.[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:352:13[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m352 | [0m      .replace(/\x0d/g, '\\x0d') // carriage ret
+   [0m[38;5;12m | [0m               [0m[1m[31m^^^^^^^[0m
+    [0m[38;5;12m=[0m [0m[1mhint[0m: Disable the rule if the control character (\x... or \u00..) was intentional, otherwise rework your RegExp
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-control-regex
+
+
+[0m[1m[31merror[no-prototype-builtins][0m: [0m[1mAccess to Object.prototype.hasOwnProperty is not allowed from target object[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:462:7[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m462 | [0m    if (thing.hasOwnProperty(key)) {
+   [0m[38;5;12m | [0m        [0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-prototype-builtins
+
+
+[0m[1m[31merror[no-control-regex][0m: [0m[1mUnexpected control character(s) in regular expression: \x0.[0m
+   [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:991:25[0m
+   [0m[38;5;12m | [0m
+[0m[38;5;12m991 | [0mconst reSpacesHyphens = /[\s\x00-\x20\u00a0\u202F\uFEFF\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u200B\u205F\u3000\u303F\xAD\u2010\u2011\u2027\uFE63\uFF0D]/g;
+   [0m[38;5;12m | [0m                        [0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+    [0m[38;5;12m=[0m [0m[1mhint[0m: Disable the rule if the control character (\x... or \u00..) was intentional, otherwise rework your RegExp
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-control-regex
+
+
+[0m[1m[31merror[no-empty][0m: [0m[1mEmpty block statement[0m
+    [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:1536:21[0m
+    [0m[38;5;12m | [0m
+[0m[38;5;12m1536 | [0m    } catch (_unused) {}
+    [0m[38;5;12m | [0m                      [0m[1m[31m^^[0m
+     [0m[38;5;12m=[0m [0m[1mhint[0m: Add code or comment to the empty block
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-empty
+
+
+[0m[1m[31merror[no-empty][0m: [0m[1mEmpty block statement[0m
+    [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:1539:20[0m
+    [0m[38;5;12m | [0m
+[0m[38;5;12m1539 | [0m  } catch (_unused) {}
+    [0m[38;5;12m | [0m                    [0m[1m[31m^^[0m
+     [0m[38;5;12m=[0m [0m[1mhint[0m: Add code or comment to the empty block
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-empty
+
+
+[0m[1m[31merror[ban-untagged-todo][0m: [0m[1mTODO should be tagged with (@username) or (#issue)[0m
+    [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:2548:25[0m
+    [0m[38;5;12m | [0m
+[0m[38;5;12m2548 | [0m        showVal('details'), // TODO details???
+    [0m[38;5;12m | [0m                            [0m[1m[31m^^^^^^^^^^^^^^^^^^[0m
+     [0m[38;5;12m=[0m [0m[1mhint[0m: Add a user tag or issue reference to the TODO comment, e.g. TODO(@djones), TODO(djones), TODO(#123)
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/ban-untagged-todo
+
+
+[0m[1m[31merror[ban-untagged-todo][0m: [0m[1mTODO should be tagged with (@username) or (#issue)[0m
+    [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:2573:4[0m
+    [0m[38;5;12m | [0m
+[0m[38;5;12m2573 | [0m      // TODO view(null)
+    [0m[38;5;12m | [0m      [0m[1m[31m^^^^^^^^^^^^^^^^^^[0m
+     [0m[38;5;12m=[0m [0m[1mhint[0m: Add a user tag or issue reference to the TODO comment, e.g. TODO(@djones), TODO(djones), TODO(#123)
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/ban-untagged-todo
+
+
+[0m[1m[31merror[no-regex-spaces][0m: [0m[1mmore than one consecutive spaces in RegExp is not allowed[0m
+    [0m[38;5;12m-->[0m [0m[36m/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/src/tslangorg.ts[0m[0m[33m:2978:24[0m
+    [0m[38;5;12m | [0m
+[0m[38;5;12m2978 | [0mconst reRegexSpaces2 = /\bregex \tand\nspaces   \u1999/gm;
+    [0m[38;5;12m | [0m                       [0m[1m[31m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+  [0m[38;5;12mdocs[0m: https://docs.deno.com/lint/rules/no-regex-spaces
+
+
+Found 13 problems
+Checked 8 files

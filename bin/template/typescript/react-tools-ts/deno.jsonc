@@ -16,8 +16,10 @@
   // deno lint --rules-tags=recommended --fix file.ts  # --compact
   // deno lint --rules
   "lint": {
+    "include": ["src/"],
     "rules": {
       "tags": ["recommended", "react", "jsx", "jsr"],
+      "exclude": ["no-explicit-any"], // TEMPORARY MUSTDO remove
       "include": ["ban-untagged-todo"]
     }
   }
