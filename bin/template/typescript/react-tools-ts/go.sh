@@ -29,6 +29,7 @@ perl -i -pne '
 
 cp tslangorg.js.txt tslangorg.js.bak
 ./tx.pl tslangorg.js.bak > tslangorg.js.txt
+rm tslangorg.js.bak
 perl -i -pne 'if (!$prev && !m{\#!/usr/bin/env\snode}xms)
 	{
 		$_ = "#!/usr/bin/env node\n$_"

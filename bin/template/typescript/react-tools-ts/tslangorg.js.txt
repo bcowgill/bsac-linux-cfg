@@ -97,13 +97,16 @@ const win = {
     }
 };
 /**
- * answers with the thing provided or the global object if found.
- * @param thing {undefined | unknown}
- * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
+ * answers with the win var provided or the global object if found.
+ * @param win {undefined | unknown} a mocked window or globalThis for testing.
+ * @returns {unknown} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
-function getGlobal(thing) {
-    return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-    // return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+function getGlobal(win) {
+    const result = (typeof win !== 'undefined' && win !== null) ? win : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+    if (!result) {
+        throw new TypeError('No Window/globalThis object available from win, window or global.');
+    }
+    return result;
 }
 /**
  * answers true if the script is running within bun (which uses Apple's JavaScriptCore engine and aims for nodejs compatability)
@@ -302,7 +305,7 @@ function mockScreen() {
     };
     return screen;
 } // mockScreen()
-let screen = mockScreen();
+const screen = mockScreen();
 // A minimal unit testing library inside the tscompiler browser
 // const EX_QUOTE = EX_UTF_OK ? '' : 'gq';
 // to control how show() formats got/expected values on failing tests. you can override mid test suite.
@@ -1052,12 +1055,7 @@ function trace(...args) {
     ht tps://github.com/jsdom/jsdom/blob/main/lib/jsdom/browser/Window.js#L981
 */
 function mockWindowNotImplementedMethods(win) {
-    win = win || typeof window === 'undefined'
-        ? global
-        : window;
-    if (!win) {
-        throw new TypeError('No Window object available from win, window or global.');
-    }
+    win = getGlobal(win);
     Object.defineProperty(win, 'alert', {
         value: noop,
         writable: true
@@ -1129,12 +1127,7 @@ function mockWindowNotImplementedMethods(win) {
  * expect(window.location.assign).toHaveBeenCalledTimes(0)
  */
 const mockWindowLocation = (brand = 'site', wnd) => {
-    wnd = wnd || typeof window === 'undefined'
-        ? global
-        : window;
-    if (!wnd) {
-        throw new TypeError('No Window object available from win, window or global.');
-    }
+    wnd = getGlobal(wnd);
     const win = wnd;
     const host = `localhost.${brand}`;
     const url = `htt\p://${host}:3000/#/`;
@@ -1395,11 +1388,11 @@ function getElementById(id) {
             found = document.getElementById(id);
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
         }
-        catch (ignore) { }
+        catch (_unused) { }
         found = found || document.querySelector(`#${id}`);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
     }
-    catch (ignore) { }
+    catch (_unused) { }
     return found;
 } // getElementById()
 /**
@@ -1482,7 +1475,7 @@ function myReplaceSpaceLength(match = '') {
  * other high character codes will be replaced by their unicode code point numbers.
  */
 function indicateSpaces(text = '') {
-    let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match) {
+    const out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match) {
         return match === '\x20'
             ? '\x20'
             : (spaceMap[match] || `[MISSING ${replaceCharsCodePt(match)}]`);
@@ -1499,7 +1492,7 @@ function indicateSpaces(text = '') {
  * other high character codes will be replaced by their unicode code point numbers.
  */
 function nameSpaces(text = '') {
-    let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match) {
+    const out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match) {
         return match === ' '
             ? ' '
             : (spaceMap[match] || replaceCharsCodePt(match));
@@ -1683,7 +1676,7 @@ function forOf(iterable, fn) {
  * gives some info about an element suitable for logging.
  * @param element {HTMLElement} will be examined for formatting nicely.
  * @returns {string} containing element tag name and attributes formatted as an HTMLElement.
- *@note borrowed from original in broadcast-messages-cwa repository.
+ * @note borrowed from original in broadcast-messages-cwa repository.
  */
 function elementInfo(element) {
     const attrs = [];
@@ -1794,7 +1787,7 @@ function getEl(element, suffix) {
     }
     else {
         // String or Regex will look for matching Elements using any query function.
-        let query = element;
+        const query = element;
         elAsString = query.toString();
         // handle [nnn] indexing of the result at end of string or in suffix parameter.
         // handle ^ at end of string to go to parentElement. trace(`getEl parse
@@ -2097,7 +2090,7 @@ function showThing(thing, MAX_LENGTH = MAX_THING, notElem = false) {
                 out = strJ(thing);
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
             }
-            catch (ignore) {
+            catch (_unused) {
                 if (isArray) {
                     out = `[${out}]`;
                 }
@@ -2318,8 +2311,8 @@ function showEvent(event, prefix = '') {
         } // if event.view
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
     }
-    catch (ignore) {
-        // console.warn(`EXCEPTION2 showEvent[${exception}]`)
+    catch (_unused) {
+        // console.warn(`EXCEPTION2 showEvent[${_unused}]`)
     }
     finally {
         result = bits.filter((item) => !!item);
@@ -2683,16 +2676,16 @@ const anObject = {
 const anArray = [1, '2', /a/g];
 const arrowFunc42 = () => 42;
 // node vs browser stringify differs...
-let expectNoop = 'function () { }';
-let expectNoopEllipsis = `function noop() {${exports.EL}}`;
-let noopEllipsisLen = 8;
-let expectNoop2 = 'function noop() { }';
-let expectNamed = 'function named() { }';
-let expectNamed2 = 'function named2() { }';
-let expectNamed4 = 'function named4() { }';
-let expectNamed5 = 'function named5() { }';
-let expectNamed6Ellipsis = `function name6() ${exports.EL}}`;
-let named6EllipsisLen = 8;
+const expectNoop = 'function () { }';
+const expectNoopEllipsis = `function noop() {${exports.EL}}`;
+const noopEllipsisLen = 8;
+const expectNoop2 = 'function noop() { }';
+const expectNamed = 'function named() { }';
+const expectNamed2 = 'function named2() { }';
+const expectNamed4 = 'function named4() { }';
+const expectNamed5 = 'function named5() { }';
+const expectNamed6Ellipsis = `function name6() ${exports.EL}}`;
+const named6EllipsisLen = 8;
 let expectArrow42 = 'function () { return 42; }';
 let expectArrowNull = 'function () { return null; }';
 let expectArrowNullEllipsis = `function () { return${exports.EL}}`;
@@ -3107,7 +3100,7 @@ expectToBe(window.location.origin, 'null', 'should set window origin');
 expectToBe(window.location.protocol, 'file:', 'should set window protocol');
 expectToBe(window.location.pathname, '/path', 'should set window pathname');
 // trace(`window.location`, window.location);
-var document = mockDocument('<main><span>version.nickname: JIRA-NNNN XYZY</span><hr/><p id="mypara" uuid="uui' +
+const document = mockDocument('<main><span>version.nickname: JIRA-NNNN XYZY</span><hr/><p id="mypara" uuid="uui' +
     'd" parole="parole" title="tooltip text">  </p><hr /></main>');
 EX_SHOW_SPACES = true;
 checkDocumentTextEmpty();

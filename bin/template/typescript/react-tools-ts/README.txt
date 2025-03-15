@@ -13,9 +13,8 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - tsx ./tsrunner.ts
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
-  - MUSTDO fix deno lint issues in lint.log
-  - MUSTDO use deno fmt to format the files with prose wrap also
-  - MUSTDO remove temporary rules from deno.jsonc
+  - MUSTDO use deno fmt to format the files with prose wrap on/off
+  - MUSTDO remove temporary lint rules from deno.jsonc
 
 Diffing changes back and forth:
 from ubuntu usb key (bun,deno,tsx,node)

@@ -52,13 +52,16 @@ const win : any = {
 };
 
 /**
- * answers with the thing provided or the global object if found.
- * @param thing {undefined | unknown}
- * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
+ * answers with the win var provided or the global object if found.
+ * @param win {undefined | unknown} a mocked window or globalThis for testing.
+ * @returns {unknown} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
-function getGlobal(thing?: unknown): undefined | unknown {
-	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+function getGlobal(win?: unknown): undefined | unknown {
+	const result = (typeof win !== 'undefined' && win !== null) ? win : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+	if (!result) {
+		throw new TypeError('No Window/globalThis object available from win, window or global.');
+	}
+	return result;
 }
 
 /**
@@ -345,7 +348,6 @@ function show(what : unknown, mode?: string, max?: number): any {
 			.replace(/\f/g, '\\f')
 			.replace(/\t/g, '\\t')
 			.replace(/\v/g, '\\v')
-			// eslint-disable-next-line no-control-regex
 			.replace(/\x08/g, '\\x08') // backspace \b conflict with regex \b
 			.replace(/\x0d\x0a/g, '\\x0d\\x0a') // CR/LF combo
 			.replace(/\x0a/g, '\\x0a') // line feed
@@ -1157,12 +1159,8 @@ export function trace(...args : any[]) : void
 */
 export function mockWindowNotImplementedMethods(win?: Window) : Window
 {
-	win = win || typeof window === 'undefined'
-		? global
-		: window;
-	if (!win) {
-		throw new TypeError('No Window object available from win, window or global.');
-	}
+	win = getGlobal(win) as Window;
+
 	Object.defineProperty(win, 'alert', {
 		value   : noop,
 		writable: true
@@ -1235,13 +1233,7 @@ export function mockWindowNotImplementedMethods(win?: Window) : Window
  * expect(window.location.assign).toHaveBeenCalledTimes(0)
  */
 export const mockWindowLocation = (brand = 'site', wnd?: Window) : Window => {
-	wnd = wnd || typeof window === 'undefined'
-		? global
-		: window;
-
-	if (!wnd) {
-		throw new TypeError('No Window object available from win, window or global.');
-	}
+	wnd = getGlobal(wnd) as Window;
 
 	const win = wnd;
 	const host = `localhost.${brand}`;
@@ -1847,7 +1839,7 @@ export function forOf<C,T>(iterable: C, fn: (item: T, index: number) => void): v
  * gives some info about an element suitable for logging.
  * @param element {HTMLElement} will be examined for formatting nicely.
  * @returns {string} containing element tag name and attributes formatted as an HTMLElement.
- *@note borrowed from original in broadcast-messages-cwa repository.
+ * @note borrowed from original in broadcast-messages-cwa repository.
  */
 export function elementInfo(element : IElement) : string
 {

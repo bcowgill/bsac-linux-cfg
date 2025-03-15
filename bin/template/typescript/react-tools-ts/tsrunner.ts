@@ -72,13 +72,16 @@ const win : any = {
 };
 
 /**
- * answers with the thing provided or the global object if found.
- * @param thing {undefined | unknown}
- * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
+ * answers with the win var provided or the global object if found.
+ * @param win {undefined | unknown} a mocked window or globalThis for testing.
+ * @returns {unknown} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
-function getGlobal(thing?: unknown): undefined | unknown {
-	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
-	// return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : undefined;
+function getGlobal(win?: unknown): undefined | unknown {
+	const result = (typeof win !== 'undefined' && win !== null) ? win : typeof globalThis !== 'undefined' ? globalThis : typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : undefined;
+	if (!result) {
+		throw new TypeError('No Window/globalThis object available from win, window or global.');
+	}
+	return result;
 }
 
 /**
@@ -300,7 +303,7 @@ function mockScreen() {
 	};
 	return screen;
 } // mockScreen()
-let screen = mockScreen();
+const screen = mockScreen();
 
 //console.warn('this', win) Define types needed
 namespace React
@@ -1176,12 +1179,8 @@ export function trace(...args : any[]) : void
 */
 export function mockWindowNotImplementedMethods(win?: Window) : Window
 {
-	win = win || typeof window === 'undefined'
-		? global
-		: window;
-	if (!win) {
-		throw new TypeError('No Window object available from win, window or global.');
-	}
+	win = getGlobal(win) as Window;
+
 	Object.defineProperty(win, 'alert', {
 		value   : noop,
 		writable: true
@@ -1254,13 +1253,7 @@ export function mockWindowNotImplementedMethods(win?: Window) : Window
  * expect(window.location.assign).toHaveBeenCalledTimes(0)
  */
 export const mockWindowLocation = (brand = 'site', wnd?: Window) : Window => {
-	wnd = wnd || typeof window === 'undefined'
-		? global
-		: window;
-
-	if (!wnd) {
-		throw new TypeError('No Window object available from win, window or global.');
-	}
+	wnd = getGlobal(wnd) as Window;
 
 	const win = wnd;
 	const host = `localhost.${brand}`;
@@ -1552,10 +1545,10 @@ export function getElementById(id : string) : null | HTMLElement
 		{
 			found = document.getElementById(id);
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		} catch (ignore) {}
+		} catch (_unused) {}
 		found = found || document.querySelector < HTMLElement > (`#${id}`);
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	} catch (ignore) {}
+	} catch (_unused) {}
 	return found;
 } // getElementById()
 
@@ -1649,7 +1642,7 @@ function myReplaceSpaceLength(match = '') : string {
  */
 function indicateSpaces(text = '') : string
 {
-	let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
+	const out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
 		return match === '\x20'
 			? '\x20'
 			: (spaceMap[match] || `[MISSING ${replaceCharsCodePt(match)}]`);
@@ -1668,7 +1661,7 @@ function indicateSpaces(text = '') : string
  */
 function nameSpaces(text = '') : string
 {
-	let out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
+	const out = text.replace(reSpacesHyphens, function myReplaceSpaceHyphen(match : string) : string {
 		return match === ' '
 			? ' '
 			: (spaceMap[match] || replaceCharsCodePt(match));
@@ -1994,7 +1987,7 @@ export function getEl(element?: IElementLocator, suffix?: string) : IElement
 		elementAt(where + elementInfo(found));
 	} else {
 		// String or Regex will look for matching Elements using any query function.
-		let query : IElementMatcher = element as IElementMatcher;
+		const query : IElementMatcher = element as IElementMatcher;
 		elAsString = query.toString();
 
 		// handle [nnn] indexing of the result at end of string or in suffix parameter.
@@ -2316,7 +2309,7 @@ export function showThing(thing?: unknown, MAX_LENGTH = MAX_THING, notElem = fal
 			{
 				out = strJ(thing);
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			} catch (ignore) {
+			} catch (_unused) {
 				if (isArray) {
 					out = `[${out}]`;
 				} else {
@@ -2593,8 +2586,8 @@ export function showEvent(event?: any, prefix = '') : string
 			bits.push(`\nview: ${getTypeName(event.view) || typeof event.view} ${showThing(event.view)}`);
 		} // if event.view
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	} catch (ignore) {
-		// console.warn(`EXCEPTION2 showEvent[${exception}]`)
+	} catch (_unused) {
+		// console.warn(`EXCEPTION2 showEvent[${_unused}]`)
 	} finally
 	{
 		result = bits.filter((item) => !!item);
@@ -3008,16 +3001,16 @@ const anArray = [1, '2', /a/g];
 const arrowFunc42 = () => 42;
 
 // node vs browser stringify differs...
-let expectNoop = 'function () { }';
-let expectNoopEllipsis = `function noop() {${EL}}`;
-let noopEllipsisLen = 8;
-let expectNoop2 = 'function noop() { }';
-let expectNamed = 'function named() { }';
-let expectNamed2 = 'function named2() { }';
-let expectNamed4 = 'function named4() { }';
-let expectNamed5 = 'function named5() { }';
-let expectNamed6Ellipsis = `function name6() ${EL}}`;
-let named6EllipsisLen = 8;
+const expectNoop = 'function () { }';
+const expectNoopEllipsis = `function noop() {${EL}}`;
+const noopEllipsisLen = 8;
+const expectNoop2 = 'function noop() { }';
+const expectNamed = 'function named() { }';
+const expectNamed2 = 'function named2() { }';
+const expectNamed4 = 'function named4() { }';
+const expectNamed5 = 'function named5() { }';
+const expectNamed6Ellipsis = `function name6() ${EL}}`;
+const named6EllipsisLen = 8;
 let expectArrow42 = 'function () { return 42; }';
 let expectArrowNull = 'function () { return null; }';
 let expectArrowNullEllipsis = `function () { return${EL}}`;
@@ -3523,7 +3516,7 @@ expectToBe(window.location.protocol, 'file:', 'should set window protocol');
 expectToBe(window.location.pathname, '/path', 'should set window pathname');
 // trace(`window.location`, window.location);
 
-var document = mockDocument('<main><span>version.nickname: JIRA-NNNN XYZY</span><hr/><p id="mypara" uuid="uui' +
+const document = mockDocument('<main><span>version.nickname: JIRA-NNNN XYZY</span><hr/><p id="mypara" uuid="uui' +
 	'd" parole="parole" title="tooltip text">  </p><hr /></main>');
 EX_SHOW_SPACES = true;
 checkDocumentTextEmpty();
@@ -4059,7 +4052,6 @@ expectToBe(shortenDump('unquoted\nstring', 7), `unquote${EL}`, 'shortenDump(7) s
 expectToBe(shortenDump('function () {}'), `function () { }`, 'shortenDump(function) should not shorten function with ellipsis');
 expectToBe(shortenDump('function (x,y) { return x + y }', 7), `function (x,y) {${EL}}`, 'shortenDump(function,7) should shorten function with ellipsis inside');
 expectToBe(shortenDump('function (x,y) { return x + y }', 12), `function (x,y) { retu${EL}}`, 'shortenDump(function,12) should shorten function with ellipsis inside');
-// MUSTDO do these need changin back on bun,deno? 11->12 24->25
 expectToBe(shortenDump('(x, y) => { return x + y; }'), `(x,y) => { return x + y; }`, 'shortenDump(arrow function) should not shorten arrow function using ellipsis');
 expectToBe(shortenDump('(x, y) => { return x + y; }', 11), `(x,y) => { ${EL}}`, 'shortenDump(arrow function,11) should shorten arrow function with ellipsis inside');
 expectToBe(shortenDump('(x, y) => { return x + y; }', 24), `(x,y) => { return x + y;${EL}}`, 'shortenDump(arrow function,24) should shorten arrow function with ellipsis inside');
