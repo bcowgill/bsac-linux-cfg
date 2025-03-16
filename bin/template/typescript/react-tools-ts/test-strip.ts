@@ -1,5 +1,7 @@
 // test node typescript type spacing vs tsx/bun/deno which strip them totally
-const EX_TSSTRIP = `${function (x:string):string{return x[0]}}`;
+export const EX_TSSTRIP = `${function (x: string): string {
+	return x[0];
+}}`;
 console.warn(`?? [${EX_TSSTRIP}]`, typeof EX_TSSTRIP, EX_TSSTRIP.length);
 
 /*

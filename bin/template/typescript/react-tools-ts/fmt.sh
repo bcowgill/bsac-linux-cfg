@@ -19,5 +19,5 @@ src/
 
 #deno fmt --check
 #deno lint -c deno.jsonc --fix
-deno lint -c deno.jsonc
-#deno fmt -c deno.jsonc
+#deno lint -c deno.jsonc
+deno fmt -c deno.jsonc

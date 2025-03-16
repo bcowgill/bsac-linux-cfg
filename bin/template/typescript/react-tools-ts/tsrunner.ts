@@ -209,7 +209,10 @@ export const EX_TSLANG = false; // using tslangorg site?
 export const EX_ONECOMP = false; // using onecompiler site?
 
 // check for node with type stripping of functions.
-export const EX_TSSTRIP = `${function (x:string):string{return x[0]}}`.length > 30;
+// this may be sensitive to your code styling tab/space indentation level.
+export const EX_TSSTRIP = `${function (x: string): string {
+	return x[0];
+}}`.length > 30;
 export const EX_TSX = isTsx() || isDeno() || isBun(); // using tsx/deno/bun to run in terminal
 export const EX_BUN = isBun(); // using bun to run in JavaScriptCore
 export const EX_DENO = isDeno(); // using deno to run in google V8
