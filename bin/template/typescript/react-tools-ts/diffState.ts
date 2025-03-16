@@ -4,14 +4,14 @@
 
 // P is the type definition for the Component
 // T is the type definition for all the combined useState/etc vars in the component
-export interface PropsState<P,T> {
+export interface PropsState<P, T> {
 	props: P;
 	internal: T;
 }
-export interface DiffState<P,T> {
+export interface DiffState<P, T> {
 	no: number;
-	state: PropsState<P,T> | string;
-};
+	state: PropsState<P, T> | string;
+}
 
 /* Goes in your component's render function
 	const render = useRef({ no: 0, state: '' });
@@ -42,7 +42,10 @@ export function brandFn(callback: any, name?: string) {
 	name = name || getFnName(callback);
 	return `${name}#${callback._fnuid}()`;
 }
-export function diffState<P,T>(name: string, render: MutableRefObject<DiffState<P,T>>): void {
+export function diffState<P, T>(
+	name: string,
+	render: MutableRefObject<DiffState<P, T>>,
+): void {
 	const now = JSON.stringify(state, void 0, 2);
 	if (now !== render.current.state) {
 		const out: string[] = [];
@@ -63,7 +66,7 @@ export function diffState<P,T>(name: string, render: MutableRefObject<DiffState<
 		}
 		console.warn(
 			`${name}.render #${render.current.no} change`,
-			out.join('\n')
+			out.join('\n'),
 		);
 	} else {
 		console.warn(

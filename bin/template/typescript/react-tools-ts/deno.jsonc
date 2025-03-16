@@ -9,7 +9,7 @@
     "indentWidth": 4,
     "semiColons": true,
     "singleQuote": true,
-    "proseWrap": "preserve" // always, never, preserve
+    "proseWrap": "always" // always, never, preserve
     //"exclude": ["src/testdata/", "src/fixtures/**/*.ts"]
   },
   // https://docs.deno.com/lint/
@@ -19,8 +19,37 @@
     "include": ["src/"],
     "rules": {
       "tags": ["recommended", "react", "jsx", "jsr"],
-      "exclude": ["no-explicit-any"], // TEMPORARY MUSTDO remove
-      "include": ["ban-untagged-todo"]
+      "exclude": [
+        // "no-explicit-any",
+      ],
+      "include": [
+        "ban-untagged-todo",
+        "camelcase",
+        "default-param-last",
+        "eqeqeq",
+        "explicit-function-return-type",
+        "explicit-module-boundary-types",
+        "guard-for-in",
+        "no-await-in-loop",
+        "no-boolean-literal-for-arguments",
+        "no-console",
+        "no-const-assign",
+        "no-eval",
+        "no-external-import",
+        "no-implicit-declare-namespace-export",
+        "no-non-null-assertion", // one or the other but not both
+        //"no-non-null-asserted-optional-chain",
+        "no-self-compare",
+        "no-sparse-arrays",
+        "no-sync-fn-in-async-fn",
+        "no-throw-literal",
+        "no-top-level-await",
+        "no-undef",
+        "no-useless-rename",
+        "prefer-ascii",
+        "single-var-declarator",
+        "triple-slash-reference"
+      ]
     }
   }
 }
@@ -42,8 +71,8 @@ deno lint --rules | grep -vE 'https:' | perl -pne 'chomp unless m{tags:}xms; s{,
         "no-eval",
         "no-external-import",
         "no-implicit-declare-namespace-export",
-        "no-inferrable-types",
-        "no-non-null-asserted-optional-chain",
+        "no-inferrable-types", // no
+        "no-non-null-asserted-optional-chain", // no
         "no-non-null-assertion",
         "no-self-compare",
         "no-sparse-arrays",
@@ -53,7 +82,7 @@ deno lint --rules | grep -vE 'https:' | perl -pne 'chomp unless m{tags:}xms; s{,
         "no-undef",
         "no-useless-rename",
         "prefer-ascii",
-        "prefer-primordials",
+        "prefer-primordials", // no
         "single-var-declarator",
         "triple-slash-reference",
 */

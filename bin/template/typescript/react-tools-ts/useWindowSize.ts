@@ -1,6 +1,6 @@
 // useWindowSize.ts - re-render on window size change giving sizes, zoom level and user description
 
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from 'react';
 
 const SCROLLBAR_WIDTH = 10;
 
@@ -29,8 +29,9 @@ export function getWindowGeometry(win = window): IWindowGeometry {
 	// Zoom levels are rounded to the nearest 5% due to their approximation.
 	const zoomLevel = calcZoom(win.innerWidth, win.outerWidth);
 	const zoomLevelV = calcZoom(win.innerHeight, win.outerHeight);
-	let size = `${win.innerWidth}x${win.innerHeight}i ${win.outerWidth}x${win.outerHeight}o`;
-	let zoom = `${zoomLevel}%H ${zoomLevelV}%V`
+	let size =
+		`${win.innerWidth}x${win.innerHeight}i ${win.outerWidth}x${win.outerHeight}o`;
+	let zoom = `${zoomLevel}%H ${zoomLevelV}%V`;
 	if (zoomLevel === zoomLevelV) {
 		zoom = `${zoomLevel}%`;
 		if (zoomLevel === 100) {
@@ -59,18 +60,20 @@ export function getWindowGeometry(win = window): IWindowGeometry {
  * the developer tools open and docked to an edge that side will be very wrong.
  */
 export function useWindowSize() {
-	const [windowSize, setWindowSize] = useState<IWindowGeometry>(getWindowGeometry());
+	const [windowSize, setWindowSize] = useState<IWindowGeometry>(
+		getWindowGeometry(),
+	);
 
 	useLayoutEffect(function whenWeMount() {
 		function updateWindowSize() {
 			setWindowSize(getWindowGeometry());
 		}
 
-		window.addEventListener("resize", updateWindowSize);
+		window.addEventListener('resize', updateWindowSize);
 
 		return function whenWeUnMount() {
-			window.removeEventListener("resize", updateWindowSize);
-		}
+			window.removeEventListener('resize', updateWindowSize);
+		};
 	}, []); // empty dependency array for mount/unmount
 
 	return windowSize;

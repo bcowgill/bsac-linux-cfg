@@ -10,7 +10,15 @@
  * @returns {any} the thing if not null or undefined, otherwise tries to return the globalThis, global or window object.
  */
 function getGlobal(thing?: unknown): undefined | unknown {
-	return (typeof thing !== 'undefined' && thing !== null) ? thing : typeof globalThis !== 'undefined' ? globalThis: typeof global!== 'undefined' ? global: typeof window !== 'undefined' ? window : undefined;
+	return (typeof thing !== 'undefined' && thing !== null)
+		? thing
+		: typeof globalThis !== 'undefined'
+		? globalThis
+		: typeof global !== 'undefined'
+		? global
+		: typeof window !== 'undefined'
+		? window
+		: undefined;
 }
 
 /**
@@ -27,7 +35,8 @@ export function isBun(bun?: unknown): boolean {
 		return false;
 	}
 	try {
-		result = 'Bun' in thing && 'process' in thing && !! thing.process.versions && !! thing.process.versions.bun;
+		result = 'Bun' in thing && 'process' in thing &&
+			!!thing.process.versions && !!thing.process.versions.bun;
 	} catch (_unused) {
 		// console.error(`EXCEPTION isBun `, _unused);
 	}
@@ -48,7 +57,7 @@ export function isDeno(deno?: unknown): boolean {
 		return false;
 	}
 	try {
-	// process.versions.deno also exists in deno v2+
+		// process.versions.deno also exists in deno v2+
 		result = 'Deno' in thing; // deno v1
 	} catch (_unused) {
 		// console.error(`EXCEPTION isBun `, _unused);
@@ -70,7 +79,8 @@ export function isNode(node?: unknown): boolean {
 		return false;
 	}
 	try {
-		result = !isDeno(node) && !isBun(node) && 'process' in thing && !! thing.process.versions && !! thing.process.versions.node;
+		result = !isDeno(node) && !isBun(node) && 'process' in thing &&
+			!!thing.process.versions && !!thing.process.versions.node;
 	} catch (_unused) {
 		// console.error(`EXCEPTION isBun `, _unused);
 	}
@@ -93,7 +103,11 @@ export function isTsx(node?: unknown): boolean {
 		return false;
 	}
 	try {
-		result = !!('process' in thing && (thing.process.env?.npm_lifecycle_script === 'tsx' || thing.process.execArgv?.find((path: string) => path.indexOf('node_modules/tsx/') >= 0)));
+		result = !!('process' in thing &&
+			(thing.process.env?.npm_lifecycle_script === 'tsx' ||
+				thing.process.execArgv?.find((path: string) =>
+					path.indexOf('node_modules/tsx/') >= 0
+				)));
 	} catch (_unused) {
 		// console.error(`EXCEPTION isBun `, _unused);
 	}
@@ -118,20 +132,23 @@ export function isBrowser(win?: unknown): boolean {
  * @example window contains cyclic references so cannot be stringified, try to make a dumpable object
  * i.e. when trying to console.log(window) on https://www.typescriptlang.org/play/?target=9&module=1
  */
-function getDumpableObject(thing: Record<string, unknown>): Record<string, unknown> {
+function getDumpableObject(
+	thing: Record<string, unknown>,
+): Record<string, unknown> {
 	const dumpable: Record<string, unknown> = {};
 	Object.keys(thing).sort().forEach((key: string) => {
 		if (Object.hasOwn(thing, key)) {
 			if (typeof thing[key] !== 'object') {
-				dumpable[key] = thing[key]
+				dumpable[key] = thing[key];
 			} else {
 				try {
 					if (JSON.stringify(thing[key])) {
 						dumpable[key] = thing[key];
 					}
-				}
-				catch(_unused) {
-					dumpable[key] = `CYCLIC REF: ${Object.getPrototypeOf(thing[key])}`;
+				} catch (_unused) {
+					dumpable[key] = `CYCLIC REF: ${
+						Object.getPrototypeOf(thing[key])
+					}`;
 				}
 			}
 		}
@@ -139,9 +156,14 @@ function getDumpableObject(thing: Record<string, unknown>): Record<string, unkno
 	return dumpable;
 } // getDumpableObject()
 
-console.warn(`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`);
+console.warn(
+	`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`,
+);
 const gg = getGlobal() as Record<string, unknown>;
 const dumpable: Record<string, unknown> = getDumpableObject(gg);
-console.log(`=== dumpable global ${typeof gg} ${Object.getPrototypeOf(gg)}`, dumpable);
+console.log(
+	`=== dumpable global ${typeof gg} ${Object.getPrototypeOf(gg)}`,
+	dumpable,
+);
 console.log(`=== real global`, gg);
 console.log(`=== process`, gg.process);

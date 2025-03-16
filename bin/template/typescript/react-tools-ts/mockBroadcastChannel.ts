@@ -9,7 +9,7 @@ const displayName = 'MockBroadcastChannel';
 // istanbul ignore next
 if (global.BroadcastChannel) {
 	throw new Error(
-		'You are running in an environment which has BroadcastChannel support do you need this mock?'
+		'You are running in an environment which has BroadcastChannel support do you need this mock?',
 	);
 }
 
@@ -51,7 +51,7 @@ function setNameOf(mock: null | jest.Mock | unknown, name: string): void {
 function remockChannel(): void {
 	number++;
 	(channel.postMessage as jest.Mock).mockImplementation(function (
-		message: any
+		message: any,
 	) {
 		debug(nameOf(nameOf(channel.postMessage)), message);
 		try {
@@ -70,8 +70,14 @@ function remockChannel(): void {
 	});
 	setNameOf(channel.postMessage, 'MockBroadcastChannel.postMessage');
 	setNameOf(channel.close, 'MockBroadcastChannel.close');
-	setNameOf(channel.addEventListener, 'MockBroadcastChannel.addEventListener');
-	setNameOf(channel.removeEventListener, 'MockBroadcastChannel.removeEventListener');
+	setNameOf(
+		channel.addEventListener,
+		'MockBroadcastChannel.addEventListener',
+	);
+	setNameOf(
+		channel.removeEventListener,
+		'MockBroadcastChannel.removeEventListener',
+	);
 	setNameOf(channel.dispatchEvent, 'MockBroadcastChannel.dispatchEvent');
 
 	// istanbul ignore next
@@ -97,10 +103,12 @@ export function getMockChannel(remock = false): MockBroadcastChannel {
 		remockChannel();
 	}
 	debug(
-		`${displayName}.getMockChannel name:${channel.name} mockName:${nameOf(
-		channel.postMessage
-		)}`,
-		channel.postMessage
+		`${displayName}.getMockChannel name:${channel.name} mockName:${
+			nameOf(
+				channel.postMessage,
+			)
+		}`,
+		channel.postMessage,
 	);
 	return channel;
 } // getMockChannel()
@@ -113,14 +121,16 @@ export function getMockChannel(remock = false): MockBroadcastChannel {
  */
 export const MockBroadcastChannel = function (
 	this: MockBroadcastChannel,
-	name: string
+	name: string,
 ) {
 	debug(
-		`${displayName} constructor(${name}) name:${
-		channel.name
-		} mockName:${nameOf(channel.postMessage)}`
+		`${displayName} constructor(${name}) name:${channel.name} mockName:${
+			nameOf(channel.postMessage)
+		}`,
 	);
-	channel.name = channel.name === 'UNNAMED' ? name : `${channel.name},${name}`;
+	channel.name = channel.name === 'UNNAMED'
+		? name
+		: `${channel.name},${name}`;
 	Object.keys(channel).forEach((key: string) => {
 		this[key] = channel[key];
 	});
