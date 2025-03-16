@@ -188,6 +188,11 @@ export const EX_SHOW_MATCH = 'js'; // for a regex test show the matching text in
 export const EX_TSLANG = true; // using tslangorg site?
 export const EX_ONECOMP = false; // using onecompiler site?
 
+// check for node with type stripping of functions.
+// this may be sensitive to your code styling tab/space indentation level.
+export const EX_TSSTRIP = `${function (x: string): string {
+	return x[0];
+}}`.length > 30;
 export const EX_TSX = isTsx() || isDeno() || isBun(); // using tsx/deno/bun to run in terminal
 export const EX_BUN = isBun(); // using bun to run in JavaScriptCore
 export const EX_DENO = isDeno(); // using deno to run in google V8
@@ -226,7 +231,7 @@ console.warn(
 	`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`,
 );
 console.warn(
-	`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK}`,
+	`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK} EX_TSSTRIP:${EX_TSSTRIP}`,
 );
 
 export const NBSP = '\u00a0';
@@ -4483,7 +4488,7 @@ if (EX_ARROW_STRINGIFY) {
 		arrowEllipsisLen = 8;
 	}
 }
-if (EX_DENO || EX_BUN) {
+if (EX_DENO || EX_BUN || EX_TSSTRIP) {
 	expectAnonEllipsis = `function () {\n  return${EL}}`;
 	anonEllipsisLen = 13;
 }
@@ -6742,9 +6747,9 @@ expectToBe(
 expectToBe(
 	showThing(function (): string {
 		return 'S';
-	}, anonEllipsisLen),
+	}, anonEllipsisLen).replace(/\t/g, ' '),
 	expectAnonEllipsis,
-	'showThing(anon function,13) should have ellipsis',
+	'showThing(anon function,13/11) should have ellipsis',
 );
 expectToBe(
 	showThing(function name6(): void {}, named6EllipsisLen),

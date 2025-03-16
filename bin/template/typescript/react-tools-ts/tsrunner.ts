@@ -251,7 +251,7 @@ console.warn(
 	`TRACE: isBun:${isBun()} isDeno:${isDeno()} isTsx:${isTsx()} isNode:${isNode()} isBrowser:${isBrowser()}`,
 );
 console.warn(
-	`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK}`,
+	`TRACE: EX_TSX:${EX_TSX} EX_ONECOMP:${EX_ONECOMP} EX_JS_NODE:${EX_JS_NODE} EX_DATE_GMT:${EX_DATE_GMT} EX_ARROW_STRINGIFY:${EX_ARROW_STRINGIFY} EX_UTF_OK:${EX_UTF_OK} EX_TSSTRIP:${EX_TSSTRIP}`,
 );
 
 export const NBSP = '\u00a0';
@@ -4481,20 +4481,15 @@ const arrowFunc42 = () => 42;
 
 // node vs browser stringify differs...
 const expectNoop = 'function () { }';
-const expectNoopEllipsis = `function noop() {${EL}}`;
 const noopEllipsisLen = 8;
 const expectNoop2 = 'function noop() { }';
 const expectNamed = 'function named() { }';
 const expectNamed2 = 'function named2() { }';
 const expectNamed4 = 'function named4() { }';
 const expectNamed5 = 'function named5() { }';
-const expectNamed6Ellipsis = `function name6() ${EL}}`;
-const named6EllipsisLen = 8;
 let expectArrow42 = 'function () { return 42; }';
 let expectArrowNull = 'function () { return null; }';
-let expectArrowNullEllipsis = `function () { return${EL}}`;
 let arrowEllipsisLen = 11;
-let expectAnonEllipsis = `function () { return${EL}}`;
 let anonEllipsisLen = 11;
 let expectSearchParams = {};
 let expectSearchParamsNone = {};
@@ -4502,14 +4497,12 @@ if (EX_ARROW_STRINGIFY) {
 	// browser...
 	expectArrow42 = '() => 42';
 	expectArrowNull = '() => null';
-	expectArrowNullEllipsis = `() => nu${EL}`;
 	arrowEllipsisLen = 8;
 	if (EX_TSX) {
 		arrowEllipsisLen = 8;
 	}
 }
 if (EX_DENO || EX_BUN || EX_TSSTRIP) {
-	expectAnonEllipsis = `function () {\n  return${EL}}`;
 	anonEllipsisLen = 13;
 }
 if (EX_BUN) {
@@ -4620,6 +4613,15 @@ expectJson._map = { '__instanceof': 'Map', 'a': 1, 'b': 2 };
 // Numeric literals with absolute values equal to 2^53 or greater are too large to be represented accurately as integers.
 const tooBig = 0x5100000000000000;
 const bigEnough = 0x15100000000000;
+
+const reEllipsis = new RegExp(EL);
+function expectEllipsis(got: string, desc = 'expectEllipsis'): void {
+	expectToMatch(reEllipsis, got, desc);
+} // expectEllipsis()
+
+function expectNoEllipsis(got: string, desc = 'expectNoEllipsis'): void {
+	expectNotToMatch(reEllipsis, got, desc);
+} // expectEllipsis()
 
 expectToBe(padHex(0), '00', 'padHex(0) should pad to two nibbles = one byte');
 expectToBe(padHex(0, 4), '0000', 'padHex(0,4) should pad to two bytes');
@@ -6599,6 +6601,10 @@ expectToBe(
 	expectNoop,
 	'showThing(anon function,26) should have no ellipsis',
 );
+expectNoEllipsis(
+	showThing(function namedZ(): void {}, 20),
+	'showThing(named function) should have no ellipsis',
+);
 expectToBe(
 	showThing(function named5(): void {}, 20),
 	expectNamed5,
@@ -6759,26 +6765,29 @@ expectToBe(
 	`Ty${EL}`,
 	'showThing(TypeError,2) should have ellipsis',
 );
-expectToBe(
+expectEllipsis(
+	// varies by JS engine:
+	// function () { return${EL}}
+	// () => nu${EL}
 	showThing(() => null, arrowEllipsisLen),
-	expectArrowNullEllipsis,
 	'showThing(arrow function,11/8) should have ellipsis',
 );
-expectToBe(
+expectEllipsis(
+	// function () { return${EL}}
+	// function () {\n return${EL}\n}
 	showThing(function (): string {
 		return 'S';
-	}, anonEllipsisLen).replace(/\t/g, ' '),
-	expectAnonEllipsis,
+	}, anonEllipsisLen),
 	'showThing(anon function,13/11) should have ellipsis',
 );
-expectToBe(
-	showThing(function name6(): void {}, named6EllipsisLen),
-	expectNamed6Ellipsis,
-	'showThing(name6 function,8/7) should have ellipsis',
+expectEllipsis(
+	// function name6() ${EL}}
+	showThing(function name6(): void {}, 8),
+	'showThing(name6 function,8) should have ellipsis',
 );
-expectToBe(
+expectEllipsis(
+	// function noop() {${EL}}
 	showThing(noop, noopEllipsisLen),
-	expectNoopEllipsis,
 	'showThing(function name,8/6) should have ellipsis',
 );
 
