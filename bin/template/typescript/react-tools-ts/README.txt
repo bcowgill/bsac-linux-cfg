@@ -13,8 +13,6 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - tsx ./tsrunner.ts
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
-  - MUSTDO use deno fmt to format the files with prose wrap on/off
-  - MUSTDO remove temporary lint rules from deno.jsonc
   - MUSTDO try with bun install / configure / unit test https://bun.sh/docs
 
 Diffing changes back and forth:
@@ -25,3 +23,26 @@ vsdiff.sh tslangorg.txt tscompiler.txt; edit.sh tscompiler.txt
 
 and back again...
 vsdiff.sh tslangorg.txt tsrunner.ts
+
+
+Bun - pros/cons v1.2.5
+	see ./bun-play directory for a sample
+
+Pros
+	drop in replacement for node to run JS/TS code faster.
+	very fast runs TypeScript by stripping out type definitions
+	compile to binary / bytecode - cross compile to other OS https://bun.sh/docs/bundler/executables
+	init a bun project from a react component https://bun.sh/docs/cli/bun-create
+
+Cons
+	no static type checker need to use tsc for that
+
+Once installed upgrade with:
+bun upgrade --stable  # latest stable build
+bun upgrade --canary  # for latest canary build
+
+bun init  # quick start a new project
+
+bun --watch run index.ts
+
+bun build index.ts --compile --outfile dist/app  # build to a single executable

@@ -1,0 +1,38 @@
+Hello via Cross Bun! 1.2.5
+env file var: defined-in-file
+All process.env values {
+  [0mSHELL[2m:[0m [0m[32m[0m[32m"/bin/bash"[0m[0m[0m[2m,[0m
+  [0mnpm_command[2m:[0m [0m[32m[0m[32m"run-script"[0m[0m[0m[2m,[0m
+  [0mNODE[2m:[0m [0m[32m[0m[32m"/usr/bin/node"[0m[0m[0m[2m,[0m
+  [0mnpm_config_local_prefix[2m:[0m [0m[32m[0m[32m"/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/quickstart"[0m[0m[0m[2m,[0m
+  [0mEDITOR[2m:[0m [0m[32m[0m[32m"vim"[0m[0m[0m[2m,[0m
+  [0mPWD[2m:[0m [0m[32m[0m[32m"/home/me/dell/home/me/bin/template/typescript/react-tools-ts/bun-play/quickstart"[0m[0m[0m[2m,[0m
+  [0mLOGNAME[2m:[0m [0m[32m[0m[32m"me"[0m[0m[0m[2m,[0m
+  [0m_[2m:[0m [0m[32m[0m[32m"/usr/bin/bun"[0m[0m[0m[2m,[0m
+  [0mHOME[2m:[0m [0m[32m[0m[32m"/home/me"[0m[0m[0m[2m,[0m
+  [0mLANG[2m:[0m [0m[32m[0m[32m"en_US.UTF-8"[0m[0m[0m[2m,[0m
+  [0mLS_COLORS[2m:[0m [0m[32m[0m[32m"rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:"[0m[0m[0m[2m,[0m
+  [0mnpm_lifecycle_script[2m:[0m [0m[32m[0m[32m"bun run index.ts"[0m[0m[0m[2m,[0m
+  [0mLESSCLOSE[2m:[0m [0m[32m[0m[32m"/usr/bin/lesspipe %s %s"[0m[0m[0m[2m,[0m
+  [0mTERM[2m:[0m [0m[32m[0m[32m"xterm-256color"[0m[0m[0m[2m,[0m
+  [0mnpm_package_name[2m:[0m [0m[32m[0m[32m"quickstart"[0m[0m[0m[2m,[0m
+  [0mLESSOPEN[2m:[0m [0m[32m[0m[32m"| /usr/bin/lesspipe %s"[0m[0m[0m[2m,[0m
+  [0mUSER[2m:[0m [0m[32m[0m[32m"me"[0m[0m[0m[2m,[0m
+  [0mnpm_lifecycle_event[2m:[0m [0m[32m[0m[32m"start"[0m[0m[0m[2m,[0m
+  [0mSHLVL[2m:[0m [0m[32m[0m[32m"1"[0m[0m[0m[2m,[0m
+  [0mnpm_config_user_agent[2m:[0m [0m[32m[0m[32m"bun/1.2.5 npm/? node/v22.6.0 linux x64"[0m[0m[0m[2m,[0m
+  [0mnpm_execpath[2m:[0m [0m[32m[0m[32m"/usr/lib/node_modules/bun/bin/bun.exe"[0m[0m[0m[2m,[0m
+  [0mnpm_package_json[2m:[0m [0m[32m[0m[32m"/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/quickstart/package.json"[0m[0m[0m[2m,[0m
+  [0mXDG_DATA_DIRS[2m:[0m [0m[32m[0m[32m"/usr/share/gnome:/usr/local/share:/usr/share:/var/lib/snapd/desktop"[0m[0m[0m[2m,[0m
+  [0mPATH[2m:[0m [0m[32m[0m[32m"/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/quickstart/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/quickstart/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/node_modules/.bin:/home/me/dell/home/me/workspace/play/node_modules/.bin:/home/me/dell/home/me/workspace/node_modules/.bin:/home/me/dell/home/me/node_modules/.bin:/home/me/dell/home/node_modules/.bin:/home/me/dell/node_modules/.bin:/home/me/node_modules/.bin:/home/node_modules/.bin:/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/quickstart/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/quickstart/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/bun-play/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/react-tools-ts/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/typescript/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/template/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/bin/node_modules/.bin:/home/me/dell/home/me/workspace/play/bsac-linux-cfg/node_modules/.bin:/home/me/dell/home/me/workspace/play/node_modules/.bin:/home/me/dell/home/me/workspace/node_modules/.bin:/home/me/dell/home/me/node_modules/.bin:/home/me/dell/home/node_modules/.bin:/home/me/dell/node_modules/.bin:/home/me/node_modules/.bin:/home/node_modules/.bin:/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"[0m[0m[0m[2m,[0m
+  [0mMAIL[2m:[0m [0m[32m[0m[32m"/var/mail/me"[0m[0m[0m[2m,[0m
+  [0mnpm_node_execpath[2m:[0m [0m[32m[0m[32m"/usr/bin/node"[0m[0m[0m[2m,[0m
+  [0mOLDPWD[2m:[0m [0m[32m[0m[32m"/home/me/dell/home/me/bin/template/typescript/react-tools-ts/bun-play"[0m[0m[0m[2m,[0m
+  [0mDO_NOT_TRACK[2m:[0m [0m[32m[0m[32m"1"[0m[0m[0m[2m,[0m
+  [0mNO_COLOR[2m:[0m [0m[32m[0m[32m"1"[0m[0m[0m[2m,[0m
+  [0mMY_ENV_VAR[2m:[0m [0m[32m[0m[32m"defined-in-file"[0m[0m[0m[2m,[0m
+  [0mTZ[2m:[0m [0m[2mundefined[0m[0m[2m,[0m
+  [0mNODE_TLS_REJECT_UNAUTHORIZED[2m:[0m [0m[2mundefined[0m[0m[2m,[0m
+  [0mBUN_CONFIG_VERBOSE_FETCH[2m:[0m [0m[2mundefined[0m[0m[2m,[0m
+}
+Listening on http://localhost:3000 ...

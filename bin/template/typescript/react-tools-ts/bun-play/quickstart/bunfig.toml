@@ -1,0 +1,117 @@
+# optional config for bun-specific options (i.e. not found in package.json or tsconfig.json
+# https://bun.sh/docs/runtime/bunfig
+# put global config in:
+#    $HOME/.bunfig.toml
+#    $XDG_CONFIG_HOME/.bunfig.toml
+
+# scripts to run before `bun run`-ing a file or script register plugins by adding them to this list
+#preload = ["./preload.ts"]
+
+logLevel = "debug" # "debug" | "warn" | "error"
+
+
+# The telemetry field permit to enable/disable the analytics records. Bun records bundle timings. The request body size is about 60 bytes, so it's not a lot of data. By default the telemetry is enabled. Equivalent of DO_NOT_TRACK env variable.
+telemetry = false
+
+# Reduce memory usage at the cost of performance
+#smol = true
+
+# Configure how Bun handles JSX.
+# https://www.typescriptlang.org/tsconfig/#jsx
+# You can also set these fields in the compilerOptions of your tsconfig.json, but they are supported here as well for non-TypeScript projects.
+# You can also configure on a per-file basis with pragmas:
+# /* @jsxRuntime classic */
+#jsx = "react"
+#jsxFactory = "h"
+#jsxFragment = "Fragment"
+#jsxImportSource = "react"
+
+# The values are parsed as JSON, except single-quoted strings are supported and `'undefined'` becomes `undefined` in JS.
+# This will probably change in a future release to be just regular TOML instead. It is a holdover from the CLI argument parsing.
+[define]
+# Replace any usage of "process.env.BAGEL" with the string `LOX`.
+# Note: BAGEL is not actually added to the process.env object when running.
+"process.env.BAGEL" = "'LOX'"
+
+[loader]
+# Configure how Bun maps file extensions to loaders. This is useful for loading files that aren't natively supported by Bun.
+# when a .bagel file is imported, treat it like a tsx file
+".bagel" = "tsx"
+
+# The bun run command can be configured under the [run] section. These apply to the bun run command and the bun command when running a file or executable or script.
+# Currently, bunfig.toml isn't always automatically loaded for bun run in a local project (it does check for a global bunfig.toml), so you might still need to pass -c or -c=bunfig.toml to use these settings.
+[run]
+#silent = true  # When true, suppresses the output of the command being run by bun run or bun.  bun --silent will override
+#shell = "system"  # The shell to use when running package.json scripts via bun run or bun.  On Windows, this defaults to "bun" and on other platforms it defaults to "system".
+
+# Auto alias node to bun
+# When true, this prepends $PATH with a node symlink that points to the bun binary for all scripts or executables invoked by bun run or bun.
+# This means that if you have a script that runs node, it will actually run bun instead, without needing to change your script. This works recursively, so if your script runs another script that runs node, it will also run bun instead. This applies to shebangs as well, so if you have a script with a shebang that points to node, it will actually run bun instead.
+# By default, this is enabled if node is not already in your $PATH.
+bun = true  # equivalent to `bun --bun` for all `bun run` commands
+
+# Configuration for `bun test` command
+[test]
+#root = "./__tests__"  # default "."
+#preload = ["./setupTests.ts"]
+#smol = true
+coverage = false  # use bun test --coverage to override
+#coverageThreshold = { line = 0.7, function = 0.8, statement = 0.9 }
+coverageSkipTestFiles = false
+coverageReporter  = ["text", "lcov"]  # default ["text"]
+coverageDir = "coverage"  # default "coverage"
+
+# Package management is a complex issue; Configure here to support a range of use cases for the `bun install` command
+[install]
+globalDir = "~/.bun/install/global"  # where `bun install --global` installs packages
+globalBinDir = "~/.bun/bin"  # where globally-installed package bins are linked
+dryRun = false  # Whether bun install will actually install dependencies. Default false. When true, it's equivalent to setting --dry-run on all bun install commands.
+optional = true  # Whether to install optional dependencies. Default true.
+dev = true  # Whether to install development dependencies. Default true.
+peer = true  # Whether to install peer dependencies. Default true.
+
+production = false # Whether bun install will run in "production mode". Default false.
+# In production mode, "devDependencies" are not installed. You can use bun install --production to override this setting.
+
+exact = false  # Whether to set an exact version in package.json. Default false.
+
+saveTextLockfile = true  # If false, generate a binary bun.lockb instead of a text-based bun.lock file when running bun install and no lockfile is present.  Default true
+
+auto = "auto"  # To configure Bun's package auto-install behavior. Default "auto" — when no node_modules folder is found, Bun will automatically install dependencies on the fly during execution. Allowed: auto, force, disable, fallback
+
+frozenLockfile = false  # When true, bun install will not update bun.lock. Default false. If package.json and the existing bun.lock are not in agreement, this will error.
+
+#registry = "https://registry.npmjs.org"  # set default registry as a string
+#registry = { url = "https://registry.npmjs.org", token = "123456" }  # set a token
+#registry = "https://username:password@registry.npmjs.org"  # set a username/password
+
+# The CA certificate as a string
+#ca = "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"
+
+# A path to a CA certificate file. The file can contain multiple certificates.
+#cafile = "path/to/cafile"
+
+# To configure lockfile behavior, use the install.lockfile section.
+[install.lockfile]
+save = true  # Whether to generate a lockfile on bun install. Default true.
+#print = "yarn"  # Whether to generate a non-Bun lockfile alongside bun.lock. (A bun.lock will always be created.) Currently "yarn" is the only supported value.
+
+# To configure a registry for a particular scope (e.g. @myorg/<package>) use install.scopes. You can reference environment variables with $variable notation.
+[install.scopes]
+#myorg = "https://username:password@registry.myorg.com/"  # registry as string
+
+# you can reference environment variables
+#myorg = { username = "myusername", password = "$npm_password", url = "https://registry.myorg.com/" }  # registry with username/password
+
+# registry with token
+#myorg = { token = "$npm_token", url = "https://registry.myorg.com/" }
+
+[install.cache]
+dir = "~/.bun/install/cache"  # the directory to use for the cache
+
+# when true, don't load from the global cache.
+# Bun may still write to node_modules/.cache
+disable = false
+
+# when true, always resolve the latest versions from the registry
+disableManifest = false

@@ -71,8 +71,8 @@ deno lint --rules | grep -vE 'https:' | perl -pne 'chomp unless m{tags:}xms; s{,
         "no-eval",
         "no-external-import",
         "no-implicit-declare-namespace-export",
-        "no-inferrable-types", // no
-        "no-non-null-asserted-optional-chain", // no
+        "no-inferrable-types", // not added above
+        "no-non-null-asserted-optional-chain", // not added above
         "no-non-null-assertion",
         "no-self-compare",
         "no-sparse-arrays",
@@ -82,7 +82,7 @@ deno lint --rules | grep -vE 'https:' | perl -pne 'chomp unless m{tags:}xms; s{,
         "no-undef",
         "no-useless-rename",
         "prefer-ascii",
-        "prefer-primordials", // no
+        "prefer-primordials", // not added above
         "single-var-declarator",
         "triple-slash-reference",
 */

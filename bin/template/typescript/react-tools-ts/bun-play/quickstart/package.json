@@ -1,0 +1,38 @@
+{
+  "name": "quickstart",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "which": "which node",
+    "clean": "rm -rf dist/",
+    "start": "ENV_FROM_PACKAGE=PACKAGE_JSON_SCRIPT bun run -c=bunfig.toml index.ts",
+    "watch": "bun --watch run -c=bunfig.toml index.ts",
+    "hot": "bun --hot run -c=bunfig.toml index.ts",
+    "build:": "bun build index.tx --compile --target=",
+    "prebuild:mac": "bun run build:mac-x86",
+    "build:mac": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-darwin-arm64 --outfile dist/app-mac-arm64",
+    "build:mac-x86": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-darwin-x64 --outfile dist/app-mac-x64",
+    "prebuild:win": "bun run build:win-old && bun run build:win-modern",
+    "build:win": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-windows-x64 --outfile dist/app-win64",
+    "build:win-old": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-windows-x64-baseline --outfile dist/app-win64-pre-2013cpu",
+    "build:win-modern": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-windows-x64-modern --outfile dist/app-win64-post-2013cpu",
+    "build:raspi": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-linux-arm64 --outfile dist/app-raspi-arm64",
+    "prebuild:linux": "bun run build:raspi && bun run build:linux-old && bun run build:linux-modern",
+    "build:linux": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-linux-x64 --outfile dist/app-linux-x64",
+    "build:linux-old": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-linux-x64-baseline --outfile dist/app-linux-x64-pre-2013cpu",
+    "build:linux-modern": "bun build index.ts --compile --bytecode --minify --sourcemap --target=bun-linux-x64-modern --outfile dist/app-linux-x64-post-2013cpu",
+    "prebuild": "bun run build:linux && bun run build:win && bun run build:mac",
+    "build": "bun build index.ts --compile --outfile dist/app"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/figlet": "^1.7.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "figlet": "^1.8.0"
+  }
+}
