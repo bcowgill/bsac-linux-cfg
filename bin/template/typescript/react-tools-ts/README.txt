@@ -33,16 +33,26 @@ Pros
 	very fast runs TypeScript by stripping out type definitions
 	compile to binary / bytecode - cross compile to other OS https://bun.sh/docs/bundler/executables
 	init a bun project from a react component https://bun.sh/docs/cli/bun-create
+	can patch files in node_modules in a selective way (for debuggine, etc) so it doesn't affect other projects which use the same package https://bun.sh/docs/install/patch
+	can build a single page app from an index.html starting file
 
 Cons
-	no static type checker need to use tsc for that
+	no static type checker need to use tsc for that (install typescript)
+	run front end and mock api server full stack with one file https://bun.sh/docs/bundler/fullstack
+	macro functions that run at build time but don't appear in the built code
 
 Once installed upgrade with:
 bun upgrade --stable  # latest stable build
 bun upgrade --canary  # for latest canary build
 
 bun init  # quick start a new project
+bun create Component.tsx  # create a dev environment from a react component
 
+bun run index.ts
 bun --watch run index.ts
+BUN_CONFIG_VERBOSE_FETCH=curl bun --inspect-brk index.ts  # debug code (ie with chromium) and insert a breakpoint immediately
+BUN_CONFIG_VERBOSE_FETCH=curl bun --inspect-wait index.ts  # debug code, susped execution until debugger attaches
+go to https://debug.bun.sh/ to debug the code (or firefox/chrome and use the link printed by the inspector)
+Or install Bun VSCode extension https://bun.sh/guides/runtime/vscode-debugger
 
 bun build index.ts --compile --outfile dist/app  # build to a single executable

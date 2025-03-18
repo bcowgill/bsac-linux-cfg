@@ -9,6 +9,7 @@
     "allowJs": true,
 
     // Bundler mode
+    "esModuleInterop": true,
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
@@ -24,5 +25,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true
-  }
+  },
+  "include": ["index.ts"],
+  "exclude": [
+  ]
 }
