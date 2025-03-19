@@ -14,6 +14,7 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
   - MUSTDO try with bun install / configure / unit test https://bun.sh/docs
+  - MUSTDO bun-play/vite try the bun create vite example https://bun.sh/guides/ecosystem/vite
 
 Diffing changes back and forth:
 from ubuntu usb key (bun,deno,tsx,node)
