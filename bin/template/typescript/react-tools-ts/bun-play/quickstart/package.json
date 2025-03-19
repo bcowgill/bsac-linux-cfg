@@ -7,6 +7,9 @@
     "clean": "rm -rf dist/",
     "tsc": "tsc",
     "lint": "bun run tsc",
+    "test": "bun test --watch",
+    "test:todo": "bun test --toddo",
+    "coverage": "bun test --coverage",
     "start": "ENV_FROM_PACKAGE=PACKAGE_JSON_SCRIPT bun run -c=bunfig.toml index.ts",
     "watch": "bun --watch run -c=bunfig.toml index.ts",
     "hot": "bun --hot run -c=bunfig.toml index.ts",
@@ -29,6 +32,7 @@
     "which": "which node"
   },
   "devDependencies": {
+    "@happy-dom/global-registrator": "^17.4.4",
     "@types/bun": "latest",
     "@types/figlet": "^1.7.0"
   },
