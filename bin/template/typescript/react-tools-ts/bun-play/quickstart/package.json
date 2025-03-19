@@ -34,8 +34,12 @@
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "^17.4.4",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
     "@types/bun": "latest",
-    "@types/figlet": "^1.7.0"
+    "@types/figlet": "^1.7.0",
+    "@types/react": "^19.0.12"
   },
   "peerDependencies": {
     "typescript": "^5.8.2"

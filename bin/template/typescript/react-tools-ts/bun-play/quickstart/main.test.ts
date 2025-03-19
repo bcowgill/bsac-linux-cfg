@@ -1,4 +1,4 @@
-import { jest, describe, expect, test, beforeEach, afterEach } from './testShim';
+import { jest, describe, expect, test, beforeEach, afterEach } from 'bun:test';
 
 describe("default date/time from setupTests", () => {
   test(`time is frozen`, () => {
@@ -240,6 +240,11 @@ describe("time zones", () => {
 }); // describe time zones
 
 describe("DOM test", () => {
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  // https://github.com/capricorn86/happy-dom
   test('dom test', () => {
     document.body.innerHTML = `<button id="ID" name="my-button" class="primary">My button</button>`;
     const button = document.querySelector('button');
@@ -257,6 +262,5 @@ describe("DOM test", () => {
     Too much is logged: parentNode,rootNode,ownerDocument,window ends up logging the entire globalThis state, so can save the log file and parse it to hide these large object:
     bun run ci > test.log 2>&1
     perl -ne '$function = $_ =~ m{\[(Getter|Function)\b}xms; print unless $hide || $function; if (!$hide && m{\A(\s+)\[Symbol.+(GlobalWindow|ownerDocument|rootNode|parentNode).*\s\{\s*\z}xms) { $indent = qr{\A$1\}}; $hide = 1; } if (!$hide && m{\A(\s+)\[Symbol\((node|element)Array.+\[\s*\z}xms) { $indent = qr{\A$1\]}; $hide = 1;} if ($indent && $_ =~ $indent) { $hide = 0; $indent = undef; print; }' test.log | less
-    */
-  });
+    */ });
 }); // describe DOM test

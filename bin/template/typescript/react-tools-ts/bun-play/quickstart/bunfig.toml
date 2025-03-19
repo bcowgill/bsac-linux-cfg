@@ -53,7 +53,7 @@ bun = true  # equivalent to `bun --bun` for all `bun run` commands
 # Configuration for `bun test` command
 [test]
 #root = "./__tests__"  # default "."
-preload = ["./setupTests.ts", "./setupDom.ts"]
+preload = ["./setupTests.ts", "./setupDom.ts", "./setupReactTest.ts"]
 #smol = true
 #coverage = false  # use bun test --coverage to override
 coverageThreshold = { line = 0.99, function = 0.99, statement = 0.99 }
