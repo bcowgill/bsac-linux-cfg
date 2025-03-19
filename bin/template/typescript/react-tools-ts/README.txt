@@ -13,7 +13,7 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - tsx ./tsrunner.ts
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
-  - MUSTDO try with bun install / configure / unit test https://bun.sh/docs
+  - MUSTDO bun-play simple front end app without a framework https://bun.sh/docs/bundler/html
   - MUSTDO bun-play/vite try the bun create vite example https://bun.sh/guides/ecosystem/vite
 
 Diffing changes back and forth:
