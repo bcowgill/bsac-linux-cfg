@@ -45,6 +45,7 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "figlet": "^1.8.0"
+    "figlet": "^1.8.0",
+    "react": "^19.0.0"
   }
 }

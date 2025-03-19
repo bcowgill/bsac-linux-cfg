@@ -5,6 +5,7 @@
       "name": "quickstart",
       "dependencies": {
         "figlet": "^1.8.0",
+        "react": "^19.0.0",
       },
       "devDependencies": {
         "@happy-dom/global-registrator": "^17.4.4",
