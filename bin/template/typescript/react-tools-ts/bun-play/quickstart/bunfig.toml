@@ -63,8 +63,8 @@ coverageDir = "coverage"  # default "coverage"
 
 # Package management is a complex issue; Configure here to support a range of use cases for the `bun install` command
 [install]
-globalDir = "~/.bun/install/global"  # where `bun install --global` installs packages
-globalBinDir = "~/.bun/bin"  # where globally-installed package bins are linked
+#globalDir = "/home/me/.bun/install/global"  # where `bun install --global` installs packages
+#globalBinDir = "/home/me/.bun/bin"  # where globally-installed package bins are linked
 dryRun = false  # Whether bun install will actually install dependencies. Default false. When true, it's equivalent to setting --dry-run on all bun install commands.
 optional = true  # Whether to install optional dependencies. Default true.
 dev = true  # Whether to install development dependencies. Default true.
@@ -107,7 +107,7 @@ save = true  # Whether to generate a lockfile on bun install. Default true.
 #myorg = { token = "$npm_token", url = "https://registry.myorg.com/" }
 
 [install.cache]
-dir = "~/.bun/install/cache"  # the directory to use for the cache
+#dir = "/home/me/.bun/install/cache"  # the directory to use for the cache
 
 # when true, don't load from the global cache.
 # Bun may still write to node_modules/.cache
