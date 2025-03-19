@@ -3,3 +3,12 @@
 export function buildTime(): string {
 	return (new Date()).toISOString();
 }
+
+export function getGitCommitHash() {
+  const {stdout} = Bun.spawnSync({
+    cmd: ["git", "rev-parse", "HEAD"],
+    stdout: "pipe",
+  });
+
+  return stdout.toString();
+}

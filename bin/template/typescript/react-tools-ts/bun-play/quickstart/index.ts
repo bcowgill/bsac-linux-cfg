@@ -1,5 +1,5 @@
 import figlet from "figlet";
-import { buildTime } from './build-macros.ts' with { type: 'macro' };
+import { buildTime, getGitCommitHash } from './build-macros.ts' with { type: 'macro' };
 
 declare module "bun" {
   interface Env {
@@ -11,6 +11,7 @@ declare module "bun" {
 
 console.log("Hello via Cross Bun!", Bun.version);
 console.log("Built on Date: ", buildTime());
+console.log(`From Git commit hash:  ${getGitCommitHash()}`);
 console.log("env var from .env file:", process.env.MY_ENV_VAR);
 console.log("env-ish substituted from bunfig.toml file:", process.env.BAGEL);
 debugger;
