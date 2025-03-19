@@ -1,10 +1,17 @@
+import { jest, describe, expect, test, beforeEach, afterEach } from './testShim';
 
-describe("date frozen", () => {
-  beforeEach(() => {
-    jest.setSystemTime(new Date("2020-01-01T00:00:00.000Z"));
+describe("default date/time from setupTests", () => {
+  test(`time is frozen`, () => {
+    expect(new Date().toISOString()).toBe('2020-01-02T12:13:14.789Z');
   });
-  test("it is 2020", () => {
-    expect(new Date().getFullYear()).toBe(2020);
+});
+
+describe("test a specific date", () => {
+  beforeEach(() => {
+    jest.setSystemTime(new Date("2022-01-01T00:00:00.000Z"));
+  });
+  test("it is now 2022", () => {
+    expect(new Date().getFullYear()).toBe(2022);
   });
 });
 
@@ -37,43 +44,67 @@ describe("time zones", () => {
     jest.setSystemTime();
   });
 
-  function localTime(date: Date): string {
-    return new Intl.DateTimeFormat("en-GB", { dateStyle: 'short', timeStyle: 'long' }).format(date);
+  function localTime(date: Date, locale = 'en-GB'): string {
+    return new Intl.DateTimeFormat(locale, {
+      dateStyle: 'short',
+      timeStyle: 'long'
+    }).format(date);
   }
 
   interface ExpectDateTimeTest {
-    label: string;
-    useTime: string;
-    offset?: number;
-    shortDate: string;
+    label: string; // to label a unit test for easy identification
+    offset?: number; // time zone offset in minutes from GMT
+    locale?: string; // en-GB for example
+    useTime: string; // 2025-10-25T00:00:00.000Z full Z time spec
+    shortDate: string; // localTime() formatted for locale specified
   }
   function expectDateTime({
-    label = '',
-    useTime,
+    label = 'expectDateTime',
     offset = 0,
+    locale,
+    useTime,
     shortDate,
   }: ExpectDateTimeTest): void {
     jest.setSystemTime(new Date(useTime));
     let date = new Date();
     expect(label + ' ' + date.getTimezoneOffset()).toBe(label + ' ' + offset);
     expect(label + ' ' + date.toISOString()).toBe(label + ' ' + useTime);
-    expect(label + ' ' + localTime(date)).toBe(label + ' ' + shortDate);
+    expect(label + ' ' + localTime(date, locale)).toBe(label + ' ' + shortDate);
+  } // expectDateTime()
+
+  interface ExpectNoDSTChangeTest {
+    year?: number;
+    offset?: number; // time zone offset in minutes from GMT
+    TZ?: string; // The string provided by tzselect program
   }
+  // Check that time zone offset remains the same for the whole year.
+  function expectNoDSTChange({
+    year = 2025,
+    offset = 0,
+    TZ = 'UTC',
+  }: ExpectNoDSTChangeTest = {}): void {
+    process.env.TZ = TZ;
+    const label = `expectNoDSTChange ofs: TZ:${TZ}`;
+    expect(new Date().getTimezoneOffset()).toBe(offset);
+    expect(new Intl.DateTimeFormat().resolvedOptions().timeZone).toBe(TZ);
+    for (let month = 1; month <= 12; month++) {
+      for (let day = 1; day <= 31; day++) {
+        const prefix = `${label} ${year}-${month}-${day} `;
+        expect(prefix + (new Date(year, month - 1, day).getTimezoneOffset()))
+	  .toBe(prefix + offset);
+      }
+    }
+  } // expectNoDSTChange()
 
   // NOTE: process.env.TZ changing is not Jest compatible
   test("Welcome to UTC! - testing no offset change by day of year", () => {
-    const offset = 0;
-    process.env.TZ = "UTC";
-    expect(new Date().getTimezoneOffset()).toBe(offset);
-    expect(new Intl.DateTimeFormat().resolvedOptions().timeZone).toBe(
-      "UTC",
-    );
-    // Time zone offset remains the same for the whole year
-    for (let month = 1; month <= 12; month++) {
-      for (let day = 1; day <= 31; day++) {
-        expect(new Date(2025, month - 1, day).getTimezoneOffset()).toBe(offset);
-      }
-    }
+    expectNoDSTChange();
+  });
+
+  test("Welcome to Ghana! - testing no offset change by day of year", () => {
+    expectNoDSTChange({
+      TZ: 'Africa/Abidjan', // Ghana is on GMT year round!
+    });
   });
 
   test("Welcome to London! - testing time offset for BST dates", () => {
@@ -141,9 +172,9 @@ describe("time zones", () => {
     // Just before BST ends until just after...
     expectDateTime({
       label: 'pre BST end',
-      useTime: `${year}-${monthST}-${dayST}T0${hourST - 2}:59:00.000Z`,
+      useTime: `${year}-${monthST}-${dayST}T0${hourST - 2}:59:59.999Z`,
       offset: offsetDST,
-      shortDate: '26/10/2025, 01:59:00 BST',
+      shortDate: '26/10/2025, 01:59:59 BST',
     });
     expectDateTime({
       label: '@BST end',
@@ -162,7 +193,7 @@ describe("time zones", () => {
       useTime: '2025-10-27T00:00:00.000Z',
       shortDate: '27/10/2025, 00:00:00 GMT',
     });
-  });
+  }); // test London
 
   test("Welcome to California! - testing time offset changes through the year", () => {
     const year = 2025;
@@ -195,7 +226,7 @@ describe("time zones", () => {
 	}
       }
     }
-  });
+  }); // test California
 
   test("Welcome to New York!", () => {
     // Unlike in Jest, you can set the timezone multiple times at runtime and it will work.
@@ -205,13 +236,27 @@ describe("time zones", () => {
       "America/New_York",
     );
     expect(new Date().toLocaleString()).toBe('3/19/2025, 2:00:00 PM');
-  });
-});
+  }); // test New York
+}); // describe time zones
 
 describe("DOM test", () => {
   test('dom test', () => {
-    document.body.innerHTML = `<button>My button</button>`;
+    document.body.innerHTML = `<button id="ID" name="my-button" class="primary">My button</button>`;
     const button = document.querySelector('button');
-    expect(button?.innerText).toEqual('My button');
+
+    expect(button?.innerText).toBe('My button');
+    expect(button?.tagName).toBe('BUTTON');
+    expect(button?.getAttributeNames()).toEqual([ 'id', 'name', 'class']);
+    expect(button?.getAttribute('id')).toBe('ID');
+    expect(button?.getAttribute('name')).toBe('my-button');
+    expect(button?.getAttribute('class')).toBe('primary');
+    expect(button?.classList.toString()).toBe('primary');
+    expect(button?.classList.contains('primary')).toBe(true);
+    //console.warn(`DOM`, button)
+    /*
+    Too much is logged: parentNode,rootNode,ownerDocument,window ends up logging the entire globalThis state, so can save the log file and parse it to hide these large object:
+    bun run ci > test.log 2>&1
+    perl -ne '$function = $_ =~ m{\[(Getter|Function)\b}xms; print unless $hide || $function; if (!$hide && m{\A(\s+)\[Symbol.+(GlobalWindow|ownerDocument|rootNode|parentNode).*\s\{\s*\z}xms) { $indent = qr{\A$1\}}; $hide = 1; } if (!$hide && m{\A(\s+)\[Symbol\((node|element)Array.+\[\s*\z}xms) { $indent = qr{\A$1\]}; $hide = 1;} if ($indent && $_ =~ $indent) { $hide = 0; $indent = undef; print; }' test.log | less
+    */
   });
-});
+}); // describe DOM test

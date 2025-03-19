@@ -40,6 +40,7 @@ Cons
 	no static type checker need to use tsc for that (install typescript)
 	run front end and mock api server full stack with one file https://bun.sh/docs/bundler/fullstack
 	macro functions that run at build time but don't appear in the built code
+	--coverage does not yet support HTML view/drill down
 
 Once installed upgrade with:
 bun upgrade --stable  # latest stable build

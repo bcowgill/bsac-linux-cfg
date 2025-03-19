@@ -55,8 +55,8 @@ bun = true  # equivalent to `bun --bun` for all `bun run` commands
 #root = "./__tests__"  # default "."
 preload = ["./setupTests.ts", "./setupDom.ts"]
 #smol = true
-coverage = false  # use bun test --coverage to override
-#coverageThreshold = { line = 0.7, function = 0.8, statement = 0.9 }
+#coverage = false  # use bun test --coverage to override
+coverageThreshold = { line = 0.99, function = 0.99, statement = 0.99 }
 coverageSkipTestFiles = false
 coverageReporter  = ["text", "lcov"]  # default ["text"]
 coverageDir = "coverage"  # default "coverage"

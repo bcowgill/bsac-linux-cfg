@@ -7,6 +7,7 @@
     "clean": "rm -rf dist/",
     "tsc": "tsc",
     "lint": "bun run tsc",
+    "ci": "bun test",
     "test": "bun test --watch",
     "test:todo": "bun test --toddo",
     "coverage": "bun test --coverage",
