@@ -13,8 +13,9 @@ tsrunner.ts can run natively with tsx, deno or bun as they detect where they are
   - tsx ./tsrunner.ts
   - deno ./tsrunner.ts
   - bun ./tsrunner.ts
-  - MUSTDO bun-play simple front end app without a framework https://bun.sh/docs/bundler/html
+  - MUSTDO bun-play react front end app https://bun.sh/docs/bundler/fullstack#how-to-use-with-react
   - MUSTDO bun-play/vite try the bun create vite example https://bun.sh/guides/ecosystem/vite
+  - MUSTDO https://www.youtube.com/watch?v=-YpSC5fly5s  21:39
 
 Diffing changes back and forth:
 from ubuntu usb key (bun,deno,tsx,node)
