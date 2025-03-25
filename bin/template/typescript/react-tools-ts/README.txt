@@ -59,3 +59,27 @@ go to https://debug.bun.sh/ to debug the code (or firefox/chrome and use the lin
 Or install Bun VSCode extension https://bun.sh/guides/runtime/vscode-debugger
 
 bun build index.ts --compile --outfile dist/app  # build to a single executable
+
+Bun Issue Reported:
+https://github.com/oven-sh/bun/issues/5636
+
+bunfig.toml install.globalDir etc does not recognise ~ or $HOME as shown in the documentation.
+
+https://bun.sh/docs/runtime/bunfig#install-cache
+
+bunfig.toml file
+
+[install]
+globalDir = "~/.bun/install/global"
+globalBinDir = "~/.bun/bin"
+
+[install.cache]
+dir = "~/.bun/install/cache"
+
+then when I run `bun install`
+
+Instead of referring to files in the user’s home directory it is creating a ‘~’ directory in the current project directory.
+
+Also tried changing ~ to $HOME in the .toml file but that creates a ‘$HOME’. directory in the current project directory also.
+
+===
