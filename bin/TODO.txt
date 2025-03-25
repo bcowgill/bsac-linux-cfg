@@ -1,14 +1,6 @@
-ubuntu Linux -- try installing neovim package for github copilot
-https://github.com/github/copilot.vim
-
 touch-dirs.sh try in Camera dir to reorder the folders, after backing up the phone
 
-newlinux.txt - list of things to do for new linux system
-
-Boot USB key
-ubuntu-install-2023 on 4TB ADATA drive downloaded, try boot from USB
-so also USB broken posting to help page.
-usb-broken.txt - from Mar 2023 trying to make a Lubuntu boot disk
+newlinux.txt - symlink to list of things to do for new linux system on Expansion external drive
 
 Get a list of all script files, then search them for exiftool or id2 commands
 
