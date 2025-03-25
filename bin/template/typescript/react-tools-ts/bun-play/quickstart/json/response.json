@@ -1,0 +1,18 @@
+{
+  "api": "/api/v1/users",
+  "data": [
+    {
+      "id": "0",
+      "name": "John Doe",
+      "role": "admin"
+    },{
+      "id": "90",
+      "name": "Jane Buck",
+      "role": "viewer"
+    },{
+      "id": "12",
+      "name": "Wally",
+      "role": "editor"
+    }
+  ]
+}
