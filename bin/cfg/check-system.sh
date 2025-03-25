@@ -816,6 +816,7 @@ if [ "$COMPANY" == "wipro" ]; then
 		cf:cf-cli
 		ranger
 		/usr/local/Cellar/shared-mime-info/$SHARED_MIME/README.md:shared-mime-info
+		/usr/local/bin/bun:oven-sh/bun/bun
 	"
 	UNINSTALL_NPM_GLOBAL_PKGS="
 		yarn

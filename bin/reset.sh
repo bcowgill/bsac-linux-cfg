@@ -2,8 +2,8 @@
 # resetting a wonky terminal
 # https://www.baeldung.com/linux/reset-terminal-screen-issues
 
-echo stty --all:
-stty --all  # show your terminal settings
+echo stty -a:
+stty -a  # show your terminal settings
 echo " "
 
 echo 'Ctrl-l  clears the terminal screen
