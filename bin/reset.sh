@@ -2,36 +2,43 @@
 # resetting a wonky terminal
 # https://www.baeldung.com/linux/reset-terminal-screen-issues
 
-# Ctrl-l  clears the terminal screen
-# Ctrl-U  (stty: kill) clears text to left of cursor
-# Ctrl-/  (bash?) undo last bunch of typing
-# Ctrl-W  (stty: werase) erase word to left of cursor
-# Ctrl-?  (stty: erase) backspace. erase the last character typed
-# or Ctrl-Shift-?  (stty: erase) backspace. erase the last character typed
-# Ctrl-V  (stty: lnext) show next typed character literally like Ctrl-V Ctrl-C will show ^C instead of breaking.
-# Ctrl-Alt-F1 switch to virtual terminal 1
-# Ctrl-Alt-F7 switch to virtual terminal 7 running the GUI (i3wm)
-
+echo stty --all:
 stty --all  # show your terminal settings
+echo " "
+
+echo 'Ctrl-l  clears the terminal screen
+Ctrl-U  (stty: kill) clears text to left of cursor
+Ctrl-/  (bash?) undo last bunch of typing
+Ctrl-W  (stty: werase) erase word to left of cursor
+Ctrl-?  (stty: erase) backspace. erase the last character typed
+or Ctrl-Shift-?  (stty: erase) backspace. erase the last character typed
+Ctrl-V  (stty: lnext) show next typed character literally like Ctrl-V Ctrl-C will show ^C instead of breaking.
+Ctrl-Alt-F1 switch to virtual terminal 1
+Ctrl-Alt-F7 switch to virtual terminal 7 running the GUI (i3wm)
+'
+
 
 # Reset without clearing the screen
 
 # stty sane does not clear the screen but restores the terminal’s line editing and echoing behavior. This feature makes it ideal for fixing specific input or display issues without reinitializing the entire terminal.
 
-stty sane
+echo 'stty sane   / reset terminal line editing and echoing but does not clear the screen'
 
 # the tput init command performs a soft reset, which restores the terminal’s default settings without clearing the screen:
-tput init
+
+echo 'tput init   / soft reset to default settings without clearing the screen'
 
 # Reset and clear the screen
 
 # When we execute the reset command, it reinitializes terminal settings, fixing issues such as garbled output and unresponsive behavior. Moreover, the reset command doesn’t affect running processes or stored data.
-reset
+
+echo 'reset       / reinitializes terminal settings fix garbled output and unreseponsive behaviour'
 
 # if that fails...
 
 # The command relies on the terminal’s internal database to determine the correct reset sequence. This makes it more effective at resetting the terminal to its default state, especially where the standalone reset command is not working as expected.
-tput reset
+
+echo 'tput reset  / reset terminal to default when reset command fails'
 
 exit $?
 
