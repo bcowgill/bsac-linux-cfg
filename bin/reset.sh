@@ -13,10 +13,9 @@ Ctrl-W  (stty: werase) erase word to left of cursor
 Ctrl-?  (stty: erase) backspace. erase the last character typed
 or Ctrl-Shift-?  (stty: erase) backspace. erase the last character typed
 Ctrl-V  (stty: lnext) show next typed character literally like Ctrl-V Ctrl-C will show ^C instead of breaking.
-Ctrl-Alt-F1 switch to virtual terminal 1
+Ctrl-Alt-F1 .. F6 switch to virtual console terminal 1-6
 Ctrl-Alt-F7 switch to virtual terminal 7 running the GUI (i3wm)
 '
-
 
 # Reset without clearing the screen
 
