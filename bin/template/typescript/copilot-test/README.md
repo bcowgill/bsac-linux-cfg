@@ -47,33 +47,3 @@ Clarity
 Specificty
 Context   - keep relevant files open in the project and/or highlight the relevant code so copilot can use what is there.
 Intent. - give a high level goal to help guide the result
-
-
-
-
-
-MS Partner Skilling Hub for Azure training
-https://vshow.on24.com/vshow/GSI_MMOC/exhibits/?
-English
-tz: Europe/London
-Wipro Ltd
-Developer
-UK
-
-Welcome to KHX
-https://wipro.intuitionkhx.com
-Assigned AI Apps, Ethics, Banking training
-
-Voucher for Exams. DP-900 Azure
-https://uplearn.ai/user_register.php
-
-
-MS Training with my Collections
-You're signed in as
-https://learn.microsoft.com/en-gb/users/me/#privacy-prefs-form
-https://learn.microsoft.com/en-gb/users/BSAC-0351
-https://learn.microsoft.com/en-gb/users/bsac-0351/collections
-https://learn.microsoft.com/en-gb/users/brentstephananthonycowgill-0351/settings#privacy-prefs-form
-https://learn.microsoft.com/en-us/training/
-
-
