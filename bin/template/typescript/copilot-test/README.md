@@ -22,6 +22,21 @@ add a switchQueue function to move last half of items to a new queue preserving 
 
 write a simulator where items arrive with normal distribution every 5 minutes.  once 30 items arrive no more should be added.  start with two queues which process each item in 10 minutes normal distribution.  once a queue has 10 items waiting start another queue and switch the items there. open at most 6 queues. run the simulation and print out how long it takes to process 30 items
 
+Copilot chat:
+/clear.  clear chat history
+/help
+
+Context specifiers
+@regex    /new or /new-from
+@terminal  /explain
+@workspace  /explain /fix /setupTests /test  /fixTestFailure /new /newNotebook
+@vscode  /search /startDebugging
+
+Add jsdoc comments to every function
+Add comments to the code
+Refactor this code
+
+
 Effective Prompt Crafting:
 
   Clarity    |   Specificity
