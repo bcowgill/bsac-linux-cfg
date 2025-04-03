@@ -2,6 +2,8 @@
 # Brent S.A. Cowgill
 # MOTE: there are custom aliases set by hostname
 
+alias ub="pushd /media/me/Expansion/ubuntu-install-2023"
+
 alias setls="set | perl -ne '\$stop = 1 if m{[^=]\(\)}xms; print unless \$stop'"
 
 alias please='sudo'

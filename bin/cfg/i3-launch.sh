@@ -144,7 +144,7 @@ sleep 1
 i3do "mark shell"
 
 # $chat
-i3do "workspace $chat; exec skypeforlinux"
+#i3do "workspace $chat; exec skypeforlinux"
 sleep 3
 
 # scratchpad setup with a logged screen session

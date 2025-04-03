@@ -44,6 +44,16 @@ SOUND=${2:-$HOME/bin/sounds/chime.wav}
 POLL=5
 WAIT=1
 
+if [ ! -e "$SOUND" ]; then
+	FOUND=`ls $HOME/bin/sounds/$SOUND* 2> /dev/null | head -1`
+	if [ -z "$FOUND" ]; then
+		>&2 echo Sound file "$SOUND" not found, will use default.
+		SOUND=$HOME/bin/sounds/chime.wav
+	else
+		SOUND="$FOUND"
+	fi
+fi
+
 NOW=`datestamp.sh | cut -c 1-16`
 if [ ! -z "$WHEN" ]; then
 	echo $NOW: alarm will go off at $WHEN
