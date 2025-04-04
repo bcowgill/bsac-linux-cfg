@@ -1,0 +1,8 @@
+[1G[0K⠦[1G[0K[1mnpm[22m [33mwarn[39m [94mdeprecated[39m mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+[1G[0K⠧[1G[0K⠇[1G[0K⠏[1G[0K⠋[1G[0K⠙[1G[0K⠹[1G[0K⠸[1G[0K⠼[1G[0K⠴[1G[0K⠦[1G[0K⠧[1G[0K⠇[1G[0K⠏[1G[0K⠋[1G[0K⠙[1G[0K
+added 2 packages, removed 1 package, changed 10 packages, and audited 39 packages in 3s
+[1G[0K⠙[1G[0K
+[1G[0K⠙[1G[0K1 package is looking for funding
+[1G[0K⠙[1G[0K  run `npm fund` for details
+[1G[0K⠙[1G[0K
+[31m[1m4[22m[39m vulnerabilities (2 [31m[1mhigh[22m[39m, 2 [35m[1mcritical[22m[39m)

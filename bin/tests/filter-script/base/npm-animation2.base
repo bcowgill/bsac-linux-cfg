@@ -1,0 +1,20 @@
+
+
+npm warn deprecated mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+
+
+
+added 2 packages, removed 1 package, changed 10 packages, and audited 39 packages in 3s
+
+
+
+
+
+1 package is looking for funding
+
+
+  run `npm fund` for details
+
+
+
+4 vulnerabilities (2 high, 2 critical)

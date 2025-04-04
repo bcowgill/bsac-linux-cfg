@@ -12,6 +12,8 @@ SAMPLE3=in/signoff-line-extra-esc.txt
 SAMPLE4=in/with-codes.txt
 SAMPLE5=in/elixir-spawn.log
 SAMPLE6=in/npm-animation.txt
+SAMPLE7=in/npm-animation2.txt
+SAMPLE8=in/setup-ts-react.txt
 CONTROL=../pee/in/SAMPLE.ctrl.txt
 DEBUG=
 SKIP=0
@@ -19,7 +21,7 @@ HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 18
+PLAN 22
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -120,7 +122,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-   check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
+	check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -135,25 +137,7 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE2 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-   check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
-else
-	echo SKIP $TEST "$SKIP"
-fi
-echo TEST $CMD successful operation prompt codes
-TEST=success-prompt
-if [ 0 == "$SKIP" ]; then
-	ERR=0
-	OUT=out/$TEST.out
-	ERR=out/$TEST.err.out
-	BASE=base/$TEST.base
-	BASE_ERR=base/$TEST.err.base
-	ARGS="$DEBUG --codes"
-	$PROGRAM $ARGS < $SAMPLE3 > $OUT 2> $ERR || assertCommandSuccess $? "$PROGRAM $ARGS"
-	filter "$OUT"
-	filter "$ERR"
-	assertFilesEqual "$OUT" "$BASE" "$TEST"
-	assertFilesEqual "$ERR" "$BASE_ERR" "$TEST error output"
-   #check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
+	check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -204,7 +188,22 @@ if [ 0 == "$SKIP" ]; then
 	$PROGRAM $ARGS < $SAMPLE6 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
-   check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
+	check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation npm animation2 log
+TEST=npm-animation2
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE7 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
 else
 	echo SKIP $TEST "$SKIP"
 fi
@@ -223,6 +222,40 @@ if [ 0 == "$SKIP" ]; then
 	filter "$ERR"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 	assertFilesEqual "$ERR" "$BASE_ERR" "$TEST error output"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation ts-react log
+TEST=success-ts-react
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	$PROGRAM $ARGS < $SAMPLE8 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation prompt codes
+TEST=success-prompt
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	ERR=out/$TEST.err.out
+	BASE=base/$TEST.base
+	BASE_ERR=base/$TEST.err.base
+	ARGS="$DEBUG --codes"
+	$PROGRAM $ARGS < $SAMPLE3 > $OUT 2> $ERR || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	filter "$ERR"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+	assertFilesEqual "$ERR" "$BASE_ERR" "$TEST error output"
+	check_clean "$OUT" || assertCommandSuccess $? "Escape codes remain in output for $OUT."
 else
 	echo SKIP $TEST "$SKIP"
 fi

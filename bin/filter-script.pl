@@ -94,7 +94,7 @@ my $dcs = qr/(?:${esc}P|\N{U+0090})/;
 my $exfn = qr{\b\w+[\?\!]?(?:/\d+)?}xms;
 
 # npm 'hourglass' animation
-my $hgani = qr{\n[⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴]\n}xms;
+my $hgani = qr{[⠴⠦⠧⠇⠏⠋⠙⠹⠸⠼⠴]}xms;
 
 sub show_line
 {
@@ -241,11 +241,17 @@ while (my $line = <>) {
 	$line =~ s{\A:\x0d}{\n}xmsg; # pager line from less
 	$line =~ s{\x0d}{\n}xmsg; # CR by itself convert to newline
 	$line =~ s{\s+\z}{}xms;
-	while ($line =~ s{$hgani}{\n}xmsg) {}
+	while ($line =~ s{\n$hgani(\z|\n+)}{\n}xmsg) {}
+	#print "RR:$hgani\nXX[$line]\n";
+	my $no_nl = $line =~ s{\A$hgani+\z}{}xms;
 	$line =~ s{\n\n\n+}{\n\n\n}xmsg;
+	#print "\nYY[$line]\n";
 
-	show_codes($line);
-	$line .= "\n";
+	unless ($no_nl)
+	{
+		show_codes($line);
+		$line .= "\n";
+	}
 } continue {
 	print NFC($line);  # recompose (where possible) + reorder canonically
 }

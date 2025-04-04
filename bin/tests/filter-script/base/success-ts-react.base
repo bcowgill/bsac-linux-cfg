@@ -1,0 +1,2800 @@
+THIS EXPERIMENT DID NOT FULLY WORK
+create react app is no longer maintained
+and failed to install eslint due to package conflicts with tslint- package versions from CRA and eslint
+
+https://www.sitepoint.com/react-with-typescript-best-practices/
+
+$ nvm install 22.0.0
+Downloading and installing node v22.0.0...
+Downloading https://nodejs.org/dist/v22.0.0/node-v22.0.0-darwin-x64.tar.xz...
+######################################################################## 100.0%
+Computing checksum with shasum -a 256
+Checksums matched!
+Now using node v22.0.0 (npm v10.5.1)
+
+> npx create-react-app ts-react --template typescript
+Need to install the following packages:
+create-react-app@5.0.1
+Ok to proceed? (y) y
+npm WARN deprecated tar@2.2.2: This version of tar is no longer supported, and will not receive security updates. Please upgrade asap.
+
+Creating a new React app in /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react.
+
+Installing packages. This might take a couple of minutes.
+Installing react, react-dom, and react-scripts with cra-template-typescript...
+
+
+added 1494 packages in 57s
+
+258 packages are looking for funding
+  run `npm fund` for details
+
+Installing template dependencies using npm...
+
+added 46 packages, removed 1 package, and changed 2 packages in 7s
+
+262 packages are looking for funding
+  run `npm fund` for details
+
+We detected TypeScript in your project (src/App.test.tsx) and created a tsconfig.json file for you.
+
+Your tsconfig.json has been populated with default values.
+
+Removing template package using npm...
+
+
+removed 1 package, and audited 1539 packages in 4s
+
+262 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (2 moderate, 6 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Success! Created ts-react at /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react
+Inside that directory, you can run several commands:
+
+  npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+We suggest that you begin by typing:
+
+  cd ts-react
+  npm start
+
+Happy hacking!
+npm notice
+npm notice New patch version of npm available! 10.5.1 -> 10.5.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v10.5.2
+npm notice Run npm install -g npm@10.5.2 to update!
+npm notice
+
+Prompt saved to PS1_SAVED and simplified.
+
+npm run build
+
+Creating an optimized production build...
+One of your dependencies, babel-preset-react-app, is importing the
+"@babel/plugin-proposal-private-property-in-object" package without
+declaring it in its dependencies. This is currently working because
+"@babel/plugin-proposal-private-property-in-object" is already in your
+node_modules folder for unrelated reasons, but it may break at any time.
+
+babel-preset-react-app is part of the create-react-app project, which
+is not maintianed anymore. It is thus unlikely that this bug will
+ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
+your devDependencies to work around this error. This will make this message
+go away.
+
+Compiled successfully.
+
+
+npm i --save-dev @babel/plugin-proposal-private-property-in-object
+
+
+> npm run build -- --json bundle.stats.json
+
+> ts-react@0.1.0 build
+> react-scripts build --json bundle.stats.json
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  46.65 kB  build/static/js/main.ae4434f6.js
+  1.77 kB   build/static/js/453.e33469ec.chunk.js
+  513 B     build/static/css/main.f855e6bc.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  npm install -g serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+
+
+
+
+Use script -a to try setting up eslint here.
+
+Failed eslint init
+===========================================================
+Script started on Thu Apr 25 14:43:36 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ ./node_modules/.bin/e 
+slint --init
+You can also run this command directly using 'npm init @eslint/config'.
+? How would you like to use ESLint? …
+  To check syntax only
+❯ To check syntax and find problems
+  To check syntax, find problems, and enforce code style
+
+
+? How would you like to use ESLint? …
+  To check syntax only
+  To check syntax and find problems
+❯ To check syntax, find problems, and enforce code style
+
+
+✔ How would you like to use ESLint? · style
+? What type of modules does your project use? …
+❯ JavaScript modules (import/export)
+  CommonJS (require/exports)
+  None of these
+
+
+✔ What type of modules does your project use? · esm
+? Which framework does your project use? …
+❯ React
+  Vue.js
+  None of these
+
+
+✔ Which framework does your project use? · react
+? Does your project use TypeScript? …
+❯ No
+  Yes
+
+
+? Does your project use TypeScript? …
+  No
+❯ Yes
+
+
+✔ Does your project use TypeScript? · typescript
+? Where does your code run? …  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+✔ Browser
+✔ Node
+
+
+✔ Where does your code run? · browser
+? Which style guide do you want to follow? …
+❯ Standard: https://github.com/standard/eslint-config-standard-with-typescript
+  XO: https://github.com/xojs/eslint-config-xo-typescript
+
+
+✔ Which style guide do you want to follow? · standard
+The config that you've selected requires the following dependencies:
+
+eslint, globals, eslint-config-standard-with-typescript, @typescript-eslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-import@^2.25.2, eslint-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js
+? Would you like to install them now? › No / Yes
+
+
+? Would you like to install them now? › No / Yes
+
+
+✔ Would you like to install them now? · No / Yes
+? Which package manager do you want to use? …
+❯ npm
+  yarn
+  pnpm
+  bun
+
+
+✔ Which package manager do you want to use? · npm
+☕️Installing...
+npm WARN idealTree Removing dependencies.typescript in favor of devDependencies.typescript
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠹ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠹ idealTree:ts-react: sill idealTree buildDeps
+
+
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE could not resolve
+npm ERR!
+npm ERR! While resolving: ts-react@0.1.0
+npm ERR! Found: @typescript-eslint/eslint-plugin@5.62.0
+npm ERR! node_modules/@typescript-eslint/eslint-plugin
+npm ERR!   @typescript-eslint/eslint-plugin@"^5.5.0" from eslint-config-react-app@7.0.1
+npm ERR!   node_modules/eslint-config-react-app
+npm ERR!     eslint-config-react-app@"^7.0.1" from react-scripts@5.0.1
+npm ERR!     node_modules/react-scripts
+npm ERR!       react-scripts@"5.0.1" from the root project
+npm ERR!   peerOptional @typescript-eslint/eslint-plugin@"^4.0.0 || ^5.0.0" from eslint-plugin-jest@25.7.0
+npm ERR!   node_modules/eslint-plugin-jest
+npm ERR!     eslint-plugin-jest@"^25.3.0" from eslint-config-react-app@7.0.1
+npm ERR!     node_modules/eslint-config-react-app
+npm ERR!       eslint-config-react-app@"^7.0.1" from react-scripts@5.0.1
+npm ERR!       node_modules/react-scripts
+npm ERR!         react-scripts@"5.0.1" from the root project
+npm ERR!   1 more (the root project)
+npm ERR!
+npm ERR! Could not resolve dependency:
+npm ERR! dev @typescript-eslint/eslint-plugin@"^6.4.0" from the root project
+npm ERR!
+npm ERR! Conflicting peer dependency: @typescript-eslint/parser@6.21.0
+npm ERR! node_modules/@typescript-eslint/parser
+npm ERR!   peer @typescript-eslint/parser@"^6.0.0 || ^6.0.0-alpha" from @typescript-eslint/eslint-plugin@6.21.0
+npm ERR!   node_modules/@typescript-eslint/eslint-plugin
+npm ERR!     dev @typescript-eslint/eslint-plugin@"^6.4.0" from the root project
+npm ERR!
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR!
+npm ERR!
+npm ERR! For a full report see:
+npm ERR! /Users/br388313/.npm/_logs/2024-04-25T13_44_52_266Z-eresolve-report.txt
+
+npm ERR! A complete log of this run can be found in: /Users/br388313/.npm/_logs/2024-04-25T13_44_52_266Z-debug-0.log
+A config file was generated, but the config file itself may not follow your linting rules.
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$
+
+
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   setup.log
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ ./node_modules/.bin/es
+slint --init --legacy-peer-deps
+You can also run this command directly using 'npm init @eslint/config'.
+? How would you like to use ESLint? …
+  To check syntax only
+❯ To check syntax and find problems
+  To check syntax, find problems, and enforce code style
+
+
+? How would you like to use ESLint? …
+  To check syntax only
+  To check syntax and find problems
+❯ To check syntax, find problems, and enforce code style
+
+
+✔ How would you like to use ESLint? · style
+? What type of modules does your project use? …
+❯ JavaScript modules (import/export)
+  CommonJS (require/exports)
+  None of these
+
+
+✔ What type of modules does your project use? · esm
+? Which framework does your project use? …
+❯ React
+  Vue.js
+  None of these
+
+
+✔ Which framework does your project use? · react
+? Does your project use TypeScript? …
+❯ No
+  Yes
+
+
+? Does your project use TypeScript? …
+  No
+❯ Yes
+
+
+✔ Does your project use TypeScript? · typescript
+? Where does your code run? …  (Press <space> to select, <a> to toggle all, <i> to invert selection)
+✔ Browser
+✔ Node
+
+
+✔ Where does your code run? · browser
+? Which style guide do you want to follow? …
+❯ Standard: https://github.com/standard/eslint-config-standard-with-typescript
+  XO: https://github.com/xojs/eslint-config-xo-typescript
+
+
+✔ Which style guide do you want to follow? · standard
+The config that you've selected requires the following dependencies:
+
+eslint, globals, eslint-config-standard-with-typescript, @typescript-eslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-import@^2.25.2, eslint-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js
+? Would you like to install them now? › No / Yes
+
+
+? Would you like to install them now? › No / Yes
+
+
+✔ Would you like to install them now? · No / Yes
+? Which package manager do you want to use? …
+❯ npm
+  yarn
+  pnpm
+  bun
+
+
+✔ Which package manager do you want to use? · npm
+☕️Installing...
+npm WARN idealTree Removing dependencies.typescript in favor of devDependencies.typescript
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+
+
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE could not resolve
+npm ERR!
+npm ERR! While resolving: ts-react@0.1.0
+npm ERR! Found: @typescript-eslint/eslint-plugin@5.62.0
+npm ERR! node_modules/@typescript-eslint/eslint-plugin
+npm ERR!   @typescript-eslint/eslint-plugin@"^5.5.0" from eslint-config-react-app@7.0.1
+npm ERR!   node_modules/eslint-config-react-app
+npm ERR!     eslint-config-react-app@"^7.0.1" from react-scripts@5.0.1
+npm ERR!     node_modules/react-scripts
+npm ERR!       react-scripts@"5.0.1" from the root project
+npm ERR!   peerOptional @typescript-eslint/eslint-plugin@"^4.0.0 || ^5.0.0" from eslint-plugin-jest@25.7.0
+npm ERR!   node_modules/eslint-plugin-jest
+npm ERR!     eslint-plugin-jest@"^25.3.0" from eslint-config-react-app@7.0.1
+npm ERR!     node_modules/eslint-config-react-app
+npm ERR!       eslint-config-react-app@"^7.0.1" from react-scripts@5.0.1
+npm ERR!       node_modules/react-scripts
+npm ERR!         react-scripts@"5.0.1" from the root project
+npm ERR!   1 more (the root project)
+npm ERR!
+npm ERR! Could not resolve dependency:
+npm ERR! dev @typescript-eslint/eslint-plugin@"^6.4.0" from the root project
+npm ERR!
+npm ERR! Conflicting peer dependency: @typescript-eslint/parser@6.21.0
+npm ERR! node_modules/@typescript-eslint/parser
+npm ERR!   peer @typescript-eslint/parser@"^6.0.0 || ^6.0.0-alpha" from @typescript-eslint/eslint-plugin@6.21.0
+npm ERR!   node_modules/@typescript-eslint/eslint-plugin
+npm ERR!     dev @typescript-eslint/eslint-plugin@"^6.4.0" from the root project
+npm ERR!
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR!
+npm ERR!
+npm ERR! For a full report see:
+npm ERR! /Users/br388313/.npm/_logs/2024-04-25T13_48_25_372Z-eresolve-report.txt
+
+npm ERR! A complete log of this run can be found in: /Users/br388313/.npm/_logs/2024-04-25T13_48_25_372Z-debug-0.log
+A config file was generated, but the config file itself may not follow your linting rules.
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ ls -al
+total 1504
+drwxr-xr-x   15 br388313  staff     480 25 Apr 14:44 .
+drwxr-xr-x   41 br388313  staff    1312 25 Apr 14:21 ..
+-rw-r--r--    1 br388313  staff     310 25 Apr 14:22 .gitignore
+-rw-r--r--    1 br388313  staff       8 25 Apr 14:26 .nvmrc
+-rw-r--r--    1 br388313  staff    2117 25 Apr 14:22 README.md
+drwxr-xr-x   10 br388313  staff     320 25 Apr 14:35 build
+-rw-r--r--    1 br388313  staff     734 25 Apr 14:48 eslint.config.mjs
+drwxr-xr-x  873 br388313  staff   27936 25 Apr 14:33 node_modules
+-rw-r--r--    1 br388313  staff    1484 25 Apr 14:29 npx
+-rw-r--r--    1 br388313  staff  709727 25 Apr 14:35 package-lock.json
+-rw-r--r--    1 br388313  staff    1065 25 Apr 14:40 package.json
+drwxr-xr-x    8 br388313  staff     256 25 Apr 14:22 public
+-rw-r--r--    1 br388313  staff   27497 25 Apr 14:48 setup.log
+drwxr-xr-x   11 br388313  staff     352 25 Apr 14:23 src
+-rw-r--r--    1 br388313  staff     535 25 Apr 14:23 tsconfig.json
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ less eslint.config.mjs
+s
+=
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+
+import path from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import pluginJs from "@eslint/js";
+
+// mimic CommonJS variables -- not needed if using CommonJS
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended});
+
+export default [
+  {languageOptions: { globals: globals.browser }},
+  ...compat.extends("standard-with-typescript"),
+  ...tseslint.configs.recommended,
+  pluginReactConfig,
+];
+eslint.config.mjs (END)
+
+>
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   setup.log
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ less ../react-tools-ts
+s
+
+
+
+which eslint
+/Users/br388313/.nvm/versions/node/v21.6.1/bin/eslint
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ ./node_modules/.bin/e 
+slint
+
+Oops! Something went wrong! :(
+
+ESLint: 8.57.0
+
+Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react/eslint.config.mjs
+    at packageResolve (node:internal/modules/esm/resolve:844:9)
+    at moduleResolve (node:internal/modules/esm/resolve:901:20)
+    at defaultResolve (node:internal/modules/esm/resolve:1131:11)
+    at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:390:12)
+    at ModuleLoader.resolve (node:internal/modules/esm/loader:359:25)
+    at ModuleLoader.getModuleJob (node:internal/modules/esm/loader:234:38)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/module_job:85:39)
+    at link (node:internal/modules/esm/module_job:84:36)
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ less eslint.config.mjs
+s
+=
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+
+import path from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import pluginJs from "@eslint/js";
+
+// mimic CommonJS variables -- not needed if using CommonJS
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended});
+
+export default [
+  {languageOptions: { globals: globals.browser }},
+  ...compat.extends("standard-with-typescript"),
+  ...tseslint.configs.recommended,
+  pluginReactConfig,
+];
+eslint.config.mjs (END)
+
+>
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ ggr require
+=
+package-lock.json:  "requires": true,
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:        "requires-port": "^1.0.0"
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:    "node_modules/require-directory": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz",
+package-lock.json:    "node_modules/require-from-string": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/require-from-string/-/require-from-string-2.0.2.tgz",
+package-lock.json:    "node_modules/requires-port": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz",
+package-lock.json:        "requires-port": "^1.0.0"
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:        "require-from-string": "^2.0.2",
+package-lock.json:        "require-directory": "^2.1.1",
+setup.log:  CommonJS (require/exports)
+setup.log:The config that you've selected requires the following dependencies:
+setup.log:  CommonJS (require/exports)
+setup.log:The config that you've selected requires the following dependencies:
+
+
+>
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ ggr import
+=
+package-lock.json:    "node_modules/@babel/helper-module-imports": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/helper-module-imports/-/helper-module-imports-7.24.3.tgz",
+package-lock.json:        "@babel/helper-module-imports": "^7.22.15",
+package-lock.json:    "node_modules/@babel/plugin-syntax-dynamic-import": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/plugin-syntax-dynamic-import/-/plugin-syntax-dynamic-import-7.8.3.tgz",
+package-lock.json:    "node_modules/@babel/plugin-syntax-import-assertions": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/plugin-syntax-import-assertions/-/plugin-syntax-import-assertions-7.24.1.tgz",
+package-lock.json:    "node_modules/@babel/plugin-syntax-import-attributes": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/plugin-syntax-import-attributes/-/plugin-syntax-import-attributes-7.24.1.tgz",
+package-lock.json:    "node_modules/@babel/plugin-syntax-import-meta": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/plugin-syntax-import-meta/-/plugin-syntax-import-meta-7.10.4.tgz",
+package-lock.json:        "@babel/helper-module-imports": "^7.24.1",
+package-lock.json:    "node_modules/@babel/plugin-transform-dynamic-import": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@babel/plugin-transform-dynamic-import/-/plugin-transform-dynamic-import-7.24.1.tgz",
+package-lock.json:        "@babel/plugin-syntax-dynamic-import": "^7.8.3"
+package-lock.json:        "@babel/helper-module-imports": "^7.22.15",
+package-lock.json:        "@babel/helper-module-imports": "^7.24.3",
+package-lock.json:        "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+package-lock.json:        "@babel/plugin-syntax-import-assertions": "^7.24.1",
+package-lock.json:        "@babel/plugin-syntax-import-attributes": "^7.24.1",
+package-lock.json:        "@babel/plugin-syntax-import-meta": "^7.10.4",
+package-lock.json:        "@babel/plugin-transform-dynamic-import": "^7.24.1",
+package-lock.json:        "import-fresh": "^3.2.1",
+package-lock.json:    "node_modules/@humanwhocodes/module-importer": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/@humanwhocodes/module-importer/-/module-importer-1.0.1.tgz",
+package-lock.json:        "@babel/helper-module-imports": "^7.10.4",
+package-lock.json:    "node_modules/acorn-import-assertions": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/acorn-import-assertions/-/acorn-import-assertions-1.9.0.tgz",
+package-lock.json:    "node_modules/babel-plugin-named-asset-import": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/babel-plugin-named-asset-import/-/babel-plugin-named-asset-import-0.3.8.tgz",
+package-lock.json:        "@babel/plugin-syntax-import-meta": "^7.8.3",
+:
+
+package-lock.json:        "import-fresh": "^3.2.1",
+package-lock.json:        "postcss-modules-extract-imports": "^3.1.0",
+package-lock.json:        "@humanwhocodes/module-importer": "^1.0.1",
+package-lock.json:        "eslint-plugin-import": "^2.25.3",
+package-lock.json:    "node_modules/eslint-import-resolver-node": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.9.tgz",
+package-lock.json:    "node_modules/eslint-import-resolver-node/node_modules/debug": {
+package-lock.json:    "node_modules/eslint-plugin-import": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/eslint-plugin-import/-/eslint-plugin-import-2.29.1.tgz",
+package-lock.json:        "eslint-import-resolver-node": "^0.3.9",
+package-lock.json:    "node_modules/eslint-plugin-import/node_modules/debug": {
+package-lock.json:    "node_modules/eslint-plugin-import/node_modules/doctrine": {
+package-lock.json:    "node_modules/eslint-plugin-import/node_modules/semver": {
+package-lock.json:        "import-fresh": "^3.1.0",
+package-lock.json:    "node_modules/import-fresh": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/import-fresh/-/import-fresh-3.3.0.tgz",
+package-lock.json:    "node_modules/import-fresh/node_modules/resolve-from": {
+package-lock.json:    "node_modules/import-local": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/import-local/-/import-local-3.1.0.tgz",
+package-lock.json:        "import-local-fixture": "fixtures/cli.js"
+package-lock.json:        "import-local": "^3.0.2",
+package-lock.json:        "import-local": "^3.0.2",
+package-lock.json:    "node_modules/postcss-import": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/postcss-import/-/postcss-import-15.1.0.tgz",
+package-lock.json:    "node_modules/postcss-modules-extract-imports": {
+package-lock.json:      "resolved": "https://registry.npmjs.org/postcss-modules-extract-imports/-/postcss-modules-extract-imports-3.1.0.tgz",
+package-lock.json:        "babel-plugin-named-asset-import": "^0.3.8",
+package-lock.json:        "postcss-import": "^15.1.0",
+package-lock.json:        "acorn-import-assertions": "^1.9.0",
+setup.log:One of your dependencies, babel-preset-react-app, is importing the
+setup.log:❯ JavaScript modules (import/export)
+:
+
+setup.log:eslint, globals, eslint-config-standard-with-typescript, @typescript-eslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-import@^2.25.2, eslint-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js
+setup.log:❯ JavaScript modules (import/export)
+setup.log:eslint, globals, eslint-config-standard-with-typescript, @typescript-eslint/eslint-plugin@^6.4.0, eslint@^8.0.1, eslint-plugin-import@^2.25.2, eslint-plugin-n@^15.0.0 || ^16.0.0 , eslint-plugin-promise@^6.0.0, typescript@*, typescript-eslint, eslint-plugin-react, @eslint/eslintrc, @eslint/js
+setup.log:^Mimport globals from "globals";
+setup.log:import tseslint from "typescript-eslint";
+setup.log:import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+setup.log:import path from "path";
+setup.log:import { fileURLToPath } from "url";
+setup.log:import { FlatCompat } from "@eslint/eslintrc";
+setup.log:import pluginJs from "@eslint/js";
+setup.log:const __filename = fileURLToPath(import.meta.url);
+setup.log:Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'typescript-eslint' imported from /Users/br388313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react/eslint.config.mjs
+setup.log:^Mimport globals from "globals";
+setup.log:import tseslint from "typescript-eslint";
+setup.log:import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+setup.log:import path from "path";
+setup.log:import { fileURLToPath } from "url";
+setup.log:import { FlatCompat } from "@eslint/eslintrc";
+setup.log:import pluginJs from "@eslint/js";
+setup.log:const __filename = fileURLToPath(import.meta.url);
+src/App.test.tsx:import React from 'react';
+src/App.test.tsx:import { render, screen } from '@testing-library/react';
+src/App.test.tsx:import App from './App';
+src/App.tsx:import React from 'react';
+src/App.tsx:import logo from './logo.svg';
+src/App.tsx:import './App.css';
+src/index.tsx:import React from 'react';
+src/index.tsx:import ReactDOM from 'react-dom/client';
+src/index.tsx:import './index.css';
+src/index.tsx:import App from './App';
+:
+
+src/index.tsx:import reportWebVitals from './reportWebVitals';
+src/reportWebVitals.ts:import { ReportHandler } from 'web-vitals';
+src/reportWebVitals.ts:    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+src/setupTests.ts:import '@testing-library/jest-dom';
+(END)
+
+>
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+1)$ exit
+exit
+
+Script done on Thu Apr 25 14:50:35 2024
+Script started on Thu Apr 25 15:29:32 2024
+The operation couldn’t be completed. Unable to locate a Java Runtime.
+Please visit http://www.java.com for information on installing Java.
+
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ npm i eslint @typescr 
+ipt-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react --save-d 
+ev
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ vim xxx
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"xxx" 1L, 103B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ xxx                                                                           
+npm i eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint--
+plugin-react --save-dev¶
+
+
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+ <8313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line
+-- INSERT --
+
++ xxx 
+·
+¶
+
+
+--save-dev¶
+
+
+2
+prettier eslint-config-prettier eslint-plugin-prettier --save-dev¶
+
+
+1
+
+
+-- INSERT --
+·
+
+
+·
+
+
+ prettier eslint-config-prettier eslint-plugin-prettier --save-dev¶
+~                                                                              
+
+
+prettier eslint-config-prettier eslint-plugin-prettier --save-de
+:wq
+[?1006;1000l[>4;m"xxx" 1L, 158B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ cat xxx
+npm i eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react prettier eslint-config-prettier eslint-plugin-prettier --save-dev
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ prettier eslint-confi 
+g
+
+
+
+npm i eslint @typescr 
+ipt-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react prettier 
+ eslint-config-prettier eslint-plugin-prettier --save-dev
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠏ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠏ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠹ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠹ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠏ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠙ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠙ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠸ idealTree:ts-react: sill idealTree buildDeps
+
+
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE could not resolve
+npm ERR!
+npm ERR! While resolving: ts-react@0.1.0
+npm ERR! Found: @typescript-eslint/eslint-plugin@5.62.0
+npm ERR! node_modules/@typescript-eslint/eslint-plugin
+npm ERR!   @typescript-eslint/eslint-plugin@"^5.5.0" from eslint-config-react-app@7.0.1
+npm ERR!   node_modules/eslint-config-react-app
+npm ERR!     eslint-config-react-app@"^7.0.1" from react-scripts@5.0.1
+npm ERR!     node_modules/react-scripts
+npm ERR!       react-scripts@"5.0.1" from the root project
+npm ERR!   peerOptional @typescript-eslint/eslint-plugin@"^4.0.0 || ^5.0.0" from eslint-plugin-jest@25.7.0
+npm ERR!   node_modules/eslint-plugin-jest
+npm ERR!     eslint-plugin-jest@"^25.3.0" from eslint-config-react-app@7.0.1
+npm ERR!     node_modules/eslint-config-react-app
+npm ERR!       eslint-config-react-app@"^7.0.1" from react-scripts@5.0.1
+npm ERR!       node_modules/react-scripts
+npm ERR!         react-scripts@"5.0.1" from the root project
+npm ERR!   1 more (the root project)
+npm ERR!
+npm ERR! Could not resolve dependency:
+npm ERR! dev @typescript-eslint/eslint-plugin@"*" from the root project
+npm ERR!
+npm ERR! Conflicting peer dependency: @typescript-eslint/parser@7.7.1
+npm ERR! node_modules/@typescript-eslint/parser
+npm ERR!   peer @typescript-eslint/parser@"^7.0.0" from @typescript-eslint/eslint-plugin@7.7.1
+npm ERR!   node_modules/@typescript-eslint/eslint-plugin
+npm ERR!     dev @typescript-eslint/eslint-plugin@"*" from the root project
+npm ERR!
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR!
+npm ERR!
+npm ERR! For a full report see:
+npm ERR! /Users/br388313/.npm/_logs/2024-04-25T14_31_49_112Z-eresolve-report.txt
+
+npm ERR! A complete log of this run can be found in: /Users/br388313/.npm/_logs/2024-04-25T14_31_49_112Z-debug-0.log
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ npm i eslint @typescri
+ipt-eslint/parser @typescript-eslint/eslint-plugin eslint-plugin-react prettier 
+ eslint-config-prettier eslint-plugin-prettier --save-dev --legacy-peer-deps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠙ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠸ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠧ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠼ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠴ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠴ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠦ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠇ idealTree:ts-react: sill idealTree buildDeps
+(⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂⠂) ⠋ idealTree:ts-react: sill idealTree buildDeps
+(##################) ⠙ reify:eslint: http fetch GET 200 https://registry.npmjs
+(##################) ⠦ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠧ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠇ reify:@typescript-eslint/eslint-plugin: http fetch GET
+(##################) ⠏ reify:@typescript-eslint/eslint-plugin: http fetch GET
+added 53 packages, removed 12 packages, changed 12 packages, and audited 1581 packages in 6s
+
+281 packages are looking for funding
+  run `npm fund` for details
+
+8 vulnerabilities (2 moderate, 6 high)
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ vim .eslintrc.js
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+".eslintrc.js" [New]
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ .eslintrc.js                                                                  
+¶
+
+
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+ <8313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 0
+
+-- INSERT --
+[?4m
++ .eslintrc.js
+module.exports =  {¶
+  parser:  '@typescript-eslint/parser',  // Speci¶
+
+
+2
+fies the ESLint parser¶
+  extends:  [¶
+
+
+    'plugin:react/recommended'¶
+
+
+,  // Uses the recommended rules from @eslint-    
+plugin-react¶
+
+
+    'p¶
+
+
+lugin:@typescript-eslint/recommended',  // Uses the recommended r¶
+ules     
+from @typescript-eslint/eslint-plugin¶
+
+
+  ],¶
+
+
+  parserOptions:¶
+
+
+  {¶
+  ecmaVersion:  2018,  // Allows for the parsing of modern E¶
+
+
+CMAScript features¶
+  sourceType:  'module',  // Allows for the·
+¶
+
+ use of imports¶
+  ecmaFeatures:  {¶
+
+
+    jsx:  true,  // Allows fo¶
+
+
+r the parsing of JSX¶
+  },¶
+
+
+  },¶
+
+
+  rules:  {¶
+
+
+    // Place to spec¶
+
+
+ify ESLint rules. Can be used to overwrite rules specified  
+from¶
+
+
+ the extended configs¶
+    // e.g. "@typescript-eslint/explicit-¶
+
+
+function-return-type": "off",¶
+  },¶
+
+
+  settings:  {¶
+
+
+    react:  {¶
+      version:  'detect',  // Tells eslint-plugin-react to aut¶
+
+
+omatically        
+detect the version of React to use¶
+
+
+    },¶
+
+
+  },¶
+
+
+};¶
+
+
+313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 23
+
+
+:wq
+[?1006;1000l[>4;m".eslintrc.js" [New] 23L, 896B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+2)$ ga .eslintrc.js
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim .prettierrc.js
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+".prettierrc.js" [New]
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ .prettierrc.js                                                                
+¶
+
+
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+ <8313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 0
+
+-- INSERT --
+[?4m
++ .prettierrc.js
+module.exports =  {¶
+  semi:  true,¶
+
+
+  trailingComma:  'all',¶
+
+
+  sin¶
+
+
+4
+gleQuote:  true,¶
+  printWidth:  120,¶
+
+
+  tabWidth:  4,¶
+
+
+};¶
+
+
+7
+
+
+:wq
+[?1006;1000l[>4;m".prettierrc.js" [New] 7L, 121B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ga .prettierrc.js
+v
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim .eslintrc.js
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+".eslintrc.js" 23L, 896B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ .eslintrc.js                                                                  
+module.exports =  {¶
+
+
+  parser:  '@typescript-eslint/parser',  // Specifies the ESLint parser¶
+
+
+extends:  [¶
+'plugin:react/recommended',  // Uses the recommended rules from @eslint-    
+plugin-react¶
+'plugin:@typescript-eslint/recommended',  // Uses the recommended rules     
+from @typescript-eslint/eslint-plugin¶
+],¶
+parserOptions:  {¶
+ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features¶
+sourceType:  'module',  // Allows for the use of imports¶
+ecmaFeatures:  {¶
+jsx:  true,  // Allows for the parsing of JSX¶
+},¶
+},¶
+rules:  {¶
+// Place to specify ESLint rules. Can be used to overwrite rules specified  
+from the extended configs¶
+// e.g. "@typescript-eslint/explicit-function-return-type": "off",¶
+},¶
+settings:  {¶
+react:  {¶
+version:  'detect',  // Tells eslint-plugin-react to automatically        
+detect the version of React to use¶
+},¶
+},¶
+};¶
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+~                                                                              
+ <313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 23
+
+2
+[?4m
+1
+
+0
+
+
+19
+
+8
+
+7
+
+6
+
+5
+
+
+4
+
+3
+
+2
+
+1
+
+0
+
+8313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 9
+
+8
+
+7
+
+6
+
+5
+
+
+-- INSERT --
++ .eslintrc.js 
+
+[L
+
+»·
+·
+·
+·
+·
+¶
+6
+
+
+-- INSERT -¶
+
+
+¶
+
+
+·
+¶
+·
+¶
+·
+¶
+·
+¶
+
+      'prettier/@typescript-eslint',  // Uses eslint-config-pr¶
+
+
+[L
+
+ettier to         
+disable ESLint rules from @typescript-eslint/esli¶
+
+
+-- INSERT (paste) --
+
+
+[2L
+
+nt-plugin that would conflict  
+with prettier¶
++   'plugin:prett¶
+
+
+-- INSERT (paste) --
+ier/recommended',  // Enables eslint-plugin-prettier and disp¶
+
+
+[L
+
+      
+displays prettier errors as ESLint errors. Make sure this is alway¶
+
+
+-- INSERT (paste) --
+
+
+[2L
+
+s the last    
+configuration in the extends array.¶
+¶
+8
+
+
+-- INSERT --
+
+
+7
+
+
+6
+
+
+     'prettier/@typescript-eslint',  // Uses eslint-config-prettier to disable  
+ESLint rules from @typescript-eslint/eslint-plugin that would conflict with     
+prettier¶
+
+
+    'prettier/@typescript-eslint',  // Uses eslint-config-prettier to disable   
+E
+  
+p
+
+
+7
+   'plugin:prettier/recommended',  // Enables eslint-plugin-prettier and        
+d
+  
+c
+
+-- INSERT --
+    'plugin:prettier/recommended',  
+/ Enables eslint-plugin-prettier and       
+d
+  
+c
+
+
+  
+d
+  
+c
+
+6
+
+
+5
+
+6
+
+
+7
+
+
+8
+
+9
+
+:wq
+[?1006;1000l[>4;m".eslintrc.js" 26L, 1247B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   .eslintrc.js
+	new file:   .prettierrc.js
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .eslintrc.js
+	modified:   package-lock.json
+	modified:   package.json
+	modified:   setup.log
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ which prettier
+./node_modules/.bin/prettier
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ im package.json
+bash: im: command not found
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim package.json
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"package.json" 53L, 1326B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ package.json                                                                  
+{¶
+
+
+  "name": "ts-react",¶
+
+
+"version": "0.1.0",¶
+"private": true,¶
+"dependencies": {¶
+"@testing-library/jest-dom": "^5.17.0",¶
+"@testing-library/react": "^13.4.0",¶
+"@testing-library/user-event": "^13.5.0",¶
+"@types/jest": "^27.5.2",¶
+"@types/node": "^16.18.96",¶
+"@types/react": "^18.2.79",¶
+"@types/react-dom": "^18.2.25",¶
+"react": "^18.2.0",¶
+"react-dom": "^18.2.0",¶
+"react-scripts": "5.0.1",¶
+"typescript": "^4.9.5",¶
+"web-vitals": "^2.1.4"¶
+},¶
+"scripts": {¶
+"start": "react-scripts start",¶
+"build": "react-scripts build",¶
+"test": "react-scripts test",¶
+"eject": "react-scripts eject"¶
+},¶
+"eslintConfig": {¶
+"extends": [¶
+"react-app",¶
+"react-app/jest"¶
+]¶
+},¶
+"browserslist": {¶
+"production": [¶
+">0.2%",¶
+"not dead",¶
+"not op_mini all"¶
+],¶
+"development": [¶
+ <313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 18
+
+9
+[?4m
+20
+
+1
+
+2
+
+3
+
+2
+
+-- INSERT --
++ package.json 
+
+[L
+
+»·
+·
+·
+¶
+3
+
+
+-- INSERT --
+
+¶
+
+
+·
+¶
+·
+¶
+·
+¶
+·
+¶
+
+    "¶
+    
+"¶
+}f"¶
+o"¶
+r"¶
+m"¶
+a"¶
+t"¶
+"
+    "format":¶
+    
+·
+¶ @¶
+@¶¶
+·
+¶
+
+ "¶
+    
+"¶
+,¶
+   p",¶
+r",¶
+e",¶
+t",¶
+t",¶
+i",¶
+e",¶
+r",¶
+ ",¶
+-",¶
+-",¶
+w",¶
+r",¶
+i",¶
+t",¶
+e",¶
+ ",¶
+
+  }
+
+:wq
+[?1006;1000l[>4;m"package.json" 54L, 1361B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ls
+README.md		npx			setup.log
+build			package-lock.json	src
+eslint.config.mjs	package.json		tsconfig.json
+node_modules		public			xxx
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ls src/
+App.css			index.css		react-app-env.d.ts
+App.test.tsx		index.tsx		reportWebVitals.ts
+App.tsx			logo.svg		setupTests.ts
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ls
+README.md		npx			setup.log
+build			package-lock.json	src
+eslint.config.mjs	package.json		tsconfig.json
+node_modules		public			xxx
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim package.json
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"package.json" 54L, 1361B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ package.json                                                                  
+{¶
+
+
+  "name": "ts-react",¶
+
+
+"version": "0.1.0",¶
+"private": true,¶
+"dependencies": {¶
+"@testing-library/jest-dom": "^5.17.0",¶
+"@testing-library/react": "^13.4.0",¶
+"@testing-library/user-event": "^13.5.0",¶
+"@types/jest": "^27.5.2",¶
+"@types/node": "^16.18.96",¶
+"@types/react": "^18.2.79",¶
+"@types/react-dom": "^18.2.25",¶
+"react": "^18.2.0",¶
+"react-dom": "^18.2.0",¶
+"react-scripts": "5.0.1",¶
+"typescript": "^4.9.5",¶
+"web-vitals": "^2.1.4"¶
+},¶
+"scripts": {¶
+"start": "react-scripts start",¶
+"build": "react-scripts build",¶
+"test": "react-scripts test",¶
+"format": "prettier --write ",¶
+"eject": "react-scripts eject"¶
+},¶
+"eslintConfig": {¶
+"extends": [¶
+"react-app",¶
+"react-app/jest"¶
+]¶
+},¶
+"browserslist": {¶
+"production": [¶
+">0.2%",¶
+"not dead",¶
+"not op_mini all"¶
+],¶
+ <313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 23
+
+-- INSERT --
+[?4m
++ package.json 
+ ",¶
+s ",¶
+r ",¶
+c ",¶
+/ ",¶
+* ",¶
+* ",¶
+/ ",¶
+* ",¶
+. ",¶
+c ",¶
+s ",¶
+s ",¶
+
+ ",¶
+s ",¶
+
+
+2
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+[
+]
+30
+
+
+[
+]
+"development": [¶
+1
+
+
+"last 1 chrome version",¶
+2
+
+
+"last 1 firefox version",¶
+3
+
+
+"last 1 safari version"¶
+4
+
+
+]¶
+5
+
+
+},¶
+6
+
+
+[
+]
+"devDependencies": {¶
+7
+
+
+[
+]
+"@babel/plugin-proposal-private-property-in-object": "^7.21.11",¶
+8
+
+
+"@typescript-eslint/eslint-plugin": "^7.7.1",¶
+9
+
+
+"@typescript-eslint/parser": "^7.7.1",¶
+40
+
+
+"eslint": "^9.1.1",¶
+1
+
+
+[
+]
+"eslint-config-prettier": "^9.1.0",¶
+2
+
+
+[
+]
+"eslint-plugin-prettier": "^5.1.3",¶
+3
+
+
+"eslint-plugin-react": "^7.34.1",¶
+4
+
+
+"prettier": "^3.2.5"¶
+5
+
+
+}¶
+6
+
+
+}¶
+7
+
+8
+
+9
+
+50
+
+1
+
+2
+
+{
+}
+3
+
+{
+}
+4
+
+{
+}
+3
+
+{
+}
+2
+
+1
+
+0
+
+49
+
+8
+
+7
+
+6
+
+5
+
+4
+
+3
+
+[
+]
+2
+
+[
+]
+1
+
+0
+
+39
+
+8
+
+[
+]
+7
+
+[
+]
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+[
+]
+0
+
+[
+]
+29
+
+8
+
+7
+
+6
+
+5
+
+
+[L
+
+"web-vitals": "^2.1.4"¶
+4
+
+
+[L
+
+"typescript": "^4.9.5",¶
+3
+
+
+[L
+
+"react-scripts": "5.0.1",¶
+2
+
+
+[L
+
+"react-dom": "^18.2.0",¶
+1
+
+
+[L
+
+"react": "^18.2.0",¶
+0
+
+
+[L
+
+"@types/react-dom": "^18.2.25",¶
+19
+
+
+[L
+
+"@types/react": "^18.2.79",¶
+8
+
+
+[L
+
+"@types/node": "^16.18.96",¶
+7
+
+
+[L
+
+"@types/jest": "^27.5.2",¶
+6
+
+
+[L
+
+"@testing-library/user-event": "^13.5.0",¶
+5
+
+
+[L
+
+"@testing-library/react": "^13.4.0",¶
+4
+
+
+[L
+
+"@testing-library/jest-dom": "^5.17.0",¶
+3
+
+
+[L
+
+"dependencies": {¶
+2
+
+
+[L
+
+"private": true,¶
+1
+
+
+[L
+
+"version": "0.1.0",¶
+0
+
+
+[L
+
+"name": "ts-react",¶
+8313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 9
+
+
+[L
+
+{¶
+8
+
+7
+
+6
+
+5
+
+4
+
+3
+
+2
+
+1
+
+:wq
+[?1006;1000l[>4;m"package.json" 54L, 1384B written
+[23;2t[23;1t
+>[>4;m^[[A
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim package.json
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"package.json" 54L, 1384B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ package.json                                                                  
+{¶
+
+
+  "name": "ts-react",¶
+
+
+"version": "0.1.0",¶
+"private": true,¶
+"dependencies": {¶
+"@testing-library/jest-dom": "^5.17.0",¶
+"@testing-library/react": "^13.4.0",¶
+"@testing-library/user-event": "^13.5.0",¶
+"@types/jest": "^27.5.2",¶
+"@types/node": "^16.18.96",¶
+"@types/react": "^18.2.79",¶
+"@types/react-dom": "^18.2.25",¶
+"react": "^18.2.0",¶
+"react-dom": "^18.2.0",¶
+"react-scripts": "5.0.1",¶
+"typescript": "^4.9.5",¶
+"web-vitals": "^2.1.4"¶
+},¶
+"scripts": {¶
+"start": "react-scripts start",¶
+"build": "react-scripts build",¶
+"test": "react-scripts test",¶
+"format": "prettier --write src/**/*.css src/**/*. ",¶
+"eject": "react-scripts eject"¶
+},¶
+"eslintConfig": {¶
+"extends": [¶
+"react-app",¶
+"react-app/jest"¶
+]¶
+},¶
+"browserslist": {¶
+"production": [¶
+">0.2%",¶
+"not dead",¶
+"not op_mini all"¶
+],¶
+ <8313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 1
+
+2
+[?4m
+3
+
+4
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 10
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+20
+
+1
+
+2
+
+3
+
+4
+    
+3
+"
+
+
+": "
+
+
++ package.json 
+",¶
+
+
+-- INSERT --
+{",¶
+{
+
+  }
+t",¶
+{
+
+  }
+s",¶
+t",¶",¶
+
+
+,",¶
+t",¶
+s",¶
+x",¶
+}",¶
+{
+} ",¶
+{ts,tsx} b",¶
+u",¶
+i",¶
+l",¶",¶
+
+",¶
+
+",¶
+
+",¶
+
+
+2
+
+3
+
+
+:wq
+[?1006;1000l[>4;m"package.json" 54L, 1392B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ls -al
+total 1912
+drwxr-xr-x   18 br388313  staff     576 25 Apr 15:35 .
+drwxr-xr-x   41 br388313  staff    1312 25 Apr 14:21 ..
+-rw-r--r--    1 br388313  staff    1247 25 Apr 15:37 .eslintrc.js
+-rw-r--r--    1 br388313  staff     310 25 Apr 14:22 .gitignore
+-rw-r--r--    1 br388313  staff       8 25 Apr 14:26 .nvmrc
+-rw-r--r--    1 br388313  staff     121 25 Apr 15:35 .prettierrc.js
+-rw-r--r--    1 br388313  staff    2117 25 Apr 14:22 README.md
+drwxr-xr-x   10 br388313  staff     320 25 Apr 15:24 build
+-rw-r--r--    1 br388313  staff     734 25 Apr 14:48 eslint.config.mjs
+drwxr-xr-x  881 br388313  staff   28192 25 Apr 15:34 node_modules
+-rw-r--r--    1 br388313  staff    1484 25 Apr 14:29 npx
+-rw-r--r--    1 br388313  staff  736845 25 Apr 15:34 package-lock.json
+-rw-r--r--    1 br388313  staff    1392 25 Apr 15:42 package.json
+drwxr-xr-x    8 br388313  staff     256 25 Apr 14:22 public
+-rw-r--r--    1 br388313  staff  140619 25 Apr 15:42 setup.log
+drwxr-xr-x   11 br388313  staff     352 25 Apr 14:23 src
+-rw-r--r--    1 br388313  staff    1861 25 Apr 15:24 tsconfig.json
+-rw-r--r--    1 br388313  staff     158 25 Apr 15:31 xxx
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ less eslint.config.mjs
+s
+=
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
+
+import path from "path";
+import { fileURLToPath } from "url";
+import { FlatCompat } from "@eslint/eslintrc";
+import pluginJs from "@eslint/js";
+
+// mimic CommonJS variables -- not needed if using CommonJS
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended});
+
+export default [
+  {languageOptions: { globals: globals.browser }},
+  ...compat.extends("standard-with-typescript"),
+  ...tseslint.configs.recommended,
+  pluginReactConfig,
+];
+eslint.config.mjs (END)
+
+>
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-reactbr388313@C02FJ2JKMD6M:~/bin/template/typescript/ts-react (master *+$%|u+2)$ less eslint.config.mjs
+s 
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ 
+s -al
+
+
+
+vim package.json
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"package.json" 54L, 1392B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ package.json                                                                  
+{¶
+
+
+  "name": "ts-react",¶
+
+
+"version": "0.1.0",¶
+"private": true,¶
+"dependencies": {¶
+"@testing-library/jest-dom": "^5.17.0",¶
+"@testing-library/react": "^13.4.0",¶
+"@testing-library/user-event": "^13.5.0",¶
+"@types/jest": "^27.5.2",¶
+"@types/node": "^16.18.96",¶
+"@types/react": "^18.2.79",¶
+"@types/react-dom": "^18.2.25",¶
+"react": "^18.2.0",¶
+"react-dom": "^18.2.0",¶
+"react-scripts": "5.0.1",¶
+"typescript": "^4.9.5",¶
+"web-vitals": "^2.1.4"¶
+},¶
+"scripts": {¶
+"start": "react-scripts start",¶
+"build": "react-scripts build",¶
+"test": "react-scripts test",¶
+"format": "prettier --write src/**/*.css src/**/*.{ts,tsx} ",¶
+"eject": "react-scripts eject"¶
+},¶
+"eslintConfig": {¶
+"extends": [¶
+"react-app",¶
+"react-app/jest"¶
+]¶
+},¶
+"browserslist": {¶
+"production": [¶
+">0.2%",¶
+"not dead",¶
+"not op_mini all"¶
+],¶
+ <313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 23
+
+[?4m
+-- INSERT --
+
++ package.json 
+.",¶
+/",¶
+*",¶
+?",¶
+.",¶",¶
+
+",¶
+
+
+.",¶
+j",¶
+s",¶
+
+
+:wq
+[?1006;1000l[>4;m"package.json" 54L, 1398B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim package.json
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"package.json" 54L, 1398B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ package.json                                                                  
+{¶
+
+
+  "name": "ts-react",¶
+
+
+"version": "0.1.0",¶
+"private": true,¶
+"dependencies": {¶
+"@testing-library/jest-dom": "^5.17.0",¶
+"@testing-library/react": "^13.4.0",¶
+"@testing-library/user-event": "^13.5.0",¶
+"@types/jest": "^27.5.2",¶
+"@types/node": "^16.18.96",¶
+"@types/react": "^18.2.79",¶
+"@types/react-dom": "^18.2.25",¶
+"react": "^18.2.0",¶
+"react-dom": "^18.2.0",¶
+"react-scripts": "5.0.1",¶
+"typescript": "^4.9.5",¶
+"web-vitals": "^2.1.4"¶
+},¶
+"scripts": {¶
+"start": "react-scripts start",¶
+"build": "react-scripts build",¶
+"test": "react-scripts test",¶
+"format": "prettier --write src/**/*.css src/**/*.{ts,tsx} ./*.js",¶
+"eject": "react-scripts eject"¶
+},¶
+"eslintConfig": {¶
+"extends": [¶
+"react-app",¶
+"react-app/jest"¶
+]¶
+},¶
+"browserslist": {¶
+"production": [¶
+">0.2%",¶
+"not dead",¶
+"not op_mini all"¶
+],¶
+ <313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 23
+
+2
+[?4m
+3
+
+"
+4
+ 
+5
+
+6
+
+7
+
+8
+
+
+:wq
+[?1006;1000l[>4;m"package.json" 54L, 1398B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ls -al
+total 1912
+drwxr-xr-x   18 br388313  staff     576 25 Apr 15:35 .
+drwxr-xr-x   41 br388313  staff    1312 25 Apr 14:21 ..
+-rw-r--r--    1 br388313  staff    1247 25 Apr 15:37 .eslintrc.js
+-rw-r--r--    1 br388313  staff     310 25 Apr 14:22 .gitignore
+-rw-r--r--    1 br388313  staff       8 25 Apr 14:26 .nvmrc
+-rw-r--r--    1 br388313  staff     121 25 Apr 15:35 .prettierrc.js
+-rw-r--r--    1 br388313  staff    2117 25 Apr 14:22 README.md
+drwxr-xr-x   10 br388313  staff     320 25 Apr 15:24 build
+-rw-r--r--    1 br388313  staff     734 25 Apr 14:48 eslint.config.mjs
+drwxr-xr-x  881 br388313  staff   28192 25 Apr 15:34 node_modules
+-rw-r--r--    1 br388313  staff    1484 25 Apr 14:29 npx
+-rw-r--r--    1 br388313  staff  736845 25 Apr 15:34 package-lock.json
+-rw-r--r--    1 br388313  staff    1398 25 Apr 15:43 package.json
+drwxr-xr-x    8 br388313  staff     256 25 Apr 14:22 public
+-rw-r--r--    1 br388313  staff  155250 25 Apr 15:43 setup.log
+drwxr-xr-x   11 br388313  staff     352 25 Apr 14:23 src
+-rw-r--r--    1 br388313  staff    1861 25 Apr 15:24 tsconfig.json
+-rw-r--r--    1 br388313  staff     158 25 Apr 15:31 xxx
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ vim package.json
+[?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"package.json" 54L, 1398B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ package.json                                                                  
+{¶
+
+
+  "name": "ts-react",¶
+
+
+"version": "0.1.0",¶
+"private": true,¶
+"dependencies": {¶
+"@testing-library/jest-dom": "^5.17.0",¶
+"@testing-library/react": "^13.4.0",¶
+"@testing-library/user-event": "^13.5.0",¶
+"@types/jest": "^27.5.2",¶
+"@types/node": "^16.18.96",¶
+"@types/react": "^18.2.79",¶
+"@types/react-dom": "^18.2.25",¶
+"react": "^18.2.0",¶
+"react-dom": "^18.2.0",¶
+"react-scripts": "5.0.1",¶
+"typescript": "^4.9.5",¶
+"web-vitals": "^2.1.4"¶
+},¶
+"scripts": {¶
+"start": "react-scripts start",¶
+"build": "react-scripts build",¶
+"test": "react-scripts test",¶
+"format": "prettier --write src/**/*.css src/**/*.{ts,tsx} ./*.js",¶
+"eject": "react-scripts eject"¶
+},¶
+"eslintConfig": {¶
+"extends": [¶
+"react-app",¶
+"react-app/jest"¶
+]¶
+},¶
+"browserslist": {¶
+"production": [¶
+">0.2%",¶
+"not dead",¶
+"not op_mini all"¶
+],¶
+ <313/workspace/play/bsac-linux-cfg/bin/template/typescript/ts-react   Line: 28[?4m
+[
+]
+7
+[
+]
+6
+
+5
+
+4
+
+3
+
+
+{
+}
+{ts,tsx}{
+
+{ts,tsx} 
+-- INSERT --
+
++ package.json 
+t./*.js",¶
+s./*.js",¶
+c./*.js",¶
+o./*.js",¶
+n./*.js",¶
+f./*.js",¶
+i./*.js",¶
+
+
+[L
+
+g./*.js",,
+¶
+
+
+-- INSERT --
+
+./*.    
+js",¶
+j./*.   
+j
+s./*.  
+j
+o./*..        
+json./*.js",¶
+ ./*.js",¶
+
+
+2
+
+3
+
+:wq
+[?1006;1000l[>4;m"package.json" 54L, 1412B written
+[23;2t[23;1t
+>[>4;m
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   .eslintrc.js
+	new file:   .prettierrc.js
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   .eslintrc.js
+	modified:   package-lock.json
+	modified:   package.json
+	modified:   setup.log
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ga paackage*.json see 
+t
+
+
+
+ga .eslintrc.js
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ga package.json packag
+ge-lock.json
+gs
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   .eslintrc.js
+	new file:   .prettierrc.js
+	modified:   package-lock.json
+	modified:   package.json
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   setup.log
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *+$%|u+2)$ ga setup.log
+g
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master +$%|u+2)$ gc
+hint: Waiting for your editor to close the file... [?1006;1000h[>4;2m=
+[22;2t[22;1t
+
+
+"~/workspace/play/bsac-linux-cfg/.git/COMMIT_EDITMSG" 74L, 2417B
+▽
+  
+Pzz\[0%m
+           
+[>c]10;?]11;?
+ .g/COMMIT_EDITMSG                                                             
+¶
+
+
+# Please enter the commit message for your changes. Lines starting¶
+
+
+# with '#' will be ignored, and an empty message aborts the commit.¶
+#¶
+# On branch master¶
+# Your branch is ahead of 'origin/master' by 2 commits.¶
+#   (use "git push" to publish your local commits)¶
+#¶
+# Changes to be committed:¶
+#»·
+·
+·
+·
+·
+·
+new file:   .eslintrc.js¶
+#»·
+·
+·
+·
+·
+·
+new file:   .prettierrc.js¶
+#»·
+·
+·
+·
+·
+·
+modified:   package-lock.json¶
+#»·
+·
+·
+·
+·
+·
+modified:   package.json¶
+#»·
+·
+·
+·
+·
+·
+modified:   setup.log¶
+#¶
+# Untracked files:¶
+#»·
+·
+·
+·
+·
+·
+../../../backup-work-manual.sh.orig¶
+#»·
+·
+·
+·
+·
+·
+../../../backup-work.sh.orig¶
+#»·
+·
+·
+·
+·
+·
+../../../cfg/wipro-lloyds/my-git-dev-tools.tgz¶
+#»·
+·
+·
+·
+·
+·
+../../../cfg/wipro-lloyds/my-git-tools.pl.txt¶
+#»·
+·
+·
+·
+·
+·
+../../../cfg/wipro-lloyds/tx/¶
+#»·
+·
+·
+·
+·
+·
+../../../changes.lst¶
+#»·
+·
+·
+·
+·
+·
+../../../check-system.sh.orig¶
+#»·
+·
+·
+·
+·
+·
+../../../check.log¶
+#»·
+·
+·
+·
+·
+·
+../../../fetch.sh¶
+#»·
+·
+·
+·
+·
+·
+../../../fontslist.txt¶
+#»·
+·
+·
+·
+·
+·
+../../../found.lst¶
+#»·
+·
+·
+·
+·
+·
+../../../get-from-home.sh.orig¶
+#»·
+·
+·
+·
+·
+·
+../../../git-mv-dirs-spaces.sh¶
+#»·
+·
+·
+·
+·
+·
+../../../git-prompt.sh¶
+#»·
+·
+·
+·
+·
+·
+../../cfgrec/add-screen-reader-col.sh¶
+#»·
+·
+·
+·
+·
+·
+../../css/responsive-viewport.html¶
+#»·
+·
+·
+·
+·
+·
+../../genai/~$nai-vectordb.docx¶
+#»·
+·
+·
+·
+·
+·
+../../playwright/.eslintcache¶
+#»·
+·
+·
+·
+·
+·
+../../playwright/eslint.log¶
+#»·
+·
+·
+·
+·
+·
+../../playwright/prettier.lst¶
+#»·
+·
+·
+·
+·
+·
+../../playwright/scan.log¶
+ <COMMIT_EDITMSG   CWD: /Users/br388313/workspace/play/bsac-linux-cfg   Line: 3
+
+2
+[?4m
+1
+
+-- INSERT --
+
++ .g/COMMIT_EDITMSG
+w¶
+MIT_EDITMSG[+]
+i¶
+p¶
+·
+¶ I¶
+n¶
+s¶
+t¶
+a¶¶
+
+¶
+
+¶
+
+¶
+·
+¶
+
+ I¶
+n¶
+·
+¶ t¶
+y¶
+p¶
+e¶
+s¶
+c¶
+r¶
+i¶
+p¶
+t¶
+/¶
+t¶
+s¶
+-¶
+r¶
+e¶
+a¶
+c¶
+t¶
+·
+¶ i¶
+n¶
+s¶
+t¶
+a¶
+l¶
+l¶
+·
+¶ p¶
+r¶
+e¶
+t¶
+t¶
+i¶
+e¶
+r¶
+·
+¶ a¶
+n¶
+d¶
+·
+¶ e¶
+s¶
+l¶
+i¶
+n¶
+t¶
+·
+¶ c¶
+o¶
+n¶
+f¶
+i¶
+g¶
+s¶
+
+
+:wq
+[?1006;1000l[>4;m".git/COMMIT_EDITMSG" 74L, 2479B written
+[23;2t[23;1t
+>[>4;m
+
+[master ab96d2a6] wip In typescript/ts-react install prettier and eslint configs
+ 5 files changed, 1319 insertions(+), 277 deletions(-)
+ create mode 100644 bin/template/typescript/ts-react/.eslintrc.js
+ create mode 100644 bin/template/typescript/ts-react/.prettierrc.js
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+3)$ gsm
+On branch master
+Your branch is ahead of 'origin/master' by 3 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   setup.log
+
+
+br388313@C02FJ2JKMD6M: ~/bin/template/typescript/ts-react (master *$%|u+3)$ exit
+exit
+
+Script done on Thu Apr 25 15:45:55 2024
