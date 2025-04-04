@@ -1,5 +1,6 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
+# WINDEV tool useful on windows development machine
 
 isexe=${0//ls-cmds/is-exe}
 IS_WIN=`echo $OS | grep -i windows`
