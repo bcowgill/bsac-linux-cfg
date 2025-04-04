@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<!-- 
+    CSS Viewport Units
+    vw (viewport width)  1vw = 1% of viewport width
+    vh (viewport height) 1vh = 1% of viewport height
+    vmin (viewport min)  1vmin = smaller valule of 1vw or 1vh
+    vmax (viewport max)  1vmax = larger value of 1vw or 1vh
+
+    percentages
+    em - relative to font size of parent element so h1..h5 gets smaller and same with list items
+    rem - relative to font size of root element so it's not getting smaller
+-->
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <title>Flexbox Centering</title>
+        <style>
+            .container {
+                display: flex;
+                display: -webkit-flex;
+
+                height: 300px;
+                border: 2px solid blue;
+            }
+            .centered {
+                width: 50%;
+                height: 50%;
+                margin: auto;
+                text-align: center;
+                vertical-align: middle;
+
+                line-height: 150px;
+                border: 2px solid orange;       
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Flexbox Centering</h1>
+        <main class="container">
+            <article class="centered">Centered Div V/H with Flexbox</article>
+        </main>
+    </body>
+</html>

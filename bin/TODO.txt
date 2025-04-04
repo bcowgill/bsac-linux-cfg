@@ -1,4 +1,5 @@
 filter-script.pl test plan has some failures that need fixing.
+template/css/responsive-viewport.html - test what this does in browser
 
 touch-dirs.sh try in Camera dir to reorder the folders, after backing up the phone
 

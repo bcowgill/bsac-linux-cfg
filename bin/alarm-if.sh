@@ -22,7 +22,7 @@ See also watcher.sh, check-ezbackup-finished.sh alarm.sh, mynotify.sh, quiet.sh,
 
 Example:
 
-alarm-if.sh check.sh ~/bin/soundes/kitten.ogg
+alarm-if.sh check.sh ~/bin/sounds/kitten.ogg
 "
 	exit $code
 }
