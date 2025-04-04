@@ -46,20 +46,24 @@ KEY:MAC:CMD Cmd-Ctrl-Shift-4 Capture a portion of the screen to clipboard.
 KEY:MAC:CMD Cmd-Shift-4-Space Capture an application in a screenshot on the Desktop.
 KEY:MAC:CMD Cmd-Ctrl-Shift-4-Space Capture an application in a screenshot to clipboard.
 
+Not working...
+Ctrl-(fn)F5        Move to window toolbar
+Ctrl-(fn)F6        Move to floating window
+
 Handy Key Reference on Mac
-Ctrl-F2            App Menu open/close
-Ctrl-F3            Dock Menu open/close
-Ctrl-F4            Move to active or next window
-Ctrl-F5            Move to window toolbar
-Ctrl-F6            Move to floating window
+Ctrl-(fn)F2        App Menu open/close
+Ctrl-(fn)F3        Dock Menu open/close
+Ctrl-(fn)F4        Switch to active or next window
 Cmd-Alt-Power      Sleep Lock
 Cmd-Ctrl-q         Screen Lock
 Cmd-Ctrl-Space     Character Viewer
-Cmd-Alt-F5         Accessibility Options
+Cmd-Alt-(fn)F5     Accessibility Options
 Screenshots        +Ctrl = clipboard
 Cmd-Shift-3        Entire Screen
 Cmd-Shift-4-Space  Application Only
 Cmd-Shift-4        Select Area
+Cmd-Shift-5        Capture Tool
+Ctrl-(fn)F2 W Down Z Enter -  Fix Wonky Window
 
 If turned on from accessibility:
 Alternative Control Methods tab
@@ -113,4 +117,19 @@ VO-l          Read the current line
 VO-Arrows     Navigate form controls
 VO-Space      Select checkbox, push button
 VO-Shift-Up/Down Exit/Enter a table, toolbar, etc
+
+Restoring a Hidden Window
+Might have been dragged to one edge or corner with only a sliver still showing.
+Alt-Tab      to cycle through the windows to find it.
+Ctrl-(fn)F2  to go to the 'apple' part of the top line menu.
+W            to go to the Window menu for the hidden app.
+Z Enter      to zoom the window to full screen.
+Now you should be able to move it to where you like it.
+
+Contrast to do this on Windows:
+Restoring a Hidden Window
+Alt-Tab          to cycle through the windows to find it.
+Alt-Space        to open the window controls menu for the hidden window (you might see nothing change).
+M                to begin moving the window or (S) to resize the window.
+Mouse or Arrows  to actually move/resize the window to desired position.
 

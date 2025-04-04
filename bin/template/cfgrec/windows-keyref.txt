@@ -49,6 +49,14 @@ notifications		Four fingerr tap (Win-a)
 volume up/down		Four finger up/down swipe (Win-F5/F6/F7)
 track change		Four finger left/right swipe
 
+----------
+
+Restoring a Hidden Window
+Alt-Tab          to cycle through the windows to find it.
+Alt-Space        to open the window controls menu for the hidden window (you might see nothing change).
+M                to begin moving the window or (S) to resize the window.
+Mouse or Arrows  to actually move/resize the window to desired position.
+
 ============================================================
 
 Windows Setup
