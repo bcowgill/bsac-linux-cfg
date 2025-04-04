@@ -1,0 +1,210 @@
+Thu 11 Apr 2024 17:22:03 BST
+
+
+
+> playwright@1.0.0 test
+> npx playwright test --project=GoogleChrome --grep-invert "@example|@iframe" tests/template.spec.js
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+J_HOME:   /#/?req=HM
+
+
+You need to be running the App with 'yarn start'
+
+
+setupTest(TEMPLATE)
+
+Running 7 tests using 6 workers
+
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+
+
+J_HOME:   /#/?req=HM
+
+
+
+
+You need to be running the App with 'yarn start'
+
+
+
+
+setupTest(TEMPLATE)
+
+
+[1/7] [GoogleChrome] › template.spec.js:56:7 › TEMPLATE page test spec › Entry @content
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+
+
+J_HOME:   /#/?req=HM
+
+
+
+
+You need to be running the App with 'yarn start'
+
+
+
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+
+
+setupTest(TEMPLATE)
+
+
+J_HOME:   /#/?req=HM
+
+
+
+
+You need to be running the App with 'yarn start'
+
+
+
+
+setupTest(TEMPLATE)
+
+
+J_HOME:   /#/?req=HM
+
+
+PLAYWRIGHT TESTS RUNNING as: brand against https://playwright.dev  timeout=60000  
+
+
+
+
+You need to be running the App with 'yarn start'
+
+
+
+
+J_HOME:   /#/?req=HM
+
+
+
+
+You need to be running the App with 'yarn start'
+
+
+
+
+setupTest(TEMPLATE)
+
+
+setupTest(TEMPLATE)
+
+
+J_HOME:   /#/?req=HM
+
+
+
+
+You need to be running the App with 'yarn start'
+
+
+
+
+[2/7] [GoogleChrome] › template.spec.js:30:7 › TEMPLATE page test spec › Entry @responsive
+layout
+
+setupTest(TEMPLATE)
+
+
+[3/7] [GoogleChrome] › template.spec.js:97:7 › TEMPLATE page test spec › Entry @happy
+@action @continue
+
+[4/7] [GoogleChrome] › template.spec.js:76:7 › TEMPLATE page test spec › Entry @unhappy
+@action
+
+[5/7] [GoogleChrome] › template.spec.js:67:7 › TEMPLATE page test spec › Entry @links
+to somewhere
+
+[6/7] [GoogleChrome] › template.spec.js:87:7 › TEMPLATE page test spec › Entry @unhappy
+@action @corrected
+
+[GoogleChrome] › template.spec.js:76:7 › TEMPLATE page test spec › Entry @unhappy @action
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+GETCAM viewport- { width: 1280, height: 720 } undefined
+
+
+[GoogleChrome] › template.spec.js:67:7 › TEMPLATE page test spec › Entry @links to somewhere
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+GETCAM viewport- { width: 1280, height: 720 } undefined
+
+
+[GoogleChrome] › template.spec.js:87:7 › TEMPLATE page test spec › Entry @unhappy @action
+@corrected
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+GETCAM viewport- { width: 1280, height: 720 } undefined
+
+
+[GoogleChrome] › template.spec.js:97:7 › TEMPLATE page test spec › Entry @happy @action
+@continue
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+GETCAM viewport- { width: 1280, height: 720 } undefined
+
+
+[GoogleChrome] › template.spec.js:30:7 › TEMPLATE page test spec › Entry @responsive
+layout
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+GETCAM viewport- { width: 1280, height: 720 } undefined
+
+
+[GoogleChrome] › template.spec.js:56:7 › TEMPLATE page test spec › Entry @content
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+GETCAM viewport- { width: 1280, height: 720 } undefined
+
+
+TEMPLATE4 viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+[GoogleChrome] › template.spec.js:30:7 › TEMPLATE page test spec › Entry @responsive
+layout
+TEMPLATE3 viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+[7/7] [GoogleChrome] › template.spec.js:107:7 › TEMPLATE page test spec › NEXT PAGE
+@content
+
+[GoogleChrome] › template.spec.js:107:7 › TEMPLATE page test spec › NEXT PAGE @content
+SETUP viewport- cu.vp vp, p.vp undefined { width: 1280, height: 720 } { width: 1280, height:
+720 }
+
+
+  7 passed (8.1s)
+
+To open last HTML report run:
+
+  npx playwright show-report
+
+Thu 11 Apr 2024 17:22:13 BST
+
+Elapsed: 10 seconds

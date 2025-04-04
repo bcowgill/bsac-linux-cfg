@@ -14,7 +14,7 @@ $CMD $OUT >> $LOG
 diff $OUT $BASE || echo NOT OK output differs. vdiff $OUT $BASE
 
 CMD=./fix-har.sh
-echo "# Tests for $CMD" | tee --append $LOG
+echo "# Tests for $CMD" | tee -a $LOG
 IN=fix-har.test.in.txt
 OUT=fix-har.test.out1
 OUT2=fix-har.test.out2
