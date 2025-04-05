@@ -108,12 +108,9 @@ tar czf bundle/my-git-dev-tools.tgz tx
 zip64.pl `find tx -type f` > bundle/mytools.txt 2> bundle/zip64.log
 grep -vE '^(end|\s*$)' bundle/zip64.log
 
-md5sum.sh tx | tee bundle/md5sum.lst
+md5sum.sh tx/c | tee bundle/md5sum.lst
 
 echo ""
 echo "You can email mytools.txt to send all the tools."
 
 ls -alh bundle
-
-
-
