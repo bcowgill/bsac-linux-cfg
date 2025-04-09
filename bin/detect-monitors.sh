@@ -18,7 +18,7 @@ XROUT=$(mktemp)
 XRERR=$(mktemp)
 xrandr >> $XROUT 2> $XRERR
 
-if [ ${1:-quiet} == show ]; then
+if [ "${1:-quiet}" == "show" ]; then
 	# if show option provided, show all resolutions with computed aspect ratio
 	perl -pne 's{\s{2}(\d+)x(\d+)\s{2}}{qq{  $1x$2  @{[substr($1/$2,0,7)]}}}xmsge' < $XROUT
 else
