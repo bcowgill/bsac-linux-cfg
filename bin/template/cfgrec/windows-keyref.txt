@@ -202,8 +202,9 @@ Time sheet submit
 Task Manager / App history / Delete usage history (win)
 powershell as Administrator Update-Help  (win)
 
-Categories for meetings
+Categories for meetings/Tasks/Email
 
+Meetings
 green  - Work
 blue   - Meeting
 gray   - Waste
@@ -211,4 +212,8 @@ red    - Blocked
 yellow - Reserved/Unavailable/Me Time
 orange - Out of Office/appointment
 purple - Holiday
+
+Email/Tasks
+green  - WIP
+red    - Blocked
 
