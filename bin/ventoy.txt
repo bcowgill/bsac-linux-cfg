@@ -1,0 +1,27 @@
+Contents of Ventoy boot USB disks
+
+/media/ubuntu/Ventoy1SPRB/iso
+kubuntu-24.04.2-desktop-amd64.iso
+lubuntu-24.04.2-desktop-amd64.iso
+ubuntu-24.04.2-desktop-amd64.iso
+ubuntu-24.04.2-wsl-amd64.wsl
+ubuntu-24.10-desktop-amd64.iso
+ubuntu-budgie-24.04.2-desktop-amd64.iso
+ubuntu-mate-24.04.2-desktop-amd64.iso
+ubuntu-unity-24.04.2-desktop-amd64.iso
+
+/media/ubuntu/Ventoy2SPDY/iso/
+memtest86-usb.img
+ubuntu-24.04.2-desktop-amd64.iso
+ubuntu-24.10-desktop-amd64.iso
+ubuntucinnamon-24.04.2-desktop-amd64.iso
+ubuntustudio-24.04.2-dvd-amd64.iso
+xubuntu-24.04.2-desktop-amd64.iso
+
+/media/ubuntu/Ventoy256G/iso/
+memtest86-usb.img
+ubuntu-24.04.2-desktop-amd64.iso
+ubuntu-24.10-desktop-amd64.iso
+ubuntucinnamon-24.04.2-desktop-amd64.iso
+ubuntustudio-24.04.2-dvd-amd64.iso
+xubuntu-24.04.2-desktop-amd64.iso

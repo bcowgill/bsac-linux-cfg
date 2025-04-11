@@ -3,6 +3,7 @@
 # MOTE: there are custom aliases set by hostname
 
 alias ub="pushd /media/me/Expansion/ubuntu-install-2023"
+alias dell="pushd /media/me/Expansion/dell-7680-workstation-2025"
 
 alias setls="set | perl -ne '\$stop = 1 if m{[^=]\(\)}xms; print unless \$stop'"
 

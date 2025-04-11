@@ -1,6 +1,14 @@
+title: Creating a local Test HTTPS Server in Python
+url: https://www.piware.de/2011/01/creating-an-https-server-in-python/
+note: Try python3 on new linux
+see httpsserver.sh and webserverssl.py
+
+bookmark.html - use a script to convert title,url labels to an actual bookmark file.
 filter-script.pl test plan has some failures that need fixing.
 template/css/responsive-viewport.html - test what this does in browser
 git-mv-dirs.sh git-mv-dirs-spaces.sh - need to finish DRY option and help --add
+/home/me/d/Pics/keep-from-wipro-old-mac/Money-Work-free.pdf
+Go through this directory, move non-pictures elsewhere.
 
 touch-dirs.sh try in Camera dir to reorder the folders, after backing up the phone
 
