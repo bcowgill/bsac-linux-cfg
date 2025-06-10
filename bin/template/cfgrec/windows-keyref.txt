@@ -18,19 +18,23 @@ Ctrl-Space		Unmute in Teams
 
 Win-Shift-H		Highlight Mouse Clicks(PT)
 Win-Alt-p		Mouse Crosshairs(PT)
-Win-Shift-M		Screen Ruler(PT)
+Win-Ctrl-Shift-M	Screen Ruler(PT)
 Win-Shift-C		Color Picker(PT)
 Win-Shift-T		Text Extractor OCR(PT)
+Win-Shift-V		Advanced Paste window(PT)
 Win-Ctrl-Alt-v	Paste as plain text(PT)
 Win-Shift-/		Shortcut Guide(PT)
+Alt-p			Toggle Preview in File Explorer
 Ctrl-Space		Quick Preview file explorer(PT)
 Win-Shift-D		Mouse Jump (extended desktops)(PT)
 
-(PT) = Power Toys
+(PT) = Power Toys https://learn.microsoft.com/en-us/windows/powertoys/
 
 Ctrl-\			Screenshot to Clipboard (xbox game bar but does not work))
+
 Setup Powertoys:
 Turn on Highlight Mouse Clicks by default
+Enable Text Extractor (can also use Windows snipping tool)
 
 Track Pad
 single-click	Tap with single finger
@@ -82,13 +86,10 @@ Additional settings -> Pointer Options / Display Pointer Trails / Long
 	on - Show location of pointer when I press Control
 
 Display Settings
-on - Night light
+on - Night light - Sunrise to sunset
 
 Ease of Access Settings
 Display / Make text bigger: 125%
-
-Outlook
-Open an email, click on the zoom% in the footer ribbon, set zoom level and click Remember my Preference
 
 Clipboard Settings
 on - Clipboard History
@@ -99,6 +100,7 @@ Configure Ctrl-\ as key for take screenshot (to clipboard)
 (this does not actually work)
 
 Outlook
+Open an email, click on the zoom% in the footer ribbon, set zoom level and click The 1xx% zoom text and then Remember my Preference
 
 Inbox folders
 0-urgent
@@ -112,22 +114,33 @@ Teams Settings
 dark theme
 
 / Privacy
+on - Turn off my camera and mic when my screen locks
 on - Keyboard shortcut to unmute (Ctrl-Space)
 
-/ Calls
-Ringtone - High Score
+/ Notifications and activity
+Sound
+ Play sounds with notifications - Flick
+ Play sounds with urgent and priority contact notificatios - Prioritise
+Meetings
+ Meeting chat notifications... both - Mute
 
-/ Captions and Transcripts
+
+/ Accessibility
+Captions and Transcripts
 on - Always show live captions in meetings
+off - Filter out profane words in live captions
 
 / Devices
-Noise suppression - low - plays background music
+Noise suppression - Voice isolation
 Speaker - Samsung monitor
 Secondary ringer - speakers
 Video Settings
 on - Adjust brightness
 on/max - Soft focus
 on - Green screen
+
+/ Calls
+Ringtone - High Score
 
 Pomodoro Timer - built into windows as focus time.
 
@@ -136,6 +149,8 @@ Pomodoro Timer - built into windows as focus time.
 Powershell
 
 $PSVersionTable.PSVersion
+update-help
+
 help
 get-help
 get-command		gcm
@@ -149,8 +164,10 @@ copy-item		cpi cp copy
 remove-item		ri rm rmdir del erase rd
 write-host
 
-in powershell to get windoes subsystem for linux:
+in powershell to get windows subsystem for linux:
 wsl --install
+wsl --install Ubuntu
+wsl -d Ubuntu [command to run in Ubuntu Linux and then exit]
 
 ============================================================
 
@@ -205,13 +222,14 @@ powershell as Administrator Update-Help  (win)
 Categories for meetings/Tasks/Email
 
 Meetings
-green  - Work
-blue   - Meeting
-gray   - Waste
 red    - Blocked
-yellow - Reserved/Unavailable/Me Time
-orange - Out of Office/appointment
+dk green - Delivery Window (for package deliveries)
 purple - Holiday
+blue   - Meeting
+orange - Out of Office / Appointment
+yellow - Reserved / Unavailable / Me Time
+gray   - Waste
+green  - Work
 
 Email/Tasks
 green  - WIP
