@@ -13,3 +13,4 @@ export function MyComponent(props: MyComponentProps): ReactElement<MyComponentPr
 }
 
 //console.log(`comp.tsx logging a component looks cool:`, <MyComponent message="Hello world!" />);
+

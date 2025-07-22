@@ -99,6 +99,10 @@ turn on
 Configure Ctrl-\ as key for take screenshot (to clipboard)
 (this does not actually work)
 
+System / Multi-tasking
+Show tabs from apps when snapping or pressing Alt-Tab: Don't show tabs
+Title bar window shake: on
+
 Outlook
 Open an email, click on the zoom% in the footer ribbon, set zoom level and click The 1xx% zoom text and then Remember my Preference
 
