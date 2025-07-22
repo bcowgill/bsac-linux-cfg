@@ -19,6 +19,7 @@ if ($arg eq '--test') {
 	$test = 1;
 	$in = *DATA;
 }
+my $debug = 0;#$test;
 
 my $id;
 my $task;

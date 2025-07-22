@@ -20,6 +20,7 @@ if ($arg eq '--test') {
 	$test = 1;
 	$in = *DATA;
 }
+my $debug = 0;#$test;
 
 my $days;
 my $products;
@@ -54,9 +55,9 @@ while (my $input = <$in>) {
 		die "You specified $days days of sales figures but provided @{[scalar(@Bestsellers)]}" if scalar(@Bestsellers) > $days;
 
 		@Sales = sort { $b <=> $a } @Input;
-		#if ($test) {
-		#	print qq{@{[join(" ", @Sales)]}\n};
-		#}
+		if ($debug) {
+			print qq{@{[join(" ", @Sales)]}\n};
+		}
 		push(@Bestsellers, $Sales[0]);
 	}
 	else {

@@ -20,6 +20,7 @@ if ($arg eq '--test') {
 	$test = 1;
 	$in = *DATA;
 }
+my $debug = 0;#$test;
 
 my $count;
 my $stream;
@@ -63,19 +64,19 @@ sub get_longest {
 	my ($stream) = @ARG;
 	my $longest = 0;
 
-	#print qq{>>$stream\n} if $test;
+	print qq{>>$stream\n} if $debug;
 	$stream =~ s{\A(0+|1+)}{}xms;
-	#print qq{strip1: $stream\n} if $test;
+	print qq{strip1: $stream\n} if $debug;
 	$stream =~ s{(0+|1+)\z}{}xms;
-	#print qq{strip2: $stream\n} if $test;
+	print qq{strip2: $stream\n} if $debug;
 	$stream =~ s{(0+|1+)}{
 		my $length = length($1);
-		#print qq{run $1: $length | $longest\n} if $test;
+		print qq{run $1: $length | $longest\n} if $debug;
 
 		$longest = $length if $length > $longest;
 		'';
 	}xmsge;
-	#print qq{rest: $stream\n} if $test;
+	print qq{rest: $stream\n} if $debug;
 	return $longest;
 }
 

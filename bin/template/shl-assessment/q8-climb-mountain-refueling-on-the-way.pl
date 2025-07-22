@@ -26,6 +26,7 @@ if ($arg eq '--test') {
 	$test = 1;
 	$in = *DATA;
 }
+my $debug = 0;#$test;
 
 my $count;
 my $stops;
@@ -118,7 +119,7 @@ sub get_min_stops {
 	my $stops = scalar(@$raStops);
 
 	if ($energy + $total_water < $total_distance) {
-		#print qq{not enough energy\n} if $test;
+		print qq{not enough energy\n} if $debug;
 		return -1;
 	}
 
@@ -127,9 +128,9 @@ sub get_min_stops {
 		$energy -= $raStops->[$idx] - $last_position;
 		$last_position = $raStops->[$idx];
 		my $remaining = $total_distance - $last_position;
-		#print qq{stop#$idx \@$last_position E:$energy R:$remaining W:$raWater->[$idx]\n} if $test;
+		print qq{stop#$idx \@$last_position E:$energy R:$remaining W:$raWater->[$idx]\n} if $debug;
 		if ($energy < 0) {
-			#print qq{dead at stop#$idx\n} if $test;
+			print qq{dead at stop#$idx\n} if $debug;
 			return -1;
 		}
 		if ($energy < $remaining) {

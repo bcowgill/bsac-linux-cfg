@@ -21,6 +21,7 @@ if ($arg eq '--test') {
 	$test = 1;
 	$in = *DATA;
 }
+my $debug = 0;#$test;
 
 my $count1;
 my $count2;
@@ -92,12 +93,12 @@ sub get_unique_count {
 		}
 	}
 
-	#print qq{\n>>} if $test;
+	print qq{\n>>} if $debug;
 	foreach my $number (keys(%Seen)) {
-		#print qq{$number($Seen{$number}) } if $test;
+		print qq{$number($Seen{$number}) } if $debug;
 		$unique++ if $Seen{$number} ne '12';
 	}
-	#print qq{\n} if $test;
+	print qq{\n} if $debug;
 
 	return $unique;
 }

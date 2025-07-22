@@ -19,6 +19,7 @@ if ($arg eq '--test') {
 	$test = 1;
 	$in = *DATA;
 }
+my $debug = 0;#$test;
 
 my $p;
 my $q;
@@ -61,10 +62,10 @@ sub get_min_bits
 	while ($p || $q) {
 		my $P = $p & $mask;
 		my $Q = $q & $mask;
-		#if ($test) {
-		#	printf "P=%32b ($P)\n", $p;
-		#	printf "Q=%32b ($Q)\n", $q;
-		#}
+		if ($debug) {
+			printf "P=%32b ($P)\n", $p;
+			printf "Q=%32b ($Q)\n", $q;
+		}
 		++$min if ($P != $Q);
 		$p = $p & ~$mask;
 		$q = $q & ~$mask;
