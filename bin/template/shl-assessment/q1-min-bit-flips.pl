@@ -58,18 +58,19 @@ while (my $input = <$in>) {
 sub get_min_bits
 {
 	my ($p, $q) = @ARG;
-	die "Values must be positive integers: ($p,$q)" if $p < 0 || $q < 0;
 	my $min = 0;
+	my $mask = 1;
 	while ($p || $q) {
-		my $P = $p & 1;
-		my $Q = $q & 1;
+		my $P = $p & $mask;
+		my $Q = $q & $mask;
 		#if ($test) {
 		#	printf "P=%32b ($P)\n", $p;
 		#	printf "Q=%32b ($Q)\n", $q;
 		#}
 		++$min if ($P != $Q);
-		$p = $p >> 1;
-		$q = $q >> 1;
+		$p = $p & ~$mask;
+		$q = $q & ~$mask;
+		$mask = $mask << 1;
 	}
 	return $min;
 }
