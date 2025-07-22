@@ -46,8 +46,6 @@ while (my $input = <$in>) {
 		if (!$test) {
 			my $min = get_min_bits($p, $q);
 			print qq{$min\n};
-			$p = undef;
-			$q = undef;
 			exit 0;
 		}
 	} else {

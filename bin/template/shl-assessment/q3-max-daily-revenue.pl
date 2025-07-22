@@ -1,7 +1,6 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use integer;
 use English qw(-no-match-vars);
 
 =pod
