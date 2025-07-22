@@ -26,7 +26,6 @@ my $count1;
 my $count2;
 my @Sequence1 = ();
 my @Sequence2 = ();
-my %Seen = ();
 my $unique = 0;
 
 while (my $input = <$in>) {
@@ -47,7 +46,6 @@ while (my $input = <$in>) {
 		$count2 = undef;
 		@Sequence1 = ();
 		@Sequence2 = ();
-		%Seen = ();
 		$unique = 0;
 		next;
 	}
@@ -69,29 +67,39 @@ while (my $input = <$in>) {
 		die "You should provide $count2 numbers for list 2, you gave $values items: $input\n" unless $values == $count2;
 		@Sequence2 = @Input;
 
-		foreach my $number (@Sequence1) {
-			$Seen{$number} = "1";
-		}
-		foreach my $number (@Sequence2) {
-			if ($Seen{$number}) {
-				$Seen{$number} .= "2";
-			} else {
-				$Seen{$number} = "2";
-			}
-		}
-
-		#print qq{\n>>} if $test;
-		foreach my $number (keys(%Seen)) {
-			#print qq{$number($Seen{$number}) } if $test;
-			$unique++ if $Seen{$number} ne '12';
-		}
-		#print qq{\n} if $test;
+		$unique = get_unique_count(\@Sequence1, \@Sequence2);
 
 		if (!$test) {
 			print qq{$unique\n};
 			exit 0;
 		}
 	}
+}
+
+sub get_unique_count {
+	my ($raSeq1, $raSeq2) = @ARG;
+	my $unique = 0;
+	my %Seen = ();
+
+	foreach my $number (@$raSeq1) {
+		$Seen{$number} = "1";
+	}
+	foreach my $number (@$raSeq2) {
+		if ($Seen{$number}) {
+			$Seen{$number} .= "2";
+		} else {
+			$Seen{$number} = "2";
+		}
+	}
+
+	#print qq{\n>>} if $test;
+	foreach my $number (keys(%Seen)) {
+		#print qq{$number($Seen{$number}) } if $test;
+		$unique++ if $Seen{$number} ne '12';
+	}
+	#print qq{\n} if $test;
+
+	return $unique;
 }
 
 __DATA__
