@@ -84,7 +84,7 @@ while (my $input = <$in>) {
 		die "You should provide a single count value for the number of water amounts, you provided $values: $input\n" unless $values == 1;
 		$stops = shift(@Input);
 		die "You should provide a positive count value for the number of water amounts, you gave: $input\n" unless $stops > 0;
-		die "You should the same value for the number of stops($count) and number of water amounts, you gave: $input\n" unless $stops == $count;
+		die "You should give the same value for the number of stops($count) and number of water amounts, you gave: $input\n" unless $stops == $count;
 	} elsif (scalar(@Water) < 1) {
 		die "You should provide $count numbers for the amount of water at each stop, you gave $values items: $input\n" unless $values == $count;
 		@Water = map {
