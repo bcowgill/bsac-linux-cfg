@@ -6,6 +6,8 @@ use Data::Dumper;
 
 =pod
 
+./q10-resource-allocation.pl < q10.dat
+
 PROBLEM STATEMENT:
 
 Given input lines all contain space separate numbers.
