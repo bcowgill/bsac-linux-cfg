@@ -10,7 +10,6 @@ PROBLEM STATEMENT:
 Given a line specifying the number of days(N) and number of products(P) space separated. The next N lines will contain P space separated numbers for the sales of each product that day.
 Output the highest sales value for each day as space separated numbers on a single line.
 
-
 =cut
 
 my $in = *STDIN;
@@ -24,7 +23,6 @@ my $debug = 0;#$test;
 
 my $days;
 my $products;
-my @Sales = ();
 my @Bestsellers = ();
 
 while (my $input = <$in>) {
@@ -44,7 +42,6 @@ while (my $input = <$in>) {
 		}
 		$days = undef;
 		$products = undef;
-		@Sales = ();
 		@Bestsellers = ();
 		next;
 	}
@@ -54,11 +51,7 @@ while (my $input = <$in>) {
 		die "You specified $products product sales figures per day, but provided $count values: $input\n" if ($count != $products);
 		die "You specified $days days of sales figures but provided @{[scalar(@Bestsellers)]}" if scalar(@Bestsellers) > $days;
 
-		@Sales = sort { $b <=> $a } @Input;
-		if ($debug) {
-			print qq{@{[join(" ", @Sales)]}\n};
-		}
-		push(@Bestsellers, $Sales[0]);
+		push(@Bestsellers, get_bestseller(\@Input));
 	}
 	else {
 		die "You need to provide a number of days and products but provided $count values: $input\n" unless scalar(@Input) == 2;
@@ -73,6 +66,15 @@ while (my $input = <$in>) {
 		print qq{$bestsellers\n};
 		exit 0;
 	}
+}
+
+sub get_bestseller {
+	my ($raDailySales) = @ARG;
+	my @Sales = sort { $b <=> $a } @$raDailySales;
+	if ($debug) {
+		print qq{@{[join(" ", @Sales)]}\n};
+	}
+	return $Sales[0];
 }
 
 __DATA__

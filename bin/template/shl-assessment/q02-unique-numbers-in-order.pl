@@ -22,7 +22,6 @@ my $debug = 0;#$test;
 
 my $count;
 my @Sequence = ();
-my %Seen = ();
 
 while (my $input = <$in>) {
 	chomp($input);
@@ -40,22 +39,31 @@ while (my $input = <$in>) {
 		}
 		$count = undef;
 		@Sequence = ();
-		%Seen = ();
 		next;
 	}
 	my @Input = split(/\s+/, $input);
 	$count = shift(@Input);
 	die "You specified a sequence of $count numbers, but provided @{[scalar(@Input)]}" if (scalar(@Input) != $count);
 
-	foreach my $number (@Input) {
-		push(@Sequence, $number) unless $Seen{$number};
-		$Seen{$number}++;
-	}
+	@Sequence = get_unique(\@Input);
+
 	if (!$test) {
 		my $min = join(" ", @Sequence);
 		print qq{$min\n};
 		exit 0;
 	}
+}
+
+sub get_unique {
+	my ($raSequence) = @ARG;
+	my %Seen = ();
+	my @Unique = ();
+
+	foreach my $number (@$raSequence) {
+		push(@Unique, $number) unless $Seen{$number};
+		$Seen{$number}++;
+	}
+	return @Unique;
 }
 
 __DATA__

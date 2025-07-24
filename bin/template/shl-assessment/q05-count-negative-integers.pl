@@ -56,15 +56,23 @@ while (my $input = <$in>) {
 		die "You should provide $count numbers for the list, you gave $values items: $input\n" unless $values == $count;
 		@Sequence = @Input;
 
-		foreach my $number (@Sequence) {
-			$negative++ if $number < 0;
-		}
+		$negative = count_negatives(\@Sequence);
 
 		if (!$test) {
 			print qq{$negative\n};
 			exit 0;
 		}
 	}
+}
+
+sub count_negatives {
+	my ($raSequence) = @ARG;
+	my $negative = 0;
+
+	foreach my $number (@$raSequence) {
+		$negative++ if $number < 0;
+	}
+	return $negative;
 }
 
 __DATA__
