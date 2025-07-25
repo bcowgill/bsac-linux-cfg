@@ -57,6 +57,9 @@ function usage {
 	echo " "
 	echo i.e. $CMD restore home/user/path/to/restore if SOURCE=/home/user
 	echo " "
+	echo "Does a command on each archive:"
+	echo "tar xvzf /media/me/Expansion/backup_brent_dell7510/ezbackup/ezbackup.tgz --directory ./restore/ --wildcards home/me/d/Pics/xxx/saved"
+	echo " "
 	echo "If full backup disk (BK_DISK) setting is different to the partial backup directory (BK_DIR) then the full backup dir will not be automatically created and a full backup will only happen if the disk is present."
 	echo "If full backukp device (BK_DEV) setting is provided, after a full backup the updatedb command will run to create an mlocate.db database for finding files on the backup disk when it has been unmounted.  Use the locatebk.sh or locatebkall.sh command to find files on the backup disk."
 	echo " "
@@ -75,6 +78,10 @@ function usage {
 
 if [ "$MODE" == "--help" ]; then
 	usage
+fi
+
+if echo "$MODE" | grep -- "--" > /dev/null; then
+	usage "unknown option '$MODE'. you must provide a mode name or valid --option name."
 fi
 
 function is_locked {
@@ -503,6 +510,7 @@ function restore {
 	for archive in $ARCHIVES;
 	do
 		echo scanning $archive:
+		echo "tar xvzf $archive --directory $RESTORE --wildcards $FIND"
 		tar xvzf $archive --directory $RESTORE --wildcards $FIND
 	done
 }

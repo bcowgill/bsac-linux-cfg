@@ -3,6 +3,24 @@ url: https://www.piware.de/2011/01/creating-an-https-server-in-python/
 note: Try python3 on new linux
 see httpsserver.sh and webserverssl.py
 
+28 day AI:
+wk1 ChatGPT
+DallE-3
+Midjourney
+Runway
+wk2 DeepSeek
+HeyGen
+NightCafe
+Bria
+wk3 Second Nature
+Sora
+Bing Copilot
+Gemini
+wk Grammarly
+WireSonic
+Chatfuel
+Google AI
+
 bookmark.html - use a script to convert title,url labels to an actual bookmark file.
 filter-script.pl test plan has some failures that need fixing.
 template/css/responsive-viewport.html - test what this does in browser

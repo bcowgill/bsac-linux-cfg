@@ -1,0 +1,62 @@
+https://www.london-artcollege.co.uk/news/2025/06/the-golden-ratio-in-art-why-its-called-the-perfect-proportion/
+
+Why Does the Golden Ratio Work?
+The golden ratio is thought to be pleasing to the eye because it mirrors patterns found in nature. From the spiral of galaxies to the arrangement of leaves, this proportion appears organically, creating a sense of balance and harmony. By incorporating it into art, creators tap into a universally recognised aesthetic.
+
+What Is the Golden Ratio?
+The golden ratio is a mathematical ratio where the relationship between two parts of a whole creates a proportion that is aesthetically balanced. If a line is divided into two segments, the ratio of the whole line to the longer segment is the same as the ratio of the longer segment to the shorter one. This ratio is expressed as 1:1.618.
+
+|------------ L -------------|
+-------------------...........
+|        l        |    s     |
+
+φ = L / l = l / s   where L = l + s
+so L / l = 1 + s / l
+φ = 1 + ⅟φ
+φ - 1 - ⅟φ = 0
+φ² - φ - 1 = 0
+using solution for quadratic equation:
+φ = ½(1 ± √(1 - 4(-1)))  =  (1 + √5)/2  drop the negative solution.
+
+The golden ratio is often visualised as a golden rectangle or a spiral, which can be seen in nature (e.g., nautilus shells and sunflower seeds) and incorporated into works of art and architecture.
+
+The famous Golden Ratio is not the only ratio of that type; rather it belongs to a family of ratio called Metallic Ratio given by the general formula
+
+[n+√(n²+4)] / 2
+
+If n=1, the ratio is called Golden Ratio. φ
+If n=2, the ratio is called Silver Ratio. δₛ
+If n=3, the ratio is called Bronze Ratio. β
+
+The metallic ratios are a generalization of the golden ratio, and they are the positive solutions to the quadratic equation x² - nx - 1 = 0, where 'n' is a positive integer. Many people have heard of the Golden ratio, phi (φ). Phi is just one of a series of related ratios that are referred to as the "Metallic ratios".
+
+Explanation:
+
+General Quadratic Equation:
+The metallic ratios are derived from the quadratic equation x² - nx - 1 = 0.
+
+Solving for x:
+
+Using the quadratic formula ( -b ± √(b² - 4ac) ) / 2a, and substituting a=1, b=-n, and c=-1, we get: x = (n ± √(n² + 4)) / 2.
+
+Positive Root:
+
+Since we are dealing with ratios, we only consider the positive root.
+
+Specific Cases:
+
+When n=1, the metallic ratio is the golden ratio (1 + √5) / 2 ≈  1.61803398874989484820.
+When n=2, the metallic ratio is the silver ratio 1 + √2 ≈  2.4142135623730950488.
+When n=3, the metallic ratio is the bronze ratio (3 + √13) / 2 ≈  3.30277563773199464656.
+
+In essence, the metallic ratios represent a family of ratios that share a similar
+
+Golden - 1 = 1/golden   φ - 1 = ⅟φ
+Silver - 2 = 1/silver   δₛ - 2 = ⅟δₛ
+Bronze - 3 = 1/bronze   β - 3 = ⅟β
+
+⅟φ = 2 / (1 + √5)  ==   2(1 - √5) / [ (1 + √5)(1 - √5)]  ==  2(1 - √5) / (1 - 5)  ==  2(1 - √5) / -4  ==  (√5 - 1) / 2  ≈  0.61803398874989484820
+
+⅟δₛ = 1 + √2 - 2  ==  √2 - 1 ≈  0.41421356237309504880
+
+⅟β = (3 + √13) / 2 - 3  ==  3/2 + √(13)/2 - 6/2  ==  √(13)/2 - 3/2  ==  (√13 - 3)/2 ≈  0.30277563773199464656

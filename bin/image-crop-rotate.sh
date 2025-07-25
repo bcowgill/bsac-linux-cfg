@@ -36,8 +36,8 @@ See also filter-images.sh image-sort-resize.sh imgcat.sh label-photo.sh ls-camer
 [ "$PREFIX" == "--man" ] && usage
 [ "$PREFIX" == "-?" ] && usage
 
-rm $PREFIX*.jpg
-for photo in `ls *.jpg *.JPG *.png *.PNG`;
+rm $PREFIX*.jpg $PREFIX*.jpeg $PREFIX*.JPG $PREFIX*.png $PREFIX*.PNG
+for photo in `ls *.jpg *.jpeg *.JPG *.png *.PNG`;
 do
 	USAGE=0
 	identify $photo

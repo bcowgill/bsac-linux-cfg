@@ -10,6 +10,10 @@ alias setls="set | perl -ne '\$stop = 1 if m{[^=]\(\)}xms; print unless \$stop'"
 alias please='sudo'
 alias fucking='sudo'
 
+# Sort some output by line length, short first or long first
+alias sort-short="perl -pne '\$length=length(\$_);\$_=qq{\$length:\$_};' | sort -n | awk -F : '{ print \$2 }'"
+alias sort-long="perl -pne '\$length=length(\$_);\$_=qq{\$length:\$_};' | sort -n -r | awk -F : '{ print \$2 }'"
+
 # Show the path split into one dir per line
 alias path='echo $PATH | perl -pne '\''s{:}{\n}xmsg'\'''
 # Unique path, remove duplicate dirs from path
@@ -370,13 +374,15 @@ fi
 # alias fgrep='fgrep --color=auto'              # show differences in colour
 #
 # Some shortcuts for different directory listings
-# alias ls='ls -hF --color=tty'                 # classify files in colour
-# alias dir='ls --color=auto --format=vertical'
-# alias vdir='ls --color=auto --format=long'
+alias lsc='ls -hF --color=tty'                 # classify files in colour
+alias dir='ls --color=auto --format=vertical'
+alias vdir='ls --color=auto --format=long'
 # alias ll='ls -l'                              # long list
-# alias la='ls -A'                              # all but . and ..
-# alias l='ls -CF'                              #
-alias lss='ls -al -oSr'   # list by size reversed
+alias l='ls -CF'       # show in columns and classify files in color
+alias la='ls -A'       # all but . and ..
+alias lss='ls -aloSr'  # list by size reversed
+alias lsd='ls -alot'   # list by date/time reversed
+alias lsu='ls -U'      # list unsorted
 
 # if calc is missing, simulate it with perl
 if which calc >> /dev/null; then

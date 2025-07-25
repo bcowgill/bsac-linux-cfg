@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 function usage {
 	local code
