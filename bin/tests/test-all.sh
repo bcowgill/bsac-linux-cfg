@@ -101,6 +101,8 @@ testSuite json-tools "json tools to manipulat key values" $PROVE
 
 testSuite git-mv-src "move a source file and repair import statements" $PROVE
 
+testSuite tar-code "tar up some code into a combined text file with file name banners for feeding to an AI" $PROVE
+
 testSuite css-color-scale "generates a quantised CSS color scale" $PROVE
 testSuite ls-cmds-used "lists external commands used in scripts" $PROVE
 

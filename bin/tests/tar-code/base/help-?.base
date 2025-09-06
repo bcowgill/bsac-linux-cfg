@@ -1,0 +1,9 @@
+Usage:
+    tar-code.pl [options] file...
+
+     Options:
+       --check         Check banners in a combined file
+       --output FILE   Write combined output to FILE instead of STDOUT
+       --help, -?      Brief help message
+       --man           Full documentation
+

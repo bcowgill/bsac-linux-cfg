@@ -1,0 +1,111 @@
+-- === out/split-sample2/src/db/hello.sql ==================================
+SELECT 'Hello from SQL!';
+// === out/split-sample2/src/lowlevel/hello.c ==============================
+#include <stdio.h>
+int main() {
+    printf("Hello from C!\n");
+    return 0;
+}
+
+// === out/split-sample2/src/lowlevel/hello.cpp ============================
+#include <iostream>
+int main() {
+    std::cout << "Hello from C++!" << std::endl;
+    return 0;
+}
+
+// === out/split-sample2/src/lowlevel/hello.cs =============================
+using System;
+class Hello {
+    static void Main() {
+        Console.WriteLine("Hello from C#!");
+    }
+}
+
+// === out/split-sample2/src/lowlevel/hello.go =============================
+package main
+import "fmt"
+func main() {
+    fmt.Println("Hello from Go!")
+}
+
+// === out/split-sample2/src/lowlevel/hello.java ===========================
+public class hello {
+    public static void main(String[] args) {
+        System.out.println("Hello from Java!");
+    }
+}
+
+// === out/split-sample2/src/lowlevel/hello.kt =============================
+fun main() {
+    println("Hello from Kotlin!")
+}
+
+// === out/split-sample2/src/lowlevel/hello.rs =============================
+fn main() {
+    println!("Hello from Rust!");
+}
+
+# === out/split-sample2/src/scripts/hello.pl ===============================
+print "Hello from Perl!\n";
+
+# === out/split-sample2/src/scripts/hello.py ===============================
+print("Hello from Python")
+
+# === out/split-sample2/src/scripts/hello.rb ===============================
+puts "Hello from Ruby"
+
+#!/bin/bash
+# === out/split-sample2/src/scripts/hello.sh ===============================
+echo "Hello from Bash!"
+
+/* === out/split-sample2/src/web/hello.css ================================= */
+body {
+  background: white;
+  color: black;
+}
+
+<!-- === out/split-sample2/src/web/hello.html ============================== -->
+<!DOCTYPE html>
+<html>
+  <head><title>Hello HTML</title></head>
+  <body>Hello from HTML!</body>
+</html>
+
+// === out/split-sample2/src/web/hello.js ==================================
+console.log("Hello from JavaScript!");
+
+// === out/split-sample2/src/web/hello.jsx =================================
+import React from 'react';
+export default function App() {
+  return <h1>Hello from JSX!</h1>;
+}
+
+/* === out/split-sample2/src/web/hello.less ================================ */
+@color: blue;
+body { color: @color; }
+
+/* === out/split-sample2/src/web/hello.sass ================================ */
+$color: red
+body
+  color: $color
+
+/* === out/split-sample2/src/web/hello.scss ================================ */
+$color: green;
+body {
+  color: $color;
+}
+
+// === out/split-sample2/src/web/hello.ts ==================================
+let msg: string = "Hello from TypeScript!";
+console.log(msg);
+
+// === out/split-sample2/src/web/hello.tsx =================================
+import React from 'react';
+export default function App(): JSX.Element {
+  return <h1>Hello from TSX!</h1>;
+}
+
+<!-- === out/split-sample2/src/web/hello.xml =============================== -->
+<message>Hello from XML!</message>
+

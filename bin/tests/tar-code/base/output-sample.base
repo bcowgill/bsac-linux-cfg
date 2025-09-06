@@ -1,0 +1,103 @@
+-- === out/split-sample/src/db/schema.sql ==================================
+-- Simple SQL hello
+CREATE TABLE greetings (id INT PRIMARY KEY, msg TEXT);
+INSERT INTO greetings VALUES (1, 'Hello from SQL!');
+// === out/split-sample/src/lowlevel/hello.c ===============================
+#include <stdio.h>
+int main() {
+    printf("Hello from C!\\n");
+    return 0;
+}
+
+// === out/split-sample/src/lowlevel/hello.cpp =============================
+#include <iostream>
+using namespace std;
+int main() {
+    cout << "Hello from C++!" << endl;
+    return 0;
+}
+
+// === out/split-sample/src/lowlevel/hello.java ============================
+public class hello {
+    public static void main(String[] args) {
+        System.out.println("Hello from Java!");
+    }
+}
+
+// === out/split-sample/src/lowlevel/hello.kt ==============================
+fun main() {
+    println("Hello from Kotlin!")
+}
+
+#!/usr/bin/perl
+// === out/split-sample/src/lowlevel/hello.rs ==============================
+fn main() {
+    println!("Hello from Rust!");
+}
+
+# === out/split-sample/src/scripts/hello.pl ================================
+print "Hello from Perl!\\n";
+
+#!/usr/bin/env python3
+# === out/split-sample/src/scripts/hello.py ================================
+print("Hello from Python!")
+
+#!/bin/bash
+# === out/split-sample/src/scripts/hello.sh ================================
+echo "Hello from Bash!"
+
+/* === out/split-sample/src/styles/main.css ================================ */
+body {
+  background: #fafafa;
+  color: #333;
+}
+
+/* === out/split-sample/src/styles/mixins.sass ============================= */
+=rounded($r)
+  border-radius: $r
+
+/* === out/split-sample/src/styles/theme.less ============================== */
+@primary: #4caf50;
+body {
+  background: @primary;
+}
+
+/* === out/split-sample/src/styles/variables.scss ========================== */
+$color: red;
+h1 { color: $color; }
+
+<!-- === out/split-sample/src/web/data.xml ================================= -->
+<?xml version="1.0" encoding="UTF-8"?>
+<greeting>Hello from XML!</greeting>
+
+// === out/split-sample/src/web/hello.js ===================================
+console.log("Hello from JavaScript!");
+
+// === out/split-sample/src/web/hello.jsx ==================================
+function Hello() {
+  return <h1>Hello from JSX!</h1>;
+}
+export default Hello;
+
+// === out/split-sample/src/web/hello.ts ===================================
+const msg: string = "Hello from TypeScript!";
+console.log(msg);
+
+// === out/split-sample/src/web/hello.tsx ==================================
+type Props = { name: string };
+function HelloTsx({ name }: Props) {
+  return <h1>Hello {name} from TSX!</h1>;
+}
+export default HelloTsx;
+
+<!-- === out/split-sample/src/web/index.html =============================== -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello HTML</title>
+  </head>
+  <body>
+    <p>Hello from HTML!</p>
+  </body>
+</html>
+

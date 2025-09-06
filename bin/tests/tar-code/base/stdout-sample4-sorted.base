@@ -1,0 +1,126 @@
+; === out/split-sample4-sorted/src/config/hello.ini ========================
+; Hello from INI 🌍!
+
+-- === out/split-sample4-sorted/src/db/hello.sql ===========================
+SELECT 'Hello from SQL 🌍!';
+
+// === out/split-sample4-sorted/src/lowlevel/hello.c =======================
+#include <stdio.h>
+int main() {
+    printf("Hello from C 🌍!\n");
+    return 0;
+}
+
+// === out/split-sample4-sorted/src/lowlevel/hello.cpp =====================
+#include <iostream>
+int main() {
+    std::cout << "Hello from C++ 🌍!" << std::endl;
+    return 0;
+}
+
+// === out/split-sample4-sorted/src/lowlevel/hello.cs ======================
+using System;
+class Hello {
+    static void Main() {
+        Console.WriteLine("Hello from C# 🌍!");
+    }
+}
+
+// === out/split-sample4-sorted/src/lowlevel/hello.go ======================
+package main
+import "fmt"
+func main() {
+    fmt.Println("Hello from Go 🌍!")
+}
+
+// === out/split-sample4-sorted/src/lowlevel/hello.java ====================
+public class hello {
+    public static void main(String[] args) {
+        System.out.println("Hello from Java 🌍!");
+    }
+}
+
+// === out/split-sample4-sorted/src/lowlevel/hello.kt ======================
+fun main() {
+    println("Hello from Kotlin 🌍!")
+}
+
+// === out/split-sample4-sorted/src/lowlevel/hello.rs ======================
+fn main() {
+    println!("Hello from Rust 🌍!");
+}
+
+% === out/split-sample4-sorted/src/math/hello.m ============================
+disp('Hello from MATLAB 🌍!');
+
+-- === out/split-sample4-sorted/src/scripts/hello.lua ======================
+print("Hello from Lua 🌍!")
+
+# === out/split-sample4-sorted/src/scripts/hello.pl ========================
+print "Hello from Perl 🌍!\n";
+
+# === out/split-sample4-sorted/src/scripts/hello.py ========================
+print("Hello from Python 🌍")
+
+# === out/split-sample4-sorted/src/scripts/hello.rb ========================
+puts "Hello from Ruby 🌍"
+
+#!/bin/bash
+# === out/split-sample4-sorted/src/scripts/hello.sh ========================
+echo "Hello from Bash 🌍!"
+
+/* === out/split-sample4-sorted/src/web/hello.css ========================== */
+body {
+  background: white;
+  color: black;
+}
+
+<!-- === out/split-sample4-sorted/src/web/hello.html ======================= -->
+<!DOCTYPE html>
+<html>
+  <head><title>Hello HTML</title></head>
+  <body>Hello from HTML 🌍!</body>
+</html>
+
+// === out/split-sample4-sorted/src/web/hello.js ===========================
+console.log("Hello from JavaScript 🌍!");
+
+// === out/split-sample4-sorted/src/web/hello.jsx ==========================
+import React from 'react';
+export default function App() {
+  return <h1>Hello from JSX 🌍!</h1>;
+}
+
+/* === out/split-sample4-sorted/src/web/hello.less ========================= */
+@color: blue;
+body { color: @color; }
+
+/* === out/split-sample4-sorted/src/web/hello.pcss ========================= */
+body {
+  font-family: sans-serif;
+  color: purple;
+}
+
+/* === out/split-sample4-sorted/src/web/hello.sass ========================= */
+$color: red
+body
+  color: $color
+
+/* === out/split-sample4-sorted/src/web/hello.scss ========================= */
+$color: green;
+body {
+  color: $color;
+}
+
+// === out/split-sample4-sorted/src/web/hello.ts ===========================
+let msg: string = "Hello from TypeScript 🌍!";
+console.log(msg);
+
+// === out/split-sample4-sorted/src/web/hello.tsx ==========================
+import React from 'react';
+export default function App(): JSX.Element {
+  return <h1>Hello from TSX 🌍!</h1>;
+}
+
+<!-- === out/split-sample4-sorted/src/web/hello.xml ======================== -->
+<message>Hello from XML 🌍!</message>

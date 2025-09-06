@@ -1,0 +1,39 @@
+TAR-CODE(1)           User Contributed Perl Documentation          TAR-CODE(1)
+
+
+
+NNAAMMEE
+       tar-code.pl - Combine and split source code files with standard comment
+       banners
+
+SSYYNNOOPPSSIISS
+       tar-code.pl [options] file...
+
+        Options:
+          --check         Check banners in a combined file
+          --output FILE   Write combined output to FILE instead of STDOUT
+          --help, -?      Brief help message
+          --man           Full documentation
+
+DDEESSCCRRIIPPTTIIOONN
+       This script can combine multiple source code files into a single file
+       with a standard comment banner separating each one, or split a single
+       combined file back into the original files.
+
+       If multiple files are given, they are combined (sorted by subdirectory
+       depth then alphabetically) and written to STDOUT or the file specified
+       with "--output".
+
+       If a single file is given, it is split back into the original files,
+       creating subdirectories as needed.
+
+       If "--check" is specified with a single file, the script scans for
+       standard banners and reports whether each file exists, will be created,
+       or appears multiple times.
+
+       Supports additional comment styles: %, ;, {-} for MATLAB, INI, Haskell,
+       and Lua.
+
+
+
+perl v5.18.2                      2025-09-06                       TAR-CODE(1)
