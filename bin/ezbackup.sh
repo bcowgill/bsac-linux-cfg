@@ -84,11 +84,19 @@ if echo "$MODE" | grep -- "--" > /dev/null; then
 	usage "unknown option '$MODE'. you must provide a mode name or valid --option name."
 fi
 
+function file_age_less {
+	local file age
+	file="$1"
+	age=$2
+	perl -e 'my $file = shift; my $age = shift; my $result = (-M "$file" > $age ? 1 : 0); exit $result;' "$file" $age
+}
+
 function is_locked {
-	if [ -d $BK_DIR/locked ]; then
-		echo "$CMD is locked: $BK_DIR/locked backup may be in progress."
+	if [ -d $BK_LOCK ]; then
+		echo "$CMD is locked: $BK_LOCK backup may be in progress."
+		file_age_less $BK_LOCK 1 || say "WARNING Backup has been locked for more than a day: $BK_LOCK"
 	else
-		echo "$CMD no backup in progress, is not locked: $BK_DIR/locked"
+		echo "$CMD no backup in progress, is not locked: $BK_LOCK"
 	fi
 }
 
@@ -96,7 +104,7 @@ function is_locked {
 # do not use mkdir -p
 function lock {
 	LOCK_ERROR=1
-	mkdir $BK_DIR/locked || die 1 "unable to lock in $BK_DIR/locked"
+	mkdir $BK_LOCK || die 1 "unable to lock in $BK_LOCK"
 	LOCK_ERROR=
 	# on error during script, unlock
 	trap 'error ${LINENO}' ERR
@@ -104,7 +112,7 @@ function lock {
 
 # unlock the backup directory so that another backup can happen
 function unlock {
-	rmdir $BK_DIR/locked > /dev/null
+	rmdir $BK_LOCK > /dev/null
 }
 
 # terminate the program with a value and message. will unlock the directory
@@ -152,6 +160,7 @@ function pre_config {
 		EXCLUDE="--exclude=\"$SOURCE/$EXCLUDE\""
 	fi
 
+	BK_LOCK="$BK_DIR/locked"
 	NUM_PARTIALS=${NUM_PARTIALS:-5}
 	FULL=$BK_DISK/ezbackup.tgz
 	FULL_SAVE=$BK_DISK/saved.full.tgz
@@ -173,6 +182,7 @@ function pre_config {
 		echo BK_DEV=$BK_DEV
 		echo BK_DISK=$BK_DISK
 		echo FULL=$FULL
+		echo BK_LOCK=$BK_LOCK
 	fi
 }
 
