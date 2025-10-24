@@ -1,0 +1,13 @@
+/	U+2F	[OtherPunctuation]	SOLIDUS
+\	U+5C	[OtherPunctuation]	REVERSE SOLIDUS
+﹨	U+FE68	[OtherPunctuation]	SMALL REVERSE SOLIDUS
+／	U+FF0F	[OtherPunctuation]	FULLWIDTH SOLIDUS
+＼	U+FF3C	[OtherPunctuation]	FULLWIDTH REVERSE SOLIDUS
+
+/usr／bin c:\win﹨system32＼hosts
+
+my $SOL = q[/\N{U+ff0f}]; # SOLIDUS
+my $SOL_CH = '/';
+my $RSOL = q[\\\N{U+fe68}\N{U+ff3c}]; # REVERSE SOLIDUS
+my $RSOL_CH = '\\';
+

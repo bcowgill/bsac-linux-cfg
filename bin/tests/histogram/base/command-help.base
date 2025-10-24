@@ -1,0 +1,34 @@
+Usage:
+    histogram.pl [options] [@options-file ...] [file ...]
+
+    This program will examine the files provided and display histograms of
+    word usage for each or for the combined batch of files. The meaning of a
+    word can be controlled by command line options. By default all
+    punctuation is stripped, words are converted to lower case and the
+    histogram of all files provided is output.
+
+     Options:
+       --line           histogram by line, without outer spacing.
+       --sentence       histogram by sentence, terminated by ! ? . forces --entire option.
+       --letter         histogram by letters and numbers.
+       --char           histogram by any non-space character.
+       --lower          convert to lower case characters.
+       --upper          convert to upper case characters.
+       --fold           fold case to compare identical letter forms that don't transform to upper/lower case the same.
+       --number         replace number symbols with their values.
+       --strip-apos     strip out apostrophe characters.
+       --strip-hyphen   strip out hyphen characters to make a combined word.
+       --split-dash     replace dash or hyphen with space to split word.
+       --utf=type       show invisible characters as unicode code points for given language. (code, wrap, name, etc)
+       --all            read all files and output one histogram, instead of showing one for each file read.
+       --percent        show percentage for each word instead of counts of each.
+       --digits=N       show number of decimal digits for percentages. default 2
+       --alpha          sort the results alphabetically instead of my number.
+       --reverse        reverse the normal sorting order (ascending number or reversed for alphabetical.)
+       --list           just list the words without their count values.
+       --bar            show results as a bar chart.
+       --entire         process the entire file instead of reading line by line.
+       --version        display program version
+       --help -?        brief help message
+       --man            full help message
+

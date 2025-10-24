@@ -1,0 +1,15 @@
+	U+82	[Control]	BREAK PERMITTED HERE
+	U+83	[Control]	NO BREAK HERE
+ 	U+A0	[SpaceSeparator]	NO-BREAK SPACE
+‑	U+2011	[DashPunctuation]	NON-BREAKING HYPHEN
+ 	U+202F	[SpaceSeparator]	NARROW NO-BREAK SPACE
+䷪	U+4DEA	[OtherSymbol]	HEXAGRAM FOR BREAKTHROUGH
+﻿	U+FEFF	[Format]	ZERO WIDTH NO-BREAK SPACE
+
+my $BR = qq[\N{U+82}\N{U+83}\N{U+2011}\N{U+feff}]; # word break/no-break indicator characters
+my $NOBR = qq[\N{U+a0}\N{U+202f}]; # inter-word no-break indicator characters
+
+s{$BR}{}xmsg;
+s{$NOBR}{ }xmsg;
+
+word breaks (indicate) (positions) within long words [where ever] {substan‑tially} lengthened [words can] (dis﻿member).

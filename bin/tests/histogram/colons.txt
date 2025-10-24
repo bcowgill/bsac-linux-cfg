@@ -1,0 +1,24 @@
+:	U+3A	[OtherPunctuation]	COLON
+܃	U+703	[OtherPunctuation]	SYRIAC SUPRALINEAR COLON
+܄	U+704	[OtherPunctuation]	SYRIAC SUBLINEAR COLON
+܅	U+705	[OtherPunctuation]	SYRIAC HORIZONTAL COLON
+܆	U+706	[OtherPunctuation]	SYRIAC COLON SKEWED LEFT
+܇	U+707	[OtherPunctuation]	SYRIAC COLON SKEWED RIGHT
+܈	U+708	[OtherPunctuation]	SYRIAC SUPRALINEAR COLON SKEWED LEFT
+܉	U+709	[OtherPunctuation]	SYRIAC SUBLINEAR COLON SKEWED LEFT
+፥	U+1365	[OtherPunctuation]	ETHIOPIC COLON
+፦	U+1366	[OtherPunctuation]	ETHIOPIC PREFACE COLON
+᠄	U+1804	[OtherPunctuation]	MONGOLIAN COLON
+⁝	U+205D	[OtherPunctuation]	TRICOLON
+꛴	U+A6F4	[OtherPunctuation]	BAMUM COLON
+︓	U+FE13	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL COLON
+﹕	U+FE55	[OtherPunctuation]	SMALL COLON
+：	U+FF1A	[OtherPunctuation]	FULLWIDTH COLON
+𒑱	U+12471	[OtherPunctuation]	CUNEIFORM PUNCTUATION SIGN VERTICAL COLON
+𒑲	U+12472	[OtherPunctuation]	CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON
+𒑳	U+12473	[OtherPunctuation]	CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON
+
+my $COLON = qq[:\N{U+703}\N{U+704}\N{U+705}\N{U+706}\N{U+707}\N{U+708}\N{U+709}\N{U+1365}\N{U+1366}\N{U+1804}\N{U+205d}\N{U+a6f4}\N{U+fe13}\N{U+fe55}\N{U+fe1a}\N{U+12471}\N{U+12472}\N{U+12473}]; # COLON
+my $COLON_CH = ':';
+
+a: 1, b܃ 2, c܄ 3, d܅ 4, e܆ 5, f܇ 6, g܈ 7, h܉ 8, i፥ 9, j፦ 10, k᠄ 11, l⁝ 12, m꛴ 13, n︓ 14, o﹕15, p： 16, q𒑱 17, r𒑲 18, s𒑳 19.

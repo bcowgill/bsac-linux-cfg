@@ -1,0 +1,13 @@
+# U+27	[OtherPunctuation]	APOSTROPHE through to U+FF07	[OtherPunctuation]	FULLWIDTH APOSTROPHE
+'ʼˮ՚ߴߵ＇
+'\u149\u2bc\u2ee\u55a\u7f4\u7f5\uff07\ue0027
+
+'	U+27	[OtherPunctuation]	APOSTROPHE
+ŉ	U+149	[LowercaseLetter]	LATIN SMALL LETTER N PRECEDED BY APOSTROPHE
+ʼ	U+2BC	[ModifierLetter]	MODIFIER LETTER APOSTROPHE
+ˮ	U+2EE	[ModifierLetter]	MODIFIER LETTER DOUBLE APOSTROPHE
+՚	U+55A	[OtherPunctuation]	ARMENIAN APOSTROPHE
+ߴ	U+7F4	[ModifierLetter]	NKO HIGH TONE APOSTROPHE
+ߵ	U+7F5	[ModifierLetter]	NKO LOW TONE APOSTROPHE
+＇	U+FF07	[OtherPunctuation]	FULLWIDTH APOSTROPHE
+󠀧	U+E0027	[Format]	TAG APOSTROPHE

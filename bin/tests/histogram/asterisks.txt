@@ -1,0 +1,11 @@
+*	U+2A	[OtherPunctuation]	ASTERISK
+⁎	U+204E	[OtherPunctuation]	LOW ASTERISK
+⁑	U+2051	[OtherPunctuation]	TWO ASTERISKS ALIGNED VERTICALLY
+꙳	U+A673	[OtherPunctuation]	SLAVONIC ASTERISK
+﹡	U+FE61	[OtherPunctuation]	SMALL ASTERISK
+＊	U+FF0A	[OtherPunctuation]	FULLWIDTH ASTERISK
+
+my $ASTER = qq[\N{U+2a}\N{U+204e}\N{U+2051}\N{U+a673}\N{U+fe61}\N{U+ff0a}]; # ASTERISK
+my $ASTER_CH = '*';
+
+the* quick⁎ brown⁑ fox꙳ jumped﹡ over＊ the lazy dog

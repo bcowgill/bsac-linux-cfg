@@ -1,0 +1,26 @@
+?	U+3F	[OtherPunctuation]	QUESTION MARK
+¿	U+BF	[OtherPunctuation]	INVERTED QUESTION MARK
+;	U+37E	[OtherPunctuation]	GREEK QUESTION MARK
+՞	U+55E	[OtherPunctuation]	ARMENIAN QUESTION MARK
+؟	U+61F	[OtherPunctuation]	ARABIC QUESTION MARK
+፧	U+1367	[OtherPunctuation]	ETHIOPIC QUESTION MARK
+᥅	U+1945	[OtherPunctuation]	LIMBU QUESTION MARK
+⳺	U+2CFA	[OtherPunctuation]	COPTIC OLD NUBIAN DIRECT QUESTION MARK
+⳻	U+2CFB	[OtherPunctuation]	COPTIC OLD NUBIAN INDIRECT QUESTION MARK
+⸮	U+2E2E	[OtherPunctuation]	REVERSED QUESTION MARK
+꘏	U+A60F	[OtherPunctuation]	VAI QUESTION MARK
+꛷	U+A6F7	[OtherPunctuation]	BAMUM QUESTION MARK
+︖	U+FE16	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL QUESTION MARK
+﹖	U+FE56	[OtherPunctuation]	SMALL QUESTION MARK
+？	U+FF1F	[OtherPunctuation]	FULLWIDTH QUESTION MARK
+𑅃	U+11143	[OtherPunctuation]	CHAKMA QUESTION MARK
+
+⁇	U+2047	[OtherPunctuation]	DOUBLE QUESTION MARK
+⁈	U+2048	[OtherPunctuation]	QUESTION EXCLAMATION MARK
+⁉	U+2049	[OtherPunctuation]	EXCLAMATION QUESTION MARK
+
+my $QUES = qq[\N{U+3f}\N{U+5f}\N{U+37e}\N{U+55e}\N{U+61f}\N{U+1367}\N{U+1945}\N{U+2cfa}\N{U+2cfb}\N{U+2e2e}\N{U+a60f}\N{U+a6f7}\N{U+fe16}\N{U+fe56}\N{U+ff1f}\N{U+11143}]; # QUESTION MARK
+my $QUES_CH = '?';
+
+
+who? what¿ where; when՞ why؟ which፧ how᥅ how much⳺ how high⳻ innit⸮ aight꘏ up for it꛷ now︖ what's next﹖ wherefore？ willya𑅃

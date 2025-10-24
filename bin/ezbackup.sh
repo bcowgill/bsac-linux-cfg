@@ -73,7 +73,7 @@ function usage {
 	echo "  alarm-if.sh check-ezbackup-finished.sh ~/bin/sounds/that_was_easy.wav"
 	echo " "
 	echo "See also check-ezbackup-finished.sh watcher.sh updatedb-backup.sh locatebk.sh locatebkall.sh alarm.sh alarm_if.sh"
-	exit $code
+	exit $code;
 }
 
 if [ "$MODE" == "--help" ]; then

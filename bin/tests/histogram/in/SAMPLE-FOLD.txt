@@ -1,0 +1,1 @@
+For example "σ" and "ς" (two forms of "Σ") don't become the same when converted to lower case.

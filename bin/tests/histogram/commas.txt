@@ -1,0 +1,25 @@
+,	U+2C	[OtherPunctuation]	COMMA
+՝	U+55D	[OtherPunctuation]	ARMENIAN COMMA
+،	U+60C	[OtherPunctuation]	ARABIC COMMA
+߸	U+7F8	[OtherPunctuation]	NKO COMMA
+፣	U+1363	[OtherPunctuation]	ETHIOPIC COMMA
+᠂	U+1802	[OtherPunctuation]	MONGOLIAN COMMA
+᠈	U+1808	[OtherPunctuation]	MONGOLIAN MANCHU COMMA
+⸲	U+2E32	[OtherPunctuation]	TURNED COMMA
+⸴	U+2E34	[OtherPunctuation]	RAISED COMMA
+、	U+3001	[OtherPunctuation]	IDEOGRAPHIC COMMA
+꓾	U+A4FE	[OtherPunctuation]	LISU PUNCTUATION COMMA
+꘍	U+A60D	[OtherPunctuation]	VAI COMMA
+꛵	U+A6F5	[OtherPunctuation]	BAMUM COMMA
+︐	U+FE10	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL COMMA
+︑	U+FE11	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA
+﹐	U+FE50	[OtherPunctuation]	SMALL COMMA
+﹑	U+FE51	[OtherPunctuation]	SMALL IDEOGRAPHIC COMMA
+，	U+FF0C	[OtherPunctuation]	FULLWIDTH COMMA
+､	U+FF64	[OtherPunctuation]	HALFWIDTH IDEOGRAPHIC COMMA
+
+my $COMMA = qq[,\N{U+55d}\N{U+60c}\N{U+7f8}\N{U+1363}\N{U+1802}\N{U+1808}\N{U+2e32}\N{U+2e34}\N{U+3001}\N{U+a4fe}\N{U+a60d}\N{U+a6f5}\N{U+fe10}\N{U+fe11}\N{U+fe50}\N{U+fe51}\N{U+ff0c}\N{U+ff64}]; # COMMA
+my $COMMA_CH = ',';
+
+
+one, two՝ three، four߸ five፣ six᠂ seven᠈ eight⸲ nine⸴ ten、eleven꓾ twelve꘍ thirteen꛵ fourteen︐ fifteen︑ sixteen﹐ seventeen﹑ eighteen， nineteen､ twenty.

@@ -1,0 +1,9 @@
+%	U+25	[OtherPunctuation]	PERCENT SIGN
+٪	U+66A	[OtherPunctuation]	ARABIC PERCENT SIGN
+﹪	U+FE6A	[OtherPunctuation]	SMALL PERCENT SIGN
+％	U+FF05	[OtherPunctuation]	FULLWIDTH PERCENT SIGN
+
+my $PCT = qq[%\N{U+66a}\N{U+fe6a}\N{U+ff05}]; # PERCENT
+my $PCT_CH = '%';
+
+34% profit, ٪99 pure, 1.4﹪inflation, 3％ trim

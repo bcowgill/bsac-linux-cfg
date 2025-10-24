@@ -1,0 +1,14 @@
+;	U+3B	[OtherPunctuation]	SEMICOLON
+؛	U+61B	[OtherPunctuation]	ARABIC SEMICOLON
+፤	U+1364	[OtherPunctuation]	ETHIOPIC SEMICOLON
+⁏	U+204F	[OtherPunctuation]	REVERSED SEMICOLON
+⸵	U+2E35	[OtherPunctuation]	TURNED SEMICOLON
+꛶	U+A6F6	[OtherPunctuation]	BAMUM SEMICOLON
+︔	U+FE14	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL SEMICOLON
+﹔	U+FE54	[OtherPunctuation]	SMALL SEMICOLON
+；	U+FF1B	[OtherPunctuation]	FULLWIDTH SEMICOLON
+
+my $SMCOL = qq[;\N{U+61b}\N{U+1364}\N{U+204f}\N{U+2e35}\N{U+a6f6}\N{U+fe14}\N{U+fe54}\N{U+ff1b}]; # SEMICOLON
+my $SMCOL_CH = ';';
+
+first; second؛ third፤ fourth⁏ fifth⸵ sixth꛶ seventh︔ eighth﹔ ninth；

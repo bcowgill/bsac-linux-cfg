@@ -1,0 +1,8 @@
+@	U+40	[OtherPunctuation]	COMMERCIAL AT
+﹫	U+FE6B	[OtherPunctuation]	SMALL COMMERCIAL AT
+＠	U+FF20	[OtherPunctuation]	FULLWIDTH COMMERCIAL AT
+
+my $AT = qq[@\N{U+fe6b}\N{U+ff20}]; # AT SIGN
+my $AT_CH = '@';
+
+eggs: 12 @ £4.99, cheese: 13 ﹫$1.99, steaks: 56 ＠ €23.45

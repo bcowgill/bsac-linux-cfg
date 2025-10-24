@@ -1,0 +1,148 @@
+NAME
+       histogram.pl - examine the distribution of words used in any number of
+       files.
+
+AUTHOR
+       Brent S.A. Cowgill
+
+SYNOPSIS
+       histogram.pl [options] [@options-file ...] [file ...]
+
+       This program will examine the files provided and display histograms of
+       word usage for each or for the combined batch of files.  The meaning of
+       a word can be controlled by command line options. By default all
+       punctuation is stripped, words are converted to lower case and the
+       histogram of all files provided is output.
+
+        Options:
+          --line           histogram by line, without outer spacing.
+          --sentence       histogram by sentence, terminated by ! ? . forces --entire option.
+          --letter         histogram by letters and numbers.
+          --char           histogram by any non-space character.
+          --lower          convert to lower case characters.
+          --upper          convert to upper case characters.
+          --fold           fold case to compare identical letter forms that don't transform to upper/lower case the same.
+          --number         replace number symbols with their values.
+          --strip-apos     strip out apostrophe characters.
+          --strip-hyphen   strip out hyphen characters to make a combined word.
+          --split-dash     replace dash or hyphen with space to split word.
+          --utf=type       show invisible characters as unicode code points for given language. (code, wrap, name, etc)
+          --all            read all files and output one histogram, instead of showing one for each file read.
+          --percent        show percentage for each word instead of counts of each.
+          --digits=N       show number of decimal digits for percentages. default 2
+          --alpha          sort the results alphabetically instead of my number.
+          --reverse        reverse the normal sorting order (ascending number or reversed for alphabetical.)
+          --list           just list the words without their count values.
+          --bar            show results as a bar chart.
+          --entire         process the entire file instead of reading line by line.
+          --version        display program version
+          --help -?        brief help message
+          --man            full help message
+
+OPTIONS
+       --line
+                Histogram by each line, stripping leading and trailing spaces.
+
+       --sentence
+                Histogram by sentence, terminated by . ! ?. Multiple line sentences are joined into a single line of text terminated by one or more terminators.
+
+       --letter
+                Histogram by letters and numbers, includes hyphens, apostrophe, comma, decimal point and currency symbols.
+
+       --char
+                Histogram by any non-space character.
+
+       --lower
+                Convert to lower case characters before doing the histogram analysis.
+
+       --upper
+                Convert to upper case characters before doing the histogram analysis.
+
+       --fold
+                Fold the case of characters before doing the histogram analysis.  This allows proper comparison of letters with different forms like Sigma in Greek, whcih do not convert to upper and lower case the same way.
+
+                Forms XXX  Greek capital, lower, final
+                upper XXX
+                lower XXX
+                fold  XXX
+
+                This also folds all apostrophe characters in words to the unicode MODIFIER LETTER APOSTROPHE. All forms of hypen or dash is folded into the unicode HTPHEN. All forms of quotation marks are folded into the unicode LEFT/RIGHT SINGLE QUOTATION MARK.  All forms of brackets are folded into simple parenthesis.
+
+       --number
+                 Replace characters and symbols which are numerically based, with their corresponding values (and units if relevant)
+
+       --strip-apos
+                 Strip out various apostrophe characters before doing the histogram analysis.
+
+       --strip-hyphen
+                Strip out hyphen characters to make a combined word before doing the histogram analysis.
+
+       --split-dash Replace dash or hyphen with space to split the word so
+       that both halves are counted in the histogram analysis.
+       --utf=format
+                Show invisible characters as unicode code points in a given format.
+
+                code       U+HHHH      normal unicode code point format.
+                wrap       {U+HHHH}    wrapped in curly parenthesis so the character is separated from trailing characters that are also hexadecimal digits.
+                name       NAME        uppercase name of the character like LINE FEED.
+                html       &#xHHHH;    formatted so it is usable in an html file. can also use xml
+                javascript \u{HHHH}    formatted so it is usable inside of a javascript string literal. can also use js, typescript
+                perl       \N{U+HHHH}  formatted so it is usable inside a perl string literal.
+                perlname   \N{NAME}    formatted so it is usable inside a perl string literal as the unicode character name instead of code point.
+                java       \uHHHH      formatted so it is usable inside a java string literal.
+                python                 same as java, usable in a python script string literal.
+                debug      \N{NAME}[C] for debugging, shows perlname format as well as the literal character between square brackets.
+
+       --all
+                 Show a single histogram for all files read, instead of one for each file.  This is the default when reading from standard input.
+
+       --percent
+                 Show histogram values by percentage of occurrence instead of plain counts of each word.
+
+       --digits=N
+                 Defaults to two decimal place digits to show for percentage values.
+
+       --alpha
+                 Sort the histogram results alphabetically instead of by percentage or count value.
+
+       --reverse
+                 Reverse the normal sorting order for the historgram. Uses ascending order for percentage or count values and reverse alphabetical order for --alpha option.
+
+       --list
+                 Instead of a histogram, just list the words without their percentage or count value.
+
+       --bar
+                 Show results as a bar chart instead of just numberd lines.
+
+       --entire
+                 Read in the entire file instead of reading line by line.
+
+       --version
+                Prints the program version and exit.
+
+       --help or -?
+                Print a brief help message and exit.
+
+       --man
+                Print the full help message and exit.
+
+DESCRIPTION
+        B<This program> will examine standard input, or the files provided and display histograms of word usage for each or for the combined batch of files.  The meaning of a word can be controlled by command line options. By default all punctuation is stripped, words are converted to lower case and the histogram of all files provided is output.
+       MUSTDO
+
+EXAMPLES
+       MUSTDO  template/perl/perl-script.pl --length=32 --file this.txt
+       filename.inline --in - --out - --ratio=43.345 --debug --debug --debug
+       --name=fred --name=barney --map key=value --map this=that -m
+       short=value --hex=0x3c7e --width -- --also-a-file -
+
+POD ERRORS
+       Hey! The above document had some coding errors, which are explained
+       below:
+
+       Around line 78:
+           Non-ASCII character seen before =encoding in 'XXX'. Assuming UTF-8
+
+
+
+perl vX.XX                      YYYY-MM-DD                      HISTOGRAM(1)

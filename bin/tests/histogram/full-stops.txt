@@ -1,0 +1,25 @@
+.	U+2E	[OtherPunctuation]	FULL STOP
+։	U+589	[OtherPunctuation]	ARMENIAN FULL STOP
+۔	U+6D4	[OtherPunctuation]	ARABIC FULL STOP
+܁	U+701	[OtherPunctuation]	SYRIAC SUPRALINEAR FULL STOP
+܂	U+702	[OtherPunctuation]	SYRIAC SUBLINEAR FULL STOP
+።	U+1362	[OtherPunctuation]	ETHIOPIC FULL STOP
+᙮	U+166E	[OtherPunctuation]	CANADIAN SYLLABICS FULL STOP
+᠃	U+1803	[OtherPunctuation]	MONGOLIAN FULL STOP
+᠉	U+1809	[OtherPunctuation]	MONGOLIAN MANCHU FULL STOP
+⳹	U+2CF9	[OtherPunctuation]	COPTIC OLD NUBIAN FULL STOP
+⳾	U+2CFE	[OtherPunctuation]	COPTIC FULL STOP
+。	U+3002	[OtherPunctuation]	IDEOGRAPHIC FULL STOP
+꓿	U+A4FF	[OtherPunctuation]	LISU PUNCTUATION FULL STOP
+꘎	U+A60E	[OtherPunctuation]	VAI FULL STOP
+꛳	U+A6F3	[OtherPunctuation]	BAMUM FULL STOP
+︒	U+FE12	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC FULL STOP
+﹒	U+FE52	[OtherPunctuation]	SMALL FULL STOP
+．	U+FF0E	[OtherPunctuation]	FULLWIDTH FULL STOP
+｡	U+FF61	[OtherPunctuation]	HALFWIDTH IDEOGRAPHIC FULL STOP
+
+my $FS = qq[\N{U+2e}\N{U+589}\N{U+6d4}\N{U+701}\N{U+702}\N{U+1362}\N{U+166e}\N{U+1803}\N{U+1809}\N{U+2cf9}\N{U+2cfe}\N{U+3002}\N{U+a4ff}\N{U+a60e}\N{U+a6f3}\N{U+fe12}\N{U+fe52}\N{U+ff0e}\N{U+ff61}]; # FULL STOP
+my $FS_CH = '.'
+
+
+one. does։ not۔ simply܁ walk܂ into። mordor᙮ and᠃ drop᠉ a⳹ ring⳾ into。the꓿ mouth꘎ of꛳ a︒ volcano﹒ and． run｡

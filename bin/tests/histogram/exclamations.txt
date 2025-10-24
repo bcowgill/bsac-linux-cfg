@@ -1,0 +1,20 @@
+!	U+21	[OtherPunctuation]	EXCLAMATION MARK
+¡	U+A1	[OtherPunctuation]	INVERTED EXCLAMATION MARK
+՜	U+55C	[OtherPunctuation]	ARMENIAN EXCLAMATION MARK
+߹	U+7F9	[OtherPunctuation]	NKO EXCLAMATION MARK
+᥄	U+1944	[OtherPunctuation]	LIMBU EXCLAMATION MARK
+‼	U+203C	[OtherPunctuation]	DOUBLE EXCLAMATION MARK
+⁈	U+2048	[OtherPunctuation]	QUESTION EXCLAMATION MARK
+⁉	U+2049	[OtherPunctuation]	EXCLAMATION QUESTION MARK
+︕	U+FE15	[OtherPunctuation]	PRESENTATION FORM FOR VERTICAL EXCLAMATION MARK
+﹗	U+FE57	[OtherPunctuation]	SMALL EXCLAMATION MARK
+！	U+FF01	[OtherPunctuation]	FULLWIDTH EXCLAMATION MARK
+
+my $EXCL = qq[!\N{U+a1}\N{U+55c}\N{U+7f9}\N{U+1944}\N{U+fe15}\N{U+fe57}\N{U+ff01}]; # EXCLAMATION
+my $EXCL_CH = '!';
+
+s{\N{U+203c}}{!!}xmsg;
+s{\N{U+2048}}{?!}xmsg;
+s{\N{U+2049}}{!?}xmsg;
+
+stop! thief¡ hey՜ teacher߹ leave those kids alone᥄ hold‼ still⁈ step off⁉ geronimo︕ away﹗out！

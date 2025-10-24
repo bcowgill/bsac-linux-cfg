@@ -1,0 +1,30 @@
+U+2D	[DashPunctuation]	HYPHEN-MINUS
+U+FF0D	[DashPunctuation]	FULLWIDTH HYPHEN-MINUS
+-֊־᐀᠆‐‑‒–—―⁓⸗⸚⸺⸻〜〰゠︱︲﹘﹣－
+-\N{U+58a}\N{U+5be}\N{U+1400}\N{U+1806}\N{U+2010}\N{U+2011}\N{U+2012}\N{U+2013}\N{U+2014}\N{U+2015}\N{U+2053}\N{U+2e17}\N{U+2e1a}\N{U+2e3a}\N{U+2e3b}\N{U+301c}\N{U+3030}\N{U+30a0}\N{U+fe31}\N{U+fe32}\N{U+fe58}\N{U+fe63}\N{U+ff0d}
+
+-	U+2D	[DashPunctuation]	HYPHEN-MINUS
+֊	U+58A	[DashPunctuation]	ARMENIAN HYPHEN
+־	U+5BE	[DashPunctuation]	HEBREW PUNCTUATION MAQAF
+᐀	U+1400	[DashPunctuation]	CANADIAN SYLLABICS HYPHEN
+᠆	U+1806	[DashPunctuation]	MONGOLIAN TODO SOFT HYPHEN
+‐	U+2010	[DashPunctuation]	HYPHEN
+‑	U+2011	[DashPunctuation]	NON-BREAKING HYPHEN
+‒	U+2012	[DashPunctuation]	FIGURE DASH
+–	U+2013	[DashPunctuation]	EN DASH
+—	U+2014	[DashPunctuation]	EM DASH
+―	U+2015	[DashPunctuation]	HORIZONTAL BAR
+⁓	U+2053	[OtherPunctuation]	SWUNG DASH
+⸗	U+2E17	[DashPunctuation]	DOUBLE OBLIQUE HYPHEN
+⸚	U+2E1A	[DashPunctuation]	HYPHEN WITH DIAERESIS
+⸺	U+2E3A	[DashPunctuation]	TWO-EM DASH
+⸻	U+2E3B	[DashPunctuation]	THREE-EM DASH
+〜	U+301C	[DashPunctuation]	WAVE DASH
+〰	U+3030	[DashPunctuation]	WAVY DASH
+゠	U+30A0	[DashPunctuation]	KATAKANA-HIRAGANA DOUBLE HYPHEN
+︱	U+FE31	[DashPunctuation]	PRESENTATION FORM FOR VERTICAL EM DASH
+︲	U+FE32	[DashPunctuation]	PRESENTATION FORM FOR VERTICAL EN DASH
+﹘	U+FE58	[DashPunctuation]	SMALL EM DASH
+﹣	U+FE63	[DashPunctuation]	SMALL HYPHEN-MINUS
+－	U+FF0D	[DashPunctuation]	FULLWIDTH HYPHEN-MINUS
+

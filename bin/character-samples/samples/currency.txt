@@ -1,0 +1,56 @@
+$	U+24	[CurrencySymbol]	DOLLAR SIGN
+¢	U+A2	[CurrencySymbol]	CENT SIGN
+£	U+A3	[CurrencySymbol]	POUND SIGN
+¤	U+A4	[CurrencySymbol]	CURRENCY SIGN
+¥	U+A5	[CurrencySymbol]	YEN SIGN
+֏	U+58F	[CurrencySymbol]	ARMENIAN DRAM SIGN
+؋	U+60B	[CurrencySymbol]	AFGHANI SIGN
+৲	U+9F2	[CurrencySymbol]	BENGALI RUPEE MARK
+৳	U+9F3	[CurrencySymbol]	BENGALI RUPEE SIGN
+৴	U+9F4	[OtherNumber]	BENGALI CURRENCY NUMERATOR ONE
+৵	U+9F5	[OtherNumber]	BENGALI CURRENCY NUMERATOR TWO
+৶	U+9F6	[OtherNumber]	BENGALI CURRENCY NUMERATOR THREE
+৷	U+9F7	[OtherNumber]	BENGALI CURRENCY NUMERATOR FOUR
+৸	U+9F8	[OtherNumber]	BENGALI CURRENCY NUMERATOR ONE LESS THAN THE DENOMINATOR
+৹	U+9F9	[OtherNumber]	BENGALI CURRENCY DENOMINATOR SIXTEEN
+৻	U+9FB	[CurrencySymbol]	BENGALI GANDA MARK
+૱	U+AF1	[CurrencySymbol]	GUJARATI RUPEE SIGN
+௹	U+BF9	[CurrencySymbol]	TAMIL RUPEE SIGN
+฿	U+E3F	[CurrencySymbol]	THAI CURRENCY SYMBOL BAHT
+៛	U+17DB	[CurrencySymbol]	KHMER CURRENCY SYMBOL RIEL
+₠	U+20A0	[CurrencySymbol]	EURO-CURRENCY SIGN
+₡	U+20A1	[CurrencySymbol]	COLON SIGN
+₢	U+20A2	[CurrencySymbol]	CRUZEIRO SIGN
+₣	U+20A3	[CurrencySymbol]	FRENCH FRANC SIGN
+₤	U+20A4	[CurrencySymbol]	LIRA SIGN
+₥	U+20A5	[CurrencySymbol]	MILL SIGN
+₦	U+20A6	[CurrencySymbol]	NAIRA SIGN
+₧	U+20A7	[CurrencySymbol]	PESETA SIGN
+₨	U+20A8	[CurrencySymbol]	RUPEE SIGN
+₩	U+20A9	[CurrencySymbol]	WON SIGN
+₪	U+20AA	[CurrencySymbol]	NEW SHEQEL SIGN
+₫	U+20AB	[CurrencySymbol]	DONG SIGN
+€	U+20AC	[CurrencySymbol]	EURO SIGN
+₭	U+20AD	[CurrencySymbol]	KIP SIGN
+₮	U+20AE	[CurrencySymbol]	TUGRIK SIGN
+₯	U+20AF	[CurrencySymbol]	DRACHMA SIGN
+₰	U+20B0	[CurrencySymbol]	GERMAN PENNY SIGN
+₱	U+20B1	[CurrencySymbol]	PESO SIGN
+₲	U+20B2	[CurrencySymbol]	GUARANI SIGN
+₳	U+20B3	[CurrencySymbol]	AUSTRAL SIGN
+₴	U+20B4	[CurrencySymbol]	HRYVNIA SIGN
+₵	U+20B5	[CurrencySymbol]	CEDI SIGN
+₶	U+20B6	[CurrencySymbol]	LIVRE TOURNOIS SIGN
+₷	U+20B7	[CurrencySymbol]	SPESMILO SIGN
+₸	U+20B8	[CurrencySymbol]	TENGE SIGN
+₹	U+20B9	[CurrencySymbol]	INDIAN RUPEE SIGN
+₺	U+20BA	[CurrencySymbol]	TURKISH LIRA SIGN
+꠸	U+A838	[CurrencySymbol]	NORTH INDIC RUPEE MARK
+﷼	U+FDFC	[CurrencySymbol]	RIAL SIGN
+﹩	U+FE69	[CurrencySymbol]	SMALL DOLLAR SIGN
+＄	U+FF04	[CurrencySymbol]	FULLWIDTH DOLLAR SIGN
+￠	U+FFE0	[CurrencySymbol]	FULLWIDTH CENT SIGN
+￡	U+FFE1	[CurrencySymbol]	FULLWIDTH POUND SIGN
+￥	U+FFE5	[CurrencySymbol]	FULLWIDTH YEN SIGN
+￦	U+FFE6	[CurrencySymbol]	FULLWIDTH WON SIGN
+💱	U+1F4B1	[OtherSymbol]	CURRENCY EXCHANGE

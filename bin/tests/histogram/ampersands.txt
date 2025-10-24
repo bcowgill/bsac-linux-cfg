@@ -1,0 +1,8 @@
+&	U+26	[OtherPunctuation]	AMPERSAND
+﹠	U+FE60	[OtherPunctuation]	SMALL AMPERSAND
+＆	U+FF06	[OtherPunctuation]	FULLWIDTH AMPERSAND
+
+my $AMP = qq[&\N{U+fe60}\N{ff06}];
+my $AMP_CH = '&';
+
+Hansel & Gretel ﹠the Witch ＆ the Oven

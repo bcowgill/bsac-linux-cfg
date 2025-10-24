@@ -1,0 +1,27 @@
+ \u8\ua0\u1361\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u202f\u205f\u2408\u2420\u3000\u303f\ufeff\ue0020
+
+	U+8	[Control]	BACKSPACE
+ 	U+20	[SpaceSeparator]	SPACE
+ 	U+A0	[SpaceSeparator]	NO-BREAK SPACE
+፡	U+1361	[OtherPunctuation]	ETHIOPIC WORDSPACE
+ 	U+1680	[SpaceSeparator]	OGHAM SPACE MARK
+ 	U+2000	[SpaceSeparator]	EN QUAD
+ 	U+2001	[SpaceSeparator]	EM QUAD
+ 	U+2002	[SpaceSeparator]	EN SPACE
+ 	U+2003	[SpaceSeparator]	EM SPACE
+ 	U+2004	[SpaceSeparator]	THREE-PER-EM SPACE
+ 	U+2005	[SpaceSeparator]	FOUR-PER-EM SPACE
+ 	U+2006	[SpaceSeparator]	SIX-PER-EM SPACE
+ 	U+2007	[SpaceSeparator]	FIGURE SPACE
+ 	U+2008	[SpaceSeparator]	PUNCTUATION SPACE
+ 	U+2009	[SpaceSeparator]	THIN SPACE
+ 	U+200A	[SpaceSeparator]	HAIR SPACE
+​	U+200B	[Format]	ZERO WIDTH SPACE
+ 	U+202F	[SpaceSeparator]	NARROW NO-BREAK SPACE
+ 	U+205F	[SpaceSeparator]	MEDIUM MATHEMATICAL SPACE
+␈	U+2408	[OtherSymbol]	SYMBOL FOR BACKSPACE
+␠	U+2420	[OtherSymbol]	SYMBOL FOR SPACE
+　	U+3000	[SpaceSeparator]	IDEOGRAPHIC SPACE
+〿	U+303F	[OtherSymbol]	IDEOGRAPHIC HALF FILL SPACE
+﻿	U+FEFF	[Format]	ZERO WIDTH NO-BREAK SPACE
+󠀠	U+E0020	[Format]	TAG SPACE

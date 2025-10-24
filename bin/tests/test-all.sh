@@ -77,6 +77,7 @@ testSuite fix-commas "fix leading/trailing commas in files" $PROVE
 testSuite strip-comments "show or strip out comments from files" $PROVE
 testSuite grep-file-line "scan an output log for filenames, lines, columns and error context" $PROVE
 testSuite grep-vim "grep a file for some text and then generate a bash script to open vim on each match line" $PROVE
+testSuite histogram "examine files and display a histogram of what words are used" $PROVE
 
 testSuite pretty-elements "format HTML elements nicely" $PROVE
 testSuite ls-tt-tags "list template toolkit tags in templates" $PROVE

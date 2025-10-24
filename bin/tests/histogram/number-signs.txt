@@ -1,0 +1,8 @@
+#	U+23	[OtherPunctuation]	NUMBER SIGN
+﹟	U+FE5F	[OtherPunctuation]	SMALL NUMBER SIGN
+＃	U+FF03	[OtherPunctuation]	FULLWIDTH NUMBER SIGN
+
+my $NUM = qq[#\N{U+fe5f}\N{U+ff03}]; # NuMBER SIGN
+my $NUM_CH = '#';
+
+#14 pencil, ﹟24 guage wire, ＃robe
