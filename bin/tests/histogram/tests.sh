@@ -17,7 +17,7 @@ HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 47
+PLAN 50
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -283,6 +283,48 @@ if [ 0 == "$SKIP" ]; then
 	OUT=out/$TEST.out
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --split-dash"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE3 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --strip-hyphen --split-dash
+TEST=success-strip-hyphen-split-dash
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --strip-hyphen --split-dash"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE3 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --strip-apos
+TEST=success-strip-apos
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --strip-apos"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE3 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --keep-punct
+TEST=success-keep-punct
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --keep-punct"
 	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE3 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
@@ -648,10 +690,9 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-# TODO
-# --all option with stdin / one file, two files
+# MUSTODO
 # normal mode tests
 # bar chart
-# comprehensive fold numbers, punctuation, brackets, quotes
+# comprehensive fold punctuation, brackets, quotes
 
 cleanUpAfterTests

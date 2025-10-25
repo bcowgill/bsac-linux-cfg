@@ -2,14 +2,14 @@
 5 this line Y has leading and trailing separator-space characters
 2 the
 1 
-1 don't
+1 donʼt
 1 Entire sentences, with punctuation, is also permitted.
 1 fat-cat
 1 fold Σσς this
 1 internal               ​  　〿spacing between words
 1 İSTANBUL
 1 line based histogram
-1 some non numbers and currencies !"£$%^&*()_+-=\|,./<>?;:'@#~[]{}
+1 some non numbers and currencies !"£$%^&*()_+-=\|,./<>?;:ʼ@#~[]{}
 1 some numbers and stuff 0.001 $12.34 £45,000,000 outside UK +44 123 456 789 call now 1-800-234-4567 or 1(604)456-1234
 1 spacing removed at start and end
 1 thð
@@ -39,4 +39,4 @@
 1 ␈␈␈␈␈this line Z has leading and trailing separator-space characters␈␈␈␈␈
 1 ␠␠␠␠␠this line Z has leading and trailing separator-space characters␠␠␠␠␠
 1 this line Z has leading and trailing separator-space characters
-1 this󠀧s is＇s aߵs longߴs word՚s withˮs variousʼs dashŉs characters's betweens thems ands
+1 this󠀧s isʼs aʼs longʼs wordʼs withʼs variousʼs dashŉs charactersʼs betweens thems ands

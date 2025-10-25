@@ -19,6 +19,7 @@ Usage:
        --strip-apos     strip out apostrophe characters.
        --strip-hyphen   strip out hyphen characters to make a combined word.
        --split-dash     replace dash or hyphen with space to split word.
+       --keep-punct     keep punctuation as is when connected to words.
        --utf=type       show invisible characters as unicode code points for given language. (code, wrap, name, etc)
        --all            read all files and output one histogram, instead of showing one for each file read.
        --percent        show percentage for each word instead of counts of each.

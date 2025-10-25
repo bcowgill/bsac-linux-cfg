@@ -20,6 +20,7 @@ Usage:
        --strip-apos     strip out apostrophe characters.
        --strip-hyphen   strip out hyphen characters to make a combined word.
        --split-dash     replace dash or hyphen with space to split word.
+       --keep-punct     keep punctuation as is when connected to words.
        --utf=type       show invisible characters as unicode code points for given language. (code, wrap, name, etc)
        --all            read all files and output one histogram, instead of showing one for each file read.
        --percent        show percentage for each word instead of counts of each.
@@ -71,8 +72,12 @@ Options:
     --strip-hyphen
              Strip out hyphen characters to make a combined word before doing the histogram analysis.
 
-    --split-dash Replace dash or hyphen with space to split the word so that
-    both halves are counted in the histogram analysis.
+    --split-dash
+             Replace dash or hyphen with space to split the word so that both halves are counted in the histogram analysis.
+
+    --keep-punct
+             Keep punctuation as is when connected to words.  Normally, apostrophe's will fold into the unicode MODIFIER LETTER APOSTROPHE. And other punctuation like comma, full-stop, quote marks will be removed so the histogram is only considering words.  This option will preserve all adjacent punctuation and non-letter characters attached to words.
+
     --utf=format
              Show invisible characters as unicode code points in a given format.
 

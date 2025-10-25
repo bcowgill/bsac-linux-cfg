@@ -29,6 +29,7 @@ This program will examine the files provided and display histograms of word usag
    --strip-apos     strip out apostrophe characters.
    --strip-hyphen   strip out hyphen characters to make a combined word.
    --split-dash     replace dash or hyphen with space to split word.
+   --keep-punct     keep punctuation as is when connected to words.
    --utf=type       show invisible characters as unicode code points for given language. (code, wrap, name, etc)
    --all            read all files and output one histogram, instead of showing one for each file read.
    --percent        show percentage for each word instead of counts of each.
@@ -95,7 +96,12 @@ This program will examine the files provided and display histograms of word usag
  Strip out hyphen characters to make a combined word before doing the histogram analysis.
 
 =item B<--split-dash>
+
  Replace dash or hyphen with space to split the word so that both halves are counted in the histogram analysis.
+
+=item B<--keep-punct>
+
+ Keep punctuation as is when connected to words.  Normally, apostrophe's will fold into the unicode MODIFIER LETTER APOSTROPHE. And other punctuation like comma, full-stop, quote marks will be removed so the histogram is only considering words.  This option will preserve all adjacent punctuation and non-letter characters attached to words.
 
 =item B<--utf=format>
 
@@ -246,8 +252,8 @@ my %Var = (
 			"strip-apos",      # strip out apostrophe's.
 			"strip-hyphen",    # strip out hyphens but not dashes.
 			"split-dash",      # replace hyphen and dash with space.
+			"keep-punct",      # keep punctuation as is when connected to words.
 			"utf:s",           # show unicode code points as code,wrap,javascript,java,python etc
-			"all",             # show a single histogram for all files read.
 			"all",             # read all files and output one histogram, instead of showing one for each file read.
 			"percent",         # show percentage for each word instead of counts of each.
 			"digits:i",        # number of decimal place digits to show for percentage values.
@@ -448,7 +454,6 @@ sub show_word
 		$output = $word,
 	} elsif (opt('percent'))
 	{
-# MUSTDO invalid if digits < 1
 		my $digits = opt('digits') || 2;
 		my $places = int('1' . ('0' x $digits));
 		$output = (int(($value * $places) / $total_count) / $places) . "% $word";
@@ -608,7 +613,6 @@ sub doLine
 		{
 			$word = toCodePoint($word, opt('utf') || 'code') if $word =~ m{[$BRK]}xms;
 		} elsif (opt('utf')) {
-#			$word =~ s{(.)}{[$1]}xmsg;
 			$word =~ s{(.)}{toUtf($1)}xmsge;
 		}
 		$Words{$word}++;
@@ -617,7 +621,7 @@ sub doLine
 	return ( $line, $print );
 }
 
-# test break/non break space inside words
+# Split line into 'word' chunks which may be sentences, lines, words or characters
 sub splitWords
 {
 	my ($line) = @ARG;
@@ -634,10 +638,10 @@ sub splitWords
 	# strip non-letter/numbers for letter mode
 	$line =~ s{[^$WRD$NUM]+}{\ }xmsg if opt('letter');
 
-   # split on spaces if literal mode set
-	# match on all Letters or dashes or apostrophes  \p{Letter}
+	# MUSTDO match on all Letters or dashes or apostrophes  \p{Letter}
 
 	$line = strip_apos($line) if opt('strip-apos');
+	$line = fold_apos($line) unless opt('keep-punct');
 	$line = split_dash($line) if opt('split-dash');
 	$line = strip_hyphen($line) if opt('strip-hyphen');
 
@@ -648,6 +652,7 @@ sub splitWords
 	$line = lc($line) if opt('lower');
 	$line = fold($line) if opt('fold');
 
+	# Splitting into smaller chunks now
 	my $split = $chars ? '' : qr/[$BRK]+/xms;
 
 	my @Words = $linewise ? ($line) : split($split, $line);
@@ -666,9 +671,9 @@ sub fix_breaks
 sub fold
 {
 	my ($line) = @ARG;
-   # identify quoted and bracketed spans of text and canonise them.
+   # MUSTDO identify quoted and bracketed spans of text and canonise them.
 	$line = fc($line);
-   # match all non-letters in the string
+   # match all non-letters in the string and fold them.
 	$line =~ s{(\P{Letter})}{foldChar($1)}xmsge;
 	return $line;
 }
@@ -684,17 +689,19 @@ sub foldChar
    return $char;
 }
 
+# Fold numbers and number like (1) circles etc, fractions into their numerical value equivalents.
 sub fold_numbers
 {
 	my ($char) = @ARG;
 	#print "FOLD: [$char] ==@{[$char =~ m{($NUMVAL)}xms]}\n";
-	$char =~ s{($NUMVAL)}{match($1)}xmsge;
-   # MUSTDO numbers and number like (1) circles etc, fractions
+	$char =~ s{($NUMVAL)}{replace_value($1)}xmsge;
+
 	#print "FOLD2: [$char]\n\n";
 	return $char;
 }
 
-sub match
+# Replace a number like character with its numerical value.
+sub replace_value
 {
 	my ($char) = @ARG;
 	#print "MATCH: [$char] :$NumValue{$char}:\n";

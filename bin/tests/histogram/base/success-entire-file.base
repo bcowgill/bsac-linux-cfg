@@ -30,7 +30,6 @@
 2 numbers
 2 some
 2 the
-1 !"Â£$%^&*()_+-=\|,./<>?;:'@#~[]{}
 1 ¡
 1 ¯
 1 ¿
@@ -43,6 +42,7 @@
 1 Â£45,000,000
 1 456
 1 789
+1 !"Â£$%^&*()_+-=\|,./<>?;:ʼ@#~[]{}
 1 also
 1 andá
 1 andâ¸
@@ -57,11 +57,11 @@
 1 charactersï»¿ï»¿ï»¿ï»¿ï»¿
 1 charactersó
 1 charactersâ¸»betweenâ¸ºthemâ¸
-1 characters's
+1 charactersʼs
 1 currencies
 1 °dashã
 1 dashÅ
-1 don't
+1 donʼt
 1 end
 1 Entire
 1 fat-cat
@@ -71,8 +71,8 @@
 1 histogram
 1 internal
 1 is
-1 isï¼
 1 isï¹£aï¹
+1 isï¼
 1 Ä°STANBUL
 1 itâ
 1 long-longlongtimefinis
