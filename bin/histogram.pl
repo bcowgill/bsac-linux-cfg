@@ -673,6 +673,8 @@ sub doNormal
 
 	# strip non-letters
 	$word =~ s{[^$WRD$NUM2]+}{}xmsg;
+	$word =~ s{[$HYPHEN$DASH]+\z}{}xms;
+	$word =~ s{\A[$HYPHEN$DASH]+}{}xms;
 	#print STDERR qq{doNormal [$word] => [$word]\n};
 	my $stripped = strip_hyphen(strip_apos($word));
 	$word = $stripped eq '' ? undef : $word;

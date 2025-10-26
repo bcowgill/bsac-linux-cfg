@@ -11,13 +11,14 @@ SAMPLE2=in/SAMPLE-FOLD.txt
 SAMPLE3=in/SAMPLE-STRIP.txt
 SAMPLE4=in/SAMPLE-BREAKS.txt
 SAMPLE5=in/SAMPLE-NUM.txt
+SAMPLE6=in/SAMPLE-P.txt
 DEBUG=
 SKIP=0
 HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 50
+PLAN 52
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -326,6 +327,34 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --keep-punct"
 	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE3 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation normal sample-p
+TEST=success-normal-sample-p
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE6 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --keep-punct sample-p
+TEST=success-keep-punct-sample-p
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --keep-punct"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE6 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
