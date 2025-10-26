@@ -713,8 +713,6 @@ sub splitWords
 	# strip non-letter/numbers for letter mode
 	$line =~ s{[^$WRD$NUM]+}{\ }xmsg if opt('letter');
 
-	# MUSTDO match on all Letters or dashes or apostrophes  \p{Letter}
-
 	$line = strip_apos($line) if opt('strip-apos');
 	if ($normal)
 	{
@@ -961,11 +959,37 @@ sub checkOptions
 	{
 		push( @$raErrors, "--digits=N number of decimal digits cannot be less than one." );
 	}
+	checkIncompatible($raErrors, 'char', 'letter');
+	checkIncompatible($raErrors, 'char', 'line');
+	checkIncompatible($raErrors, 'char', 'sentence');
+	checkIncompatible($raErrors, 'letter', 'line');
+	checkIncompatible($raErrors, 'letter', 'sentence');
+	checkIncompatible($raErrors, 'line', 'sentence');
+
+	checkIncompatible($raErrors, 'lower', 'upper');
+	checkIncompatible($raErrors, 'lower', 'fold');
+	checkIncompatible($raErrors, 'upper', 'fold');
+
+	checkIncompatible($raErrors, 'list', 'percent');
+	checkIncompatible($raErrors, 'list', 'bar');
+
 
 	if ( scalar(@$raErrors) )
 	{
 		usage( join( "\n", @$raErrors ) );
 	}
+}
+
+sub checkIncompatible
+{
+	my ($raErrors, $opt1, $opt2) = @ARG;
+
+	if (opt($opt1) && opt($opt2))
+	{
+		push( @$raErrors, "--$opt1 option cannot be specified along with --$opt2 option." );
+	}
+
+	return $raErrors;
 }
 
 sub checkMandatoryOptions

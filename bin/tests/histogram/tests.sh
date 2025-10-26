@@ -90,19 +90,19 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
-#echo TEST $CMD command inplace and show are incompatible
-#TEST=command-invalid-inplace-show
-#if [ 0 == "$SKIP" ]; then
-#	ERR=0
-#	EXPECT=1
-#	OUT=out/$TEST.out
-#	BASE=base/$TEST.base
-#	ARGS="$DEBUG --inplace --show $SAMPLE"
-#	NO_UNIT_TESTS=1 $PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
-#	assertFilesEqual "$OUT" "$BASE" "$TEST"
-#else
-#	echo SKIP $TEST "$SKIP"
-#fi
+echo TEST $CMD command --sentence and --line are incompatible
+TEST=command-invalid-sentence-line
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	EXPECT=1
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --sentence --line $SAMPLE"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS 2>&1 | head -$HEAD > $OUT
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
 
 echo TEST $CMD successful operation from stdin
 TEST=success
