@@ -299,6 +299,7 @@ my $NOBR = qq[\N{U+a0}\N{U+202f}]; # inter-word no-break indicator characters
 my $BRK = '\s\p{Separator}\p{Control}\N{U+e0020}\N{U+feff}\N{U+303f}\N{U+200b}\N{U+1361}\N{U+8}'; # TAG SPACE,ZERO WIDTH NO-BREAK SPACE,IDEOGRAPHIC HALF FILL SPACE,ZERO WIDTH SPACE,ETHIOPIC WORDSPACE,BACKSPACE
 
 # Unicode currency or number with thousands separator and decimal point
+my $NUM2 = '\p{Number}';
 my $NUM = '\p{Currency_Symbol}\p{Number},.\N{U+ff0c}\N{U+ff0e}';
 
 # Apostrophes and hypens/dashes
@@ -609,16 +610,74 @@ sub doLine
 	my $raWords = splitWords($line);
 	foreach my $word (@$raWords)
 	{
-		if (opt('char'))
-		{
-			$word = toCodePoint($word, opt('utf') || 'code') if $word =~ m{[$BRK]}xms;
-		} elsif (opt('utf')) {
-			$word =~ s{(.)}{toUtf($1)}xmsge;
-		}
+		doWord($word);
+	}
+	return ( $line, $print );
+}
+
+sub doWord
+{
+   my ($word) = @ARG;
+
+   my $chars = opt('char') || opt('letter');
+	my $linewise = opt('line') || opt('sentence');
+   my $normal = !$chars && !$linewise && !opt('keep-punct');
+
+	if (opt('char'))
+	{
+		$word = toCodePoint($word, opt('utf') || 'code') if $word =~ m{[$BRK]}xms;
+	} elsif ($normal && isAbnormal($word))
+	{
+		$word = doNormal($word);
+	} elsif (opt('utf')) {
+		$word =~ s{(.)}{toUtf($1)}xmsge;
+	}
+	if (defined($word))
+	{
 		$Words{$word}++;
 		$total_count++;
 	}
-	return ( $line, $print );
+}
+
+sub isAbnormal
+{
+	my ($word) = @ARG;
+
+	my $abnormal;
+	my $stripped = strip_hyphen(strip_apos($word));
+	if ($stripped =~ m{[$NUM2]}xms)
+	{
+		$abnormal = isAbnormalNum($word);
+	} else
+	{
+		$abnormal = $word =~ m{[^$NUM2\p{Letter}]}xms && $word;
+		#print STDERR qq{isAbnormal wrd [$word]\n} if $abnormal;
+	}
+	return $abnormal;
+}
+
+sub isAbnormalNum
+{
+	my ($word) = @ARG;
+
+	my $stripped = strip_hyphen(strip_apos($word));
+	my $abnormal = $word !~ m{\A[$NUM\(\)-]+\z}xms || $stripped =~ m{\p{Letter}}xms;
+	#print STDERR qq{isAbnormal num [$word]\n} if $abnormal;
+
+	return $abnormal;
+}
+
+sub doNormal
+{
+	my ($word) = @ARG;
+
+	# strip non-letters
+	$word =~ s{[^$WRD$NUM2]+}{}xmsg;
+	#print STDERR qq{doNormal [$word] => [$word]\n};
+	my $stripped = strip_hyphen(strip_apos($word));
+	$word = $stripped eq '' ? undef : $word;
+
+	return $word;
 }
 
 # Split line into 'word' chunks which may be sentences, lines, words or characters
@@ -630,6 +689,7 @@ sub splitWords
    my $chars = opt('char') || opt('letter');
 	my $strip = !opt('char') && !opt('letter');
 	my $linewise = opt('line') || opt('sentence');
+   my $normal = !$chars && !opt('keep-punct');
 
    # strip leading / trailing spaces \p{Separator} \p{Space_Separator}
 	$line =~ s{\A[$BRK]*(.*?)[$BRK]*\z}{$1}xms if $strip;
@@ -641,7 +701,11 @@ sub splitWords
 	# MUSTDO match on all Letters or dashes or apostrophes  \p{Letter}
 
 	$line = strip_apos($line) if opt('strip-apos');
-	$line = fold_apos($line) unless opt('keep-punct');
+	if ($normal)
+	{
+		$line = fold_apos($line);
+		$line = fold_dash($line);
+	}
 	$line = split_dash($line) if opt('split-dash');
 	$line = strip_hyphen($line) if opt('strip-hyphen');
 
