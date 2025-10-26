@@ -35,6 +35,7 @@ This program will examine the files provided and display histograms of word usag
    --percent        show percentage for each word instead of counts of each.
    --digits=N       show number of decimal digits for percentages. default 2
    --alpha          sort the results alphabetically instead of my number.
+   --inorder        sort the results in the order found within the input file.
    --reverse        reverse the normal sorting order (ascending number or reversed for alphabetical.)
    --list           just list the words without their count values.
    --bar            show results as a bar chart.
@@ -133,6 +134,10 @@ This program will examine the files provided and display histograms of word usag
 =item B<--alpha>
 
   Sort the histogram results alphabetically instead of by percentage or count value.
+
+=item B<--inorder>
+
+  Sort the histogram results in the order that the original word/letter/sentence was seen in the document.
 
 =item B<--reverse>
 
@@ -258,6 +263,7 @@ my %Var = (
 			"percent",         # show percentage for each word instead of counts of each.
 			"digits:i",        # number of decimal place digits to show for percentage values.
 			"alpha",           # sort the results alphabetically instead of my number.
+			"inorder",         # sort the results in the order that the words appeared in the file.
 			"reverse",         # reverse the normal sorting order (ascending number or reversed for alphabetical.)
 			"list",            # just list the words without their count values.
 			"bar",             # show histogram as a bar chart instead of numbers
@@ -352,6 +358,7 @@ my $RSOL_CH = '\\';
 
 my $total_count = 0;
 my %Words = ();
+my %Order = ();
 
 # prove command sets HARNESS_ACTIVE in ENV
 unless ($ENV{NO_UNIT_TESTS}) {
@@ -426,7 +433,7 @@ sub summary
 
 sub show_histogram
 {
-	# MUSTDO sort by order found in document??
+	#print STDERR "Inorder: " . Dumper(\%Order) if opt('inorder');
 	my @Ordered = sort { sort_word($a, $b) } keys(%Words);
 	say(join("\n", map { show_word($ARG, $Words{$ARG}) } @Ordered));
 }
@@ -434,7 +441,11 @@ sub show_histogram
 sub sort_word
 {
 	my $cmp;
-	if (opt('alpha'))
+	if (opt('inorder'))
+	{
+		$cmp = $Order{$a} <=> $Order{$b} || $a cmp $b;
+	}
+	elsif (opt('alpha'))
 	{
 		$cmp = $a cmp $b || $Words{$b} <=> $Words{$a};
 	}
@@ -470,6 +481,7 @@ sub clear_histogram
 {
 	$total_count = 0;
 	%Words = ();
+	%Order = ();
 }
 
 sub setup
@@ -636,6 +648,7 @@ sub doWord
 	{
 		$Words{$word}++;
 		$total_count++;
+		$Order{$word} = $total_count if $Words{$word} == 1;
 	}
 }
 

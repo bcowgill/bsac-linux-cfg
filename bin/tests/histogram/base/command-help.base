@@ -25,6 +25,7 @@ Usage:
        --percent        show percentage for each word instead of counts of each.
        --digits=N       show number of decimal digits for percentages. default 2
        --alpha          sort the results alphabetically instead of my number.
+       --inorder        sort the results in the order found within the input file.
        --reverse        reverse the normal sorting order (ascending number or reversed for alphabetical.)
        --list           just list the words without their count values.
        --bar            show results as a bar chart.

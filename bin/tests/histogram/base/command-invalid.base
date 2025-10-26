@@ -26,6 +26,7 @@ Usage:
        --percent        show percentage for each word instead of counts of each.
        --digits=N       show number of decimal digits for percentages. default 2
        --alpha          sort the results alphabetically instead of my number.
+       --inorder        sort the results in the order found within the input file.
        --reverse        reverse the normal sorting order (ascending number or reversed for alphabetical.)
        --list           just list the words without their count values.
        --bar            show results as a bar chart.
@@ -103,6 +104,9 @@ Options:
 
     --alpha
               Sort the histogram results alphabetically instead of by percentage or count value.
+
+    --inorder
+              Sort the histogram results in the order that the original word/letter/sentence was seen in the document.
 
     --reverse
               Reverse the normal sorting order for the historgram. Uses ascending order for percentage or count values and reverse alphabetical order for --alpha option.
