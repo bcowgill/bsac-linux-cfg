@@ -14,7 +14,7 @@
 1 internal               ​  　〿spacing between words
 1 İstanbul
 1 line based histogram
-1 some non numbers and currencies !"£$%^&*()?+‐=\|,./<>?;:ʼ@#~[]{}
+1 some non numbers and currencies !"£$%^&*()?+‐=\|,./<>?;:ʼ@#~()()
 1 some numbers and stuff 0.001 $12.34 £45,000,000 outside uk +44 123 456 789 call now 1‐800‐234‐4567 or 1(604)456‐1234
 1 spacing removed at start and end
 1 thð
@@ -32,4 +32,6 @@
 1 ␈␈␈␈␈this line z has leading and trailing separator‐space characters␈␈␈␈␈
 1 ␠␠␠␠␠this line z has leading and trailing separator‐space characters␠␠␠␠␠
 1 this line z has leading and trailing separator‐space characters
-1 this󠀧s isʼs aʼs longʼs wordʼs withʼs variousʼs dashŉs charactersʼs betweens thems ands
+1 this󠀧s isʼs aߵs longߴs wordʼs withˮs variousʼs dashŉs charactersʼs betweens thems ands
+: 35 total bins
+: 63 total hits

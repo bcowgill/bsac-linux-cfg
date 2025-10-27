@@ -1,0 +1,13 @@
+([{༺༼᚛‚„⁅⁽₍⌈⌊〈❨❪❬❮❰❲❴⟅⟦⟨⟪⟬⟮⦃⦅⦇⦉⦋⦍⦏⦑⦓⦕⦗⧘⧚⧼⸢⸤⸦⸨〈《「『【〔〖〘〚〝﴾︗︵︷︹︻︽︿﹁﹃﹇﹙﹛﹝（［｛｟｢bracketed)]}༻༽᚜⁆⁐⁾₎⌉⌋〉❩❫❭❯❱❳❵⟆⟧⟩⟫⟭⟯⦄⦆⦈⦊⦌⦎⦐⦒⦔⦖⦘⧙⧛⧽⸣⸥⸧⸩〉》」』】〕〗〙〛〞〟﴿︘︶︸︺︼︾﹀﹂﹄﹈﹚﹜﹞）］｝｠｣
+«this is quoted»
+‘this is quoted’
+“this is quoted”
+‹this is quoted›
+⸂this is quoted⸃
+⸄this is quoted⸅
+⸉this is quoted⸊
+⸌this is quoted⸍
+⸜this is quoted⸝
+⸠this is quoted⸡
+'this is quoted'
+"this is quoted"

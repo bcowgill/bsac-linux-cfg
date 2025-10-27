@@ -37,6 +37,7 @@ SYNOPSIS
           --list           just list the words without their count values.
           --bar            show results as a bar chart.
           --entire         process the entire file instead of reading line by line.
+          --pre-populate=file  process the file named but set all counts to zero before processing.
           --version        display program version
           --help -?        brief help message
           --man            full help message
@@ -126,6 +127,9 @@ OPTIONS
        --entire
                  Read in the entire file instead of reading line by line.
 
+       --pre-populate=file
+                 Process the file named but set all counts to zero before processing.  Useful for comparing multiple files with a fixed set of words in the histogram.
+
        --version
                 Prints the program version and exit.
 
@@ -149,7 +153,7 @@ POD ERRORS
        Hey! The above document had some coding errors, which are explained
        below:
 
-       Around line 80:
+       Around line 81:
            Non-ASCII character seen before =encoding in 'XXX'. Assuming UTF-8
 
 

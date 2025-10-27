@@ -1,4 +1,4 @@
-Unknown option: invalid
+--digits=N number of decimal digits cannot be less than one.
 Usage:
     histogram.pl [options] [@options-file ...] [file ...]
 

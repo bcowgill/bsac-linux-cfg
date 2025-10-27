@@ -88,6 +88,8 @@
 1 words
 1 wordʼs
 1 Σσς
+: 88 total bins
+: 301 total hits
 
 === in/SAMPLE-FOLD.txt ====================================================
 1 and
@@ -108,6 +110,8 @@
 1 Σ
 1 σ
 1 ς
+: 18 total bins
+: 18 total hits
 
 === in/SAMPLE-STRIP.txt ===================================================
 7 donʼt
@@ -306,6 +310,8 @@
 1 willya
 1 wire
 1 Witch
+: 196 total bins
+: 214 total hits
 
 === in/SAMPLE-BREAKS.txt ==================================================
 2 words
@@ -321,6 +327,8 @@
 1 where
 1 within
 1 word
+: 13 total bins
+: 14 total hits
 
 === in/SAMPLE-NUM.txt =====================================================
 2 my
@@ -1473,3 +1481,5 @@
 1 ۹
 1 ৸
 1 ৹
+: 1150 total bins
+: 1151 total hits

@@ -12,13 +12,14 @@ SAMPLE3=in/SAMPLE-STRIP.txt
 SAMPLE4=in/SAMPLE-BREAKS.txt
 SAMPLE5=in/SAMPLE-NUM.txt
 SAMPLE6=in/SAMPLE-P.txt
+SAMPLE7=in/SAMPLE-BRACKET.txt
 DEBUG=
 SKIP=0
 HEAD=3
 
 # Include testing library and make output dir exist
 source ../shell-test.sh
-PLAN 54
+PLAN 59
 
 [ -d out ] || mkdir out
 rm out/* > /dev/null 2>&1 || OK "output dir ready"
@@ -347,6 +348,20 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD successful operation normal sample bracket
+TEST=success-normal-sample-bracket
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE7 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 echo TEST $CMD successful operation --keep-punct sample-p
 TEST=success-keep-punct-sample-p
 if [ 0 == "$SKIP" ]; then
@@ -369,6 +384,20 @@ if [ 0 == "$SKIP" ]; then
 	BASE=base/$TEST.base
 	ARGS="$DEBUG --fold"
 	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE3 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --fold bracket test
+TEST=success-fold-brackets
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --fold"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE7 > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
 	filter "$OUT"
 	assertFilesEqual "$OUT" "$BASE" "$TEST"
 else
@@ -747,9 +776,78 @@ else
 	echo SKIP $TEST "$SKIP"
 fi
 
+echo TEST $CMD successful operation --pre-populate
+TEST=success-pre-populate
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --pre-populate in/SAMPLE-B.txt in/SAMPLE-A.txt"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS < $SAMPLE > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --pre-populate --percent
+TEST=success-pre-populate-percent
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --percent --pre-populate in/SAMPLE-B.txt in/SAMPLE-A.txt"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --pre-populate --percent two
+TEST=success-pre-populate-percent-more
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --percent --pre-populate in/SAMPLE-B.txt in/SAMPLE-C.txt"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --pre-populate --percent multi file
+TEST=success-pre-populate-percent-multi-file
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --percent --pre-populate in/SAMPLE-B.txt in/SAMPLE-A.txt in/SAMPLE-C.txt"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
+echo TEST $CMD successful operation --pre-populate --percent --all multi file
+TEST=success-pre-populate-percent-all-multi-file
+if [ 0 == "$SKIP" ]; then
+	ERR=0
+	OUT=out/$TEST.out
+	BASE=base/$TEST.base
+	ARGS="$DEBUG --percent --all --pre-populate in/SAMPLE-B.txt in/SAMPLE-A.txt in/SAMPLE-C.txt"
+	NO_UNIT_TESTS=1 $PROGRAM $ARGS > $OUT || assertCommandSuccess $? "$PROGRAM $ARGS"
+	filter "$OUT"
+	assertFilesEqual "$OUT" "$BASE" "$TEST"
+else
+	echo SKIP $TEST "$SKIP"
+fi
+
 # MUSTODO
-# normal mode tests
 # bar chart
-# comprehensive fold punctuation, brackets, quotes
+# comprehensive fold quotes
 
 cleanUpAfterTests

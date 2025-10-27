@@ -1,0 +1,3 @@
+--line option cannot be specified along with --sentence option.
+Usage:
+    histogram.pl [options] [@options-file ...] [file ...]

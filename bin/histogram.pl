@@ -40,6 +40,7 @@ This program will examine the files provided and display histograms of word usag
    --list           just list the words without their count values.
    --bar            show results as a bar chart.
    --entire         process the entire file instead of reading line by line.
+   --pre-populate=file  process the file named but set all counts to zero before processing.
    --version        display program version
    --help -?        brief help message
    --man            full help message
@@ -155,6 +156,10 @@ This program will examine the files provided and display histograms of word usag
 
   Read in the entire file instead of reading line by line.
 
+=item B<--pre-populate=file>
+
+  Process the file named but set all counts to zero before processing.  Useful for comparing multiple files with a fixed set of words in the histogram.
+
 =item B<--version>
 
  Prints the program version and exit.
@@ -267,6 +272,7 @@ my %Var = (
 			"reverse",         # reverse the normal sorting order (ascending number or reversed for alphabetical.)
 			"list",            # just list the words without their count values.
 			"bar",             # show histogram as a bar chart instead of numbers
+			"pre-populate:s",  # process the file named but set all counts to zero before processing.
 # MUSTDO remove
 #			"length|l=i",      # numeric required --length or -l (explicit defined)
 #			"width:3",         # numeric optional with default value if none given on command line but not necessarily the default assigned if not present on command line
@@ -356,6 +362,7 @@ my $SOL_CH = '/';
 my $RSOL = qq[\\\N{U+fe68}\N{U+ff3c}]; # REVERSE SOLIDUS
 my $RSOL_CH = '\\';
 
+my $seen_at = 0;
 my $total_count = 0;
 my %Words = ();
 my %Order = ();
@@ -436,6 +443,10 @@ sub show_histogram
 	#print STDERR "Inorder: " . Dumper(\%Order) if opt('inorder');
 	my @Ordered = sort { sort_word($a, $b) } keys(%Words);
 	say(join("\n", map { show_word($ARG, $Words{$ARG}) } @Ordered));
+
+	my $total_bins = scalar(keys(%Words));
+	say(": $total_bins total bins");
+	say(": $total_count total hits");
 }
 
 sub sort_word
@@ -467,8 +478,9 @@ sub show_word
 	} elsif (opt('percent'))
 	{
 		my $digits = opt('digits') || 2;
+		my $multiplier = int('1' . ('0' x ($digits + 2)));
 		my $places = int('1' . ('0' x $digits));
-		$output = (int(($value * $places) / $total_count) / $places) . "% $word";
+		$output = (int(($value * $multiplier) / $total_count) / $places) . "% $word";
 	}
 	else
 	{
@@ -479,9 +491,25 @@ sub show_word
 
 sub clear_histogram
 {
+	if (opt('pre-populate'))
+	{
+		reset_histogram();
+	}
+	else
+	{
+		$total_count = 0;
+		%Words = ();
+		%Order = ();
+	}
+}
+
+sub reset_histogram
+{
 	$total_count = 0;
-	%Words = ();
-	%Order = ();
+	foreach my $word (keys(%Words))
+	{
+		$Words{$word} = 0;
+	}
 }
 
 sub setup
@@ -515,6 +543,12 @@ sub setup
 #	print "NUMVAL: $NUMVAL\n";
 #	print Dumper(\%Numbers);
 #	print Dumper(\%NumValue);
+
+	if (opt('pre-populate'))
+	{
+		processAFile(opt('pre-populate'));
+		reset_histogram();
+	}
 }
 
 sub processStdio
@@ -554,20 +588,27 @@ sub processFiles
 	debug("processFiles()\n");
 	foreach my $fileName (@$raFiles)
 	{
-		if ( opt('entire') )
-		{
-			processEntireFile( $fileName );
-		}
-		else
-		{
-			processFile( $fileName );
-		}
+		processAFile( $fileName );
 		unless (opt('all'))
 		{
 			say("\n=== " . banner($fileName));
 			show_histogram();
 			clear_histogram();
 		}
+	}
+}
+
+sub processAFile
+{
+	my ($fileName) = @ARG;
+
+	if ( opt('entire') )
+	{
+		processEntireFile( $fileName );
+	}
+	else
+	{
+		processFile( $fileName );
 	}
 }
 
@@ -646,9 +687,10 @@ sub doWord
 	}
 	if (defined($word))
 	{
-		$Words{$word}++;
+		$seen_at++;
 		$total_count++;
-		$Order{$word} = $total_count if $Words{$word} == 1;
+		$Words{$word}++;
+		$Order{$word} = $seen_at if !exists($Order{$word});
 	}
 }
 
@@ -704,7 +746,7 @@ sub splitWords
    my $chars = opt('char') || opt('letter');
 	my $strip = !opt('char') && !opt('letter');
 	my $linewise = opt('line') || opt('sentence');
-   my $normal = !$chars && !opt('keep-punct');
+   my $normal = !$chars && !$linewise && !opt('keep-punct');
 
    # strip leading / trailing spaces \p{Separator} \p{Space_Separator}
 	$line =~ s{\A[$BRK]*(.*?)[$BRK]*\z}{$1}xms if $strip;
@@ -718,6 +760,8 @@ sub splitWords
 	{
 		$line = fold_apos($line);
 		$line = fold_dash($line);
+		$line = fold_bracket($line);
+		$line = fold_quote($line);
 	}
 	$line = split_dash($line) if opt('split-dash');
 	$line = strip_hyphen($line) if opt('strip-hyphen');
@@ -758,11 +802,15 @@ sub fold
 sub foldChar
 {
    my ($char) = @ARG;
+
    # MUSTDO quotation chars
 	$char = fold_apos($char);
 	$char = fold_hyphen($char);
 	$char = fold_dash($char);
 	$char = fold_punct($char);
+	$char = fold_bracket($char);
+	$char = fold_quote($char);
+
    return $char;
 }
 
@@ -793,6 +841,27 @@ sub fold_stops
 	$char =~ s{[$EXCL]}{$EXCL_CH}xmsg;
 	$char =~ s{[$QUES]}{$QUES_CH}xmsg;
 	$char =~ s{([$FS_CH$EXCL_CH$QUES_CH]+)}{$1\n}xmsg;
+	return $char;
+}
+
+sub fold_bracket
+{
+	my ($char) = @ARG;
+
+	$char =~ s{\p{Open_Punctuation}}{\(}xmsg;
+	$char =~ s{\p{Close_Punctuation}}{\)}xmsg;
+	return $char;
+}
+
+sub fold_quote
+{
+	my ($char) = @ARG;
+
+	# “	U+201C	[InitialPunctuation]	LEFT DOUBLE QUOTATION MARK
+	# ”	U+201D	[FinalPunctuation]	RIGHT DOUBLE QUOTATION MARK
+
+	$char =~ s{\p{Initial_Punctuation}}{\N{U+201c}}xmsg;
+	$char =~ s{\p{Final_Punctuation}}{\N{U+201d}}xmsg;
 	return $char;
 }
 

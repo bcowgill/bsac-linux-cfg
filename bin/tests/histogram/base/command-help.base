@@ -30,6 +30,7 @@ Usage:
        --list           just list the words without their count values.
        --bar            show results as a bar chart.
        --entire         process the entire file instead of reading line by line.
+       --pre-populate=file  process the file named but set all counts to zero before processing.
        --version        display program version
        --help -?        brief help message
        --man            full help message
