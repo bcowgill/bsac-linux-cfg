@@ -5,8 +5,10 @@
 # Sources for collective nouns lists:
 # https://englishstudyhere.com/collective-nouns/english-collective-nouns-list/
 # https://www.englishgrammar.org/collective-nouns/
+# https://www.collinsdictionary.com/word-lists/animal-collective-nouns
 # TODO https://www.adducation.info/mankind-nature-general-knowledge/collective-nouns-for-animals/
-# TODO also names for offspring by animal type
+# names for offspring by animal type
+# https://lessonsforenglish.com/vocabulary/100-animals-and-their-babies-names-animals-and-their-young-ones/
 perl -i -ne '
 	next if m{\A\s*\z}xms;
 	$_ = lc($_);
@@ -57,3 +59,8 @@ perl -i -pne 's{\Aa\s([aeiou])}{an $1}xmsg' english-collective-nouns.txt
 F=english-collective-nouns.txt
 F=english-collective-nouns.csv
 cp $F $F.saved; sort < $F.saved | uniq > $F; rm $F.saved
+
+
+// Animals and their offspring
+r=document.querySelectorAll('tr');
+what=[];r.forEach((el) => { let td=el.querySelectorAll('td'); let mom=td[0].innerText.toLowerCase(); let young = td[1].innerText.toLowerCase().split(/,\s*/); young.forEach(pup => { let a = /^[aeiou]/.test(mom) ? "an" : "a"; what.push(`${a} ${mom} produces a ${pup}`) });   })
