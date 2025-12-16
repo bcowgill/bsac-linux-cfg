@@ -384,6 +384,10 @@ alias lss='ls -aloSr'  # list by size reversed
 alias lsd='ls -alot'   # list by date/time reversed
 alias lsu='ls -U'      # list unsorted
 
+# history aliases
+alias fwhist='stty -ixon; echo Ctrl-s history search enabled'
+alias lshist='history | grep'
+
 # if calc is missing, simulate it with perl
 if which calc >> /dev/null; then
 	true
