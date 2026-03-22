@@ -1,5 +1,9 @@
 #!/bin/sh
-find . -daystart -not -mtime +$*
+if [ -z "$1" ]; then
+	find . -daystart -not -mtime +7
+else
+	find . -daystart -not -mtime +$*
+fi
 # find files that have been modified recently, within some number of days.
 # you can add additional find parameters to the command line:
 # find-recent.sh 3 # list file and dir names changed in the last 3 days

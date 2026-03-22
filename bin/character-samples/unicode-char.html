@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<!--
+
+#!/bin/bash
+
+# first locate a unicode character by grep or a specific value
+#CH=`grep-utf8.sh alpha | head -1 | perl -pne 's{\A.+U\+(\S+).+\z}{$1}xms'`
+CH=${1:-a5f8}
+
+# define the heading text and html entity for same...
+H1=`utf8ls.pl U+$CH | head -1 | perl -pne 's{\A.+(\[[^\]]+\])\s+(.+?)\s*\z}{$2 $1}xms'`
+H1="U+$CH: $H1"
+EN="&#x$CH;"
+echo Update unicode-char.html with:
+echo $EN $H1
+
+# substitute the heading and entity into this html in the right place.
+EN="$EN" H1="$H1" perl -i -pne 's{<(title|h1)>.+</\1>}{<$1>$ENV{H1}</$1>}xmsg; s{<(article)>.+</\1>}{<$1>$ENV{EN}</$1>}xmsg;' unicode-char.html
+
+-->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>U+a5f8: VAI SYLLABLE RE [OtherLetter]</title>
+<style>
+body {
+	height: 100vh;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+main {
+	background: black;
+	color: white;
+}
+
+article {
+	text-align: center;
+	line-height: 96vh;
+	font-size: 96vh;
+	transform: scale(0.98);
+}
+h1 {
+	position: relative;
+	bottom: 0.2rem;
+	margin: 0;
+	padding: 0;
+	padding-left: 0.4rem;
+	font-family: sans-serif;
+	font-size: 4vh;
+	text-transform: uppercase;
+	color: yellow;
+}
+
+</style>
+</head>
+<body>
+<main>
+<article>&#xa5f8;</article>
+<h1>U+a5f8: VAI SYLLABLE RE [OtherLetter]</h1>
+</main>
+</body>
+</html>
