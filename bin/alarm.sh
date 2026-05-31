@@ -1,6 +1,8 @@
 #!/bin/bash
 # BSACSYS Part of Brent S.A. Cowgill's System Toolkit
 
+STOP_ALARM=$HOME/_STOP_ALARM
+
 function usage {
 	local code
 	code=$1
@@ -16,6 +18,8 @@ sound-file  a specific file to play as an alarm instead of the default one.
 -?          Shows help for this tool.
 
 Also emits a system notification message.
+
+It plays the sound over and over in a loop. You can touch $STOP_ALARM to stop the alarm.
 
 See also alarm-if.sh, mynotify.sh, watcher.sh, check-ezbackup-finished.sh, quiet.sh, get-sound-level.sh, ls-sound.sh, sound-cards.sh, sound-control.sh, sound-down.sh, sound-level.sh, sound-not-ok.sh, sound-off.sh, sound-ok.sh, sound-play.sh, sound-set.sh, sound-test-console.sh, sound-test.sh, sound-toggle.sh, sound-up.sh, speaker-tester.sh
 
@@ -64,9 +68,14 @@ if [ ! -z "$WHEN" ]; then
 fi
 
 echo $NOW: playing alarm file "$SOUND"
+echo You can touch $STOP_ALARM to terminate the alarm.
 which mynotify.sh > /dev/null && mynotify.sh "alarm.sh $NOW" "Alarm for $NOW has arrived."
 while true; do
 	sound-play.sh "$SOUND"
 
 	sleep $WAIT
+	if [ -e "$STOP_ALARM" ]; then
+		rm "$STOP_ALARM"
+		exit 0
+	fi
 done
