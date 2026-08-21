@@ -24,6 +24,10 @@ if [ "$1" == "--cat" ]; then
 	vim $MATHC
 	exit
 fi
+if [ "$1" == "--rev" ]; then
+	vim $MATHC $EQN $MATH $SYM
+	exit
+fi
 if [ -z "$1" ]; then
 	vim $SYM $MATH $EQN $MATHC
 	exit

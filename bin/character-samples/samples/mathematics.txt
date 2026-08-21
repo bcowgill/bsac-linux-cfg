@@ -10,7 +10,7 @@ TODO - GREP is marked on some items for some reason. see math-rep.pl
 ≠ ≈ ≉ ≃ ≄ ≅ ≆ ≤ ≥                      NOT EQUAL TO ALMOST ASYMPTOTICALLY APPROXIMATELY LESS THAN GREATER THAN
 ≝ ≟                                    EQUAL TO BY DEFINITION QUESTIONED
 
-√() ∛() ∜()                            SQUARE ROOT CUBE ROOT FOURTH ROOT
+√() ∛() ∜()  √[] ∛[] ∜[]               SQUARE ROOT CUBE ROOT FOURTH ROOT
 [-b ± √(b² -4ac)]/2a                   QUADRATIC EQUATION
 
 ⁄                                      / FRACTION SLASH
